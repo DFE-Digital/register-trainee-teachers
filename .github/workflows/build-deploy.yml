@@ -36,6 +36,12 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
+
+    env:
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_HOSTNAME: localhost
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
@@ -53,8 +59,5 @@ jobs:
         bundle exec rake db:schema:load
       env:
         RAILS_ENV: test
-        DB_USERNAME: postgres
-        DB_PASSWORD: postgres
-        DB_HOSTNAME: localhost
     - name: Run tests
       run: bundle exec rake
