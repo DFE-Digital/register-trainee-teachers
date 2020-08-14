@@ -25,6 +25,7 @@ jobs:
         image: postgres:11
         # Provide the password for postgres
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
         options: >-
@@ -44,6 +45,14 @@ jobs:
       uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
       with:
         ruby-version: 2.7.1
+    - name: Setup Database
+      run: |
+        bundle exec rake db:create
+        bundle exec rake db:schema:load
+      env:
+        RAILS_ENV: test
+        DB_USERNAME: postgres
+        DB_PASSWORD: postgres
     - name: Install dependencies
       run: bundle install
     - name: Run tests
