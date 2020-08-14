@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@rails/webpacker": "^5.1.1",
+    "core-js": "^3.6.5",
     "govuk-frontend": "^3.8.0",
     "rails-ujs": "^5.2.4",
     "serialize-javascript": "^4.0.0",
@@ -12,5 +13,6 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
-  }
+  },
+  "license": "MIT"
 }
