@@ -18,25 +18,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres:11
-        # Provide the password for postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          # Maps tcp port 5432 on service container to the host
-          - 5432:5432
-
     env:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
@@ -44,20 +25,43 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
-      with:
-        ruby-version: 2.7.1
-    - name: Install dependencies
-      run: bundle install
-    - name: Setup Database
+
+    - name: Get values for current commit
       run: |
-        bundle exec rake db:create
-        bundle exec rake db:schema:load
+        GIT_SHA_SHORT=$(echo ${{github.sha}} | cut -c 1-7)
+        GIT_REF=${{github.ref}}
+        GIT_BRANCH=${GIT_REF##*/}
+        echo "::set-env name=GIT_SHA_SHORT::$GIT_SHA_SHORT"
+        echo "::set-env name=GIT_BRANCH::$GIT_BRANCH"
+        echo "::set-env name=SHA_TAG::paas-$GIT_SHA_SHORT"
+        echo "::set-env name=BRANCH_TAG::paas-$GIT_BRANCH"
+
+    - name: Login to docker hub
+      run: echo "${{secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
+
+    - name: "docker pull ${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}"
+      run: docker pull $DOCKER_IMAGE:BRANCH_TAG || true
+
+    - name: "docker-compose build web"
+      run: $DOCKER_COMPOSE build web
       env:
-        RAILS_ENV: test
+        GIT_BRANCH: ${{env.BRANCH_TAG}}
+
+    - name: Bring images up
+      run: |
+        $DOCKER_COMPOSE up --no-build -d
+        $DOCKER_COMPOSE exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
+
+    - name: Setup DB
+      run: |
+        $DOCKER_COMPOSE exec -T web /bin/sh -c "bundle exec rails db:setup"
+
     - name: Run tests
-      run: bundle exec rake
+      run: |
+        $DOCKER_COMPOSE exec -T web /bin/sh -c 'bundle exec rake'
+      env:
+        GIT_BRANCH: ${{env.BRANCH_TAG}}
+
+    - name: Tag docker images
+      run: |
+        docker tag $DOCKER_IMAGE:$BRANCH_TAG $DOCKER_IMAGE:$SHA_TAG

@@ -1,0 +1,28 @@
+version: '3.4'
+volumes:
+  dbdata:
+services:
+  db:
+    image: postgres:11-alpine
+    # To preserve data between runs of docker-compose, we mount a folder from the host machine.
+    volumes:
+     - dbdata:/var/lib/postgresql/data
+    environment:
+    - POSTGRES_PASSWORD=developmentpassword
+
+  web:
+    build:
+      context: .
+      cache_from:
+        - ${dockerHubUsername:-dfedigital}/register-trainee-teachers:${GIT_BRANCH:-latest}
+    image: ${dockerHubUsername:-dfedigital}/register-trainee-teachers:${GIT_BRANCH:-latest}
+    command: ash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3001 -b '0.0.0.0'"
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=developmentpassword
+      - GIT_BRANCH=${GIT_BRANCH}
