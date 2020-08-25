@@ -84,6 +84,8 @@ GEM
       dotenv (= 2.7.6)
       railties (>= 3.2)
     erubi (1.9.0)
+    faraday (1.0.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
     foreman (0.87.2)
     globalid (0.4.2)
@@ -106,6 +108,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.14.1)
     msgpack (1.3.3)
+    multipart-post (2.1.1)
     nio4r (2.5.2)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -216,6 +219,8 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (2.3.0)
+    sentry-raven (3.0.2)
+      faraday (>= 1.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -271,6 +276,7 @@ DEPENDENCIES
   rspec-rails (~> 4.0.1)
   rubocop-govuk
   scss_lint-govuk
+  sentry-raven
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
