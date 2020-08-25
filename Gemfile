@@ -30,6 +30,9 @@ gem "canonical-rails"
 # Sentry
 gem "sentry-raven"
 
+# Used to build our forms and style them using govuk-frontend class names
+gem "govuk_design_system_formbuilder"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
@@ -47,6 +50,8 @@ group :development, :test do
   gem "capybara", "~> 3.33"
 
   gem "dotenv-rails"
+
+  gem "factory_bot_rails"
 end
 
 group :development do
