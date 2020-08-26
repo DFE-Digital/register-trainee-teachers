@@ -39,4 +39,43 @@ RSpec.describe TraineesController do
       expect(response).to redirect_to(trainee_path(latest_trainee))
     end
   end
+
+  describe "#personal_details" do
+    let(:trainee) { create(:trainee) }
+
+    before do
+      get :personal_details, params: { id: trainee.id }
+    end
+
+    it "returns 200" do
+      expect(response).to be_successful
+    end
+  end
+
+  describe "#update" do
+    let(:trainee) { create(:trainee) }
+
+    before do
+      put :update, params: { id: trainee.id,
+                             trainee: { first_names: "Fred",
+                                        last_name: "Bloggs",
+                                        "date_of_birth(3i)": "19",
+                                        "date_of_birth(2i)": "7",
+                                        "date_of_birth(1i)": "1994",
+                                        gender: "Female",
+                                        nationality: "Scottish",
+                                        ethnicity: "French",
+                                        disability: "Dyslexic" } }
+    end
+
+    it "tests for change in record" do
+      expect(trainee.reload.first_names).to eql("Fred")
+      expect(trainee.last_name).to eql("Bloggs")
+      expect(trainee.date_of_birth).to eql(Date.new(1994, 7, 19))
+      expect(trainee.gender).to eql("Female")
+      expect(trainee.nationality).to eql("Scottish")
+      expect(trainee.ethnicity).to eql("French")
+      expect(trainee.disability).to eql("Dyslexic")
+    end
+  end
 end

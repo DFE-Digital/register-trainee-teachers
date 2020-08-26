@@ -10,6 +10,16 @@ class TraineesController < ApplicationController
     redirect_to trainee_path(trainee)
   end
 
+  def personal_details
+    @trainee = Trainee.find(params[:id])
+  end
+
+  def update
+    @trainee = Trainee.find(params[:id])
+    @trainee.update(trainee_params)
+    redirect_to trainee_path(@trainee)
+  end
+
 private
 
   def trainee_params
