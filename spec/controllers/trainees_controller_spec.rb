@@ -2,8 +2,15 @@ require "rails_helper"
 
 RSpec.describe TraineesController do
   describe "#show" do
+    let(:trainee) { build(:trainee) }
+    let(:id) { "1" }
+
+    before do
+      allow(Trainee).to receive(:find).with(id).and_return(trainee)
+      get :show, params: { id: id }
+    end
+
     it "returns 200" do
-      get :show, params: { id: 1 }
       expect(response).to be_successful
     end
   end
@@ -37,18 +44,6 @@ RSpec.describe TraineesController do
 
     it "create record and redirects to show page" do
       expect(response).to redirect_to(trainee_path(latest_trainee))
-    end
-  end
-
-  describe "#personal_details" do
-    let(:trainee) { create(:trainee) }
-
-    before do
-      get :personal_details, params: { id: trainee.id }
-    end
-
-    it "returns 200" do
-      expect(response).to be_successful
     end
   end
 

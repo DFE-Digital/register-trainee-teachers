@@ -1,5 +1,7 @@
 class TraineesController < ApplicationController
-  def show; end
+  def show
+    @trainee = Trainee.find(params[:id])
+  end
 
   def new
     @trainee = Trainee.new
@@ -8,10 +10,6 @@ class TraineesController < ApplicationController
   def create
     trainee = Trainee.create(trainee_params)
     redirect_to trainee_path(trainee)
-  end
-
-  def personal_details
-    @trainee = Trainee.find(params[:id])
   end
 
   def update

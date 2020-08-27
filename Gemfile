@@ -40,6 +40,8 @@ gem "request_store", "~> 1.5"
 # Used to build our forms and style them using govuk-frontend class names
 gem "govuk_design_system_formbuilder"
 
+gem "view_component"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
