@@ -58,3 +58,8 @@ jobs:
 
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
+      
+    - name: Push docker images to Docker Hub
+      run: |
+        docker push ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}
+        docker push ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
