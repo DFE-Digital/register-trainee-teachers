@@ -7,11 +7,10 @@
 
 name: build
 
-on:
+on: 
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+     
+
 
 jobs:
   build:
@@ -22,46 +21,40 @@ jobs:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
+      DOCKER_IMAGE: register-trainee-teacher-data
+      DOCKER_REPO: ${{secrets.DOCKERHUB_USERNAME}}/register-trainee-teacher-data
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Get values for current commit
       run: |
-        GIT_SHA_SHORT=$(echo ${{github.sha}} | cut -c 1-7)
-        GIT_REF=${{github.ref}}
-        GIT_BRANCH=${GIT_REF##*/}
+        GIT_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c 1-7)
+        GIT_BRANCH="${GITHUB_REF##*/}"
         echo "::set-env name=GIT_SHA_SHORT::$GIT_SHA_SHORT"
         echo "::set-env name=GIT_BRANCH::$GIT_BRANCH"
-        echo "::set-env name=SHA_TAG::paas-$GIT_SHA_SHORT"
-        echo "::set-env name=BRANCH_TAG::paas-$GIT_BRANCH"
+        echo "::set-env name=SHA_TAG::$GIT_SHA_SHORT"
+        echo "::set-env name=BRANCH_TAG::$GIT_BRANCH"
 
     - name: Login to docker hub
       run: echo "${{secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
 
-    - name: "docker pull ${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}"
-      run: docker pull $DOCKER_IMAGE:BRANCH_TAG || true
+    - name: "docker pull ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}"
+      run: docker pull $DOCKER_REPO:$BRANCH_TAG || true
 
-    - name: "docker-compose build web"
-      run: $DOCKER_COMPOSE build web
-      env:
-        GIT_BRANCH: ${{env.BRANCH_TAG}}
+    - name: "docker-compose build"
+      run:  docker-compose build
 
     - name: Bring images up
       run: |
-        $DOCKER_COMPOSE up --no-build -d
-        $DOCKER_COMPOSE exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
+        docker-compose up --no-build -d
+        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
 
     - name: Setup DB
-      run: |
-        $DOCKER_COMPOSE exec -T web /bin/sh -c "bundle exec rails db:setup"
+      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
 
     - name: Run tests
-      run: |
-        $DOCKER_COMPOSE exec -T web /bin/sh -c 'bundle exec rake'
-      env:
-        GIT_BRANCH: ${{env.BRANCH_TAG}}
+      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake'
 
     - name: Tag docker images
-      run: |
-        docker tag $DOCKER_IMAGE:$BRANCH_TAG $DOCKER_IMAGE:$SHA_TAG
+      run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}

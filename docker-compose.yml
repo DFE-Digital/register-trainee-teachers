@@ -14,8 +14,8 @@ services:
     build:
       context: .
       cache_from:
-        - ${dockerHubUsername:-dfedigital}/register-trainee-teachers:${GIT_BRANCH:-latest}
-    image: ${dockerHubUsername:-dfedigital}/register-trainee-teachers:${GIT_BRANCH:-latest}
+        - $DOCKER_REPO:${BRANCH_TAG:-latest}
+    image: $DOCKER_REPO:${BRANCH_TAG:-latest}
     command: ash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3001 -b '0.0.0.0'"
     ports:
       - "3001:3001"
@@ -25,4 +25,6 @@ services:
       - DB_HOSTNAME=db
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
-      - GIT_BRANCH=${GIT_BRANCH}
+      - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME:-dfetwdregister}
+      - DOCKER_IMAGE=${DOCKER_IMAGE:-register-trainee-teacher-data}
+      - DOCKER_REPO=${DOCKERHUB_USERNAME}/${DOCKER_IMAGE}
