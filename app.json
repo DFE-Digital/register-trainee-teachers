@@ -1,7 +1,7 @@
 {
-  "name": "govuk-rails-boilerplate",
+  "name": "register-trainee-teacher-data",
   "scripts": {
-    "postdeploy": "bundle exec rake db:migrate db:seed"
+    "postdeploy": "RAILS_ENV=production bundle exec rake db:schema:load db:seed"
   },
   "env": {
     "LANG": {
