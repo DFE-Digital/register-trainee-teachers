@@ -30,6 +30,13 @@ gem "canonical-rails"
 # Sentry
 gem "sentry-raven"
 
+# Logging
+gem "amazing_print", "~> 1.2"
+gem "rails_semantic_logger", "~> 4.4"
+
+# Thread-safe global state
+gem "request_store", "~> 1.5"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
