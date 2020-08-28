@@ -1,17 +1,19 @@
 {
   "name": "register-trainee-teacher-data",
   "scripts": {
-    "postdeploy": "RAILS_ENV=production bundle exec rake db:schema:load db:seed"
+    "postdeploy": "bundle exec rake db:schema:load db:seed"
   },
   "env": {
     "LANG": {
       "required": true
     },
     "RACK_ENV": {
-      "required": true
+      "required": true,
+      "value": "production"
     },
     "RAILS_ENV": {
-      "required": true
+      "required": true,
+      "value": "production"
     },
     "RAILS_SERVE_STATIC_FILES": {
       "required": true
