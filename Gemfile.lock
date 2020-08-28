@@ -76,10 +76,15 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
+    cliver (0.3.2)
     coderay (1.1.3)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
+    cuprite (0.11)
+      capybara (>= 2.1, < 4)
+      ferrum (~> 0.9.0)
     diff-lcs (1.4.4)
+    docile (1.3.2)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
@@ -94,6 +99,11 @@ GEM
       i18n (>= 1.6, < 2)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
+    ferrum (0.9)
+      addressable (~> 2.5)
+      cliver (~> 0.3)
+      concurrent-ruby (~> 1.1)
+      websocket-driver (>= 0.6, < 0.8)
     ffi (1.13.1)
     foreman (0.87.2)
     globalid (0.4.2)
@@ -241,7 +251,18 @@ GEM
     semantic_range (2.3.0)
     sentry-raven (3.0.2)
       faraday (>= 1.0)
+    simplecov (0.19.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.2)
+    site_prism (3.4.2)
+      addressable (~> 2.5)
+      capybara (~> 3.3)
+      site_prism-all_there (>= 0.3.1, < 1.0)
+    site_prism-all_there (0.3.2)
     spring (2.1.0)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -289,6 +310,7 @@ DEPENDENCIES
   byebug
   canonical-rails
   capybara (~> 3.33)
+  cuprite (~> 0.11)
   dotenv-rails
   factory_bot_rails
   faker
@@ -305,7 +327,10 @@ DEPENDENCIES
   rubocop-govuk
   scss_lint-govuk
   sentry-raven
+  simplecov (~> 0.19.0)
+  site_prism (~> 3.4)
   spring
+  spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
   view_component

@@ -1,9 +1,13 @@
 require "rails_helper"
 
-RSpec.feature "View pages", type: :feature do
-  scenario "Navigate to home" do
-    visit "/pages/home"
+RSpec.feature "view pages", type: :system do
+  let(:home_page) { PageObjects::HomePage.new }
 
-    expect(page).to have_text("Lorem")
+  before do
+    home_page.load
+  end
+
+  scenario "navigate to home" do
+    expect(home_page.hero).to have_text(t("hello"))
   end
 end

@@ -1,4 +1,5 @@
 en:
+  hello: Hello
   activerecord:
     attributes:
       trainee:
