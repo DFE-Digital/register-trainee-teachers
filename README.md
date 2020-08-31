@@ -2,12 +2,27 @@
 
 # GOV.UK Rails Boilerplate
 
-## Prerequisites
+## Development
 
-- Ruby 2.6.5
-- PostgreSQL
-- NodeJS 12.13.x
-- Yarn 1.12.x
+### Install build dependencies
+
+The required versions of build tools is defined in
+[.tool-versions](.tool-versions). These can be automatically installed with
+[asdf-vm](https://asdf-vm.com/), see their [installation
+instructions](https://asdf-vm.com/#/core-manage-asdf-vm).
+
+Once installed, run:
+
+```
+asdf plugin add ruby
+asdf plugin add nodejs
+asdf plugin add yarn
+asdf install
+```
+
+When the versions are updated in master run `asdf install` again to update your
+installation. Use `asdf plugin update --all` to update plugins and get access to
+newer versions of tools.
 
 ## Setting up the app in development
 
