@@ -12,7 +12,7 @@ ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-COPY .ruby-version Gemfile Gemfile.lock ./
+COPY .tool-versions Gemfile Gemfile.lock ./
 
 RUN apk add --update --no-cache --virtual build-dependances \
   build-base && \
