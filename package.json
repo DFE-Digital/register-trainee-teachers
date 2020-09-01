@@ -2,6 +2,9 @@
   "engines": {
     "node": "12.x"
   },
+  "scripts": {
+    "js:lint": "standard"
+  },
   "dependencies": {
     "@rails/webpacker": "^5.1.1",
     "core-js": "^3.6.5",
@@ -12,6 +15,7 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
+    "standard": "^14.3.4",
     "webpack-dev-server": "^3.11.0"
   },
   "license": "MIT"
