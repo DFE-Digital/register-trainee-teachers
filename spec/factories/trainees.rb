@@ -1,9 +1,12 @@
+# rubocop:disable Style/SymbolProc
 FactoryBot.define do
   factory :trainee do
   end
 
   factory :trainee_for_form, class: Trainee do
-    sequence(:trainee_id) { |n| n.to_s }
+    sequence :trainee_id do |n|
+      n.to_s
+    end
     first_names { "Steve" }
     last_name { "Smith" }
     gender { "Male" }
@@ -15,3 +18,4 @@ FactoryBot.define do
     disability { "none" }
   end
 end
+# rubocop:enable Style/SymbolProc
