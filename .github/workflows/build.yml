@@ -53,9 +53,6 @@ jobs:
     - name: Setup DB
       run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
 
-    - name: Run tests
-      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake spec'
-
     - name: Run Ruby Linter
       run: docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:ruby'
 
@@ -64,6 +61,9 @@ jobs:
 
     - name: Run SCSS Linter
       run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
+
+    - name: Run tests
+      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake spec'
 
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
