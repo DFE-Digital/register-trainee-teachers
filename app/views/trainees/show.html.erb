@@ -1,1 +1,3 @@
-trainee goes here
+<h2 class="govuk-heading-l">Personal details</h2>
+
+<%= render(SummaryTableComponent.new(content_hash: TraineePersonalDetails.new(@trainee).call)) %>
