@@ -1,0 +1,60 @@
+<h2 class="govuk-heading-l">Add previous education</h1>
+
+<%= form_with model: @trainee, data: { remote: false } do |f| %>
+  <h3 class="govuk-heading-m">A levels</h3>
+
+  <p class="govuk-body">
+    Or equivalent
+  </p>
+
+  <%= f.govuk_fieldset legend: { text: 'Subject and grade achieved' } do %>
+    <%= f.govuk_text_field :a_level_1_subject, label: { text: 'Subject' }, width: 'one-third' %>
+    <%= f.govuk_text_field :a_level_1_grade, label: { text: 'Grade' }, width: 2 %>
+
+    <%= f.govuk_text_field :a_level_2_subject, label: { text: 'Subject' }, width: 'one-third' %>
+    <%= f.govuk_text_field :a_level_2_grade, label: { text: 'Grade' }, width: 2 %>
+
+    <%= f.govuk_text_field :a_level_3_subject, label: { text: 'Subject' }, width: 'one-third' %>
+    <%= f.govuk_text_field :a_level_3_grade, label: { text: 'Grade' }, width: 2 %>
+  <% end %>
+
+  <%= f.govuk_fieldset legend: { text: 'Undergraduate degree' } do %>
+    <%= f.govuk_text_field :degree_subject, label: { text: 'Subject of undergraduate degree' }, width: 'two-thirds' %>
+
+    <% degree_classes = [OpenStruct.new(name: "1st"),
+                         OpenStruct.new(name: "2:1"),
+                         OpenStruct.new(name: "2:2"),
+                         OpenStruct.new(name: "3rd")] %>
+
+    <%= f.govuk_collection_radio_buttons :degree_class,
+        degree_classes,
+        :name,
+        :name,
+        legend: { text: 'Class of undergraduate degree' } %>
+
+    <%= f.govuk_text_field :degree_institution, label: { text: 'Undergraduate degree awarding institution' }, width: 'two-thirds' %>
+
+    <%= f.govuk_text_field :degree_type, label: { text: 'Degree type' }, hint_text: 'For example, BA, BSc, Masters, Ph or other(please specify)',  width: 'two-thirds' %>
+  <% end %>
+
+  <% skes = [OpenStruct.new(name: "Currently on SKE course"),
+             OpenStruct.new(name: "SKE not required"),
+             OpenStruct.new(name: "Completed SKE course")] %>
+
+  <%= f.govuk_collection_radio_buttons :ske,
+      skes,
+      :name,
+      :name,
+      legend: { text: 'Skill knowledge enhancement (SKE)' } %>
+
+  <% previous_qts_options = [OpenStruct.new(name: "No", value: false),
+                             OpenStruct.new(name: "Yes", value: true)] %>
+
+  <%= f.govuk_collection_radio_buttons :previous_qts,
+      previous_qts_options,
+      :value,
+      :name,
+      legend: { text: 'Previously gained QTS' } %>
+
+  <%= f.govuk_submit "Add previous education to training record" %>
+<% end %>

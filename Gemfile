@@ -74,6 +74,7 @@ group :development do
 end
 
 group :test do
+  gem "faker"
   gem "webdrivers", "~> 4.4"
 end
 
