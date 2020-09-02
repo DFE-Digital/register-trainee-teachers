@@ -26,7 +26,7 @@ private
   end
 
   def trainee_all_params
-    trainee_personal_details_params + trainee_previous_education_params + trainee_contact_details_params
+    trainee_personal_details_params + trainee_previous_education_params + trainee_contact_details_params + trainee_training_details_params
   end
 
   def trainee_personal_details_params
@@ -68,6 +68,14 @@ private
       postcode
       phone
       email
+    ]
+  end
+
+  def trainee_training_details_params
+    %i[
+      start_date
+      full_time_part_time
+      teaching_scholars
     ]
   end
 end
