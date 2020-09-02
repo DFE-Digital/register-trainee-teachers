@@ -49,28 +49,45 @@ RSpec.describe TraineesController do
 
   describe "#update" do
     let(:trainee) { create(:trainee) }
+    let(:new_trainee_attributes) { attributes_for(:trainee_for_form) }
+    let(:new_dob) do
+      Date.new(new_trainee_attributes[:"date_of_birth(1i)"].to_i,
+               new_trainee_attributes[:"date_of_birth(2i)"].to_i,
+               new_trainee_attributes[:"date_of_birth(3i)"].to_i)
+    end
 
     before do
       put :update, params: { id: trainee.id,
-                             trainee: { first_names: "Fred",
-                                        last_name: "Bloggs",
-                                        "date_of_birth(3i)": "19",
-                                        "date_of_birth(2i)": "7",
-                                        "date_of_birth(1i)": "1994",
-                                        gender: "Female",
-                                        nationality: "Scottish",
-                                        ethnicity: "French",
-                                        disability: "Dyslexic" } }
+                             trainee: new_trainee_attributes }
     end
 
     it "tests for change in record" do
-      expect(trainee.reload.first_names).to eql("Fred")
-      expect(trainee.last_name).to eql("Bloggs")
-      expect(trainee.date_of_birth).to eql(Date.new(1994, 7, 19))
-      expect(trainee.gender).to eql("Female")
-      expect(trainee.nationality).to eql("Scottish")
-      expect(trainee.ethnicity).to eql("French")
-      expect(trainee.disability).to eql("Dyslexic")
+      trainee.reload
+
+      expect(trainee.date_of_birth).to eql(new_dob)
+
+      %i[
+        first_names
+        last_name
+        gender
+        nationality
+        ethnicity
+        disability
+        a_level_1_subject
+        a_level_1_grade
+        a_level_2_subject
+        a_level_2_grade
+        a_level_3_subject
+        a_level_3_grade
+        degree_subject
+        degree_class
+        degree_institution
+        degree_type
+        ske
+        previous_qts
+      ].each do |field|
+        expect(trainee.public_send(field)).to eql(new_trainee_attributes[field])
+      end
     end
   end
 end
