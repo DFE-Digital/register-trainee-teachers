@@ -28,3 +28,10 @@ yarn-debug.log*
 
 .env
 *.log
+.envrc
+
+#terraform files
+.terraform/
+tfplan
+*.tfplan
+*.plan
