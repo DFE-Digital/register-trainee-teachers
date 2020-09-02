@@ -1,6 +1,6 @@
 <h2 class="govuk-heading-l">Contact details</h2>
 
-<%= form_with model: @trainee, data: { remote: false } do |f| %>
+<%= form_with model: @trainee, local: true do |f| %>
   <%= f.govuk_fieldset legend: { text: 'Address' } do %>
     <%= f.govuk_text_field :address_line_one,
       width: 'two-thirds',

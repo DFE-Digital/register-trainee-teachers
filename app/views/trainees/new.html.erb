@@ -1,4 +1,4 @@
-<%= form_with model: @trainee, data: {remote: false} do |f| %>
+<%= form_with model: @trainee, local: true do |f| %>
   <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID' }, width: 'one-quarter' %>
 
   <%= f.govuk_text_field :first_names, label: { text: 'First names' }, hint_text: 'Or given names', width: 'three-quarters' %>
