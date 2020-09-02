@@ -114,6 +114,8 @@ GEM
       activesupport (>= 5.2)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
+    launchy (2.5.0)
+      addressable (~> 2.7)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -316,6 +318,7 @@ DEPENDENCIES
   faker
   foreman
   govuk_design_system_formbuilder
+  launchy
   listen (>= 3.0.5, < 3.3)
   pg (>= 0.18, < 2.0)
   pry-byebug
