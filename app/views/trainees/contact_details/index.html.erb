@@ -1,0 +1,36 @@
+<h2 class="govuk-heading-l">Contact details</h2>
+
+<%= form_with model: @trainee, data: { remote: false } do |f| %>
+  <%= f.govuk_fieldset legend: { text: 'Address' } do %>
+    <%= f.govuk_text_field :address_line_one,
+      width: 'two-thirds',
+      label: { text: 'Building and street' } %>
+
+    <%= f.govuk_text_field :address_line_two,
+      width: 'two-thirds',
+      label: { text: 'Address line 2', hidden: true } %>
+
+    <%= f.govuk_text_field :town_city,
+      width: 'one-half',
+      label: { text: 'Town or city' } %>
+
+    <%= f.govuk_text_field :county,
+      width: 'one-half',
+      label: { text: 'County' } %>
+
+    <%= f.govuk_text_field :postcode,
+      width: 'one-quarter',
+      label: { text: 'Postcode' } %>
+  <% end %>
+
+  <%= f.govuk_phone_field :phone,
+    width: 'two-thirds',
+    label: { text: 'Phone number' },
+    hint_text: "Enter a landline or mobile. For non-UK numbers, include the country code" %>
+
+  <%= f.govuk_email_field :email,
+    width: 'two-thirds',
+    label: { text: 'Email' } %>
+
+  <%= f.govuk_submit "Add contact details to training record" %>
+<% end %>

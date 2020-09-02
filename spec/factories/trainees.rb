@@ -25,6 +25,14 @@ FactoryBot.define do
     ske { "SKE not required" }
     previous_qts { false }
 
+    address_line_one { Faker::Address.street_address }
+    address_line_two { Faker::Address.street_name }
+    town_city { Faker::Address.city }
+    county { Faker::Address.state }
+    postcode { Faker::Address.postcode }
+    phone { [Faker::PhoneNumber.phone_number, Faker::PhoneNumber.cell_phone].sample }
+    email { "#{first_names}.#{last_name}@example.com" }
+
     factory :trainee do
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
     end
