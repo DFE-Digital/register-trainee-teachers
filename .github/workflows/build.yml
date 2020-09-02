@@ -7,9 +7,9 @@
 
 name: build
 
-on: 
+on:
   push:
-     
+
 
 
 jobs:
@@ -53,12 +53,21 @@ jobs:
     - name: Setup DB
       run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
 
+    - name: Run Ruby Linter
+      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:ruby'
+
+    - name: Run JavaScript Linter
+      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:javascript'
+
+    - name: Run SCSS Linter
+      run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
+
     - name: Run tests
-      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake'
+      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake spec'
 
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
-      
+
     - name: Push docker images to Docker Hub
       run: |
         docker push ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}

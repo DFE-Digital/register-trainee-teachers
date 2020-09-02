@@ -8,13 +8,13 @@ class TraineesController < ApplicationController
   end
 
   def create
-    trainee = Trainee.create(trainee_params)
+    trainee = Trainee.create!(trainee_params)
     redirect_to trainee_path(trainee)
   end
 
   def update
     @trainee = Trainee.find(params[:id])
-    @trainee.update(trainee_params)
+    @trainee.update!(trainee_params)
     redirect_to trainee_path(@trainee)
   end
 
