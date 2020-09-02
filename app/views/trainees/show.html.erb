@@ -1,3 +1,15 @@
 <h2 class="govuk-heading-l">Personal details</h2>
 
+<p>
+  <%= link_to "Update", personal_details_trainee_path(@trainee), class: "govuk-link" %>
+</p>
+
 <%= render(SummaryTableComponent.new(content_hash: TraineePersonalDetails.new(@trainee).call)) %>
+
+<h2 class="govuk-heading-l">Previous education</h2>
+
+<p>
+  <%= link_to "Update", previous_education_trainee_path(@trainee), class: "govuk-link" %>
+</p>
+
+<%= render(SummaryTableComponent.new(content_hash: TraineePreviousEducation.new(@trainee).call)) %>
