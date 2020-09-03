@@ -10,7 +10,7 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
-/log/*
+/tmp/*
 
 # Ignore uploaded files in development
 /storage/*
@@ -23,7 +23,6 @@
 /public/assets
 /public/system
 /tags
-/tmp/*
 /yarn-error.log
 /vendor/cache
 yarn-debug.log*
