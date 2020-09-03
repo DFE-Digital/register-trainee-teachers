@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_01_113117) do
+ActiveRecord::Schema.define(version: 2020_09_02_142317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,13 @@ ActiveRecord::Schema.define(version: 2020_09_01_113117) do
     t.text "degree_type"
     t.text "ske"
     t.boolean "previous_qts"
+    t.text "address_line_one"
+    t.text "address_line_two"
+    t.text "town_city"
+    t.text "county"
+    t.text "postcode"
+    t.text "phone"
+    t.text "email"
   end
 
 end

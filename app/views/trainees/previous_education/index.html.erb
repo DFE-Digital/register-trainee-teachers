@@ -1,6 +1,6 @@
 <h2 class="govuk-heading-l">Add previous education</h1>
 
-<%= form_with model: @trainee, data: { remote: false } do |f| %>
+<%= form_with model: @trainee, local: true do |f| %>
   <h3 class="govuk-heading-m">A levels</h3>
 
   <p class="govuk-body">

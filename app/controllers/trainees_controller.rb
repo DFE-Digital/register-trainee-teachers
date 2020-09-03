@@ -26,7 +26,7 @@ private
   end
 
   def trainee_all_params
-    trainee_personal_details_params + trainee_previous_education_params
+    trainee_personal_details_params + trainee_previous_education_params + trainee_contact_details_params
   end
 
   def trainee_personal_details_params
@@ -56,6 +56,18 @@ private
       degree_type
       ske
       previous_qts
+    ]
+  end
+
+  def trainee_contact_details_params
+    %i[
+      address_line_one
+      address_line_two
+      town_city
+      county
+      postcode
+      phone
+      email
     ]
   end
 end
