@@ -4,8 +4,8 @@
 
   <%= f.govuk_date_field :start_date, legend: { text: 'Start date' } %>
 
-  <% full_time_part_time_options = [OpenStruct.new(name: "Full time", value: false),
-                             OpenStruct.new(name: "Part time", value: true)] %>
+  <% full_time_part_time_options = [OpenStruct.new(name: "Full time", value: "full_time"),
+                             OpenStruct.new(name: "Part time", value: "part_time")] %>
 
   <%= f.govuk_collection_radio_buttons :full_time_part_time,
       full_time_part_time_options,
