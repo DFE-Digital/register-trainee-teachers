@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.6'
 volumes:
   dbdata:
 services:
@@ -43,4 +43,3 @@ services:
       - DB_PASSWORD=developmentpassword
       - SETTINGS__APPLICATION=register-trainee-teacher-data-bg-jobs
       - REDIS_URL=redis://redis:6379
-

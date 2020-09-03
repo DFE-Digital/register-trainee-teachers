@@ -32,6 +32,10 @@ newer versions of tools.
 4. Run `bundle exec rails server` to launch the app on http://localhost:3000
 5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
+## Documentation
+
+- [Running locally using docker](/docs/run-local-docker.md)
+
 ## Whats included in this boilerplate?
 
 - Rails 6.0 with Webpacker

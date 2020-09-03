@@ -1,0 +1,9 @@
+.git/
+.github/
+node_modules
+coverage
+docs
+.env
+.env*
+*.gem
+*.rdb
