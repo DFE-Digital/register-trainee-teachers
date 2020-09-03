@@ -13,25 +13,25 @@ feature "edit training details" do
   end
 
   def when_i_visit_the_training_details_page
-    visit "/trainees/#{@trainee.id}/training-details"
+    @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
+    @training_details_page.load(id: @trainee.id)
   end
 
   def and_i_enter_valid_parameters
-    page_object = PageObjects::Trainees::TrainingDetails.new
-    set_date_fields(page_object, "start_date", "10/01/2021")
-    page_object.full_time.click
-    page_object.teaching_scholars_yes.click
-    page_object.submit_button.click
+    set_date_fields("start_date", "10/01/2021")
+    @training_details_page.full_time.click
+    @training_details_page.teaching_scholars_yes.click
+    @training_details_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_summary_page
     expect(page.current_path).to eq("/trainees/#{@trainee.id}")
   end
 
-  def set_date_fields(page_object, field_prefix, date_string)
+  def set_date_fields(field_prefix, date_string)
     day, month, year = date_string.split("/")
-    page_object.send("#{field_prefix}_day").set day
-    page_object.send("#{field_prefix}_month").set month
-    page_object.send("#{field_prefix}_year").set year
+    @training_details_page.send("#{field_prefix}_day").set day
+    @training_details_page.send("#{field_prefix}_month").set month
+    @training_details_page.send("#{field_prefix}_year").set year
   end
 end
