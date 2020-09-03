@@ -13,6 +13,12 @@ feature "Trainee summary page", type: :system do
     then_i_can_see_the_contact_details
   end
 
+  scenario "displays the training details" do
+    given_a_trainee_exists
+    when_i_visit_the_summary_page
+    then_i_can_see_the_training_details
+  end
+
   def given_a_trainee_exists
     @trainee = create(:trainee)
   end
@@ -24,6 +30,12 @@ feature "Trainee summary page", type: :system do
 
   def then_i_can_see_the_personal_details
     expect(@summary_page.personal_details.trainee_id.text).to eq(@trainee.trainee_id)
+  end
+
+  def then_i_can_see_the_training_details
+    expect(@summary_page.training_details.start_date.text).to eq(@trainee.start_date.to_s)
+    expect(@summary_page.training_details.full_time_part_time.text).to eq(@trainee.full_time_part_time.to_s)
+    expect(@summary_page.training_details.teaching_scholars.text).to eq(@trainee.teaching_scholars.to_s)
   end
 
   def then_i_can_see_the_contact_details
