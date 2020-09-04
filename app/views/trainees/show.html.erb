@@ -4,7 +4,9 @@
   <%= link_to "Update", personal_details_trainee_path(@trainee), class: "govuk-link" %>
 </p>
 
-<%= render(SummaryTableComponent.new(content_hash: TraineePersonalDetails.new(@trainee).call)) %>
+<div class="personal-details">
+  <%= render(SummaryTableComponent.new(content_hash: TraineePersonalDetails.new(@trainee).call)) %>
+</div>
 
 <h2 class="govuk-heading-l">Previous education</h2>
 
