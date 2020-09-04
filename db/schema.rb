@@ -24,8 +24,6 @@ ActiveRecord::Schema.define(version: 2020_09_02_142317) do
     t.text "nationality"
     t.text "ethnicity"
     t.text "disability"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.text "a_level_1_subject"
     t.text "a_level_1_grade"
     t.text "a_level_2_subject"
