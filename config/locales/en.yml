@@ -1,10 +1,20 @@
 en:
   hello: Hello
+  views:
+    trainee_summary:
+      contact_details:
+        heading: "Contact Details"
   activerecord:
     attributes:
       trainee:
         trainee_id: "Trainee ID"
   presenters:
+    TraineeContactDetails:
+      attributes:
+        address: "Address"
+        postcode: "Postcode"
+        phone: "Phone number"
+        email: "Email"
     TraineePreviousEducation:
       attributes:
         first_a_level: "First A level subject and grade"

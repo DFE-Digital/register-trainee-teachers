@@ -14,7 +14,7 @@ RSpec.describe SummaryTableComponent, type: :component do
     end
   end
 
-  describe "formatted_attribute_id" do
+  describe "#formatted_attribute_id" do
     let(:content_hash) { { "Trainee ID" => "Alfred" } }
     let(:expected_key) { "trainee-id" }
 
