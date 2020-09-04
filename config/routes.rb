@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get "personal-details", to: "trainees/personal_details#edit"
       get "previous-education", to: "trainees/previous_education#edit"
       get "training-details", to: "trainees/training_details#edit"
+      get "course-details", to: "trainees/course_details#edit"
     end
   end
 end
