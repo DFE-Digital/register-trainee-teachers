@@ -1,6 +1,6 @@
 <dl class="govuk-summary-list">
   <% content_hash.each do |key, value| %>
-    <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__row <%= formatted_attribute_id(key)%>">
       <dt class="govuk-summary-list__key">
         <%= key %>
       </dt>

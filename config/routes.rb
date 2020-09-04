@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   resources :trainees, only: %i[show new create update] do
     member do
-      get "contact-details", to: "trainees/contact_details#index"
-      get "personal-details", to: "trainees/personal_details#index"
-      get "previous-education", to: "trainees/previous_education#index"
+      get "contact-details", to: "trainees/contact_details#edit"
+      get "personal-details", to: "trainees/personal_details#edit"
+      get "previous-education", to: "trainees/previous_education#edit"
     end
   end
 end

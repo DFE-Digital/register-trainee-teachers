@@ -1,6 +1,6 @@
 module Trainees
   class ContactDetailsController < ApplicationController
-    def index
+    def edit
       @trainee = Trainee.find(params[:id])
     end
   end

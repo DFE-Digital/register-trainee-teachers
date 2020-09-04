@@ -4,4 +4,8 @@ class SummaryTableComponent < ViewComponent::Base
   def initialize(content_hash:)
     @content_hash = content_hash
   end
+
+  def formatted_attribute_id(key)
+    key.to_s.downcase.gsub(/ /, "-")
+  end
 end
