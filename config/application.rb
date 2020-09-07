@@ -36,5 +36,6 @@ module GovukRailsBoilerplate
     config.view_component.show_previews = true
 
     config.middleware.use Rack::Deflater
+    config.active_job.queue_adapter = :sidekiq
   end
 end
