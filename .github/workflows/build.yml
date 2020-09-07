@@ -10,8 +10,6 @@ name: build
 on:
   push:
 
-
-
 jobs:
   build:
 
@@ -23,6 +21,10 @@ jobs:
       DB_HOSTNAME: localhost
       DOCKER_IMAGE: register-trainee-teacher-data
       DOCKER_REPO: ${{secrets.DOCKERHUB_USERNAME}}/register-trainee-teacher-data
+      PAAS_TF_DIR: ./terraform
+      ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+      TF_VAR_paas_user: ${{ secrets.TF_VAR_PAAS_USER }}
+      TF_VAR_paas_password: ${{ secrets.TF_VAR_PAAS_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v2
@@ -72,3 +74,45 @@ jobs:
       run: |
         docker push ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}
         docker push ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
+
+    
+  #master
+  deploy_to_paas:
+    
+    name: Deploy to Paas
+    
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/master'
+    needs: build
+
+    steps:      
+
+    - name: Pin Terraform version
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.12.29
+
+    - name: Install Terraform CloudFoundry Provider
+      run: |
+          mkdir -p $HOME/.terraform.d/plugins/linux_amd64 
+          cd $HOME/.terraform.d/plugins/linux_amd64
+          wget -q -O zipfile https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry/releases/download/v0.12.4/terraform-provider-cloudfoundry_0.12.4_linux_amd64.zip && unzip zipfile && rm zipfile
+
+    - name: Terraform init
+      run: |
+          terraform init -backend-config=terraform/workspace-variables/qa_backend.tfvars terraform
+      env:
+        TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
+    
+    - name: Terraform plan
+      run: |
+          terraform plan -var-file=terraform/workspace-variables/qa.tfvars terraform
+      env:
+        TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
+
+    - name: Terraform apply
+      run: |
+          terraform apply -var-file=terraform/workspace-variables/qa.tfvars -auto-approve terraform
+      env:
+        TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
