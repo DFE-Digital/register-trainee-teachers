@@ -8,6 +8,16 @@
   <%= render(SummaryTableComponent.new(content_hash: TraineePersonalDetails.new(@trainee).call)) %>
 </div>
 
+<h2 class="govuk-heading-l"><%= t('views.trainee_summary.contact_details.heading') %></h2>
+
+<p>
+  <%= link_to "Update", contact_details_trainee_path(@trainee), class: "govuk-link" %>
+</p>
+
+<div class="contact-details">
+  <%= render(SummaryTableComponent.new(content_hash: TraineeContactDetails.new(@trainee).call)) %>
+</div>
+
 <h2 class="govuk-heading-l">Previous education</h2>
 
 <p>
