@@ -1,5 +1,6 @@
 terraform {
-  required_version = ">= 0.12.29"
+  required_version = "= 0.12.29"
+
   backend "azurerm" {
   }
 }
@@ -19,7 +20,7 @@ provider cloudfoundry {
 module paas {
   source = "./modules/paas"
 
-  app_environment             = terraform.workspace
+  app_environment             = var.paas_app_environment
   app_docker_image            = var.paas_app_docker_image
   app_start_timeout           = var.paas_app_start_timeout
   app_stopped                 = var.paas_app_stopped
