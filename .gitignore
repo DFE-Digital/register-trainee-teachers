@@ -37,3 +37,4 @@ yarn-debug.log*
 tfplan
 *.tfplan
 *.plan
+*secrets.tfvars
