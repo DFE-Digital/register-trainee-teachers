@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get "contact-details", to: "trainees/contact_details#edit"
       get "personal-details", to: "trainees/personal_details#edit"
       get "previous-education", to: "trainees/previous_education#edit"
+      get "training-details", to: "trainees/training_details#edit"
     end
   end
 end

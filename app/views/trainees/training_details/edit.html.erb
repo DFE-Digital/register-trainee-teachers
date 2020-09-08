@@ -1,0 +1,26 @@
+<h2 class="govuk-heading-l">Add training details</h2>
+
+<%= form_with model: @trainee, local: true do |f| %>
+
+  <%= f.govuk_date_field :start_date, legend: { text: 'Start date' } %>
+
+  <% full_time_part_time_options = [OpenStruct.new(name: "Full time", value: "full_time"),
+                             OpenStruct.new(name: "Part time", value: "part_time")] %>
+
+  <%= f.govuk_collection_radio_buttons :full_time_part_time,
+      full_time_part_time_options,
+      :value,
+      :name,
+      legend: { text: 'Full time/Part time' } %>
+
+  <% teaching_scholars_options = [OpenStruct.new(name: "No", value: false),
+                               OpenStruct.new(name: "Yes", value: true)] %>
+
+  <%= f.govuk_collection_radio_buttons :teaching_scholars,
+        teaching_scholars_options,
+        :value,
+        :name,
+        legend: { text: 'Teaching scholars' } %>
+
+  <%= f.govuk_submit "Add training details to training record" %>
+<% end %>
