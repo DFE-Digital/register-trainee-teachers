@@ -53,6 +53,9 @@ group :development, :test do
   # Debugging
   gem "pry-byebug"
 
+  # Better use of test helpers such as save_and_open_page/screenshot
+  gem "launchy"
+
   # Testing framework
   gem "rspec-rails", "~> 4.0.1"
   # Adds support for Capybara system testing and selenium driver

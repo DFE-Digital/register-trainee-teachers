@@ -1,4 +1,8 @@
 class TraineesController < ApplicationController
+  def index
+    @trainees = Trainee.all
+  end
+
   def show
     @trainee = Trainee.find(params[:id])
   end

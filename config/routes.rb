@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get "/422", to: "errors#unprocessable_entity", via: :all
   get "/500", to: "errors#internal_server_error", via: :all
 
-  resources :trainees, only: %i[show new create update] do
+  resources :trainees, only: %i[index show new create update] do
     member do
       get "contact-details", to: "trainees/contact_details#edit"
       get "personal-details", to: "trainees/personal_details#edit"

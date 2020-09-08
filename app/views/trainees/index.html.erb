@@ -1,0 +1,42 @@
+<h1 class="govuk-heading-xl">Trainee teacher data list</h1>
+
+<h2 class="govuk-heading-l" id="report-title">
+  ITT collection 20/21
+</h2>
+
+<p class="govuk-body">
+  <%= link_to "Add data to collection", new_trainee_path , { class:"govuk-button", data: {module: "govuk-button"}}%>
+</p>
+
+<table class="govuk-table" aria-describedby="report-title">
+  <thead>
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"></th>
+      <th scope="col" class="govuk-table__header"></th>
+      <th scope="col" class="govuk-table__header"></th>
+      <th scope="col" class="govuk-table__header"></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% if @trainees.present? %>
+      <% @trainees.each do |trainee| %>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">
+            <%= link_to "#{trainee.first_names} #{trainee.last_name}", trainee_path(trainee.id), class:"govuk-link" %>
+          </th>
+          <td class="govuk-table__cell">
+            <div class="govuk-hint govuk-!-margin-bottom-0">
+              <abbr title="Date of Birth">DOB:</abbr> <%= trainee.date_of_birth %>
+            </div> ID: <%= trainee.trainee_id %>
+          </td>
+          <td class="govuk-table__cell">
+            <div class="govuk-hint govuk-!-margin-bottom-0">
+              Salaried Direct(Salaried)
+            </div>
+          </td>
+          <td class="govuk-table__cell"> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
