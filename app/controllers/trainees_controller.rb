@@ -22,11 +22,17 @@ private
 
   def trainee_params
     params.require(:trainee)
-          .permit(trainee_all_params)
+      .permit(trainee_all_params)
   end
 
   def trainee_all_params
-    trainee_personal_details_params + trainee_previous_education_params + trainee_contact_details_params + trainee_training_details_params
+    [
+      trainee_personal_details_params,
+      trainee_previous_education_params,
+      trainee_contact_details_params,
+      trainee_course_details_params,
+      trainee_training_details_params,
+    ].flatten
   end
 
   def trainee_personal_details_params
@@ -76,6 +82,20 @@ private
       start_date
       full_time_part_time
       teaching_scholars
+    ]
+  end
+
+  def trainee_course_details_params
+    %i[
+      course_title
+      course_phase
+      programme_start_date
+      programme_length
+      programme_end_date
+      allocation_subject
+      itt_subject
+      employing_school
+      placement_school
     ]
   end
 end
