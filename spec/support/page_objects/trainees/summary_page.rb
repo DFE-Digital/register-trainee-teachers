@@ -7,6 +7,7 @@ module PageObjects
 
       section :personal_details, PageObjects::Sections::PersonalDetails, ".personal-details"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
+      section :course_details, PageObjects::Sections::CourseDetails, ".course-details"
     end
   end
 end
