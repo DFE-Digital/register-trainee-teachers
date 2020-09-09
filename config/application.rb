@@ -32,6 +32,9 @@ module GovukRailsBoilerplate
 
     config.exceptions_app = routes
 
+    config.view_component.preview_paths = [Rails.root.join('spec/components/previews')]
+    config.view_component.show_previews = true
+
     config.middleware.use Rack::Deflater
   end
 end
