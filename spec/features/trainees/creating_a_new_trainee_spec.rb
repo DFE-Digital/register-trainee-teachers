@@ -10,7 +10,7 @@ RSpec.feature "Create trainee journey" do
     then_i_should_see_the_new_trainee_details
   end
 
-  private
+private
 
   def when_i_am_viewing_the_list_of_trainees
     @index_page ||= PageObjects::Trainees::IndexPage.new
@@ -23,12 +23,12 @@ RSpec.feature "Create trainee journey" do
   end
 
   def and_i_fill_in_train_id
-    @new_page.trainee_id_input.set('123')
+    @new_page.trainee_id_input.set("123")
   end
 
   def and_i_fill_in_first_and_last_name
-    @new_page.trainee_first_names_input.set('Tim')
-    @new_page.trainee_last_name_input.set('Smith')
+    @new_page.trainee_first_names_input.set("Tim")
+    @new_page.trainee_last_name_input.set("Smith")
   end
 
   def and_i_save_the_form

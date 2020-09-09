@@ -56,7 +56,7 @@ jobs:
       run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
 
     - name: Run Ruby Linter
-      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:ruby'
+      run: docker-compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
 
     - name: Run JavaScript Linter
       run: docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:javascript'
