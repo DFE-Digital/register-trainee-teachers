@@ -32,7 +32,9 @@ FactoryBot.define do
     postcode { Faker::Address.postcode }
     phone { [Faker::PhoneNumber.phone_number, Faker::PhoneNumber.cell_phone].sample }
     email { "#{first_names}.#{last_name}@example.com" }
-
+    start_date { Time.zone.now }
+    full_time_part_time { %w[full_time part_time].sample }
+    teaching_scholars { [false, true].sample }
     factory :trainee do
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
     end

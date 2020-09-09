@@ -31,7 +31,12 @@ RSpec.describe TraineesController do
     end
 
     it "creates record with correct data" do
-      trainee_attributes.reject { |k, _| k.to_s.include?("date_of_birth") }.each do |k, _v|
+      dates = %i[date_of_birth
+                 start_date
+                 date_of_birth(1i)
+                 date_of_birth(2i)
+                 date_of_birth(3i)]
+      trainee_attributes.reject { |k, _| dates.include?(k) }.each do |k, _v|
         expect(latest_trainee.public_send(k)).to eql(trainee_attributes[k])
       end
 

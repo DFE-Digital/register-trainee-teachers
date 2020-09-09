@@ -34,4 +34,12 @@
 
 <div class="course-details">
   <%= render(SummaryTableComponent.new(content_hash: TraineeCourseDetails.new(@trainee).call)) %>
+<h2 class="govuk-heading-l">Training details</h2>
+
+<p>
+  <%= link_to "Update", training_details_trainee_path(@trainee), class: "govuk-link" %>
+</p>
+
+<div class="training-details">
+  <%= render(SummaryTableComponent.new(content_hash: TraineeTrainingDetails.new(@trainee).call)) %>
 </div>
