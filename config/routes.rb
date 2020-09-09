@@ -1,4 +1,8 @@
+require_relative "routes/sidekiq_routes"
+
 Rails.application.routes.draw do
+  extend SidekiqRoutes
+
   get "/pages/:page", to: "pages#show"
 
   get "/404", to: "errors#not_found", via: :all
