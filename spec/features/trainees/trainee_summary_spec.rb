@@ -43,7 +43,7 @@ feature "Trainee summary page", type: :system do
 
     expect(@summary_page.contact_details.address.text).to eq(expected_address)
     expect(@summary_page.contact_details.postcode.text).to eq(@trainee.postcode)
-    expect(@summary_page.contact_details.phone.text).to eq(@trainee.phone)
+    expect(@summary_page.contact_details.phone_number.text).to eq(@trainee.phone_number)
     expect(@summary_page.contact_details.email.text).to eq(@trainee.email)
   end
 end

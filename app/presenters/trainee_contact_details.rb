@@ -7,7 +7,7 @@ class TraineeContactDetails
 
   def call
     relevant_attributes.map { |k, v|
-      [I18n.t("presenters.TraineeContactDetails.attributes.#{k}"), v]
+      [Trainee.human_attribute_name(k), v]
     }.to_h
   end
 
@@ -33,7 +33,7 @@ private
   def relevant_fields
     %w[
       postcode
-      phone
+      phone_number
       email
     ]
   end

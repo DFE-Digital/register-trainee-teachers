@@ -30,7 +30,7 @@ FactoryBot.define do
     town_city { Faker::Address.city }
     county { Faker::Address.state }
     postcode { Faker::Address.postcode }
-    phone { [Faker::PhoneNumber.phone_number, Faker::PhoneNumber.cell_phone].sample }
+    phone_number { [Faker::PhoneNumber.phone_number, Faker::PhoneNumber.cell_phone].sample }
     email { "#{first_names}.#{last_name}@example.com" }
     start_date { Time.zone.now }
     full_time_part_time { %w[full_time part_time].sample }

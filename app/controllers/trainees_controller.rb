@@ -76,7 +76,7 @@ private
       town_city
       county
       postcode
-      phone
+      phone_number
       email
     ]
   end

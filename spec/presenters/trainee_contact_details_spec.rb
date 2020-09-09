@@ -9,7 +9,7 @@ RSpec.describe TraineeContactDetails do
     expect(subject.call).to eql({
       "Address" => "#{trainee.address_line_one}, #{trainee.address_line_two}, #{trainee.town_city}, #{trainee.county}",
       "Postcode" => trainee.postcode,
-      "Phone number" => trainee.phone,
+      "Phone number" => trainee.phone_number,
       "Email" => trainee.email,
     })
   end
