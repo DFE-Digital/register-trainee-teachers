@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_03_085102) do
+ActiveRecord::Schema.define(version: 2020_09_07_121550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,8 +43,11 @@ ActiveRecord::Schema.define(version: 2020_09_03_085102) do
     t.text "town_city"
     t.text "county"
     t.text "postcode"
-    t.text "phone"
+    t.text "phone_number"
     t.text "email"
+    t.date "start_date"
+    t.text "full_time_part_time"
+    t.boolean "teaching_scholars"
     t.text "course_title"
     t.text "course_phase"
     t.date "programme_start_date"
@@ -54,9 +57,6 @@ ActiveRecord::Schema.define(version: 2020_09_03_085102) do
     t.text "itt_subject"
     t.text "employing_school"
     t.text "placement_school"
-    t.date "start_date"
-    t.text "full_time_part_time"
-    t.boolean "teaching_scholars"
   end
 
 end
