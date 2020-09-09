@@ -1,6 +1,6 @@
 module PageObjects
   module Trainees
-    class ShowPage < PageObjects::BasePage
+    class Show < PageObjects::Base
       set_url "/trainees/{id}"
     end
   end

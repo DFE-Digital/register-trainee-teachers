@@ -13,7 +13,7 @@ feature "View trainees", type: :feature do
   end
 
   def when_i_view_the_trainee_index_page
-    @index_page ||= PageObjects::Trainees::IndexPage.new
+    @index_page ||= PageObjects::Trainees::Index.new
     @index_page.load
   end
 
@@ -22,7 +22,7 @@ feature "View trainees", type: :feature do
   end
 
   def then_i_should_see_the_trainee_details
-    @show_page ||= PageObjects::Trainees::ShowPage.new
+    @show_page ||= PageObjects::Trainees::Show.new
     expect(@show_page).to be_displayed(id: @trainee.id)
   end
 end

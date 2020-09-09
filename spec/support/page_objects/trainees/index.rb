@@ -1,6 +1,6 @@
 module PageObjects
   module Trainees
-    class IndexPage < PageObjects::BasePage
+    class Index < PageObjects::Base
       set_url "/trainees"
 
       element :page_title, ".govuk-heading-xl"

@@ -1,6 +1,6 @@
 module PageObjects
   module Trainees
-    class NewPage < PageObjects::BasePage
+    class New < PageObjects::Base
       set_url "/trainees/new"
 
       element :page_title, ".govuk-heading-xl"

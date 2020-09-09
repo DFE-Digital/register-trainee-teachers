@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "view pages", type: :system do
-  let(:home_page) { PageObjects::HomePage.new }
+  let(:home_page) { PageObjects::Home.new }
 
   before do
     home_page.load
