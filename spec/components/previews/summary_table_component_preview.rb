@@ -3,7 +3,7 @@ class SummaryTableComponentPreview < ViewComponent::Preview
     render(SummaryTableComponent.new(content_hash: {
       "First names": "Mike",
       "Middle names": "Larson",
-      "Last name": "Doyle"
+      "Last name": "Doyle",
     }))
   end
 end
