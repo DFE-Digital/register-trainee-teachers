@@ -1,4 +1,4 @@
-class SummaryTable::ComponentPreview < ViewComponent::Preview
+class SummaryTable::ViewPreview < ViewComponent::Preview
   def default_state
     render(SummaryTable::View.new(content_hash: {
       "First names": "Mike",

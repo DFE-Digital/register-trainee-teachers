@@ -5,7 +5,7 @@
 </p>
 
 <div class="personal-details">
-  <%= render_component(SummaryTable::Component.new(content_hash: TraineePersonalDetails.new(@trainee).call)) %>
+  <%= render_component(SummaryTable::View.new(content_hash: TraineePersonalDetails.new(@trainee).call)) %>
 </div>
 
 <h2 class="govuk-heading-l"><%= t('views.trainee_summary.contact_details.heading') %></h2>
@@ -15,7 +15,7 @@
 </p>
 
 <div class="contact-details">
-  <%= render_component(SummaryTable::Component.new(content_hash: TraineeContactDetails.new(@trainee).call)) %>
+  <%= render_component(SummaryTable::View.new(content_hash: TraineeContactDetails.new(@trainee).call)) %>
 </div>
 
 <h2 class="govuk-heading-l">Previous education</h2>
@@ -24,7 +24,7 @@
   <%= link_to "Update", previous_education_trainee_path(@trainee), class: "govuk-link" %>
 </p>
 
-<%= render_component(SummaryTable::Component.new(content_hash: TraineePreviousEducation.new(@trainee).call)) %>
+<%= render_component(SummaryTable::View.new(content_hash: TraineePreviousEducation.new(@trainee).call)) %>
 
 <h2 class="govuk-heading-l">Course details</h2>
 
@@ -33,7 +33,7 @@
 </p>
 
 <div class="course-details">
-  <%= render_component(SummaryTable::Component.new(content_hash: TraineeCourseDetails.new(@trainee).call)) %>
+  <%= render_component(SummaryTable::View.new(content_hash: TraineeCourseDetails.new(@trainee).call)) %>
 </div>
 <h2 class="govuk-heading-l">Training details</h2>
 
@@ -42,5 +42,5 @@
 </p>
 
 <div class="training-details">
-  <%= render_component(SummaryTable::Component.new(content_hash: TraineeTrainingDetails.new(@trainee).call)) %>
+  <%= render_component(SummaryTable::View.new(content_hash: TraineeTrainingDetails.new(@trainee).call)) %>
 </div>
