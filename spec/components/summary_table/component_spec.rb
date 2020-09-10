@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SummaryTable::Component, type: :component do
+RSpec.describe SummaryTable::Component do
   let(:content_hash) { { Name: "Alfred" } }
   let(:doc) { render_inline(described_class.new(content_hash: content_hash)) }
 
