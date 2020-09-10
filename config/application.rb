@@ -35,6 +35,9 @@ module GovukRailsBoilerplate
     config.view_component.preview_paths = [Rails.root.join("spec/components/previews")]
     config.view_component.show_previews = true
 
+    # Force us to use `render_component` when rendering components instead of use `render`
+    config.view_component.render_monkey_patch_enabled = false
+
     config.middleware.use Rack::Deflater
     config.active_job.queue_adapter = :sidekiq
   end
