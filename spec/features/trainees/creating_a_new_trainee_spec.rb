@@ -13,12 +13,12 @@ RSpec.feature "Create trainee journey" do
 private
 
   def when_i_am_viewing_the_list_of_trainees
-    @index_page ||= PageObjects::Trainees::IndexPage.new
+    @index_page ||= PageObjects::Trainees::Index.new
     @index_page.load
   end
 
   def and_i_click_on_add_data_button
-    @new_page ||= PageObjects::Trainees::NewPage.new
+    @new_page ||= PageObjects::Trainees::New.new
     @index_page.add_data_link.click
   end
 
@@ -32,7 +32,7 @@ private
   end
 
   def and_i_save_the_form
-    @show_page ||= PageObjects::Trainees::ShowPage.new
+    @show_page ||= PageObjects::Trainees::Show.new
     @new_page.continue_button.click
   end
 

@@ -45,7 +45,7 @@ feature "edit course details" do
   end
 
   def summary_page
-    @summary_page ||= PageObjects::Trainees::SummaryPage.new
+    @summary_page ||= PageObjects::Trainees::Summary.new
   end
 
   def trainee

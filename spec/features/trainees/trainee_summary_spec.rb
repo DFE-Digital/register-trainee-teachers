@@ -24,7 +24,7 @@ feature "Trainee summary page", type: :system do
   end
 
   def when_i_visit_the_summary_page
-    @summary_page ||= PageObjects::Trainees::SummaryPage.new
+    @summary_page ||= PageObjects::Trainees::Summary.new
     @summary_page.load(id: @trainee.id)
   end
 

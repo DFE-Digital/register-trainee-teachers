@@ -1,6 +1,6 @@
 module PageObjects
   module Trainees
-    class TrainingDetails < PageObjects::BasePage
+    class TrainingDetails < PageObjects::Base
       set_url "/trainees/{id}/training-details"
       element :submit_button, "input[name='commit']"
       element :start_date_day, "#trainee_start_date_3i"
