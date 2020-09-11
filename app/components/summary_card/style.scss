@@ -1,16 +1,4 @@
-@function frontend-font-url($filename) {
-  @return url("~assets/fonts/" + $filename);
-}
-
-@function frontend-image-url($filename) {
-  @return url("~assets/images/" + $filename);
-}
-
-$govuk-font-url-function: frontend-font-url;
-$govuk-image-url-function: frontend-image-url;
-
-@import "~govuk-frontend/govuk/base";
-
+@import "../base.scss";
 
 .app-summary-card {
   border: 1px solid $govuk-border-colour;
