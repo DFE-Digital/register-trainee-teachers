@@ -6,25 +6,41 @@ services:
     image: postgres:11-alpine
     # To preserve data between runs of docker-compose, we mount a folder from the host machine.
     volumes:
-     - dbdata:/var/lib/postgresql/data
+      - dbdata:/var/lib/postgresql/data
     environment:
-    - POSTGRES_PASSWORD=developmentpassword
+      - POSTGRES_PASSWORD=developmentpassword
+
+  redis:
+    image: redis
 
   web:
     build:
       context: .
       cache_from:
-        - $DOCKER_REPO:${BRANCH_TAG:-latest}
-    image: $DOCKER_REPO:${BRANCH_TAG:-latest}
-    command: ash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3001 -b '0.0.0.0'"
+        - dfedigital/register-trainee-teacher-data:${BRANCH_TAG:-latest}
+    image: dfedigital/register-trainee-teacher-data:${BRANCH_TAG:-latest}
+    command: ash -c "bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails server -p 3001 -b '0.0.0.0'"
     ports:
-      - "3001:3001"
+      - 3001:3001
     depends_on:
       - db
     environment:
       - DB_HOSTNAME=db
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
-      - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME:-dfetwdregister}
-      - DOCKER_IMAGE=${DOCKER_IMAGE:-register-trainee-teacher-data}
-      - DOCKER_REPO=${DOCKERHUB_USERNAME}/${DOCKER_IMAGE}
+      - REDIS_URL=redis://redis:6379
+  
+  bg-jobs:
+    image: dfedigital/register-trainee-teacher-data:${BRANCH_TAG:-latest}
+    command: bundle exec sidekiq -c 5 -C config/sidekiq.yml
+    depends_on:
+      - web
+      - db
+      - redis
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=developmentpassword
+      - SETTINGS__APPLICATION=register-trainee-teacher-data-bg-jobs
+      - REDIS_URL=redis://redis:6379
+
