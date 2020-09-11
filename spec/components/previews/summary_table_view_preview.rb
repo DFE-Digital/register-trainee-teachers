@@ -1,6 +1,6 @@
-class SummaryTableComponentPreview < ViewComponent::Preview
+class SummaryTable::ViewPreview < ViewComponent::Preview
   def default_state
-    render(SummaryTableComponent.new(content_hash: {
+    render(SummaryTable::View.new(content_hash: {
       "First names": "Mike",
       "Middle names": "Larson",
       "Last name": "Doyle",

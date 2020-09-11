@@ -1,4 +1,4 @@
-class SummaryTableComponent < ViewComponent::Base
+class SummaryTable::View < ViewComponent::Base
   attr_reader :content_hash
 
   def initialize(content_hash:)
