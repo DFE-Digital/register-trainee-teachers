@@ -7,7 +7,7 @@ RSpec.describe SummaryCard::View do
   }
 
   before(:all) do
-    @result = render_inline(SummaryCard::View.new(title: "Lando Calrissian", heading_level: 6, rows: rows))
+    @result ||= render_inline(SummaryCard::View.new(title: "Lando Calrissian", heading_level: 6, rows: rows))
   end
 
   it "renders a summary list component for rows" do
