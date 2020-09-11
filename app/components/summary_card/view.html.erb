@@ -1,0 +1,10 @@
+<section class="app-summary-card govuk-!-margin-bottom-6 <%= border_css_class %>">
+  <header class="app-summary-card__header">
+    <h<%= @heading_level %> class="app-summary-card__title">
+      <%= @title %>
+    </h<%= @heading_level %>>
+  </header>
+  <div class="app-summary-card__body">
+    <%= render_component SummaryTable::View.new(content_hash: rows) %>
+  </div>
+</section>
