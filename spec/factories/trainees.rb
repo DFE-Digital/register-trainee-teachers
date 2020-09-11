@@ -40,9 +40,12 @@ FactoryBot.define do
     end
 
     factory :trainee_for_form do
-      add_attribute("date_of_birth(3i)") { Faker::Date.birthday(min_age: 18, max_age: 65).day.to_s }
-      add_attribute("date_of_birth(2i)") { Faker::Date.birthday(min_age: 18, max_age: 65).month.to_s }
-      add_attribute("date_of_birth(1i)") { Faker::Date.birthday(min_age: 18, max_age: 65).year.to_s }
+      transient do
+        form_dob { Faker::Date.birthday(min_age: 18, max_age: 65) }
+      end
+      add_attribute("date_of_birth(3i)") { form_dob.day.to_s }
+      add_attribute("date_of_birth(2i)") { form_dob.month.to_s }
+      add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
   end
 end
