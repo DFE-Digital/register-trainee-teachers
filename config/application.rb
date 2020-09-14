@@ -32,7 +32,8 @@ module GovukRailsBoilerplate
 
     config.exceptions_app = routes
 
-    config.view_component.preview_paths = [Rails.root.join("spec/components/previews")]
+    config.view_component.preview_paths = [Rails.root.join("spec/components")]
+    config.view_component.preview_route = "/view_components"
     config.view_component.show_previews = true
 
     # Force us to use `render_component` when rendering components instead of use `render`
