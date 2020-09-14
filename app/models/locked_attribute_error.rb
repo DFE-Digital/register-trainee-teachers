@@ -1,0 +1,1 @@
+class LockedAttributeError < StandardError; end
