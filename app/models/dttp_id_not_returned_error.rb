@@ -1,0 +1,1 @@
+class DttpIdNotReturnedError < StandardError; end
