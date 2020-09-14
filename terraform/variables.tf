@@ -12,8 +12,6 @@ variable paas_app_docker_image {}
 
 variable paas_app_start_timeout {}
 
-variable paas_app_stopped { default = false }
-
 variable paas_postgres_service_plan {}
 
 variable paas_redis_service_plan {}

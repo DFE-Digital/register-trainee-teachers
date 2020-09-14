@@ -4,8 +4,6 @@ variable app_docker_image {}
 
 variable app_start_timeout { default = 300 }
 
-variable app_stopped { default = false }
-
 variable postgres_service_plan {}
 
 variable redis_service_plan {}
