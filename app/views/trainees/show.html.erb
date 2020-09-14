@@ -24,7 +24,9 @@
   <%= link_to "Update", previous_education_trainee_path(@trainee), class: "govuk-link" %>
 </p>
 
-<%= render_component(SummaryCard::View.new(title: "Previous education", rows:  TraineePreviousEducation.new(@trainee).call)) %>
+<div class="previous-education">
+  <%= render_component(SummaryCard::View.new(title: "Previous education", rows:  TraineePreviousEducation.new(@trainee).call)) %>
+</div>
 
 <h2 class="govuk-heading-l">Course details</h2>
 
