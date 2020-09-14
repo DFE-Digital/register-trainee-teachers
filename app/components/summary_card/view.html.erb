@@ -5,6 +5,15 @@
     </h<%= heading_level %>>
   </header>
   <div class="app-summary-card__body">
-    <%= render_component SummaryTable::View.new(content_hash: rows) %>
+    <%= render_component GovukComponent::SummaryList.new do |component| %>
+      <% rows.each do |row_key, row_value| %>
+        <% component.slot(
+             :row,
+             key: row_key,
+             value: row_value,
+             classes: row_key.to_s.downcase.gsub(/ /, "-"),
+             ) %>
+      <% end %>
+    <% end %>
   </div>
 </section>
