@@ -10,27 +10,33 @@ name: build
 on:
   push:
 
+env:
+  DOCKER_REPO: dfedigital/register-trainee-teacher-data
+  DOCKER_IMAGE: register-trainee-teacher-data
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    outputs:
+      sha_tag: ${{ steps.set_env.outputs.SHA_TAG }}
 
     env:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
-      DOCKER_IMAGE: register-trainee-teacher-data
-      DOCKER_REPO: dfedigital/register-trainee-teacher-data
-      
+
     steps:
     - uses: actions/checkout@v2
     - name: Get values for current commit
+      id: set_env
       run: |
         GIT_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c 1-7)
         GIT_BRANCH="${GITHUB_REF##*/}"
         echo "::set-env name=GIT_SHA_SHORT::$GIT_SHA_SHORT"
         echo "::set-env name=GIT_BRANCH::$GIT_BRANCH"
         echo "::set-env name=SHA_TAG::$GIT_SHA_SHORT"
+        echo "::set-output name=SHA_TAG::$GIT_SHA_SHORT"
         echo "::set-env name=BRANCH_TAG::$GIT_BRANCH"
 
     - name: Login to docker hub
@@ -70,18 +76,17 @@ jobs:
         docker push ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}
         docker push ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
 
-    
   #master
   deploy_to_paas:
-    
-    name: Deploy to Paas
-    
-    runs-on: ubuntu-latest
 
+    name: Deploy to Paas
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     needs: build
-    
-    steps:      
+    env:
+      SHA_TAG: ${{needs.build.outputs.sha_tag}}
+
+    steps:
     - uses: actions/checkout@v2
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v1
@@ -90,7 +95,7 @@ jobs:
 
     - name: Install Terraform CloudFoundry Provider
       run: |
-          mkdir -p $HOME/.terraform.d/plugins/linux_amd64 
+          mkdir -p $HOME/.terraform.d/plugins/linux_amd64
           cd $HOME/.terraform.d/plugins/linux_amd64
           wget -q -O zipfile https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry/releases/download/v0.12.4/terraform-provider-cloudfoundry_0.12.4_linux_amd64.zip && unzip zipfile && rm zipfile
 
@@ -99,7 +104,8 @@ jobs:
       env:
         TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
         ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
-    
+
+
     - name: Terraform plan
       run: terraform plan -var-file=terraform/workspace-variables/qa.tfvars terraform
       env:
@@ -115,5 +121,3 @@ jobs:
         ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
         TF_VAR_paas_password: ${{ secrets.TF_VAR_PAAS_PASSWORD }}
         TF_VAR_paas_user: ${{ secrets.TF_VAR_PAAS_USER }}
-
-
