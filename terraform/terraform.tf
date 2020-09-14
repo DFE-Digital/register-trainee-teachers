@@ -30,4 +30,6 @@ module paas {
   web_app_deployment_strategy = var.paas_web_app_deployment_strategy
   web_app_instances           = var.paas_web_app_instances
   web_app_memory              = var.paas_web_app_memory
+  worker_app_instances        = var.paas_worker_app_instances
+  worker_app_memory           = var.paas_worker_app_memory
 }

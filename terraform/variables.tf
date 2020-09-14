@@ -24,6 +24,11 @@ variable paas_web_app_instances { default = 2 }
 
 variable paas_web_app_memory { default = 512 }
 
+variable paas_worker_app_instances { default = 2 }
+
+variable paas_worker_app_memory { default = 512 }
+
+
 locals {
   pass_api_url = "https://api.london.cloud.service.gov.uk"
 }
