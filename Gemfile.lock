@@ -151,6 +151,10 @@ GEM
     foreman (0.87.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    govuk-components (0.2.0)
+      rails (~> 6.0.3, >= 6.0.3)
+      slim-rails (~> 3.2)
+      view_component (~> 2.18.1)
     govuk_design_system_formbuilder (1.2.7)
       actionview (>= 5.2)
       activemodel (>= 5.2)
@@ -310,6 +314,13 @@ GEM
       capybara (~> 3.3)
       site_prism-all_there (>= 0.3.1, < 1.0)
     site_prism-all_there (0.3.2)
+    slim (4.1.0)
+      temple (>= 0.7.6, < 0.9)
+      tilt (>= 2.0.6, < 2.1)
+    slim-rails (3.2.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (>= 3.0, < 5.0)
     spring (2.1.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -323,8 +334,10 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    temple (0.8.2)
     thor (1.0.1)
     thread_safe (0.3.6)
+    tilt (2.0.10)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
@@ -366,6 +379,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   foreman
+  govuk-components
   govuk_design_system_formbuilder
   launchy
   listen (>= 3.0.5, < 3.3)

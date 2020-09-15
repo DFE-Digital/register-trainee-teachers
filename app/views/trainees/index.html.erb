@@ -22,7 +22,7 @@
       <% @trainees.each do |trainee| %>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">
-            <%= link_to "#{trainee.first_names} #{trainee.last_name}", trainee_path(trainee.id), class:"govuk-link" %>
+            <%= govuk_link_to "#{trainee.first_names} #{trainee.last_name}", trainee_path(trainee.id) %>
           </th>
           <td class="govuk-table__cell">
             <div class="govuk-hint govuk-!-margin-bottom-0">
