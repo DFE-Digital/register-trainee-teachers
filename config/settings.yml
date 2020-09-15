@@ -5,3 +5,5 @@ dttp:
   client_secret: "client-secret-from-env"
   tenant_id: "tenant-id-from-env"
   api_base_url: "api-base-url-from-env"
+features:
+  home_text: false
