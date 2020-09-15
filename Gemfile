@@ -96,6 +96,8 @@ group :test do
 
   # Page objects
   gem "site_prism", "~> 3.4"
+
+  gem "webmock"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
