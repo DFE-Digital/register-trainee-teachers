@@ -5,5 +5,7 @@ dttp:
   client_secret: "client-secret-from-env"
   tenant_id: "tenant-id-from-env"
   api_base_url: "api-base-url-from-env"
+
+# Used to add feature flags in the app to control access to certain features.
 features:
   home_text: false
