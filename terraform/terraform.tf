@@ -23,7 +23,6 @@ module paas {
   app_environment             = var.paas_app_environment
   app_docker_image            = var.paas_app_docker_image
   app_start_timeout           = var.paas_app_start_timeout
-  app_stopped                 = var.paas_app_stopped
   postgres_service_plan       = var.paas_postgres_service_plan
   redis_service_plan          = var.paas_redis_service_plan
   space_name                  = var.paas_space_name
