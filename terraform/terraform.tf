@@ -10,7 +10,7 @@ provider azurerm {
 }
 
 provider cloudfoundry {
-  api_url      = local.pass_api_url
+  api_url      = local.paas_api_url
   user         = var.paas_user != "" ? var.paas_user : null
   password     = var.paas_password != "" ? var.paas_password : null
   sso_passcode = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
@@ -31,4 +31,5 @@ module paas {
   web_app_memory              = var.paas_web_app_memory
   worker_app_instances        = var.paas_worker_app_instances
   worker_app_memory           = var.paas_worker_app_memory
+  log_url                     = var.paas_log_url
 }
