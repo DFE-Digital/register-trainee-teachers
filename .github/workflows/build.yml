@@ -113,6 +113,7 @@ jobs:
         ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
         TF_VAR_paas_password: ${{ secrets.TF_VAR_PAAS_PASSWORD }}
         TF_VAR_paas_user: ${{ secrets.TF_VAR_PAAS_USER }}
+        TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
 
     - name: Terraform apply
       run: terraform apply -var-file=terraform/workspace-variables/qa.tfvars -auto-approve terraform
@@ -121,3 +122,4 @@ jobs:
         ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
         TF_VAR_paas_password: ${{ secrets.TF_VAR_PAAS_PASSWORD }}
         TF_VAR_paas_user: ${{ secrets.TF_VAR_PAAS_USER }}
+        TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
