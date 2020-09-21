@@ -21,4 +21,6 @@ Rails.application.routes.draw do
       get "course-details", to: "trainees/course_details#edit"
     end
   end
+
+  resources :trn_submissions, only: %i[create show]
 end

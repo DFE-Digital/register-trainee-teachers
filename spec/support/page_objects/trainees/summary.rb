@@ -9,6 +9,8 @@ module PageObjects
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
       section :course_details, PageObjects::Sections::CourseDetails, ".course-details"
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
+
+      element :submit_for_trn_button, "input[name='commit']"
     end
   end
 end

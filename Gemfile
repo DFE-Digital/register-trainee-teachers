@@ -48,6 +48,8 @@ gem "sidekiq", "~> 6.1"
 
 gem "config", "~> 2.2"
 
+gem "httparty", "~> 0.18"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
@@ -94,6 +96,8 @@ group :test do
 
   # Page objects
   gem "site_prism", "~> 3.4"
+
+  gem "webmock"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

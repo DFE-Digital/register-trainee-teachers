@@ -1,3 +1,8 @@
+<%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>
+  <%= hidden_field_tag :trainee_id, @trainee.id %>
+  <%= f.govuk_submit "Submit for TRN" %>
+<%- end -%>
+
 <h2 class="govuk-heading-l">Personal details</h2>
 
 <p class="govuk-body">

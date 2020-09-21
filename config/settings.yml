@@ -1,1 +1,7 @@
 basic_auth_required: true
+dttp:
+  client_id: "application-registration-client-id-from-env"
+  scope: "https://dttp-dev.crm4.dynamics.com/.default"
+  client_secret: "client-secret-from-env"
+  tenant_id: "tenant-id-from-env"
+  api_base_url: "api-base-url-from-env"

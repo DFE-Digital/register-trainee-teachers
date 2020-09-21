@@ -1,2 +1,28 @@
 @import "./govuk_style_setup";
 @import "~govuk-frontend/govuk/all";
+
+.trn-submission-success-panel {
+  text-align: left;
+
+  &__check {
+    border-radius: 50%;
+    width: 50px;
+    height: 40px;
+    background-color: govuk-color("white");
+    color: govuk-colour("green");
+    font-size: 25px;
+    text-align: center;
+    padding-top: 10px;
+    float: left;
+    margin: 0 20px;
+  }
+
+  &__content {
+    float: left;
+    width: 80%;
+  }
+
+  &__emphasis {
+    font-weight: bold;
+  }
+}
