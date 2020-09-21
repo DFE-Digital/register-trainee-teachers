@@ -11,7 +11,7 @@
 
 <div class="personal-details">
   <%= render_component(SummaryCard::View.new(title: "Personal details",
-                                             rows: TraineePersonalDetails.new(@trainee).call))  %>
+                                             rows: View::TraineePersonalDetailsPresenter.new(@trainee).call))  %>
 </div>
 
 <h2 class="govuk-heading-l"><%= t('views.trainee_summary.contact_details.heading') %></h2>
@@ -22,7 +22,7 @@
 
 <div class="contact-details">
   <%= render_component(SummaryCard::View.new(title: "Contact details",
-                                             rows: TraineeContactDetails.new(@trainee).call)) %>
+                                             rows: View::TraineeContactDetailsPresenter.new(@trainee).call)) %>
 </div>
 
 <h2 class="govuk-heading-l">Previous education</h2>
@@ -33,7 +33,7 @@
 
 <div class="previous-education">
   <%= render_component(SummaryCard::View.new(title: "Previous education",
-                                             rows:  TraineePreviousEducation.new(@trainee).call)) %>
+                                             rows:  View::TraineePreviousEducationPresenter.new(@trainee).call)) %>
 </div>
 
 <h2 class="govuk-heading-l">Course details</h2>
@@ -44,7 +44,7 @@
 
 <div class="course-details">
   <%= render_component(SummaryCard::View.new(title: "Course details",
-                                             rows:  TraineeCourseDetails.new(@trainee).call)) %>
+                                             rows:  View::TraineeCourseDetailsPresenter.new(@trainee).call)) %>
 </div>
 
 <h2 class="govuk-heading-l">Training details</h2>
@@ -55,5 +55,5 @@
 
 <div class="training-details">
   <%= render_component(SummaryCard::View.new(title: "Training details",
-                                             rows: TraineeTrainingDetails.new(@trainee).call)) %>
+                                             rows: View::TraineeTrainingDetailsPresenter.new(@trainee).call)) %>
 </div>
