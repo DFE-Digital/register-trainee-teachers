@@ -19,6 +19,9 @@ variable web_app_memory { default = 512 }
 variable worker_app_instances { default = 1 }
 variable worker_app_memory { default = 512 }
 
+variable log_url {}
+
+
 locals {
   postgres_service_name = "register-postgres-${var.app_environment}"
   redis_service_name    = "register-redis-${var.app_environment}"
@@ -33,4 +36,5 @@ locals {
   }
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "register-worker-${var.app_environment}"
+  logging_service_name     = "register-logit-${var.app_environment}"
 }

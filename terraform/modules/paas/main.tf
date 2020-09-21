@@ -31,6 +31,10 @@ resource cloudfoundry_app web_app {
   service_binding {
     service_instance = cloudfoundry_service_instance.redis_instance.id
   }
+
+  service_binding {
+    service_instance = cloudfoundry_user_provided_service.logging.id
+  }
 }
 
 
@@ -59,3 +63,10 @@ resource cloudfoundry_route web_app_route {
   space    = data.cloudfoundry_space.space.id
   hostname = local.web_app_name
 }
+
+resource cloudfoundry_user_provided_service logging {
+  name             = local.logging_service_name
+  space            = data.cloudfoundry_space.space.id
+  syslog_drain_url = var.log_url
+}
+

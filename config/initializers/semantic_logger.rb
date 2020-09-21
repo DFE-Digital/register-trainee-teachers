@@ -54,6 +54,6 @@ private
   end
 end
 
-if Rails.env.production?
+unless Rails.env.development?
   SemanticLogger.add_appender(io: STDOUT, level: :info, formatter: CustomLogFormatter.new)
 end
