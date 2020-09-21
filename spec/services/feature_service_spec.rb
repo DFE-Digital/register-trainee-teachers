@@ -25,5 +25,17 @@ describe FeatureService do
         expect(response).to be_falsey
       end
     end
+
+    context "empty features" do
+      before do
+        allow(Settings).to receive(:features).and_return(nil)
+      end
+
+      it "returns false" do
+        response = FeatureService.enabled?(:some_feature)
+
+        expect(response).to be_falsey
+      end
+    end
   end
 end
