@@ -3,6 +3,9 @@ module Dttp
     class AuthenticationClient
       include HTTParty
 
+      TOKEN_EXPIRY_TIME = 3599.seconds
+      CACHED_TOKEN_EXPIRY_TIME = TOKEN_EXPIRY_TIME - 5.seconds
+
       MICROSOFT_LOGIN_URL = "https://login.microsoftonline.com".freeze
 
       base_uri MICROSOFT_LOGIN_URL
@@ -13,6 +16,14 @@ module Dttp
     end
 
     def call
+      Rails.cache.fetch("dttp-access-token", expires_in: AuthenticationClient::CACHED_TOKEN_EXPIRY_TIME) do
+        fetch_token
+      end
+    end
+
+  private
+
+    def fetch_token
       options = {
         body: {
           grant_type: "client_credentials",
@@ -25,8 +36,6 @@ module Dttp
       response = AuthenticationClient.post("/#{tenant_id}/oauth2/v2.0/token", options)
       JSON.parse(response.body)["access_token"]
     end
-
-  private
 
     def tenant_id
       Settings.dttp.tenant_id

@@ -40,6 +40,18 @@ module Dttp
       it "returns the access token" do
         expect(described_class.call).to eq("token")
       end
+
+      context "with cache" do
+        before do
+          allow(Rails.cache).to receive(:fetch).and_return("token")
+        end
+
+        it "caches the access token after the initial request" do
+          expect(described_class::AuthenticationClient).to receive(:post).never
+
+          described_class.call
+        end
+      end
     end
   end
 end
