@@ -3,10 +3,7 @@ require "rails_helper"
 module Dttp
   module ContactService
     describe Create do
-      let(:trainee) do
-        instance_double(Trainee, id: 1, first_names: "Dave", last_name: "Davids", dttp_id: "uuid-id")
-      end
-
+      let(:trainee) { TraineePresenter.new(trainee: build(:trainee)) }
       let(:access_token) { "token" }
       let(:endpoint_path) { "/contacts" }
       let(:contactid) { "60f77a42-5f0e-e611-80e0-00155da84c03" }
@@ -26,16 +23,9 @@ module Dttp
 
       describe ".call" do
         it "sends the payload to dttp" do
-          # TODO: add a presenter to handle the values for the payload and maybe pass that in instead
-
-          body = {
-            "firstname" => trainee.first_names,
-            "lastname" => trainee.last_name,
-          }
-
           expect(Client).to receive(:post).with(
             endpoint_path,
-            hash_including(body: body),
+            hash_including(body: trainee.to_dttp_params.as_json),
           ).and_return(response)
 
           described_class.call(trainee: trainee)

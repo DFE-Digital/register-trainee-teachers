@@ -10,6 +10,8 @@ class TrnSubmissionsController < ApplicationController
 private
 
   def trainee
-    @trainee ||= Trainee.find(params[:trainee_id])
+    @trainee ||= Trainee.find(params[:trainee_id]).then do |trainee|
+      Dttp::TraineePresenter.new(trainee: trainee)
+    end
   end
 end

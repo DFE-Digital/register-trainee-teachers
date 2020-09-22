@@ -12,7 +12,7 @@ module Dttp
       end
 
       def call
-        response = Client.post(endpoint_path, { body: body,
+        response = Client.post(endpoint_path, { body: trainee.to_dttp_params.as_json,
                                                 headers: headers })
 
         trainee.update!(dttp_id: parse_contactid(response))
@@ -24,8 +24,6 @@ module Dttp
 
       attr_reader :trainee
 
-      delegate :first_names, :last_name, :dttp_id, to: :trainee
-
       def auth_token
         AccessTokenService.call
       end
@@ -35,13 +33,6 @@ module Dttp
           "Accept" => "application/json",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "Authorization" => "Bearer #{auth_token}",
-        }
-      end
-
-      def body
-        {
-          "firstname" => first_names,
-          "lastname" => last_name,
         }
       end
 
