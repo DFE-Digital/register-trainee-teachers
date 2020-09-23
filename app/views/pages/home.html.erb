@@ -1,3 +1,5 @@
 <div class="hero">
-  <p class="govuk-body"><%= t("hello") %></p>
+  <% if FeatureService.enabled?(:home_text) %>
+    <p class="govuk-body"><%= t("hello") %></p>
+  <% end %>
 </div>
