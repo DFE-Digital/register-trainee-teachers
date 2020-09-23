@@ -3,7 +3,6 @@ module FeatureService
     def enabled?(feature_name)
       return false if Settings.features.blank?
 
-      # Supports nested feature segments
       segments = feature_name.to_s.split(".")
       segments.reduce(Settings.features) { |config, segment| config[segment] }
     end

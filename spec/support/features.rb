@@ -5,8 +5,6 @@ RSpec.configure do |config|
   # Helper method to normalise the feature metadata key name, eg :feature_trainees -> :trainees
   normalise_feature_name = ->(feature) { feature.to_s.delete_prefix("feature_").to_sym }
 
-  # Allow examples to be tagged with "feature_{name}: true". This will turn that
-  # feature on just for the duration of that test.
   config.around :each do |example|
     example.metadata.keys.grep(/^feature_.*/) do |metadata_key|
       feature = normalise_feature_name.call(metadata_key)
@@ -21,7 +19,6 @@ RSpec.configure do |config|
     example.run
   end
 
-  # Reset feature flags back to their original values.
   config.after :each do |example|
     features = example.metadata.keys.grep(/^feature_.*/)
 
