@@ -37,5 +37,17 @@ describe FeatureService do
         expect(response).to be_falsey
       end
     end
+
+    context "nested features" do
+      before do
+        Settings.features[:some] = OpenStruct.new(nested_feature: true)
+      end
+
+      it "returns true" do
+        response = FeatureService.enabled?("some.nested_feature")
+
+        expect(response).to be_truthy
+      end
+    end
   end
 end
