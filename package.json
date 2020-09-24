@@ -6,7 +6,7 @@
     "js:lint": "standard"
   },
   "dependencies": {
-    "@rails/webpacker": "^5.1.1",
+    "@rails/webpacker": "^5.2.1",
     "core-js": "^3.6.5",
     "govuk-frontend": "^3.9.1",
     "rails-ujs": "^5.2.4",
