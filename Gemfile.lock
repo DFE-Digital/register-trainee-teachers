@@ -416,7 +416,6 @@ DEPENDENCIES
   spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
-  view_component
   web-console (>= 3.3.0)
   webdrivers (~> 4.4)
   webmock
