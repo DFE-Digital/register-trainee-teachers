@@ -28,7 +28,12 @@ variable paas_worker_app_memory { default = 512 }
 
 variable paas_log_url {}
 
-
+variable paas_settings__basic_auth__username {} #secrets
+variable paas_settings__basic_auth__password {} #secrets
+variable paas_settings__dttp__client_id {}      #secrets
+variable paas_settings__dttp__tenant_id {}      #secrets
+variable paas_settings__dttp__client_secret {}  # secrets
+variable paas_settings__dttp__api_base_url {}   #secrets
 
 locals {
   paas_api_url = "https://api.london.cloud.service.gov.uk"

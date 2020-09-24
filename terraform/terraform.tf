@@ -32,4 +32,11 @@ module paas {
   worker_app_instances        = var.paas_worker_app_instances
   worker_app_memory           = var.paas_worker_app_memory
   log_url                     = var.paas_log_url
+
+  settings__basic_auth__username = var.paas_settings__basic_auth__username
+  settings__basic_auth__password = var.paas_settings__basic_auth__password
+  settings__dttp__client_id      = var.paas_settings__dttp__client_id
+  settings__dttp__tenant_id      = var.paas_settings__dttp__tenant_id
+  settings__dttp__client_secret  = var.paas_settings__dttp__client_secret
+  settings__dttp__api_base_url   = var.paas_settings__dttp__api_base_url
 }
