@@ -117,7 +117,7 @@ jobs:
         TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
         TF_VAR_paas_settings__basic_auth__password: ${{ secrets.TF_VAR_PAAS_SETTINGS__BASIC_AUTH__PASSWORD }}
         TF_VAR_paas_settings__dttp__client_secret:  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__CLIENT_SECRET }}
-        TF_VAR_pass_settings__basic_auth__username :  ${{ secrets.TF_VAR_PAAS_SETTINGS__BASIC_AUTH__USERNAME }}
+        TF_VAR_paas_settings__basic_auth__username :  ${{ secrets.TF_VAR_PAAS_SETTINGS__BASIC_AUTH__USERNAME }}
         TF_VAR_paas_settings__dttp__client_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__CLIENT_ID }}
         TF_VAR_paas_settings__dttp__tenant_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__TENANT_ID }}
         TF_VAR_paas_settings__dttp__api_base_url :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__API_BASE_URL }}
