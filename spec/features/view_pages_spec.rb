@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.feature "view pages", type: :feature do
-  let(:home_page) { PageObjects::Home.new }
+RSpec.feature "view pages" do
+  let(:start_page) { PageObjects::Start.new }
 
   before do
-    home_page.load
+    start_page.load
   end
 
-  scenario "navigate to home", feature_home_text: true do
-    expect(home_page.hero).to have_text(t("hello"))
+  scenario "navigate to start" do
+    expect(start_page.page_title).to have_text(t("page_headings.start_page"))
   end
 end

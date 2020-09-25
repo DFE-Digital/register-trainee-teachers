@@ -18,3 +18,5 @@ en:
         degree_class: "Class of undergraduate degree"
         ske: "Knowledge enhancement?"
         previous_qts: "Previously gained QTS"
+  page_headings:
+    start_page: "Register trainee teachers"
