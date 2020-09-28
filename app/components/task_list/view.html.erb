@@ -1,0 +1,12 @@
+<%= tag.ol(class: classes, **html_attributes) do %>
+  <% rows.each do |row| %>
+    <%= tag.li(class: row.classes, **row.html_attributes) do %>
+      <a href="<%= row.path  %>" class="govuk-link app-task-list__key">
+        <%= row.task_name %>
+      </a>
+      <% if any_row_has_status? %>
+        <%= render_component GovukComponent::Tag.new(text: row.status, colour: row.get_status_colour) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
