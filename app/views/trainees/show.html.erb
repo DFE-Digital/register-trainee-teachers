@@ -1,59 +1,86 @@
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'All records',
+    href: trainees_path
+  ) %>
+<% end %>
+
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-l">Add a trainee</span>
+  Overview
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render_component TaskList::View.new(classes: "record-setup") do |component|
+      component.slot(
+        :row,
+        task_name: 'Record setup',
+        path: "",
+        status: 'completed'
+      )
+    end %>
+
+    <h2 class="govuk-heading-m">Trainee details</h2>
+
+    <%= render_component TaskList::View.new(classes: "personal-details") do |component|
+      component.slot(
+        :row,
+        task_name: 'Personal details',
+        path: personal_details_trainee_path(@trainee),
+        status: 'completed'
+      )
+
+      component.slot(
+        :row,
+        task_name: 'Contact details',
+        path: contact_details_trainee_path(@trainee),
+        status: 'in progress'
+      )
+
+      component.slot(
+        :row,
+        task_name: 'Diversity information',
+        path: '#details',
+        status: 'not started'
+      )
+    end %>
+
+    <h2 class="govuk-heading-m">Education</h2>
+
+    <%= render_component TaskList::View.new(classes: "education") do |component|
+      component.slot(
+        :row,
+        task_name: 'GCSE',
+        path: "#",
+        status: 'completed'
+      )
+
+      component.slot(
+        :row,
+        task_name: 'Degree',
+        path: "#",
+        status: 'in progress'
+      )
+    end %>
+
+    <h2 class="govuk-heading-m">Assessment</h2>
+
+    <%= render_component TaskList::View.new(classes: "assessment") do |component|
+      component.slot(
+        :row,
+        task_name: 'Assessment details',
+        path: course_details_trainee_path(@trainee),
+        status: 'completed'
+      )
+    end %>
+  </div>
+</div>
+
 <%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>
   <%= hidden_field_tag :trainee_id, @trainee.id %>
-  <%= f.govuk_submit "Submit for TRN" %>
+  <%= f.govuk_submit "Check and submit for TRN" %>
 <%- end -%>
 
-<h2 class="govuk-heading-l">Personal details</h2>
-
-<p class="govuk-body">
-  <%= govuk_link_to "Update", personal_details_trainee_path(@trainee) %>
-</p>
-
-<div class="personal-details">
-  <%= render_component(SummaryCard::View.new(title: "Personal details",
-                                             rows: TraineePersonalDetails.new(@trainee).call))  %>
-</div>
-
-<h2 class="govuk-heading-l"><%= t('views.trainee_summary.contact_details.heading') %></h2>
-
-<p class="govuk-body">
-  <%= govuk_link_to "Update", contact_details_trainee_path(@trainee) %>
-</p>
-
-<div class="contact-details">
-  <%= render_component(SummaryCard::View.new(title: "Contact details",
-                                             rows: TraineeContactDetails.new(@trainee).call)) %>
-</div>
-
-<h2 class="govuk-heading-l">Previous education</h2>
-
-<p class="govuk-body">
-  <%= govuk_link_to "Update", previous_education_trainee_path(@trainee) %>
-</p>
-
-<div class="previous-education">
-  <%= render_component(SummaryCard::View.new(title: "Previous education",
-                                             rows:  TraineePreviousEducation.new(@trainee).call)) %>
-</div>
-
-<h2 class="govuk-heading-l">Course details</h2>
-
-<p class="govuk-body">
-  <%= govuk_link_to "Update", course_details_trainee_path(@trainee) %>
-</p>
-
-<div class="course-details">
-  <%= render_component(SummaryCard::View.new(title: "Course details",
-                                             rows:  TraineeCourseDetails.new(@trainee).call)) %>
-</div>
-
-<h2 class="govuk-heading-l">Training details</h2>
-
-<p class="govuk-body">
-  <%= govuk_link_to "Update", training_details_trainee_path(@trainee) %>
-</p>
-
-<div class="training-details">
-  <%= render_component(SummaryCard::View.new(title: "Training details",
-                                             rows: TraineeTrainingDetails.new(@trainee).call)) %>
-</div>
+<p class="govuk-body"><%= govuk_link_to("Save as draft", "#") %></p>
