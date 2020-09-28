@@ -41,8 +41,6 @@ gem "request_store", "~> 1.5"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
-gem "view_component"
-
 # Background job processor
 gem "sidekiq", "~> 6.1"
 
