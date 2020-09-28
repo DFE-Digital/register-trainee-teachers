@@ -1,19 +1,19 @@
 require "rails_helper"
 
 feature "Trainee summary page", type: :system do
-  scenario "displays the personal details" do
+  xscenario "displays the personal details" do
     given_a_trainee_exists
     when_i_visit_the_summary_page
     then_i_can_see_the_personal_details
   end
 
-  scenario "displays the contact details" do
+  xscenario "displays the contact details" do
     given_a_trainee_exists
     when_i_visit_the_summary_page
     then_i_can_see_the_contact_details
   end
 
-  scenario "displays the training details" do
+  xscenario "displays the training details" do
     given_a_trainee_exists
     when_i_visit_the_summary_page
     then_i_can_see_the_training_details

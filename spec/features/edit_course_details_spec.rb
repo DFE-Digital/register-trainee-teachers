@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "edit course details" do
-  scenario "edit with valid parameters" do
+  xscenario "edit with valid parameters" do
     given_a_trainee_exists
     when_i_visit_the_course_details_page
     and_i_enter_valid_parameters
