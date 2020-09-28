@@ -1,0 +1,47 @@
+@import "../base.scss";
+
+.app-task-list {
+  @include govuk-font($size: 19);
+  @include govuk-responsive-margin(8, "bottom");
+  list-style: none;
+  padding-left: 0;
+}
+
+.app-task-list__item {
+  @include govuk-responsive-padding(2, "top");
+  @include govuk-responsive-padding(2, "bottom");
+  @include govuk-clearfix;
+  border-bottom: 1px solid $govuk-border-colour;
+  margin-bottom: 0;
+
+  .govuk-tag {
+    @include govuk-media-query($until: 450px) {
+      @include govuk-responsive-margin(2, "top");
+    }
+
+    @include govuk-media-query($from: 450px) {
+      float: right;
+    }
+  }
+}
+
+.app-task-list__item:first-child {
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.app-task-list__task-name {
+  display: block;
+  @include govuk-media-query($from: 450px) {
+    float: left;
+  }
+}
+
+.app-task-list__key {
+  @include govuk-responsive-margin(1, "right");
+}
+
+@media print {
+  .app-task-list__task-name::after {
+    display: none;
+  }
+}
