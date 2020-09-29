@@ -1,25 +1,49 @@
-<h2 class="govuk-heading-l">Personal details</h2>
-
-<%= form_with model: @trainee, local: true do |f| %>
-  <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID' }, width: 'one-quarter' %>
-
-  <%= f.govuk_text_field :first_names, label: { text: 'First names' }, hint: {text: 'Or given names'}, width: 'three-quarters' %>
-
-  <%= f.govuk_text_field :last_name, label: { text: 'Last name' }, hint: {text: 'Or family name'}, width: 'three-quarters' %>
-
-  <% genders = [OpenStruct.new(id: 1, name: 'Male'), OpenStruct.new(id: 2, name: 'Female'), OpenStruct.new(id: 3, name: 'Other')]%>
-  <%= f.govuk_collection_radio_buttons :gender, genders, :id, :name, legend: { text: 'Gender' } %>
-
-  <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth' }, hint: {text: 'For example, 31 3 1980'} %>
-
-  <% nationalities = [OpenStruct.new(id: 1, name: '1'), OpenStruct.new(id: 2, name: '2'), OpenStruct.new(id: 3, name: '3')] %>
-  <%= f.govuk_collection_select :nationality, nationalities, :id, :name, label: { text: "Nationality" } %>
-
-  <% ethnicities = [OpenStruct.new(id: 1, name: '4'), OpenStruct.new(id: 2, name: '5'), OpenStruct.new(id: 3, name: '6')] %>
-  <%= f.govuk_collection_select :ethnicity, ethnicities, :id, :name, label: { text: "Ethnicity" } %>
-
-  <% disabilities = [OpenStruct.new(id: 1, name: '7'), OpenStruct.new(id: 2, name: '8'), OpenStruct.new(id: 3, name: '9')] %>
-  <%= f.govuk_collection_select :disability, disabilities, :id, :name, label: { text: "Disability" } %>
-
-  <%= f.govuk_submit %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: trainee_path(@trainee)
+  ) %>
 <% end %>
+
+<h2 class="govuk-heading-l">Trainee personal details</h2>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with model: @trainee, local: true do |f| %>
+      <%= f.govuk_text_field :first_names, label: { text: 'First names', size: 's' }, hint: { text: 'Or given names' }, width: 'three-quarters' %>
+
+      <%= f.govuk_text_field :middle_names, label: { text: 'Middle names', size: 's' }, width: 'three-quarters' %>
+
+      <%= f.govuk_text_field :last_name, label: { text: 'Last name', size: 's' }, width: 'three-quarters' %>
+
+      <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth', size: 's' }, hint: { text: 'For example, 31 3 1980' } %>
+
+      <% genders = [OpenStruct.new(id: 1, name: 'Male'), OpenStruct.new(id: 2, name: 'Female'), OpenStruct.new(id: 3, name: 'Other')]%>
+      <%= f.govuk_collection_radio_buttons :gender, genders, :id, :name, legend: { text: 'Gender', size: 's' } %>
+
+      <% 
+        nationalities = [
+          OpenStruct.new(
+              id: 1,
+              name: 'British',
+              description: 'including English, Scottish, Welsh or from Northern Ireland '
+            ),
+            OpenStruct.new(
+              id: 2,
+              name: 'Irish',
+              description: 'including from Northern Ireland '
+            ),
+            OpenStruct.new(
+              id: 2,
+              name: 'Other'
+            )
+        ] 
+      %>
+      <%= f.govuk_collection_check_boxes :nationality, nationalities, :id, :name, :description, legend: { text: "Nationality", size: 's' }, hint: { text: 'Select all that apply' } %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel", trainee_path(@trainee)) %></p>

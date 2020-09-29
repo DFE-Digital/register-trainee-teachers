@@ -43,6 +43,7 @@ private
     %i[
       trainee_id
       first_names
+      middle_names
       last_name
       date_of_birth
       gender
