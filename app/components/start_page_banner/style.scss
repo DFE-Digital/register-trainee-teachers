@@ -1,0 +1,48 @@
+@import "../base.scss";
+@import "../../webpacker/styles/inverted";
+
+.app-start-page-banner {
+  background-color: $govuk-brand-colour;
+  color: govuk-colour("white");
+  margin-top: -(govuk-spacing(6));
+
+  @include govuk-media-query($from: tablet) {
+    margin-top: -(govuk-spacing(8));
+  }
+}
+
+.app-start-page-banner__grid-row {
+  padding: 0;
+}
+
+.app-start-page-banner__heading {
+  @include govuk-responsive-margin(6, "bottom");
+}
+
+.app-start-page-banner__description {
+  color: govuk-colour("white");
+}
+
+.app-start-page-banner__actions {
+  color: govuk-colour("white");
+
+  @include govuk-media-query($from: tablet) {
+    display: flex;
+    align-items: center;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.app-start-page-banner__button {
+  margin-bottom: govuk-spacing(3);
+  color: govuk-colour("blue");
+  background-color: govuk-colour("white");
+
+  @include govuk-media-query($from: tablet) {
+    margin-right: govuk-spacing(3);
+    margin-bottom: 0;
+  }
+}

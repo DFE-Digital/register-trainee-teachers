@@ -1,0 +1,79 @@
+// Blue card styles - used by masthead and intro slides
+
+.app-inverted,
+.app-body--inverted,
+.app-body-l--inverted,
+.app-heading-m--inverted,
+.app-heading-l--inverted,
+.app-heading-xl--inverted {
+  color: govuk-colour("white");
+  background-color: govuk-colour("blue");
+}
+
+// Inverted button styles from
+// https://github.com/alphagov/govuk-design-system/blob/master/src/stylesheets/components/_inverted-button.scss
+$button-shadow-size: $govuk-border-width-form-element;
+$app-button-inverted-background-colour: govuk-colour("white");
+$app-button-inverted-foreground-colour: govuk-colour("blue");
+$app-button-inverted-shadow-colour: govuk-shade($app-button-inverted-foreground-colour, 30%);
+$app-button-inverted-hover-background-colour: govuk-tint($app-button-inverted-foreground-colour, 90%);
+
+.app-button--inverted,
+.app-button--inverted:link,
+.app-button--inverted:visited {
+  color: $app-button-inverted-foreground-colour;
+  background-color: $app-button-inverted-background-colour;
+  box-shadow: 0 $button-shadow-size 0 $app-button-inverted-shadow-colour;
+}
+
+.app-button--inverted:hover {
+  color: $app-button-inverted-foreground-colour;
+  background-color: $app-button-inverted-hover-background-colour;
+}
+
+.app-button--inverted:focus:not(:hover) {
+  color: $govuk-focus-text-colour;
+  background-color: $govuk-focus-colour;
+}
+
+.app-button--inverted:active,
+.app-button--inverted:focus {
+  border-color: $govuk-focus-colour;
+  color: $app-button-inverted-foreground-colour;
+  background-color: $app-button-inverted-hover-background-colour;
+  box-shadow: inset 0 0 0 2px $govuk-focus-colour;
+}
+
+.app-link--inverted,
+.app-link--inverted:link,
+.app-link--inverted:active,
+.app-link--inverted:visited {
+  color: govuk-colour("white");
+}
+
+.app-link--inverted:focus,
+.app-link--inverted:hover:focus {
+  color: $govuk-text-colour;
+}
+
+.app-link--inverted:hover {
+  color: $app-button-inverted-hover-background-colour;
+}
+
+.app-tag--inverted {
+  background-color: govuk-colour("white");
+  color: govuk-colour("blue");
+
+  > :last-child { margin-bottom: 0 !important; margin-right: 0 !important; }
+}
+
+// PSD homepage (not signed-in)
+.app-inverted--masthead {
+  @include govuk-responsive-padding(6, "bottom");
+}
+
+// Introduction slides
+.app-inverted--card {
+  margin-top: -15px; //override govuk-main-wrapper
+  @include govuk-responsive-padding(9);
+}

@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   end
 
   resources :trn_submissions, only: %i[create show]
+
+  root to: "pages#show", defaults: { page: "start" }
 end

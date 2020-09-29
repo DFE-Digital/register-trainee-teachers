@@ -1,0 +1,21 @@
+<div class="app-start-page-banner">
+  <div class="govuk-grid-row govuk-width-container govuk-main-wrapper">
+    <div class="govuk-grid-column-two-thirds app-start-page-banner__grid-row">
+      <h1 class="govuk-heading-xl app-start-page-banner__heading app-heading-xl--inverted">
+        <%= t('page_headings.start_page') %>
+      </h1>
+      <p class="govuk-body-l govuk-!-font-size-27  app-body-l--inverted">
+        A service for collecting and managing trainee teacher registration data.
+      </p>
+      <div class="app-start-page-banner__actions">
+        <%= render_component GovukComponent::StartNowButton.new( text: 'Get started',
+                                                                 href: trainees_path,
+                                                                 classes: 'app-button--inverted app-start-page-banner__button') %>
+        <p class="govuk-body app-body--inverted">
+          or <a class="govuk-link app-link--inverted govuk-link--no-visited-state" href="/records">sign in</a>
+          if you’ve used it before
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

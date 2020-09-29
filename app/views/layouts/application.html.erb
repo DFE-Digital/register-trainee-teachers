@@ -18,7 +18,7 @@
     <%= javascript_pack_tag 'application', defer: true %>
   </head>
 
-  <body class="govuk-template__body ">
+  <body class="govuk-template__body">
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
@@ -27,17 +27,14 @@
 
     <%= render_component GovukComponent::Header.new( logo: 'GOV.UK',
                                                      service_name: 'Register trainee teachers',
-                                                     service_name_href: "/") do |component| %>
-      <%= component.slot(:item, title: 'Navigation item 1', href: '/#page-1', active: true) %>
-      <%= component.slot(:item, title: 'Navigation item 2', href: '/#page-2') %>
-      <%= component.slot(:item, title: 'Navigation item 3', href: '/#page-3') %>
-    <% end %>
+                                                     service_name_href: "/") %>
 
-    <div class="govuk-width-container">
-      <main class="govuk-main-wrapper " id="main-content" role="main">
+    <main class="govuk-main-wrapper " id="main-content" role="main">
+      <%= yield :start_page_banner %>
+      <div class="govuk-width-container">
         <%= yield %>
-      </main>
-    </div>
+      </div>
+    </main>
 
     <footer class="govuk-footer " role="contentinfo">
       <div class="govuk-width-container ">
