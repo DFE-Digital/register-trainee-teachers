@@ -34,7 +34,7 @@
 
     <%= f.govuk_text_field :degree_institution, label: { text: 'Undergraduate degree awarding institution' }, width: 'two-thirds' %>
 
-    <%= f.govuk_text_field :degree_type, label: { text: 'Degree type' }, hint_text: 'For example, BA, BSc, Masters, Ph or other(please specify)',  width: 'two-thirds' %>
+    <%= f.govuk_text_field :degree_type, label: { text: 'Degree type' }, hint: {text: 'For example, BA, BSc, Masters, Ph or other(please specify)'},  width: 'two-thirds' %>
   <% end %>
 
   <% skes = [OpenStruct.new(name: "Currently on SKE course"),

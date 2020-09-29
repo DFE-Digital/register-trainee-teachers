@@ -4,7 +4,7 @@
   <%= f.govuk_text_field :course_phase, label: { text: 'Course phase' }, width: 'three-quarters'%>
 
   <%= f.govuk_date_field :programme_start_date, legend: { text: 'Programme start date' } %>
-  
+
   <%= f.govuk_text_field :programme_length, label: { text: 'Programme length' }, width: 'three-quarters'%>
 
   <%= f.govuk_date_field :programme_end_date, legend: { text: 'Programme end date' } %>
@@ -13,9 +13,9 @@
 
   <%= f.govuk_text_field :itt_subject, label: { text: 'ITT subject' }, width: 'three-quarters'%>
 
-  <%= f.govuk_text_field :employing_school, label: { text: 'Employing school' }, hint_text: "Choose employing school by name, postcode or URN number", width: 'three-quarters'%>
-  
-  <%= f.govuk_text_field :placement_school, label: { text: 'Placement school' }, hint_text: "Choose placement school by name, postcode or URN number", width: 'three-quarters'%>
+  <%= f.govuk_text_field :employing_school, label: { text: 'Employing school' }, hint: {text: "Choose employing school by name, postcode or URN number"}, width: 'three-quarters'%>
+
+  <%= f.govuk_text_field :placement_school, label: { text: 'Placement school' }, hint: {text: "Choose placement school by name, postcode or URN number"}, width: 'three-quarters'%>
 
   <%= f.govuk_submit %>
 <% end %>
