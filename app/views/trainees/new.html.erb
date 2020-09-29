@@ -1,14 +1,14 @@
 <%= form_with model: @trainee, local: true do |f| %>
   <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID' }, width: 'one-quarter' %>
 
-  <%= f.govuk_text_field :first_names, label: { text: 'First names' }, hint_text: 'Or given names', width: 'three-quarters' %>
+  <%= f.govuk_text_field :first_names, label: { text: 'First names' }, hint: {text: 'Or given names'}, width: 'three-quarters' %>
 
-  <%= f.govuk_text_field :last_name, label: { text: 'Last name' }, hint_text: 'Or family name', width: 'three-quarters' %>
+  <%= f.govuk_text_field :last_name, label: { text: 'Last name' }, hint: {text: 'Or family name'}, width: 'three-quarters' %>
 
   <% genders = [OpenStruct.new(id: 1, name: 'Male'), OpenStruct.new(id: 2, name: 'Female'), OpenStruct.new(id: 3, name: 'Other')]%>
   <%= f.govuk_collection_radio_buttons :gender, genders, :id, :name, legend: { text: 'Gender' } %>
 
-  <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth' }, hint_text: 'For example, 31 3 1980' %>
+  <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth' }, hint: {text: 'For example, 31 3 1980'} %>
 
   <% nationalities = [OpenStruct.new(id: 1, name: '1'), OpenStruct.new(id: 2, name: '2'), OpenStruct.new(id: 3, name: '3')] %>
   <%= f.govuk_collection_select :nationality, nationalities, :id, :name, label: { text: "Nationality" } %>
