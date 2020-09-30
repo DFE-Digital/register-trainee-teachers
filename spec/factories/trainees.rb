@@ -46,6 +46,8 @@ FactoryBot.define do
       add_attribute("date_of_birth(2i)") { form_dob.month.to_s }
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
+    record_type { "assessment_only" }
   end
 end
+
 # rubocop:enable Style/SymbolProc

@@ -72,6 +72,7 @@ RSpec.describe TraineesController do
       expect(trainee.date_of_birth).to eql(new_dob)
 
       %i[
+        record_type
         first_names
         last_name
         gender

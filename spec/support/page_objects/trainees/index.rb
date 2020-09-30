@@ -5,7 +5,7 @@ module PageObjects
 
       element :page_title, ".govuk-heading-xl"
 
-      element :add_data_link, "a", text: "Add data to collection"
+      element :add_trainee_link, "a", text: "Add a trainee"
 
       elements :trainee_data, ".govuk-table tbody tr"
 
