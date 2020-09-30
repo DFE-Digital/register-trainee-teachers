@@ -19,27 +19,16 @@
       <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth', size: 's' }, hint: { text: 'For example, 31 3 1980' } %>
 
       <% genders = [OpenStruct.new(id: 1, name: 'Male'), OpenStruct.new(id: 2, name: 'Female'), OpenStruct.new(id: 3, name: 'Other')]%>
-      <%= f.govuk_collection_radio_buttons :gender, genders, :id, :name, legend: { text: 'Gender', size: 's' } %>
+      <%= f.govuk_collection_radio_buttons :gender, genders, :id, :name, legend: { text: 'Gender', size: 's' }, classes: "gender" %>
 
-      <% 
-        nationalities = [
-          OpenStruct.new(
-              id: 1,
-              name: 'British',
-              description: 'including English, Scottish, Welsh or from Northern Ireland '
-            ),
-            OpenStruct.new(
-              id: 2,
-              name: 'Irish',
-              description: 'including from Northern Ireland '
-            ),
-            OpenStruct.new(
-              id: 2,
-              name: 'Other'
-            )
-        ] 
-      %>
-      <%= f.govuk_collection_check_boxes :nationality, nationalities, :id, :name, :description, legend: { text: "Nationality", size: 's' }, hint: { text: 'Select all that apply' } %>
+      <%= f.govuk_collection_check_boxes :nationality_ids, 
+          format_default_nationalities(@nationalities), 
+          :id, 
+          :name, 
+          :description, 
+          legend: { text: "Nationality", size: 's' }, 
+          hint: { text: 'Select all that apply' },
+          classes: "nationality" %>
 
       <%= f.govuk_submit %>
     <% end %>

@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_163852) do
+ActiveRecord::Schema.define(version: 2020_09_29_163827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "nationalisations", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.bigint "nationality_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["nationality_id"], name: "index_nationalisations_on_nationality_id"
+    t.index ["trainee_id"], name: "index_nationalisations_on_trainee_id"
+  end
+
+  create_table "nationalities", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_nationalities_on_name", unique: true
+  end
 
   create_table "trainees", force: :cascade do |t|
     t.text "trainee_id"
@@ -45,6 +61,9 @@ ActiveRecord::Schema.define(version: 2020_09_14_163852) do
     t.text "postcode"
     t.text "phone_number"
     t.text "email"
+    t.date "start_date"
+    t.text "full_time_part_time"
+    t.boolean "teaching_scholars"
     t.text "course_title"
     t.text "course_phase"
     t.date "programme_start_date"
@@ -54,11 +73,11 @@ ActiveRecord::Schema.define(version: 2020_09_14_163852) do
     t.text "itt_subject"
     t.text "employing_school"
     t.text "placement_school"
-    t.date "start_date"
-    t.text "full_time_part_time"
-    t.boolean "teaching_scholars"
     t.uuid "dttp_id"
+    t.text "middle_names"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
   end
 
+  add_foreign_key "nationalisations", "nationalities"
+  add_foreign_key "nationalisations", "trainees"
 end

@@ -26,7 +26,7 @@ private
 
   def trainee_params
     params.require(:trainee)
-      .permit(trainee_all_params)
+      .permit(trainee_all_params, nationality_ids: [])
   end
 
   def trainee_all_params
@@ -47,7 +47,6 @@ private
       last_name
       date_of_birth
       gender
-      nationality
       ethnicity
       disability
     ]

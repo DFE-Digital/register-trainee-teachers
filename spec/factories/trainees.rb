@@ -7,8 +7,6 @@ FactoryBot.define do
     first_names { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     gender { %w[Female Male Other].sample }
-
-    nationality { Faker::Nation.nationality }
     ethnicity { Faker::Nation.nationality }
     disability { %w[none something].sample }
 
@@ -35,6 +33,7 @@ FactoryBot.define do
     start_date { Time.zone.now }
     full_time_part_time { %w[full_time part_time].sample }
     teaching_scholars { [false, true].sample }
+
     factory :trainee do
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
     end
