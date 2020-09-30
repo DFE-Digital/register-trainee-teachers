@@ -75,7 +75,6 @@ RSpec.describe TraineesController do
         first_names
         last_name
         gender
-        nationality
         ethnicity
         disability
         a_level_1_subject

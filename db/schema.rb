@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_29_163827) do
+ActiveRecord::Schema.define(version: 2020_09_30_125009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 2020_09_29_163827) do
     t.text "last_name"
     t.text "gender"
     t.date "date_of_birth"
-    t.text "nationality"
     t.text "ethnicity"
     t.text "disability"
     t.datetime "created_at", precision: 6, null: false

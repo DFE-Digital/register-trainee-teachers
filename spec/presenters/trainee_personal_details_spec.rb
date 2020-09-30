@@ -12,7 +12,6 @@ RSpec.describe TraineePersonalDetails do
       "Last name",
       "Gender",
       "Date of birth",
-      "Nationality",
       "Ethnicity",
       "Disability",
     ])
