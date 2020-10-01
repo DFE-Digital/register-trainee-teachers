@@ -32,6 +32,7 @@ private
 
   def and_i_save_the_form
     @show_page ||= PageObjects::Trainees::Show.new
+    @not_supported_route_page ||= PageObjects::Trainees::NotSupportedRoute.new
     @new_page.continue_button.click
   end
 

@@ -26,3 +26,9 @@
     font-weight: bold;
   }
 }
+
+// Styles links that do not have a path or a bookmark ID
+a[href="#"] {
+  color: govuk-colour("red") !important;
+  font-weight: bolder !important;
+}

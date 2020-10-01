@@ -12,8 +12,12 @@ class TraineesController < ApplicationController
   end
 
   def create
-    trainee = Trainee.create!(trainee_params)
-    redirect_to trainee_path(trainee)
+    if trainee_params[:record_type] == "other"
+      redirect_to trainees_not_supported_route_path
+    else
+      trainee = Trainee.create!(trainee_params)
+      redirect_to trainee_path(trainee)
+    end
   end
 
   def update
