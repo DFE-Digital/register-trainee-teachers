@@ -26,7 +26,7 @@ feature "edit personal details", type: :feature do
   def and_i_enter_valid_parameters
     @personal_details_page.first_names.set("Tim")
     @personal_details_page.last_name.set("Smith")
-    set_date_fields("dob", "01/01/1986")
+    @personal_details_page.set_date_fields("dob", "01/01/1986")
     @personal_details_page.gender.choose("Male")
     @personal_details_page.nationality.check(@nationality.name.titleize)
     @personal_details_page.submit_button.click
@@ -40,12 +40,5 @@ feature "edit personal details", type: :feature do
   def and_the_personal_details_are_updated
     when_i_visit_the_personal_details_page
     expect(@personal_details_page.first_names.value).to eq("Tim")
-  end
-
-  def set_date_fields(field_prefix, date_string)
-    day, month, year = date_string.split("/")
-    @personal_details_page.send("#{field_prefix}_day").set(day)
-    @personal_details_page.send("#{field_prefix}_month").set(month)
-    @personal_details_page.send("#{field_prefix}_year").set(year)
   end
 end

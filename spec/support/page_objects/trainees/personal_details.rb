@@ -1,6 +1,8 @@
 module PageObjects
   module Trainees
     class PersonalDetails < PageObjects::Base
+      include PageObjects::Helpers
+
       set_url "/trainees/{id}/personal-details"
       element :first_names, "#trainee-first-names-field"
       element :last_name, "#trainee-last-name-field"
