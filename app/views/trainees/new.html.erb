@@ -5,14 +5,15 @@
   ) %>
 <% end %>
 
-<h1 class="govuk-heading-l">
-  Add a trainee
-</h1>
-
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_with model: @trainee, local: true do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        Add a trainee
+      </h1>
 
       <%= f.govuk_radio_buttons_fieldset(:record_type, legend: { size: 's', text: "What type of route is this?", tag: 'span'} ) do %>
         <%= f.govuk_radio_button :record_type, :assessment_only, label: { text: "Assessment Only (AO)" }, link_errors: true %>
