@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe Trainee do
   describe "associations" do
-    it { should have_many(:nationalisations).inverse_of(:trainee) }
-    it { should have_many(:nationalities).through(:nationalisations) }
+    it { is_expected.to have_many(:nationalisations).inverse_of(:trainee) }
+    it { is_expected.to have_many(:nationalities).through(:nationalisations) }
   end
 
   describe ".dttp_id" do

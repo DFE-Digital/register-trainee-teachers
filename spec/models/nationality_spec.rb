@@ -4,7 +4,7 @@ describe Nationality do
   subject { build(:nationality) }
 
   describe "associations" do
-    it { should have_many(:nationalisations).inverse_of(:nationality) }
-    it { should have_many(:trainees).through(:nationalisations) }
+    it { is_expected.to have_many(:nationalisations).inverse_of(:nationality) }
+    it { is_expected.to have_many(:trainees).through(:nationalisations) }
   end
 end
