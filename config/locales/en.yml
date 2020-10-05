@@ -3,6 +3,13 @@ en:
     trainee_summary:
       contact_details:
         heading: "Contact Details"
+    default_nationalities:
+      british:
+        description: including English, Scottish, Welsh or from Northern Ireland
+      irish: 
+        description: including from Northern Ireland 
+      other:
+        description: ""
   activerecord:
     attributes:
       trainee:

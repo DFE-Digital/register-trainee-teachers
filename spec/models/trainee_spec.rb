@@ -1,6 +1,11 @@
 require "rails_helper"
 
 describe Trainee do
+  describe "associations" do
+    it { is_expected.to have_many(:nationalisations).inverse_of(:trainee) }
+    it { is_expected.to have_many(:nationalities).through(:nationalisations) }
+  end
+
   describe ".dttp_id" do
     let(:uuid) { "2795182a-43b2-4543-bf83-ad95fbfce7fd" }
 
