@@ -6,8 +6,17 @@ feature "edit personal details", type: :feature do
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page
     and_i_enter_valid_parameters
+    and_i_submit_the_form
     then_i_am_redirected_to_the_summary_page
     and_the_personal_details_are_updated
+  end
+
+  scenario "edit with invalid parameters" do
+    given_a_trainee_exists
+    and_nationalities_exist_in_the_system
+    when_i_visit_the_personal_details_page
+    and_i_submit_the_form
+    then_i_see_error_messages
   end
 
   def given_a_trainee_exists
@@ -29,6 +38,9 @@ feature "edit personal details", type: :feature do
     @personal_details_page.set_date_fields("dob", "01/01/1986")
     @personal_details_page.gender.choose("Male")
     @personal_details_page.nationality.check(@nationality.name.titleize)
+  end
+
+  def and_i_submit_the_form
     @personal_details_page.submit_button.click
   end
 
@@ -40,5 +52,9 @@ feature "edit personal details", type: :feature do
   def and_the_personal_details_are_updated
     when_i_visit_the_personal_details_page
     expect(@personal_details_page.first_names.value).to eq("Tim")
+  end
+
+  def then_i_see_error_messages
+    expect(page).to have_content(I18n.t("activerecord.validations.trainee.nationalities.empty"))
   end
 end

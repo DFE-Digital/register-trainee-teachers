@@ -14,5 +14,10 @@ en:
     attributes:
       trainee:
         trainee_id: "Trainee ID"
+    validations:
+      trainee:
+        nationalities:
+          empty: Please select at least one nationality
+          format: Please enter your date of birth in the correct format
   page_headings:
     start_page: "Register trainee teachers"

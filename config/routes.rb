@@ -17,10 +17,11 @@ Rails.application.routes.draw do
   resources :trainees, only: %i[index show new create update] do
     scope module: :trainees do
       resource :contact_details, only: %i[edit update], path: "/contact-details"
+      resource :personal_details, only: %i[edit update], path: "/personal-details"
     end
 
     member do
-      get "personal-details", to: "trainees/personal_details#edit"
+      get "previous-education", to: "trainees/previous_education#edit"
       get "training-details", to: "trainees/training_details#edit"
       get "course-details", to: "trainees/course_details#edit"
     end
