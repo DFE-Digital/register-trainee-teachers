@@ -6,12 +6,13 @@
   </header>
   <div class="app-summary-card__body">
     <%= render_component GovukComponent::SummaryList.new do |component| %>
-      <% rows.each do |row_key, row_value| %>
+      <% rows.each do |row| %>
         <% component.slot(
              :row,
-             key: row_key,
-             value: row_value,
-             classes: row_key.to_s.downcase.gsub(/ /, "-"),
+             key: row[:key],
+             value: row[:value],
+             action: row[:action],
+             classes: row[:key].to_s.downcase.gsub(/ /, "-"),
              ) %>
       <% end %>
     <% end %>

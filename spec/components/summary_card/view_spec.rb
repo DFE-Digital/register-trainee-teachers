@@ -1,10 +1,11 @@
 require "rails_helper"
 
 RSpec.describe SummaryCard::View do
-  rows = {
-    'Character': "Lando Calrissian",
-    'Location': "In a galaxy",
-  }
+  rows = [
+    { key: "Character", value: "Lando Calrissian" },
+    { key: "Location", value: "In a galaxy" },
+    { key: "Transport", value: "Falcon", action: '<a href="#mike" class="govuk-link">Change</a>'.html_safe },
+  ]
 
   before(:all) do
     @result ||= render_inline(SummaryCard::View.new(title: "Lando Calrissian", heading_level: 6, rows: rows))
@@ -26,5 +27,9 @@ RSpec.describe SummaryCard::View do
   it "renders a summary card header component with a custom heading level" do
     expect(@result.css(".app-summary-card__title").text).to include("Lando Calrissian")
     expect(@result.css("h6.app-summary-card__title")).to be_present
+  end
+
+  it "renders a link alongside rows with an action value" do
+    expect(@result.css(".govuk-link").text).to include("Change")
   end
 end
