@@ -12,8 +12,12 @@ class TraineesController < ApplicationController
   end
 
   def create
-    trainee = Trainee.create!(trainee_params)
-    redirect_to trainee_path(trainee)
+    if trainee_params[:record_type] == "other"
+      redirect_to trainees_not_supported_route_path
+    else
+      trainee = Trainee.create!(trainee_params)
+      redirect_to trainee_path(trainee)
+    end
   end
 
   def update
@@ -31,6 +35,7 @@ private
 
   def trainee_all_params
     [
+      trainee_record_params,
       trainee_personal_details_params,
       trainee_previous_education_params,
       trainee_contact_details_params,
@@ -39,9 +44,15 @@ private
     ].flatten
   end
 
+  def trainee_record_params
+    %i[
+      record_type
+      trainee_id
+    ]
+  end
+
   def trainee_personal_details_params
     %i[
-      trainee_id
       first_names
       middle_names
       last_name

@@ -1,11 +1,9 @@
-<h1 class="govuk-heading-xl">Trainee teacher data list</h1>
-
-<h2 class="govuk-heading-l" id="report-title">
-  ITT collection 20/21
-</h2>
+<h1 class="govuk-heading-xl">Trainee teachers</h1>
 
 <p class="govuk-body">
-  <%= link_to "Add data to collection", new_trainee_path , { class:"govuk-button", data: {module: "govuk-button"}}%>
+  <%= render_component GovukComponent::StartNowButton.new(
+  text: 'Add a trainee',
+  href: new_trainee_path ) %>
 </p>
 
 <table class="govuk-table" aria-describedby="report-title">

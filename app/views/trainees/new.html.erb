@@ -1,23 +1,27 @@
-<%= form_with model: @trainee, local: true do |f| %>
-  <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID' }, width: 'one-quarter' %>
-
-  <%= f.govuk_text_field :first_names, label: { text: 'First names' }, hint: {text: 'Or given names'}, width: 'three-quarters' %>
-
-  <%= f.govuk_text_field :last_name, label: { text: 'Last name' }, hint: {text: 'Or family name'}, width: 'three-quarters' %>
-
-  <% genders = [OpenStruct.new(id: 1, name: 'Male'), OpenStruct.new(id: 2, name: 'Female'), OpenStruct.new(id: 3, name: 'Other')]%>
-  <%= f.govuk_collection_radio_buttons :gender, genders, :id, :name, legend: { text: 'Gender' } %>
-
-  <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth' }, hint: {text: 'For example, 31 3 1980'} %>
-
-  <% nationalities = [OpenStruct.new(id: 1, name: '1'), OpenStruct.new(id: 2, name: '2'), OpenStruct.new(id: 3, name: '3')] %>
-  <%= f.govuk_collection_select :nationality, nationalities, :id, :name, label: { text: "Nationality" } %>
-
-  <% ethnicities = [OpenStruct.new(id: 1, name: '4'), OpenStruct.new(id: 2, name: '5'), OpenStruct.new(id: 3, name: '6')] %>
-  <%= f.govuk_collection_select :ethnicity, ethnicities, :id, :name, label: { text: "Ethnicity" } %>
-
-  <% disabilities = [OpenStruct.new(id: 1, name: '7'), OpenStruct.new(id: 2, name: '8'), OpenStruct.new(id: 3, name: '9')] %>
-  <%= f.govuk_collection_select :disability, disabilities, :id, :name, label: { text: "Disability" } %>
-
-  <%= f.govuk_submit %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: trainees_path
+  ) %>
 <% end %>
+
+<h1 class="govuk-heading-l">
+  Add a trainee
+</h1>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with model: @trainee, local: true do |f| %>
+
+      <%= f.govuk_radio_buttons_fieldset(:record_type, legend: { size: 's', text: "What type of route is this?", tag: 'span'} ) do %>
+        <%= f.govuk_radio_button :record_type, :assessment_only, label: { text: "Assessment Only (AO)" }, link_errors: true %>
+        <%= f.govuk_radio_button :record_type, :other, label: { text: "Other" } %>
+      <% end %>
+
+      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', size:'s' }, hint: { text: 'Your internal identifier for this trainee or candidate'}, width: 20 %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

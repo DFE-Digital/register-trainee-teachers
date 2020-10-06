@@ -1,0 +1,29 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: new_trainee_path
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Other routes not supported
+    </h1>
+
+    <p class="govuk-body">
+      Assessment Only is the only route currently supported by this service. More routes will be added soon.
+    </p>
+
+    <p class="govuk-body">You can:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <%= govuk_link_to "go back and change your answer", new_trainee_path  %>
+      </li>
+      <li>
+        <%#= TODO Need to find out and add DTTP link %>
+        <a class="govuk-link" href="#">use DTTP to register a different route</a>
+      </li>
+    </ul>
+  </div>
+</div>
