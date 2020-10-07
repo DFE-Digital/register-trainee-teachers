@@ -37,7 +37,6 @@ private
     [
       trainee_record_params,
       trainee_personal_details_params,
-      trainee_previous_education_params,
       trainee_contact_details_params,
       trainee_course_details_params,
       trainee_training_details_params,
@@ -60,23 +59,6 @@ private
       gender
       ethnicity
       disability
-    ]
-  end
-
-  def trainee_previous_education_params
-    %i[
-      a_level_1_subject
-      a_level_1_grade
-      a_level_2_subject
-      a_level_2_grade
-      a_level_3_subject
-      a_level_3_grade
-      degree_subject
-      degree_class
-      degree_institution
-      degree_type
-      ske
-      previous_qts
     ]
   end
 

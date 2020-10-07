@@ -10,19 +10,6 @@ FactoryBot.define do
     ethnicity { Faker::Nation.nationality }
     disability { %w[none something].sample }
 
-    a_level_1_subject { "Maths" }
-    a_level_1_grade { %w[A B C].sample }
-    a_level_2_subject { "Geography" }
-    a_level_2_grade { %w[A B C].sample }
-    a_level_3_subject { "Physics" }
-    a_level_3_grade { %w[A B C].sample }
-    degree_subject { "Software Engineering" }
-    degree_class { "2:1" }
-    degree_institution { Faker::University.name }
-    degree_type { "BSc" }
-    ske { "SKE not required" }
-    previous_qts { false }
-
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
     town_city { Faker::Address.city }

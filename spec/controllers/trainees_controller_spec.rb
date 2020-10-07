@@ -91,18 +91,6 @@ RSpec.describe TraineesController do
         gender
         ethnicity
         disability
-        a_level_1_subject
-        a_level_1_grade
-        a_level_2_subject
-        a_level_2_grade
-        a_level_3_subject
-        a_level_3_grade
-        degree_subject
-        degree_class
-        degree_institution
-        degree_type
-        ske
-        previous_qts
       ].each do |field|
         expect(trainee.public_send(field)).to eql(new_trainee_attributes[field])
       end

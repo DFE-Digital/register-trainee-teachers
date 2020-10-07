@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_30_125009) do
+ActiveRecord::Schema.define(version: 2020_10_07_151313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,18 +41,6 @@ ActiveRecord::Schema.define(version: 2020_09_30_125009) do
     t.text "disability"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "a_level_1_subject"
-    t.text "a_level_1_grade"
-    t.text "a_level_2_subject"
-    t.text "a_level_2_grade"
-    t.text "a_level_3_subject"
-    t.text "a_level_3_grade"
-    t.text "degree_subject"
-    t.text "degree_class"
-    t.text "degree_institution"
-    t.text "degree_type"
-    t.text "ske"
-    t.boolean "previous_qts"
     t.text "address_line_one"
     t.text "address_line_two"
     t.text "town_city"
