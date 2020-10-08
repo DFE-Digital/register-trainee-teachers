@@ -14,15 +14,5 @@ en:
     attributes:
       trainee:
         trainee_id: "Trainee ID"
-  presenters:
-    TraineePreviousEducation:
-      attributes:
-        first_a_level: "First A level subject and grade"
-        second_a_level: "Second A level subject and grade"
-        third_a_level: "Third A level subject and grade"
-        degree_subject: "Undergraduate degree"
-        degree_class: "Class of undergraduate degree"
-        ske: "Knowledge enhancement?"
-        previous_qts: "Previously gained QTS"
   page_headings:
     start_page: "Register trainee teachers"
