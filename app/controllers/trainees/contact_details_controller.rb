@@ -5,7 +5,7 @@ module Trainees
     end
 
     def update
-      trainee.update!(contact_details_params)
+      ContactDetails::Update.call(trainee: trainee, attributes: contact_details_params)
       redirect_to trainee_path(trainee)
     end
 
