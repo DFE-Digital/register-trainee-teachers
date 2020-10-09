@@ -18,7 +18,16 @@ module ContactDetails
       end
 
       context "when uk address values provided but with non uk locale code" do
-        let(:attributes) { { locale_code: "non_uk", international_address: "some international address" } }
+        let(:attributes) do
+          {
+            locale_code: "non_uk",
+            international_address: Faker::Address.street_name,
+            address_line_one: Faker::Address.street_name,
+            address_line_two: Faker::Address.street_name,
+            town_city: Faker::Address.city_suffix,
+            postcode: Faker::Address.postcode,
+          }
+        end
 
         before do
           described_class.call(trainee: trainee, attributes: attributes)
