@@ -18,7 +18,7 @@ feature "edit contact details", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee, locale_code: :uk)
+    @trainee = create(:trainee)
   end
 
   def when_i_visit_the_contact_details_page
