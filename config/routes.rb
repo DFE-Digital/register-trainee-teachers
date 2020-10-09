@@ -15,8 +15,11 @@ Rails.application.routes.draw do
   get "/trainees/not-supported-route", to: "trainees/not_supported_routes#index"
 
   resources :trainees, only: %i[index show new create update] do
+    scope module: :trainees do
+      resource :contact_details, only: %i[edit update], path: "/contact-details"
+    end
+
     member do
-      get "contact-details", to: "trainees/contact_details#edit"
       get "personal-details", to: "trainees/personal_details#edit"
       get "training-details", to: "trainees/training_details#edit"
       get "course-details", to: "trainees/course_details#edit"

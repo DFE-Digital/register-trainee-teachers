@@ -1,36 +1,56 @@
-<h2 class="govuk-heading-l">Contact details</h2>
-
-<%= form_with model: @trainee, local: true do |f| %>
-  <%= f.govuk_fieldset legend: { text: 'Address' } do %>
-    <%= f.govuk_text_field :address_line_one,
-      width: 'two-thirds',
-      label: { text: 'Building and street' } %>
-
-    <%= f.govuk_text_field :address_line_two,
-      width: 'two-thirds',
-      label: { text: 'Address line 2', hidden: true } %>
-
-    <%= f.govuk_text_field :town_city,
-      width: 'one-half',
-      label: { text: 'Town or city' } %>
-
-    <%= f.govuk_text_field :county,
-      width: 'one-half',
-      label: { text: 'County' } %>
-
-    <%= f.govuk_text_field :postcode,
-      width: 'one-quarter',
-      label: { text: 'Postcode' } %>
-  <% end %>
-
-  <%= f.govuk_phone_field :phone_number,
-    width: 'two-thirds',
-    label: { text: 'Phone number' },
-    hint: {text: "Enter a landline or mobile. For non-UK numbers, include the country code"} %>
-
-  <%= f.govuk_email_field :email,
-    width: 'two-thirds',
-    label: { text: 'Email' } %>
-
-  <%= f.govuk_submit "Add contact details to training record" %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: "Back",
+    href: trainee_path(@trainee)
+  ) %>
 <% end %>
+
+<h1 class="govuk-heading-l">Contact details</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with(model: @trainee, url: trainee_contact_details_path(@trainee), method: :put, local: true) do |f| %>
+
+      <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "Where does the trainee live?", size: "s" }, classes: "locale") do %>
+        <%= f.govuk_radio_button :locale_code, :non_uk, label: { text: "Outside the UK" } do %>
+          <%= f.govuk_text_area :international_address,
+            width: "one-quarter",
+            label: { text: "Home address" } %>
+        <% end %>
+
+        <%= f.govuk_radio_button :locale_code, :uk, label: { text: "In the UK" } do %>
+          <%= f.govuk_fieldset legend: { text: "Home address", size: "s" } do %>
+            <%= f.govuk_text_field :address_line_one,
+              width: "full",
+              label: { text: "Building and street" } %>
+
+            <%= f.govuk_text_field :address_line_two,
+              width: "full",
+              label: { text: "Address line 2", hidden: true } %>
+
+            <%= f.govuk_text_field :town_city,
+              width: "two-thirds",
+              label: { text: "Town or city" } %>
+
+            <%= f.govuk_text_field :postcode,
+              width: 10,
+              label: { text: "Postal code" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_phone_field :phone_number,
+        width: "two-thirds",
+        label: { text: "Phone number", size: "s" },
+        hint: {text: "Enter a landline or mobile. For non-UK numbers, include the country code"} %>
+
+      <%= f.govuk_email_field :email,
+        width: "two-thirds",
+        label: { text: "Email address", size: "s" } %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel", trainee_path(@trainee)) %></p>

@@ -37,7 +37,7 @@ private
     [
       trainee_record_params,
       trainee_personal_details_params,
-      trainee_contact_details_params,
+      trainee_previous_education_params,
       trainee_course_details_params,
       trainee_training_details_params,
     ].flatten
@@ -62,15 +62,20 @@ private
     ]
   end
 
-  def trainee_contact_details_params
+  def trainee_previous_education_params
     %i[
-      address_line_one
-      address_line_two
-      town_city
-      county
-      postcode
-      phone_number
-      email
+      a_level_1_subject
+      a_level_1_grade
+      a_level_2_subject
+      a_level_2_grade
+      a_level_3_subject
+      a_level_3_grade
+      degree_subject
+      degree_class
+      degree_institution
+      degree_type
+      ske
+      previous_qts
     ]
   end
 
