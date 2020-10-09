@@ -1,4 +1,7 @@
 en:
+  components:
+    confirmation:
+      not_provided: Not provided
   views:
     trainee_summary:
       contact_details:

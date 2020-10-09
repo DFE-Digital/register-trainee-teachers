@@ -5,8 +5,11 @@ module Trainees
     end
 
     def update
-      ContactDetails::Update.call(trainee: trainee, attributes: contact_details_params)
-      redirect_to trainee_path(trainee)
+      if ContactDetails::Update.call(trainee: trainee, attributes: contact_details_params)
+        redirect_to trainee_contact_details_confirm_path(trainee)
+      else
+        render :edit
+      end
     end
 
   private
