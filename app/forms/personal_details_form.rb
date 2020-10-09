@@ -40,7 +40,7 @@ private
 
     errors.add(
       :nationality_ids,
-      I18n.t("activerecord.validations.trainee.nationalities.empty"),
+      :empty_nationalities,
     )
   end
 end

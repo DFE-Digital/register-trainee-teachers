@@ -55,6 +55,10 @@ feature "edit personal details", type: :feature do
   end
 
   def then_i_see_error_messages
-    expect(page).to have_content(I18n.t("activerecord.validations.trainee.nationalities.empty"))
+    expect(page).to have_content(
+      I18n.t(
+        "activemodel.errors.models.personal_details_form.attributes.nationality_ids.empty_nationalities",
+      ),
+    )
   end
 end

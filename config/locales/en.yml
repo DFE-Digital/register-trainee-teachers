@@ -14,10 +14,20 @@ en:
     attributes:
       trainee:
         trainee_id: "Trainee ID"
-    validations:
-      trainee:
-        nationalities:
-          empty: Please select at least one nationality
-          format: Please enter your date of birth in the correct format
+  activemodel:
+    errors:
+      models:
+        personal_details_form:
+          attributes:
+            first_names:
+              blank: "You must enter a first name"
+            last_name:
+              blank: "You must enter a last name"
+            date_of_birth:
+              blank: "You must enter a date of birth"
+            gender:
+              blank: "You must select a gennder"
+            nationality_ids:
+              empty_nationalities: You must select at least one nationality
   page_headings:
     start_page: "Register trainee teachers"

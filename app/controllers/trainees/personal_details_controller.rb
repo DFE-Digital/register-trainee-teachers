@@ -1,12 +1,12 @@
 module Trainees
   class PersonalDetailsController < ApplicationController
-    before_action :build_nationalities, only: %w[edit update]
-
     def edit
+      nationalities
       @personal_details_form = PersonalDetailsForm.new(trainee: trainee)
     end
 
     def update
+      nationalities
       @personal_details_form = PersonalDetailsForm.new(trainee: trainee, params: personal_details_params)
 
       if @personal_details_form.submit
@@ -22,8 +22,8 @@ module Trainees
       @trainee ||= Trainee.find(params[:trainee_id])
     end
 
-    def build_nationalities
-      @nationalities = Nationality.where(name: %w[british irish other])
+    def nationalities
+      @nationalities ||= Nationality.where(name: %w[british irish other])
     end
 
     def personal_details_params
