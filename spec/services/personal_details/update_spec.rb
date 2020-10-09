@@ -3,7 +3,7 @@ require "rails_helper"
 module PersonalDetails
   describe Update do
     describe ".call" do
-      let(:trainee) { create(:trainee, nationalities: [create(:nationality)] ) }
+      let(:trainee) { create(:trainee, nationalities: [create(:nationality)]) }
       let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
 
       context "when personal details are valid" do

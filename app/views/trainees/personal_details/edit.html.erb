@@ -5,12 +5,12 @@
   ) %>
 <% end %>
 
-<h1 class="govuk-heading-l">Trainee personal details</h1>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_for(@personal_detail, url: trainee_personal_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">Trainee personal details</h1>
       
       <%= f.govuk_text_field :first_names, label: { text: 'First names', size: 's' }, hint: { text: 'Or given names' }, width: 'three-quarters' %>
 
