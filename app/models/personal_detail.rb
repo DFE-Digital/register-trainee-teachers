@@ -1,8 +1,8 @@
-class PersonalDetailsForm
+class PersonalDetail
   include ActiveModel::Model
   attr_accessor :trainee
 
-  PERSONAL_DETAIL_FIELDS = %w[
+  FIELDS = %w[
     first_names
     middle_names
     last_name
@@ -13,7 +13,7 @@ class PersonalDetailsForm
 
   delegate :id, :persisted?, to: :trainee
 
-  attr_accessor(*PERSONAL_DETAIL_FIELDS)
+  attr_accessor(*FIELDS)
 
   validates :first_names, presence: true
   validates :last_name, presence: true
@@ -21,16 +21,9 @@ class PersonalDetailsForm
   validates :gender, presence: true
   validate :nationalities_cannot_be_empty
 
-  def initialize(trainee:, params: {})
+  def initialize(trainee:)
     @trainee = trainee
-    trainee.assign_attributes(params)
-    super(trainee.attributes.slice(*PERSONAL_DETAIL_FIELDS).merge(nationality_ids: trainee.nationality_ids))
-  end
-
-  def submit
-    return false unless valid?
-
-    trainee.save!
+    super(trainee.attributes.slice(*FIELDS).merge(nationality_ids: trainee.nationality_ids))
   end
 
 private

@@ -1,17 +1,19 @@
 module Trainees
   class PersonalDetailsController < ApplicationController
     def edit
+      trainee
       nationalities
-      @personal_details_form = PersonalDetailsForm.new(trainee: trainee)
+      @personal_detail = PersonalDetail.new(trainee: trainee)
     end
 
     def update
       nationalities
-      @personal_details_form = PersonalDetailsForm.new(trainee: trainee, params: personal_details_params)
+      updater = PersonalDetails::Update.call(trainee: trainee, attributes: personal_details_params)
 
-      if @personal_details_form.submit
-        redirect_to trainee_path(@personal_details_form.trainee)
+      if updater.successful?
+        redirect_to trainee_path(updater.personal_detail.trainee)
       else
+        @personal_detail = updater.personal_detail
         render :edit
       end
     end
@@ -27,12 +29,8 @@ module Trainees
     end
 
     def personal_details_params
-      params.require(:personal_details_form).permit(
-        :first_names,
-        :middle_names,
-        :last_name,
-        :date_of_birth,
-        :gender,
+      params.require(:personal_detail).permit(
+        *PersonalDetail::FIELDS,
         nationality_ids: [],
       )
     end

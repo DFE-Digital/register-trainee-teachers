@@ -1,7 +1,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
     text: 'Back',
-    href: trainee_path(@personal_details_form.trainee)
+    href: trainee_path(@trainee)
   ) %>
 <% end %>
 
@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_for(@personal_details_form, url: trainee_personal_details_path(@personal_details_form.trainee), method: :put, local: true) do |f| %>
+    <%= form_for(@personal_detail, url: trainee_personal_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
       
       <%= f.govuk_text_field :first_names, label: { text: 'First names', size: 's' }, hint: { text: 'Or given names' }, width: 'three-quarters' %>
@@ -37,4 +37,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to("Cancel", trainee_path(@personal_details_form.trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to("Cancel", trainee_path(@trainee)) %></p>

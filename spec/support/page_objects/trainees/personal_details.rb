@@ -4,11 +4,11 @@ module PageObjects
       include PageObjects::Helpers
 
       set_url "/trainees/{id}/personal-details/edit"
-      element :first_names, "input[name='personal_details_form[first_names]']"
-      element :last_name, "input[name='personal_details_form[last_name]']"
-      element :dob_day, "input[name='personal_details_form[date_of_birth(3i)]']"
-      element :dob_month, "input[name='personal_details_form[date_of_birth(2i)]']"
-      element :dob_year, "input[name='personal_details_form[date_of_birth(1i)]']"
+      element :first_names, "#personal-detail-first-names-field"
+      element :last_name, "#personal-detail-last-name-field"
+      element :dob_day, "#personal_detail_date_of_birth_3i"
+      element :dob_month, "#personal_detail_date_of_birth_2i"
+      element :dob_year, "#personal_detail_date_of_birth_1i"
       element :gender, ".govuk-radios.gender"
       element :nationality, ".govuk-checkboxes.nationality"
       element :submit_button, "input[name='commit']"
