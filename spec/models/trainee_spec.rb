@@ -27,5 +27,39 @@ describe Trainee do
         expect { trainee.dttp_id = uuid }.to raise_error(LockedAttributeError)
       end
     end
+
+    describe "validation" do
+      context "when record type is present" do
+        subject { build(:trainee, record_type: "assessment_only") }
+
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+
+      context "when record type is not present" do
+        it "is not valid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.keys).to include(:record_type)
+        end
+      end
+
+      context "when trainee id is over 100 characters" do
+        subject { build(:trainee, trainee_id: SecureRandom.alphanumeric(101)) }
+
+        it "is not valid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.keys).to include(:trainee_id)
+        end
+      end
+
+      context "when trainee id is under 100 characters" do
+        subject { build(:trainee, trainee_id: SecureRandom.alphanumeric(99)) }
+
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+    end
   end
 end
