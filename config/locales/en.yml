@@ -1,7 +1,7 @@
 en:
   components:
     confirmation:
-      not_entered: Not provided
+      not_provided: Not provided
       heading: Confirm %{section_title}
   views:
     trainee_summary:
@@ -10,8 +10,8 @@ en:
     default_nationalities:
       british:
         description: including English, Scottish, Welsh or from Northern Ireland
-      irish: 
-        description: including from Northern Ireland 
+      irish:
+        description: including from Northern Ireland
       other:
         description: ""
   activerecord:

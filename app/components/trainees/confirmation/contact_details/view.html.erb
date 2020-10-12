@@ -1,17 +1,17 @@
 <%= render_component SummaryCard::View.new(title: 'Contact details',
     heading_level: 2,
     rows: [
-      { 
+      {
         key: "Address",
         value: address,
         action: govuk_link_to("Change", edit_trainee_contact_details_path(trainee))
       },
-      { 
+      {
         key: "Phone number",
         value: phone_number,
         action: govuk_link_to("Change", edit_trainee_contact_details_path(trainee))
       },
-      { 
+      {
         key: "Email address",
         value: email ,
         action: govuk_link_to("Change", edit_trainee_contact_details_path(trainee))

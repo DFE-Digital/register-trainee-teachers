@@ -1,29 +1,54 @@
-module Confirmation
-  class Trainees::Confirmation::ContactDetails::View < GovukComponent::Base
-    attr_accessor :trainee
+module Trainees
+  module Confirmation
+    module ContactDetails
+      class View < GovukComponent::Base
+        include SanitizeHelper
 
-    delegate :phone_number, :email, to: :trainee
+        attr_accessor :trainee
 
-    def initialize(trainee:)
-      @trainee = trainee
-    end
+        def initialize(trainee:)
+          @trainee = trainee
+          @not_provided_copy = I18n.t("components.confirmation.not_provided")
+        end
 
-    def address
-      uk_locale? ? uk_address : international_address
-    end
+        def address
+          return @not_provided_copy if trainee.locale_code.nil?
 
-  private
+          sanitize(uk_locale? ? uk_address : international_address)
+        end
 
-    def uk_locale?
-      trainee.locale_code == "uk"
-    end
+        def email
+          return @not_provided_copy unless trainee.email
 
-    def uk_address
-      "#{trainee.address_line_one}, #{trainee.address_line_two}, #{trainee.town_city}, #{trainee.postcode}"
-    end
+          trainee.email
+        end
 
-    def international_address
-      trainee.international_address
+        def phone_number
+          return @not_provided_copy unless trainee.phone_number
+
+          trainee.phone_number
+        end
+
+      private
+
+        def uk_locale?
+          trainee.locale_code == "uk"
+        end
+
+        def uk_address
+          [trainee.address_line_one,
+           trainee.address_line_two,
+           trainee.town_city,
+           trainee.postcode].reject(&:blank?).join(tag.br)
+        end
+
+        def international_address
+          trainee.international_address
+            .split(/\r\n+/)
+            .reject(&:blank?)
+            .join(tag.br)
+        end
+      end
     end
   end
 end
