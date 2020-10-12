@@ -6,6 +6,24 @@ module Trainees
       describe View do
         alias_method :component, :page
 
+        context "when data has not been provided" do
+          let(:trainee) { build(:trainee, id: 1, first_names: nil, date_of_birth: nil, gender: nil) }
+
+          before do
+            render_inline(View.new(trainee: trainee))
+          end
+
+          it "renders blank rows for full name, date of birth, gender and nationality" do
+            expect(component).to have_selector(".govuk-summary-list__row", count: 4)
+          end
+
+          it "tells the user that no data has been entered" do
+            component.find_all(".govuk-summary-list__row").each do |row|
+              expect(row.find(".govuk-summary-list__value")).to have_text(t("components.confirmation.not_provided"))
+            end
+          end
+        end
+
         context "when data has been provided" do
           let(:trainee) { build(:trainee, id: 1) }
 
@@ -37,21 +55,6 @@ module Trainees
           it "renders the nationality" do
             expect(component.find(".govuk-summary-list__row.nationality .govuk-summary-list__value"))
               .to have_text("British")
-          end
-        end
-
-        context "when data has not been provided" do
-          let(:trainee) { build(:trainee, id: 1, first_names: nil, date_of_birth: nil, gender: nil) }
-
-          before do
-            render_inline(View.new(trainee: trainee))
-          end
-
-          %w[full-name date-of-birth gender nationality].each do |field|
-            it "renders the default text for #{field}" do
-              expect(component.find(".govuk-summary-list__row.#{field} .govuk-summary-list__value"))
-                .to have_text(t("components.confirmation.not_provided"))
-            end
           end
         end
       end
