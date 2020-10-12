@@ -15,7 +15,7 @@ module Trainees
     end
 
     def component_klass(key)
-      "Confirmation::#{key.underscore.camelcase}::View".constantize
+      "Trainees::Confirmation::#{key.underscore.camelcase}::View".constantize
     end
 
     def trainee_section_key

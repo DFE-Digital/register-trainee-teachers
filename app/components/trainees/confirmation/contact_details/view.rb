@@ -1,5 +1,5 @@
 module Confirmation
-  class ContactDetails::View < GovukComponent::Base
+  class Trainees::Confirmation::ContactDetails::View < GovukComponent::Base
     attr_accessor :trainee
 
     delegate :phone_number, :email, to: :trainee
