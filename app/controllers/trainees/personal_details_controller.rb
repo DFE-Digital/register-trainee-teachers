@@ -11,7 +11,7 @@ module Trainees
       updater = PersonalDetails::Update.call(trainee: trainee, attributes: personal_details_params)
 
       if updater.successful?
-        redirect_to trainee_path(updater.personal_detail.trainee)
+        redirect_to trainee_personal_details_confirm_path(updater.personal_detail.trainee)
       else
         @personal_detail = updater.personal_detail
         render :edit

@@ -7,6 +7,7 @@ feature "edit personal details", type: :feature do
     when_i_visit_the_personal_details_page
     and_i_enter_valid_parameters
     and_i_submit_the_form
+    and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
     and_the_personal_details_are_updated
   end
@@ -38,6 +39,12 @@ feature "edit personal details", type: :feature do
     @personal_details_page.set_date_fields("dob", "01/01/1986")
     @personal_details_page.gender.choose("Male")
     @personal_details_page.nationality.check(@nationality.name.titleize)
+  end
+
+  def and_confirm_my_details
+    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
+    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "personal-details")
+    @confirm_page.submit_button.click
   end
 
   def and_i_submit_the_form

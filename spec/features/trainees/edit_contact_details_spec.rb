@@ -5,6 +5,8 @@ feature "edit contact details", type: :feature do
     given_a_trainee_exists
     when_i_visit_the_contact_details_page
     and_i_enter_valid_parameters
+    and_i_submit_the_form
+    and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
     and_the_contact_details_are_updated
   end
@@ -13,6 +15,7 @@ feature "edit contact details", type: :feature do
     given_a_trainee_exists
     when_i_visit_the_contact_details_page
     and_i_enter_an_international_address
+    and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
     and_the_old_address_is_cleared
   end
@@ -30,7 +33,16 @@ feature "edit contact details", type: :feature do
     @new_address_line = Faker::Address.street_name
 
     @contact_details_page.address_line_one.set(@new_address_line)
+  end
+
+  def and_i_submit_the_form
     @contact_details_page.submit_button.click
+  end
+
+  def and_confirm_my_details
+    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
+    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "contact-details")
+    @confirm_page.submit_button.click
   end
 
   def and_i_enter_an_international_address
