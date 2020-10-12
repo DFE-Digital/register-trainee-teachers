@@ -3,7 +3,6 @@ module Trainees
     helper_method :trainee_section_key
 
     def show
-      trainee
       @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
     end
 

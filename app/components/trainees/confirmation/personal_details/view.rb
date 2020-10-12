@@ -9,19 +9,19 @@ module Trainees
         end
 
         def full_name
-          return I18n.t("confirmation.not_entered") unless trainee.first_names
+          return I18n.t("components.confirmation.not_provided") unless trainee.first_names && trainee.last_name
 
-          "#{trainee.first_names} #{trainee.last_name}".upcase
+          "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}".upcase
         end
 
         def date_of_birth
-          return I18n.t("confirmation.not_entered") unless trainee.date_of_birth
+          return I18n.t("components.confirmation.not_provided") unless trainee.date_of_birth
 
           trainee.date_of_birth.strftime("%-d %B %Y")
         end
 
         def gender
-          return I18n.t("confirmation.not_entered") unless trainee.gender
+          return I18n.t("components.confirmation.not_provided") unless trainee.gender
 
           # TODO: This will change once we have set up gender to use ENUM values.
           gender_map = {
@@ -34,7 +34,7 @@ module Trainees
         end
 
         def nationality
-          return I18n.t("confirmation.not_entered") if trainee.nationalities.blank?
+          return I18n.t("components.confirmation.not_provided") if trainee.nationalities.blank?
 
           trainee.nationalities.map { |nationality| nationality.name.titleize }.join(", ")
         end

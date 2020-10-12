@@ -1,8 +1,9 @@
 en:
-  views:
+  components:
     confirmation:
       not_entered: Not provided
       heading: Confirm %{section_title}
+  views:
     trainee_summary:
       contact_details:
         heading: Contact Details
