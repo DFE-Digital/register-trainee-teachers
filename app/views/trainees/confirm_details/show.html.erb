@@ -1,5 +1,22 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back to overview',
+    href: trainee_path(@trainee)
+  ) %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-      <%= render_component @confirmation_component %>
+    <h1 class="govuk-heading-l"><%= I18n.t("views.confirmation.heading", section_title: trainee_section_key.gsub(/-/, " ")) %></h1>
+
+    <%= render_component @confirmation_component %>
+
+    <%= form_with url: trainee_path(@trainee), method: :get do |f| %>
+      <%= f.govuk_check_boxes_fieldset :mark_as_completed, multiple: false, legend: { text: '' } do %>
+        <%= f.govuk_check_box :mark_as_completed, 1, 0, multiple: false, link_errors: true, label: { text: "I have completed this section " } %>
+      <% end %>
+
+      <%= f.govuk_submit %>
+    <% end %>
   </div>
 </div>
