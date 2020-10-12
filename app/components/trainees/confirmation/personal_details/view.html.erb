@@ -1,0 +1,26 @@
+<%= render_component SummaryCard::View.new(title: 'Personal details',
+    heading_level: 2,
+    rows: [
+      { 
+        key: "Full name",
+        value: full_name,
+        action: govuk_link_to("Change", edit_trainee_personal_details_path(trainee))
+      },
+      { 
+        key: "Date of birth",
+        value: date_of_birth,
+        action: govuk_link_to("Change", edit_trainee_personal_details_path(trainee))
+      },
+      { 
+        key: "Gender",
+        value: gender,
+        action: govuk_link_to("Change", edit_trainee_personal_details_path(trainee))
+      },
+      { 
+        key: "Nationality",
+        value: nationality,
+        action: govuk_link_to("Change", edit_trainee_personal_details_path(trainee))
+      },
+    ]
+  )
+%>

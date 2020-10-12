@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :trainees, only: %i[index show new create update] do
     scope module: :trainees do
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
-      resource :personal_details, only: %i[edit update], path: "/personal-details"
+      resource :personal_details, concerns: :confirmable, only: %i[edit update], path: "/personal-details"
     end
 
     member do
