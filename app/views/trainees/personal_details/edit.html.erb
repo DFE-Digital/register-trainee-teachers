@@ -20,8 +20,11 @@
 
       <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth', size: 's' }, hint: { text: 'For example, 31 3 1980' } %>
 
-      <% genders = [OpenStruct.new(id: 1, name: 'Male'), OpenStruct.new(id: 2, name: 'Female'), OpenStruct.new(id: 3, name: 'Other')]%>
-      <%= f.govuk_collection_radio_buttons :gender, genders, :id, :name, legend: { text: 'Gender', size: 's' }, classes: "gender" %>
+      <%= f.govuk_radio_buttons_fieldset(:gender, legend: { text: "Gender", size: "s" }, classes: "gender") do %>
+        <%= f.govuk_radio_button :gender, :male, label: { text: "Male" } %>
+        <%= f.govuk_radio_button :gender, :female, label: { text: "Female" } %>
+        <%= f.govuk_radio_button :gender, :other, label: { text: "Other" } %>
+      <% end %>
 
       <%= f.govuk_collection_check_boxes :nationality_ids, 
           format_default_nationalities(@nationalities), 

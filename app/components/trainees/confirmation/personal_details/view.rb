@@ -26,14 +26,7 @@ module Trainees
         def gender
           return @not_provided_copy unless trainee.gender
 
-          # TODO: This will change once we have set up gender to use ENUM values.
-          gender_map = {
-            "1" => "Male",
-            "2" => "Female",
-            "3" => "Other",
-          }
-
-          gender_map[trainee.gender]
+          trainee.gender.capitalize
         end
 
         def nationality

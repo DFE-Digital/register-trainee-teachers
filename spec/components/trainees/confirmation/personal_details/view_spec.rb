@@ -28,7 +28,6 @@ module Trainees
           let(:trainee) { build(:trainee, id: 1) }
 
           before do
-            trainee.gender = "2"
             allow(trainee).to receive(:nationalities).and_return([OpenStruct.new(name: "British")])
             render_inline(View.new(trainee: trainee))
           end
@@ -49,7 +48,7 @@ module Trainees
 
           it "renders the gender" do
             expect(component.find(".govuk-summary-list__row.gender .govuk-summary-list__value"))
-              .to have_text("Female")
+              .to have_text(trainee.gender.capitalize)
           end
 
           it "renders the nationality" do

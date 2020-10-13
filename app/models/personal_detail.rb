@@ -11,6 +11,12 @@ class PersonalDetail
     nationality_ids
   ].freeze
 
+  GENDERS = %w[
+    male
+    female
+    other
+  ].freeze
+
   delegate :id, :persisted?, to: :trainee
 
   attr_accessor(*FIELDS)
@@ -18,7 +24,7 @@ class PersonalDetail
   validates :first_names, presence: true
   validates :last_name, presence: true
   validates :date_of_birth, presence: true
-  validates :gender, presence: true
+  validates :gender, presence: true, inclusion: GENDERS
   validate :nationalities_cannot_be_empty
 
   def initialize(trainee:)

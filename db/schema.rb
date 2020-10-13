@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2020_10_14_132704) do
     t.text "trainee_id"
     t.text "first_names"
     t.text "last_name"
-    t.text "gender"
     t.date "date_of_birth"
     t.text "ethnicity"
     t.text "disability"
@@ -76,7 +75,9 @@ ActiveRecord::Schema.define(version: 2020_10_14_132704) do
     t.integer "record_type"
     t.text "international_address"
     t.integer "locale_code"
+    t.integer "gender"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
+    t.index ["gender"], name: "index_trainees_on_gender"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
     t.index ["record_type"], name: "index_trainees_on_record_type"
   end
