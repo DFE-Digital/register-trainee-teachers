@@ -14,11 +14,15 @@ Rails.application.routes.draw do
 
   get "/trainees/not-supported-route", to: "trainees/not_supported_routes#index"
 
+  concern :confirmable do
+    resource :confirm_details, as: :confirm, only: :show, path: "/confirm"
+  end
+
   resources :trainees, only: %i[index show new create update] do
     scope module: :trainees do
+      resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resources :degrees
-      resource :contact_details, only: %i[edit update], path: "/contact-details"
-      resource :personal_details, only: %i[edit update], path: "/personal-details"
+      resource :personal_details, concerns: :confirmable, only: %i[edit update], path: "/personal-details"
     end
 
     member do

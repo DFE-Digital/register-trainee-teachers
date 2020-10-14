@@ -1,8 +1,12 @@
 en:
+  components:
+    confirmation:
+      not_provided: Not provided
+      heading: Confirm %{section_title}
   views:
     trainee_summary:
       contact_details:
-        heading: "Contact Details"
+        heading: Contact Details
     default_nationalities:
       british:
         description: including English, Scottish, Welsh or from Northern Ireland

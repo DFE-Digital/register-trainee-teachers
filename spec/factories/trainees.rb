@@ -5,6 +5,7 @@ FactoryBot.define do
       n.to_s
     end
     first_names { Faker::Name.first_name }
+    middle_names { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
     gender { %w[Female Male Other].sample }
     ethnicity { Faker::Nation.nationality }
