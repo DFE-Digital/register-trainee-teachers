@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_094728) do
+ActiveRecord::Schema.define(version: 2020_10_14_132704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_094728) do
     t.bigint "trainee_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["locale_code"], name: "index_degrees_on_locale_code"
     t.index ["trainee_id"], name: "index_degrees_on_trainee_id"
   end
 
@@ -49,6 +50,8 @@ ActiveRecord::Schema.define(version: 2020_10_12_094728) do
     t.date "date_of_birth"
     t.text "ethnicity"
     t.text "disability"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.text "address_line_one"
     t.text "address_line_two"
     t.text "town_city"
@@ -69,12 +72,13 @@ ActiveRecord::Schema.define(version: 2020_10_12_094728) do
     t.text "full_time_part_time"
     t.boolean "teaching_scholars"
     t.uuid "dttp_id"
-    t.integer "record_type"
     t.text "middle_names"
+    t.integer "record_type"
     t.text "international_address"
     t.integer "locale_code"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
+    t.index ["record_type"], name: "index_trainees_on_record_type"
   end
 
   add_foreign_key "degrees", "trainees"
