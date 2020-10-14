@@ -7,7 +7,7 @@ FactoryBot.define do
     first_names { Faker::Name.first_name }
     middle_names { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
-    gender { PersonalDetail::GENDERS.sample }
+    gender { Trainee.genders.keys.sample }
     ethnicity { Faker::Nation.nationality }
     disability { %w[none something].sample }
 

@@ -11,12 +11,6 @@ class PersonalDetail
     nationality_ids
   ].freeze
 
-  GENDERS = %w[
-    male
-    female
-    other
-  ].freeze
-
   delegate :id, :persisted?, to: :trainee
 
   attr_accessor(*FIELDS)
