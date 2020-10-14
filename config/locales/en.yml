@@ -6,14 +6,24 @@ en:
     default_nationalities:
       british:
         description: including English, Scottish, Welsh or from Northern Ireland
-      irish: 
-        description: including from Northern Ireland 
+      irish:
+        description: including from Northern Ireland
       other:
         description: ""
   activerecord:
     attributes:
       trainee:
         trainee_id: "Trainee ID"
+    errors:
+      models:
+        degree:
+          attributes:
+            uk_degree:
+              blank: "You must select a UK degree"
+            non_uk_degree:
+              blank: "You must select a Non-UK degree"
+            locale_code:
+              blank: "You must select either a UK degree or Non-UK degree"
   activemodel:
     errors:
       models:

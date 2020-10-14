@@ -6,7 +6,8 @@ describe Trainee do
   end
 
   describe "associations" do
-    it { is_expected.to have_many(:nationalisations).inverse_of(:trainee) }
+    it { is_expected.to have_many(:degrees).dependent(:destroy) }
+    it { is_expected.to have_many(:nationalisations).dependent(:destroy).inverse_of(:trainee) }
     it { is_expected.to have_many(:nationalities).through(:nationalisations) }
   end
 
