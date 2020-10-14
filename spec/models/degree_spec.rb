@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Degree, type: :model do
   describe "database fields" do
-    it { is_expected.to have_db_column(:locale_code).with_options(uk: 0, non_uk: 1) }
+    it { is_expected.to define_enum_for(:locale_code).with_values(uk: 0, non_uk: 1) }
   end
 
   describe "associations" do
