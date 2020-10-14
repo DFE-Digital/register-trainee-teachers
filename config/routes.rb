@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :trainees, only: %i[index show new create update] do
     scope module: :trainees do
+      resources :degrees
       resource :contact_details, only: %i[edit update], path: "/contact-details"
       resource :personal_details, only: %i[edit update], path: "/personal-details"
     end
