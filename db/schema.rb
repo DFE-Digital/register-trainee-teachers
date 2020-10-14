@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_151313) do
+ActiveRecord::Schema.define(version: 2020_10_12_094728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "degrees", force: :cascade do |t|
+    t.integer "locale_code", null: false
+    t.string "uk_degree"
+    t.string "non_uk_degree"
+    t.bigint "trainee_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trainee_id"], name: "index_degrees_on_trainee_id"
+  end
 
   create_table "nationalisations", force: :cascade do |t|
     t.bigint "trainee_id", null: false
@@ -39,8 +49,6 @@ ActiveRecord::Schema.define(version: 2020_10_07_151313) do
     t.date "date_of_birth"
     t.text "ethnicity"
     t.text "disability"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.text "address_line_one"
     t.text "address_line_two"
     t.text "town_city"
@@ -48,9 +56,6 @@ ActiveRecord::Schema.define(version: 2020_10_07_151313) do
     t.text "postcode"
     t.text "phone_number"
     t.text "email"
-    t.date "start_date"
-    t.text "full_time_part_time"
-    t.boolean "teaching_scholars"
     t.text "course_title"
     t.text "course_phase"
     t.date "programme_start_date"
@@ -60,16 +65,19 @@ ActiveRecord::Schema.define(version: 2020_10_07_151313) do
     t.text "itt_subject"
     t.text "employing_school"
     t.text "placement_school"
+    t.date "start_date"
+    t.text "full_time_part_time"
+    t.boolean "teaching_scholars"
     t.uuid "dttp_id"
-    t.text "middle_names"
     t.integer "record_type"
+    t.text "middle_names"
     t.text "international_address"
     t.integer "locale_code"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
-    t.index ["record_type"], name: "index_trainees_on_record_type"
   end
 
+  add_foreign_key "degrees", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
 end
