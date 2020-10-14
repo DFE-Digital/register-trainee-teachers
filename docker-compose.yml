@@ -19,7 +19,7 @@ services:
       cache_from:
         - dfedigital/register-trainee-teacher-data:${BRANCH_TAG:-latest}
     image: dfedigital/register-trainee-teacher-data:${BRANCH_TAG:-latest}
-    command: ash -c "bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails server -p 3001 -b '0.0.0.0'"
+    command: ash -c "bundle exec rails server -p 3001 -b '0.0.0.0'"
     ports:
       - 3001:3001
     depends_on:
@@ -29,7 +29,7 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
       - REDIS_URL=redis://redis:6379
-  
+
   bg-jobs:
     image: dfedigital/register-trainee-teacher-data:${BRANCH_TAG:-latest}
     command: bundle exec sidekiq -c 5 -C config/sidekiq.yml
