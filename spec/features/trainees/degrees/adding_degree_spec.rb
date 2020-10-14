@@ -3,12 +3,14 @@ require "rails_helper"
 RSpec.feature "Adding a degree" do
   scenario "adding a degree" do
     given_a_trainee_exists
-    when_i_visit_degree_page
-    and_i_select_correct_radio_buttons
+    when_i_visit_the_degree_page
+    and_i_select_a_degree_type
     and_i_click_continue_button
   end
 
-  def when_i_visit_degree_page
+private
+
+  def when_i_visit_the_degree_page
     degree_page.load(trainee_id: @trainee.id)
   end
 
@@ -20,7 +22,7 @@ RSpec.feature "Adding a degree" do
     trainee
   end
 
-  def and_i_select_correct_radio_buttons
+  def and_i_select_a_degree_type
     degree_page.degree_type.choose("UK degree")
     degree_page.type_of_uk_degrees.select("Bachelor of Arts")
 
