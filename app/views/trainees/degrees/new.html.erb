@@ -9,15 +9,27 @@
             If the trainee or candidate has further postgraduate degrees, you can add them next.
           </p>
 
-          <% uk_degrees = HESA_DEGREE_TYPES.map { |_hesa_code, _abbreviation, name, _level| OpenStruct.new(name: name) } %>
+          <%- uk_degrees = HESA_DEGREE_TYPES.map do |_hesa_code, _abbreviation, name, _level| 
+            OpenStruct.new(name: name) 
+          end %>
+          
           <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "" }, classes: "degree_type" ) do %>
             <%= f.govuk_radio_button :locale_code, :uk, label: { text: "UK Degree" } do %>
-              <%= f.govuk_collection_select :uk_degree, uk_degrees, :name, :name, label: { text: "Enter degree type"}, hint: { text: "For example, BA, BSc or other (please specify)" } %>
+              <%= f.govuk_collection_select(:uk_degree,
+                    uk_degrees,
+                    :name,
+                    :name,
+                    label: { text: "Enter degree type"},
+                    hint: { text: "For example, BA, BSc or other (please specify)" } )
+              %>
             <% end %>
 
             <%= f.govuk_radio_button :locale_code, :non_uk, label: { text: "Non-UK degree" } do %>
             <%= f.govuk_radio_buttons_fieldset(:non_uk_degree, legend: { text: "" } ) do %>
-               <%= f.govuk_fieldset legend: -> { tag.legend("Select the NARIC comparable UK degree", { class: "govuk-fieldset__legend" } ) } do %>
+              <%= f.govuk_fieldset legend: -> { 
+                tag.legend(
+                  "Select the NARIC comparable UK degree", 
+                  { class: "govuk-fieldset__legend" } ) } do %>
                 <%  NARIC_NON_UK.map do |name| %>
                   <%= f.govuk_radio_button :non_uk_degree, name, label: { text: name } %>
                 <% end %>
@@ -29,7 +41,7 @@
           <% end %>
         <% end %>
 
-          <%= f.govuk_submit("Continue") %>
+        <%= f.govuk_submit("Continue") %>
 
       <% end %>
   </div>
