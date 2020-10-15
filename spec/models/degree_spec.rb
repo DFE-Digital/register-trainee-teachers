@@ -47,5 +47,16 @@ RSpec.describe Degree, type: :model do
         expect(subject).to_not validate_presence_of(:non_uk_degree)
       end
     end
+
+    describe "uk degree fields" do
+      it "validates" do
+        expect(subject).to validate_presence_of(:degree_subject).on(:uk)
+        expect(subject).to validate_presence_of(:institution).on(:uk)
+        expect(subject).to validate_presence_of(:degree_grade).on(:uk)
+        expect(subject).to validate_presence_of(:graduation_year).on(:uk)
+        expect(subject).to validate_inclusion_of(:graduation_year)
+          .in_range(1900..Time.zone.today.year).on(:uk)
+      end
+    end
   end
 end

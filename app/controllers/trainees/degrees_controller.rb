@@ -23,7 +23,9 @@ module Trainees
 
     def update
       @degree = trainee.degrees.find(params[:id])
-      if @degree.update(uk_degree_details_params)
+      @degree.assign_attributes(uk_degree_details_params)
+
+      if @degree.save(context: @degree.locale_code.to_sym)
         redirect_to trainee
       else
         render :edit
@@ -37,7 +39,7 @@ module Trainees
     end
 
     def uk_degree_details_params
-      params.require(:degree).permit(:degree_subject, :institution, :graduation, :degree_grade)
+      params.require(:degree).permit(:degree_subject, :institution, :graduation_year, :degree_grade)
     end
 
     def trainee

@@ -1,7 +1,13 @@
 class Degree < ApplicationRecord
   validates :locale_code, presence: true
-  validates :uk_degree, presence: true, if: :uk?
   validates :non_uk_degree, presence: true, if: :non_uk?
+  validates :uk_degree, presence: true, if: :uk?
+
+  validates :degree_subject, presence: true, on: :uk
+  validates :institution, presence: true, on: :uk
+  validates :graduation_year, presence: true, on: :uk,
+                              inclusion: { in: 1900..Time.zone.today.year }
+  validates :degree_grade, presence: true, on: :uk
 
   belongs_to :trainee
 
