@@ -58,7 +58,6 @@ module Trainees
 
           context "when multiple nationalities have been provided" do
             before do
-              trainee.gender = "2"
               allow(trainee).to receive(:nationalities).and_return([OpenStruct.new(name: "British"), OpenStruct.new(name: "Irish")])
               render_inline(View.new(trainee: trainee))
             end
