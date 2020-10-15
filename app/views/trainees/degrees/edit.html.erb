@@ -2,7 +2,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: [ @trainee, @degree ], local: true do |f| %>
       <h2 class="govuk-heading-l"> Degree Details </h2>
-
+      <%= f.govuk_error_summary %>
       <%- degree_subjects = DEGREE_SUBJECTS.map do |name| 
         OpenStruct.new(name: name) 
       end %>
@@ -21,11 +21,10 @@
       <%= f.govuk_radio_buttons_fieldset(:degree_grade, legend: { text: "Degree grade", size: 's' } ) do %>
 
         <% DEGREE_GRADES.map do |name| %>
-          <%= f.govuk_radio_button :degree_grade, name, label: { text: name } %>
+          <%= f.govuk_radio_button :degree_grade, name, label: { text: name }, link_errors: true %>
         <% end %>
         <%= f.govuk_radio_divider %>
         <%= f.govuk_radio_button :degree_grade, :still_studying, label: { text: "The trainee is still studying for their degree"} %>
-
       <% end %>
 
       <%= f.govuk_submit("Continue") %>
