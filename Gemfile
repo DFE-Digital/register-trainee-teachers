@@ -97,7 +97,7 @@ group :test do
   gem "simplecov", "~> 0.19.0", require: false
 
   # Page objects
-  gem "site_prism", "~> 3.4"
+  gem "site_prism", "~> 3.7"
 
   gem "webmock"
 end
