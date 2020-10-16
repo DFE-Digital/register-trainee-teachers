@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_132704) do
+ActiveRecord::Schema.define(version: 2020_10_15_145100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,9 +76,11 @@ ActiveRecord::Schema.define(version: 2020_10_14_132704) do
     t.text "international_address"
     t.integer "locale_code"
     t.integer "gender"
+    t.jsonb "progress", default: {}
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
     t.index ["gender"], name: "index_trainees_on_gender"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
+    t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["record_type"], name: "index_trainees_on_record_type"
   end
 

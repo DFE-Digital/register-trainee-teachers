@@ -2,6 +2,8 @@ class Trainee < ApplicationRecord
   validates :record_type, presence: { message: "You must select a route" }
   validates :trainee_id, length: { maximum: 100, message: "Your entry must not exceed 100 characters" }
 
+  serialize :progress, TraineeProgressSerializer
+
   enum record_type: { assessment_only: 0 }
   enum locale_code: { uk: 0, non_uk: 1 }
   enum gender: { male: 0, female: 1, other: 2 }

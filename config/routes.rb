@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get "/trainees/not-supported-route", to: "trainees/not_supported_routes#index"
 
   concern :confirmable do
-    resource :confirm_details, as: :confirm, only: :show, path: "/confirm"
+    resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm"
   end
 
   resources :trainees, only: %i[index show new create update] do

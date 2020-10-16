@@ -11,7 +11,7 @@
 
     <%= render_component @confirmation_component %>
 
-    <%= form_with url: trainee_path(@trainee), method: :get do |f| %>
+    <%= form_for(@confirm_detail, url: trainee_personal_details_confirm_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_check_boxes_fieldset :mark_as_completed, multiple: false, legend: { text: '' } do %>
         <%= f.govuk_check_box :mark_as_completed, 1, 0, multiple: false, link_errors: true, label: { text: "I have completed this section " } %>
       <% end %>

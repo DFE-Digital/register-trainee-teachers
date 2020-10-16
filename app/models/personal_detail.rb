@@ -23,7 +23,11 @@ class PersonalDetail
 
   def initialize(trainee:)
     @trainee = trainee
-    super(trainee.attributes.slice(*FIELDS).merge(nationality_ids: trainee.nationality_ids))
+    super(fields)
+  end
+
+  def fields
+    trainee.attributes.slice(*FIELDS).merge(nationality_ids: trainee.nationality_ids)
   end
 
 private

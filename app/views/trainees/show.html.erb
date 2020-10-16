@@ -28,7 +28,8 @@
         :row,
         task_name: 'Personal details',
         path: edit_trainee_personal_details_path(@trainee),
-        status: 'completed'
+        status: Trainees::Progress::PersonalDetails.call(trainee: @trainee)
+
       )
 
       component.slot(
