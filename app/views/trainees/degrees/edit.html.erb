@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: [ @trainee, @degree ], local: true do |f| %>
-      <h2 class="govuk-heading-l"> Degree Details </h2>
+      <h2 class="govuk-heading-l">Degree Details</h2>
       <%= f.govuk_error_summary %>
       <%- degree_subjects = DEGREE_SUBJECTS.map do |name| 
             OpenStruct.new(name: name) 
