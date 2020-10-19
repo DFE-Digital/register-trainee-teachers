@@ -5,15 +5,15 @@ RSpec.feature "editing a degree" do
     scenario "without filling in the fields" do
       given_a_trainee_with_an_uk_degree_exists
       when_i_visit_the_degree_details_page
-      and_i_click_continue_button
-      then_i_see_error_summary
+      and_i_click_the_continue_button
+      then_i_see_the_error_summary
     end
 
     scenario "filling in the fields correct" do
       given_a_trainee_with_an_uk_degree_exists
       when_i_visit_the_degree_details_page
-      and_i_filling_the_degree_details
-      and_i_click_continue_button
+      and_i_fill_the_degree_details
+      and_i_click_the_continue_button
       then_i_am_on_the_summary_page
     end
   end
@@ -24,11 +24,11 @@ private
     trainee
   end
 
-  def and_i_click_continue_button
+  def and_i_click_the_continue_button
     degree_details_page.continue.click
   end
 
-  def and_i_filling_the_degree_details
+  def and_i_fill_the_degree_details
     template = build(:degree, :uk_degree_with_details)
 
     degree_details_page.degree_subject.select(template.degree_subject)
@@ -47,7 +47,7 @@ private
     expect(summary_page).to be_displayed
   end
 
-  def then_i_see_error_summary
+  def then_i_see_the_error_summary
     expect(degree_details_page.error_summary).to be_visible
   end
 

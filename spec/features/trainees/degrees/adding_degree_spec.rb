@@ -4,8 +4,8 @@ RSpec.feature "Adding a degree" do
   scenario "without selecting a degree type" do
     given_a_trainee_exists
     when_i_visit_the_degree_page
-    and_i_click_continue_button
-    then_i_see_error_summary
+    and_i_click_the_continue_button
+    then_i_see_the_error_summary
   end
 
   describe "Non-UK degree" do
@@ -13,8 +13,8 @@ RSpec.feature "Adding a degree" do
       given_a_trainee_exists
       when_i_visit_the_degree_page
       and_i_select_the_non_uk_degree_type
-      and_i_click_continue_button
-      then_i_see_error_summary
+      and_i_click_the_continue_button
+      then_i_see_the_error_summary
     end
 
     scenario "with comparable UK degree type" do
@@ -22,7 +22,7 @@ RSpec.feature "Adding a degree" do
       when_i_visit_the_degree_page
       and_i_select_the_non_uk_degree_type
       and_i_select_a_non_uk_degree
-      and_i_click_continue_button
+      and_i_click_the_continue_button
       then_i_am_on_the_summary_page
     end
   end
@@ -32,8 +32,8 @@ RSpec.feature "Adding a degree" do
       given_a_trainee_exists
       when_i_visit_the_degree_page
       and_i_select_the_uk_degree_type
-      and_i_click_continue_button
-      then_i_see_error_summary
+      and_i_click_the_continue_button
+      then_i_see_the_error_summary
     end
 
     scenario "with UK degree type" do
@@ -41,7 +41,7 @@ RSpec.feature "Adding a degree" do
       when_i_visit_the_degree_page
       and_i_select_the_uk_degree_type
       and_i_select_an_uk_degree
-      and_i_click_continue_button
+      and_i_click_the_continue_button
       then_i_am_on_the_degree_details_page
     end
   end
@@ -68,11 +68,11 @@ private
     degree_page.non_uk_degree_type.click
   end
 
-  def and_i_click_continue_button
+  def and_i_click_the_continue_button
     degree_page.continue.click
   end
 
-  def then_i_see_error_summary
+  def then_i_see_the_error_summary
     expect(degree_page.error_summary).to be_visible
   end
 
