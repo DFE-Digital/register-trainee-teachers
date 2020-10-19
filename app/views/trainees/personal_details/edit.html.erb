@@ -11,7 +11,7 @@
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">Trainee personal details</h1>
-      
+
       <%= f.govuk_text_field :first_names, label: { text: 'First names', size: 's' }, hint: { text: 'Or given names' }, width: 'three-quarters' %>
 
       <%= f.govuk_text_field :middle_names, label: { text: 'Middle names', size: 's' }, width: 'three-quarters' %>
@@ -21,17 +21,17 @@
       <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth', size: 's' }, hint: { text: 'For example, 31 3 1980' } %>
 
       <%= f.govuk_radio_buttons_fieldset(:gender, legend: { text: "Gender", size: "s" }, classes: "gender") do %>
-        <%= f.govuk_radio_button :gender, :male, label: { text: "Male" } %>
+        <%= f.govuk_radio_button :gender, :male, label: { text: "Male" }, link_errors: true %>
         <%= f.govuk_radio_button :gender, :female, label: { text: "Female" } %>
         <%= f.govuk_radio_button :gender, :other, label: { text: "Other" } %>
       <% end %>
 
-      <%= f.govuk_collection_check_boxes :nationality_ids, 
-          format_default_nationalities(@nationalities), 
-          :id, 
-          :name, 
-          :description, 
-          legend: { text: "Nationality", size: 's' }, 
+      <%= f.govuk_collection_check_boxes :nationality_ids,
+          format_default_nationalities(@nationalities),
+          :id,
+          :name,
+          :description,
+          legend: { text: "Nationality", size: 's' },
           hint: { text: 'Select all that apply' },
           classes: "nationality" %>
 
