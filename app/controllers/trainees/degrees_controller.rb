@@ -11,11 +11,7 @@ module Trainees
     def create
       @degree = trainee.degrees.build(degree_params)
       if @degree.save
-        if @degree.uk?
-          redirect_to edit_trainee_degree_path(@trainee, @degree)
-        else
-          redirect_to trainee
-        end
+        redirect_to edit_trainee_degree_path(@trainee, @degree)
       else
         render :new
       end
@@ -23,8 +19,7 @@ module Trainees
 
     def update
       @degree = trainee.degrees.find(params[:id])
-      @degree.assign_attributes(uk_degree_details_params)
-
+      @degree.uk? ? assign(uk_degree_details_params) : assign(non_uk_degree_details_params)
       if @degree.save(context: @degree.locale_code.to_sym)
         redirect_to trainee
       else
@@ -42,8 +37,16 @@ module Trainees
       params.require(:degree).permit(:degree_subject, :institution, :graduation_year, :degree_grade)
     end
 
+    def non_uk_degree_details_params
+      params.require(:degree).permit(:degree_subject, :country, :graduation_year)
+    end
+
     def trainee
       @trainee ||= Trainee.find(params[:trainee_id])
+    end
+
+    def assign(attributes)
+      @degree.assign_attributes(attributes)
     end
   end
 end

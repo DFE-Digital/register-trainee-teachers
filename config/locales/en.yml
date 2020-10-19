@@ -37,6 +37,8 @@ en:
             graduation_year:
               blank: "You must set a graduation year, example: 2010"
               inclusion: "You must set a graduation year, example: 2010"
+            country:
+              blank: "You must select the country where the degree was obtained"
   activemodel:
     errors:
       models:
