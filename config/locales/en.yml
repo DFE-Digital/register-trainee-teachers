@@ -28,6 +28,15 @@ en:
               blank: "You must select a Non-UK degree"
             locale_code:
               blank: "You must select either a UK degree or Non-UK degree"
+            degree_subject:
+              blank: "You must select a subject"
+            institution:
+              blank: "You must select a institution"
+            degree_grade:
+              blank: "You must select a grade"
+            graduation_year:
+              blank: "You must set a graduation year, example: 2010"
+              inclusion: "You must set a graduation year, example: 2010"
   activemodel:
     errors:
       models:

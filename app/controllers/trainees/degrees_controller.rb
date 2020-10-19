@@ -4,12 +4,31 @@ module Trainees
       @degree = trainee.degrees.build
     end
 
+    def edit
+      @degree = trainee.degrees.find(params[:id])
+    end
+
     def create
       @degree = trainee.degrees.build(degree_params)
       if @degree.save
-        redirect_to trainee
+        if @degree.uk?
+          redirect_to edit_trainee_degree_path(@trainee, @degree)
+        else
+          redirect_to trainee
+        end
       else
         render :new
+      end
+    end
+
+    def update
+      @degree = trainee.degrees.find(params[:id])
+      @degree.assign_attributes(uk_degree_details_params)
+
+      if @degree.save(context: @degree.locale_code.to_sym)
+        redirect_to trainee
+      else
+        render :edit
       end
     end
 
@@ -17,6 +36,10 @@ module Trainees
 
     def degree_params
       params.require(:degree).permit(:locale_code, :uk_degree, :non_uk_degree)
+    end
+
+    def uk_degree_details_params
+      params.require(:degree).permit(:degree_subject, :institution, :graduation_year, :degree_grade)
     end
 
     def trainee
