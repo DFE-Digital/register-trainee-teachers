@@ -7,7 +7,7 @@ RSpec.feature "editing a degree" do
       when_i_visit_the_edit_degree_details_page
       and_i_enter_valid_uk_degree_details
       then_i_click_the_continue_button
-      and_i_am_redirected_to_the_summary_page
+      then_i_am_redirected_to_confirm_page
     end
 
     scenario "the user enters invalid details" do
@@ -24,7 +24,7 @@ RSpec.feature "editing a degree" do
       when_i_visit_the_edit_degree_details_page
       and_i_enter_valid_non_uk_degree_details
       then_i_click_the_continue_button
-      and_i_am_redirected_to_the_summary_page
+      then_i_am_redirected_to_confirm_page
     end
 
     scenario "the user enters invalid details" do
@@ -70,9 +70,8 @@ private
                                   id: trainee.degrees.first.id)
   end
 
-  def and_i_am_redirected_to_the_summary_page
-    summary_page.load(id: trainee.id)
-    expect(summary_page).to be_displayed(id: trainee.id)
+  def then_i_am_redirected_to_confirm_page
+    expect(page.current_path).to eq("/trainees/#{trainee.id}/degrees/confirm")
   end
 
   def and_i_see_the_error_summary
