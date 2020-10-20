@@ -54,6 +54,9 @@ jobs:
         docker-compose up --no-build -d
         docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
 
+    - name: Setup sonarqube
+      uses: warchant/setup-sonar-scanner@v1
+
     - name: Setup DB
       run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
 
@@ -67,7 +70,32 @@ jobs:
       run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
 
     - name: Run tests
-      run: docker-compose exec -T web /bin/sh -c 'bundle exec rake spec'
+      run: |
+        docker-compose exec --env COVERAGE=true -T web /bin/sh -c "bundle exec rake spec SPEC_OPTS='--format RspecSonarqubeFormatter --out rspec-test-report.xml --format documentation'"
+        # Copy test results and coverage to docker host (used by another script)
+        docker cp -a register-trainee-teachers_web_1:/app/coverage .
+        docker cp -a register-trainee-teachers_web_1:/app/rspec-test-report.xml .
+        # As the tests were run in the docker container the paths to the coverage are prefixed with "/app/"
+        # So we need to replace it with the docker hosts current directory
+        sed "s|\"/app/|\"`pwd`/|g" coverage/backend/.resultset.json -i
+        sed "s|\"./spec/|\"`pwd`/spec/|g" rspec-test-report.xml -i
+
+    - name: Keep Code Coverage Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: Code_Coverage
+        if-no-files-found: error
+        path: |
+          ${{ github.workspace }}/coverage/*
+          ${{ github.workspace }}/rspec-test-report.xml
+
+    - name: Run sonarqube
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: sonar-scanner
+        -Dsonar.login=6ca2ab400673d5491d6746aa6337d743e94a9dbf
+        -Dsonar.testExecutionReportPaths=${{ github.workspace }}/rspec-test-report.xml
+        -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/backend/.resultset.json
 
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
