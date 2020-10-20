@@ -1,0 +1,9 @@
+<% if trainee.degrees.present? %>
+  <% trainee.degrees.each do |degree| %>
+    <%= render_component SummaryCard::View.new(title: degree_title(degree),
+        heading_level: 2,
+        rows: get_degree_rows(degree)
+      )
+    %>
+  <% end %>
+<% end %>
