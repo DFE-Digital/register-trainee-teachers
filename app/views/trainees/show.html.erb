@@ -59,7 +59,7 @@
       component.slot(
         :row,
         task_name: 'Degree',
-        path: new_trainee_degree_path(@trainee),
+        path:   @trainee.degrees.present?  ? trainee_degrees_confirm_path(@trainee) : new_trainee_degree_path(@trainee),
         status: 'in progress'
       )
     end %>
