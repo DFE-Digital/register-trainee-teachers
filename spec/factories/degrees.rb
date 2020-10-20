@@ -17,5 +17,19 @@ FactoryBot.define do
       degree_grade { DEGREE_GRADES.sample }
       graduation_year { (1900..Time.zone.today.year).to_a.sample }
     end
+
+    trait :non_uk_degree_type do
+      locale_code { :non_uk }
+      non_uk_degree { NARIC_NON_UK.sample }
+    end
+
+    trait :non_uk_degree_with_details do
+      non_uk_degree_type
+
+      degree_subject { DEGREE_SUBJECTS.sample }
+      country { DEGREE_COUNTRIES.sample }
+      degree_grade { DEGREE_GRADES.sample }
+      graduation_year { (1900..Time.zone.today.year).to_a.sample }
+    end
   end
 end

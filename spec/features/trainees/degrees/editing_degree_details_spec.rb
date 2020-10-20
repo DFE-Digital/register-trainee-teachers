@@ -3,16 +3,33 @@ require "rails_helper"
 RSpec.feature "editing a degree" do
   context "UK degree" do
     scenario "without filling in the fields" do
-      given_a_trainee_with_an_uk_degree_exists
+      given_a_trainee_with_a_uk_degree
       when_i_visit_the_degree_details_page
       and_i_click_the_continue_button
       then_i_see_the_error_summary
     end
 
     scenario "filling in the fields correct" do
-      given_a_trainee_with_an_uk_degree_exists
+      given_a_trainee_with_a_uk_degree
       when_i_visit_the_degree_details_page
-      and_i_fill_the_degree_details
+      and_i_fill_the_uk_degree_details
+      and_i_click_the_continue_button
+      then_i_am_on_the_summary_page
+    end
+  end
+
+  context "Non UK degree" do
+    scenario "without filling in the fields" do
+      given_a_trainee_with_a_non_uk_degree
+      when_i_visit_the_degree_details_page
+      and_i_click_the_continue_button
+      then_i_am_on_the_summary_page
+    end
+
+    scenario "filling the fields correct" do
+      given_a_trainee_with_a_non_uk_degree
+      when_i_visit_the_degree_details_page
+      and_i_fill_the_non_uk_degree_details
       and_i_click_the_continue_button
       then_i_am_on_the_summary_page
     end
@@ -20,15 +37,26 @@ RSpec.feature "editing a degree" do
 
 private
 
-  def given_a_trainee_with_an_uk_degree_exists
-    trainee
+  def given_a_trainee_with_a_uk_degree
+    uk_trainee
+  end
+
+  def given_a_trainee_with_a_non_uk_degree
+    non_uk_trainee
   end
 
   def and_i_click_the_continue_button
     degree_details_page.continue.click
   end
 
-  def and_i_fill_the_degree_details
+  def and_i_fill_the_non_uk_degree_details
+    template = build(:degree, :non_uk_degree_with_details)
+    degree_details_page.degree_subject.select(template.degree_subject)
+    degree_details_page.degree_country.select(template.country)
+    degree_details_page.graduation_year.fill_in(with: template.graduation_year)
+  end
+
+  def and_i_fill_the_uk_degree_details
     template = build(:degree, :uk_degree_with_details)
 
     degree_details_page.degree_subject.select(template.degree_subject)
@@ -43,7 +71,7 @@ private
   end
 
   def then_i_am_on_the_summary_page
-    summary_page.load(id: @trainee.id)
+    summary_page.load(id: trainee.id)
     expect(summary_page).to be_displayed
   end
 
@@ -60,10 +88,14 @@ private
   end
 
   def trainee
-    @trainee ||= create(:degree).trainee
+    (@uk_trainee || @non_uk_trainee)
   end
 
-  def degree
-    trainee.degrees.first
+  def uk_trainee
+    @uk_trainee ||= create(:degree, :uk_degree_type).trainee
+  end
+
+  def non_uk_trainee
+    @non_uk_trainee ||= create(:degree, :non_uk_degree_type).trainee
   end
 end

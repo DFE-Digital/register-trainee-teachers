@@ -7,6 +7,7 @@ module PageObjects
       element :institution, "#degree-institution-field"
       element :graduation_year, "#degree-graduation-year-field"
       element :degree_grade, ".degree-grade"
+      element :degree_country, "#degree-country-field"
 
       element :error_summary, ".govuk-error-summary"
       element :continue, ".govuk-button"
