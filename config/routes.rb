@@ -23,6 +23,10 @@ Rails.application.routes.draw do
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resources :degrees
       resource :personal_details, concerns: :confirmable, only: %i[edit update], path: "/personal-details"
+
+      namespace :diversity do
+        resource :disclosure, only: %i[edit update], path: "/information-disclosed"
+      end
     end
 
     member do

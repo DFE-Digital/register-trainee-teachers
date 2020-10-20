@@ -11,6 +11,8 @@ FactoryBot.define do
     ethnicity { Faker::Nation.nationality }
     disability { %w[none something].sample }
 
+    diversity_disclosure { Trainee.diversity_disclosures.keys.sample }
+
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
     town_city { Faker::Address.city }

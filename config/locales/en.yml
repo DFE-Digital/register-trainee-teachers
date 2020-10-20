@@ -52,5 +52,9 @@ en:
               blank: "You must select a gender"
             nationality_ids:
               empty_nationalities: You must select at least one nationality
+        diversities/disclosure:
+          attributes:
+            diversity_disclosure:
+              blank: "You must select Yes or No"
   page_headings:
     start_page: "Register trainee teachers"
