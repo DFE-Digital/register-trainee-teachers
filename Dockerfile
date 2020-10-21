@@ -8,16 +8,17 @@ RUN apk add --update --no-cache --virtual runtime-dependances \
   postgresql-dev \
   yarn
 
-ENV APP_HOME /app
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-
-COPY .tool-versions Gemfile Gemfile.lock ./
+WORKDIR /tmp
+COPY .tool-versions Gemfile Gemfile.lock /tmp/
 
 RUN apk add --update --no-cache --virtual build-dependances \
   build-base && \
   bundle install --jobs=4 && \
   apk del build-dependances
+
+ENV APP_HOME /app
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile

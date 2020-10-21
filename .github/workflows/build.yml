@@ -33,11 +33,13 @@ jobs:
       run: |
         GIT_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c 1-7)
         GIT_BRANCH="${GITHUB_REF##*/}"
-        echo "::set-env name=GIT_SHA_SHORT::$GIT_SHA_SHORT"
-        echo "::set-env name=GIT_BRANCH::$GIT_BRANCH"
-        echo "::set-env name=SHA_TAG::$GIT_SHA_SHORT"
+
+
+        echo "GIT_SHA_SHORT=$GIT_SHA_SHORT" >> $GITHUB_ENV
+        echo "GIT_BRANCHE=$GIT_BRANCH" >> $GITHUB_ENV
+        echo "SHA_TAG=$GIT_SHA_SHORT" >> $GITHUB_ENV
         echo "::set-output name=SHA_TAG::$GIT_SHA_SHORT"
-        echo "::set-env name=BRANCH_TAG::$GIT_BRANCH"
+        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
 
     - name: Login to docker hub
       run: echo "${{secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
@@ -45,6 +47,8 @@ jobs:
     - name: "docker pull ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}"
       run: docker pull $DOCKER_REPO:$BRANCH_TAG || true
 
+
+    #docker compose
     - name: "docker-compose build"
       run:  docker-compose build
 
