@@ -7,13 +7,13 @@ module Diversities
         let(:trainee) { create(:trainee, diversity_disclosure: nil) }
         let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
 
+        before(:each) do
+          service.call
+          trainee.reload
+        end
+
         context "when disclosure attribute is valid" do
           let(:attributes) { { diversity_disclosure: "yes" } }
-
-          before do
-            service.call
-            trainee.reload
-          end
 
           it "updates the trainee's disclosure details" do
             expect(trainee.diversity_disclosure).to be_truthy
@@ -27,11 +27,6 @@ module Diversities
 
         context "when disclosure attribute is invalid" do
           let(:attributes) { { diversity_disclosure: nil } }
-
-          before do
-            service.call
-            trainee.reload
-          end
 
           it "does not update the trainee's disclosure details" do
             expect(trainee.diversity_disclosure).to be_falsey
