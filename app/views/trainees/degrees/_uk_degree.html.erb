@@ -1,39 +1,52 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: [ @trainee, @degree ], local: true do |f| %>
-      <h2 class="govuk-heading-l"> Degree Details </h2>
+      <h2 class="govuk-heading-l">UK degree details </h2>
       <%= f.govuk_error_summary %>
-      <%- degree_subjects = DEGREE_SUBJECTS.map do |name| 
-            OpenStruct.new(name: name) 
-          end 
+      <%- uk_degrees = HESA_DEGREE_TYPES.map do |_hesa_code, _abbreviation, name, _level|
+        OpenStruct.new(name: name)
+      end
+          uk_degrees.unshift(OpenStruct.new(name: nil))
+      %>
+
+      <%= f.govuk_collection_select(:uk_degree,
+                                    uk_degrees,
+                                    :name,
+                                    :name,
+                                    label: { text: "Enter degree type", size: 's'},
+                                    hint: { text: "For example, BA, BSc or other (please specify)" } )
+      %>
+      <%- degree_subjects = DEGREE_SUBJECTS.map do |name|
+            OpenStruct.new(name: name)
+          end
           degree_subjects.unshift(OpenStruct.new(name: nil))
       %>
-      <%= f.govuk_collection_select :degree_subject, degree_subjects, 
+      <%= f.govuk_collection_select :degree_subject, degree_subjects,
             :name, :name, label: { text: 'Degree subject', size: 's' },
             hint: { text: 'Search for the closest matching subject' } %>
 
-      <%- institutions = INSTITUTIONS.map do |name| 
-            OpenStruct.new(name: name) 
-          end 
+      <%- institutions = INSTITUTIONS.map do |name|
+            OpenStruct.new(name: name)
+          end
           institutions.unshift(OpenStruct.new(name: nil))
       %>
-      <%= f.govuk_collection_select :institution, institutions, :name, 
+      <%= f.govuk_collection_select :institution, institutions, :name,
             :name, label: { text: "Institution", size: 's' } %>
 
-      <%= f.govuk_text_field :graduation_year, 
-            label: { text: "Graduation Year", size: 's' }, 
+      <%= f.govuk_text_field :graduation_year,
+            label: { text: "Graduation Year", size: 's' },
             width: "one-quarter"  %>
 
-      <%= f.govuk_radio_buttons_fieldset(:degree_grade, 
-            legend: { text: "Degree grade", size: 's' }, 
+      <%= f.govuk_radio_buttons_fieldset(:degree_grade,
+            legend: { text: "Degree grade", size: 's' },
             classes: "degree-grade" ) do %>
 
         <% DEGREE_GRADES.each do |name| %>
-          <%= f.govuk_radio_button :degree_grade, name, 
+          <%= f.govuk_radio_button :degree_grade, name,
                 label: { text: name }, link_errors: true %>
         <% end %>
         <%= f.govuk_radio_divider %>
-        <%= f.govuk_radio_button :degree_grade, :still_studying, 
+        <%= f.govuk_radio_button :degree_grade, :still_studying,
               label: { text: "The trainee is still studying for their degree"} %>
       <% end %>
 

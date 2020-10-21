@@ -1,7 +1,7 @@
 class Degree < ApplicationRecord
   validates :locale_code, presence: true
-  validates :non_uk_degree, presence: true, if: :non_uk?
-  validates :uk_degree, presence: true, if: :uk?
+  # validates :non_uk_degree, presence: true, if: :non_uk?
+  # validates :uk_degree, presence: true, if: :uk?
 
   validates :degree_subject, presence: true, on: :uk
   validates :institution, presence: true, on: :uk
