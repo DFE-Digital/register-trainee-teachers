@@ -6,6 +6,14 @@ class Trainee < ApplicationRecord
   enum locale_code: { uk: 0, non_uk: 1 }
   enum diversity_disclosure: { yes: 0, no: 1 }
   enum gender: { male: 0, female: 1, other: 2 }
+  enum ethnic_group: {
+    asian: 0,
+    black: 1,
+    mixed: 2,
+    white: 3,
+    other_ethnic_group: 4,
+    no_ethnicity_provided: 5,
+  }
 
   has_many :degrees, dependent: :destroy
   has_many :nationalisations, dependent: :destroy, inverse_of: :trainee

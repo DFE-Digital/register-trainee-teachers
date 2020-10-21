@@ -1,0 +1,29 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: "Back",
+    href: trainee_path(@trainee)
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with(model: @ethnic_group, url: trainee_diversity_ethnic_group_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+        <%= f.govuk_collection_radio_buttons(
+          :ethnic_group,
+          format_ethnic_group_options(Trainee.ethnic_groups.keys),
+          ->(option) { option }, # Mapped to value
+          ->(option) { I18n.t('views.ethnic_groups.names.' + option.to_s) } # Mapped to text,
+          ->(option) { I18n.t('views.ethnic_groups.descriptions.' + option.to_s) } # Mappted to hint,
+          legend: { text: "What is their ethnic group?", tag: "h1", size: "l" }) %>
+
+        <div class="govuk-form-group">
+          <%= f.govuk_radio_divider %>
+          <%= f.govuk_radio_button :ethnic_group, :no_ethnicity_provided, label: { text: "Not provided" } %>
+        </div>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
