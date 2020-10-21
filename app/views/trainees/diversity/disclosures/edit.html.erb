@@ -9,17 +9,15 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_with(model: @disclosure, url: trainee_diversity_disclosure_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
-      
-      <h1 class="govuk-heading-l">Has the trainee shared diversity information?</h1>
 
-      <%= f.govuk_radio_buttons_fieldset(
-        :diversity_disclosure, 
-        legend: { text: "" }, 
-        hint: { text: "Includes ethnicity and disabilities" }) do %>
-
-          <%= f.govuk_radio_button :diversity_disclosure, :yes, label: { text: "Yes" }, link_errors: true %>
-          <%= f.govuk_radio_button :diversity_disclosure, :no, label: { text: "No" } %>
-      <% end %>
+              
+        <%= f.govuk_collection_radio_buttons(
+          :diversity_disclosure,
+          Trainee.diversity_disclosures.keys,
+          ->(option) { option },
+          ->(option) { I18n.t("views.diversity_disclosures.names.#{option}_option") },
+          legend: { text: "Has the trainee shared diversity information?", tag: "h1", size: "l" },
+          hint: { text: "Includes ethnicity and disabilities" }) %>
 
       <%= f.govuk_submit %>
     <% end %>
