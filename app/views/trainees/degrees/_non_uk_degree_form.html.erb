@@ -1,16 +1,16 @@
 <%= form_with model: [ @trainee, @degree ], local: true do |f| %>
   <%= f.govuk_error_summary %>
-  <h2 class="govuk-heading-l">Degree Details</h2>
-    <%= f.govuk_collection_select :degree_subject, degree_subjects, 
-        :name, :name, label: { text: 'Degree subject', size: 's' },
-        hint: { text: 'Search for the closest matching subject' } %>
-    
-    <%= f.govuk_collection_select :country, degree_countries, :name,
-        :name, label: { text: "Country where the degree was obtained", size: 's' } %>
+  <h1 class="govuk-heading-l">Degree Details</h1>
+	<%= f.govuk_collection_select :degree_subject, degree_subjects, 
+			:name, :name, label: { text: 'Degree subject', size: 's' },
+			hint: { text: 'Search for the closest matching subject' } %>
 
-    <%= f.govuk_text_field :graduation_year, 
-        label: { text: "Graduation Year", size: 's' }, 
-        width: "one-quarter"  %>
+	<%= f.govuk_collection_select :country, degree_countries, :name,
+			:name, label: { text: "Country where the degree was obtained", size: 's' } %>
 
-    <%= f.govuk_submit("Continue") %>
+	<%= f.govuk_text_field :graduation_year, 
+			label: { text: "Graduation Year", size: 's' }, 
+			width: "one-quarter"  %>
+
+	<%= f.govuk_submit("Continue") %>
 <% end %>

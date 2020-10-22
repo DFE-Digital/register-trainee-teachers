@@ -1,5 +1,5 @@
 <%= form_with model: [ @trainee, @degree ], local: true do |f| %>
-  <h2 class="govuk-heading-l">Degree Details</h2>
+  <h1 class="govuk-heading-l">Degree Details</h1>
   <%= f.govuk_error_summary %>
   <%= f.govuk_collection_select :degree_subject, degree_subjects, 
         :name, :name, label: { text: 'Degree subject', size: 's' },
@@ -26,4 +26,3 @@
 
   <%= f.govuk_submit("Continue") %>
 <% end %>
-  
