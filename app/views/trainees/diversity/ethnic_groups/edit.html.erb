@@ -13,9 +13,10 @@
         <%= f.govuk_collection_radio_buttons(
           :ethnic_group,
           format_ethnic_group_options(Trainee.ethnic_groups.keys),
-          ->(option) { option }, # Mapped to value
-          ->(option) { I18n.t('views.ethnic_groups.names.' + option.to_s) } # Mapped to text,
-          ->(option) { I18n.t('views.ethnic_groups.descriptions.' + option.to_s) } # Mappted to hint,
+          -> (value) { value },
+          -> (name) { I18n.t("views.ethnic_groups.names.#{name}") },
+          -> (description) { I18n.t("views.ethnic_groups.descriptions.#{description}") },
+          form_group: { classes: "govuk-!-margin-bottom-0" },
           legend: { text: "What is their ethnic group?", tag: "h1", size: "l" }) %>
 
         <div class="govuk-form-group">
