@@ -1,0 +1,25 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: "Back",
+    href: trainee_path(@trainee)
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with(model: @disclosure, url: trainee_diversity_disclosure_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+              
+        <%= f.govuk_collection_radio_buttons(
+          :diversity_disclosure,
+          Trainee.diversity_disclosures.keys,
+          ->(value) { value },
+          ->(label) { I18n.t("views.diversity_disclosures.label_names.#{label}_option") },
+          legend: { text: "Has the trainee shared diversity information?", tag: "h1", size: "l" },
+          hint: { text: "Includes ethnicity and disabilities" }) %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

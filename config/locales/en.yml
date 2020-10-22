@@ -4,6 +4,10 @@ en:
       not_provided: Not provided
       heading: Confirm %{section_title}
   views:
+    diversity_disclosures:
+      label_names:
+        yes_option: "Yes"
+        no_option: "No"
     trainee_summary:
       contact_details:
         heading: Contact Details
@@ -52,5 +56,9 @@ en:
               blank: "You must select a gender"
             nationality_ids:
               empty_nationalities: You must select at least one nationality
+        diversities/disclosure:
+          attributes:
+            diversity_disclosure:
+              blank: "You must select Yes or No"
   page_headings:
     start_page: "Register trainee teachers"
