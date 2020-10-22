@@ -15,7 +15,7 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "standard": "^14.3.4",
+    "standard": "^15.0.0",
     "webpack-dev-server": "^3.11.0"
   },
   "license": "MIT"
