@@ -5,7 +5,7 @@ en:
       heading: Confirm %{section_title}
   views:
     diversity_disclosures:
-      names:
+      label_names:
         yes_option: "Yes"
         no_option: "No"
     trainee_summary:

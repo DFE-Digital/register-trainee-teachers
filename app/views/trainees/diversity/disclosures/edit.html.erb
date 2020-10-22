@@ -14,8 +14,8 @@
         <%= f.govuk_collection_radio_buttons(
           :diversity_disclosure,
           Trainee.diversity_disclosures.keys,
-          ->(option) { option },
-          ->(option) { I18n.t("views.diversity_disclosures.names.#{option}_option") },
+          ->(value) { value },
+          ->(label) { I18n.t("views.diversity_disclosures.label_names.#{label}_option") },
           legend: { text: "Has the trainee shared diversity information?", tag: "h1", size: "l" },
           hint: { text: "Includes ethnicity and disabilities" }) %>
 
