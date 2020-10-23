@@ -12,7 +12,7 @@
           <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "" } ) do %>
             <%= f.govuk_radio_button :locale_code, :uk, label: { text: "UK degree" } do %>
               <%= f.govuk_collection_select(:uk_degree,
-                hesa_degrees,
+                hesa_degree_types_options,
                 :name,
                 :name,
                 label: { text: "Enter degree type"},
