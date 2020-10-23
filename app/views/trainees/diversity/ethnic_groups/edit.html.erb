@@ -10,19 +10,19 @@
     <%= form_with(model: @ethnic_group, url: trainee_diversity_ethnic_group_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-        <%= f.govuk_collection_radio_buttons(
-          :ethnic_group,
-          format_ethnic_group_options(Trainee.ethnic_groups.keys),
-          -> (value) { value },
-          -> (name) { I18n.t("views.ethnic_groups.names.#{name}") },
-          -> (description) { I18n.t("views.ethnic_groups.descriptions.#{description}") },
-          form_group: { classes: "govuk-!-margin-bottom-0" },
-          legend: { text: "What is their ethnic group?", tag: "h1", size: "l" }) %>
+        <%= f.govuk_radio_buttons_fieldset(:ethnic_group, legend: { text: "What is their ethnic group?", tag: "h1", size: "l" }) do %>
+          <% format_ethnic_group_options(Trainee.ethnic_groups.keys).each_with_index do |ethnic_option, index| %>
+            <%= f.govuk_radio_button(
+              :ethnic_group, 
+              ethnic_option,
+              hint: { text: I18n.t("views.forms.ethnic_groups.descriptions.#{ethnic_option}") },
+              label: { text: I18n.t("views.forms.ethnic_groups.labels.#{ethnic_option}"), size: "s" },
+              link_errors: (true if index == 0)) %>
+          <% end %>
 
-        <div class="govuk-form-group">
           <%= f.govuk_radio_divider %>
           <%= f.govuk_radio_button :ethnic_group, :no_ethnicity_provided, label: { text: "Not provided" } %>
-        </div>
+        <% end %>
 
       <%= f.govuk_submit %>
     <% end %>
