@@ -17,7 +17,7 @@
               ethnic_option,
               hint: { text: I18n.t("views.forms.ethnic_groups.descriptions.#{ethnic_option}") },
               label: { text: I18n.t("views.forms.ethnic_groups.labels.#{ethnic_option}"), size: "s" },
-              link_errors: (true if index == 0)) %>
+              link_errors: index.zero?) %>
           <% end %>
 
           <%= f.govuk_radio_divider %>
