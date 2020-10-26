@@ -8,17 +8,11 @@
           <p class="govuk-body">
             If the trainee or candidate has further postgraduate degrees, you can add them next.
           </p>
-
-          <%- uk_degrees = HESA_DEGREE_TYPES.map do |_hesa_code, _abbreviation, name, _level| 
-                OpenStruct.new(name: name) 
-              end 
-              uk_degrees.unshift(OpenStruct.new(name: nil))
-          %>
           
           <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "" } ) do %>
             <%= f.govuk_radio_button :locale_code, :uk, label: { text: "UK degree" } do %>
               <%= f.govuk_collection_select(:uk_degree,
-                uk_degrees,
+                hesa_degree_types_options,
                 :name,
                 :name,
                 label: { text: "Enter degree type"},
@@ -34,11 +28,10 @@
                     { class: "govuk-fieldset__legend" } ) } do %>
                 <% NARIC_NON_UK.each do |name| %>
                   <%= f.govuk_radio_button :non_uk_degree, name,
-                        label: { text: name }, link_errors: true %>
+                    label: { text: name }, link_errors: true %>
                 <% end %>
                 <%= f.govuk_radio_divider %>
                 <%= f.govuk_radio_button :non_uk_degree, :non_naric, label: { text: "NARIC not provided"} %>
-
                 <% end %>
               <% end %>
             <% end %>

@@ -1,0 +1,27 @@
+<%= form_with model: [ @trainee, @degree ], local: true do |f| %>
+  <h1 class="govuk-heading-l">Degree Details</h1>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_collection_select :degree_subject, degree_subjects_options, 
+        :name, :name, label: { text: 'Degree subject', size: 's' },
+        hint: { text: 'Search for the closest matching subject' } %>
+
+  <%= f.govuk_collection_select :institution, institutions_options, :name, 
+        :name, label: { text: "Institution", size: 's' } %>
+
+  <%= f.govuk_text_field :graduation_year, 
+        label: { text: "Graduation Year", size: 's' }, 
+        width: "one-quarter"  %>
+
+  <%= f.govuk_radio_buttons_fieldset(:degree_grade, 
+        legend: { text: "Degree grade", size: 's' }, 
+        classes: "degree-grade" ) do %>
+
+    <% DEGREE_GRADES.map do |name| %>
+      <%= f.govuk_radio_button :degree_grade, name, label: { text: name }, link_errors: true %>
+    <% end %>
+    <%= f.govuk_radio_divider %>
+    <%= f.govuk_radio_button :degree_grade, :still_studying, 
+          label: { text: "The trainee is still studying for their degree"} %>
+  <% end %>
+  <%= f.govuk_submit("Continue") %> 
+<% end %>

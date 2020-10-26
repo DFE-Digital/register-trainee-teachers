@@ -58,5 +58,15 @@ RSpec.describe Degree, type: :model do
           .in_range(1900..Time.zone.today.year).on(:uk)
       end
     end
+
+    describe "non-uk degree fields" do
+      it "validates" do
+        expect(subject).to validate_presence_of(:degree_subject).on(:non_uk)
+        expect(subject).to validate_presence_of(:country).on(:non_uk)
+        expect(subject).to validate_presence_of(:graduation_year).on(:non_uk)
+        expect(subject).to validate_inclusion_of(:graduation_year)
+          .in_range(1900..Time.zone.today.year).on(:non_uk)
+      end
+    end
   end
 end
