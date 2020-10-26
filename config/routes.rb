@@ -21,7 +21,12 @@ Rails.application.routes.draw do
   resources :trainees, only: %i[index show new create update] do
     scope module: :trainees do
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
-      resources :degrees
+      resources :degrees do
+        collection do
+          get "ask"
+          post "finish"
+        end
+      end
       resource :personal_details, concerns: :confirmable, only: %i[edit update], path: "/personal-details"
 
       namespace :diversity do
