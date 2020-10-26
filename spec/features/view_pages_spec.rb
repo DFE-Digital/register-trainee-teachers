@@ -9,5 +9,6 @@ RSpec.feature "view pages" do
 
   scenario "navigate to start" do
     expect(start_page.page_title).to have_text(t("page_headings.start_page"))
+    expect(start_page).to have_title("Register trainee teachers - GOV.UK")
   end
 end

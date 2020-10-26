@@ -1,3 +1,5 @@
+<%= render_component PageTitle::View.new(title: I18n.t("components.confirmation.heading", section_title: trainee_section_key.gsub(/-/, " "))) %>
+
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
     text: 'Back to overview',

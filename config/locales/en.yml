@@ -1,8 +1,29 @@
 en:
+  service_name: Register trainee teachers
   components:
     confirmation:
       not_provided: Not provided
       heading: Confirm %{section_title}
+    page_titles:
+      trn_submissions:
+        show: Successfully submitted
+      trainees:
+        new: Add a trainee
+        index: Trainee teachers
+        not_supported_route: Other routes not supported
+        show: Overview
+        diversity:
+          disclosures:
+            edit: Has the trainee shared diversity information?
+        contact_details:
+          edit: Contact details
+        degrees:
+          edit: Degree Details
+          new: Add undergraduate details
+        personal_details:
+          edit: Trainee personal details
+        training_details:
+          edit: Add training details
   views:
     diversity_disclosures:
       label_names:
@@ -27,11 +48,11 @@ en:
           white: White
           other_ethnic_group: Another ethnic group
         descriptions:
-          asian: (includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani) 
-          black: (includes any Black background) 
-          mixed: (includes any Mixed background) 
-          white: (includes any White background) 
-          other_ethnic_group: (includes any other ethnic group, for example, Arab) 
+          asian: (includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani)
+          black: (includes any Black background)
+          mixed: (includes any Mixed background)
+          white: (includes any White background)
+          other_ethnic_group: (includes any other ethnic group, for example, Arab)
   activerecord:
     attributes:
       trainee:

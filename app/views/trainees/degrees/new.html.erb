@@ -1,3 +1,5 @@
+<%= render_component PageTitle::View.new(title: "trainees.degrees.new") %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
       <%= form_with model: [@trainee, @degree], local: true do |f| %>
