@@ -9,7 +9,7 @@ module Trainees
         updater = Diversities::Disclosures::Update.call(trainee: trainee, attributes: disclosure_param)
 
         if updater.successful?
-          redirect_to(trainee_path(updater.disclosure.trainee))
+          redirect_to(edit_trainee_diversity_ethnic_group_path(updater.disclosure.trainee))
         else
           @disclosure = updater.disclosure
           render :edit

@@ -18,6 +18,20 @@ en:
         description: including from Northern Ireland
       other:
         description: ""
+    forms:
+      ethnic_groups:
+        labels:
+          asian: Asian or Asian British
+          black: Black, African, Black British or Caribbean
+          mixed: Mixed or multiple ethnic groups
+          white: White
+          other_ethnic_group: Another ethnic group
+        descriptions:
+          asian: (includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani) 
+          black: (includes any Black background) 
+          mixed: (includes any Mixed background) 
+          white: (includes any White background) 
+          other_ethnic_group: (includes any other ethnic group, for example, Arab) 
   activerecord:
     attributes:
       trainee:
@@ -60,5 +74,9 @@ en:
           attributes:
             diversity_disclosure:
               blank: "You must select Yes or No"
+        diversities/ethnic_group:
+          attributes:
+            ethnic_group:
+              blank: "You must select an option"
   page_headings:
     start_page: "Register trainee teachers"
