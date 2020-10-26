@@ -1,46 +1,42 @@
 require "rails_helper"
 
-RSpec.feature "Adding a degree" do
-  scenario "without selecting a degree type" do
+RSpec.feature "Selecting the degree route" do
+  scenario "without selecting yes or no" do
     given_a_trainee_exists
     when_i_visit_the_degree_page
     and_i_click_the_continue_button
     then_i_see_the_error_summary
   end
 
-  describe "Non-UK degree" do
-    scenario "without comparable UK degree type" do
+  describe "non-UK degree" do
+    scenario "without selecting no" do
       given_a_trainee_exists
       when_i_visit_the_degree_page
-      and_i_select_the_non_uk_degree_type
       and_i_click_the_continue_button
       then_i_see_the_error_summary
     end
 
-    scenario "with comparable UK degree type" do
+    scenario "selecting no" do
       given_a_trainee_exists
       when_i_visit_the_degree_page
-      and_i_select_the_non_uk_degree_type
-      and_i_select_a_non_uk_degree
+      and_i_select_no
       and_i_click_the_continue_button
       then_i_am_on_the_summary_page
     end
   end
 
   describe "UK degree" do
-    scenario "without UK degree type" do
+    scenario "without selecting yes" do
       given_a_trainee_exists
       when_i_visit_the_degree_page
-      and_i_select_the_uk_degree_type
       and_i_click_the_continue_button
       then_i_see_the_error_summary
     end
 
-    scenario "with UK degree type" do
+    scenario "selecting yes" do
       given_a_trainee_exists
       when_i_visit_the_degree_page
-      and_i_select_the_uk_degree_type
-      and_i_select_an_uk_degree
+      and_i_select_yes
       and_i_click_the_continue_button
       then_i_am_on_the_degree_details_page
     end
@@ -53,19 +49,21 @@ private
   end
 
   def degree_page
-    @degree_page ||= PageObjects::Trainees::Degrees.new
+    @degree_page ||= PageObjects::Trainees::DegreeAsk.new
   end
 
   def given_a_trainee_exists
     trainee
   end
 
-  def and_i_select_the_uk_degree_type
-    degree_page.uk_degree_type.click
+  def and_i_select_yes
+    degree_page.locale_code_uk.click
+    @locale = degree_page.locale_code_uk.value
   end
 
-  def and_i_select_the_non_uk_degree_type
-    degree_page.non_uk_degree_type.click
+  def and_i_select_no
+    degree_page.locale_code_non_uk.click
+    @locale = degree_page.locale_code_non_uk.value
   end
 
   def and_i_click_the_continue_button
@@ -77,9 +75,8 @@ private
   end
 
   def then_i_am_on_the_degree_details_page
-    degree_details_page.load(trainee_id: trainee.id,
-                             id: trainee.degrees.first.id)
-    expect(degree_details_page).to be_displayed
+    new_degree_details_page.load(trainee_id: trainee.id, locale_code: @locale)
+    expect(new_degree_details_page).to be_displayed
   end
 
   def then_i_am_on_the_summary_page
@@ -87,24 +84,8 @@ private
     expect(summary_page).to be_displayed
   end
 
-  def degree_details_page
-    @degree_details_page ||= PageObjects::Trainees::DegreeDetails.new
-  end
-
-  def and_i_select_a_non_uk_degree
-    degree_page.type_of_non_uk_degrees.choose(non_uk_degree_type)
-  end
-
-  def and_i_select_an_uk_degree
-    degree_page.type_of_uk_degrees.select(uk_degree_type)
-  end
-
-  def uk_degree_type
-    "Bachelor of Arts"
-  end
-
-  def non_uk_degree_type
-    "Bachelor Degree"
+  def new_degree_details_page
+    @new_degree_details_page ||= PageObjects::Trainees::NewDegreeDetails.new
   end
 
   def summary_page

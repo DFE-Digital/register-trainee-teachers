@@ -1,7 +1,7 @@
 module PageObjects
   module Trainees
-    class DegreeDetails < PageObjects::Base
-      set_url "/trainees/{trainee_id}/degrees/{id}/edit"
+    class NewDegreeDetails < PageObjects::Base
+      set_url "/trainees/{trainee_id}/degrees/new?locale_code={locale_code}"
 
       element :degree_subject, "#degree-degree-subject-field"
       element :institution, "#degree-institution-field"

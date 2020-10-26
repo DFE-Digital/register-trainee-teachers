@@ -4,14 +4,14 @@ RSpec.feature "editing a degree" do
   context "UK degree" do
     scenario "without filling in the fields" do
       given_a_trainee_with_a_uk_degree
-      when_i_visit_the_degree_details_page
+      when_i_visit_the_edit_degree_details_page
       and_i_click_the_continue_button
       then_i_see_the_error_summary
     end
 
     scenario "filling in the fields correct" do
       given_a_trainee_with_a_uk_degree
-      when_i_visit_the_degree_details_page
+      when_i_visit_the_edit_degree_details_page
       and_i_fill_the_uk_degree_details
       and_i_click_the_continue_button
       then_i_am_on_the_summary_page
@@ -21,14 +21,14 @@ RSpec.feature "editing a degree" do
   context "Non UK degree" do
     scenario "without filling in the fields" do
       given_a_trainee_with_a_non_uk_degree
-      when_i_visit_the_degree_details_page
+      when_i_visit_the_edit_degree_details_page
       and_i_click_the_continue_button
       then_i_am_on_the_summary_page
     end
 
     scenario "filling the fields correct" do
       given_a_trainee_with_a_non_uk_degree
-      when_i_visit_the_degree_details_page
+      when_i_visit_the_edit_degree_details_page
       and_i_fill_the_non_uk_degree_details
       and_i_click_the_continue_button
       then_i_am_on_the_summary_page
@@ -46,28 +46,28 @@ private
   end
 
   def and_i_click_the_continue_button
-    degree_details_page.continue.click
+    edit_degree_details_page.continue.click
   end
 
   def and_i_fill_the_non_uk_degree_details
     template = build(:degree, :non_uk_degree_with_details)
-    degree_details_page.degree_subject.select(template.degree_subject)
-    degree_details_page.degree_country.select(template.country)
-    degree_details_page.graduation_year.fill_in(with: template.graduation_year)
+    edit_degree_details_page.degree_subject.select(template.degree_subject)
+    edit_degree_details_page.degree_country.select(template.country)
+    edit_degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 
   def and_i_fill_the_uk_degree_details
     template = build(:degree, :uk_degree_with_details)
 
-    degree_details_page.degree_subject.select(template.degree_subject)
-    degree_details_page.institution.select(template.institution)
-    degree_details_page.degree_grade.choose(template.degree_grade)
-    degree_details_page.graduation_year.fill_in(with: template.graduation_year)
+    edit_degree_details_page.degree_subject.select(template.degree_subject)
+    edit_degree_details_page.institution.select(template.institution)
+    edit_degree_details_page.degree_grade.choose(template.degree_grade)
+    edit_degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 
-  def when_i_visit_the_degree_details_page
-    degree_details_page.load(trainee_id: trainee.id,
-                             id: trainee.degrees.first.id)
+  def when_i_visit_the_edit_degree_details_page
+    edit_degree_details_page.load(trainee_id: trainee.id,
+                                  id: trainee.degrees.first.id)
   end
 
   def then_i_am_on_the_summary_page
@@ -76,11 +76,11 @@ private
   end
 
   def then_i_see_the_error_summary
-    expect(degree_details_page.error_summary).to be_visible
+    expect(edit_degree_details_page.error_summary).to be_visible
   end
 
-  def degree_details_page
-    @degree_details_page ||= PageObjects::Trainees::DegreeDetails.new
+  def edit_degree_details_page
+    @edit_degree_details_page ||= PageObjects::Trainees::EditDegreeDetails.new
   end
 
   def summary_page
