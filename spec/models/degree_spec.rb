@@ -11,45 +11,14 @@ RSpec.describe Degree, type: :model do
 
   describe "validation" do
     context "when locale code is present" do
-      it "is present" do
+      it "expect it to be valid" do
         expect(subject).to validate_presence_of(:locale_code)
-      end
-    end
-
-    context "uk degree is present" do
-      subject { described_class.new(locale_code: :uk) }
-
-      it "validates" do
-        expect(subject).to validate_presence_of(:uk_degree)
-      end
-    end
-
-    context "uk degree is not present" do
-      subject { described_class.new(locale_code: :non_uk) }
-
-      it "does not validate" do
-        expect(subject).to_not validate_presence_of(:uk_degree)
-      end
-    end
-
-    context "non-uk degree is present" do
-      subject { described_class.new(locale_code: :non_uk) }
-
-      it "validates" do
-        expect(subject).to validate_presence_of(:non_uk_degree)
-      end
-    end
-
-    context "non-uk degree is not present" do
-      subject { described_class.new(locale_code: :uk) }
-
-      it "does not validate" do
-        expect(subject).to_not validate_presence_of(:non_uk_degree)
       end
     end
 
     describe "uk degree fields" do
       it "validates" do
+        expect(subject).to validate_presence_of(:uk_degree).on(:uk)
         expect(subject).to validate_presence_of(:degree_subject).on(:uk)
         expect(subject).to validate_presence_of(:institution).on(:uk)
         expect(subject).to validate_presence_of(:degree_grade).on(:uk)
@@ -61,6 +30,7 @@ RSpec.describe Degree, type: :model do
 
     describe "non-uk degree fields" do
       it "validates" do
+        expect(subject).to validate_presence_of(:non_uk_degree).on(:non_uk)
         expect(subject).to validate_presence_of(:degree_subject).on(:non_uk)
         expect(subject).to validate_presence_of(:country).on(:non_uk)
         expect(subject).to validate_presence_of(:graduation_year).on(:non_uk)
