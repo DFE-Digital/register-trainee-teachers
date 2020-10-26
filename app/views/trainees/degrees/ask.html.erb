@@ -1,0 +1,27 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: @degree, url: finish_trainee_degrees_path, local: true)do |f| %>
+          <%= f.govuk_error_summary %>
+          <h2 class="govuk-heading-l">Add undergraduate degree</h2>
+
+          <p class="govuk-body">
+            If the trainee has any other degrees, you can add them next.
+          </p>
+
+          <% question = [ 
+          OpenStruct.new(name: "Yes", value: "uk" ),
+          OpenStruct.new(name: "No", value: "non_uk")
+          ] %>
+
+          <%= f.govuk_collection_radio_buttons :locale_code,
+              question,
+              :value,
+              :name,
+              legend: { text: 'Is this a UK degree?' },
+              hint: { text: '' } %>
+
+        <%= f.govuk_submit("Continue") %>
+
+      <% end %>
+  </div>
+</div>
