@@ -4,30 +4,38 @@ module Trainees
     module Degrees
       class ViewPreview < ViewComponent::Preview
         def with_one_uk_degree
-          render_component(Trainees::Confirmation::Degrees::View.new(degrees: single_uk_degree))
+          render_component(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: single_uk_degree)))
         end
 
         def with_multiple_uk_degree
-          render_component(Trainees::Confirmation::Degrees::View.new(degrees: multiple_uk_degrees))
+          render_component(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: multiple_uk_degrees)))
         end
 
         def with_one_non_uk_degree
-          render_component(Trainees::Confirmation::Degrees::View.new(degrees: single_non_uk_degree))
+          render_component(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: single_non_uk_degree)))
         end
 
         def with_multiple_non_uk_degree
-          render_component(Trainees::Confirmation::Degrees::View.new(degrees: multiple_non_uk_degrees))
+          render_component(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: multiple_non_uk_degrees)))
         end
 
         def with_a_mixture_of_uk_and_non_uk_degrees
-          render_component(Trainees::Confirmation::Degrees::View.new(degrees: mixture_of_uk_and_non_uk_degrees))
+          render_component(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees)))
         end
 
       private
 
+        def mock_trainee(degrees:)
+          Trainee.new(
+            id: 0,
+            degrees: degrees,
+          )
+        end
+
         def mock_uk_degree
-          OpenStruct.new(
-            uk?: true,
+          Degree.new(
+            id: 0,
+            locale_code: :uk,
             uk_degree: "BSc - Bachelor of Science",
             degree_subject: "Aviation studies",
             institution: "The Royal College of Nursing",
@@ -37,8 +45,9 @@ module Trainees
         end
 
         def mock_non_uk_degree
-          OpenStruct.new(
-            non_uk?: true,
+          Degree.new(
+            id: 0,
+            locale_code: :non_uk,
             non_uk_degree: "Ordinary bachelor degree",
             degree_subject: "Clinical dentistry",
             country: "Morocco",
@@ -53,8 +62,9 @@ module Trainees
         def multiple_uk_degrees
           @multiple_uk_degrees ||= [
             mock_uk_degree,
-            OpenStruct.new(
-              uk?: true,
+            Degree.new(
+              id: 0,
+              locale_code: :uk,
               uk_degree: "BSc Education",
               degree_subject: "Akkadian language",
               institution: "Royal Agricultural University",
@@ -71,8 +81,9 @@ module Trainees
         def multiple_non_uk_degrees
           @multiple_non_uk_degrees ||= [
             mock_non_uk_degree,
-            OpenStruct.new(
-              non_uk?: true,
+            Degree.new(
+              id: 0,
+              locale_code: :non_uk,
               non_uk_degree: "Postgraduate certificate or postgraduate diploma",
               degree_subject: "Modern Middle Eastern society and culture studies",
               country: "Afghanistan",
