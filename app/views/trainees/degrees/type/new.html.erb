@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-      <%= form_with(model: @degree, url: finish_trainee_degrees_path, local: true)do |f| %>
+      <%= form_with(model: @degree, url: trainee_degrees_new_type_path, local: true) do |f| %>
           <%= f.govuk_error_summary %>
           <h2 class="govuk-heading-l">Add undergraduate degree</h2>
 
@@ -17,11 +17,11 @@
               question,
               :value,
               :name,
-              legend: { text: 'Is this a UK degree?' },
-              hint: { text: '' } %>
+              legend: { text: 'Is this a UK degree?' } %>
 
         <%= f.govuk_submit("Continue") %>
 
       <% end %>
   </div>
 </div>
+

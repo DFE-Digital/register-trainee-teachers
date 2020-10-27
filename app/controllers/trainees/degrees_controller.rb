@@ -1,18 +1,5 @@
 module Trainees
   class DegreesController < ApplicationController
-    def ask
-      @degree = trainee.degrees.build
-    end
-
-    def finish
-      @degree = trainee.degrees.build(locale_code_params)
-      if @degree.valid?
-        redirect_to new_trainee_degree_path(trainee_id: params[:trainee_id], **locale_code_params)
-      else
-        render :ask
-      end
-    end
-
     def new
       @degree = trainee.degrees.build(locale_code: params[:locale_code])
     end

@@ -2,36 +2,36 @@ require "rails_helper"
 
 RSpec.feature "editing a degree" do
   context "UK degree" do
-    scenario "without filling in the fields" do
+    scenario "the user enters valid details" do
       given_a_trainee_with_a_uk_degree
       when_i_visit_the_edit_degree_details_page
-      and_i_click_the_continue_button
-      then_i_see_the_error_summary
+      and_i_enter_valid_uk_degree_details
+      then_i_click_the_continue_button
+      and_i_am_redirected_to_the_summary_page
     end
 
-    scenario "filling in the fields correct" do
+    scenario "the user enters invalid details" do
       given_a_trainee_with_a_uk_degree
       when_i_visit_the_edit_degree_details_page
-      and_i_fill_the_uk_degree_details
-      and_i_click_the_continue_button
-      then_i_am_on_the_summary_page
+      then_i_click_the_continue_button
+      and_i_see_the_error_summary
     end
   end
 
   context "Non UK degree" do
-    scenario "without filling in the fields" do
+    scenario "the user enters valid details" do
       given_a_trainee_with_a_non_uk_degree
       when_i_visit_the_edit_degree_details_page
-      and_i_click_the_continue_button
-      then_i_am_on_the_summary_page
+      and_i_enter_valid_non_uk_degree_details
+      then_i_click_the_continue_button
+      and_i_am_redirected_to_the_summary_page
     end
 
-    scenario "filling the fields correct" do
+    scenario "the user enters invalid details" do
       given_a_trainee_with_a_non_uk_degree
       when_i_visit_the_edit_degree_details_page
-      and_i_fill_the_non_uk_degree_details
-      and_i_click_the_continue_button
-      then_i_am_on_the_summary_page
+      then_i_click_the_continue_button
+      and_i_see_the_error_summary
     end
   end
 
@@ -45,18 +45,18 @@ private
     non_uk_trainee
   end
 
-  def and_i_click_the_continue_button
+  def then_i_click_the_continue_button
     edit_degree_details_page.continue.click
   end
 
-  def and_i_fill_the_non_uk_degree_details
+  def and_i_enter_valid_non_uk_degree_details
     template = build(:degree, :non_uk_degree_with_details)
     edit_degree_details_page.degree_subject.select(template.degree_subject)
     edit_degree_details_page.degree_country.select(template.country)
     edit_degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 
-  def and_i_fill_the_uk_degree_details
+  def and_i_enter_valid_uk_degree_details
     template = build(:degree, :uk_degree_with_details)
 
     edit_degree_details_page.degree_subject.select(template.degree_subject)
@@ -70,12 +70,12 @@ private
                                   id: trainee.degrees.first.id)
   end
 
-  def then_i_am_on_the_summary_page
+  def and_i_am_redirected_to_the_summary_page
     summary_page.load(id: trainee.id)
-    expect(summary_page).to be_displayed
+    expect(summary_page).to be_displayed(id: trainee.id)
   end
 
-  def then_i_see_the_error_summary
+  def and_i_see_the_error_summary
     expect(edit_degree_details_page.error_summary).to be_visible
   end
 
