@@ -78,7 +78,6 @@ jobs:
         # As the tests were run in the docker container the paths to the coverage are prefixed with "/app/"
         # So we need to replace it with the docker hosts current directory
         sed "s|\"/app/|\"`pwd`/|g" coverage/backend/.resultset.json -i
-#        sed "s|\"./spec/|\"`pwd`/spec/|g" rspec-test-report.xml -i
         pwd
 
     - name: Keep Code Coverage Report
