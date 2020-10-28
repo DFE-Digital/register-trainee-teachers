@@ -70,8 +70,6 @@ jobs:
       run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
 
     - name: Run tests
-      env:
-        TEST_PATH: ${{ github.workspace  }}
       run: |
         docker-compose exec --env COVERAGE=true -T web /bin/sh -c "bundle exec rake spec SPEC_OPTS='--format RspecSonarqubeFormatter --out rspec-test-report.xml --format documentation'"
         # Copy test results and coverage to docker host (used by another script)
@@ -79,8 +77,7 @@ jobs:
         docker cp -a register-trainee-teachers_web_1:/app/rspec-test-report.xml .
         # As the tests were run in the docker container the paths to the coverage are prefixed with "/app/"
         # So we need to replace it with the docker hosts current directory
-        # sed "s|\"/app/|\"`pwd`/|g" coverage/backend/.resultset.json -i
-        echo $TEST_PATH
+        sed "s|\"/app/|\"`pwd`/|g" coverage/backend/.resultset.json -i
         pwd
 
     - name: Keep Code Coverage Report
