@@ -1,3 +1,6 @@
+<%= render_component PageTitle::View.new(title: "trainees.new", 
+                                           errors: @trainee.errors) %>
+
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
     text: 'Back',
