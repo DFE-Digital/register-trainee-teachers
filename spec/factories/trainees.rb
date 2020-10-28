@@ -11,8 +11,8 @@ FactoryBot.define do
     ethnicity { Faker::Nation.nationality }
     disability { %w[none something].sample }
 
-    diversity_disclosure { Trainee.diversity_disclosures.keys.sample }
-    ethnic_group { Diversities::ENUMS.values.sample }
+    diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS.values.sample }
+    ethnic_group { Diversities::ETHNIC_GROUP_ENUMS.values.sample }
     ethnic_background { nil }
     additional_ethnic_background { nil }
 

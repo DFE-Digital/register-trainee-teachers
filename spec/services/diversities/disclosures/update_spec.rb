@@ -13,7 +13,7 @@ module Diversities
         end
 
         context "when disclosure attribute is valid" do
-          let(:attributes) { { diversity_disclosure: "yes" } }
+          let(:attributes) { { diversity_disclosure: DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] } }
 
           it "updates the trainee's disclosure details" do
             expect(trainee.diversity_disclosure).to be_truthy

@@ -3,7 +3,7 @@ module Diversities
     include ActiveModel::Model
     attr_accessor :trainee, :diversity_disclosure
 
-    validates :diversity_disclosure, presence: true, inclusion: { in: Trainee.diversity_disclosures.keys }
+    validates :diversity_disclosure, presence: true, inclusion: { in: Diversities::DIVERSITY_DISCLOSURE_ENUMS.values }
 
     delegate :id, :persisted?, to: :trainee
 

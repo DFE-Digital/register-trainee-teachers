@@ -18,7 +18,7 @@ feature "edit ethnic background", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee, ethnic_group: Diversities::ENUMS[:asian])
+    @trainee = create(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian])
   end
 
   def when_i_visit_the_diversity_ethnic_background_page

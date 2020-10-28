@@ -3,8 +3,8 @@ module PageObjects
     module Diversities
       class Disclosure < PageObjects::Base
         set_url "/trainees/{id}/diversity/information-disclosed/edit"
-        element :yes, "#diversities-disclosure-diversity-disclosure-yes-field"
-        element :no, "#diversities-disclosure-diversity-disclosure-no-field"
+        element :yes, "#diversities-disclosure-diversity-disclosure-diversity-disclosed-field"
+        element :no, "#diversities-disclosure-diversity-disclosure-diversity-not-disclosed-field"
         element :submit_button, "input[name='commit']"
       end
     end

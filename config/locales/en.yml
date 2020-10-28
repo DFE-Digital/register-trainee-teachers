@@ -40,6 +40,10 @@ en:
       other:
         description: ""
     forms:
+      diversity_disclosures:
+        label_names:
+          diversity_disclosed: "Yes"
+          diversity_not_disclosed: "No"
       ethnic_groups:
         labels:
           asian_ethnic_group: Asian or Asian British

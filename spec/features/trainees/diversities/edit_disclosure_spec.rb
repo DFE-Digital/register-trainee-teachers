@@ -1,12 +1,21 @@
 require "rails_helper"
 
 feature "edit diversity disclosure", type: :feature do
-  scenario "edit with valid parameters" do
+  scenario "choosing to disclose" do
     given_a_trainee_exists
     when_i_visit_the_diversity_disclosure_page
-    and_i_enter_valid_parameters
+    and_i_choose_to_disclose
     and_i_submit_the_form
     then_i_am_redirected_to_the_ethnic_group_page
+    and_the_diversity_disclosure_is_updated
+  end
+
+  scenario "choosing not to disclose" do
+    given_a_trainee_exists
+    when_i_visit_the_diversity_disclosure_page
+    and_i_choose_not_to_disclose
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_summary_page
     and_the_diversity_disclosure_is_updated
   end
 
@@ -26,8 +35,12 @@ feature "edit diversity disclosure", type: :feature do
     @disclosure_page.load(id: @trainee.id)
   end
 
-  def and_i_enter_valid_parameters
+  def and_i_choose_to_disclose
     @disclosure_page.yes.choose
+  end
+
+  def and_i_choose_not_to_disclose
+    @disclosure_page.no.choose
   end
 
   def and_i_submit_the_form
@@ -37,6 +50,11 @@ feature "edit diversity disclosure", type: :feature do
   def then_i_am_redirected_to_the_ethnic_group_page
     @ethnic_group ||= PageObjects::Trainees::Diversities::EthnicGroup.new
     expect(@ethnic_group).to be_displayed(id: @trainee.id)
+  end
+
+  def then_i_am_redirected_to_the_summary_page
+    @summary_page ||= PageObjects::Trainees::Summary.new
+    expect(@summary_page).to be_displayed(id: @trainee.id)
   end
 
   def and_the_diversity_disclosure_is_updated

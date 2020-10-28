@@ -8,7 +8,7 @@ module Diversities
 
         context "when ethnic group attribute is valid" do
           let(:trainee) { create(:trainee) }
-          let(:attributes) { { ethnic_group: Diversities::ENUMS.values.sample } }
+          let(:attributes) { { ethnic_group: Diversities::ETHNIC_GROUP_ENUMS.values.sample } }
 
           before do
             service.call
@@ -29,13 +29,13 @@ module Diversities
           let(:trainee) do
             create(
               :trainee,
-              ethnic_group: Diversities::ENUMS[:asian],
+              ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian],
               ethnic_background: "some background",
               additional_ethnic_background: "some other background",
             )
           end
 
-          let(:attributes) { { ethnic_group: Diversities::ENUMS[:mixed] } }
+          let(:attributes) { { ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:mixed] } }
 
           before do
             service.call

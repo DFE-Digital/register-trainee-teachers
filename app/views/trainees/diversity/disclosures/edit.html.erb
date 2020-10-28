@@ -12,12 +12,11 @@
     <%= form_with(model: @disclosure, url: trainee_diversity_disclosure_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-              
         <%= f.govuk_collection_radio_buttons(
           :diversity_disclosure,
-          Trainee.diversity_disclosures.keys,
+          Diversities::DIVERSITY_DISCLOSURE_ENUMS.values,
           ->(value) { value },
-          ->(label) { I18n.t("views.diversity_disclosures.label_names.#{label}_option") },
+          ->(label) { I18n.t("views.forms.diversity_disclosures.label_names.#{label}") },
           legend: { text: "Has the trainee shared diversity information?", tag: "h1", size: "l" },
           hint: { text: "Includes ethnicity and disabilities" }) %>
 

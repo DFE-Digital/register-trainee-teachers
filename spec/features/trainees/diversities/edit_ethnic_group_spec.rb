@@ -4,10 +4,10 @@ feature "edit ethnic group", type: :feature do
   scenario "edit with valid parameters" do
     given_a_trainee_exists
     when_i_visit_the_diversity_ethnic_group_page
-    and_i_enter_valid_parameters
+    and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:asian])
     and_i_submit_the_form
     then_i_am_redirected_to_the_ethnic_background_page
-    and_the_diversity_ethnic_group_is_updated
+    and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:asian])
   end
 
   scenario "edit with invalid parameters" do
@@ -20,12 +20,21 @@ feature "edit ethnic group", type: :feature do
   scenario "updating the ethnic group clears the previous ethnic background" do
     given_a_trainee_with_a_background_exists
     when_i_visit_the_diversity_ethnic_group_page
-    and_i_enter_valid_parameters
+    and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:asian])
     and_i_submit_the_form
     then_i_am_redirected_to_the_ethnic_background_page
-    and_the_diversity_ethnic_group_is_updated
+    and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:asian])
     and_the_previous_ethnic_background_is_cleared
     and_i_see_ethnic_background_options_for_the_selected_group
+  end
+
+  scenario "choosing not to provide ethnic group" do
+    given_a_trainee_exists
+    when_i_visit_the_diversity_ethnic_group_page
+    and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_summary_page
+    and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
   end
 
   def given_a_trainee_exists
@@ -35,8 +44,8 @@ feature "edit ethnic group", type: :feature do
   def given_a_trainee_with_a_background_exists
     @trainee = create(
       :trainee,
-      ethnic_group: Diversities::ENUMS[:mixed],
-      ethnic_background: Diversities::BACKGROUNDS[Diversities::ENUMS[:mixed]].sample,
+      ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:mixed],
+      ethnic_background: Diversities::BACKGROUNDS[Diversities::ETHNIC_GROUP_ENUMS[:mixed]].sample,
     )
   end
 
@@ -45,8 +54,10 @@ feature "edit ethnic group", type: :feature do
     @ethnic_group_page.load(id: @trainee.id)
   end
 
-  def and_i_enter_valid_parameters
-    @ethnic_group_page.asian.choose
+  def and_i_choose(option)
+    @ethnic_group_page.find(
+      "#diversities-ethnic-group-ethnic-group-#{option.dasherize}-field",
+    ).choose
   end
 
   def and_i_submit_the_form
@@ -58,8 +69,13 @@ feature "edit ethnic group", type: :feature do
     expect(@ethnic_background_page).to be_displayed(id: @trainee.id)
   end
 
-  def and_the_diversity_ethnic_group_is_updated
-    expect(@trainee.reload.ethnic_group).to eq(Diversities::ENUMS[:asian])
+  def then_i_am_redirected_to_the_summary_page
+    @summary_page ||= PageObjects::Trainees::Summary.new
+    expect(@summary_page).to be_displayed(id: @trainee.id)
+  end
+
+  def and_the_diversity_ethnic_group_is_updated_with(selected_group)
+    expect(@trainee.reload.ethnic_group).to eq(selected_group)
   end
 
   def and_the_previous_ethnic_background_is_cleared
@@ -67,7 +83,7 @@ feature "edit ethnic group", type: :feature do
   end
 
   def and_i_see_ethnic_background_options_for_the_selected_group
-    Diversities::BACKGROUNDS[Diversities::ENUMS[:asian]].each do |ethnic_background|
+    Diversities::BACKGROUNDS[Diversities::ETHNIC_GROUP_ENUMS[:asian]].each do |ethnic_background|
       expect(page.find(ethnic_background_option(ethnic_background))).to be_visible
     end
   end
