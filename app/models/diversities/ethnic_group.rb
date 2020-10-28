@@ -3,7 +3,7 @@ module Diversities
     include ActiveModel::Model
     attr_accessor :trainee, :ethnic_group
 
-    validates :ethnic_group, presence: true, inclusion: { in: Trainee.ethnic_groups.keys }
+    validates :ethnic_group, presence: true, inclusion: { in: ENUMS.values }
 
     delegate :id, :persisted?, to: :trainee
 

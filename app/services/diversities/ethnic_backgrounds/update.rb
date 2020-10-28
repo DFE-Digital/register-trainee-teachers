@@ -1,7 +1,7 @@
 module Diversities
-  module Disclosures
+  module EthnicBackgrounds
     class Update
-      attr_reader :trainee, :disclosure, :successful
+      attr_reader :trainee, :ethnic_background, :successful
 
       alias_method :successful?, :successful
 
@@ -14,11 +14,11 @@ module Diversities
       def initialize(trainee:, attributes: {})
         @trainee = trainee
         trainee.assign_attributes(attributes)
-        @disclosure = Diversities::Disclosure.new(trainee: trainee)
+        @ethnic_background = Diversities::EthnicBackground.new(trainee: trainee)
       end
 
       def call
-        @successful = disclosure.valid? && trainee.save!
+        @successful = ethnic_background.valid? && trainee.save!
         self
       end
     end

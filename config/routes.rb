@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       namespace :diversity do
         resource :disclosure, only: %i[edit update], path: "/information-disclosed"
         resource :ethnic_group, only: %i[edit update], path: "/ethnic-group"
+        resource :ethnic_background, only: %i[edit update], path: "/ethnic-background"
       end
     end
 

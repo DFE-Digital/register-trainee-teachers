@@ -4,16 +4,16 @@ module Diversities
   module EthnicGroups
     describe Update do
       describe ".call" do
-        let(:trainee) { create(:trainee, ethnic_group: nil) }
         let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
 
-        before(:each) do
-          service.call
-          trainee.reload
-        end
-
         context "when ethnic group attribute is valid" do
-          let(:attributes) { { ethnic_group: Trainee.ethnic_groups.keys.sample } }
+          let(:trainee) { create(:trainee) }
+          let(:attributes) { { ethnic_group: Diversities::ENUMS.values.sample } }
+
+          before do
+            service.call
+            trainee.reload
+          end
 
           it "updates the trainee's ethnic group details" do
             expect(trainee.ethnic_group).to be_truthy
@@ -25,11 +25,44 @@ module Diversities
           end
         end
 
+        context "when attributes contain a new ethnic group value" do
+          let(:trainee) do
+            create(
+              :trainee,
+              ethnic_group: Diversities::ENUMS[:asian],
+              ethnic_background: "some background",
+              additional_ethnic_background: "some other background",
+            )
+          end
+
+          let(:attributes) { { ethnic_group: Diversities::ENUMS[:mixed] } }
+
+          before do
+            service.call
+            trainee.reload
+          end
+
+          it "resets the trainee's previous ethnic background details" do
+            expect(trainee.ethnic_background).to be_nil
+            expect(trainee.additional_ethnic_background).to be_nil
+          end
+
+          it "is successful" do
+            expect(service).to be_successful
+          end
+        end
+
         context "when ethnic group attribute is invalid" do
+          let(:trainee) { create(:trainee) }
           let(:attributes) { { ethnic_group: nil } }
 
+          before do
+            service.call
+            trainee.reload
+          end
+
           it "does not update the trainee's ethnic group details" do
-            expect(trainee.ethnic_group).to be_falsey
+            expect(trainee.ethnic_group).to be_truthy
           end
 
           it "is unsuccessful" do

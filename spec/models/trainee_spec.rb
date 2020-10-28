@@ -11,12 +11,12 @@ describe Trainee do
 
     it do
       is_expected.to define_enum_for(:ethnic_group).with_values(
-        asian: 0,
-        black: 1,
-        mixed: 2,
-        white: 3,
-        other_ethnic_group: 4,
-        no_ethnicity_provided: 5,
+        Diversities::ENUMS[:asian] => 0,
+        Diversities::ENUMS[:black] => 1,
+        Diversities::ENUMS[:mixed] => 2,
+        Diversities::ENUMS[:white] => 3,
+        Diversities::ENUMS[:other] => 4,
+        Diversities::ENUMS[:not_provided] => 5,
       )
     end
   end

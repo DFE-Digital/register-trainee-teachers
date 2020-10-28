@@ -12,7 +12,9 @@ FactoryBot.define do
     disability { %w[none something].sample }
 
     diversity_disclosure { Trainee.diversity_disclosures.keys.sample }
-    ethnic_group { Trainee.ethnic_groups.keys.sample }
+    ethnic_group { Diversities::ENUMS.values.sample }
+    ethnic_background { nil }
+    additional_ethnic_background { nil }
 
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
@@ -40,6 +42,7 @@ FactoryBot.define do
       add_attribute("date_of_birth(2i)") { form_dob.month.to_s }
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
+
     record_type { "assessment_only" }
   end
 end

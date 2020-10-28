@@ -1,0 +1,38 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: "Back",
+    href: edit_trainee_diversity_ethnic_group_path(@trainee)
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with(model: @ethnic_background, url: trainee_diversity_ethnic_background_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+        <%= f.govuk_radio_buttons_fieldset(
+          :ethnic_background, 
+          legend: { text: "Which of the following best describes their #{I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")} background?", tag: "h1", size: "l" }) do %>
+
+          <% Diversities::BACKGROUNDS[@trainee.ethnic_group].each_with_index do |ethnic_background, index| %>
+            <% if other_ethnic_background_option?(ethnic_background) %>
+              <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background }, link_errors: index.zero? ) do %>
+                <%= f.govuk_text_field(
+                  :additional_ethnic_background,
+                  width: "two-thirds",
+                  label: { text: I18n.t("views.forms.ethnic_backgrounds.another_ethnic_background_labels.#{@trainee.ethnic_group}") }
+                ) %>
+              <% end %>
+            <% else %>
+              <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background }, link_errors: index.zero?) %>
+            <% end %>
+          <% end %>
+
+          <%= f.govuk_radio_divider %>
+          <%= f.govuk_radio_button :ethnic_background, Diversities::NOT_PROVIDED_VALUE, label: { text: "Not provided" } %>
+        <% end %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
