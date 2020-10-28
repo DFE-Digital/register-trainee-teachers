@@ -78,7 +78,7 @@ jobs:
         # As the tests were run in the docker container the paths to the coverage are prefixed with "/app/"
         # So we need to replace it with the docker hosts current directory
         sed "s|\"/app/|\"`pwd`/|g" coverage/backend/.resultset.json -i
-        pwd
+        ls -d $PWD/
 
     - name: Keep Code Coverage Report
       uses: actions/upload-artifact@v2
@@ -92,10 +92,12 @@ jobs:
     - name: Run sonarqube
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: sonar-scanner
-        -Dsonar.login=6ca2ab400673d5491d6746aa6337d743e94a9dbf
-        -Dsonar.testExecutionReportPaths=${{ github.workspace }}/rspec-test-report.xml
-        -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/backend/.resultset.json
+      run:
+        ls -d $PWD/
+        sonar-scanner
+          -Dsonar.login=6ca2ab400673d5491d6746aa6337d743e94a9dbf
+          -Dsonar.testExecutionReportPaths=${{ github.workspace }}/rspec-test-report.xml
+          -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/backend/.resultset.json
 
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
