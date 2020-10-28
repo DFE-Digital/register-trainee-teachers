@@ -13,16 +13,6 @@ RSpec.feature "Adding a degree" do
   end
 
   describe "UK Route" do
-    scenario "the user enters valid details on type page" do
-      given_a_trainee_exists
-      and_i_visit_the_summary_page
-      and_i_click_the_degree_on_the_summary_page
-      when_i_visit_the_type_page
-      and_i_enter_valid_uk_details
-      and_i_click_the_continue_button_on_the_degree_details_page
-      then_i_am_redirected_to_the_degree_details_page
-    end
-
     scenario "the user enters valid details on UK degree details page" do
       given_a_trainee_exists
       and_i_have_selected_uk_route
@@ -42,16 +32,6 @@ RSpec.feature "Adding a degree" do
   end
 
   describe "Non-UK Route" do
-    scenario "the user enters valid details on type page" do
-      given_a_trainee_exists
-      and_i_visit_the_summary_page
-      and_i_click_the_degree_on_the_summary_page
-      when_i_visit_the_type_page
-      and_i_enter_valid_non_uk_details
-      and_i_click_the_continue_button_on_the_degree_details_page
-      then_i_am_redirected_to_the_degree_details_page
-    end
-
     scenario "the user enters valid details on Non-UK degree details page" do
       given_a_trainee_exists
       and_i_have_selected_non_uk_route
@@ -103,20 +83,6 @@ private
 
   def then_i_see_the_error_summary_for_degree_details_page
     expect(degree_details_page.error_summary).to be_visible
-  end
-
-  def and_i_enter_valid_uk_details
-    type_page.locale_code_uk.click
-    @locale = type_page.locale_code_uk.value
-  end
-
-  def and_i_enter_valid_non_uk_details
-    type_page.locale_code_non_uk.click
-    @locale = type_page.locale_code_non_uk.value
-  end
-
-  def then_i_am_redirected_to_the_degree_details_page
-    expect(current_path).to eq("/trainees/#{trainee.id}/degrees/new")
   end
 
   def and_i_have_selected_uk_route
