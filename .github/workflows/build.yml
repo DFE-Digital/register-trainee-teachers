@@ -90,6 +90,8 @@ jobs:
           ${{ github.workspace }}/rspec-test-report.xml
 
     - name: Run sonarqube
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: sonar-scanner
         -Dsonar.login=16e50ed371a4fcf6fd5d1fe881c2ec22458518e1
         -Dsonar.testExecutionReportPaths=${{ github.workspace }}/rspec-test-report.xml
