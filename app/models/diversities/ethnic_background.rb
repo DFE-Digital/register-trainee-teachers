@@ -1,7 +1,7 @@
 module Diversities
   class EthnicBackground
     include ActiveModel::Model
-    attr_accessor :trainee, :ethnic_background
+    attr_accessor :trainee
 
     FIELDS = %w[
       ethnic_background

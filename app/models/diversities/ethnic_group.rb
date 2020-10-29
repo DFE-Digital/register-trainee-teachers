@@ -1,7 +1,13 @@
 module Diversities
   class EthnicGroup
     include ActiveModel::Model
-    attr_accessor :trainee, :ethnic_group
+    attr_accessor :trainee
+
+    FIELDS = %w[
+      ethnic_group
+    ].freeze
+
+    attr_accessor(*FIELDS)
 
     validates :ethnic_group, presence: true, inclusion: { in: Diversities::ETHNIC_GROUP_ENUMS.values }
 
@@ -9,7 +15,7 @@ module Diversities
 
     def initialize(trainee:)
       @trainee = trainee
-      super(ethnic_group: trainee.ethnic_group)
+      super(trainee.attributes.slice(*FIELDS))
     end
   end
 end
