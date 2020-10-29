@@ -16,7 +16,7 @@ module Diversities
           let(:attributes) do
             {
               ethnic_background: "Another ethnic background",
-              additional_ethnic_background: "some other bacground",
+              additional_ethnic_background: "some other background",
             }
           end
 
