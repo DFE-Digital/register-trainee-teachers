@@ -92,7 +92,7 @@ jobs:
     - name: Run sonarqube
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run:
+      run: |
         ls -d $PWD/
         sonar-scanner
           -Dsonar.login=6ca2ab400673d5491d6746aa6337d743e94a9dbf
