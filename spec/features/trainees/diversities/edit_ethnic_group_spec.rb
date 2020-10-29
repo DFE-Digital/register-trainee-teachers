@@ -97,7 +97,7 @@ feature "edit ethnic group", type: :feature do
 private
 
   def ethnic_background_option(ethnic_background)
-    formatted_id = ethnic_background.downcase.gsub(" ", "-")
+    formatted_id = ethnic_background.parameterize
     "#diversities-ethnic-background-ethnic-background-#{formatted_id}-field"
   end
 end
