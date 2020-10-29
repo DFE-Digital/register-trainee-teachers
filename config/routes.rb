@@ -28,6 +28,7 @@ Rails.application.routes.draw do
         resource :disclosure, only: %i[edit update], path: "/information-disclosed"
         resource :ethnic_group, only: %i[edit update], path: "/ethnic-group"
         resource :ethnic_background, only: %i[edit update], path: "/ethnic-background"
+        resource :disability_disclosure, only: %i[edit update], path: "/disability-disclosure"
       end
     end
 

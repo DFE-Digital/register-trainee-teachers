@@ -11,6 +11,12 @@ class Trainee < ApplicationRecord
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] => 1,
   }
 
+  enum disability_disclosure: {
+    Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] => 0,
+    Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled] => 1,
+    Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] => 2,
+  }
+
   enum ethnic_group: {
     Diversities::ETHNIC_GROUP_ENUMS[:asian] => 0,
     Diversities::ETHNIC_GROUP_ENUMS[:black] => 1,

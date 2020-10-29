@@ -15,6 +15,14 @@ describe Trainee do
     end
 
     it do
+      is_expected.to define_enum_for(:disability_disclosure).with_values(
+        Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] => 0,
+        Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled] => 1,
+        Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] => 2,
+      )
+    end
+
+    it do
       is_expected.to define_enum_for(:ethnic_group).with_values(
         Diversities::ETHNIC_GROUP_ENUMS[:asian] => 0,
         Diversities::ETHNIC_GROUP_ENUMS[:black] => 1,

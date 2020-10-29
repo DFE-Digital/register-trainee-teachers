@@ -9,7 +9,7 @@ module Trainees
         updater = Diversities::EthnicBackgrounds::Update.call(trainee: trainee, attributes: ethnic_background_param)
 
         if updater.successful?
-          redirect_to(trainee_path(updater.ethnic_background.trainee))
+          redirect_to(edit_trainee_diversity_disability_disclosure_path(trainee))
         else
           @ethnic_background = updater.ethnic_background
           render :edit

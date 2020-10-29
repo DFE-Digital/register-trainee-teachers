@@ -33,7 +33,7 @@ feature "edit ethnic group", type: :feature do
     when_i_visit_the_diversity_ethnic_group_page
     and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
     and_i_submit_the_form
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_disability_disclosure_page
     and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
   end
 
@@ -69,9 +69,9 @@ feature "edit ethnic group", type: :feature do
     expect(@ethnic_background_page).to be_displayed(id: @trainee.id)
   end
 
-  def then_i_am_redirected_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    expect(@summary_page).to be_displayed(id: @trainee.id)
+  def then_i_am_redirected_to_the_disability_disclosure_page
+    @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
+    expect(@disability_disclosure_page).to be_displayed(id: @trainee.id)
   end
 
   def and_the_diversity_ethnic_group_is_updated_with(selected_group)
