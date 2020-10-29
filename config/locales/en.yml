@@ -66,7 +66,7 @@ en:
             non_uk_degree:
               blank: "You must select a Non-UK degree"
             locale_code:
-              blank: "You must select either a UK degree or Non-UK degree"
+              blank: "You must select either Yes or No"
             degree_subject:
               blank: "You must select a subject"
             institution:

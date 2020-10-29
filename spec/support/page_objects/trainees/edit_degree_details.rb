@@ -1,6 +1,6 @@
 module PageObjects
   module Trainees
-    class DegreeDetails < PageObjects::Base
+    class EditDegreeDetails < PageObjects::Base
       set_url "/trainees/{trainee_id}/degrees/{id}/edit"
 
       element :degree_subject, "#degree-degree-subject-field"

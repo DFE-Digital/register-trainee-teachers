@@ -1,6 +1,12 @@
 <%= form_with model: [ @trainee, @degree ], local: true do |f| %>
-  <h1 class="govuk-heading-l">Degree Details</h1>
+	<%= f.hidden_field :locale_code, value: "uk" %>
+  <h2 class="govuk-heading-l">UK Degree Details</h2>
   <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :name,
+        :name, label: { text: "Enter degree type", size: 's'},
+        hint: { text: "For example, BA, BSc or other (please specify)" } ) %>
+    
   <%= f.govuk_collection_select :degree_subject, degree_subjects_options, 
         :name, :name, label: { text: 'Degree subject', size: 's' },
         hint: { text: 'Search for the closest matching subject' } %>
@@ -23,5 +29,8 @@
     <%= f.govuk_radio_button :degree_grade, :still_studying, 
           label: { text: "The trainee is still studying for their degree"} %>
   <% end %>
-  <%= f.govuk_submit("Continue") %> 
+  <%= f.govuk_submit %>
 <% end %>
+  
+
+   

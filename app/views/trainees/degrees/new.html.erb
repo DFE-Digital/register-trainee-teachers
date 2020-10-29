@@ -2,45 +2,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-      <%= form_with model: [@trainee, @degree], local: true do |f| %>
-        <%= f.govuk_error_summary %>
-
-          <h2 class="govuk-heading-l">Add undergraduate details</h2>
-
-          <p class="govuk-body">
-            If the trainee or candidate has further postgraduate degrees, you can add them next.
-          </p>
-          
-          <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "" } ) do %>
-            <%= f.govuk_radio_button :locale_code, :uk, label: { text: "UK degree" } do %>
-              <%= f.govuk_collection_select(:uk_degree,
-                hesa_degree_types_options,
-                :name,
-                :name,
-                label: { text: "Enter degree type"},
-                hint: { text: "For example, BA, BSc or other (please specify)" } )
-              %>
-            <% end %>
-
-            <%= f.govuk_radio_button :locale_code, :non_uk, label: { text: "Non-UK Degree" } do %>
-              <%= f.govuk_radio_buttons_fieldset(:non_uk_degree, legend: { text: "" } ) do %>
-                <%= f.govuk_fieldset legend: -> { 
-                tag.legend(
-                    "Select the NARIC comparable UK degree", 
-                    { class: "govuk-fieldset__legend" } ) } do %>
-                <% NARIC_NON_UK.each do |name| %>
-                  <%= f.govuk_radio_button :non_uk_degree, name,
-                    label: { text: name }, link_errors: true %>
-                <% end %>
-                <%= f.govuk_radio_divider %>
-                <%= f.govuk_radio_button :non_uk_degree, :non_naric, label: { text: "NARIC not provided"} %>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-
-        <%= f.govuk_submit("Continue") %>
-
-      <% end %>
-  </div>
+		<%= @degree.uk? ? (render "uk_degree_form") : (render "non_uk_degree_form") %>
+	</div>
 </div>
+

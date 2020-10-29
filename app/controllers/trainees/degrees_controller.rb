@@ -1,7 +1,7 @@
 module Trainees
   class DegreesController < ApplicationController
     def new
-      @degree = trainee.degrees.build
+      @degree = trainee.degrees.build(locale_code: params[:locale_code])
     end
 
     def edit
@@ -9,9 +9,9 @@ module Trainees
     end
 
     def create
-      @degree = trainee.degrees.build(degree_params)
-      if @degree.save
-        redirect_to edit_trainee_degree_path(@trainee, @degree)
+      @degree = trainee.degrees.build(degree_params.merge(locale_code_params))
+      if @degree.save(context: @degree.locale_code.to_sym)
+        redirect_to trainee_path(@trainee)
       else
         render :new
       end
@@ -19,8 +19,7 @@ module Trainees
 
     def update
       @degree = trainee.degrees.find(params[:id])
-      degree_details_params = @degree.uk? ? uk_degree_details_params : non_uk_degree_details_params
-      @degree.assign_attributes(degree_details_params)
+      @degree.assign_attributes(degree_params)
       if @degree.save(context: @degree.locale_code.to_sym)
         redirect_to trainee
       else
@@ -30,16 +29,13 @@ module Trainees
 
   private
 
+    def locale_code_params
+      params.require(:degree).permit(:locale_code) if params.dig(:degree, :locale_code).present?
+    end
+
     def degree_params
-      params.require(:degree).permit(:locale_code, :uk_degree, :non_uk_degree)
-    end
-
-    def uk_degree_details_params
-      params.require(:degree).permit(:degree_subject, :institution, :graduation_year, :degree_grade)
-    end
-
-    def non_uk_degree_details_params
-      params.require(:degree).permit(:degree_subject, :country, :graduation_year)
+      params.require(:degree).permit(:uk_degree, :non_uk_degree, :degree_subject, :institution,
+                                     :graduation_year, :degree_grade, :country)
     end
 
     def trainee
