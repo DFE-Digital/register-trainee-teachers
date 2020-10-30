@@ -40,19 +40,30 @@ en:
       other:
         description: ""
     forms:
+      diversity_disclosures:
+        label_names:
+          diversity_disclosed: "Yes"
+          diversity_not_disclosed: "No"
       ethnic_groups:
         labels:
-          asian: Asian or Asian British
-          black: Black, African, Black British or Caribbean
-          mixed: Mixed or multiple ethnic groups
-          white: White
+          asian_ethnic_group: Asian or Asian British
+          black_ethnic_group: Black, African, Black British or Caribbean
+          mixed_ethnic_group: Mixed or multiple ethnic groups
+          white_ethnic_group: White
           other_ethnic_group: Another ethnic group
         descriptions:
-          asian: (includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani)
-          black: (includes any Black background)
-          mixed: (includes any Mixed background)
-          white: (includes any White background)
-          other_ethnic_group: (includes any other ethnic group, for example, Arab)
+          asian_ethnic_group: (includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani) 
+          black_ethnic_group: (includes any Black background) 
+          mixed_ethnic_group: (includes any Mixed background) 
+          white_ethnic_group: (includes any White background) 
+          other_ethnic_group: (includes any other ethnic group, for example, Arab) 
+      ethnic_backgrounds:
+        another_ethnic_background_labels:
+          asian_ethnic_group: Describe their Asian background (optional) 
+          black_ethnic_group: Describe their Black background (optional) 
+          mixed_ethnic_group: Describe their Mixed background (optional) 
+          white_ethnic_group: Describe their White background (optional) 
+          other_ethnic_group: Describe their ethnic background (optional) 
   activerecord:
     attributes:
       trainee:
@@ -100,6 +111,10 @@ en:
         diversities/ethnic_group:
           attributes:
             ethnic_group:
+              blank: "You must select an option"
+        diversities/ethnic_background:
+          attributes:
+            ethnic_background:
               blank: "You must select an option"
   page_headings:
     start_page: "Register trainee teachers"

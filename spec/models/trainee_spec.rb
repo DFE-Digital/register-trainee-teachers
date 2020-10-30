@@ -7,16 +7,21 @@ describe Trainee do
     it { is_expected.to define_enum_for(:record_type).with_values(assessment_only: 0) }
     it { is_expected.to define_enum_for(:locale_code).with_values(uk: 0, non_uk: 1) }
     it { is_expected.to define_enum_for(:gender).with_values(male: 0, female: 1, other: 2) }
-    it { is_expected.to define_enum_for(:diversity_disclosure).with_values(yes: 0, no: 1) }
+    it do
+      is_expected.to define_enum_for(:diversity_disclosure).with_values(
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] => 1,
+      )
+    end
 
     it do
       is_expected.to define_enum_for(:ethnic_group).with_values(
-        asian: 0,
-        black: 1,
-        mixed: 2,
-        white: 3,
-        other_ethnic_group: 4,
-        no_ethnicity_provided: 5,
+        Diversities::ETHNIC_GROUP_ENUMS[:asian] => 0,
+        Diversities::ETHNIC_GROUP_ENUMS[:black] => 1,
+        Diversities::ETHNIC_GROUP_ENUMS[:mixed] => 2,
+        Diversities::ETHNIC_GROUP_ENUMS[:white] => 3,
+        Diversities::ETHNIC_GROUP_ENUMS[:other] => 4,
+        Diversities::ETHNIC_GROUP_ENUMS[:not_provided] => 5,
       )
     end
   end

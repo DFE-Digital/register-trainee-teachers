@@ -4,15 +4,20 @@ class Trainee < ApplicationRecord
 
   enum record_type: { assessment_only: 0 }
   enum locale_code: { uk: 0, non_uk: 1 }
-  enum diversity_disclosure: { yes: 0, no: 1 }
   enum gender: { male: 0, female: 1, other: 2 }
+
+  enum diversity_disclosure: {
+    Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
+    Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] => 1,
+  }
+
   enum ethnic_group: {
-    asian: 0,
-    black: 1,
-    mixed: 2,
-    white: 3,
-    other_ethnic_group: 4,
-    no_ethnicity_provided: 5,
+    Diversities::ETHNIC_GROUP_ENUMS[:asian] => 0,
+    Diversities::ETHNIC_GROUP_ENUMS[:black] => 1,
+    Diversities::ETHNIC_GROUP_ENUMS[:mixed] => 2,
+    Diversities::ETHNIC_GROUP_ENUMS[:white] => 3,
+    Diversities::ETHNIC_GROUP_ENUMS[:other] => 4,
+    Diversities::ETHNIC_GROUP_ENUMS[:not_provided] => 5,
   }
 
   has_many :degrees, dependent: :destroy

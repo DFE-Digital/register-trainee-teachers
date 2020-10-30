@@ -1,17 +1,18 @@
 module Diversities
-  class EthnicGroup
+  class EthnicBackground
     include ActiveModel::Model
     attr_accessor :trainee
 
     FIELDS = %w[
-      ethnic_group
+      ethnic_background
+      additional_ethnic_background
     ].freeze
 
     attr_accessor(*FIELDS)
 
-    validates :ethnic_group, presence: true, inclusion: { in: Diversities::ETHNIC_GROUP_ENUMS.values }
-
     delegate :id, :persisted?, to: :trainee
+
+    validates :ethnic_background, presence: true
 
     def initialize(trainee:)
       @trainee = trainee
