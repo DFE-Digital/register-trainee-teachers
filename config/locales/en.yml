@@ -25,10 +25,6 @@ en:
         training_details:
           edit: Add training details
   views:
-    diversity_disclosures:
-      label_names:
-        yes_option: "Yes"
-        no_option: "No"
     trainee_summary:
       contact_details:
         heading: Contact Details
@@ -64,6 +60,10 @@ en:
           mixed_ethnic_group: Describe their Mixed background (optional) 
           white_ethnic_group: Describe their White background (optional) 
           other_ethnic_group: Describe their ethnic background (optional) 
+      disability_disclosures:
+        labels:
+          disabled: "Yes, they shared that they’re disabled"
+          not_disabled: "They shared that they’re not disabled"
   activerecord:
     attributes:
       trainee:
@@ -115,6 +115,10 @@ en:
         diversities/ethnic_background:
           attributes:
             ethnic_background:
+              blank: "You must select an option"
+        diversities/disability_disclosure:
+          attributes:
+            disability_disclosure:
               blank: "You must select an option"
   page_headings:
     start_page: "Register trainee teachers"

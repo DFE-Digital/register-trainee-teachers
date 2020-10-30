@@ -6,7 +6,7 @@ feature "edit ethnic background", type: :feature do
     when_i_visit_the_diversity_ethnic_background_page
     and_i_enter_valid_parameters
     and_i_submit_the_form
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_disability_disclosure_page
     and_the_diversity_ethnic_background_is_updated
   end
 
@@ -34,9 +34,9 @@ feature "edit ethnic background", type: :feature do
     @ethnic_background_page.submit_button.click
   end
 
-  def then_i_am_redirected_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    expect(@summary_page).to be_displayed(id: @trainee.id)
+  def then_i_am_redirected_to_the_disability_disclosure_page
+    @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
+    expect(@disability_disclosure_page).to be_displayed(id: @trainee.id)
   end
 
   def and_the_diversity_ethnic_background_is_updated

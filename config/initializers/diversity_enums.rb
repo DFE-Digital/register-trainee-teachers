@@ -4,6 +4,12 @@ module Diversities
     diversity_not_disclosed: "diversity_not_disclosed",
   }.freeze
 
+  DISABILITY_DISCLOSURE_ENUMS = {
+    disabled: "disabled",
+    not_disabled: "not_disabled",
+    not_provided: "disability_not_provided",
+  }.freeze
+
   ETHNIC_GROUP_ENUMS = {
     asian: "asian_ethnic_group",
     black: "black_ethnic_group",
