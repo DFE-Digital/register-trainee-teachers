@@ -21,7 +21,7 @@ module Trainees
       @degree = trainee.degrees.find(params[:id])
       @degree.assign_attributes(degree_params)
       if @degree.save(context: @degree.locale_code.to_sym)
-        redirect_to trainee
+        redirect_to trainee_degrees_confirm_path(trainee)
       else
         render :edit
       end

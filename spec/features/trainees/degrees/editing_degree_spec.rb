@@ -6,15 +6,15 @@ RSpec.feature "editing a degree" do
       given_a_trainee_with_a_uk_degree
       when_i_visit_the_edit_degree_details_page
       and_i_enter_valid_uk_degree_details
-      then_i_click_the_continue_button
-      and_i_am_redirected_to_the_summary_page
+      and_i_click_the_continue_button
+      then_i_am_redirected_to_confirm_page
     end
 
     scenario "the user enters invalid details" do
       given_a_trainee_with_a_uk_degree
       when_i_visit_the_edit_degree_details_page
-      then_i_click_the_continue_button
-      and_i_see_the_error_summary
+      and_i_click_the_continue_button
+      then_i_see_the_error_summary
     end
   end
 
@@ -23,15 +23,15 @@ RSpec.feature "editing a degree" do
       given_a_trainee_with_a_non_uk_degree
       when_i_visit_the_edit_degree_details_page
       and_i_enter_valid_non_uk_degree_details
-      then_i_click_the_continue_button
-      and_i_am_redirected_to_the_summary_page
+      and_i_click_the_continue_button
+      then_i_am_redirected_to_confirm_page
     end
 
     scenario "the user enters invalid details" do
       given_a_trainee_with_a_non_uk_degree
       when_i_visit_the_edit_degree_details_page
-      then_i_click_the_continue_button
-      and_i_see_the_error_summary
+      and_i_click_the_continue_button
+      then_i_see_the_error_summary
     end
   end
 
@@ -45,7 +45,7 @@ private
     non_uk_trainee
   end
 
-  def then_i_click_the_continue_button
+  def and_i_click_the_continue_button
     edit_degree_details_page.continue.click
   end
 
@@ -70,12 +70,12 @@ private
                                   id: trainee.degrees.first.id)
   end
 
-  def and_i_am_redirected_to_the_summary_page
-    summary_page.load(id: trainee.id)
-    expect(summary_page).to be_displayed(id: trainee.id)
+  def then_i_am_redirected_to_confirm_page
+    degrees_confirm.load(trainee_id: trainee.id)
+    expect(degrees_confirm).to be_displayed(trainee_id: trainee.id)
   end
 
-  def and_i_see_the_error_summary
+  def then_i_see_the_error_summary
     expect(edit_degree_details_page.error_summary).to be_visible
   end
 
@@ -83,8 +83,8 @@ private
     @edit_degree_details_page ||= PageObjects::Trainees::EditDegreeDetails.new
   end
 
-  def summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
+  def degrees_confirm
+    @degrees_confirm ||= PageObjects::Trainees::DegreesConfirm.new
   end
 
   def trainee

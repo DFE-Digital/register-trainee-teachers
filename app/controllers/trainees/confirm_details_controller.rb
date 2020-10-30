@@ -28,6 +28,7 @@ module Trainees
       @trainee_paths ||= [
         trainee_personal_details_path,
         trainee_contact_details_path,
+        trainee_degrees_path,
       ].map { |path| path.split("/").last }
     end
   end
