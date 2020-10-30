@@ -17,23 +17,10 @@ feature "edit disability disclosure", type: :feature do
     then_i_see_error_messages
   end
 
-  scenario "returning to the correct previous step" do
-    given_a_trainee_without_an_ethnic_group_exists
-    when_i_visit_the_diversity_ethnic_group_page
-    and_i_submit_the_ethnic_group_form
-    and_i_click_back
-    then_i_should_return_to_ethnic_group_page
-  end
+private
 
   def given_a_trainee_exists
     @trainee = create(:trainee, disability_disclosure: nil)
-  end
-
-  def given_a_trainee_without_an_ethnic_group_exists
-    @trainee = create(
-      :trainee,
-      ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
-    )
   end
 
   def when_i_visit_the_disability_disclosure_page
@@ -56,24 +43,6 @@ feature "edit disability disclosure", type: :feature do
 
   def and_the_disability_disclosure_is_updated
     expect(@trainee.reload.disability_disclosure).to be_truthy
-  end
-
-  def when_i_visit_the_diversity_ethnic_group_page
-    @ethnic_group_page ||= PageObjects::Trainees::Diversities::EthnicGroup.new
-    @ethnic_group_page.load(id: @trainee.id)
-  end
-
-  def and_i_submit_the_ethnic_group_form
-    @ethnic_group_page.submit_button.click
-  end
-
-  def and_i_click_back
-    expect(page.current_path).to eq(edit_trainee_diversity_disability_disclosure_path(@trainee))
-    page.find(".govuk-back-link").click
-  end
-
-  def then_i_should_return_to_ethnic_group_page
-    expect(@ethnic_group_page).to be_displayed(id: @trainee.id)
   end
 
   def then_i_see_error_messages

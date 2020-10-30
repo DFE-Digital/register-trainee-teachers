@@ -10,4 +10,12 @@ module DiversitiesHelper
   def format_disability_disclosure_options(options)
     options.reject { |option| option == Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
   end
+
+  def back_link(trainee)
+    if trainee.ethnic_group.blank? || trainee.ethnic_background.blank?
+      edit_trainee_diversity_ethnic_group_path(trainee)
+    else
+      edit_trainee_diversity_ethnic_background_path(trainee)
+    end
+  end
 end
