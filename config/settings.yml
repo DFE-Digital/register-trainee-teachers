@@ -1,3 +1,6 @@
+use_ssl: true
+port: 5000
+
 basic_auth_required: true
 dttp:
   client_id: "application-registration-client-id-from-env"
@@ -10,6 +13,7 @@ dttp:
 features:
   home_text: false
 
+# Others
 nationalities:
   - afghan
   - albanian
