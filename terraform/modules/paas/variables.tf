@@ -21,6 +21,8 @@ variable worker_app_memory { default = 512 }
 
 variable log_url {}
 
+variable docker_credentials { type = map }
+
 variable settings__basic_auth__username {}
 variable settings__basic_auth__password {} #secrets
 

@@ -22,6 +22,7 @@ resource cloudfoundry_app web_app {
   strategy                   = var.web_app_deployment_strategy
   timeout                    = var.app_start_timeout
   environment                = local.app_environment
+  docker_credentials         = var.docker_credentials
   routes {
     route = cloudfoundry_route.web_app_route.id
   }
@@ -31,7 +32,6 @@ resource cloudfoundry_app web_app {
   service_binding {
     service_instance = cloudfoundry_service_instance.redis_instance.id
   }
-
   service_binding {
     service_instance = cloudfoundry_user_provided_service.logging.id
   }
@@ -69,4 +69,3 @@ resource cloudfoundry_user_provided_service logging {
   space            = data.cloudfoundry_space.space.id
   syslog_drain_url = var.log_url
 }
-
