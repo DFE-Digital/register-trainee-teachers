@@ -98,7 +98,7 @@ jobs:
       run: |
           mkdir -p $HOME/.terraform.d/plugins/linux_amd64
           cd $HOME/.terraform.d/plugins/linux_amd64
-          wget -q -O zipfile https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry/releases/download/v0.12.4/terraform-provider-cloudfoundry_0.12.4_linux_amd64.zip && unzip zipfile && rm zipfile
+          wget -q -O zipfile https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry/releases/download/v0.12.6/terraform-provider-cloudfoundry_0.12.6_linux_amd64.zip && unzip zipfile && rm zipfile
 
     - name: Terraform init
       run: terraform init -backend-config=terraform/workspace-variables/qa_backend.tfvars terraform
