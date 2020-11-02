@@ -3,19 +3,29 @@ require "rails_helper"
 RSpec.describe Trainees::DegreesController, type: :controller do
   describe "#create" do
     let(:trainee) { create(:trainee) }
-    let(:post_method) do
-      post(:create, params: { trainee_id: trainee.id,
-                              degree:
-      { locale_code: :uk,
-        uk_degree: "Bachelor of Arts",
-        degree_subject: "History",
-        institution: "The University of Warwick",
-        graduation_year: 2014,
-        degree_grade: "Upper second-class honours (2:1)" } })
+    let(:degree) { build(:degree, :uk_degree_with_details) }
+
+    let(:degree_params) do
+      {
+        locale_code: degree.locale_code,
+        uk_degree: degree.uk_degree,
+        degree_subject: degree.degree_subject,
+        institution: degree.institution,
+        graduation_year: degree.graduation_year,
+        degree_grade: degree.degree_grade,
+      }
     end
 
-    it "saves the degree of the trainee to db" do
-      expect { post_method }.to change { trainee.reload.degrees.size }.from(0).to(1)
+    before do
+      post(:create, params: { trainee_id: trainee.id, degree: degree_params })
+    end
+
+    it "creates a new degree record associated with the trainee" do
+      expect(trainee.degrees.first).to have_attributes(degree_params)
+    end
+
+    it "redirects to trainee degree confirmation page" do
+      expect(response).to redirect_to(trainee_degrees_confirm_path(trainee))
     end
   end
 end

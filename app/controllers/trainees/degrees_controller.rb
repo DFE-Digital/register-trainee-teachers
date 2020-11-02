@@ -11,7 +11,7 @@ module Trainees
     def create
       @degree = trainee.degrees.build(degree_params.merge(locale_code_params))
       if @degree.save(context: @degree.locale_code.to_sym)
-        redirect_to trainee_path(@trainee)
+        redirect_to trainee_degrees_confirm_path(@trainee)
       else
         render :new
       end
