@@ -5,7 +5,7 @@
   <h1 class="govuk-heading-l">Non-UK Degree Details</h1>
 
   <%= render_component FormComponents::Autocomplete::View.new(
-    form_field: f.govuk_collection_select(:country, degree_countries_options, :name,
+    form_field: f.govuk_collection_select(:country, countries_options, :name,
                                           :name, label: { text: "Country where the degree was obtained", size: 's' }),
     html_attributes: {
       "data-show-all-values" => false,
@@ -24,7 +24,7 @@
   </div>
 
   <%= render_component FormComponents::Autocomplete::View.new(
-    form_field: f.govuk_collection_select(:degree_subject, degree_subjects_options,
+    form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: 'Degree subject', size: 's' },
                                           hint: { text: 'Search for the closest matching subject' }),
     html_attributes: {

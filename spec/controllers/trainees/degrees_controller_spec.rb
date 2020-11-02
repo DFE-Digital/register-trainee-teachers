@@ -9,10 +9,10 @@ RSpec.describe Trainees::DegreesController, type: :controller do
       {
         locale_code: degree.locale_code,
         uk_degree: degree.uk_degree,
-        degree_subject: degree.degree_subject,
+        subject: degree.subject,
         institution: degree.institution,
         graduation_year: degree.graduation_year,
-        degree_grade: degree.degree_grade,
+        grade: degree.grade,
       }
     end
 

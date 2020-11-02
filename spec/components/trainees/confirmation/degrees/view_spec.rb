@@ -33,15 +33,15 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
   describe "UK Degrees" do
     context "when trainee has only one UK degree" do
       it "renders section title for the UK degree" do
-        expected_title = "#{degree.uk_degree}: #{degree.degree_subject.downcase}"
+        expected_title = "#{degree.uk_degree}: #{degree.subject.downcase}"
         expect(component.find(".app-summary-card__title")).to have_text(expected_title)
       end
 
       it_behaves_like summary_list_row, :uk_degree, "degree type"
-      it_behaves_like summary_list_row, :degree_subject, "subject"
+      it_behaves_like summary_list_row, :subject, "subject"
       it_behaves_like summary_list_row, :institution, "institution"
       it_behaves_like summary_list_row, :graduation_year, "graduation year"
-      it_behaves_like summary_list_row, :degree_grade, "grade"
+      it_behaves_like summary_list_row, :grade, "grade"
     end
 
     context "when trainee has multiple UK degrees" do
@@ -62,12 +62,12 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
       end
 
       it "renders section title for the UK degree" do
-        expected_title = "Non-UK #{degree.non_uk_degree}: #{degree.degree_subject.downcase}"
+        expected_title = "Non-UK #{degree.non_uk_degree}: #{degree.subject.downcase}"
         expect(component.find(".app-summary-card__title")).to have_text(expected_title)
       end
 
       it_behaves_like summary_list_row, :non_uk_degree, "comparable UK degree"
-      it_behaves_like summary_list_row, :degree_subject, "subject"
+      it_behaves_like summary_list_row, :subject, "subject"
       it_behaves_like summary_list_row, :country, "country"
       it_behaves_like summary_list_row, :graduation_year, "graduation year"
     end

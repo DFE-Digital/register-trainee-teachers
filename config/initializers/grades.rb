@@ -1,4 +1,4 @@
-DEGREE_GRADES = [
+GRADES = [
   "First-class Honours",
   "Upper second-class honours (2:1)",
   "Lower second-class honours (2:2)",

@@ -27,27 +27,27 @@ describe DegreesHelper do
     end
   end
 
-  describe "#degree_subjects_options" do
+  describe "#subjects_options" do
     before do
-      allow(self).to receive(:degree_subjects).and_return(%w[degree_subject])
+      allow(self).to receive(:subjects).and_return(%w[subject])
     end
 
-    it "iterates over array and prints out correct degree_subjects values" do
-      expect(degree_subjects_options.size).to be 2
-      expect(degree_subjects_options.first.name).to be_nil
-      expect(degree_subjects_options.second.name).to eq "degree_subject"
+    it "iterates over array and prints out correct subjects values" do
+      expect(subjects_options.size).to be 2
+      expect(subjects_options.first.name).to be_nil
+      expect(subjects_options.second.name).to eq "subject"
     end
   end
 
-  describe "#degree_countries_options" do
+  describe "#countries_options" do
     before do
-      allow(self).to receive(:degree_countries).and_return(%w[degree_country])
+      allow(self).to receive(:countries).and_return(%w[country])
     end
 
-    it "iterates over array and prints out correct degree_countries values" do
-      expect(degree_countries_options.size).to be 2
-      expect(degree_countries_options.first.name).to be_nil
-      expect(degree_countries_options.second.name).to eq "degree_country"
+    it "iterates over array and prints out correct countries values" do
+      expect(countries_options.size).to be 2
+      expect(countries_options.first.name).to be_nil
+      expect(countries_options.second.name).to eq "country"
     end
   end
 end

@@ -37,10 +37,10 @@ module Trainees
             id: 0,
             locale_code: :uk,
             uk_degree: "BSc - Bachelor of Science",
-            degree_subject: "Aviation studies",
+            subject: "Aviation studies",
             institution: "The Royal College of Nursing",
             graduation_year: "2012",
-            degree_grade: "Pass",
+            grade: "Pass",
           )
         end
 
@@ -49,7 +49,7 @@ module Trainees
             id: 0,
             locale_code: :non_uk,
             non_uk_degree: "Ordinary bachelor degree",
-            degree_subject: "Clinical dentistry",
+            subject: "Clinical dentistry",
             country: "Morocco",
             graduation_year: "1973",
           )
@@ -66,10 +66,10 @@ module Trainees
               id: 0,
               locale_code: :uk,
               uk_degree: "BSc Education",
-              degree_subject: "Akkadian language",
+              subject: "Akkadian language",
               institution: "Royal Agricultural University",
               graduation_year: "1973",
-              degree_grade: "Third-class honours",
+              grade: "Third-class honours",
             ),
           ]
         end
@@ -85,7 +85,7 @@ module Trainees
               id: 0,
               locale_code: :non_uk,
               non_uk_degree: "Postgraduate certificate or postgraduate diploma",
-              degree_subject: "Modern Middle Eastern society and culture studies",
+              subject: "Modern Middle Eastern society and culture studies",
               country: "Afghanistan",
               graduation_year: "2002",
             ),

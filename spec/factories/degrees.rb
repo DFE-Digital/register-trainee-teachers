@@ -12,9 +12,9 @@ FactoryBot.define do
     trait :uk_degree_with_details do
       uk_degree_type
 
-      degree_subject { DEGREE_SUBJECTS.sample }
+      subject { SUBJECTS.sample }
       institution { INSTITUTIONS.sample }
-      degree_grade { DEGREE_GRADES.sample }
+      grade { GRADES.sample }
       graduation_year { (1900..Time.zone.today.year).to_a.sample }
     end
 
@@ -26,9 +26,9 @@ FactoryBot.define do
     trait :non_uk_degree_with_details do
       non_uk_degree_type
 
-      degree_subject { DEGREE_SUBJECTS.sample }
-      country { DEGREE_COUNTRIES.sample }
-      degree_grade { DEGREE_GRADES.sample }
+      subject { SUBJECTS.sample }
+      country { COUNTRIES.sample }
+      grade { GRADES.sample }
       graduation_year { (1900..Time.zone.today.year).to_a.sample }
     end
   end

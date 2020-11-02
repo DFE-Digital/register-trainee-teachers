@@ -109,9 +109,9 @@ private
     template = build(:degree, :uk_degree_with_details)
 
     degree_details_page.uk_degree.select(template.uk_degree)
-    degree_details_page.degree_subject.select(template.degree_subject)
+    degree_details_page.subject.select(template.subject)
     degree_details_page.institution.select(template.institution)
-    degree_details_page.degree_grade.choose(template.degree_grade)
+    degree_details_page.grade.choose(template.grade)
     degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 
@@ -119,8 +119,8 @@ private
     template = build(:degree, :non_uk_degree_with_details)
 
     degree_details_page.send(template.non_uk_degree.parameterize(separator: "_")).choose
-    degree_details_page.degree_subject.select(template.degree_subject)
-    degree_details_page.degree_country.select(template.country)
+    degree_details_page.subject.select(template.subject)
+    degree_details_page.country.select(template.country)
     degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 

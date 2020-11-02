@@ -1,4 +1,4 @@
-DEGREE_SUBJECTS = [
+SUBJECTS = [
   "Ceramics",
   "Clinical engineering",
   "Metallurgy",
