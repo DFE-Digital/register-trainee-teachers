@@ -122,5 +122,5 @@ jobs:
         TF_VAR_paas_settings__dttp__client_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__CLIENT_ID }}
         TF_VAR_paas_settings__dttp__tenant_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__TENANT_ID }}
         TF_VAR_paas_settings__dttp__api_base_url :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__API_BASE_URL }}
-        TF_VAR_paas_dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-        TF_VAR_paas_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
+        TF_VAR_dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+        TF_VAR_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
