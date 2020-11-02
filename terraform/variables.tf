@@ -28,6 +28,10 @@ variable paas_worker_app_memory { default = 512 }
 
 variable paas_log_url {}
 
+variable dockerhub_username {}
+
+variable dockerhub_password {}
+
 variable paas_settings__basic_auth__username {} #secrets
 variable paas_settings__basic_auth__password {} #secrets
 variable paas_settings__dttp__client_id {}      #secrets
@@ -37,4 +41,8 @@ variable paas_settings__dttp__api_base_url {}   #secrets
 
 locals {
   paas_api_url = "https://api.london.cloud.service.gov.uk"
+  docker_credentials = {
+    username = var.dockerhub_username
+    password = var.dockerhub_password
+  }
 }
