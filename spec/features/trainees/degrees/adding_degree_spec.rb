@@ -19,6 +19,8 @@ RSpec.feature "Adding a degree" do
       when_i_visit_the_degree_details_page
       and_i_fill_in_the_form
       and_i_click_the_continue_button_on_the_degree_details_page
+      then_i_am_redirected_to_the_trainee_degrees_confirmation_page
+      and_confirm_my_details
       then_i_am_redirected_to_the_summary_page
     end
 
@@ -38,6 +40,8 @@ RSpec.feature "Adding a degree" do
       when_i_visit_the_degree_details_page
       and_i_fill_in_the_form
       and_i_click_the_continue_button_on_the_degree_details_page
+      then_i_am_redirected_to_the_trainee_degrees_confirmation_page
+      and_confirm_my_details
       then_i_am_redirected_to_the_summary_page
     end
 
@@ -127,6 +131,16 @@ private
 
   def then_i_am_redirected_to_the_summary_page
     expect(current_path).to eq("/trainees/#{trainee.id}")
+  end
+
+  def then_i_am_redirected_to_the_trainee_degrees_confirmation_page
+    expect(current_path).to eq("/trainees/#{trainee.id}/degrees/confirm")
+  end
+
+  def and_confirm_my_details
+    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
+    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "degrees")
+    @confirm_page.submit_button.click
   end
 
   def degree_details_page
