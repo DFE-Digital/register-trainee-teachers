@@ -3,7 +3,7 @@ module PageObjects
     class NotSupportedRoute < PageObjects::Base
       set_url "/trainees/not-supported-route"
 
-      element :page_title, ".govuk-heading-xl"
+      element :page_heading, ".govuk-heading-xl"
     end
   end
 end
