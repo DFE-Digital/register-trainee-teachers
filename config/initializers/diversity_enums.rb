@@ -16,7 +16,7 @@ module Diversities
     mixed: "mixed_ethnic_group",
     white: "white_ethnic_group",
     other: "other_ethnic_group",
-    not_provided: "no_ethnic_group_provided",
+    not_provided: "not_provided_ethnic_group",
   }.freeze
 
   BACKGROUNDS = {

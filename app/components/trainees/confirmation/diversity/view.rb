@@ -10,7 +10,7 @@ module Trainees
           @trainee = trainee
         end
 
-        def get_diversity_information_rows
+        def diversity_information_rows
           rows = [
             {
               key: "Diversity information",
@@ -23,14 +23,14 @@ module Trainees
           if trainee.diversity_disclosure == "diversity_disclosed"
             rows << {
               key: "Ethnicity",
-              value: get_ethnic_group_content,
+              value: ethnic_group_content,
               action: govuk_link_to('Change<span class="govuk-visually-hidden"> ethnicity</span>'.html_safe,
                                     edit_trainee_diversity_ethnic_group_path(trainee.id)),
             }
 
             rows << {
               key: "Disability",
-              value: tag.p(get_disability_selection, class: "govuk-body") + get_selected_disability_options,
+              value: tag.p(disability_selection, class: "govuk-body") + selected_disability_options,
               action: govuk_link_to('Change<span class="govuk-visually-hidden"> disability</span>'.html_safe,
                                     edit_trainee_diversity_disability_disclosure_path(trainee.id)),
             }
@@ -38,16 +38,16 @@ module Trainees
           rows
         end
 
-        def get_ethnic_group_content
+        def ethnic_group_content
           value = I18n.t("components.confirmation.diversity.ethnic_groups.#{trainee.ethnic_group}")
 
-          if trainee.ethnic_background.present? && trainee.ethnic_background != "Not provided"
+          if trainee.ethnic_background.present? && trainee.ethnic_background != Diversities::NOT_PROVIDED_VALUE
             value += " (#{trainee.ethnic_background})"
           end
           value
         end
 
-        def get_disability_selection
+        def disability_selection
           if trainee.disabled?
             "They shared that they’re disabled"
           elsif trainee.not_disabled?
@@ -57,7 +57,7 @@ module Trainees
           end
         end
 
-        def get_selected_disability_options
+        def selected_disability_options
           return "" if trainee.disabilities.blank?
 
           disabilities = trainee.disabilities.map { |disability| disability.name.titleize }

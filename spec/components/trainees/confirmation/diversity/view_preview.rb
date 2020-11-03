@@ -28,22 +28,22 @@ module Trainees
         def mock_trainee_with_no_disclosure
           OpenStruct.new({
             id: 1,
-            diversity_disclosure: "diversity_not_disclosed",
+            diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed],
           })
         end
 
         def mock_trainee_with_disclosure
           OpenStruct.new({
             id: 1,
-            diversity_disclosure: "diversity_disclosed",
+            diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
           })
         end
 
         def mock_trainee_with_disclosure_and_ethnic_group
           OpenStruct.new({
             id: 1,
-            diversity_disclosure: "diversity_disclosed",
-            ethnic_group: "mixed_ethnic_group",
+            diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
+            ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:mixed],
             ethnic_background: "Asian and White",
           })
         end
@@ -51,16 +51,16 @@ module Trainees
         def mock_trainee_with_disclosure_and_no_ethnic_group
           OpenStruct.new({
             id: 1,
-            diversity_disclosure: "diversity_disclosed",
-            ethnic_group: "not_provided_ethnic_group",
+            diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
+            ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
           })
         end
 
         def mock_trainee_with_disclosure_and_no_disabilities
           OpenStruct.new({
             id: 1,
-            diversity_disclosure: "diversity_disclosed",
-            ethnic_group: "not_provided_ethnic_group",
+            diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
+            ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
             not_disabled?: true,
           })
         end
@@ -68,8 +68,8 @@ module Trainees
         def mock_trainee_with_disclosure_and_disabilities
           OpenStruct.new({
             id: 1,
-            diversity_disclosure: "diversity_disclosed",
-            ethnic_group: "not_provided_ethnic_group",
+            diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
+            ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
             disabled?: true,
             disabilities: [
               OpenStruct.new(name: "Blind"),
