@@ -4,7 +4,7 @@ attributes:
   - content
   - foreign_key
   - inheritance
-exclude: "ActiveRecord::SchemaMigration, ActiveRecord::InternalMetadata"
+exclude: "ActiveRecord::SchemaMigration, ActiveRecord::InternalMetadata, primary::SchemaMigration"
 filename: docs/datadase-diagram
 filetype: jpg
 title: Register Trainee Teachers Database Diagram
