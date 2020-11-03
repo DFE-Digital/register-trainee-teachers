@@ -12,11 +12,11 @@ module PageObjects
       element :master_s_degree_integrated_master_s_degree, "#degree-non-uk-degree-master-s-degree-integrated-master-s-degree-field"
       element :non_naric, "#degree-non-uk-degree-non-naric-field"
 
-      element :degree_subject, "#degree-degree-subject-field"
+      element :subject, "#degree-subject-field"
       element :institution, "#degree-institution-field"
       element :graduation_year, "#degree-graduation-year-field"
-      element :degree_grade, ".degree-grade"
-      element :degree_country, "#degree-country-field"
+      element :grade, ".degree-grade"
+      element :country, "#degree-country-field"
 
       element :error_summary, ".govuk-error-summary"
       element :continue, ".govuk-button"

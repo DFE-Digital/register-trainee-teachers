@@ -34,8 +34,8 @@ module Trainees
     end
 
     def degree_params
-      params.require(:degree).permit(:uk_degree, :non_uk_degree, :degree_subject, :institution,
-                                     :graduation_year, :degree_grade, :country)
+      params.require(:degree).permit(:uk_degree, :non_uk_degree, :subject, :institution,
+                                     :graduation_year, :grade, :country)
     end
 
     def trainee

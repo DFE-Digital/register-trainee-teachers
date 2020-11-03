@@ -7,12 +7,12 @@ module DegreesHelper
     boilerplate(institutions)
   end
 
-  def degree_subjects_options
-    boilerplate(degree_subjects)
+  def subjects_options
+    boilerplate(subjects)
   end
 
-  def degree_countries_options
-    boilerplate(degree_countries)
+  def countries_options
+    boilerplate(countries)
   end
 
 private
@@ -27,12 +27,12 @@ private
     INSTITUTIONS
   end
 
-  def degree_subjects
-    DEGREE_SUBJECTS
+  def subjects
+    SUBJECTS
   end
 
-  def degree_countries
-    DEGREE_COUNTRIES
+  def countries
+    COUNTRIES
   end
 
   def boilerplate(array)

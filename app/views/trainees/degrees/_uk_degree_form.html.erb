@@ -13,7 +13,7 @@
   ) %>
 
   <%= render_component FormComponents::Autocomplete::View.new(
-    form_field: f.govuk_collection_select(:degree_subject, degree_subjects_options,
+    form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: 'Degree subject', size: 's' },
                                           hint: { text: 'Search for the closest matching subject' }),
     html_attributes: {
@@ -34,15 +34,15 @@
         label: { text: "Graduation Year", size: 's' },
         width: "one-quarter"  %>
 
-  <%= f.govuk_radio_buttons_fieldset(:degree_grade,
+  <%= f.govuk_radio_buttons_fieldset(:grade,
         legend: { text: "Degree grade", size: 's' },
         classes: "degree-grade" ) do %>
 
-    <% DEGREE_GRADES.map do |name| %>
-      <%= f.govuk_radio_button :degree_grade, name, label: { text: name }, link_errors: true %>
+    <% GRADES.map do |name| %>
+      <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: true %>
     <% end %>
     <%= f.govuk_radio_divider %>
-    <%= f.govuk_radio_button :degree_grade, :still_studying,
+    <%= f.govuk_radio_button :grade, :still_studying,
           label: { text: "The trainee is still studying for their degree"} %>
   <% end %>
   <%= f.govuk_submit %>

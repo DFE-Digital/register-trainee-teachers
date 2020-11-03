@@ -51,17 +51,17 @@ private
 
   def and_i_enter_valid_non_uk_degree_details
     template = build(:degree, :non_uk_degree_with_details)
-    edit_degree_details_page.degree_subject.select(template.degree_subject)
-    edit_degree_details_page.degree_country.select(template.country)
+    edit_degree_details_page.subject.select(template.subject)
+    edit_degree_details_page.country.select(template.country)
     edit_degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 
   def and_i_enter_valid_uk_degree_details
     template = build(:degree, :uk_degree_with_details)
 
-    edit_degree_details_page.degree_subject.select(template.degree_subject)
+    edit_degree_details_page.subject.select(template.subject)
     edit_degree_details_page.institution.select(template.institution)
-    edit_degree_details_page.degree_grade.choose(template.degree_grade)
+    edit_degree_details_page.grade.choose(template.grade)
     edit_degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 

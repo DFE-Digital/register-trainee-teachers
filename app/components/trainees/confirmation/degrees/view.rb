@@ -11,9 +11,9 @@ module Trainees
 
         def degree_title(degree)
           if degree.uk?
-            "#{degree.uk_degree}: #{degree.degree_subject.downcase}"
+            "#{degree.uk_degree}: #{degree.subject.downcase}"
           else
-            "Non-UK #{degree.non_uk_degree}: #{degree.degree_subject.downcase}"
+            "Non-UK #{degree.non_uk_degree}: #{degree.subject.downcase}"
           end
         end
 
@@ -27,7 +27,7 @@ module Trainees
               },
               {
                 key: "Subject",
-                value: degree.degree_subject,
+                value: degree.subject,
                 action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
               },
               {
@@ -42,7 +42,7 @@ module Trainees
               },
               {
                 key: "Grade",
-                value: degree.degree_grade,
+                value: degree.grade,
                 action: govuk_link_to('Change<span class="govuk-visually-hidden"> grade</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
               },
             ]
@@ -55,7 +55,7 @@ module Trainees
               },
               {
                 key: "Subject",
-                value: degree.degree_subject,
+                value: degree.subject,
                 action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
               },
               {

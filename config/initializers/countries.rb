@@ -1,4 +1,4 @@
-DEGREE_COUNTRIES = [
+COUNTRIES = [
   "Afghanistan",
   "Albania",
   "Algeria",
