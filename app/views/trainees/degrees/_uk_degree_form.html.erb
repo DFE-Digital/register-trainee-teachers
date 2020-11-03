@@ -3,34 +3,50 @@
   <h2 class="govuk-heading-l">UK Degree Details</h2>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :name,
-        :name, label: { text: "Enter degree type", size: 's'},
-        hint: { text: "For example, BA, BSc or other (please specify)" } ) %>
-    
-  <%= f.govuk_collection_select :degree_subject, degree_subjects_options, 
-        :name, :name, label: { text: 'Degree subject', size: 's' },
-        hint: { text: 'Search for the closest matching subject' } %>
+  <%= render_component FormComponents::Autocomplete::View.new(
+    form_field: f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :name,
+                                          :name, label: { text: "Enter degree type", size: 's'},
+                                          hint: { text: "For example, BA, BSc or other (please specify)" } ),
+    html_attributes: {
+      "data-show-all-values"=> true,
+    }
+  ) %>
 
-  <%= f.govuk_collection_select :institution, institutions_options, :name, 
-        :name, label: { text: "Institution", size: 's' } %>
+  <%= render_component FormComponents::Autocomplete::View.new(
+    form_field: f.govuk_collection_select(:degree_subject, degree_subjects_options,
+                                          :name, :name, label: { text: 'Degree subject', size: 's' },
+                                          hint: { text: 'Search for the closest matching subject' }),
+    html_attributes: {
+      "data-show-all-values" => true,
+    }
+  )%>
 
-  <%= f.govuk_text_field :graduation_year, 
-        label: { text: "Graduation Year", size: 's' }, 
+  <%= render_component FormComponents::Autocomplete::View.new(
+    form_field: f.govuk_collection_select(:institution, institutions_options, :name,
+                                          :name, label: { text: "Institution", size: 's' },
+                                          ),
+    html_attributes: {
+      "data-show-all-values" => true,
+    }
+  ) %>
+
+  <%= f.govuk_text_field :graduation_year,
+        label: { text: "Graduation Year", size: 's' },
         width: "one-quarter"  %>
 
-  <%= f.govuk_radio_buttons_fieldset(:degree_grade, 
-        legend: { text: "Degree grade", size: 's' }, 
+  <%= f.govuk_radio_buttons_fieldset(:degree_grade,
+        legend: { text: "Degree grade", size: 's' },
         classes: "degree-grade" ) do %>
 
     <% DEGREE_GRADES.map do |name| %>
       <%= f.govuk_radio_button :degree_grade, name, label: { text: name }, link_errors: true %>
     <% end %>
     <%= f.govuk_radio_divider %>
-    <%= f.govuk_radio_button :degree_grade, :still_studying, 
+    <%= f.govuk_radio_button :degree_grade, :still_studying,
           label: { text: "The trainee is still studying for their degree"} %>
   <% end %>
   <%= f.govuk_submit %>
 <% end %>
-  
 
-   
+
+
