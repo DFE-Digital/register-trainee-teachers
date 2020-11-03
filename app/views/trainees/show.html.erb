@@ -67,17 +67,6 @@
         classes: 'degree-link'
       )
     end %>
-
-    <h2 class="govuk-heading-m">Assessment</h2>
-
-    <%= render_component TaskList::View.new(classes: "assessment") do |component|
-      component.slot(
-        :row,
-        task_name: 'Assessment details',
-        path: course_details_trainee_path(@trainee),
-        status: 'completed'
-      )
-    end %>
   </div>
 </div>
 

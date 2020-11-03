@@ -7,7 +7,6 @@ module PageObjects
 
       section :personal_details, PageObjects::Sections::PersonalDetails, ".personal-details"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
-      section :course_details, PageObjects::Sections::CourseDetails, ".course-details"
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
       element :degree_link, ".education .degree-link .govuk-link"
 
