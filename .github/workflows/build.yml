@@ -90,9 +90,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Pin Terraform version
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v1.2.1
       with:
-        terraform_version: 0.12.29
+        terraform_version: 0.13.3
 
     - name: Install Terraform CloudFoundry Provider
       run: |
