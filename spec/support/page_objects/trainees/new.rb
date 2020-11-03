@@ -3,7 +3,7 @@ module PageObjects
     class New < PageObjects::Base
       set_url "/trainees/new"
 
-      element :page_title, ".govuk-heading-xl"
+      element :page_heading, ".govuk-heading-xl"
 
       element :assessment_only, "#trainee-record-type-assessment-only-field"
       element :other, "#trainee-record-type-other-field"

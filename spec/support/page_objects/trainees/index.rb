@@ -3,7 +3,7 @@ module PageObjects
     class Index < PageObjects::Base
       set_url "/trainees"
 
-      element :page_title, ".govuk-heading-xl"
+      element :page_heading, ".govuk-heading-xl"
 
       element :add_trainee_link, "a", text: "Add a trainee"
 

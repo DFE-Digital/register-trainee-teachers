@@ -2,6 +2,6 @@ module PageObjects
   class Start < PageObjects::Base
     set_url "/"
 
-    element :page_title, ".govuk-heading-xl"
+    element :page_heading, ".govuk-heading-xl"
   end
 end
