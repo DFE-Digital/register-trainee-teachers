@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Load Nationalities.
+# Load Nationalities
 Settings.nationalities.each do |nationality|
   Nationality.find_or_create_by(name: nationality)
 end
