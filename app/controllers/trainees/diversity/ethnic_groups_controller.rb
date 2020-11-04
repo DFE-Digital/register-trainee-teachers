@@ -29,7 +29,7 @@ module Trainees
       end
 
       def redirect_to_relevant_step
-        if trainee.no_ethnic_group_provided?
+        if trainee.not_provided_ethnic_group?
           redirect_to(edit_trainee_diversity_disability_disclosure_path(trainee))
         else
           redirect_to(edit_trainee_diversity_ethnic_background_path(trainee))
