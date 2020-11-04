@@ -7,13 +7,13 @@ module Diversities
         let(:trainee) { create(:trainee, disability_disclosure: nil) }
         let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
 
-        before(:each) do
-          service.call
-          trainee.reload
-        end
-
         context "when disability disclosure attribute is valid" do
           let(:attributes) { { disability_disclosure: DISABILITY_DISCLOSURE_ENUMS[:disabled] } }
+
+          before(:each) do
+            service.call
+            trainee.reload
+          end
 
           it "updates the trainee's disclosure details" do
             expect(trainee.disability_disclosure).to be_truthy
@@ -25,8 +25,27 @@ module Diversities
           end
         end
 
+        context "when trainee is not disabled or disability is not provided" do
+          let(:attributes) { { disability_disclosure: DISABILITY_DISCLOSURE_ENUMS[:not_disabled] } }
+
+          before(:each) do
+            trainee.disabilities << create(:disability)
+            service.call
+            trainee.reload
+          end
+
+          it "clears the trainee's previously set disabilities" do
+            expect(trainee.disabilities).to be_empty
+          end
+        end
+
         context "when disability disclosure attribute is invalid" do
           let(:attributes) { { disability_disclosure: nil } }
+
+          before(:each) do
+            service.call
+            trainee.reload
+          end
 
           it "does not update the trainee's disclosure details" do
             expect(trainee.disability_disclosure).to be_falsey

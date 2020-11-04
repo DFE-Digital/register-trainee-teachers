@@ -29,6 +29,8 @@ class Trainee < ApplicationRecord
   has_many :degrees, dependent: :destroy
   has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
   has_many :nationalities, through: :nationalisations
+  has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
+  has_many :disabilities, through: :trainee_disabilities
 
   def dttp_id=(value)
     raise LockedAttributeError, "dttp_id update failed for trainee ID: #{id}, with value: #{value}" if dttp_id.present?

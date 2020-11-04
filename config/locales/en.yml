@@ -120,5 +120,9 @@ en:
           attributes:
             disability_disclosure:
               blank: "You must select an option"
+        diversities/disability_detail:
+          attributes:
+            disability_ids:
+              empty_disabilities: You must select at least one disability
   page_headings:
     start_page: "Register trainee teachers"

@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 2020_11_03_141147) do
     t.index ["trainee_id"], name: "index_degrees_on_trainee_id"
   end
 
+  create_table "disabilities", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_disabilities_on_name", unique: true
+  end
+
   create_table "nationalisations", force: :cascade do |t|
     t.bigint "trainee_id", null: false
     t.bigint "nationality_id", null: false
@@ -45,6 +53,15 @@ ActiveRecord::Schema.define(version: 2020_11_03_141147) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_nationalities_on_name", unique: true
+  end
+
+  create_table "trainee_disabilities", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.bigint "disability_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["disability_id"], name: "index_trainee_disabilities_on_disability_id"
+    t.index ["trainee_id"], name: "index_trainee_disabilities_on_trainee_id"
   end
 
   create_table "trainees", force: :cascade do |t|
@@ -87,4 +104,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_141147) do
   add_foreign_key "degrees", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
+  add_foreign_key "trainee_disabilities", "disabilities"
+  add_foreign_key "trainee_disabilities", "trainees"
 end

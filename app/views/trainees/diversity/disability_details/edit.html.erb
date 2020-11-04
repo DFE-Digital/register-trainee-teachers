@@ -1,0 +1,25 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: "Back",
+    href: edit_trainee_diversity_disability_disclosure_path(@trainee)
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with(model: @disability_detail, url: trainee_diversity_disability_detail_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_collection_check_boxes :disability_ids,
+          @disabilities,
+          :id,
+          :name,
+          :description,
+          legend: { text: "Which disabilities were shared?", tag: "h1", size: "l" },
+          hint: { text: "Select all that apply" },
+          classes: "disability" %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

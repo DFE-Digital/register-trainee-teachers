@@ -38,6 +38,8 @@ describe Trainee do
     it { is_expected.to have_many(:degrees).dependent(:destroy) }
     it { is_expected.to have_many(:nationalisations).dependent(:destroy).inverse_of(:trainee) }
     it { is_expected.to have_many(:nationalities).through(:nationalisations) }
+    it { is_expected.to have_many(:trainee_disabilities).dependent(:destroy).inverse_of(:trainee) }
+    it { is_expected.to have_many(:disabilities).through(:trainee_disabilities) }
   end
 
   context "class methods" do

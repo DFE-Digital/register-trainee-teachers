@@ -12,7 +12,7 @@ module Trainees
         )
 
         if updater.successful?
-          redirect_to(trainee_path(trainee))
+          redirect_to_relevant_step
         else
           @disability_disclosure = updater.disability_disclosure
           render :edit
@@ -29,6 +29,14 @@ module Trainees
         return { disability_disclosure: nil } if params[:diversities_disability_disclosure].blank?
 
         params.require(:diversities_disability_disclosure).permit(*Diversities::DisabilityDisclosure::FIELDS)
+      end
+
+      def redirect_to_relevant_step
+        if trainee.disability_not_provided? || trainee.not_disabled?
+          redirect_to(trainee_path(trainee))
+        else
+          redirect_to(edit_trainee_diversity_disability_detail_path(trainee))
+        end
       end
     end
   end
