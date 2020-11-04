@@ -2,7 +2,7 @@ if ENV.fetch("COVERAGE", false)
   require "simplecov"
 
   SimpleCov.coverage_dir("coverage/backend")
-  SimpleCov.minimum_coverage(86)
+  SimpleCov.minimum_coverage(99)
   SimpleCov.start("rails")
 end
 
