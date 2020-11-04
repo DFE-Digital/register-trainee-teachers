@@ -77,50 +77,13 @@ jobs:
         docker push ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}
         docker push ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
 
-  #master
-  deploy_to_paas_QA:
 
-    name: Deploy to Paas
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    needs: build
-    env:
-      SHA_TAG: ${{needs.build.outputs.sha_tag}}
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Pin Terraform version
-      uses: hashicorp/setup-terraform@v1.2.1
+    - name: Trigger QA Deployment
+      if: ${{ success() && github.ref == 'refs/heads/master' }}
+      uses: benc-uk/workflow-dispatch@v1.1
       with:
-        terraform_version: 0.13.5
+        workflow: 'Deploy to PaaS'
+        token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
+        inputs: '{"environment": "qa", "sha": "${{ env.SHA_TAG }}"}'
 
-    - name: Install Terraform CloudFoundry Provider
-      run: |
-          mkdir -p $HOME/.terraform.d/plugins/linux_amd64
-          cd $HOME/.terraform.d/plugins/linux_amd64
-          wget -q -O zipfile https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry/releases/download/v0.12.6/terraform-provider-cloudfoundry_0.12.6_linux_amd64.zip && unzip zipfile && rm zipfile
 
-    - name: Terraform init
-      run: terraform init -backend-config=terraform/workspace-variables/qa_backend.tfvars terraform
-      env:
-        TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
-        ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
-
-    - name: Terraform Plan and Apply
-      run: |
-        terraform plan -var-file=terraform/workspace-variables/qa.tfvars terraform
-        terraform apply -var-file=terraform/workspace-variables/qa.tfvars -auto-approve terraform
-      env:
-        TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
-        ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
-        TF_VAR_paas_password: ${{ secrets.TF_VAR_PAAS_PASSWORD }}
-        TF_VAR_paas_user: ${{ secrets.TF_VAR_PAAS_USER }}
-        TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
-        TF_VAR_paas_settings__basic_auth__password: ${{ secrets.TF_VAR_PAAS_SETTINGS__BASIC_AUTH__PASSWORD }}
-        TF_VAR_paas_settings__dttp__client_secret:  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__CLIENT_SECRET }}
-        TF_VAR_paas_settings__basic_auth__username :  ${{ secrets.TF_VAR_PAAS_SETTINGS__BASIC_AUTH__USERNAME }}
-        TF_VAR_paas_settings__dttp__client_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__CLIENT_ID }}
-        TF_VAR_paas_settings__dttp__tenant_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__TENANT_ID }}
-        TF_VAR_paas_settings__dttp__api_base_url :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__API_BASE_URL }}
-        TF_VAR_dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-        TF_VAR_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
