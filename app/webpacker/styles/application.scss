@@ -32,3 +32,9 @@ a[href="#"] {
   color: govuk-colour("red") !important;
   font-weight: bolder !important;
 }
+
+.govuk-checkboxes.disability {
+  label {
+    font-weight: $govuk-font-weight-bold;
+  }
+}

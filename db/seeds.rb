@@ -7,7 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Load Nationalities
-
 Settings.nationalities.each do |nationality|
   Nationality.find_or_create_by(name: nationality)
+end
+
+# Load Disabilities
+Diversities::SEED_DISABILITIES.each do |disability|
+  Disability.find_or_create_by!(name: disability.name, description: disability.description)
 end

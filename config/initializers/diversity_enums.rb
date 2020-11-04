@@ -28,4 +28,15 @@ module Diversities
   }.freeze
 
   NOT_PROVIDED_VALUE = "Not provided".freeze
+
+  SEED_DISABILITIES = [
+    OpenStruct.new(name: "Blind", description: "(or a serious visual impairment which is not corrected by glasses)"),
+    OpenStruct.new(name: "Deaf", description: "(or a serious hearing impairment)"),
+    OpenStruct.new(name: "Learning difficulty", description: "(for example, dyslexia, dyspraxia or ADHD)"),
+    OpenStruct.new(name: "Long-standing illness", description: "(for example, cancer, HIV, diabetes, chronic heart disease or epilepsy)"),
+    OpenStruct.new(name: "Mental health condition", description: "(for example, depression, schizophrenia or anxiety disorder)"),
+    OpenStruct.new(name: "Physical disability or mobility issue", description: "(for example,impaired use of arms or legs, use of a wheelchair or crutches)"),
+    OpenStruct.new(name: "Social or communication impairment", description: "(for example Asperger’s, or another autistic spectrum disorder)"),
+    OpenStruct.new(name: "Other", description: nil),
+  ].freeze
 end
