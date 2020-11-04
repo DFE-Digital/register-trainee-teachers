@@ -77,8 +77,6 @@ ActiveRecord::Schema.define(version: 2020_11_06_111550) do
     t.date "date_of_birth"
     t.text "ethnicity"
     t.text "disability"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.text "address_line_one"
     t.text "address_line_two"
     t.text "town_city"
@@ -90,8 +88,8 @@ ActiveRecord::Schema.define(version: 2020_11_06_111550) do
     t.text "full_time_part_time"
     t.boolean "teaching_scholars"
     t.uuid "dttp_id"
-    t.text "middle_names"
     t.integer "record_type"
+    t.text "middle_names"
     t.text "international_address"
     t.integer "locale_code"
     t.integer "gender"
@@ -100,6 +98,9 @@ ActiveRecord::Schema.define(version: 2020_11_06_111550) do
     t.text "ethnic_background"
     t.text "additional_ethnic_background"
     t.integer "disability_disclosure"
+    t.text "subject"
+    t.text "age_range"
+    t.date "programme_start_date"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
@@ -116,7 +117,7 @@ ActiveRecord::Schema.define(version: 2020_11_06_111550) do
     t.bigint "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email", "provider_id"], name: "index_users_on_email_and_provider_id"
+    t.index ["email"], name: "index_users_on_email"
     t.index ["provider_id"], name: "index_users_on_provider_id"
   end
 
