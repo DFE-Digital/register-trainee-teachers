@@ -13,12 +13,12 @@ module Trainees
             render_inline(View.new(trainee: trainee))
           end
 
-          it "renders blank rows for subject, age range, and programme start date" do
-            expect(component).to have_selector(".govuk-summary-list__row", count: 3)
-          end
+          it "tells the user that no data has been entered for subject, age range, and programme start date" do
+            found = component.find_all(".govuk-summary-list__row")
 
-          it "tells the user that no data has been entered" do
-            component.find_all(".govuk-summary-list__row").each do |row|
+            expect(found.size).to eq(3)
+
+            found.each do |row|
               expect(row.find(".govuk-summary-list__value")).to have_text(t("components.confirmation.not_provided"))
             end
           end
