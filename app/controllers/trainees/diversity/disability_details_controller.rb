@@ -14,7 +14,7 @@ module Trainees
         )
 
         if updater.successful?
-          redirect_to(trainee_path(trainee))
+          redirect_to(trainee_diversity_disability_detail_confirm_path(trainee))
         else
           @disability_detail = updater.disability_detail
           render :edit

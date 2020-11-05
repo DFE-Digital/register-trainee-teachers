@@ -7,4 +7,4 @@
   ) %>
 <% end %>
 
-<%= render partial: "form", locals: { heading: I18n.t("components.confirmation.heading", section_title: trainee_section_key.gsub(/-/, " ")), trainee: @trainee, component: @confirmation_component } %>
+<%= render partial: "trainees/confirm_details/form", locals: { heading: "Confirm diversity information", trainee: @trainee, component: @confirmation_component } %>

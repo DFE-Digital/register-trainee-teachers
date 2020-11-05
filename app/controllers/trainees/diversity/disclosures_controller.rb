@@ -32,7 +32,7 @@ module Trainees
         if trainee.diversity_disclosed?
           redirect_to(edit_trainee_diversity_ethnic_group_path(trainee))
         else
-          redirect_to(trainee_path(trainee))
+          redirect_to(trainee_diversity_disclosure_confirm_path(trainee))
         end
       end
     end
