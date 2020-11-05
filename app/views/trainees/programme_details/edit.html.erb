@@ -1,0 +1,55 @@
+<%= render_component PageTitle::View.new(title: "trainees.programme_details.edit") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: trainee_path(@trainee)
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for(@programme_detail, url: trainee_programme_details_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">Programme details</h1>
+
+      <%= render_component FormComponents::Autocomplete::View.new(
+        form_field: f.govuk_collection_select(:subject, subjects_options,
+                                              :name, :name, label: { text: 'Subject', size: 's' },
+                                              hint: { text: 'Search for the closest matching subject' }),
+        html_attributes: { "data-show-all-values" => true, } ) %>
+
+      <%= f.govuk_radio_buttons_fieldset(:age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
+        <% main_age_ranges.each_with_index do |age_range, index| %>
+          <%= f.govuk_radio_button(:age_range, age_range, 
+                                   label: { text: age_range }, 
+                                   link_errors: index.zero? ) %>
+        <% end %>
+
+        <%= f.govuk_radio_divider %>
+
+        <%= f.govuk_radio_button(:age_range, 
+                                 :other, 
+                                 label: { text: "Other age range"} ) do %>
+          <%= render_component FormComponents::Autocomplete::View.new(
+            form_field: f.govuk_collection_select(:age_range, additional_age_ranges_options,
+                                                  :name, 
+                                                  :name, 
+                                                  label: { text: 'Other age range', size: 's' }),
+            html_attributes: { "data-show-all-values" => true, } ) %>
+
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_date_field(:programme_start_date, 
+                             date_of_birth: false, 
+                             legend: { text: 'Programme start date', size: 's' }, 
+                             hint: { text: 'For example, 2 11 2020' } ) %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel", trainee_path(@trainee)) %></p>
