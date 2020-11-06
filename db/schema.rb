@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_141147) do
+ActiveRecord::Schema.define(version: 2020_11_06_110950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,12 @@ ActiveRecord::Schema.define(version: 2020_11_03_141147) do
     t.index ["name"], name: "index_nationalities_on_name", unique: true
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "trainee_disabilities", force: :cascade do |t|
     t.bigint "trainee_id", null: false
     t.bigint "disability_id", null: false
@@ -71,6 +77,8 @@ ActiveRecord::Schema.define(version: 2020_11_03_141147) do
     t.date "date_of_birth"
     t.text "ethnicity"
     t.text "disability"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.text "address_line_one"
     t.text "address_line_two"
     t.text "town_city"
@@ -82,8 +90,8 @@ ActiveRecord::Schema.define(version: 2020_11_03_141147) do
     t.text "full_time_part_time"
     t.boolean "teaching_scholars"
     t.uuid "dttp_id"
-    t.integer "record_type"
     t.text "middle_names"
+    t.integer "record_type"
     t.text "international_address"
     t.integer "locale_code"
     t.integer "gender"
