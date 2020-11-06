@@ -15,7 +15,7 @@
       <h1 class="govuk-heading-l">Programme details</h1>
 
       <%= render_component FormComponents::Autocomplete::View.new(
-        form_field: f.govuk_collection_select(:subject, subjects_options,
+        form_field: f.govuk_collection_select(:subject, programme_subjects_options,
                                               :name, :name, label: { text: 'Subject', size: 's' },
                                               hint: { text: 'Search for the closest matching subject' }),
         html_attributes: { "data-show-all-values" => true, } ) %>

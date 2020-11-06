@@ -1,7 +1,7 @@
 module ProgrammeDetailsHelper
   include ApplicationHelper
 
-  def subjects_options
+  def programme_subjects_options
     boilerplate(subjects.map)
   end
 
@@ -20,7 +20,7 @@ private
       .map { |s| s.values[0] }
   end
 
-  def subjects
+  def programme_subjects
     PROGRAMME_SUBJECTS.map { |s| s.values[0] }
   end
 end
