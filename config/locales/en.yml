@@ -35,6 +35,8 @@ en:
           edit: Trainee personal details
         training_details:
           edit: Add training details
+        programme_details:
+          edit: Programme details
   views:
     trainee_summary:
       contact_details:
@@ -131,5 +133,16 @@ en:
           attributes:
             disability_ids:
               empty_disabilities: You must select at least one disability
+        programme_detail:
+          attributes:
+            subject:
+              blank: "You must select a subject"
+            main_age_range:
+              blank: "You must select an age range"
+            additional_age_range:
+              blank: "You must select an age range"
+            programme_start_date:
+              blank: "You must enter programme start date"
+              invalid: "You must enter a valid programme start date"
   page_headings:
     start_page: "Register trainee teachers"
