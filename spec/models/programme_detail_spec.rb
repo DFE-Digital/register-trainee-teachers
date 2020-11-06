@@ -107,7 +107,7 @@ describe ProgrammeDetail do
         end
         context "valid attributes" do
           let(:date) do
-            Date.new(2000, 12, 25)
+            Date.new(1999, 12, 31)
           end
           let(:attributes) do
             { day: date.day.to_s,

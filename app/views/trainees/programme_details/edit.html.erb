@@ -21,7 +21,7 @@
         html_attributes: { "data-show-all-values" => true, } ) %>
 
       <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
-        <% main_age_ranges.each_with_index do |age_range, index| %>
+        <% main_age_ranges_options.each_with_index do |age_range, index| %>
           <%= f.govuk_radio_button(:main_age_range, age_range, 
                                    label: { text: age_range }, 
                                    link_errors: index.zero? ) %>

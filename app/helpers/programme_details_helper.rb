@@ -2,10 +2,10 @@ module ProgrammeDetailsHelper
   include ApplicationHelper
 
   def programme_subjects_options
-    boilerplate(subjects.map)
+    boilerplate(programme_subjects)
   end
 
-  def main_age_ranges
+  def main_age_ranges_options
     age_ranges(options: :main)
   end
 
