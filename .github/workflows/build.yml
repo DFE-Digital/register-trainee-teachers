@@ -85,5 +85,3 @@ jobs:
         workflow: 'Deploy to PaaS'
         token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
         inputs: '{"environment": "qa", "sha": "${{ env.SHA_TAG }}"}'
-
-

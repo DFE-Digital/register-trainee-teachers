@@ -21,6 +21,26 @@ jobs:
     if: ${{ !startsWith(github.event.inputs.environment, 'dfe-twd-rttd-pr') }}
     runs-on: ubuntu-latest
     steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Set Current Deployment Environment variable
+        run: |
+          echo $DOCKER_IMAGE
+
+          case $DEPLOY_ENV in
+            qa) next_env=staging ;;
+            staging) next_env=production ;;
+          esac
+
+          echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
+          echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
+          echo "NEXT_ENV=$next_env" >> $GITHUB_ENV
+        env:
+          DOCKER_IMAGE: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
+          DEPLOY_ENV: ${{ github.event.inputs.environment }}
+
+
       - uses: softprops/turnstyle@v1
         name: Wait for other inprogress deployment runs
         env:
@@ -35,7 +55,13 @@ jobs:
           env: ${{ github.event.inputs.environment }}
           ref: ${{ github.event.inputs.sha }}
 
-      - uses: actions/checkout@v2
+      - name: Download app configuration file
+        working-directory: terraform
+        run: |
+          echo $APP_SECRETS | base64 -d >> app_secrets.yml
+        env:
+          APP_SECRETS: ${{ secrets[format('APP_SECRETS_{0}', env.DEPLOY_ENV)] }}
+
       - name: Pin Terraform version
         uses: hashicorp/setup-terraform@v1.2.1
         with:
@@ -46,6 +72,7 @@ jobs:
           terraform init -backend-config=terraform/workspace-variables/qa_backend.tfvars terraform
         env:
           ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+          TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
 
       - name: Terraform Plan and Apply
         run: |
@@ -57,12 +84,6 @@ jobs:
           TF_VAR_paas_password: ${{ secrets.TF_VAR_PAAS_PASSWORD }}
           TF_VAR_paas_user: ${{ secrets.TF_VAR_PAAS_USER }}
           TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
-          TF_VAR_paas_settings__basic_auth__password: ${{ secrets.TF_VAR_PAAS_SETTINGS__BASIC_AUTH__PASSWORD }}
-          TF_VAR_paas_settings__dttp__client_secret:  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__CLIENT_SECRET }}
-          TF_VAR_paas_settings__basic_auth__username :  ${{ secrets.TF_VAR_PAAS_SETTINGS__BASIC_AUTH__USERNAME }}
-          TF_VAR_paas_settings__dttp__client_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__CLIENT_ID }}
-          TF_VAR_paas_settings__dttp__tenant_id :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__TENANT_ID }}
-          TF_VAR_paas_settings__dttp__api_base_url :  ${{ secrets.TF_VAR_PAAS_SETTINGS__DTTP__API_BASE_URL }}
           TF_VAR_dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           TF_VAR_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
 
