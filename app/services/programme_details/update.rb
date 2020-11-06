@@ -13,11 +13,8 @@ module ProgrammeDetails
     def initialize(trainee:, attributes: {})
       @trainee = trainee
 
-      trainee.assign_attributes(
-        attributes,
-      )
-
       @programme_detail = ProgrammeDetail.new(trainee: trainee)
+      @programme_detail.assign_attributes(attributes)
     end
 
     def call
