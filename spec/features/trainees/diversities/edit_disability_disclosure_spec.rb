@@ -15,6 +15,7 @@ feature "edit disability disclosure", type: :feature do
     when_i_visit_the_disability_disclosure_page
     and_i_choose_not_to_disclose
     and_i_submit_the_form
+    and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
     and_the_disability_disclosure_is_updated
   end
@@ -42,11 +43,17 @@ private
   end
 
   def and_i_choose_not_to_disclose
-    @disability_disclosure_page.disability_not_provided.choose
+    @disability_disclosure_page.send(%w[disability_not_provided not_disabled].sample).choose
   end
 
   def and_i_submit_the_form
     @disability_disclosure_page.submit_button.click
+  end
+
+  def and_confirm_my_details
+    @confirm_page ||= PageObjects::Trainees::ConfirmDiversityDetails.new
+    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "disability-disclosure")
+    @confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_disabilities_page

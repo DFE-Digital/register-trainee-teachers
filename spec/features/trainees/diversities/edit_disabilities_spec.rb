@@ -7,6 +7,7 @@ feature "edit disability details", type: :feature do
     when_i_visit_the_disability_details_page
     and_i_choose_a_disability
     and_i_submit_the_form
+    and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
     and_the_disability_details_are_updated
   end
@@ -38,6 +39,12 @@ feature "edit disability details", type: :feature do
 
   def and_i_submit_the_form
     @disabilities_page.submit_button.click
+  end
+
+  def and_confirm_my_details
+    @confirm_page ||= PageObjects::Trainees::ConfirmDiversityDetails.new
+    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "disabilities")
+    @confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_summary_page

@@ -15,6 +15,7 @@ feature "edit diversity disclosure", type: :feature do
     when_i_visit_the_diversity_disclosure_page
     and_i_choose_not_to_disclose
     and_i_submit_the_form
+    and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
     and_the_diversity_disclosure_is_updated
   end
@@ -45,6 +46,12 @@ feature "edit diversity disclosure", type: :feature do
 
   def and_i_submit_the_form
     @disclosure_page.submit_button.click
+  end
+
+  def and_confirm_my_details
+    @confirm_page ||= PageObjects::Trainees::ConfirmDiversityDetails.new
+    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "information-disclosed")
+    @confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_ethnic_group_page
