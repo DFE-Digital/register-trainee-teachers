@@ -52,6 +52,37 @@ describe ProgrammeDetail do
               expect(subject.errors[:additional_age_range]).to be_empty
             end
           end
+
+          describe "programme start date empty" do
+            let(:attributes) { { "day" => "", "month" => "", "year" => "" } }
+            context "programme start date is blank" do
+              it "returns an error" do
+                expect(subject.errors[:programme_start_date]).to include(
+                  I18n.t(
+                    "activemodel.errors.models.programme_detail.attributes.programme_start_date.blank",
+                  ),
+                )
+              end
+            end
+
+            context "programme start date is 12/11/2020" do
+              let(:attributes) { { "day" => "12", "month" => "11", "year" => "2020" } }
+              it "does not return an error message" do
+                expect(subject.errors[:programme_start_date]).to be_empty
+              end
+            end
+
+            context "programme start date is foo" do
+              let(:attributes) { { "day" => "foo", "month" => "foo", "year" => "foo" } }
+              it "return an error message" do
+                expect(subject.errors[:programme_start_date]).to include(
+                  I18n.t(
+                    "activemodel.errors.models.programme_detail.attributes.programme_start_date.invalid",
+                  ),
+                )
+              end
+            end
+          end
         end
       end
     end
