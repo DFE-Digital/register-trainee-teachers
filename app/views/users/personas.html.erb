@@ -7,21 +7,21 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render_component Users::Personas::View.new(
+    <%= render_component Users::Persona::View.new(
       name: "Adam Baker",
       roles: ["Admin"],
       description: '<p class="govuk-body">Belongs to Provider A and is responsible for managing users.</p>',
       link_path: root_path
     )%>
 
-    <%= render_component Users::Personas::View.new(
+    <%= render_component Users::Persona::View.new(
       name: "Annie Bell",
       roles: [],
       description: '<p class="govuk-body">Belongs to Provider A and creates trainees for assessment only routes.</p>',
       link_path: root_path
     )%>
 
-    <%= render_component Users::Personas::View.new(
+    <%= render_component Users::Persona::View.new(
       name: "Bridget Campbell",
       roles: ["Admin"],
       description: '<p class="govuk-body">Belongs to Provider B,responsible for managing users and creates trainees for assessment only routes.</p>',
