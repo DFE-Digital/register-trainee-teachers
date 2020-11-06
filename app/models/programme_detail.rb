@@ -3,7 +3,8 @@ class ProgrammeDetail
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  attr_accessor :trainee, :subject, :main_age_range, :additional_age_range, :day, :month, :year
+  attr_accessor :trainee, :subject, :main_age_range,
+                :additional_age_range, :day, :month, :year
 
   delegate :id, :persisted?, to: :trainee
 
