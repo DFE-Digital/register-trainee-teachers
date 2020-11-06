@@ -20,20 +20,20 @@
                                               hint: { text: 'Search for the closest matching subject' }),
         html_attributes: { "data-show-all-values" => true, } ) %>
 
-      <%= f.govuk_radio_buttons_fieldset(:age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
+      <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
         <% main_age_ranges.each_with_index do |age_range, index| %>
-          <%= f.govuk_radio_button(:age_range, age_range, 
+          <%= f.govuk_radio_button(:main_age_range, age_range, 
                                    label: { text: age_range }, 
                                    link_errors: index.zero? ) %>
         <% end %>
 
         <%= f.govuk_radio_divider %>
 
-        <%= f.govuk_radio_button(:age_range, 
+        <%= f.govuk_radio_button(:main_age_range, 
                                  :other, 
                                  label: { text: "Other age range"} ) do %>
           <%= render_component FormComponents::Autocomplete::View.new(
-            form_field: f.govuk_collection_select(:age_range, additional_age_ranges_options,
+            form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
                                                   :name, 
                                                   :name, 
                                                   label: { text: 'Other age range', size: 's' }),

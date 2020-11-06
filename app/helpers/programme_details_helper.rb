@@ -1,4 +1,6 @@
 module ProgrammeDetailsHelper
+  include ApplicationHelper
+
   def subjects_options
     boilerplate(subjects.map)
   end
@@ -20,13 +22,5 @@ private
 
   def subjects
     PROGRAMME_SUBJECTS.map { |s| s.values[0] }
-  end
-
-  def boilerplate(array)
-    result = array.map do |name|
-      OpenStruct.new(name: name)
-    end
-    result.unshift(OpenStruct.new(name: nil))
-    result
   end
 end

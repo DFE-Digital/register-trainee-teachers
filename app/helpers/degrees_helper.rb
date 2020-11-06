@@ -1,4 +1,5 @@
 module DegreesHelper
+  include ApplicationHelper
   def hesa_degree_types_options
     boilerplate(hesa_degree_types)
   end
@@ -33,13 +34,5 @@ private
 
   def countries
     COUNTRIES
-  end
-
-  def boilerplate(array)
-    result = array.map do |name|
-      OpenStruct.new(name: name)
-    end
-    result.unshift(OpenStruct.new(name: nil))
-    result
   end
 end
