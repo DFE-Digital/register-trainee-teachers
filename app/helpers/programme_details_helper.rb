@@ -2,7 +2,7 @@ module ProgrammeDetailsHelper
   include ApplicationHelper
 
   def programme_subjects_options
-    boilerplate(programme_subjects)
+    to_options(programme_subjects)
   end
 
   def main_age_ranges_options
@@ -10,7 +10,7 @@ module ProgrammeDetailsHelper
   end
 
   def additional_age_ranges_options
-    boilerplate(age_ranges(options: :additional))
+    to_options(age_ranges(options: :additional))
   end
 
 private

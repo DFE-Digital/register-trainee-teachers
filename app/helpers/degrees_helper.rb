@@ -1,19 +1,20 @@
 module DegreesHelper
   include ApplicationHelper
+
   def hesa_degree_types_options
-    boilerplate(hesa_degree_types)
+    to_options(hesa_degree_types)
   end
 
   def institutions_options
-    boilerplate(institutions)
+    to_options(institutions)
   end
 
   def subjects_options
-    boilerplate(subjects)
+    to_options(subjects)
   end
 
   def countries_options
-    boilerplate(countries)
+    to_options(countries)
   end
 
 private

@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def boilerplate(array)
+  def to_options(array)
     result = array.map do |name|
       OpenStruct.new(name: name)
     end

@@ -10,6 +10,7 @@ describe ProgrammeDetail do
 
     describe "custom" do
       translation_key_prefix = "activemodel.errors.models.programme_detail.attributes"
+
       before do
         subject.assign_attributes(attributes)
         subject.valid?
@@ -22,6 +23,7 @@ describe ProgrammeDetail do
 
         context "main age range is blank" do
           let(:main_age_range) { "" }
+
           it "returns an error" do
             expect(subject.errors[:main_age_range]).to include(
               I18n.t(
@@ -43,8 +45,10 @@ describe ProgrammeDetail do
             { main_age_range: :other,
               additional_age_range: additional_age_range }
           end
+
           context "additional age range is blank" do
             let(:additional_age_range) { "" }
+
             it "returns an error message for age range is blank" do
               expect(subject.errors[:additional_age_range]).to include(
                 I18n.t(
@@ -53,8 +57,10 @@ describe ProgrammeDetail do
               )
             end
           end
+
           context "additional age range is 0 - 5 programme" do
             let(:additional_age_range) { "0 - 5 programme" }
+
             it "does not return an error message for additional age range" do
               expect(subject.errors[:additional_age_range]).to be_empty
             end
@@ -67,6 +73,7 @@ describe ProgrammeDetail do
           let(:attributes) do
             { day: "", month: "", year: "" }
           end
+
           it "returns an error start date is blank" do
             expect(subject.errors[:programme_start_date]).to include(
               I18n.t(
@@ -80,6 +87,7 @@ describe ProgrammeDetail do
           let(:attributes) do
             { day: "12", month: "11", year: "2020" }
           end
+
           it "does not return an error message for programme start date" do
             expect(subject.errors[:programme_start_date]).to be_empty
           end
@@ -89,6 +97,7 @@ describe ProgrammeDetail do
           let(:attributes) do
             { day: "foo", month: "foo", year: "foo" }
           end
+
           it "return an error message programme start is invalid" do
             expect(subject.errors[:programme_start_date]).to include(
               I18n.t(
@@ -105,10 +114,12 @@ describe ProgrammeDetail do
         before do
           subject.assign_attributes(attributes)
         end
+
         context "valid attributes" do
           let(:date) do
             Date.new(1999, 12, 31)
           end
+
           let(:attributes) do
             { day: date.day.to_s,
               month: date.month.to_s,

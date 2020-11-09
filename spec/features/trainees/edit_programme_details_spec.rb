@@ -68,17 +68,17 @@ feature "edit programme details", type: :feature do
   end
 
   def then_i_see_error_messages
+    translation_key_prefix = "activemodel.errors.models.programme_detail.attributes"
+
     expect(page).to have_content(
-      I18n.t(
-        "activemodel.errors.models.programme_detail.attributes.subject.blank",
-      ),
+      I18n.t("#{translation_key_prefix}.subject.blank"),
     )
-    expect(page).to have_content(I18n.t(
-                                   "activemodel.errors.models.programme_detail.attributes.main_age_range.blank",
-                                 ))
-    expect(page).to have_content(I18n.t(
-                                   "activemodel.errors.models.programme_detail.attributes.programme_start_date.blank",
-                                 ))
+    expect(page).to have_content(
+      I18n.t("#{translation_key_prefix}.main_age_range.blank"),
+    )
+    expect(page).to have_content(
+      I18n.t("#{translation_key_prefix}.programme_start_date.blank"),
+    )
   end
 
   def template
