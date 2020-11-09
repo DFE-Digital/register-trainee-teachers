@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get :ping, controller: :heartbeat
   get :healthcheck, controller: :heartbeat
+  get :sha, controller: :heartbeat
 
   get "/pages/:page", to: "pages#show"
 
