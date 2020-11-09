@@ -1,0 +1,11 @@
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+<h2 class="govuk-heading-l"><%= persona.name %></h2>
+
+<div>
+  <p class="govuk-body">
+    Belongs to <strong><%= persona.provider.name %></strong> and is responsible for managing users.
+  </p>
+</div>
+
+<%= govuk_button_to("Sign in as #{persona.name}", sessions_path(user_id: persona.id)) %>

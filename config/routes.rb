@@ -52,7 +52,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get "/users/personas", to: "users#personas"
+  get "/personas", to: "personas#index"
+  post "/sessions", to: "sessions#create"
 
   resources :trn_submissions, only: %i[create show]
 
