@@ -32,15 +32,11 @@ variable dockerhub_username {}
 
 variable dockerhub_password {}
 
-variable paas_settings__basic_auth__username {} #secrets
-variable paas_settings__basic_auth__password {} #secrets
-variable paas_settings__dttp__client_id {}      #secrets
-variable paas_settings__dttp__tenant_id {}      #secrets
-variable paas_settings__dttp__client_secret {}  # secrets
-variable paas_settings__dttp__api_base_url {}   #secrets
+variable paas_app_secrets_file { default = "./terraform/app_secrets.yml" }
 
 locals {
   paas_api_url = "https://api.london.cloud.service.gov.uk"
+  app_secrets = yamldecode(file(var.paas_app_secrets_file))
   docker_credentials = {
     username = var.dockerhub_username
     password = var.dockerhub_password
