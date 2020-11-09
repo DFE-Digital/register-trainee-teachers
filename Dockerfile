@@ -24,6 +24,9 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
+ARG COMMIT_SHA
+ENV COMMIT_SHA=$COMMIT_SHA
+
 RUN bundle exec rake assets:precompile
 
 CMD bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0
