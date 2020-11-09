@@ -33,7 +33,7 @@ describe ProgrammeDetail do
 
         context "main age range is 3 to 11 programme" do
           let(:main_age_range) { "3 to 11 programme" }
-          it "does not return an error message" do
+          it "does not return an error message for main age range" do
             expect(subject.errors[:main_age_range]).to be_empty
           end
         end
@@ -45,7 +45,7 @@ describe ProgrammeDetail do
           end
           context "additional age range is blank" do
             let(:additional_age_range) { "" }
-            it "returns an error message" do
+            it "returns an error message for age range is blank" do
               expect(subject.errors[:additional_age_range]).to include(
                 I18n.t(
                   "#{translation_key_prefix}.main_age_range.blank",
@@ -55,7 +55,7 @@ describe ProgrammeDetail do
           end
           context "additional age range is 0 - 5 programme" do
             let(:additional_age_range) { "0 - 5 programme" }
-            it "does not return an error message" do
+            it "does not return an error message for additional age range" do
               expect(subject.errors[:additional_age_range]).to be_empty
             end
           end
@@ -67,7 +67,7 @@ describe ProgrammeDetail do
           let(:attributes) do
             { day: "", month: "", year: "" }
           end
-          it "returns an error" do
+          it "returns an error start date is blank" do
             expect(subject.errors[:programme_start_date]).to include(
               I18n.t(
                 "#{translation_key_prefix}.programme_start_date.blank",
@@ -80,7 +80,7 @@ describe ProgrammeDetail do
           let(:attributes) do
             { day: "12", month: "11", year: "2020" }
           end
-          it "does not return an error message" do
+          it "does not return an error message for programme start date" do
             expect(subject.errors[:programme_start_date]).to be_empty
           end
         end
@@ -89,7 +89,7 @@ describe ProgrammeDetail do
           let(:attributes) do
             { day: "foo", month: "foo", year: "foo" }
           end
-          it "return an error message" do
+          it "return an error message programme start is invalid" do
             expect(subject.errors[:programme_start_date]).to include(
               I18n.t(
                 "#{translation_key_prefix}.programme_start_date.invalid",
