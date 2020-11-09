@@ -4,6 +4,9 @@ FactoryBot.define do
     sequence :trainee_id do |n|
       n.to_s
     end
+
+    record_type { "assessment_only" }
+
     first_names { Faker::Name.first_name }
     middle_names { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
@@ -44,7 +47,11 @@ FactoryBot.define do
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
 
-    record_type { "assessment_only" }
+    trait :with_programme_details do
+      subject { PROGRAMME_SUBJECTS.sample[:name] }
+      age_range { AGE_RANGES.sample[:name] }
+      programme_start_date { Faker::Date.between(from: 2.years.ago, to: Time.zone.today) }
+    end
   end
 end
 
