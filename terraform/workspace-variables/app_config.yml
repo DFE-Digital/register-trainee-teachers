@@ -1,0 +1,20 @@
+default: &default
+  RAILS_SERVE_STATIC_FILES: true
+
+qa:
+  <<: *default
+  AUTHORISED_HOSTS: "register-qa.london.cloudapps.digital"
+  RAILS_ENV: qa
+  RACK_ENV: qa
+
+staging:
+  <<: *default
+  AUTHORISED_HOSTS: "register-staging.london.cloudapps.digital"
+  RAILS_ENV: staging
+  RACK_ENV: staging
+
+prod:
+  <<: *default
+  AUTHORISED_HOSTS: "register-production.london.cloudapps.digital"
+  RAILS_ENV: production
+  RACK_ENV: production
