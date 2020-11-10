@@ -1,0 +1,24 @@
+<%= render_component SummaryCard::View.new(title: 'Programme Details',
+    heading_level: 2,
+    rows: [
+      {
+        key: "Subject",
+        value: subject,
+        action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe, 
+                              edit_trainee_programme_details_path(trainee))
+      },
+      {
+        key: "Age range",
+        value: age_range,
+        action: govuk_link_to('Change<span class="govuk-visually-hidden"> age range</span>'.html_safe,
+                              edit_trainee_programme_details_path(trainee))
+      },
+      {
+        key: "Programme start date",
+        value: programme_start_date,
+        action: govuk_link_to('Change<span class="govuk-visually-hidden"> progamme start date</span>'.html_safe,
+                              edit_trainee_programme_details_path(trainee))
+      },
+    ]
+  )
+%>
