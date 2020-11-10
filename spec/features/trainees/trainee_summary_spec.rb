@@ -39,7 +39,7 @@ feature "Trainee summary page", type: :system do
   end
 
   def then_i_can_see_the_contact_details
-    expected_address = "#{@trainee.address_line_one}, #{@trainee.address_line_two}, #{@trainee.town_city}, #{@trainee.county}"
+    expected_address = "#{@trainee.address_line_one}, #{@trainee.address_line_two}, #{@trainee.town_city}"
 
     expect(@summary_page.contact_details.address.text).to eq(expected_address)
     expect(@summary_page.contact_details.postcode.text).to eq(@trainee.postcode)

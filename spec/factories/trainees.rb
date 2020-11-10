@@ -25,7 +25,6 @@ FactoryBot.define do
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
     town_city { Faker::Address.city }
-    county { Faker::Address.state }
     postcode { Faker::Address.postcode }
     international_address { nil }
     locale_code { :uk }
