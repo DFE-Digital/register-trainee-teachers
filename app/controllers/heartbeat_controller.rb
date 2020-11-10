@@ -20,6 +20,10 @@ class HeartbeatController < ActionController::API
            }
   end
 
+  def sha
+    render json: { sha: ENV["COMMIT_SHA"] }
+  end
+
 private
 
   def database_alive?

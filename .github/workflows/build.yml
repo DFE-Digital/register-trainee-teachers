@@ -47,7 +47,7 @@ jobs:
       run: docker pull $DOCKER_REPO:$BRANCH_TAG || true
 
     - name: "docker-compose build"
-      run:  docker-compose build
+      run:  docker-compose build --build-arg COMMIT_SHA=$GITHUB_SHA
 
     - name: Bring images up
       run: |
