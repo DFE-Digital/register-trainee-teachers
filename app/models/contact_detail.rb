@@ -26,6 +26,7 @@ class ContactDetail
   validate :uk_address_must_not_be_empty
   validates :phone_number, presence: true
   validates :email, presence: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def initialize(trainee:)
     @trainee = trainee
@@ -50,6 +51,7 @@ private
 
     MANDATORY_UK_ADDRESS_FIELDS.each do |field|
       next if trainee[field.to_sym].present?
+
       errors.add(
         field.to_sym,
         :blank,

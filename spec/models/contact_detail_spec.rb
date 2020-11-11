@@ -49,5 +49,26 @@ describe ContactDetail do
           .to be_empty
       end
     end
+
+    describe "email" do
+      it "must fail if only @" do
+        trainee.email = "@"
+        expect(subject).not_to be_valid
+        expect(subject.errors[:email])
+          .to include(I18n.t("activemodel.errors.models.contact_detail.attributes.email.invalid"))
+      end
+
+      it "must fail if it does not contain @" do
+        trainee.email = "myname.com"
+        expect(subject).not_to be_valid
+        expect(subject.errors[:email])
+          .to include(I18n.t("activemodel.errors.models.contact_detail.attributes.email.invalid"))
+      end
+
+      it "accepts a valid email address" do
+        trainee.email = "my_name@doman.com"
+        expect(subject).to be_valid
+      end
+    end
   end
 end
