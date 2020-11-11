@@ -1,0 +1,12 @@
+<h1 class="govuk-heading-xl">
+  <span class="govuk-caption-xl">
+    Register trainee teacher
+  </span>
+  Personas
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render_component Personas::View.with_collection(@personas) %>
+  </div>
+</div>

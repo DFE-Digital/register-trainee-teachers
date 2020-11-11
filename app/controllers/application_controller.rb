@@ -10,4 +10,12 @@ private
       BasicAuthenticable.authenticate(username, password)
     end
   end
+
+  def current_user
+    @current_user ||= User.find(session[:auth_user][:user_id])
+  end
+
+  def authenticated?
+    current_user.present?
+  end
 end
