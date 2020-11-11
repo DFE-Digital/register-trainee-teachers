@@ -29,7 +29,7 @@ module Trainees
     end
 
     def confirm_section_title
-      trainee_section_key.gsub(/-/, " ")
+      trainee_section_key.gsub(/_/, " ")
     end
 
     def toggle_trainee_progress_field
