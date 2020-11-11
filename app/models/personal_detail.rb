@@ -16,8 +16,6 @@ class PersonalDetail
 
   delegate :id, :persisted?, to: :trainee
 
-  after_validation :update_trainee
-
   attr_accessor(*FIELDS)
 
   validates :first_names, presence: true
@@ -35,6 +33,10 @@ class PersonalDetail
     trainee.attributes.slice(*FIELDS).merge(nationality_ids: trainee.nationality_ids)
   end
 
+  def save
+    valid? && trainee.save
+  end
+
 private
 
   attr_reader :attributes
@@ -43,9 +45,5 @@ private
     return unless trainee.nationalities.empty?
 
     errors.add(:nationality_ids, :empty_nationalities)
-  end
-
-  def update_trainee
-    trainee.save! if errors.empty?
   end
 end

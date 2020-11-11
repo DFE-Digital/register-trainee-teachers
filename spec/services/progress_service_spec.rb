@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ProgressService do
-  describe ".call" do
+  describe "#status" do
     let(:validator_stub) do
       OpenStruct.new(
         valid?: false,
@@ -15,7 +15,7 @@ describe ProgressService do
 
     context "when not in progress or completed" do
       it "returns a 'not started' status" do
-        expect(subject.call).to eq(Progress::STATUSES[:not_started])
+        expect(subject.status).to eq(Progress::STATUSES[:not_started])
       end
     end
 
@@ -25,7 +25,7 @@ describe ProgressService do
       end
 
       it "returns an 'in progress' status" do
-        expect(subject.call).to eq(Progress::STATUSES[:in_progress])
+        expect(subject.status).to eq(Progress::STATUSES[:in_progress])
       end
     end
 
@@ -38,7 +38,7 @@ describe ProgressService do
       end
 
       it "returns a 'completed' status" do
-        expect(subject.call).to eq(Progress::STATUSES[:completed])
+        expect(subject.status).to eq(Progress::STATUSES[:completed])
       end
     end
   end

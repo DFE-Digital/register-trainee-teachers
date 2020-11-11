@@ -13,7 +13,7 @@ module Trainees
       trainee.assign_attributes(personal_details_params)
       personal_detail = PersonalDetail.new(trainee)
 
-      if personal_detail.valid?
+      if personal_detail.save
         redirect_to trainee_personal_details_confirm_path(personal_detail.trainee)
       else
         @personal_detail = personal_detail
@@ -46,7 +46,7 @@ module Trainees
       ProgressService.call(
         validator: PersonalDetail.new(trainee),
         progress_value: trainee.progress.personal_details,
-      ) == Progress::STATUSES[:completed]
+      ).completed?
     end
   end
 end

@@ -1,9 +1,7 @@
 class ProgressService
-  attr_reader :status, :trainee
-
   class << self
     def call(**args)
-      new(**args).call
+      new(**args)
     end
   end
 
@@ -12,16 +10,12 @@ class ProgressService
     @progress_value = progress_value
   end
 
-  def call
+  def status
     return Progress::STATUSES[:in_progress] if in_progress?
     return Progress::STATUSES[:completed] if completed?
 
     Progress::STATUSES[:not_started]
   end
-
-private
-
-  attr_reader :validator, :progress_value
 
   def started?
     @validator.fields.values.flatten.compact.any?
@@ -34,4 +28,8 @@ private
   def completed?
     @validator.valid? && progress_value
   end
+
+private
+
+  attr_reader :validator, :progress_value
 end
