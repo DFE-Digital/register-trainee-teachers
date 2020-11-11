@@ -24,7 +24,7 @@ module Trainees
         def programme_start_date
           return @not_provided_copy if trainee.programme_start_date.blank?
 
-          trainee.programme_start_date
+          trainee.programme_start_date.strftime("%-d %B %Y")
         end
       end
     end

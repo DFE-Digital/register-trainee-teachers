@@ -6,6 +6,7 @@ feature "edit programme details", type: :feature do
     when_i_visit_the_programme_details_page
     and_i_enter_valid_parameters
     and_i_submit_the_form
+    and_i_confirm_my_details
     then_i_am_redirected_to_the_summary_page
     and_the_programme_details_are_updated
   end
@@ -65,6 +66,12 @@ feature "edit programme details", type: :feature do
       expect(@programme_details_page.main_age_range_other).to be_checked
       expect(@programme_details_page.additional_age_range.value).to eq(template.age_range)
     end
+  end
+
+  def and_i_confirm_my_details
+    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
+    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "programme-details")
+    @confirm_page.submit_button.click
   end
 
   def then_i_see_error_messages

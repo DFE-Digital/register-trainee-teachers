@@ -19,7 +19,7 @@ module Trainees
       updater = ProgrammeDetails::Update.call(trainee: trainee,
                                               attributes: programme_details_params)
       if updater.successful?
-        redirect_to trainee_path(trainee)
+        redirect_to trainee_programme_details_confirm_path(trainee)
       else
         @programme_detail = updater.programme_detail
         render :edit
