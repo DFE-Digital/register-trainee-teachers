@@ -43,7 +43,7 @@ module Trainees
 
           it "renders the programme start date" do
             expect(component.find(".govuk-summary-list__row.programme-start-date .govuk-summary-list__value"))
-              .to have_text(trainee.programme_start_date)
+              .to have_text(trainee.programme_start_date.strftime("%-d %B %Y"))
           end
         end
       end
