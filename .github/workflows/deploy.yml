@@ -16,7 +16,6 @@ jobs:
     name: Deploy to PaaS ${{ github.event.inputs.environment }}
     env:
         DOCKER_REPO: dfedigital/register-trainee-teacher-data
-        #DOCKER_IMAGE: register-trainee-teacher-data
 
     if: ${{ !startsWith(github.event.inputs.environment, 'dfe-twd-rttd-pr') }}
     runs-on: ubuntu-latest
@@ -26,7 +25,6 @@ jobs:
 
       - name: Set Current Deployment Environment variable
         run: |
-          echo ${{ env.CONTROL_BRANCH}}
           echo $DOCKER_IMAGE
 
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
@@ -86,7 +84,7 @@ jobs:
           TF_VAR_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
 
       - name: Trigger ${{ env.NEXT_ENV }} Deployment
-        if: ${{ success() && env.NEXT_ENV != '' && github.ref == 'refs/heads/423-deploy-to-new-bat-workspace' }}
+        if: ${{ success() && env.NEXT_ENV != '' && github.ref == 'refs/heads/master' }}
         uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: Deploy to PaaS
