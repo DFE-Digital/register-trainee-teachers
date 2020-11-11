@@ -51,6 +51,8 @@ gem "httparty", "~> 0.18"
 # Wrap jsonb columns with activemodel-like classes
 gem "store_model", "~> 0.8"
 
+gem "pundit"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
