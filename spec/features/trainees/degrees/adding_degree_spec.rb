@@ -118,7 +118,7 @@ private
   def and_i_fill_in_the_non_uk_form
     template = build(:degree, :non_uk_degree_with_details)
 
-    degree_details_page.send(template.non_uk_degree.parameterize(separator: "_")).choose
+    degree_details_page.public_send(template.non_uk_degree.parameterize(separator: "_")).choose
     degree_details_page.subject.select(template.subject)
     degree_details_page.country.select(template.country)
     degree_details_page.graduation_year.fill_in(with: template.graduation_year)

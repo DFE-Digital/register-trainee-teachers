@@ -42,7 +42,7 @@ feature "edit disability details", type: :feature do
   end
 
   def and_confirm_my_details
-    @confirm_page ||= PageObjects::Trainees::ConfirmDiversityDetails.new
+    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
     expect(@confirm_page).to be_displayed(id: @trainee.id, section: "disabilities")
     @confirm_page.submit_button.click
   end

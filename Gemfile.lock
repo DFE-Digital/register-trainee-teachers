@@ -346,6 +346,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    store_model (0.8.0)
+      activerecord (>= 5.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.8)
@@ -416,6 +418,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.0.0)
+  store_model (~> 0.8)
   tzinfo-data
   web-console (>= 3.3.0)
   webdrivers (~> 4.4)

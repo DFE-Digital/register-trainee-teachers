@@ -22,7 +22,7 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
     end
 
     it "renders row #{field_name}" do
-      expect(subject).to have_text(degree.send(degree_attribute))
+      expect(subject).to have_text(degree.public_send(degree_attribute))
     end
 
     it "has change link for #{field_name}" do
