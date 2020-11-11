@@ -1,8 +1,11 @@
 class TraineesController < ApplicationController
   before_action :authenticate
 
+  # TODO: move this into ApplicationController as we expand the policies
+  after_action :verify_policy_scoped, only: :index
+
   def index
-    @trainees = current_user.trainees.all
+    @trainees = policy_scope(Trainee)
   end
 
   def show
