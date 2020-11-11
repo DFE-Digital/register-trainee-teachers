@@ -13,10 +13,10 @@ on:
 jobs:
   deploy:
 
-    name: Deploy to PaaS
+    name: Deploy to PaaS ${{ github.event.inputs.environment }}
     env:
         DOCKER_REPO: dfedigital/register-trainee-teacher-data
-        DOCKER_IMAGE: register-trainee-teacher-data
+        #DOCKER_IMAGE: register-trainee-teacher-data
 
     if: ${{ !startsWith(github.event.inputs.environment, 'dfe-twd-rttd-pr') }}
     runs-on: ubuntu-latest
@@ -26,12 +26,8 @@ jobs:
 
       - name: Set Current Deployment Environment variable
         run: |
+          echo ${{ env.CONTROL_BRANCH}}
           echo $DOCKER_IMAGE
-
-          case $DEPLOY_ENV in
-            qa) next_env=staging ;;
-            staging) next_env=production ;;
-          esac
 
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
           echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
@@ -69,7 +65,7 @@ jobs:
 
       - name: Terraform init
         run: |
-          terraform init -backend-config=terraform/workspace-variables/qa_backend.tfvars terraform
+          terraform init -backend-config=terraform/workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars terraform
         env:
           ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
           TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
@@ -81,11 +77,22 @@ jobs:
         env:
           TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
           ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
-          TF_VAR_paas_password: ${{ secrets.TF_VAR_PAAS_PASSWORD }}
-          TF_VAR_paas_user: ${{ secrets.TF_VAR_PAAS_USER }}
+
+          TF_VAR_paas_password: ${{ secrets[format('TF_VAR_PAAS_PASSWORD_{0}', env.DEPLOY_ENV)] }}
+          TF_VAR_paas_user: ${{ secrets[format('TF_VAR_PAAS_USER_{0}', env.DEPLOY_ENV)] }}
+
           TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
           TF_VAR_dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           TF_VAR_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Trigger ${{ env.NEXT_ENV }} Deployment
+        if: ${{ success() && env.NEXT_ENV != '' && github.ref == 'refs/heads/423-deploy-to-new-bat-workspace' }}
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+          workflow: Deploy to PaaS
+          token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
+          inputs: '{"environment": "${{ env.NEXT_ENV }}", "sha": "${{ github.event.inputs.sha }}"}'
+
 
       - name: Update ${{ github.event.inputs.environment }} status
         if: ${{ always() }}

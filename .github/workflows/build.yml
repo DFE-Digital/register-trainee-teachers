@@ -13,6 +13,7 @@ on:
 env:
   DOCKER_REPO: dfedigital/register-trainee-teacher-data
   DOCKER_IMAGE: register-trainee-teacher-data
+  BRANCH_REF: refs/heads/423-deploy-to-new-bat-workspace
 
 jobs:
   build:
@@ -31,6 +32,7 @@ jobs:
     - name: Get values for current commit
       id: set_env
       run: |
+        echo $BRANCH_REF
         GIT_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c 1-7)
         GIT_BRANCH="${GITHUB_REF##*/}"
         echo "GIT_SHA_SHORT=$GIT_SHA_SHORT" >> $GITHUB_ENV
@@ -38,6 +40,8 @@ jobs:
         echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
         echo "SHA_TAG=$GIT_SHA_SHORT" >> $GITHUB_ENV
         echo "::set-output name=SHA_TAG::$GIT_SHA_SHORT"
+
+        echo "BRANCH_REF=$BRANCH_REF" >> $GITHUB_ENV
 
 
     - name: Login to docker hub
@@ -79,7 +83,7 @@ jobs:
 
 
     - name: Trigger QA Deployment
-      if: ${{ success() && github.ref == 'refs/heads/master' }}
+      if: ${{ success() && github.ref == 'refs/heads/423-deploy-to-new-bat-workspace' }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: 'Deploy to PaaS'
