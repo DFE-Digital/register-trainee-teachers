@@ -24,6 +24,7 @@ class ContactDetail
   validates :locale_code, presence: true
   validate :international_address_not_empty
   validate :uk_address_must_not_be_empty
+  validates :postcode, postcode: true
   validates :phone_number, presence: true
   validates :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }

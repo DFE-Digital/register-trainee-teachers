@@ -129,7 +129,7 @@ en:
               blank: "You must enter a telephone number"
             email:
               blank: "You must enter an email address"
-              invalid: "Enter an email address in the correct format, like name@example.com"
+              invalid: "You must enter an email address in the correct format, like name@example.com"
         diversities/disclosure:
           attributes:
             diversity_disclosure:

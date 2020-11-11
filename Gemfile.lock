@@ -352,6 +352,7 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
+    uk_postcode (2.1.6)
     unicode-display_width (1.7.0)
     view_component (2.18.2)
       activesupport (>= 5.0.0, < 7.0)
@@ -420,6 +421,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   store_model (~> 0.8)
   tzinfo-data
+  uk_postcode
   web-console (>= 3.3.0)
   webdrivers (~> 4.4)
   webmock
