@@ -1,13 +1,16 @@
 module Trainees
   class ContactDetailsController < ApplicationController
     def edit
-      trainee
+      @contact_details = ContactDetail.new(trainee: trainee)
     end
 
     def update
-      if ContactDetails::Update.call(trainee: trainee, attributes: contact_details_params)
+      updater = ContactDetails::Update.call(trainee: trainee, attributes: contact_details_params)
+
+      if updater.successful?
         redirect_to trainee_contact_details_confirm_path(trainee)
       else
+        @contact_details = updater.contact_details
         render :edit
       end
     end
@@ -19,15 +22,8 @@ module Trainees
     end
 
     def contact_details_params
-      params.require(:trainee).permit(
-        :locale_code,
-        :international_address,
-        :address_line_one,
-        :address_line_two,
-        :town_city,
-        :postcode,
-        :phone_number,
-        :email,
+      params.require(:contact_detail).permit(
+        *ContactDetail::FIELDS,
       )
     end
   end
