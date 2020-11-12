@@ -3,7 +3,13 @@
 module Trainees
   class TrainingDetailsController < ApplicationController
     def edit
-      @trainee = Trainee.find(params[:id])
+      authorize trainee
+    end
+
+  private
+
+    def trainee
+      @trainee ||= Trainee.find(params[:id])
     end
   end
 end

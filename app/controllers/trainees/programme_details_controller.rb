@@ -15,11 +15,12 @@ module Trainees
                                        additional_age_range].freeze
 
     def edit
-      trainee
+      authorize trainee
       @programme_detail = ProgrammeDetail.new(trainee: trainee)
     end
 
     def update
+      authorize trainee
       updater = ProgrammeDetails::Update.call(trainee: trainee,
                                               attributes: programme_details_params)
       if updater.successful?

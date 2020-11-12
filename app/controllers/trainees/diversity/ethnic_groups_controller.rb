@@ -4,10 +4,12 @@ module Trainees
   module Diversity
     class EthnicGroupsController < BaseController
       def edit
+        authorize trainee
         @ethnic_group = Diversities::EthnicGroup.new(trainee: trainee)
       end
 
       def update
+        authorize trainee
         updater = Diversities::EthnicGroups::Update.call(trainee: trainee, attributes: ethnic_group_param)
 
         if updater.successful?

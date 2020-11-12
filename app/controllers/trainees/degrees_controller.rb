@@ -3,14 +3,17 @@
 module Trainees
   class DegreesController < ApplicationController
     def new
+      authorize trainee
       @degree = trainee.degrees.build(locale_code: params[:locale_code])
     end
 
     def edit
+      authorize trainee
       @degree = trainee.degrees.find(params[:id])
     end
 
     def create
+      authorize trainee
       @degree = trainee.degrees.build(degree_params.merge(locale_code_params))
       if @degree.save(context: @degree.locale_code.to_sym)
         redirect_to trainee_degrees_confirm_path(@trainee)
@@ -20,6 +23,7 @@ module Trainees
     end
 
     def update
+      authorize trainee
       @degree = trainee.degrees.find(params[:id])
       @degree.assign_attributes(degree_params)
       if @degree.save(context: @degree.locale_code.to_sym)

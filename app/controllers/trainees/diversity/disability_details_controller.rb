@@ -4,11 +4,13 @@ module Trainees
   module Diversity
     class DisabilityDetailsController < BaseController
       def edit
+        authorize trainee
         disabilities
         @disability_detail = Diversities::DisabilityDetail.new(trainee: trainee)
       end
 
       def update
+        authorize trainee
         disabilities
         updater = Diversities::DisabilityDetails::Update.call(
           trainee: trainee,

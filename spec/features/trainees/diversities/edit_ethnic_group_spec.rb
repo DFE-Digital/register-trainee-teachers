@@ -5,9 +5,18 @@ require "rails_helper"
 feature "edit ethnic group", type: :feature do
   background { given_i_am_authenticated }
 
+  scenario "edit with valid parameters" do
+    given_a_trainee_exists
+    when_i_visit_the_diversity_ethnic_group_page
+    and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:asian])
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_ethnic_background_page
+    and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:asian])
+  end
+
   context "trainee with no defined ethnic group" do
     background do
-      given_a_trainee_exists(ethnic_group: nil)
+      given_a_trainee_exists
       when_i_visit_the_diversity_ethnic_group_page
     end
 
@@ -40,6 +49,19 @@ feature "edit ethnic group", type: :feature do
     and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:asian])
     and_the_previous_ethnic_background_is_cleared
     and_i_see_ethnic_background_options_for_the_selected_group
+  end
+
+  scenario "choosing not to provide ethnic group" do
+    given_a_trainee_exists
+    when_i_visit_the_diversity_ethnic_group_page
+    and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_disability_disclosure_page
+    and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+  end
+
+  def given_a_trainee_exists
+    @trainee = create(:trainee, ethnic_group: nil, provider: current_user.provider)
   end
 
   def given_a_trainee_with_a_background_exists

@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe Trainees::DegreesController, type: :controller do
   describe "#create" do
+    let(:user) { create(:user, provider: trainee.provider) }
     let(:trainee) { create(:trainee) }
     let(:degree) { build(:degree, :uk_degree_with_details) }
 
@@ -19,6 +20,7 @@ RSpec.describe Trainees::DegreesController, type: :controller do
     end
 
     before do
+      allow(controller).to receive(:current_user).and_return(user)
       post(:create, params: { trainee_id: trainee.id, degree: degree_params })
     end
 

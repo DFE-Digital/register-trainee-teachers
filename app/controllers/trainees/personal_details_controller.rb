@@ -5,12 +5,13 @@ module Trainees
     before_action :redirect_to_confirm, if: :section_completed?
 
     def edit
-      trainee
+      authorize trainee
       nationalities
       @personal_detail = PersonalDetail.new(trainee)
     end
 
     def update
+      authorize trainee
       nationalities
       trainee.assign_attributes(personal_details_params)
       personal_detail = PersonalDetail.new(trainee)
