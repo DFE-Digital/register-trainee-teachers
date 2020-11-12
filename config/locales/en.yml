@@ -100,6 +100,11 @@ en:
               blank: "You must select the country where the degree was obtained"
   activemodel:
     errors:
+      validators:
+        phone_number:
+          invalid: "You must enter a valid telephone number"
+        postcode:
+          invalid: "You must enter a valid postcode (for example, BN1 1AA)"
       models:
         personal_detail:
           attributes:
