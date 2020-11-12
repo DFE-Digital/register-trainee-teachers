@@ -26,6 +26,7 @@ class ContactDetail
   validate :uk_address_must_not_be_empty
   validates :postcode, postcode: true
   validates :phone_number, presence: true
+  validates :phone_number, phone: true
   validates :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
