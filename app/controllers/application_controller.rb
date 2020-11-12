@@ -12,10 +12,14 @@ private
   end
 
   def current_user
-    @current_user ||= User.find(session[:auth_user][:user_id])
+    @current_user ||= User.find_by(id: session.dig(:auth_user, "user_id"))
   end
 
   def authenticated?
     current_user.present?
+  end
+
+  def authenticate
+    redirect_to personas_path unless authenticated?
   end
 end

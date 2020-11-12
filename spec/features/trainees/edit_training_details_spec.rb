@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "edit training details" do
+  background { given_i_am_authenticated }
+
   scenario "edit with valid parameters" do
     given_a_trainee_exists
     when_i_visit_the_training_details_page
@@ -9,7 +11,7 @@ feature "edit training details" do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee)
+    @trainee = create(:trainee, provider: current_user.provider)
   end
 
   def when_i_visit_the_training_details_page

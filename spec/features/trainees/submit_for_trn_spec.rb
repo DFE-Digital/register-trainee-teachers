@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "submit for TRN" do
+  background { given_i_am_authenticated }
+
   before do
     stub_microsoft_oauth_success
     stub_request(:post, "#{Settings.dttp.api_base_url}/contacts").to_return(
@@ -44,7 +46,7 @@ feature "submit for TRN" do
   end
 
   def trainee
-    @trainee ||= create(:trainee)
+    @trainee ||= create(:trainee, provider: current_user.provider)
   end
 
   def stub_microsoft_oauth_success

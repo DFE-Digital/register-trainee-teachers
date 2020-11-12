@@ -5,6 +5,8 @@ FactoryBot.define do
       n.to_s
     end
 
+    provider
+
     record_type { "assessment_only" }
 
     first_names { Faker::Name.first_name }

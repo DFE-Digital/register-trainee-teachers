@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "edit programme details", type: :feature do
+  background { given_i_am_authenticated }
+
   scenario "edit with valid parameters" do
     given_a_trainee_exists
     when_i_visit_the_programme_details_page
@@ -19,7 +21,7 @@ feature "edit programme details", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee)
+    @trainee = create(:trainee, provider: current_user.provider)
   end
 
   def when_i_visit_the_programme_details_page

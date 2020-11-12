@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Adding a degree" do
+  background { given_i_am_authenticated }
+
   describe "Validation before route is picked" do
     scenario "the user enters invalid details" do
       given_a_trainee_exists
@@ -156,6 +158,6 @@ private
   end
 
   def trainee
-    @trainee ||= create(:trainee)
+    @trainee ||= create(:trainee, provider: current_user.provider)
   end
 end

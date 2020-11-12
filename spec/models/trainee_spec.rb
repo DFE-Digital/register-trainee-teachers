@@ -35,6 +35,7 @@ describe Trainee do
   end
 
   context "associations" do
+    it { is_expected.to belong_to(:provider) }
     it { is_expected.to have_many(:degrees).dependent(:destroy) }
     it { is_expected.to have_many(:nationalisations).dependent(:destroy).inverse_of(:trainee) }
     it { is_expected.to have_many(:nationalities).through(:nationalisations) }

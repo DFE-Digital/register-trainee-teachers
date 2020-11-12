@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "edit disability details", type: :feature do
+  background { given_i_am_authenticated }
+
   scenario "choosing a disability" do
     given_a_trainee_exists
     and_disabilities_exist_in_the_system
@@ -21,7 +23,7 @@ feature "edit disability details", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee)
+    @trainee = create(:trainee, provider: current_user.provider)
   end
 
   def and_disabilities_exist_in_the_system

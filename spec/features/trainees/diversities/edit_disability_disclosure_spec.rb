@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "edit disability disclosure", type: :feature do
+  background { given_i_am_authenticated }
+
   scenario "choosing to disclose a disability" do
     given_a_trainee_exists
     when_i_visit_the_disability_disclosure_page
@@ -30,7 +32,7 @@ feature "edit disability disclosure", type: :feature do
 private
 
   def given_a_trainee_exists
-    @trainee = create(:trainee, disability_disclosure: nil)
+    @trainee = create(:trainee, disability_disclosure: nil, provider: current_user.provider)
   end
 
   def when_i_visit_the_disability_disclosure_page

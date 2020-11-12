@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "edit diversity disclosure", type: :feature do
+  background { given_i_am_authenticated }
+
   scenario "choosing to disclose" do
     given_a_trainee_exists
     when_i_visit_the_diversity_disclosure_page
@@ -28,7 +30,7 @@ feature "edit diversity disclosure", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee, diversity_disclosure: nil)
+    @trainee = create(:trainee, diversity_disclosure: nil, provider: current_user.provider)
   end
 
   def when_i_visit_the_diversity_disclosure_page
@@ -69,8 +71,6 @@ feature "edit diversity disclosure", type: :feature do
   end
 
   def then_i_see_error_messages
-    expect(page).to have_content(
-      I18n.t("activemodel.errors.models.diversities/disclosure.attributes.diversity_disclosure.blank"),
-    )
+    expect(page).to have_content(I18n.t("activemodel.errors.models.diversities/disclosure.attributes.diversity_disclosure.blank"))
   end
 end

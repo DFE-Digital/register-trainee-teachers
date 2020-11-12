@@ -1,4 +1,6 @@
 class Trainee < ApplicationRecord
+  belongs_to :provider
+
   attribute :progress, Progress.to_type
 
   validates :record_type, presence: { message: "You must select a route" }
