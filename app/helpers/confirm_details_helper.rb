@@ -7,6 +7,7 @@ module ConfirmDetailsHelper
       "information-disclosed" => "trainee_diversity_disclosure_confirm_path",
       "disability-disclosure" => "trainee_diversity_disability_disclosure_confirm_path",
       "disabilities" => "trainee_diversity_disability_detail_confirm_path",
+      "programme-details" => "trainee_programme_details_confirm_path",
     }
 
     public_send(routes[section_key.dasherize], trainee)

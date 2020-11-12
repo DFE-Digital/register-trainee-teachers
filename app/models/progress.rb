@@ -11,4 +11,5 @@ class Progress
   attribute :contact_details, :boolean
   attribute :degrees, :boolean
   attribute :diversity, :boolean
+  attribute :programme_details, :boolean
 end
