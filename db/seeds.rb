@@ -16,12 +16,10 @@ Diversities::SEED_DISABILITIES.each do |disability|
   Disability.find_or_create_by!(name: disability.name, description: disability.description)
 end
 
-unless Rails.env.production?
-  PERSONAS.each do |persona|
-    provider = Provider.find_or_create_by!(name: persona[:provider])
-    User.find_or_create_by!(first_name: persona[:first_name],
-                            last_name: persona[:last_name],
-                            email: persona[:email],
-                            provider: provider)
-  end
+PERSONAS.each do |persona|
+  provider = Provider.find_or_create_by!(name: persona[:provider])
+  Persona.find_or_create_by!(first_name: persona[:first_name],
+                             last_name: persona[:last_name],
+                             email: persona[:email],
+                             provider: provider)
 end

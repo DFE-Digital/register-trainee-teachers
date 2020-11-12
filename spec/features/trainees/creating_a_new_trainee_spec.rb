@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Create trainee journey" do
-  scenario "setting up an initial assessment only record " do
+  background { given_i_am_authenticated }
+
+  scenario "setting up an initial assessment only record" do
     when_i_am_viewing_the_list_of_trainees
     and_i_click_on_add_trainee_button
     and_i_select_assessment_only_route

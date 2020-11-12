@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Adding a degree" do
+  background { given_i_am_authenticated }
+
   describe "Validation before route is picked" do
     scenario "the user enters invalid details" do
       given_a_trainee_exists
@@ -55,10 +57,6 @@ RSpec.feature "Adding a degree" do
   end
 
 private
-
-  def given_a_trainee_exists
-    trainee
-  end
 
   def and_i_visit_the_summary_page
     summary_page.load(id: @trainee.id)
@@ -153,9 +151,5 @@ private
 
   def type_page
     @type_page ||= PageObjects::Trainees::DegreeType.new
-  end
-
-  def trainee
-    @trainee ||= create(:trainee)
   end
 end

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "submit for TRN" do
+  background { given_i_am_authenticated }
+
   before do
     stub_microsoft_oauth_success
     stub_request(:post, "#{Settings.dttp.api_base_url}/contacts").to_return(
@@ -13,14 +15,10 @@ feature "submit for TRN" do
   end
 
   scenario "with a valid trainee" do
-    given_a_valid_trainee_exists
+    given_a_trainee_exists
     when_i_am_viewing_the_summary_page
     and_i_click_the_submit_for_trn_button
     then_i_am_redirected_to_the_success_page
-  end
-
-  def given_a_valid_trainee_exists
-    trainee
   end
 
   def when_i_am_viewing_the_summary_page
@@ -41,10 +39,6 @@ feature "submit for TRN" do
 
   def trn_success_page
     @trn_success_page ||= PageObjects::Trainees::TrnSuccess.new
-  end
-
-  def trainee
-    @trainee ||= create(:trainee)
   end
 
   def stub_microsoft_oauth_success

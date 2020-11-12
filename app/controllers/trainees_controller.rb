@@ -1,10 +1,12 @@
 class TraineesController < ApplicationController
+  before_action :authenticate
+
   def index
-    @trainees = Trainee.all
+    @trainees = current_user.trainees.all
   end
 
   def show
-    @trainee = Trainee.find(params[:id])
+    @trainee = current_user.trainees.find(params[:id])
   end
 
   def new
@@ -15,7 +17,7 @@ class TraineesController < ApplicationController
     if trainee_params[:record_type] == "other"
       redirect_to trainees_not_supported_route_path
     else
-      @trainee = Trainee.new(trainee_params)
+      @trainee = current_user.provider.trainees.build(trainee_params)
       if @trainee.save
         redirect_to trainee_path(@trainee)
       else
@@ -25,7 +27,7 @@ class TraineesController < ApplicationController
   end
 
   def update
-    @trainee = Trainee.find(params[:id])
+    @trainee = current_user.trainees.find(params[:id])
     @trainee.update!(trainee_params)
     redirect_to trainee_path(@trainee)
   end
@@ -33,8 +35,7 @@ class TraineesController < ApplicationController
 private
 
   def trainee_params
-    params.require(:trainee)
-      .permit(trainee_all_params, nationality_ids: [])
+    params.require(:trainee).permit(trainee_all_params, nationality_ids: [])
   end
 
   def trainee_all_params

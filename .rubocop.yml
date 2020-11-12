@@ -6,3 +6,7 @@ inherit_gem:
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - "spec/**/*"
+
+Rails/NotNullColumn:
+  Enabled: false
+

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "edit personal details", type: :feature do
+  background { given_i_am_authenticated }
+
   scenario "updates personal details with valid data" do
     given_valid_personal_details_are_provided
     then_the_personal_details_are_updated
@@ -46,10 +48,6 @@ private
     and_i_submit_the_form
     and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
-  end
-
-  def given_a_trainee_exists
-    @trainee ||= create(:trainee)
   end
 
   def and_nationalities_exist_in_the_system
