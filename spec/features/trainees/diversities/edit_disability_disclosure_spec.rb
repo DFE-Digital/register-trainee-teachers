@@ -43,7 +43,7 @@ private
   end
 
   def and_i_choose_not_to_disclose
-    @disability_disclosure_page.send(%w[disability_not_provided not_disabled].sample).choose
+    @disability_disclosure_page.public_send(%w[disability_not_provided not_disabled].sample).choose
   end
 
   def and_i_submit_the_form
@@ -51,7 +51,7 @@ private
   end
 
   def and_confirm_my_details
-    @confirm_page ||= PageObjects::Trainees::ConfirmDiversityDetails.new
+    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
     expect(@confirm_page).to be_displayed(id: @trainee.id, section: "disability-disclosure")
     @confirm_page.submit_button.click
   end

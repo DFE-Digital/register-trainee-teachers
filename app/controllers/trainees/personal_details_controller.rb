@@ -1,19 +1,22 @@
 module Trainees
   class PersonalDetailsController < ApplicationController
+    before_action :redirect_to_confirm, if: :section_completed?
+
     def edit
       trainee
       nationalities
-      @personal_detail = PersonalDetail.new(trainee: trainee)
+      @personal_detail = PersonalDetail.new(trainee)
     end
 
     def update
       nationalities
-      updater = PersonalDetails::Update.call(trainee: trainee, attributes: personal_details_params)
+      trainee.assign_attributes(personal_details_params)
+      personal_detail = PersonalDetail.new(trainee)
 
-      if updater.successful?
-        redirect_to trainee_personal_details_confirm_path(updater.personal_detail.trainee)
+      if personal_detail.save
+        redirect_to trainee_personal_details_confirm_path(personal_detail.trainee)
       else
-        @personal_detail = updater.personal_detail
+        @personal_detail = personal_detail
         render :edit
       end
     end
@@ -33,6 +36,17 @@ module Trainees
         *PersonalDetail::FIELDS,
         nationality_ids: [],
       )
+    end
+
+    def redirect_to_confirm
+      redirect_to(trainee_personal_details_confirm_path(trainee))
+    end
+
+    def section_completed?
+      ProgressService.call(
+        validator: PersonalDetail.new(trainee),
+        progress_value: trainee.progress.personal_details,
+      ).completed?
     end
   end
 end

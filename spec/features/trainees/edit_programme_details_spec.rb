@@ -34,7 +34,7 @@ feature "edit programme details", type: :feature do
     age_range = AGE_RANGES.find { |a| a[:name] == template.age_range }
 
     if age_range[:option] == :main
-      @programme_details_page.send("main_age_range_#{template.age_range.parameterize(separator: '_')}").choose
+      @programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}").choose
     else
       @programme_details_page.main_age_range_other.choose
       @programme_details_page.additional_age_range.select(template.age_range)
@@ -61,7 +61,7 @@ feature "edit programme details", type: :feature do
     age_range = AGE_RANGES.find { |a| a[:name] == template.age_range }
 
     if age_range[:option] == :main
-      expect(@programme_details_page.send("main_age_range_#{template.age_range.parameterize(separator: '_')}")).to be_checked
+      expect(@programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}")).to be_checked
     else
       expect(@programme_details_page.main_age_range_other).to be_checked
       expect(@programme_details_page.additional_age_range.value).to eq(template.age_range)

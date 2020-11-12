@@ -1,4 +1,4 @@
-<%= render_component PageTitle::View.new(title: I18n.t("components.confirmation.heading", section_title: trainee_section_key.gsub(/-/, " "))) %>
+<%= render_component PageTitle::View.new(title: I18n.t("components.confirmation.heading", section_title: confirm_section_title)) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
@@ -7,4 +7,13 @@
   ) %>
 <% end %>
 
-<%= render partial: "trainees/confirm_details/form", locals: { heading: "Confirm diversity information", trainee: @trainee, component: @confirmation_component } %>
+<%= render(
+  partial: "trainees/confirm_details/form", 
+  locals: { 
+    heading: "Confirm diversity information",
+    confirm_detail: @confirm_detail, 
+    trainee: @trainee,
+    component: @confirmation_component,
+    resource_confirm_update_path: trainee_section_update_path(trainee_section_key, @trainee),
+  }
+) %>

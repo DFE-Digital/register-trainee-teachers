@@ -36,12 +36,16 @@
 
     <h2 class="govuk-heading-m">Trainee details</h2>
 
-    <%= render_component TaskList::View.new(classes: "personal-details") do |component|
+    <%= render_component TaskList::View.new do |component|
       component.slot(
         :row,
         task_name: 'Personal details',
         path: edit_trainee_personal_details_path(@trainee),
-        status: 'completed'
+        classes: "personal-details",
+        status: ProgressService.call(
+          validator: PersonalDetail.new(@trainee), 
+          progress_value: @trainee.progress.personal_details
+        ).status
       )
 
       component.slot(

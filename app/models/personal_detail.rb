@@ -1,5 +1,8 @@
 class PersonalDetail
   include ActiveModel::Model
+  include ActiveModel::AttributeAssignment
+  include ActiveModel::Validations::Callbacks
+
   attr_accessor :trainee
 
   FIELDS = %w[
@@ -21,19 +24,26 @@ class PersonalDetail
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
   validate :nationalities_cannot_be_empty
 
-  def initialize(trainee:)
+  def initialize(trainee)
     @trainee = trainee
-    super(trainee.attributes.slice(*FIELDS).merge(nationality_ids: trainee.nationality_ids))
+    super(fields)
+  end
+
+  def fields
+    trainee.attributes.slice(*FIELDS).merge(nationality_ids: trainee.nationality_ids)
+  end
+
+  def save
+    valid? && trainee.save
   end
 
 private
 
+  attr_reader :attributes
+
   def nationalities_cannot_be_empty
     return unless trainee.nationalities.empty?
 
-    errors.add(
-      :nationality_ids,
-      :empty_nationalities,
-    )
+    errors.add(:nationality_ids, :empty_nationalities)
   end
 end

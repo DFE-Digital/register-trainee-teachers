@@ -1,4 +1,6 @@
 class Trainee < ApplicationRecord
+  attribute :progress, Progress.to_type
+
   validates :record_type, presence: { message: "You must select a route" }
   validates :trainee_id, length: { maximum: 100, message: "Your entry must not exceed 100 characters" }
 
