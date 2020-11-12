@@ -26,6 +26,9 @@ jobs:
       - name: Set Current Deployment Environment variable
         run: |
           echo $DOCKER_IMAGE
+          case $DEPLOY_ENV in
+            qa) next_env=staging ;;
+          esac
 
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
           echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
@@ -65,16 +68,17 @@ jobs:
         run: |
           terraform init -backend-config=terraform/workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars terraform
         env:
-          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+          ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
           TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
 
       - name: Terraform Plan and Apply
         run: |
-          terraform plan -var-file=terraform/workspace-variables/qa.tfvars terraform
-          terraform apply -var-file=terraform/workspace-variables/qa.tfvars -auto-approve terraform
+          terraform plan -var-file=terraform/workspace-variables/${{ env.DEPLOY_ENV }}.tfvars terraform
+          terraform apply -var-file=terraform/workspace-variables/${{ env.DEPLOY_ENV }}.tfvars -auto-approve terraform
         env:
           TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
-          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+          ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
+
 
           TF_VAR_paas_password: ${{ secrets[format('TF_VAR_PAAS_PASSWORD_{0}', env.DEPLOY_ENV)] }}
           TF_VAR_paas_user: ${{ secrets[format('TF_VAR_PAAS_USER_{0}', env.DEPLOY_ENV)] }}
