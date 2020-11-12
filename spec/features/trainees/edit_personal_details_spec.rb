@@ -50,10 +50,6 @@ private
     then_i_am_redirected_to_the_summary_page
   end
 
-  def given_a_trainee_exists
-    @trainee ||= create(:trainee, provider: current_user.provider)
-  end
-
   def and_nationalities_exist_in_the_system
     @nationality ||= create(:nationality, name: "british")
   end

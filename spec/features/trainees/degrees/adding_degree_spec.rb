@@ -58,10 +58,6 @@ RSpec.feature "Adding a degree" do
 
 private
 
-  def given_a_trainee_exists
-    trainee
-  end
-
   def and_i_visit_the_summary_page
     summary_page.load(id: @trainee.id)
     expect(summary_page).to be_displayed(id: @trainee.id)
@@ -155,9 +151,5 @@ private
 
   def type_page
     @type_page ||= PageObjects::Trainees::DegreeType.new
-  end
-
-  def trainee
-    @trainee ||= create(:trainee, provider: current_user.provider)
   end
 end

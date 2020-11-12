@@ -1,12 +1,14 @@
 require "rails_helper"
 
 feature "edit disability details", type: :feature do
-  background { given_i_am_authenticated }
-
-  scenario "choosing a disability" do
+  background do
+    given_i_am_authenticated
     given_a_trainee_exists
     and_disabilities_exist_in_the_system
     when_i_visit_the_disability_details_page
+  end
+
+  scenario "choosing a disability" do
     and_i_choose_a_disability
     and_i_submit_the_form
     and_confirm_my_details
@@ -15,15 +17,8 @@ feature "edit disability details", type: :feature do
   end
 
   scenario "submitting with no disability chosen" do
-    given_a_trainee_exists
-    and_disabilities_exist_in_the_system
-    when_i_visit_the_disability_details_page
     and_i_submit_the_form
     then_i_see_error_messages
-  end
-
-  def given_a_trainee_exists
-    @trainee = create(:trainee, provider: current_user.provider)
   end
 
   def and_disabilities_exist_in_the_system

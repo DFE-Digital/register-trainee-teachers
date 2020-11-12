@@ -1,10 +1,12 @@
 require "rails_helper"
 
 feature "edit disability disclosure", type: :feature do
-  background { given_i_am_authenticated }
+  background do
+    given_i_am_authenticated
+    given_a_trainee_exists(disability_disclosure: nil)
+  end
 
   scenario "choosing to disclose a disability" do
-    given_a_trainee_exists
     when_i_visit_the_disability_disclosure_page
     and_i_choose_to_disclose
     and_i_submit_the_form
@@ -13,7 +15,6 @@ feature "edit disability disclosure", type: :feature do
   end
 
   scenario "choosing not to disclose a disability" do
-    given_a_trainee_exists
     when_i_visit_the_disability_disclosure_page
     and_i_choose_not_to_disclose
     and_i_submit_the_form
@@ -23,17 +24,12 @@ feature "edit disability disclosure", type: :feature do
   end
 
   scenario "submitting with no option selected" do
-    given_a_trainee_exists
     when_i_visit_the_disability_disclosure_page
     and_i_submit_the_form
     then_i_see_error_messages
   end
 
 private
-
-  def given_a_trainee_exists
-    @trainee = create(:trainee, disability_disclosure: nil, provider: current_user.provider)
-  end
 
   def when_i_visit_the_disability_disclosure_page
     @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new

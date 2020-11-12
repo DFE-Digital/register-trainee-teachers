@@ -1,11 +1,13 @@
 require "rails_helper"
 
 feature "edit programme details", type: :feature do
-  background { given_i_am_authenticated }
-
-  scenario "edit with valid parameters" do
+  background do
+    given_i_am_authenticated
     given_a_trainee_exists
     when_i_visit_the_programme_details_page
+  end
+
+  scenario "edit with valid parameters" do
     and_i_enter_valid_parameters
     and_i_submit_the_form
     and_i_confirm_my_details
@@ -14,14 +16,8 @@ feature "edit programme details", type: :feature do
   end
 
   scenario "edit with invalid parameters" do
-    given_a_trainee_exists
-    when_i_visit_the_programme_details_page
     and_i_submit_the_form
     then_i_see_error_messages
-  end
-
-  def given_a_trainee_exists
-    @trainee = create(:trainee, provider: current_user.provider)
   end
 
   def when_i_visit_the_programme_details_page

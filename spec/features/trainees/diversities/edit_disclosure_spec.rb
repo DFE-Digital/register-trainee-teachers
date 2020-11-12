@@ -1,11 +1,13 @@
 require "rails_helper"
 
 feature "edit diversity disclosure", type: :feature do
-  background { given_i_am_authenticated }
+  background do
+    given_i_am_authenticated
+    given_a_trainee_exists(diversity_disclosure: nil)
+    when_i_visit_the_diversity_disclosure_page
+  end
 
   scenario "choosing to disclose" do
-    given_a_trainee_exists
-    when_i_visit_the_diversity_disclosure_page
     and_i_choose_to_disclose
     and_i_submit_the_form
     then_i_am_redirected_to_the_ethnic_group_page
@@ -13,8 +15,6 @@ feature "edit diversity disclosure", type: :feature do
   end
 
   scenario "choosing not to disclose" do
-    given_a_trainee_exists
-    when_i_visit_the_diversity_disclosure_page
     and_i_choose_not_to_disclose
     and_i_submit_the_form
     and_confirm_my_details
@@ -23,14 +23,8 @@ feature "edit diversity disclosure", type: :feature do
   end
 
   scenario "edit with invalid parameters" do
-    given_a_trainee_exists
-    when_i_visit_the_diversity_disclosure_page
     and_i_submit_the_form
     then_i_see_error_messages
-  end
-
-  def given_a_trainee_exists
-    @trainee = create(:trainee, diversity_disclosure: nil, provider: current_user.provider)
   end
 
   def when_i_visit_the_diversity_disclosure_page

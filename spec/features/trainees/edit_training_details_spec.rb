@@ -10,10 +10,6 @@ feature "edit training details" do
     then_i_am_redirected_to_the_summary_page
   end
 
-  def given_a_trainee_exists
-    @trainee = create(:trainee, provider: current_user.provider)
-  end
-
   def when_i_visit_the_training_details_page
     @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
     @training_details_page.load(id: @trainee.id)

@@ -1,4 +1,5 @@
 require_relative "features/authentication_steps"
+require_relative "features/trainee_steps"
 
 RSpec.configure do |config|
   # Store original feature flag values before the examples run
@@ -8,6 +9,7 @@ RSpec.configure do |config|
   normalise_feature_name = ->(feature) { feature.to_s.delete_prefix("feature_").to_sym }
 
   config.include Features::AuthenticationSteps, type: :feature
+  config.include Features::TraineeSteps, type: :feature
 
   config.around :each do |example|
     example.metadata.keys.grep(/^feature_.*/) do |metadata_key|
