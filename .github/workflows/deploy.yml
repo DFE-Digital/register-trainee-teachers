@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'The environment to deploy to eg: qa, staging, production etc'
+        description: 'The environment to deploy to eg:- qa, staging, production etc'
         required: true
       sha:
         description: Commit sha to be deployed
@@ -28,6 +28,7 @@ jobs:
           echo $DOCKER_IMAGE
           case $DEPLOY_ENV in
             qa) next_env=staging ;;
+            staging) next_env=production ;;
           esac
 
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
