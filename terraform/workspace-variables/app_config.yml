@@ -13,7 +13,7 @@ staging:
   RAILS_ENV: staging
   RACK_ENV: staging
 
-prod:
+production:
   <<: *default
   AUTHORISED_HOSTS: "register-production.london.cloudapps.digital"
   RAILS_ENV: production
