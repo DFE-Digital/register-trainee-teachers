@@ -133,6 +133,18 @@ en:
           attributes:
             disability_ids:
               empty_disabilities: You must select at least one disability
+        diversities/diversity_flow:
+          attributes:
+            disclosure_section:
+              not_valid: The disclosure section is not valid for this trainee
+            ethnic_group_section:
+              not_valid: The ethnic group section is not valid for this trainee
+            ethnic_background_section:
+              not_valid: The ethnic background section is not valid for this trainee
+            disability_disclosure_section:
+              not_valid: The disability disclosure section is not valid for this trainee
+            disability_ids:
+              not_valid: Trainee has been disclosed as disabled but no disabilities exist
         programme_detail:
           attributes:
             subject:

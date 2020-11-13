@@ -59,7 +59,11 @@
         :row,
         task_name: 'Diversity information',
         path: edit_trainee_diversity_disclosure_path(@trainee),
-        status: 'not started'
+        classes: "diversity-details",
+        status: ProgressService.call(
+          validator: Diversities::DiversityFlow.new(@trainee), 
+          progress_value: @trainee.progress.diversity
+        ).status
       )
     end %>
 

@@ -1,4 +1,5 @@
 require_relative "../sections/personal_details"
+require_relative "../sections/diversity"
 
 module PageObjects
   module Trainees
@@ -7,6 +8,7 @@ module PageObjects
 
       section :personal_details, PageObjects::Sections::PersonalDetails, ".app-task-list__item.personal-details"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
+      section :diversity_section, PageObjects::Sections::Diversity, ".app-task-list__item.diversity-details"
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
       element :degree_link, ".education .degree-link .govuk-link"
 

@@ -1,6 +1,6 @@
 module Trainees
   module Diversity
-    class EthnicGroupsController < ApplicationController
+    class EthnicGroupsController < BaseController
       def edit
         @ethnic_group = Diversities::EthnicGroup.new(trainee: trainee)
       end
