@@ -1,11 +1,20 @@
 require "rails_helper"
 
 RSpec.feature "Adding a degree" do
-  background { given_i_am_authenticated }
+  background do
+    given_i_am_authenticated
+    given_a_trainee_exists
+  end
+
+  describe "summary page" do
+    scenario "no degrees entered" do
+      and_i_visit_the_summary_page
+      then_the_degree_status_should_be(:not_started)
+    end
+  end
 
   describe "Validation before route is picked" do
     scenario "the user enters invalid details" do
-      given_a_trainee_exists
       and_i_visit_the_summary_page
       and_i_click_the_degree_on_the_summary_page
       when_i_visit_the_type_page
@@ -15,19 +24,29 @@ RSpec.feature "Adding a degree" do
   end
 
   describe "UK Route" do
-    scenario "the user enters valid details on UK degree details page" do
-      given_a_trainee_exists
-      and_i_have_selected_uk_route
-      when_i_visit_the_degree_details_page
-      and_i_fill_in_the_form
-      and_i_click_the_continue_button_on_the_degree_details_page
-      then_i_am_redirected_to_the_trainee_degrees_confirmation_page
-      and_confirm_my_details
-      then_i_am_redirected_to_the_summary_page
+    context "the user enters valid details " do
+      background do
+        and_i_have_selected_uk_route
+        when_i_visit_the_degree_details_page
+        and_i_fill_in_the_form
+        and_i_click_the_continue_button_on_the_degree_details_page
+        then_i_am_redirected_to_the_trainee_degrees_confirmation_page
+      end
+
+      scenario "the user confirms degree details" do
+        and_confirm_my_details
+        then_i_am_redirected_to_the_summary_page
+        then_the_degree_status_should_be(:completed)
+      end
+
+      scenario "the user does not confirm degree details" do
+        and_i_click_continue
+        then_i_am_redirected_to_the_summary_page
+        then_the_degree_status_should_be(:in_progress)
+      end
     end
 
     scenario "the user enters invalid details on UK degree details page" do
-      given_a_trainee_exists
       and_i_have_selected_uk_route
       when_i_visit_the_degree_details_page
       and_i_click_the_continue_button_on_the_degree_details_page
@@ -37,7 +56,6 @@ RSpec.feature "Adding a degree" do
 
   describe "Non-UK Route" do
     scenario "the user enters valid details on Non-UK degree details page" do
-      given_a_trainee_exists
       and_i_have_selected_non_uk_route
       when_i_visit_the_degree_details_page
       and_i_fill_in_the_form
@@ -48,7 +66,6 @@ RSpec.feature "Adding a degree" do
     end
 
     scenario "the user enters invalid details on Non-UK degree details page" do
-      given_a_trainee_exists
       and_i_have_selected_non_uk_route
       when_i_visit_the_degree_details_page
       and_i_click_the_continue_button_on_the_degree_details_page
@@ -64,7 +81,7 @@ private
   end
 
   def and_i_click_the_degree_on_the_summary_page
-    summary_page.degree_link.click
+    summary_page.degree_details.link.click
   end
 
   def when_i_visit_the_type_page
@@ -136,20 +153,24 @@ private
   end
 
   def and_confirm_my_details
-    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "degrees")
-    @confirm_page.submit_button.click
+    expect(confirm_details_page).to be_displayed(id: @trainee.id, section: "degrees")
+    confirm_details_page.confirm.click
+    confirm_details_page.submit_button.click
+  end
+
+  def and_i_click_continue
+    confirm_details_page.submit_button.click
   end
 
   def degree_details_page
     @degree_details_page ||= PageObjects::Trainees::NewDegreeDetails.new
   end
 
-  def summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-  end
-
   def type_page
     @type_page ||= PageObjects::Trainees::DegreeType.new
+  end
+
+  def then_the_degree_status_should_be(status)
+    expect(summary_page.degree_details.status.text).to eq(Progress::STATUSES[status])
   end
 end

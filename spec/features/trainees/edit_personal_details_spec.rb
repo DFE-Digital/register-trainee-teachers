@@ -84,16 +84,6 @@ private
     @personal_details_page.submit_button.click
   end
 
-  def then_i_am_redirected_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    expect(@summary_page).to be_displayed(id: @trainee.id)
-  end
-
-  def and_return_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    @summary_page.load
-  end
-
   def then_the_personal_details_are_updated
     @trainee.reload
     expect(@trainee.progress.personal_details).to be_truthy
@@ -108,10 +98,10 @@ private
   end
 
   def then_the_personal_details_section_should_be_completed
-    expect(@summary_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
+    expect(summary_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
   end
 
   def then_the_personal_details_section_should_be_in_progress
-    expect(@summary_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
+    expect(summary_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
   end
 end

@@ -43,7 +43,7 @@
         path: edit_trainee_personal_details_path(@trainee),
         classes: "personal-details",
         status: ProgressService.call(
-          validator: PersonalDetail.new(@trainee), 
+          validator: PersonalDetail.new(@trainee),
           progress_value: @trainee.progress.personal_details
         ).status
       )
@@ -71,8 +71,11 @@
         :row,
         task_name: 'Degree',
         path: @trainee.degrees.present?  ? trainee_degrees_confirm_path(@trainee) : trainee_degrees_new_type_path(@trainee),
-        status: 'in progress',
-        classes: 'degree-link'
+        status: ProgressService.call(
+          validator: DegreeDetail.new(@trainee),
+          progress_value: @trainee.progress.degrees
+        ).status,
+        classes: 'degree-details'
       )
     end %>
   </div>
