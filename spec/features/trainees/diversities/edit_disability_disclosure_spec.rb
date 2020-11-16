@@ -33,7 +33,7 @@ private
 
   def when_i_visit_the_disability_disclosure_page
     @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
-    @disability_disclosure_page.load(id: @trainee.id)
+    @disability_disclosure_page.load(id: trainee.id)
   end
 
   def and_i_choose_to_disclose
@@ -50,22 +50,17 @@ private
 
   def and_confirm_my_details
     @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "disability-disclosure")
+    expect(@confirm_page).to be_displayed(id: trainee.id, section: "disability-disclosure")
     @confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_disabilities_page
     @disabilities_page ||= PageObjects::Trainees::Diversities::Disabilities.new
-    expect(@disabilities_page).to be_displayed(id: @trainee.id)
-  end
-
-  def then_i_am_redirected_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    expect(@summary_page).to be_displayed(id: @trainee.id)
+    expect(@disabilities_page).to be_displayed(id: trainee.id)
   end
 
   def and_the_disability_disclosure_is_updated
-    expect(@trainee.reload.disability_disclosure).to be_truthy
+    expect(trainee.reload.disability_disclosure).to be_truthy
   end
 
   def then_i_see_error_messages

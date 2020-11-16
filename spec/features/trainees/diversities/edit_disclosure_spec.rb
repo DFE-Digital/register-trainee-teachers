@@ -29,7 +29,7 @@ feature "edit diversity disclosure", type: :feature do
 
   def when_i_visit_the_diversity_disclosure_page
     @disclosure_page ||= PageObjects::Trainees::Diversities::Disclosure.new
-    @disclosure_page.load(id: @trainee.id)
+    @disclosure_page.load(id: trainee.id)
   end
 
   def and_i_choose_to_disclose
@@ -46,22 +46,17 @@ feature "edit diversity disclosure", type: :feature do
 
   def and_confirm_my_details
     @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "information-disclosed")
+    expect(@confirm_page).to be_displayed(id: trainee.id, section: "information-disclosed")
     @confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_ethnic_group_page
     @ethnic_group ||= PageObjects::Trainees::Diversities::EthnicGroup.new
-    expect(@ethnic_group).to be_displayed(id: @trainee.id)
-  end
-
-  def then_i_am_redirected_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    expect(@summary_page).to be_displayed(id: @trainee.id)
+    expect(@ethnic_group).to be_displayed(id: trainee.id)
   end
 
   def and_the_diversity_disclosure_is_updated
-    expect(@trainee.reload.diversity_disclosure).to be_truthy
+    expect(trainee.reload.diversity_disclosure).to be_truthy
   end
 
   def then_i_see_error_messages

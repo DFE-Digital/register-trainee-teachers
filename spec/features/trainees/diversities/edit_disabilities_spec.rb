@@ -27,7 +27,7 @@ feature "edit disability details", type: :feature do
 
   def when_i_visit_the_disability_details_page
     @disabilities_page ||= PageObjects::Trainees::Diversities::Disabilities.new
-    @disabilities_page.load(id: @trainee.id)
+    @disabilities_page.load(id: trainee.id)
   end
 
   def and_i_choose_a_disability
@@ -40,17 +40,12 @@ feature "edit disability details", type: :feature do
 
   def and_confirm_my_details
     @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "disabilities")
+    expect(@confirm_page).to be_displayed(id: trainee.id, section: "disabilities")
     @confirm_page.submit_button.click
   end
 
-  def then_i_am_redirected_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    expect(@summary_page).to be_displayed(id: @trainee.id)
-  end
-
   def and_the_disability_details_are_updated
-    expect(@trainee.reload.disabilities).to include(@disability)
+    expect(trainee.reload.disabilities).to include(@disability)
   end
 
   def then_i_see_error_messages

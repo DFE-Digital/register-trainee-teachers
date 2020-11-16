@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Create trainee journey" do
+feature "Create trainee journey" do
   background { given_i_am_authenticated }
 
   scenario "setting up an initial assessment only record" do
@@ -15,13 +15,12 @@ RSpec.feature "Create trainee journey" do
 private
 
   def when_i_am_viewing_the_list_of_trainees
-    @index_page ||= PageObjects::Trainees::Index.new
-    @index_page.load
+    trainee_index_page.load
   end
 
   def and_i_click_on_add_trainee_button
     @new_page ||= PageObjects::Trainees::New.new
-    @index_page.add_trainee_link.click
+    trainee_index_page.add_trainee_link.click
   end
 
   def and_i_select_assessment_only_route

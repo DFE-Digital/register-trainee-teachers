@@ -76,8 +76,8 @@ RSpec.feature "Adding a degree" do
 private
 
   def and_i_visit_the_summary_page
-    summary_page.load(id: @trainee.id)
-    expect(summary_page).to be_displayed(id: @trainee.id)
+    summary_page.load(id: trainee.id)
+    expect(summary_page).to be_displayed(id: trainee.id)
   end
 
   def and_i_click_the_degree_on_the_summary_page
@@ -85,7 +85,7 @@ private
   end
 
   def when_i_visit_the_type_page
-    type_page.load(trainee_id: @trainee.id)
+    type_page.load(trainee_id: trainee.id)
   end
 
   def and_i_click_the_continue_button_on_the_type_page
@@ -153,7 +153,7 @@ private
   end
 
   def and_confirm_my_details
-    expect(confirm_details_page).to be_displayed(id: @trainee.id, section: "degrees")
+    expect(confirm_details_page).to be_displayed(id: trainee.id, section: "degrees")
     confirm_details_page.confirm.click
     confirm_details_page.submit_button.click
   end
