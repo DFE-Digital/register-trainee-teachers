@@ -1,6 +1,8 @@
 module ContactDetails
   class Update
-    attr_reader :trainee, :attributes
+    attr_reader :trainee, :contact_details, :attributes, :successful
+
+    alias_method :successful?, :successful
 
     class << self
       def call(**args)
@@ -11,10 +13,13 @@ module ContactDetails
     def initialize(trainee:, attributes:)
       @trainee = trainee
       @attributes = attributes
+      trainee.assign_attributes(normalised_address_attributes)
+      @contact_details = ContactDetail.new(trainee: trainee)
     end
 
     def call
-      trainee.update!(normalised_address_attributes)
+      @successful = contact_details.valid? && trainee.save!
+      self
     end
 
   private

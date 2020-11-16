@@ -100,6 +100,11 @@ en:
               blank: "You must select the country where the degree was obtained"
   activemodel:
     errors:
+      validators:
+        phone_number:
+          invalid: "You must enter a valid telephone number"
+        postcode:
+          invalid: "You must enter a valid postcode (for example, BN1 1AA)"
       models:
         personal_detail:
           attributes:
@@ -113,6 +118,23 @@ en:
               blank: "You must select a gender"
             nationality_ids:
               empty_nationalities: You must select at least one nationality
+        contact_detail:
+          attributes:
+            locale_code:
+              blank: "You must select where the trainee lives"
+            international_address:
+              blank: "You must enter a home address outside the UK"
+            address_line_one:
+              blank: "You must enter the first line of the address"
+            town_city:
+              blank: "You must enter a town or city"
+            postcode:
+              blank: "You must enter a postcode"
+            phone_number:
+              blank: "You must enter a telephone number"
+            email:
+              blank: "You must enter an email address"
+              invalid: "You must enter an email address in the correct format, like name@example.com"
         diversities/disclosure:
           attributes:
             diversity_disclosure:
