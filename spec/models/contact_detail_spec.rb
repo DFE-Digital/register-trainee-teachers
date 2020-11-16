@@ -3,7 +3,7 @@ require "rails_helper"
 describe ContactDetail do
   let(:trainee) { build(:trainee) }
 
-  subject { described_class.new(trainee: trainee) }
+  subject { described_class.new(trainee) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:locale_code) }
