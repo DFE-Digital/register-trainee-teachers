@@ -8,6 +8,7 @@ module PageObjects
 
     section :footer, "footer" do
       element :accessibility_link, ".govuk-footer__link", text: "Accessibility"
+      element :cookies_link, ".govuk-footer__link", text: "Cookies"
     end
   end
 end

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get :sha, controller: :heartbeat
 
   get "/accessibility", to: "pages#accessibility", as: :accessibility
+  get "/cookies", to: "pages#cookies", as: :cookies
   get "/pages/:page", to: "pages#show"
 
   get "/404", to: "errors#not_found", via: :all

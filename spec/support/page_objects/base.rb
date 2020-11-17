@@ -17,4 +17,10 @@ module PageObjects
 
     element :page_heading, ".govuk-heading-l"
   end
+
+  class Cookies < PageObjects::Base
+    set_url "/cookies"
+
+    element :page_heading, ".govuk-heading-l"
+  end
 end

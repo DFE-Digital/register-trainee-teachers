@@ -8,4 +8,8 @@ class PagesController < ApplicationController
   def accessibility
     render :accessibility
   end
+
+  def cookies
+    render :cookies
+  end
 end
