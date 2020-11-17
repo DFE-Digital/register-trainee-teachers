@@ -43,7 +43,7 @@ module Trainees
         def ethnic_group_content
           value = I18n.t("components.confirmation.diversity.ethnic_groups.#{trainee.ethnic_group}")
 
-          if trainee.ethnic_background.present? && trainee.ethnic_background != Diversities::NOT_PROVIDED_VALUE
+          if trainee.ethnic_background.present? && trainee.ethnic_background != Diversities::NOT_PROVIDED
             value += " (#{trainee.ethnic_background})"
           end
           value

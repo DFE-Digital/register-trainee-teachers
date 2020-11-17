@@ -55,6 +55,14 @@ FactoryBot.define do
       age_range { AGE_RANGES.sample[:name] }
       programme_start_date { Faker::Date.between(from: 2.years.ago, to: Time.zone.today) }
     end
+
+    trait :diversity_disclosed do
+      diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] }
+    end
+
+    trait :diversity_not_disclosed do
+      diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
+    end
   end
 end
 
