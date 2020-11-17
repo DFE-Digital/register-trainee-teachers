@@ -18,3 +18,7 @@ data cloudfoundry_service postgres {
 data cloudfoundry_service redis {
   name = "redis"
 }
+
+data cloudfoundry_domain register_education_gov_uk {
+  name = "register-trainee-teachers.education.gov.uk"
+}
