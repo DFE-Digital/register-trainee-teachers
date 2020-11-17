@@ -26,10 +26,25 @@ feature "view pages" do
     then_i_should_see_the_privacy_policy
   end
 
+  scenario "navigate to sign in" do
+    given_i_am_on_the_home_page
+    when_i_click_on_sign_in
+    then_the_start_page_is_displayed
+  end
+
 private
 
   def given_i_am_on_the_home_page
     start_page.load
+  end
+
+  def when_i_click_on_sign_in
+    start_page.sign_in.click
+  end
+
+  def then_the_start_page_is_displayed
+    sign_in_page = PageObjects::SignIn.new
+    expect(sign_in_page).to be_displayed
   end
 
   def then_i_should_see_the_service_name

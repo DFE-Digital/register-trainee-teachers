@@ -59,9 +59,12 @@ Rails.application.routes.draw do
   end
 
   get "/personas", to: "personas#index"
+  post "/personas", to: "personas#create"
   post "/sessions", to: "sessions#create"
 
   resources :trn_submissions, only: %i[create show], param: :trainee_id
+
+  resources :sign_in, path: "/sign-in", only: [:index]
 
   root to: "pages#show", defaults: { page: "start" }
 end
