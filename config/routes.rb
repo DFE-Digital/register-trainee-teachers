@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     member do
       get "training-details", to: "trainees/training_details#edit"
       get "course-details", to: "trainees/course_details#edit"
+      get "check-details", to: "trainees/check_details#show"
     end
   end
 
