@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dttp
   class TraineePresenter
     attr_reader :trainee

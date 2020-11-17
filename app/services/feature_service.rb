@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FeatureService
   class << self
     def enabled?(feature_name)

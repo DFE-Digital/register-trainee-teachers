@@ -1,5 +1,7 @@
-PROVIDER_A = "Provider A".freeze
-PROVIDER_B = "Provider B".freeze
+# frozen_string_literal: true
+
+PROVIDER_A = "Provider A"
+PROVIDER_B = "Provider B"
 
 PERSONAS = [
   { first_name: "Adam", last_name: "Baker", email: "adam_baker@example.org", provider: PROVIDER_A },

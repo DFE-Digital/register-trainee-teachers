@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Nationalities
   SEED_NATIONALITIES = [
     "Afghan",

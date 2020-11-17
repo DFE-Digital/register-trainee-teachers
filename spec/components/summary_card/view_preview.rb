@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "govuk/components"
 class SummaryCard::ViewPreview < ViewComponent::Preview
   def with_no_action_links

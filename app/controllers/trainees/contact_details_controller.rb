@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trainees
   class ContactDetailsController < ApplicationController
     before_action :redirect_to_confirm, if: :section_completed?

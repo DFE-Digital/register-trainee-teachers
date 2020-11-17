@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trainees
   class CheckDetailsController < ApplicationController
     def show

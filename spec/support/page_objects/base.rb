@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   module Helpers
     def set_date_fields(field_prefix, date_string)

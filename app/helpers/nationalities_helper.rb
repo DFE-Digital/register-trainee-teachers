@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NationalitiesHelper
   def format_default_nationalities(nationalities)
     formatted_nationalities = []

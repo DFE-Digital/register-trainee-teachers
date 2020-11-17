@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dttp
   class AccessTokenService
     class AuthenticationClient
@@ -6,7 +8,7 @@ module Dttp
       TOKEN_EXPIRY_TIME = 3599.seconds
       CACHED_TOKEN_EXPIRY_TIME = TOKEN_EXPIRY_TIME - 5.seconds
 
-      MICROSOFT_LOGIN_URL = "https://login.microsoftonline.com".freeze
+      MICROSOFT_LOGIN_URL = "https://login.microsoftonline.com"
 
       base_uri MICROSOFT_LOGIN_URL
     end

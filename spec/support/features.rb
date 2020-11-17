@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "features/authentication_steps"
 require_relative "features/trainee_steps"
 

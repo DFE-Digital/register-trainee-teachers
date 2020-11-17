@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddRecordTypeToTrainees < ActiveRecord::Migration[6.0]
   def change
     add_column :trainees, :record_type, :integer

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Personas
   class View < GovukComponent::Base
     with_collection_parameter :persona

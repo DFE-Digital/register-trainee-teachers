@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 HESA_DEGREE_TYPES = [
   [1, nil, "BEd", :bachelor],
   [3, nil, "BSc/Education", :bachelor],

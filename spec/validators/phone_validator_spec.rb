@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe PhoneValidator do
   let(:model) do
     cls = Class.new do

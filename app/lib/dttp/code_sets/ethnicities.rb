@@ -1,30 +1,32 @@
+# frozen_string_literal: true
+
 module Dttp
   module CodeSets
     module Ethnicities
-      AFRICAN = "Black or Black British - African".freeze
-      ARAB = "Arab".freeze
-      BANGLADESHI = "Asian or Asian British - Bangladeshi".freeze
-      CARIBBEAN = "Black or Black British - Caribbean".freeze
-      CHINESE = "Chinese".freeze
-      GYPSY_OR_TRAVELLER = "Gypsy or Traveller".freeze
-      INDIAN = "Asian or Asian British - Indian".freeze
-      INFORMATION_NOT_SAUGHT = "Information not yet sought".freeze
-      INFORMATION_REFUSED = "Information refused".freeze
-      IRISH_TRAVELLER = "Irish traveller".freeze
-      NOT_KNOWN = "Not known".freeze
-      OTHER_ASIAN = "Other Asian background".freeze
-      OTHER_BLACK = "Other Black background".freeze
-      OTHER_ETHNIC = "Other Ethnic background".freeze
-      OTHER_MIXED = "Other Mixed background".freeze
-      OTHER_WHITE = "Other White background".freeze
-      PAKISTANI = "Asian or Asian British - Pakistani".freeze
-      WHITE = "White".freeze
-      WHITE_AND_ASIAN = "Mixed - White and Asian".freeze
-      WHITE_AND_BLACK_AFRICAN = "Mixed - White and Black African".freeze
-      WHITE_AND_BLACK_CARIBBEAN = "Mixed - White and Black Caribbean".freeze
-      WHITE_BRITISH = "White - British".freeze
-      WHITE_IRISH = "White - Irish".freeze
-      WHITE_SCOTTISH = "White - Scottish".freeze
+      AFRICAN = "Black or Black British - African"
+      ARAB = "Arab"
+      BANGLADESHI = "Asian or Asian British - Bangladeshi"
+      CARIBBEAN = "Black or Black British - Caribbean"
+      CHINESE = "Chinese"
+      GYPSY_OR_TRAVELLER = "Gypsy or Traveller"
+      INDIAN = "Asian or Asian British - Indian"
+      INFORMATION_NOT_SAUGHT = "Information not yet sought"
+      INFORMATION_REFUSED = "Information refused"
+      IRISH_TRAVELLER = "Irish traveller"
+      NOT_KNOWN = "Not known"
+      OTHER_ASIAN = "Other Asian background"
+      OTHER_BLACK = "Other Black background"
+      OTHER_ETHNIC = "Other Ethnic background"
+      OTHER_MIXED = "Other Mixed background"
+      OTHER_WHITE = "Other White background"
+      PAKISTANI = "Asian or Asian British - Pakistani"
+      WHITE = "White"
+      WHITE_AND_ASIAN = "Mixed - White and Asian"
+      WHITE_AND_BLACK_AFRICAN = "Mixed - White and Black African"
+      WHITE_AND_BLACK_CARIBBEAN = "Mixed - White and Black Caribbean"
+      WHITE_BRITISH = "White - British"
+      WHITE_IRISH = "White - Irish"
+      WHITE_SCOTTISH = "White - Scottish"
 
       MAPPING = [
         { name: ARAB, code: 50, ethnic_minority: true },

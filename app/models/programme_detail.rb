@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProgrammeDetail
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment

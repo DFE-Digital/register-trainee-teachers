@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Diversities
   module DisabilityDetails
     class Update

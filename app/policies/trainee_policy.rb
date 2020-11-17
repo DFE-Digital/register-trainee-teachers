@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TraineePolicy
   class Scope
     attr_reader :user, :scope

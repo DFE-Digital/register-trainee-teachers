@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FormComponents
   module Autocomplete
     class View < GovukComponent::Base

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ConfirmDetailsHelper
   def trainee_section_update_path(section_key, trainee)
     routes = {

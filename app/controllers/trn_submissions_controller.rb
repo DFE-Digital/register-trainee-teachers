@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TrnSubmissionsController < ApplicationController
   def show; end
 

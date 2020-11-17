@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
   def create
     session[:auth_user] = { user_id: params[:user_id] }

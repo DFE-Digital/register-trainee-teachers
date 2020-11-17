@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PageTitle::View < GovukComponent::Base
   attr_accessor :title, :errors
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CustomLogFormatter < SemanticLogger::Formatters::Raw
   def call(log, logger)
     super(log, logger)
