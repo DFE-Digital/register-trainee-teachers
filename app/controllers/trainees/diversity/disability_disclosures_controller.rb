@@ -1,6 +1,6 @@
 module Trainees
   module Diversity
-    class DisabilityDisclosuresController < ApplicationController
+    class DisabilityDisclosuresController < BaseController
       def edit
         @disability_disclosure = Diversities::DisabilityDisclosure.new(trainee: trainee)
       end
