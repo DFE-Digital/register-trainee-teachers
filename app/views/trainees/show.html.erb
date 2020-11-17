@@ -29,7 +29,11 @@
         :row,
         task_name: 'Programme details',
         path: edit_trainee_programme_details_path(@trainee),
-        status: 'in progress'
+        classes: "programme-details",
+        status: ProgressService.call(
+          validator: ProgrammeDetail.new(trainee: @trainee),
+          progress_value: @trainee.progress.programme_details
+        ).status
       )
 
     end %>

@@ -6,6 +6,7 @@ module PageObjects
     class Summary < PageObjects::Base
       set_url "/trainees/{id}"
 
+      section :programme_details, PageObjects::Sections::ProgrammeDetails, ".app-task-list__item.programme-details"
       section :personal_details, PageObjects::Sections::PersonalDetails, ".app-task-list__item.personal-details"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
       section :diversity_section, PageObjects::Sections::Diversity, ".app-task-list__item.diversity-details"
