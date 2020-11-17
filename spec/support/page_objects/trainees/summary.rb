@@ -10,7 +10,7 @@ module PageObjects
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
       section :diversity_section, PageObjects::Sections::Diversity, ".app-task-list__item.diversity-details"
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
-      element :degree_link, ".education .degree-link .govuk-link"
+      section :degree_details, PageObjects::Sections::DegreeDetails, ".degree-details"
 
       element :submit_for_trn_button, "input[name='commit']"
     end

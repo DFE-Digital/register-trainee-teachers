@@ -33,10 +33,6 @@ feature "submit for TRN" do
     expect(trn_success_page).to be_displayed(id: trainee.id)
   end
 
-  def summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-  end
-
   def trn_success_page
     @trn_success_page ||= PageObjects::Trainees::TrnSuccess.new
   end

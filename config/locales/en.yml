@@ -178,5 +178,9 @@ en:
             programme_start_date:
               blank: "You must enter programme start date"
               invalid: "You must enter a valid programme start date"
+        degree_detail:
+          attributes:
+            degree_ids:
+              empty_degrees: You must have at least one degree
   page_headings:
     start_page: "Register trainee teachers"

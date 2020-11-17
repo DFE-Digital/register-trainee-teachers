@@ -1,9 +1,12 @@
 require "rails_helper"
 
 feature "edit ethnic background", type: :feature do
-  scenario "edit with valid parameters" do
+  background do
     given_a_trainee_exists
     when_i_visit_the_diversity_ethnic_background_page
+  end
+
+  scenario "edit with valid parameters" do
     and_i_enter_valid_parameters
     and_i_submit_the_form
     then_i_am_redirected_to_the_disability_disclosure_page
@@ -11,8 +14,6 @@ feature "edit ethnic background", type: :feature do
   end
 
   scenario "edit with invalid parameters" do
-    given_a_trainee_exists
-    when_i_visit_the_diversity_ethnic_background_page
     and_i_submit_the_form
     then_i_see_error_messages
   end
@@ -36,11 +37,11 @@ feature "edit ethnic background", type: :feature do
 
   def then_i_am_redirected_to_the_disability_disclosure_page
     @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
-    expect(@disability_disclosure_page).to be_displayed(id: @trainee.id)
+    expect(@disability_disclosure_page).to be_displayed(id: trainee.id)
   end
 
   def and_the_diversity_ethnic_background_is_updated
-    expect(@trainee.reload.ethnic_background).to eq("Bangladeshi")
+    expect(trainee.reload.ethnic_background).to eq("Bangladeshi")
   end
 
   def then_i_see_error_messages

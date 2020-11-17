@@ -56,7 +56,7 @@ private
 
   def when_i_visit_the_personal_details_page
     @personal_details_page ||= PageObjects::Trainees::PersonalDetails.new
-    @personal_details_page.load(id: @trainee.id)
+    @personal_details_page.load(id: trainee.id)
   end
 
   def and_i_enter_valid_parameters
@@ -70,33 +70,23 @@ private
   def and_confirm_my_details(checked: true)
     checked_option = checked ? "check" : "uncheck"
     @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "personal-details")
+    expect(@confirm_page).to be_displayed(id: trainee.id, section: "personal-details")
     @confirm_page.confirm.public_send(checked_option)
     @confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_confirm_page
     @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "personal-details")
+    expect(@confirm_page).to be_displayed(id: trainee.id, section: "personal-details")
   end
 
   def and_i_submit_the_form
     @personal_details_page.submit_button.click
   end
 
-  def then_i_am_redirected_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    expect(@summary_page).to be_displayed(id: @trainee.id)
-  end
-
-  def and_return_to_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    @summary_page.load
-  end
-
   def then_the_personal_details_are_updated
-    @trainee.reload
-    expect(@trainee.progress.personal_details).to be_truthy
+    trainee.reload
+    expect(trainee.progress.personal_details).to be_truthy
   end
 
   def then_i_see_error_messages
@@ -108,10 +98,10 @@ private
   end
 
   def then_the_personal_details_section_should_be_completed
-    expect(@summary_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
+    expect(summary_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
   end
 
   def then_the_personal_details_section_should_be_in_progress
-    expect(@summary_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
+    expect(summary_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
   end
 end
