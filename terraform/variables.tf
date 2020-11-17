@@ -38,7 +38,7 @@ variable paas_app_secrets_file { default = "./terraform/app_secrets.yml" }
 
 locals {
   paas_api_url = "https://api.london.cloud.service.gov.uk"
-  app_secrets = yamldecode(file(var.paas_app_secrets_file))
+  app_secrets  = yamldecode(file(var.paas_app_secrets_file))
 
   app_config = yamldecode(file(var.paas_app_config_file))[var.paas_app_environment]
 

@@ -31,9 +31,14 @@ resource cloudfoundry_app web_app {
   timeout                    = var.app_start_timeout
   environment                = local.app_environment
   docker_credentials         = var.docker_credentials
-  routes {
-    route = cloudfoundry_route.web_app_route.id
+
+  dynamic "routes" {
+    for_each = local.web_app_routes
+    content {
+      route = routes.value
+    }
   }
+
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres_instance.id
   }
@@ -70,6 +75,12 @@ resource cloudfoundry_route web_app_route {
   domain   = data.cloudfoundry_domain.cloudapps_digital.id
   space    = data.cloudfoundry_space.space.id
   hostname = local.web_app_name
+}
+
+resource cloudfoundry_route web_app_service_gov_uk_route {
+  domain   = data.cloudfoundry_domain.register_education_gov_uk.id
+  space    = data.cloudfoundry_space.space.id
+  hostname = var.app_environment == "prod" ? "www" : var.app_environment
 }
 
 resource cloudfoundry_user_provided_service logging {
