@@ -11,4 +11,10 @@ module PageObjects
   end
 
   class Base < SitePrism::Page; end
+
+  class Accessibility < PageObjects::Base
+    set_url "/accessibility"
+
+    element :page_heading, ".govuk-heading-l"
+  end
 end

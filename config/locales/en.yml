@@ -16,6 +16,8 @@ en:
       not_provided: Not provided
       heading: Confirm %{section_title}
     page_titles:
+      pages:
+        accessibility: Accessibility
       trn_submissions:
         show: Successfully submitted
       trainees:
