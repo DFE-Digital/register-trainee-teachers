@@ -12,7 +12,7 @@ module PageObjects
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
       section :degree_details, PageObjects::Sections::DegreeDetails, ".degree-details"
 
-      element :submit_for_trn_button, "input[name='commit']"
+      element :review_this_record_link, "#check-details"
     end
   end
 end
