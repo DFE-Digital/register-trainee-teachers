@@ -87,7 +87,7 @@
 
 <h2 class="govuk-heading-m">Review and submit</h2>
 
-<%= govuk_link_to "Review this record", check_details_trainee_path(@trainee), class: "govuk-button" %>
+<%= govuk_link_to "Review this record", check_details_trainee_path(@trainee), {class: "govuk-button", id: "check-details"} %>
 
 
 <p class="govuk-body"><%= govuk_link_to("Return to this draft record later", "#") %></p>

@@ -12,7 +12,7 @@ module PageObjects
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
       section :degree_details, PageObjects::Sections::DegreeDetails, ".degree-details"
 
-      element :review_this_record_link, "a.govuk-button", text: "Review this record"
+      element :review_this_record_link, "#check-details"
     end
   end
 end
