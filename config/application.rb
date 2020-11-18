@@ -21,7 +21,7 @@ require "govuk/components"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module GovukRailsBoilerplate
+module RegisterTraineeTeachers
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -42,5 +42,7 @@ module GovukRailsBoilerplate
 
     config.middleware.use Rack::Deflater
     config.active_job.queue_adapter = :sidekiq
+
+    config.session_store :cookie_store, key: "_register_trainee_teachers_session", expire_after: 6.hours
   end
 end
