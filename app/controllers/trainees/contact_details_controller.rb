@@ -1,16 +1,20 @@
 module Trainees
   class ContactDetailsController < ApplicationController
+    before_action :redirect_to_confirm, if: :section_completed?
+
     def edit
-      @contact_details = ContactDetail.new(trainee: trainee)
+      @contact_details = ContactDetail.new(trainee)
     end
 
     def update
-      updater = ContactDetails::Update.call(trainee: trainee, attributes: contact_details_params)
+      trainee.assign_contact_details(contact_details_params)
 
-      if updater.successful?
-        redirect_to trainee_contact_details_confirm_path(trainee)
+      contact_detail = ContactDetail.new(trainee)
+
+      if contact_detail.save
+        redirect_to_confirm
       else
-        @contact_details = updater.contact_details
+        @contact_details = contact_detail
         render :edit
       end
     end
@@ -25,6 +29,17 @@ module Trainees
       params.require(:contact_detail).permit(
         *ContactDetail::FIELDS,
       )
+    end
+
+    def redirect_to_confirm
+      redirect_to trainee_contact_details_confirm_path(trainee)
+    end
+
+    def section_completed?
+      ProgressService.call(
+        validator: ContactDetail.new(trainee),
+        progress_value: trainee.progress.contact_details,
+      ).completed?
     end
   end
 end

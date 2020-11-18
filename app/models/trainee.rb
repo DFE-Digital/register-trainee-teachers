@@ -41,4 +41,12 @@ class Trainee < ApplicationRecord
 
     super
   end
+
+  def assign_contact_details(params)
+    if params[:locale_code] == "uk"
+      assign_attributes(params.merge(international_address: nil))
+    else
+      assign_attributes(params.merge(address_line_one: nil, address_line_two: nil, town_city: nil, postcode: nil))
+    end
+  end
 end

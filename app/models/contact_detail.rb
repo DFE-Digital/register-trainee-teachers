@@ -1,5 +1,8 @@
 class ContactDetail
   include ActiveModel::Model
+  include ActiveModel::AttributeAssignment
+  include ActiveModel::Validations::Callbacks
+
   attr_accessor :trainee
 
   MANDATORY_UK_ADDRESS_FIELDS = %w[
@@ -24,15 +27,23 @@ class ContactDetail
   validates :locale_code, presence: true
   validate :international_address_not_empty
   validate :uk_address_must_not_be_empty
-  validates :postcode, postcode: true
+  validates :postcode, postcode: true, if: ->(attr) { attr.postcode.present? }
   validates :phone_number, presence: true
   validates :phone_number, phone: true
   validates :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  def initialize(trainee:)
+  def initialize(trainee)
     @trainee = trainee
-    super(trainee.attributes.slice(*FIELDS))
+    super(fields)
+  end
+
+  def fields
+    trainee.attributes.slice(*FIELDS)
+  end
+
+  def save
+    valid? && trainee.save
   end
 
 private

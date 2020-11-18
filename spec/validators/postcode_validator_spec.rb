@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe PostcodeValidator do
   let(:trainee) { build :trainee }
-  subject { ContactDetail.new(trainee: trainee) }
+  subject { ContactDetail.new(trainee) }
 
   before do
     subject.postcode = postcode
