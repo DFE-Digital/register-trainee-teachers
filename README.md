@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/DFE-Digital/govuk-rails-boilerplate.svg?branch=master)](https://travis-ci.com/DFE-Digital/govuk-rails-boilerplate)
+![build](https://github.com/DFE-Digital/register-trainee-teachers/workflows/build/badge.svg)
+![Deploy to PaaS](https://github.com/DFE-Digital/register-trainee-teachers/workflows/Deploy%20to%20PaaS/badge.svg)
 
 # GOV.UK Rails Boilerplate
 
@@ -41,11 +42,13 @@ newer versions of tools.
 - Travis with Heroku deployment
 
 ## Running specs, linter(without auto correct) and annotate models and serializers
+
 ```
 bundle exec rake
 ```
 
 ## Running specs
+
 ```
 bundle exec rspec
 ```
