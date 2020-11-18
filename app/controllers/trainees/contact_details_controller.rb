@@ -7,7 +7,7 @@ module Trainees
     end
 
     def update
-      trainee.assign_attributes(contact_details_attributes)
+      trainee.assign_contact_details(contact_details_params)
 
       contact_detail = ContactDetail.new(trainee)
 
@@ -29,10 +29,6 @@ module Trainees
       params.require(:contact_detail).permit(
         *ContactDetail::FIELDS,
       )
-    end
-
-    def contact_details_attributes
-      ContactDetails::Utilities::AddressAttributes.new(contact_details_params).attributes
     end
 
     def redirect_to_confirm
