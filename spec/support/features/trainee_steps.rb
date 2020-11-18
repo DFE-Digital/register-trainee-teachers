@@ -29,5 +29,12 @@ module Features
     def confirm_details_page
       @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
     end
+
+    def and_i_confirm_my_details(checked: true, section:)
+      checked_option = checked ? "check" : "uncheck"
+      expect(confirm_details_page).to be_displayed(id: trainee.id, section: section)
+      confirm_details_page.confirm.public_send(checked_option)
+      confirm_details_page.submit_button.click
+    end
   end
 end

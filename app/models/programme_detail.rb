@@ -17,6 +17,10 @@ class ProgrammeDetail
   def initialize(trainee:)
     @trainee = trainee
 
+    super(fields)
+  end
+
+  def fields
     attributes = {
       subject: trainee.subject,
       day: trainee.programme_start_date&.day,
@@ -31,7 +35,7 @@ class ProgrammeDetail
       attributes[:main_age_range] = :other if age_range[:option] == :additional
     end
 
-    super(attributes)
+    attributes
   end
 
   def programme_start_date

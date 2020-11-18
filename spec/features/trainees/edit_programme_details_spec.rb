@@ -1,23 +1,61 @@
 require "rails_helper"
 
-feature "edit programme details", type: :feature do
+feature "programme details", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists
-    when_i_visit_the_programme_details_page
   end
 
-  scenario "edit with valid parameters" do
-    and_i_enter_valid_parameters
-    and_i_submit_the_form
-    and_i_confirm_my_details
-    then_i_am_redirected_to_the_summary_page
-    and_the_programme_details_are_updated
+  describe "tracking the progress" do
+    scenario "renders a 'not started' status when no details provided" do
+      summary_page.load(id: trainee.id)
+      and_the_section_should_be(:not_started)
+    end
+
+    scenario "renders an 'in progress' status when details partially provided" do
+      when_i_visit_the_programme_details_page
+      and_i_enter_valid_parameters
+      and_i_submit_the_form
+      and_i_confirm_my_details(checked: false, section: programme_details_section)
+      then_i_am_redirected_to_the_summary_page
+      and_the_section_should_be(:in_progress)
+    end
+
+    scenario "renders a completed status when valid details provided" do
+      when_i_visit_the_programme_details_page
+      and_i_enter_valid_parameters
+      and_i_submit_the_form
+      and_i_confirm_my_details(section: programme_details_section)
+      then_i_am_redirected_to_the_summary_page
+      and_the_section_should_be(:completed)
+    end
+
+    scenario "redirects to confirm page when section is completed" do
+      when_i_visit_the_programme_details_page
+      and_i_enter_valid_parameters
+      and_i_submit_the_form
+      and_i_confirm_my_details(section: programme_details_section)
+      then_i_am_redirected_to_the_summary_page
+      when_i_visit_the_programme_details_page
+      then_i_am_redirected_to_the_confirm_page
+    end
   end
 
-  scenario "edit with invalid parameters" do
-    and_i_submit_the_form
-    then_i_see_error_messages
+  describe "editing the programme details" do
+    scenario "submitting with valid parameters" do
+      when_i_visit_the_programme_details_page
+      and_i_enter_valid_parameters
+      and_i_submit_the_form
+      and_i_confirm_my_details(checked: false, section: programme_details_section)
+      then_i_am_redirected_to_the_summary_page
+      and_the_programme_details_are_updated
+    end
+
+    scenario "submitting with invalid parameters" do
+      when_i_visit_the_programme_details_page
+      and_i_submit_the_form
+      then_i_see_error_messages
+    end
   end
 
   def when_i_visit_the_programme_details_page
@@ -43,6 +81,14 @@ feature "edit programme details", type: :feature do
     @programme_details_page.submit_button.click
   end
 
+  def and_i_visit_the_summary_page
+    summary_page.load(id: trainee.id)
+  end
+
+  def then_i_am_redirected_to_the_summary_page
+    expect(summary_page).to be_displayed(id: trainee.id)
+  end
+
   def and_the_programme_details_are_updated
     when_i_visit_the_programme_details_page
 
@@ -61,10 +107,8 @@ feature "edit programme details", type: :feature do
     end
   end
 
-  def and_i_confirm_my_details
-    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.id, section: "programme-details")
-    @confirm_page.submit_button.click
+  def and_the_section_should_be(status)
+    expect(summary_page.programme_details.status.text).to eq(Progress::STATUSES[status])
   end
 
   def then_i_see_error_messages
@@ -83,5 +127,15 @@ feature "edit programme details", type: :feature do
 
   def template
     @template ||= build(:trainee, :with_programme_details)
+  end
+
+  def then_i_am_redirected_to_the_confirm_page
+    expect(confirm_details_page).to be_displayed(id: trainee.id, section: programme_details_section)
+  end
+
+private
+
+  def programme_details_section
+    "programme-details"
   end
 end
