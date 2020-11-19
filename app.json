@@ -1,5 +1,5 @@
 {
-  "name": "register-trainee-teacher-data",
+  "name": "register-trainee-teachers",
   "scripts": {
     "postdeploy": "bundle exec rake db:schema:load db:seed"
   },
@@ -9,11 +9,11 @@
     },
     "RACK_ENV": {
       "required": true,
-      "value": "production"
+      "value": "review"
     },
     "RAILS_ENV": {
       "required": true,
-      "value": "production"
+      "value": "review"
     },
     "RAILS_SERVE_STATIC_FILES": {
       "required": true
