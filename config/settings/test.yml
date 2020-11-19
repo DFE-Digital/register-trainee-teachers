@@ -1,3 +1,6 @@
 basic_auth_required: false
 dttp:
   api_base_url: "https://test-api-base-uri.com"
+
+features:
+  use_dfe_sign_in: false

@@ -1,3 +1,5 @@
 basic_auth_required: false
 dttp:
   api_base_url: "https://dttp-dev.api.crm4.dynamics.com"
+
+base_url: https://localhost:5000
