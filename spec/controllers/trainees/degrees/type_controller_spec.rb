@@ -4,11 +4,16 @@ require "rails_helper"
 
 RSpec.describe Trainees::Degrees::TypeController, type: :controller do
   describe "#create" do
+    let(:user) { create(:user, provider: trainee.provider) }
     let(:trainee) { create(:trainee) }
     let(:response) do
       post(:create, params: { trainee_id: trainee.id,
                               degree:
       { locale_code: locale_code } })
+    end
+
+    before do
+      allow(controller).to receive(:current_user).and_return(user)
     end
 
     context "uk" do

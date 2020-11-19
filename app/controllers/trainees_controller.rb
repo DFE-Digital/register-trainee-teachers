@@ -3,18 +3,16 @@
 class TraineesController < ApplicationController
   before_action :authenticate
 
-  # TODO: move this into ApplicationController as we expand the policies
-  after_action :verify_policy_scoped, only: :index
-
   def index
     @trainees = policy_scope(Trainee)
   end
 
   def show
-    @trainee = current_user.trainees.find(params[:id])
+    authorize trainee
   end
 
   def new
+    skip_authorization
     @trainee = Trainee.new
   end
 
@@ -22,9 +20,9 @@ class TraineesController < ApplicationController
     if trainee_params[:record_type] == "other"
       redirect_to trainees_not_supported_route_path
     else
-      @trainee = current_user.provider.trainees.build(trainee_params)
-      if @trainee.save
-        redirect_to trainee_path(@trainee)
+      authorize @trainee = Trainee.new(trainee_params.merge(provider_id: current_user.provider_id))
+      if trainee.save
+        redirect_to trainee_path(trainee)
       else
         render :new
       end
@@ -32,12 +30,16 @@ class TraineesController < ApplicationController
   end
 
   def update
-    @trainee = current_user.trainees.find(params[:id])
-    @trainee.update!(trainee_params)
-    redirect_to trainee_path(@trainee)
+    authorize trainee
+    trainee.update!(trainee_params)
+    redirect_to trainee_path(trainee)
   end
 
 private
+
+  def trainee
+    @trainee ||= Trainee.find(params[:id])
+  end
 
   def trainee_params
     params.require(:trainee).permit(trainee_all_params, nationality_ids: [])

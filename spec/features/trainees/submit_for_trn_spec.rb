@@ -42,11 +42,7 @@ feature "submit for TRN" do
   end
 
   def and_i_am_redirected_to_the_success_page
-    expect(trn_success_page).to be_displayed(id: trainee.id)
-  end
-
-  def summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
+    expect(trn_success_page).to be_displayed(trainee_id: trainee.id)
   end
 
   def check_details_page

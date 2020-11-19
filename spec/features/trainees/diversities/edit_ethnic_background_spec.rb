@@ -4,6 +4,7 @@ require "rails_helper"
 
 feature "edit ethnic background", type: :feature do
   background do
+    given_i_am_authenticated
     given_a_trainee_exists
     when_i_visit_the_diversity_ethnic_background_page
   end
@@ -21,7 +22,7 @@ feature "edit ethnic background", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian])
+    @trainee = create(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian], provider: current_user.provider)
   end
 
   def when_i_visit_the_diversity_ethnic_background_page

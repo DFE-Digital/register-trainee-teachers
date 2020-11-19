@@ -32,6 +32,7 @@ class Trainee < ApplicationRecord
     Diversities::ETHNIC_GROUP_ENUMS[:not_provided] => 5,
   }
 
+  belongs_to :provider
   has_many :degrees, dependent: :destroy
   has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
   has_many :nationalities, through: :nationalisations

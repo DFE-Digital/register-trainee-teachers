@@ -6,11 +6,13 @@ module Trainees
     helper_method :confirm_section_title
 
     def show
+      authorize trainee
       @confirm_detail = ConfirmDetail.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
       @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
     end
 
     def update
+      authorize trainee
       toggle_trainee_progress_field
       trainee.save!
       redirect_to trainee_path(trainee)

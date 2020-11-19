@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.feature "editing a degree" do
+  background { given_i_am_authenticated }
+
   context "UK degree" do
     scenario "the user enters valid details" do
       given_a_trainee_with_a_uk_degree
@@ -94,10 +96,14 @@ private
   end
 
   def uk_trainee
-    @uk_trainee ||= create(:degree, :uk_degree_type).trainee
+    @uk_trainee ||= create(:trainee, provider: current_user.provider).tap do |t|
+      t.degrees << build(:degree, :uk_degree_type)
+    end
   end
 
   def non_uk_trainee
-    @non_uk_trainee ||= create(:degree, :non_uk_degree_type).trainee
+    @non_uk_trainee ||= create(:trainee, provider: current_user.provider).tap do |t|
+      t.degrees << build(:degree, :non_uk_degree_type)
+    end
   end
 end

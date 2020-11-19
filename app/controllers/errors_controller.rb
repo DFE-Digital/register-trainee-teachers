@@ -3,6 +3,8 @@
 class ErrorsController < ApplicationController
   layout "application"
 
+  before_action :skip_authorization, only: %i[not_found internal_server_error unprocessable_entity]
+
   def not_found
     respond_to do |format|
       format.html { render status: :not_found }

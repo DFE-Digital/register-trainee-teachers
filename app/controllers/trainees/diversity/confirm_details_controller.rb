@@ -4,6 +4,7 @@ module Trainees
   module Diversity
     class ConfirmDetailsController < Trainees::ConfirmDetailsController
       def show
+        authorize trainee
         @confirm_detail = ConfirmDetail.new(mark_as_completed: trainee.progress.diversity)
         @confirmation_component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
       end

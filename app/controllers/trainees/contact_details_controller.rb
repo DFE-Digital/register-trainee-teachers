@@ -5,10 +5,12 @@ module Trainees
     before_action :redirect_to_confirm, if: :section_completed?
 
     def edit
+      authorize trainee
       @contact_details = ContactDetail.new(trainee)
     end
 
     def update
+      authorize trainee
       trainee.assign_contact_details(contact_details_params)
 
       contact_detail = ContactDetail.new(trainee)

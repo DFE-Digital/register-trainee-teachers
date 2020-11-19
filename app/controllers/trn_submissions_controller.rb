@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
 class TrnSubmissionsController < ApplicationController
-  def show; end
+  before_action :authenticate
+
+  def show
+    authorize trainee_presenter.trainee
+  end
 
   def create
-    Dttp::ContactService::Create.call(trainee: trainee)
+    authorize trainee_presenter.trainee
 
-    redirect_to trn_submission_path(id: params[:trainee_id])
+    Dttp::ContactService::Create.call(trainee: trainee_presenter)
+
+    redirect_to trn_submission_path(trainee_id: params[:trainee_id])
   end
 
 private
 
-  def trainee
-    @trainee ||= Trainee.find(params[:trainee_id]).then do |trainee|
+  def trainee_presenter
+    @trainee_presenter ||= Trainee.find(params[:trainee_id]).then do |trainee|
       Dttp::TraineePresenter.new(trainee: trainee)
     end
   end
