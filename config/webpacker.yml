@@ -11,7 +11,7 @@ default: &default
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
-  additional_paths: ['app/components', 'node_modules/govuk-frontend/govuk']
+  additional_paths: ["app/components", "node_modules/govuk-frontend/govuk"]
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
@@ -72,13 +72,13 @@ development:
     headers:
       "Access-Control-Allow-Origin": "*"
     watch_options:
-      ignored: '**/node_modules/**'
+      ignored: "**/node_modules/**"
 
 test:
   <<: *default
   compile: true
 
-production:
+production: &production
   <<: *default
 
   # Production depends on precompilation of packs prior to booting for performance.
@@ -86,3 +86,12 @@ production:
 
   # Cache manifest.json for performance
   cache_manifest: true
+
+qa:
+  <<: *production
+
+review:
+  <<: *production
+
+staging:
+  <<: *production
