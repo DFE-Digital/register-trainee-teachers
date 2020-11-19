@@ -20,6 +20,12 @@ feature "view pages" do
     then_i_should_see_the_cookies_policy
   end
 
+  scenario "navigate to privacy policy" do
+    given_i_am_on_the_home_page
+    and_i_click_on_the_privacy_link_in_the_footer
+    then_i_should_see_the_privacy_policy
+  end
+
 private
 
   def given_i_am_on_the_home_page
@@ -39,6 +45,10 @@ private
     start_page.footer.cookies_link.click
   end
 
+  def and_i_click_on_the_privacy_link_in_the_footer
+    start_page.footer.privacy_link.click
+  end
+
   def then_i_should_see_the_accessibility_statement
     expect(accessibility_page).to be_displayed
     expect(accessibility_page.page_heading).to have_text("Accessibility statement for #{I18n.t('service_name')}")
@@ -47,6 +57,11 @@ private
   def then_i_should_see_the_cookies_policy
     expect(cookies_page).to be_displayed
     expect(cookies_page.page_heading).to have_text("Cookies")
+  end
+
+  def then_i_should_see_the_privacy_policy
+    expect(privacy_policy_page).to be_displayed
+    expect(privacy_policy_page.page_heading).to have_text(t("components.page_titles.pages.privacy_policy"))
   end
 
   def start_page
@@ -59,5 +74,9 @@ private
 
   def cookies_page
     @cookies_page ||= PageObjects::Cookies.new
+  end
+
+  def privacy_policy_page
+    @privacy_policy_page ||= PageObjects::PrivacyPolicy.new
   end
 end

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get "/accessibility", to: "pages#accessibility", as: :accessibility
   get "/cookies", to: "pages#cookies", as: :cookies
+  get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/pages/:page", to: "pages#show"
 
   get "/404", to: "errors#not_found", via: :all

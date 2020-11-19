@@ -38,3 +38,18 @@ a[href="#"] {
     font-weight: $govuk-font-weight-bold;
   }
 }
+
+
+// Dashed list (used in Contents links list)
+
+.app-list--dash li {
+  position: relative;
+
+  &::before {
+    color: $govuk-secondary-text-colour;
+    content: "\2013";
+    left: -16px;
+    position: absolute;
+    top: 0;
+  }
+}

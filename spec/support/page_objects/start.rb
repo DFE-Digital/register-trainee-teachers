@@ -9,6 +9,7 @@ module PageObjects
     section :footer, "footer" do
       element :accessibility_link, ".govuk-footer__link", text: "Accessibility"
       element :cookies_link, ".govuk-footer__link", text: "Cookies"
+      element :privacy_link, ".govuk-footer__link", text: "Privacy policy"
     end
   end
 end

@@ -23,4 +23,10 @@ module PageObjects
 
     element :page_heading, ".govuk-heading-l"
   end
+
+  class PrivacyPolicy < PageObjects::Base
+    set_url "/privacy-policy"
+
+    element :page_heading, ".govuk-heading-l"
+  end
 end
