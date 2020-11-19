@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 PROGRAMME_SUBJECTS = [
   { name: "Primary", level: :primary },
   { name: "Primary with English", level: :primary },

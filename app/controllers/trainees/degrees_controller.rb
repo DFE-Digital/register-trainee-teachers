@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trainees
   class DegreesController < ApplicationController
     def new

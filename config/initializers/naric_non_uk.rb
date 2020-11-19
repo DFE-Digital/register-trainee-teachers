@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 NARIC_NON_UK = [
   "Bachelor Degree",
   "Bachelor (Ordinary Degree)",

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 INSTITUTIONS = [
   "Aberystwyth University",
   "Anglia Ruskin University",

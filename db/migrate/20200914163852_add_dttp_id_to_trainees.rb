@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDttpIdToTrainees < ActiveRecord::Migration[6.0]
   def change
     # TODO: make this null: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Features
   module AuthenticationSteps
     attr_reader :current_user

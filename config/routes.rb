@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "routes/sidekiq_routes"
 
 Rails.application.routes.draw do

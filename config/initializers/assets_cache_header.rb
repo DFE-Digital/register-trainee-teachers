@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This will affect assets served from /app/assets
 Rails.application.config.static_cache_control = "public, max-age=31536000"
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Personas
   class ViewPreview < ViewComponent::Preview
     def single_profile

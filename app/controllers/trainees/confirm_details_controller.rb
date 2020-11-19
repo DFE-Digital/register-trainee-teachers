@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trainees
   class ConfirmDetailsController < ApplicationController
     helper_method :trainee_section_key

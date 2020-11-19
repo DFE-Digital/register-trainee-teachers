@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ProgrammeDetails
   class Update
     attr_reader :trainee, :programme_detail, :successful

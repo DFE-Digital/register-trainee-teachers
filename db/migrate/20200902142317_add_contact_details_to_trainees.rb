@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddContactDetailsToTrainees < ActiveRecord::Migration[6.0]
   def change
     change_table :trainees, bulk: true do |t|

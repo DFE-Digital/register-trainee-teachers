@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PageObjects
   class Start < PageObjects::Base
     set_url "/"

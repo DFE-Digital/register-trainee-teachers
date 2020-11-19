@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 GRADES = [
   "First-class Honours",
   "Upper second-class honours (2:1)",

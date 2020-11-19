@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Do yourself a favor and set these up right when you install the engine.
 
 CanonicalRails.setup do |config|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Diversities
   DIVERSITY_DISCLOSURE_ENUMS = {
     diversity_disclosed: "diversity_disclosed",
@@ -27,7 +29,7 @@ module Diversities
     ETHNIC_GROUP_ENUMS[:other] => ["Arab", "Another ethnic background"],
   }.freeze
 
-  NOT_PROVIDED_VALUE = "Not provided".freeze
+  NOT_PROVIDED_VALUE = "Not provided"
 
   SEED_DISABILITIES = [
     OpenStruct.new(name: "Blind", description: "(or a serious visual impairment which is not corrected by glasses)"),

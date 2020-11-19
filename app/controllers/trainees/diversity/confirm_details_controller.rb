@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trainees
   module Diversity
     class ConfirmDetailsController < Trainees::ConfirmDetailsController

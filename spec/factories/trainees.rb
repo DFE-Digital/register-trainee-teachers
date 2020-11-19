@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Style/SymbolProc
 FactoryBot.define do
   factory :abstract_trainee, class: Trainee do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 AGE_RANGES = [
   { name: "3 to 11 programme", option: :main },
   { name: "5 to 11 programme", option: :main },

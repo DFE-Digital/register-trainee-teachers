@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :lint do
   desc "Lint Ruby code"
   task ruby: :environment do

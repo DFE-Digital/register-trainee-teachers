@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Degree < ApplicationRecord
   validates :locale_code, presence: true
   validates :uk_degree, presence: true, on: :uk

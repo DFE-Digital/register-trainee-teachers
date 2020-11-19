@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "govuk/components"
 
 class PageTitle::ViewPreview < ViewComponent::Preview

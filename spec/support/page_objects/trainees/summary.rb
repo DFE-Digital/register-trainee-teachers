@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "../sections/personal_details"
 require_relative "../sections/diversity"
 

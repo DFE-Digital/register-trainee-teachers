@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DiversitiesHelper
   def format_ethnic_group_options(options)
     options.reject { |option| option == Diversities::ETHNIC_GROUP_ENUMS[:not_provided] }
