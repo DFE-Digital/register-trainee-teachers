@@ -1,3 +1,5 @@
+port: 5000
+
 basic_auth_required: true
 dttp:
   client_id: "application-registration-client-id-from-env"
@@ -9,3 +11,4 @@ dttp:
 # Used to add feature flags in the app to control access to certain features.
 features:
   home_text: false
+  use_ssl: true

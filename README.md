@@ -111,3 +111,7 @@ Rspec tests can also be tagged with `feature_{name}: true`. This will turn that 
 ## Basic auth
 
 Basic auth is enabled in non-production and non-local environments. The credentials can be found in the Confluence pages.
+
+## SSL https local dev
+
+When running the https local dev environment if you are on Mac and using Chrome you may need to get past an invalid certificate screen. https://stackoverflow.com/questions/58802767/no-proceed-anyway-option-on-neterr-cert-invalid-in-chrome-on-macos
