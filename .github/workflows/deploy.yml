@@ -38,7 +38,6 @@ jobs:
           DOCKER_IMAGE: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
           DEPLOY_ENV: ${{ github.event.inputs.environment }}
 
-
       - uses: softprops/turnstyle@v1
         name: Wait for other inprogress deployment runs
         env:
@@ -88,8 +87,25 @@ jobs:
           TF_VAR_dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           TF_VAR_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
 
+      - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
+        uses: benc-uk/workflow-dispatch@v1.1
+        with:
+          workflow: Smoke Tests
+          token:    ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
+          inputs:   '{"environment": "${{ env.DEPLOY_ENV }}"}'
+
+      - name: Wait for smoke tests
+        id: wait_for_smoke_tests
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref:   ${{ github.ref }}
+          checkName: smoke-tests-${{ env.DEPLOY_ENV }}
+          timeoutSeconds:  300
+          intervalSeconds: 15
+
       - name: Trigger ${{ env.NEXT_ENV }} Deployment
-        if: ${{ success() && env.NEXT_ENV != '' && github.ref == 'refs/heads/master' }}
+        if: ${{ steps.wait_for_smoke_tests.outputs.conclusion == 'success' && env.NEXT_ENV != '' && github.ref == 'refs/heads/master' }}
         uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: Deploy to PaaS
