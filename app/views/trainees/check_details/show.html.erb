@@ -17,7 +17,7 @@
 <%= render_component Trainees::Confirmation::PersonalDetails::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::ContactDetails::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::Diversity::View.new(trainee: @trainee) %>
-<%= render_component Trainees::Confirmation::Degrees::View.new(trainee: @trainee) %>
+<%= render_component Trainees::Confirmation::Degrees::View.new(trainee: @trainee, show_add_another_degree_button: false) %>
 
 
 <%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>

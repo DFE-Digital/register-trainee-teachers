@@ -85,6 +85,22 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
     end
   end
 
+  describe "Add another degree" do
+    it "always renders 'Add another degree' button" do
+      expect(component).to have_css(".govuk-button.govuk-button--secondary")
+    end
+
+    context "suppress the 'Add another degree' button" do
+      before do
+        render_inline(Trainees::Confirmation::Degrees::View.new(trainee: trainee, show_add_another_degree_button: false))
+      end
+
+      it "does not render 'Add another degree' button" do
+        expect(component).not_to have_css(".govuk-button.govuk-button--secondary")
+      end
+    end
+  end
+
 private
 
   def mock_trainee_with_single_uk_degree
