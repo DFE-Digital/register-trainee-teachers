@@ -20,6 +20,10 @@ describe "Settings" do
     it "default for home text returns false" do
       expect(subject[:home_text]).to eq(false)
     end
+
+    it "default for allow user creation returns false" do
+      expect(subject[:allow_user_creation]).to eq(false)
+    end
   end
 
   describe ".port" do
@@ -32,25 +36,26 @@ describe "Settings" do
     end
   end
 
-  shared_examples "required value" do |key, value|
-    subject do
-      value
-    end
-
+  required_value = "required_value"
+  shared_examples required_value do |key, value|
     describe ".#{key}" do
-      it "#{key} is a required value" do
-        expect(subject).to eq("#{key} required value")
+      subject do
+        value
+      end
+
+      it "#{key} is a #{required_value}" do
+        expect(subject).to eq("#{key} #{required_value.humanize(capitalize: false)}")
       end
     end
   end
 
   describe ".dfe_sign_in" do
     settings[:dfe_sign_in].keys.each do |key|
-      include_examples "required value", key, settings[:dfe_sign_in][key]
+      include_examples required_value, key, settings[:dfe_sign_in][key]
     end
   end
 
   describe ".base_url" do
-    include_examples "required value", :base_url, settings[:base_url]
+    include_examples required_value, :base_url, settings[:base_url]
   end
 end

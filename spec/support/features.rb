@@ -2,6 +2,7 @@
 
 require_relative "features/authentication_steps"
 require_relative "features/trainee_steps"
+require_relative "dfe_sign_in_user_helper"
 
 RSpec.configure do |config|
   # Store original feature flag values before the examples run
@@ -12,6 +13,7 @@ RSpec.configure do |config|
 
   config.include Features::AuthenticationSteps, type: :feature
   config.include Features::TraineeSteps, type: :feature
+  config.include DfESignInUserHelper, type: :feature
 
   config.around :each do |example|
     example.metadata.keys.grep(/^feature_.*/) do |metadata_key|

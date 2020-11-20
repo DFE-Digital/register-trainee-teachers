@@ -20,6 +20,11 @@ Rails.application.routes.draw do
 
   get "/trainees/not-supported-route", to: "trainees/not_supported_routes#index"
 
+  if FeatureService.enabled?("use_dfe_sign_in")
+    get "/auth/dfe/callback" => "sessions#callback"
+    get "/auth/dfe/sign-out" => "sessions#redirect_after_dsi_signout"
+  end
+
   concern :confirmable do
     resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm"
   end

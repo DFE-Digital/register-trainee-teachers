@@ -14,8 +14,12 @@ private
     end
   end
 
+  def dfe_sign_in_user
+    @dfe_sign_in_user ||= DfESignInUser.load_from_session(session)
+  end
+
   def current_user
-    @current_user ||= User.find_by(id: session.dig(:auth_user, "user_id"))
+    @current_user ||= User.find_by(email: dfe_sign_in_user&.email)
   end
 
   def authenticated?
@@ -23,6 +27,6 @@ private
   end
 
   def authenticate
-    redirect_to personas_path unless authenticated?
+    redirect_to sign_in_index_path unless authenticated?
   end
 end

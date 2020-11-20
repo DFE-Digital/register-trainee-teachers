@@ -3,4 +3,8 @@ dttp:
   api_base_url: "https://test-api-base-uri.com"
 
 features:
-  use_dfe_sign_in: false
+  use_dfe_sign_in: true
+
+base_url: "https://example.com/base_url"
+dfe_sign_in:
+  issuer: "https://example.com/dfe_sign_in"

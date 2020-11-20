@@ -115,3 +115,19 @@ Basic auth is enabled in non-production and non-local environments. The credenti
 ## SSL https local dev
 
 When running the https local dev environment if you are on Mac and using Chrome you may need to get past an invalid certificate screen. https://stackoverflow.com/questions/58802767/no-proceed-anyway-option-on-neterr-cert-invalid-in-chrome-on-macos
+
+### DfE Sign-in 
+
+For DfE Signin to work, the below values needs to be set.
+
+```yml
+base_url: base_url required value
+features:
+  use_dfe_sign_in: true
+dfe_sign_in:
+  identifier: identifier required value
+  issuer: issuer required value
+  profile: profile required value
+  secret: secret required value
+
+```

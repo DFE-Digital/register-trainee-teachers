@@ -14,7 +14,11 @@
 
     <p class="govuk-body-m"> Use DfE Sign-in to access your account.</p>
 
-    <%= govuk_button_to("Sign in using Persona", personas_path) %>
+    <% if FeatureService.enabled?("use_dfe_sign_in")%>
+      <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe") %>
+    <% else %>    
+      <%= govuk_button_to("Sign in using Persona", personas_path) %>
+    <% end %>
 
     <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Register trainee teachers, email
 
