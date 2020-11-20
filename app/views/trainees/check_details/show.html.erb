@@ -8,6 +8,7 @@
 <h2 class="govuk-heading-m">
   Training details
 </h2>
+<%= render_component Trainees::Confirmation::Record::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
 
 <h2 class="govuk-heading-m">
