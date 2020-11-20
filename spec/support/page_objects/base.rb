@@ -11,4 +11,22 @@ module PageObjects
   end
 
   class Base < SitePrism::Page; end
+
+  class Accessibility < PageObjects::Base
+    set_url "/accessibility"
+
+    element :page_heading, ".govuk-heading-l"
+  end
+
+  class Cookies < PageObjects::Base
+    set_url "/cookies"
+
+    element :page_heading, ".govuk-heading-l"
+  end
+
+  class PrivacyPolicy < PageObjects::Base
+    set_url "/privacy-policy"
+
+    element :page_heading, ".govuk-heading-l"
+  end
 end
