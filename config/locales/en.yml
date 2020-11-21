@@ -20,6 +20,8 @@ en:
         accessibility: Accessibility
         cookies: Cookies on Register trainee teachers
         privacy_policy: How we use your personal data when you use Register trainee teachers
+      sign_in:
+        index: Sign in
       trn_submissions:
         show: Successfully submitted
       trainees:
