@@ -4,22 +4,20 @@ class TrnSubmissionsController < ApplicationController
   before_action :authenticate
 
   def show
-    authorize trainee_presenter.trainee
+    authorize trainee
   end
 
   def create
-    authorize trainee_presenter.trainee
+    authorize trainee
 
-    Dttp::ContactService::Create.call(trainee: trainee_presenter)
+    Dttp::ContactService::Create.call(trainee: Dttp::TraineePresenter.new(trainee: trainee))
 
-    redirect_to trn_submission_path(trainee_id: params[:trainee_id])
+    redirect_to trn_submission_path(trainee_id: trainee.id)
   end
 
 private
 
-  def trainee_presenter
-    @trainee_presenter ||= Trainee.find(params[:trainee_id]).then do |trainee|
-      Dttp::TraineePresenter.new(trainee: trainee)
-    end
+  def trainee
+    @trainee ||= Trainee.find(params[:trainee_id])
   end
 end

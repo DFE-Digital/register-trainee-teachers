@@ -24,6 +24,8 @@ en:
         index: Sign in
       trn_submissions:
         show: Successfully submitted
+      check_details:
+        show: Review the trainee details
       trainees:
         new: Add a trainee
         index: Trainee teachers

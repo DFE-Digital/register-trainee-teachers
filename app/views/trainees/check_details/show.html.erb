@@ -1,3 +1,15 @@
+<%= render_component PageTitle::View.new(title: "check_details.show") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back to draft record',
+    href: trainee_path(@trainee),
+    html_attributes:{
+      id: "back-to-draft-record"
+    }
+  ) %>
+<% end %>
+
 <h1 class="govuk-heading-l">
   <span class="govuk-caption-l">
     Draft record for ...
@@ -14,13 +26,15 @@
 <h2 class="govuk-heading-m">
   About the trainee
 </h2>
+
 <%= render_component Trainees::Confirmation::PersonalDetails::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::ContactDetails::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::Diversity::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::Degrees::View.new(trainee: @trainee, show_add_another_degree_button: false) %>
 
-
 <%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>
   <%= hidden_field_tag :trainee_id, @trainee.id %>
   <%= f.govuk_submit "Submit record and request TRN" %>
 <%- end -%>
+
+<p class="govuk-body"><%= govuk_link_to("Return to this draft record later", trainees_path, { id: "return-to-draft-later" }) %></p>

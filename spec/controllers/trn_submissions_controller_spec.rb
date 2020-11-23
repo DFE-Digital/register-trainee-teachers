@@ -11,7 +11,10 @@ describe TrnSubmissionsController do
     let(:trainee_data) { { some: "data" } }
     let(:decorated_trainee) { instance_double(Dttp::TraineePresenter, trainee: trainee) }
 
-    before { allow(controller).to receive(:current_user).and_return(user) }
+    before do
+      allow(controller).to receive(:current_user).and_return(user)
+      allow(trainee).to receive(:id).and_return(trainee_id)
+    end
 
     it "passes the decorated trainee to the create service" do
       allow(Trainee).to receive(:find).with(trainee_id.to_s).and_return(trainee)
