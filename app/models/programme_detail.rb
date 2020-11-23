@@ -16,7 +16,7 @@ class ProgrammeDetail
 
   after_validation :update_trainee
 
-  def initialize(trainee:)
+  def initialize(trainee)
     @trainee = trainee
 
     super(fields)

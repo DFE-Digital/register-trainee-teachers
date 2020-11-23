@@ -17,13 +17,31 @@ feature "submit for TRN" do
   end
 
   describe "submission" do
-    scenario "with all sections completed" do
-      given_a_trainee_exists
-      when_i_am_viewing_the_summary_page
-      and_i_want_to_review_record_before_submitting_for_trn
-      then_i_review_the_trainee_data
-      and_i_click_the_submit_for_trn_button
-      and_i_am_redirected_to_the_success_page
+    context "when all sections are completed" do
+      before do
+        given_a_trainee_exists
+        stub_progress_service(completed: true)
+      end
+
+      scenario "can submit the application" do
+        when_i_am_viewing_the_summary_page
+        and_i_want_to_review_record_before_submitting_for_trn
+        then_i_review_the_trainee_data
+        and_i_click_the_submit_for_trn_button
+        and_i_am_redirected_to_the_success_page
+      end
+    end
+
+    context "when all sections are not completed" do
+      before do
+        given_a_trainee_exists
+        stub_progress_service(completed: false)
+      end
+
+      scenario "cannot submit the application" do
+        when_i_am_viewing_the_summary_page
+        then_i_do_not_see_the_review_details_link
+      end
     end
   end
 
@@ -53,6 +71,10 @@ feature "submit for TRN" do
 
   def and_i_want_to_review_record_before_submitting_for_trn
     summary_page.review_this_record_link.click
+  end
+
+  def then_i_do_not_see_the_review_details_link
+    expect(summary_page).not_to have_review_this_record_link
   end
 
   def then_i_review_the_trainee_data
@@ -101,5 +123,9 @@ feature "submit for TRN" do
         expires_in: 3600,
       }.to_json,
     )
+  end
+
+  def stub_progress_service(completed: false)
+    expect(Trns::SubmissionChecker).to receive(:call).with(trainee).and_return(double(successful?: completed))
   end
 end

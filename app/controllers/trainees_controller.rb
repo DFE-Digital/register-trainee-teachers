@@ -9,6 +9,7 @@ class TraineesController < ApplicationController
 
   def show
     authorize trainee
+    @pre_submission_checker = Trns::SubmissionChecker.call(trainee)
   end
 
   def new

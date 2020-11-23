@@ -5,7 +5,7 @@ require "rails_helper"
 describe ProgrammeDetail do
   let(:trainee) { build(:trainee) }
 
-  subject { described_class.new(trainee: trainee) }
+  subject { described_class.new(trainee) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:subject) }
