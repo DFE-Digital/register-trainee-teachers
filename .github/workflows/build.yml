@@ -77,7 +77,6 @@ jobs:
         docker push ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}
         docker push ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
 
-
     - name: Trigger QA Deployment
       if: ${{ success() && github.ref == 'refs/heads/master' }}
       uses: benc-uk/workflow-dispatch@v1.1
@@ -85,3 +84,15 @@ jobs:
         workflow: 'Deploy to PaaS'
         token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
         inputs: '{"environment": "qa", "sha": "${{ env.SHA_TAG }}"}'
+
+    - name: Check for Failure
+      if: ${{ failure() && github.ref == 'refs/heads/master' }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_CHANNEL: twd_publish_register_tech
+        SLACK_COLOR: '#ef5343'
+        SLACK_ICON_EMOJI: ':github-logo:'
+        SLACK_USERNAME: Register Trainee Teachers
+        SLACK_TITLE: Build Failure
+        SLACK_MESSAGE: ':alert: Build failure on ${{ github.event.inputs.environment }} :sadparrot:'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
