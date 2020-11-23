@@ -22,7 +22,7 @@ module Personas
     end
 
     it "renders a sign-in button to login as the persona" do
-      expect(component.find("form")["action"]).to eq("/sessions?user_id=#{persona_id}")
+      expect(component.find("form")["action"]).to eq("/auth/developer/callback")
       expect(component).to have_selector(".govuk-button")
     end
   end
