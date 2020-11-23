@@ -69,7 +69,7 @@ feature "programme details", type: :feature do
     @programme_details_page.subject.select(template.subject)
     @programme_details_page.set_date_fields("programme_start_date", template.programme_start_date.strftime("%d/%m/%Y"))
 
-    age_range = AGE_RANGES.find { |a| a[:name] == template.age_range }
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
 
     if age_range[:option] == :main
       @programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}").choose
@@ -99,7 +99,7 @@ feature "programme details", type: :feature do
     expect(@programme_details_page.programme_start_date_month.value).to eq(template.programme_start_date.month.to_s)
     expect(@programme_details_page.programme_start_date_year.value).to eq(template.programme_start_date.year.to_s)
 
-    age_range = AGE_RANGES.find { |a| a[:name] == template.age_range }
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
 
     if age_range[:option] == :main
       expect(@programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}")).to be_checked

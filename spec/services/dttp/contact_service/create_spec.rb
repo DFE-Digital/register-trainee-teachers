@@ -8,7 +8,7 @@ module Dttp
       let(:trainee) { TraineePresenter.new(trainee: build(:trainee)) }
       let(:access_token) { "token" }
       let(:endpoint_path) { "/contacts" }
-      let(:contactid) { "60f77a42-5f0e-e611-80e0-00155da84c03" }
+      let(:contactid) { SecureRandom.uuid }
       let(:headers) do
         {
           "odata-version" => "4.0",
@@ -27,7 +27,7 @@ module Dttp
         it "sends the payload to dttp" do
           expect(Client).to receive(:post).with(
             endpoint_path,
-            hash_including(body: trainee.to_dttp_params.as_json),
+            hash_including(body: trainee.contact_params.to_json),
           ).and_return(response)
 
           described_class.call(trainee: trainee)

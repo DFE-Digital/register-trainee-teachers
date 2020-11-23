@@ -10,7 +10,7 @@ module Dttp
       @trainee = trainee
     end
 
-    def to_dttp_params
+    def contact_params
       {
         "firstname" => trainee.first_names,
         "lastname" => trainee.last_name,
@@ -28,10 +28,27 @@ module Dttp
       }
     end
 
+    def placement_assignment_params
+      {
+        "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
+        "dfe_ContactId@odata.bind" => "/contacts(#{trainee.dttp_id})",
+        "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_course_phase_id})",
+        "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_id})",
+      }
+    end
+
   private
 
     def formatted_dob
       trainee.date_of_birth.strftime("%d/%m/%Y")
+    end
+
+    def dttp_programme_subject_id
+      Dttp::CodeSets::ProgrammeSubjects::MAPPING.dig(trainee.subject, :entity_id)
+    end
+
+    def dttp_course_phase_id
+      Dttp::CodeSets::AgeRanges::MAPPING.dig(trainee.age_range, :entity_id)
     end
 
     def dttp_ethnicity_id
