@@ -11,7 +11,7 @@
       <%= f.govuk_error_summary %>
 
         <%= f.govuk_radio_buttons_fieldset(
-          :ethnic_background, 
+          :ethnic_background,
           legend: { text: "Which of the following best describes their #{I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")} background?", tag: "h1", size: "l" }) do %>
 
           <% Diversities::BACKGROUNDS[@trainee.ethnic_group].each_with_index do |ethnic_background, index| %>
@@ -29,7 +29,7 @@
           <% end %>
 
           <%= f.govuk_radio_divider %>
-          <%= f.govuk_radio_button :ethnic_background, Diversities::NOT_PROVIDED_VALUE, label: { text: "Not provided" } %>
+          <%= f.govuk_radio_button :ethnic_background, Diversities::NOT_PROVIDED, label: {text: "Not provided" } %>
         <% end %>
 
       <%= f.govuk_submit %>

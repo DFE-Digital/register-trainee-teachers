@@ -4,25 +4,115 @@ require "rails_helper"
 
 module Dttp
   describe TraineePresenter do
-    let(:trainee) { build(:trainee) }
-
     subject { described_class.new(trainee: trainee) }
 
     describe "#to_dttp_params" do
-      it "returns a hash formatted for a DTTP contact creation" do
-        expect(subject.to_dttp_params).to eql({
-          "firstname" => trainee.first_names,
-          "lastname" => trainee.last_name,
-          "contactid" => trainee.dttp_id,
-          "address1_line1" => trainee.address_line_one,
-          "address1_line2" => trainee.address_line_two,
-          "address1_line3" => trainee.town_city,
-          "address1_postalcode" => trainee.postcode,
-          "birthdate" => trainee.date_of_birth.strftime("%d/%m/%Y"),
-          "emailaddress1" => trainee.email,
-          "gendercode" => trainee.gender,
-          "mobilephone" => trainee.phone_number,
-        })
+      let(:trainee) { build(:trainee) }
+
+      context "basic information" do
+        it "returns a hash with all the DTTP basic contact fields" do
+          expect(subject.to_dttp_params).to include({
+            "firstname" => trainee.first_names,
+            "lastname" => trainee.last_name,
+            "contactid" => trainee.dttp_id,
+            "address1_line1" => trainee.address_line_one,
+            "address1_line2" => trainee.address_line_two,
+            "address1_line3" => trainee.town_city,
+            "address1_postalcode" => trainee.postcode,
+            "birthdate" => trainee.date_of_birth.strftime("%d/%m/%Y"),
+            "emailaddress1" => trainee.email,
+            "gendercode" => trainee.gender,
+            "mobilephone" => trainee.phone_number,
+          })
+        end
+      end
+
+      context "diversity information" do
+        let(:dttp_ethnicity_entity_id) { Dttp::CodeSets::Ethnicities::MAPPING[ethnic_background][:entity_id] }
+        let(:dttp_disability_entity_id) { Dttp::CodeSets::Disabilities::MAPPING[dttp_disability][:entity_id] }
+
+        context "undisclosed" do
+          let(:trainee) { build(:trainee, :diversity_not_disclosed) }
+          let(:ethnic_background) { Diversities::NOT_PROVIDED }
+          let(:dttp_disability) { Diversities::NOT_PROVIDED }
+
+          it "returns a hash with a foreign key matching DTTP's 'Not known' ethnicity entity" do
+            expect(subject.to_dttp_params).to include("_dfe_ethnicityid_value" => dttp_ethnicity_entity_id,
+                                                      "_dfe_disibilityid_value" => dttp_disability_entity_id)
+          end
+        end
+
+        context "disclosed" do
+          context "ethnicity information" do
+            let(:trainee) { build(:trainee, :diversity_disclosed, ethnic_background: ethnic_background) }
+
+            context "provided" do
+              let(:ethnic_background) { Diversities::IRISH }
+
+              it "returns a hash with a foreign key of DTTP's 'Irish' ethnicity entity" do
+                expect(subject.to_dttp_params).to include("_dfe_ethnicityid_value" => dttp_ethnicity_entity_id)
+              end
+            end
+
+            context "not provided" do
+              let(:ethnic_background) { Diversities::NOT_PROVIDED }
+
+              it "returns a hash with a foreign of DTTP's 'Not known' ethnicity entity" do
+                expect(subject.to_dttp_params).to include("_dfe_ethnicityid_value" => dttp_ethnicity_entity_id)
+              end
+            end
+          end
+
+          context "disability information" do
+            let(:trainee) { create(:trainee, :diversity_disclosed, disability_disclosure: disability_disclosure) }
+
+            context "disabled" do
+              let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
+
+              context "only one disability" do
+                let(:dttp_disability) { Diversities::BLIND }
+
+                before do
+                  trainee.disabilities << create(:disability, name: dttp_disability)
+                end
+
+                it "returns a hash with a foreign key of DTTP's 'Blind' disability entity" do
+                  expect(subject.to_dttp_params).to include("_dfe_disibilityid_value" => dttp_disability_entity_id)
+                end
+              end
+
+              context "more than one disability" do
+                let(:dttp_disability) { Diversities::MULTIPLE_DISABILITIES }
+
+                before do
+                  trainee.disabilities += build_list(:disability, 2)
+                end
+
+                it "returns a hash with a foreign key of DTTP's 'Multiple disabilities' entity" do
+                  expect(subject.to_dttp_params).to include("_dfe_disibilityid_value" => dttp_disability_entity_id)
+                end
+              end
+            end
+
+            context "not disabled" do
+              let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled] }
+              let(:dttp_disability) { Diversities::NO_KNOWN_DISABILITY }
+
+              it "returns a hash with a foreign key of DTTP's 'No known disability' entity" do
+                expect(subject.to_dttp_params).to include("_dfe_disibilityid_value" => dttp_disability_entity_id)
+              end
+            end
+
+            context "not provided" do
+              let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
+              let(:dttp_disability) { Diversities::NOT_PROVIDED }
+
+              it "returns a hash with a foreign key of DTTP's 'Not known' entity" do
+                expect(subject.to_dttp_params).to include("_dfe_disibilityid_value" => dttp_disability_entity_id)
+              end
+            end
+          end
+        end
       end
     end
   end
