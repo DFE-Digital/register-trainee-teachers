@@ -1,26 +1,26 @@
 <%= render_component PageTitle::View.new(title: "trn_submissions.show") %>
 
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'All records',
+    href: trainees_path
+  ) %>
+<% end %>
+
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <div class="govuk-panel govuk-panel--confirmation trn-submission-success-panel">
-          <div class="govuk-grid-row">
-            <div class="trn-submission-success-panel__check">
-              &check;
-            </div>
-            <div class="trn-submission-success-panel__content">
-              <h1 class="govuk-panel__title">
-                Successfully submitted
-              </h1>
-              <div class="govuk-panel__body">
-                <span class="trn-submission-success-panel__emphasis">You have submitted the trainee for TRN registration</span> - we will update their status when we receive the TRN
-              </div>
-            </div>
-          </div>
-        </div>
-        <a class="govuk-link" href="/trainees">Back to trainee teacher list</a>
-      </div>
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="govuk-panel govuk-panel--confirmation trn-submission-success-panel govuk-!-margin-bottom-6">
+      <h1 class="govuk-panel__title">
+        Record submitted for <%= trainee_name(@trainee) %>
+      </h1>
     </div>
+
+    <p class="govuk-body">The Department for Education (DfE) will issue a teacher reference number (TRN) within 3 working days.</p>
+
+    <p class="govuk-body">DfE will contact trainees to give them their TRN.</p>
+
+    <%= govuk_link_to "Add another record", new_trainee_path, { class: "govuk-button" } %>
+
+    <p class="govuk-body">or <%= govuk_link_to("check trainee statuses and manage records", trainees_path) %></p>
   </div>
 </div>
