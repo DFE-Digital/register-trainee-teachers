@@ -33,6 +33,13 @@ newer versions of tools.
 4. Run `bundle exec rails server` to launch the app on http://localhost:3000
 5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
+## Architectural Decision Record
+
+See the [docs/adr](docs/adr) directory for a list of the Architectural Decision
+Record (ADR). We use [adr-tools](https://github.com/npryce/adr-tools) to manage
+our ADRs, see the link for how to install (hint: `brew install adr-tools` or use
+ASDF).
+
 ## Running specs, linter(without auto correct) and annotate models and serializers
 
 ```
