@@ -13,9 +13,6 @@ module Trns
       { validator: ProgrammeDetail, progress_key: :programme_details },
     ].freeze
 
-    class PreSubmissionError < StandardError
-    end
-
     class << self
       def call(trainee)
         new(trainee).call
