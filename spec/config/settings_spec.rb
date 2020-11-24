@@ -4,58 +4,38 @@ require "rails_helper"
 
 describe "Settings" do
   settings = YAML.load_file(Rails.root.join("config/settings.yml")).with_indifferent_access
-  describe ".features" do
-    subject do
-      settings[:features]
-    end
+  expected_value_test = "expected_value_test"
 
-    it "default for use ssl returns true" do
-      expect(subject[:use_ssl]).to eq(true)
-    end
-
-    it "default for use dfe sign in returns true" do
-      expect(subject[:use_dfe_sign_in]).to eq(true)
-    end
-
-    it "default for home text returns false" do
-      expect(subject[:home_text]).to eq(false)
-    end
-
-    it "default for allow user creation returns false" do
-      expect(subject[:allow_user_creation]).to eq(false)
-    end
-  end
-
-  describe ".port" do
-    subject do
-      settings[:port]
-    end
-
-    it "default for port is 5000" do
-      expect(subject).to eq(5000)
-    end
-  end
-
-  required_value = "required_value"
-  shared_examples required_value do |key, value|
+  shared_examples expected_value_test do |key, source, expected_value|
     describe ".#{key}" do
       subject do
-        value
+        source[key]
       end
 
-      it "#{key} is a #{required_value}" do
-        expect(subject).to eq("#{key} #{required_value.humanize(capitalize: false)}")
+      it "#{key} has a default value" do
+        expect(subject).to eq(expected_value)
       end
     end
+  end
+
+  include_examples expected_value_test, :port, settings, 5000
+  include_examples expected_value_test, :base_url, settings, "https://localhost:5000"
+
+  describe ".features" do
+    features = settings[:features]
+
+    include_examples expected_value_test, :use_ssl, features, true
+    include_examples expected_value_test, :use_dfe_sign_in, features, true
+    include_examples expected_value_test, :home_text, features, false
+    include_examples expected_value_test, :allow_user_creation, features, false
   end
 
   describe ".dfe_sign_in" do
-    settings[:dfe_sign_in].keys.each do |key|
-      include_examples required_value, key, settings[:dfe_sign_in][key]
-    end
-  end
+    dfe_sign_in = settings[:dfe_sign_in]
 
-  describe ".base_url" do
-    include_examples required_value, :base_url, settings[:base_url]
+    include_examples expected_value_test, :identifier, dfe_sign_in, "rtt"
+    include_examples expected_value_test, :issuer, dfe_sign_in, "https://test-oidc.signin.education.gov.uk/"
+    include_examples expected_value_test, :profile, dfe_sign_in, "https://test-profile.signin.education.gov.uk"
+    include_examples expected_value_test, :secret, dfe_sign_in, "secret required value"
   end
 end

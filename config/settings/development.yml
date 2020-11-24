@@ -2,8 +2,6 @@ basic_auth_required: false
 dttp:
   api_base_url: "https://dttp-dev.api.crm4.dynamics.com"
 
-base_url: https://localhost:5000
-
 features:
   allow_user_creation: true
   use_dfe_sign_in: false
