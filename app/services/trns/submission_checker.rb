@@ -35,16 +35,12 @@ module Trns
   private
 
     def is_submission_ready?
-      VALIDATORS.each do |validator_hash|
+      VALIDATORS.all? do |validator_hash|
         validator = validator_hash[:validator].new(trainee)
         progress_value = trainee.progress.public_send(validator_hash[:progress_key])
 
-        raise PreSubmissionError, validator_hash[:validator].to_s unless progress_is_completed?(validator, progress_value)
+        progress_is_completed?(validator, progress_value)
       end
-
-      true
-    rescue PreSubmissionError
-      false
     end
 
     def progress_is_completed?(validator, progress_value)
