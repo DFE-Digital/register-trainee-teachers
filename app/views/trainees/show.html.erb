@@ -31,7 +31,7 @@
         path: edit_trainee_programme_details_path(@trainee),
         classes: "programme-details",
         status: ProgressService.call(
-          validator: ProgrammeDetail.new(trainee: @trainee),
+          validator: ProgrammeDetail.new(@trainee),
           progress_value: @trainee.progress.programme_details
         ).status
       )
@@ -92,9 +92,11 @@
   </div>
 </div>
 
-<h2 class="govuk-heading-m">Review and submit</h2>
+<% if @pre_submission_checker.successful? %>
+  <h2 class="govuk-heading-m">Review and submit</h2>
 
-<%= govuk_link_to "Review this record", check_details_trainee_path(@trainee), {class: "govuk-button", id: "check-details"} %>
+  <%= govuk_link_to "Review this record", check_details_trainee_path(@trainee), {class: "govuk-button", id: "check-details"} %>
+<% end %>
 
 
 <p class="govuk-body"><%= govuk_link_to("Return to this draft record later", "#") %></p>

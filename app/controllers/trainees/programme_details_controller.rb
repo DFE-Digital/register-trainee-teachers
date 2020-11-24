@@ -16,7 +16,7 @@ module Trainees
 
     def edit
       authorize trainee
-      @programme_detail = ProgrammeDetail.new(trainee: trainee)
+      @programme_detail = ProgrammeDetail.new(trainee)
     end
 
     def update
@@ -57,7 +57,7 @@ module Trainees
 
     def section_completed?
       ProgressService.call(
-        validator: ProgrammeDetail.new(trainee: trainee),
+        validator: ProgrammeDetail.new(trainee),
         progress_value: trainee.progress.programme_details,
       ).completed?
     end
