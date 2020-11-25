@@ -14,4 +14,8 @@ describe User do
   describe "associations" do
     it { is_expected.to belong_to(:provider) }
   end
+
+  describe "indexes" do
+    it { should have_db_index(:dfe_sign_in_uid).unique(true) }
+  end
 end

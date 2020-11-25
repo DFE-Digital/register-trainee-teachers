@@ -58,6 +58,11 @@ gem "store_model", "~> 0.8"
 
 gem "pundit"
 
+# DfE Sign-in
+gem "omniauth"
+gem "omniauth_openid_connect"
+gem "omniauth-rails_csrf_protection"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]

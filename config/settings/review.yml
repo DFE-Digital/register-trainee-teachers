@@ -1,2 +1,3 @@
 features:
   home_text: true
+  use_dfe_sign_in: false

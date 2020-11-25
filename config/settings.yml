@@ -1,5 +1,8 @@
 port: 5000
 
+# The url for this app, also used by `dfe_sign_in`
+base_url: https://localhost:5000
+
 basic_auth_required: true
 dttp:
   client_id: "application-registration-client-id-from-env"
@@ -12,3 +15,15 @@ dttp:
 features:
   home_text: false
   use_ssl: true
+  use_dfe_sign_in: true
+  allow_user_creation: false
+
+dfe_sign_in:
+  # Our service name
+  identifier: rtt
+  # URL that the users are redirected to for signing in
+  issuer: https://test-oidc.signin.education.gov.uk/
+  # URL of the users profile
+  profile: https://test-profile.signin.education.gov.uk
+  # This value must be set otherwise sign in will fail
+  secret: secret required value
