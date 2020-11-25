@@ -2,9 +2,12 @@
 
 module Dttp
   class TraineePresenter
-    attr_reader :trainee
+    FEMALE_GENDER_CODE = 1
+    MALE_GENDER_CODE = 2
 
     delegate_missing_to :trainee
+
+    attr_reader :trainee
 
     def initialize(trainee:)
       @trainee = trainee
@@ -14,17 +17,16 @@ module Dttp
       {
         "firstname" => trainee.first_names,
         "lastname" => trainee.last_name,
-        "contactid" => trainee.dttp_id,
         "address1_line1" => trainee.address_line_one,
         "address1_line2" => trainee.address_line_two,
         "address1_line3" => trainee.town_city,
         "address1_postalcode" => trainee.postcode,
-        "birthdate" => formatted_dob,
+        "birthdate" => trainee.date_of_birth.to_s,
         "emailaddress1" => trainee.email,
-        "gendercode" => trainee.gender,
+        "gendercode" => gender_code,
         "mobilephone" => trainee.phone_number,
-        "_dfe_ethnicityid_value" => dttp_ethnicity_id,
-        "_dfe_disibilityid_value" => dttp_disability_id,
+        "dfe_EthnicityId@odata.bind" => "/dfe_ethnicities(#{dttp_ethnicity_id})",
+        "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{dttp_disability_id})",
       }
     end
 
@@ -39,8 +41,8 @@ module Dttp
 
   private
 
-    def formatted_dob
-      trainee.date_of_birth.strftime("%d/%m/%Y")
+    def gender_code
+      trainee.gender == "male" ? MALE_GENDER_CODE : FEMALE_GENDER_CODE
     end
 
     def dttp_programme_subject_id
