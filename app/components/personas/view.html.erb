@@ -8,10 +8,9 @@
   </p>
 </div>
 
-<%= form_tag("/auth/developer/callback") do %>
+<%= form_with url: "/auth/developer/callback" do |f| %>
   <%= hidden_field_tag "email", persona.email %>
-  <%= hidden_field_tag "first_name", persona.name %>
+  <%= hidden_field_tag "first_name", persona.first_name %>
   <%= hidden_field_tag "last_name", persona.last_name %>
-
-  <%= submit_tag "Login as " + persona.name, class: "govuk-button govuk-!-margin-bottom-2" %>
+  <%= f.submit "Login as " + persona.name, class: "govuk-button govuk-!-margin-bottom-2" %> 
 <% end %>
