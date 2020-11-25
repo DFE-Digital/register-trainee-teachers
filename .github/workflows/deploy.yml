@@ -112,7 +112,6 @@ jobs:
           token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
           inputs: '{"environment": "${{ env.NEXT_ENV }}", "sha": "${{ github.event.inputs.sha }}"}'
 
-
       - name: Update ${{ github.event.inputs.environment }} status
         if: ${{ always() }}
         uses: bobheadxi/deployments@v0.4.2
@@ -123,3 +122,15 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           ref: ${{ github.event.inputs.sha }}
+
+      - name: Check for Failure
+        if: ${{ failure() && github.ref == 'refs/heads/master' }}
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: twd_publish_register_tech
+          SLACK_COLOR: '#ef5343'
+          SLACK_ICON_EMOJI: ':github-logo:'
+          SLACK_USERNAME: Register Trainee Teachers
+          SLACK_TITLE: Build Failure
+          SLACK_MESSAGE: ':alert: Build failure on ${{ github.event.inputs.environment }} :sadparrot:'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
