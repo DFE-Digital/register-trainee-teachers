@@ -25,9 +25,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= render_component GovukComponent::Header.new( logo: 'GOV.UK',
-                                                     service_name: 'Register trainee teachers',
-                                                     service_name_href: "/") %>
+    <%= render_component(Header::View.new(I18n.t('service_name'), @current_user)) %>
 
     <div class="govuk-width-container">
       <%= yield :breadcrumbs %>
