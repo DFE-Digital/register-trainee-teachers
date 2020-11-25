@@ -1,0 +1,8 @@
+# The url for this app, also used by `dfe_sign_in`
+base_url: https://www.register-trainee-teachers.education.gov.uk
+
+dfe_sign_in:
+  # URL that the users are redirected to for signing in
+  issuer: https://oidc.signin.education.gov.uk
+  # URL of the users profile
+  profile: https://profile.signin.education.gov.uk
