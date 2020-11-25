@@ -16,6 +16,7 @@ en:
       not_provided: Not provided
       heading: Confirm %{section_title}
     page_titles:
+      personas: Personas 
       pages:
         accessibility: Accessibility
         cookies: Cookies on Register trainee teachers

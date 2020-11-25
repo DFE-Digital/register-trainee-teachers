@@ -3,3 +3,4 @@ base_url: https://qa.register-trainee-teachers.education.gov.uk
 
 features:
   home_text: true
+  use_dfe_sign_in: false

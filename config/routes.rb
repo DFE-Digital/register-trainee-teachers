@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   if FeatureService.enabled?("use_dfe_sign_in")
     get "/auth/dfe/callback" => "sessions#callback"
     get "/auth/dfe/sign-out" => "sessions#redirect_after_dsi_signout"
+  else
+    get "/personas", to: "personas#index"
+    post "/auth/developer/callback", to: "sessions#bypass_callback"
   end
 
   concern :confirmable do
@@ -62,10 +65,6 @@ Rails.application.routes.draw do
       get "check-details", to: "trainees/check_details#show"
     end
   end
-
-  get "/personas", to: "personas#index"
-  post "/personas", to: "personas#create"
-  post "/sessions", to: "sessions#create"
 
   resources :trn_submissions, only: %i[create show], param: :trainee_id
 

@@ -8,4 +8,9 @@
   </p>
 </div>
 
-<%= govuk_button_to("Sign in as #{persona.name}", sessions_path(user_id: persona.id)) %>
+<%= form_with url: "/auth/developer/callback" do |f| %>
+  <%= hidden_field_tag "email", persona.email %>
+  <%= hidden_field_tag "first_name", persona.first_name %>
+  <%= hidden_field_tag "last_name", persona.last_name %>
+  <%= f.submit "Login as " + persona.name, class: "govuk-button govuk-!-margin-bottom-2" %> 
+<% end %>
