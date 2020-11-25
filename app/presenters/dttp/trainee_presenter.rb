@@ -42,7 +42,7 @@ module Dttp
   private
 
     def gender_code
-      trainee.gender == "male" ? MALE_GENDER_CODE : FEMALE_GENDER_CODE
+      trainee.male? ? MALE_GENDER_CODE : FEMALE_GENDER_CODE
     end
 
     def dttp_programme_subject_id
