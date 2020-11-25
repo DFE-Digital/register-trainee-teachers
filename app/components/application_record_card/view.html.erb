@@ -1,0 +1,22 @@
+<div class="app-application-card">
+  <div class="app-application-card_col">
+    <h<%= heading_level %> class="govuk-heading-m govuk-!-margin-bottom-3">
+      <%= govuk_link_to trainee_name, trainee_path(record.id) %>
+    </h<%= heading_level %>>
+  </div>
+
+  <div class="app-application-card_col">
+    <p class="govuk-body app-application-card__subject">
+      <%= subject %>
+    </p>
+    <p class="govuk-body govuk-hint app-application-card__route">
+      <%= route %>
+    </p>
+  </div>
+
+  <div class="app-application-card_col">
+    <%= render_component GovukComponent::Tag.new(text: status, colour: 'grey') %>
+  </div>
+</div>
+
+

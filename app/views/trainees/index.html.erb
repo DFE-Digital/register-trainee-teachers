@@ -8,35 +8,8 @@
   href: new_trainee_path ) %>
 </p>
 
-<table class="govuk-table" aria-describedby="report-title">
-  <thead>
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header"></th>
-      <th scope="col" class="govuk-table__header"></th>
-      <th scope="col" class="govuk-table__header"></th>
-      <th scope="col" class="govuk-table__header"></th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% if @trainees.present? %>
-      <% @trainees.each do |trainee| %>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">
-            <%= govuk_link_to "#{trainee.first_names} #{trainee.last_name}", trainee_path(trainee.id) %>
-          </th>
-          <td class="govuk-table__cell">
-            <div class="govuk-hint govuk-!-margin-bottom-0">
-              <abbr title="Date of Birth">DOB:</abbr> <%= trainee.date_of_birth %>
-            </div> ID: <%= trainee.trainee_id %>
-          </td>
-          <td class="govuk-table__cell">
-            <div class="govuk-hint govuk-!-margin-bottom-0">
-              Salaried Direct(Salaried)
-            </div>
-          </td>
-          <td class="govuk-table__cell"> </td>
-        </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render_component ApplicationRecordCard::View.with_collection(@trainees) %>
+  </div>
+</div>
