@@ -21,7 +21,6 @@ a[href="#"] {
 
 
 // Dashed list (used in Contents links list)
-
 .app-list--dash li {
   position: relative;
 
@@ -31,5 +30,17 @@ a[href="#"] {
     left: -16px;
     position: absolute;
     top: 0;
+  }
+}
+
+
+.trainee-record-header {
+  margin-bottom: govuk-spacing(6);
+}
+
+.trainee-record-header .govuk-tag {
+  @include govuk-media-query($from: tablet) {
+    position: relative;
+    top: -5px;
   }
 }

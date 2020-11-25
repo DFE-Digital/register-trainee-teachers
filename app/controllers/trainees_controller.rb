@@ -30,6 +30,10 @@ class TraineesController < ApplicationController
     end
   end
 
+  def edit
+    authorize trainee
+  end
+
   def update
     authorize trainee
     trainee.update!(trainee_params)

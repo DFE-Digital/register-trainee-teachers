@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm"
   end
 
-  resources :trainees, only: %i[index show new create update] do
+  resources :trainees, except: :destroy do
     scope module: :trainees do
       resource :programme_details, concerns: :confirmable, only: %i[edit update], path: "/programme-details"
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
