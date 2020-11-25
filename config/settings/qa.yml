@@ -1,2 +1,5 @@
+# The url for this app, also used by `dfe_sign_in`
+base_url: https://qa.register-trainee-teachers.education.gov.uk
+
 features:
   home_text: true
