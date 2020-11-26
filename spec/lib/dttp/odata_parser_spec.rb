@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "rails_helper"
+
 module Dttp
   describe OdataParser do
     describe ".entity_id" do
@@ -21,6 +23,7 @@ module Dttp
 
       context "headers don't have an entity ID" do
         let(:headers) { {} }
+        let(:response) { double(body: { error: { message: "something went wrong" } }, headers: headers) }
 
         it "raises a DttpIdNotReturned error" do
           expect { subject }.to raise_error(DttpIdNotReturnedError)

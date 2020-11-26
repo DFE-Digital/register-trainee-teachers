@@ -5,7 +5,8 @@ require "rails_helper"
 module Dttp
   module PlacementAssignment
     describe Create do
-      let(:trainee) { TraineePresenter.new(trainee: build(:trainee, :with_programme_details)) }
+      let(:trainee) { TraineePresenter.new(trainee: create(:trainee, :with_programme_details)) }
+      let(:degree) { create(:degree, :uk_degree_with_details) }
       let(:access_token) { "token" }
       let(:endpoint_path) { "/dfe_placementassignments" }
       let(:placementassignmentid) { SecureRandom.uuid }
@@ -24,6 +25,10 @@ module Dttp
       end
 
       describe ".call" do
+        before do
+          trainee.degrees << degree
+        end
+
         it "sends a POST request to DTTP with all the necessary placement assignment parameters" do
           body = { body: trainee.placement_assignment_params.to_json }
 

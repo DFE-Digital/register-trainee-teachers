@@ -38,7 +38,7 @@
         legend: { text: "Degree grade", size: 's' },
         classes: "degree-grade" ) do %>
 
-    <% GRADES.map do |name| %>
+    <% grades.map do |name| %>
       <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: true %>
     <% end %>
     <%= f.govuk_radio_divider %>

@@ -19,6 +19,10 @@ module DegreesHelper
     to_options(countries)
   end
 
+  def grades
+    Dttp::CodeSets::Grades::MAPPING.keys
+  end
+
 private
 
   def hesa_degree_types
@@ -28,14 +32,14 @@ private
   end
 
   def institutions
-    INSTITUTIONS
+    Dttp::CodeSets::Institutions::MAPPING.keys
   end
 
   def subjects
-    SUBJECTS
+    Dttp::CodeSets::DegreeSubjects::MAPPING.keys
   end
 
   def countries
-    COUNTRIES
+    Dttp::CodeSets::Countries::MAPPING.keys
   end
 end
