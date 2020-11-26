@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ErrorsController < ApplicationController
+  skip_before_action :authenticate
   layout "application"
 
   before_action :skip_authorization, only: %i[not_found internal_server_error unprocessable_entity]

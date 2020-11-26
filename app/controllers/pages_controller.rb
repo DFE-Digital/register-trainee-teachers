@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
+  skip_before_action :authenticate
+
   def show
     render template: "pages/#{params[:page]}"
   end

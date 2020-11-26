@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class TrnSubmissionsController < ApplicationController
-  before_action :authenticate
-
   def show
     authorize trainee
   end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :authenticate
+
   include Pundit
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
 

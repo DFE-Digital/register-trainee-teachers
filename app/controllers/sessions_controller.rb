@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :authenticate
   protect_from_forgery except: :bypass_callback
 
   def callback
