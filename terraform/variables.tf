@@ -36,6 +36,11 @@ variable paas_app_config_file { default = "./terraform/workspace-variables/app_c
 
 variable paas_app_secrets_file { default = "./terraform/app_secrets.yml" }
 
+#StatusCake
+variable statuscake_alerts { type = map }
+variable statuscake_username {}
+variable statuscake_password {}
+
 locals {
   paas_api_url = "https://api.london.cloud.service.gov.uk"
   app_secrets  = yamldecode(file(var.paas_app_secrets_file))

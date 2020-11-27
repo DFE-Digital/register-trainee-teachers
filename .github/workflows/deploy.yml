@@ -76,16 +76,18 @@ jobs:
           terraform plan -var-file=terraform/workspace-variables/${{ env.DEPLOY_ENV }}.tfvars terraform
           terraform apply -var-file=terraform/workspace-variables/${{ env.DEPLOY_ENV }}.tfvars -auto-approve terraform
         env:
-          TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
           ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
-
-
+          TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
+          TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
+          #PaaS credentials
           TF_VAR_paas_password: ${{ secrets[format('TF_VAR_PAAS_PASSWORD_{0}', env.DEPLOY_ENV)] }}
           TF_VAR_paas_user: ${{ secrets[format('TF_VAR_PAAS_USER_{0}', env.DEPLOY_ENV)] }}
-
-          TF_VAR_paas_log_url: ${{ secrets.TF_VAR_PAAS_LOGGING_ENDPOINT_PORT }}
+          #dockerHub credentials
           TF_VAR_dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           TF_VAR_dockerhub_password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
+          #statusCake credentials
+          TF_VAR_statuscake_username: ${{ secrets.TF_VAR_STATUSCAKE_USERNAME }}
+          TF_VAR_statuscake_password: ${{ secrets.TF_VAR_STATUSCAKE_PASSWORD}}
 
       - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
         uses: benc-uk/workflow-dispatch@v1.1
