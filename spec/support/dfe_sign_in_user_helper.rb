@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module DfESignInUserHelper
-  def set_authenticated_user(user: @current_user)
-    mock_auth(user: user)
-  end
-
-  def mock_auth(user: @current_user)
+  def user_exists_in_dfe_sign_in(user:)
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       fake_dfe_sign_in_auth_hash(
         email: user.email,
