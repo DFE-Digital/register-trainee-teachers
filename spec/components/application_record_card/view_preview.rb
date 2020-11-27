@@ -10,14 +10,14 @@ module ApplicationRecordCard
       render_component(ApplicationRecordCard::View.with_collection(mock_multiple_trainees))
     end
 
-    def no_data
+    def single_card_with_incomplete_data
       render_component(ApplicationRecordCard::View.new(record: Trainee.new(id: 1)))
     end
 
   private
 
     def mock_trainee
-      Trainee.new(id: 1)
+      Trainee.new(id: 1, first_names: "Tom", last_name: "Jones", record_type: "assessment_only", subject: "Primary")
     end
 
     def mock_multiple_trainees
