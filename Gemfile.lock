@@ -391,6 +391,7 @@ GEM
       httpclient (>= 2.4)
     thor (1.0.1)
     thread_safe (0.3.6)
+    timecop (0.9.2)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
     uk_postcode (2.1.6)
@@ -474,6 +475,7 @@ DEPENDENCIES
   spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.0.0)
   store_model (~> 0.8)
+  timecop (~> 0.9.2)
   tzinfo-data
   uk_postcode
   web-console (>= 3.3.0)
