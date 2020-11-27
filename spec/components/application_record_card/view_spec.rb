@@ -19,7 +19,7 @@ module ApplicationRecordCard
     end
 
     it "renders 'No route provided' if there is no route" do
-      expect(component.find(".app-application-card__route")).to have_text("ERROR: No route provided")
+      expect(component.find(".app-application-card__route")).to have_text("No route provided")
     end
 
     it "renders Status tag" do

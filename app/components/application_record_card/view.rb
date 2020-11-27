@@ -24,7 +24,7 @@ module ApplicationRecordCard
     end
 
     def route
-      return "ERROR: No route provided" if record.record_type.blank?
+      return "No route provided" if record.record_type.blank?
 
       record.record_type.humanize
     end
