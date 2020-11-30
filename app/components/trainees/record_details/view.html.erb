@@ -1,0 +1,23 @@
+<%= render_component SummaryCard::View.new(
+  title: "Record details",
+  heading_level: 2,
+  rows: [
+    {
+      key: "Trainee ID",
+      value: trainee_id,
+    },
+    {
+      key: "Submitted for TRN",
+      value: submission_date,
+    },
+    {
+      key: "Last updated",
+      value: last_updated_date,
+    },
+
+    {
+      key: "Record created",
+      value: date_for_summary_view(trainee.created_at),
+    },
+  ])
+%>
