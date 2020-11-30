@@ -10,7 +10,7 @@
 The required versions of build tools is defined in
 [.tool-versions](.tool-versions). These can be automatically installed with
 [asdf-vm](https://asdf-vm.com/), see their [installation
-instructions](https://asdf-vm.com/#/core-manage-asdf-vm).
+instructions](https://asdf-vm.com/#/core-manage-asdf).
 
 Once installed, run:
 
