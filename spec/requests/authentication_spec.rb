@@ -7,7 +7,7 @@ describe "authentication", type: :request do
     context "without been authenticated" do
       it "redirects back to the sign in page" do
         get trainees_path
-        expect(response).to redirect_to(sign_in_index_path)
+        expect(response).to redirect_to(sign_in_path)
       end
     end
   end

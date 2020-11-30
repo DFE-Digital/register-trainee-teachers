@@ -2,7 +2,6 @@
 
 class SessionsController < ApplicationController
   skip_before_action :authenticate
-  protect_from_forgery except: :bypass_callback
 
   def callback
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])
@@ -19,9 +18,11 @@ class SessionsController < ApplicationController
       redirect_to trainees_path
     else
       DfESignInUser.end_session!(session)
-      redirect_to sign_in_index_path
+      redirect_to sign_in_path
     end
   end
 
-  alias_method :bypass_callback, :callback
+  def signout
+    redirect_to root_path
+  end
 end

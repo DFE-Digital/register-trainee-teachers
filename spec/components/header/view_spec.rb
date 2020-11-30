@@ -14,7 +14,7 @@ module Header
       expect(component.find(".govuk-header__product-name")).to have_text("Test Service")
     end
 
-    it "does not render Sign out/your account links" do
+    it "does not render Sign out link" do
       expect(component).not_to have_selector(".app-header__content")
     end
 
@@ -25,8 +25,8 @@ module Header
         render_inline(described_class.new("Test Service", user))
       end
 
-      it "render Sign out/your account links" do
-        expect(component.find_all(".app-header__content .govuk-header__link").length).to eq(2)
+      it "renders the Sign out link" do
+        expect(component.find_all(".app-header__content .govuk-header__link").length).to eq(1)
       end
     end
   end
