@@ -7,7 +7,7 @@ describe "A user authenticates via DfE Sign-in" do
     and_i_have_a_dfe_sign_in_account
 
     when_i_visit_the_trainee_page
-    then_i_am_redirected_to_the_sign_path
+    then_i_am_redirected_to_the_sign_in_path
     and_i_sign_in_via_dfe_sign_in
 
     then_i_am_redirected_to_the_trainee_path
@@ -42,7 +42,7 @@ private
     trainee_page.load
   end
 
-  def then_i_am_redirected_to_the_sign_path
+  def then_i_am_redirected_to_the_sign_in_path
     expect(page.current_path).to eq("/sign-in")
   end
 
