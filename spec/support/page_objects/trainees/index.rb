@@ -9,9 +9,9 @@ module PageObjects
 
       element :add_trainee_link, "a", text: "Add a trainee"
 
-      elements :trainee_data, ".govuk-table tbody tr"
+      elements :trainee_data, ".app-application-card"
 
-      elements :trainee_name, ".govuk-table tbody tr th .govuk-link"
+      elements :trainee_name, ".app-application-card .govuk-link"
     end
   end
 end
