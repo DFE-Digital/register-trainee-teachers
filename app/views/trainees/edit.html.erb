@@ -15,6 +15,11 @@
   </h1>
 </div>
 
+<%= render_component TabNavigation::View.new(items: [
+  { name: "Training details", url: edit_trainee_path(@trainee) },
+  { name: "Personal details", url: trainee_path(@trainee) },
+]) %>
+
 <h2 class="govuk-heading-m">
   Trainee record
 </h2>

@@ -5,7 +5,7 @@ require "rails_helper"
 module Trainees
   module RecordDetails
     describe View do
-      include SummariesHelper
+      include SummaryHelper
 
       alias_method :component, :page
 

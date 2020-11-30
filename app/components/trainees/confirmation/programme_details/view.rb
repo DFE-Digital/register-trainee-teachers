@@ -4,7 +4,7 @@ module Trainees
   module Confirmation
     module ProgrammeDetails
       class View < GovukComponent::Base
-        include SummariesHelper
+        include SummaryHelper
 
         attr_accessor :trainee
 

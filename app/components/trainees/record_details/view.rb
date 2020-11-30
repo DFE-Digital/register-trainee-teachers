@@ -4,7 +4,7 @@ module Trainees
   module RecordDetails
     class View < GovukComponent::Base
       include SanitizeHelper
-      include SummariesHelper
+      include SummaryHelper
 
       attr_reader :trainee
 
