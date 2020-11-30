@@ -26,12 +26,6 @@ feature "edit personal details", type: :feature do
     then_the_personal_details_section_should_be_in_progress
   end
 
-  scenario "redirects to confirm page when section is completed" do
-    given_valid_personal_details_are_provided
-    when_i_visit_the_personal_details_page
-    then_i_am_redirected_to_the_confirm_page
-  end
-
   scenario "does not update the personal details with invalid data" do
     given_a_trainee_exists
     and_nationalities_exist_in_the_system
@@ -75,11 +69,6 @@ private
     expect(@confirm_page).to be_displayed(id: trainee.id, section: "personal-details")
     @confirm_page.confirm.public_send(checked_option)
     @confirm_page.submit_button.click
-  end
-
-  def then_i_am_redirected_to_the_confirm_page
-    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.id, section: "personal-details")
   end
 
   def and_i_submit_the_form

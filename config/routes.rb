@@ -48,7 +48,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resource :personal_details, concerns: :confirmable, only: %i[edit update], path: "/personal-details"
+      resource :personal_details, concerns: :confirmable, only: %i[show edit update], path: "/personal-details"
 
       namespace :diversity do
         resource :disclosure, concerns: :confirmable, only: %i[edit update], path: "/information-disclosed"

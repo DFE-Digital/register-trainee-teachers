@@ -30,6 +30,7 @@ class TraineesController < ApplicationController
 
   def edit
     authorize trainee
+    render layout: "trainee_record"
   end
 
   def update

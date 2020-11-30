@@ -20,6 +20,16 @@ feature "edit trainee record", type: :feature do
     end
   end
 
+  describe "personal details and education view" do
+    scenario "viewing the trainee's personal details and education" do
+      and_i_visit_the_personal_details
+      then_i_see_the_personal_details
+      then_i_see_the_contact_details
+      then_i_see_the_diversity_details
+      then_i_see_the_degree_details
+    end
+  end
+
   def then_i_see_the_trainee_name
     expect(@edit_page.trainee_name.text).to include(trainee_name(trainee))
   end
@@ -39,5 +49,25 @@ feature "edit trainee record", type: :feature do
 
   def then_i_see_the_programme_details
     expect(@edit_page).to have_programme_detail
+  end
+
+  def and_i_visit_the_personal_details
+    visit trainee_personal_details_path(trainee)
+  end
+
+  def then_i_see_the_personal_details
+    expect(@edit_page).to have_personal_detail
+  end
+
+  def then_i_see_the_contact_details
+    expect(@edit_page).to have_contact_detail
+  end
+
+  def then_i_see_the_diversity_details
+    expect(@edit_page).to have_diversity_detail
+  end
+
+  def then_i_see_the_degree_details
+    expect(@edit_page).to have_degree_detail
   end
 end

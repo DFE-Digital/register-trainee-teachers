@@ -2,7 +2,10 @@
 
 module Trainees
   class PersonalDetailsController < ApplicationController
-    before_action :redirect_to_confirm, if: :section_completed?
+    def show
+      authorize trainee
+      render layout: "trainee_record"
+    end
 
     def edit
       authorize trainee
@@ -39,17 +42,6 @@ module Trainees
         *PersonalDetail::FIELDS,
         nationality_ids: [],
       )
-    end
-
-    def redirect_to_confirm
-      redirect_to(trainee_personal_details_confirm_path(trainee))
-    end
-
-    def section_completed?
-      ProgressService.call(
-        validator: PersonalDetail.new(trainee),
-        progress_value: trainee.progress.personal_details,
-      ).completed?
     end
   end
 end
