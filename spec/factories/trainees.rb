@@ -51,8 +51,8 @@ FactoryBot.define do
     end
 
     trait :with_programme_details do
-      subject { PROGRAMME_SUBJECTS.sample[:name] }
-      age_range { AGE_RANGES.sample[:name] }
+      subject { Dttp::CodeSets::ProgrammeSubjects::MAPPING.keys.sample }
+      age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
       programme_start_date { Faker::Date.between(from: 2.years.ago, to: Time.zone.today) }
     end
 

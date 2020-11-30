@@ -8,21 +8,20 @@ module ProgrammeDetailsHelper
   end
 
   def main_age_ranges_options
-    age_ranges(options: :main)
+    age_ranges(option: :main)
   end
 
   def additional_age_ranges_options
-    to_options(age_ranges(options: :additional))
+    to_options(age_ranges(option: :additional))
   end
 
 private
 
-  def age_ranges(options:)
-    AGE_RANGES.select { |age_range| age_range[:option] == options }
-      .map { |s| s.values[0] }
+  def age_ranges(option:)
+    Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option }.keys
   end
 
   def programme_subjects
-    PROGRAMME_SUBJECTS.map { |s| s.values[0] }
+    Dttp::CodeSets::ProgrammeSubjects::MAPPING.keys
   end
 end

@@ -30,10 +30,10 @@ class ProgrammeDetail
       year: trainee.programme_start_date&.year,
     }
 
-    age_range = AGE_RANGES.find { |a| a[:name] == trainee.age_range }
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.age_range]
 
     if age_range.present?
-      attributes["#{age_range[:option]}_age_range".to_sym] = age_range[:name]
+      attributes["#{age_range[:option]}_age_range".to_sym] = trainee.age_range
       attributes[:main_age_range] = :other if age_range[:option] == :additional
     end
 
