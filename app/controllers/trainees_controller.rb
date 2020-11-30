@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class TraineesController < ApplicationController
-  before_action :authenticate
-
   def index
     @trainees = policy_scope(Trainee)
   end

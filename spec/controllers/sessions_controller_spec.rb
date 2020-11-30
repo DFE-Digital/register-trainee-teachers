@@ -5,9 +5,8 @@ require "rails_helper"
 describe SessionsController, type: :controller do
   include DfESignInUserHelper
   let(:user) { create(:user) }
-  let(:mocked_auth) { mock_auth(user: user) }
   let(:request_callback) do
-    request.env["omniauth.auth"] = mocked_auth
+    request.env["omniauth.auth"] = user_exists_in_dfe_sign_in(user: user)
     post :callback
   end
 

@@ -6,8 +6,12 @@ module Features
 
     def given_i_am_authenticated(user: nil)
       @current_user = user || create(:user)
-      set_authenticated_user
+      user_exists_in_dfe_sign_in(user: @current_user)
 
+      visit_sign_in_page
+    end
+
+    def visit_sign_in_page
       sign_in_page = PageObjects::SignIn.new
       sign_in_page.load
       sign_in_page.sign_in_button.click
