@@ -1,0 +1,17 @@
+<%= render_component PageTitle::View.new(title: "trainees.trainee_ids.edit") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: edit_trainee_path(@trainee)
+  ) %>
+<% end %>
+
+<%= form_with model: @trainee, url: trainee_trainee_id_path, local: true do |f| %>
+
+      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', size:'l' }, hint: { text: 'Your internal identifier for this trainee or candidate'}, width: 20 %>
+
+  <%= f.govuk_submit "Continue" %>
+<% end %>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", edit_trainee_path(@trainee)) %></p>
