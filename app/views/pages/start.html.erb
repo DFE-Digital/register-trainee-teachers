@@ -1,3 +1,5 @@
+<%= content_for :body_class, "app-start-page" %>
+
 <%= render_component PageTitle::View.new %>
 
 <%= content_for :start_page_banner do %>
@@ -10,6 +12,7 @@
     <ul class="govuk-list govuk-list--bullet">
       <li>register trainee data with the Department for Education, and keep it updated</li>
       <li>get a teacher reference number (TRN) for your trainees</li>
+      <li>share information about a trainee’s progress, such as whether they withdraw or defer</li>
       <li>recommend your trainees for qualified teacher status (QTS) or early years teacher status (EYTS)</li>
     </ul>
 
