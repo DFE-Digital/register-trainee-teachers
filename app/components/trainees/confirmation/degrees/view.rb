@@ -4,12 +4,13 @@ module Trainees
   module Confirmation
     module Degrees
       class View < GovukComponent::Base
-        attr_accessor :degrees, :trainee, :show_add_another_degree_button
+        attr_accessor :degrees, :trainee, :show_add_another_degree_button, :show_delete_button
 
-        def initialize(trainee:, show_add_another_degree_button: true)
+        def initialize(trainee:, show_add_another_degree_button: true, show_delete_button: false)
           @trainee = trainee
           @degrees = trainee.degrees
           @show_add_another_degree_button = show_add_another_degree_button
+          @show_delete_button = show_delete_button
         end
 
         def degree_title(degree)

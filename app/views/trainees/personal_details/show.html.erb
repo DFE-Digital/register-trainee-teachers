@@ -17,5 +17,5 @@
 <h3 class="govuk-heading-s">Degrees</h3>
 
 <div class="degree-details">
-  <%= render_component Trainees::Confirmation::Degrees::View.new(trainee: @trainee) %>
+  <%= render_component Trainees::Confirmation::Degrees::View.new(trainee: @trainee, show_delete_button: true) %>
 </div>
