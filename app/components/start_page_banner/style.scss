@@ -1,13 +1,30 @@
 @import "../base.scss";
 @import "../../webpacker/styles/inverted";
 
+.app-start-page {
+  .app-phase-banner {
+    background-color: $govuk-brand-colour;
+    margin-top: -(govuk-spacing(2));
+  }
+
+  .govuk-phase-banner__text,
+  .govuk-link {
+    color: govuk-colour("white");
+  }
+
+  .govuk-tag {
+    background: govuk-colour("white");
+    color: $govuk-brand-colour;
+  }
+}
+
 .app-start-page-banner {
   background-color: $govuk-brand-colour;
   color: govuk-colour("white");
   margin-top: -(govuk-spacing(6));
 
   @include govuk-media-query($from: tablet) {
-    margin-top: -(govuk-spacing(8));
+    margin-top: -(govuk-spacing(7));
   }
 }
 

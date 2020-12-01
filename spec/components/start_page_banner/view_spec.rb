@@ -12,6 +12,6 @@ RSpec.describe StartPageBanner::View do
   end
 
   it "renders 'sign in' link" do
-    expect(@result.css(".govuk-link").text).to include("sign in")
+    expect(@result.css(".app-link--inverted").text).to include("sign in")
   end
 end

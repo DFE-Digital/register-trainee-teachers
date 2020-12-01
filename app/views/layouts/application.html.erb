@@ -18,7 +18,7 @@
     <%= javascript_pack_tag 'application', defer: true %>
   </head>
 
-  <body class="govuk-template__body">
+  <body class="govuk-template__body <%= yield :body_class %>">
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
@@ -26,6 +26,21 @@
     <%= govuk_skip_link %>
 
     <%= render_component(Header::View.new(I18n.t('service_name'), @current_user)) %>
+
+    <div class="app-phase-banner">
+      <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+          <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+              Beta
+            </strong>
+            <span class="govuk-phase-banner__text">
+                This is a new service – <%= mail_to "becomingateacher@digital.education.gov.uk?subject=Feedback%20about%20Register%20trainee%20teachers", "give feedback or report a problem", class: "govuk-link govuk-link--no-visited-state" %>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
 
     <div class="govuk-width-container">
       <%= yield :breadcrumbs %>
