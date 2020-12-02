@@ -8,7 +8,7 @@
 <% end %>
 
 <%= form_with model: @trainee, url: trainee_trainee_id_path, local: true do |f| %>
-    <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', tag: 'h1', size:'l' }, hint: { text: 'Your internal identifier for this trainee or candidate'}, width: 20 %>
+    <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', tag: 'h1', size: 'l' }, hint: { text: 'Your internal identifier for this trainee or candidate'}, width: 20 %>
   <%= f.govuk_submit "Continue" %>
 <% end %>
 
