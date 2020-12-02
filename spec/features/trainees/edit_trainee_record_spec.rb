@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "edit trainee record", type: :feature do
-  include TrnSubmissionsHelper
+  include TraineeHelper
 
   background do
     given_i_am_authenticated
