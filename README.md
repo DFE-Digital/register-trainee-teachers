@@ -138,3 +138,9 @@ dfe_sign_in:
   secret: secret required value
 
 ```
+
+### Hosting
+
+Register is hosted on [GOVUK PAAS](https://www.cloud.service.gov.uk/)
+
+[Additional GOVUK PAAS documentation](docs/govuk_paas.md)
