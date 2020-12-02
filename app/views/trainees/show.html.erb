@@ -15,12 +15,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <h2 class="govuk-heading-m">Route into teaching</h2>
+    <h2 class="govuk-heading-m">Training details</h2>
 
     <%= render_component TaskList::View.new(classes: "record-setup") do |component|
       component.slot(
         :row,
-        task_name: 'Type of training',
+        task_name: 'Training details',
         path: "",
         status: 'completed'
       )
@@ -38,7 +38,7 @@
 
     end %>
 
-    <h2 class="govuk-heading-m">Trainee details</h2>
+    <h2 class="govuk-heading-m">About the trainee</h2>
 
     <%= render_component TaskList::View.new do |component|
       component.slot(
@@ -72,11 +72,6 @@
           progress_value: @trainee.progress.diversity
         ).status
       )
-    end %>
-
-    <h2 class="govuk-heading-m">Education</h2>
-
-    <%= render_component TaskList::View.new(classes: "education") do |component|
 
       component.slot(
         :row,
@@ -97,6 +92,5 @@
 
   <%= govuk_link_to "Review this record", check_details_trainee_path(@trainee), {class: "govuk-button", id: "check-details"} %>
 <% end %>
-
 
 <p class="govuk-body"><%= govuk_link_to("Return to this draft record later", "#") %></p>

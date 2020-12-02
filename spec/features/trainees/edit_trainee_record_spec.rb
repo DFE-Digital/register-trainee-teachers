@@ -11,7 +11,7 @@ feature "edit trainee record", type: :feature do
     when_i_visit_the_trainee_edit_page
   end
 
-  describe "trainee details view" do
+  describe "about trainee view" do
     scenario "viewing the trainee's details" do
       then_i_see_the_trainee_name
       then_i_see_the_trn_status
