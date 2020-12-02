@@ -2,8 +2,6 @@
 
 module Trainees
   class ProgrammeDetailsController < ApplicationController
-    before_action :redirect_to_confirm, if: :section_completed?
-
     PROGRAMME_START_DATE_CONVERSION = {
       "programme_start_date(3i)" => "day",
       "programme_start_date(2i)" => "month",
@@ -53,13 +51,6 @@ module Trainees
 
     def redirect_to_confirm
       redirect_to(trainee_programme_details_confirm_path(trainee))
-    end
-
-    def section_completed?
-      ProgressService.call(
-        validator: ProgrammeDetail.new(trainee),
-        progress_value: trainee.progress.programme_details,
-      ).completed?
     end
   end
 end
