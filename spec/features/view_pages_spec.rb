@@ -6,6 +6,7 @@ feature "view pages" do
   scenario "navigate to start" do
     given_i_am_on_the_home_page
     then_i_should_see_the_service_name
+    and_i_should_see_the_phase_banner
   end
 
   scenario "navigate to accessibility statement" do
@@ -50,6 +51,10 @@ private
   def then_i_should_see_the_service_name
     expect(start_page.page_heading).to have_text(t("page_headings.start_page"))
     expect(start_page).to have_title("Register trainee teachers - GOV.UK")
+  end
+
+  def and_i_should_see_the_phase_banner
+    expect(start_page.phase_banner).to have_text("Beta")
   end
 
   def and_i_click_on_the_accessibility_link_in_the_footer
