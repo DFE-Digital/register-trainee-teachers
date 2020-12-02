@@ -45,6 +45,8 @@ en:
           new: Add undergraduate details
         personal_details:
           edit: Trainee personal details
+        trainee_ids:
+          edit: Trainee ID
         training_details:
           edit: Add training details
         programme_details:

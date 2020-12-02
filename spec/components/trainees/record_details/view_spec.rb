@@ -9,7 +9,7 @@ module Trainees
 
       alias_method :component, :page
 
-      let(:trainee) { build(:trainee, created_at: Time.zone.today, updated_at: Time.zone.today) }
+      let(:trainee) { create(:trainee, created_at: Time.zone.today, updated_at: Time.zone.today) }
 
       context "when trainee_id data has not been provided" do
         before do
