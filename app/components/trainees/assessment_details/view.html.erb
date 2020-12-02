@@ -1,0 +1,14 @@
+<%= render_component SummaryCard::View.new(
+  title: "Assessment details",
+  heading_level: 2,
+  rows: [
+    {
+      key: "Assessment outcome",
+      value: assessment_outcome,
+    },
+    {
+      key: "Assessment end date",
+      value: assessment_end_date,
+    },
+  ])
+%>
