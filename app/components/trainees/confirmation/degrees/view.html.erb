@@ -3,8 +3,8 @@
     <%= render_component SummaryCard::View.new(title: degree_title(degree), heading_level: 2, rows: get_degree_rows(degree)) do |component| %>
       <% if show_delete_button %>
         <% component.with(:header_actions) do %>
-          <%= form_with model: [trainee, degree], method: :delete, local: true, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
-            <%= f.govuk_submit "Delete degree", classes: "govuk-link govuk-button--link" %>
+          <%= form_with model: [trainee, degree], method: :delete, local: true do |f| %>
+            <%= f.submit "Delete degree", class: "govuk-button govuk-link govuk-button--link" %>
           <% end %>
         <% end %>
       <% end %>

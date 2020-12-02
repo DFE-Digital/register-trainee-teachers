@@ -26,10 +26,22 @@ module Trainees
         end
 
         def with_no_option_to_add_another_degree
-          render_component(Trainees::Confirmation::Degrees::View.new(
-                             trainee: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
-                             show_add_another_degree_button: false,
-                           ))
+          render_component(
+            Trainees::Confirmation::Degrees::View.new(
+              trainee: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
+              show_add_another_degree_button: false,
+            ),
+          )
+        end
+
+        def with_delete_degree_button
+          render_component(
+            Trainees::Confirmation::Degrees::View.new(
+              trainee: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
+              show_add_another_degree_button: false,
+              show_delete_button: true,
+            ),
+          )
         end
 
       private
