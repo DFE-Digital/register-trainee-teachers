@@ -53,13 +53,35 @@
       </div>
     </main>
 
-    <%= render_component GovukComponent::Footer.new(
-      meta_links: {
-        Accessibility: accessibility_path,
-        Cookies: cookies_path,
-        "Privacy policy": privacy_policy_path,
-      },
-      meta_heading: 'Supporting links')
-    %>
+    <%= tag.footer(class: "govuk-footer", role: 'contentinfo') do %>
+      <div class="govuk-width-container">
+        <div class="govuk-footer__meta">
+          <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+            <h2 class="govuk-heading-m">Get support</h2>
+            <div class="govuk-footer__meta-custom">
+              <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
+                <li>Email: <%= mail_to "mailto:becomingateacher@digital.education.gov.uk", "becomingateacher@digital.education.gov.uk", class: "govuk-link govuk-footer__link" %></li>
+                <li>We aim to respond within 5 working days, or one working day for more urgent queries</li>
+              </ul>
+              <p class="govuk-body govuk-!-font-size-16"><a href="#" class="govuk-link govuk-footer__link">How to use Register trainee teachers</a></p>
+            </div>
+            <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
+              <li class="govuk-footer__inline-list-item">
+                <%= link_to "Accessibility", accessibility_path, class: "govuk-footer__link" %>
+              </li>
+              <li class="govuk-footer__inline-list-item">
+                <%= link_to "Cookies", cookies_path, class: "govuk-footer__link" %>
+              </li>
+              <li class="govuk-footer__inline-list-item">
+                <%= link_to "Privacy policy", privacy_policy_path, class: "govuk-footer__link" %>
+              </li>
+            </ul>
+          </div>
+          <div class="govuk-footer__meta-item">
+            <%= link_to raw(%(&copy Crown copyright)), "https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/", class: "govuk-footer__link govuk-footer__copyright-logo" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </body>
 </html>
