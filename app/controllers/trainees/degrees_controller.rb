@@ -33,6 +33,11 @@ module Trainees
       end
     end
 
+    def destroy
+      trainee.degrees.destroy(trainee.degrees.find(params[:id]))
+      redirect_to trainee_personal_details_path(@trainee)
+    end
+
   private
 
     def locale_code_params

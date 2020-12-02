@@ -1,0 +1,25 @@
+<%= extends_layout :application do %>
+  <%= render_component PageTitle::View.new(title: "trainees.edit") %>
+
+  <%= content_for(:breadcrumbs) do %>
+    <%= render_component GovukComponent::BackLink.new(
+      text: 'All records',
+      href: trainees_path
+    ) %>
+  <% end %>
+
+  <div class="trainee-record-header">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+      <%= trainee_name(@trainee) %>
+
+      <%= render_component GovukComponent::Tag.new(text: "Pending TRN", colour: "turquoise") %>
+    </h1>
+  </div>
+
+  <%= render_component TabNavigation::View.new(items: [
+    { name: "Training details", url: edit_trainee_path(@trainee) },
+    { name: "Personal details and education", url: trainee_personal_details_path(@trainee) },
+  ]) %>
+
+  <%= yield %>
+<% end %>

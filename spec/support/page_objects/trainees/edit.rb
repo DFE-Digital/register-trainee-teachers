@@ -10,6 +10,11 @@ module PageObjects
 
       section :record_detail, PageObjects::Sections::Summaries::RecordDetail, ".record-details"
       section :programme_detail, PageObjects::Sections::Summaries::ProgrammeDetail, ".programme-details"
+
+      section :personal_detail, PageObjects::Sections::Summaries::PersonalDetail, ".personal-details"
+      section :contact_detail, PageObjects::Sections::Summaries::ContactDetail, ".contact-details"
+      section :diversity_detail, PageObjects::Sections::Summaries::DiversityDetail, ".diversity-details"
+      section :degree_detail, PageObjects::Sections::Summaries::DegreeDetail, ".degree-details"
     end
   end
 end

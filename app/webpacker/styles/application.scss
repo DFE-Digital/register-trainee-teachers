@@ -44,3 +44,20 @@ a[href="#"] {
     top: -5px;
   }
 }
+
+.app-summary-card__actions .govuk-button--link {
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+  @include govuk-link-print-friendly;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: $govuk-link-colour;
+  box-shadow: none;
+  text-decoration: underline;
+
+  &:active {
+    top: 0;
+  }
+}
