@@ -144,3 +144,15 @@ dfe_sign_in:
 Register is hosted on [GOVUK PAAS](https://www.cloud.service.gov.uk/)
 
 [Additional GOVUK PAAS documentation](docs/govuk_paas.md)
+
+## DTTP settings for testing
+Add the following settings to your `development.yml.local` (ask a team member for the secrets):
+
+```yaml
+dttp:
+  client_id: SECRET
+  client_secret: SECRET
+  tenant_id: SECRET
+  scope: "https://dttp-dev.crm4.dynamics.com/.default"
+  api_base_url: "https://dttp-dev.api.crm4.dynamics.com/api/data/v9.1"
+```

@@ -4,14 +4,14 @@ module Dttp
   class OdataParser
     class << self
       def entity_id(trainee_id, response)
-        contact_url = response.headers["odata-entityid"]
+        entity_id = response.headers["odata-entityid"]
 
-        if contact_url.blank?
+        if entity_id.blank?
           raise DttpIdNotReturnedError,
                 "failed to retrieve the entity ID from #{response.headers} with #{response.body} for trainee: #{trainee_id}"
         end
 
-        extract_uuid(contact_url)
+        extract_uuid(entity_id)
       end
 
       def extract_uuid(string_source)
