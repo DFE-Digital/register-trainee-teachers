@@ -3,7 +3,7 @@
 module PageObjects
   module Trainees
     class EditTraineeId < PageObjects::Base
-      set_url "/trainees/{trainee_id}/trainee_id/edit"
+      set_url "/trainees/{trainee_id}/trainee-id/edit"
 
       element :trainee_id_input, "#trainee-trainee-id-field"
       element :continue, ".govuk-button"

@@ -9,7 +9,11 @@ module Trainees
     def update
       authorize trainee
       trainee.update!(trainee_params)
-      redirect_to edit_trainee_path(trainee)
+      redirect_to confirm_trainee_trainee_id_path(trainee)
+    end
+
+    def confirm
+      authorize trainee
     end
 
   private
