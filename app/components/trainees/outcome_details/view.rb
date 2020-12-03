@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  module AssessmentDetails
+  module OutcomeDetails
     class View < GovukComponent::Base
       include SummaryHelper
 
@@ -11,12 +11,8 @@ module Trainees
         @trainee = trainee
       end
 
-      def assessment_outcome
-        trainee.assessment_outcome.humanize
-      end
-
-      def assessment_end_date
-        date_for_summary_view(trainee.assessment_end_date)
+      def outcome_date
+        date_for_summary_view(trainee.outcome_date)
       end
     end
   end
