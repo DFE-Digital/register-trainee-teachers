@@ -2,15 +2,20 @@
   <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: @degree, url: trainee_degrees_new_type_path, local: true) do |f| %>
           <%= f.govuk_error_summary %>
-          <h2 class="govuk-heading-l">Add undergraduate degree</h2>
 
-          <p class="govuk-body">
-            If the trainee has any other degrees, you can add them next.
-          </p>
+          <% if @trainee.degrees.size > 1 %>
+            <h2 class="govuk-heading-l">Add another degree</h2>
+          <% else %>
+            <h2 class="govuk-heading-l">Add undergraduate degree</h2>
+
+            <p class="govuk-body">
+              If the trainee has any other degrees, you can add them next.
+            </p>
+          <% end %>
 
           <% question = [ 
-          OpenStruct.new(name: "Yes", value: "uk" ),
-          OpenStruct.new(name: "No", value: "non_uk")
+            OpenStruct.new(name: "Yes", value: "uk" ),
+            OpenStruct.new(name: "No", value: "non_uk")
           ] %>
 
           <%= f.govuk_collection_radio_buttons :locale_code,

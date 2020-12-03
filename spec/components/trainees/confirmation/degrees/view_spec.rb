@@ -85,9 +85,19 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
     end
   end
 
-  describe "Add another degree" do
-    it "always renders 'Add another degree' button" do
-      expect(component).to have_css(".govuk-button.govuk-button--secondary")
+  describe "Degree button text" do
+    context "when there are no degrees" do
+      let(:trainee) { create(:trainee) }
+
+      it "renders 'Add a degree' button" do
+        expect(component.find(degree_button_selector)).to have_text(t("components.degrees.add_a_degree"))
+      end
+    end
+
+    context "when there are degrees" do
+      it "renders 'Add another degree' button" do
+        expect(component.find(degree_button_selector)).to have_text(t("components.degrees.add_another_degree"))
+      end
     end
 
     context "suppress the 'Add another degree' button" do
@@ -96,7 +106,7 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
       end
 
       it "does not render 'Add another degree' button" do
-        expect(component).not_to have_css(".govuk-button.govuk-button--secondary")
+        expect(component).not_to have_css(degree_button_selector)
       end
     end
   end
@@ -123,5 +133,9 @@ private
       build(:degree, :non_uk_degree_with_details),
       build(:degree, :non_uk_degree_with_details),
     ])
+  end
+
+  def degree_button_selector
+    ".govuk-button.govuk-button--secondary"
   end
 end
