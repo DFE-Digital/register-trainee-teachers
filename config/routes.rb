@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   get "/sign-in" => "sign_in#index"
   get "/sign-out" => "sign_out#index"
 
+  get "/sign-in/user-not-found", to: "sign_in#new"
+
   if FeatureService.enabled?("use_dfe_sign_in")
     get "/auth/dfe/callback" => "sessions#callback"
     get "/auth/dfe/sign-out" => "sessions#signout"
