@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PageTitle::View < GovukComponent::Base
+  I18N_FORMAT = /^\S*\.\S*$/.freeze
+
   attr_accessor :title, :errors
 
   include ActiveModel
@@ -21,10 +23,10 @@ private
   end
 
   def build_title
-    title == "" ? "" : I18n.t("components.page_titles." + title)
+    title.match?(I18N_FORMAT) ? I18n.t("components.page_titles." + title) : title
   end
 
   def build_service_name
-    title == "" ? I18n.t("service_name") : " - " + I18n.t("service_name")
+    title.present? ? " - " + I18n.t("service_name") : I18n.t("service_name")
   end
 end
