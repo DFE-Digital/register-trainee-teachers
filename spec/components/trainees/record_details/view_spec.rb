@@ -28,26 +28,20 @@ module Trainees
         end
 
         it "renders the trainee ID" do
-          expect(component.find(row_for("trainee-id"))).to have_text(trainee.trainee_id)
+          expect(component.find(summary_card_row_for("trainee-id"))).to have_text(trainee.trainee_id)
         end
 
         it "renders the trn submission date" do
-          expect(component.find(row_for("submitted-for-trn"))).to have_text(date_for_summary_view(Time.zone.yesterday))
+          expect(component.find(summary_card_row_for("submitted-for-trn"))).to have_text(date_for_summary_view(Time.zone.yesterday))
         end
 
         it "renders the trainee record last updated date" do
-          expect(component.find(row_for("last-updated"))).to have_text(date_for_summary_view(trainee.updated_at))
+          expect(component.find(summary_card_row_for("last-updated"))).to have_text(date_for_summary_view(trainee.updated_at))
         end
 
         it "renders the trainee record created date" do
-          expect(component.find(row_for("record-created"))).to have_text(date_for_summary_view(trainee.created_at))
+          expect(component.find(summary_card_row_for("record-created"))).to have_text(date_for_summary_view(trainee.created_at))
         end
-      end
-
-    private
-
-      def row_for(selector)
-        ".govuk-summary-list__row.#{selector} .govuk-summary-list__value"
       end
     end
   end
