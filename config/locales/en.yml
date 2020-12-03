@@ -17,6 +17,9 @@ en:
       heading: Confirm %{section_title}
     programme_detail:
       title: "%{record_type} programme details"
+    degrees:
+      add_a_degree: Add a degree
+      add_another_degree: Add another degree
     page_titles:
       personas: Personas 
       pages:
