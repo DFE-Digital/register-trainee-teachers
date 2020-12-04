@@ -21,7 +21,6 @@ en:
       add_a_degree: Add a degree
       add_another_degree: Add another degree
     page_titles:
-      personas: Personas 
       pages:
         accessibility: Accessibility
         cookies: Cookies on Register trainee teachers
@@ -31,7 +30,7 @@ en:
       trn_submissions:
         show: Successfully submitted
       check_details:
-        show: Review the trainee details
+        show: Review trainee record
       trainees:
         new: Add a trainee
         index: Trainee teachers
@@ -41,6 +40,15 @@ en:
         diversity:
           disclosures:
             edit: Has the trainee shared diversity information?
+          ethnic_group:
+            edit: What is their ethnic group?
+          ethnic_background:
+            edit: "Which of the following best describes their %{background} background?"
+          disability_disclosure:
+            edit: Has the trainee shared that they are disabled?
+          disabilities:
+            edit: Which disabilities were shared?
+          confirm: Confirm diversity information
         contact_details:
           edit: Contact details
         degrees:

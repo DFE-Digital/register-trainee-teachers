@@ -1,4 +1,4 @@
-<%= render_component PageTitle::View.new(title: I18n.t("components.confirmation.heading", section_title: confirm_section_title)) %>
+<%= render_component PageTitle::View.new(title: "trainees.diversity.confirm") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
@@ -10,7 +10,7 @@
 <%= render(
   partial: "trainees/confirm_details/form", 
   locals: { 
-    heading: "Confirm diversity information",
+    heading: t("components.page_titles.trainees.diversity.confirm"),
     confirm_detail: @confirm_detail, 
     trainee: @trainee,
     component: @confirmation_component,

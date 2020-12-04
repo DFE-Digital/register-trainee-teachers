@@ -1,3 +1,5 @@
+<%= render_component PageTitle::View.new(title: "trainees.diversity.disability_disclosure.edit") %>
+
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
     text: "Back",
@@ -10,7 +12,7 @@
     <%= form_with(model: @disability_disclosure, url: trainee_diversity_disability_disclosure_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-        <%= f.govuk_radio_buttons_fieldset(:disability_disclosure, legend: { text: "Has the trainee shared that they are disabled?", tag: "h1", size: "l" }) do %>
+        <%= f.govuk_radio_buttons_fieldset(:disability_disclosure, legend: { text: t("components.page_titles.trainees.diversity.disability_disclosure.edit"), tag: "h1", size: "l" }) do %>
           <% format_disability_disclosure_options(Diversities::DISABILITY_DISCLOSURE_ENUMS.values).each_with_index do |disclosure_option, index| %>
             <%= f.govuk_radio_button(
               :disability_disclosure, 
