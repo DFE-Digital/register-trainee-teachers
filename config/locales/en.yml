@@ -21,6 +21,7 @@ en:
       add_a_degree: Add a degree
       add_another_degree: Add another degree
     page_titles:
+      personas: Personas
       pages:
         accessibility: Accessibility
         cookies: Cookies on Register trainee teachers
@@ -52,8 +53,8 @@ en:
         contact_details:
           edit: Contact details
         degrees:
-          edit: Degree Details
-          new: Add undergraduate details
+          edit: Degree details
+          new: Add undergraduate degree
         personal_details:
           edit: Trainee personal details
         trainee_ids:

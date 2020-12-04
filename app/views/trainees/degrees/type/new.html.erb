@@ -15,9 +15,9 @@
             </p>
           <% end %>
 
-          <% question = [ 
-            OpenStruct.new(name: "Yes", value: "uk" ),
-            OpenStruct.new(name: "No", value: "non_uk")
+          <% question = [
+            OpenStruct.new(name: "UK degree", value: "uk" ),
+            OpenStruct.new(name: "Non-UK degree", value: "non_uk")
           ] %>
 
           <%= f.govuk_collection_radio_buttons :locale_code,
@@ -31,4 +31,3 @@
       <% end %>
   </div>
 </div>
-

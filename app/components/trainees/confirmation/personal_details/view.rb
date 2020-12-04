@@ -16,7 +16,7 @@ module Trainees
         def full_name
           return @not_provided_copy unless trainee.first_names && trainee.last_name
 
-          "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}".upcase
+          "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}"
         end
 
         def date_of_birth
