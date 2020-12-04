@@ -7,8 +7,12 @@
     margin-top: -(govuk-spacing(2));
   }
 
+  .govuk-phase-banner {
+    border-bottom-color: govuk-colour("light-blue");
+  }
+
   .govuk-phase-banner__text,
-  .govuk-link {
+  .govuk-phase-banner__text .govuk-link {
     color: govuk-colour("white");
   }
 
@@ -21,7 +25,11 @@
 .app-start-page-banner {
   background-color: $govuk-brand-colour;
   color: govuk-colour("white");
-  margin-top: -(govuk-spacing(6));
+  margin-top: -(govuk-spacing(4));
+
+  .govuk-link {
+    color: govuk-colour("white");
+  }
 
   @include govuk-media-query($from: tablet) {
     margin-top: -(govuk-spacing(7));

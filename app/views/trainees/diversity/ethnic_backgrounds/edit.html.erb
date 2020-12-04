@@ -1,3 +1,7 @@
+<%= render_component PageTitle::View.new(
+  title: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}"))
+) %>
+
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
     text: "Back",
@@ -12,7 +16,11 @@
 
         <%= f.govuk_radio_buttons_fieldset(
           :ethnic_background,
-          legend: { text: "Which of the following best describes their #{I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")} background?", tag: "h1", size: "l" }) do %>
+          legend: { 
+            text: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")), 
+            tag: "h1", 
+            size: "l" }
+        ) do %>
 
           <% Diversities::BACKGROUNDS[@trainee.ethnic_group].each_with_index do |ethnic_background, index| %>
             <% if other_ethnic_background_option?(ethnic_background) %>

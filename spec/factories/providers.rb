@@ -5,5 +5,6 @@ FactoryBot.define do
     sequence :name do |n|
       "Provider #{n}"
     end
+    dttp_id { Dttp::CodeSets::Institutions::MAPPING.values.sample[:entity_id] }
   end
 end
