@@ -57,6 +57,7 @@ FactoryBot.define do
 
     trait :diversity_disclosed do
       diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] }
+      ethnic_background { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
     end
 
     trait :diversity_not_disclosed do

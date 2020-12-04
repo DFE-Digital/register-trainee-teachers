@@ -4,8 +4,8 @@ module Features
   module TraineeSteps
     attr_reader :trainee
 
-    def given_a_trainee_exists(attributes = {})
-      @trainee ||= create(:trainee, **attributes, provider: current_user.provider)
+    def given_a_trainee_exists(*traits, **overrides)
+      @trainee ||= create(:trainee, *traits, **overrides, provider: current_user.provider)
     end
 
     def and_return_to_the_summary_page

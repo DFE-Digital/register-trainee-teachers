@@ -30,16 +30,16 @@ module Dttp
       }
     end
 
-    def placement_assignment_params
-      programme_details_params.merge(degree.uk_degree ? uk_degree_params : non_uk_degree_params)
+    def placement_assignment_params(contact_change_set_id)
+      programme_details_params(contact_change_set_id).merge(degree.uk_degree ? uk_degree_params : non_uk_degree_params)
     end
 
   private
 
-    def programme_details_params
+    def programme_details_params(contact_change_set_id)
       {
+        "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
         "dfe_programmestartdate" => programme_start_date.in_time_zone.iso8601,
-        "dfe_ContactId@odata.bind" => "/contacts(#{dttp_id})",
         "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_course_phase_id})",
         "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_id})",
       }

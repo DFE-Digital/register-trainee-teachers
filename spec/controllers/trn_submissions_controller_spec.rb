@@ -19,7 +19,7 @@ describe TrnSubmissionsController do
     it "passes the decorated trainee to the create service" do
       allow(Trainee).to receive(:find).with(trainee_id.to_s).and_return(trainee)
       expect(Dttp::TraineePresenter).to receive(:new).with(trainee: trainee).and_return(decorated_trainee)
-      expect(Dttp::Contact::Create).to receive(:call).with(trainee: decorated_trainee)
+      expect(Dttp::BatchCreate).to receive(:call).with(trainee: decorated_trainee)
 
       post :create, params: { trainee_id: trainee_id }
     end
