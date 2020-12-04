@@ -2,7 +2,7 @@
 
 module Trainees
   module Diversity
-    class DisabilityDetailsController < BaseController
+    class DisabilityDetailsController < ApplicationController
       def edit
         authorize trainee
         disabilities
