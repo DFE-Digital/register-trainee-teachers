@@ -82,7 +82,7 @@ jobs:
       with:
         workflow: 'Deploy to PaaS'
         token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
-        inputs: '{"environment": "qa", "sha": "${{ env.SHA_TAG }}"}'
+        inputs: '{"qa": "true", "staging": "true", "production": "true", "sha": "${{ env.SHA_TAG }}"}'
 
     - name: Check for Failure
       if: ${{ failure() && github.ref == 'refs/heads/master' }}
