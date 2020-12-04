@@ -59,7 +59,7 @@ en:
         trainee_ids:
           edit: Trainee ID
         training_details:
-          edit: Add training details
+          edit: Edit training details
         programme_details:
           edit: Programme details
   views:
