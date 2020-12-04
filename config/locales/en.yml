@@ -190,6 +190,11 @@ en:
             programme_start_date:
               blank: "You must enter programme start date"
               invalid: "You must enter a valid programme start date"
+        outcome:
+          attributes:
+            outcome_date:
+              blank: "You must enter an outcome date"
+              invalid: "You must enter a valid outcome date"
         degree_detail:
           attributes:
             degree_ids:

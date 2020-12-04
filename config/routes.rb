@@ -57,6 +57,8 @@ Rails.application.routes.draw do
         resource :disability_disclosure, concerns: :confirmable, only: %i[edit update], path: "/disability-disclosure"
         resource :disability_detail, concerns: :confirmable, only: %i[edit update], path: "/disabilities"
       end
+
+      resource :outcome_date, only: %i[edit update], path: "/outcome-date"
     end
 
     member do
