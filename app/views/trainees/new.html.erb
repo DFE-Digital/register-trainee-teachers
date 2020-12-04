@@ -1,9 +1,9 @@
-<%= render_component PageTitle::View.new(title: "trainees.new", 
+<%= render_component PageTitle::View.new(title: "trainees.new",
                                            errors: @trainee.errors) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(
-    text: 'Back',
+    text: "Back",
     href: trainees_path
   ) %>
 <% end %>
@@ -18,12 +18,12 @@
         Add a trainee
       </h1>
 
-      <%= f.govuk_radio_buttons_fieldset(:record_type, legend: { size: 's', text: "What type of route is this?", tag: 'span'} ) do %>
+      <%= f.govuk_radio_buttons_fieldset(:record_type, legend: { size: "s", text: "What type of route is this?", tag: "span"} ) do %>
         <%= f.govuk_radio_button :record_type, :assessment_only, label: { text: "Assessment Only (AO)" }, link_errors: true %>
         <%= f.govuk_radio_button :record_type, :other, label: { text: "Other" } %>
       <% end %>
 
-      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', size:'s' }, hint: { text: 'Your internal identifier for this trainee or candidate'}, width: 20 %>
+      <%= f.govuk_text_field :trainee_id, label: { text: "Trainee ID (optional)", size: "s" }, hint: { text: "You can assign your own ID for this trainee if it'll help you find them later"}, width: 20 %>
 
       <%= f.govuk_submit %>
     <% end %>
