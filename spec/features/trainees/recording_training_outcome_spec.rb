@@ -7,7 +7,7 @@ feature "Recording a training outcome", type: :feature do
     given_i_am_authenticated
     given_a_trainee_exists
     when_i_visit_the_trainee_edit_page
-    when_click_on_record_training_outcome
+    when_i_click_on_record_training_outcome
   end
 
   scenario "choosing today records the outcome" do
@@ -49,7 +49,7 @@ feature "Recording a training outcome", type: :feature do
     edit_page.load(id: trainee.id)
   end
 
-  def when_click_on_record_training_outcome
+  def when_i_click_on_record_training_outcome
     edit_page.record_outcome.click
   end
 
@@ -63,7 +63,7 @@ feature "Recording a training outcome", type: :feature do
 
   def then_i_see_the_error_message_for(type)
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.outcome.attributes.outcome_date.#{type}"),
+      I18n.t("activemodel.errors.models.outcome_date.attributes.outcome_date_string.#{type}"),
     )
   end
 

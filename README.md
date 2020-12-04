@@ -28,7 +28,7 @@ newer versions of tools.
 ### Install GraphViz
 
 This is not essential if you just want to run the app. However, if you're
-intending to make any changed to the database schema, this is a requirement
+intending to make any changes to the database schema, this is a requirement
 for [rails-erd](https://github.com/voormedia/rails-erd).
 
 ```

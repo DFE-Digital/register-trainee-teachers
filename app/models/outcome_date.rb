@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Outcome
+class OutcomeDate
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
@@ -61,9 +61,9 @@ private
 
   def outcome_date_valid
     if outcome_date_string == "other" && [day, month, year].all?(&:blank?)
-      errors.add(:outcome_date, :blank)
+      errors.add(:outcome_date_string, :blank)
     elsif !outcome_date.is_a?(Date)
-      errors.add(:outcome_date, :invalid)
+      errors.add(:outcome_date_string, :invalid)
     end
   end
 end
