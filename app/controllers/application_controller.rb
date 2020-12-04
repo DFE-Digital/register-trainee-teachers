@@ -29,6 +29,6 @@ private
   end
 
   def authenticate
-    redirect_to sign_in_index_path unless authenticated?
+    redirect_to sign_in_path unless authenticated?
   end
 end

@@ -34,7 +34,7 @@ describe "Settings" do
     dfe_sign_in = settings[:dfe_sign_in]
 
     include_examples expected_value_test, :identifier, dfe_sign_in, "rtt"
-    include_examples expected_value_test, :issuer, dfe_sign_in, "https://test-oidc.signin.education.gov.uk/"
+    include_examples expected_value_test, :issuer, dfe_sign_in, "https://test-oidc.signin.education.gov.uk"
     include_examples expected_value_test, :profile, dfe_sign_in, "https://test-profile.signin.education.gov.uk"
     include_examples expected_value_test, :secret, dfe_sign_in, "secret required value"
   end
