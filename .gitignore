@@ -32,14 +32,17 @@ yarn-debug.log*
 .env
 *.log
 .envrc
-terraform/app_secrets.yml
 
 #terraform files
 .terraform/
 tfplan
 *.tfplan
 *.plan
-*secrets.tfvars
+**/tokens
+*secret*.tfvars
+!terraform/**/app_config.yml
+terraform/**/*.yml
+terraform/**/*.base64
 
 config/settings.local.yml
 config/settings/*.local.yml
