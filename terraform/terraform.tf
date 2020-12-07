@@ -16,15 +16,17 @@ terraform {
     }
   }
   backend azurerm {
+
   }
 }
 
 provider cloudfoundry {
-  api_url      = local.paas_api_url
-  user         = var.paas_user != "" ? var.paas_user : null
-  password     = var.paas_password != "" ? var.paas_password : null
-  sso_passcode = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
-  version      = "~> 0.12"
+  api_url           = local.paas_api_url
+  user              = var.paas_user == null ? local.infra_secrets.paas_user : var.paas_user
+  password          = var.paas_password == null ? local.infra_secrets.paas_password : var.paas_password
+  sso_passcode      = var.paas_sso_passcode
+  store_tokens_path = "./terraform/tokens"
+  version           = "~> 0.12"
 }
 
 module paas {
@@ -41,7 +43,7 @@ module paas {
   web_app_memory              = var.paas_web_app_memory
   worker_app_instances        = var.paas_worker_app_instances
   worker_app_memory           = var.paas_worker_app_memory
-  log_url                     = var.paas_log_url
+  log_url                     = local.infra_secrets.paas_log_url
   docker_credentials          = local.docker_credentials
   app_secrets_variable        = local.app_secrets
   app_config_variable         = local.app_config
@@ -49,8 +51,8 @@ module paas {
 
 #authenticate into provider
 provider statuscake {
-  username = var.statuscake_username
-  apikey   = var.statuscake_password
+  username = var.statuscake_user == null ? local.infra_secrets.statuscake_username : var.statuscake_user
+  apikey   = var.statuscake_password == null ? local.infra_secrets.statuscake_password : var.statuscake_password
 }
 # interface into statusCake module
 module statuscake {
