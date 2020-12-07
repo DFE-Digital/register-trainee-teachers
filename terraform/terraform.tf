@@ -51,8 +51,8 @@ module paas {
 
 #authenticate into provider
 provider statuscake {
-  username = var.statuscake_user == null ? local.infra_secrets.statuscake_username : var.statuscake_user
-  apikey   = var.statuscake_password == null ? local.infra_secrets.statuscake_password : var.statuscake_password
+  username = local.infra_secrets.statuscake_username
+  apikey   = local.infra_secrets.statuscake_password
 }
 # interface into statusCake module
 module statuscake {
