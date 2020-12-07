@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
 class TrnSubmissionsController < ApplicationController
-  def show
-    authorize trainee
-  end
+  before_action :authorize_trainee
 
   def create
-    authorize trainee
-
-    Dttp::BatchCreate.call(trainee: Dttp::TraineePresenter.new(trainee: trainee))
+    Dttp::CreateJob.perform_later(trainee.id)
 
     redirect_to trn_submission_path(trainee_id: trainee.id)
   end
@@ -17,5 +13,9 @@ private
 
   def trainee
     @trainee ||= Trainee.find(params[:trainee_id])
+  end
+
+  def authorize_trainee
+    authorize(trainee)
   end
 end

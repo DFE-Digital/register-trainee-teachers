@@ -3,25 +3,22 @@
 require "rails_helper"
 
 describe TrnSubmissionsController do
+  include ActiveJob::TestHelper
+
   describe "#create" do
-    let(:trainee) { build(:trainee, provider_id: provider_id) }
-    let(:user) { build(:user, provider_id: provider_id) }
-    let(:provider_id) { 25 }
-    let(:trainee_id) { 10 }
-    let(:trainee_data) { { some: "data" } }
-    let(:decorated_trainee) { instance_double(Dttp::TraineePresenter, trainee: trainee) }
+    let(:trainee) { create(:trainee) }
+    let(:user) { build(:user) }
+    let(:trainee_policy) { instance_double(TraineePolicy, create?: true) }
 
     before do
       allow(controller).to receive(:current_user).and_return(user)
-      allow(trainee).to receive(:id).and_return(trainee_id)
+      allow(TraineePolicy).to receive(:new).with(user, trainee).and_return(trainee_policy)
     end
 
-    it "passes the decorated trainee to the create service" do
-      allow(Trainee).to receive(:find).with(trainee_id.to_s).and_return(trainee)
-      expect(Dttp::TraineePresenter).to receive(:new).with(trainee: trainee).and_return(decorated_trainee)
-      expect(Dttp::BatchCreate).to receive(:call).with(trainee: decorated_trainee)
-
-      post :create, params: { trainee_id: trainee_id }
+    it "launches CreateJob" do
+      expect {
+        post :create, params: { trainee_id: trainee.id }
+      }.to have_enqueued_job(Dttp::CreateJob).with(trainee.id)
     end
   end
 end
