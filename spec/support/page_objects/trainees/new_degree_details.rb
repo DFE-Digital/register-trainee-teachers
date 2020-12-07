@@ -8,10 +8,10 @@ module PageObjects
       element :uk_degree, "#degree-uk-degree-field"
 
       element :bachelor_degree, "#degree-non-uk-degree-bachelor-degree-field"
-      element :bachelor_ordinary_degree, "#degree-non-uk-degree-bachelor-ordinary-degree-field"
-      element :bachelor_honours_degree, "#degree-non-uk-degree-bachelor-honours-degree-field"
-      element :postgraduate_certificate_postgraduate_diploma, "#degree-non-uk-degree-postgraduate-certificate-postgraduate-diploma-field"
-      element :master_s_degree_integrated_master_s_degree, "#degree-non-uk-degree-master-s-degree-integrated-master-s-degree-field"
+      element :ordinary_bachelor_degree, "#degree-non-uk-degree-ordinary-bachelor-degree-field"
+      element :bachelor_degree_with_honours, "#degree-non-uk-degree-bachelor-degree-with-honours-field"
+      element :postgraduate_certificate_or_postgraduate_diploma, "#degree-non-uk-degree-postgraduate-certificate-or-postgraduate-diploma-field"
+      element :master_s_degree_or_integrated_master_s_degree, "#degree-non-uk-degree-master-s-degree-or-integrated-master-s-degree-field"
       element :non_naric, "#degree-non-uk-degree-non-naric-field"
 
       element :subject, "#degree-subject-field"

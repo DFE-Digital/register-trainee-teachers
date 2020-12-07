@@ -2,15 +2,28 @@
   <%= f.hidden_field :locale_code, value: "non_uk" %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">Non-UK Degree Details</h1>
+  <h1 class="govuk-heading-l">Degree details</h1>
 
   <%= render_component FormComponents::Autocomplete::View.new(
-    form_field: f.govuk_collection_select(:country, countries_options, :name,
-                                          :name, label: { text: "Country where the degree was obtained", size: 's' }),
+    form_field: f.govuk_collection_select(:subject, subjects_options,
+                                          :name, :name, label: { text: 'Degree subject', size: 's' },
+                                          hint: { text: 'Search for the closest matching subject' }),
     html_attributes: {
       "data-show-all-values" => false,
     }
   ) %>
+
+  <%= render_component FormComponents::Autocomplete::View.new(
+    form_field: f.govuk_collection_select(:country, countries_options, :name,
+                                          :name, label: { text: "Where is the degree institution based?", size: 's' }),
+    html_attributes: {
+      "data-show-all-values" => false,
+    }
+  ) %>
+
+  <%= f.govuk_text_field :graduation_year,
+        label: { text: "Graduation year", size: 's' },
+        width: "one-quarter"  %>
 
   <div class="govuk-form-group">
     <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the NARIC comparable UK degree", size: 's'} do %>
@@ -22,19 +35,6 @@
       <%= f.govuk_radio_button :non_uk_degree, :non_naric, label: { text: "NARIC not provided"} %>
     <% end %>
   </div>
-
-  <%= render_component FormComponents::Autocomplete::View.new(
-    form_field: f.govuk_collection_select(:subject, subjects_options,
-                                          :name, :name, label: { text: 'Degree subject', size: 's' },
-                                          hint: { text: 'Search for the closest matching subject' }),
-    html_attributes: {
-      "data-show-all-values" => false,
-    }
-  ) %>
-
-  <%= f.govuk_text_field :graduation_year,
-        label: { text: "Graduation Year", size: 's' },
-        width: "one-quarter"  %>
 
 	<%= f.govuk_submit %>
 <% end %>
