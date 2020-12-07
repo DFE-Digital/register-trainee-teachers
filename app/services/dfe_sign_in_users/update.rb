@@ -2,15 +2,11 @@
 
 module DfESignInUsers
   class Update
+    include ServicePattern
+
     attr_reader :user, :successful
 
     alias_method :successful?, :successful
-
-    class << self
-      def call(**args)
-        new(**args).call
-      end
-    end
 
     def initialize(user:, dfe_sign_in_user:)
       @user = user

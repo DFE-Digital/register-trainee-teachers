@@ -6,7 +6,7 @@ module Diversities
   module EthnicGroups
     describe Update do
       describe ".call" do
-        let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
+        let(:service) { described_class.call(trainee: trainee, attributes: attributes) }
 
         context "when ethnic group attribute is valid" do
           let(:trainee) { create(:trainee) }

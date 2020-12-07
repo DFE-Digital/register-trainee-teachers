@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ServicePattern
   def self.included(base)
     base.extend ClassMethods
@@ -14,7 +16,7 @@ module ServicePattern
     def call(**args)
       return new.call if args.empty?
 
-      new(args).call
+      new(**args).call
     end
   end
 end

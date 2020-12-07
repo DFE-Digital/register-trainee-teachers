@@ -3,15 +3,11 @@
 module Diversities
   module EthnicGroups
     class Update
+      include ServicePattern
+
       attr_reader :trainee, :ethnic_group, :successful
 
       alias_method :successful?, :successful
-
-      class << self
-        def call(**args)
-          new(**args).call
-        end
-      end
 
       def initialize(trainee:, attributes: {})
         @trainee = trainee

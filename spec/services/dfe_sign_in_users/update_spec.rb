@@ -5,7 +5,7 @@ require "rails_helper"
 module DfESignInUsers
   describe Update do
     describe ".call" do
-      let(:service) { described_class.new(user: user, dfe_sign_in_user: dfe_sign_in_user) }
+      let(:service) { described_class.call(user: user, dfe_sign_in_user: dfe_sign_in_user) }
 
       context "when user are valid" do
         let(:user) { create(:user) }

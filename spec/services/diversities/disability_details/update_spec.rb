@@ -8,7 +8,7 @@ module Diversities
       describe ".call" do
         let(:trainee) { create(:trainee) }
         let(:disability) { create(:disability) }
-        let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
+        let(:service) { described_class.call(trainee: trainee, attributes: attributes) }
 
         before(:each) do
           service.call

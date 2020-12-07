@@ -128,6 +128,6 @@ feature "submit for TRN" do
   end
 
   def stub_progress_service(completed: false)
-    expect(Trns::SubmissionChecker).to receive(:call).with(trainee).and_return(double(successful?: completed))
+    expect(Trns::SubmissionChecker).to receive(:call).with(trainee: trainee).and_return(double(successful?: completed))
   end
 end
