@@ -10,8 +10,8 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
       @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(trainee: Trainee.new(id: 1)))
     end
 
-    it "renders blank rows for address, email, telephone" do
-      expect(component).to have_selector(".govuk-summary-list__row", count: 3)
+    it "renders blank rows for address, email" do
+      expect(component).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
     it "tells the user that no data has been entered" do
@@ -27,8 +27,8 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
       @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(trainee: mock_trainee))
     end
 
-    it "renders rows for address, email, telephone" do
-      expect(component).to have_selector(".govuk-summary-list__row", count: 3)
+    it "renders rows for address, email" do
+      expect(component).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
     it "renders the address" do
@@ -41,11 +41,6 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
         ].join)
     end
 
-    it "renders the phone number" do
-      expect(component.find(".govuk-summary-list__row.phone-number .govuk-summary-list__value"))
-        .to have_text(mock_trainee.phone_number)
-    end
-
     it "renders the email address" do
       expect(component.find(".govuk-summary-list__row.email-address .govuk-summary-list__value"))
         .to have_text(mock_trainee.email)
@@ -55,23 +50,17 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
   context "non UK based trainee" do
     before(:all) do
       mock_trainee.locale_code = "non_uk"
-      mock_trainee.phone_number = "+33 (0)8 92 70 12 39"
       mock_trainee.email = "visit@paris.com"
       @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(trainee: mock_trainee))
     end
 
-    it "renders rows for address, email, telephone" do
-      expect(component).to have_selector(".govuk-summary-list__row", count: 3)
+    it "renders rows for address, email" do
+      expect(component).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
     it "renders the address" do
       expect(component.find(".govuk-summary-list__row.address .govuk-summary-list__value"))
         .to have_text(mock_trainee.international_address.split(/\r\n+/).join)
-    end
-
-    it "renders the phone number" do
-      expect(component.find(".govuk-summary-list__row.phone-number .govuk-summary-list__value"))
-        .to have_text(mock_trainee.phone_number)
     end
 
     it "renders the email address" do
@@ -88,8 +77,7 @@ private
                                   address_line_two: "Westminster",
                                   town_city: "London",
                                   postcode: "EC1 9CP",
-                                  international_address: "Champ de Mars\r\n5 Avenue Anatole France\r\n75007 Paris\r\nFrance",
-                                  phone_number: "0207 123 4567",
+                                  international_address: "Champ de Mars\r\n5 Avenue Anatole",
                                   email: "Paddington@bear.com")
   end
 end

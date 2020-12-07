@@ -24,7 +24,6 @@ module Dttp
         "birthdate" => date_of_birth.to_s,
         "emailaddress1" => email,
         "gendercode" => gender_code,
-        "mobilephone" => phone_number,
         "dfe_EthnicityId@odata.bind" => "/dfe_ethnicities(#{dttp_ethnicity_id})",
         "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{dttp_disability_id})",
         "parentcustomerid_account@odata.bind" => "/accounts(#{provider.dttp_id})",

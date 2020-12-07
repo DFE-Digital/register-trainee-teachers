@@ -127,8 +127,6 @@ en:
   activemodel:
     errors:
       validators:
-        phone_number:
-          invalid: "You must enter a valid telephone number"
         postcode:
           invalid: "You must enter a valid postcode (for example, BN1 1AA)"
       models:
@@ -156,8 +154,6 @@ en:
               blank: "You must enter a town or city"
             postcode:
               blank: "You must enter a postcode"
-            phone_number:
-              blank: "You must enter a telephone number"
             email:
               blank: "You must enter an email address"
               invalid: "You must enter an email address in the correct format, like name@example.com"

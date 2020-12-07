@@ -30,7 +30,6 @@ FactoryBot.define do
     postcode { Faker::Address.postcode }
     international_address { nil }
     locale_code { :uk }
-    phone_number { [Faker::PhoneNumber.phone_number, Faker::PhoneNumber.cell_phone].sample }
     email { "#{first_names}.#{last_name}@example.com" }
 
     start_date { Time.zone.now }
