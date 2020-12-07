@@ -1,6 +1,6 @@
 # PaaS
-paas_sso_passcode                = ""
 paas_app_environment             = "staging"
+env_config                       = "staging"
 paas_space_name                  = "bat-staging"
 paas_postgres_service_plan       = "tiny-unencrypted-11"
 paas_redis_service_plan          = "tiny-4_x"
