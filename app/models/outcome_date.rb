@@ -20,6 +20,7 @@ class OutcomeDate
 
   def fields
     {
+      outcome_date_string: rehydrate_outcome_date_string,
       day: trainee.outcome_date&.day,
       month: trainee.outcome_date&.month,
       year: trainee.outcome_date&.year,
@@ -35,6 +36,19 @@ class OutcomeDate
   end
 
 private
+
+  def rehydrate_outcome_date_string
+    return unless trainee.outcome_date
+
+    case trainee.outcome_date
+    when Time.zone.today
+      "today"
+    when Time.zone.yesterday
+      "yesterday"
+    else
+      "other"
+    end
+  end
 
   def update_trainee
     trainee.assign_attributes({ outcome_date: outcome_date }) if errors.empty?
