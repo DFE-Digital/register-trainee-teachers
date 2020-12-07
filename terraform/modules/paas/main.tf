@@ -61,6 +61,7 @@ resource cloudfoundry_app worker_app {
   space             = data.cloudfoundry_space.space.id
   timeout           = var.app_start_timeout
   environment       = local.app_environment
+  docker_credentials         = var.docker_credentials
 
   service_binding {
     service_instance = cloudfoundry_service_instance.redis_instance.id
@@ -68,6 +69,9 @@ resource cloudfoundry_app worker_app {
 
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres_instance.id
+  }
+  service_binding {
+    service_instance = cloudfoundry_user_provided_service.logging.id
   }
 }
 
