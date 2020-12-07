@@ -1,6 +1,6 @@
 # PaaS
-paas_sso_passcode                = ""
 paas_app_environment             = "qa"
+env_config                       = "qa"
 paas_space_name                  = "bat-qa"
 paas_postgres_service_plan       = "tiny-unencrypted-11"
 paas_redis_service_plan          = "tiny-4_x"
