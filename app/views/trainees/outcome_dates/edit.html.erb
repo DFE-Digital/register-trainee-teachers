@@ -1,0 +1,31 @@
+<%= render_component PageTitle::View.new(title: "trainees.outcome_date.edit") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: edit_trainee_path(@trainee)
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l">
+      <%= trainee_name(@trainee) %>
+    </span>
+    <%= form_for(@outcome, url: trainee_outcome_date_path(@trainee), local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_radio_buttons_fieldset(:outcome_date_string, legend: { text: "When did they meet the standards?", tag: "h1", size: "l" }, classes: "outcome-date") do %>
+        <%= f.govuk_radio_button :outcome_date_string, :today, label: { text: "Today" }, link_errors: true %>
+        <%= f.govuk_radio_button :outcome_date_string, :yesterday, label: { text: "Yesterday" } %>
+        <%= f.govuk_radio_button :outcome_date_string, :other, label: { text: "On another day" } do %>
+          <%= f.govuk_date_field :outcome_date, legend: { text: 'On what date?', size: 's' }, hint: { text: "For example, 3 12 2020" } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", edit_trainee_path(@trainee)) %></p>

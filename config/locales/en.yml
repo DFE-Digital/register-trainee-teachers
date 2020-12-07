@@ -55,6 +55,8 @@ en:
         degrees:
           edit: Degree details
           new: Add undergraduate degree
+        outcome_date:
+          edit: When did they meet the standards?
         personal_details:
           edit: Trainee personal details
         trainee_ids:
@@ -200,6 +202,11 @@ en:
             programme_start_date:
               blank: "You must enter programme start date"
               invalid: "You must enter a valid programme start date"
+        outcome_date:
+          attributes:
+            outcome_date_string:
+              blank: "You must enter an outcome date"
+              invalid: "You must enter a valid outcome date"
         degree_detail:
           attributes:
             degree_ids:
