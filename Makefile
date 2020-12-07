@@ -15,20 +15,21 @@ staging:
 	$(eval env_config=staging)
 
 
-prod:
-	$(eval env=prod)
-	$(eval env_config=prod)
+production:
+	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+	$(eval env=production)
+	$(eval env_config=production)
 
-deploy-plan: terraform_init
+deploy-plan: terraform-init
 	terraform plan -var-file=terraform/workspace-variables/$(env_config).tfvars terraform
 
-deploy: terraform_init
+deploy: terraform-init
 	terraform apply -var-file=terraform/workspace-variables/$(env_config).tfvars -auto-approve terraform
 
-destroy: terraform_init
+destroy: terraform-init
 	terraform destroy -var-file=terraform/workspace-variables/$(env_config).tfvars terraform
 
-terraform_init:
+terraform-init:
 	terraform init -reconfigure -backend-config=terraform/workspace-variables/$(env_config)_backend.tfvars $(backend_key) terraform
 	$(if $(tag), , $(error Missing environment variable "tag"))
 	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teacher-data:$(tag))
