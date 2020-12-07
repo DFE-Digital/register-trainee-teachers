@@ -56,6 +56,7 @@ en:
           new: Add undergraduate details
         outcome_date:
           edit: When did they meet the standards?
+          confirm: Check outcome details
         personal_details:
           edit: Trainee personal details
         trainee_ids:
