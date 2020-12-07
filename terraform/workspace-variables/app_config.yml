@@ -3,18 +3,20 @@ default: &default
 
 qa:
   <<: *default
-  AUTHORISED_HOSTS: "register-qa.london.cloudapps.digital"
   RAILS_ENV: qa
   RACK_ENV: qa
 
 staging:
   <<: *default
-  AUTHORISED_HOSTS: "register-staging.london.cloudapps.digital"
   RAILS_ENV: staging
   RACK_ENV: staging
 
 production:
   <<: *default
-  AUTHORISED_HOSTS: "register-production.london.cloudapps.digital"
   RAILS_ENV: production
   RACK_ENV: production
+
+review:
+  <<: *default
+  RAILS_ENV: review
+  RACK_ENV: review
