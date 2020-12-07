@@ -30,7 +30,7 @@ private
         "urls" => { "website" => nil },
       },
       "credentials" => {
-        "id_token" => "",
+        "id_token" => "id_token",
         "token" => "DFE_SIGN_IN_TOKEN",
         "refresh_token" => nil,
         "expires_in" => 3600,

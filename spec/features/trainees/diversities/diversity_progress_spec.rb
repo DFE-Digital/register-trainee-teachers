@@ -15,7 +15,7 @@ feature "completing the diversity section", type: :feature do
 
   scenario "renders an 'in progress' status when diversity information partially provided" do
     given_valid_diversity_information
-    when_i_visit_the_diversity_section
+    when_i_visit_the_diversity_confirmation_page
     and_unconfirm_my_details
     and_i_visit_the_summary_page
     then_the_diversity_section_should_be(:in_progress)
@@ -25,12 +25,6 @@ feature "completing the diversity section", type: :feature do
     given_valid_diversity_information
     and_i_visit_the_summary_page
     then_the_diversity_section_should_be(:completed)
-  end
-
-  scenario "redirects to confirm page when section is completed" do
-    given_valid_diversity_information
-    when_i_visit_the_diversity_section
-    then_i_am_redirected_to_the_confirm_page
   end
 
 private
@@ -55,10 +49,9 @@ private
     expect(@summary_page.diversity_section.status.text).to eq(Progress::STATUSES[status])
   end
 
-  def when_i_visit_the_diversity_section
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    @summary_page.load(id: @trainee.id)
-    @summary_page.diversity_section.link.click
+  def when_i_visit_the_diversity_confirmation_page
+    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
+    @confirm_page.load(id: @trainee.id, section: "information-disclosed")
   end
 
   def then_i_am_redirected_to_the_confirm_page

@@ -35,7 +35,7 @@ module Trainees
           end
 
           it "renders the full name" do
-            expected_name = "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}".upcase
+            expected_name = "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}"
 
             expect(component.find(".govuk-summary-list__row.full-name .govuk-summary-list__value"))
               .to have_text(expected_name)

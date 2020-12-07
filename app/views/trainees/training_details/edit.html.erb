@@ -1,28 +1,14 @@
 <%= render_component PageTitle::View.new(title: "trainees.training_details.edit") %>
 
-<h2 class="govuk-heading-l">Add training details</h2>
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: trainee_path(@trainee)
+  ) %>
+<% end %>
 
 <%= form_with model: @trainee, local: true do |f| %>
+  <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', tag: 'h1', size: 'l' }, hint: { text: 'Your internal identifier for this trainee or candidate'}, width: 20 %>
 
-  <%= f.govuk_date_field :start_date, legend: { text: 'Start date' } %>
-
-  <% full_time_part_time_options = [OpenStruct.new(name: "Full time", value: "full_time"),
-                             OpenStruct.new(name: "Part time", value: "part_time")] %>
-
-  <%= f.govuk_collection_radio_buttons :full_time_part_time,
-      full_time_part_time_options,
-      :value,
-      :name,
-      legend: { text: 'Full time/Part time' } %>
-
-  <% teaching_scholars_options = [OpenStruct.new(name: "No", value: false),
-                               OpenStruct.new(name: "Yes", value: true)] %>
-
-  <%= f.govuk_collection_radio_buttons :teaching_scholars,
-        teaching_scholars_options,
-        :value,
-        :name,
-        legend: { text: 'Teaching scholars' } %>
-
-  <%= f.govuk_submit "Add training details to training record" %>
+  <%= f.govuk_submit "Continue" %>
 <% end %>

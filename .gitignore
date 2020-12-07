@@ -48,3 +48,5 @@ config/environments/*.local.yml
 # Localhost ssl related
 config/localhost/https/localhost.key
 config/localhost/https/localhost.crt
+.nvmrc
+.ruby-version

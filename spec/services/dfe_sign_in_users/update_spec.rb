@@ -35,7 +35,7 @@ module DfESignInUsers
         end
       end
 
-      context "when programme details are invalid" do
+      context "when the user's details are invalid" do
         let(:user) { create(:user) }
 
         let(:dfe_sign_in_user) do

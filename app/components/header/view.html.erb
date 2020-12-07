@@ -23,12 +23,7 @@
         <nav>
           <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top Level Navigation">
             <li class="govuk-header__navigation-item">
-              <%# TODO Update the path once it has been created %>
-              <%= govuk_link_to "Your account", "#2", class: "govuk-header__link" %>
-            </li>
-            <li class="govuk-header__navigation-item">
-              <%# TODO Update the path once it has been created %>
-              <%= govuk_link_to "Sign out", "#2", class: "govuk-header__link" %>
+              <%= govuk_link_to "Sign out", sign_out_path, class: "govuk-header__link" %>
             </li>
           </ul>
         </nav>

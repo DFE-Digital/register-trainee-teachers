@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-describe TrnSubmissionsHelper do
-  include TrnSubmissionsHelper
+describe TraineeHelper do
+  include TraineeHelper
 
   describe "#trainee_name" do
     let(:trainee) { build(:trainee) }

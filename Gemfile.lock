@@ -272,7 +272,7 @@ GEM
       ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
-    rails_semantic_logger (4.4.5)
+    rails_semantic_logger (4.4.6)
       rack
       railties (>= 3.2)
       semantic_logger (~> 4.4)
@@ -463,7 +463,7 @@ DEPENDENCIES
   pundit
   rails (~> 6.0.3)
   rails-erd
-  rails_semantic_logger (~> 4.4)
+  rails_semantic_logger (= 4.4.6)
   request_store (~> 1.5)
   rspec-rails (~> 4.0.1)
   rubocop-govuk

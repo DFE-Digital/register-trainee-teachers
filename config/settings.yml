@@ -5,6 +5,7 @@ base_url: https://localhost:5000
 
 basic_auth_required: true
 dttp:
+  back_office_url: https://dttp-dev.crm4.dynamics.com/
   client_id: "application-registration-client-id-from-env"
   scope: "https://dttp-dev.crm4.dynamics.com/.default"
   client_secret: "client-secret-from-env"
@@ -22,7 +23,7 @@ dfe_sign_in:
   # Our service name
   identifier: rtt
   # URL that the users are redirected to for signing in
-  issuer: https://test-oidc.signin.education.gov.uk/
+  issuer: https://test-oidc.signin.education.gov.uk
   # URL of the users profile
   profile: https://test-profile.signin.education.gov.uk
   # This value must be set otherwise sign in will fail

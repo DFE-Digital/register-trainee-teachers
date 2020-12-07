@@ -2,7 +2,7 @@
 
 module Trainees
   module Diversity
-    class EthnicGroupsController < BaseController
+    class EthnicGroupsController < ApplicationController
       def edit
         authorize trainee
         @ethnic_group = Diversities::EthnicGroup.new(trainee: trainee)

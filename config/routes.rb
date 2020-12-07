@@ -20,12 +20,16 @@ Rails.application.routes.draw do
 
   get "/trainees/not-supported-route", to: "trainees/not_supported_routes#index"
 
+  get "/sign-in" => "sign_in#index"
+  get "/sign-out" => "sign_out#index"
+
   if FeatureService.enabled?("use_dfe_sign_in")
     get "/auth/dfe/callback" => "sessions#callback"
-    get "/auth/dfe/sign-out" => "sessions#redirect_after_dsi_signout"
+    get "/auth/dfe/sign-out" => "sessions#signout"
   else
     get "/personas", to: "personas#index"
-    post "/auth/developer/callback", to: "sessions#bypass_callback"
+    get "/auth/developer/sign-out", to: "sessions#signout"
+    post "/auth/developer/callback", to: "sessions#callback"
   end
 
   concern :confirmable do
@@ -67,15 +71,13 @@ Rails.application.routes.draw do
     end
 
     member do
-      get "training-details", to: "trainees/training_details#edit"
+      get "training-details", to: "trainees/training_details#edit", as: :training_details
       get "course-details", to: "trainees/course_details#edit"
       get "check-details", to: "trainees/check_details#show"
     end
   end
 
   resources :trn_submissions, only: %i[create show], param: :trainee_id
-
-  resources :sign_in, path: "/sign-in", only: [:index]
 
   root to: "pages#show", defaults: { page: "start" }
 end

@@ -31,16 +31,6 @@ feature "programme details", type: :feature do
       then_i_am_redirected_to_the_summary_page
       and_the_section_should_be(:completed)
     end
-
-    scenario "redirects to confirm page when section is completed" do
-      when_i_visit_the_programme_details_page
-      and_i_enter_valid_parameters
-      and_i_submit_the_form
-      and_i_confirm_my_details(section: programme_details_section)
-      then_i_am_redirected_to_the_summary_page
-      when_i_visit_the_programme_details_page
-      then_i_am_redirected_to_the_confirm_page
-    end
   end
 
   describe "editing the programme details" do

@@ -18,7 +18,6 @@ class ContactDetail
     *MANDATORY_UK_ADDRESS_FIELDS,
     "address_line_two",
     "international_address",
-    "phone_number",
     "email",
   ].freeze
 
@@ -30,8 +29,6 @@ class ContactDetail
   validate :international_address_not_empty
   validate :uk_address_must_not_be_empty
   validates :postcode, postcode: true, if: ->(attr) { attr.postcode.present? }
-  validates :phone_number, presence: true
-  validates :phone_number, phone: true
   validates :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 

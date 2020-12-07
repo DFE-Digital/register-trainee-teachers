@@ -3,6 +3,7 @@
 require "rails_helper"
 
 feature "submit for TRN" do
+  include TraineeHelper
   background { given_i_am_authenticated }
 
   before do
@@ -29,6 +30,13 @@ feature "submit for TRN" do
         then_i_review_the_trainee_data
         and_i_click_the_submit_for_trn_button
         and_i_am_redirected_to_the_success_page
+      end
+
+      scenario "displays trainee name" do
+        when_i_am_viewing_the_summary_page
+        and_i_want_to_review_record_before_submitting_for_trn
+        then_i_review_the_trainee_data
+        expect(page).to have_content(trainee_name(@trainee))
       end
     end
 

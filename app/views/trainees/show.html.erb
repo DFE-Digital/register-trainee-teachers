@@ -21,7 +21,7 @@
       component.slot(
         :row,
         task_name: 'Training details',
-        path: "",
+        path: training_details_trainee_path(@trainee),
         status: 'completed'
       )
 
@@ -93,4 +93,4 @@
   <%= govuk_link_to "Review this record", check_details_trainee_path(@trainee), {class: "govuk-button", id: "check-details"} %>
 <% end %>
 
-<p class="govuk-body"><%= govuk_link_to("Return to this draft record later", "#") %></p>
+<p class="govuk-body"><%= govuk_link_to("Return to this draft record later", trainees_path) %></p>
