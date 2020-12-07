@@ -10,7 +10,6 @@ module PageObjects
       element :address_line_two, "#contact-detail-address-line-two-field"
       element :town_city, "#contact-detail-town-city-field"
       element :postcode, "#contact-detail-postcode-field"
-      element :phone_number, "#contact-detail-phone-number-field"
       element :email, "#contact-detail-email-field"
       element :international_address, "#contact-detail-international-address-field"
       element :submit_button, "input[name='commit']"

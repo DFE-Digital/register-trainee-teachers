@@ -25,12 +25,6 @@ module Trainees
           trainee.email
         end
 
-        def phone_number
-          return @not_provided_copy if trainee.phone_number.blank?
-
-          trainee.phone_number
-        end
-
       private
 
         def uk_address

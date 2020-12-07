@@ -80,7 +80,6 @@ module Dttp
             "birthdate" => trainee.date_of_birth.to_s,
             "emailaddress1" => trainee.email,
             "gendercode" => 1,
-            "mobilephone" => trainee.phone_number,
             "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
           })
         end

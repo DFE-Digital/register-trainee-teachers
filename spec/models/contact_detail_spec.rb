@@ -9,7 +9,6 @@ describe ContactDetail do
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:locale_code) }
-    it { is_expected.to validate_presence_of(:phone_number) }
     it { is_expected.to validate_presence_of(:email) }
 
     context "international address validations" do
