@@ -7,7 +7,7 @@ module Dttp
 
     delegate_missing_to :trainee
 
-    attr_reader :trainee, :user
+    attr_reader :trainee
 
     def initialize(trainee:)
       @trainee = trainee
@@ -28,6 +28,7 @@ module Dttp
         "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{dttp_disability_id})",
         "parentcustomerid_account@odata.bind" => "/accounts(#{provider.dttp_id})",
         "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
+        "dfe_trnassessmentdate" => today_iso_time,
       }
     end
 
@@ -43,6 +44,8 @@ module Dttp
         "dfe_programmestartdate" => programme_start_date.in_time_zone.iso8601,
         "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_course_phase_id})",
         "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_id})",
+        "dfe_sendforsiregistration" => true,
+        "dfe_sendforregistrationdate" => today_iso_time,
       }
     end
 
@@ -59,6 +62,10 @@ module Dttp
         "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_id})",
         "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{dttp_degree_country_id})",
       }
+    end
+
+    def today_iso_time
+      Time.zone.now.iso8601
     end
 
     def gender_code
