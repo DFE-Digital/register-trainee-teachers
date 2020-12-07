@@ -5,6 +5,7 @@ base_url: https://localhost:5000
 
 basic_auth_required: true
 dttp:
+  back_office_url: https://dttp-dev.crm4.dynamics.com/
   client_id: "application-registration-client-id-from-env"
   scope: "https://dttp-dev.crm4.dynamics.com/.default"
   client_secret: "client-secret-from-env"

@@ -23,8 +23,7 @@
         <%= govuk_link_to "go back and change your answer", new_trainee_path  %>
       </li>
       <li>
-        <%#= TODO Need to find out and add DTTP link %>
-        <a class="govuk-link" href="#">use DTTP to register a different route</a>
+        <%= govuk_link_to "use DTTP to register a different route", Settings.dttp.back_office_url  %>
       </li>
     </ul>
   </div>
