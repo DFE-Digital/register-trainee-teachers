@@ -1,7 +1,8 @@
 @import "./govuk_style_setup";
 @import "~govuk-frontend/govuk/all";
 
-.trn-submission-success-panel {
+.trn-submission-success-panel,
+.qts-submission-success-panel {
   .govuk-panel__title {
     @include govuk-font(36, bold);
   }

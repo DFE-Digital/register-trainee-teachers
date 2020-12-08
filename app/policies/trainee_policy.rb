@@ -29,6 +29,10 @@ class TraineePolicy
     user && user.provider_id == trainee.provider_id
   end
 
+  def recommended?
+    user && user.provider_id == trainee.provider_id
+  end
+
   alias_method :create?, :show?
   alias_method :update?, :show?
   alias_method :edit?, :show?
