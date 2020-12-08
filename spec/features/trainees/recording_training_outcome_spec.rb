@@ -90,6 +90,6 @@ feature "Recording a training outcome", type: :feature do
   end
 
   def confirm_page
-    @confirm_page ||= PageObjects::Trainees::ConfirmOutcomeDate.new
+    @confirm_page ||= PageObjects::Trainees::ConfirmOutcomeDetails.new
   end
 end

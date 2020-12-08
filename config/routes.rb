@@ -69,10 +69,10 @@ Rails.application.routes.draw do
         resource :disability_detail, concerns: :confirmable, only: %i[edit update], path: "/disabilities"
       end
 
-      resource :outcome_date, only: %i[edit update], path: "/outcome-date" do
-        member do
-          get "confirm", to: "outcome_dates#confirm"
-        end
+      resource :outcome_details, only: [], path: "outcome-details" do
+        get "confirm"
+        get "recommended"
+        resource :outcome_date, only: %i[edit update], path: "/outcome-date"
       end
     end
 
