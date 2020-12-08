@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       redirect_to trainees_path
     else
       DfESignInUser.end_session!(session)
-      redirect_to sign_in_path
+      redirect_to sign_in_user_not_found_path
     end
   end
 

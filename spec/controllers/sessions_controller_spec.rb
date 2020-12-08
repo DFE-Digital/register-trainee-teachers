@@ -34,9 +34,9 @@ describe SessionsController, type: :controller do
         expect(session[:dfe_sign_in_user]).to be_nil
       end
 
-      it "redirects to the sign in page" do
+      it "redirects to the sign in user not found page" do
         request_callback
-        expect(response).to redirect_to(sign_in_path)
+        expect(response).to redirect_to(sign_in_user_not_found_path)
       end
 
       describe "save the new user", "feature_allow_user_creation": true do
