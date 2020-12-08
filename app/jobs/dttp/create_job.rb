@@ -5,8 +5,8 @@ module Dttp
     queue_as :default
     retry_on Dttp::BatchRequest::Error
 
-    def perform(trainee_id)
-      Dttp::BatchCreate.call(trainee: Trainee.find(trainee_id))
+    def perform(trainee_id, trainee_creator_dttp_id)
+      Dttp::BatchCreate.call(trainee: Trainee.find(trainee_id), trainee_creator_dttp_id: trainee_creator_dttp_id)
     end
   end
 end
