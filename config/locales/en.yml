@@ -140,6 +140,8 @@ en:
               blank: "You must enter a last name"
             date_of_birth:
               blank: "You must enter a date of birth"
+              invalid: "You must enter a valid date"
+              future: "You must enter a date of birth that is in the past, for example 31 3 1980"
             gender:
               blank: "You must select a gender"
             nationality_ids:
