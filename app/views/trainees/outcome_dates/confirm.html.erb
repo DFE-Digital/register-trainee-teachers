@@ -1,0 +1,26 @@
+<%= render_component PageTitle::View.new(title: "trainees.outcome_date.confirm") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render_component GovukComponent::BackLink.new(
+    text: 'Back',
+    href: edit_trainee_outcome_date_path(@trainee)
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l">
+      <%= trainee_name(@trainee) %>
+    </span>
+    <h1 class="govuk-heading-l">Check outcome details</h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render_component Trainees::OutcomeDetails::View.new(@trainee) %>
+    <%= govuk_link_to "Recommend for QTS", edit_trainee_path(@trainee), class: "govuk-button" %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", edit_trainee_path(@trainee)) %></p>

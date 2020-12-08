@@ -19,10 +19,14 @@ module Trainees
       @outcome.assign_attributes(trainee_params)
 
       if @outcome.save
-        redirect_to edit_trainee_path(trainee)
+        redirect_to confirm_trainee_outcome_date_path(trainee)
       else
         render :edit
       end
+    end
+
+    def confirm
+      authorize trainee
     end
 
   private
