@@ -64,6 +64,11 @@ FactoryBot.define do
     trait :diversity_not_disclosed do
       diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
     end
+
+    trait :with_placement_assignment do
+      placement_assignment_dttp_id { SecureRandom.uuid }
+      outcome_date { Faker::Date.in_date_period }
+    end
   end
 end
 
