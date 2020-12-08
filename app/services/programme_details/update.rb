@@ -2,15 +2,11 @@
 
 module ProgrammeDetails
   class Update
+    include ServicePattern
+
     attr_reader :trainee, :programme_detail, :successful
 
     alias_method :successful?, :successful
-
-    class << self
-      def call(**args)
-        new(**args).call
-      end
-    end
 
     def initialize(trainee:, attributes: {})
       @trainee = trainee

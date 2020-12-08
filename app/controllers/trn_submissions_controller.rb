@@ -8,7 +8,7 @@ class TrnSubmissionsController < ApplicationController
   def create
     authorize trainee
 
-    Dttp::Contact::Create.call(trainee: Dttp::TraineePresenter.new(trainee: trainee))
+    Dttp::BatchCreate.call(trainee: Dttp::TraineePresenter.new(trainee: trainee))
 
     redirect_to trn_submission_path(trainee_id: trainee.id)
   end

@@ -15,6 +15,7 @@ module Dttp
       let(:dttp_degree_institution_entity_id) { SecureRandom.uuid }
       let(:dttp_degree_grade_entity_id) { SecureRandom.uuid }
       let(:dttp_country_entity_id) { SecureRandom.uuid }
+      let(:contact_change_set_id) { SecureRandom.uuid }
 
       before do
         trainee.degrees << degree
@@ -37,9 +38,9 @@ module Dttp
         let(:degree) { create(:degree, :uk_degree_with_details) }
 
         it "returns a hash with all the UK specific placement assignment fields " do
-          expect(subject.placement_assignment_params).to eq({
+          expect(subject.placement_assignment_params(contact_change_set_id)).to eq({
             "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
-            "dfe_ContactId@odata.bind" => "/contacts(#{trainee.dttp_id})",
+            "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
             "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
             "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_entity_id})",
             "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
@@ -53,9 +54,9 @@ module Dttp
         let(:degree) { create(:degree, :non_uk_degree_with_details) }
 
         it "returns a hash with all the Non-UK specific placement assignment fields" do
-          expect(subject.placement_assignment_params).to eq({
+          expect(subject.placement_assignment_params(contact_change_set_id)).to eq({
             "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
-            "dfe_ContactId@odata.bind" => "/contacts(#{trainee.dttp_id})",
+            "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
             "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
             "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_entity_id})",
             "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",

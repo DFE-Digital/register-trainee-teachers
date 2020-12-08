@@ -8,19 +8,13 @@ feature "submit for TRN" do
 
   before do
     stub_microsoft_oauth_success
-    stub_request(:post, "#{Settings.dttp.api_base_url}/contacts").to_return(
-      body: "",
-      headers: {
-        "OData-Version" => "4.0",
-        "OData-EntityId" => "https://dttp-dev.api.crm4.dynamics.com/api/data/v9.1/contacts(60f77a42-5f0e-e611-80e0-00155da84c03)",
-      },
-    )
+    stub_request(:post, "#{Dttp::Client.base_uri}/$batch").to_return(body: "/contacts#{SecureRandom.uuid}")
   end
 
   describe "submission" do
     context "when all sections are completed" do
       before do
-        given_a_trainee_exists
+        given_a_trainee_exists(:with_programme_details, degrees: [create(:degree, :uk_degree_with_details)])
         stub_progress_service(completed: true)
       end
 
@@ -134,6 +128,6 @@ feature "submit for TRN" do
   end
 
   def stub_progress_service(completed: false)
-    expect(Trns::SubmissionChecker).to receive(:call).with(trainee).and_return(double(successful?: completed))
+    expect(Trns::SubmissionChecker).to receive(:call).with(trainee: trainee).and_return(double(successful?: completed))
   end
 end

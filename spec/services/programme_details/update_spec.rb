@@ -5,7 +5,7 @@ require "rails_helper"
 module ProgrammeDetails
   describe Update do
     describe ".call" do
-      let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
+      let(:service) { described_class.call(trainee: trainee, attributes: attributes) }
 
       context "when programme details are valid" do
         let(:trainee) { create(:trainee) }

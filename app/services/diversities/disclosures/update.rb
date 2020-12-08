@@ -3,15 +3,11 @@
 module Diversities
   module Disclosures
     class Update
+      include ServicePattern
+
       attr_reader :trainee, :disclosure, :successful
 
       alias_method :successful?, :successful
-
-      class << self
-        def call(**args)
-          new(**args).call
-        end
-      end
 
       def initialize(trainee:, attributes: {})
         @trainee = trainee

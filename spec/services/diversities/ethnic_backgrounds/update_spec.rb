@@ -7,7 +7,7 @@ module Diversities
     describe Update do
       describe ".call" do
         let(:trainee) { create(:trainee, ethnic_background: nil, additional_ethnic_background: nil) }
-        let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
+        let(:service) { described_class.call(trainee: trainee, attributes: attributes) }
 
         before(:each) do
           service.call

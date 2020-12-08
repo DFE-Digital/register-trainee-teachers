@@ -2,6 +2,8 @@
 
 module Trns
   class SubmissionChecker
+    include ServicePattern
+
     attr_reader :trainee, :successful
     alias_method :successful?, :successful
 
@@ -13,13 +15,7 @@ module Trns
       { validator: ProgrammeDetail, progress_key: :programme_details },
     ].freeze
 
-    class << self
-      def call(trainee)
-        new(trainee).call
-      end
-    end
-
-    def initialize(trainee)
+    def initialize(trainee:)
       @trainee = trainee
     end
 

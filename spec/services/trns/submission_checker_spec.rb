@@ -16,7 +16,7 @@ module Trns
         )
       end
 
-      subject { described_class.new(full_trainee) }
+      subject { described_class.call(trainee: full_trainee) }
 
       context "when all sections are valid and complete" do
         before do

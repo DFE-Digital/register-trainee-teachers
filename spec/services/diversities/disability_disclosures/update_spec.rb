@@ -7,7 +7,7 @@ module Diversities
     describe Update do
       describe ".call" do
         let(:trainee) { create(:trainee, disability_disclosure: nil) }
-        let(:service) { described_class.new(trainee: trainee, attributes: attributes) }
+        let(:service) { described_class.call(trainee: trainee, attributes: attributes) }
 
         context "when disability disclosure attribute is valid" do
           let(:attributes) { { disability_disclosure: DISABILITY_DISCLOSURE_ENUMS[:disabled] } }
