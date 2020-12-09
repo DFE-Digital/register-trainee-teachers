@@ -6,7 +6,7 @@ module Trainees
       class View < GovukComponent::Base
         attr_accessor :degrees, :trainee, :show_add_another_degree_button, :show_delete_button
 
-        def initialize(trainee:, show_add_another_degree_button: true, show_delete_button: false)
+        def initialize(trainee:, show_add_another_degree_button: true, show_delete_button: true)
           @trainee = trainee
           @degrees = trainee.degrees
           @show_add_another_degree_button = show_add_another_degree_button

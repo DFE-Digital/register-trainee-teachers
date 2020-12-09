@@ -6,6 +6,8 @@ module PageObjects
       set_url "/trainees/{id}/{section}/confirm"
       element :confirm, "input[name='confirm_detail[mark_as_completed]']"
       element :submit_button, "input[name='commit']"
+      element :continue_button, "input[name='commit'][value='Continue']"
+      element :delete_button, "input[name='commit'][value='Delete degree']"
     end
   end
 end
