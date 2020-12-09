@@ -2,10 +2,13 @@
 
 module Trainees
   class ProgrammeDetailsController < ApplicationController
-    PROGRAMME_START_DATE_CONVERSION = {
-      "programme_start_date(3i)" => "day",
-      "programme_start_date(2i)" => "month",
-      "programme_start_date(1i)" => "year",
+    PROGRAMME_DATE_CONVERSION = {
+      "programme_start_date(3i)" => "start_day",
+      "programme_start_date(2i)" => "start_month",
+      "programme_start_date(1i)" => "start_year",
+      "programme_end_date(3i)" => "end_day",
+      "programme_end_date(2i)" => "end_month",
+      "programme_end_date(1i)" => "end_year",
     }.freeze
 
     PROGRAMME_DETAILS_PARAMS_KEYS = %i[subject
@@ -38,15 +41,15 @@ module Trainees
     def programme_details_params
       params.require(:programme_detail).permit(
         *PROGRAMME_DETAILS_PARAMS_KEYS,
-      ).except(*PROGRAMME_START_DATE_CONVERSION.keys)
-      .merge(programme_start_date_params)
+      ).except(*PROGRAMME_DATE_CONVERSION.keys)
+      .merge(programme_date_params)
     end
 
-    def programme_start_date_params
+    def programme_date_params
       params.require(:programme_detail).except(
         *PROGRAMME_DETAILS_PARAMS_KEYS,
-      ).permit(*PROGRAMME_START_DATE_CONVERSION.keys)
-      .transform_keys { |key| PROGRAMME_START_DATE_CONVERSION[key] }
+      ).permit(*PROGRAMME_DATE_CONVERSION.keys)
+      .transform_keys { |key| PROGRAMME_DATE_CONVERSION[key] }
     end
 
     def redirect_to_confirm

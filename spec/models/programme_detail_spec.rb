@@ -71,9 +71,9 @@ describe ProgrammeDetail do
       end
 
       describe "#programme_start_date_valid" do
-        context "the date fields are all blank" do
+        context "the start date fields are all blank" do
           let(:attributes) do
-            { day: "", month: "", year: "" }
+            { start_day: "", start_month: "", start_year: "" }
           end
 
           it "returns an error start date is blank" do
@@ -85,9 +85,9 @@ describe ProgrammeDetail do
           end
         end
 
-        context "the date fields are 12/11/2020" do
+        context "the start date fields are 12/11/2020" do
           let(:attributes) do
-            { day: "12", month: "11", year: "2020" }
+            { start_day: "12", start_month: "11", start_year: "2020" }
           end
 
           it "does not return an error message for programme start date" do
@@ -95,15 +95,55 @@ describe ProgrammeDetail do
           end
         end
 
-        context "the date fields are are gibberish" do
+        context "the start date fields are are gibberish" do
           let(:attributes) do
-            { day: "foo", month: "foo", year: "foo" }
+            { start_day: "foo", start_month: "foo", start_year: "foo" }
           end
 
           it "return an error message programme start is invalid" do
             expect(subject.errors[:programme_start_date]).to include(
               I18n.t(
                 "#{translation_key_prefix}.programme_start_date.invalid",
+              ),
+            )
+          end
+        end
+      end
+
+      describe "#programme_end_date_valid" do
+        context "the end date fields are all blank" do
+          let(:attributes) do
+            { end_day: "", end_month: "", end_year: "" }
+          end
+
+          it "returns an error end date is blank" do
+            expect(subject.errors[:programme_end_date]).to include(
+              I18n.t(
+                "#{translation_key_prefix}.programme_end_date.blank",
+              ),
+            )
+          end
+        end
+
+        context "the end date fields are 12/11/2020" do
+          let(:attributes) do
+            { end_day: "12", end_month: "11", end_year: "2020" }
+          end
+
+          it "does not return an error message for end date" do
+            expect(subject.errors[:programme_end_date]).to be_empty
+          end
+        end
+
+        context "the end date fields are are gibberish" do
+          let(:attributes) do
+            { end_day: "foo", end_month: "foo", end_year: "foo" }
+          end
+
+          it "returns an error message programme end is invalid" do
+            expect(subject.errors[:programme_end_date]).to include(
+              I18n.t(
+                "#{translation_key_prefix}.programme_end_date.invalid",
               ),
             )
           end
@@ -123,9 +163,12 @@ describe ProgrammeDetail do
           end
 
           let(:attributes) do
-            { day: date.day.to_s,
-              month: date.month.to_s,
-              year: date.year.to_s,
+            { start_day: date.day.to_s,
+              start_month: date.month.to_s,
+              start_year: date.year.to_s,
+              end_day: date.day.to_s,
+              end_month: date.month.to_s,
+              end_year: date.year.to_s,
               main_age_range: "11 to 19 programme",
               subject: "Psychology" }
           end

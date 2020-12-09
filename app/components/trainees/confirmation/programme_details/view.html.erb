@@ -4,7 +4,7 @@
       {
         key: "Subject",
         value: subject,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe, 
+        action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe,
                               edit_trainee_programme_details_path(trainee))
       },
       {
@@ -17,6 +17,12 @@
         key: "Programme start date",
         value: programme_start_date,
         action: govuk_link_to('Change<span class="govuk-visually-hidden"> programme start date</span>'.html_safe,
+                              edit_trainee_programme_details_path(trainee))
+      },
+      {
+        key: "Programme end date",
+        value: programme_end_date,
+        action: govuk_link_to('Change<span class="govuk-visually-hidden"> programme end date</span>'.html_safe,
                               edit_trainee_programme_details_path(trainee))
       },
     ]

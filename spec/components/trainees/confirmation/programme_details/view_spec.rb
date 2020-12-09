@@ -15,10 +15,10 @@ module Trainees
             render_inline(View.new(trainee: trainee))
           end
 
-          it "tells the user that no data has been entered for subject, age range, and programme start date" do
+          it "tells the user that no data has been entered for subject, age range, programme start date and programme end date" do
             found = component.find_all(".govuk-summary-list__row")
 
-            expect(found.size).to eq(3)
+            expect(found.size).to eq(4)
 
             found.each do |row|
               expect(row.find(".govuk-summary-list__value")).to have_text(t("components.confirmation.not_provided"))

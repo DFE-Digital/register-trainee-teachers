@@ -14,9 +14,12 @@ module ProgrammeDetails
           Date.new(1999, 12, 31)
         end
         let(:attributes) do
-          { day: date.day.to_s,
-            month: date.month.to_s,
-            year: date.year.to_s,
+          { start_day: date.day.to_s,
+            start_month: date.month.to_s,
+            start_year: date.year.to_s,
+            end_day: date.day.to_s,
+            end_month: date.month.to_s,
+            end_year: date.year.to_s,
             main_age_range: "other",
             additional_age_range: "14 - 19 diploma",
             subject: "Philosophy" }
@@ -31,6 +34,7 @@ module ProgrammeDetails
           expect(trainee.subject).to eq(attributes[:subject])
           expect(trainee.age_range).to eq(attributes[:additional_age_range])
           expect(trainee.programme_start_date).to eq(date)
+          expect(trainee.programme_end_date).to eq(date)
         end
 
         it "is successful" do
@@ -42,9 +46,12 @@ module ProgrammeDetails
         let(:trainee) { create(:trainee, :with_programme_details) }
 
         let(:attributes) do
-          { day: nil,
-            month: nil,
-            year: nil,
+          { start_day: nil,
+            start_month: nil,
+            start_year: nil,
+            end_day: nil,
+            end_month: nil,
+            end_year: nil,
             main_age_range: nil,
             additional_age_range: nil,
             subject: nil }

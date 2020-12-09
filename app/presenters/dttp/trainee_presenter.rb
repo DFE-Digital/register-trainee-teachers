@@ -42,6 +42,7 @@ module Dttp
       {
         "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
         "dfe_programmestartdate" => programme_start_date.in_time_zone.iso8601,
+        "dfe_programmeenddate" => programme_end_date.in_time_zone.iso8601,
         "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_course_phase_id})",
         "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_id})",
         "dfe_sendforsiregistration" => true,

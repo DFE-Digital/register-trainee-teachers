@@ -35,6 +35,12 @@ module Trainees
           date_for_summary_view(trainee.programme_start_date)
         end
 
+        def programme_end_date
+          return @not_provided_copy if trainee.programme_end_date.blank?
+
+          date_for_summary_view(trainee.programme_end_date)
+        end
+
       private
 
         def format_record_type

@@ -53,6 +53,7 @@ FactoryBot.define do
       subject { Dttp::CodeSets::ProgrammeSubjects::MAPPING.keys.sample }
       age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
       programme_start_date { Faker::Date.between(from: 2.years.ago, to: Time.zone.today) }
+      programme_end_date { Faker::Date.between(from: 2.years.ago, to: Time.zone.today) }
     end
 
     trait :diversity_disclosed do

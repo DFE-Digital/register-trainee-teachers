@@ -58,7 +58,7 @@ feature "programme details", type: :feature do
   def and_i_enter_valid_parameters
     @programme_details_page.subject.select(template.subject)
     @programme_details_page.set_date_fields("programme_start_date", template.programme_start_date.strftime("%d/%m/%Y"))
-
+    @programme_details_page.set_date_fields("programme_end_date", template.programme_end_date.strftime("%d/%m/%Y"))
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
 
     if age_range[:option] == :main
@@ -88,6 +88,9 @@ feature "programme details", type: :feature do
     expect(@programme_details_page.programme_start_date_day.value).to eq(template.programme_start_date.day.to_s)
     expect(@programme_details_page.programme_start_date_month.value).to eq(template.programme_start_date.month.to_s)
     expect(@programme_details_page.programme_start_date_year.value).to eq(template.programme_start_date.year.to_s)
+    expect(@programme_details_page.programme_end_date_day.value).to eq(template.programme_end_date.day.to_s)
+    expect(@programme_details_page.programme_end_date_month.value).to eq(template.programme_end_date.month.to_s)
+    expect(@programme_details_page.programme_end_date_year.value).to eq(template.programme_end_date.year.to_s)
 
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
 
