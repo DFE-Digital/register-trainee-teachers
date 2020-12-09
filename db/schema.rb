@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2020_12_08_121221) do
     t.jsonb "progress", default: {}
     t.bigint "provider_id", null: false
     t.date "outcome_date"
+    t.date "programme_end_date"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
