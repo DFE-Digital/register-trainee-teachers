@@ -4,6 +4,8 @@ require "rails_helper"
 
 module Dttp
   describe TraineePresenter do
+    let(:trainee_creator_dttp_id) { SecureRandom.uuid }
+
     subject { described_class.new(trainee: trainee) }
 
     describe "#placement_assignment_params" do
@@ -71,7 +73,7 @@ module Dttp
 
       context "basic information" do
         it "returns a hash with all the DTTP basic contact fields" do
-          expect(subject.contact_params).to include({
+          expect(subject.contact_params(trainee_creator_dttp_id)).to include({
             "firstname" => trainee.first_names,
             "lastname" => trainee.last_name,
             "address1_line1" => trainee.address_line_one,
@@ -81,6 +83,7 @@ module Dttp
             "birthdate" => trainee.date_of_birth.to_s,
             "emailaddress1" => trainee.email,
             "gendercode" => 1,
+            "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
             "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
           })
         end
@@ -104,7 +107,7 @@ module Dttp
           let(:dttp_disability) { Diversities::NOT_PROVIDED }
 
           it "returns a hash with a foreign key matching DTTP's 'Not known' ethnicity entity" do
-            expect(subject.contact_params).to include(disability_param, ethnicity_param)
+            expect(subject.contact_params(trainee_creator_dttp_id)).to include(disability_param, ethnicity_param)
           end
         end
 
@@ -116,7 +119,7 @@ module Dttp
               let(:ethnic_background) { Diversities::IRISH }
 
               it "returns a hash with a foreign key of DTTP's 'Irish' ethnicity entity" do
-                expect(subject.contact_params).to include(ethnicity_param)
+                expect(subject.contact_params(trainee_creator_dttp_id)).to include(ethnicity_param)
               end
             end
 
@@ -124,7 +127,7 @@ module Dttp
               let(:ethnic_background) { Diversities::NOT_PROVIDED }
 
               it "returns a hash with a foreign of DTTP's 'Not known' ethnicity entity" do
-                expect(subject.contact_params).to include(ethnicity_param)
+                expect(subject.contact_params(trainee_creator_dttp_id)).to include(ethnicity_param)
               end
             end
           end
@@ -143,7 +146,7 @@ module Dttp
                 end
 
                 it "returns a hash with a foreign key of DTTP's 'Blind' disability entity" do
-                  expect(subject.contact_params).to include(disability_param)
+                  expect(subject.contact_params(trainee_creator_dttp_id)).to include(disability_param)
                 end
               end
 
@@ -155,7 +158,7 @@ module Dttp
                 end
 
                 it "returns a hash with a foreign key of DTTP's 'Multiple disabilities' entity" do
-                  expect(subject.contact_params).to include(disability_param)
+                  expect(subject.contact_params(trainee_creator_dttp_id)).to include(disability_param)
                 end
               end
             end
@@ -165,7 +168,7 @@ module Dttp
               let(:dttp_disability) { Diversities::NO_KNOWN_DISABILITY }
 
               it "returns a hash with a foreign key of DTTP's 'No known disability' entity" do
-                expect(subject.contact_params).to include(disability_param)
+                expect(subject.contact_params(trainee_creator_dttp_id)).to include(disability_param)
               end
             end
 
@@ -174,7 +177,7 @@ module Dttp
               let(:dttp_disability) { Diversities::NOT_PROVIDED }
 
               it "returns a hash with a foreign key of DTTP's 'Not known' entity" do
-                expect(subject.contact_params).to include(disability_param)
+                expect(subject.contact_params(trainee_creator_dttp_id)).to include(disability_param)
               end
             end
           end

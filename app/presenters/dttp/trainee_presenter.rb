@@ -7,13 +7,13 @@ module Dttp
 
     delegate_missing_to :trainee
 
-    attr_reader :trainee
+    attr_reader :trainee, :user
 
     def initialize(trainee:)
       @trainee = trainee
     end
 
-    def contact_params
+    def contact_params(trainee_creator_dttp_id)
       {
         "firstname" => first_names,
         "lastname" => last_name,
@@ -27,6 +27,7 @@ module Dttp
         "dfe_EthnicityId@odata.bind" => "/dfe_ethnicities(#{dttp_ethnicity_id})",
         "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{dttp_disability_id})",
         "parentcustomerid_account@odata.bind" => "/accounts(#{provider.dttp_id})",
+        "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
       }
     end
 

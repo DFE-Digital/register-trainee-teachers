@@ -4,19 +4,20 @@ module Dttp
   class BatchCreate
     include ServicePattern
 
-    attr_reader :trainee, :batch_request
+    attr_reader :trainee, :trainee_creator_dttp_id, :batch_request
 
-    def initialize(trainee:)
+    def initialize(trainee:, trainee_creator_dttp_id:)
       @trainee = Dttp::TraineePresenter.new(trainee: trainee)
+      @trainee_creator_dttp_id = trainee_creator_dttp_id
       @batch_request = BatchRequest.new
     end
 
     def call
-      contact_change_set_id = batch_request.add_change_set(entity: "contacts",
-                                                           payload: trainee.contact_params.to_json)
+      contact_payload = trainee.contact_params(trainee_creator_dttp_id).to_json
+      contact_change_set_id = batch_request.add_change_set(entity: "contacts", payload: contact_payload)
 
-      batch_request.add_change_set(entity: "dfe_placementassignments",
-                                   payload: trainee.placement_assignment_params(contact_change_set_id).to_json)
+      placement_assignment_payload = trainee.placement_assignment_params(contact_change_set_id).to_json
+      batch_request.add_change_set(entity: "dfe_placementassignments", payload: placement_assignment_payload)
 
       batch_response = batch_request.submit
 
