@@ -7,7 +7,7 @@ module Dttp
     attr_reader :trainee, :batch_request
 
     def initialize(trainee:)
-      @trainee = trainee
+      @trainee = Dttp::TraineePresenter.new(trainee: trainee)
       @batch_request = BatchRequest.new
     end
 
