@@ -16,14 +16,21 @@ private
   end
 
   class Row < GovukComponent::Slot
-    attr_accessor :task_name, :path, :status
+    attr_accessor :task_name, :status
 
-    def initialize(task_name:, path:, status:, classes: [], html_attributes: {})
+    def initialize(task_name:, path:, confirm_path: nil, status:, classes: [], html_attributes: {})
       super(classes: classes, html_attributes: html_attributes)
 
       @task_name = task_name
       @path = path
+      @confirm_path = confirm_path
       @status = status
+    end
+
+    def get_path
+      return @path unless @confirm_path
+
+      status == "not started" ? @path : @confirm_path
     end
 
     def get_status_colour
