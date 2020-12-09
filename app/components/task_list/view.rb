@@ -30,7 +30,7 @@ private
     def get_path
       return @path unless @confirm_path
 
-      status == "not started" ? @path : @confirm_path
+      status == Progress::STATUSES[:not_started] ? @path : @confirm_path
     end
 
     def get_status_colour
