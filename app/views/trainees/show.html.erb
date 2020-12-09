@@ -29,6 +29,7 @@
         :row,
         task_name: 'Programme details',
         path: edit_trainee_programme_details_path(@trainee),
+        confirm_path: trainee_programme_details_confirm_path(@trainee),
         classes: "programme-details",
         status: ProgressService.call(
           validator: ProgrammeDetail.new(@trainee),
@@ -45,6 +46,7 @@
         :row,
         task_name: 'Personal details',
         path: edit_trainee_personal_details_path(@trainee),
+        confirm_path: trainee_personal_details_confirm_path(@trainee),
         classes: "personal-details",
         status: ProgressService.call(
           validator: PersonalDetail.new(@trainee),
@@ -56,6 +58,7 @@
         :row,
         task_name: 'Contact details',
         path: edit_trainee_contact_details_path(@trainee),
+        confirm_path: trainee_contact_details_confirm_path(@trainee),
         status: ProgressService.call(
           validator: ContactDetail.new(@trainee),
           progress_value: @trainee.progress.contact_details
@@ -66,6 +69,7 @@
         :row,
         task_name: 'Diversity information',
         path: edit_trainee_diversity_disclosure_path(@trainee),
+        confirm_path: trainee_diversity_disclosure_confirm_path(@trainee),
         classes: "diversity-details",
         status: ProgressService.call(
           validator: Diversities::DiversityFlow.new(@trainee),
@@ -76,7 +80,8 @@
       component.slot(
         :row,
         task_name: 'Degree',
-        path: @trainee.degrees.present?  ? trainee_degrees_confirm_path(@trainee) : trainee_degrees_new_type_path(@trainee),
+        path: trainee_degrees_new_type_path(@trainee),
+        confirm_path: trainee_degrees_confirm_path(@trainee),
         status: ProgressService.call(
           validator: DegreeDetail.new(@trainee),
           progress_value: @trainee.progress.degrees
