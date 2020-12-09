@@ -50,31 +50,33 @@ module Dttp
           let(:expected_headers) { { "Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}" } }
 
           let(:expected_body) do
-            %(--batch_#{batch_id}
-Content-Type: multipart/mixed;boundary=changeset_#{change_set_id}
+            <<~BODY
+              --batch_#{batch_id}
+              Content-Type: multipart/mixed;boundary=changeset_#{change_set_id}
 
---changeset_#{change_set_id}
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-Content-ID: #{change_set_1[:content_id]}
+              --changeset_#{change_set_id}
+              Content-Type: application/http
+              Content-Transfer-Encoding: binary
+              Content-ID: #{change_set_1[:content_id]}
 
-POST #{Dttp::Client.base_uri}/#{change_set_1[:entity]} HTTP/1.1
-Content-Type: application/json;odata.metadata=minimal
+              POST #{Dttp::Client.base_uri}/#{change_set_1[:entity]} HTTP/1.1
+              Content-Type: application/json;odata.metadata=minimal
 
-#{change_set_1[:payload]}
+              #{change_set_1[:payload]}
 
---changeset_#{change_set_id}
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-Content-ID: #{change_set_2[:content_id]}
+              --changeset_#{change_set_id}
+              Content-Type: application/http
+              Content-Transfer-Encoding: binary
+              Content-ID: #{change_set_2[:content_id]}
 
-POST #{Dttp::Client.base_uri}/#{change_set_2[:entity]} HTTP/1.1
-Content-Type: application/json;odata.metadata=minimal
+              POST #{Dttp::Client.base_uri}/#{change_set_2[:entity]} HTTP/1.1
+              Content-Type: application/json;odata.metadata=minimal
 
-#{change_set_2[:payload]}
---changeset_#{change_set_id}--
---batch_#{batch_id}--
-)
+              #{change_set_2[:payload]}
+
+              --changeset_#{change_set_id}--
+              --batch_#{batch_id}--
+            BODY
           end
 
           it "sends a batch request with the correct headers and body" do

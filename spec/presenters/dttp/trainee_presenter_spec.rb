@@ -4,6 +4,7 @@ require "rails_helper"
 
 module Dttp
   describe TraineePresenter do
+    let(:time_now_in_zone) { Time.zone.now }
     let(:trainee_creator_dttp_id) { SecureRandom.uuid }
 
     subject { described_class.new(trainee: trainee) }
@@ -48,6 +49,8 @@ module Dttp
             "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
             "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{dttp_degree_institution_entity_id})",
             "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{dttp_degree_grade_entity_id})",
+            "dfe_sendforsiregistration" => true,
+            "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
           })
         end
       end
@@ -63,6 +66,8 @@ module Dttp
             "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_entity_id})",
             "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
             "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
+            "dfe_sendforsiregistration" => true,
+            "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
           })
         end
       end
@@ -70,6 +75,10 @@ module Dttp
 
     describe "#contact_params" do
       let(:trainee) { build(:trainee, gender: "female") }
+
+      before do
+        allow(Time).to receive(:now).and_return(time_now_in_zone)
+      end
 
       context "basic information" do
         it "returns a hash with all the DTTP basic contact fields" do
@@ -85,6 +94,7 @@ module Dttp
             "gendercode" => 1,
             "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
             "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
+            "dfe_trnassessmentdate" => time_now_in_zone.in_time_zone.iso8601,
           })
         end
       end

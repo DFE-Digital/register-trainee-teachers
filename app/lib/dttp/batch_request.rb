@@ -29,26 +29,26 @@ module Dttp
 
     def body
       payload = "--batch_#{batch_id}\n"
-      payload += "Content-Type: multipart/mixed;boundary=changeset_#{change_set_id}\n"
+      payload += "Content-Type: multipart/mixed;boundary=changeset_#{change_set_id}\n\n"
 
-      change_sets.each { |change_set| payload += change_set_body(change_set) }
+      change_sets.each { |change_set| payload += change_set_body(change_set) + "\n" }
 
       payload += "--changeset_#{change_set_id}--\n"
       payload + "--batch_#{batch_id}--\n"
     end
 
     def change_set_body(change_set)
-      %(
---changeset_#{change_set_id}
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-Content-ID: #{change_set[:content_id]}
+      <<~BODY
+        --changeset_#{change_set_id}
+        Content-Type: application/http
+        Content-Transfer-Encoding: binary
+        Content-ID: #{change_set[:content_id]}
 
-POST #{Client.base_uri}/#{change_set[:entity]} HTTP/1.1
-Content-Type: application/json;odata.metadata=minimal
+        POST #{Client.base_uri}/#{change_set[:entity]} HTTP/1.1
+        Content-Type: application/json;odata.metadata=minimal
 
-#{change_set[:payload]}
-)
+        #{change_set[:payload]}
+      BODY
     end
   end
 end
