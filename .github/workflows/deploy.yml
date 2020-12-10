@@ -33,7 +33,7 @@ jobs:
       - uses: softprops/turnstyle@v1
         name: Wait for other inprogress deployment runs
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_API_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     name: ${{ matrix.environment }} Deployment
@@ -61,7 +61,7 @@ jobs:
         id: deployment
         with:
           step: start
-          token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ matrix.environment }}
           ref: ${{ github.event.inputs.sha }}
 
@@ -116,7 +116,7 @@ jobs:
         uses: bobheadxi/deployments@v0.4.2
         with:
           step: finish
-          token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ matrix.environment }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
