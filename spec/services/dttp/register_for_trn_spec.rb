@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Dttp
-  describe BatchCreate do
+  describe RegisterForTrn do
     describe "#call" do
       let(:trainee) { create(:trainee, :with_programme_details) }
       let(:trainee_presenter) { TraineePresenter.new(trainee: trainee) }

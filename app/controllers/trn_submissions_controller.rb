@@ -4,7 +4,7 @@ class TrnSubmissionsController < ApplicationController
   before_action :authorize_trainee
 
   def create
-    Dttp::CreateJob.perform_later(trainee.id, current_user.dttp_id)
+    RegisterForTrnJob.perform_later(trainee.id, current_user.dttp_id)
 
     redirect_to trn_submission_path(trainee_id: trainee.id)
   end

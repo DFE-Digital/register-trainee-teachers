@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dttp
-  class BatchCreate
+  class RegisterForTrn
     include ServicePattern
 
     attr_reader :trainee, :trainee_creator_dttp_id, :batch_request
