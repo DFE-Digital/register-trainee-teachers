@@ -14,7 +14,7 @@ jobs:
       - uses: softprops/turnstyle@v1
         name: Wait for other runs
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_API_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Smoke Tests ${{ github.event.inputs.environment }}
         run: echo "Nothing to run yet 🚀"
