@@ -5,6 +5,7 @@ class TrnSubmissionsController < ApplicationController
 
   def create
     RegisterForTrnJob.perform_later(trainee.id, current_user.dttp_id)
+    RetrieveTrnJob.set(wait: RetrieveTrnJob::POLL_DELAY).perform_later(trainee.id)
 
     redirect_to trn_submission_path(trainee_id: trainee.id)
   end

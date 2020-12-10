@@ -14,6 +14,7 @@ module Dttp
       let(:placement_assignmentt_entity_id) { SecureRandom.uuid }
       let(:contact_payload) { trainee_presenter.contact_params(trainee_creator_dttp_id).to_json }
       let(:placement_assignment_payload) { trainee_presenter.placement_assignment_params(contact_change_set_id).to_json }
+      let(:time_now) { Time.zone.now }
 
       let(:dttp_response) do
         <<~DTTP_RESPONSE
@@ -25,6 +26,7 @@ module Dttp
       before do
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(BatchRequest).to receive(:new).and_return(batch_request)
+        allow(Time).to receive(:now).and_return(time_now)
         trainee.degrees << create(:degree)
       end
 
@@ -43,7 +45,7 @@ module Dttp
           described_class.call(trainee: trainee, trainee_creator_dttp_id: trainee_creator_dttp_id)
         }.to change(trainee, :dttp_id).to(contact_entity_id).and change(trainee, :placement_assignment_dttp_id).to(
           placement_assignmentt_entity_id,
-        )
+        ).and change(trainee, :trn_requested_at).to(time_now)
       end
     end
   end
