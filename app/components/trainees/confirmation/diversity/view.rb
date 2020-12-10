@@ -62,15 +62,38 @@ module Trainees
         def selected_disability_options
           return "" if trainee.disabilities.blank?
 
-          disabilities = trainee.disabilities.map { |disability| disability.name.titleize }
-
           selected = tag.p("Disabilities shared:", class: "govuk-body")
 
           selected + sanitize(tag.ul(class: "govuk-list govuk-list--bullet") do
-            disabilities.each do |disability|
-              concat tag.li(disability)
-            end
+            render_disabilities
           end)
+        end
+
+      private
+
+        def render_disabilities
+          trainee.disabilities.each do |disability|
+            if disability.name == Diversities::OTHER
+              render_additional_disability(disability)
+            else
+              concat(tag.li(disability_name_for(disability)))
+            end
+          end
+        end
+
+        def render_additional_disability(disability)
+          concat(tag.li("#{disability_name_for(disability)} #{additional_disability_for(disability)}"))
+        end
+
+        def additional_disability_for(disability)
+          additional_disability = trainee.trainee_disabilities.where(disability_id: disability.id).first.additional_disability
+          return if additional_disability.blank?
+
+          "(#{additional_disability})"
+        end
+
+        def disability_name_for(disability)
+          disability.name.downcase
         end
       end
     end

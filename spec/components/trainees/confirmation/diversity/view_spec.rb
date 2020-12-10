@@ -5,9 +5,7 @@ require "rails_helper"
 RSpec.describe Trainees::Confirmation::Diversity::View do
   alias_method :component, :page
 
-  let(:trainee) do
-    mock_trainee
-  end
+  let(:trainee) { create(:trainee) }
 
   describe "Diversity information" do
     context "when trainee has not shared any ethnic or disability information" do
@@ -87,16 +85,37 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
   end
 
   describe "#selected_disability_options" do
-    it "returns a empty string if no disabilities" do
-      trainee.disabilities = []
-      component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
-      expect(component.selected_disability_options).to be_empty
+    let(:component) { Trainees::Confirmation::Diversity::View.new(trainee: trainee) }
+
+    context "when there are no disabilities" do
+      it "returns a empty string if no disabilities" do
+        expect(component.selected_disability_options).to be_empty
+      end
     end
-  end
 
-private
+    context "when there are disabilities" do
+      let(:disabilities_stub) { [double(name: "some disability")] }
 
-  def mock_trainee
-    @mock_trainee ||= create(:trainee)
+      before do
+        allow(trainee).to receive(:disabilities).and_return(disabilities_stub)
+      end
+
+      it "renders the disability names" do
+        trainee.disabilities.each do |disability|
+          expect(component.selected_disability_options).to include(disability.name)
+        end
+      end
+    end
+
+    context "when additional disability has been provided" do
+      let(:disability) { build(:disability, name: Diversities::OTHER) }
+      let(:trainee_disability) { build(:trainee_disability, additional_disability: "some additional disability", disability: disability) }
+      let(:trainee) { create(:trainee, trainee_disabilities: [trainee_disability]) }
+
+      it "renders the additional disability" do
+        expected_text = "#{disability.name.downcase} (#{trainee_disability.additional_disability})"
+        expect(component.selected_disability_options).to include(expected_text)
+      end
+    end
   end
 end
