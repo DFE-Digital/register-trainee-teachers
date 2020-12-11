@@ -6,16 +6,26 @@ describe ApplicationHelper do
   include ApplicationHelper
 
   describe "#govuk_button_link_to" do
-    it "returns an anchor tag with the govuk-button class and button role" do
-      anchor_tag = helper.govuk_button_link_to("Hoot", "https://localhost:0103/owl/hoot")
+    context "default behaviour" do
+      subject { helper.govuk_button_link_to("Hoot", "https://localhost:0103/owl/hoot") }
 
-      expect(anchor_tag).to eq('<a class="govuk-button" role="button" draggable="false" href="https://localhost:0103/owl/hoot">Hoot</a>')
+      it "returns an anchor tag with the govuk-button class and button role" do
+        expected_output = '<a role="button" data-module="govuk-button" draggable="false" class="govuk-button" href="https://localhost:0103/owl/hoot">Hoot</a>'
+
+        expect(subject).to eq(expected_output)
+      end
     end
 
-    it "returns an anchor tag with additional HTML options" do
-      anchor_tag = helper.govuk_button_link_to("Cluck", "https://localhost:0103/chicken/cluck", class: "govuk-button--start")
+    context "with options" do
+      subject do
+        helper.govuk_button_link_to("Cluck", "https://localhost:0103/chicken/cluck", class: "govuk-button--start")
+      end
 
-      expect(anchor_tag).to eq('<a class="govuk-button govuk-button--start" role="button" draggable="false" href="https://localhost:0103/chicken/cluck">Cluck</a>')
+      it "returns the correct markup with the extra options applied" do
+        expected_output = '<a role="button" data-module="govuk-button" draggable="false" class="govuk-button govuk-button--start" href="https://localhost:0103/chicken/cluck">Cluck</a>'
+
+        expect(subject).to eq(expected_output)
+      end
     end
   end
 end

@@ -3,6 +3,8 @@
 module Trainees
   module RecordActions
     class View < GovukComponent::Base
+      include ApplicationHelper
+
       attr_reader :trainee
 
       def initialize(trainee)
