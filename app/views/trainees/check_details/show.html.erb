@@ -24,7 +24,8 @@
 <%= render_component Trainees::Confirmation::PersonalDetails::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::ContactDetails::View.new(trainee: @trainee) %>
 <%= render_component Trainees::Confirmation::Diversity::View.new(trainee: @trainee) %>
-<%= render_component Trainees::Confirmation::Degrees::View.new(trainee: @trainee, show_add_another_degree_button: false) %>
+<%= render_component Trainees::Confirmation::Degrees::View.new(trainee: @trainee, show_add_another_degree_button: false, show_delete_button: true) %>
+
 
 <h2 class="govuk-heading-m">
   About their training

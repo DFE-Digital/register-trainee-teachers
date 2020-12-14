@@ -13,7 +13,7 @@ module PageObjects
       element :dob_year, "#personal_detail_date_of_birth_1i"
       element :gender, ".govuk-radios.gender"
       element :nationality, ".govuk-checkboxes.nationality"
-      element :submit_button, "input[name='commit']"
+      element :continue_button, "input[name='commit'][value='Continue']"
     end
   end
 end

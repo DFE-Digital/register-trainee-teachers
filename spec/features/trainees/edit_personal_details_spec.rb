@@ -72,7 +72,7 @@ private
   end
 
   def and_i_submit_the_form
-    @personal_details_page.submit_button.click
+    @personal_details_page.continue_button.click
   end
 
   def then_the_personal_details_are_updated

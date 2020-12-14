@@ -35,6 +35,12 @@ RSpec.feature "Adding a degree" do
         then_i_am_redirected_to_the_trainee_degrees_confirmation_page
       end
 
+      scenario "the user deletes a degree" do
+        confirm_details_page.delete_button.click
+        and_i_visit_the_summary_page
+        then_the_degree_status_should_be(:not_started)
+      end
+
       scenario "the user confirms degree details" do
         and_confirm_my_details
         then_i_am_redirected_to_the_summary_page
@@ -157,11 +163,11 @@ private
   def and_confirm_my_details
     expect(confirm_details_page).to be_displayed(id: trainee.id, section: "degrees")
     confirm_details_page.confirm.click
-    confirm_details_page.submit_button.click
+    confirm_details_page.continue_button.click
   end
 
   def and_i_click_continue
-    confirm_details_page.submit_button.click
+    confirm_details_page.continue_button.click
   end
 
   def degree_details_page
