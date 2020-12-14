@@ -2,6 +2,8 @@
 
 module ApplicationRecordCard
   class View < GovukComponent::Base
+    include SanitizeHelper
+
     with_collection_parameter :record
 
     attr_reader :record, :heading_level
@@ -29,8 +31,22 @@ module ApplicationRecordCard
       record.record_type.humanize
     end
 
+    def updated_at
+      date_stamp = record.updated_at.presence || record.created_at
+      date_text = tag.span(date_stamp.strftime("%-d %B %Y"))
+      class_list = "govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0 app-application-card__submitted"
+
+      sanitize(tag.p(date_text.prepend("Updated: "), class: class_list))
+    end
+
     def status
       "Draft"
+    end
+
+    def trainee_id
+      return if record.trainee_id.blank?
+
+      tag.p("Trainee ID: " + record.trainee_id, class: "govuk-caption-m govuk-!-font-size-16 app-application-card__id govuk-!-margin-bottom-0")
     end
   end
 end

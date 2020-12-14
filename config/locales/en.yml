@@ -34,7 +34,7 @@ en:
         show: Review trainee record
       trainees:
         new: Add a trainee
-        index: Trainee teachers
+        index: Trainee records
         not_supported_route: Other routes not supported
         show: Overview
         edit: Edit trainee
