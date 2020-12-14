@@ -7,7 +7,7 @@ module ApplicationRecordCard
     alias_method :component, :page
 
     before do
-      render_inline(described_class.new(record: Trainee.new(id: 1)))
+      render_inline(described_class.new(record: Trainee.new(id: 1, created_at: Timecop.freeze(Time.zone.local(2020, 1, 1)))))
     end
 
     it "renders 'Draft record' if trainee does not have a first & Last name " do
@@ -22,6 +22,10 @@ module ApplicationRecordCard
       expect(component.find(".app-application-card__route")).to have_text("No route provided")
     end
 
+    it "does not render trainee ID" do
+      expect(component).to_not have_selector(".app-application-card__id")
+    end
+
     it "renders Status tag" do
       expect(component).to have_selector(".govuk-tag")
     end
@@ -33,9 +37,19 @@ module ApplicationRecordCard
                           id: 1, first_names: "Teddy",
                           last_name: "Smith",
                           subject: "Designer",
-                          record_type: "assessment_only"
+                          record_type: "assessment_only",
+                          trainee_id: "132456",
+                          created_at: Timecop.freeze(Time.zone.local(2020, 1, 1))
                         ),
                       ))
+      end
+
+      it "renders trainee ID" do
+        expect(component.find(".app-application-card__id")).to have_text("Trainee ID: 132456")
+      end
+
+      it "renders updated at" do
+        expect(component.find(".app-application-card__submitted")).to have_text("Updated: 1 January 2020")
       end
 
       it "renders trainee name " do

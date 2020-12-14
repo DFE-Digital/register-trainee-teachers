@@ -3,6 +3,7 @@
     <h<%= heading_level %> class="govuk-heading-m govuk-!-margin-bottom-3">
       <%= govuk_link_to trainee_name, trainee_path(record.id) %>
     </h<%= heading_level %>>
+    <%= trainee_id %>
   </div>
 
   <div class="app-application-card_col">
@@ -16,7 +17,6 @@
 
   <div class="app-application-card_col">
     <%= render_component GovukComponent::Tag.new(text: status, colour: 'grey') %>
+    <%= updated_at %>
   </div>
 </div>
-
-

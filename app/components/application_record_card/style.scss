@@ -1,7 +1,7 @@
 @import "../base.scss";
 
 .app-application-card {
-  border-bottom: 1px solid govuk-colour('mid-grey');
+  border-bottom: 1px solid govuk-colour("mid-grey");
   margin-bottom: 15px;
   padding-bottom: 15px;
 
@@ -12,7 +12,7 @@
 }
 
 .app-application-card:first-of-type {
-  border-top: 1px solid govuk-colour('mid-grey');
+  border-top: 1px solid govuk-colour("mid-grey");
   padding-top: 15px;
 }
 
@@ -80,7 +80,20 @@
   }
 }
 
-.app-application-card__subject, .app-application-card__route {
+.app-application-card__subject,
+.app-application-card__route {
   @include govuk-font(16);
   @include govuk-responsive-margin(0, "bottom");
+}
+
+.app-application-card__submitted {
+  overflow-wrap: break-word;
+
+  span {
+    display: block;
+  }
+}
+
+.app-application-card__id {
+  overflow-wrap: break-word;
 }
