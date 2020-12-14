@@ -74,6 +74,8 @@ Rails.application.routes.draw do
         get "recommended"
         resource :outcome_date, only: %i[edit update], path: "/outcome-date"
       end
+
+      resource :qts_recommendations, only: %i[create]
     end
 
     member do

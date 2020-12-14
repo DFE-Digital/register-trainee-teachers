@@ -7,8 +7,7 @@ feature "submit for TRN" do
   background { given_i_am_authenticated }
 
   before do
-    stub_microsoft_oauth_success
-    stub_request(:post, "#{Dttp::Client.base_uri}/$batch").to_return(body: "/contacts#{SecureRandom.uuid}")
+    stub_dttp_batch_request
   end
 
   describe "submission" do
@@ -113,18 +112,6 @@ feature "submit for TRN" do
 
   def then_i_am_redirected_to_the_trainee_records_page
     expect(trainee_index_page).to be_displayed
-  end
-
-  def stub_microsoft_oauth_success
-    stub_request(
-      :post,
-      "https://login.microsoftonline.com/#{Settings.dttp.tenant_id}/oauth2/v2.0/token",
-    ).to_return(
-      body: {
-        access_token: "token",
-        expires_in: 3600,
-      }.to_json,
-    )
   end
 
   def stub_progress_service(completed: false)

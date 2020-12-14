@@ -15,10 +15,10 @@ describe TrnSubmissionsController do
       allow(TraineePolicy).to receive(:new).with(current_user, trainee).and_return(trainee_policy)
     end
 
-    it "launches CreateJob" do
+    it "launches a background job to register trainee for TRN" do
       expect {
         post :create, params: { trainee_id: trainee.id }
-      }.to have_enqueued_job(Dttp::CreateJob).with(trainee.id, current_user.dttp_id)
+      }.to have_enqueued_job(RegisterForTrnJob).with(trainee.id, current_user.dttp_id)
     end
   end
 end
