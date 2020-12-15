@@ -26,6 +26,9 @@ en:
         accessibility: Accessibility
         cookies: Cookies on Register trainee teachers
         privacy_policy: How we use your personal data when you use Register trainee teachers
+        not_found: Page not found
+        internal_server_error: Sorry, there is a problem with the service
+        unprocessable_entity: The change you wanted was rejected
       sign_in:
         index: Sign in
       trn_submissions:
