@@ -39,6 +39,16 @@ class Trainee < ApplicationRecord
   has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
   has_many :disabilities, through: :trainee_disabilities
 
+  enum state: {
+    draft: 0,
+    submitted_for_trn: 1,
+    trn_received: 2,
+    recommended_for_qts: 3,
+    withdrawn: 4,
+    deferred: 5,
+    qts_awarded: 6,
+  }
+
   def dttp_id=(value)
     raise LockedAttributeError, "dttp_id update failed for trainee ID: #{id}, with value: #{value}" if dttp_id.present?
 

@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2020_12_17_112615) do
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
     t.index ["record_type"], name: "index_trainees_on_record_type"
+    t.index ["state"], name: "index_trainees_on_state"
   end
 
   create_table "users", force: :cascade do |t|
