@@ -1,4 +1,4 @@
-<%= render_component PageTitle::View.new(title: "trainees.contact_details.edit") %>
+<%= render_component PageTitle::View.new(title: "trainees.contact_details.edit", has_errors: @contact_details.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render_component GovukComponent::BackLink.new(

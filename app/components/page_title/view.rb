@@ -3,13 +3,11 @@
 class PageTitle::View < GovukComponent::Base
   I18N_FORMAT = /^\S*\.\S*$/.freeze
 
-  attr_accessor :title, :errors
+  attr_accessor :title
 
-  include ActiveModel
-
-  def initialize(title: "", errors: false)
+  def initialize(title: "", has_errors: false)
     @title = title
-    @errors = errors.present?
+    @has_errors = has_errors
   end
 
   def build_page_title
@@ -18,8 +16,10 @@ class PageTitle::View < GovukComponent::Base
 
 private
 
+  attr_reader :has_errors
+
   def build_error
-    errors ? "Error: " : ""
+    has_errors ? "Error: " : ""
   end
 
   def build_title
