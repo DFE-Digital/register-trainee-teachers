@@ -216,7 +216,7 @@ en:
               invalid: "You must enter a valid programme end date"
         outcome_date:
           attributes:
-            outcome_date_string:
+            outcome_date:
               blank: "You must enter an outcome date"
               invalid: "You must enter a valid outcome date"
         degree_detail:
