@@ -23,7 +23,8 @@ module Dttp
 
       entity_ids = OdataParser.entity_ids(batch_response: batch_response)
       trainee.update!(dttp_id: entity_ids["contacts"],
-                      placement_assignment_dttp_id: entity_ids["dfe_placementassignments"])
+                      placement_assignment_dttp_id: entity_ids["dfe_placementassignments"],
+                      trn_requested_at: Time.zone.now)
       entity_ids
     end
   end

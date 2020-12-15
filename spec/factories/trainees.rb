@@ -69,6 +69,10 @@ FactoryBot.define do
       placement_assignment_dttp_id { SecureRandom.uuid }
       outcome_date { Faker::Date.in_date_period }
     end
+
+    trait :trn_requested do
+      trn_requested_at { Time.zone.now }
+    end
   end
 end
 
