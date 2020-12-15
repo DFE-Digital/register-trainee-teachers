@@ -75,9 +75,9 @@ private
 
   def outcome_date_valid
     if outcome_date_string == "other" && [day, month, year].all?(&:blank?)
-      errors.add(:outcome_date_string, :blank)
+      errors.add(:outcome_date, :blank)
     elsif !outcome_date.is_a?(Date)
-      errors.add(:outcome_date_string, :invalid)
+      errors.add(:outcome_date, :invalid)
     end
   end
 end
