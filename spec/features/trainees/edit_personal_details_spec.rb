@@ -10,6 +10,11 @@ feature "edit personal details", type: :feature do
     then_the_personal_details_are_updated
   end
 
+  scenario "updates personal details with 'other' nationality" do
+    given_other_nationality_is_provided
+    then_the_personal_details_are_updated
+  end
+
   scenario "renders a completed status when valid personal details provided" do
     given_valid_personal_details_are_provided
     then_the_personal_details_section_should_be_completed
@@ -46,8 +51,19 @@ private
     then_i_am_redirected_to_the_summary_page
   end
 
+  def given_other_nationality_is_provided
+    given_a_trainee_exists
+    and_nationalities_exist_in_the_system
+    when_i_visit_the_personal_details_page
+    and_i_enter_valid_parameters(other_nationality: true)
+    and_i_submit_the_form
+    and_confirm_my_details
+    then_i_am_redirected_to_the_summary_page
+  end
+
   def and_nationalities_exist_in_the_system
-    @nationality ||= create(:nationality, name: "british")
+    @british ||= create(:nationality, name: "british")
+    @french ||= create(:nationality, name: "french")
   end
 
   def when_i_visit_the_personal_details_page
@@ -55,12 +71,17 @@ private
     @personal_details_page.load(id: trainee.id)
   end
 
-  def and_i_enter_valid_parameters
+  def and_i_enter_valid_parameters(other_nationality: false)
     @personal_details_page.first_names.set("Tim")
     @personal_details_page.last_name.set("Smith")
     @personal_details_page.set_date_fields("dob", "01/01/1986")
     @personal_details_page.gender.choose("Male")
-    @personal_details_page.nationality.check(@nationality.name.titleize)
+    if other_nationality
+      @personal_details_page.nationality.check("Other")
+      @personal_details_page.other_nationality.select(@french.name.titleize)
+    else
+      @personal_details_page.nationality.check(@british.name.titleize)
+    end
   end
 
   def and_confirm_my_details(checked: true)

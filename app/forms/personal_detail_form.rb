@@ -15,7 +15,8 @@ class PersonalDetailForm
 
   delegate :id, :persisted?, to: :trainee
 
-  attr_accessor(*FIELDS, :trainee, :day, :month, :year)
+  attr_accessor(*FIELDS, :trainee, :day, :month, :year, :other_nationality1,
+                :other_nationality2, :other_nationality3, :other)
 
   validates :first_names, presence: true
   validates :last_name, presence: true
@@ -36,7 +37,11 @@ class PersonalDetailForm
 
   def fields
     trainee.attributes.merge(attributes).slice(*FIELDS).merge(
-      nationality_ids: nationalities,
+      nationality_ids: trainee.nationality_ids,
+      # Check for `other_is_selected?` needed for 'blank' error styling. In this case,
+      # it needs to be expanded, but there are no 'other' nationalities on the trainee.
+      other: other_is_selected? || other_nationalities_hash.values.any?,
+      **other_nationalities_hash,
       **date_of_birth_hash,
     )
   end
@@ -63,7 +68,11 @@ private
   def update_trainee_attributes
     if errors.empty?
       trainee.assign_attributes(
-        fields.except(:day, :month, :year).symbolize_keys.merge(
+        fields.except(
+          :day, :month, :year, :other, :other_nationality1, :other_nationality2,
+          :other_nationality3
+        ).symbolize_keys
+        .merge(
           date_of_birth: date_of_birth,
           nationality_ids: nationalities,
         ),
@@ -79,10 +88,28 @@ private
     }.merge(attributes.slice(:day, :month, :year).to_h.symbolize_keys)
   end
 
+  def other_nationalities_hash
+    # Re-hydrate the 'Other nationality' fields from the trainee model.
+    nationality1, nationality2, nationality3 = trainee.nationalities
+      .where.not(name: %w[british irish]).pluck(:id)
+
+    {
+      other_nationality1: nationality1,
+      other_nationality2: nationality2,
+      other_nationality3: nationality3,
+    }
+  end
+
   def nationalities
     return trainee.nationality_ids if attributes[:nationality_ids].blank?
 
-    attributes[:nationality_ids].reject(&:blank?).map(&:to_i)
+    nationalities = attributes[:nationality_ids]
+
+    if other_is_selected?
+      nationalities += [attributes[:other_nationality1], attributes[:other_nationality2], attributes[:other_nationality3]]
+    end
+
+    nationalities&.reject(&:blank?)&.uniq&.map(&:to_i)
   end
 
   def date_of_birth_valid
@@ -93,9 +120,17 @@ private
     errors.add(:date_of_birth, :future) if date_of_birth.is_a?(Date) && date_of_birth > Time.zone.today
   end
 
-  def nationalities_cannot_be_empty
-    return unless nationalities.empty?
+  def other_is_selected?
+    ActiveModel::Type::Boolean.new.cast(attributes[:other])
+  end
 
-    errors.add(:nationality_ids, :empty_nationalities)
+  def nationalities_cannot_be_empty
+    if nationalities.empty?
+      errors.add(:nationality_ids, :empty_nationalities)
+    end
+
+    if other_is_selected? && attributes[:other_nationality1].blank?
+      errors.add(:other_nationality1, :blank)
+    end
   end
 end
