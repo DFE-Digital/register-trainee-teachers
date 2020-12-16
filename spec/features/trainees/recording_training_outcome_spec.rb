@@ -84,7 +84,7 @@ feature "Recording a training outcome", type: :feature do
 
   def then_i_see_the_error_message_for(type)
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.outcome_date.attributes.outcome_date.#{type}"),
+      I18n.t("activemodel.errors.models.outcome_date_form.attributes.outcome_date.#{type}"),
     )
   end
 

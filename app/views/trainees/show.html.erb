@@ -31,7 +31,7 @@
         confirm_path: trainee_programme_details_confirm_path(@trainee),
         classes: "programme-details",
         status: ProgressService.call(
-          validator: ProgrammeDetail.new(@trainee),
+          validator: ProgrammeDetailForm.new(@trainee),
           progress_value: @trainee.progress.programme_details
         ).status
       )
@@ -48,7 +48,7 @@
         confirm_path: trainee_personal_details_confirm_path(@trainee),
         classes: "personal-details",
         status: ProgressService.call(
-          validator: PersonalDetail.new(@trainee),
+          validator: PersonalDetailForm.new(@trainee),
           progress_value: @trainee.progress.personal_details
         ).status
       )
@@ -59,7 +59,7 @@
         path: edit_trainee_contact_details_path(@trainee),
         confirm_path: trainee_contact_details_confirm_path(@trainee),
         status: ProgressService.call(
-          validator: ContactDetail.new(@trainee),
+          validator: ContactDetailForm.new(@trainee),
           progress_value: @trainee.progress.contact_details
         ).status
       )
@@ -71,7 +71,7 @@
         confirm_path: trainee_diversity_disclosure_confirm_path(@trainee),
         classes: "diversity-details",
         status: ProgressService.call(
-          validator: Diversities::DiversityFlow.new(@trainee),
+          validator: Diversities::FormValidator.new(@trainee),
           progress_value: @trainee.progress.diversity
         ).status
       )
@@ -82,7 +82,7 @@
         path: trainee_degrees_new_type_path(@trainee),
         confirm_path: trainee_degrees_confirm_path(@trainee),
         status: ProgressService.call(
-          validator: DegreeDetail.new(@trainee),
+          validator: DegreeDetailForm.new(@trainee),
           progress_value: @trainee.progress.degrees
         ).status,
         classes: 'degree-details'

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Diversities
-  describe DisabilityDisclosure do
+  describe DisabilityDisclosureForm, type: :model do
     let(:trainee) { build(:trainee) }
 
     subject { described_class.new(trainee: trainee) }

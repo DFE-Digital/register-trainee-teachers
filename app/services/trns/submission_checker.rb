@@ -8,11 +8,11 @@ module Trns
     alias_method :successful?, :successful
 
     VALIDATORS = [
-      { validator: PersonalDetail, progress_key: :personal_details },
-      { validator: ContactDetail, progress_key: :contact_details },
-      { validator: DegreeDetail, progress_key: :degrees },
-      { validator: Diversities::DiversityFlow, progress_key: :diversity },
-      { validator: ProgrammeDetail, progress_key: :programme_details },
+      { validator: PersonalDetailForm, progress_key: :personal_details },
+      { validator: ContactDetailForm, progress_key: :contact_details },
+      { validator: DegreeDetailForm, progress_key: :degrees },
+      { validator: Diversities::FormValidator, progress_key: :diversity },
+      { validator: ProgrammeDetailForm, progress_key: :programme_details },
     ].freeze
 
     def initialize(trainee:)

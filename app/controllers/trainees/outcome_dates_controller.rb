@@ -10,12 +10,12 @@ module Trainees
 
     def edit
       authorize trainee
-      @outcome = OutcomeDate.new(trainee)
+      @outcome = OutcomeDateForm.new(trainee)
     end
 
     def update
       authorize trainee
-      @outcome = OutcomeDate.new(trainee)
+      @outcome = OutcomeDateForm.new(trainee)
       @outcome.assign_attributes(trainee_params)
 
       if @outcome.save
@@ -32,7 +32,7 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:outcome_date).permit(:outcome_date_string, *PARAM_CONVERSION.keys)
+      params.require(:outcome_date_form).permit(:outcome_date_string, *PARAM_CONVERSION.keys)
         .transform_keys do |key|
           PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
         end

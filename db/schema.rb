@@ -78,8 +78,6 @@ ActiveRecord::Schema.define(version: 2020_12_16_094155) do
     t.text "first_names"
     t.text "last_name"
     t.date "date_of_birth"
-    t.text "ethnicity"
-    t.text "disability"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "address_line_one"
@@ -87,9 +85,6 @@ ActiveRecord::Schema.define(version: 2020_12_16_094155) do
     t.text "town_city"
     t.text "postcode"
     t.text "email"
-    t.date "start_date"
-    t.text "full_time_part_time"
-    t.boolean "teaching_scholars"
     t.uuid "dttp_id"
     t.text "middle_names"
     t.integer "record_type"

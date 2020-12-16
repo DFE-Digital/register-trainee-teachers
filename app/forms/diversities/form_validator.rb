@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Diversities
-  class DiversityFlow
+  class FormValidator
     include ActiveModel::Model
 
     FIELDS = {
-      disclosure_section: Diversities::Disclosure::FIELDS,
-      ethnic_group_section: Diversities::EthnicGroup::FIELDS,
-      ethnic_background_section: Diversities::EthnicBackground::FIELDS,
-      disability_disclosure_section: Diversities::DisabilityDisclosure::FIELDS,
+      disclosure_section: DisclosureForm::FIELDS,
+      ethnic_group_section: EthnicGroupForm::FIELDS,
+      ethnic_background_section: EthnicBackgroundForm::FIELDS,
+      disability_disclosure_section: DisabilityDisclosureForm::FIELDS,
     }.freeze
 
     attr_accessor(*(FIELDS.keys + FIELDS.values.flatten + %i[trainee disability_ids]))
@@ -33,31 +33,31 @@ module Diversities
   private
 
     def disclosure
-      return if validator_is_valid?(Disclosure)
+      return if validator_is_valid?(DisclosureForm)
 
       add_error_for(:disclosure_section)
     end
 
     def ethnic_group
-      return if validator_is_valid?(EthnicGroup)
+      return if validator_is_valid?(EthnicGroupForm)
 
       add_error_for(:ethnic_group_section)
     end
 
     def ethnic_background
-      return if validator_is_valid?(EthnicBackground)
+      return if validator_is_valid?(EthnicBackgroundForm)
 
       add_error_for(:ethnic_background_section)
     end
 
     def disability_disclosure
-      return if validator_is_valid?(DisabilityDisclosure)
+      return if validator_is_valid?(DisabilityDisclosureForm)
 
       add_error_for(:disability_disclosure_section)
     end
 
     def disabilities
-      return if validator_is_valid?(DisabilityDetail)
+      return if validator_is_valid?(DisabilityDetailForm)
 
       add_error_for(:disability_ids)
     end

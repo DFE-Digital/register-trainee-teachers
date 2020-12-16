@@ -67,7 +67,7 @@ private
 
   def then_i_see_error_messages
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.diversities/disability_disclosure.attributes.disability_disclosure.blank"),
+      I18n.t("activemodel.errors.models.diversities/disability_disclosure_form.attributes.disability_disclosure.blank"),
     )
   end
 end

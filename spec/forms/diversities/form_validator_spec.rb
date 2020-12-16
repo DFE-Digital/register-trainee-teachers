@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Diversities
-  describe DiversityFlow do
+  describe FormValidator do
     let(:trainee) do
       build(:trainee, diversity_disclosure: nil, ethnic_group: nil, ethnic_background: nil, disability_disclosure: nil)
     end
@@ -12,14 +12,14 @@ module Diversities
 
     describe "validations" do
       context "when trainee has disclosed diversity" do
-        let(:disclosure) { instance_double(Disclosure) }
+        let(:disclosure) { instance_double(DisclosureForm) }
 
         before do
           trainee.diversity_disclosure = DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
-          expect(Disclosure).to receive(:new).and_return(disclosure)
+          expect(DisclosureForm).to receive(:new).and_return(disclosure)
         end
 
-        context "when Disclosure is valid" do
+        context "when DisclosureForm is valid" do
           let(:validity) { true }
 
           before do
@@ -29,14 +29,14 @@ module Diversities
           it { is_expected.to be_valid }
 
           context "ethnic group" do
-            let(:ethnic_group) { instance_double(EthnicGroup) }
+            let(:ethnic_group) { instance_double(EthnicGroupForm) }
 
             before do
               trainee.ethnic_group = ETHNIC_GROUP_ENUMS.values.sample
-              expect(EthnicGroup).to receive(:new).and_return(ethnic_group)
+              expect(EthnicGroupForm).to receive(:new).and_return(ethnic_group)
             end
 
-            context "when EthnicGroup is valid" do
+            context "when EthnicGroupForm is valid" do
               before do
                 allow(ethnic_group).to receive(:valid?).and_return(true)
               end
@@ -44,14 +44,14 @@ module Diversities
               it { is_expected.to be_valid }
 
               context "ethnic background" do
-                let(:ethnic_background) { instance_double(EthnicBackground) }
+                let(:ethnic_background) { instance_double(EthnicBackgroundForm) }
 
                 before do
                   trainee.ethnic_background = "some background"
-                  expect(EthnicBackground).to receive(:new).and_return(ethnic_background)
+                  expect(EthnicBackgroundForm).to receive(:new).and_return(ethnic_background)
                 end
 
-                context "when EthnicBackground is valid" do
+                context "when EthnicBackgroundForm is valid" do
                   before do
                     allow(ethnic_background).to receive(:valid?).and_return(true)
                   end
@@ -59,7 +59,7 @@ module Diversities
                   it { is_expected.to be_valid }
                 end
 
-                context "when EthnicBackground is invalid" do
+                context "when EthnicBackgroundForm is invalid" do
                   before do
                     allow(ethnic_background).to receive(:valid?).and_return(false)
                   end
@@ -69,7 +69,7 @@ module Diversities
 
                     expect(subject.errors[:ethnic_background_section]).to include(
                       I18n.t(
-                        "activemodel.errors.models.diversities/diversity_flow.attributes.ethnic_background_section.not_valid",
+                        "activemodel.errors.models.diversities/form_validator.attributes.ethnic_background_section.not_valid",
                       ),
                     )
                   end
@@ -77,7 +77,7 @@ module Diversities
               end
             end
 
-            context "when EthnicGroup is invalid" do
+            context "when EthnicGroupForm is invalid" do
               before do
                 allow(ethnic_group).to receive(:valid?).and_return(false)
               end
@@ -87,7 +87,7 @@ module Diversities
 
                 expect(subject.errors[:ethnic_group_section]).to include(
                   I18n.t(
-                    "activemodel.errors.models.diversities/diversity_flow.attributes.ethnic_group_section.not_valid",
+                    "activemodel.errors.models.diversities/form_validator.attributes.ethnic_group_section.not_valid",
                   ),
                 )
               end
@@ -95,14 +95,14 @@ module Diversities
           end
 
           context "disability disclosure" do
-            let(:disability_disclosure) { instance_double(DisabilityDisclosure) }
+            let(:disability_disclosure) { instance_double(DisabilityDisclosureForm) }
 
             before do
               trainee.disability_disclosure = DISABILITY_DISCLOSURE_ENUMS[:not_disabled]
-              expect(DisabilityDisclosure).to receive(:new).and_return(disability_disclosure)
+              expect(DisabilityDisclosureForm).to receive(:new).and_return(disability_disclosure)
             end
 
-            context "when DisabilityDisclosure is valid" do
+            context "when DisabilityDisclosureForm is valid" do
               before do
                 allow(disability_disclosure).to receive(:valid?).and_return(true)
               end
@@ -110,14 +110,14 @@ module Diversities
               it { is_expected.to be_valid }
 
               context "when trainee is disabled" do
-                let(:disability_detail) { instance_double(DisabilityDetail) }
+                let(:disability_detail) { instance_double(DisabilityDetailForm) }
 
                 before do
                   trainee.disability_disclosure = DISABILITY_DISCLOSURE_ENUMS[:disabled]
-                  expect(DisabilityDetail).to receive(:new).and_return(disability_detail)
+                  expect(DisabilityDetailForm).to receive(:new).and_return(disability_detail)
                 end
 
-                context "when DisabilityDetail is valid" do
+                context "when DisabilityDetailForm is valid" do
                   before do
                     allow(disability_detail).to receive(:valid?).and_return(true)
                   end
@@ -125,7 +125,7 @@ module Diversities
                   it { is_expected.to be_valid }
                 end
 
-                context "when DisabilityDetail is invalid" do
+                context "when DisabilityDetailForm is invalid" do
                   before do
                     allow(disability_detail).to receive(:valid?).and_return(false)
                   end
@@ -135,7 +135,7 @@ module Diversities
 
                     expect(subject.errors[:disability_ids]).to include(
                       I18n.t(
-                        "activemodel.errors.models.diversities/diversity_flow.attributes.disability_ids.not_valid",
+                        "activemodel.errors.models.diversities/form_validator.attributes.disability_ids.not_valid",
                       ),
                     )
                   end
@@ -143,7 +143,7 @@ module Diversities
               end
             end
 
-            context "when DisabilityDisclosure is invalid" do
+            context "when DisabilityDisclosureForm is invalid" do
               before do
                 allow(disability_disclosure).to receive(:valid?).and_return(false)
               end
@@ -153,7 +153,7 @@ module Diversities
 
                 expect(subject.errors[:disability_disclosure_section]).to include(
                   I18n.t(
-                    "activemodel.errors.models.diversities/diversity_flow.attributes.disability_disclosure_section.not_valid",
+                    "activemodel.errors.models.diversities/form_validator.attributes.disability_disclosure_section.not_valid",
                   ),
                 )
               end
@@ -161,7 +161,7 @@ module Diversities
           end
         end
 
-        context "when Disclosure is valid and not disclosed" do
+        context "when DisclosureForm is valid and not disclosed" do
           before do
             trainee.diversity_disclosure = DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
             allow(disclosure).to receive(:valid?).and_return(true)
@@ -170,7 +170,7 @@ module Diversities
           it { is_expected.to be_valid }
         end
 
-        context "when Disclosure is invalid" do
+        context "when DisclosureForm is invalid" do
           before do
             allow(disclosure).to receive(:valid?).and_return(false)
           end
@@ -180,7 +180,7 @@ module Diversities
 
             expect(subject.errors[:disclosure_section]).to include(
               I18n.t(
-                "activemodel.errors.models.diversities/diversity_flow.attributes.disclosure_section.not_valid",
+                "activemodel.errors.models.diversities/form_validator.attributes.disclosure_section.not_valid",
               ),
             )
           end
