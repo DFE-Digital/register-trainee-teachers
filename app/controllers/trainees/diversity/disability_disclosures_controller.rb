@@ -5,7 +5,7 @@ module Trainees
     class DisabilityDisclosuresController < ApplicationController
       def edit
         authorize trainee
-        @disability_disclosure = Diversities::DisabilityDisclosure.new(trainee: trainee)
+        @disability_disclosure = Diversities::DisabilityDisclosureForm.new(trainee: trainee)
       end
 
       def update
@@ -30,9 +30,9 @@ module Trainees
       end
 
       def disability_disclosure_params
-        return { disability_disclosure: nil } if params[:diversities_disability_disclosure].blank?
+        return { disability_disclosure: nil } if params[:diversities_disability_disclosure_form].blank?
 
-        params.require(:diversities_disability_disclosure).permit(*Diversities::DisabilityDisclosure::FIELDS)
+        params.require(:diversities_disability_disclosure_form).permit(*Diversities::DisabilityDisclosureForm::FIELDS)
       end
 
       def redirect_to_relevant_step

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OutcomeDate
+class OutcomeDateForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks

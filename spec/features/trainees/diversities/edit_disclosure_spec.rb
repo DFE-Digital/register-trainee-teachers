@@ -62,6 +62,6 @@ feature "edit diversity disclosure", type: :feature do
   end
 
   def then_i_see_error_messages
-    expect(page).to have_content(I18n.t("activemodel.errors.models.diversities/disclosure.attributes.diversity_disclosure.blank"))
+    expect(page).to have_content(I18n.t("activemodel.errors.models.diversities/disclosure_form.attributes.diversity_disclosure.blank"))
   end
 end

@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 
 module Diversities
-  class DisabilityDisclosure
+  class EthnicBackgroundForm
     include ActiveModel::Model
     attr_accessor :trainee
 
     FIELDS = %w[
-      disability_disclosure
+      ethnic_background
+      additional_ethnic_background
     ].freeze
 
     attr_accessor(*FIELDS)
 
-    validates :disability_disclosure, presence: true, inclusion: { in: Diversities::DISABILITY_DISCLOSURE_ENUMS.values }
-
     delegate :id, :persisted?, to: :trainee
+
+    validates :ethnic_background, presence: true
 
     def initialize(trainee:)
       @trainee = trainee

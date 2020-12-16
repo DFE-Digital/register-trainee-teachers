@@ -6,14 +6,14 @@ module Trainees
       def edit
         authorize trainee
         disabilities
-        @disability_detail = Diversities::DisabilityDetail.new(trainee: trainee)
+        @disability_detail = Diversities::DisabilityDetailForm.new(trainee: trainee)
       end
 
       def update
         authorize trainee
         disabilities
 
-        disability_detail = Diversities::DisabilityDetail.new(trainee: trainee, attributes: disability_detail_params)
+        disability_detail = Diversities::DisabilityDetailForm.new(trainee: trainee, attributes: disability_detail_params)
 
         if disability_detail.save
           redirect_to(trainee_diversity_disability_detail_confirm_path(trainee))
@@ -34,9 +34,9 @@ module Trainees
       end
 
       def disability_detail_params
-        return { disability_ids: nil } if params[:diversities_disability_detail].blank?
+        return { disability_ids: nil } if params[:diversities_disability_detail_form].blank?
 
-        params.require(:diversities_disability_detail).permit(:additional_disability, disability_ids: [])
+        params.require(:diversities_disability_detail_form).permit(:additional_disability, disability_ids: [])
       end
     end
   end

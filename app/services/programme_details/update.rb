@@ -11,7 +11,7 @@ module ProgrammeDetails
     def initialize(trainee:, attributes: {})
       @trainee = trainee
 
-      @programme_detail = ProgrammeDetail.new(trainee)
+      @programme_detail = ProgrammeDetailForm.new(trainee)
       @programme_detail.assign_attributes(attributes)
     end
 

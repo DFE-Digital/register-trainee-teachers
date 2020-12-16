@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Diversities
-  class DisabilityDetail
+  class DisabilityDetailForm
     include ActiveModel::Model
     include ActiveModel::AttributeAssignment
     include ActiveModel::Validations::Callbacks

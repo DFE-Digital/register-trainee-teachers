@@ -7,7 +7,7 @@ module Trainees
 
     def show
       authorize trainee
-      @confirm_detail = ConfirmDetail.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
+      @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
       @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
     end
 
@@ -53,7 +53,7 @@ module Trainees
     end
 
     def mark_as_completed_params
-      mark_as_completed_attributes = params.require(:confirm_detail).permit(:mark_as_completed)[:mark_as_completed]
+      mark_as_completed_attributes = params.require(:confirm_detail_form).permit(:mark_as_completed)[:mark_as_completed]
 
       ActiveModel::Type::Boolean.new.cast(mark_as_completed_attributes)
     end

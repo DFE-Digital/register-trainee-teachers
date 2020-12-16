@@ -5,7 +5,7 @@ module Trainees
     class EthnicGroupsController < ApplicationController
       def edit
         authorize trainee
-        @ethnic_group = Diversities::EthnicGroup.new(trainee: trainee)
+        @ethnic_group = Diversities::EthnicGroupForm.new(trainee: trainee)
       end
 
       def update
@@ -27,9 +27,9 @@ module Trainees
       end
 
       def ethnic_group_param
-        return { ethnic_group: nil } if params[:diversities_ethnic_group].blank?
+        return { ethnic_group: nil } if params[:diversities_ethnic_group_form].blank?
 
-        params.require(:diversities_ethnic_group).permit(*Diversities::EthnicGroup::FIELDS)
+        params.require(:diversities_ethnic_group_form).permit(*Diversities::EthnicGroupForm::FIELDS)
       end
 
       def redirect_to_relevant_step

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PersonalDetail
+class PersonalDetailForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks

@@ -80,7 +80,7 @@ feature "edit ethnic group", type: :feature do
 
   def and_i_choose(option)
     @ethnic_group_page.find(
-      "#diversities-ethnic-group-ethnic-group-#{option.dasherize}-field",
+      "#diversities-ethnic-group-form-ethnic-group-#{option.dasherize}-field",
     ).choose
   end
 
@@ -114,7 +114,7 @@ feature "edit ethnic group", type: :feature do
 
   def then_i_see_error_messages
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.diversities/ethnic_group.attributes.ethnic_group.blank"),
+      I18n.t("activemodel.errors.models.diversities/ethnic_group_form.attributes.ethnic_group.blank"),
     )
   end
 
@@ -122,6 +122,6 @@ private
 
   def ethnic_background_option(ethnic_background)
     formatted_id = ethnic_background.parameterize
-    "#diversities-ethnic-background-ethnic-background-#{formatted_id}-field"
+    "#diversities-ethnic-background-form-ethnic-background-#{formatted_id}-field"
   end
 end

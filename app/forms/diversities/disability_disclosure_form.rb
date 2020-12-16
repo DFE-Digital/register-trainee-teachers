@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 module Diversities
-  class EthnicGroup
+  class DisabilityDisclosureForm
     include ActiveModel::Model
     attr_accessor :trainee
 
     FIELDS = %w[
-      ethnic_group
+      disability_disclosure
     ].freeze
 
     attr_accessor(*FIELDS)
 
-    validates :ethnic_group, presence: true, inclusion: { in: Diversities::ETHNIC_GROUP_ENUMS.values }
+    validates :disability_disclosure, presence: true, inclusion: { in: Diversities::DISABILITY_DISCLOSURE_ENUMS.values }
 
     delegate :id, :persisted?, to: :trainee
 

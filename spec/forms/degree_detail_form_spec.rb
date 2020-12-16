@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe DegreeDetail do
+describe DegreeDetailForm, type: :model do
   let(:trainee) { build(:trainee) }
 
   subject { described_class.new(trainee) }
@@ -25,7 +25,7 @@ describe DegreeDetail do
         it "returns an error if its empty" do
           expect(subject.errors[:degree_ids]).to include(
             I18n.t(
-              "activemodel.errors.models.degree_detail.attributes.degree_ids.empty_degrees",
+              "activemodel.errors.models.degree_detail_form.attributes.degree_ids.empty_degrees",
             ),
           )
         end

@@ -5,7 +5,7 @@ module Trainees
     class DisclosuresController < ApplicationController
       def edit
         authorize trainee
-        @disclosure = Diversities::Disclosure.new(trainee: trainee)
+        @disclosure = Diversities::DisclosureForm.new(trainee: trainee)
       end
 
       def update
@@ -27,9 +27,9 @@ module Trainees
       end
 
       def disclosure_param
-        return { diversity_disclosure: nil } if params[:diversities_disclosure].blank?
+        return { diversity_disclosure: nil } if params[:diversities_disclosure_form].blank?
 
-        params.require(:diversities_disclosure).permit(*Diversities::Disclosure::FIELDS)
+        params.require(:diversities_disclosure_form).permit(*Diversities::DisclosureForm::FIELDS)
       end
 
       def redirect_to_relevant_step

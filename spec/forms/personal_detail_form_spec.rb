@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe PersonalDetail do
+describe PersonalDetailForm, type: :model do
   let(:trainee) { build(:trainee) }
 
   subject { described_class.new(trainee) }
@@ -21,7 +21,7 @@ describe PersonalDetail do
       it "returns an error if its empty" do
         expect(subject.errors[:nationality_ids]).to include(
           I18n.t(
-            "activemodel.errors.models.personal_detail.attributes.nationality_ids.empty_nationalities",
+            "activemodel.errors.models.personal_detail_form.attributes.nationality_ids.empty_nationalities",
           ),
         )
       end
@@ -40,7 +40,7 @@ describe PersonalDetail do
         it "is invalid" do
           expect(subject.errors[:date_of_birth]).to include(
             I18n.t(
-              "activemodel.errors.models.personal_detail.attributes.date_of_birth.invalid",
+              "activemodel.errors.models.personal_detail_form.attributes.date_of_birth.invalid",
             ),
           )
         end
@@ -62,7 +62,7 @@ describe PersonalDetail do
         it "is invalid" do
           expect(subject.errors[:date_of_birth]).to include(
             I18n.t(
-              "activemodel.errors.models.personal_detail.attributes.date_of_birth.future",
+              "activemodel.errors.models.personal_detail_form.attributes.date_of_birth.future",
             ),
           )
         end

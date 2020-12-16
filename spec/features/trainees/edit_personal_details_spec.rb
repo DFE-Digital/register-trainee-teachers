@@ -83,7 +83,7 @@ private
   def then_i_see_error_messages
     expect(page).to have_content(
       I18n.t(
-        "activemodel.errors.models.personal_detail.attributes.nationality_ids.empty_nationalities",
+        "activemodel.errors.models.personal_detail_form.attributes.nationality_ids.empty_nationalities",
       ),
     )
   end

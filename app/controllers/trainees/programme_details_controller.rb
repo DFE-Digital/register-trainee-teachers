@@ -17,7 +17,7 @@ module Trainees
 
     def edit
       authorize trainee
-      @programme_detail = ProgrammeDetail.new(trainee)
+      @programme_detail = ProgrammeDetailForm.new(trainee)
     end
 
     def update
@@ -39,14 +39,14 @@ module Trainees
     end
 
     def programme_details_params
-      params.require(:programme_detail).permit(
+      params.require(:programme_detail_form).permit(
         *PROGRAMME_DETAILS_PARAMS_KEYS,
       ).except(*PROGRAMME_DATE_CONVERSION.keys)
       .merge(programme_date_params)
     end
 
     def programme_date_params
-      params.require(:programme_detail).except(
+      params.require(:programme_detail_form).except(
         *PROGRAMME_DETAILS_PARAMS_KEYS,
       ).permit(*PROGRAMME_DATE_CONVERSION.keys)
       .transform_keys { |key| PROGRAMME_DATE_CONVERSION[key] }

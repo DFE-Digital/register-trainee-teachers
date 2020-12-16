@@ -12,7 +12,7 @@ module Diversities
       def initialize(trainee:, attributes: {})
         @trainee = trainee
         trainee.assign_attributes(attributes)
-        @ethnic_background = Diversities::EthnicBackground.new(trainee: trainee)
+        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee: trainee)
       end
 
       def call

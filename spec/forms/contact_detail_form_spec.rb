@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ContactDetail do
+describe ContactDetailForm, type: :model do
   let(:trainee) { build(:trainee) }
 
   subject { described_class.new(trainee) }
@@ -20,7 +20,7 @@ describe ContactDetail do
       it "returns an error if its empty" do
         expect(subject.errors[:international_address]).to include(
           I18n.t(
-            "activemodel.errors.models.contact_detail.attributes.international_address.blank",
+            "activemodel.errors.models.contact_detail_form.attributes.international_address.blank",
           ),
         )
       end
@@ -41,7 +41,7 @@ describe ContactDetail do
             town_city
             postcode].each do |field|
           expect(subject.errors[field.to_sym])
-            .to include(I18n.t("activemodel.errors.models.contact_detail.attributes.#{field}.blank"))
+            .to include(I18n.t("activemodel.errors.models.contact_detail_form.attributes.#{field}.blank"))
         end
       end
 
@@ -56,14 +56,14 @@ describe ContactDetail do
         trainee.email = "@"
         expect(subject).not_to be_valid
         expect(subject.errors[:email])
-          .to include(I18n.t("activemodel.errors.models.contact_detail.attributes.email.invalid"))
+          .to include(I18n.t("activemodel.errors.models.contact_detail_form.attributes.email.invalid"))
       end
 
       it "must fail if it does not contain @" do
         trainee.email = "myname.com"
         expect(subject).not_to be_valid
         expect(subject.errors[:email])
-          .to include(I18n.t("activemodel.errors.models.contact_detail.attributes.email.invalid"))
+          .to include(I18n.t("activemodel.errors.models.contact_detail_form.attributes.email.invalid"))
       end
 
       it "accepts a valid email address" do
