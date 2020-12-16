@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Diversities
-  class Disclosure
+  class DisclosureForm
     include ActiveModel::Model
     attr_accessor :trainee
 

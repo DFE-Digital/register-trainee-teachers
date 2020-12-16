@@ -13,7 +13,7 @@ module Diversities
         @trainee = trainee
         @attributes = attributes
         trainee.assign_attributes(attributes)
-        @disability_disclosure = Diversities::DisabilityDisclosure.new(trainee: trainee)
+        @disability_disclosure = Diversities::DisabilityDisclosureForm.new(trainee: trainee)
       end
 
       def call

@@ -139,7 +139,7 @@ en:
         postcode:
           invalid: "You must enter a valid postcode (for example, BN1 1AA)"
       models:
-        personal_detail:
+        personal_detail_form:
           attributes:
             first_names:
               blank: "You must enter a first name"
@@ -153,7 +153,7 @@ en:
               blank: "You must select a gender"
             nationality_ids:
               empty_nationalities: You must select at least one nationality
-        contact_detail:
+        contact_detail_form:
           attributes:
             locale_code:
               blank: "You must select where the trainee lives"
@@ -168,27 +168,27 @@ en:
             email:
               blank: "You must enter an email address"
               invalid: "You must enter an email address in the correct format, like name@example.com"
-        diversities/disclosure:
+        diversities/disclosure_form:
           attributes:
             diversity_disclosure:
               blank: "You must select Yes or No"
-        diversities/ethnic_group:
+        diversities/ethnic_group_form:
           attributes:
             ethnic_group:
               blank: "You must select an option"
-        diversities/ethnic_background:
+        diversities/ethnic_background_form:
           attributes:
             ethnic_background:
               blank: "You must select an option"
-        diversities/disability_disclosure:
+        diversities/disability_disclosure_form:
           attributes:
             disability_disclosure:
               blank: "You must select an option"
-        diversities/disability_detail:
+        diversities/disability_detail_form:
           attributes:
             disability_ids:
               empty_disabilities: You must select at least one disability
-        diversities/diversity_flow:
+        diversities/flow_validator:
           attributes:
             disclosure_section:
               not_valid: The disclosure section is not valid for this trainee
@@ -200,7 +200,7 @@ en:
               not_valid: The disability disclosure section is not valid for this trainee
             disability_ids:
               not_valid: Trainee has been disclosed as disabled but no disabilities exist
-        programme_detail:
+        programme_detail_form:
           attributes:
             subject:
               blank: "You must select a subject"
@@ -214,12 +214,12 @@ en:
             programme_end_date:
               blank: "You must enter programme end date"
               invalid: "You must enter a valid programme end date"
-        outcome_date:
+        outcome_date_form:
           attributes:
             outcome_date:
               blank: "You must enter an outcome date"
               invalid: "You must enter a valid outcome date"
-        degree_detail:
+        degree_detail_form:
           attributes:
             degree_ids:
               empty_degrees: You must have at least one degree

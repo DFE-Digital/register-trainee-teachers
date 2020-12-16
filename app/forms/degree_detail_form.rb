@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DegreeDetail
+class DegreeDetailForm
   include ActiveModel::Model
 
   attr_accessor :trainee, :degree_ids

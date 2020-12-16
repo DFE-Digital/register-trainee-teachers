@@ -12,7 +12,7 @@ module Diversities
       def initialize(trainee:, attributes: {})
         @trainee = trainee
         trainee.assign_attributes(attributes)
-        @disclosure = Diversities::Disclosure.new(trainee: trainee)
+        @disclosure = Diversities::DisclosureForm.new(trainee: trainee)
       end
 
       def call

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ProgrammeDetail do
+describe ProgrammeDetailForm, type: :model do
   let(:trainee) { build(:trainee) }
 
   subject { described_class.new(trainee) }
@@ -11,7 +11,7 @@ describe ProgrammeDetail do
     it { is_expected.to validate_presence_of(:subject) }
 
     describe "custom" do
-      translation_key_prefix = "activemodel.errors.models.programme_detail.attributes"
+      translation_key_prefix = "activemodel.errors.models.programme_detail_form.attributes"
 
       before do
         subject.assign_attributes(attributes)

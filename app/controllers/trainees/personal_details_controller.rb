@@ -16,13 +16,13 @@ module Trainees
     def edit
       authorize trainee
       nationalities
-      @personal_detail = PersonalDetail.new(trainee)
+      @personal_detail = PersonalDetailForm.new(trainee)
     end
 
     def update
       authorize trainee
       nationalities
-      personal_detail = PersonalDetail.new(trainee, personal_details_params)
+      personal_detail = PersonalDetailForm.new(trainee, personal_details_params)
 
       if personal_detail.save
         redirect_to trainee_personal_details_confirm_path(personal_detail.trainee)
@@ -43,8 +43,8 @@ module Trainees
     end
 
     def personal_details_params
-      params.require(:personal_detail).permit(
-        *PersonalDetail::FIELDS,
+      params.require(:personal_detail_form).permit(
+        *PersonalDetailForm::FIELDS,
         *DOB_CONVERSION.keys,
         nationality_ids: [],
       ).transform_keys do |key|

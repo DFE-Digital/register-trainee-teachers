@@ -5,7 +5,7 @@ module Trainees
     class EthnicBackgroundsController < ApplicationController
       def edit
         authorize trainee
-        @ethnic_background = Diversities::EthnicBackground.new(trainee: trainee)
+        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee: trainee)
       end
 
       def update
@@ -27,10 +27,10 @@ module Trainees
       end
 
       def ethnic_background_param
-        return { ethnic_background: nil } if params[:diversities_ethnic_background].blank?
+        return { ethnic_background: nil } if params[:diversities_ethnic_background_form].blank?
 
-        params.require(:diversities_ethnic_background).permit(
-          *Diversities::EthnicBackground::FIELDS,
+        params.require(:diversities_ethnic_background_form).permit(
+          *Diversities::EthnicBackgroundForm::FIELDS,
         )
       end
     end

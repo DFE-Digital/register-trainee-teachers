@@ -53,7 +53,7 @@ feature "edit disability details", type: :feature do
   def then_i_see_error_messages
     expect(page).to have_content(
       I18n.t(
-        "activemodel.errors.models.diversities/disability_detail.attributes.disability_ids.empty_disabilities",
+        "activemodel.errors.models.diversities/disability_detail_form.attributes.disability_ids.empty_disabilities",
       ),
     )
   end

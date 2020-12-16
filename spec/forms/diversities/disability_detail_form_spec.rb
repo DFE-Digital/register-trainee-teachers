@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Diversities
-  describe DisabilityDetail do
+  describe DisabilityDetailForm, type: :model do
     let(:trainee) { build(:trainee) }
 
     subject { described_class.new(trainee: trainee) }
@@ -17,7 +17,7 @@ module Diversities
         it "returns an error if its empty" do
           expect(subject.errors[:disability_ids]).to include(
             I18n.t(
-              "activemodel.errors.models.diversities/disability_detail.attributes.disability_ids.empty_disabilities",
+              "activemodel.errors.models.diversities/disability_detail_form.attributes.disability_ids.empty_disabilities",
             ),
           )
         end
