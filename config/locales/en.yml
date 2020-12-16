@@ -153,6 +153,8 @@ en:
               blank: "You must select a gender"
             nationality_ids:
               empty_nationalities: You must select at least one nationality
+            other_nationality1:
+              blank: If you have an additional nationality, select it from the list
         contact_detail_form:
           attributes:
             locale_code:

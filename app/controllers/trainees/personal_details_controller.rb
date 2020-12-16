@@ -8,6 +8,8 @@ module Trainees
       "date_of_birth(1i)" => "year",
     }.freeze
 
+    NATIONALITIES = %w[british irish].freeze
+
     def show
       authorize trainee
       render layout: "trainee_record"
@@ -16,12 +18,14 @@ module Trainees
     def edit
       authorize trainee
       nationalities
+      other_nationalities
       @personal_detail = PersonalDetailForm.new(trainee)
     end
 
     def update
       authorize trainee
       nationalities
+      other_nationalities
       personal_detail = PersonalDetailForm.new(trainee, personal_details_params)
 
       if personal_detail.save
@@ -39,13 +43,22 @@ module Trainees
     end
 
     def nationalities
-      @nationalities ||= Nationality.where(name: %w[british irish other])
+      @nationalities ||= Nationality.where(name: NATIONALITIES)
+    end
+
+    def other_nationalities
+      @other_nationality ||= Nationality.find_by(name: "other")
+      @other_nationalities ||= Nationality.where.not(name: NATIONALITIES)
     end
 
     def personal_details_params
       params.require(:personal_detail_form).permit(
         *PersonalDetailForm::FIELDS,
         *DOB_CONVERSION.keys,
+        :other,
+        :other_nationality1,
+        :other_nationality2,
+        :other_nationality3,
         nationality_ids: [],
       ).transform_keys do |key|
         DOB_CONVERSION.keys.include?(key) ? DOB_CONVERSION[key] : key

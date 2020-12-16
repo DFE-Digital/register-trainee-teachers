@@ -28,15 +28,23 @@
         <%= f.govuk_radio_button :gender, :other, label: { text: "Other" } %>
       <% end %>
 
-      <%= f.govuk_collection_check_boxes :nationality_ids,
-          format_default_nationalities(@nationalities),
-          :id,
-          :name,
-          :description,
-          legend: { text: "Nationality", size: 's' },
-          hint: { text: 'Select all that apply' },
-          classes: "nationality" %>
+      <%= f.govuk_check_boxes_fieldset :nationality_ids, legend: { text: "Nationality", size: 's' }, hint: { text: "Select all that apply" }, classes: "nationality" do %>
+        <% format_nationalities(@nationalities).each do |nationality| %>
+          <%= f.govuk_check_box(
+              :nationality_ids,
+              nationality.id,
+              multiple: true,
+              link_errors: true,
+              label: { text: nationality.name },
+              hint: { text: nationality.description }) %>
+        <% end %>
 
+        <%= f.govuk_check_box(:other, 1, 0, multiple: false, link_errors: true) do %>
+          <% [:other_nationality1, :other_nationality2, :other_nationality3].each_with_index do |field, index|%>
+            <%= render "nationality_select_field", form: f, field: field, index: index, nationalities: @other_nationalities %>
+          <% end %>
+        <% end %>
+      <% end %>
       <%= f.govuk_submit %>
     <% end %>
   </div>
