@@ -18,6 +18,8 @@ module PageObjects
       element :institution, "#degree-institution-field"
       element :graduation_year, "#degree-graduation-year-field"
       element :grade, ".degree-grade"
+      element :other_grade, "#degree-other-grade-field"
+
       element :country, "#degree-country-field"
 
       element :error_summary, ".govuk-error-summary"

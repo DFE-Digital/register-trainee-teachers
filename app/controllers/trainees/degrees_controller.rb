@@ -45,8 +45,14 @@ module Trainees
     end
 
     def degree_params
-      params.require(:degree).permit(:uk_degree, :non_uk_degree, :subject, :institution,
-                                     :graduation_year, :grade, :country)
+      degree_params = params.require(:degree).permit(
+        :uk_degree, :non_uk_degree, :subject, :institution, :graduation_year,
+        :grade, :other_grade, :country
+      )
+      # Blat other_grade if grade isn't 'Other'. Don't just ignore the param -
+      # other_grade may already be persisted to the database.
+      degree_params[:other_grade] = nil if degree_params[:grade] != "Other"
+      degree_params
     end
 
     def trainee
