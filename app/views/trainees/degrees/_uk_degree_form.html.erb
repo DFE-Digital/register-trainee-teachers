@@ -3,7 +3,7 @@
 
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">Degree Details</h1>
+  <h1 class="govuk-heading-l">Degree details</h1>
 
   <%= render_component FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:subject, subjects_options,
