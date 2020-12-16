@@ -1,3 +1,27 @@
+help:
+	@echo "Environment setup targets:"
+	@echo "  review     - configure for review app"
+	@echo "  qa"
+	@echo "  staging"
+	@echo "  production"
+	@echo ""
+	@echo "Commands:"
+	@echo "  deploy-plan - Print out the plan for the deploy, does not deploy."
+	@echo ""
+	@echo "Command Options:"
+	@echo "      env      - name of the environment being setup, set this when creating review apps"
+	@echo "      tag      - git sha of a built image, see builds in GitHub Actions"
+	@echo "      passcode - your authentication code for GOVUK PaaS, retrieve from"
+	@echo "                 https://login.london.cloud.service.gov.uk/passcode"
+	@echo ""
+	@echo "Examples:"
+	@echo "  Create a review app"
+	@echo "    You will need to retrieve the authentication code from GOVUK PaaS"
+	@echo "    visit https://login.london.cloud.service.gov.uk/passcode. Then run"
+	@echo "    deploy-plan to test:"
+	@echo ""
+	@echo "        make review env=REVIEW_APP_NAME deploy-plan tag=GIT_REF passcode=AUTHCODE"
+
 review:
 	echo "setting Review $(env) environment"
 	$(eval env_config=review)
