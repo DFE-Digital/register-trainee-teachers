@@ -140,3 +140,16 @@
 .autocomplete__option {
   padding: govuk-spacing(1);
 }
+
+.govuk-form-group--error {
+
+  .autocomplete__input {
+    border: $govuk-border-width-form-element-error solid $govuk-error-colour;
+  }
+
+  // Remove error colour when focused
+  .autocomplete__input:focus,
+  .autocomplete__input--focused {
+    border-color: $govuk-input-border-colour;
+  }
+}
