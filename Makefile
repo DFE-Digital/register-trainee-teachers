@@ -33,7 +33,6 @@ qa:
 	$(eval env=qa)
 	$(eval env_config=qa)
 
-
 staging:
 	$(eval env=staging)
 	$(eval env_config=staging)
@@ -59,3 +58,7 @@ terraform-init:
 	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teacher-data:$(tag))
 	$(if $(passcode), , $(error Missing environment variable "passcode"))
 	$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+
+console:
+	cf target -s bat-${env}
+	cf ssh register-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
