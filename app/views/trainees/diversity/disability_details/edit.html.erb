@@ -11,12 +11,12 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_with(model: @disability_detail, url: trainee_diversity_disability_detail_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
-      
-      <%= f.govuk_check_boxes_fieldset :disability_ids, 
+
+      <%= f.govuk_check_boxes_fieldset :disability_ids,
           legend: { text: t("components.page_titles.trainees.diversity.disabilities.edit"), tag: "h1", size: "l" },
           hint: { text: "Select all that apply" },
           classes: "disability" do %>
-        
+
         <% @disabilities.each_with_index do |disability, index|  %>
           <% if disability.name != Diversities::OTHER  %>
             <%= f.govuk_check_box :disability_ids, disability.id, label: { text: disability.name, size: "s" }, hint: { text: disability.description }, link_errors: index.zero? %>

@@ -90,6 +90,21 @@ FactoryBot.define do
     trait :qts_awarded do
       state { "qts_awarded" }
     end
+
+    trait :withdrawn_on_another_day do
+      withdraw_date { Faker::Date.in_date_period }
+    end
+
+    trait :withdrawn_for_specific_reason do
+      withdraw_date { Time.zone.today }
+      withdraw_reason { WithdrawalReasons::SPECIFIC.sample }
+    end
+
+    trait :withdrawn_for_another_reason do
+      withdraw_date { Faker::Date.in_date_period }
+      withdraw_reason { WithdrawalReasons::FOR_ANOTHER_REASON }
+      additional_withdraw_reason { Faker::Lorem.paragraph }
+    end
   end
 end
 

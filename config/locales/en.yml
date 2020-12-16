@@ -1,5 +1,8 @@
 en:
+  back: Back
   service_name: Register trainee teachers
+  cancel: Cancel and return to record
+  change: Change
   components:
     confirmation:
       diversity:
@@ -13,6 +16,22 @@ en:
           white_ethnic_group: White
           other_ethnic_group: Another ethnic group
           not_provided_ethnic_group: Not provided
+      withdrawal_details:
+        heading: Check withdrawal details
+        summary_title: Withdrawal details
+        withdraw_date_label: Date of withdrawal
+        withdraw_reason_label: Reason for withdrawal
+        reasons: &withdrawal_reasons
+          death: Death
+          exclusion: Exclusion
+          financial_reasons: Financial reasons
+          for_another_reason: For another reason
+          gone_into_employment: Gone into employment
+          health_reasons: Health reasons
+          personal_reasons: Other personal reasons and dropped out
+          transferred_to_another_provider: Transferred to another provider
+          unknown: Unknown
+          written_off_after_lapse_of_time: Written off after lapse of time
       not_provided: Not provided
       heading: Confirm %{section_title}
     programme_detail:
@@ -72,7 +91,16 @@ en:
           edit: Edit training details
         programme_details:
           edit: Programme details
+        withdrawal:
+          show: Withdraw trainee
+        confirm_withdrawal:
+          show: Check withdrawal details
   views:
+    trainees:
+      edit:
+        defer: Defer
+        withdraw: Withdraw
+        this_trainee: this trainee
     trainee_summary:
       contact_details:
         heading: Contact Details
@@ -83,7 +111,17 @@ en:
         description: including from Northern Ireland
       other:
         description: ""
+    confirm_withdrawal:
+      heading: Check withdrawal details
+      submit: Withdraw this trainee
     forms:
+      common:
+        today: Today
+        yesterday: Yesterday
+        specific_date: On another day
+        on_what_date: On what date?
+        for_example: For example
+        continue: Continue
       diversity_disclosures:
         label_names:
           diversity_disclosed: "Yes"
@@ -108,6 +146,13 @@ en:
         labels:
           disabled: "Yes, they shared that they’re disabled"
           not_disabled: "They shared that they’re not disabled"
+      withdrawal_reasons:
+        headings:
+          withdrawal_date: When did the trainee withdraw?
+          withdrawal_reason: Reason for leaving
+        labels:
+          additional_reason: Enter the reason for withdrawal
+          <<: *withdrawal_reasons
   activerecord:
     attributes:
       trainee:
@@ -225,5 +270,14 @@ en:
           attributes:
             degree_ids:
               empty_degrees: You must have at least one degree
+        withdrawal_form:
+          attributes:
+            withdraw_date:
+              blank: You must enter a withdraw date
+              invalid: You must enter a valid withdraw date
+            additional_withdraw_reason:
+              blank: You must enter a reason
+            withdraw_reason:
+              invalid: You must choose a reason
   page_headings:
     start_page: "Register trainee teachers"

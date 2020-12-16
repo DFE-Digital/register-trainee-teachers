@@ -104,9 +104,12 @@ ActiveRecord::Schema.define(version: 2020_12_17_112615) do
     t.date "outcome_date"
     t.date "programme_end_date"
     t.uuid "placement_assignment_dttp_id"
-    t.integer "state", default: 0
     t.string "trn"
     t.datetime "submitted_for_trn_at"
+    t.integer "state", default: 0
+    t.integer "withdraw_reason"
+    t.datetime "withdraw_date"
+    t.string "additional_withdraw_reason"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
