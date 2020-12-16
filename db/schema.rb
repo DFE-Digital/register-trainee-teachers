@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_143727) do
+ActiveRecord::Schema.define(version: 2020_12_16_094155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_143727) do
     t.integer "graduation_year"
     t.string "grade"
     t.string "country"
+    t.text "other_grade"
     t.index ["locale_code"], name: "index_degrees_on_locale_code"
     t.index ["trainee_id"], name: "index_degrees_on_trainee_id"
   end

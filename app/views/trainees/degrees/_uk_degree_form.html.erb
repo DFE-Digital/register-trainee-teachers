@@ -41,7 +41,13 @@
         classes: "degree-grade" ) do %>
 
     <% grades.map do |name| %>
-      <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: true %>
+      <% if name != "Other" %>
+        <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: true %>
+      <% else %>
+        <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: true do %>
+          <%= f.govuk_text_field :other_grade, label: { text: "Enter the degree grade" }, width: "two-thirds" %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
   <%= f.govuk_submit %>

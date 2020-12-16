@@ -54,6 +54,22 @@ RSpec.feature "Adding a degree" do
       end
     end
 
+    context "the user enters valid details, with an 'Other' grade" do
+      let(:other_grade) { "A different grade" }
+
+      background do
+        and_i_have_selected_uk_route
+        when_i_visit_the_degree_details_page
+        and_i_fill_in_the_form(other_grade: other_grade)
+        and_i_click_the_continue_button_on_the_degree_details_page
+        then_i_am_redirected_to_the_trainee_degrees_confirmation_page
+      end
+
+      scenario "records the other grade" do
+        expect(page).to have_text(other_grade)
+      end
+    end
+
     scenario "the user enters invalid details on UK degree details page" do
       and_i_have_selected_uk_route
       when_i_visit_the_degree_details_page
@@ -120,21 +136,28 @@ private
     @locale = "non_uk"
   end
 
-  def and_i_fill_in_the_form
+  def and_i_fill_in_the_form(other_grade: nil)
     if @locale == "uk"
-      and_i_fill_in_the_uk_form
+      and_i_fill_in_the_uk_form(other_grade)
     else
       and_i_fill_in_the_non_uk_form
     end
   end
 
-  def and_i_fill_in_the_uk_form
+  def and_i_fill_in_the_uk_form(other_grade)
     template = build(:degree, :uk_degree_with_details)
 
     degree_details_page.uk_degree.select(template.uk_degree)
     degree_details_page.subject.select(template.subject)
     degree_details_page.institution.select(template.institution)
-    degree_details_page.grade.choose(template.grade)
+
+    if other_grade
+      degree_details_page.grade.choose("Other")
+      degree_details_page.other_grade.fill_in(with: other_grade)
+    else
+      degree_details_page.grade.choose(template.grade)
+    end
+
     degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 

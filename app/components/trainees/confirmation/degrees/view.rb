@@ -46,7 +46,7 @@ module Trainees
               },
               {
                 key: "Grade",
-                value: degree.grade,
+                value: grade_for(degree),
                 action: govuk_link_to('Change<span class="govuk-visually-hidden"> grade</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
               },
             ]
@@ -80,6 +80,14 @@ module Trainees
           return t("components.degrees.add_a_degree") if degrees.empty?
 
           t("components.degrees.add_another_degree")
+        end
+
+      private
+
+        def grade_for(degree)
+          return degree.grade += " (#{degree.other_grade})" if degree.other_grade.present?
+
+          degree.grade
         end
       end
     end
