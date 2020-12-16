@@ -68,8 +68,8 @@ jobs:
       - name: Download app configuration file
         working-directory: terraform
         run: |
-          echo $APP_SECRETS | base64 -d >> ./workspace-variables/app_secrets.yml
-          echo $INFRA_SECRETS | base64 -d >> ./workspace-variables/infra_secrets.yml
+          echo "$APP_SECRETS" | base64 -d >> ./workspace-variables/app_secrets.yml
+          echo "$INFRA_SECRETS" | base64 -d >> ./workspace-variables/infra_secrets.yml
         env:
           APP_SECRETS:   ${{ secrets[format('APP_SECRETS_{0}', env.DEPLOY_ENV)] }}
           INFRA_SECRETS: ${{ secrets[format('INFRA_SECRETS_{0}', env.DEPLOY_ENV)] }}
