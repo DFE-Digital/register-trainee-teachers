@@ -17,7 +17,7 @@ module Trainees
           if degree.uk?
             "#{degree.uk_degree}: #{degree.subject.downcase}"
           else
-            "Non-UK #{degree.non_uk_degree}: #{degree.subject.downcase}"
+            "Non-UK #{degree.non_uk_degree == 'non_naric' ? 'degree' : degree.non_uk_degree}: #{degree.subject.downcase}"
           end
         end
 
@@ -53,11 +53,6 @@ module Trainees
           else
             [
               {
-                key: "Comparable UK degree",
-                value: degree.non_uk_degree,
-                action: govuk_link_to('Change<span class="govuk-visually-hidden"> comparable UK degree</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-              },
-              {
                 key: "Subject",
                 value: degree.subject,
                 action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
@@ -71,6 +66,11 @@ module Trainees
                 key: "Graduation year",
                 value: degree.graduation_year,
                 action: govuk_link_to('Change<span class="govuk-visually-hidden"> graduation year</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
+              },
+              {
+                key: "Degree type",
+                value: degree.non_uk_degree == "non_naric" ? "NARIC not provided" : degree.non_uk_degree,
+                action: govuk_link_to('Change<span class="govuk-visually-hidden"> degree type</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
               },
             ]
           end

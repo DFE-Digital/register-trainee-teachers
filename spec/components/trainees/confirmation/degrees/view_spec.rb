@@ -68,10 +68,10 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
         expect(component.find(".app-summary-card__title")).to have_text(expected_title)
       end
 
-      it_behaves_like summary_list_row, :non_uk_degree, "comparable UK degree"
       it_behaves_like summary_list_row, :subject, "subject"
       it_behaves_like summary_list_row, :country, "country"
       it_behaves_like summary_list_row, :graduation_year, "graduation year"
+      it_behaves_like summary_list_row, :non_uk_degree, "degree type"
     end
 
     context "when trainee has multiple Non-UK degrees" do
