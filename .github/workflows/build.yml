@@ -27,11 +27,6 @@ jobs:
       DB_HOSTNAME: localhost
 
     steps:
-    - uses: softprops/turnstyle@v1
-      name: Wait for other runs
-      env:
-        GITHUB_TOKEN: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
-
     - uses: actions/checkout@v2
     - name: Get values for current commit
       id: set_env
