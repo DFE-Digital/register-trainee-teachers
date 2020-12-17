@@ -45,7 +45,7 @@ module Dttp
           described_class.call(trainee: trainee, trainee_creator_dttp_id: trainee_creator_dttp_id)
         }.to change(trainee, :dttp_id).to(contact_entity_id).and change(trainee, :placement_assignment_dttp_id).to(
           placement_assignmentt_entity_id,
-        ).and change(trainee, :trn_requested_at).to(time_now)
+        ).and change(trainee, :submitted_for_trn_at).to(time_now)
       end
     end
   end

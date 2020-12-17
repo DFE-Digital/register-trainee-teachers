@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_094155) do
+ActiveRecord::Schema.define(version: 2020_12_17_112615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,8 +104,9 @@ ActiveRecord::Schema.define(version: 2020_12_16_094155) do
     t.date "outcome_date"
     t.date "programme_end_date"
     t.uuid "placement_assignment_dttp_id"
+    t.integer "state", default: 0
     t.string "trn"
-    t.datetime "trn_requested_at"
+    t.datetime "submitted_for_trn_at"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"

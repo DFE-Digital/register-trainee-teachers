@@ -6,7 +6,7 @@ describe RetrieveTrnJob do
   include ActiveJob::TestHelper
 
   let(:trn) { nil }
-  let(:trainee) { create(:trainee, :trn_requested) }
+  let(:trainee) { create(:trainee, :submitted_for_trn) }
 
   before do
     allow(Dttp::RetrieveTrn).to receive(:call).with(trainee: trainee).and_return(trn)
@@ -37,7 +37,7 @@ describe RetrieveTrnJob do
     end
 
     context "after 2 days of polling" do
-      let(:trainee) { create(:trainee, trn_requested_at: 2.days.ago) }
+      let(:trainee) { create(:trainee, submitted_for_trn_at: 2.days.ago) }
 
       it "doesn't queue another job after 2 days have passed without a TRN" do
         described_class.perform_now(trainee.id)
@@ -46,9 +46,9 @@ describe RetrieveTrnJob do
     end
   end
 
-  context "the trainee attribute trn_requested_at is nil" do
+  context "the trainee attribute submitted_for_trn_at is nil" do
     let(:trainee) { create(:trainee) }
-    let(:error_msg) { "Trainee#trn_requested_at is nil - it should be timestamped (id: #{trainee.id})" }
+    let(:error_msg) { "Trainee#submitted_for_trn_at is nil - it should be timestamped (id: #{trainee.id})" }
 
     it "raises a TraineeAttributeError" do
       expect {

@@ -15,6 +15,7 @@ class RetrieveTrnJob < ApplicationJob
     trn = Dttp::RetrieveTrn.call(trainee: trainee)
 
     if trn
+      # TODO: make this a state transition
       trainee.update!(trn: trn)
     elsif continue_polling?(trainee)
       RetrieveTrnJob.set(wait: POLL_DELAY).perform_later(trainee.id)
@@ -24,10 +25,10 @@ class RetrieveTrnJob < ApplicationJob
 private
 
   def continue_polling?(trainee)
-    if trainee.trn_requested_at.nil?
-      raise TraineeAttributeError, "Trainee#trn_requested_at is nil - it should be timestamped (id: #{trainee.id})"
+    if trainee.submitted_for_trn_at.nil?
+      raise TraineeAttributeError, "Trainee#submitted_for_trn_at is nil - it should be timestamped (id: #{trainee.id})"
     end
 
-    trainee.trn_requested_at > MAX_POLL_DURATION.ago
+    trainee.submitted_for_trn_at > MAX_POLL_DURATION.ago
   end
 end
