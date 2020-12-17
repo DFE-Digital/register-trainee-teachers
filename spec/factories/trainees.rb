@@ -67,10 +67,12 @@ FactoryBot.define do
     trait :submitted_for_trn do
       state { "submitted_for_trn" }
       submitted_for_trn_at { Time.zone.now }
+      dttp_id { SecureRandom.uuid }
     end
 
     trait :trn_received do
       state { "trn_received" }
+      dttp_id { SecureRandom.uuid }
     end
 
     trait :recommended_for_qts do
