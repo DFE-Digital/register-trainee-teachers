@@ -46,19 +46,37 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
   end
 
   describe "#ethnic_group_content" do
-    before do
-      allow(I18n).to receive(:t).with("components.confirmation.diversity.ethnic_groups.#{trainee.ethnic_group}").and_return("New ethnic group")
+    let(:trainee) { build(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian]) }
+    let(:expected_locale_key) { t("components.confirmation.diversity.ethnic_groups.asian_ethnic_group") }
+
+    subject { Trainees::Confirmation::Diversity::View.new(trainee: trainee) }
+
+    it "returns the ethnic_group if the ethnic_background is not provided" do
+      expect(subject.ethnic_group_content).to eq(expected_locale_key)
     end
 
-    it "returns just the ethnic if not ethnic group is present or no provided" do
-      component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
-      expect(component.ethnic_group_content).to eq "New ethnic group"
-    end
+    context "ethnic background" do
+      let(:ethnic_background) { Diversities::ANOTHER_ETHNIC_BACKGROUND }
+      let(:trainee) { build(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:other], ethnic_background: ethnic_background) }
+      let(:expected_locale_key) { t("components.confirmation.diversity.ethnic_groups.other_ethnic_group") }
 
-    it "returns the ethnic background" do
-      trainee.ethnic_background = "Ethnic background"
-      component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
-      expect(component.ethnic_group_content).to eq "New ethnic group (Ethnic background)"
+      context "when ethnic_background provided" do
+        it "returns the ethnic_background alongside the ethnic_group" do
+          expect(subject.ethnic_group_content).to eq("#{expected_locale_key} (#{ethnic_background})")
+        end
+      end
+
+      context "when additional_ethnic_background provided" do
+        let(:additional_background) { "some additional background" }
+
+        before do
+          trainee.additional_ethnic_background = additional_background
+        end
+
+        it "returns the additional_ethnic_background alongside the ethnic_group" do
+          expect(subject.ethnic_group_content).to eq("#{expected_locale_key} (#{additional_background})")
+        end
+      end
     end
   end
 

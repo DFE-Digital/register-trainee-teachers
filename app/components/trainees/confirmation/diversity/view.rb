@@ -44,7 +44,7 @@ module Trainees
           value = I18n.t("components.confirmation.diversity.ethnic_groups.#{trainee.ethnic_group}")
 
           if trainee.ethnic_background.present? && trainee.ethnic_background != Diversities::NOT_PROVIDED
-            value += " (#{trainee.ethnic_background})"
+            value += " (#{trainee_ethnic_background})"
           end
           value
         end
@@ -94,6 +94,10 @@ module Trainees
 
         def disability_name_for(disability)
           disability.name.downcase
+        end
+
+        def trainee_ethnic_background
+          trainee.additional_ethnic_background.presence || trainee.ethnic_background
         end
       end
     end
