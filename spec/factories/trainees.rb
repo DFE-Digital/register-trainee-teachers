@@ -64,8 +64,31 @@ FactoryBot.define do
       outcome_date { Faker::Date.in_date_period }
     end
 
-    trait :trn_requested do
-      trn_requested_at { Time.zone.now }
+    trait :submitted_for_trn do
+      state { "submitted_for_trn" }
+      submitted_for_trn_at { Time.zone.now }
+      dttp_id { SecureRandom.uuid }
+    end
+
+    trait :trn_received do
+      state { "trn_received" }
+      dttp_id { SecureRandom.uuid }
+    end
+
+    trait :recommended_for_qts do
+      state { "recommended_for_qts" }
+    end
+
+    trait :withdrawn do
+      state { "withdrawn" }
+    end
+
+    trait :deferred do
+      state { "deferred" }
+    end
+
+    trait :qts_awarded do
+      state { "qts_awarded" }
     end
   end
 end

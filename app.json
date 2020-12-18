@@ -1,7 +1,7 @@
 {
   "name": "register-trainee-teachers",
   "scripts": {
-    "postdeploy": "bundle exec rake db:schema:load db:seed"
+    "postdeploy": "bundle exec rake db:schema:load db:seed example_data:generate"
   },
   "env": {
     "LANG": {

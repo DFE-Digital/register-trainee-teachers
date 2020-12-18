@@ -6,7 +6,7 @@ module Dttp
   describe RetrieveTrn do
     describe "#call" do
       let(:contact_entity_id) { SecureRandom.uuid }
-      let(:trainee) { create(:trainee, :trn_requested, dttp_id: contact_entity_id) }
+      let(:trainee) { create(:trainee, :submitted_for_trn, dttp_id: contact_entity_id) }
       let(:path) { "/contacts(#{contact_entity_id})?$select=dfe_trn" }
       let(:trn) { "trn number" }
 

@@ -84,8 +84,6 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "factory_bot_rails"
-
   gem "timecop", "~> 0.9.2"
 end
 
@@ -104,7 +102,6 @@ group :development do
 end
 
 group :test do
-  gem "faker"
   # Headless browser testing kit
   gem "cuprite", "~> 0.11"
   gem "webdrivers", "~> 4.4"
@@ -117,6 +114,11 @@ group :test do
   gem "site_prism", "~> 3.7"
 
   gem "webmock"
+end
+
+group :development, :test, :review, :qa do
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
