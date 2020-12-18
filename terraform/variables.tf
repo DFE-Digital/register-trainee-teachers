@@ -38,6 +38,8 @@ variable infra_secrets_file { default = "./terraform/workspace-variables/infra_s
 
 variable env_config {}
 
+variable paas_worker_app_stopped { default = false }
+
 variable statuscake_alerts { type = map }
 
 

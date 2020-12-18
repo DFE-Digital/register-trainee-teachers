@@ -20,3 +20,8 @@ review:
   <<: *default
   RAILS_ENV: review
   RACK_ENV: review
+
+pen:
+  <<: *default
+  RAILS_ENV: pen
+  RACK_ENV: pen
