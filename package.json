@@ -9,7 +9,7 @@
     "@rails/webpacker": "^5.2.1",
     "accessible-autocomplete": "^2.0.3",
     "core-js": "^3.8.1",
-    "govuk-frontend": "^3.10.1",
+    "govuk-frontend": "^3.10.2",
     "rails-ujs": "^5.2.4",
     "serialize-javascript": "^5.0.1",
     "set-value": "^3.0.2",
