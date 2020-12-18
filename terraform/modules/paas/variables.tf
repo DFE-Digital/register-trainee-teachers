@@ -27,6 +27,8 @@ variable app_secrets_variable { type = map } #secrets from yml file
 
 variable app_config_variable { type = map } #from yml file
 
+variable worker_app_stopped { default = false }
+
 locals {
   postgres_service_name    = "register-postgres-${var.app_environment}"
   redis_service_name       = "register-redis-${var.app_environment}"

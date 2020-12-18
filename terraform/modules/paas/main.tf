@@ -52,16 +52,17 @@ resource cloudfoundry_app web_app {
 
 
 resource cloudfoundry_app worker_app {
-  name              = local.worker_app_name
-  command           = local.worker_app_start_command
-  docker_image      = var.app_docker_image
-  health_check_type = "process"
-  instances         = var.worker_app_instances
-  memory            = var.worker_app_memory
-  space             = data.cloudfoundry_space.space.id
-  timeout           = var.app_start_timeout
-  environment       = local.app_environment
-  docker_credentials         = var.docker_credentials
+  name               = local.worker_app_name
+  command            = local.worker_app_start_command
+  docker_image       = var.app_docker_image
+  health_check_type  = "process"
+  instances          = var.worker_app_instances
+  memory             = var.worker_app_memory
+  space              = data.cloudfoundry_space.space.id
+  timeout            = var.app_start_timeout
+  environment        = local.app_environment
+  docker_credentials = var.docker_credentials
+  stopped            = var.worker_app_stopped
 
   service_binding {
     service_instance = cloudfoundry_service_instance.redis_instance.id
