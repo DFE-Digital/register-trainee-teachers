@@ -2,7 +2,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l"><%= heading %></h1>
 
-    <%= render_component(component) %>
+    <%= render(component) %>
 
     <%= form_with(model: @confirm_detail, url: resource_confirm_update_path, method: :put, local: true) do |f| %>
       <%= f.govuk_check_boxes_fieldset :mark_as_completed, multiple: false, legend: { text: '' } do %>

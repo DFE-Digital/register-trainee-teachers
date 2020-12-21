@@ -6,23 +6,23 @@ module Trainees
     module Diversity
       class ViewPreview < ViewComponent::Preview
         def not_disclosed
-          render_component(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_no_disclosure))
+          render(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_no_disclosure))
         end
 
         def disclosed_with_no_ethnic_group
-          render_component(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_no_ethnic_group))
+          render(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_no_ethnic_group))
         end
 
         def disclosed_with_ethnic_group
-          render_component(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_ethnic_group))
+          render(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_ethnic_group))
         end
 
         def disclosed_with_no_disabilities
-          render_component(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_no_disabilities))
+          render(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_no_disabilities))
         end
 
         def disclosed_with_disabilities
-          render_component(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_disabilities))
+          render(Trainees::Confirmation::Diversity::View.new(trainee: mock_trainee_with_disclosure_and_disabilities))
         end
 
       private

@@ -54,5 +54,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = FeatureService.enabled?("use_ssl")
+  config.force_ssl = Settings.features.use_ssl
 end

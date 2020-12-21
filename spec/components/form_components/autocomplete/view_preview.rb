@@ -4,23 +4,23 @@ module FormComponents
   module Autocomplete
     class ViewPreview < ViewComponent::Preview
       def enhancing_select_list
-        render_component(FormComponents::Autocomplete::View.new(form_field: setup_form))
+        render(FormComponents::Autocomplete::View.new(form_field: setup_form))
       end
 
       def with_custom_class
-        render_component(FormComponents::Autocomplete::View.new(form_field: setup_form, classes: "app-testing-class"))
+        render(FormComponents::Autocomplete::View.new(form_field: setup_form, classes: "app-testing-class"))
       end
 
       def with_custom_html_attributes
-        render_component(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "test-html-attribute" => "testing" }))
+        render(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "test-html-attribute" => "testing" }))
       end
 
       def with_show_all_values
-        render_component(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "data-show-all-values" => true }))
+        render(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "data-show-all-values" => true }))
       end
 
       def with_default_value
-        render_component(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "data-default-value" => "France" }))
+        render(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "data-default-value" => "France" }))
       end
 
     private

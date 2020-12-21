@@ -5,7 +5,7 @@
 
   <h1 class="govuk-heading-l">Degree details</h1>
 
-  <%= render_component FormComponents::Autocomplete::View.new(
+  <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: 'Degree subject', size: 's' },
                                           hint: { text: 'Search for the closest matching subject' }),
@@ -14,7 +14,7 @@
     }
   )%>
 
-  <%= render_component FormComponents::Autocomplete::View.new(
+  <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :name,
                                           :name, label: { text: "Type of degree", size: 's'},
                                           hint: { text: "For example, BA, BSc or other (please specify)" } ),
@@ -23,7 +23,7 @@
     }
   ) %>
 
-  <%= render_component FormComponents::Autocomplete::View.new(
+  <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:institution, institutions_options, :name,
                                           :name, label: { text: "Institution", size: 's' },
                                           ),

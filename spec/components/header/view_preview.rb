@@ -3,15 +3,15 @@
 module Header
   class ViewPreview < ViewComponent::Preview
     def with_custom_service_name
-      render_component(Header::View.new("Hello"))
+      render(Header::View.new("Hello"))
     end
 
     def with_our_service_name
-      render_component(Header::View.new(I18n.t("service_name")))
+      render(Header::View.new(I18n.t("service_name")))
     end
 
     def with_a_user_signed_in
-      render_component(Header::View.new(I18n.t("service_name"), { first_name: "Ted" }))
+      render(Header::View.new(I18n.t("service_name"), { first_name: "Ted" }))
     end
 
   private

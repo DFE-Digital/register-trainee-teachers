@@ -1,7 +1,7 @@
-<%= render_component PageTitle::View.new(title: "trn_submissions.show") %>
+<%= render PageTitle::View.new(title: "trn_submissions.show") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render_component GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLink.new(
     text: 'All records',
     href: trainees_path
   ) %>

@@ -1,10 +1,10 @@
-<%= render_component PageTitle::View.new(
+<%= render PageTitle::View.new(
   title: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")),
   has_errors: @ethnic_background.errors.present?
 ) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render_component GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLink.new(
     text: "Back",
     href: edit_trainee_diversity_ethnic_group_path(@trainee)
   ) %>

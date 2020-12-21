@@ -1,4 +1,4 @@
-<%= render_component PageTitle::View.new(title: (@trainee.degrees.size > 1 ? "Add another degree" : "Add undergraduate degree"), has_errors: @degree.errors.present?) %>
+<%= render PageTitle::View.new(title: (@trainee.degrees.size > 1 ? "Add another degree" : "Add undergraduate degree"), has_errors: @degree.errors.present?) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

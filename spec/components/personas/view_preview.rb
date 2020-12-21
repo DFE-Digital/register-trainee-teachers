@@ -3,7 +3,7 @@
 module Personas
   class ViewPreview < ViewComponent::Preview
     def single_profile
-      render_component(Personas::View.new(persona: mock_persona))
+      render(Personas::View.new(persona: mock_persona))
     end
 
   private

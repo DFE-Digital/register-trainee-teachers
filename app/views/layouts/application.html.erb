@@ -25,7 +25,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= render_component(Header::View.new(I18n.t('service_name'), @current_user)) %>
+    <%= render(Header::View.new(I18n.t('service_name'), @current_user)) %>
 
     <div class="app-phase-banner">
       <div class="govuk-width-container">

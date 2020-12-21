@@ -1,15 +1,15 @@
-<%= render_component PageTitle::View.new(title: "trainees.index") %>
+<%= render PageTitle::View.new(title: "trainees.index") %>
 
 <h1 class="govuk-heading-xl">Trainee records</h1>
 
 <p class="govuk-body">
-  <%= render_component GovukComponent::StartNowButton.new(
+  <%= render GovukComponent::StartNowButton.new(
   text: 'Add a trainee',
   href: new_trainee_path ) %>
 </p>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= render_component ApplicationRecordCard::View.with_collection(@trainees) %>
+    <%= render ApplicationRecordCard::View.with_collection(@trainees) %>
   </div>
 </div>

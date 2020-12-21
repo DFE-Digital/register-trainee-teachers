@@ -2,7 +2,7 @@
 
 class TaskList::ViewPreview < ViewComponent::Preview
   def default_state
-    render_component TaskList::View.new do |component|
+    render TaskList::View.new do |component|
       component.slot(
         :row,
         task_name: "Personal details",
@@ -13,7 +13,7 @@ class TaskList::ViewPreview < ViewComponent::Preview
   end
 
   def with_multiple_status
-    render_component TaskList::View.new do |component|
+    render TaskList::View.new do |component|
       component.slot(
         :row,
         task_name: "Personal details",

@@ -1,7 +1,7 @@
-<%= render_component PageTitle::View.new(title: I18n.t("components.confirmation.heading", section_title: confirm_section_title)) %>
+<%= render PageTitle::View.new(title: I18n.t("components.confirmation.heading", section_title: confirm_section_title)) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render_component GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLink.new(
     text: 'Back to overview',
     href: trainee_path(@trainee)
   ) %>

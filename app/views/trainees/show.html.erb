@@ -1,7 +1,7 @@
-<%= render_component PageTitle::View.new(title: "trainees.show", has_errors: @trainee.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.show", has_errors: @trainee.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render_component GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLink.new(
     text: 'All records',
     href: trainees_path
   ) %>
@@ -16,7 +16,7 @@
 
     <h2 class="govuk-heading-m">Training details</h2>
 
-    <%= render_component TaskList::View.new(classes: "record-setup") do |component|
+    <%= render TaskList::View.new(classes: "record-setup") do |component|
       component.slot(
         :row,
         task_name: 'Training details',
@@ -40,7 +40,7 @@
 
     <h2 class="govuk-heading-m">About the trainee</h2>
 
-    <%= render_component TaskList::View.new do |component|
+    <%= render TaskList::View.new do |component|
       component.slot(
         :row,
         task_name: 'Personal details',

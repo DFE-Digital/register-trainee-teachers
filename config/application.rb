@@ -39,9 +39,6 @@ module RegisterTraineeTeachers
     config.view_component.preview_route = "/view_components"
     config.view_component.show_previews = !Settings.features.use_dfe_sign_in
 
-    # Force us to use `render_component` when rendering components instead of use `render`
-    config.view_component.render_monkey_patch_enabled = false
-
     config.middleware.use Rack::Deflater
     config.active_job.queue_adapter = :sidekiq
 
