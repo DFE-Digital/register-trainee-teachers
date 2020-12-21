@@ -50,7 +50,7 @@ module Diversities
     def disabilities
       return trainee.disability_ids if attributes[:disability_ids].blank?
 
-      attributes[:disability_ids].reject(&:blank?).map(&:to_i)
+      attributes[:disability_ids].reject(&:blank?)
     end
 
     def other_trainee_disability

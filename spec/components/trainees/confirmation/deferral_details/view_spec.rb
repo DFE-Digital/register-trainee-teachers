@@ -9,7 +9,7 @@ module Trainees
 
       alias_method :component, :page
 
-      let(:trainee) { Trainee.new(id: 1, defer_date: Time.zone.yesterday) }
+      let(:trainee) { build(:trainee, defer_date: Time.zone.yesterday) }
 
       before do
         render_inline(View.new(trainee))

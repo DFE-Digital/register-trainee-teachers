@@ -43,6 +43,11 @@ FactoryBot.define do
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
 
+    trait :with_international_address do
+      locale_code { :non_uk }
+      international_address { Faker::Address.full_address }
+    end
+
     trait :with_programme_details do
       subject { Dttp::CodeSets::ProgrammeSubjects::MAPPING.keys.sample }
       age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
@@ -108,6 +113,10 @@ FactoryBot.define do
       withdraw_date { Faker::Date.in_date_period }
       withdraw_reason { WithdrawalReasons::FOR_ANOTHER_REASON }
       additional_withdraw_reason { Faker::Lorem.paragraph }
+    end
+
+    after :build do |trainee|
+      trainee.id = SecureRandom.uuid
     end
   end
 end

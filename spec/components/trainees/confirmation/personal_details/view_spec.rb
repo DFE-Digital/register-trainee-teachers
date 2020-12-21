@@ -9,7 +9,7 @@ module Trainees
         alias_method :component, :page
 
         context "when data has not been provided" do
-          let(:trainee) { build(:trainee, id: 1, first_names: nil, date_of_birth: nil, gender: nil) }
+          let(:trainee) { build(:trainee, first_names: nil, date_of_birth: nil, gender: nil) }
 
           before do
             render_inline(View.new(trainee: trainee))
@@ -27,7 +27,7 @@ module Trainees
         end
 
         context "when data has been provided" do
-          let(:trainee) { build(:trainee, id: 1) }
+          let(:trainee) { build(:trainee) }
 
           before do
             allow(trainee).to receive(:nationalities).and_return([OpenStruct.new(name: "British")])

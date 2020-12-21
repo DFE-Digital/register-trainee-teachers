@@ -109,7 +109,7 @@ private
       nationalities += [attributes[:other_nationality1], attributes[:other_nationality2], attributes[:other_nationality3]]
     end
 
-    nationalities&.reject(&:blank?)&.uniq&.map(&:to_i)
+    nationalities&.reject(&:blank?)&.uniq
   end
 
   def date_of_birth_valid
