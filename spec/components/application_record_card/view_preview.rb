@@ -3,15 +3,15 @@
 module ApplicationRecordCard
   class ViewPreview < ViewComponent::Preview
     def single_card
-      render_component(ApplicationRecordCard::View.new(record: mock_trainee))
+      render(ApplicationRecordCard::View.new(record: mock_trainee))
     end
 
     def multiple_cards
-      render_component(ApplicationRecordCard::View.with_collection(mock_multiple_trainees))
+      render(ApplicationRecordCard::View.with_collection(mock_multiple_trainees))
     end
 
     def single_card_with_incomplete_data
-      render_component(ApplicationRecordCard::View.new(record: Trainee.new(id: 1)))
+      render(ApplicationRecordCard::View.new(record: Trainee.new(id: 1)))
     end
 
   private

@@ -16,7 +16,7 @@
   </div>
 
   <div class="app-application-card_col">
-    <%= render_component GovukComponent::Tag.new(text: status, colour: status_colour) %>
+    <%= render GovukComponent::Tag.new(text: status, colour: status_colour) %>
     <%= updated_at %>
   </div>
 </div>

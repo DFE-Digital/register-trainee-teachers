@@ -6,11 +6,11 @@ module Trainees
   module RecordDetails
     class ViewPreview < ViewComponent::Preview
       def default
-        render_component(Trainees::RecordDetails::View.new(mock_trainee("ABC-1234-XYZ")))
+        render(Trainees::RecordDetails::View.new(mock_trainee("ABC-1234-XYZ")))
       end
 
       def with_no_trainee_id
-        render_component(Trainees::RecordDetails::View.new(mock_trainee(nil)))
+        render(Trainees::RecordDetails::View.new(mock_trainee(nil)))
       end
 
     private

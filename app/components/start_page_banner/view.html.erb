@@ -8,7 +8,7 @@
         Register trainees with the Department for Education and record the outcome of their training.
       </p>
       <div class="app-start-page-banner__actions">
-        <%= render_component GovukComponent::StartNowButton.new( text: 'Get started',
+        <%= render GovukComponent::StartNowButton.new( text: 'Get started',
                                                                  href: trainees_path,
                                                                  classes: 'app-button--inverted app-start-page-banner__button') %>
         <p class="govuk-body app-body--inverted">

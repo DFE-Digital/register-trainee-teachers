@@ -3,7 +3,7 @@
 module TabNavigation
   class ViewPreview < ViewComponent::Preview
     def default
-      render_component(View.new(items: items))
+      render(View.new(items: items))
     end
 
     def with_current_item_highlited
@@ -11,7 +11,7 @@ module TabNavigation
         { name: "Training details", url: mock_link, current: true },
       )
 
-      render_component(View.new(items: with_current))
+      render(View.new(items: with_current))
     end
 
   private

@@ -1,15 +1,15 @@
 <div class="record-outcome-action-bar">
-  <%= render_component Trainees::RecordActions::View.new(@trainee) %>
+  <%= render Trainees::RecordActions::View.new(@trainee) %>
 </div>
 
 <h2 class="govuk-heading-m">Trainee record</h2>
 
 <div class="record-details">
-  <%= render_component Trainees::RecordDetails::View.new(@trainee) %>
+  <%= render Trainees::RecordDetails::View.new(@trainee) %>
 </div>
 
 <h2 class="govuk-heading-m">Programme details</h2>
 
 <div class="programme-details"> 
-  <%= render_component Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
+  <%= render Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
 </div>

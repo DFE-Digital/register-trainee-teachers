@@ -1,7 +1,7 @@
-<%= render_component PageTitle::View.new(title: "trainees.diversity.confirm") %>
+<%= render PageTitle::View.new(title: "trainees.diversity.confirm") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render_component GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLink.new(
     text: 'Back to overview',
     href: trainee_path(@trainee)
   ) %>

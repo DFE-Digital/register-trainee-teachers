@@ -1,9 +1,9 @@
 <%= content_for :body_class, "app-start-page" %>
 
-<%= render_component PageTitle::View.new %>
+<%= render PageTitle::View.new %>
 
 <%= content_for :start_page_banner do %>
-  <%= render_component StartPageBanner::View.new %>
+  <%= render StartPageBanner::View.new %>
 <% end %>
 
 <div class="govuk-grid-row govuk-main-wrapper--auto-spacing">

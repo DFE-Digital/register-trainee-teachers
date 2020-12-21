@@ -1,7 +1,7 @@
-<%= render_component PageTitle::View.new(title: "trainees.programme_details.edit", has_errors: @programme_detail.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.programme_details.edit", has_errors: @programme_detail.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render_component GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLink.new(
     text: 'Back',
     href: trainee_path(@trainee)
   ) %>
@@ -14,7 +14,7 @@
 
       <h1 class="govuk-heading-l">Programme details</h1>
 
-      <%= render_component FormComponents::Autocomplete::View.new(
+      <%= render FormComponents::Autocomplete::View.new(
         form_field: f.govuk_collection_select(:subject, programme_subjects_options,
                                               :name, :name, label: { text: 'Subject', size: 's' },
                                               hint: { text: 'Search for the closest matching subject' }),
@@ -32,7 +32,7 @@
         <%= f.govuk_radio_button(:main_age_range,
                                  :other,
                                  label: { text: "Other age range"} ) do %>
-          <%= render_component FormComponents::Autocomplete::View.new(
+          <%= render FormComponents::Autocomplete::View.new(
             form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
                                                   :name,
                                                   :name,

@@ -6,7 +6,7 @@ module Trainees
   module OutcomeDetails
     class ViewPreview < ViewComponent::Preview
       def default
-        render_component(OutcomeDetails::View.new(mock_trainee))
+        render(OutcomeDetails::View.new(mock_trainee))
       end
 
     private

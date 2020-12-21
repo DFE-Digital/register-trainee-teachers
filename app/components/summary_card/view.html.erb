@@ -11,7 +11,7 @@
     <% end %>
   </header>
   <div class="app-summary-card__body">
-    <%= render_component GovukComponent::SummaryList.new do |component| %>
+    <%= render GovukComponent::SummaryList.new do |component| %>
       <% rows.each do |row| %>
         <% component.slot(
              :row,

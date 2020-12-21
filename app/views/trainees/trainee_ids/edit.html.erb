@@ -1,7 +1,7 @@
-<%= render_component PageTitle::View.new(title: "trainees.trainee_ids.edit") %>
+<%= render PageTitle::View.new(title: "trainees.trainee_ids.edit") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render_component GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLink.new(
     text: 'Back',
     href: edit_trainee_path(@trainee)
   ) %>

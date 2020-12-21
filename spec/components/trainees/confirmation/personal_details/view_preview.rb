@@ -5,12 +5,12 @@ module Trainees
     module PersonalDetails
       class ViewPreview < ViewComponent::Preview
         def default
-          render_component(Trainees::Confirmation::PersonalDetails::View.new(trainee: trainee))
+          render(Trainees::Confirmation::PersonalDetails::View.new(trainee: trainee))
         end
 
         def with_multiple_nationalities
           trainee.nationalities.push(OpenStruct.new(name: "Irish")).push(OpenStruct.new(name: "Australian"))
-          render_component(Trainees::Confirmation::PersonalDetails::View.new(trainee: trainee))
+          render(Trainees::Confirmation::PersonalDetails::View.new(trainee: trainee))
         end
 
       private

@@ -5,7 +5,7 @@
         <%= row.task_name %>
       </a>
       <% if any_row_has_status? %>
-        <%= render_component GovukComponent::Tag.new(text: row.status, colour: row.get_status_colour) %>
+        <%= render GovukComponent::Tag.new(text: row.status, colour: row.get_status_colour) %>
       <% end %>
     <% end %>
   <% end %>
