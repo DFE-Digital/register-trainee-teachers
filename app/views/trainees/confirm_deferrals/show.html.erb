@@ -1,0 +1,24 @@
+<%= render PageTitle::View.new(title: "trainees.deferral_details.confirm") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(text: t("back"), href:  trainee_deferral_path(@trainee)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l">
+      <%= trainee_name(@trainee) %>
+    </span>
+    <h1 class="govuk-heading-l">Check deferral details</h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render Trainees::DeferralDetails::View.new(@trainee) %>
+
+    <%= form_with url: trainee_confirm_deferral_path(@trainee), method: :put, local: true do |f| %>
+      <%= f.govuk_submit "Defer this trainee" %>
+    <%- end -%>
+  </div>
+</div>

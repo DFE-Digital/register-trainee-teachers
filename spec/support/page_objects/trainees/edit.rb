@@ -11,6 +11,8 @@ module PageObjects
       element :record_outcome, ".govuk-button"
       element :withdraw, ".govuk-link.withdraw"
 
+      element :defer, ".govuk-link.defer"
+
       section :record_detail, PageObjects::Sections::Summaries::RecordDetail, ".record-details"
       section :programme_detail, PageObjects::Sections::Summaries::ProgrammeDetail, ".programme-details"
 

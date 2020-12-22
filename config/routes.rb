@@ -79,6 +79,9 @@ Rails.application.routes.draw do
 
       resource :confirm_withdrawal, only: %i[show update], path: "/withdraw/confirm"
       resource :withdrawal, only: %i[show update], path: "/withdraw"
+
+      resource :confirm_deferral, only: %i[show update], path: "/defer/confirm"
+      resource :deferral, only: %i[show update], path: "/defer"
     end
 
     member do
