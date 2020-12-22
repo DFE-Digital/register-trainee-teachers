@@ -1,5 +1,3 @@
-<h2 class="govuk-heading-m">Trainee details</h2>
-
 <div class="personal-details">
   <%= render Trainees::Confirmation::PersonalDetails::View.new(trainee: @trainee) %>
 </div>
@@ -11,10 +9,6 @@
 <div class="diversity-details">
   <%= render Trainees::Confirmation::Diversity::View.new(trainee: @trainee) %>
 </div>
-
-<h2 class="govuk-heading-m">Education</h2>
-
-<h3 class="govuk-heading-s">Degrees</h3>
 
 <div class="degree-details">
   <%= render Trainees::Confirmation::Degrees::View.new(trainee: @trainee, show_delete_button: true) %>
