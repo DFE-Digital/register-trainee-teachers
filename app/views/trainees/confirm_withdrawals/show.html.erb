@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.confirm_withdrawal.show") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(text: t("back"), href: edit_trainee_path(@trainee)) %>
+  <%= render GovukComponent::BackLink.new(text: t("back"), href: trainee_withdrawal_path(@trainee)) %>
 <% end %>
 
 <div class="govuk-grid-row">

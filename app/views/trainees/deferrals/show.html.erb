@@ -1,0 +1,28 @@
+<%= render PageTitle::View.new(title: "trainees.deferral.show", has_errors: @deferral.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(text: t(:back), href: edit_trainee_path(@trainee)) %>
+<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for(@deferral, url: trainee_deferral_path(@trainee), local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <span class="govuk-caption-l">
+        <%= trainee_name(@trainee) %>
+      </span>
+
+      <%= f.govuk_radio_buttons_fieldset(:defer_date_string, legend: { text: "When did the trainee defer?", tag: "h1", size: "l" }, classes: "deferral-date") do %>
+        <%= f.govuk_radio_button :defer_date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
+        <%= f.govuk_radio_button :defer_date_string, :yesterday, label: { text: t("views.forms.common.yesterday") } %>
+        <%= f.govuk_radio_button :defer_date_string, :other, label: { text: t("views.forms.common.specific_date") } do %>
+          <%= f.govuk_date_field :defer_date, legend: { text: t("views.forms.common.on_what_date"), size: 's' }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", edit_trainee_path(@trainee)) %></p>
