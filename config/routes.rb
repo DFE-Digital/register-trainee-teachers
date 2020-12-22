@@ -76,6 +76,9 @@ Rails.application.routes.draw do
       end
 
       resource :qts_recommendations, only: %i[create]
+
+      resource :confirm_withdrawal, only: %i[show update], path: "/withdraw/confirm"
+      resource :withdrawal, only: %i[show update], path: "/withdraw"
     end
 
     member do

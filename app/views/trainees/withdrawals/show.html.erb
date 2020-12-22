@@ -1,0 +1,48 @@
+<%= render PageTitle::View.new(title: "trainees.withdrawal.show", has_errors: @withdrawal_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(text: t(:back), href: edit_trainee_path(@trainee)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for(@withdrawal_form, url: trainee_withdrawal_path(@trainee), local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <span class="govuk-caption-l">
+        <%= trainee_name(@trainee) %>
+      </span>
+
+      <%= f.govuk_radio_buttons_fieldset(:withdraw_date_string, legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_date"), tag: "h1", size: "l" }, classes: "withdraw-date") do %>
+        <%= f.govuk_radio_button :withdraw_date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
+        <%= f.govuk_radio_button :withdraw_date_string, :yesterday, label: { text: t("views.forms.common.yesterday") } %>
+        <%= f.govuk_radio_button :withdraw_date_string, :other, label: { text: t("views.forms.common.specific_date") } do %>
+          <%= f.govuk_date_field :withdraw_date, legend: { text: t("views.forms.common.on_what_date"), size: 's' }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_radio_buttons_fieldset(:withdraw_reason,legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_reason"), tag: "h1", size: "l" }) do %>
+        <% WithdrawalReasons::SPECIFIC.each_with_index do |withdrawal_reason, index| %>
+          <%= f.govuk_radio_button(:withdraw_reason, withdrawal_reason,
+                label: { text: t("views.forms.withdrawal_reasons.labels.#{withdrawal_reason}") },
+                link_errors: index.zero?) %>
+        <% end %>
+
+        <%= f.govuk_radio_divider %>
+
+        <%= f.govuk_radio_button :withdraw_reason, WithdrawalReasons::FOR_ANOTHER_REASON,
+                                 label: { text: t("views.forms.withdrawal_reasons.labels.for_another_reason") } do %>
+          <%= f.govuk_text_field :additional_withdraw_reason,
+                                 label: { text: t("views.forms.withdrawal_reasons.labels.additional_reason") } %>
+        <% end %>
+
+        <%= f.govuk_radio_button :withdraw_reason, WithdrawalReasons::UNKNOWN,
+                                 label: { text: t("views.forms.withdrawal_reasons.labels.unknown") } %>
+      <% end %>
+
+      <%= f.govuk_submit t('views.forms.common.continue') %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("cancel"), edit_trainee_path(@trainee)) %></p>

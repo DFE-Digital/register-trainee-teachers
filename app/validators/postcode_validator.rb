@@ -5,8 +5,7 @@ class PostcodeValidator < ActiveModel::EachValidator
     return unless value
 
     postcode = UKPostcode.parse(value)
-    unless postcode.full_valid?
-      record.errors[attribute] << I18n.t("activemodel.errors.validators.postcode.invalid")
-    end
+
+    record.errors.add(attribute, I18n.t("activemodel.errors.validators.postcode.invalid")) unless postcode.full_valid?
   end
 end
