@@ -31,7 +31,7 @@ locals {
   postgres_service_name    = "register-postgres-${var.app_environment}"
   redis_service_name       = "register-redis-${var.app_environment}"
   web_app_name             = "register-${var.app_environment}"
-  web_app_start_command    = "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"
+  web_app_start_command    = "bundle exec rails db:migrate:reset && bundle exec rails server -b 0.0.0.0"
   app_environment          = merge(var.app_config_variable, var.app_secrets_variable)
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "register-worker-${var.app_environment}"
