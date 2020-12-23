@@ -7,6 +7,10 @@ module ProgrammeDetailsHelper
     to_options(programme_subjects)
   end
 
+  def filter_programme_subjects_options
+    to_options(programme_subjects, first_value: "All subjects")
+  end
+
   def main_age_ranges_options
     age_ranges(option: :main)
   end

@@ -164,6 +164,18 @@ en:
     attributes:
       trainee:
         trainee_id: "Trainee ID"
+        record_types:
+          assessment_only: Assessment only
+          provider_led: Provider-led
+        states:
+          draft: Draft
+          submitted_for_trn: Pending TRN
+          trn_received: TRN received
+          recommended_for_qts: QTS recommended
+          withdrawn: Withdrawn
+          deferred: Deferred
+          qts_awarded: QTS awarded
+
     errors:
       models:
         degree:

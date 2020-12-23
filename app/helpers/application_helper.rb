@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def to_options(array)
+  def to_options(array, first_value: nil)
     result = array.map do |name|
       OpenStruct.new(name: name)
     end
-    result.unshift(OpenStruct.new(name: nil))
+    result.unshift(OpenStruct.new(name: first_value))
     result
   end
 
