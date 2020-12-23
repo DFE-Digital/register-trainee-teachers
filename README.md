@@ -43,6 +43,10 @@ brew install graphviz
 4. Run `bundle exec rails server` to launch the app on http://localhost:3000
 5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
+### Setting up seed records
+
+Run `rake example_data:generate` to generate seed records
+
 ## Architectural Decision Record
 
 See the [docs/adr](docs/adr) directory for a list of the Architectural Decision
