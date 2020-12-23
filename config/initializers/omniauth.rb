@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-if FeatureService.enabled?("use_dfe_sign_in")
+OmniAuth.config.logger = Rails.logger
 
-  OmniAuth.config.logger = Rails.logger
-
+if Settings.features.use_dfe_sign_in
   dfe_sign_in_issuer_uri = URI.parse(Settings.dfe_sign_in.issuer)
   dfe_sign_in_redirect_uri = URI.join(Settings.base_url, "/auth/dfe/callback")
 
@@ -29,13 +28,10 @@ if FeatureService.enabled?("use_dfe_sign_in")
   }
 
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
-
 else
-
   Rails.application.config.middleware.use OmniAuth::Builder do
     provider :developer,
              fields: %i[uid email first_name last_name],
              uid_field: :uid
   end
-
 end
