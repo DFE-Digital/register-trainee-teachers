@@ -17,6 +17,7 @@ module PageObjects
       element :clear_filters_link, "a", text: "Clear"
       element :apply_filters, "input[name='commit']"
 
+      element :text_search, "#text_search"
       element :assessment_only_checkbox, "#record_type-assessment_only"
       element :provider_led_checkbox, "#record_type-provider_led"
       element :subject, "#subject"

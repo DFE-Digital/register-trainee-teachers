@@ -53,6 +53,6 @@ private
   end
 
   def filters
-    @filters ||= params.permit(:subject, record_type: [], state: [])
+    @filters ||= params.permit(:subject, :text_search, record_type: [], state: [])
   end
 end
