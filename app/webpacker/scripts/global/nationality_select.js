@@ -22,6 +22,10 @@ const prepareNationalitySelect = () => {
     'personal-detail-form-other-nationality2-field-select'
   )
 
+  const firstInputEl = document.getElementById(
+    'personal-detail-form-other-nationality1-field'
+  )
+
   let addNationalityButton = null
 
   const addNthNationalityHiddenSpan = (removeLink, nthNationality) => {
@@ -31,14 +35,15 @@ const prepareNationalitySelect = () => {
     removeLink.appendChild(nthNationalitySpan)
   }
 
-  const handleRemoveLinkClick = (labelEl, inputEl, selectEl) => {
+  const handleRemoveLinkClick = (labelEl, inputEl, selectEl, prevInputEl) => {
     addNationalityButton.style.display = ''
     labelEl.parentElement.style.display = 'none'
     inputEl.value = ''
     selectEl.value = ''
+    prevInputEl.focus()
   }
 
-  const addRemoveLink = (labelEl, inputEl, selectEl) => {
+  const addRemoveLink = (labelEl, inputEl, selectEl, prevInputEl) => {
     const removeLink = document.createElement('a')
     removeLink.innerHTML = 'Remove'
     removeLink.classList.add('govuk-link', 'personal-detail-form-other-nationality__remove-link')
@@ -46,13 +51,14 @@ const prepareNationalitySelect = () => {
     labelEl.appendChild(removeLink)
 
     if (labelEl === secondFormLabel) {
-      addNthNationalityHiddenSpan(removeLink, 'Second')
+      addNthNationalityHiddenSpan(removeLink, 'second')
     } else {
-      addNthNationalityHiddenSpan(removeLink, 'Third')
+      addNthNationalityHiddenSpan(removeLink, 'third')
     }
 
-    removeLink.addEventListener('click', function () {
-      handleRemoveLinkClick(labelEl, inputEl, selectEl)
+    removeLink.addEventListener('click', function (e) {
+      e.preventDefault()
+      handleRemoveLinkClick(labelEl, inputEl, selectEl, prevInputEl)
     })
   }
 
@@ -62,12 +68,14 @@ const prepareNationalitySelect = () => {
       thirdFormLabel.parentElement.style.display === 'none'
     ) {
       secondFormLabel.parentElement.style.display = ''
+      secondInputEl.focus()
     } else if (secondFormLabel.parentElement.style.display === 'none') {
       secondFormLabel.parentElement.style.display = ''
       addNationalityButton.style.display = 'none'
     } else {
       thirdFormLabel.parentElement.style.display = ''
       addNationalityButton.style.display = 'none'
+      thirdInputEl.focus()
     }
   }
 
@@ -98,9 +106,9 @@ const prepareNationalitySelect = () => {
     }
   }
 
-  addRemoveLink(secondFormLabel, secondInputEl, secondSelectEl)
+  addRemoveLink(secondFormLabel, secondInputEl, secondSelectEl, firstInputEl)
 
-  addRemoveLink(thirdFormLabel, thirdInputEl, thirdSelectEl)
+  addRemoveLink(thirdFormLabel, thirdInputEl, thirdSelectEl, secondInputEl)
 
   addAddNationalityButton(
     '#personal-detail-form-other-1-conditional'
