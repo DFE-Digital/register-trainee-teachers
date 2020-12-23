@@ -2,6 +2,8 @@
 
 module Trainees
   class DeferralsController < ApplicationController
+    before_action :authorize_trainee
+
     PARAM_CONVERSION = {
       "defer_date(3i)" => "day",
       "defer_date(2i)" => "month",
@@ -9,12 +11,12 @@ module Trainees
     }.freeze
 
     def show
-      authorize trainee
       @deferral = DeferralForm.new(trainee)
     end
 
     def update
-      authorize trainee
+      authorize(trainee, :defer?)
+
       @deferral = DeferralForm.new(trainee)
       @deferral.assign_attributes(trainee_params)
 
@@ -29,6 +31,10 @@ module Trainees
 
     def trainee
       @trainee ||= Trainee.find(params[:trainee_id])
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
 
     def trainee_params

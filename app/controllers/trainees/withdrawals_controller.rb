@@ -15,6 +15,8 @@ module Trainees
     end
 
     def update
+      authorize(trainee, :withdraw?)
+
       @withdrawal_form = WithdrawalForm.new(trainee)
       @withdrawal_form.assign_attributes(trainee_params)
 

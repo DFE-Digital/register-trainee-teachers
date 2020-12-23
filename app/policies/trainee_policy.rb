@@ -33,6 +33,14 @@ class TraineePolicy
     user && user.provider_id == trainee.provider_id
   end
 
+  def withdraw?
+    defer? || trainee.deferred?
+  end
+
+  def defer?
+    trainee.submitted_for_trn? || trainee.trn_received?
+  end
+
   alias_method :create?, :show?
   alias_method :update?, :show?
   alias_method :edit?, :show?
