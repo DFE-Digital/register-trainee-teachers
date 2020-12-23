@@ -77,7 +77,7 @@ describe Trainee do
         context "when record type is not present" do
           it "is not valid" do
             expect(subject).not_to be_valid
-            expect(subject.errors.keys).to include(:record_type)
+            expect(subject.errors.attribute_names).to include(:record_type)
           end
         end
 
@@ -86,7 +86,7 @@ describe Trainee do
 
           it "is not valid" do
             expect(subject).not_to be_valid
-            expect(subject.errors.keys).to include(:trainee_id)
+            expect(subject.errors.attribute_names).to include(:trainee_id)
           end
         end
 
