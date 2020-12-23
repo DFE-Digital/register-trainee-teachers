@@ -1,0 +1,88 @@
+<div class='moj-filter-layout abigail'>
+  <div class="moj-filter-layout__filter app-filter">
+    <div class="moj-filter">
+      <div class="moj-filter__header">
+        <div class="moj-filter__header-title">
+          <h2 class="govuk-heading-m">Filters</h2>
+        </div>
+      </div>
+
+      <div class="moj-filter__content">
+
+        <% if !active_filters.empty? %>
+        <div class="moj-filter__selected">
+          <div class="moj-filter__selected-heading">
+            <div class="moj-filter__heading-title">
+              <h2 class="govuk-heading-m">Selected filters</h2>
+            </div>
+            <div class="moj-filter__heading-action">
+              <p class="govuk-body">
+              <%= govuk_link_to 'Clear', trainees_path, class: 'govuk-link--no-visited-state' %>
+              </p>
+            </div>
+          </div>
+
+          <% active_filters.each do |filter, value| %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= filter.humanize %></h3>
+            <ul class="moj-filter-tags">
+              <% tags_for_active_filter(filter, value).each do |tag| %>
+                <li>
+                  <%= link_to(tag[:title], tag[:remove_link], class: "moj-filter__tag") %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+
+        <div class="moj-filter__options">
+
+          <form method="get">
+            <%= submit_tag "Apply filters", class: "govuk-button" %>
+
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                  Routes
+                </legend>
+                <div class="govuk-checkboxes govuk-checkboxes--small">
+                  <% Trainee.record_types.map do |record_type, _| %>
+                    <div class="govuk-checkboxes__item">
+                      <%= check_box_tag 'record_type[]', record_type, checked?(:record_type, record_type), id: "record_type-#{record_type}", class: "govuk-checkboxes__input"%>
+                      <%= label_tag "record_type-#{record_type}", label_for('record_type', record_type), class: "govuk-label govuk-checkboxes__label" %>
+                    </div>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                  Status
+                </legend>
+                <div class="govuk-checkboxes govuk-checkboxes--small">
+                  <% Trainee.states.map do |state, _| %>
+                    <div class="govuk-checkboxes__item">
+                      <%= check_box_tag 'state[]', state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input"%>
+                      <%= label_tag "state-#{state}", label_for('state', state), class: "govuk-label govuk-checkboxes__label" %>
+                    </div>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="govuk-form-group">
+              <%= label_tag "subject", "Subject", class: "govuk-label govuk-label--m" %>
+              <%= select_tag :subject, options_from_collection_for_select(filter_programme_subjects_options, :name, :name, filters[:subject]), class: "govuk-select" %>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='moj-filter-layout__content'>
+    <%= content %>
+  </div>
+</div>

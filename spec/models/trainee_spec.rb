@@ -6,7 +6,7 @@ describe Trainee do
   context "fields" do
     subject { build(:trainee) }
 
-    it { is_expected.to define_enum_for(:record_type).with_values(assessment_only: 0) }
+    it { is_expected.to define_enum_for(:record_type).with_values(assessment_only: 0, provider_led: 1) }
     it { is_expected.to define_enum_for(:locale_code).with_values(uk: 0, non_uk: 1) }
     it { is_expected.to define_enum_for(:gender).with_values(male: 0, female: 1, other: 2) }
 

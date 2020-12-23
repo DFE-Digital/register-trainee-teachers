@@ -1,5 +1,6 @@
 @import "./govuk_style_setup";
 @import "~govuk-frontend/govuk/all";
+@import "~@ministryofjustice/frontend/moj/all";
 
 .trn-submission-success-panel,
 .qts-submission-success-panel {
@@ -27,7 +28,6 @@ a[href="#"] {
   }
 }
 
-
 .trainee-record-header {
   margin-bottom: govuk-spacing(6);
 }
@@ -54,4 +54,8 @@ a[href="#"] {
   &:active {
     top: 0;
   }
+}
+
+.personal-detail-form-other-nationality__remove-link {
+  float: right;
 }

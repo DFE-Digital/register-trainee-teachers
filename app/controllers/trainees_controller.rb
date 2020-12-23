@@ -2,7 +2,10 @@
 
 class TraineesController < ApplicationController
   def index
-    @trainees = policy_scope(Trainee)
+    @trainees = Trainees::Filter.call(
+      trainees: policy_scope(Trainee),
+      filters: filters,
+    )
   end
 
   def show
@@ -47,5 +50,9 @@ private
 
   def trainee_params
     params.require(:trainee).permit(:record_type, :trainee_id)
+  end
+
+  def filters
+    @filters ||= params.permit(:subject, record_type: [], state: [])
   end
 end
