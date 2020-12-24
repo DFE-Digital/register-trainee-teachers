@@ -1,5 +1,5 @@
 # PaaS
-#paas_app_environment not specified here, must be passed to terraform dymamically
+paas_app_environment             = "pen"
 env_config                       = "pen"
 paas_space_name                  = "bat-qa"
 paas_postgres_service_plan       = "tiny-unencrypted-11"

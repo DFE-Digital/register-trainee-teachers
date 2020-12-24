@@ -29,10 +29,8 @@ review:
 	$(eval export TF_VAR_paas_app_environment=$(env))
 
 pentest:
-	echo "setting Review $(env) environment"
+	$(eval env=pen)
 	$(eval env_config=pen)
-	$(eval backend_key=-backend-config=key=$(env).terraform.tfstate)
-	$(eval export TF_VAR_paas_app_environment=$(env))
 
 qa:
 	$(eval env=qa)
