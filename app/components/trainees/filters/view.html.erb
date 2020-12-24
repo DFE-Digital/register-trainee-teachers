@@ -27,7 +27,7 @@
             <ul class="moj-filter-tags">
               <% tags_for_active_filter(filter, value).each do |tag| %>
                 <li>
-                  <%= link_to(tag[:title], tag[:remove_link], class: "moj-filter__tag") %>
+                  <%= link_to(tag[:title], tag[:remove_link], class: "moj-filter__tag", draggable: "false") %>
                 </li>
               <% end %>
             </ul>
