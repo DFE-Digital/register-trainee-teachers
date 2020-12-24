@@ -11,7 +11,7 @@ RSpec.feature "Filtering trainees" do
   end
 
   scenario "can filter by route" do
-    when_i_filter_by_route(:assessment_only)
+    when_i_filter_by_route("assessment_only")
     then_only_assessment_only_trainees_are_visible
     then_the_tag_is_visible_for("Assessment only")
     then_the_checkbox_should_still_be_checked_for("assessment_only")
@@ -51,6 +51,32 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
+  context "searching" do
+    before { when_i_search_for(search_term) }
+
+    shared_examples_for "a working search" do
+      it "returns the correct trainee" do
+        then_only_the_searchable_trainee_is_visible
+        then_the_tag_is_visible_for(search_term)
+      end
+    end
+
+    context "by name" do
+      let(:search_term) { @searchable_trainee.first_names }
+      it_behaves_like "a working search"
+    end
+
+    context "by trn" do
+      let(:search_term) { @searchable_trainee.trn }
+      it_behaves_like "a working search"
+    end
+
+    context "by trainee_id" do
+      let(:search_term) { @searchable_trainee.trainee_id }
+      it_behaves_like "a working search"
+    end
+  end
+
 private
 
   def given_trainees_exist_in_the_system
@@ -58,6 +84,7 @@ private
     @provider_led_trainee ||= create(:trainee, record_type: "provider_led")
     @biology_trainee ||= create(:trainee, subject: "Biology")
     @history_trainee ||= create(:trainee, subject: "History")
+    @searchable_trainee ||= create(:trainee, trn: "123")
     Trainee.update_all(provider_id: @current_user.provider.id)
   end
 
@@ -87,6 +114,11 @@ private
 
   def when_i_filter_by_subject(value)
     trainees_page.subject.select(value)
+    trainees_page.apply_filters.click
+  end
+
+  def when_i_search_for(value)
+    trainees_page.text_search.fill_in(with: value)
     trainees_page.apply_filters.click
   end
 
@@ -125,7 +157,24 @@ private
 
   def then_only_assessment_only_biology_trainees_are_visible
     expect(page).to have_text(@biology_trainee.first_names)
-    [@assessment_only_trainee, @provider_led_trainee, @history_trainee].each do |t|
+    [
+      @assessment_only_trainee,
+      @provider_led_trainee,
+      @history_trainee,
+      @searchable_trainee,
+    ].each do |t|
+      expect(page).to_not have_text(t.first_names)
+    end
+  end
+
+  def then_only_the_searchable_trainee_is_visible
+    expect(page).to have_text(@searchable_trainee.first_names)
+    [
+      @assessment_only_trainee,
+      @provider_led_trainee,
+      @history_trainee,
+      @biology_trainee,
+    ].each do |t|
       expect(page).to_not have_text(t.first_names)
     end
   end

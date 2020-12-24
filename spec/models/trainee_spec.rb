@@ -100,4 +100,54 @@ describe Trainee do
       end
     end
   end
+
+  describe "#with_name_trainee_id_or_trn_like" do
+    let(:other_trainee) { create(:trainee) }
+    let(:matching_trainee) do
+      create(:trainee, middle_names: "Firstmiddle Secondmiddle", trn: "123")
+    end
+
+    subject { described_class.with_name_trainee_id_or_trn_like(search_term) }
+
+    shared_examples_for "a working search" do
+      it "returns the matching trainee" do
+        expect(subject).to contain_exactly(matching_trainee)
+      end
+    end
+
+    context "with an exactly matching first name" do
+      let(:search_term) { matching_trainee.first_names }
+      it_behaves_like "a working search"
+    end
+
+    context "with exactly matching (second) middle name" do
+      let(:search_term) { "Secondmiddle" }
+      it_behaves_like "a working search"
+    end
+
+    context "with exactly matching last name" do
+      let(:search_term) { matching_trainee.last_name }
+      it_behaves_like "a working search"
+    end
+
+    context "with a matching trainee id" do
+      let(:search_term) { matching_trainee.trn }
+      it_behaves_like "a working search"
+    end
+
+    context "with extra spaces in the search term" do
+      let(:search_term) { "Firstmiddle  Secondmiddle" }
+      it_behaves_like "a working search"
+    end
+
+    context "with incorrect case" do
+      let(:search_term) { "firstMiddle" }
+      it_behaves_like "a working search"
+    end
+
+    context "with partial search term" do
+      let(:search_term) { "First" }
+      it_behaves_like "a working search"
+    end
+  end
 end

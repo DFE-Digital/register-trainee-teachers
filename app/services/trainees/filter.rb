@@ -37,6 +37,12 @@ module Trainees
       trainees.where(subject: subject)
     end
 
+    def text_search(trainees, text_search)
+      return trainees if text_search&.empty?
+
+      trainees.with_name_trainee_id_or_trn_like(text_search)
+    end
+
     def filter_trainees
       # Tech note: If you're adding a new filter to the top of this list, make
       # sure that it acts on `trainees` and all other filters then act on
@@ -44,6 +50,7 @@ module Trainees
       filtered_trainees = record_type(trainees, filters[:record_type])
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
+      filtered_trainees = text_search(filtered_trainees, filters[:text_search])
       filtered_trainees
     end
   end

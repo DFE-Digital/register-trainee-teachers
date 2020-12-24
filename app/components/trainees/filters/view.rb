@@ -26,7 +26,7 @@ module Trainees
 
       def active_filters
         filters.deep_dup.reject! do |filter, value|
-          filter == "subject" && value == "All subjects"
+          value.empty? || (filter == "subject" && value == "All subjects")
         end
       end
 

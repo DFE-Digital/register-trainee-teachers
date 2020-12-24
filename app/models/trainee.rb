@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 class Trainee < ApplicationRecord
+  include PgSearch::Model
+
   belongs_to :provider
+  has_many :degrees, dependent: :destroy
+  has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
+  has_many :nationalities, through: :nationalisations
+  has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
+  has_many :disabilities, through: :trainee_disabilities
 
   attribute :progress, Progress.to_type
 
@@ -45,13 +52,6 @@ class Trainee < ApplicationRecord
     WithdrawalReasons::WRITTEN_OFF_AFTER_LAPSE_OF_TIME => 9,
   }
 
-  belongs_to :provider
-  has_many :degrees, dependent: :destroy
-  has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
-  has_many :nationalities, through: :nationalisations
-  has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
-  has_many :disabilities, through: :trainee_disabilities
-
   enum state: {
     draft: 0,
     submitted_for_trn: 1,
@@ -61,6 +61,10 @@ class Trainee < ApplicationRecord
     deferred: 5,
     qts_awarded: 6,
   }
+
+  pg_search_scope :with_name_trainee_id_or_trn_like,
+                  against: %i[first_names middle_names last_name trainee_id trn],
+                  using: { tsearch: { prefix: true } }
 
   def dttp_id=(value)
     raise LockedAttributeError, "dttp_id update failed for trainee ID: #{id}, with value: #{value}" if dttp_id.present?
