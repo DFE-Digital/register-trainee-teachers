@@ -131,6 +131,8 @@ private
   end
 
   def then_the_tag_is_visible_for(*values)
-    expect(trainees_page.filter_tags).to have_text(values.join(" "))
+    values.each do |value|
+      expect(trainees_page.filter_tags).to have_text(value)
+    end
   end
 end

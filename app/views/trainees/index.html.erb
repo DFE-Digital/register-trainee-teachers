@@ -15,9 +15,9 @@
     <h2 class="govuk-heading-m">No records found.</h2>
     <p class="govuk-body">
       Try
-      <%= link_to "clearing your search and filters.", trainees_path %>
+      <%= govuk_link_to "clearing your search and filters", trainees_path %>.
     </p>
   <% else %>
-    <p class="govuk-body">You don't have any records yet.</p>
+    <h2 class="govuk-heading-m">You do not have any records yet.</h2>
   <% end %>
 <% end %>

@@ -16,6 +16,10 @@ module Trainees
         I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
       end
 
+      def title_html(filter, value)
+        tag.span("Remove ", class: "govuk-visually-hidden") + value + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")
+      end
+
       def checked?(filter, value)
         filters[filter]&.include?(value)
       end
@@ -29,11 +33,11 @@ module Trainees
       def tags_for_active_filter(filter, value)
         case value
         when String
-          [{ title: value, remove_link: remove_select_tag_link(filter) }]
+          [{ title: title_html(filter, value), remove_link: remove_select_tag_link(filter) }]
         else
           value.each_with_object([]) do |v, arr|
             arr << {
-              title: label_for(filter, v),
+              title: title_html(filter, label_for(filter, v)),
               remove_link: remove_checkbox_tag_link(filter, v),
             }
           end
