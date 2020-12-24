@@ -10,12 +10,13 @@ module Trainees
 
       def update
         authorize trainee
-        updater = Diversities::EthnicBackgrounds::Update.call(trainee: trainee, attributes: ethnic_background_param)
 
-        if updater.successful?
+        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee: trainee)
+        @ethnic_background.assign_attributes(ethnic_background_params)
+
+        if @ethnic_background.save
           redirect_to(edit_trainee_diversity_disability_disclosure_path(trainee))
         else
-          @ethnic_background = updater.ethnic_background
           render :edit
         end
       end
@@ -26,12 +27,19 @@ module Trainees
         @trainee ||= Trainee.find(params[:trainee_id])
       end
 
-      def ethnic_background_param
+      def ethnic_background_params
         return { ethnic_background: nil } if params[:diversities_ethnic_background_form].blank?
 
-        params.require(:diversities_ethnic_background_form).permit(
+        required_params = params.require(:diversities_ethnic_background_form).permit(
           *Diversities::EthnicBackgroundForm::FIELDS,
         )
+
+        required_params[:additional_ethnic_background] = nil if background_is_different?(required_params)
+        required_params
+      end
+
+      def background_is_different?(required_params)
+        trainee.ethnic_background.present? && trainee.ethnic_background != required_params[:ethnic_background]
       end
     end
   end
