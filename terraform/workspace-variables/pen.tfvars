@@ -1,6 +1,6 @@
 # PaaS
-#paas_app_environment not specified here, must be passed to terraform dymamically
-env_config                       = "review"
+paas_app_environment             = "pen"
+env_config                       = "pen"
 paas_space_name                  = "bat-qa"
 paas_postgres_service_plan       = "tiny-unencrypted-11"
 paas_redis_service_plan          = "tiny-4_x"
@@ -10,5 +10,5 @@ paas_web_app_instances           = 1
 paas_web_app_memory              = 512
 paas_worker_app_instances        = 1
 paas_worker_app_memory           = 512
-paas_worker_app_stopped          = false
-statuscake_alerts = {}
+paas_worker_app_stopped          = true
+statuscake_alerts                = {}

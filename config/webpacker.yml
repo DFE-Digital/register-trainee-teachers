@@ -86,6 +86,9 @@ production: &production
   # Cache manifest.json for performance
   cache_manifest: true
 
+pen:
+  <<: *production
+
 qa:
   <<: *production
 

@@ -28,6 +28,9 @@ review:
 	$(eval backend_key=-backend-config=key=$(env).terraform.tfstate)
 	$(eval export TF_VAR_paas_app_environment=$(env))
 
+pentest:
+	$(eval env=pen)
+	$(eval env_config=pen)
 
 qa:
 	$(eval env=qa)
@@ -56,7 +59,7 @@ terraform-init:
 	terraform init -reconfigure -backend-config=terraform/workspace-variables/$(env_config)_backend.tfvars $(backend_key) terraform
 	$(if $(tag), , $(error Missing environment variable "tag"))
 	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teacher-data:$(tag))
-	$(if $(passcode), , $(error Missing environment variable "passcode"))
+	$(if $(passcode), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 
 console:
