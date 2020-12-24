@@ -84,7 +84,7 @@ namespace :example_data do
         next if trainee.draft?
 
         [1, 2].sample.times do
-          trainee.degrees << FactoryBot.build(:degree)
+          trainee.degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
         end
       end
     end
