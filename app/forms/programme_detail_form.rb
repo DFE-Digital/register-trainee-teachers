@@ -101,6 +101,8 @@ private
       errors.add(:programme_start_date, :blank)
     elsif !programme_start_date.is_a?(Date)
       errors.add(:programme_start_date, :invalid)
+    elsif programme_start_date < 10.years.ago
+      errors.add(:programme_start_date, :too_old)
     end
   end
 
@@ -109,6 +111,14 @@ private
       errors.add(:programme_end_date, :blank)
     elsif !programme_end_date.is_a?(Date)
       errors.add(:programme_end_date, :invalid)
+    end
+
+    additional_validation = errors.attribute_names.none? do |attribute_name|
+      %i[programme_start_date programme_end_date].include?(attribute_name)
+    end
+
+    if additional_validation && programme_start_date >= programme_end_date
+      errors.add(:programme_end_date, :before_or_same_as_start_date)
     end
   end
 end

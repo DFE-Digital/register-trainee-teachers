@@ -65,17 +65,23 @@ module ApplicationRecordCard
     end
 
     context "when a trainee with all their details filled in" do
+      let(:trainee) do
+        Timecop.freeze(Time.zone.local(2020, 1, 1)) do
+          build(
+            :trainee,
+            id: 1, first_names: "Teddy",
+            last_name: "Smith",
+            subject: "Designer",
+            record_type: "assessment_only",
+            trainee_id: "132456",
+            created_at: Time.zone.now
+          )
+        end
+      end
+
       before do
         render_inline(described_class.new(
-                        record: build(
-                          :trainee,
-                          id: 1, first_names: "Teddy",
-                          last_name: "Smith",
-                          subject: "Designer",
-                          record_type: "assessment_only",
-                          trainee_id: "132456",
-                          created_at: Timecop.freeze(Time.zone.local(2020, 1, 1))
-                        ),
+                        record: trainee,
                       ))
       end
 

@@ -10,16 +10,21 @@ module ProgrammeDetails
       context "when programme details are valid" do
         let(:trainee) { create(:trainee) }
 
-        let(:date) do
-          Date.new(1999, 12, 31)
+        let(:valid_start_date) do
+          Date.parse(5.years.ago.to_s)
         end
+
+        let(:valid_end_date) do
+          Date.parse(4.years.ago.to_s)
+        end
+
         let(:attributes) do
-          { start_day: date.day.to_s,
-            start_month: date.month.to_s,
-            start_year: date.year.to_s,
-            end_day: date.day.to_s,
-            end_month: date.month.to_s,
-            end_year: date.year.to_s,
+          { start_day: valid_start_date.day,
+            start_month: valid_start_date.month,
+            start_year: valid_start_date.year,
+            end_day: valid_end_date.day,
+            end_month: valid_end_date.month,
+            end_year: valid_end_date.year,
             main_age_range: "other",
             additional_age_range: "14 - 19 diploma",
             subject: "Philosophy" }
@@ -33,8 +38,8 @@ module ProgrammeDetails
         it "updates the trainee's programme details" do
           expect(trainee.subject).to eq(attributes[:subject])
           expect(trainee.age_range).to eq(attributes[:additional_age_range])
-          expect(trainee.programme_start_date).to eq(date)
-          expect(trainee.programme_end_date).to eq(date)
+          expect(trainee.programme_start_date).to eq(valid_start_date)
+          expect(trainee.programme_end_date).to eq(valid_end_date)
         end
 
         it "is successful" do
@@ -66,6 +71,7 @@ module ProgrammeDetails
           expect(trainee.subject).to_not eq(nil)
           expect(trainee.age_range).to_not eq(nil)
           expect(trainee.programme_start_date).to_not eq(nil)
+          expect(trainee.programme_end_date).to_not eq(nil)
         end
 
         it "is unsuccessful" do
