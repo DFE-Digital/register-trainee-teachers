@@ -102,7 +102,7 @@ private
     elsif !programme_start_date.is_a?(Date)
       errors.add(:programme_start_date, :invalid)
     elsif programme_start_date < 10.years.ago
-      errors.add(:programme_start_date, :invalid)
+      errors.add(:programme_start_date, :too_old)
     end
   end
 

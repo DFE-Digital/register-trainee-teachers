@@ -277,6 +277,7 @@ en:
             programme_start_date:
               blank: "You must enter programme start date"
               invalid: "You must enter a valid programme start date"
+              too_old: "You must enter a valid programme start date"
             programme_end_date:
               blank: "You must enter programme end date"
               invalid: "You must enter a valid programme end date"

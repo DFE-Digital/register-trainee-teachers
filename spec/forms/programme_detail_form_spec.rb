@@ -121,7 +121,7 @@ describe ProgrammeDetailForm, type: :model do
                            "foo", "foo", "foo"
 
           start_date = 10.years.ago
-          include_examples date_error_message, :programme_start_date, :invalid,
+          include_examples date_error_message, :programme_start_date, :too_old,
                            start_date.day, start_date.month, start_date.year
         end
 
