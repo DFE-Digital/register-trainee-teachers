@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../app/services/feature_service"
+
 if FeatureService.enabled?("use_dfe_sign_in")
 
   OmniAuth.config.logger = Rails.logger

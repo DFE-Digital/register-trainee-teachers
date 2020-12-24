@@ -2,13 +2,20 @@
   <%= govuk_button_link_to "Recommend for QTS", edit_trainee_outcome_details_outcome_date_path(trainee),
                            { class: "govuk-!-margin-bottom-0" }  %>
 
-  <div class="record-actions__links">
-    <p class="govuk-body govuk-!-margin-bottom-0">
-      <%= govuk_link_to t("views.trainees.edit.defer"), trainee_deferral_path(@trainee), class: "defer"  %> or
-      <%= govuk_link_to t("views.trainees.edit.withdraw"), trainee_withdrawal_path(@trainee), class: "withdraw"  %>
-      <%= t("views.trainees.edit.this_trainee") %>
-    </p>
-  </div>
+  <% if display_actions? %>
+    <div class="record-actions__links">
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        <% if allow_defer? %>
+          <%= govuk_link_to t("views.trainees.edit.defer"), trainee_deferral_path(@trainee), class: "defer"  %> or
+        <% end %>
+
+        <% if allow_withdraw? %>
+          <%= govuk_link_to t("views.trainees.edit.withdraw"), trainee_withdrawal_path(@trainee), class: "withdraw"  %>
+        <% end %>
+        <%= t("views.trainees.edit.this_trainee") %>
+      </p>
+    </div>
+  <% end %>
 </div>
 
 <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>

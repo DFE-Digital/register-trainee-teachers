@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-feature "Recording withdrawing training", type: :feature do
+feature "Withdrawing a trainee", type: :feature do
   include SummaryHelper
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_trainee_exists_to_be_withdrawn
     and_i_am_on_the_trainee_edit_page
     and_i_click_on_withdraw
   end
@@ -163,6 +163,10 @@ feature "Recording withdrawing training", type: :feature do
   def and_the_additional_reason_is_displayed
     trainee.reload
     expect(withdrawal_confirmation_page).to have_text(additional_withdraw_reason)
+  end
+
+  def given_a_trainee_exists_to_be_withdrawn
+    given_a_trainee_exists(%i[submitted_for_trn trn_received deferred].sample)
   end
 
   def edit_page

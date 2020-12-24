@@ -7,7 +7,7 @@ feature "Deferring a trainee", type: :feature do
 
   before do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_trainee_exists_to_be_deferred
     and_i_am_on_the_trainee_edit_page
     and_i_click_on_defer
   end
@@ -101,6 +101,10 @@ feature "Deferring a trainee", type: :feature do
 
   def then_i_am_redirected_to_deferral_confirmation_page
     expect(deferral_confirmation_page).to be_displayed(id: trainee.id)
+  end
+
+  def given_a_trainee_exists_to_be_deferred
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample)
   end
 
   def edit_page

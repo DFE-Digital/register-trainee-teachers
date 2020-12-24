@@ -64,6 +64,10 @@ FactoryBot.define do
       outcome_date { Faker::Date.in_date_period }
     end
 
+    trait :draft do
+      state { "draft" }
+    end
+
     trait :submitted_for_trn do
       state { "submitted_for_trn" }
       submitted_for_trn_at { Time.zone.now }
