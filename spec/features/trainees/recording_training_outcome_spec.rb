@@ -12,6 +12,11 @@ feature "Recording a training outcome", type: :feature do
     and_i_click_on_record_training_outcome
   end
 
+  scenario "submit empty form" do
+    and_i_submit_the_form
+    then_i_see_the_error_message_for_date_not_chosen
+  end
+
   scenario "choosing today records the outcome" do
     when_i_choose_today
     and_i_submit_the_form
@@ -85,6 +90,12 @@ feature "Recording a training outcome", type: :feature do
   def then_i_see_the_error_message_for(type)
     expect(page).to have_content(
       I18n.t("activemodel.errors.models.outcome_date_form.attributes.outcome_date.#{type}"),
+    )
+  end
+
+  def then_i_see_the_error_message_for_date_not_chosen
+    expect(page).to have_content(
+      I18n.t("activemodel.errors.models.outcome_date_form.attributes.outcome_date_string.blank"),
     )
   end
 

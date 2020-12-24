@@ -66,15 +66,13 @@ private
     date_hash = { year: year, month: month, day: day }
     date_args = date_hash.values.map(&:to_i)
 
-    if Date.valid_date?(*date_args)
-      Date.new(*date_args)
-    else
-      Struct.new(*date_hash.keys).new(*date_hash.values)
-    end
+    Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
   def outcome_date_valid
-    if outcome_date_string == "other" && [day, month, year].all?(&:blank?)
+    if outcome_date_string.nil?
+      errors.add(:outcome_date_string, :blank)
+    elsif outcome_date_string == "other" && [day, month, year].all?(&:blank?)
       errors.add(:outcome_date, :blank)
     elsif !outcome_date.is_a?(Date)
       errors.add(:outcome_date, :invalid)

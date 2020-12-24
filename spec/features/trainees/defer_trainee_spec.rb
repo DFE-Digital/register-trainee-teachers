@@ -12,7 +12,12 @@ feature "Deferring a trainee", type: :feature do
     and_i_click_on_defer
   end
 
-  context "trainee withdrawal date" do
+  context "trainee deferral date" do
+    scenario "submit empty form" do
+      and_i_continue
+      then_i_see_the_error_message_for_date_not_chosen
+    end
+
     scenario "choosing today" do
       when_i_choose_today
       and_i_continue
@@ -96,6 +101,12 @@ feature "Deferring a trainee", type: :feature do
   def then_i_see_the_error_message_for_blank_date
     expect(page).to have_content(
       I18n.t("activemodel.errors.models.deferral_form.attributes.defer_date.blank"),
+    )
+  end
+
+  def then_i_see_the_error_message_for_date_not_chosen
+    expect(page).to have_content(
+      I18n.t("activemodel.errors.models.deferral_form.attributes.defer_date_string.blank"),
     )
   end
 

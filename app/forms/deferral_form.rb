@@ -70,7 +70,9 @@ private
   end
 
   def defer_date_valid
-    if defer_date_string == "other" && [day, month, year].all?(&:blank?)
+    if defer_date_string.nil?
+      errors.add(:defer_date_string, :blank)
+    elsif defer_date_string == "other" && [day, month, year].all?(&:blank?)
       errors.add(:defer_date, :blank)
     elsif !defer_date.is_a?(Date)
       errors.add(:defer_date, :invalid)

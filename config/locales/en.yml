@@ -286,26 +286,32 @@ en:
               before_or_same_as_start_date: "You must enter programme end date after the programme start date"
         outcome_date_form:
           attributes:
+            outcome_date_string:
+              blank: You must choose an outcome date
             outcome_date:
-              blank: "You must enter an outcome date"
-              invalid: "You must enter a valid outcome date"
+              blank: You must enter an outcome date
+              invalid: You must enter a valid outcome date
         degree_detail_form:
           attributes:
             degree_ids:
               empty_degrees: You must have at least one degree
         withdrawal_form:
           attributes:
+            withdraw_date_string:
+              blank: You must choose a withdrawal date
             withdraw_date:
-              blank: You must enter a withdraw date
-              invalid: You must enter a valid withdraw date
+              blank: You must enter a withdrawal date
+              invalid: You must enter a valid withdrawal date
             additional_withdraw_reason:
               blank: You must enter a reason
             withdraw_reason:
               invalid: You must choose a reason
         deferral_form:
           attributes:
+            defer_date_string:
+              blank: You must choose a deferral date
             defer_date:
-              blank: "You must enter a deferral date"
-              invalid: "You must enter a valid deferral date"
+              blank: You must enter a deferral date
+              invalid: You must enter a valid deferral date
   page_headings:
     start_page: "Register trainee teachers"
