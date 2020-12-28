@@ -81,7 +81,7 @@ group :development, :test do
   gem "launchy"
 
   # Testing framework
-  gem "rspec-rails", "~> 4.0.1"
+  gem "rspec-rails", "~> 4.0.2"
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", "~> 3.34"
 
