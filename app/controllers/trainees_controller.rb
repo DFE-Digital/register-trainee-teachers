@@ -2,8 +2,12 @@
 
 class TraineesController < ApplicationController
   def index
+    @draft_trainees = Trainees::Filter.call(
+      trainees: policy_scope(Trainee.is_draft.ordered_by_date),
+      filters: filters,
+    )
     @trainees = Trainees::Filter.call(
-      trainees: policy_scope(Trainee),
+      trainees: policy_scope(Trainee.is_not_draft.ordered_by_date),
       filters: filters,
     )
   end

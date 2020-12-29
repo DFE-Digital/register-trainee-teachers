@@ -66,6 +66,10 @@ class Trainee < ApplicationRecord
                   against: %i[first_names middle_names last_name trainee_id trn],
                   using: { tsearch: { prefix: true } }
 
+  scope :ordered_by_date, -> { order(updated_at: :desc) }
+  scope :is_draft, -> { where(state: "draft") }
+  scope :is_not_draft, -> { where.not(state: "draft") }
+
   def dttp_id=(value)
     raise LockedAttributeError, "dttp_id update failed for trainee ID: #{id}, with value: #{value}" if dttp_id.present?
 
