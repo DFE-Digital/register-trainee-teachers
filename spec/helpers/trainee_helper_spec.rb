@@ -24,4 +24,25 @@ describe TraineeHelper do
       end
     end
   end
+
+  describe "#view_trainee" do
+    STATES = Trainee.states.keys.map(&:to_sym) - [:draft]
+    subject { view_trainee(trainee) }
+
+    context "with a draft trainee" do
+      let(:trainee) { create(:trainee) }
+      it "returns the trainee_path" do
+        expect(subject).to eq(trainee_path(trainee))
+      end
+    end
+
+    STATES.each do |state|
+      context "with a #{state} trainee" do
+        let(:trainee) { create(:trainee, state) }
+        it "returns the edit_trainee_path" do
+          expect(subject).to eq(edit_trainee_path(trainee))
+        end
+      end
+    end
+  end
 end

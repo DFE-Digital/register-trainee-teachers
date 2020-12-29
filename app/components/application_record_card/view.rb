@@ -3,6 +3,7 @@
 module ApplicationRecordCard
   class View < GovukComponent::Base
     include SanitizeHelper
+    include TraineeHelper
 
     with_collection_parameter :record
 

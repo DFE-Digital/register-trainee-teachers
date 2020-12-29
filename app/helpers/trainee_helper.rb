@@ -7,4 +7,12 @@ module TraineeHelper
       .reject(&:empty?)
       .join(" ")
   end
+
+  def view_trainee(trainee)
+    if trainee.draft?
+      trainee_path(trainee.id)
+    else
+      edit_trainee_path(trainee.id)
+    end
+  end
 end
