@@ -54,6 +54,10 @@ module Trainees
         new_filters = active_filters.reject { |f| f == filter }
         "?" + new_filters.to_query
       end
+
+      def filter_label_for(filter)
+        I18n.t("components.filter.#{filter}")
+      end
     end
   end
 end

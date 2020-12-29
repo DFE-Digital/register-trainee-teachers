@@ -23,7 +23,7 @@
           </div>
 
           <% active_filters.each do |filter, value| %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= filter.humanize %></h3>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= filter_label_for(filter) %></h3>
             <ul class="moj-filter-tags">
               <% tags_for_active_filter(filter, value).each do |tag| %>
                 <li>
