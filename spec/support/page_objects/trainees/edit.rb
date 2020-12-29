@@ -6,7 +6,7 @@ module PageObjects
       set_url "/trainees/{id}/edit"
 
       element :trainee_name, ".govuk-heading-xl"
-      element :trn_status, ".govuk-tag.govuk-tag--turquoise"
+      element :trn_status, ".govuk-tag.trainee-status"
 
       element :record_outcome, ".govuk-button"
       element :withdraw, ".govuk-link.withdraw"

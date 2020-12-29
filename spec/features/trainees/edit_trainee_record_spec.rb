@@ -41,7 +41,7 @@ feature "edit trainee record", type: :feature do
   end
 
   def then_i_see_the_trn_status
-    expect(@edit_page.trn_status.text).to eq("Pending TRN")
+    expect(@edit_page.trn_status.text).to eq(trainee.state)
   end
 
   def when_i_visit_the_trainee_edit_page
