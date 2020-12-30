@@ -1,5 +1,5 @@
 <%= extends_layout :application do %>
-  <%= render PageTitle::View.new(title: "trainees.edit") %>
+  <%= render PageTitle::View.new(title: trainee_name(@trainee)) %>
 
   <%= content_for(:breadcrumbs) do %>
     <%= render GovukComponent::BackLink.new(
@@ -12,7 +12,7 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
       <%= trainee_name(@trainee) %>
 
-      <%= render GovukComponent::Tag.new(text: "Pending TRN", colour: "turquoise") %>
+      <%= render StatusTag::View.new(trainee: @trainee) %>
     </h1>
   </div>
 

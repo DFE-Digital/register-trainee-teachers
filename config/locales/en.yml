@@ -62,7 +62,6 @@ en:
         index: Trainee records
         not_supported_route: Other routes not supported
         show: Overview
-        edit: Edit trainee
         diversity:
           disclosures:
             edit: Has the trainee shared diversity information?
