@@ -150,4 +150,31 @@ describe Trainee do
       it_behaves_like "a working search"
     end
   end
+
+  describe "#ordered_by_date" do
+    let(:trainee_one) { create(:trainee, updated_at: 1.day.ago) }
+    let(:trainee_two) { create(:trainee, updated_at: 1.hour.ago) }
+
+    it "orders the trainess by updated_at in descending order" do
+      expect(Trainee.ordered_by_date).to eq([trainee_two, trainee_one])
+    end
+  end
+
+  context "trainee status" do
+    let(:draft_trainee) { create(:trainee, :draft) }
+    let(:trainee_submitted_for_trn) { create(:trainee, :submitted_for_trn) }
+    let(:trainee_with_qts_awarded) { create(:trainee, :qts_awarded) }
+
+    describe "#is_draft" do
+      it "returns all trainees that are draft" do
+        expect(Trainee.is_draft).to match_array([draft_trainee])
+      end
+    end
+
+    describe "#is_not_draft" do
+      it "returns all records that are not draft" do
+        expect(Trainee.is_not_draft).to match_array([trainee_submitted_for_trn, trainee_with_qts_awarded])
+      end
+    end
+  end
 end
