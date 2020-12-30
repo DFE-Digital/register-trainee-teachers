@@ -101,6 +101,10 @@ en:
           show: When did the trainee defer?
         deferral_details:
           confirm: Check deferral details
+    filter:
+      state: Status
+      record_type: Training route
+      subject: Subject
   views:
     trainees:
       edit:
@@ -174,7 +178,6 @@ en:
           withdrawn: Withdrawn
           deferred: Deferred
           qts_awarded: QTS awarded
-
     errors:
       models:
         degree:
