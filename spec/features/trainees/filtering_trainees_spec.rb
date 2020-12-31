@@ -137,45 +137,45 @@ private
   end
 
   def then_all_trainees_are_visible
-    Trainee.all.each { |trainee| expect(page).to have_text(trainee.first_names) }
+    Trainee.all.each { |trainee| expect(page).to have_text(full_name(trainee)) }
   end
 
   def then_only_assessment_only_trainees_are_visible
-    expect(page).to have_text(@assessment_only_trainee.first_names)
-    expect(page).to_not have_text(@provider_led_trainee.first_names)
+    expect(page).to have_text(full_name(@assessment_only_trainee))
+    expect(page).to_not have_text(full_name(@provider_led_trainee))
   end
 
   def then_only_provider_led_trainees_are_visible
-    expect(page).to_not have_text(@assessment_only_trainee.first_names)
-    expect(page).to have_text(@provider_led_trainee.first_names)
+    expect(page).to_not have_text(full_name(@assessment_only_trainee))
+    expect(page).to have_text(full_name(@provider_led_trainee))
   end
 
   def then_only_biology_trainees_are_visible
-    expect(page).to have_text(@biology_trainee.first_names)
-    expect(page).to_not have_text(@history_trainee.first_names)
+    expect(page).to have_text(full_name(@biology_trainee))
+    expect(page).to_not have_text(full_name(@history_trainee))
   end
 
   def then_only_assessment_only_biology_trainees_are_visible
-    expect(page).to have_text(@biology_trainee.first_names)
+    expect(page).to have_text(full_name(@biology_trainee))
     [
       @assessment_only_trainee,
       @provider_led_trainee,
       @history_trainee,
       @searchable_trainee,
-    ].each do |t|
-      expect(page).to_not have_text(t.first_names)
+    ].each do |trainee|
+      expect(page).to_not have_text(full_name(trainee))
     end
   end
 
   def then_only_the_searchable_trainee_is_visible
-    expect(page).to have_text(@searchable_trainee.first_names)
+    expect(page).to have_text(full_name(@searchable_trainee))
     [
       @assessment_only_trainee,
       @provider_led_trainee,
       @history_trainee,
       @biology_trainee,
-    ].each do |t|
-      expect(page).to_not have_text(t.first_names)
+    ].each do |trainee|
+      expect(page).to_not have_text(full_name(trainee))
     end
   end
 
@@ -183,5 +183,9 @@ private
     values.each do |value|
       expect(trainees_page.filter_tags).to have_text(value)
     end
+  end
+
+  def full_name(trainee)
+    [trainee.first_names, trainee.last_name].join(" ")
   end
 end
