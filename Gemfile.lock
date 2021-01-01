@@ -155,7 +155,7 @@ GEM
       cliver (~> 0.3)
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
-    ffi (1.13.1)
+    ffi (1.14.2)
     foreman (0.87.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -180,7 +180,7 @@ GEM
       bindata
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.3.3)
+    listen (3.4.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.8.0)
@@ -451,7 +451,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   httparty (~> 0.18)
   launchy
-  listen (>= 3.0.5, < 3.4)
+  listen (>= 3.0.5, < 3.5)
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
