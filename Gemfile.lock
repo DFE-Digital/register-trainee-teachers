@@ -97,7 +97,7 @@ GEM
       ferrum (~> 0.9.0)
     deep_merge (1.2.1)
     diff-lcs (1.4.4)
-    docile (1.3.2)
+    docile (1.3.4)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
@@ -362,7 +362,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    simplecov (0.20.0)
+    simplecov (0.21.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
@@ -471,7 +471,7 @@ DEPENDENCIES
   sentry-raven
   shoulda-matchers (~> 4.4)
   sidekiq (~> 6.1)
-  simplecov (~> 0.20.0)
+  simplecov (~> 0.21.0)
   site_prism (~> 3.7)
   spring
   spring-commands-rspec (~> 1.0)
