@@ -25,6 +25,20 @@ module Trainees
         render_text_with_hint(trainee.updated_at)
       end
 
+      def trn_row
+        if trainee.trn.present?
+          {
+            key: "TRN",
+            value: trainee.trn,
+          }
+        else
+          {
+            key: "Submitted for TRN",
+            value: submission_date,
+          }
+        end
+      end
+
     private
 
       def render_text_with_hint(date)
