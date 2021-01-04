@@ -5,13 +5,9 @@
     {
       key: "Trainee ID",
       value: trainee_id,
-      action: govuk_link_to('Change<span class="govuk-visually-hidden"> trainee ID</span>'.html_safe,
-                              edit_trainee_trainee_id_path(trainee)),
+      action: govuk_link_to('Change<span class="govuk-visually-hidden"> trainee ID</span>'.html_safe, edit_trainee_trainee_id_path(trainee)),
     },
-    {
-      key: "Submitted for TRN",
-      value: submission_date,
-    },
+    trn_row,
     {
       key: "Last updated",
       value: last_updated_date,
