@@ -9,7 +9,7 @@
     "@ministryofjustice/frontend": "^0.0.23",
     "@rails/webpacker": "^5.2.1",
     "accessible-autocomplete": "^2.0.3",
-    "core-js": "^3.8.1",
+    "core-js": "^3.8.2",
     "govuk-frontend": "^3.10.2",
     "jquery": "^3.5.1",
     "rails-ujs": "^5.2.4",
