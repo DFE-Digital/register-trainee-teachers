@@ -21,7 +21,7 @@
         <% end %>
       <% end %>
 
-      <%= f.govuk_radio_buttons_fieldset(:withdraw_reason,legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_reason"), tag: "h1", size: "l" }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:withdraw_reason, legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_reason"), tag: "h1", size: "l" }) do %>
         <% WithdrawalReasons::SPECIFIC.each_with_index do |withdrawal_reason, index| %>
           <%= f.govuk_radio_button(:withdraw_reason, withdrawal_reason,
                 label: { text: t("views.forms.withdrawal_reasons.labels.#{withdrawal_reason}") },

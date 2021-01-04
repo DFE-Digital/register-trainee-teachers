@@ -15,8 +15,8 @@ feature "Withdrawing a trainee", type: :feature do
   context "validation errors" do
     scenario "no information provided" do
       and_i_continue
-      then_i_see_the_error_message_for_invalid_date
-      then_i_see_the_error_message_for_invalid_reason
+      then_i_see_the_error_message_for_date_not_chosen
+      then_i_see_the_error_message_for_reason_not_chosen
     end
 
     scenario "invalid date for another day" do
@@ -24,6 +24,12 @@ feature "Withdrawing a trainee", type: :feature do
       and_enter_an_invalid_date
       and_i_continue
       then_i_see_the_error_message_for_invalid_date
+    end
+
+    scenario "blank date for another day" do
+      when_i_choose_another_day
+      and_i_continue
+      then_i_see_the_error_message_for_blank_date
     end
   end
 
@@ -126,13 +132,25 @@ feature "Withdrawing a trainee", type: :feature do
     withdrawal_page.additional_withdraw_reason.set(additional_withdraw_reason)
   end
 
+  def then_i_see_the_error_message_for_date_not_chosen
+    expect(page).to have_content(
+      I18n.t("activemodel.errors.models.withdrawal_form.attributes.withdraw_date_string.blank"),
+    )
+  end
+
   def then_i_see_the_error_message_for_invalid_date
     expect(page).to have_content(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.withdraw_date.invalid"),
     )
   end
 
-  def then_i_see_the_error_message_for_invalid_reason
+  def then_i_see_the_error_message_for_blank_date
+    expect(page).to have_content(
+      I18n.t("activemodel.errors.models.withdrawal_form.attributes.withdraw_date.blank"),
+    )
+  end
+
+  def then_i_see_the_error_message_for_reason_not_chosen
     expect(withdrawal_page).to have_content(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.withdraw_reason.invalid"),
     )

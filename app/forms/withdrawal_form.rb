@@ -82,7 +82,9 @@ private
   end
 
   def withdraw_date_valid
-    if withdraw_date_string == "other" && [day, month, year].all?(&:blank?)
+    if withdraw_date_string.nil?
+      errors.add(:withdraw_date_string, :blank)
+    elsif withdraw_date_string == "other" && [day, month, year].all?(&:blank?)
       errors.add(:withdraw_date, :blank)
     elsif !withdraw_date.is_a?(Date)
       errors.add(:withdraw_date, :invalid)
