@@ -373,6 +373,7 @@ GEM
       capybara (~> 3.8)
       site_prism-all_there (>= 0.3.1, < 1.0)
     site_prism-all_there (0.3.2)
+    slack-notifier (2.3.2)
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -473,6 +474,7 @@ DEPENDENCIES
   sidekiq (~> 6.1)
   simplecov (~> 0.21.1)
   site_prism (~> 3.7)
+  slack-notifier
   spring
   spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.0.0)
