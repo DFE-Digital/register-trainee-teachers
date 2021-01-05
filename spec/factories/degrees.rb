@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+NEXT_YEAR = Time.zone.now.year.next
+
 FactoryBot.define do
   factory :degree, class: Degree do
     association :trainee
@@ -17,7 +19,7 @@ FactoryBot.define do
       subject { Dttp::CodeSets::DegreeSubjects::MAPPING.keys.sample }
       institution { Dttp::CodeSets::Institutions::MAPPING.keys.sample }
       grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
-      graduation_year { (1900..Time.zone.today.year).to_a.sample }
+      graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
     end
 
     trait :non_uk_degree_type do
@@ -32,7 +34,7 @@ FactoryBot.define do
       subject { Dttp::CodeSets::DegreeSubjects::MAPPING.keys.sample }
       country { Dttp::CodeSets::Countries::MAPPING.keys.sample }
       grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
-      graduation_year { (1900..Time.zone.today.year).to_a.sample }
+      graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
     end
   end
 end
