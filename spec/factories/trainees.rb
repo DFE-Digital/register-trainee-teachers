@@ -61,6 +61,9 @@ FactoryBot.define do
 
     trait :with_placement_assignment do
       placement_assignment_dttp_id { SecureRandom.uuid }
+    end
+
+    trait :with_outcome_date do
       outcome_date { Faker::Date.in_date_period }
     end
 
