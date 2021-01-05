@@ -1,0 +1,14 @@
+<div class="trainee-record-header">
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+    <%= trainee_name(trainee)%>
+
+    <%= render StatusTag::View.new(trainee: trainee) %>
+
+  </h1>
+
+  <% if show_trn? %>
+    <span class="govuk-caption-l">
+      <%= "TRN: #{trn}" %>
+    </span>
+  <% end %>
+</div>
