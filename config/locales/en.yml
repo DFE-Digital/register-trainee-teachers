@@ -109,7 +109,8 @@ en:
     trainees:
       edit:
         defer: Defer
-        withdraw: Withdraw
+        withdraw: withdraw
+        reinstate: Reinstate
         this_trainee: this trainee
     trainee_summary:
       contact_details:

@@ -11,37 +11,37 @@ RSpec.describe Trainees::RecordActions::View do
     context "draft" do
       let(:trait) { :draft }
 
-      it { is_expected.not_to include("Defer", "Withdraw") }
+      it { is_expected.not_to include("Defer", "withdraw") }
     end
 
     context "submitted for TRN" do
       let(:trait) { :submitted_for_trn }
 
-      it { is_expected.to include("Defer", "Withdraw") }
+      it { is_expected.to include("Defer", "withdraw") }
     end
 
     context "TRN received" do
       let(:trait) { :trn_received }
 
-      it { is_expected.to include("Defer", "Withdraw") }
+      it { is_expected.to include("Defer", "withdraw") }
     end
 
-    context "recommended for GTS" do
+    context "recommended for QTS" do
       let(:trait) { :recommended_for_qts }
 
-      it { is_expected.not_to include("Defer", "Withdraw") }
+      it { is_expected.not_to include("Defer", "withdraw") }
     end
 
     context "withdrawn" do
       let(:trait) { :withdrawn }
 
-      it { is_expected.not_to include("Defer", "Withdraw") }
+      it { is_expected.not_to include("Defer", "withdraw") }
     end
 
     context "QTS awarded" do
       let(:trait) { :qts_awarded }
 
-      it { is_expected.not_to include("Defer", "Withdraw") }
+      it { is_expected.not_to include("Defer", "withdraw") }
     end
   end
 end

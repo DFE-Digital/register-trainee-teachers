@@ -5,13 +5,7 @@
   <% if display_actions? %>
     <div class="record-actions__links">
       <p class="govuk-body govuk-!-margin-bottom-0">
-        <% if allow_defer? %>
-          <%= govuk_link_to t("views.trainees.edit.defer"), trainee_deferral_path(@trainee), class: "defer"  %> or
-        <% end %>
-
-        <% if allow_withdraw? %>
-          <%= govuk_link_to t("views.trainees.edit.withdraw"), trainee_withdrawal_path(@trainee), class: "withdraw"  %>
-        <% end %>
+        <%= defer_and_withdraw_links %>
         <%= t("views.trainees.edit.this_trainee") %>
       </p>
     </div>
