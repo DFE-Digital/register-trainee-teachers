@@ -58,7 +58,7 @@ destroy: terraform-init
 terraform-init:
 	terraform init -reconfigure -backend-config=terraform/workspace-variables/$(env_config)_backend.tfvars $(backend_key) terraform
 	$(if $(tag), , $(error Missing environment variable "tag"))
-	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teacher-data:$(tag))
+	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teachers:$(tag))
 	$(if $(passcode), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 

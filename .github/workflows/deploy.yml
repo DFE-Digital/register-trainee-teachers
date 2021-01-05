@@ -43,7 +43,7 @@ jobs:
        matrix: ${{ fromJson(needs.prepare-matrix.outputs.environments) }}
        max-parallel: 1
     env:
-        DOCKER_REPO: dfedigital/register-trainee-teacher-data
+        DOCKER_REPO: dfedigital/register-trainee-teachers
 
     steps:
       - uses: actions/checkout@v2
