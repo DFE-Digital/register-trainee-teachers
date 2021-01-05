@@ -25,12 +25,19 @@ class ContactDetailForm
 
   attr_accessor(*FIELDS)
 
+  before_validation :sanitise_email
+
   validates :locale_code, presence: true
   validate :international_address_not_empty
   validate :uk_address_must_not_be_empty
   validates :postcode, postcode: true, if: ->(attr) { attr.postcode.present? }
   validates :email, presence: true
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+
+  validate do |record|
+    EmailFormatValidator.new(record).validate
+  end
+
+  after_validation :update_trainee
 
   def initialize(trainee)
     @trainee = trainee
@@ -46,6 +53,11 @@ class ContactDetailForm
   end
 
 private
+
+  def update_trainee
+    # Need to save the email attribute formatted by the ContactDetailForm.
+    trainee.assign_attributes(fields.merge({ email: email })) if errors.empty?
+  end
 
   def international_address_not_empty
     return unless trainee.non_uk?
@@ -69,5 +81,9 @@ private
         :blank,
       )
     end
+  end
+
+  def sanitise_email
+    self.email = email.gsub(/\s+/, "") unless email.nil?
   end
 end

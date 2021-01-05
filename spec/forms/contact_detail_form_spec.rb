@@ -50,26 +50,13 @@ describe ContactDetailForm, type: :model do
           .to be_empty
       end
     end
+  end
 
-    describe "email" do
-      it "must fail if only @" do
-        trainee.email = "@"
-        expect(subject).not_to be_valid
-        expect(subject.errors[:email])
-          .to include(I18n.t("activemodel.errors.models.contact_detail_form.attributes.email.invalid"))
-      end
-
-      it "must fail if it does not contain @" do
-        trainee.email = "myname.com"
-        expect(subject).not_to be_valid
-        expect(subject.errors[:email])
-          .to include(I18n.t("activemodel.errors.models.contact_detail_form.attributes.email.invalid"))
-      end
-
-      it "accepts a valid email address" do
-        trainee.email = "my_name@doman.com"
-        expect(subject).to be_valid
-      end
+  describe "formatting emails" do
+    it "strips whitespace from emails" do
+      trainee.email = "test @example.com"
+      subject.save # rubocop:disable Rails/SaveBang
+      expect(trainee.email).to eq("test@example.com")
     end
   end
 end

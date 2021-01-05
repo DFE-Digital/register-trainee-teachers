@@ -204,6 +204,8 @@ en:
       validators:
         postcode:
           invalid: "You must enter a valid postcode (for example, BN1 1AA)"
+        email:
+          invalid: "You must enter an email address in the correct format, like name@example.com"
       models:
         personal_detail_form:
           attributes:

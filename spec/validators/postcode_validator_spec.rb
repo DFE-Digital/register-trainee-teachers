@@ -22,7 +22,6 @@ describe PostcodeValidator do
     let(:postcode) { "not really a postcode" }
 
     it "adds an error" do
-      subject.postcode = "not really a postcode"
       expect(subject).not_to be_valid
       expect(subject.errors[:postcode]).not_to be_blank
     end
