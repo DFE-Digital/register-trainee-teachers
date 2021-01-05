@@ -22,7 +22,7 @@ module Trainees
         end
       end
 
-      context "when data has been provided" do
+      context "when trainee_id data has been provided" do
         before do
           render_inline(View.new(trainee))
         end
