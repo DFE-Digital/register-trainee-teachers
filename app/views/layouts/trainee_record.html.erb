@@ -8,13 +8,7 @@
     ) %>
   <% end %>
 
-  <div class="trainee-record-header">
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-      <%= trainee_name(@trainee) %>
-
-      <%= render StatusTag::View.new(trainee: @trainee) %>
-    </h1>
-  </div>
+  <%= render Trainees::RecordHeader::View.new(trainee: @trainee) %>
 
   <%= render TabNavigation::View.new(items: [
     { name: "Training details", url: edit_trainee_path(@trainee) },
