@@ -11,8 +11,8 @@ on:
   push:
 
 env:
-  DOCKER_REPO: dfedigital/register-trainee-teacher-data
-  DOCKER_IMAGE: register-trainee-teacher-data
+  DOCKER_REPO: dfedigital/register-trainee-teachers
+  DOCKER_IMAGE: register-trainee-teachers
 
 jobs:
   build:
