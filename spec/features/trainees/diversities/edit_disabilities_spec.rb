@@ -15,6 +15,7 @@ feature "edit disability details", type: :feature do
     and_i_submit_the_form
     and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
+    then_i_see_a_flash_message
     and_the_disability_details_are_updated
   end
 
@@ -56,5 +57,9 @@ feature "edit disability details", type: :feature do
         "activemodel.errors.models.diversities/disability_detail_form.attributes.disability_ids.empty_disabilities",
       ),
     )
+  end
+
+  def then_i_see_a_flash_message
+    expect(page).to have_text("Trainee disabilities updated")
   end
 end

@@ -15,6 +15,7 @@ module Trainees
       authorize trainee
       toggle_trainee_progress_field
       trainee.save!
+      flash[:success] = "Trainee #{flash_message_title} updated"
       redirect_to trainee_path(trainee)
     end
 
@@ -34,6 +35,13 @@ module Trainees
 
     def confirm_section_title
       trainee_section_key.gsub(/_/, " ")
+    end
+
+    def flash_message_title
+      I18n.t(
+        "components.confirmation.flash.#{trainee_section_key}",
+        default: confirm_section_title.pluralize,
+      )
     end
 
     def toggle_trainee_progress_field

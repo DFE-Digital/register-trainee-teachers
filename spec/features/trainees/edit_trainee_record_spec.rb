@@ -32,6 +32,7 @@ feature "edit trainee record", type: :feature do
     scenario "removing a degree" do
       and_i_visit_the_personal_details
       and_i_remove_the_degree
+      then_i_see_a_flash_message
       then_i_should_not_see_any_degree
     end
   end
@@ -83,5 +84,9 @@ feature "edit trainee record", type: :feature do
 
   def then_i_should_not_see_any_degree
     expect(@edit_page.degree_detail.find_all(".govuk-summary-list__row")).to be_empty
+  end
+
+  def then_i_see_a_flash_message
+    expect(page).to have_text("Trainee degree deleted")
   end
 end
