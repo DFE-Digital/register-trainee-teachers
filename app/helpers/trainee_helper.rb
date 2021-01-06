@@ -10,9 +10,9 @@ module TraineeHelper
 
   def view_trainee(trainee)
     if trainee.draft?
-      trainee_path(trainee.id)
+      trainee_path(trainee)
     else
-      edit_trainee_path(trainee.id)
+      edit_trainee_path(trainee)
     end
   end
 end

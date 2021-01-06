@@ -2,6 +2,7 @@
 
 class Trainee < ApplicationRecord
   include PgSearch::Model
+  include Sluggable
 
   belongs_to :provider
   has_many :degrees, dependent: :destroy
