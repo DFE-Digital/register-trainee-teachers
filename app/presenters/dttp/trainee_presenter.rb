@@ -2,8 +2,10 @@
 
 module Dttp
   class TraineePresenter
-    FEMALE_GENDER_CODE = 1
-    MALE_GENDER_CODE = 2
+    MALE_GENDER_CODE = 1
+    FEMALE_GENDER_CODE = 2
+    OTHER_GENDER_CODE = 389_040_000
+    GENDER_NOT_PROVIDED_CODE = nil
 
     delegate_missing_to :trainee
 
@@ -70,7 +72,12 @@ module Dttp
     end
 
     def gender_code
-      male? ? MALE_GENDER_CODE : FEMALE_GENDER_CODE
+      {
+        male: MALE_GENDER_CODE,
+        female: FEMALE_GENDER_CODE,
+        other: OTHER_GENDER_CODE,
+        gender_not_provided: GENDER_NOT_PROVIDED_CODE,
+      }[trainee.gender.to_sym]
     end
 
     def dttp_disability

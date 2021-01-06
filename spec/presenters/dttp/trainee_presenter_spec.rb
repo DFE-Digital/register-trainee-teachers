@@ -93,7 +93,7 @@ module Dttp
             "address1_postalcode" => trainee.postcode,
             "birthdate" => trainee.date_of_birth.to_s,
             "emailaddress1" => trainee.email,
-            "gendercode" => 1,
+            "gendercode" => 2,
             "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
             "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
             "dfe_trnassessmentdate" => time_now_in_zone.in_time_zone.iso8601,
