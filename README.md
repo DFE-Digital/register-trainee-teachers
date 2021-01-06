@@ -104,6 +104,10 @@ bar
 
 Refer to the [settings file](config/settings.yml) for all the settings required to run this app
 
+## Resetting Secrets and passwords
+
+Please visit the [confluence page](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/2351824901/Resetting+Secrets+for+Register-Trainee-Teachers) for instructions
+
 ## Feature flags
 
 This repo supports the ability to set up feature flags. To do this, add your feature flag in the [settings file](config/settings.yml) under the `features` property. eg:
@@ -137,7 +141,7 @@ Basic auth is enabled in non-production and non-local environments. The credenti
 
 When running the https local dev environment if you are on Mac and using Chrome you may need to get past an invalid certificate screen. https://stackoverflow.com/questions/58802767/no-proceed-anyway-option-on-neterr-cert-invalid-in-chrome-on-macos
 
-### DfE Sign-in 
+### DfE Sign-in
 
 For DfE Signin to work, the below values needs to be set.
 
