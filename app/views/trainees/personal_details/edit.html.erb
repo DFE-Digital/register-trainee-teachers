@@ -26,6 +26,8 @@
         <%= f.govuk_radio_button :gender, :male, label: { text: "Male" }, link_errors: true %>
         <%= f.govuk_radio_button :gender, :female, label: { text: "Female" } %>
         <%= f.govuk_radio_button :gender, :other, label: { text: "Other" } %>
+        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_button :gender, :gender_not_provided, label: { text: "Not provided" } %>
       <% end %>
 
       <%= f.govuk_check_boxes_fieldset :nationality_ids, legend: { text: "Nationality", size: 's' }, hint: { text: "Select all that apply" }, classes: "nationality" do %>

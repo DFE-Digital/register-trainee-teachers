@@ -28,7 +28,7 @@ module Trainees
         def gender
           return @not_provided_copy unless trainee.gender
 
-          trainee.gender.capitalize
+          I18n.t("components.confirmation.personal_detail.gender.#{trainee.gender}")
         end
 
         def nationality
