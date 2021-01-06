@@ -102,9 +102,10 @@ en:
         deferral_details:
           confirm: Check deferral details
     filter:
-      state: Status
       record_type: Training route
+      state: Status
       subject: Subject
+      text_search: Text search
   views:
     trainees:
       edit:

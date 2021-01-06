@@ -2,13 +2,15 @@
 
 class TraineesController < ApplicationController
   def index
+    @filters = TraineeFilter.new(params: filter_params).filters
+
     @draft_trainees = Trainees::Filter.call(
       trainees: policy_scope(Trainee.is_draft.ordered_by_date),
-      filters: filters,
+      filters: @filters,
     )
     @trainees = Trainees::Filter.call(
       trainees: policy_scope(Trainee.is_not_draft.ordered_by_date),
-      filters: filters,
+      filters: @filters,
     )
   end
 
@@ -56,7 +58,7 @@ private
     params.require(:trainee).permit(:record_type, :trainee_id)
   end
 
-  def filters
-    @filters ||= params.permit(:subject, :text_search, record_type: [], state: [])
+  def filter_params
+    params.permit(:subject, :text_search, record_type: [], state: [])
   end
 end

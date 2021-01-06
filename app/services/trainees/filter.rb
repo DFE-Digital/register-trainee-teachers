@@ -10,7 +10,7 @@ module Trainees
     end
 
     def call
-      return trainees if filters.empty?
+      return trainees unless filters
 
       filter_trainees
     end
@@ -32,13 +32,13 @@ module Trainees
     end
 
     def subject(trainees, subject)
-      return trainees if subject.blank? || subject == "All subjects"
+      return trainees if subject.blank?
 
       trainees.where(subject: subject)
     end
 
     def text_search(trainees, text_search)
-      return trainees if text_search&.empty?
+      return trainees if text_search.blank?
 
       trainees.with_name_trainee_id_or_trn_like(text_search)
     end

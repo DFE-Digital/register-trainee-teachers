@@ -30,7 +30,7 @@
         <%= render ApplicationRecordCard::View.with_collection(@trainees) %>
       </div>
     <% end %>
-  <% elsif !@filters.empty? %>
+  <% elsif @filters %>
     <h2 class="govuk-heading-m">No records found.</h2>
     <p class="govuk-body">
       Try

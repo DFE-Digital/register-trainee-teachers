@@ -21,16 +21,10 @@ module Trainees
       end
 
       def checked?(filter, value)
-        filters[filter]&.include?(value)
+        filters && filters[filter]&.include?(value)
       end
 
-      def active_filters
-        filters.deep_dup.reject! do |filter, value|
-          value.empty? || (filter == "subject" && value == "All subjects")
-        end
-      end
-
-      def tags_for_active_filter(filter, value)
+      def tags_for_filter(filter, value)
         case value
         when String
           [{ title: title_html(filter, value), remove_link: remove_select_tag_link(filter) }]
@@ -45,13 +39,13 @@ module Trainees
       end
 
       def remove_checkbox_tag_link(filter, value)
-        new_filters = active_filters
+        new_filters = filters.deep_dup
         new_filters[filter].reject! { |v| v == value }
         "?" + new_filters.to_query
       end
 
       def remove_select_tag_link(filter)
-        new_filters = active_filters.reject { |f| f == filter }
+        new_filters = filters.reject { |f| f == filter }
         "?" + new_filters.to_query
       end
 
