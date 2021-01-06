@@ -17,7 +17,12 @@ class Trainee < ApplicationRecord
 
   enum record_type: { assessment_only: 0, provider_led: 1 }
   enum locale_code: { uk: 0, non_uk: 1 }
-  enum gender: { male: 0, female: 1, other: 2 }
+  enum gender: {
+    male: 0,
+    female: 1,
+    other: 2,
+    gender_not_provided: 3,
+  }
 
   enum diversity_disclosure: {
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,

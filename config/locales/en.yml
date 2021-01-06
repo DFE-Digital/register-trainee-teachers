@@ -16,6 +16,12 @@ en:
           white_ethnic_group: White
           other_ethnic_group: Another ethnic group
           not_provided_ethnic_group: Not provided
+      personal_detail:
+        gender:
+          male: Male
+          female: Female
+          other: Other
+          gender_not_provided: Not provided
       withdrawal_details:
         heading: Check withdrawal details
         summary_title: Withdrawal details

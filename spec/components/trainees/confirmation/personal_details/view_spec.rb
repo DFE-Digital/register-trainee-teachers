@@ -50,7 +50,9 @@ module Trainees
 
           it "renders the gender" do
             expect(component.find(".govuk-summary-list__row.gender .govuk-summary-list__value"))
-              .to have_text(trainee.gender.capitalize)
+              .to have_text(
+                I18n.t("components.confirmation.personal_detail.gender.#{trainee.gender}"),
+              )
           end
 
           it "renders the nationality" do
