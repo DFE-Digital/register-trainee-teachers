@@ -67,6 +67,26 @@ class Trainee < ApplicationRecord
     qts_awarded: 6,
   }
 
+  enum age_range: {
+    AgeRange::THREE_TO_ELEVEN_PROGRAMME => 0,
+    AgeRange::FIVE_TO_ELEVEN_PROGRAMME => 1,
+    AgeRange::ELEVEN_TO_SIXTEEN_PROGRAMME => 2,
+    AgeRange::ELEVEN_TO_NINETEEN_PROGRAMME => 3,
+    AgeRange::ZERO_TO_FIVE_PROGRAMME => 4,
+    AgeRange::THREE_TO_SEVEN_PROGRAMME => 5,
+    AgeRange::THREE_TO_EIGHT_PROGRAMME => 6,
+    AgeRange::THREE_TO_NINE_PROGRAMME => 7,
+    AgeRange::FIVE_TO_NINE_PROGRAMME => 8,
+    AgeRange::FIVE_TO_FOURTEEN_PROGRAMME => 9,
+    AgeRange::SEVEN_TO_ELEVEN_PROGRAMME => 10,
+    AgeRange::SEVEN_TO_FOURTEEN_PROGRAMME => 11,
+    AgeRange::SEVEN_TO_SIXTEEN_PROGRAMME => 12,
+    AgeRange::NINE_TO_FOURTEEN_PROGRAMME => 13,
+    AgeRange::NINE_TO_SIXTEEN_PROGRAMME => 14,
+    AgeRange::FOURTEEN_TO_NINETEEN_PROGRAMME => 15,
+    AgeRange::FOURTEEN_TO_NINETEEN_DIPLOMA => 16,
+  }
+
   pg_search_scope :with_name_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name trainee_id trn],
                   using: { tsearch: { prefix: true } }

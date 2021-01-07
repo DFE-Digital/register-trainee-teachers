@@ -26,7 +26,7 @@ module ProgrammeDetails
             end_month: valid_end_date.month,
             end_year: valid_end_date.year,
             main_age_range: "other",
-            additional_age_range: "14 - 19 diploma",
+            additional_age_range: AgeRange::FOURTEEN_TO_NINETEEN_DIPLOMA,
             subject: "Philosophy" }
         end
 
