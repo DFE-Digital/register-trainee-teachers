@@ -82,6 +82,8 @@ Rails.application.routes.draw do
 
       resource :confirm_deferral, only: %i[show update], path: "/defer/confirm"
       resource :deferral, only: %i[show update], path: "/defer"
+
+      resource :timeline, only: :show
     end
 
     member do
