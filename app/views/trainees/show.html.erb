@@ -8,37 +8,16 @@
 <% end %>
 
 <h1 class="govuk-heading-l">
+  <% if @trainee.first_names.present? && @trainee.last_name.present? %>
+    <span class="govuk-caption-l">Draft record for <%= trainee_name(@trainee) %></span>
+  <% end %>
   Add a trainee
 </h1>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <h2 class="govuk-heading-m">Training details</h2>
-
-    <%= render TaskList::View.new(classes: "record-setup") do |component|
-      component.slot(
-        :row,
-        task_name: 'Training details',
-        path: training_details_trainee_path(@trainee),
-        status: 'completed'
-      )
-
-      component.slot(
-        :row,
-        task_name: 'Programme details',
-        path: edit_trainee_programme_details_path(@trainee),
-        confirm_path: trainee_programme_details_confirm_path(@trainee),
-        classes: "programme-details",
-        status: ProgressService.call(
-          validator: ProgrammeDetailForm.new(@trainee),
-          progress_value: @trainee.progress.programme_details
-        ).status
-      )
-
-    end %>
-
-    <h2 class="govuk-heading-m">About the trainee</h2>
+    <h2 class="govuk-heading-m">Personal details and education</h2>
 
     <%= render TaskList::View.new do |component|
       component.slot(
@@ -86,6 +65,29 @@
           progress_value: @trainee.progress.degrees
         ).status,
         classes: 'degree-details'
+      )
+    end %>
+
+    <h2 class="govuk-heading-m">About their training</h2>
+
+    <%= render TaskList::View.new(classes: "record-setup") do |component|
+      component.slot(
+        :row,
+        task_name: 'Programme details',
+        path: edit_trainee_programme_details_path(@trainee),
+        confirm_path: trainee_programme_details_confirm_path(@trainee),
+        classes: "programme-details",
+        status: ProgressService.call(
+          validator: ProgrammeDetailForm.new(@trainee),
+          progress_value: @trainee.progress.programme_details
+        ).status
+      )
+
+      component.slot(
+        :row,
+        task_name: 'Trainee details',
+        path: training_details_trainee_path(@trainee),
+        status: 'completed'
       )
     end %>
   </div>
