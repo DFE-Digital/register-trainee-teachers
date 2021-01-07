@@ -13,6 +13,7 @@
   <%= render TabNavigation::View.new(items: [
     { name: "Training details", url: edit_trainee_path(@trainee) },
     { name: "Personal details and education", url: trainee_personal_details_path(@trainee) },
+    { name: "Timeline", url: trainee_timeline_path(@trainee) },
   ]) %>
 
   <%= yield %>

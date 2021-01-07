@@ -5,6 +5,8 @@ module PageObjects
     class Edit < PageObjects::Base
       set_url "/trainees/{id}/edit"
 
+      element :timeline_tab, "a", text: "Timeline"
+
       element :trainee_name, ".govuk-heading-xl"
       element :trn_status, ".govuk-tag.trainee-status"
 

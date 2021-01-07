@@ -1,0 +1,69 @@
+@import "../../base.scss";
+
+.app-timeline {
+  margin-bottom: govuk-spacing(4);
+  position: relative;
+
+  &:before {
+    background-color: govuk-colour("blue");
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: govuk-spacing(2);
+    width: 5px;
+  }
+}
+
+.app-timeline--full {
+  margin-bottom: 0;
+  &:before {
+    height: calc(100% - 75px);
+  }
+}
+
+.app-timeline__item {
+  padding-bottom: govuk-spacing(6);
+  padding-left: govuk-spacing(4);
+  position: relative;
+
+  &:before {
+    background-color: govuk-colour("blue");
+    content: "";
+    height: 5px;
+    left: 0;
+    position: absolute;
+    top: govuk-spacing(2);
+    width: 15px;
+  }
+}
+
+.app-timeline__item:last-child {
+  &:after {
+    background-color: govuk-colour("blue");
+    content: "";
+    height: 5px;
+    left: -5px;
+    position: absolute;
+    bottom: -10px;
+    width: 15px;
+  }
+}
+
+.app-timeline__title {
+  @include govuk-font($size: 19, $weight: bold);
+  display: inline;
+}
+
+.app-timeline__actor_and_date {
+  @include govuk-font($size: 19);
+  color: $govuk-secondary-text-colour;
+  display: inline;
+  margin: 0;
+}
+
+.app-timeline__date {
+  @include govuk-font($size: 19);
+  color: $govuk-secondary-text-colour;
+  margin: 0;
+}

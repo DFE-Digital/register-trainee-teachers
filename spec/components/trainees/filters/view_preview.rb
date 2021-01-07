@@ -14,7 +14,7 @@ module Trainees
         ActionController::Parameters.new({
           record_type: %w[assessment_only],
           subject: "Biology",
-        })
+        }).permit(:subject, :text_search, record_type: [], state: [])
       end
     end
   end
