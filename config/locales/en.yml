@@ -43,6 +43,9 @@ en:
         defer_date_label: Date of deferral
       not_provided: Not provided
       heading: Confirm %{section_title}
+      flash:
+        disability_disclosure: disclosure
+        information_disclosed: disclosure
     programme_detail:
       title: "%{record_type} programme details"
     degrees:

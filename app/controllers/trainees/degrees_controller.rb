@@ -35,6 +35,7 @@ module Trainees
 
     def destroy
       trainee.degrees.destroy(trainee.degrees.find(params[:id]))
+      flash[:success] = "Trainee degree deleted"
       redirect_to trainee_personal_details_path(@trainee)
     end
 

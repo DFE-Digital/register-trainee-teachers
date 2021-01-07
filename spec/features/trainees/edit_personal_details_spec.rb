@@ -7,16 +7,19 @@ feature "edit personal details", type: :feature do
 
   scenario "updates personal details with valid data" do
     given_valid_personal_details_are_provided
+    then_i_see_a_flash_message
     then_the_personal_details_are_updated
   end
 
   scenario "updates personal details with 'other' nationality" do
     given_other_nationality_is_provided
+    then_i_see_a_flash_message
     then_the_personal_details_are_updated
   end
 
   scenario "renders a completed status when valid personal details provided" do
     given_valid_personal_details_are_provided
+    then_i_see_a_flash_message
     then_the_personal_details_section_should_be_completed
   end
 
@@ -28,6 +31,7 @@ feature "edit personal details", type: :feature do
     and_i_submit_the_form
     and_confirm_my_details(checked: false)
     then_i_am_redirected_to_the_summary_page
+    then_i_see_a_flash_message
     then_the_personal_details_section_should_be_in_progress
   end
 
@@ -115,5 +119,9 @@ private
 
   def then_the_personal_details_section_should_be_in_progress
     expect(summary_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
+  end
+
+  def then_i_see_a_flash_message
+    expect(page).to have_text("Trainee personal details updated")
   end
 end

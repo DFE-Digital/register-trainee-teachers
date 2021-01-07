@@ -37,6 +37,7 @@ RSpec.feature "Adding a degree" do
 
       scenario "the user deletes a degree" do
         confirm_details_page.delete_button.click
+        then_i_see_a_flash_message
         and_i_visit_the_summary_page
         then_the_degree_status_should_be(:not_started)
       end
@@ -203,5 +204,9 @@ private
 
   def then_the_degree_status_should_be(status)
     expect(summary_page.degree_details.status.text).to eq(Progress::STATUSES[status])
+  end
+
+  def then_i_see_a_flash_message
+    expect(page).to have_text("Trainee degree deleted")
   end
 end

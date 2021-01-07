@@ -49,6 +49,7 @@
     <main class="govuk-main-wrapper " id="main-content" role="main">
       <%= yield :start_page_banner %>
       <div class="govuk-width-container">
+        <%= render(FlashBanner::View.new(flash: flash)) %>
         <%= yield %>
       </div>
     </main>

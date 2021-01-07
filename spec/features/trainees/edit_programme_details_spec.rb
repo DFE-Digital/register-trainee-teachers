@@ -40,6 +40,7 @@ feature "programme details", type: :feature do
       and_i_submit_the_form
       and_i_confirm_my_details(checked: false, section: programme_details_section)
       then_i_am_redirected_to_the_summary_page
+      then_i_see_a_flash_message
       and_the_programme_details_are_updated
     end
 
@@ -118,6 +119,10 @@ feature "programme details", type: :feature do
     expect(page).to have_content(
       I18n.t("#{translation_key_prefix}.programme_start_date.blank"),
     )
+  end
+
+  def then_i_see_a_flash_message
+    expect(page).to have_text("Trainee programme details updated")
   end
 
   def template
