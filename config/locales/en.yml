@@ -207,7 +207,8 @@ en:
               blank: "You must select a grade"
             graduation_year:
               blank: "You must set a graduation year"
-              inclusion: "You must set a graduation year"
+              future: "You must enter a graduation year that is in the past, for example 2014"
+              invalid: "You must enter a valid graduation year"
             country:
               blank: "You must select the country where the degree was obtained"
   activemodel:
