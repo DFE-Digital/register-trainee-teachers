@@ -2,16 +2,16 @@
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
-    text: 'Back to overview',
+    text: @trainee.draft? ? 'Back to draft record' : 'Back to record',
     href: view_trainee(@trainee)
   ) %>
 <% end %>
 
 <%= render(
-  partial: "trainees/confirm_details/form", 
-  locals: { 
+  partial: "trainees/confirm_details/form",
+  locals: {
     heading: t("components.page_titles.trainees.diversity.confirm"),
-    confirm_detail: @confirm_detail, 
+    confirm_detail: @confirm_detail,
     trainee: @trainee,
     component: @confirmation_component,
     resource_confirm_update_path: trainee_section_update_path(trainee_section_key, @trainee),
