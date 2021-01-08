@@ -24,6 +24,8 @@ class Trainee < ApplicationRecord
     gender_not_provided: 3,
   }
 
+  audited associated_with: :provider
+
   enum diversity_disclosure: {
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] => 1,

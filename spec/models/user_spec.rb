@@ -20,6 +20,6 @@ describe User do
   end
 
   describe "auditing" do
-    it { should be_audited }
+    it { should be_audited.associated_with(:provider) }
   end
 end
