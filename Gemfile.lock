@@ -66,6 +66,8 @@ GEM
     amazing_print (1.2.2)
     ast (2.4.1)
     attr_required (1.0.1)
+    audited (4.10.0)
+      activerecord (>= 4.2, < 6.2)
     bindata (2.4.8)
     bindex (0.8.1)
     bootsnap (1.5.1)
@@ -440,6 +442,7 @@ PLATFORMS
 
 DEPENDENCIES
   amazing_print (~> 1.2)
+  audited (~> 4.9)
   bootsnap (>= 1.1.0)
   byebug
   canonical-rails

@@ -34,3 +34,4 @@ RSpec.configure do |config|
 end
 
 require "pundit/rspec"
+require "audited-rspec"

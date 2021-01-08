@@ -12,3 +12,7 @@ Rails/NotNullColumn:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - "db/migrate/20210108163200_install_audited.rb"
