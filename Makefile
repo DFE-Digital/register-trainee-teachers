@@ -35,16 +35,19 @@ pentest:
 qa:
 	$(eval env=qa)
 	$(eval env_config=qa)
+	$(eval backend_key=-backend-config=key=${env}-bat.terraform.tfstate)
 
 staging:
 	$(eval env=staging)
 	$(eval env_config=staging)
+	$(eval backend_key=-backend-config=key=${env}-bat.tfstate)
 
 
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval env=production)
 	$(eval env_config=production)
+	$(eval backend_key=-backend-config=key=${env}-bat.tfstate)
 
 deploy-plan: terraform-init
 	terraform plan -var-file=terraform/workspace-variables/$(env_config).tfvars terraform
