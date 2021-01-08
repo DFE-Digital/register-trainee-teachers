@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  belongs_to :provider
+  belongs_to :provider, optional: true
 
   has_many :trainees, through: :provider
 

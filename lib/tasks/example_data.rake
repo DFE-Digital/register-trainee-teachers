@@ -10,13 +10,16 @@ namespace :example_data do
 
     Faker::Config.locale = "en-GB"
 
-    PERSONAS.each do |persona|
-      provider = Provider.find_or_create_by!(name: persona[:provider])
+    PERSONAS.each do |persona_attributes|
+      persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
+                                           last_name: persona_attributes[:last_name],
+                                           email: persona_attributes[:email],
+                                           system_admin: persona_attributes[:system_admin])
 
-      Persona.find_or_create_by!(first_name: persona[:first_name],
-                                 last_name: persona[:last_name],
-                                 email: persona[:email],
-                                 provider: provider)
+      if persona_attributes[:provider]
+        provider = Provider.find_or_create_by!(name: persona_attributes[:provider])
+        persona.update!(provider: provider)
+      end
 
       trait_combinations = [
         [],
@@ -64,18 +67,17 @@ namespace :example_data do
           end
         end
 
-        updated_at = submitted_for_trn_at || created_at
-
-        trainee = FactoryBot.create(
-          :trainee,
-          *traits,
-          provider: provider,
+        trainee_attributes = {
           created_at: created_at,
           submitted_for_trn_at: submitted_for_trn_at,
           trn: trn,
           progress: progress,
-          updated_at: updated_at,
-        )
+          updated_at: submitted_for_trn_at || created_at,
+        }
+
+        trainee_attributes.merge!(provider: provider) if provider
+
+        trainee = FactoryBot.create(:trainee, *traits, trainee_attributes)
 
         [1, 1, 1, 1, 1, 2].sample.times do # multiple nationalities are less common
           trainee.nationalities << FactoryBot.build(:nationality)

@@ -10,7 +10,7 @@ class TraineePolicy
     end
 
     def resolve
-      scope.where(provider_id: user.provider_id)
+      user.system_admin? ? scope.all : scope.where(provider_id: user.provider_id)
     end
   end
 
@@ -22,15 +22,15 @@ class TraineePolicy
   end
 
   def show?
-    user && user.provider_id == trainee.provider_id
+    user && (user.system_admin? || user.provider_id == trainee.provider_id)
   end
 
   def confirm?
-    user && user.provider_id == trainee.provider_id
+    user && (user.system_admin? || user.provider_id == trainee.provider_id)
   end
 
   def recommended?
-    user && user.provider_id == trainee.provider_id
+    user && (user.system_admin? || user.provider_id == trainee.provider_id)
   end
 
   def withdraw?
