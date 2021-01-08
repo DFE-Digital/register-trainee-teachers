@@ -13,8 +13,12 @@ module Trainees
 
     def update
       authorize trainee
-      toggle_trainee_progress_field
-      trainee.save!
+
+      if trainee.draft?
+        toggle_trainee_progress_field
+        trainee.save!
+      end
+
       flash[:success] = "Trainee #{flash_message_title} updated"
       redirect_to trainee_path(trainee)
     end

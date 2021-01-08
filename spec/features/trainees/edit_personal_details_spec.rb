@@ -43,6 +43,22 @@ feature "edit personal details", type: :feature do
     then_i_see_error_messages
   end
 
+  context "as a non-draft trainee" do
+    before do
+      given_a_trainee_exists(state: :submitted_for_trn)
+      and_nationalities_exist_in_the_system
+      when_i_visit_the_personal_details_page
+      and_i_enter_valid_parameters
+      and_i_submit_the_form
+    end
+
+    it "it doesn't ask me to complete the section" do
+      then_the_confirm_page_has_no_checkbox
+      and_i_click_continue
+      then_i_am_redirected_to_the_summary_page
+    end
+  end
+
 private
 
   def given_valid_personal_details_are_provided
@@ -90,10 +106,17 @@ private
 
   def and_confirm_my_details(checked: true)
     checked_option = checked ? "check" : "uncheck"
-    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.id, section: "personal-details")
-    @confirm_page.confirm.public_send(checked_option)
-    @confirm_page.submit_button.click
+    expect(confirm_page).to be_displayed(id: trainee.id, section: "personal-details")
+    confirm_page.confirm.public_send(checked_option)
+    and_i_click_continue
+  end
+
+  def then_the_confirm_page_has_no_checkbox
+    expect(confirm_page).to_not have_text("I have completed this section")
+  end
+
+  def and_i_click_continue
+    confirm_page.submit_button.click
   end
 
   def and_i_submit_the_form
@@ -123,5 +146,9 @@ private
 
   def then_i_see_a_flash_message
     expect(page).to have_text("Trainee personal details updated")
+  end
+
+  def confirm_page
+    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
   end
 end
