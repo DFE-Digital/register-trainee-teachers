@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_21_173705) do
+ActiveRecord::Schema.define(version: 2021_01_07_103656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,7 +97,6 @@ ActiveRecord::Schema.define(version: 2020_12_21_173705) do
     t.text "additional_ethnic_background"
     t.integer "disability_disclosure"
     t.text "subject"
-    t.text "age_range"
     t.date "programme_start_date"
     t.jsonb "progress", default: {}
     t.bigint "provider_id", null: false
@@ -111,6 +110,7 @@ ActiveRecord::Schema.define(version: 2020_12_21_173705) do
     t.datetime "withdraw_date"
     t.string "additional_withdraw_reason"
     t.date "defer_date"
+    t.integer "age_range"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
