@@ -6,7 +6,7 @@ module PageObjects
       class DisabilityDisclosure < PageObjects::Base
         set_url "/trainees/{id}/diversity/disability-disclosure/edit"
         element :disabled, "#diversities-disability-disclosure-form-disability-disclosure-disabled-field"
-        element :not_disabled, "#diversities-disability-disclosure-form-disability-disclosure-not-disabled-field"
+        element :no_disability, "#diversities-disability-disclosure-form-disability-disclosure-no-disability-field"
         element :disability_not_provided, "#diversities-disability-disclosure-form-disability-disclosure-disability-not-provided-field"
         element :submit_button, "input[name='commit']"
       end
