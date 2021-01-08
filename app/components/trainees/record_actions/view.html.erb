@@ -1,15 +1,22 @@
-<div class="record-actions">
-  <%= govuk_button_link_to "Recommend for QTS", edit_trainee_outcome_details_outcome_date_path(trainee),
-                           { class: "govuk-!-margin-bottom-0" }  %>
+<% if display_actions? %>
+  <div class="record-actions">
 
-  <% if display_actions? %>
+    <% if can_recommend_for_qts? %>
+      <%= govuk_button_link_to t("views.trainees.edit.recommend_for_qts"), edit_trainee_outcome_details_outcome_date_path(trainee),
+                              { class: "govuk-!-margin-bottom-0" } %>
+    <% else %>
+      <div class="govuk-inset-text govuk-!-margin-0">
+        <%= t("views.trainees.edit.status_summary.#{trainee.state}") %>
+      </div>
+    <% end %>
+
     <div class="record-actions__links">
       <p class="govuk-body govuk-!-margin-bottom-0">
-        <%= defer_and_withdraw_links %>
+        <%= action_links %>
         <%= t("views.trainees.edit.this_trainee") %>
       </p>
     </div>
-  <% end %>
-</div>
+  </div>
 
-<hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+  <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+<% end %>

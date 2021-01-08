@@ -12,28 +12,20 @@ module Trainees
       end
 
       def display_actions?
-        allow_defer? || allow_withdraw?
+        trainee.submitted_for_trn? || trainee.trn_received? || trainee.deferred?
       end
 
-      def allow_defer?
-        trainee.submitted_for_trn? || trainee.trn_received?
+      def can_recommend_for_qts?
+        trainee.trn_received?
       end
 
-      def allow_withdraw?
-        allow_defer? || trainee.deferred?
-      end
+      def action_links
+        return reinstate_link + " or " + withdraw_link if trainee.deferred?
 
-      def defer_and_withdraw_links
-        return defer_link + " or " + withdraw_link if choose_both_actions?
-        return defer_link if allow_defer?
-        return reinstate_link + " or " + withdraw_link if allow_withdraw?
+        defer_link + " or " + withdraw_link
       end
 
     private
-
-      def choose_both_actions?
-        allow_defer? && allow_withdraw?
-      end
 
       def defer_link
         govuk_link_to t("views.trainees.edit.defer"), trainee_deferral_path(@trainee), class: "defer"
