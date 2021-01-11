@@ -6,7 +6,7 @@
     "js:lint": "standard"
   },
   "dependencies": {
-    "@ministryofjustice/frontend": "^0.0.23",
+    "@ministryofjustice/frontend": "^0.1.0",
     "@rails/webpacker": "^5.2.1",
     "accessible-autocomplete": "^2.0.3",
     "core-js": "^3.8.2",
