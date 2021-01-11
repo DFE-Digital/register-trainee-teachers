@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_07_103656) do
+ActiveRecord::Schema.define(version: 2021_01_08_163200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audits", force: :cascade do |t|
+    t.integer "auditable_id"
+    t.string "auditable_type"
+    t.integer "associated_id"
+    t.string "associated_type"
+    t.integer "user_id"
+    t.string "user_type"
+    t.string "username"
+    t.string "action"
+    t.jsonb "audited_changes"
+    t.integer "version", default: 0
+    t.string "comment"
+    t.string "remote_address"
+    t.string "request_uuid"
+    t.datetime "created_at"
+    t.index ["associated_type", "associated_id"], name: "associated_index"
+    t.index ["auditable_type", "auditable_id", "version"], name: "auditable_index"
+    t.index ["created_at"], name: "index_audits_on_created_at"
+    t.index ["request_uuid"], name: "index_audits_on_request_uuid"
+    t.index ["user_id", "user_type"], name: "user_index"
+  end
 
   create_table "degrees", force: :cascade do |t|
     t.integer "locale_code", null: false
@@ -97,6 +119,7 @@ ActiveRecord::Schema.define(version: 2021_01_07_103656) do
     t.text "additional_ethnic_background"
     t.integer "disability_disclosure"
     t.text "subject"
+    t.integer "age_range"
     t.date "programme_start_date"
     t.jsonb "progress", default: {}
     t.bigint "provider_id", null: false
@@ -110,7 +133,6 @@ ActiveRecord::Schema.define(version: 2021_01_07_103656) do
     t.datetime "withdraw_date"
     t.string "additional_withdraw_reason"
     t.date "defer_date"
-    t.integer "age_range"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"

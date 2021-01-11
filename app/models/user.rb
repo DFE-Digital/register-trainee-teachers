@@ -9,6 +9,8 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :email, presence: true
 
+  audited associated_with: :provider
+
   def name
     "#{first_name} #{last_name}"
   end

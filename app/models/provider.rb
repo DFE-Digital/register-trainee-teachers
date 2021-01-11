@@ -5,4 +5,7 @@ class Provider < ApplicationRecord
   has_many :trainees
 
   validates :name, presence: true
+
+  audited
+  has_associated_audits
 end

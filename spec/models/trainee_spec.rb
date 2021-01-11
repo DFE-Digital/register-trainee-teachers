@@ -177,4 +177,8 @@ describe Trainee do
       end
     end
   end
+
+  describe "auditing" do
+    it { should be_audited.associated_with(:provider) }
+  end
 end

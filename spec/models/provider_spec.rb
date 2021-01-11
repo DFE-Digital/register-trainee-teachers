@@ -12,4 +12,9 @@ describe Provider do
   describe "associations" do
     it { is_expected.to have_many(:users) }
   end
+
+  describe "auditing" do
+    it { should be_audited }
+    it { should have_associated_audits }
+  end
 end
