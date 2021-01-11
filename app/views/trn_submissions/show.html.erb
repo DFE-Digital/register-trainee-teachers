@@ -21,6 +21,13 @@
 
     <%= govuk_link_to "Add another record", new_trainee_path, { class: "govuk-button" } %>
 
-    <p class="govuk-body">or <%= govuk_link_to("check trainee statuses and manage records", trainees_path) %></p>
+    <p class="govuk-body govuk-!-margin-bottom-9">or <%= govuk_link_to("check trainee statuses and manage records", trainees_path) %></p>
+
+    <%= render FeedbackLink::View.new(
+      enabled: Settings.features.enable_feedback_link,
+      feedback_link_url: Settings.feedback_link_url)
+    %>
   </div>
 </div>
+
+
