@@ -18,6 +18,8 @@ class ProgrammeDetailForm
 
   after_validation :update_trainee
 
+  MAX_END_YEARS = 4
+
   def initialize(trainee)
     @trainee = trainee
 
@@ -99,6 +101,8 @@ private
   def programme_start_date_valid
     if [start_day, start_month, start_year].all?(&:blank?)
       errors.add(:programme_start_date, :blank)
+    elsif start_year.to_i > next_year
+      errors.add(:programme_start_date, :future)
     elsif !programme_start_date.is_a?(Date)
       errors.add(:programme_start_date, :invalid)
     elsif programme_start_date < 10.years.ago
@@ -109,8 +113,12 @@ private
   def programme_end_date_valid
     if [end_day, end_month, end_year].all?(&:blank?)
       errors.add(:programme_end_date, :blank)
+    elsif end_year.to_i > max_years
+      errors.add(:programme_end_date, :future)
     elsif !programme_end_date.is_a?(Date)
       errors.add(:programme_end_date, :invalid)
+    elsif programme_end_date < 10.years.ago
+      errors.add(:programme_end_date, :too_old)
     end
 
     additional_validation = errors.attribute_names.none? do |attribute_name|
@@ -120,5 +128,13 @@ private
     if additional_validation && programme_start_date >= programme_end_date
       errors.add(:programme_end_date, :before_or_same_as_start_date)
     end
+  end
+
+  def next_year
+    Time.zone.now.year.next
+  end
+
+  def max_years
+    next_year + MAX_END_YEARS
   end
 end

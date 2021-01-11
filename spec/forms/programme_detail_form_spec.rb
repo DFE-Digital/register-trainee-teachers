@@ -123,6 +123,26 @@ describe ProgrammeDetailForm, type: :model do
           start_date = 10.years.ago
           include_examples date_error_message, :programme_start_date, :too_old,
                            start_date.day, start_date.month, start_date.year
+
+          context "the start date fields are too far in future" do
+            let(:start_date_attributes) do
+              { start_day: "12", start_month: "11", start_year: "2099" }
+            end
+
+            it "returns an error message for programme start date" do
+              expect(subject.errors.messages[:programme_start_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_start_date.future")
+            end
+          end
+
+          context "the start date fields are too far in past" do
+            let(:start_date_attributes) do
+              { start_day: "12", start_month: "11", start_year: "2000" }
+            end
+
+            it "returns an error message for programme start date" do
+              expect(subject.errors.messages[:programme_start_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_start_date.too_old")
+            end
+          end
         end
 
         describe "#programme_end_date_valid" do
@@ -157,6 +177,26 @@ describe ProgrammeDetailForm, type: :model do
                            start_date.day, start_date.month, start_date.year
           include_examples date_error_message, :programme_end_date, :before_or_same_as_start_date,
                            start_date.day, start_date.month, start_date.year - 1
+
+          context "the end date fields are too far in future" do
+            let(:end_date_attributes) do
+              { end_day: "12", end_month: "11", end_year: "3000" }
+            end
+
+            it "returns an error message for programme end date" do
+              expect(subject.errors.messages[:programme_end_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_end_date.future")
+            end
+          end
+
+          context "the end date fields are too far in past" do
+            let(:end_date_attributes) do
+              { end_day: "12", end_month: "11", end_year: "2001" }
+            end
+
+            it "returns an error message for programme end date" do
+              expect(subject.errors.messages[:programme_end_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_end_date.too_old")
+            end
+          end
         end
       end
     end

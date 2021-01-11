@@ -291,12 +291,15 @@ en:
             additional_age_range:
               blank: "You must select an age range"
             programme_start_date:
-              blank: "You must enter programme start date"
+              blank: "You must enter a programme start date"
+              future: "You must enter a programme start date that is not as far in the future"
               invalid: "You must enter a valid programme start date"
               too_old: "You must enter a valid programme start date"
             programme_end_date:
-              blank: "You must enter programme end date"
+              blank: "You must enter a programme end date"
+              future: "You must enter a programme end date that is not as far in the future"
               invalid: "You must enter a valid programme end date"
+              too_old: "You must enter a valid programme end date"
               before_or_same_as_start_date: "You must enter programme end date after the programme start date"
         outcome_date_form:
           attributes:
