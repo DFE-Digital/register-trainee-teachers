@@ -1,0 +1,39 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+  <h1 class="govuk-heading-l">Register trainee teachers</h1>
+
+  <p class="govuk-body-l"> Register trainees with the Department for Education
+  and record the outcome of their training.</p>
+
+  <p class="govuk-body">
+    <%= render GovukComponent::StartNowButton.new(
+      text: "Add a trainee",
+      href: new_trainee_path ) %>
+  </p>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to "Trainee records", trainees_path, { class: "govuk-link govuk-link--no-visited-state" } %>
+    </h2>
+    <p class="govuk-body">Review and manage your trainee records.</p>
+  </div>
+
+  <div class ="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to "Give feedback", Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
+    </h2>
+    <p class="govuk-body">This is a new service. Your views will help us improve it.</p>
+  </div>
+
+  <div class ="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">
+      <%= govuk_link_to "Check what data you need", data_requirements_path, { class: "govuk-link govuk-link--no-visited-state" } %>
+    </h2>
+    <p class="govuk-body">The data you need to complete a trainee record.</p>
+  </div>
+</div>

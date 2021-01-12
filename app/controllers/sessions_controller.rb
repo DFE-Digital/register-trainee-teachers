@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
     if current_user
       DfESignInUsers::Update.call(user: current_user, dfe_sign_in_user: dfe_sign_in_user)
 
-      redirect_to trainees_path
+      redirect_to home_path
     else
       DfESignInUser.end_session!(session)
       redirect_to sign_in_user_not_found_path
