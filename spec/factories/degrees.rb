@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-NEXT_YEAR = Time.zone.now.year.next
+NEXT_YEAR = Time.zone.now.year.next unless defined?(NEXT_YEAR)
 
 FactoryBot.define do
   factory :degree, class: Degree do

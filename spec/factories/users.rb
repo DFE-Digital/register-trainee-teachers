@@ -9,5 +9,9 @@ FactoryBot.define do
     dttp_id { SecureRandom.uuid }
 
     provider
+
+    trait :system_admin do
+      system_admin { true }
+    end
   end
 end

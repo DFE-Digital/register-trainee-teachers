@@ -12,7 +12,7 @@ describe User do
   end
 
   describe "associations" do
-    it { is_expected.to belong_to(:provider) }
+    it { is_expected.to belong_to(:provider).optional }
   end
 
   describe "indexes" do
