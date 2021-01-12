@@ -1,0 +1,87 @@
+<%= render PageTitle::View.new(title: "pages.data_requirements") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(
+    text: 'Back',
+    href: "/home"
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-heading-l govuk-!-margin-bottom-9">Check what data you need</span>
+
+    <p class="govuk-body">You’ll need the following information about a trainee to complete their record.</p>
+
+    <div class="govuk-heading-m">Personal details</div>
+
+    <ul class="govuk-list">
+      <li>First names</li>
+      <li>Middle names</li>
+      <li>Last or family name</li>
+      <li>Date of birth</li>
+      <li>Gender</li>
+      <li>Nationality</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-heading-m">Contact details</div>
+
+    <ul class="govuk-list">
+      <li> Address </li>
+      <li> Email address</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-heading-m">Diversity information (optional)</div>
+    
+    <div class="govuk-inset-text"> If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
+
+    <ul class="govuk-list">
+      <li>Ethnicity</li>
+      <li>Disability</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-heading-m">Degrees</div>
+
+    <div class="govuk-heading-s">If it's a UK degree</div>
+
+    <ul class="govuk-list">
+      <li>Type (for example, BA, BSc or other)</li>
+      <li>Subject</li>
+      <li>Institution</li>
+      <li>Graduation year</li>
+      <li>Grade</li>
+    </ul>
+
+    <div class="govuk-heading-s">If it's not a UK degree</div>
+
+    <ul class="govuk-list">
+      <li>NARIC comparable UK degree (if provided)</li>
+      <li>Subject</li>
+      <li>Country where the degree was obtained</li>
+      <li>Graduation year</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-heading-m">Course or programme details</div>
+    
+    <ul class="govuk-list">
+      <li>Subject</li>
+      <li>Age range</li>
+      <li>Start date</li>
+      <li>End date</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-heading-m">Allocations information</div>
+
+    <p class="govuk-body">If the course has allocated places, you’ll need to know whether the trainee is using an allocated place.</p>
+  </div>
+</div>
