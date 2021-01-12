@@ -9,6 +9,8 @@ if ENV.fetch("COVERAGE", false)
 end
 
 RSpec.configure do |config|
+  config.filter_run_excluding smoke: true
+
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -32,6 +34,3 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end
-
-require "pundit/rspec"
-require "audited-rspec"
