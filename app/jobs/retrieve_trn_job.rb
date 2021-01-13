@@ -15,8 +15,7 @@ class RetrieveTrnJob < ApplicationJob
     trn = Dttp::RetrieveTrn.call(trainee: trainee)
 
     if trn
-      # TODO: make this a state transition
-      trainee.update!(trn: trn)
+      trainee.update_and_receive_trn!(trn)
     elsif continue_polling?(trainee)
       RetrieveTrnJob.set(wait: POLL_DELAY).perform_later(trainee.id)
     end

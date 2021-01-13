@@ -389,6 +389,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stateful_enum (0.6.0)
     store_model (0.8.0)
       activerecord (>= 5.2)
     swd (1.2.0)
@@ -481,6 +482,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.0.0)
+  stateful_enum
   store_model (~> 0.8)
   timecop (~> 0.9.2)
   tzinfo-data
