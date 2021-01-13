@@ -18,4 +18,8 @@ class PagesController < ApplicationController
   def privacy_policy
     render :privacy_policy
   end
+
+  def data_requirements
+    render :data_requirements
+  end
 end
