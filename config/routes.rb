@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get :healthcheck, controller: :heartbeat
   get :sha, controller: :heartbeat
 
+  get "/home", to: "pages#home", as: :home
   get "/accessibility", to: "pages#accessibility", as: :accessibility
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy

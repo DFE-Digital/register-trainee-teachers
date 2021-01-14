@@ -8,12 +8,11 @@
         Register trainees with the Department for Education and record the outcome of their training.
       </p>
       <div class="app-start-page-banner__actions">
-        <%= render GovukComponent::StartNowButton.new( text: 'Get started',
-                                                                 href: trainees_path,
+        <%= render GovukComponent::StartNowButton.new( text: 'Sign in',
+                                                                 href: home_path,
                                                                  classes: 'app-button--inverted app-start-page-banner__button') %>
         <p class="govuk-body app-body--inverted">
-          or <a class="govuk-link app-link--inverted govuk-link--no-visited-state" href="/sign-in">sign in</a>
-          if you’ve used it before
+          or <a class="govuk-link app-link--inverted govuk-link--no-visited-state" href="/home">request an account</a>
         </p>
       </div>
     </div>

@@ -7,11 +7,11 @@ RSpec.describe StartPageBanner::View do
     @result ||= render_inline(StartPageBanner::View.new)
   end
 
-  it "renders a 'Get Started' button" do
-    expect(@result.css(".app-start-page-banner__button").text).to include("Get started")
+  it "renders a 'Sign in' button" do
+    expect(@result.css(".app-start-page-banner__button").text).to include("Sign in")
   end
 
-  it "renders 'sign in' link" do
-    expect(@result.css(".app-link--inverted").text).to include("sign in")
+  it "renders 'or request an account' link" do
+    expect(@result.css(".app-link--inverted").text).to include("request an account")
   end
 end
