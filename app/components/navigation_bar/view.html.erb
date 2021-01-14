@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+  <div class="moj-primary-navigation">
+    <div class="moj-primary-navigation__container">
+      <div class="moj-primary-navigation__nav">
+        <nav class="moj-primary-navigation" aria-label="Primary navigation">
+          <ul class="moj-primary-navigation__list">
+            <li class="moj-primary-navigation__item">
+              <%= govuk_link_to "Home", home_path, { class: "moj-primary-navigation__link" } %>
+            </li>
+            <li class ="moj-primary-navigation__item">
+              <%= govuk_link_to "Trainee records", trainees_path, { class: "moj-primary-navigation__link" } %>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+<% end %>
