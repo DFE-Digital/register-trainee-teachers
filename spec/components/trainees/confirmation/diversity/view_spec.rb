@@ -89,14 +89,14 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
 
     it "returns a message stating the user is not disabled" do
       allow(trainee).to receive(:disabled?).and_return(false)
-      allow(trainee).to receive(:not_disabled?).and_return(true)
+      allow(trainee).to receive(:no_disability?).and_return(true)
       component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
       expect(component.disability_selection).to eq "They shared that they’re not disabled"
     end
 
     it "returns a message stating the user did not provide details" do
       allow(trainee).to receive(:disabled?).and_return(false)
-      allow(trainee).to receive(:not_disabled?).and_return(false)
+      allow(trainee).to receive(:no_disability?).and_return(false)
       component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
       expect(component.disability_selection).to eq "Not provided"
     end

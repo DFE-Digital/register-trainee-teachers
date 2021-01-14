@@ -33,7 +33,7 @@ class Trainee < ApplicationRecord
 
   enum disability_disclosure: {
     Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] => 0,
-    Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled] => 1,
+    Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] => 1,
     Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] => 2,
   }
 

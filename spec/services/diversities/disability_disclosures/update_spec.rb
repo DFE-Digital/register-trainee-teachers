@@ -28,7 +28,7 @@ module Diversities
         end
 
         context "when trainee is not disabled or disability is not provided" do
-          let(:attributes) { { disability_disclosure: DISABILITY_DISCLOSURE_ENUMS[:not_disabled] } }
+          let(:attributes) { { disability_disclosure: DISABILITY_DISCLOSURE_ENUMS[:no_disability] } }
 
           before(:each) do
             trainee.disabilities << create(:disability)

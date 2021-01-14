@@ -20,7 +20,7 @@ describe Trainee do
     it do
       is_expected.to define_enum_for(:disability_disclosure).with_values(
         Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] => 0,
-        Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled] => 1,
+        Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] => 1,
         Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] => 2,
       )
     end

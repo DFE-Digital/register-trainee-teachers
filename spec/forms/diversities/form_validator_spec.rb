@@ -98,7 +98,7 @@ module Diversities
             let(:disability_disclosure) { instance_double(DisabilityDisclosureForm) }
 
             before do
-              trainee.disability_disclosure = DISABILITY_DISCLOSURE_ENUMS[:not_disabled]
+              trainee.disability_disclosure = DISABILITY_DISCLOSURE_ENUMS[:no_disability]
               expect(DisabilityDisclosureForm).to receive(:new).and_return(disability_disclosure)
             end
 

@@ -27,7 +27,7 @@ module Diversities
       attr_reader :attributes
 
       def not_disabled?
-        attributes[:disability_disclosure] == Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled]
+        attributes[:disability_disclosure] == Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability]
       end
 
       def disability_not_provided?

@@ -63,7 +63,7 @@ module Trainees
             id: 1,
             diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
             ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
-            not_disabled?: true,
+            no_disability?: true,
           })
         end
 
