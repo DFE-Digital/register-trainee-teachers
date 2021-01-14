@@ -5,11 +5,11 @@ class TraineesController < ApplicationController
     @filters = TraineeFilter.new(params: filter_params).filters
 
     @draft_trainees = Trainees::Filter.call(
-      trainees: policy_scope(Trainee.is_draft.ordered_by_date),
+      trainees: policy_scope(Trainee.draft.ordered_by_date),
       filters: @filters,
     )
     @trainees = Trainees::Filter.call(
-      trainees: policy_scope(Trainee.is_not_draft.ordered_by_date),
+      trainees: policy_scope(Trainee.not_draft.ordered_by_date),
       filters: @filters,
     )
   end

@@ -160,24 +160,6 @@ describe Trainee do
     end
   end
 
-  context "trainee status" do
-    let(:draft_trainee) { create(:trainee, :draft) }
-    let(:trainee_submitted_for_trn) { create(:trainee, :submitted_for_trn) }
-    let(:trainee_with_qts_awarded) { create(:trainee, :qts_awarded) }
-
-    describe "#is_draft" do
-      it "returns all trainees that are draft" do
-        expect(Trainee.is_draft).to match_array([draft_trainee])
-      end
-    end
-
-    describe "#is_not_draft" do
-      it "returns all records that are not draft" do
-        expect(Trainee.is_not_draft).to match_array([trainee_submitted_for_trn, trainee_with_qts_awarded])
-      end
-    end
-  end
-
   describe "auditing" do
     it { should be_audited.associated_with(:provider) }
   end
