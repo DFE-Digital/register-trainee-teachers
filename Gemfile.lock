@@ -92,7 +92,8 @@ GEM
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
     connection_pool (2.2.3)
-    crack (0.4.4)
+    crack (0.4.5)
+      rexml
     crass (1.0.6)
     cuprite (0.11)
       capybara (>= 2.1, < 4)
@@ -421,7 +422,7 @@ GEM
     webfinger (1.1.0)
       activesupport
       httpclient (>= 2.4)
-    webmock (3.11.0)
+    webmock (3.11.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
