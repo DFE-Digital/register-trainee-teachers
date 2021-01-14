@@ -26,7 +26,6 @@ jobs:
       - name: Bundle smoke test gem
         run: |
           echo 'gem "rspec"' >> Gemfile
-          echo 'gem "httparty"' >> Gemfile
           bundle
 
       - uses: softprops/turnstyle@v1
