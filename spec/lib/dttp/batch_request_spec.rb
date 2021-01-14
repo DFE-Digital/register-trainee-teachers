@@ -38,10 +38,11 @@ module Dttp
 
         context "unsuccessful" do
           let(:error_body) { "error" }
-          let(:dttp_response) { double(code: 400, body: error_body) }
+          let(:headers) { "test=header" }
+          let(:dttp_response) { double(code: 400, body: error_body, headers: headers) }
 
           it "raises an error" do
-            expect { subject.submit }.to raise_error(BatchRequest::Error, error_body)
+            expect { subject.submit }.to raise_error(BatchRequest::Error, "body: #{error_body}, status: 400, headers: #{headers}")
           end
         end
 

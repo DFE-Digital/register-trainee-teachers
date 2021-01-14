@@ -20,7 +20,7 @@ module Dttp
 
     def submit
       response = Client.post("/$batch", body: body, headers: headers)
-      raise Error, response.body.gsub("\r", "") if response.code != 200
+      raise Error, "body: #{response.body.gsub('\r', '')}, status: #{response.code}, headers: #{response.headers}" if response.code != 200
 
       response
     end
