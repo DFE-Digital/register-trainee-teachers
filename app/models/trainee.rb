@@ -67,7 +67,35 @@ class Trainee < ApplicationRecord
     withdrawn: 4,
     deferred: 5,
     qts_awarded: 6,
-  }
+  } do
+    event :submit_for_trn do
+      before do
+        self.submitted_for_trn_at = Time.zone.now
+      end
+
+      transition %i[draft deferred] => :submitted_for_trn
+    end
+
+    event :receive_trn do
+      transition %i[submitted_for_trn deferred] => :trn_received
+    end
+
+    event :recommend_for_qts do
+      transition %i[trn_received] => :recommended_for_qts
+    end
+
+    event :withdraw do
+      transition %i[submitted_for_trn trn_received deferred] => :withdrawn
+    end
+
+    event :defer do
+      transition %i[submitted_for_trn trn_received] => :deferred
+    end
+
+    event :award_qts do
+      transition %i[recommended_for_qts] => :qts_awarded
+    end
+  end
 
   enum age_range: {
     AgeRange::THREE_TO_ELEVEN_PROGRAMME => 0,
@@ -94,6 +122,19 @@ class Trainee < ApplicationRecord
                   using: { tsearch: { prefix: true } }
 
   scope :ordered_by_date, -> { order(updated_at: :desc) }
+
+  def update_and_submit_for_trn!(dttp_id, placement_assignment_dttp_id)
+    submit_for_trn!
+    update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
+  end
+
+  def update_and_receive_trn!(new_trn = nil)
+    raise StateTransitionError, "Cannot transition to :trn_received without a trn" unless new_trn || trn
+
+    receive_trn!
+    # A deferred trainee will probably already have a trn - don't overwrite that!
+    update!(trn: new_trn) unless trn
+  end
 
   def dttp_id=(value)
     raise LockedAttributeError, "dttp_id update failed for trainee ID: #{id}, with value: #{value}" if dttp_id.present?

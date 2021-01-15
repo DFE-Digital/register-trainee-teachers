@@ -6,7 +6,7 @@ module Dttp
   describe RecommendForQTS do
     describe "#call" do
       let(:trainee) do
-        TraineePresenter.new(trainee: create(:trainee,
+        TraineePresenter.new(trainee: create(:trainee, :trn_received,
                                              outcome_date: outcome_date,
                                              placement_assignment_dttp_id: placement_assignment_dttp_id))
       end

@@ -17,6 +17,8 @@ module Dttp
       response = Client.patch("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})", body: body)
       raise Error, response.body if response.code != 204
 
+      trainee.recommend_for_qts!
+
       response
     end
   end
