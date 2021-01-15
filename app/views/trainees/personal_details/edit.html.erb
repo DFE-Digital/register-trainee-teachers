@@ -23,8 +23,8 @@
       <%= f.govuk_date_field :date_of_birth, date_of_birth: true, legend: { text: 'Date of birth', size: 's' }, hint: { text: 'For example, 31 3 1980' } %>
 
       <%= f.govuk_radio_buttons_fieldset(:gender, legend: { text: "Gender", size: "s" }, classes: "gender") do %>
-        <%= f.govuk_radio_button :gender, :male, label: { text: "Male" }, link_errors: true %>
-        <%= f.govuk_radio_button :gender, :female, label: { text: "Female" } %>
+        <%= f.govuk_radio_button :gender, :female, label: { text: "Female" }, link_errors: true %>
+        <%= f.govuk_radio_button :gender, :male, label: { text: "Male" } %>
         <%= f.govuk_radio_button :gender, :other, label: { text: "Other" } %>
         <%= f.govuk_radio_divider %>
         <%= f.govuk_radio_button :gender, :gender_not_provided, label: { text: "Not provided" } %>
