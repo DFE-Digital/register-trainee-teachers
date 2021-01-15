@@ -176,7 +176,7 @@ module Dttp
             end
 
             context "not disabled" do
-              let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled] }
+              let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] }
               let(:dttp_disability) { Diversities::NO_KNOWN_DISABILITY }
 
               it "returns a hash with a foreign key of DTTP's 'No known disability' entity" do

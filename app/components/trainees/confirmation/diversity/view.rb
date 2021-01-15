@@ -52,7 +52,7 @@ module Trainees
         def disability_selection
           if trainee.disabled?
             "They shared that they’re disabled"
-          elsif trainee.not_disabled?
+          elsif trainee.no_disability?
             "They shared that they’re not disabled"
           else
             "Not provided"

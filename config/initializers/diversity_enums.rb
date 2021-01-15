@@ -34,7 +34,7 @@ module Diversities
 
   DISABILITY_DISCLOSURE_ENUMS = {
     disabled: "disabled",
-    not_disabled: "not_disabled",
+    no_disability: "no_disability",
     not_provided: "disability_not_provided",
   }.freeze
 
