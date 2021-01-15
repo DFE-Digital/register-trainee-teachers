@@ -17,7 +17,7 @@ module Trainees
           if degree.uk?
             "#{degree.uk_degree}: #{degree.subject.downcase}"
           else
-            "Non-UK #{degree.non_uk_degree == 'non_naric' ? 'degree' : degree.non_uk_degree}: #{degree.subject.downcase}"
+            "Non-UK #{degree.non_uk_degree_non_naric? ? 'degree' : degree.non_uk_degree}: #{degree.subject.downcase}"
           end
         end
 

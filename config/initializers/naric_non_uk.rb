@@ -7,3 +7,5 @@ NARIC_NON_UK = [
   "Postgraduate certificate or postgraduate diploma",
   "Master’s degree or Integrated Master’s degree",
 ].freeze
+
+NON_NARIC = "non_naric"

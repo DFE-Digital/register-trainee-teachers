@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Dttp
-  describe Dttp::BatchRequest do
+  describe BatchRequest do
     let(:batch_id) { SecureRandom.uuid }
     let(:change_set_id) { SecureRandom.uuid }
     let(:content_id) { SecureRandom.uuid }

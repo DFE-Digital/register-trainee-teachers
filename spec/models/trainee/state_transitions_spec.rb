@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe "Trainee state transitions" do
-  describe "#update_and_receive_trn!" do
+  describe "#trn_received!" do
     let(:old_trn) { "123" }
     let(:new_trn) { "abc" }
 
@@ -11,7 +11,7 @@ describe "Trainee state transitions" do
       let(:trainee) { create(:trainee, :submitted_for_trn) }
 
       it "transitions the trainee to :trn_received and updates the trn" do
-        trainee.update_and_receive_trn!(new_trn)
+        trainee.trn_received!(new_trn)
         expect(trainee.state).to eq("trn_received")
         expect(trainee.trn).to eq(new_trn)
       end
@@ -22,7 +22,7 @@ describe "Trainee state transitions" do
         let(:trainee) { create(:trainee, :deferred, trn: old_trn) }
 
         it "transitions the trainee to :trn_received" do
-          trainee.update_and_receive_trn!
+          trainee.trn_received!
           expect(trainee.state).to eq("trn_received")
           expect(trainee.trn).to eq(old_trn)
         end
@@ -32,12 +32,12 @@ describe "Trainee state transitions" do
         let(:trainee) { create(:trainee, :deferred) }
         it "raises an error if no trn is provided" do
           expect {
-            trainee.update_and_receive_trn!
+            trainee.trn_received!
           }.to raise_error(StateTransitionError)
         end
 
         it "transitions the trainee to :trn_received and updates the trn" do
-          trainee.update_and_receive_trn!(new_trn)
+          trainee.trn_received!(new_trn)
           expect(trainee.state).to eq("trn_received")
           expect(trainee.trn).to eq(new_trn)
         end
@@ -48,7 +48,7 @@ describe "Trainee state transitions" do
       let(:trainee) { create(:trainee, :deferred, trn: old_trn) }
 
       it "transitions the trainee to :trn_received" do
-        trainee.update_and_receive_trn!
+        trainee.trn_received!
         expect(trainee.state).to eq("trn_received")
         expect(trainee.trn).to eq(old_trn)
       end
@@ -60,7 +60,7 @@ describe "Trainee state transitions" do
 
         it "raises an error" do
           expect {
-            trainee.update_and_receive_trn!(new_trn)
+            trainee.trn_received!(new_trn)
           }.to raise_error(RuntimeError, "Invalid transition")
         end
       end
@@ -75,7 +75,7 @@ describe "Trainee state transitions" do
       let(:trainee) { create(:trainee, :draft) }
 
       it "transitions the trainee to :submitted_for_trn and updates the dttp_id, placement_assignment_dttp_id and submitted_for_trn_at" do
-        trainee.update_and_submit_for_trn!(dttp_id, placement_assignment_dttp_id)
+        trainee.trn_requested!(dttp_id, placement_assignment_dttp_id)
         expect(trainee.state).to eq("submitted_for_trn")
         expect(trainee.dttp_id).to eq(dttp_id)
         expect(trainee.placement_assignment_dttp_id).to eq(placement_assignment_dttp_id)

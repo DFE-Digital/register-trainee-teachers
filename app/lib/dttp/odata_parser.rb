@@ -6,7 +6,9 @@ module Dttp
 
     class << self
       def entity_ids(batch_response:)
-        batch_response.scan(/(\w+)\((#{UUID_PATTERN})\)/).uniq.to_h
+        batch_response.scan(/(\w+)\((#{UUID_PATTERN})\)/).uniq.each_with_object({}) do |(entity_name, entity_id), h|
+          h[entity_name] = (h[entity_name] || []) + [entity_id]
+        end
       end
 
       def entity_id(trainee_id, response)
