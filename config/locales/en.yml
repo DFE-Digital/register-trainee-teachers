@@ -171,7 +171,7 @@ en:
       disability_disclosures:
         labels:
           disabled: "Yes, they shared that they’re disabled"
-          not_disabled: "They shared that they’re not disabled"
+          no_disability: "They shared that they’re not disabled"
       withdrawal_reasons:
         headings:
           withdrawal_date: When did the trainee withdraw?

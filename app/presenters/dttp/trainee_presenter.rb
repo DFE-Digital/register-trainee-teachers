@@ -16,6 +16,25 @@ module Dttp
     end
 
     def contact_params(trainee_creator_dttp_id)
+      standard_contact_params(trainee_creator_dttp_id).merge("dfe_trnassessmentdate" => today_iso_time)
+    end
+
+    def contact_update_params(trainee_creator_dttp_id)
+      standard_contact_params(trainee_creator_dttp_id)
+    end
+
+    def placement_assignment_params(contact_change_set_id)
+      programme_details_params(contact_change_set_id).merge(degree.uk_degree ? uk_degree_params : non_uk_degree_params)
+    end
+
+    def placement_assignment_update_params
+      programme_details_params.merge(degree.uk_degree ? uk_degree_params : non_uk_degree_params)
+        .except("dfe_ContactId@odata.bind", "dfe_sendforregistrationdate")
+    end
+
+  private
+
+    def standard_contact_params(trainee_creator_dttp_id)
       {
         "firstname" => first_names,
         "lastname" => last_name,
@@ -30,17 +49,10 @@ module Dttp
         "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{dttp_disability_id})",
         "parentcustomerid_account@odata.bind" => "/accounts(#{provider.dttp_id})",
         "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
-        "dfe_trnassessmentdate" => today_iso_time,
       }
     end
 
-    def placement_assignment_params(contact_change_set_id)
-      programme_details_params(contact_change_set_id).merge(degree.uk_degree ? uk_degree_params : non_uk_degree_params)
-    end
-
-  private
-
-    def programme_details_params(contact_change_set_id)
+    def programme_details_params(contact_change_set_id = "")
       {
         "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
         "dfe_programmestartdate" => programme_start_date.in_time_zone.iso8601,
