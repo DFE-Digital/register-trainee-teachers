@@ -4,12 +4,15 @@
       <div class="moj-primary-navigation__nav">
         <nav class="moj-primary-navigation" aria-label="Primary navigation">
           <ul class="moj-primary-navigation__list">
+          <% items.each do |item| %>
             <li class="moj-primary-navigation__item">
-              <%= govuk_link_to "Home", home_path, { class: "moj-primary-navigation__link" } %>
+              <% if item.fetch(:current, false) || current_page?(item.fetch(:url)) %>
+                <%= govuk_link_to item[:name], item[:url], class: "moj-primary-navigation__link", aria: { current: "page" }%>
+              <% else %>
+                <%= govuk_link_to item[:name], item[:url], class: "moj-primary-navigation__link"%>
+              <% end %>
             </li>
-            <li class ="moj-primary-navigation__item">
-              <%= govuk_link_to "Trainee records", trainees_path, { class: "moj-primary-navigation__link" } %>
-            </li>
+          <% end %>
           </ul>
         </nav>
       </div>

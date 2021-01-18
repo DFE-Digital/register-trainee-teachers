@@ -6,8 +6,16 @@ module NavigationBar
   describe View do
     alias_method :component, :page
 
+    let(:mock_link) { "https://www.gov.uk" }
+    let(:items) do
+      [
+        { name: "Home", url: mock_link },
+        { name: "Trainee records", url: mock_link },
+      ]
+    end
+
     before do
-      render_inline(described_class.new(user))
+      render_inline(described_class.new(user, items: items))
     end
 
     context "when user is not signed in" do
@@ -28,6 +36,19 @@ module NavigationBar
       it "has two change links" do
         expect(component).to have_link("Home")
         expect(component).to have_link("Trainee records")
+      end
+
+      context "with current item" do
+        let(:active_item) { { name: "Bulk actions", url: mock_link, current: true } }
+
+        before do
+          render_inline(described_class.new(:user, items: items.prepend(active_item)))
+        end
+
+        it "renders the current item with the correct class" do
+          rendered_link = component.find(".moj-primary-navigation__link", text: active_item[:name])
+          expect(rendered_link["aria-current"]).to eq("page")
+        end
       end
     end
   end
