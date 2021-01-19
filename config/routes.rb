@@ -92,6 +92,7 @@ Rails.application.routes.draw do
       get "training-details", to: "trainees/training_details#edit", as: :training_details
       get "course-details", to: "trainees/course_details#edit"
       get "check-details", to: "trainees/check_details#show"
+      get "review-draft", to: "trainees/review_draft#show"
     end
   end
 

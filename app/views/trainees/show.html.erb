@@ -1,102 +1,11 @@
-<%= render PageTitle::View.new(title: "trainees.show", has_errors: @trainee.errors.present?) %>
-
-<%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: 'All records',
-    href: trainees_path
-  ) %>
-<% end %>
-
-<h1 class="govuk-heading-l">
-  <% if @trainee.first_names.present? && @trainee.last_name.present? %>
-    <span class="govuk-caption-l">Draft record for <%= trainee_name(@trainee) %></span>
-  <% end %>
-  Add a trainee
-</h1>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-
-    <h2 class="govuk-heading-m">Personal details and education</h2>
-
-    <%= render TaskList::View.new do |component|
-      component.slot(
-        :row,
-        task_name: 'Personal details',
-        path: edit_trainee_personal_details_path(@trainee),
-        confirm_path: trainee_personal_details_confirm_path(@trainee),
-        classes: "personal-details",
-        status: ProgressService.call(
-          validator: PersonalDetailForm.new(@trainee),
-          progress_value: @trainee.progress.personal_details
-        ).status
-      )
-
-      component.slot(
-        :row,
-        task_name: 'Contact details',
-        path: edit_trainee_contact_details_path(@trainee),
-        confirm_path: trainee_contact_details_confirm_path(@trainee),
-        status: ProgressService.call(
-          validator: ContactDetailForm.new(@trainee),
-          progress_value: @trainee.progress.contact_details
-        ).status
-      )
-
-      component.slot(
-        :row,
-        task_name: 'Diversity information',
-        path: edit_trainee_diversity_disclosure_path(@trainee),
-        confirm_path: trainee_diversity_disclosure_confirm_path(@trainee),
-        classes: "diversity-details",
-        status: ProgressService.call(
-          validator: Diversities::FormValidator.new(@trainee),
-          progress_value: @trainee.progress.diversity
-        ).status
-      )
-
-      component.slot(
-        :row,
-        task_name: 'Degree',
-        path: trainee_degrees_new_type_path(@trainee),
-        confirm_path: trainee_degrees_confirm_path(@trainee),
-        status: ProgressService.call(
-          validator: DegreeDetailForm.new(@trainee),
-          progress_value: @trainee.progress.degrees
-        ).status,
-        classes: 'degree-details'
-      )
-    end %>
-
-    <h2 class="govuk-heading-m">About their training</h2>
-
-    <%= render TaskList::View.new(classes: "record-setup") do |component|
-      component.slot(
-        :row,
-        task_name: 'Programme details',
-        path: edit_trainee_programme_details_path(@trainee),
-        confirm_path: trainee_programme_details_confirm_path(@trainee),
-        classes: "programme-details",
-        status: ProgressService.call(
-          validator: ProgrammeDetailForm.new(@trainee),
-          progress_value: @trainee.progress.programme_details
-        ).status
-      )
-
-      component.slot(
-        :row,
-        task_name: 'Trainee details',
-        path: training_details_trainee_path(@trainee),
-        status: 'completed'
-      )
-    end %>
-  </div>
+<div class="record-outcome-action-bar">
+  <%= render Trainees::RecordActions::View.new(@trainee) %>
 </div>
 
-<% if @pre_submission_checker.successful? %>
-  <h2 class="govuk-heading-m">Review and submit</h2>
+<div class="record-details">
+  <%= render Trainees::RecordDetails::View.new(@trainee) %>
+</div>
 
-  <%= govuk_link_to "Review this record", check_details_trainee_path(@trainee), {class: "govuk-button", id: "check-details"} %>
-<% end %>
-
-<p class="govuk-body"><%= govuk_link_to("Return to this draft record later", trainees_path) %></p>
+<div class="programme-details">
+  <%= render Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
+</div>
