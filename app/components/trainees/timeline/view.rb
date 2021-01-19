@@ -3,42 +3,62 @@
 module Trainees
   module Timeline
     class View < GovukComponent::Base
-      delegate :created_at, :submitted_for_trn_at, :provider, to: :trainee
+      delegate :audits, :provider, to: :trainee
+
+      Event = Struct.new(:title, :username, :date)
 
       def initialize(trainee)
         @trainee = trainee
       end
 
-      Event = Struct.new(:title, :actor, :date)
-
     private
 
       attr_reader :trainee
 
-      # TODO: Once we implement auditing, this will be an array of audit events.
-      # We'll iterate over a trainee's audit events, pull out ones we care about,
-      # and map them to timeline `Event`s accordingly.
       def events
-        [
-          creation_event,
-          submitted_for_trn_event,
-        ].compact.sort_by(&:date).reverse
+        state_change_events
+          .append(creation_event)
+          .compact.sort_by(&:date).reverse
       end
 
       def creation_event
-        Event.new("Record created", temp_actor, created_at)
+        return nil unless creation_audit
+
+        Event.new(
+          I18n.t("components.timeline.titles.created"),
+          username(creation_audit),
+          creation_audit.created_at,
+        )
       end
 
-      def submitted_for_trn_event
-        if submitted_for_trn_at
-          Event.new("Trainee submitted for TRN", temp_actor, submitted_for_trn_at)
+      def state_change_events
+        state_change_audits.map do |audit|
+          Event.new(
+            state_change_title(audit.audited_changes["state"][1]),
+            username(audit),
+            audit.created_at,
+          )
         end
       end
 
-      # TODO: This will be pulled from the audit event. Until then, we don't
-      # actually know which user made the change, so this is a placeholder.
-      def temp_actor
-        provider.users.first.name
+      def creation_audit
+        @creation_audit ||= audits.find { |audit| audit.action == "create" }
+      end
+
+      def state_change_audits
+        @state_change_audits ||= audits.select do |audit|
+          audit.action == "update" && audit.audited_changes.key?("state")
+        end
+      end
+
+      def state_change_title(value)
+        I18n.t("components.timeline.titles.#{Trainee.states.key(value)}")
+      end
+
+      # Fall back on the provider's name if there's no user for the audit, e.g.
+      # it was created by a background job.
+      def username(audit)
+        audit.user&.name || provider.name
       end
     end
   end

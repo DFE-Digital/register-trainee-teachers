@@ -6,7 +6,7 @@
         <h2 class="app-timeline__title"><%= event.title %></h2>
       </div>
       <p class="app-timeline__actor_and_date">
-        <%= event.actor %>,
+        <%= event.username %>,
         <time datetime="<%= event.date.to_s(:govuk_date_and_time) %>">
           <%= event.date.to_s(:govuk_date_and_time) %>
         </time>
