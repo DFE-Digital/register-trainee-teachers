@@ -43,7 +43,7 @@ feature "edit Trainee ID" do
   end
 
   def then_i_am_redirected_to_the_trainee_edit_page
-    expect(page.current_path).to eq("/trainees/#{trainee.id}/edit")
+    expect(page.current_path).to eq("/trainees/#{trainee.id}")
   end
 
   def then_the_trainee_id_is_updated

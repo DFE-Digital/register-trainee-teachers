@@ -10,15 +10,15 @@ RSpec.feature "Adding a degree" do
 
   describe "summary page" do
     scenario "no degrees entered" do
-      and_i_visit_the_summary_page
+      and_i_visit_the_review_draft_page
       then_the_degree_status_should_be(:not_started)
     end
   end
 
   describe "Validation before route is picked" do
     scenario "the user enters invalid details" do
-      and_i_visit_the_summary_page
-      and_i_click_the_degree_on_the_summary_page
+      and_i_visit_the_review_draft_page
+      and_i_click_the_degree_on_the_review_draft_page
       when_i_visit_the_type_page
       and_i_click_the_continue_button_on_the_type_page
       then_i_see_the_error_summary_for_type_page
@@ -38,19 +38,21 @@ RSpec.feature "Adding a degree" do
       scenario "the user deletes a degree" do
         confirm_details_page.delete_button.click
         then_i_see_a_flash_message
-        and_i_visit_the_summary_page
+        and_i_visit_the_review_draft_page
         then_the_degree_status_should_be(:not_started)
       end
 
       scenario "the user confirms degree details" do
         and_confirm_my_details
-        then_i_am_redirected_to_the_summary_page
+        then_i_am_redirected_to_the_record_page
+        and_i_visit_the_review_draft_page
         then_the_degree_status_should_be(:completed)
       end
 
       scenario "the user does not confirm degree details" do
         and_i_click_continue
-        then_i_am_redirected_to_the_summary_page
+        then_i_am_redirected_to_the_record_page
+        and_i_visit_the_review_draft_page
         then_the_degree_status_should_be(:in_progress)
       end
     end
@@ -87,7 +89,7 @@ RSpec.feature "Adding a degree" do
       and_i_click_the_continue_button_on_the_degree_details_page
       then_i_am_redirected_to_the_trainee_degrees_confirmation_page
       and_confirm_my_details
-      then_i_am_redirected_to_the_summary_page
+      then_i_am_redirected_to_the_record_page
     end
 
     scenario "the user enters invalid details on Non-UK degree details page" do
@@ -100,13 +102,18 @@ RSpec.feature "Adding a degree" do
 
 private
 
-  def and_i_visit_the_summary_page
-    summary_page.load(id: trainee.id)
-    expect(summary_page).to be_displayed(id: trainee.id)
+  def and_i_visit_the_review_draft_page
+    review_draft_page.load(id: trainee.id)
+    expect(review_draft_page).to be_displayed(id: trainee.id)
   end
 
-  def and_i_click_the_degree_on_the_summary_page
-    summary_page.degree_details.link.click
+  def and_i_visit_the_record_page
+    record_page.load(id: trainee.id)
+    expect(record_page).to be_displayed(id: trainee.id)
+  end
+
+  def and_i_click_the_degree_on_the_review_draft_page
+    review_draft_page.degree_details.link.click
   end
 
   def when_i_visit_the_type_page
@@ -176,7 +183,7 @@ private
     expect(degree_details_page).to be_displayed(trainee_id: trainee.id, locale_code: @locale)
   end
 
-  def then_i_am_redirected_to_the_summary_page
+  def then_i_am_redirected_to_the_record_page
     expect(current_path).to eq("/trainees/#{trainee.id}")
   end
 
@@ -203,7 +210,7 @@ private
   end
 
   def then_the_degree_status_should_be(status)
-    expect(summary_page.degree_details.status.text).to eq(Progress::STATUSES[status])
+    expect(review_draft_page.degree_details.status.text).to eq(Progress::STATUSES[status])
   end
 
   def then_i_see_a_flash_message

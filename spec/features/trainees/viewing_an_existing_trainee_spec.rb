@@ -26,7 +26,7 @@ feature "View trainees" do
   end
 
   def then_i_should_see_the_trainee_details
-    @show_page ||= PageObjects::Trainees::Show.new
-    expect(@show_page).to be_displayed(id: trainee.id)
+    @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
+    expect(@review_draft_page).to be_displayed(id: trainee.id)
   end
 end

@@ -10,7 +10,7 @@ feature "programme details", type: :feature do
 
   describe "tracking the progress" do
     scenario "renders a 'not started' status when no details provided" do
-      summary_page.load(id: trainee.id)
+      review_draft_page.load(id: trainee.id)
       and_the_section_should_be(:not_started)
     end
 
@@ -19,7 +19,8 @@ feature "programme details", type: :feature do
       and_i_enter_valid_parameters
       and_i_submit_the_form
       and_i_confirm_my_details(checked: false, section: programme_details_section)
-      then_i_am_redirected_to_the_summary_page
+      then_i_am_redirected_to_the_record_page
+      and_i_visit_the_review_draft_page
       and_the_section_should_be(:in_progress)
     end
 
@@ -28,7 +29,8 @@ feature "programme details", type: :feature do
       and_i_enter_valid_parameters
       and_i_submit_the_form
       and_i_confirm_my_details(section: programme_details_section)
-      then_i_am_redirected_to_the_summary_page
+      then_i_am_redirected_to_the_record_page
+      and_i_visit_the_review_draft_page
       and_the_section_should_be(:completed)
     end
   end
@@ -39,7 +41,7 @@ feature "programme details", type: :feature do
       and_i_enter_valid_parameters
       and_i_submit_the_form
       and_i_confirm_my_details(checked: false, section: programme_details_section)
-      then_i_am_redirected_to_the_summary_page
+      then_i_am_redirected_to_the_record_page
       and_the_programme_details_are_updated
     end
 
@@ -73,12 +75,12 @@ feature "programme details", type: :feature do
     @programme_details_page.submit_button.click
   end
 
-  def and_i_visit_the_summary_page
-    summary_page.load(id: trainee.id)
+  def and_i_visit_the_record_page
+    record_page.load(id: trainee.id)
   end
 
-  def then_i_am_redirected_to_the_summary_page
-    expect(summary_page).to be_displayed(id: trainee.id)
+  def then_i_am_redirected_to_the_record_page
+    expect(record_page).to be_displayed(id: trainee.id)
   end
 
   def and_the_programme_details_are_updated
@@ -103,7 +105,7 @@ feature "programme details", type: :feature do
   end
 
   def and_the_section_should_be(status)
-    expect(summary_page.programme_details.status.text).to eq(Progress::STATUSES[status])
+    expect(review_draft_page.programme_details.status.text).to eq(Progress::STATUSES[status])
   end
 
   def then_i_see_error_messages
@@ -130,6 +132,11 @@ feature "programme details", type: :feature do
 
   def then_i_am_redirected_to_the_confirm_page
     expect(confirm_details_page).to be_displayed(id: trainee.id, section: programme_details_section)
+  end
+
+  def and_i_visit_the_review_draft_page
+    review_draft_page.load(id: trainee.id)
+    expect(review_draft_page).to be_displayed(id: trainee.id)
   end
 
 private

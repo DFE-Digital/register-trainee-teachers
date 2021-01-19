@@ -11,7 +11,7 @@ feature "edit training details" do
     given_a_trainee_exists
     when_i_visit_the_training_details_page
     and_i_update_the_training_details
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
     and_the_training_details_are_updated
   end
 
@@ -25,8 +25,8 @@ feature "edit training details" do
     @training_details_page.submit_button.click
   end
 
-  def then_i_am_redirected_to_the_summary_page
-    expect(summary_page).to be_displayed(id: trainee.id)
+  def then_i_am_redirected_to_the_record_page
+    expect(record_page).to be_displayed(id: trainee.id)
   end
 
   def and_the_training_details_are_updated

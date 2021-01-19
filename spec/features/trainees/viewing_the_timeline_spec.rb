@@ -24,15 +24,15 @@ feature "View the timeline" do
   end
 
   def and_i_click_on_the_timeline_tab
-    edit_page.timeline_tab.click
+    record_page.timeline_tab.click
   end
 
   def then_i_should_see_the_trainee_timeline
     expect(timeline_page).to be_displayed(id: trainee.id)
   end
 
-  def edit_page
-    @show_page ||= PageObjects::Trainees::Edit.new
+  def record_page
+    @record_page ||= PageObjects::Trainees::Record.new
   end
 
   def timeline_page

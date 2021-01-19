@@ -8,8 +8,8 @@ feature "completing the diversity section", type: :feature do
     given_a_trainee_exists(diversity_disclosure: nil, ethnic_group: nil, disability_disclosure: nil)
   end
 
-  scenario "renders a 'not started' status when diversity details provided" do
-    and_i_visit_the_summary_page
+  scenario "renders a 'not started' status when diversity details are not provided" do
+    and_i_visit_the_review_draft_page
     then_the_diversity_section_should_be(:not_started)
   end
 
@@ -17,13 +17,14 @@ feature "completing the diversity section", type: :feature do
     given_valid_diversity_information
     when_i_visit_the_diversity_confirmation_page
     and_unconfirm_my_details
-    and_i_visit_the_summary_page
+    and_i_visit_the_record_page
+    and_i_visit_the_review_draft_page
     then_the_diversity_section_should_be(:in_progress)
   end
 
   scenario "renders a completed status when valid diversity information provided" do
     given_valid_diversity_information
-    and_i_visit_the_summary_page
+    and_i_visit_the_review_draft_page
     then_the_diversity_section_should_be(:completed)
   end
 
@@ -39,14 +40,21 @@ private
     @trainee.save!
   end
 
-  def and_i_visit_the_summary_page
-    @summary_page ||= PageObjects::Trainees::Summary.new
-    @summary_page.load(id: @trainee.id)
-    expect(@summary_page).to be_displayed(id: @trainee.id)
+  def and_i_visit_the_review_draft_page
+    @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
+    @review_draft_page.load(id: @trainee.id)
+    expect(@review_draft_page).to be_displayed(id: @trainee.id)
+  end
+
+  def and_i_visit_the_record_page
+    @record_page ||= PageObjects::Trainees::ReviewDraft.new
+    @record_page.load(id: @trainee.id)
+    expect(@record_page).to be_displayed(id: @trainee.id)
   end
 
   def then_the_diversity_section_should_be(status)
-    expect(@summary_page.diversity_section.status.text).to eq(Progress::STATUSES[status])
+    @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
+    expect(@review_draft_page.diversity_section.status.text).to eq(Progress::STATUSES[status])
   end
 
   def when_i_visit_the_diversity_confirmation_page

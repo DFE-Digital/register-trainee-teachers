@@ -2,8 +2,8 @@
 
 module PageObjects
   module Trainees
-    class Edit < PageObjects::Base
-      set_url "/trainees/{id}/edit"
+    class Record < PageObjects::Base
+      set_url "/trainees/{id}"
 
       element :timeline_tab, "a", text: "Timeline"
 
