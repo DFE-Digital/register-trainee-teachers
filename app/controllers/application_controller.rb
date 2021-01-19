@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include Pundit
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
 
+  helper_method :current_user, :authenticated?
+
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
 private

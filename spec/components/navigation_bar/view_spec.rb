@@ -50,6 +50,11 @@ module NavigationBar
           expect(rendered_link["aria-current"]).to eq("page")
         end
       end
+
+      context "where item current is true"
+
+      context "where item current is false"
+      context "where item current is not set"
     end
   end
 end
