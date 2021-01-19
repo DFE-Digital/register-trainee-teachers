@@ -174,3 +174,6 @@ dttp:
   scope: "https://dttp-dev.crm4.dynamics.com/.default"
   api_base_url: "https://dttp-dev.api.crm4.dynamics.com/api/data/v9.1"
 ```
+
+## PaaS Space Access and App interaction
+In order to login, change space roles and interact with PaaS based application, please follow this [instruction] https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/2409791489/Changing+set+and+unset+roles+and+interacting+with+App+on+PaaS
