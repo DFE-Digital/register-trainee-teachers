@@ -2,16 +2,28 @@
 
 module FlashBanner
   class View < GovukComponent::Base
-    attr_reader :flash
+    attr_reader :flash, :trainee, :referer
 
-    def initialize(flash:)
+    FLASH_TYPES = %i[success warning info].freeze
+
+    def initialize(flash:, trainee:, referer:)
       @flash = flash
+      @trainee = trainee
+      @referer = referer
+    end
+
+    def display?
+      flash.any? && (non_draft_trainee? || degree_deleted?)
     end
 
   private
 
-    def flash_types
-      %w[warning info success]
+    def non_draft_trainee?
+      !trainee&.draft?
+    end
+
+    def degree_deleted?
+      referer&.include?("degrees/confirm")
     end
   end
 end

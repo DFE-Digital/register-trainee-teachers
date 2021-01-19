@@ -7,19 +7,16 @@ feature "edit personal details", type: :feature do
 
   scenario "updates personal details with valid data" do
     given_valid_personal_details_are_provided
-    then_i_see_a_flash_message
     then_the_personal_details_are_updated
   end
 
   scenario "updates personal details with 'other' nationality" do
     given_other_nationality_is_provided
-    then_i_see_a_flash_message
     then_the_personal_details_are_updated
   end
 
   scenario "renders a completed status when valid personal details provided" do
     given_valid_personal_details_are_provided
-    then_i_see_a_flash_message
     then_the_personal_details_section_should_be_completed
   end
 
@@ -31,7 +28,6 @@ feature "edit personal details", type: :feature do
     and_i_submit_the_form
     and_confirm_my_details(checked: false)
     then_i_am_redirected_to_the_summary_page
-    then_i_see_a_flash_message
     then_the_personal_details_section_should_be_in_progress
   end
 
@@ -45,7 +41,7 @@ feature "edit personal details", type: :feature do
 
   context "as a non-draft trainee" do
     before do
-      given_a_trainee_exists(state: :submitted_for_trn)
+      given_a_trainee_exists(:submitted_for_trn)
       and_nationalities_exist_in_the_system
       when_i_visit_the_personal_details_page
       and_i_enter_valid_parameters
@@ -56,6 +52,7 @@ feature "edit personal details", type: :feature do
       then_the_confirm_page_has_no_checkbox
       and_i_click_continue
       then_i_am_redirected_to_the_summary_page
+      then_i_see_a_flash_message
     end
   end
 

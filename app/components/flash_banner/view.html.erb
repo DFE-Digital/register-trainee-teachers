@@ -1,5 +1,5 @@
-<% if !flash.empty? %>
-  <% flash_types.each do |type| %>
+<% if display? %>
+  <% FLASH_TYPES.each do |type| %>
     <% if flash[type] %>
       <%= render(NotificationBanner::View.new(text: flash[type], type: type))%>
     <% end %>

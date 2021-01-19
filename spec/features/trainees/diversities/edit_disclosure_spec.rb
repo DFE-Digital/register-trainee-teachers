@@ -21,7 +21,6 @@ feature "edit diversity disclosure", type: :feature do
     and_i_submit_the_form
     and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
-    then_i_see_a_flash_message
     and_the_diversity_disclosure_is_updated
   end
 
@@ -64,9 +63,5 @@ feature "edit diversity disclosure", type: :feature do
 
   def then_i_see_error_messages
     expect(page).to have_content(I18n.t("activemodel.errors.models.diversities/disclosure_form.attributes.diversity_disclosure.blank"))
-  end
-
-  def then_i_see_a_flash_message
-    expect(page).to have_text("Trainee disclosure updated")
   end
 end

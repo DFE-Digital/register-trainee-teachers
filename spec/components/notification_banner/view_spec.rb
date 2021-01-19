@@ -35,7 +35,7 @@ module NotificationBanner
     end
 
     context "when type is success" do
-      before { render_inline(View.new(type: "success")) }
+      before { render_inline(View.new(type: :success)) }
 
       it "adds the success type class" do
         expect(component).to have_selector(".govuk-notification-banner--success")

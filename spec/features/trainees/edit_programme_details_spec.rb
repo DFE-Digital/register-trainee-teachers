@@ -40,7 +40,6 @@ feature "programme details", type: :feature do
       and_i_submit_the_form
       and_i_confirm_my_details(checked: false, section: programme_details_section)
       then_i_am_redirected_to_the_summary_page
-      then_i_see_a_flash_message
       and_the_programme_details_are_updated
     end
 

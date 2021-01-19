@@ -22,7 +22,6 @@ feature "edit disability disclosure", type: :feature do
     and_i_submit_the_form
     and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
-    then_i_see_a_flash_message
     and_the_disability_disclosure_is_updated
   end
 
@@ -70,9 +69,5 @@ private
     expect(page).to have_content(
       I18n.t("activemodel.errors.models.diversities/disability_disclosure_form.attributes.disability_disclosure.blank"),
     )
-  end
-
-  def then_i_see_a_flash_message
-    expect(page).to have_text("Trainee disclosure updated")
   end
 end
