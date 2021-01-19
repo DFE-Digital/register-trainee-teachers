@@ -3,7 +3,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
     text: 'Back',
-    href: edit_trainee_path(@trainee)
+    href: trainee_path(@trainee)
   ) %>
 <% end %>
 
@@ -29,5 +29,5 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", edit_trainee_path(@trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", trainee_path(@trainee)) %></p>
 

@@ -9,7 +9,7 @@ module Trainees
     def update
       authorize trainee
       flash[:success] = "Trainee withdrawn"
-      redirect_to edit_trainee_path(trainee)
+      redirect_to trainee_path(trainee)
     end
 
   private
