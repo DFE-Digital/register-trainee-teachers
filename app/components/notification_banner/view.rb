@@ -4,8 +4,6 @@ module NotificationBanner
   class View < GovukComponent::Base
     attr_reader :text, :title_id
 
-    SUCCESS_TYPE = "success"
-
     SUCCESS_TITLE = "Success"
     DEFAULT_TITLE = "Important"
 
@@ -69,7 +67,7 @@ module NotificationBanner
     end
 
     def success_banner?
-      type == SUCCESS_TYPE
+      type == :success
     end
   end
 end

@@ -14,7 +14,6 @@ feature "edit contact details", type: :feature do
     and_i_submit_the_form
     and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
-    then_i_see_a_flash_message
     and_the_contact_details_are_updated
   end
 
@@ -22,7 +21,6 @@ feature "edit contact details", type: :feature do
     and_i_enter_an_international_address
     and_confirm_my_details
     then_i_am_redirected_to_the_summary_page
-    then_i_see_a_flash_message
     and_the_old_address_is_cleared
   end
 
@@ -67,9 +65,5 @@ feature "edit contact details", type: :feature do
     expect(@contact_details_page.address_line_two.value).to be_nil
     expect(@contact_details_page.town_city.value).to be_nil
     expect(@contact_details_page.postcode.value).to be_nil
-  end
-
-  def then_i_see_a_flash_message
-    expect(page).to have_text("Trainee contact details updated")
   end
 end
