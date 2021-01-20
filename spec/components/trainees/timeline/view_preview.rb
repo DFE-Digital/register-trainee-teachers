@@ -10,18 +10,16 @@ module Trainees
       end
 
       def submitted_for_trn
-        render Trainees::Timeline::View.new(
-          trainee(submitted_for_trn_at: Time.zone.today),
-        )
+        trainee.submit_for_trn!
+        render Trainees::Timeline::View.new(trainee)
       end
 
     private
 
-      def trainee(attrs = {})
-        Trainee.new(
+      def trainee
+        @trainee ||= Trainee.create!(
+          record_type: "assessment_only",
           provider: user.provider,
-          created_at: Time.zone.yesterday,
-          **attrs,
         )
       end
 
@@ -30,7 +28,7 @@ module Trainees
           first_name: "Tom",
           last_name: "Jones",
           email: "tom@example.com",
-          provider: Provider.create(name: "Provider A"),
+          provider: Provider.create!(name: "Provider A"),
         )
       end
     end

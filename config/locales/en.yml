@@ -116,6 +116,16 @@ en:
       state: Status
       subject: Subject
       text_search: Text search
+    timeline:
+      titles:
+        created: Record created
+        draft: Trainee marked as draft
+        submitted_for_trn: Trainee submitted for TRN
+        trn_received: Received TRN for trainee
+        recommended_for_qts: Trainee recommended for QTS
+        withdrawn: Trainee withdrawn
+        deferred: Trainee deferred
+        qts_awarded: Trainee awarded QTS
   views:
     trainees:
       edit:
