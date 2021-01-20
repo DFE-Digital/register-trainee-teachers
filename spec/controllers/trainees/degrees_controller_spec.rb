@@ -21,7 +21,7 @@ RSpec.describe Trainees::DegreesController, type: :controller do
 
     before do
       allow(controller).to receive(:current_user).and_return(user)
-      post(:create, params: { trainee_id: trainee.id, degree: degree_params })
+      post(:create, params: { trainee_id: trainee, degree: degree_params })
     end
 
     it "creates a new degree record associated with the trainee" do

@@ -23,7 +23,7 @@ module Trainees
     private
 
       def trainee
-        @trainee ||= Trainee.find(params[:trainee_id])
+        @trainee ||= Trainee.from_param(params[:trainee_id])
       end
 
       def disclosure_param

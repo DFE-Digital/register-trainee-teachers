@@ -17,7 +17,7 @@ feature "edit training details" do
 
   def when_i_visit_the_training_details_page
     @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
-    @training_details_page.load(id: trainee.id)
+    @training_details_page.load(id: trainee.slug)
   end
 
   def and_i_update_the_training_details
@@ -26,7 +26,7 @@ feature "edit training details" do
   end
 
   def then_i_am_redirected_to_the_record_page
-    expect(record_page).to be_displayed(id: trainee.id)
+    expect(record_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_training_details_are_updated

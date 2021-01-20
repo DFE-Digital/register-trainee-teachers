@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Trainee < ApplicationRecord
+  include Sluggable
   include PgSearch::Model
 
   belongs_to :provider
@@ -14,6 +15,7 @@ class Trainee < ApplicationRecord
 
   validates :record_type, presence: { message: "You must select a route" }
   validates :trainee_id, length: { maximum: 100, message: "Your entry must not exceed 100 characters" }
+  validates :slug, presence: true, uniqueness: { case_sensitive: false }
 
   enum record_type: { assessment_only: 0, provider_led: 1 }
   enum locale_code: { uk: 0, non_uk: 1 }

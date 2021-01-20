@@ -7,13 +7,13 @@ class TrnSubmissionsController < ApplicationController
     RegisterForTrnJob.perform_later(trainee.id, current_user.dttp_id)
     RetrieveTrnJob.set(wait: RetrieveTrnJob::POLL_DELAY).perform_later(trainee.id)
 
-    redirect_to trn_submission_path(trainee_id: trainee.id)
+    redirect_to trn_submission_path(trainee)
   end
 
 private
 
   def trainee
-    @trainee ||= Trainee.find(params[:trainee_id])
+    @trainee ||= Trainee.from_param(params[:trainee_id])
   end
 
   def authorize_trainee

@@ -67,7 +67,7 @@ feature "submit for TRN" do
   end
 
   def when_i_am_viewing_the_review_draft_page
-    review_draft_page.load(id: trainee.id)
+    review_draft_page.load(id: trainee.slug)
   end
 
   def and_i_want_to_review_record_before_submitting_for_trn
@@ -79,7 +79,7 @@ feature "submit for TRN" do
   end
 
   def then_i_review_the_trainee_data
-    expect(check_details_page).to be_displayed(id: trainee.id)
+    expect(check_details_page).to be_displayed(id: trainee.slug)
   end
 
   def and_i_click_the_submit_for_trn_button
@@ -87,7 +87,7 @@ feature "submit for TRN" do
   end
 
   def and_i_am_redirected_to_the_success_page
-    expect(trn_success_page).to be_displayed(trainee_id: trainee.id)
+    expect(trn_success_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def check_details_page
@@ -95,7 +95,7 @@ feature "submit for TRN" do
   end
 
   def and_i_am_on_the_check_details_page
-    check_details_page.load(id: trainee.id)
+    check_details_page.load(id: trainee.slug)
   end
 
   def trn_success_page

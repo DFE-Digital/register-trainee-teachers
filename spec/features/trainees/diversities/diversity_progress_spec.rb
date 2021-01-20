@@ -42,14 +42,14 @@ private
 
   def and_i_visit_the_review_draft_page
     @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
-    @review_draft_page.load(id: @trainee.id)
-    expect(@review_draft_page).to be_displayed(id: @trainee.id)
+    @review_draft_page.load(id: @trainee.slug)
+    expect(@review_draft_page).to be_displayed(id: @trainee.slug)
   end
 
   def and_i_visit_the_record_page
     @record_page ||= PageObjects::Trainees::ReviewDraft.new
-    @record_page.load(id: @trainee.id)
-    expect(@record_page).to be_displayed(id: @trainee.id)
+    @record_page.load(id: @trainee.slug)
+    expect(@record_page).to be_displayed(id: @trainee.slug)
   end
 
   def then_the_diversity_section_should_be(status)
@@ -59,12 +59,12 @@ private
 
   def when_i_visit_the_diversity_confirmation_page
     @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    @confirm_page.load(id: @trainee.id, section: "information-disclosed")
+    @confirm_page.load(id: @trainee.slug, section: "information-disclosed")
   end
 
   def then_i_am_redirected_to_the_confirm_page
     @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.id, section: "information-disclosed")
+    expect(@confirm_page).to be_displayed(id: @trainee.slug, section: "information-disclosed")
   end
 
   def and_unconfirm_my_details

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_12_121519) do
+ActiveRecord::Schema.define(version: 2021_01_18_133452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 2021_01_12_121519) do
     t.datetime "withdraw_date"
     t.string "additional_withdraw_reason"
     t.date "defer_date"
+    t.string "slug", null: false
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
@@ -142,6 +143,7 @@ ActiveRecord::Schema.define(version: 2021_01_12_121519) do
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
     t.index ["record_type"], name: "index_trainees_on_record_type"
+    t.index ["slug"], name: "index_trainees_on_slug", unique: true
     t.index ["state"], name: "index_trainees_on_state"
   end
 

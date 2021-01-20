@@ -99,7 +99,7 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def and_i_am_on_the_trainee_record_page
-    record_page.load(id: trainee.id)
+    record_page.load(id: trainee.slug)
   end
 
   def when_i_choose(option)
@@ -168,7 +168,7 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def then_i_am_redirected_to_withdrawal_confirmation_page
-    expect(withdrawal_confirmation_page).to be_displayed(id: trainee.id)
+    expect(withdrawal_confirmation_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_withdraw_date_and_reason_is_updated

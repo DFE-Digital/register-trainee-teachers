@@ -46,6 +46,27 @@ describe Trainee do
     it { is_expected.to have_many(:disabilities).through(:trainee_disabilities) }
   end
 
+  context "validations" do
+    context "slug" do
+      subject { create(:trainee) }
+
+      it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
+
+      context "immutability" do
+        let(:original_slug) { subject.slug.dup }
+
+        before do
+          subject.regenerate_slug
+          subject.reload
+        end
+
+        it "is immutable once created" do
+          expect(subject.slug).to eq(original_slug)
+        end
+      end
+    end
+  end
+
   context "class methods" do
     describe ".dttp_id" do
       let(:uuid) { "2795182a-43b2-4543-bf83-ad95fbfce7fd" }

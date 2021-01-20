@@ -22,7 +22,7 @@ feature "edit Trainee ID" do
 
   def when_i_visit_the_edit_trainee_id_page
     @edit_page ||= PageObjects::Trainees::EditTraineeId.new
-    @edit_page.load(trainee_id: trainee.id)
+    @edit_page.load(trainee_id: trainee.slug)
   end
 
   def when_i_change_the_trainee_id
@@ -34,7 +34,7 @@ feature "edit Trainee ID" do
   end
 
   def then_i_am_taken_to_the_confirmation_page
-    expect(page.current_path).to eq("/trainees/#{trainee.id}/trainee-id/confirm")
+    expect(page.current_path).to eq("/trainees/#{trainee.slug}/trainee-id/confirm")
   end
 
   def when_i_confirm
@@ -43,7 +43,7 @@ feature "edit Trainee ID" do
   end
 
   def then_i_am_redirected_to_the_trainee_edit_page
-    expect(page.current_path).to eq("/trainees/#{trainee.id}")
+    expect(page.current_path).to eq("/trainees/#{trainee.slug}")
   end
 
   def then_the_trainee_id_is_updated

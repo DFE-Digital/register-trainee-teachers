@@ -34,7 +34,7 @@
 <%= render Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
 
 <%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>
-  <%= hidden_field_tag :trainee_id, @trainee.id %>
+  <%= hidden_field_tag :trainee_id, @trainee.slug %>
   <%= f.govuk_submit "Submit record and request TRN" %>
 <%- end -%>
 

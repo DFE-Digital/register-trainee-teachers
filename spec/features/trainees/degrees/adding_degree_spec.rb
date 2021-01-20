@@ -103,13 +103,13 @@ RSpec.feature "Adding a degree" do
 private
 
   def and_i_visit_the_review_draft_page
-    review_draft_page.load(id: trainee.id)
-    expect(review_draft_page).to be_displayed(id: trainee.id)
+    review_draft_page.load(id: trainee.slug)
+    expect(review_draft_page).to be_displayed(id: trainee.slug)
   end
 
   def and_i_visit_the_record_page
-    record_page.load(id: trainee.id)
-    expect(record_page).to be_displayed(id: trainee.id)
+    record_page.load(id: trainee.slug)
+    expect(record_page).to be_displayed(id: trainee.slug)
   end
 
   def and_i_click_the_degree_on_the_review_draft_page
@@ -117,7 +117,7 @@ private
   end
 
   def when_i_visit_the_type_page
-    type_page.load(trainee_id: trainee.id)
+    type_page.load(trainee_id: trainee.slug)
   end
 
   def and_i_click_the_continue_button_on_the_type_page
@@ -179,20 +179,20 @@ private
   end
 
   def when_i_visit_the_degree_details_page
-    degree_details_page.load(trainee_id: trainee.id, locale_code: @locale)
-    expect(degree_details_page).to be_displayed(trainee_id: trainee.id, locale_code: @locale)
+    degree_details_page.load(trainee_id: trainee.slug, locale_code: @locale)
+    expect(degree_details_page).to be_displayed(trainee_id: trainee.slug, locale_code: @locale)
   end
 
   def then_i_am_redirected_to_the_record_page
-    expect(current_path).to eq("/trainees/#{trainee.id}")
+    expect(current_path).to eq("/trainees/#{trainee.slug}")
   end
 
   def then_i_am_redirected_to_the_trainee_degrees_confirmation_page
-    expect(current_path).to eq("/trainees/#{trainee.id}/degrees/confirm")
+    expect(current_path).to eq("/trainees/#{trainee.slug}/degrees/confirm")
   end
 
   def and_confirm_my_details
-    expect(confirm_details_page).to be_displayed(id: trainee.id, section: "degrees")
+    expect(confirm_details_page).to be_displayed(id: trainee.slug, section: "degrees")
     confirm_details_page.confirm.click
     confirm_details_page.continue_button.click
   end

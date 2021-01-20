@@ -17,7 +17,7 @@ module Features
     end
 
     def then_i_am_redirected_to_the_record_page
-      expect(record_page).to be_displayed(id: trainee.id)
+      expect(record_page).to be_displayed(id: trainee.slug)
     end
 
     def trainee_index_page
@@ -38,7 +38,7 @@ module Features
 
     def and_i_confirm_my_details(checked: true, section:)
       checked_option = checked ? "check" : "uncheck"
-      expect(confirm_details_page).to be_displayed(id: trainee.id, section: section)
+      expect(confirm_details_page).to be_displayed(id: trainee.slug, section: section)
       confirm_details_page.confirm.public_send(checked_option)
       confirm_details_page.submit_button.click
     end
