@@ -49,7 +49,7 @@ feature "edit ethnic background", type: :feature do
 
   def when_i_visit_the_diversity_ethnic_background_page
     @ethnic_background_page ||= PageObjects::Trainees::Diversities::EthnicBackground.new
-    @ethnic_background_page.load(id: @trainee.id)
+    @ethnic_background_page.load(id: @trainee.slug)
   end
 
   def and_i_choose_a_background(background)
@@ -62,7 +62,7 @@ feature "edit ethnic background", type: :feature do
 
   def then_i_am_redirected_to_the_disability_disclosure_page
     @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
-    expect(@disability_disclosure_page).to be_displayed(id: trainee.id)
+    expect(@disability_disclosure_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_diversity_ethnic_background_is_updated_with(background)

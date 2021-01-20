@@ -3,7 +3,7 @@
 module Trainees
   class CheckDetailsController < ApplicationController
     def show
-      @trainee = Trainee.find(params[:id])
+      @trainee = Trainee.from_param(params[:id])
     end
   end
 end

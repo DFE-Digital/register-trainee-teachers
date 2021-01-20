@@ -75,7 +75,7 @@ feature "edit ethnic group", type: :feature do
 
   def when_i_visit_the_diversity_ethnic_group_page
     @ethnic_group_page ||= PageObjects::Trainees::Diversities::EthnicGroup.new
-    @ethnic_group_page.load(id: trainee.id)
+    @ethnic_group_page.load(id: trainee.slug)
   end
 
   def and_i_choose(option)
@@ -90,12 +90,12 @@ feature "edit ethnic group", type: :feature do
 
   def then_i_am_redirected_to_the_ethnic_background_page
     @ethnic_background_page ||= PageObjects::Trainees::Diversities::EthnicBackground.new
-    expect(@ethnic_background_page).to be_displayed(id: trainee.id)
+    expect(@ethnic_background_page).to be_displayed(id: trainee.slug)
   end
 
   def then_i_am_redirected_to_the_disability_disclosure_page
     @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
-    expect(@disability_disclosure_page).to be_displayed(id: trainee.id)
+    expect(@disability_disclosure_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_diversity_ethnic_group_is_updated_with(selected_group)

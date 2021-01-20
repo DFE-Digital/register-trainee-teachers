@@ -72,7 +72,7 @@ feature "Recording a training outcome", type: :feature do
   end
 
   def and_i_am_on_the_trainee_record_page
-    record_page.load(id: trainee.id)
+    record_page.load(id: trainee.slug)
   end
 
   def and_i_click_on_record_training_outcome
@@ -100,7 +100,7 @@ feature "Recording a training outcome", type: :feature do
   end
 
   def then_i_am_redirected_to_the_confirm_page
-    expect(confirm_page).to be_displayed(id: trainee.id)
+    expect(confirm_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_outcome_date_is_updated

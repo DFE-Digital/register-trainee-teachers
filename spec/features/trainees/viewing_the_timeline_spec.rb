@@ -28,7 +28,7 @@ feature "View the timeline" do
   end
 
   def then_i_should_see_the_trainee_timeline
-    expect(timeline_page).to be_displayed(id: trainee.id)
+    expect(timeline_page).to be_displayed(id: trainee.slug)
   end
 
   def record_page

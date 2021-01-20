@@ -7,7 +7,11 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
 
   context "when no contact details data supplied for existing trainee" do
     before(:all) do
-      @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(trainee: Trainee.new(id: 1)))
+      @result ||= render_inline(
+        Trainees::Confirmation::ContactDetails::View.new(
+          trainee: Trainee.new,
+        ),
+      )
     end
 
     it "renders blank rows for address, email" do
@@ -72,12 +76,13 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
 private
 
   def mock_trainee
-    @mock_trainee ||= Trainee.new(id: 1,
-                                  address_line_one: "32 Windsor Gardens",
-                                  address_line_two: "Westminster",
-                                  town_city: "London",
-                                  postcode: "EC1 9CP",
-                                  international_address: "Champ de Mars\r\n5 Avenue Anatole",
-                                  email: "Paddington@bear.com")
+    @mock_trainee ||= Trainee.new(
+      address_line_one: "32 Windsor Gardens",
+      address_line_two: "Westminster",
+      town_city: "London",
+      postcode: "EC1 9CP",
+      international_address: "Champ de Mars\r\n5 Avenue Anatole",
+      email: "Paddington@bear.com",
+    )
   end
 end

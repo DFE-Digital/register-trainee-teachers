@@ -7,13 +7,13 @@ module Trainees
 
       RecommendForQtsJob.perform_later(trainee.id)
 
-      redirect_to recommended_trainee_outcome_details_path(trainee_id: trainee.id)
+      redirect_to recommended_trainee_outcome_details_path(trainee)
     end
 
   private
 
     def trainee
-      @trainee ||= Trainee.find(params[:trainee_id])
+      @trainee ||= Trainee.from_param(params[:trainee_id])
     end
   end
 end

@@ -15,6 +15,7 @@ FactoryBot.define do
     middle_names { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
     gender { Trainee.genders.keys.sample }
+    slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
 
     diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS.values.sample }
     ethnic_group { Diversities::ETHNIC_GROUP_ENUMS.values.sample }

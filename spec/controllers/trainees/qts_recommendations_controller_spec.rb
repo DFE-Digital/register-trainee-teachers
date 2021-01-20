@@ -17,13 +17,13 @@ describe Trainees::QtsRecommendationsController do
   describe "#create" do
     it "it updates the placement assignment in DTTP to mark it ready for QTS" do
       expect {
-        post :create, params: { trainee_id: trainee.id }
+        post :create, params: { trainee_id: trainee }
       }.to have_enqueued_job(RecommendForQtsJob).with(trainee.id)
     end
 
     it "redirects user to the recommended page" do
-      post :create, params: { trainee_id: trainee.id }
-      expect(response).to redirect_to(recommended_trainee_outcome_details_path(trainee_id: trainee.id))
+      post :create, params: { trainee_id: trainee }
+      expect(response).to redirect_to(recommended_trainee_outcome_details_path(trainee))
     end
   end
 end

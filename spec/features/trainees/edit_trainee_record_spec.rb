@@ -50,7 +50,7 @@ feature "edit trainee record", type: :feature do
 
   def when_i_visit_the_trainee_record_page
     @record_page ||= PageObjects::Trainees::Record.new
-    @record_page.load(id: trainee.id)
+    @record_page.load(id: trainee.slug)
   end
 
   def then_i_see_the_record_details

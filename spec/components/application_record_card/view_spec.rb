@@ -6,7 +6,7 @@ module ApplicationRecordCard
   describe View do
     alias_method :component, :page
 
-    let(:trainee) { Trainee.new(id: 1, created_at: Time.zone.now) }
+    let(:trainee) { Trainee.new(created_at: Time.zone.now) }
 
     before do
       render_inline(described_class.new(record: trainee))
@@ -47,7 +47,7 @@ module ApplicationRecordCard
         { state: :withdrawn, colour: "red", text: "withdrawn" },
       ].each do |state_expectation|
         context "when state is #{state_expectation[:state]}" do
-          let(:trainee) { build(:trainee, state_expectation[:state], id: 1, created_at: Time.zone.now) }
+          let(:trainee) { build(:trainee, state_expectation[:state], created_at: Time.zone.now) }
 
           it "renders '#{state_expectation[:text]}'" do
             expect(component).to have_selector(".govuk-tag", text: state_expectation[:text])
@@ -69,12 +69,13 @@ module ApplicationRecordCard
         Timecop.freeze(Time.zone.local(2020, 1, 1)) do
           build(
             :trainee,
-            id: 1, first_names: "Teddy",
+            id: 1,
+            first_names: "Teddy",
             last_name: "Smith",
             subject: "Designer",
             record_type: "assessment_only",
             trainee_id: "132456",
-            created_at: Time.zone.now
+            created_at: Time.zone.now,
           )
         end
       end

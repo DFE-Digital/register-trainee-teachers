@@ -73,7 +73,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def and_i_am_on_the_trainee_record_page
-    record_page.load(id: trainee.id)
+    record_page.load(id: trainee.slug)
   end
 
   def and_i_click_on_defer
@@ -111,7 +111,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def then_i_am_redirected_to_deferral_confirmation_page
-    expect(deferral_confirmation_page).to be_displayed(id: trainee.id)
+    expect(deferral_confirmation_page).to be_displayed(id: trainee.slug)
   end
 
   def given_a_trainee_exists_to_be_deferred

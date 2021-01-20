@@ -18,7 +18,7 @@ module Trainees
               key: "Diversity information",
               value: I18n.t("components.confirmation.diversity.diversity_disclosure.#{trainee.diversity_disclosure}"),
               action: govuk_link_to('Change<span class="govuk-visually-hidden"> diversity information</span>'.html_safe,
-                                    edit_trainee_diversity_disclosure_path(trainee.id)),
+                                    edit_trainee_diversity_disclosure_path(trainee)),
             },
           ]
 
@@ -27,14 +27,14 @@ module Trainees
               key: "Ethnicity",
               value: ethnic_group_content,
               action: govuk_link_to('Change<span class="govuk-visually-hidden"> ethnicity</span>'.html_safe,
-                                    edit_trainee_diversity_ethnic_group_path(trainee.id)),
+                                    edit_trainee_diversity_ethnic_group_path(trainee)),
             }
 
             rows << {
               key: "Disability",
               value: tag.p(disability_selection, class: "govuk-body") + selected_disability_options,
               action: govuk_link_to('Change<span class="govuk-visually-hidden"> disability</span>'.html_safe,
-                                    edit_trainee_diversity_disability_disclosure_path(trainee.id)),
+                                    edit_trainee_diversity_disability_disclosure_path(trainee)),
             }
           end
           rows

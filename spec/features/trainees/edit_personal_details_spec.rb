@@ -85,7 +85,7 @@ private
 
   def when_i_visit_the_personal_details_page
     @personal_details_page ||= PageObjects::Trainees::PersonalDetails.new
-    @personal_details_page.load(id: trainee.id)
+    @personal_details_page.load(id: trainee.slug)
   end
 
   def and_i_enter_valid_parameters(other_nationality: false)
@@ -103,7 +103,7 @@ private
 
   def and_confirm_my_details(checked: true)
     checked_option = checked ? "check" : "uncheck"
-    expect(confirm_page).to be_displayed(id: trainee.id, section: "personal-details")
+    expect(confirm_page).to be_displayed(id: trainee.slug, section: "personal-details")
     confirm_page.confirm.public_send(checked_option)
     and_i_click_continue
   end
@@ -134,12 +134,12 @@ private
   end
 
   def then_the_personal_details_section_should_be_completed
-    review_draft_page.load(id: trainee.id)
+    review_draft_page.load(id: trainee.slug)
     expect(review_draft_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
   end
 
   def then_the_personal_details_section_should_be_in_progress
-    review_draft_page.load(id: trainee.id)
+    review_draft_page.load(id: trainee.slug)
     expect(review_draft_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
   end
 

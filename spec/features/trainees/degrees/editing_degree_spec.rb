@@ -70,13 +70,13 @@ private
   end
 
   def when_i_visit_the_edit_degree_details_page
-    edit_degree_details_page.load(trainee_id: trainee.id,
+    edit_degree_details_page.load(trainee_id: trainee.slug,
                                   id: trainee.degrees.first.id)
   end
 
   def then_i_am_redirected_to_confirm_page
-    degrees_confirm.load(trainee_id: trainee.id)
-    expect(degrees_confirm).to be_displayed(trainee_id: trainee.id)
+    degrees_confirm.load(trainee_id: trainee.slug)
+    expect(degrees_confirm).to be_displayed(trainee_id: trainee.slug)
   end
 
   def then_i_see_the_error_summary

@@ -46,7 +46,7 @@ class TraineesController < ApplicationController
 private
 
   def trainee
-    @trainee ||= Trainee.find(params[:id])
+    @trainee ||= Trainee.from_param(params[:id])
   end
 
   def trainee_params

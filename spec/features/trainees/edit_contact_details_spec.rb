@@ -26,7 +26,7 @@ feature "edit contact details", type: :feature do
 
   def when_i_visit_the_contact_details_page
     @contact_details_page ||= PageObjects::Trainees::ContactDetails.new
-    @contact_details_page.load(id: trainee.id)
+    @contact_details_page.load(id: trainee.slug)
   end
 
   def and_i_enter_valid_parameters
@@ -41,7 +41,7 @@ feature "edit contact details", type: :feature do
 
   def and_confirm_my_details
     @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.id, section: "contact-details")
+    expect(@confirm_page).to be_displayed(id: trainee.slug, section: "contact-details")
     @confirm_page.submit_button.click
   end
 
