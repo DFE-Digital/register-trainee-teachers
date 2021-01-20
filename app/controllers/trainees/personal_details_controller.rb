@@ -2,6 +2,8 @@
 
 module Trainees
   class PersonalDetailsController < ApplicationController
+    include Breadcrumbable
+
     DOB_CONVERSION = {
       "date_of_birth(3i)" => "day",
       "date_of_birth(2i)" => "month",
@@ -12,6 +14,7 @@ module Trainees
 
     def show
       authorize trainee
+      save_origin_page_for(trainee)
       render layout: "trainee_record"
     end
 

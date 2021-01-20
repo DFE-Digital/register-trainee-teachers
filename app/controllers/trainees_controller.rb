@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TraineesController < ApplicationController
+  include Breadcrumbable
+
   def index
     @filters = TraineeFilter.new(params: filter_params).filters
 
@@ -16,6 +18,7 @@ class TraineesController < ApplicationController
 
   def show
     authorize trainee
+    save_origin_page_for(trainee)
     render layout: "trainee_record"
   end
 
