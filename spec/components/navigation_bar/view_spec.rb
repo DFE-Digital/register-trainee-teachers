@@ -6,28 +6,77 @@ module NavigationBar
   describe View do
     alias_method :component, :page
 
+    let(:item_url) { "https://www.gov.uk" }
+    let(:current_path) { item_url }
+
     before do
-      render_inline(described_class.new(user))
+      render_inline(described_class.new(items: items, current_path: current_path))
     end
 
-    context "when user is not signed in" do
-      let(:user) { nil }
-
-      it "does not render the navigation bar" do
-        expect(component).to_not have_css(".moj-primary-navigation")
-      end
-    end
-
-    context "when user is signed in" do
-      let(:user) { build(:user) }
-
-      it "renders the navigation bar" do
-        expect(component).to have_css(".moj-primary-navigation")
+    context "multiple links" do
+      let(:items) do
+        [
+          { name: "Home", url: item_url },
+          { name: "Trainee records", url: item_url },
+        ]
       end
 
       it "has two change links" do
         expect(component).to have_link("Home")
         expect(component).to have_link("Trainee records")
+      end
+    end
+
+    context "where item current is true" do
+      let(:current_item) { { name: "Bulk actions", url: item_url, current: true } }
+      let(:current_path) { "http://www.google.com" }
+      let(:items) { [current_item] }
+
+      it "renders the link with aria-current" do
+        rendered_link = component.find(".moj-primary-navigation__link", text: current_item[:name])
+        expect(rendered_link["aria-current"]).to eq("page")
+      end
+    end
+
+    context "where item current is false" do
+      let(:non_current_item) { { name: "Trainee records", url: item_url, current: false } }
+      let(:items) { [non_current_item] }
+
+      context "when not on the current url" do
+        let(:current_path) { "http://www.google.com" }
+
+        it "renders the link without aria-current" do
+          rendered_link = component.find(".moj-primary-navigation__link", text: non_current_item[:name])
+          expect(rendered_link["aria-current"]).to eq(nil)
+        end
+      end
+
+      context "when on the current url" do
+        it "renders the link with aria-current" do
+          rendered_link = component.find(".moj-primary-navigation__link", text: non_current_item[:name])
+          expect(rendered_link["aria-current"]).to eq("page")
+        end
+      end
+    end
+
+    context "where item current is not set" do
+      let(:no_current_item) { { name: "Trainee records", url: item_url } }
+      let(:items) { [no_current_item] }
+
+      context "when not on the current url" do
+        let(:current_path) { "http://www.google.com" }
+
+        it "renders the link without aria-current" do
+          rendered_link = component.find(".moj-primary-navigation__link", text: no_current_item[:name])
+          expect(rendered_link["aria-current"]).to eq(nil)
+        end
+      end
+
+      context "when on the current url" do
+        it "renders the link with aria-current" do
+          rendered_link = component.find(".moj-primary-navigation__link", text: no_current_item[:name])
+          expect(rendered_link["aria-current"]).to eq("page")
+        end
       end
     end
   end
