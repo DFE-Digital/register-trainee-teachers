@@ -80,7 +80,7 @@ namespace :example_data do
         trainee = FactoryBot.create(:trainee, *traits, trainee_attributes)
 
         [1, 1, 1, 1, 1, 2].sample.times do # multiple nationalities are less common
-          trainee.nationalities << FactoryBot.build(:nationality)
+          trainee.nationalities << Nationality.all.sample
         end
 
         next if trainee.draft?
