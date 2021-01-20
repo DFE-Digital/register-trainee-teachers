@@ -1,10 +1,7 @@
 <%= render PageTitle::View.new(title: I18n.t("components.confirmation.heading", section_title: confirm_section_title)) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: @trainee.draft? ? 'Back to draft record' : 'Back to record',
-    href: view_trainee(@trainee)
-  ) %>
+  <%= render DynamicBackLink::View.new(@trainee) %>
 <% end %>
 
 <%= render(

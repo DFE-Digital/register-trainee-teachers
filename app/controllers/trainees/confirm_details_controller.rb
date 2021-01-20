@@ -2,11 +2,14 @@
 
 module Trainees
   class ConfirmDetailsController < ApplicationController
+    include Breadcrumbable
+
     helper_method :trainee_section_key
     helper_method :confirm_section_title
 
     def show
       authorize trainee
+      save_origin_page_for(trainee)
       @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
       @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
     end

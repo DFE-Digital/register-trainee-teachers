@@ -1,10 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.training_details.edit") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: 'Back',
-    href: view_trainee(@trainee)
-  ) %>
+  <%= render DynamicBackLink::View.new(@trainee) %>
 <% end %>
 
 <%= form_with model: @trainee, local: true do |f| %>
