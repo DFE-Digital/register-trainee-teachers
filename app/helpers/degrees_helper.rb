@@ -26,9 +26,7 @@ module DegreesHelper
 private
 
   def hesa_degree_types
-    HESA_DEGREE_TYPES.map do |_hesa_code, _abbreviation, name, _level|
-      name
-    end
+    Dttp::CodeSets::DegreeTypes::MAPPING.keys - Dttp::CodeSets::DegreeTypes::NON_UK
   end
 
   def institutions

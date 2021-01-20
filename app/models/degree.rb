@@ -22,6 +22,10 @@ class Degree < ApplicationRecord
     errors.add(:graduation_year, :invalid) unless graduation_year.between?(next_year - MAX_GRAD_YEARS, next_year)
   end
 
+  def non_uk_degree_non_naric?
+    non_uk_degree == NON_NARIC
+  end
+
 private
 
   def next_year

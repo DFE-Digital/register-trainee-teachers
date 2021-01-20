@@ -125,12 +125,12 @@ class Trainee < ApplicationRecord
 
   scope :ordered_by_date, -> { order(updated_at: :desc) }
 
-  def update_and_submit_for_trn!(dttp_id, placement_assignment_dttp_id)
+  def trn_requested!(dttp_id, placement_assignment_dttp_id)
     submit_for_trn!
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
 
-  def update_and_receive_trn!(new_trn = nil)
+  def trn_received!(new_trn = nil)
     raise StateTransitionError, "Cannot transition to :trn_received without a trn" unless new_trn || trn
 
     receive_trn!

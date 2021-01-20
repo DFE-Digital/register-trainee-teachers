@@ -6,26 +6,25 @@ module Dttp
 
     class Error < StandardError; end
 
-    attr_reader :trainee, :trainee_creator_dttp_id, :batch_request
+    attr_reader :trainee
 
-    def initialize(trainee:, trainee_creator_dttp_id:)
+    def initialize(trainee:)
       @trainee = trainee
-      @trainee_presenter = Dttp::TraineePresenter.new(trainee: trainee)
-      @trainee_creator_dttp_id = trainee_creator_dttp_id
+      @contact_payload = Params::Contact.new(trainee)
+      @placement_assignment_payload = Params::PlacementAssignment.new(trainee)
     end
 
     def call
-      dttp_update("/contacts(#{trainee.dttp_id})",
-                  @trainee_presenter.contact_update_params(trainee_creator_dttp_id).to_json)
+      dttp_update("/contacts(#{trainee.dttp_id})", @contact_payload)
 
       dttp_update("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})",
-                  @trainee_presenter.placement_assignment_update_params.to_json)
+                  @placement_assignment_payload)
     end
 
   private
 
     def dttp_update(path, body)
-      response = Client.patch(path, body: body)
+      response = Client.patch(path, body: body.to_json)
       raise Error, response.body if response.code != 204
     end
   end

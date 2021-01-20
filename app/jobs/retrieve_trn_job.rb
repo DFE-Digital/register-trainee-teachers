@@ -15,7 +15,7 @@ class RetrieveTrnJob < ApplicationJob
     trn = Dttp::RetrieveTrn.call(trainee: trainee)
 
     if trn
-      trainee.update_and_receive_trn!(trn)
+      trainee.trn_received!(trn)
     elsif continue_polling?(trainee)
       RetrieveTrnJob.set(wait: POLL_DELAY).perform_later(trainee.id)
     end
