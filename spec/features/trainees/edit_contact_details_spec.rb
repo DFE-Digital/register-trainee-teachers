@@ -13,14 +13,14 @@ feature "edit contact details", type: :feature do
     and_i_enter_valid_parameters
     and_i_submit_the_form
     and_confirm_my_details
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
     and_the_contact_details_are_updated
   end
 
   scenario "changing locale clears previous address" do
     and_i_enter_an_international_address
     and_confirm_my_details
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
     and_the_old_address_is_cleared
   end
 

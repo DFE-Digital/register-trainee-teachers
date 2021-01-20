@@ -16,7 +16,7 @@ class TraineesController < ApplicationController
 
   def show
     authorize trainee
-    @pre_submission_checker = Trns::SubmissionChecker.call(trainee: trainee)
+    render layout: "trainee_record"
   end
 
   def new
@@ -35,11 +35,6 @@ class TraineesController < ApplicationController
         render :new
       end
     end
-  end
-
-  def edit
-    authorize trainee
-    render layout: "trainee_record"
   end
 
   def update

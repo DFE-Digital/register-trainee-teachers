@@ -3,7 +3,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
     text: 'Return to trainee',
-    href: edit_trainee_path(@trainee)
+    href: trainee_path(@trainee)
   ) %>
 <% end %>
 

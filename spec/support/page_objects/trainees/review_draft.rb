@@ -5,8 +5,8 @@ require_relative "../sections/diversity"
 
 module PageObjects
   module Trainees
-    class Summary < PageObjects::Base
-      set_url "/trainees/{id}"
+    class ReviewDraft < PageObjects::Base
+      set_url "/trainees/{id}/review-draft"
 
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
       section :programme_details, PageObjects::Sections::ProgrammeDetails, ".app-task-list__item.programme-details"

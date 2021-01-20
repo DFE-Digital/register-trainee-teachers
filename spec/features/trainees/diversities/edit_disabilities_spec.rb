@@ -14,7 +14,7 @@ feature "edit disability details", type: :feature do
     and_i_choose_a_disability
     and_i_submit_the_form
     and_confirm_my_details
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
     and_the_disability_details_are_updated
   end
 

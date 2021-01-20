@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.withdrawal.show", has_errors: @withdrawal_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(text: t(:back), href: edit_trainee_path(@trainee)) %>
+  <%= render GovukComponent::BackLink.new(text: t(:back), href: trainee_path(@trainee)) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -45,4 +45,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to(t("cancel"), edit_trainee_path(@trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to(t("cancel"), trainee_path(@trainee)) %></p>

@@ -8,7 +8,7 @@ feature "Withdrawing a trainee", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn
-    and_i_am_on_the_trainee_edit_page
+    and_i_am_on_the_trainee_record_page
     and_i_click_on_withdraw
   end
 
@@ -98,8 +98,8 @@ feature "Withdrawing a trainee", type: :feature do
     end
   end
 
-  def and_i_am_on_the_trainee_edit_page
-    edit_page.load(id: trainee.id)
+  def and_i_am_on_the_trainee_record_page
+    record_page.load(id: trainee.id)
   end
 
   def when_i_choose(option)
@@ -111,7 +111,7 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def and_i_click_on_withdraw
-    edit_page.withdraw.click
+    record_page.withdraw.click
   end
 
   def and_enter_an_invalid_date
@@ -187,8 +187,8 @@ feature "Withdrawing a trainee", type: :feature do
     given_a_trainee_exists(%i[submitted_for_trn trn_received deferred].sample)
   end
 
-  def edit_page
-    @edit_page ||= PageObjects::Trainees::Edit.new
+  def record_page
+    @record_page ||= PageObjects::Trainees::Record.new
   end
 
   def withdrawal_page

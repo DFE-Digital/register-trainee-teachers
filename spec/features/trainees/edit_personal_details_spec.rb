@@ -27,7 +27,7 @@ feature "edit personal details", type: :feature do
     and_i_enter_valid_parameters
     and_i_submit_the_form
     and_confirm_my_details(checked: false)
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
     then_the_personal_details_section_should_be_in_progress
   end
 
@@ -51,7 +51,7 @@ feature "edit personal details", type: :feature do
     it "it doesn't ask me to complete the section" do
       then_the_confirm_page_has_no_checkbox
       and_i_click_continue
-      then_i_am_redirected_to_the_summary_page
+      then_i_am_redirected_to_the_record_page
       then_i_see_a_flash_message
     end
   end
@@ -65,7 +65,7 @@ private
     and_i_enter_valid_parameters
     and_i_submit_the_form
     and_confirm_my_details
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
   end
 
   def given_other_nationality_is_provided
@@ -75,7 +75,7 @@ private
     and_i_enter_valid_parameters(other_nationality: true)
     and_i_submit_the_form
     and_confirm_my_details
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
   end
 
   def and_nationalities_exist_in_the_system
@@ -134,11 +134,13 @@ private
   end
 
   def then_the_personal_details_section_should_be_completed
-    expect(summary_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
+    review_draft_page.load(id: trainee.id)
+    expect(review_draft_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
   end
 
   def then_the_personal_details_section_should_be_in_progress
-    expect(summary_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
+    review_draft_page.load(id: trainee.id)
+    expect(review_draft_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
   end
 
   def then_i_see_a_flash_message

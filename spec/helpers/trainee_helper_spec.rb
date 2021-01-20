@@ -32,15 +32,15 @@ describe TraineeHelper do
     context "with a draft trainee" do
       let(:trainee) { create(:trainee) }
       it "returns the trainee_path" do
-        expect(subject).to eq(trainee_path(trainee))
+        expect(subject).to eq(review_draft_trainee_path(trainee))
       end
     end
 
     STATES.each do |state|
       context "with a #{state} trainee" do
         let(:trainee) { create(:trainee, state) }
-        it "returns the edit_trainee_path" do
-          expect(subject).to eq(edit_trainee_path(trainee))
+        it "returns the trainee_path" do
+          expect(subject).to eq(trainee_path(trainee))
         end
       end
     end

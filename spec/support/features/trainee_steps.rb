@@ -8,24 +8,28 @@ module Features
       @trainee ||= create(:trainee, *traits, **overrides, provider: current_user.provider)
     end
 
-    def and_return_to_the_summary_page
-      summary_page.load
+    def and_return_to_the_record_page
+      record_page.load
     end
 
-    def when_i_visit_the_summary_page
-      summary_page.load
+    def when_i_visit_the_record_page
+      record_page.load
     end
 
-    def then_i_am_redirected_to_the_summary_page
-      expect(summary_page).to be_displayed(id: trainee.id)
+    def then_i_am_redirected_to_the_record_page
+      expect(record_page).to be_displayed(id: trainee.id)
     end
 
     def trainee_index_page
       @trainee_index_page ||= PageObjects::Trainees::Index.new
     end
 
-    def summary_page
-      @summary_page ||= PageObjects::Trainees::Summary.new
+    def record_page
+      @record_page ||= PageObjects::Trainees::Record.new
+    end
+
+    def review_draft_page
+      @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
     end
 
     def confirm_details_page

@@ -8,7 +8,7 @@ feature "Recording a training outcome", type: :feature do
   before do
     given_i_am_authenticated
     given_a_trainee_exists(state: :trn_received)
-    and_i_am_on_the_trainee_edit_page
+    and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
   end
 
@@ -71,12 +71,12 @@ feature "Recording a training outcome", type: :feature do
     outcome_date_page.set_date_fields("outcome_date", outcome_date.strftime("%d/%m/%Y"))
   end
 
-  def and_i_am_on_the_trainee_edit_page
-    edit_page.load(id: trainee.id)
+  def and_i_am_on_the_trainee_record_page
+    record_page.load(id: trainee.id)
   end
 
   def and_i_click_on_record_training_outcome
-    edit_page.record_outcome.click
+    record_page.record_outcome.click
   end
 
   def when_i_choose(option)
@@ -108,8 +108,8 @@ feature "Recording a training outcome", type: :feature do
     expect(page).to have_text(date_for_summary_view(trainee.outcome_date))
   end
 
-  def edit_page
-    @edit_page ||= PageObjects::Trainees::Edit.new
+  def record_page
+    @record_page ||= PageObjects::Trainees::Record.new
   end
 
   def outcome_date_page

@@ -20,7 +20,7 @@ feature "edit diversity disclosure", type: :feature do
     and_i_choose_not_to_disclose
     and_i_submit_the_form
     and_confirm_my_details
-    then_i_am_redirected_to_the_summary_page
+    then_i_am_redirected_to_the_record_page
     and_the_diversity_disclosure_is_updated
   end
 

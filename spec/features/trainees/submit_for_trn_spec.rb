@@ -18,7 +18,7 @@ feature "submit for TRN" do
       end
 
       scenario "can submit the application" do
-        when_i_am_viewing_the_summary_page
+        when_i_am_viewing_the_review_draft_page
         and_i_want_to_review_record_before_submitting_for_trn
         then_i_review_the_trainee_data
         and_i_click_the_submit_for_trn_button
@@ -26,7 +26,7 @@ feature "submit for TRN" do
       end
 
       scenario "displays trainee name" do
-        when_i_am_viewing_the_summary_page
+        when_i_am_viewing_the_review_draft_page
         and_i_want_to_review_record_before_submitting_for_trn
         then_i_review_the_trainee_data
         expect(page).to have_content(trainee_name(@trainee))
@@ -40,7 +40,7 @@ feature "submit for TRN" do
       end
 
       scenario "cannot submit the application" do
-        when_i_am_viewing_the_summary_page
+        when_i_am_viewing_the_review_draft_page
         then_i_do_not_see_the_review_details_link
       end
     end
@@ -52,7 +52,7 @@ feature "submit for TRN" do
         given_a_trainee_exists
         and_i_am_on_the_check_details_page
         when_i_click_back_to_draft_record
-        then_i_am_redirected_to_the_summary_page
+        then_i_am_redirected_to_the_record_page
       end
     end
 
@@ -66,16 +66,16 @@ feature "submit for TRN" do
     end
   end
 
-  def when_i_am_viewing_the_summary_page
-    summary_page.load(id: trainee.id)
+  def when_i_am_viewing_the_review_draft_page
+    review_draft_page.load(id: trainee.id)
   end
 
   def and_i_want_to_review_record_before_submitting_for_trn
-    summary_page.review_this_record_link.click
+    review_draft_page.review_this_record_link.click
   end
 
   def then_i_do_not_see_the_review_details_link
-    expect(summary_page).not_to have_review_this_record_link
+    expect(review_draft_page).not_to have_review_this_record_link
   end
 
   def then_i_review_the_trainee_data
