@@ -60,5 +60,11 @@ RSpec.describe Degree, type: :model do
         end
       end
     end
+
+    context "slug" do
+      subject { create(:degree) }
+
+      it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
+    end
   end
 end

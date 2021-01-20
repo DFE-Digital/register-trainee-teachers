@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Degree < ApplicationRecord
+  include Sluggable
+
   validates :locale_code, presence: true
   validates :uk_degree, presence: true, on: :uk
   validates :country, presence: true, on: :non_uk

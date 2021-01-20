@@ -8,6 +8,8 @@ FactoryBot.define do
 
     uk_degree_type
 
+    slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
+
     trait :uk_degree_type do
       locale_code { :uk }
       uk_degree { Dttp::CodeSets::DegreeTypes::MAPPING.keys.sample }
