@@ -65,6 +65,20 @@ RSpec.describe Degree, type: :model do
       subject { create(:degree) }
 
       it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
+
+      context "immutability" do
+        let(:original_slug) { subject.slug.dup }
+
+        before do
+          original_slug
+          subject.regenerate_slug
+          subject.reload
+        end
+
+        it "is immutable once created" do
+          expect(subject.slug).to eq(original_slug)
+        end
+      end
     end
   end
 end
