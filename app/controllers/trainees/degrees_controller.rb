@@ -9,7 +9,7 @@ module Trainees
 
     def edit
       authorize trainee
-      @degree = trainee.degrees.find_by(slug: params[:id])
+      @degree = trainee.degrees.from_param(params[:id])
     end
 
     def create
@@ -24,7 +24,7 @@ module Trainees
 
     def update
       authorize trainee
-      @degree = trainee.degrees.find_by(slug: params[:id])
+      @degree = trainee.degrees.from_param(params[:id])
       @degree.assign_attributes(degree_params)
       if @degree.save(context: @degree.locale_code.to_sym)
         redirect_to trainee_degrees_confirm_path(trainee)
@@ -34,7 +34,7 @@ module Trainees
     end
 
     def destroy
-      trainee.degrees.destroy(trainee.degrees.find_by(slug: params[:id]))
+      trainee.degrees.destroy(trainee.degrees.from_param(params[:id]))
       flash[:success] = "Trainee degree deleted"
       redirect_to trainee_personal_details_path(@trainee)
     end
