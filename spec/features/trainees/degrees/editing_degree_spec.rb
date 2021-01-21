@@ -71,7 +71,7 @@ private
 
   def when_i_visit_the_edit_degree_details_page
     edit_degree_details_page.load(trainee_id: trainee.slug,
-                                  id: trainee.degrees.first.id)
+                                  id: trainee.degrees.first.slug)
   end
 
   def then_i_am_redirected_to_confirm_page

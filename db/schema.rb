@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_133452) do
+ActiveRecord::Schema.define(version: 2021_01_20_140248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,9 @@ ActiveRecord::Schema.define(version: 2021_01_18_133452) do
     t.string "grade"
     t.string "country"
     t.text "other_grade"
+    t.string "slug", null: false
     t.index ["locale_code"], name: "index_degrees_on_locale_code"
+    t.index ["slug"], name: "index_degrees_on_slug", unique: true
     t.index ["trainee_id"], name: "index_degrees_on_trainee_id"
   end
 
