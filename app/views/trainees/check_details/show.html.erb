@@ -3,7 +3,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
     text: 'Back to draft record',
-    href: trainee_path(@trainee),
+    href: review_draft_trainee_path(@trainee),
     html_attributes:{
       id: "back-to-draft-record"
     }

@@ -3,8 +3,11 @@
 module Trainees
   module Diversity
     class ConfirmDetailsController < Trainees::ConfirmDetailsController
+      include Breadcrumbable
+
       def show
         authorize trainee
+        save_origin_page_for(trainee)
         @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
         @confirmation_component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
       end

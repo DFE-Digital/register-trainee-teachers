@@ -5,12 +5,13 @@ module DynamicBackLink
     include TraineeHelper
     include Breadcrumbable
 
-    def initialize(trainee)
+    def initialize(trainee, text: nil)
       @trainee = trainee
+      @text = text
     end
 
-    def text
-      trainee.draft? ? "Back to draft record" : "Back to record"
+    def link_text
+      text.presence || (trainee.draft? ? "Back to draft record" : "Back to record")
     end
 
     def path
@@ -28,7 +29,7 @@ module DynamicBackLink
 
   private
 
-    attr_reader :trainee
+    attr_reader :trainee, :text
 
     def rails_path(route)
       public_send("#{route}_path", trainee)

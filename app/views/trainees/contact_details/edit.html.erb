@@ -1,10 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.contact_details.edit", has_errors: @contact_details.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: "Back",
-    href: view_trainee(@trainee)
-  ) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: "Back") %>
 <% end %>
 
 <h1 class="govuk-heading-l">Contact details</h1>
