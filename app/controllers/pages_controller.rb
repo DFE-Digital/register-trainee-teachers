@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate, except: [:home]
+  skip_before_action :authenticate
 
-  def show
-    render template: "pages/#{params[:page]}"
-  end
-
-  def home
-    render :home
+  def start
+    if authenticated?
+      render :home
+    else
+      render :start
+    end
   end
 
   def accessibility

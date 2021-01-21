@@ -4,38 +4,38 @@ require "rails_helper"
 
 feature "view pages" do
   scenario "navigate to start" do
-    given_i_am_on_the_home_page
+    given_i_am_on_the_start_page
     then_i_should_see_the_service_name
     and_i_should_see_the_phase_banner
   end
 
   scenario "navigate to accessibility statement" do
-    given_i_am_on_the_home_page
+    given_i_am_on_the_start_page
     and_i_click_on_the_accessibility_link_in_the_footer
     then_i_should_see_the_accessibility_statement
   end
 
   scenario "navigate to cookies policy" do
-    given_i_am_on_the_home_page
+    given_i_am_on_the_start_page
     and_i_click_on_the_cookies_link_in_the_footer
     then_i_should_see_the_cookies_policy
   end
 
   scenario "navigate to privacy policy" do
-    given_i_am_on_the_home_page
+    given_i_am_on_the_start_page
     and_i_click_on_the_privacy_link_in_the_footer
     then_i_should_see_the_privacy_policy
   end
 
   scenario "navigate to sign in" do
-    given_i_am_on_the_home_page
+    given_i_am_on_the_start_page
     when_i_click_on_sign_in
     then_the_start_page_is_displayed
   end
 
 private
 
-  def given_i_am_on_the_home_page
+  def given_i_am_on_the_start_page
     start_page.load
   end
 
