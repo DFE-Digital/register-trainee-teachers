@@ -48,7 +48,13 @@ module Dttp
 
         context "successful" do
           let(:dttp_response) { double(code: 200) }
-          let(:expected_headers) { { "Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}" } }
+          let(:expected_headers) do
+            {
+              "Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}",
+              "Accept" => "application/json",
+              "Authorization" => "Bearer token",
+            }
+          end
 
           let(:expected_body) do
             <<~BODY
