@@ -20,7 +20,7 @@ module Breadcrumbable
       route.name
     end
 
-    routes.flatten.last.name
+    routes.first.last.name
   end
 
 private
