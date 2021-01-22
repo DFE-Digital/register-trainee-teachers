@@ -52,7 +52,7 @@ feature "submit for TRN" do
         given_a_trainee_exists
         and_i_am_on_the_check_details_page
         when_i_click_back_to_draft_record
-        then_i_am_redirected_to_the_record_page
+        then_i_am_redirected_to_the_review_draft_page
       end
     end
 
@@ -80,6 +80,10 @@ feature "submit for TRN" do
 
   def then_i_review_the_trainee_data
     expect(check_details_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_i_am_redirected_to_the_review_draft_page
+    expect(review_draft_page).to be_displayed(id: trainee.slug)
   end
 
   def and_i_click_the_submit_for_trn_button
