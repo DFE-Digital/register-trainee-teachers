@@ -43,7 +43,7 @@ class TraineesController < ApplicationController
   def update
     authorize trainee
     trainee.update!(trainee_params)
-    redirect_to trainee_path(trainee)
+    redirect_to OriginPage.new(trainee, session, request).path
   end
 
 private
