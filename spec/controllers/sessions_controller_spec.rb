@@ -23,7 +23,7 @@ describe SessionsController, type: :controller do
 
       it "redirects to the trainees index page" do
         request_callback
-        expect(response).to redirect_to(home_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -51,7 +51,7 @@ describe SessionsController, type: :controller do
 
         it "redirects to the trainees index page" do
           request_callback
-          expect(response).to redirect_to(home_path)
+          expect(response).to redirect_to(root_path)
         end
 
         it "saved non existing user to database" do

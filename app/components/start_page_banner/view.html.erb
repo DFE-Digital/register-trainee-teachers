@@ -9,10 +9,10 @@
       </p>
       <div class="app-start-page-banner__actions">
         <%= render GovukComponent::StartNowButton.new( text: 'Sign in',
-                                                                 href: home_path,
+                                                                 href: sign_in_path,
                                                                  classes: 'app-button--inverted app-start-page-banner__button') %>
         <p class="govuk-body app-body--inverted">
-          or <a class="govuk-link app-link--inverted govuk-link--no-visited-state" href="/home">request an account</a>
+          or <a class="govuk-link app-link--inverted govuk-link--no-visited-state" href="/sign-in">request an account</a>
         </p>
       </div>
     </div>

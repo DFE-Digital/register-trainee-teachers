@@ -38,7 +38,7 @@
     <% if authenticated? %>
       <%= render NavigationBar::View.new(
         items: [
-          {name: "Home", url: home_path},
+          {name: "Home", url: root_path},
           {name: "Trainee records", url: trainees_path, current: trainee_link_is_current? }
         ],
         current_path: request.path,

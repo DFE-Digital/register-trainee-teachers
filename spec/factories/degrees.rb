@@ -12,7 +12,7 @@ FactoryBot.define do
 
     trait :uk_degree_type do
       locale_code { :uk }
-      uk_degree { Dttp::CodeSets::DegreeTypes::MAPPING.keys.sample }
+      uk_degree { (Dttp::CodeSets::DegreeTypes::MAPPING.keys - Dttp::CodeSets::DegreeTypes::NON_UK).sample }
     end
 
     trait :uk_degree_with_details do

@@ -9,11 +9,9 @@ Rails.application.routes.draw do
   get :healthcheck, controller: :heartbeat
   get :sha, controller: :heartbeat
 
-  get "/home", to: "pages#home", as: :home
   get "/accessibility", to: "pages#accessibility", as: :accessibility
   get "/cookies", to: "pages#cookies", as: :cookies
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
-  get "/pages/:page", to: "pages#show"
   get "/data-requirements", to: "pages#data_requirements"
 
   get "/404", to: "errors#not_found", via: :all
@@ -98,5 +96,5 @@ Rails.application.routes.draw do
 
   resources :trn_submissions, only: %i[create show], param: :trainee_id
 
-  root to: "pages#show", defaults: { page: "start" }
+  root to: "pages#start"
 end
