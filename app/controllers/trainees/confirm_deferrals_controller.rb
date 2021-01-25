@@ -8,6 +8,9 @@ module Trainees
 
     def update
       authorize trainee
+
+      DeferJob.perform_later(trainee.id)
+
       flash[:success] = "Trainee deferred"
       redirect_to trainee_path(trainee)
     end

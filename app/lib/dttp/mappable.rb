@@ -37,5 +37,9 @@ module Dttp
     def dttp_ethnicity_id(ethnicity)
       CodeSets::Ethnicities::MAPPING.dig(ethnicity, :entity_id)
     end
+
+    def dttp_status_id(status)
+      CodeSets::Statuses::MAPPING.dig(status, :entity_id)
+    end
   end
 end
