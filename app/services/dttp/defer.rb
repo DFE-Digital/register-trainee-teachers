@@ -14,7 +14,7 @@ module Dttp
     end
 
     def call
-      body = { "dfe_TraineeStatusId@odata.bind" => "/dfe_traineestatuses(#{dttp_status_id('Trainee deferred')})" }
+      body = { "dfe_TraineeStatusId@odata.bind" => "/dfe_traineestatuses(#{dttp_status_id(DttpStatuses::DEFERRED)})" }
 
       dttp_update("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})", body)
 
