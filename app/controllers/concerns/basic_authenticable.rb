@@ -4,7 +4,7 @@
 module BasicAuthenticable
   class << self
     def required?
-      Settings.basic_auth_required
+      Settings.features.basic_auth
     end
 
     def authenticate(username, password)

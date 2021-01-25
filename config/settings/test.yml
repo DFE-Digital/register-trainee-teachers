@@ -1,6 +1,7 @@
-basic_auth_required: false
 dttp:
   api_base_url: "https://test-api-base-uri.com"
 slack:
   default_channel: "test-channel"
   webhook_url: "https://test-slack-webhook-url.com"
+features:
+  basic_auth: false

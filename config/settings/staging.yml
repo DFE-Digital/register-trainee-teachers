@@ -11,3 +11,6 @@ dfe_sign_in:
   issuer: https://pp-oidc.signin.education.gov.uk
   # URL of the users profile
   profile: https://pp-profile.signin.education.gov.uk
+
+features:
+  basic_auth: false
