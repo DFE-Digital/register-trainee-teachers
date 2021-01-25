@@ -26,6 +26,10 @@ module Dttp
         Params::DegreeQualification.new(degree, contact_change_set_id, placement_assignment_change_set_id).to_json
       end
 
+      let(:status_payload) do
+        Params::Status.new(status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED).to_json
+      end
+
       let(:dttp_response) do
         <<~DTTP_RESPONSE
           Content-ID: #{contact_change_set_id}

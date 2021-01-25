@@ -21,12 +21,7 @@ module Dttp
         @trainee_creator_dttp_id = trainee_creator_dttp_id
         @params = build_params
 
-        if trainee_creator_dttp_id
-          @params.merge!({
-            "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
-            "dfe_trnassessmentdate" => Time.zone.now.iso8601,
-          })
-        end
+        append_create_only_params if trainee_creator_dttp_id
       end
 
       def to_json(*_args)
@@ -37,7 +32,6 @@ module Dttp
 
       def build_params
         {
-          "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(#{TRAINEE_CONTACT_TYPE_DTTP_ID})",
           "firstname" => trainee.first_names,
           "lastname" => trainee.last_name,
           "address1_line1" => trainee.address_line_one,
@@ -51,6 +45,20 @@ module Dttp
           "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{contact_dttp_disability_id})",
           "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
         }
+      end
+
+      def append_create_only_params
+        create_only_params = {
+          "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(#{TRAINEE_CONTACT_TYPE_DTTP_ID})",
+          "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
+          "dfe_trnassessmentdate" => Time.zone.now.iso8601,
+        }.merge(
+          Status.new(
+            status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
+          ).params,
+        )
+
+        @params.merge!(create_only_params)
       end
 
       def contact_dttp_ethnicity_id
