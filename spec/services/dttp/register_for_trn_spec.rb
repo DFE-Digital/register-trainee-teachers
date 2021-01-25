@@ -25,6 +25,10 @@ module Dttp
         Params::DegreeQualification.new(degree, contact_change_set_id, placement_assignment_change_set_id).to_json
       end
 
+      let(:status_payload) do
+        Params::Status.new(status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED).to_json
+      end
+
       let(:dttp_response) do
         <<~DTTP_RESPONSE
           OData-EntityId: /contacts(#{contact_entity_id})
@@ -53,6 +57,9 @@ module Dttp
 
         expect(batch_request).to receive(:add_change_set).with(entity: "dfe_degreequalifications",
                                                                payload: degree_qualification_payload)
+
+        expect(batch_request).to receive(:add_change_set).with(entity: "contacts",
+                                                               payload: status_payload)
 
         expect(batch_request).to receive(:submit).and_return(dttp_response)
 

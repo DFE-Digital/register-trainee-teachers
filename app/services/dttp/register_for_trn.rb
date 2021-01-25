@@ -13,7 +13,6 @@ module Dttp
     end
 
     def call
-      contact_payload = Params::Contact.new(trainee, trainee_creator_dttp_id).to_json
       contact_change_set_id = batch_request.add_change_set(entity: "contacts", payload: contact_payload)
 
       placement_assignment_payload = Params::PlacementAssignment.new(trainee, contact_change_set_id).to_json
@@ -27,6 +26,11 @@ module Dttp
         batch_request.add_change_set(entity: "dfe_degreequalifications", payload: degree_qualification_payload)
       end
 
+      batch_request.add_change_set(
+        entity: "contacts",
+        payload: status_payload,
+      )
+
       batch_response = batch_request.submit
 
       entity_ids = OdataParser.entity_ids(batch_response: batch_response)
@@ -34,6 +38,18 @@ module Dttp
       trainee.trn_requested!(entity_ids["contacts"].first, entity_ids["dfe_placementassignments"].first)
 
       entity_ids
+    end
+
+  private
+
+    def contact_payload
+      Params::Contact.new(trainee, trainee_creator_dttp_id).to_json
+    end
+
+    def status_payload
+      Params::Status.new(
+        status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
+      ).to_json
     end
   end
 end
