@@ -17,10 +17,15 @@ module Dttp
 
       context "success" do
         let(:dttp_response) { double(code: 204) }
+        let(:expected_body) do
+          Dttp::Params::Status.new(
+            status: DttpStatuses::DEFERRED,
+          ).to_json
+        end
 
-        it "sends a PATCH request to set entity property 'dfe_TraineeStatusId@odata.bind' and transitions trainee to deferred" do
-          body = { "dfe_TraineeStatusId@odata.bind" => "/dfe_traineestatuses(1d5af972-9e1b-e711-80c7-0050568902d3)" }.to_json
-          expect(Client).to receive(:patch).with(path, body: body).and_return(dttp_response)
+        it "sends a PATCH request with status params and transitions trainee to deferred" do
+          expect(Client).to receive(:patch).with(path, body: expected_body).and_return(dttp_response)
+
           described_class.call(trainee: trainee)
           expect(trainee.state).to eq("deferred")
         end
