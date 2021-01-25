@@ -18,6 +18,7 @@ module Dttp
       describe "#params" do
         it "returns a hash with all the DTTP basic contact fields" do
           expect(subject).to include({
+            "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(faba11c7-07d9-e711-80e1-005056ac45bb)",
             "firstname" => trainee.first_names,
             "lastname" => trainee.last_name,
             "address1_line1" => trainee.address_line_one,
