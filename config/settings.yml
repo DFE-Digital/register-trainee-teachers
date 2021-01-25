@@ -6,7 +6,6 @@ base_url: https://localhost:5000
 # The url for the google doc feedback link
 feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSfhdvlUkg7oxPjl1C6FcJ2pnlc1OQ82r7o3ZMNKthhVAt_h5g/viewform?usp=sf_link"
 
-basic_auth_required: true
 dttp:
   back_office_url: https://dttp-dev.crm4.dynamics.com/
   client_id: "application-registration-client-id-from-env"
@@ -22,6 +21,7 @@ features:
   use_dfe_sign_in: true
   allow_user_creation: false
   enable_feedback_link: true
+  basic_auth: true
 
 dfe_sign_in:
   # Our service name
