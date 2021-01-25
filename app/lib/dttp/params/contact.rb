@@ -12,6 +12,8 @@ module Dttp
         gender_not_provided: nil,
       }.freeze
 
+      TRAINEE_CONTACT_TYPE_DTTP_ID = "faba11c7-07d9-e711-80e1-005056ac45bb"
+
       attr_reader :trainee, :trainee_creator_dttp_id, :params
 
       def initialize(trainee, trainee_creator_dttp_id = nil)
@@ -35,6 +37,7 @@ module Dttp
 
       def build_params
         {
+          "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(#{TRAINEE_CONTACT_TYPE_DTTP_ID})",
           "firstname" => trainee.first_names,
           "lastname" => trainee.last_name,
           "address1_line1" => trainee.address_line_one,
