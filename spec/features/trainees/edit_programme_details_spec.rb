@@ -19,8 +19,7 @@ feature "programme details", type: :feature do
       and_i_enter_valid_parameters
       and_i_submit_the_form
       and_i_confirm_my_details(checked: false, section: programme_details_section)
-      then_i_am_redirected_to_the_record_page
-      and_i_visit_the_review_draft_page
+      then_i_am_redirected_to_the_review_draft_page
       and_the_section_should_be(:in_progress)
     end
 
@@ -29,8 +28,7 @@ feature "programme details", type: :feature do
       and_i_enter_valid_parameters
       and_i_submit_the_form
       and_i_confirm_my_details(section: programme_details_section)
-      then_i_am_redirected_to_the_record_page
-      and_i_visit_the_review_draft_page
+      then_i_am_redirected_to_the_review_draft_page
       and_the_section_should_be(:completed)
     end
   end
@@ -41,7 +39,7 @@ feature "programme details", type: :feature do
       and_i_enter_valid_parameters
       and_i_submit_the_form
       and_i_confirm_my_details(checked: false, section: programme_details_section)
-      then_i_am_redirected_to_the_record_page
+      then_i_am_redirected_to_the_review_draft_page
       and_the_programme_details_are_updated
     end
 
@@ -132,11 +130,6 @@ feature "programme details", type: :feature do
 
   def then_i_am_redirected_to_the_confirm_page
     expect(confirm_details_page).to be_displayed(id: trainee.slug, section: programme_details_section)
-  end
-
-  def and_i_visit_the_review_draft_page
-    review_draft_page.load(id: trainee.slug)
-    expect(review_draft_page).to be_displayed(id: trainee.slug)
   end
 
 private

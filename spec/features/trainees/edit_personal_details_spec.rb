@@ -27,7 +27,7 @@ feature "edit personal details", type: :feature do
     and_i_enter_valid_parameters
     and_i_submit_the_form
     and_confirm_my_details(checked: false)
-    then_i_am_redirected_to_the_record_page
+    then_i_am_redirected_to_the_review_draft_page
     then_the_personal_details_section_should_be_in_progress
   end
 
@@ -65,7 +65,7 @@ private
     and_i_enter_valid_parameters
     and_i_submit_the_form
     and_confirm_my_details
-    then_i_am_redirected_to_the_record_page
+    then_i_am_redirected_to_the_review_draft_page
   end
 
   def given_other_nationality_is_provided
@@ -75,7 +75,7 @@ private
     and_i_enter_valid_parameters(other_nationality: true)
     and_i_submit_the_form
     and_confirm_my_details
-    then_i_am_redirected_to_the_record_page
+    then_i_am_redirected_to_the_review_draft_page
   end
 
   def and_nationalities_exist_in_the_system

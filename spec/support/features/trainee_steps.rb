@@ -42,5 +42,9 @@ module Features
       confirm_details_page.confirm.public_send(checked_option)
       confirm_details_page.submit_button.click
     end
+
+    def then_i_am_redirected_to_the_review_draft_page
+      expect(review_draft_page).to be_displayed(id: trainee.slug)
+    end
   end
 end

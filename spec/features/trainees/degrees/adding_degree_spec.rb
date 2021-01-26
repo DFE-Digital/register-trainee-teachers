@@ -44,15 +44,13 @@ RSpec.feature "Adding a degree" do
 
       scenario "the user confirms degree details" do
         and_confirm_my_details
-        then_i_am_redirected_to_the_record_page
-        and_i_visit_the_review_draft_page
+        then_i_am_redirected_to_the_review_draft_page
         then_the_degree_status_should_be(:completed)
       end
 
       scenario "the user does not confirm degree details" do
         and_i_click_continue
-        then_i_am_redirected_to_the_record_page
-        and_i_visit_the_review_draft_page
+        then_i_am_redirected_to_the_review_draft_page
         then_the_degree_status_should_be(:in_progress)
       end
     end
@@ -89,7 +87,7 @@ RSpec.feature "Adding a degree" do
       and_i_click_the_continue_button_on_the_degree_details_page
       then_i_am_redirected_to_the_trainee_degrees_confirmation_page
       and_confirm_my_details
-      then_i_am_redirected_to_the_record_page
+      then_i_am_redirected_to_the_review_draft_page
     end
 
     scenario "the user enters invalid details on Non-UK degree details page" do
@@ -181,10 +179,6 @@ private
   def when_i_visit_the_degree_details_page
     degree_details_page.load(trainee_id: trainee.slug, locale_code: @locale)
     expect(degree_details_page).to be_displayed(trainee_id: trainee.slug, locale_code: @locale)
-  end
-
-  def then_i_am_redirected_to_the_record_page
-    expect(current_path).to eq("/trainees/#{trainee.slug}")
   end
 
   def then_i_am_redirected_to_the_trainee_degrees_confirmation_page
