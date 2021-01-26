@@ -125,7 +125,8 @@ group :test do
   gem "webmock"
 end
 
-group :development, :test, :review, :qa do
+# Required for example_data so needed in review, qa and pen too
+group :development, :test, :review, :qa, :pen do
   gem "factory_bot_rails"
   gem "faker"
 end
