@@ -395,7 +395,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stateful_enum (0.6.0)
-    store_model (0.8.0)
+    store_model (0.8.1)
       activerecord (>= 5.2)
     swd (1.2.0)
       activesupport (>= 3)
