@@ -68,6 +68,14 @@ jobs:
     - name: Run tests
       run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'bundle exec rake spec'
 
+    - name: Install firefox into web container
+      run: docker-compose exec -T web /bin/sh -c 'apk add firefox-esr'
+
+    - name: Run Axe Tests
+      run: |
+        docker-compose exec -T web /bin/sh -c 'bundle exec rspec spec/axe'
+        echo $?
+
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
 

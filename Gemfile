@@ -123,6 +123,14 @@ group :test do
   gem "site_prism", "~> 3.7"
 
   gem "webmock"
+
+  # AXE grinding
+  gem "axe-core-api"
+  gem "axe-core-capybara"
+  gem "axe-core-rspec"
+  gem "selenium-webdriver"
+  # gecko
+  gem "geckodriver-bin"
 end
 
 # Required for example_data so needed in review, qa and pen too

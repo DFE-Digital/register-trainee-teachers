@@ -4,12 +4,13 @@ if ENV.fetch("COVERAGE", false)
   require "simplecov"
 
   SimpleCov.coverage_dir("coverage/backend")
-  SimpleCov.minimum_coverage(86)
+  SimpleCov.minimum_coverage(82)
   SimpleCov.start("rails")
 end
 
 RSpec.configure do |config|
   config.filter_run_excluding smoke: true
+  config.filter_run_excluding axe: true
 
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
