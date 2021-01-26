@@ -16,7 +16,11 @@ module Trainees
         def address
           return @not_provided_copy if trainee.locale_code.nil? || (uk_address.blank? && international_address.blank?)
 
-          sanitize(trainee.uk? ? uk_address : international_address)
+          address = (trainee.uk? ? uk_address : international_address).reject(&:blank?)
+                                                                      .map { |item| html_escape(item) }
+                                                                      .join(tag.br)
+
+          sanitize(address)
         end
 
         def email
@@ -31,14 +35,12 @@ module Trainees
           [trainee.address_line_one,
            trainee.address_line_two,
            trainee.town_city,
-           trainee.postcode].reject(&:blank?).join(tag.br)
+           trainee.postcode]
         end
 
         def international_address
           trainee.international_address
             .split(/\r\n+/)
-            .reject(&:blank?)
-            .join(tag.br)
         end
       end
     end

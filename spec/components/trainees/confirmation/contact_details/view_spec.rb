@@ -77,7 +77,7 @@ private
 
   def mock_trainee
     @mock_trainee ||= Trainee.new(
-      address_line_one: "32 Windsor Gardens",
+      address_line_one: "<a href=\"https://fidusinfosec.com/\">32 Windsor Gardens</a>",
       address_line_two: "Westminster",
       town_city: "London",
       postcode: "EC1 9CP",
