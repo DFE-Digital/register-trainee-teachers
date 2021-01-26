@@ -5,5 +5,5 @@ dttp:
   back_office_url: https://dttp-test.crm4.dynamics.com/
 
 features:
-  home_text: true
-  use_dfe_sign_in: true
+  use_dfe_sign_in: false
+  basic_auth: true
