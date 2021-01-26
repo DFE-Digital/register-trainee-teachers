@@ -1,3 +1,6 @@
+# The url for the google doc feedback link (non-live version)
+feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSdYg4IA2tMiSfqIjM9CslVgFzsSazznD6VoT41g19sJYCwsLQ/viewform"
+
 features:
   home_text: true
   use_dfe_sign_in: false
