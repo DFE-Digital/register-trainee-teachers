@@ -29,7 +29,6 @@ module Dttp
             "emailaddress1" => trainee.email,
             "gendercode" => Dttp::Params::Contact::GENDER_CODES[:female],
             "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
-            "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
             "dfe_trnassessmentdate" => time_now_in_zone.in_time_zone.iso8601,
           })
         end

@@ -47,7 +47,6 @@ module Dttp
           "gendercode" => GENDER_CODES[trainee.gender.to_sym],
           "dfe_EthnicityId@odata.bind" => "/dfe_ethnicities(#{contact_dttp_ethnicity_id})",
           "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{contact_dttp_disability_id})",
-          "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
         }
       end
 

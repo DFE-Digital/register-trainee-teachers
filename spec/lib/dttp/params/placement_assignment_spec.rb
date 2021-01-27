@@ -6,7 +6,8 @@ module Dttp
   module Params
     describe PlacementAssignment do
       let(:time_now_in_zone) { Time.zone.now }
-      let(:trainee) { create(:trainee, :with_programme_details, dttp_id: dttp_contact_id) }
+      let(:provider) { create(:provider, dttp_id: dttp_provider_id) }
+      let(:trainee) { create(:trainee, :with_programme_details, dttp_id: dttp_contact_id, provider: provider) }
 
       let(:contact_change_set_id) { SecureRandom.uuid }
       let(:dttp_contact_id) { SecureRandom.uuid }
@@ -16,6 +17,7 @@ module Dttp
       let(:dttp_degree_institution_entity_id) { SecureRandom.uuid }
       let(:dttp_degree_grade_entity_id) { SecureRandom.uuid }
       let(:dttp_country_entity_id) { SecureRandom.uuid }
+      let(:dttp_provider_id) { SecureRandom.uuid }
 
       before do
         allow(Time).to receive(:now).and_return(time_now_in_zone)
@@ -54,6 +56,7 @@ module Dttp
               "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{dttp_degree_grade_entity_id})",
               "dfe_sendforsiregistration" => true,
               "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
+              "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
             })
           end
         end
@@ -72,6 +75,7 @@ module Dttp
               "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
               "dfe_sendforsiregistration" => true,
               "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
+              "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
             })
           end
         end
