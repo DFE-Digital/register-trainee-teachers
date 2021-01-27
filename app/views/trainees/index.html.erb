@@ -2,11 +2,13 @@
 
 <h1 class="govuk-heading-xl">Trainee records</h1>
 
-<p class="govuk-body">
-  <%= render GovukComponent::StartNowButton.new(
-  text: "Add a trainee",
-  href: new_trainee_path ) %>
-</p>
+<% unless current_user.system_admin? %>
+  <p class="govuk-body">
+    <%= render GovukComponent::StartNowButton.new(
+    text: "Add a trainee",
+    href: new_trainee_path ) %>
+  </p>
+<% end %>
 
 <%= render Trainees::Filters::View.new(@filters) do %>
   <% if @draft_trainees.any? || @trainees.any? %>
