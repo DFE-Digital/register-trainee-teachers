@@ -5,11 +5,13 @@
   <p class="govuk-body-l"> Register trainees with the Department for Education
   and record the outcome of their training.</p>
 
-  <p class="govuk-body">
-    <%= render GovukComponent::StartNowButton.new(
-      text: "Add a trainee",
-      href: new_trainee_path ) %>
-  </p>
+  <% unless current_user.system_admin? %>
+    <p class="govuk-body">
+      <%= render GovukComponent::StartNowButton.new(
+        text: "Add a trainee",
+        href: new_trainee_path ) %>
+    </p>
+  <% end %>
   </div>
 </div>
 

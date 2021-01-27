@@ -5,7 +5,7 @@
   <div>
     <p class="govuk-body">
     <% if persona.system_admin? %>
-      <%= persona.first_name %> has <strong>adminstrator</strong> access.
+      <%= persona.first_name %> has <strong>administrator</strong> access.
     <% else %>
       Belongs to <strong><%= persona.provider.name %></strong> and is responsible for managing users.
     <% end %> 
