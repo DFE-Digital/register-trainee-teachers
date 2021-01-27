@@ -6,9 +6,17 @@ module Dttp
 
     class << self
       def entity_ids(batch_response:)
-        batch_response.scan(/(\w+)\((#{UUID_PATTERN})\)/).uniq.each_with_object({}) do |(entity_name, entity_id), h|
-          h[entity_name] = (h[entity_name] || []) + [entity_id]
+        content_ids = batch_response.scan(/Content\-ID: (#{UUID_PATTERN})/).flatten
+        entities = batch_response.scan(/(\w+)\((#{UUID_PATTERN})\)/).uniq
+
+        content_id_entity_id_map = {}
+
+        entities.each_with_index do |(entity_name, entity_id), index|
+          content_id_entity_id_map[entity_name] ||= []
+          content_id_entity_id_map[entity_name] << { content_id: content_ids[index], entity_id: entity_id }
         end
+
+        content_id_entity_id_map
       end
 
       def entity_id(trainee_id, response)
