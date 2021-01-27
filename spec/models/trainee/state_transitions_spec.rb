@@ -76,11 +76,24 @@ describe "Trainee state transitions" do
 
       it "transitions the trainee to :submitted_for_trn and updates the dttp_id, placement_assignment_dttp_id and submitted_for_trn_at" do
         trainee.trn_requested!(dttp_id, placement_assignment_dttp_id)
-        expect(trainee.state).to eq("submitted_for_trn")
         expect(trainee.dttp_id).to eq(dttp_id)
         expect(trainee.placement_assignment_dttp_id).to eq(placement_assignment_dttp_id)
-        expect(trainee.submitted_for_trn_at).to_not be_nil
       end
+    end
+  end
+
+  describe "#submit_for_trn" do
+    let(:time_now) { Time.zone.now }
+
+    subject { create(:trainee) }
+
+    before do
+      allow(Time).to receive(:now).and_return(time_now)
+      subject.submit_for_trn!
+    end
+
+    it "sets the #submitted_for_trn_at" do
+      expect(subject.submitted_for_trn_at).to eq(time_now)
     end
   end
 end

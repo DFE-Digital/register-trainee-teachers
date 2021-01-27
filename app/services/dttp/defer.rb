@@ -17,8 +17,6 @@ module Dttp
         "/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})",
         Dttp::Params::Status.new(status: DttpStatuses::DEFERRED),
       )
-
-      trainee.defer!
     end
 
   private

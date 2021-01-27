@@ -129,7 +129,6 @@ class Trainee < ApplicationRecord
   scope :ordered_by_date, -> { order(updated_at: :desc) }
 
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
-    submit_for_trn!
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
 
