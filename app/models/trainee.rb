@@ -82,6 +82,10 @@ class Trainee < ApplicationRecord
     end
 
     event :recommend_for_qts do
+      before do
+        self.recommended_for_qts_at = Time.zone.now
+      end
+
       transition %i[trn_received] => :recommended_for_qts
     end
 

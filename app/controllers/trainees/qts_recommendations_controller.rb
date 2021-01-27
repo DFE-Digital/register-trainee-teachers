@@ -6,6 +6,7 @@ module Trainees
       authorize trainee
 
       RecommendForQtsJob.perform_later(trainee.id)
+      RetrieveQtsJob.set(wait: RetrieveQtsJob::POLL_DELAY).perform_later(trainee.id)
 
       redirect_to recommended_trainee_outcome_details_path(trainee)
     end

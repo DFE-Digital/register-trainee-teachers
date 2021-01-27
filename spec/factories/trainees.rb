@@ -85,6 +85,7 @@ FactoryBot.define do
 
     trait :recommended_for_qts do
       state { "recommended_for_qts" }
+      recommended_for_qts_at { Time.zone.now }
     end
 
     trait :withdrawn do

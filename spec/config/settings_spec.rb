@@ -38,4 +38,11 @@ describe "Settings" do
     include_examples expected_value_test, :profile, dfe_sign_in, "https://test-profile.signin.education.gov.uk"
     include_examples expected_value_test, :secret, dfe_sign_in, "secret required value"
   end
+
+  describe ".jobs" do
+    jobs = settings[:jobs]
+
+    include_examples expected_value_test, :poll_delay_hours, jobs, 6
+    include_examples expected_value_test, :max_poll_duration_days, jobs, 2
+  end
 end

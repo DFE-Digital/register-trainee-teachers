@@ -32,3 +32,7 @@ dfe_sign_in:
   profile: https://test-profile.signin.education.gov.uk
   # This value must be set otherwise sign in will fail
   secret: secret required value
+
+jobs:
+  poll_delay_hours: 6
+  max_poll_duration_days: 2
