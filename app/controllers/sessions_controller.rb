@@ -8,7 +8,10 @@ class SessionsController < ApplicationController
 
     if FeatureService.enabled?("allow_user_creation") && current_user.nil?
       @current_user = User.new(
-        provider: Provider.create_or_find_by(name: "DfE"),
+        provider: Provider.create_or_find_by(
+          name: "DfE",
+          dttp_id: "00000000-0000-0000-0000-000000000000",
+        ),
       )
     end
 

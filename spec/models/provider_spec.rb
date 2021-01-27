@@ -5,7 +5,8 @@ require "rails_helper"
 describe Provider do
   context "fields" do
     it "validates" do
-      expect(subject).to validate_presence_of(:name)
+      expect(subject).to validate_presence_of(:name).with_message("You must provide a provider name")
+      expect(subject).to validate_presence_of(:dttp_id).with_message("You must enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e")
     end
   end
 

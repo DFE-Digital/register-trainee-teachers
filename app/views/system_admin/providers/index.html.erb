@@ -1,0 +1,17 @@
+<%= render PageTitle::View.new(title: "providers.index") %>
+
+<h1 class="govuk-heading-xl">Providers</h1>
+
+<p class="govuk-body">
+  <%= render GovukComponent::StartNowButton.new(
+  text: "Add a provider",
+  href: new_provider_path ) %>
+</p>
+
+<% if @providers.any? %>
+  <div class="govuk-!-margin-bottom-8">
+    <%= render ProviderCard::View.with_collection(@providers) %>
+  </div>
+<% else %>
+  <h2 class="govuk-heading-m">There are no providers yet</h2>
+<% end %>
