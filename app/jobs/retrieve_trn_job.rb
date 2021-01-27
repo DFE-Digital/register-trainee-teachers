@@ -6,8 +6,8 @@ class RetrieveTrnJob < ApplicationJob
 
   class TraineeAttributeError < StandardError; end
 
-  POLL_DELAY = 6.hours
-  MAX_POLL_DURATION = 2.days
+  POLL_DELAY = Settings.jobs.poll_delay_hours.hours
+  MAX_POLL_DURATION = Settings.jobs.max_poll_duration_days.days
 
   def perform(trainee_id)
     trainee = Trainee.find(trainee_id)
