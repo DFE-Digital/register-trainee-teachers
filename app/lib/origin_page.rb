@@ -15,9 +15,11 @@ class OriginPage
 
   def save
     # Don't save it the same origin page on page refresh, for example.
-    origin_pages << current_page unless origin_pages.include?(current_page)
+    return if origin_pages.include?(current_page)
 
-    origin_pages.shift if origin_pages.length > MAX_PAGES
+    # if there are MAX_PAGES pages we want to replace the last one
+    origin_pages.pop if origin_pages.length == MAX_PAGES
+    origin_pages << current_page
   end
 
   def path
