@@ -48,7 +48,7 @@ feature "edit diversity disclosure", type: :feature do
 
   def and_confirm_my_details
     @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.slug, section: "information-disclosed")
+    expect(@confirm_page).to be_displayed(id: trainee.slug)
     @confirm_page.submit_button.click
   end
 

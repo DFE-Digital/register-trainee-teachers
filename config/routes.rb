@@ -62,11 +62,14 @@ Rails.application.routes.draw do
       resource :personal_details, concerns: :confirmable, only: %i[show edit update], path: "/personal-details"
 
       namespace :diversity do
-        resource :disclosure, concerns: :confirmable, only: %i[edit update], path: "/information-disclosed"
+        get "/confirm", to: "confirm_details#show"
+        post "/confirm", to: "confirm_details#update"
+        put "/confirm", to: "confirm_details#update"
+        resource :disclosure, only: %i[edit update], path: "/information-disclosed"
         resource :ethnic_group, only: %i[edit update], path: "/ethnic-group"
         resource :ethnic_background, only: %i[edit update], path: "/ethnic-background"
-        resource :disability_disclosure, concerns: :confirmable, only: %i[edit update], path: "/disability-disclosure"
-        resource :disability_detail, concerns: :confirmable, only: %i[edit update], path: "/disabilities"
+        resource :disability_disclosure, only: %i[edit update], path: "/disability-disclosure"
+        resource :disability_detail, only: %i[edit update], path: "/disabilities"
       end
 
       resource :outcome_details, only: [], path: "outcome-details" do

@@ -14,6 +14,10 @@ module Trainees
 
     private
 
+      def flash_message_title
+        I18n.t("components.confirmation.flash.disclosure")
+      end
+
       def toggle_trainee_progress_field
         trainee.progress.diversity = mark_as_completed_params
       end

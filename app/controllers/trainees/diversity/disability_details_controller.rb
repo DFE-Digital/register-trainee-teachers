@@ -16,7 +16,7 @@ module Trainees
         disability_detail = Diversities::DisabilityDetailForm.new(trainee: trainee, attributes: disability_detail_params)
 
         if disability_detail.save
-          redirect_to(trainee_diversity_disability_detail_confirm_path(trainee))
+          redirect_to(trainee_diversity_confirm_path(trainee))
         else
           @disability_detail = disability_detail
           render :edit

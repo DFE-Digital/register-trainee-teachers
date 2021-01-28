@@ -61,9 +61,6 @@ module Trainees
         trainee_personal_details_path,
         trainee_contact_details_path,
         trainee_degrees_path,
-        trainee_diversity_disclosure_path,
-        trainee_diversity_disability_disclosure_path,
-        trainee_diversity_disability_detail_path,
         trainee_programme_details_path,
       ].map { |path| path.split("/").last }
     end
