@@ -4,6 +4,8 @@ require "rails_helper"
 
 module Dttp
   describe RegisterForTrn do
+    include ActiveJob::TestHelper
+
     describe "#call" do
       let(:trainee) { create(:trainee, :with_programme_details) }
       let(:degree) { build(:degree, :uk_degree_with_details) }
@@ -23,10 +25,6 @@ module Dttp
       let(:placement_assignment_payload) { Params::PlacementAssignment.new(trainee, contact_change_set_id).to_json }
       let(:degree_qualification_payload) do
         Params::DegreeQualification.new(degree, contact_change_set_id, placement_assignment_change_set_id).to_json
-      end
-
-      let(:status_payload) do
-        Params::Status.new(status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED).to_json
       end
 
       let(:dttp_response) do
@@ -76,6 +74,10 @@ module Dttp
           contact_entity_id,
         ).and change(trainee, :placement_assignment_dttp_id).to(
           placement_assignment_entity_id,
+        ).and have_enqueued_job(ChangeTraineeStatusJob).with(
+          status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
+          entity_id: contact_entity_id,
+          entity_type: :contact,
         )
       end
     end

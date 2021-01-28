@@ -47,17 +47,11 @@ module Dttp
       end
 
       def append_create_only_params
-        create_only_params = {
+        params.merge!({
           "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(#{TRAINEE_CONTACT_TYPE_DTTP_ID})",
           "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
           "dfe_trnassessmentdate" => Time.zone.now.iso8601,
-        }.merge(
-          Status.new(
-            status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
-          ).params,
-        )
-
-        @params.merge!(create_only_params)
+        })
       end
 
       def contact_dttp_ethnicity_id

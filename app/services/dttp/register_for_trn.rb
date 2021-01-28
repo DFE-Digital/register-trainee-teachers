@@ -22,14 +22,19 @@ module Dttp
       batch_response = batch_request.submit
 
       entity_ids = OdataParser.entity_ids(batch_response: batch_response)
+      contact_dttp_id = entity_ids["contacts"].first[:entity_id]
 
-      trainee.trn_requested!(entity_ids["contacts"].first[:entity_id],
-                             entity_ids["dfe_placementassignments"].first[:entity_id])
+      trainee.trn_requested!(contact_dttp_id, entity_ids["dfe_placementassignments"].first[:entity_id])
 
       degree_change_set_ids.each do |degree, content_id|
         result = entity_ids["dfe_degreequalifications"].find { |item| item[:content_id] == content_id }
         degree.update!(dttp_id: result[:entity_id])
       end
+
+      # Has to be done after the contact entity is created - can't be done in the batch request
+      ChangeTraineeStatusJob.perform_later(status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
+                                           entity_id: contact_dttp_id,
+                                           entity_type: :contact)
 
       entity_ids
     end
@@ -61,10 +66,6 @@ module Dttp
       end
 
       degree_change_set_ids
-    end
-
-    def contact_payload
-      Params::Contact.new(trainee, trainee_creator_dttp_id).to_json
     end
   end
 end
