@@ -33,6 +33,7 @@ module Dttp
             "birthdate" => trainee.date_of_birth.to_s,
             "emailaddress1" => trainee.email,
             "gendercode" => Dttp::Params::Contact::GENDER_CODES[:female],
+            "dfe_traineeid" => trainee.trainee_id,
             "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(faba11c7-07d9-e711-80e1-005056ac45bb)",
             "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
             "parentcustomerid_account@odata.bind" => "/accounts(#{provider_dttp_id})",
@@ -55,8 +56,19 @@ module Dttp
               "birthdate" => trainee.date_of_birth.to_s,
               "emailaddress1" => trainee.email,
               "gendercode" => Dttp::Params::Contact::GENDER_CODES[:female],
+              "dfe_traineeid" => trainee.trainee_id,
               "parentcustomerid_account@odata.bind" => "/accounts(#{provider_dttp_id})",
             })
+          end
+        end
+
+        context "trainee.traineeid is null" do
+          let(:trainee) { build(:trainee, gender: "female", provider: provider, trainee_id: nil) }
+
+          it "sets the dfe_traineeid to NOTPROVIDED" do
+            expect(subject).to include(
+              { "dfe_traineeid" => "NOTPROVIDED" },
+            )
           end
         end
 
