@@ -14,6 +14,7 @@ module Dttp
 
     def call
       contact_change_set_id = build_contact_change_set
+
       placement_assignment_change_set_id = build_placement_assignment_change_set(contact_change_set_id)
       degree_change_set_ids = build_degree_qualification_change_sets(contact_change_set_id,
                                                                      placement_assignment_change_set_id)
@@ -60,6 +61,10 @@ module Dttp
       end
 
       degree_change_set_ids
+    end
+
+    def contact_payload
+      Params::Contact.new(trainee, trainee_creator_dttp_id).to_json
     end
   end
 end
