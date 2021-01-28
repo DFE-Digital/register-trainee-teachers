@@ -15,7 +15,7 @@ class OriginPage
 
   def save
     # Don't save it the same origin page on page refresh, for example.
-    origin_pages << current_page unless origin_pages.include?(current_page)
+    origin_pages << current_page unless origin_pages.last == current_page
 
     origin_pages.shift if origin_pages.length > MAX_PAGES
   end
