@@ -46,6 +46,11 @@ production:
 	$(eval env=production)
 	$(eval env_config=production)
 
+sandbox:
+	$(eval env=sandbox)
+	$(eval env_config=sandbox)
+
+
 deploy-plan: terraform-init
 	terraform plan -var-file=terraform/workspace-variables/$(env_config).tfvars terraform
 
