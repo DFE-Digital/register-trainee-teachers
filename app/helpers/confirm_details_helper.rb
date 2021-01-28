@@ -6,9 +6,6 @@ module ConfirmDetailsHelper
       "personal-details" => "trainee_personal_details_confirm_path",
       "contact-details" => "trainee_contact_details_confirm_path",
       "degrees" => "trainee_degrees_confirm_path",
-      "information-disclosed" => "trainee_diversity_disclosure_confirm_path",
-      "disability-disclosure" => "trainee_diversity_disability_disclosure_confirm_path",
-      "disabilities" => "trainee_diversity_disability_detail_confirm_path",
       "programme-details" => "trainee_programme_details_confirm_path",
     }
 
