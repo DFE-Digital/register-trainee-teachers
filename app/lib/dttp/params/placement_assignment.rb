@@ -5,6 +5,8 @@ module Dttp
     class PlacementAssignment
       include Mappable
 
+      ASSESSMENT_ONLY_DTTP_ID = "99f435d5-a626-e711-80c8-0050568902d3"
+
       attr_reader :trainee, :qualifying_degree, :params
 
       def initialize(trainee, contact_change_set_id = nil)
@@ -16,6 +18,7 @@ module Dttp
           @params.merge!({
             "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
             "dfe_sendforregistrationdate" => Time.zone.now.iso8601,
+            "dfe_RouteId@odata.bind" => "/dfe_routes(#{ASSESSMENT_ONLY_DTTP_ID})",
           })
         end
       end

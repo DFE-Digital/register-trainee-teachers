@@ -40,10 +40,10 @@ module Dttp
 
       subject { described_class.new(trainee, contact_change_set_id).params }
 
+      let(:degree) { build(:degree, :uk_degree_with_details) }
+
       describe "#params" do
         context "UK degree" do
-          let(:degree) { build(:degree, :uk_degree_with_details) }
-
           it "returns a hash with all the UK specific placement assignment fields " do
             expect(subject).to eq({
               "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
@@ -57,6 +57,7 @@ module Dttp
               "dfe_sendforsiregistration" => true,
               "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
+              "dfe_RouteId@odata.bind" => "/dfe_routes(#{Dttp::Params::PlacementAssignment::ASSESSMENT_ONLY_DTTP_ID})",
             })
           end
         end
@@ -76,7 +77,26 @@ module Dttp
               "dfe_sendforsiregistration" => true,
               "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
+              "dfe_RouteId@odata.bind" => "/dfe_routes(#{Dttp::Params::PlacementAssignment::ASSESSMENT_ONLY_DTTP_ID})",
             })
+          end
+        end
+
+        context "No contact_change_set_id passed" do
+          subject { described_class.new(trainee).params }
+
+          it "doesn't include contact id" do
+            expect(subject).not_to include(
+              { "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}" },
+            )
+          end
+
+          it "doesn't include sendforregistrationdate" do
+            Timecop.freeze do
+              expect(subject).not_to include(
+                { "dfe_sendforregistrationdate" => Time.zone.now.iso8601 },
+              )
+            end
           end
         end
       end
