@@ -14,6 +14,7 @@ module Dttp
 
       let(:contact_change_set_id) { SecureRandom.uuid }
       let(:placement_assignment_change_set_id) { SecureRandom.uuid }
+      let(:degree_qualification_change_set_id) { SecureRandom.uuid }
 
       let(:contact_entity_id) { SecureRandom.uuid }
       let(:placement_assignment_entity_id) { SecureRandom.uuid }
@@ -27,8 +28,11 @@ module Dttp
 
       let(:dttp_response) do
         <<~DTTP_RESPONSE
+          Content-ID: #{contact_change_set_id}
           OData-EntityId: /contacts(#{contact_entity_id})
+          Content-ID: #{placement_assignment_change_set_id}
           OData-EntityId: /dfe_placementassignments(#{placement_assignment_entity_id})
+          Content-ID: #{degree_qualification_change_set_id}
           OData-EntityId: /dfe_degreequalifications(#{degree_qualification_entity_id})
         DTTP_RESPONSE
       end
@@ -41,26 +45,40 @@ module Dttp
       end
 
       it "submits a batch request to create contact, placement assignment and degree qualification entities and updates trainee record" do
-        expect(batch_request).to receive(:add_change_set).with(entity: "contacts",
-                                                               payload: contact_payload).and_return(
-                                                                 contact_change_set_id,
-                                                               )
+        expect(batch_request).to receive(:add_change_set).with(
+          entity: "contacts",
+          payload: contact_payload,
+        ).and_return(
+          contact_change_set_id,
+        )
 
-        expect(batch_request).to receive(:add_change_set).with(entity: "dfe_placementassignments",
-                                                               payload: placement_assignment_payload).and_return(
-                                                                 placement_assignment_change_set_id,
-                                                               )
+        expect(batch_request).to receive(:add_change_set).with(
+          entity: "dfe_placementassignments",
+          payload: placement_assignment_payload,
+        ).and_return(
+          placement_assignment_change_set_id,
+        )
 
-        expect(batch_request).to receive(:add_change_set).with(entity: "dfe_degreequalifications",
-                                                               payload: degree_qualification_payload)
+        expect(batch_request).to receive(:add_change_set).with(
+          entity: "dfe_degreequalifications",
+          payload: degree_qualification_payload,
+        ).and_return(
+          degree_qualification_change_set_id,
+        )
 
         expect(batch_request).to receive(:submit).and_return(dttp_response)
 
         expect {
           described_class.call(trainee: trainee, trainee_creator_dttp_id: trainee_creator_dttp_id)
-        }.to change(trainee, :dttp_id).to(contact_entity_id).and change(trainee, :placement_assignment_dttp_id).to(
+        }.to change(trainee, :dttp_id).to(
+          contact_entity_id,
+        ).and change(trainee, :placement_assignment_dttp_id).to(
           placement_assignment_entity_id,
-        ).and change(trainee, :submitted_for_trn_at).to(time_now)
+        ).and change(trainee, :submitted_for_trn_at).to(
+          time_now,
+        ).and change(degree, :dttp_id).to(
+          degree_qualification_entity_id,
+        )
       end
     end
   end

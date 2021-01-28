@@ -86,11 +86,11 @@ module Dttp
 
       it "returns a hash of key/value pairs where the key is the entity name and the value the entity ID" do
         expect(subject).to include({
-          "contacts" => %w[243fc7f1-6035-eb11-a813-000d3ada6b1f],
-          "dfe_placementassignments" => %w[273fc7f1-6035-eb11-a813-000d3ada6b1f],
-          "dfe_degreequalifications" => %w[
-            62ebc247-3a57-eb11-a812-000d3ada6b1f
-            67ebc247-3a57-eb11-a812-000d3ada6b1f
+          "contacts" => [{ content_id: "06910a13-3875-4d7b-9dbf-d3d651a18e45", entity_id: "243fc7f1-6035-eb11-a813-000d3ada6b1f" }],
+          "dfe_placementassignments" => [{ content_id: "939906f2-bbe3-4080-9ed0-1aa6660dfabb", entity_id: "273fc7f1-6035-eb11-a813-000d3ada6b1f" }],
+          "dfe_degreequalifications" => [
+            { content_id: "5dc36062-2080-4515-b1cf-cff69726389d", entity_id: "62ebc247-3a57-eb11-a812-000d3ada6b1f" },
+            { content_id: "2f645f14-bae8-4b5f-93df-b76d4a774a8c", entity_id: "67ebc247-3a57-eb11-a812-000d3ada6b1f" },
           ],
         })
       end
