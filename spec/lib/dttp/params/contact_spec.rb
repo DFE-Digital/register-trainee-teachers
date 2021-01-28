@@ -33,7 +33,6 @@ module Dttp
             "gendercode" => Dttp::Params::Contact::GENDER_CODES[:female],
             "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(faba11c7-07d9-e711-80e1-005056ac45bb)",
             "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
-            "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
             "dfe_trnassessmentdate" => time_now_in_zone.in_time_zone.iso8601,
             "dfe_TraineeStatusId@odata.bind" => "/dfe_traineestatuses(#{prospective_trainee_state})",
           })
