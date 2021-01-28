@@ -7,6 +7,7 @@ module Dttp
 
       ASSESSMENT_ONLY_DTTP_ID = "99f435d5-a626-e711-80c8-0050568902d3"
       ACADEMIC_YEAR_2020_2021 = "76bcaeca-2bd1-e711-80df-005056ac45bb"
+      COURSE_LEVEL_PG = 12
 
       attr_reader :trainee, :qualifying_degree, :params
 
@@ -39,6 +40,7 @@ module Dttp
           "dfe_programmeenddate" => trainee.programme_end_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{ACADEMIC_YEAR_2020_2021})",
+          "dfe_courselevel" => COURSE_LEVEL_PG, # TODO: this can be PG (12) or UG (20).  Postgrad or undergrad. Hardcoded for now.
           "dfe_sendforsiregistration" => true,
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
