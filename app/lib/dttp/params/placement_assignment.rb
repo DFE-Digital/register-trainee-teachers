@@ -6,6 +6,7 @@ module Dttp
       include Mappable
 
       ASSESSMENT_ONLY_DTTP_ID = "99f435d5-a626-e711-80c8-0050568902d3"
+      ACADEMIC_YEAR_2020_2021 = "76bcaeca-2bd1-e711-80df-005056ac45bb"
 
       attr_reader :trainee, :qualifying_degree, :params
 
@@ -37,6 +38,7 @@ module Dttp
           "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.programme_end_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
+          "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{ACADEMIC_YEAR_2020_2021})",
           "dfe_sendforsiregistration" => true,
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
