@@ -113,6 +113,8 @@ en:
       providers:
         index: Providers
         new: Add a provider
+      users:
+        new: Add a user
     filter:
       record_type: Training route
       state: Status
@@ -231,9 +233,19 @@ en:
         provider:
           attributes:
             name:
-              blank: You must provide a provider name
+              blank: You must enter a provider name
             dttp_id:
               invalid: You must enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e
+        user:
+          attributes:
+            first_name: 
+              blank: "You must enter the user's first name"
+            last_name:
+              blank: "You must enter the user's last name"
+            email:
+              blank: "You must enter the user's email address"
+            dttp_id:
+              invalid: "You must enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949"
   activemodel:
     errors:
       validators:
