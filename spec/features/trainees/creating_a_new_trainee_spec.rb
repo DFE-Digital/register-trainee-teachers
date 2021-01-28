@@ -34,12 +34,12 @@ private
   end
 
   def and_i_save_the_form
-    @record_page ||= PageObjects::Trainees::Record.new
+    @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
     @not_supported_route_page ||= PageObjects::Trainees::NotSupportedRoute.new
     @new_page.continue_button.click
   end
 
   def then_i_should_see_the_new_trainee_overview
-    expect(@record_page).to be_displayed
+    expect(@review_draft_page).to be_displayed
   end
 end
