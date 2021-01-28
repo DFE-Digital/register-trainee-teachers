@@ -36,6 +36,7 @@ module Dttp
           "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
           "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.programme_end_date.in_time_zone.iso8601,
+          "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_sendforsiregistration" => true,
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
