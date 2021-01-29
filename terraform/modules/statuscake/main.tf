@@ -6,8 +6,6 @@ resource statuscake_test alert {
   check_rate     = each.value.check_rate
   contact_group  = each.value.contact_group
   trigger_rate   = each.value.trigger_rate
-  custom_header  = each.value.custom_header
-  status_codes   = each.value.status_codes
   confirmations  = 1
   node_locations = each.value.node_locations
 }
