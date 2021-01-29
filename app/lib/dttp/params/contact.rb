@@ -41,8 +41,10 @@ module Dttp
           "birthdate" => trainee.date_of_birth.to_s,
           "emailaddress1" => trainee.email,
           "gendercode" => GENDER_CODES[trainee.gender.to_sym],
+          "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_EthnicityId@odata.bind" => "/dfe_ethnicities(#{contact_dttp_ethnicity_id})",
           "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{contact_dttp_disability_id})",
+          "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
         }
       end
 

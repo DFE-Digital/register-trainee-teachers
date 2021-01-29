@@ -6,7 +6,9 @@ module Dttp
   module Params
     describe Contact do
       let(:time_now_in_zone) { Time.zone.now }
-      let(:trainee) { build(:trainee, gender: "female") }
+      let(:provider) { build(:provider, dttp_id: provider_dttp_id) }
+      let(:provider_dttp_id) { SecureRandom.uuid }
+      let(:trainee) { build(:trainee, gender: "female", provider: provider) }
       let(:trainee_creator_dttp_id) { SecureRandom.uuid }
 
       subject { described_class.new(trainee, trainee_creator_dttp_id).params }
@@ -31,8 +33,10 @@ module Dttp
             "birthdate" => trainee.date_of_birth.to_s,
             "emailaddress1" => trainee.email,
             "gendercode" => Dttp::Params::Contact::GENDER_CODES[:female],
+            "dfe_traineeid" => trainee.trainee_id,
             "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(faba11c7-07d9-e711-80e1-005056ac45bb)",
             "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
+            "parentcustomerid_account@odata.bind" => "/accounts(#{provider_dttp_id})",
             "dfe_trnassessmentdate" => time_now_in_zone.in_time_zone.iso8601,
           })
         end
@@ -52,7 +56,19 @@ module Dttp
               "birthdate" => trainee.date_of_birth.to_s,
               "emailaddress1" => trainee.email,
               "gendercode" => Dttp::Params::Contact::GENDER_CODES[:female],
+              "dfe_traineeid" => trainee.trainee_id,
+              "parentcustomerid_account@odata.bind" => "/accounts(#{provider_dttp_id})",
             })
+          end
+        end
+
+        context "trainee.traineeid is null" do
+          let(:trainee) { build(:trainee, gender: "female", provider: provider, trainee_id: nil) }
+
+          it "sets the dfe_traineeid to NOTPROVIDED" do
+            expect(subject).to include(
+              { "dfe_traineeid" => "NOTPROVIDED" },
+            )
           end
         end
 
