@@ -9,6 +9,7 @@ module Trainees
     def update
       authorize trainee
 
+      trainee.defer!
       DeferJob.perform_later(trainee.id)
 
       flash[:success] = "Trainee deferred"

@@ -27,7 +27,6 @@ module Dttp
           expect(Client).to receive(:patch).with(path, body: expected_body).and_return(dttp_response)
 
           described_class.call(trainee: trainee)
-          expect(trainee.state).to eq("deferred")
         end
       end
 
@@ -40,7 +39,6 @@ module Dttp
           expect {
             described_class.call(trainee: trainee)
           }.to raise_error(Dttp::Defer::Error, error_body)
-          expect(trainee.state).to eq("trn_received")
         end
       end
     end

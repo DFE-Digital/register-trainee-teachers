@@ -5,7 +5,7 @@ require "rails_helper"
 describe Trainees::ConfirmDeferralsController do
   include ActiveJob::TestHelper
 
-  let(:trainee) { create(:trainee) }
+  let(:trainee) { create(:trainee, :trn_received) }
   let(:current_user) { build(:user) }
   let(:trainee_policy) { instance_double(TraineePolicy, update?: true) }
 
@@ -19,6 +19,16 @@ describe Trainees::ConfirmDeferralsController do
       expect {
         post :update, params: { trainee_id: trainee }
       }.to have_enqueued_job(DeferJob).with(trainee.id)
+    end
+
+    context "trainee state" do
+      before do
+        post :update, params: { trainee_id: trainee }
+      end
+
+      it "transitions the trainee state to defferred" do
+        expect(trainee.reload).to be_deferred
+      end
     end
   end
 end

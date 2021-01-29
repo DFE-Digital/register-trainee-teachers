@@ -5,7 +5,6 @@ require "rails_helper"
 module Dttp
   describe RegisterForTrn do
     describe "#call" do
-      let(:time_now) { Time.zone.now }
       let(:trainee) { create(:trainee, :with_programme_details) }
       let(:degree) { build(:degree, :uk_degree_with_details) }
 
@@ -44,7 +43,6 @@ module Dttp
       before do
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(BatchRequest).to receive(:new).and_return(batch_request)
-        allow(Time).to receive(:now).and_return(time_now)
         trainee.degrees << degree
       end
 
@@ -78,10 +76,6 @@ module Dttp
           contact_entity_id,
         ).and change(trainee, :placement_assignment_dttp_id).to(
           placement_assignment_entity_id,
-        ).and change(trainee, :submitted_for_trn_at).to(
-          time_now,
-        ).and change(degree, :dttp_id).to(
-          degree_qualification_entity_id,
         )
       end
     end

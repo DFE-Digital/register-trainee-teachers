@@ -4,6 +4,8 @@ class TrnSubmissionsController < ApplicationController
   before_action :authorize_trainee
 
   def create
+    trainee.submit_for_trn!
+
     RegisterForTrnJob.perform_later(trainee.id, current_user.dttp_id)
     RetrieveTrnJob.set(wait: RetrieveTrnJob::POLL_DELAY).perform_later(trainee.id)
 

@@ -28,5 +28,15 @@ describe TrnSubmissionsController do
         }.to have_enqueued_job(RetrieveTrnJob).at(RetrieveTrnJob::POLL_DELAY.from_now).with(trainee.id)
       end
     end
+
+    context "trainee state" do
+      before do
+        post :create, params: { trainee_id: trainee }
+      end
+
+      it "transitions the trainee state to submitted_for_trn" do
+        expect(trainee.reload).to be_submitted_for_trn
+      end
+    end
   end
 end

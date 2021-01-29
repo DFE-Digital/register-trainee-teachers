@@ -4,6 +4,7 @@ module Trainees
   class QtsRecommendationsController < ApplicationController
     def create
       authorize trainee
+      trainee.recommend_for_qts!
 
       RecommendForQtsJob.perform_later(trainee.id)
       RetrieveQtsJob.set(wait: RetrieveQtsJob::POLL_DELAY).perform_later(trainee.id)

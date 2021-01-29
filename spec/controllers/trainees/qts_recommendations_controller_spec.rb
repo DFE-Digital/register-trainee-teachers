@@ -5,7 +5,7 @@ require "rails_helper"
 describe Trainees::QtsRecommendationsController do
   include ActiveJob::TestHelper
 
-  let(:trainee) { create(:trainee) }
+  let(:trainee) { create(:trainee, :trn_received) }
   let(:current_user) { build(:user) }
   let(:trainee_policy) { instance_double(TraineePolicy, create?: true) }
 
@@ -32,6 +32,16 @@ describe Trainees::QtsRecommendationsController do
     it "redirects user to the recommended page" do
       post :create, params: { trainee_id: trainee }
       expect(response).to redirect_to(recommended_trainee_outcome_details_path(trainee))
+    end
+
+    context "trainee state" do
+      before do
+        post :create, params: { trainee_id: trainee }
+      end
+
+      it "transitions the trainee state to recommended_for_qts" do
+        expect(trainee.reload).to be_recommended_for_qts
+      end
     end
   end
 end
