@@ -6,7 +6,7 @@
   and record the outcome of their training.</p>
 
   <% unless current_user.system_admin? %>
-    <p class="govuk-body">
+    <p class="govuk-body govuk-!-margin-bottom-0">
       <%= render GovukComponent::StartNowButton.new(
         text: "Add a trainee",
         href: new_trainee_path ) %>
