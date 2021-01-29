@@ -8,6 +8,10 @@ module Trainees
 
     def update
       authorize trainee
+
+      trainee.withdraw!
+      WithdrawJob.perform_later(trainee.id)
+
       flash[:success] = "Trainee withdrawn"
       redirect_to trainee_path(trainee)
     end
