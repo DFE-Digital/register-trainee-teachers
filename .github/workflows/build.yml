@@ -16,7 +16,6 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     outputs:
       sha_tag: ${{ steps.set_env.outputs.SHA_TAG }}
@@ -68,13 +67,6 @@ jobs:
     - name: Run tests
       run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'bundle exec rake spec'
 
-    - name: Install firefox into web container
-      run: docker-compose exec -T web /bin/sh -c 'apk add firefox-esr'
-
-    - name: Run Axe Tests
-      run: |
-        docker-compose exec -T web /bin/sh -c 'bundle exec rspec spec/axe --failure-exit-code 0'
-
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
 
@@ -102,3 +94,62 @@ jobs:
         SLACK_TITLE: Build Failure
         SLACK_MESSAGE: ':alert: Build failure on ${{ github.event.inputs.environment }} :sadparrot:'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+  axe-tests:
+    needs: build
+    runs-on: ubuntu-latest
+
+    env:
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_HOSTNAME: localhost
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get values for current commit
+      id: set_env
+      run: |
+        GIT_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c 1-7)
+        GIT_BRANCH="${GITHUB_REF##*/}"
+        echo "GIT_SHA_SHORT=$GIT_SHA_SHORT" >> $GITHUB_ENV
+        echo "GIT_BRANCH=$GIT_BRANCH" >> $GITHUB_ENV
+        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+        echo "SHA_TAG=$GIT_SHA_SHORT" >> $GITHUB_ENV
+        echo "::set-output name=SHA_TAG::$GIT_SHA_SHORT"
+
+    - name: Login to docker hub
+      run: echo "${{secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
+
+    - name: "docker pull ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}}"
+      run: docker pull $DOCKER_REPO:$BRANCH_TAG || true
+
+    - name: "docker-compose build"
+      run:  docker-compose build --build-arg COMMIT_SHA=$GITHUB_SHA
+
+    - name: Bring images up
+      run: |
+        docker-compose up --no-build -d
+        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
+
+    - name: Setup DB
+      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
+      
+    - name: Install firefox into web container
+      run: docker-compose exec -T web /bin/sh -c 'apk add firefox-esr'
+
+    - name: Run Axe Tests
+      run: |
+        docker-compose exec -T web /bin/sh -c 'bundle exec rspec spec/axe'
+
+    # NOTE: The axe test is currently failing
+    # - name: Check for Axe tests Failure
+    #   if: ${{ failure() && github.ref == 'refs/heads/master' }}
+    #   uses: rtCamp/action-slack-notify@master
+    #   env:
+    #     SLACK_CHANNEL: twd_publish_register_tech
+    #     SLACK_COLOR: '#ef5343'
+    #     SLACK_ICON_EMOJI: ':github-logo:'
+    #     SLACK_USERNAME: Register Trainee Teachers
+    #     SLACK_TITLE: Axe tests Failure
+    #     SLACK_MESSAGE: ':alert: Axe tests Failure on ${{ github.event.inputs.environment }} :axe: :sadparrot:'
+    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
