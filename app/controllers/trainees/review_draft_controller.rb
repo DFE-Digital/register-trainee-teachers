@@ -4,6 +4,8 @@ module Trainees
   class ReviewDraftController < ApplicationController
     include Breadcrumbable
 
+    before_action :ensure_trainee_is_draft!
+
     def show
       authorize trainee
       save_origin_page_for(trainee)

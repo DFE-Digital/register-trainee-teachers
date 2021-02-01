@@ -4,6 +4,8 @@ module Trainees
   class PersonalDetailsController < ApplicationController
     include Breadcrumbable
 
+    before_action :ensure_trainee_is_not_draft!, only: :show
+
     DOB_CONVERSION = {
       "date_of_birth(3i)" => "day",
       "date_of_birth(2i)" => "month",

@@ -7,7 +7,7 @@ feature "edit Trainee ID" do
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_trainee_exists(:submitted_for_trn)
     when_i_visit_the_edit_trainee_id_page
     when_i_change_the_trainee_id
     when_i_click_continue
