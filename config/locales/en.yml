@@ -94,7 +94,7 @@ en:
           edit: When did they meet the standards?
           confirm: Check outcome details
         outcome_details:
-          confirm: Check outcome details
+          confirm: Check QTS details
           recommended: Trainee recommended for QTS
         personal_details:
           edit: Trainee personal details
@@ -134,7 +134,7 @@ en:
         withdraw: withdraw
         reinstate: Reinstate
         this_trainee: this trainee
-        recommend_for_qts: Recommend for QTS
+        recommend_for_qts: Recommend trainee for QTS
         status_summary:
           submitted_for_trn: This record is pending a TRN
           deferred: This record is deferred
