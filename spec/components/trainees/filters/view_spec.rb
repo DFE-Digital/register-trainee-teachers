@@ -19,19 +19,6 @@ RSpec.describe Trainees::Filters::View do
     end
   end
 
-  context "when checkboxes have been pre-selected" do
-    let(:filters) { { record_type: %w[assessment_only] }.with_indifferent_access }
-
-    it "marks the correct ones as selected" do
-      expect(result.css("#record_type-assessment_only").attr("checked").value).to eq("checked")
-      expect(result.css("#record_type-provider_led").attr("checked")).to eq(nil)
-    end
-
-    it "shows a 'Selected filters' dialogue" do
-      expect(result.text).to include(selected_text)
-    end
-  end
-
   context "when a subject has been pre-selected" do
     let(:filters) { { subject: "Business studies" }.with_indifferent_access }
 
