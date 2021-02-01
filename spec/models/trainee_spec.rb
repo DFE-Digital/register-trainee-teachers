@@ -123,6 +123,32 @@ describe Trainee do
     end
   end
 
+  context "instance methods" do
+    describe "#sha" do
+      subject { create(:trainee) }
+
+      let(:expected_sha) { Digest::SHA1.hexdigest(subject.digest) }
+
+      it "returns a SHA of the trainee's current state" do
+        expect(subject.sha).to eq(expected_sha)
+      end
+    end
+
+    describe "#digest" do
+      subject { create(:trainee) }
+
+      let(:expected_digest) do
+        subject.as_json.except(
+          "created_at", "updated_at", "dttp_update_sha"
+        ).to_json
+      end
+
+      it "returns a string representation of the trainee's current state" do
+        expect(subject.digest).to include(expected_digest)
+      end
+    end
+  end
+
   describe "#with_name_trainee_id_or_trn_like" do
     let(:other_trainee) { create(:trainee) }
     let(:matching_trainee) do

@@ -19,6 +19,8 @@ module Dttp
 
       dttp_update("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})",
                   @placement_assignment_payload)
+
+      trainee.update!(dttp_update_sha: trainee.sha)
     end
 
   private
