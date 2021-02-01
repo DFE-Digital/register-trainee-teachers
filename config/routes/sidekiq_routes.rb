@@ -6,6 +6,7 @@ module SidekiqRoutes
       # Sidekiq Basic Auth implementation
       # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
       require "sidekiq/web"
+      require "sidekiq/cron/web"
 
       if Rails.env.production?
         Sidekiq::Web.use Rack::Auth::Basic do |username, password|
