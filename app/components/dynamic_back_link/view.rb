@@ -10,7 +10,7 @@ module DynamicBackLink
     end
 
     def link_text
-      text.presence || (trainee.draft? ? "Back to draft record" : "Back to record")
+      text.presence || (trainee.draft? ? t("back_to_draft") : t("back_to_record"))
     end
 
     def path

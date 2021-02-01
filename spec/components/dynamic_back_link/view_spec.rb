@@ -16,7 +16,7 @@ module DynamicBackLink
       let(:trainee) { create(:trainee, :draft) }
 
       it "renders a back link" do
-        expect(component).to have_link("Back to draft record", href: "/trainees/#{trainee.to_param}/review-draft")
+        expect(component).to have_link(t("back_to_draft"), href: "/trainees/#{trainee.to_param}/review-draft")
       end
     end
 
@@ -24,7 +24,7 @@ module DynamicBackLink
       let(:trainee) { create(:trainee, :submitted_for_trn) }
 
       it "renders a back link" do
-        expect(component).to have_link("Back to record", href: "/trainees/#{trainee.to_param}")
+        expect(component).to have_link(t("back_to_record"), href: "/trainees/#{trainee.to_param}")
       end
     end
   end

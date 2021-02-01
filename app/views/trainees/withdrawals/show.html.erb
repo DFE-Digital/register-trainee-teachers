@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.withdrawal.show", has_errors: @withdrawal_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(text: t(:back), href: trainee_path(@trainee)) %>
+  <%= render GovukComponent::BackLink.new(text: t('back'), href: trainee_path(@trainee)) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -9,11 +9,14 @@
     <%= form_for(@withdrawal_form, url: trainee_withdrawal_path(@trainee), local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <span class="govuk-caption-l">
-        <%= trainee_name(@trainee) %>
-      </span>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">
+          <%= trainee_name(@trainee) %>
+        </span>
+        Withdraw trainee
+      </h1>
 
-      <%= f.govuk_radio_buttons_fieldset(:withdraw_date_string, legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_date"), tag: "h1", size: "l" }, classes: "withdraw-date") do %>
+      <%= f.govuk_radio_buttons_fieldset(:withdraw_date_string, legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_date"), size: "s" }, classes: "withdraw-date") do %>
         <%= f.govuk_radio_button :withdraw_date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
         <%= f.govuk_radio_button :withdraw_date_string, :yesterday, label: { text: t("views.forms.common.yesterday") } %>
         <%= f.govuk_radio_button :withdraw_date_string, :other, label: { text: t("views.forms.common.specific_date") } do %>
@@ -21,7 +24,7 @@
         <% end %>
       <% end %>
 
-      <%= f.govuk_radio_buttons_fieldset(:withdraw_reason, legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_reason"), tag: "h1", size: "l" }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:withdraw_reason, legend: { text: t("views.forms.withdrawal_reasons.headings.withdrawal_reason"), size: "s" }) do %>
         <% WithdrawalReasons::SPECIFIC.each_with_index do |withdrawal_reason, index| %>
           <%= f.govuk_radio_button(:withdraw_reason, withdrawal_reason,
                 label: { text: t("views.forms.withdrawal_reasons.labels.#{withdrawal_reason}") },
