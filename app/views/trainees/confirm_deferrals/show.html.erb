@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.deferral_details.confirm") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(text: t("back"), href:  trainee_deferral_path(@trainee)) %>
+  <%= render GovukComponent::BackLink.new(text: t("back_to_record"), href:  trainee_deferral_path(@trainee)) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -22,3 +22,5 @@
     <%- end -%>
   </div>
 </div>
+
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", trainee_path(@trainee)) %></p>
