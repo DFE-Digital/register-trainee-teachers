@@ -45,5 +45,11 @@ module ApplicationRecordCard
 
       tag.p("Trainee ID: " + record.trainee_id, class: "govuk-caption-m govuk-!-font-size-16 app-application-card__id govuk-!-margin-bottom-0")
     end
+
+    def trn
+      return if record.trn.blank?
+
+      tag.p("TRN: " + record.trn, class: "govuk-caption-m govuk-!-font-size-16 app-application-card__trn govuk-!-margin-bottom-0 govuk-!-margin-top-0")
+    end
   end
 end

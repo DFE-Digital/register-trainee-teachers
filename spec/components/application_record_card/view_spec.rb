@@ -36,6 +36,12 @@ module ApplicationRecordCard
       end
     end
 
+    context "when the Trainee has no trn" do
+      it "does not render trn" do
+        expect(component).to_not have_selector(".app-application-card__trn")
+      end
+    end
+
     describe "status" do
       [
         { state: :draft, colour: "grey", text: "draft" },
@@ -76,6 +82,7 @@ module ApplicationRecordCard
             record_type: "assessment_only",
             trainee_id: "132456",
             created_at: Time.zone.now,
+            trn: "789456"
           )
         end
       end
@@ -88,6 +95,10 @@ module ApplicationRecordCard
 
       it "renders trainee ID" do
         expect(component.find(".app-application-card__id")).to have_text("Trainee ID: 132456")
+      end
+
+      it "renders trn" do
+        expect(component.find(".app-application-card__trn")).to have_text("TRN: 789456")
       end
 
       it "renders updated at" do
