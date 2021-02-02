@@ -9,8 +9,8 @@ RSpec.feature "view components" do
     end
   end).flatten
 
-  shared_examples "navigate to" do |link, skip|
-    scenario "navigate to #{link}", skip: skip do
+  shared_examples "navigate to" do |link|
+    scenario "navigate to #{link}" do
       visit link
 
       expect(page.status_code).to eq(200)
@@ -19,6 +19,6 @@ RSpec.feature "view components" do
   end
 
   all_links.each do |link|
-    include_examples "navigate to", link, false
+    include_examples "navigate to", link
   end
 end
