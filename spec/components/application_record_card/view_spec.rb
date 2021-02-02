@@ -82,7 +82,7 @@ module ApplicationRecordCard
             record_type: "assessment_only",
             trainee_id: "132456",
             created_at: Time.zone.now,
-            trn: "789456"
+            trn: "789456",
           )
         end
       end
