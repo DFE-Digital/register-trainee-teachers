@@ -5,5 +5,6 @@ FactoryBot.define do
     sequence :name do |n|
       "Provider #{n}"
     end
+    dttp_id { SecureRandom.uuid }
   end
 end

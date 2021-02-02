@@ -17,7 +17,10 @@ namespace :example_data do
                                            system_admin: persona_attributes[:system_admin])
 
       if persona_attributes[:provider]
-        provider = Provider.find_or_create_by!(name: persona_attributes[:provider])
+        provider = Provider.find_or_create_by!(
+          name: persona_attributes[:provider],
+          dttp_id: "00000000-0000-0000-0000-000000000000",
+        )
         persona.update!(provider: provider)
       end
 

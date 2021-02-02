@@ -110,6 +110,9 @@ en:
           show: When did the trainee defer?
         deferral_details:
           confirm: Check deferral details
+      providers:
+        index: Providers
+        new: Add a provider
     filter:
       record_type: Training route
       state: Status
@@ -225,6 +228,12 @@ en:
               invalid: "You must enter a valid graduation year"
             country:
               blank: "You must select the country where the degree was obtained"
+        provider:
+          attributes:
+            name:
+              blank: You must provide a provider name
+            dttp_id:
+              invalid: You must enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e
   activemodel:
     errors:
       validators:

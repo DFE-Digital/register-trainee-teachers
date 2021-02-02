@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm"
   end
 
+  scope module: :system_admin, path: "system-admin" do
+    resources :providers, except: %i[edit update destroy]
+  end
+
   resources :trainees, except: :destroy do
     scope module: :trainees do
       resource :programme_details, concerns: :confirmable, only: %i[edit update], path: "/programme-details"

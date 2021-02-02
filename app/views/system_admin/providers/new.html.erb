@@ -1,0 +1,19 @@
+<%= render PageTitle::View.new(title: "providers.new", has_errors: @provider.errors.present?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with model: @provider, local: true do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        Add a provider
+      </h1>
+
+      <%= f.govuk_text_field :name, label: { text: "Provider name", size: "s" }, width: 20 %>
+      <%= f.govuk_text_field :dttp_id, label: { text: "DTTP ID", size: "s" }, width: 20 %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

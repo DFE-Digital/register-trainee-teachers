@@ -13,4 +13,8 @@ class Header::View < GovukComponent::Base
   def user_signed_in?
     @current_user.present?
   end
+
+  def user_system_admin?
+    @current_user.system_admin?
+  end
 end
