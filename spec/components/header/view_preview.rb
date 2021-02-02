@@ -11,7 +11,7 @@ module Header
     end
 
     def with_a_user_signed_in
-      render(Header::View.new(I18n.t("service_name"), { first_name: "Ted" }))
+      render(Header::View.new(I18n.t("service_name"), User.new(id: 1, system_admin: true)))
     end
   end
 end
