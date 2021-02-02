@@ -22,8 +22,10 @@ RSpec.feature "view components", axe: true,
     expect(all_links.count).to eq(links_to_be_tested.count + exempt_links.count)
   end
 
-  shared_examples "navigate to" do |link, skip|
-    scenario "navigate to #{link}", skip: skip do
+  navigate_to = "navigate to"
+
+  shared_examples navigate_to do |link, skip|
+    scenario "#{navigate_to} #{link}", skip: skip do
       visit link
 
       expect(page).to be_axe_clean.within("#main-content")
@@ -31,10 +33,10 @@ RSpec.feature "view components", axe: true,
   end
 
   links_to_be_tested.each do |link|
-    include_examples "navigate to", link, false
+    include_examples navigate_to, link, false
   end
 
   exempt_links.each do |link|
-    include_examples "navigate to", link, "it has been exempted"
+    include_examples navigate_to, link, "it has been exempted"
   end
 end
