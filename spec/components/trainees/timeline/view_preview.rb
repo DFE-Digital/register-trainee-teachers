@@ -28,7 +28,7 @@ module Trainees
           first_name: "Tom",
           last_name: "Jones",
           email: "tom@example.com",
-          provider: Provider.create!(name: "Provider A"),
+          provider: Provider.create!(name: "Provider A", dttp_id: "b77c821a-c12a-4133-8036-6ef1db146f9e"),
         )
       end
     end
