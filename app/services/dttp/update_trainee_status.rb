@@ -9,6 +9,9 @@ module Dttp
       placement_assignment: "/placementassignments",
     }.freeze
 
+    CONTACT_ENTITY_TYPE = :contact
+    PLACEMENT_ASSIGNMENT_ENTITY_TYPE = :placement_assignment
+
     class Error < StandardError; end
 
     def initialize(status:, entity_id:, entity_type:)

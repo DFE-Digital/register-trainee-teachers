@@ -22,7 +22,7 @@ module Dttp
 
       update_degrees
 
-      queue_update_trainee_status_job
+      queue_update_trainee_status_jobs
 
       entity_ids
     end
@@ -54,11 +54,15 @@ module Dttp
       end
     end
 
-    def queue_update_trainee_status_job
+    def queue_update_trainee_status_jobs
       # Has to be done after the contact entity is created - can't be done in the batch request
       ChangeTraineeStatusJob.perform_later(status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
                                            entity_id: contact_dttp_id,
-                                           entity_type: :contact)
+                                           entity_type: Dttp::UpdateTraineeStatus::CONTACT_ENTITY_TYPE)
+
+      ChangeTraineeStatusJob.perform_later(status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
+                                           entity_id: contact_dttp_id,
+                                           entity_type: Dttp::UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE)
     end
 
     def submit_batch_request
