@@ -8,6 +8,6 @@ class PageTitle::ViewPreview < ViewComponent::Preview
   end
 
   def heading_with_error
-    render(PageTitle::View.new(title: "trainees.new", errors: "Error"))
+    render(PageTitle::View.new(title: "trainees.new", has_errors: true))
   end
 end
