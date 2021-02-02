@@ -35,15 +35,14 @@
 
     <%= render(Header::View.new(I18n.t('service_name'), @current_user)) %>
 
-    <% if authenticated? %>
-      <%= render NavigationBar::View.new(
-        items: [
-          {name: "Home", url: root_path},
-          {name: "Trainee records", url: trainees_path, current: trainee_link_is_current? }
-        ],
-        current_path: request.path,
-      ) %>
-    <% end %>
+    <%= render NavigationBar::View.new(
+      items: [
+        {name: "Home", url: root_path},
+        {name: "Trainee records", url: trainees_path, current: trainee_link_is_current? }
+      ],
+      current_path: request.path,
+      current_user: @current_user
+    ) %>
 
     <div class="app-phase-banner">
       <div class="govuk-width-container">

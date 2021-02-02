@@ -37,7 +37,7 @@ module RegisterTraineeTeachers
 
     config.view_component.preview_paths = [Rails.root.join("spec/components")]
     config.view_component.preview_route = "/view_components"
-    config.view_component.show_previews = !Settings.features.use_dfe_sign_in
+    config.view_component.show_previews = !Rails.env.production?
 
     config.middleware.use Rack::Deflater
     config.active_job.queue_adapter = :sidekiq

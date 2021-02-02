@@ -8,9 +8,10 @@ module NavigationBar
 
     let(:item_url) { "https://www.gov.uk" }
     let(:current_path) { item_url }
+    let(:current_user) { build(:user) }
 
     before do
-      render_inline(described_class.new(items: items, current_path: current_path))
+      render_inline(described_class.new(items: items, current_path: current_path, current_user: current_user {}))
     end
 
     context "multiple links" do

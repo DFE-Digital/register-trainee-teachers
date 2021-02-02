@@ -1,4 +1,5 @@
- <div class="moj-primary-navigation">
+ <% if user_signed_in? %>
+  <div class="moj-primary-navigation">
     <div class="moj-primary-navigation__container">
       <div class="moj-primary-navigation__nav">
         <nav class="moj-primary-navigation" aria-label="Primary navigation">
@@ -13,3 +14,4 @@
       </div>
     </div>
   </div>
+<% end %>
