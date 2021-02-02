@@ -4,11 +4,6 @@ require "rails_helper_axe"
 
 RSpec.feature "view components", axe: true,
                                  driver: :selenium_headless do
-  before :each do
-    # NOTE: some of the components
-    Capybara.raise_server_errors = false
-  end
-
   all_links = (ViewComponent::Preview.all.map do |component|
     component.examples.map do |example|
       "#{Rails.application.config.view_component.preview_route}/#{component.preview_name}/#{example}"
