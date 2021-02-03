@@ -3,6 +3,8 @@
 class TraineesController < ApplicationController
   include Breadcrumbable
 
+  before_action :ensure_trainee_is_not_draft!, only: :show
+
   def index
     @filters = TraineeFilter.new(params: filter_params).filters
 

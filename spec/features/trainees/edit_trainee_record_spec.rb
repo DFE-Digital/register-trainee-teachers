@@ -37,7 +37,7 @@ feature "edit trainee record", type: :feature do
   end
 
   def given_a_trainee_exists_with_a_degree
-    given_a_trainee_exists(degrees: [create(:degree, :uk_degree_with_details)])
+    given_a_trainee_exists(:submitted_for_trn, degrees: [create(:degree, :uk_degree_with_details)])
   end
 
   def then_i_see_the_trainee_name
@@ -45,7 +45,8 @@ feature "edit trainee record", type: :feature do
   end
 
   def then_i_see_the_trn_status
-    expect(@record_page.trn_status.text).to eq(trainee.state)
+    state_text = "activerecord.attributes.trainee.states.#{trainee.state}"
+    expect(@record_page.trn_status.text).to eq(I18n.t(state_text).downcase)
   end
 
   def when_i_visit_the_trainee_record_page

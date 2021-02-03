@@ -6,13 +6,11 @@ describe TrnSubmissionsController do
   include ActiveJob::TestHelper
 
   describe "#create" do
-    let(:trainee) { create(:trainee) }
-    let(:current_user) { build(:user) }
-    let(:trainee_policy) { instance_double(TraineePolicy, create?: true) }
+    let(:current_user) { create(:user) }
+    let(:trainee) { create(:trainee, provider: current_user.provider) }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
-      allow(TraineePolicy).to receive(:new).with(current_user, trainee).and_return(trainee_policy)
     end
 
     it "queues a background job to register trainee for TRN" do
