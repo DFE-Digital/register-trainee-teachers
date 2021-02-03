@@ -16,15 +16,15 @@
 
     <% if FeatureService.enabled?("use_dfe_sign_in")%>
       <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe") %>
-    <% else %>    
+    <% else %>
       <%= govuk_link_to "Sign in using Persona", "/personas", { class: "govuk-button" }  %>
     <% end %>
 
     <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Register trainee teachers, email
 
-    <%= govuk_mail_to "becomingateacher@digital.education.gov.uk", 
-                      "becomingateacher@digital.education.gov.uk" %>. 
+    <%= govuk_mail_to "becomingateacher@digital.education.gov.uk",
+                      "becomingateacher@digital.education.gov.uk", subject: "Register trainee teachers support" %>.
     </p>
-    
+
   </div>
 </div>
