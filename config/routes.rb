@@ -39,7 +39,9 @@ Rails.application.routes.draw do
   end
 
   scope module: :system_admin, path: "system-admin" do
-    resources :providers, except: %i[edit update destroy]
+    resources :providers, except: %i[edit update destroy] do
+      resources :users, only: %i[new create]
+    end
   end
 
   resources :trainees, except: :destroy do

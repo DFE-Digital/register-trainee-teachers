@@ -8,6 +8,7 @@ describe User do
       expect(subject).to validate_presence_of(:first_name)
       expect(subject).to validate_presence_of(:last_name)
       expect(subject).to validate_presence_of(:email)
+      expect(subject).to validate_presence_of(:dttp_id).with_message("You must enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949")
     end
   end
 

@@ -1,0 +1,26 @@
+<%= render PageTitle::View.new(title: "users.new", has_errors: @user.errors.present?) %>
+
+<%= render GovukComponent::BackLink.new(
+      text: "Back",
+      href: provider_path(@provider)
+    ) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with model: [@provider, @user], local: true do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        Add a user for <%= @provider.name %>
+      </h1>
+
+      <%= f.govuk_text_field :first_name, label: { text: "First Name", size: "s" }, width: 20 %>
+      <%= f.govuk_text_field :last_name, label: { text: "Last Name", size: "s" }, width: 20 %>
+      <%= f.govuk_text_field :email, label: { text: "Email address", size: "s" }, width: 20 %>
+      <%= f.govuk_text_field :dttp_id, label: { text: "DTTP ID", size: "s" }, width: 20 %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
