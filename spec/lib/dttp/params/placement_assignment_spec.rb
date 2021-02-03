@@ -61,6 +61,8 @@ module Dttp
               "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
               "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{Dttp::Params::PlacementAssignment::ITT_QUALIFICATION_AIM_QTS})",
+              "dfe_programmeyear" => 1,
+              "dfe_programmelength" => 1,
               "dfe_RouteId@odata.bind" => "/dfe_routes(#{Dttp::Params::PlacementAssignment::ASSESSMENT_ONLY_DTTP_ID})",
             })
           end
@@ -85,6 +87,8 @@ module Dttp
               "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
               "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{Dttp::Params::PlacementAssignment::ITT_QUALIFICATION_AIM_QTS})",
+              "dfe_programmeyear" => 1,
+              "dfe_programmelength" => 1,
               "dfe_RouteId@odata.bind" => "/dfe_routes(#{Dttp::Params::PlacementAssignment::ASSESSMENT_ONLY_DTTP_ID})",
             })
           end
