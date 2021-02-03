@@ -6,7 +6,7 @@ module Dttp
 
     ENDPOINTS = {
       contact: "/contacts",
-      placement_assignment: "/placementassignments",
+      placement_assignment: "/dfe_placementassignments",
     }.freeze
 
     CONTACT_ENTITY_TYPE = :contact

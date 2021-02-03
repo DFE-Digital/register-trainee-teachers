@@ -15,7 +15,7 @@ module Dttp
       def initialize(trainee, contact_change_set_id = nil)
         @trainee = trainee
         @qualifying_degree = trainee.degrees.order(:created_at).first # assuming first is most relevant - TBC
-        @params = build_parms
+        @params = build_params
 
         if contact_change_set_id
           @params.merge!({
@@ -32,7 +32,7 @@ module Dttp
 
     private
 
-      def build_parms
+      def build_params
         {
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.age_range)})",
           "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{programme_subject_id(trainee.subject)})",
@@ -42,7 +42,7 @@ module Dttp
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{ACADEMIC_YEAR_2020_2021})",
           "dfe_courselevel" => COURSE_LEVEL_PG, # TODO: this can be PG (12) or UG (20).  Postgrad or undergrad. Hardcoded for now.
-          "dfe_sendforsiregistration" => true,
+          "dfe_sendforregistration" => true,
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{ITT_QUALIFICATION_AIM_QTS})",
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
