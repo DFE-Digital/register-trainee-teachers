@@ -6,8 +6,11 @@ module Dttp
 
     ENDPOINTS = {
       contact: "/contacts",
-      placement_assignment: "/placementassignments",
+      placement_assignment: "/dfe_placementassignments",
     }.freeze
+
+    CONTACT_ENTITY_TYPE = :contact
+    PLACEMENT_ASSIGNMENT_ENTITY_TYPE = :placement_assignment
 
     class Error < StandardError; end
 

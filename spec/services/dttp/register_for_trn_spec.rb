@@ -74,10 +74,6 @@ module Dttp
           contact_entity_id,
         ).and change(trainee, :placement_assignment_dttp_id).to(
           placement_assignment_entity_id,
-        ).and have_enqueued_job(ChangeTraineeStatusJob).with(
-          status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
-          entity_id: contact_entity_id,
-          entity_type: :contact,
         )
       end
     end
