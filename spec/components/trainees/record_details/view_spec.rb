@@ -9,7 +9,8 @@ module Trainees
 
       alias_method :component, :page
 
-      let(:trainee) { create(:trainee, created_at: Time.zone.today, updated_at: Time.zone.today) }
+      let(:trainee) { create(:trainee, created_at: Time.zone.today, updated_at: Time.zone.today, state: "deferred", defer_date: Time.zone.today) }
+      let(:trainee_status) { "trainee-status" }
 
       context "when trainee_id data has not been provided" do
         before do
@@ -41,6 +42,24 @@ module Trainees
 
         it "renders the trainee record created date" do
           expect(component.find(summary_card_row_for("record-created"))).to have_text(date_for_summary_view(trainee.created_at))
+        end
+
+        it "renders the trainee status tag" do
+          expect(component.find(summary_card_row_for(trainee_status))).to have_text("deferred")
+        end
+
+        it "renders the trainee deferral date" do
+          expect(component.find(summary_card_row_for(trainee_status))).to have_text(date_for_summary_view(trainee.defer_date))
+        end
+
+        context "when trainee state is withdrawn" do
+          before do
+            trainee.state = "withdrawn"
+            trainee.withdraw_date = Time.zone.today
+          end
+          it "renders the trainee withdrawal date" do
+            expect(component.find(summary_card_row_for(trainee_status))).to have_text(date_for_summary_view(trainee.withdraw_date))
+          end
         end
       end
     end
