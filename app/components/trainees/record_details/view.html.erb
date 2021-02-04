@@ -8,14 +8,14 @@
       action: govuk_link_to('Change<span class="govuk-visually-hidden"> trainee ID</span>'.html_safe, edit_trainee_trainee_id_path(trainee)),
     },
     trn_row,
+    trainee_status_row,
     {
       key: "Last updated",
       value: last_updated_date,
     },
-
     {
       key: "Record created",
       value: date_for_summary_view(trainee.created_at),
     },
-  ])
+  ].compact)
 %>

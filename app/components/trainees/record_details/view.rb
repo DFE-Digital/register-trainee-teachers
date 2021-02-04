@@ -39,6 +39,23 @@ module Trainees
         end
       end
 
+      def trainee_status_row
+        return unless trainee.deferred? || trainee.withdrawn?
+
+        {
+          key: "Trainee status",
+          value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + trainee_status_date,
+        }
+      end
+
+      def trainee_status_date
+        status_date = trainee.deferred? ? trainee.defer_date : trainee.withdraw_date
+        return unless status_date
+
+        status_date_prefix = trainee.deferred? ? "Deferral date: " : "Withdrawal date: "
+        status_date_prefix + date_for_summary_view(status_date)
+      end
+
     private
 
       def render_text_with_hint(date)

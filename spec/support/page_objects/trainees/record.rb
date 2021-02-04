@@ -8,7 +8,7 @@ module PageObjects
       element :timeline_tab, "a", text: "Timeline"
 
       element :trainee_name, ".govuk-heading-xl"
-      element :trn_status, ".govuk-tag.trainee-status"
+      element :trn_status, ".govuk-tag.trainee-status", match: :first
 
       element :record_outcome, ".govuk-button"
       element :withdraw, ".govuk-link.withdraw"

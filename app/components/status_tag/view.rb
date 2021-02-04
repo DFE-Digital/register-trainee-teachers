@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class StatusTag::View < ViewComponent::Base
-  def initialize(trainee:)
+class StatusTag::View < GovukComponent::Base
+  def initialize(trainee:, classes: "")
+    super(classes: classes)
     @trainee = trainee
   end
 
@@ -26,5 +27,9 @@ private
       deferred: "yellow",
       withdrawn: "red",
     }[trainee.state.to_sym]
+  end
+
+  def default_classes
+    %w[trainee-status]
   end
 end
