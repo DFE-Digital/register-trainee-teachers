@@ -53,7 +53,7 @@ en:
     page_titles:
       personas: Personas
       pages:
-        accessibility: Accessibility
+        accessibility: Accessibility statement
         cookies: Cookies on Register trainee teachers
         data_requirements: Data requirements
         privacy_policy: How we use your personal data when you use Register trainee teachers
@@ -238,7 +238,7 @@ en:
               invalid: You must enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e
         user:
           attributes:
-            first_name: 
+            first_name:
               blank: "You must enter the user's first name"
             last_name:
               blank: "You must enter the user's last name"
