@@ -9,9 +9,6 @@
 
 .moj-filter-layout__content {
   overflow-x: hidden;
-  .moj-action-bar {
-    height: 60px;
-  }
 }
 
 .moj-action-bar__filter {
@@ -39,7 +36,7 @@
 }
 
 .moj-filter__header {
-  background: govuk-colour('white');
+  background: govuk-colour("white");
   box-shadow: none;
   border: 1px solid $govuk-border-colour;
   border-bottom: 0;

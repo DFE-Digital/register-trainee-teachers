@@ -14,7 +14,7 @@ module Trainees
         end
 
         def summary_title
-          I18n.t("components.programme_detail.title", record_type: format_record_type)
+          I18n.t("components.programme_detail.title")
         end
 
         def subject
@@ -29,6 +29,12 @@ module Trainees
           trainee.age_range
         end
 
+        def programme_type
+          return @not_provided_copy if trainee.record_type.blank?
+
+          trainee.record_type.humanize
+        end
+
         def programme_start_date
           return @not_provided_copy if trainee.programme_start_date.blank?
 
@@ -39,12 +45,6 @@ module Trainees
           return @not_provided_copy if trainee.programme_end_date.blank?
 
           date_for_summary_view(trainee.programme_end_date)
-        end
-
-      private
-
-        def format_record_type
-          trainee.record_type.humanize
         end
       end
     end

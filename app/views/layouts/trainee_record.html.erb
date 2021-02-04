@@ -11,7 +11,7 @@
   <%= render Trainees::RecordHeader::View.new(trainee: @trainee) %>
 
   <%= render TabNavigation::View.new(items: [
-    { name: "Training details", url: trainee_path(@trainee) },
+    { name: "About their training", url: trainee_path(@trainee) },
     { name: "Personal details and education", url: trainee_personal_details_path(@trainee) },
     { name: "Timeline", url: trainee_timeline_path(@trainee) },
   ]) %>

@@ -10,23 +10,6 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
-  scenario "can filter by route" do
-    when_i_filter_by_route("assessment_only")
-    then_only_assessment_only_trainees_are_visible
-    then_the_tag_is_visible_for("Assessment only")
-    then_the_checkbox_should_still_be_checked_for("assessment_only")
-    when_i_unfilter_by_route("assessment_only")
-    then_all_trainees_are_visible
-    when_i_filter_by_route("provider_led")
-    then_the_tag_is_visible_for("Provider-led")
-    then_only_provider_led_trainees_are_visible
-    when_i_filter_by_route("assessment_only")
-    then_all_trainees_are_visible
-    then_the_tag_is_visible_for("Assessment only", "Provider-led")
-    when_i_remove_a_tag_for("Assessment only")
-    then_only_provider_led_trainees_are_visible
-  end
-
   scenario "can filter by subject" do
     when_i_filter_by_subject("Biology")
     then_only_biology_trainees_are_visible
@@ -39,14 +22,13 @@ RSpec.feature "Filtering trainees" do
   end
 
   scenario "can filter by route and subject" do
-    when_i_filter_by_route("assessment_only")
     when_i_filter_by_subject("Biology")
     then_only_assessment_only_biology_trainees_are_visible
   end
 
   scenario "can clear filters" do
-    when_i_filter_by_route("assessment_only")
-    then_only_assessment_only_trainees_are_visible
+    when_i_filter_by_subject("Biology")
+    then_only_assessment_only_biology_trainees_are_visible
     when_i_clear_filters
     then_all_trainees_are_visible
   end

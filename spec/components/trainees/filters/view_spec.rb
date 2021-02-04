@@ -10,8 +10,7 @@ RSpec.describe Trainees::Filters::View do
     let(:filters) { nil }
 
     it "all of the checkboxes are unchecked" do
-      expect(result.css("#record_type-assessment_only").attr("checked")).to eq(nil)
-      expect(result.css("#record_type-provider_led").attr("checked")).to eq(nil)
+      expect(result.css("#state-draft").attr("checked")).to eq(nil)
     end
 
     it "does not show a 'Selected filters' dialogue" do
@@ -20,11 +19,11 @@ RSpec.describe Trainees::Filters::View do
   end
 
   context "when checkboxes have been pre-selected" do
-    let(:filters) { { record_type: %w[assessment_only] }.with_indifferent_access }
+    let(:filters) { { state: %w[draft] }.with_indifferent_access }
 
     it "marks the correct ones as selected" do
-      expect(result.css("#record_type-assessment_only").attr("checked").value).to eq("checked")
-      expect(result.css("#record_type-provider_led").attr("checked")).to eq(nil)
+      expect(result.css("#state-draft").attr("checked").value).to eq("checked")
+      expect(result.css("#state-submitted_for_trn").attr("checked")).to eq(nil)
     end
 
     it "shows a 'Selected filters' dialogue" do

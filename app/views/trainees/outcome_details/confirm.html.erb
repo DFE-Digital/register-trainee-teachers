@@ -2,7 +2,7 @@
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
-    text: 'Back',
+    text: t('back_to_record'),
     href: edit_trainee_outcome_details_outcome_date_path(@trainee)
   ) %>
 <% end %>
@@ -12,7 +12,7 @@
     <span class="govuk-caption-l">
       <%= trainee_name(@trainee) %>
     </span>
-    <h1 class="govuk-heading-l">Check outcome details</h1>
+    <h1 class="govuk-heading-l">Check QTS details</h1>
   </div>
 </div>
 
@@ -22,7 +22,7 @@
 
     <%= form_with url: trainee_qts_recommendations_path, method: :post, local: true do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
-      <%= f.govuk_submit "Recommend for QTS" %>
+      <%= f.govuk_submit "Recommend trainee for QTS" %>
     <%- end -%>
   </div>
 </div>

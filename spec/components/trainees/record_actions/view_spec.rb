@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Trainees::RecordActions::View do
   let(:trainee) { build(:trainee, trait, id: 1) }
-  let(:button_text) { "Recommend for QTS" }
+  let(:button_text) { "Recommend trainee for QTS" }
 
   subject { render_inline(described_class.new(trainee)).text }
 

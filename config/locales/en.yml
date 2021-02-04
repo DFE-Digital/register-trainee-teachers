@@ -1,5 +1,7 @@
 en:
   back: Back
+  back_to_record: Back to record
+  back_to_draft: Back to draft record
   service_name: Register trainee teachers
   cancel: Cancel and return to record
   change: Change
@@ -46,7 +48,7 @@ en:
       flash:
         diversity: disclosure
     programme_detail:
-      title: "%{record_type} programme details"
+      title: "Programme details"
     degrees:
       add_a_degree: Add a degree
       add_another_degree: Add another degree
@@ -92,7 +94,7 @@ en:
           edit: When did they meet the standards?
           confirm: Check outcome details
         outcome_details:
-          confirm: Check outcome details
+          confirm: Check QTS details
           recommended: Trainee recommended for QTS
         personal_details:
           edit: Trainee personal details
@@ -137,7 +139,7 @@ en:
         withdraw: withdraw
         reinstate: Reinstate
         this_trainee: this trainee
-        recommend_for_qts: Recommend for QTS
+        recommend_for_qts: Recommend trainee for QTS
         status_summary:
           submitted_for_trn: This record is pending a TRN
           deferred: This record is deferred

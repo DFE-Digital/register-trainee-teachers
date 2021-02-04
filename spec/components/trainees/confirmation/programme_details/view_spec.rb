@@ -9,16 +9,15 @@ module Trainees
         alias_method :component, :page
 
         context "when data has not been provided" do
-          let(:trainee) { build(:trainee, id: 1, subject: nil, age_range: nil, programme_start_date: nil) }
-
+          let(:trainee) { build(:trainee, id: 1, record_type: nil, subject: nil, age_range: nil, programme_start_date: nil) }
           before do
             render_inline(View.new(trainee: trainee))
           end
 
-          it "tells the user that no data has been entered for subject, age range, programme start date and programme end date" do
+          it "tells the user that no data has been entered for programme type, subject, age range, programme start date and programme end date" do
             found = component.find_all(".govuk-summary-list__row")
 
-            expect(found.size).to eq(4)
+            expect(found.size).to eq(5)
 
             found.each do |row|
               expect(row.find(".govuk-summary-list__value")).to have_text(t("components.confirmation.not_provided"))
@@ -31,6 +30,11 @@ module Trainees
 
           before do
             render_inline(View.new(trainee: trainee))
+          end
+
+          it "renders the programme type" do
+            expect(component.find(".govuk-summary-list__row.type-of-course .govuk-summary-list__value"))
+              .to have_text(trainee.record_type.humanize)
           end
 
           it "renders the subject" do

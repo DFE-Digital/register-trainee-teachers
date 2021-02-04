@@ -11,7 +11,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        Trainee recommended for QTS
+        <%= trainee_name(@trainee) %> recommended for QTS
       </h1>
     </div>
     <p class="govuk-body">
@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<p class="govuk-body govuk-!-margin-bottom-9"><%= govuk_link_to("Check trainee statuses from your list of records.", trainees_path) %></p>
+<p class="govuk-body govuk-!-margin-bottom-9"><%= govuk_link_to("Check trainee statuses from your list of records", trainees_path) %></p>
 
 <%= render FeedbackLink::View.new(
   enabled: Settings.features.enable_feedback_link,

@@ -3,6 +3,8 @@
 require "rails_helper"
 
 feature "Recommending for QTS", type: :feature do
+  include TraineeHelper
+
   scenario "redirects to the 'Recommended for QTS' page" do
     given_i_am_authenticated
     and_a_trainee_exists_ready_for_qts
@@ -12,7 +14,7 @@ feature "Recommending for QTS", type: :feature do
   end
 
   def then_the_trainee_is_recommended_for_qts
-    expect(page).to have_text("Trainee recommended for QTS")
+    expect(page).to have_text("#{trainee_name(@trainee)} recommended for QTS")
   end
 
   def and_a_trainee_exists_ready_for_qts
