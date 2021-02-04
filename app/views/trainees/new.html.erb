@@ -17,8 +17,8 @@
         Add a trainee
       </h1>
 
-      <%= f.govuk_radio_buttons_fieldset(:record_type, legend: { size: "s", text: "What type of route is this?", tag: "span"} ) do %>
-        <%= f.govuk_radio_button :record_type, :assessment_only, label: { text: "Assessment Only" }, link_errors: true %>
+      <%= f.govuk_radio_buttons_fieldset(:record_type, legend: { size: "s", text: "What type of training are they doing?", tag: "span"} ) do %>
+        <%= f.govuk_radio_button :record_type, :assessment_only, label: { text: "Assessment only" }, link_errors: true %>
         <%= f.govuk_radio_button :record_type, :other, label: { text: "Other" } %>
       <% end %>
 
