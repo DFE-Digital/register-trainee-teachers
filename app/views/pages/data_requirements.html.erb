@@ -3,7 +3,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
     text: 'Back',
-    href: "/home"
+    href: root_path
   ) %>
 <% end %>
 
@@ -36,7 +36,7 @@
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
     <div class="govuk-heading-m">Diversity information (optional)</div>
-    
+
     <div class="govuk-inset-text"> If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
 
     <ul class="govuk-list">
@@ -70,7 +70,7 @@
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
     <div class="govuk-heading-m">Course or programme details</div>
-    
+
     <ul class="govuk-list">
       <li>Subject</li>
       <li>Age range</li>
