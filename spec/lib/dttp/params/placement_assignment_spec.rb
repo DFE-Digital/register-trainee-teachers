@@ -58,7 +58,6 @@ module Dttp
               "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
               "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
               "dfe_sendforregistration" => true,
-              "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
               "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{Dttp::Params::PlacementAssignment::ITT_QUALIFICATION_AIM_QTS})",
               "dfe_programmeyear" => 1,
@@ -84,7 +83,6 @@ module Dttp
               "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
               "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
               "dfe_sendforregistration" => true,
-              "dfe_sendforregistrationdate" => time_now_in_zone.iso8601,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
               "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{Dttp::Params::PlacementAssignment::ITT_QUALIFICATION_AIM_QTS})",
               "dfe_programmeyear" => 1,
@@ -101,14 +99,6 @@ module Dttp
             expect(subject).not_to include(
               { "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}" },
             )
-          end
-
-          it "doesn't include sendforregistrationdate" do
-            Timecop.freeze do
-              expect(subject).not_to include(
-                { "dfe_sendforregistrationdate" => Time.zone.now.iso8601 },
-              )
-            end
           end
         end
 

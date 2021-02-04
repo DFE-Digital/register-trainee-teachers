@@ -20,7 +20,6 @@ module Dttp
         if contact_change_set_id
           @params.merge!({
             "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
-            "dfe_sendforregistrationdate" => Time.zone.now.iso8601,
             "dfe_RouteId@odata.bind" => "/dfe_routes(#{ASSESSMENT_ONLY_DTTP_ID})",
           })
         end
