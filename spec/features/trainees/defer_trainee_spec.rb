@@ -50,7 +50,7 @@ feature "Deferring a trainee", type: :feature do
       end
 
       scenario "and filling out an invalid date displays the correct error" do
-        defer_date_page.set_date_fields("defer_date", "32/01/2020")
+        deferral_page.set_date_fields("defer_date", "32/01/2020")
         and_i_continue
         then_i_see_the_error_message_for_invalid_date
       end
@@ -68,7 +68,7 @@ feature "Deferring a trainee", type: :feature do
 
   def and_i_enter_a_valid_date
     Faker::Date.in_date_period.tap do |defer_date|
-      defer_date_page.set_date_fields(:defer_date, defer_date.strftime("%d/%m/%Y"))
+      deferral_page.set_date_fields(:defer_date, defer_date.strftime("%d/%m/%Y"))
     end
   end
 
@@ -81,7 +81,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def when_i_choose(option)
-    defer_date_page.choose(option)
+    deferral_page.choose(option)
   end
 
   def when_i_choose_another_day
@@ -116,22 +116,6 @@ feature "Deferring a trainee", type: :feature do
 
   def given_a_trainee_exists_to_be_deferred
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample)
-  end
-
-  def record_page
-    @record_page ||= PageObjects::Trainees::Record.new
-  end
-
-  def defer_date_page
-    @edit_defer_date_page ||= PageObjects::Trainees::Deferral.new
-  end
-
-  def deferral_confirmation_page
-    @deferral_confirmation_page ||= PageObjects::Trainees::ConfirmDeferral.new
-  end
-
-  def deferral_page
-    @deferral_page ||= PageObjects::Trainees::Deferral.new
   end
 
   def and_the_defer_date_is_updated

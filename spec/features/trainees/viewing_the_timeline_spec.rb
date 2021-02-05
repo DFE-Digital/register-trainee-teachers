@@ -30,12 +30,4 @@ feature "View the timeline" do
   def then_i_should_see_the_trainee_timeline
     expect(timeline_page).to be_displayed(id: trainee.slug)
   end
-
-  def record_page
-    @record_page ||= PageObjects::Trainees::Record.new
-  end
-
-  def timeline_page
-    @timeline_page ||= PageObjects::Trainees::Timeline.new
-  end
 end

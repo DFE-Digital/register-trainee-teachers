@@ -2,9 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "view pages" do
-  let(:sign_in_page) { PageObjects::SignIn.new }
-
+feature "view pages" do
   before do
     sign_in_page.load
   end

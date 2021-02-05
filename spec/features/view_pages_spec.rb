@@ -83,20 +83,4 @@ private
     expect(privacy_policy_page).to be_displayed
     expect(privacy_policy_page.page_heading).to have_text(t("components.page_titles.pages.privacy_policy"))
   end
-
-  def start_page
-    @start_page ||= PageObjects::Start.new
-  end
-
-  def accessibility_page
-    @accessibility_page ||= PageObjects::Accessibility.new
-  end
-
-  def cookies_page
-    @cookies_page ||= PageObjects::Cookies.new
-  end
-
-  def privacy_policy_page
-    @privacy_policy_page ||= PageObjects::PrivacyPolicy.new
-  end
 end

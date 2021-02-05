@@ -106,6 +106,10 @@ module Features
       @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeId.new
     end
 
+    def confirm_trainee_id_page
+      @confirm_trainee_id_page ||= PageObjects::Trainees::ConfirmTraineeId.new
+    end
+
     def outcome_date_edit_page
       @outcome_date_page ||= PageObjects::Trainees::EditOutcomeDate.new
     end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+
 describe "A user authenticates via DfE Sign-in" do
   scenario "signing in successfully" do
     given_i_am_registered_as_a_user

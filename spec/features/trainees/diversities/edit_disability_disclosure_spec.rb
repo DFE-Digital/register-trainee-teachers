@@ -33,31 +33,28 @@ feature "edit disability disclosure", type: :feature do
 private
 
   def and_i_am_on_the_disability_disclosure_page
-    @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
-    @disability_disclosure_page.load(id: trainee.slug)
+    disability_disclosure_page.load(id: trainee.slug)
   end
 
   def and_i_choose_to_disclose
-    @disability_disclosure_page.disabled.choose
+    disability_disclosure_page.disabled.choose
   end
 
   def and_i_choose_not_to_disclose
-    @disability_disclosure_page.public_send(%w[disability_not_provided no_disability].sample).choose
+    disability_disclosure_page.public_send(%w[disability_not_provided no_disability].sample).choose
   end
 
   def and_i_submit_the_form
-    @disability_disclosure_page.submit_button.click
+    disability_disclosure_page.submit_button.click
   end
 
   def and_confirm_my_details
-    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.slug)
-    @confirm_page.submit_button.click
+    expect(diversities_confirm_page).to be_displayed(id: trainee.slug)
+    diversities_confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_disabilities_page
-    @disabilities_page ||= PageObjects::Trainees::Diversities::Disabilities.new
-    expect(@disabilities_page).to be_displayed(id: trainee.slug)
+    expect(disabilities_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_disability_disclosure_is_updated

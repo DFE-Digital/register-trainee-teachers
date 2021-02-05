@@ -37,8 +37,7 @@ feature "edit Trainee ID" do
   end
 
   def when_i_confirm
-    confirm_page = PageObjects::Trainees::ConfirmTraineeId.new
-    confirm_page.confirm.click
+    confirm_trainee_id_page.confirm.click
   end
 
   def then_i_am_redirected_to_the_trainee_edit_page
@@ -48,9 +47,5 @@ feature "edit Trainee ID" do
   def then_the_trainee_id_is_updated
     when_i_visit_the_edit_trainee_id_page
     expect(trainee_id_edit_page.trainee_id_input.value).to eq(new_trainee_id)
-  end
-
-  def confirm_trainee_id_page
-    @confirm_page ||= PageObjects::Trainees::ConfirmTraineeId.new
   end
 end
