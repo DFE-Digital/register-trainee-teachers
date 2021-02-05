@@ -18,7 +18,7 @@ describe TraineesController do
       end
 
       it "saves the origin page" do
-        expect(session["origin_pages_for_#{trainee.id}"]).to eq(%w[trainee])
+        expect(session["origin_pages_for_#{trainee.slug}"]).to eq(["/trainees/#{trainee.slug}"])
       end
     end
 

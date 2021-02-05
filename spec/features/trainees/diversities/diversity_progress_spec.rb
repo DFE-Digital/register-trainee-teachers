@@ -15,6 +15,7 @@ feature "completing the diversity section", type: :feature do
 
   scenario "renders an 'in progress' status when diversity information partially provided" do
     given_valid_diversity_information
+    given_i_visited_the_review_draft_page
     when_i_visit_the_diversity_confirmation_page
     and_unconfirm_my_details
     and_i_visit_the_record_page

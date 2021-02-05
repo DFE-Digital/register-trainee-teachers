@@ -6,6 +6,7 @@ feature "programme details", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists
+    given_i_visited_the_review_draft_page
   end
 
   describe "tracking the progress" do
@@ -51,26 +52,25 @@ feature "programme details", type: :feature do
   end
 
   def when_i_visit_the_programme_details_page
-    @programme_details_page ||= PageObjects::Trainees::ProgrammeDetails.new
-    @programme_details_page.load(id: trainee.slug)
+    programme_details_page.load(id: trainee.slug)
   end
 
   def and_i_enter_valid_parameters
-    @programme_details_page.subject.select(template.subject)
-    @programme_details_page.set_date_fields("programme_start_date", template.programme_start_date.strftime("%d/%m/%Y"))
-    @programme_details_page.set_date_fields("programme_end_date", template.programme_end_date.strftime("%d/%m/%Y"))
+    programme_details_page.subject.select(template.subject)
+    programme_details_page.set_date_fields("programme_start_date", template.programme_start_date.strftime("%d/%m/%Y"))
+    programme_details_page.set_date_fields("programme_end_date", template.programme_end_date.strftime("%d/%m/%Y"))
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
 
     if age_range[:option] == :main
-      @programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}").choose
+      programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}").choose
     else
-      @programme_details_page.main_age_range_other.choose
-      @programme_details_page.additional_age_range.select(template.age_range)
+      programme_details_page.main_age_range_other.choose
+      programme_details_page.additional_age_range.select(template.age_range)
     end
   end
 
   def and_i_submit_the_form
-    @programme_details_page.submit_button.click
+    programme_details_page.submit_button.click
   end
 
   def and_i_visit_the_record_page
@@ -84,21 +84,21 @@ feature "programme details", type: :feature do
   def and_the_programme_details_are_updated
     when_i_visit_the_programme_details_page
 
-    expect(@programme_details_page.subject.value).to eq(template.subject)
-    expect(@programme_details_page.programme_start_date_day.value).to eq(template.programme_start_date.day.to_s)
-    expect(@programme_details_page.programme_start_date_month.value).to eq(template.programme_start_date.month.to_s)
-    expect(@programme_details_page.programme_start_date_year.value).to eq(template.programme_start_date.year.to_s)
-    expect(@programme_details_page.programme_end_date_day.value).to eq(template.programme_end_date.day.to_s)
-    expect(@programme_details_page.programme_end_date_month.value).to eq(template.programme_end_date.month.to_s)
-    expect(@programme_details_page.programme_end_date_year.value).to eq(template.programme_end_date.year.to_s)
+    expect(programme_details_page.subject.value).to eq(template.subject)
+    expect(programme_details_page.programme_start_date_day.value).to eq(template.programme_start_date.day.to_s)
+    expect(programme_details_page.programme_start_date_month.value).to eq(template.programme_start_date.month.to_s)
+    expect(programme_details_page.programme_start_date_year.value).to eq(template.programme_start_date.year.to_s)
+    expect(programme_details_page.programme_end_date_day.value).to eq(template.programme_end_date.day.to_s)
+    expect(programme_details_page.programme_end_date_month.value).to eq(template.programme_end_date.month.to_s)
+    expect(programme_details_page.programme_end_date_year.value).to eq(template.programme_end_date.year.to_s)
 
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
 
     if age_range[:option] == :main
-      expect(@programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}")).to be_checked
+      expect(programme_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}")).to be_checked
     else
-      expect(@programme_details_page.main_age_range_other).to be_checked
-      expect(@programme_details_page.additional_age_range.value).to eq(template.age_range)
+      expect(programme_details_page.main_age_range_other).to be_checked
+      expect(programme_details_page.additional_age_range.value).to eq(template.age_range)
     end
   end
 

@@ -6,7 +6,8 @@ feature "edit diversity disclosure", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(diversity_disclosure: nil)
-    when_i_visit_the_diversity_disclosure_page
+    given_i_visited_the_review_draft_page
+    and_i_am_on_the_diversity_disclosure_page
   end
 
   scenario "choosing to disclose" do
@@ -29,32 +30,29 @@ feature "edit diversity disclosure", type: :feature do
     then_i_see_error_messages
   end
 
-  def when_i_visit_the_diversity_disclosure_page
-    @disclosure_page ||= PageObjects::Trainees::Diversities::Disclosure.new
-    @disclosure_page.load(id: trainee.slug)
+  def and_i_am_on_the_diversity_disclosure_page
+    diversity_disclosure_page.load(id: trainee.slug)
   end
 
   def and_i_choose_to_disclose
-    @disclosure_page.yes.choose
+    diversity_disclosure_page.yes.choose
   end
 
   def and_i_choose_not_to_disclose
-    @disclosure_page.no.choose
+    diversity_disclosure_page.no.choose
   end
 
   def and_i_submit_the_form
-    @disclosure_page.submit_button.click
+    diversity_disclosure_page.submit_button.click
   end
 
   def and_confirm_my_details
-    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.slug)
-    @confirm_page.submit_button.click
+    expect(diversities_confirm_page).to be_displayed(id: trainee.slug)
+    diversities_confirm_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_ethnic_group_page
-    @ethnic_group ||= PageObjects::Trainees::Diversities::EthnicGroup.new
-    expect(@ethnic_group).to be_displayed(id: trainee.slug)
+    expect(ethnic_group_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_diversity_disclosure_is_updated

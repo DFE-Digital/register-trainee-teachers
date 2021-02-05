@@ -19,15 +19,16 @@ RSpec.feature "Adding a degree" do
     scenario "the user enters invalid details" do
       and_i_visit_the_review_draft_page
       and_i_click_the_degree_on_the_review_draft_page
-      when_i_visit_the_type_page
-      and_i_click_the_continue_button_on_the_type_page
-      then_i_see_the_error_summary_for_type_page
+      when_i_visit_the_degree_type_page
+      and_i_click_the_continue_button_on_the_degree_type_page
+      then_i_see_the_error_summary_for_degree_type_page
     end
   end
 
   describe "UK Route" do
     context "the user enters valid details " do
       background do
+        given_i_visited_the_review_draft_page
         and_i_have_selected_uk_route
         when_i_visit_the_degree_details_page
         and_i_fill_in_the_form
@@ -81,6 +82,7 @@ RSpec.feature "Adding a degree" do
 
   describe "Non-UK Route" do
     scenario "the user enters valid details on Non-UK degree details page" do
+      given_i_visited_the_review_draft_page
       and_i_have_selected_non_uk_route
       when_i_visit_the_degree_details_page
       and_i_fill_in_the_form
@@ -114,16 +116,16 @@ private
     review_draft_page.degree_details.link.click
   end
 
-  def when_i_visit_the_type_page
-    type_page.load(trainee_id: trainee.slug)
+  def when_i_visit_the_degree_type_page
+    degree_type_page.load(trainee_id: trainee.slug)
   end
 
-  def and_i_click_the_continue_button_on_the_type_page
-    type_page.continue.click
+  def and_i_click_the_continue_button_on_the_degree_type_page
+    degree_type_page.continue.click
   end
 
-  def then_i_see_the_error_summary_for_type_page
-    expect(type_page.error_summary).to be_visible
+  def then_i_see_the_error_summary_for_degree_type_page
+    expect(degree_type_page.error_summary).to be_visible
   end
 
   def and_i_click_the_continue_button_on_the_degree_details_page
@@ -193,14 +195,6 @@ private
 
   def and_i_click_continue
     confirm_details_page.continue_button.click
-  end
-
-  def degree_details_page
-    @degree_details_page ||= PageObjects::Trainees::NewDegreeDetails.new
-  end
-
-  def type_page
-    @type_page ||= PageObjects::Trainees::DegreeType.new
   end
 
   def then_the_degree_status_should_be(status)

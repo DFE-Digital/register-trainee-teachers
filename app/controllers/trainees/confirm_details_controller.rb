@@ -2,14 +2,12 @@
 
 module Trainees
   class ConfirmDetailsController < ApplicationController
-    include Breadcrumbable
-
     helper_method :trainee_section_key
     helper_method :confirm_section_title
 
     def show
       authorize trainee
-      save_origin_page_for(trainee)
+      page_tracker.save_as_origin!
       @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
       @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
     end
@@ -24,7 +22,7 @@ module Trainees
 
       flash[:success] = "Trainee #{flash_message_title} updated"
 
-      redirect_to OriginPage.new(trainee, session, request).path
+      redirect_to page_tracker.last_origin_page_path
     end
 
   private

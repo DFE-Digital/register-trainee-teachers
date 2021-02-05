@@ -21,16 +21,15 @@ feature "edit Trainee ID" do
   end
 
   def when_i_visit_the_edit_trainee_id_page
-    @edit_page ||= PageObjects::Trainees::EditTraineeId.new
-    @edit_page.load(trainee_id: trainee.slug)
+    trainee_id_edit_page.load(trainee_id: trainee.slug)
   end
 
   def when_i_change_the_trainee_id
-    @edit_page.trainee_id_input.set(new_trainee_id)
+    trainee_id_edit_page.trainee_id_input.set(new_trainee_id)
   end
 
   def when_i_click_continue
-    @edit_page.continue.click
+    trainee_id_edit_page.continue.click
   end
 
   def then_i_am_taken_to_the_confirmation_page
@@ -48,7 +47,7 @@ feature "edit Trainee ID" do
 
   def then_the_trainee_id_is_updated
     when_i_visit_the_edit_trainee_id_page
-    expect(@edit_page.trainee_id_input.value).to eq(new_trainee_id)
+    expect(trainee_id_edit_page.trainee_id_input.value).to eq(new_trainee_id)
   end
 
   def confirm_trainee_id_page

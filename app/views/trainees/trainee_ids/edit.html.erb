@@ -1,10 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.trainee_ids.edit") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: 'Back',
-    href: trainee_path(@trainee)
-  ) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <%= form_with model: @trainee, url: trainee_trainee_id_path, local: true do |f| %>

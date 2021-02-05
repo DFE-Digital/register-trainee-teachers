@@ -6,10 +6,11 @@ feature "edit disability disclosure", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(disability_disclosure: nil)
+    given_i_visited_the_review_draft_page
+    and_i_am_on_the_disability_disclosure_page
   end
 
   scenario "choosing to disclose a disability" do
-    when_i_visit_the_disability_disclosure_page
     and_i_choose_to_disclose
     and_i_submit_the_form
     then_i_am_redirected_to_the_disabilities_page
@@ -17,7 +18,6 @@ feature "edit disability disclosure", type: :feature do
   end
 
   scenario "choosing not to disclose a disability" do
-    when_i_visit_the_disability_disclosure_page
     and_i_choose_not_to_disclose
     and_i_submit_the_form
     and_confirm_my_details
@@ -26,14 +26,13 @@ feature "edit disability disclosure", type: :feature do
   end
 
   scenario "submitting with no option selected" do
-    when_i_visit_the_disability_disclosure_page
     and_i_submit_the_form
     then_i_see_error_messages
   end
 
 private
 
-  def when_i_visit_the_disability_disclosure_page
+  def and_i_am_on_the_disability_disclosure_page
     @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
     @disability_disclosure_page.load(id: trainee.slug)
   end

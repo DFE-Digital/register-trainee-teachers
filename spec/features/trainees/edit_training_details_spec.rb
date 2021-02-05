@@ -9,6 +9,7 @@ feature "edit training details" do
 
   scenario "edit with valid parameters" do
     given_a_trainee_exists
+    given_i_visited_the_review_draft_page
     when_i_visit_the_training_details_page
     and_i_update_the_training_details
     then_i_am_redirected_to_the_review_draft_page
@@ -16,17 +17,16 @@ feature "edit training details" do
   end
 
   def when_i_visit_the_training_details_page
-    @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
-    @training_details_page.load(id: trainee.slug)
+    training_details_page.load(id: trainee.slug)
   end
 
   def and_i_update_the_training_details
-    @training_details_page.trainee_id.set(new_trainee_id)
-    @training_details_page.submit_button.click
+    training_details_page.trainee_id.set(new_trainee_id)
+    training_details_page.submit_button.click
   end
 
   def and_the_training_details_are_updated
     when_i_visit_the_training_details_page
-    expect(@training_details_page.trainee_id.value).to eq(new_trainee_id)
+    expect(training_details_page.trainee_id.value).to eq(new_trainee_id)
   end
 end

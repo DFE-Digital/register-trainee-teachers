@@ -6,6 +6,7 @@ feature "edit disability details", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists
+    given_i_visited_the_review_draft_page
     and_disabilities_exist_in_the_system
     when_i_visit_the_disability_details_page
   end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class TraineesController < ApplicationController
-  include Breadcrumbable
-
   before_action :ensure_trainee_is_not_draft!, only: :show
 
   def index
@@ -20,7 +18,7 @@ class TraineesController < ApplicationController
 
   def show
     authorize trainee
-    save_origin_page_for(trainee)
+    page_tracker.save_as_origin!
     render layout: "trainee_record"
   end
 
@@ -45,7 +43,7 @@ class TraineesController < ApplicationController
   def update
     authorize trainee
     trainee.update!(trainee_params)
-    redirect_to OriginPage.new(trainee, session, request).path
+    redirect_to page_tracker.last_origin_page_path
   end
 
 private
