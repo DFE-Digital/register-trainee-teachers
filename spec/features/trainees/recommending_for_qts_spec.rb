@@ -23,20 +23,12 @@ feature "Recommending for QTS", type: :feature do
   end
 
   def when_i_record_the_outcome_date
-    outcome_date_page.load(trainee_id: trainee.slug)
-    outcome_date_page.choose("Today")
-    outcome_date_page.continue.click
+    outcome_date_edit_page.load(trainee_id: trainee.slug)
+    outcome_date_edit_page.choose("Today")
+    outcome_date_edit_page.continue.click
   end
 
   def and_i_confirm_the_outcome_details
-    confirm_page.continue.click
-  end
-
-  def outcome_date_page
-    @outcome_date_page ||= PageObjects::Trainees::EditOutcomeDate.new
-  end
-
-  def confirm_page
-    @confirm_page ||= PageObjects::Trainees::ConfirmOutcomeDetails.new
+    confirm_outcome_details_page.continue.click
   end
 end

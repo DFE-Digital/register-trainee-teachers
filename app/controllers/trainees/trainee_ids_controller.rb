@@ -14,6 +14,7 @@ module Trainees
 
     def confirm
       authorize trainee
+      page_tracker.save_as_origin!
     end
 
   private

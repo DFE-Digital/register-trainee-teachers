@@ -34,7 +34,11 @@ module Trainees
 
       def redirect_to_relevant_step
         if trainee.not_provided_ethnic_group?
-          redirect_to(edit_trainee_diversity_disability_disclosure_path(trainee))
+          if trainee.disability_disclosure.present?
+            redirect_to(page_tracker.last_origin_page_path)
+          else
+            redirect_to(edit_trainee_diversity_disability_disclosure_path(trainee))
+          end
         else
           redirect_to(edit_trainee_diversity_ethnic_background_path(trainee))
         end

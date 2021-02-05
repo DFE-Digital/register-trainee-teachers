@@ -14,7 +14,7 @@ module DynamicBackLink
     end
 
     def path
-      OriginPage.new(trainee, session, request).path
+      PageTracker.new(trainee_slug: trainee.slug, session: session, request: request).previous_page_path
     end
   end
 end

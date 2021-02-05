@@ -20,14 +20,14 @@ feature "Recording a training outcome", type: :feature do
   scenario "choosing today records the outcome" do
     when_i_choose_today
     and_i_submit_the_form
-    then_i_am_redirected_to_the_confirm_page
+    then_i_am_redirected_to_the_confirm_outcome_details_page
     and_the_outcome_date_is_updated
   end
 
   scenario "choosing yesterday records the outcome" do
     when_i_choose_yesterday
     and_i_submit_the_form
-    then_i_am_redirected_to_the_confirm_page
+    then_i_am_redirected_to_the_confirm_outcome_details_page
     and_the_outcome_date_is_updated
   end
 
@@ -42,7 +42,7 @@ feature "Recording a training outcome", type: :feature do
     end
 
     scenario "and filling out an invalid date displays the correct error" do
-      outcome_date_page.set_date_fields("outcome_date", "32/01/2020")
+      outcome_date_edit_page.set_date_fields("outcome_date", "32/01/2020")
       and_i_submit_the_form
       then_i_see_the_error_message_for("invalid")
     end
@@ -50,7 +50,7 @@ feature "Recording a training outcome", type: :feature do
     scenario "and filling out a valid date" do
       when_i_chose_a_specific_date
       and_i_submit_the_form
-      then_i_am_redirected_to_the_confirm_page
+      then_i_am_redirected_to_the_confirm_outcome_details_page
       and_the_outcome_date_is_updated
     end
   end
@@ -68,7 +68,7 @@ feature "Recording a training outcome", type: :feature do
   def when_i_chose_a_specific_date
     outcome_date = Faker::Date.in_date_period
     stub_dttp_placement_assignment_request(outcome_date: outcome_date, status: 204)
-    outcome_date_page.set_date_fields("outcome_date", outcome_date.strftime("%d/%m/%Y"))
+    outcome_date_edit_page.set_date_fields("outcome_date", outcome_date.strftime("%d/%m/%Y"))
   end
 
   def and_i_am_on_the_trainee_record_page
@@ -80,11 +80,11 @@ feature "Recording a training outcome", type: :feature do
   end
 
   def when_i_choose(option)
-    outcome_date_page.choose(option)
+    outcome_date_edit_page.choose(option)
   end
 
   def and_i_submit_the_form
-    outcome_date_page.continue.click
+    outcome_date_edit_page.continue.click
   end
 
   def then_i_see_the_error_message_for(type)
@@ -99,24 +99,12 @@ feature "Recording a training outcome", type: :feature do
     )
   end
 
-  def then_i_am_redirected_to_the_confirm_page
-    expect(confirm_page).to be_displayed(id: trainee.slug)
+  def then_i_am_redirected_to_the_confirm_outcome_details_page
+    expect(confirm_outcome_details_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_outcome_date_is_updated
     trainee.reload
     expect(page).to have_text(date_for_summary_view(trainee.outcome_date))
-  end
-
-  def record_page
-    @record_page ||= PageObjects::Trainees::Record.new
-  end
-
-  def outcome_date_page
-    @edit_outcome_date_page ||= PageObjects::Trainees::EditOutcomeDate.new
-  end
-
-  def confirm_page
-    @confirm_page ||= PageObjects::Trainees::ConfirmOutcomeDetails.new
   end
 end

@@ -48,21 +48,19 @@ feature "edit ethnic background", type: :feature do
   end
 
   def when_i_visit_the_diversity_ethnic_background_page
-    @ethnic_background_page ||= PageObjects::Trainees::Diversities::EthnicBackground.new
-    @ethnic_background_page.load(id: @trainee.slug)
+    ethnic_background_page.load(id: @trainee.slug)
   end
 
   def and_i_choose_a_background(background)
-    @ethnic_background_page.public_send(background).choose
+    ethnic_background_page.public_send(background).choose
   end
 
   def and_i_submit_the_form
-    @ethnic_background_page.submit_button.click
+    ethnic_background_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_disability_disclosure_page
-    @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
-    expect(@disability_disclosure_page).to be_displayed(id: trainee.slug)
+    expect(disability_disclosure_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_diversity_ethnic_background_is_updated_with(background)

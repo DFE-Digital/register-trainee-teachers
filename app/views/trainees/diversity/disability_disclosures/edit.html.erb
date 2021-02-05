@@ -1,10 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.diversity.disability_disclosure.edit", has_errors: @disability_disclosure.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: "Back",
-    href: back_link(@trainee)
-  ) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: "Back") %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -15,7 +12,7 @@
         <%= f.govuk_radio_buttons_fieldset(:disability_disclosure, legend: { text: t("components.page_titles.trainees.diversity.disability_disclosure.edit"), tag: "h1", size: "l" }) do %>
           <% format_disability_disclosure_options(Diversities::DISABILITY_DISCLOSURE_ENUMS.values).each_with_index do |disclosure_option, index| %>
             <%= f.govuk_radio_button(
-              :disability_disclosure, 
+              :disability_disclosure,
               disclosure_option,
               label: { text: I18n.t("views.forms.disability_disclosures.labels.#{disclosure_option}") },
               link_errors: index.zero?) %>

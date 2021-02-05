@@ -6,7 +6,7 @@ RSpec.feature "Filtering trainees" do
   before do
     given_i_am_authenticated
     given_trainees_exist_in_the_system
-    when_i_visit_the_trainees_page
+    when_i_visit_the_trainee_index_page
     then_all_trainees_are_visible
   end
 
@@ -70,51 +70,47 @@ private
     Trainee.update_all(provider_id: @current_user.provider.id)
   end
 
-  def trainees_page
-    @trainees_page ||= PageObjects::Trainees::Index.new
-  end
-
-  def when_i_visit_the_trainees_page
-    trainees_page.load
-    expect(trainees_page).to be_displayed
+  def when_i_visit_the_trainee_index_page
+    trainee_index_page.load
+    expect(trainee_index_page).to be_displayed
   end
 
   def when_i_filter_by_route(value)
-    trainees_page.public_send("#{value}_checkbox").set(true)
-    trainees_page.apply_filters.click
+    trainee_index_page.public_send("#{value}_checkbox").set(true)
+    trainee_index_page.apply_filters.click
   end
 
   def when_i_unfilter_by_route(value)
-    trainees_page.public_send("#{value}_checkbox").set(false)
-    trainees_page.apply_filters.click
+    trainee_index_page.public_send("#{value}_checkbox").set(false)
+    trainee_index_page.apply_filters.click
   end
 
   def when_i_remove_a_tag_for(value)
     click_link(value)
-    trainees_page.apply_filters.click
+    trainee_index_page.apply_filters.click
   end
 
   def when_i_filter_by_subject(value)
-    trainees_page.subject.select(value)
-    trainees_page.apply_filters.click
+    trainee_index_page.subject.select(value)
+    trainee_index_page.apply_filters.click
   end
 
   def when_i_search_for(value)
-    trainees_page.text_search.fill_in(with: value)
-    trainees_page.apply_filters.click
+    trainee_index_page.text_search.fill_in(with: value)
+    trainee_index_page.apply_filters.click
   end
 
   def when_i_clear_filters
-    trainees_page.clear_filters_link.click
+    trainee_index_page.clear_filters_link.click
   end
 
   def then_the_checkbox_should_still_be_checked_for(value)
-    checkbox = trainees_page.public_send("#{value}_checkbox")
+    checkbox = trainee_index_page.public_send("#{value}_checkbox")
     expect(checkbox.checked?).to be(true)
   end
 
   def then_the_select_should_still_show(value)
-    select = trainees_page.subject
+    select = trainee_index_page.subject
     expect(select.value).to eq value
   end
 
@@ -163,7 +159,7 @@ private
 
   def then_the_tag_is_visible_for(*values)
     values.each do |value|
-      expect(trainees_page.filter_tags).to have_text(value)
+      expect(trainee_index_page.filter_tags).to have_text(value)
     end
   end
 

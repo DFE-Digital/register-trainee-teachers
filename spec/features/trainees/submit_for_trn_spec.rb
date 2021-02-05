@@ -94,16 +94,8 @@ feature "submit for TRN" do
     expect(trn_success_page).to be_displayed(trainee_id: trainee.slug)
   end
 
-  def check_details_page
-    @check_details_page ||= PageObjects::Trainees::CheckDetails::Show.new
-  end
-
   def and_i_am_on_the_check_details_page
     check_details_page.load(id: trainee.slug)
-  end
-
-  def trn_success_page
-    @trn_success_page ||= PageObjects::Trainees::TrnSuccess.new
   end
 
   def when_i_click_back_to_draft_record

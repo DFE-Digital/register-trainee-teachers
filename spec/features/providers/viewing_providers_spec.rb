@@ -28,8 +28,4 @@ feature "View providers" do
   def when_i_click_on_provider_name
     provider_index_page.provider_card.name.click
   end
-
-  def provider_index_page
-    @provider_index_page ||= PageObjects::Providers::Index.new
-  end
 end

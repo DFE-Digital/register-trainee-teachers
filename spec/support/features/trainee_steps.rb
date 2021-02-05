@@ -20,22 +20,6 @@ module Features
       expect(record_page).to be_displayed(id: trainee.slug)
     end
 
-    def trainee_index_page
-      @trainee_index_page ||= PageObjects::Trainees::Index.new
-    end
-
-    def record_page
-      @record_page ||= PageObjects::Trainees::Record.new
-    end
-
-    def review_draft_page
-      @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
-    end
-
-    def confirm_details_page
-      @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
-    end
-
     def and_i_confirm_my_details(checked: true, section:)
       checked_option = checked ? "check" : "uncheck"
       expect(confirm_details_page).to be_displayed(id: trainee.slug, section: section)

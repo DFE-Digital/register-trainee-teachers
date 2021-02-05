@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   before_action :authenticate
+  before_action :track_page
 
   include Pundit
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
@@ -40,5 +41,16 @@ private
 
   def ensure_trainee_is_not_draft!
     redirect_to review_draft_trainee_path(trainee) if trainee.draft?
+  end
+
+  def track_page
+    page_tracker.save!
+  end
+
+  def page_tracker
+    @page_tracker ||= begin
+      trainee_slug = params[:trainee_id] || params[:id]
+      PageTracker.new(trainee_slug: trainee_slug, session: session, request: request)
+    end
   end
 end

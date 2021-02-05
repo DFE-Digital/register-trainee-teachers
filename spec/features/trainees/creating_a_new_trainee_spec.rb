@@ -21,25 +21,22 @@ private
   end
 
   def and_i_click_on_add_trainee_button
-    @new_page ||= PageObjects::Trainees::New.new
     trainee_index_page.add_trainee_link.click
   end
 
   def and_i_select_assessment_only_route
-    @new_page.assessment_only.click
+    new_trainee_page.assessment_only.click
   end
 
   def and_i_fill_in_train_id
-    @new_page.trainee_id_input.set("123")
+    new_trainee_page.trainee_id_input.set("123")
   end
 
   def and_i_save_the_form
-    @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
-    @not_supported_route_page ||= PageObjects::Trainees::NotSupportedRoute.new
-    @new_page.continue_button.click
+    new_trainee_page.continue_button.click
   end
 
   def then_i_should_see_the_new_trainee_overview
-    expect(@review_draft_page).to be_displayed
+    expect(review_draft_page).to be_displayed
   end
 end

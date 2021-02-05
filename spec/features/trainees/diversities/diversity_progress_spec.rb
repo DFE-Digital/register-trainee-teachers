@@ -15,6 +15,7 @@ feature "completing the diversity section", type: :feature do
 
   scenario "renders an 'in progress' status when diversity information partially provided" do
     given_valid_diversity_information
+    given_i_visited_the_review_draft_page
     when_i_visit_the_diversity_confirmation_page
     and_unconfirm_my_details
     and_i_visit_the_record_page
@@ -41,35 +42,29 @@ private
   end
 
   def and_i_visit_the_review_draft_page
-    @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
-    @review_draft_page.load(id: @trainee.slug)
-    expect(@review_draft_page).to be_displayed(id: @trainee.slug)
+    review_draft_page.load(id: @trainee.slug)
+    expect(review_draft_page).to be_displayed(id: @trainee.slug)
   end
 
   def and_i_visit_the_record_page
-    @record_page ||= PageObjects::Trainees::ReviewDraft.new
-    @record_page.load(id: @trainee.slug)
-    expect(@record_page).to be_displayed(id: @trainee.slug)
+    review_draft_page.load(id: @trainee.slug)
+    expect(review_draft_page).to be_displayed(id: @trainee.slug)
   end
 
   def then_the_diversity_section_should_be(status)
-    @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
-    expect(@review_draft_page.diversity_section.status.text).to eq(Progress::STATUSES[status])
+    expect(review_draft_page.diversity_section.status.text).to eq(Progress::STATUSES[status])
   end
 
   def when_i_visit_the_diversity_confirmation_page
-    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    @confirm_page.load(id: @trainee.slug, section: "information-disclosed")
+    diversities_confirm_page.load(id: @trainee.slug, section: "information-disclosed")
   end
 
   def then_i_am_redirected_to_the_confirm_page
-    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: @trainee.slug, section: "information-disclosed")
+    expect(diversities_confirm_page).to be_displayed(id: @trainee.slug, section: "information-disclosed")
   end
 
   def and_unconfirm_my_details
-    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    @confirm_page.confirm.uncheck
-    @confirm_page.submit_button.click
+    diversities_confirm_page.confirm.uncheck
+    diversities_confirm_page.submit_button.click
   end
 end

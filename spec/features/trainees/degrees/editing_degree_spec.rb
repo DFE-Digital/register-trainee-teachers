@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "editing a degree" do
+feature "editing a degree" do
   background { given_i_am_authenticated }
 
   context "UK degree" do
@@ -75,20 +75,12 @@ private
   end
 
   def then_i_am_redirected_to_confirm_page
-    degrees_confirm.load(trainee_id: trainee.slug)
-    expect(degrees_confirm).to be_displayed(trainee_id: trainee.slug)
+    degrees_confirm_page.load(trainee_id: trainee.slug)
+    expect(degrees_confirm_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def then_i_see_the_error_summary
     expect(edit_degree_details_page.error_summary).to be_visible
-  end
-
-  def edit_degree_details_page
-    @edit_degree_details_page ||= PageObjects::Trainees::EditDegreeDetails.new
-  end
-
-  def degrees_confirm
-    @degrees_confirm ||= PageObjects::Trainees::DegreesConfirm.new
   end
 
   def trainee

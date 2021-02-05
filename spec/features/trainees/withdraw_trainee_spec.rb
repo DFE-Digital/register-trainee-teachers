@@ -187,18 +187,6 @@ feature "Withdrawing a trainee", type: :feature do
     given_a_trainee_exists(%i[submitted_for_trn trn_received deferred].sample)
   end
 
-  def record_page
-    @record_page ||= PageObjects::Trainees::Record.new
-  end
-
-  def withdrawal_page
-    @withdrawal_page ||= PageObjects::Trainees::Withdrawal.new
-  end
-
-  def withdrawal_confirmation_page
-    @withdrawal_confirmation_page ||= PageObjects::Trainees::ConfirmWithdrawal.new
-  end
-
   def additional_withdraw_reason
     @additional_withdraw_reason ||= Faker::Lorem.paragraph
   end

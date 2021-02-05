@@ -6,6 +6,7 @@ feature "edit disability details", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists
+    given_i_visited_the_review_draft_page
     and_disabilities_exist_in_the_system
     when_i_visit_the_disability_details_page
   end
@@ -28,22 +29,20 @@ feature "edit disability details", type: :feature do
   end
 
   def when_i_visit_the_disability_details_page
-    @disabilities_page ||= PageObjects::Trainees::Diversities::Disabilities.new
-    @disabilities_page.load(id: trainee.slug)
+    disabilities_page.load(id: trainee.slug)
   end
 
   def and_i_choose_a_disability
-    @disabilities_page.disability.check(@disability.name)
+    disabilities_page.disability.check(@disability.name)
   end
 
   def and_i_submit_the_form
-    @disabilities_page.submit_button.click
+    disabilities_page.submit_button.click
   end
 
   def and_confirm_my_details
-    @confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
-    expect(@confirm_page).to be_displayed(id: trainee.slug)
-    @confirm_page.submit_button.click
+    expect(diversities_confirm_page).to be_displayed(id: trainee.slug)
+    diversities_confirm_page.submit_button.click
   end
 
   def and_the_disability_details_are_updated

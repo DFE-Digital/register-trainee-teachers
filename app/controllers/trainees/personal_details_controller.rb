@@ -2,8 +2,6 @@
 
 module Trainees
   class PersonalDetailsController < ApplicationController
-    include Breadcrumbable
-
     before_action :ensure_trainee_is_not_draft!, only: :show
 
     DOB_CONVERSION = {
@@ -16,7 +14,7 @@ module Trainees
 
     def show
       authorize trainee
-      save_origin_page_for(trainee)
+      page_tracker.save_as_origin!
       render layout: "trainee_record"
     end
 

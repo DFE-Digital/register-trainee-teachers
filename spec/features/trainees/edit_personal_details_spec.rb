@@ -22,6 +22,7 @@ feature "edit personal details", type: :feature do
 
   scenario "renders an 'in progress' status when valid personal details partially provided" do
     given_a_trainee_exists
+    given_i_visited_the_review_draft_page
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page
     and_i_enter_valid_parameters
@@ -43,13 +44,14 @@ feature "edit personal details", type: :feature do
     before do
       given_a_trainee_exists(:submitted_for_trn)
       and_nationalities_exist_in_the_system
+      given_i_visited_the_record_page
       when_i_visit_the_personal_details_page
       and_i_enter_valid_parameters
       and_i_submit_the_form
     end
 
     it "it doesn't ask me to complete the section" do
-      then_the_confirm_page_has_no_checkbox
+      then_the_confirm_details_page_has_no_checkbox
       and_i_click_continue
       then_i_am_redirected_to_the_record_page
       then_i_see_a_flash_message
@@ -60,6 +62,7 @@ private
 
   def given_valid_personal_details_are_provided
     given_a_trainee_exists
+    given_i_visited_the_review_draft_page
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page
     and_i_enter_valid_parameters
@@ -70,6 +73,7 @@ private
 
   def given_other_nationality_is_provided
     given_a_trainee_exists
+    given_i_visited_the_review_draft_page
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page
     and_i_enter_valid_parameters(other_nationality: true)
@@ -84,40 +88,40 @@ private
   end
 
   def when_i_visit_the_personal_details_page
-    @personal_details_page ||= PageObjects::Trainees::PersonalDetails.new
-    @personal_details_page.load(id: trainee.slug)
+    personal_details_page.load(id: trainee.slug)
   end
 
   def and_i_enter_valid_parameters(other_nationality: false)
-    @personal_details_page.first_names.set("Tim")
-    @personal_details_page.last_name.set("Smith")
-    @personal_details_page.set_date_fields("dob", "01/01/1986")
-    @personal_details_page.gender.choose("Male")
+    personal_details_page.first_names.set("Tim")
+    personal_details_page.last_name.set("Smith")
+    personal_details_page.set_date_fields("dob", "01/01/1986")
+    personal_details_page.gender.choose("Male")
+
     if other_nationality
-      @personal_details_page.nationality.check("Other")
-      @personal_details_page.other_nationality.select(@french.name.titleize)
+      personal_details_page.nationality.check("Other")
+      personal_details_page.other_nationality.select(@french.name.titleize)
     else
-      @personal_details_page.nationality.check(@british.name.titleize)
+      personal_details_page.nationality.check(@british.name.titleize)
     end
   end
 
   def and_confirm_my_details(checked: true)
     checked_option = checked ? "check" : "uncheck"
-    expect(confirm_page).to be_displayed(id: trainee.slug, section: "personal-details")
-    confirm_page.confirm.public_send(checked_option)
+    expect(confirm_details_page).to be_displayed(id: trainee.slug, section: "personal-details")
+    confirm_details_page.confirm.public_send(checked_option)
     and_i_click_continue
   end
 
-  def then_the_confirm_page_has_no_checkbox
-    expect(confirm_page).to_not have_text("I have completed this section")
+  def then_the_confirm_details_page_has_no_checkbox
+    expect(confirm_details_page).to_not have_text("I have completed this section")
   end
 
   def and_i_click_continue
-    confirm_page.submit_button.click
+    confirm_details_page.submit_button.click
   end
 
   def and_i_submit_the_form
-    @personal_details_page.continue_button.click
+    personal_details_page.continue_button.click
   end
 
   def then_the_personal_details_are_updated
@@ -145,9 +149,5 @@ private
 
   def then_i_see_a_flash_message
     expect(page).to have_text("Trainee personal details updated")
-  end
-
-  def confirm_page
-    @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
   end
 end

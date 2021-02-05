@@ -7,7 +7,7 @@ feature "edit ethnic group", type: :feature do
 
   scenario "edit with valid parameters" do
     given_a_trainee_exists
-    when_i_visit_the_diversity_ethnic_group_page
+    and_i_am_on_the_diversity_ethnic_group_page
     and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:asian])
     and_i_submit_the_form
     then_i_am_redirected_to_the_ethnic_background_page
@@ -17,7 +17,8 @@ feature "edit ethnic group", type: :feature do
   context "trainee with no defined ethnic group" do
     background do
       given_a_trainee_exists
-      when_i_visit_the_diversity_ethnic_group_page
+      given_i_visited_the_diversities_confirm_page_page
+      and_i_am_on_the_diversity_ethnic_group_page
     end
 
     scenario "edit with valid parameters" do
@@ -35,14 +36,14 @@ feature "edit ethnic group", type: :feature do
     scenario "choosing not to provide ethnic group" do
       and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
       and_i_submit_the_form
-      then_i_am_redirected_to_the_disability_disclosure_page
+      then_i_am_redirected_to_the_diversities_confirm_page_page
       and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
     end
   end
 
   scenario "updating the ethnic group clears the previous ethnic background" do
     given_a_trainee_with_a_background_exists
-    when_i_visit_the_diversity_ethnic_group_page
+    and_i_am_on_the_diversity_ethnic_group_page
     and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:asian])
     and_i_submit_the_form
     then_i_am_redirected_to_the_ethnic_background_page
@@ -53,10 +54,11 @@ feature "edit ethnic group", type: :feature do
 
   scenario "choosing not to provide ethnic group" do
     given_a_trainee_exists
-    when_i_visit_the_diversity_ethnic_group_page
+    given_i_visited_the_diversities_confirm_page_page
+    and_i_am_on_the_diversity_ethnic_group_page
     and_i_choose(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
     and_i_submit_the_form
-    then_i_am_redirected_to_the_disability_disclosure_page
+    then_i_am_redirected_to_the_diversities_confirm_page_page
     and_the_diversity_ethnic_group_is_updated_with(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
   end
 
@@ -73,29 +75,26 @@ feature "edit ethnic group", type: :feature do
     )
   end
 
-  def when_i_visit_the_diversity_ethnic_group_page
-    @ethnic_group_page ||= PageObjects::Trainees::Diversities::EthnicGroup.new
-    @ethnic_group_page.load(id: trainee.slug)
+  def and_i_am_on_the_diversity_ethnic_group_page
+    ethnic_group_page.load(id: trainee.slug)
   end
 
   def and_i_choose(option)
-    @ethnic_group_page.find(
+    ethnic_group_page.find(
       "#diversities-ethnic-group-form-ethnic-group-#{option.dasherize}-field",
     ).choose
   end
 
   def and_i_submit_the_form
-    @ethnic_group_page.submit_button.click
+    ethnic_group_page.submit_button.click
   end
 
   def then_i_am_redirected_to_the_ethnic_background_page
-    @ethnic_background_page ||= PageObjects::Trainees::Diversities::EthnicBackground.new
-    expect(@ethnic_background_page).to be_displayed(id: trainee.slug)
+    expect(ethnic_background_page).to be_displayed(id: trainee.slug)
   end
 
   def then_i_am_redirected_to_the_disability_disclosure_page
-    @disability_disclosure_page ||= PageObjects::Trainees::Diversities::DisabilityDisclosure.new
-    expect(@disability_disclosure_page).to be_displayed(id: trainee.slug)
+    expect(disability_disclosure_page).to be_displayed(id: trainee.slug)
   end
 
   def and_the_diversity_ethnic_group_is_updated_with(selected_group)
