@@ -8,7 +8,9 @@
   <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: 'Degree subject', size: 's' },
-                                          hint: { text: 'Search for the closest matching subject' }),
+                                          hint: { text: 'Search for the closest matching subject. 
+                                                         You can start typing to narrow down your search.' }),
+                                                           
     html_attributes: {
       "data-show-all-values" => true,
     }
