@@ -4,7 +4,7 @@
       <% if show_delete_button %>
         <% component.with(:header_actions) do %>
           <%= form_with model: [trainee, degree], method: :delete, local: true do |f| %>
-            <%= f.submit "Delete degree", class: "govuk-button govuk-link govuk-button--link" %>
+            <%= f.submit "Delete degree", class: "govuk-link govuk-button--link govuk-body", role: "link" %>
           <% end %>
         <% end %>
       <% end %>
