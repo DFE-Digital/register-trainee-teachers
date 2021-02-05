@@ -3,17 +3,17 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
     text: 'Back',
-    href: "/home"
+    href: root_path
   ) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <span class="govuk-heading-l govuk-!-margin-bottom-9">Check what data you need</span>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Check what data you need</h1>
 
     <p class="govuk-body">You’ll need the following information about a trainee to complete their record.</p>
 
-    <div class="govuk-heading-m">Personal details</div>
+    <h2 class="govuk-heading-m">Personal details</h2>
 
     <ul class="govuk-list">
       <li>First names</li>
@@ -26,7 +26,7 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    <div class="govuk-heading-m">Contact details</div>
+    <h2 class="govuk-heading-m">Contact details</h2>
 
     <ul class="govuk-list">
       <li> Address </li>
@@ -35,8 +35,8 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    <div class="govuk-heading-m">Diversity information (optional)</div>
-    
+    <h2 class="govuk-heading-m">Diversity information (optional)</h2>
+
     <div class="govuk-inset-text"> If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
 
     <ul class="govuk-list">
@@ -46,9 +46,9 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    <div class="govuk-heading-m">Degrees</div>
+    <h2 class="govuk-heading-m">Degrees</h2>
 
-    <div class="govuk-heading-s">If it's a UK degree</div>
+    <h3 class="govuk-heading-s">If it's a UK degree</h3>
 
     <ul class="govuk-list">
       <li>Type (for example, BA, BSc or other)</li>
@@ -58,7 +58,7 @@
       <li>Grade</li>
     </ul>
 
-    <div class="govuk-heading-s">If it's not a UK degree</div>
+    <h3 class="govuk-heading-s">If it's not a UK degree</h3>
 
     <ul class="govuk-list">
       <li>NARIC comparable UK degree (if provided)</li>
@@ -69,8 +69,8 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    <div class="govuk-heading-m">Course or programme details</div>
-    
+    <h2 class="govuk-heading-m">Course or programme details</h2>
+
     <ul class="govuk-list">
       <li>Subject</li>
       <li>Age range</li>
@@ -80,8 +80,10 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    <div class="govuk-heading-m">Allocations information</div>
+    <h2 class="govuk-heading-m">Allocations information</h2>
 
-    <p class="govuk-body">If the course has allocated places, you’ll need to know whether the trainee is using an allocated place.</p>
+    <p class="govuk-body">
+      If the course has allocated places, you’ll need to know whether the trainee is using an allocated place.
+    </p>
   </div>
 </div>
