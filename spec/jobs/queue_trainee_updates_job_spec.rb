@@ -15,7 +15,6 @@ describe QueueTraineeUpdatesJob do
       trainees
     end
 
-
     it "enqueues the UpdateTraineeToDttpJob" do
       described_class.perform_now
 
