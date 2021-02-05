@@ -6,11 +6,11 @@
     <p class="govuk-body"> Although you have a DfE Sign-in account, you also need an account
                              for this service.</p>
 
-    <p class="govuk-body"> Contact us at 
-    <%= govuk_mail_to "becomingateacher@digital.education.gov.uk", 
-                      "becomingateacher@digital.education.gov.uk" %> to ask for an account. 
+    <p class="govuk-body"> Contact us at
+    <%= govuk_mail_to t("support_email"),
+                      t("support_email") %> to ask for an account.
     </p>
-    
+
     <%= govuk_button_link_to("Return home", root_path) %>
 
   </div>

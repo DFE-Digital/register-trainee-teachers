@@ -5,6 +5,7 @@ en:
   service_name: Register trainee teachers
   cancel: Cancel and return to record
   change: Change
+  support_email: becomingateacher@digital.education.gov.uk
   components:
     confirmation:
       diversity:
