@@ -16,7 +16,7 @@ variable paas_postgres_service_plan {}
 
 variable paas_redis_service_plan {}
 
-variable paas_web_app_deployment_strategy { default = "blue-green-v2" }
+variable paas_deployment_strategy { default = "blue-green-v2" }
 
 variable paas_web_app_instances { default = 2 }
 
