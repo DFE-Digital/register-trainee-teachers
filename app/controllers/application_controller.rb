@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   rescue_from Pundit::NotAuthorizedError do
-    render :'errors/forbidden', status: :forbidden
+    render "errors/forbidden", status: :forbidden
   end
 
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }

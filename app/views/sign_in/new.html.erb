@@ -7,8 +7,7 @@
                              for this service.</p>
 
     <p class="govuk-body"> Contact us at
-    <%= govuk_mail_to t("support_email"),
-                      t("support_email") %> to ask for an account.
+    <%= support_email(subject: "Get access to Register trainee teachers") %> to ask for an account.
     </p>
 
     <%= govuk_button_link_to("Return home", root_path) %>
