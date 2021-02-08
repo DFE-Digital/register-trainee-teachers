@@ -19,9 +19,9 @@
 
     <% if user_signed_in? %>
       <div class="govuk-header__content app-header__content">
-        <button type="button" role="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation" data-module="govuk-button">Menu</button>
+        <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide navigation menu" data-module="govuk-button">Menu</button>
         <nav>
-          <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top Level Navigation">
+          <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top level navigation">
             <% if user_system_admin? %>
               <li class="govuk-header__navigation-item">
                 <%= govuk_link_to "System admin", providers_path, class: "govuk-header__link" %>
