@@ -10,7 +10,7 @@ variable redis_service_plan {}
 
 variable space_name {}
 
-variable web_app_deployment_strategy { default = "blue-green-v2" }
+variable deployment_strategy { default = "blue-green-v2" }
 
 variable web_app_instances { default = 1 }
 
