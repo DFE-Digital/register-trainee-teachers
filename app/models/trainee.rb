@@ -153,4 +153,14 @@ class Trainee < ApplicationRecord
       assign_attributes(params.merge(address_line_one: nil, address_line_two: nil, town_city: nil, postcode: nil))
     end
   end
+
+  def sha
+    Digest::SHA1.hexdigest(digest)
+  end
+
+  def digest
+    exclude_list = %w[created_at updated_at dttp_update_sha]
+
+    [as_json.except(*exclude_list), degrees, nationalities, disabilities].map(&:to_json).join(",")
+  end
 end
