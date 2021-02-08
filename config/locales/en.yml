@@ -219,7 +219,7 @@ en:
             non_uk_degree:
               blank: "You must select a Non-UK degree"
             locale_code:
-              blank: "You must select either Yes or No"
+              blank: "You must select whether this is a UK or a non-UK degree"
             subject:
               blank: "You must select a subject"
             institution:
@@ -337,7 +337,7 @@ en:
               future: "You must enter a programme end date that is not as far in the future"
               invalid: "You must enter a valid programme end date"
               too_old: "You must enter a valid programme end date"
-              before_or_same_as_start_date: "You must enter programme end date after the programme start date"
+              before_or_same_as_start_date: "The programme end date must be after the start date"
         outcome_date_form:
           attributes:
             outcome_date_string:
