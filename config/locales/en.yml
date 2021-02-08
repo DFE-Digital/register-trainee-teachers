@@ -260,8 +260,12 @@ en:
           attributes:
             first_names:
               blank: "You must enter a first name"
+              invalid: "You must enter valid first names"
+            middle_names:
+              invalid: "You must enter valid middle names"
             last_name:
               blank: "You must enter a last name"
+              invalid: "You must enter a valid last name"
             date_of_birth:
               blank: "You must enter a date of birth"
               invalid: "You must enter a valid date"

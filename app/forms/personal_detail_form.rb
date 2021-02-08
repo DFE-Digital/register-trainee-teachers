@@ -18,8 +18,9 @@ class PersonalDetailForm
   attr_accessor(*FIELDS, :trainee, :day, :month, :year, :other_nationality1,
                 :other_nationality2, :other_nationality3, :other)
 
-  validates :first_names, presence: true
-  validates :last_name, presence: true
+  validates :first_names, presence: true, name: true
+  validates :middle_names, name: true
+  validates :last_name, presence: true, name: true
   validates :date_of_birth, presence: true
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
 
