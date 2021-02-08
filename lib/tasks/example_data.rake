@@ -14,12 +14,13 @@ namespace :example_data do
       persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
                                            last_name: persona_attributes[:last_name],
                                            email: persona_attributes[:email],
+                                           dttp_id: SecureRandom.uuid,
                                            system_admin: persona_attributes[:system_admin])
 
       if persona_attributes[:provider]
         provider = Provider.find_or_create_by!(
           name: persona_attributes[:provider],
-          dttp_id: "00000000-0000-0000-0000-000000000000",
+          dttp_id: SecureRandom.uuid,
         )
         persona.update!(provider: provider)
       end
