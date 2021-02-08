@@ -19,6 +19,7 @@ module Dttp
         ::Diversities::CHINESE => { ethnic_minority: true, entity_id: "ca0bb892-2b9d-e711-80d9-005056ac45bb" },
         ::Diversities::INDIAN => { ethnic_minority: true, entity_id: "c40bb892-2b9d-e711-80d9-005056ac45bb" },
         ::Diversities::IRISH => { ethnic_minority: false, entity_id: "b40bb892-2b9d-e711-80d9-005056ac45bb" },
+        ::Diversities::IRISH_TRAVELLER => { ethnic_minority: true, entity_id: "b80bb892-2b9d-e711-80d9-005056ac45bb" },
         ::Diversities::NOT_PROVIDED => { ethnic_minority: false, entity_id: "da0bb892-2b9d-e711-80d9-005056ac45bb" },
         ::Diversities::PAKISTANI => { ethnic_minority: true, entity_id: "c60bb892-2b9d-e711-80d9-005056ac45bb" },
         ::Diversities::TRAVELLER_OR_GYPSY => { ethnic_minority: false, entity_id: "ba0bb892-2b9d-e711-80d9-005056ac45bb" },

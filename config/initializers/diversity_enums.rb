@@ -21,6 +21,7 @@ module Diversities
   WHITE_BRITISH = "British, English, Northern Irish, Scottish, or Welsh"
 
   IRISH = "Irish"
+  IRISH_TRAVELLER = "Irish traveller"
   TRAVELLER_OR_GYPSY = "Traveller or Gypsy"
   ANOTHER_WHITE_BACKGROUND = "Another White background"
 
