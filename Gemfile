@@ -45,6 +45,7 @@ gem "govuk_design_system_formbuilder"
 
 # Background job processor
 gem "sidekiq", "~> 6.1"
+gem "sidekiq-cron", "~> 1.1"
 
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"

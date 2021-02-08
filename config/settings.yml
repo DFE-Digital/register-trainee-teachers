@@ -36,3 +36,6 @@ dfe_sign_in:
 jobs:
   poll_delay_hours: 6
   max_poll_duration_days: 2
+
+sidekiq:
+  schedule_file: "config/sidekiq_cron_schedule.yml"

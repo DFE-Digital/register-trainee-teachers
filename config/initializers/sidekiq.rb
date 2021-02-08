@@ -21,3 +21,8 @@ if ENV.key?("VCAP_SERVICES")
     }
   end
 end
+
+# Sidekiq Cron
+if Settings.sidekiq.schedule_file && Sidekiq.server?
+  Sidekiq::Cron::Job.load_from_hash(YAML.load_file(Settings.sidekiq.schedule_file))
+end
