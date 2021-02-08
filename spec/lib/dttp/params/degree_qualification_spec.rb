@@ -35,7 +35,7 @@ module Dttp
           let(:degree_type) { degree.uk_degree }
 
           it "returns a hash with all the UK specific degree qualification fields " do
-            expect(subject).to include({
+            expect(subject).to match({
               "dfe_name" => degree.uk_degree,
               "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
               "dfe_TrainingRecordId@odata.bind" => "$#{placement_assignment_change_set_id}",
@@ -52,11 +52,10 @@ module Dttp
           let(:degree_type) { degree.non_uk_degree_non_naric? ? "Unknown" : "Degree equivalent" }
 
           it "returns a hash with all the Non-UK specific degree qualification fields" do
-            expect(subject).to include({
+            expect(subject).to match({
               "dfe_name" => degree.non_uk_degree,
               "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
               "dfe_TrainingRecordId@odata.bind" => "$#{placement_assignment_change_set_id}",
-              "dfe_ClassofDegreeId@odata.bind" => "/dfe_classofdegrees(#{dttp_degree_grade_entity_id})",
               "dfe_DegreeSubjectId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
               "dfe_DegreeTypeId@odata.bind" => "/dfe_degreetypes(#{dttp_degree_type_id})",
               "dfe_DegreeCountryId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
