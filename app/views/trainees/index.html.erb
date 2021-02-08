@@ -16,7 +16,7 @@
       <div class="govuk-!-margin-bottom-8 app-draft-records">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Draft records (<%= @draft_trainees.count %>)</h2>
+            <h2 class="govuk-heading-m">Draft records (<%= @draft_trainees.count %><span class="govuk-visually-hidden"> draft <%= "record".pluralize(@draft_trainees.count) %></span>)</h2>
           </div>
         </div>
         <%= render ApplicationRecordCard::View.with_collection(@draft_trainees) %>
@@ -26,7 +26,7 @@
       <div class="govuk-!-margin-bottom-8 app-non-draft-records">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Records (<%= @trainees.count %>)</h2>
+            <h2 class="govuk-heading-m">Records (<%= @trainees.count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@trainees.count) %></span>)</h2>
           </div>
         </div>
         <%= render ApplicationRecordCard::View.with_collection(@trainees) %>
