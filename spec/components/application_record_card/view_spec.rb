@@ -14,7 +14,7 @@ module ApplicationRecordCard
 
     context "when the Trainee has no names" do
       it "renders 'Draft record'" do
-        expect(component.find("h2")).to have_text("Draft record")
+        expect(component.find("h3")).to have_text("Draft record")
       end
     end
 
@@ -106,7 +106,7 @@ module ApplicationRecordCard
       end
 
       it "renders trainee name " do
-        expect(component.find("h2")).to have_text("Teddy Smith")
+        expect(component.find("h3")).to have_text("Teddy Smith")
       end
 
       it "renders subject" do

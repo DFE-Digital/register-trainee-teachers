@@ -9,7 +9,7 @@ module ApplicationRecordCard
 
     attr_reader :record, :heading_level
 
-    def initialize(heading_level = 2, record:)
+    def initialize(heading_level = 3, record:)
       @record = record
       @heading_level = heading_level
     end
