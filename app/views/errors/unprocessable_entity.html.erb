@@ -2,6 +2,11 @@
   <%= render PageTitle::View.new(title: "pages.unprocessable_entity") %>
 
   <h1 class="govuk-heading-l">Sorry, the change you wanted was rejected</h1>
+
   <p class="govuk-body">Try again later.</p>
-  <p class="govuk-body">If you continue to get this message, email the Register trainee teachers team at <%= govuk_mail_to 'registerateacher@digital.education.gov.uk', 'registerateacher@digital.education.gov.uk' %>.</p>
+
+  <% if FeatureService.enabled?("enable_support_link") %>
+    <p class="govuk-body">If you continue to get this message, email the Register trainee teachers team at <%= govuk_mail_to 'registerateacher@digital.education.gov.uk', 'registerateacher@digital.education.gov.uk' %>.</p>
+  <% end %>
 <% end %>
+

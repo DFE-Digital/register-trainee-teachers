@@ -52,7 +52,7 @@
               Beta
             </strong>
             <span class="govuk-phase-banner__text">
-                This is a new service – <%= support_email(name: "give feedback or report a problem", subject: "Register trainee teachers feedback", classes: "govuk-link--no-visited-state") %>
+                This is a new service <% if FeatureService.enabled?("enable_support_link") %> – <%= support_email(name: "give feedback or report a problem", subject: "Register trainee teachers feedback", classes: "govuk-link--no-visited-state") %> <% end %>
             </span>
           </p>
         </div>
@@ -75,13 +75,15 @@
       <div class="govuk-width-container">
         <div class="govuk-footer__meta">
           <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            <h2 class="govuk-heading-m">Get support</h2>
-            <div class="govuk-footer__meta-custom">
-              <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
-                <li>Email: <%= support_email(subject: "Register trainee teachers support", classes: "govuk-footer__link") %></li>
-                <li>We aim to respond within 5 working days, or one working day for more urgent queries</li>
-              </ul>
-            </div>
+            <% if FeatureService.enabled?("enable_support_link") %>
+              <h2 class="govuk-heading-m">Get support</h2>
+              <div class="govuk-footer__meta-custom">
+                <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
+                  <li>Email: <%= support_email(subject: "Register trainee teachers support", classes: "govuk-footer__link") %></li>
+                  <li>We aim to respond within 5 working days, or one working day for more urgent queries</li>
+                </ul>
+              </div>
+            <% end %>
             <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
               <li class="govuk-footer__inline-list-item">
                 <%= link_to "Accessibility", accessibility_path, class: "govuk-footer__link" %>

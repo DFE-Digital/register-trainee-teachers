@@ -25,6 +25,7 @@ features:
   allow_user_creation: false
   enable_feedback_link: true
   basic_auth: true
+  enable_support_link: true
 
 dfe_sign_in:
   # Our service name
