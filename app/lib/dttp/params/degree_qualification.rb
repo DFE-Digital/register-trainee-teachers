@@ -24,7 +24,6 @@ module Dttp
         {
           "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
           "dfe_TrainingRecordId@odata.bind" => "$#{placement_assignment_change_set_id}",
-          "dfe_ClassofDegreeId@odata.bind" => "/dfe_classofdegrees(#{degree_class_id(degree.grade)})",
           "dfe_DegreeSubjectId@odata.bind" => "/dfe_jacses(#{degree_subject_id(degree.subject)})",
         }.merge(degree.uk? ? uk_specific_params : non_uk_specific_params)
       end
@@ -32,6 +31,7 @@ module Dttp
       def uk_specific_params
         {
           "dfe_name" => degree.uk_degree,
+          "dfe_ClassofDegreeId@odata.bind" => "/dfe_classofdegrees(#{degree_class_id(degree.grade)})",
           "dfe_DegreeTypeId@odata.bind" => "/dfe_degreetypes(#{degree_type_id(degree.uk_degree)})",
           "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{degree_institution_id(degree.institution)})",
         }
