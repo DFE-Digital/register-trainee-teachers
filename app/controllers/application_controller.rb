@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
   before_action :track_page
 
   include Pundit
+
+  rescue_from Pundit::NotAuthorizedError do
+    render "errors/forbidden", status: :forbidden
+  end
+
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
 
   helper_method :current_user, :authenticated?

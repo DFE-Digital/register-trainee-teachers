@@ -52,7 +52,7 @@
               Beta
             </strong>
             <span class="govuk-phase-banner__text">
-                This is a new service – <%= mail_to "becomingateacher@digital.education.gov.uk", "give feedback or report a problem", subject: "Register trainee teachers feedback", class: "govuk-link govuk-link--no-visited-state" %>
+                This is a new service – <%= support_email(name: "give feedback or report a problem", subject: "Register trainee teachers feedback", classes: "govuk-link--no-visited-state") %>
             </span>
           </p>
         </div>
@@ -78,7 +78,7 @@
             <h2 class="govuk-heading-m">Get support</h2>
             <div class="govuk-footer__meta-custom">
               <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
-                <li>Email: <%= mail_to "becomingateacher@digital.education.gov.uk", "becomingateacher@digital.education.gov.uk", subject: "Register trainee teachers support", class: "govuk-link govuk-footer__link" %></li>
+                <li>Email: <%= support_email(subject: "Register trainee teachers support", classes: "govuk-footer__link") %></li>
                 <li>We aim to respond within 5 working days, or one working day for more urgent queries</li>
               </ul>
             </div>

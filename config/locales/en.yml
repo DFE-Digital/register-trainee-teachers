@@ -59,6 +59,8 @@ en:
         cookies: Cookies on Register trainee teachers
         data_requirements: Data requirements
         privacy_policy: How we use your personal data when you use Register trainee teachers
+        forbidden: You do not have access to view details for this trainee
+        home: Home
         not_found: Page not found
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
