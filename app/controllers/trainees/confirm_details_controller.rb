@@ -8,7 +8,11 @@ module Trainees
     def show
       authorize trainee
       page_tracker.save_as_origin!
-      @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
+
+      if trainee.draft?
+        @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
+      end
+
       @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
     end
 
@@ -40,7 +44,7 @@ module Trainees
     end
 
     def confirm_section_title
-      trainee_section_key.gsub(/_/, " ")
+      trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
     end
 
     def flash_message_title
@@ -60,6 +64,7 @@ module Trainees
         trainee_contact_details_path,
         trainee_degrees_path,
         trainee_programme_details_path,
+        trainee_trainee_id_path,
       ].map { |path| path.split("/").last }
     end
 

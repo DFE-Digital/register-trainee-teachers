@@ -9,12 +9,7 @@ module Trainees
     def update
       authorize trainee
       trainee.update!(trainee_params)
-      redirect_to confirm_trainee_trainee_id_path(trainee)
-    end
-
-    def confirm
-      authorize trainee
-      page_tracker.save_as_origin!
+      redirect_to trainee_trainee_id_confirm_path(trainee)
     end
 
   private

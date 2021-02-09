@@ -8,6 +8,7 @@ feature "edit Trainee ID" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(:submitted_for_trn)
+    given_i_visited_the_record_page
     when_i_visit_the_edit_trainee_id_page
     when_i_change_the_trainee_id
     when_i_click_continue
@@ -37,7 +38,8 @@ feature "edit Trainee ID" do
   end
 
   def when_i_confirm
-    confirm_trainee_id_page.confirm.click
+    expect(confirm_details_page).to be_displayed(id: trainee.slug, section: "trainee-id")
+    confirm_details_page.continue_button.click
   end
 
   def then_i_am_redirected_to_the_trainee_edit_page
