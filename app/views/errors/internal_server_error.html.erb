@@ -1,11 +1,9 @@
-<%= render PageTitle::View.new(title: "pages.internal_server_error") %>
+<%= extends_layout :error do %>
+  <%= render PageTitle::View.new(title: "pages.internal_server_error") %>
 
-<main role="main" class="govuk-main-wrapper" id="main-content">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      <h1 class="govuk-heading-l">Sorry, something went wrong</h1>
-      <p class="govuk-body">Try again later.</p>
-      <p class="govuk-body">If you continue to get this message, email the Register trainee teachers team at <%= govuk_mail_to 'registerateacher@digital.education.gov.uk', 'registerateacher@digital.education.gov.uk' %>.</p>
-    </div>
-  </div>
-</main>
+  <h1 class="govuk-heading-l">Sorry, something went wrong</h1>
+
+  <p class="govuk-body">Try again later.</p>
+  
+  <p class="govuk-body">If you continue to get this message, email the Register trainee teachers team at <%= govuk_mail_to 'registerateacher@digital.education.gov.uk', 'registerateacher@digital.education.gov.uk' %>.</p>
+<% end %>
