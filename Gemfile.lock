@@ -411,7 +411,7 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     thor (1.1.0)
-    timecop (0.9.3)
+    timecop (0.9.4)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uk_postcode (2.1.6)
@@ -500,7 +500,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   stateful_enum
   store_model (~> 0.8)
-  timecop (~> 0.9.3)
+  timecop (~> 0.9.4)
   tzinfo-data
   uk_postcode
   web-console (>= 3.3.0)
