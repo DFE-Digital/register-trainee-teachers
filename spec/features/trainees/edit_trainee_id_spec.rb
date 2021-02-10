@@ -17,7 +17,7 @@ feature "edit Trainee ID" do
   scenario "updates the Trainee ID" do
     then_i_am_taken_to_the_confirmation_page
     when_i_confirm
-    then_i_am_redirected_to_the_trainee_edit_page
+    then_i_am_redirected_to_the_record_page
     then_the_trainee_id_is_updated
   end
 
@@ -42,12 +42,7 @@ feature "edit Trainee ID" do
     confirm_details_page.continue_button.click
   end
 
-  def then_i_am_redirected_to_the_trainee_edit_page
-    expect(page.current_path).to eq("/trainees/#{trainee.slug}")
-  end
-
   def then_the_trainee_id_is_updated
-    when_i_visit_the_edit_trainee_id_page
-    expect(trainee_id_edit_page.trainee_id_input.value).to eq(new_trainee_id)
+    expect(record_page.record_detail.trainee_id_row).to have_text(new_trainee_id)
   end
 end

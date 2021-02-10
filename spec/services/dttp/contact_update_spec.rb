@@ -8,6 +8,7 @@ module Dttp
       let(:trainee) do
         create(:trainee,
                :with_programme_details,
+               :with_start_date,
                dttp_id: contact_dttp_id,
                placement_assignment_dttp_id: placement_assignment_dttp_id)
       end

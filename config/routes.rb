@@ -46,9 +46,11 @@ Rails.application.routes.draw do
 
   resources :trainees, except: :destroy do
     scope module: :trainees do
+      resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
       resource :programme_details, concerns: :confirmable, only: %i[edit update], path: "/programme-details"
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resource :trainee_id, concerns: :confirmable, only: %i[edit update], path: "/trainee-id"
+      resource :start_date, concerns: :confirmable, only: %i[edit update], path: "/trainee-start-date"
 
       namespace :degrees do
         get "/new/type", to: "type#new"
@@ -92,7 +94,6 @@ Rails.application.routes.draw do
     end
 
     member do
-      get "training-details", to: "trainees/training_details#edit", as: :training_details
       get "course-details", to: "trainees/course_details#edit"
       get "check-details", to: "trainees/check_details#show"
       get "review-draft", to: "trainees/review_draft#show"

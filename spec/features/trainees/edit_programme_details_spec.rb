@@ -77,10 +77,6 @@ feature "programme details", type: :feature do
     record_page.load(id: trainee.slug)
   end
 
-  def then_i_am_redirected_to_the_record_page
-    expect(record_page).to be_displayed(id: trainee.slug)
-  end
-
   def and_the_programme_details_are_updated
     when_i_visit_the_programme_details_page
 

@@ -1,19 +1,16 @@
 <%= render PageTitle::View.new(title: "trainees.trainee_ids.edit") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back_to_record)) %>
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop"> 
-    <%= form_with model: @trainee, url: trainee_trainee_id_path, local: true do |f| %>
-      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', tag: 'h1', size: 'l' }, width: 20 do %>  
-          <p class="govuk-body govuk-hint">
-            You can assign your own ID for this trainee. This can help you identify them
-            or search for them in your trainee records later.
-          </p> 
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with model: @training_details, url: trainee_trainee_id_path, local: true do |f| %>
+      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID', tag: 'h1', size: 'l' }, width: 20 do %>
+          <p class="govuk-body govuk-hint"><%= t('views.forms.training_details.trainee_id.hint') %></p>
         <% end %>
-      <%= f.govuk_submit "Continue" %>  
+      <%= f.govuk_submit "Continue" %>
     <% end %>
   </div>
 </div>

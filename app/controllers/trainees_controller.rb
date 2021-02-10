@@ -85,7 +85,7 @@ private
   end
 
   def trainee_params
-    params.require(:trainee).permit(:record_type, :trainee_id)
+    params.fetch(:trainee, {}).permit(:record_type)
   end
 
   def filter_params

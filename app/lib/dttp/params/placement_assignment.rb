@@ -38,6 +38,7 @@ module Dttp
           "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
           "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.programme_end_date.in_time_zone.iso8601,
+          "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{ACADEMIC_YEAR_2020_2021})",
           "dfe_courselevel" => COURSE_LEVEL_PG, # TODO: this can be PG (12) or UG (20).  Postgrad or undergrad. Hardcoded for now.

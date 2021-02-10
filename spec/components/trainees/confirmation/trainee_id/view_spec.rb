@@ -8,18 +8,6 @@ module Trainees
       describe View do
         alias_method :component, :page
 
-        context "when trainee ID has not been provided" do
-          let(:trainee) { create(:trainee, trainee_id: nil) }
-
-          before do
-            render_inline(View.new(trainee: trainee))
-          end
-
-          it "tells the user that no data has been entered" do
-            expect(trainee_id_row).to have_text(t("components.confirmation.not_provided"))
-          end
-        end
-
         context "when data has been provided" do
           let(:trainee) { create(:trainee) }
 

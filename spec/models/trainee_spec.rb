@@ -102,23 +102,6 @@ describe Trainee do
             expect(subject.errors.attribute_names).to include(:record_type)
           end
         end
-
-        context "when trainee id is over 100 characters" do
-          subject { build(:trainee, trainee_id: SecureRandom.alphanumeric(101)) }
-
-          it "is not valid" do
-            expect(subject).not_to be_valid
-            expect(subject.errors.attribute_names).to include(:trainee_id)
-          end
-        end
-
-        context "when trainee id is under 100 characters" do
-          subject { build(:trainee, trainee_id: SecureRandom.alphanumeric(99)) }
-
-          it "is valid" do
-            expect(subject).to be_valid
-          end
-        end
       end
     end
   end

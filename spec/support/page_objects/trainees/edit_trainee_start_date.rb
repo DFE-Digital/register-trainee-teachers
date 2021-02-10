@@ -2,17 +2,16 @@
 
 module PageObjects
   module Trainees
-    class TrainingDetails < PageObjects::Base
+    class EditTraineeStartDate < PageObjects::Base
       include PageObjects::Helpers
 
-      set_url "/trainees/{id}/training-details/edit"
+      set_url "/trainees/{trainee_id}/trainee-start-date/edit"
 
-      element :trainee_id, "#training-details-form-trainee-id-field"
       element :commencement_date_day, "#training_details_form_commencement_date_3i"
       element :commencement_date_month, "#training_details_form_commencement_date_2i"
       element :commencement_date_year, "#training_details_form_commencement_date_1i"
 
-      element :submit_button, "input[name='commit']"
+      element :continue, ".govuk-button"
     end
   end
 end

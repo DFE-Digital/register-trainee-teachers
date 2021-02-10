@@ -17,5 +17,10 @@
       key: "Record created",
       value: date_for_summary_view(trainee.created_at),
     },
+    {
+      key: 'Trainee start date',
+      value: trainee_start_date,
+      action: govuk_link_to('Change<span class="govuk-visually-hidden"> start date</span>'.html_safe, edit_trainee_start_date_path(trainee)),
+    }
   ].compact)
 %>

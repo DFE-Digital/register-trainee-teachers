@@ -51,6 +51,10 @@ FactoryBot.define do
       programme_end_date { Faker::Date.between(from: programme_start_date + 1.day, to: Time.zone.today) }
     end
 
+    trait :with_start_date do
+      commencement_date { Faker::Date.between(from: 6.months.from_now, to: Time.zone.today) }
+    end
+
     trait :diversity_disclosed do
       diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] }
       ethnic_background { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }

@@ -7,6 +7,12 @@ en:
   change: Change
   components:
     confirmation:
+      trainee_id:
+        title: Trainee ID
+      start_date:
+        title: Start date
+      training_details:
+        title: Trainee start date and ID
       diversity:
         diversity_disclosure:
           diversity_disclosed: Information disclosed
@@ -48,6 +54,7 @@ en:
       flash:
         diversity: disclosure
         trainee_id: ID
+        trainee_start_date: start date
     programme_detail:
       title: "Programme details"
     degrees:
@@ -203,6 +210,15 @@ en:
         labels:
           additional_reason: Enter the reason for withdrawal
           <<: *withdrawal_reasons
+      training_details:
+        title: Confirm trainee start date and ID
+        commencement_date:
+          label: Date trainee started
+          hint: When this trainee started, rather than the programme start date. For example, 9 2 %{year}
+        trainee_id:
+          label: Trainee ID
+          hint: You can assign your own ID for this trainee. <br>This can help you identify them
+            or search for them in your trainee records later.
   activerecord:
     attributes:
       trainee:
@@ -220,6 +236,9 @@ en:
           qts_awarded: QTS awarded
     errors:
       models:
+        trainee:
+          attributes:
+            record_type: You must select a route
         degree:
           attributes:
             uk_degree:
@@ -375,5 +394,13 @@ en:
             defer_date:
               blank: You must enter a deferral date
               invalid: You must enter a valid deferral date
+        training_details_form:
+          attributes:
+            commencement_date:
+              blank: You must enter a start date
+              invalid: You must enter a valid start date
+            trainee_id:
+              blank: You must enter a trainee ID
+              max_char_exceeded: Your entry must not exceed 100 characters
   page_headings:
     start_page: "Register trainee teachers"

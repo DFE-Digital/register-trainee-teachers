@@ -6,7 +6,7 @@ module Trainees
       include SanitizeHelper
       include SummaryHelper
 
-      attr_reader :trainee
+      attr_reader :trainee, :not_provided_copy
 
       def initialize(trainee)
         @trainee = trainee
@@ -14,7 +14,11 @@ module Trainees
       end
 
       def trainee_id
-        trainee.trainee_id.presence || @not_provided_copy
+        trainee.trainee_id.presence || not_provided_copy
+      end
+
+      def trainee_start_date
+        trainee.commencement_date.present? ? date_for_summary_view(trainee.commencement_date) : not_provided_copy
       end
 
       def submission_date
