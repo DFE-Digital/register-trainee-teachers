@@ -9,6 +9,12 @@ RSpec.feature "view components" do
     end
   end).flatten
 
+  let(:create_nationality) { create :nationality }
+
+  before do
+    create_nationality
+  end
+
   shared_examples "navigate to" do |link|
     scenario "navigate to #{link}" do
       visit link
