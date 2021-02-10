@@ -147,6 +147,20 @@ en:
         withdrawn: Trainee withdrawn
         deferred: Trainee deferred
         qts_awarded: Trainee awarded QTS
+        programme_details: Programme details not started
+    missing_details:
+      not_started_title:
+        personal_details: Personal details not started
+        contact_details: Contact details not started
+        diversity: Diversity information not started
+        degrees: Degree details not started
+        programme_details: Programme details not started
+      not_complete_title:
+        personal_details: Personal details not marked as complete
+        contact_details: Contact details not marked as complete
+        diversity: Diversity information not marked as complete
+        degrees: Degree details not marked as complete
+        programme_details: Programme details not marked as complete
   views:
     trainees:
       edit:
