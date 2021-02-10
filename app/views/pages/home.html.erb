@@ -27,12 +27,14 @@
     <p class="govuk-body">Review and manage your trainee records.</p>
   </div>
 
-  <div class ="govuk-grid-column-one-third">
-    <h2 class="govuk-heading-m">
-      <%= govuk_link_to "Give feedback", Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
-    </h2>
-    <p class="govuk-body">This is a new service. Your views will help us improve it.</p>
-  </div>
+  <% if FeatureService.enabled?("enable_feedback_link") %>
+    <div class ="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">
+        <%= govuk_link_to "Give feedback", Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
+      </h2>
+      <p class="govuk-body">This is a new service. Your views will help us improve it.</p>
+    </div>
+  <% end %>
 
   <div class ="govuk-grid-column-one-third">
     <h2 class="govuk-heading-m">
