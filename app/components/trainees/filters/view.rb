@@ -6,6 +6,8 @@ module Trainees
       include ProgrammeDetailsHelper
       attr_accessor :filters
 
+      with_content_areas :filter_actions
+
       def initialize(filters)
         @filters = filters
       end

@@ -2,6 +2,7 @@
 
 class TraineesController < ApplicationController
   before_action :ensure_trainee_is_not_draft!, only: :show
+  helper_method :filter_params
 
   def index
     @filters = TraineeFilter.new(params: filter_params).filters
@@ -14,6 +15,11 @@ class TraineesController < ApplicationController
       trainees: policy_scope(Trainee.not_draft.ordered_by_date),
       filters: @filters,
     )
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data data_export.data, filename: data_export.filename, disposition: :attachment }
+    end
   end
 
   def show
@@ -58,5 +64,9 @@ private
 
   def filter_params
     params.permit(:subject, :text_search, record_type: [], state: [])
+  end
+
+  def data_export
+    @data_export ||= Exports::TraineeSearchData.new(@draft_trainees + @trainees)
   end
 end

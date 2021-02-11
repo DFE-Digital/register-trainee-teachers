@@ -12,3 +12,4 @@ dttp:
 features:
   home_text: true
   use_dfe_sign_in: false
+  trainee_export: true
