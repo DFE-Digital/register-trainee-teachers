@@ -47,6 +47,7 @@ en:
       heading: Confirm %{section_title}
       flash:
         diversity: disclosure
+        trainee_id: ID
     programme_detail:
       title: "Programme details"
     degrees:

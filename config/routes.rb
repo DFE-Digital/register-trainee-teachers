@@ -48,11 +48,7 @@ Rails.application.routes.draw do
     scope module: :trainees do
       resource :programme_details, concerns: :confirmable, only: %i[edit update], path: "/programme-details"
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
-      resource :trainee_id, only: %i[edit update], path: "/trainee-id" do
-        member do
-          get "confirm", to: "trainee_ids#confirm"
-        end
-      end
+      resource :trainee_id, concerns: :confirmable, only: %i[edit update], path: "/trainee-id"
 
       namespace :degrees do
         get "/new/type", to: "type#new"
