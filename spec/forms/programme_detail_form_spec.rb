@@ -7,6 +7,30 @@ describe ProgrammeDetailForm, type: :model do
 
   subject { described_class.new(trainee) }
 
+  describe "before validation" do
+    context "#sanitise_programme_dates" do
+      let(:attributes) do
+        { start_day: "1 2",
+          start_month: "1 1",
+          start_year: "2 0 2 0",
+          end_day: "1 2",
+          end_month: "1 1",
+          end_year: "2 0 2 1" }
+      end
+
+      before do
+        subject.assign_attributes(attributes)
+        subject.sanitise_programme_dates
+        subject.valid?
+      end
+
+      it "does not return programme date errors" do
+        expect(subject.errors[:programme_start_date]).to be_empty
+        expect(subject.errors[:programme_end_date]).to be_empty
+      end
+    end
+  end
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:subject) }
 

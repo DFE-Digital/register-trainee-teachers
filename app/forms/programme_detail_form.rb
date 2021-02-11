@@ -11,6 +11,8 @@ class ProgrammeDetailForm
 
   delegate :id, :persisted?, to: :trainee
 
+  before_validation :sanitise_programme_dates
+
   validates :subject, presence: true
   validate :age_range_valid
   validate :programme_start_date_valid
@@ -66,6 +68,23 @@ class ProgrammeDetailForm
       Date.new(*date_args)
     else
       Struct.new(*date_hash.keys).new(*date_hash.values)
+    end
+  end
+
+  def sanitise_programme_dates
+    programme_dates = %w[start_day
+                         start_month
+                         start_year
+                         end_day
+                         end_month
+                         end_year]
+
+    return if programme_dates.any?(&:nil?)
+
+    programme_dates.each do |date_attribute|
+      date = "#{date_attribute}="
+      sanitised_date = public_send(date_attribute).to_s.gsub(/\s+/, "")
+      public_send(date, sanitised_date)
     end
   end
 
