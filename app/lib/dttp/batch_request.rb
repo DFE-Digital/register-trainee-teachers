@@ -4,13 +4,13 @@ module Dttp
   class BatchRequest
     class Error < StandardError; end
 
-    attr_reader :batch_id, :change_set_id, :additional_headers, :change_sets
+    attr_reader :batch_id, :change_set_id, :headers, :change_sets
 
     def initialize(batch_id: SecureRandom.uuid, change_set_id: SecureRandom.uuid)
       @batch_id = batch_id
       @change_set_id = change_set_id
       @change_sets = []
-      @additional_headers = { "Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}" }
+      @headers = { "Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}" }
     end
 
     def add_change_set(entity:, payload:, content_id: SecureRandom.uuid)
@@ -19,7 +19,7 @@ module Dttp
     end
 
     def submit
-      response = Client.post("/$batch", body: body, headers: Client.headers.merge(additional_headers))
+      response = Client.post("/$batch", body: body, headers: headers)
       raise Error, "body: #{response.body.gsub('\r', '')}, status: #{response.code}, headers: #{response.headers}" if response.code != 200
 
       response
