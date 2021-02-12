@@ -1,0 +1,105 @@
+@import "../base.scss";
+
+.app-status-card {
+
+  display: block;
+  padding: govuk-spacing(2);
+
+  @include govuk-media-query($from: desktop) {
+    padding: govuk-spacing(4);
+  }
+ 
+  margin-bottom: govuk-spacing(3);
+
+  @include govuk-media-query($from: tablet) {
+    margin-bottom: govuk-spacing(0);
+  }
+  
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+
+  color: govuk-colour("white");
+  background-color: $govuk-brand-colour;
+  letter-spacing: 1px;
+
+  &:hover {
+    background-color: govuk-shade($govuk-brand-colour, 15%);
+  }
+
+  text-decoration: none;
+
+  @include govuk-font($size: 19);
+
+  &:focus, &:link:focus, &:visited:focus {
+    @include govuk-focused-text;
+    color:  $govuk-text-colour;
+    background:  $govuk-focus-colour;
+    outline: none;
+  }
+}
+
+.app-status-card__count {
+  @include govuk-font($size: 36, $weight: bold, $tabular: true);
+  display: block;
+}
+
+.app-status-card--grey {
+  &, &:link, &:visited {
+    color: govuk-shade(govuk-colour("dark-grey", $legacy: "grey-1"), 30);
+    background: govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 90); 
+  }
+  &:hover {
+    background: govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 80);
+  }
+}
+
+.app-status-card--turquoise {
+  &, &:link, &:visited {
+    color: govuk-shade(govuk-colour("turquoise"), 60);
+    background: govuk-tint(govuk-colour("turquoise"), 70);
+  }
+  &:hover {
+    background: govuk-tint(govuk-colour("turquoise"), 57);
+  }
+}
+
+.app-status-card--blue {
+  &, &:link, &:visited {
+    color: govuk-shade(govuk-colour("blue"), 30);
+    background: govuk-tint(govuk-colour("blue"), 80);
+  }
+  &:hover {
+    background: govuk-tint(govuk-colour("blue"), 70);
+  }
+}
+
+.app-status-card--purple {
+  &, &:link, &:visited {
+    color: govuk-shade(govuk-colour("purple"), 20);
+    background: govuk-tint(govuk-colour("purple"), 80);
+  }
+  &:hover {
+    background: govuk-tint(govuk-colour("purple"), 70);
+  }
+}
+
+.app-status-card--yellow {
+  &, &:link, &:visited {
+    color: govuk-shade(govuk-colour("yellow"), 65);
+    background: govuk-tint(govuk-colour("yellow"), 75);
+  }
+  &:hover {
+    background: govuk-tint(govuk-colour("yellow"), 60);
+  }
+}
+
+.app-status-card--red {
+  &, &:link, &:visited {
+    color: govuk-shade(govuk-colour("red"), 30);
+    background: govuk-tint(govuk-colour("red"), 80);
+  }
+  &:hover {
+    background: govuk-tint(govuk-colour("red"), 70);
+  }
+}
+
