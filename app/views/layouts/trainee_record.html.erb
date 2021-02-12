@@ -1,5 +1,5 @@
 <%= extends_layout :application do %>
-  <%= render PageTitle::View.new(title: trainee_name(@trainee)) %>
+  <%= render PageTitle::View.new(title: "trainees.show") %>
 
   <%= content_for(:breadcrumbs) do %>
     <%= render GovukComponent::BackLink.new(

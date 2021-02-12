@@ -75,7 +75,7 @@ en:
         new: Add a trainee
         index: Trainee records
         not_supported_route: Other routes not supported
-        show: Overview
+        show: Trainee record overview
         diversity:
           disclosures:
             edit: Has the trainee shared diversity information?
