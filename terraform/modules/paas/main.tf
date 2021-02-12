@@ -2,7 +2,7 @@ terraform {
   required_providers {
     cloudfoundry = {
       source  = "cloudfoundry-community/cloudfoundry"
-      version = "0.12.6"
+      version = "0.13.0"
     }
   }
 }
@@ -27,7 +27,7 @@ resource cloudfoundry_app web_app {
   instances                  = var.web_app_instances
   memory                     = var.web_app_memory
   space                      = data.cloudfoundry_space.space.id
-  strategy                   = var.deployment_strategy
+  strategy                   = "blue-green-v2"
   timeout                    = var.app_start_timeout
   environment                = local.app_environment
   docker_credentials         = var.docker_credentials
@@ -59,7 +59,7 @@ resource cloudfoundry_app worker_app {
   instances          = var.worker_app_instances
   memory             = var.worker_app_memory
   space              = data.cloudfoundry_space.space.id
-  strategy           = var.deployment_strategy
+  strategy           = "blue-green-v2"
   timeout            = var.app_start_timeout
   environment        = local.app_environment
   docker_credentials = var.docker_credentials
