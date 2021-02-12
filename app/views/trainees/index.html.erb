@@ -10,7 +10,13 @@
   </p>
 <% end %>
 
-<%= render Trainees::Filters::View.new(@filters) do %>
+<%= render Trainees::Filters::View.new(@filters) do |component| %>
+  <% if FeatureService.enabled?(:trainee_export) && (@draft_trainees + @trainees).any?(&:present?) %>
+    <% component.with(:filter_actions) do %>
+      <p class="govuk-body govuk-!-margin-top-3"><%= govuk_link_to("Export these records", trainees_path(filter_params.merge(format: "csv")), class: "trainee-search-export") %></p>
+    <% end %>
+  <% end %>
+
   <% if @draft_trainees.any? || @trainees.any? %>
     <% if @draft_trainees.any? %>
       <div class="govuk-!-margin-bottom-8 app-draft-records">

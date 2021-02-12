@@ -6,3 +6,4 @@ features:
   use_dfe_sign_in: false
   enable_feedback_link: false
   enable_support_link: false
+  trainee_export: true

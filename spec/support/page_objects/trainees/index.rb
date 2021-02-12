@@ -23,6 +23,8 @@ module PageObjects
       element :assessment_only_checkbox, "#record_type-assessment_only"
       element :provider_led_checkbox, "#record_type-provider_led"
       element :subject, "#subject"
+
+      element :export_link, ".trainee-search-export"
     end
   end
 end

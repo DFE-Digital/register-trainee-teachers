@@ -59,6 +59,19 @@ RSpec.feature "Filtering trainees" do
     end
   end
 
+  context "exporting", feature_trainee_export: true do
+    scenario "exporting with no filter" do
+      and_i_export_the_results
+      then_i_see_my_trainee_search_results
+    end
+
+    scenario "exporting with a filter" do
+      when_i_filter_by_subject("Biology")
+      and_i_export_the_results
+      then_i_see_my_filtered_trainee_search_results
+    end
+  end
+
 private
 
   def given_trainees_exist_in_the_system
@@ -165,5 +178,29 @@ private
 
   def full_name(trainee)
     [trainee.first_names, trainee.last_name].join(" ")
+  end
+
+  def and_i_export_the_results
+    trainee_index_page.export_link.click
+  end
+
+  def then_i_see_my_trainee_search_results
+    expect(csv_output).to include(@assessment_only_trainee.trainee_id)
+    expect(csv_output).to include(@provider_led_trainee.trainee_id)
+    expect(csv_output).to include(@biology_trainee.trainee_id)
+    expect(csv_output).to include(@history_trainee.trainee_id)
+  end
+
+  def then_i_see_my_filtered_trainee_search_results
+    expect(csv_output).to include(@biology_trainee.trainee_id)
+
+    expect(csv_output).not_to include(@assessment_only_trainee.trainee_id)
+    expect(csv_output).not_to include(@provider_led_trainee.trainee_id)
+    expect(csv_output).not_to include(@searchable_trainee.trainee_id)
+    expect(csv_output).not_to include(@history_trainee.trainee_id)
+  end
+
+  def csv_output
+    @csv_output ||= CSV.parse(page.text).flatten.compact.map(&:strip)
   end
 end

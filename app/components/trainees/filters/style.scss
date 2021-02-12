@@ -58,6 +58,8 @@
 }
 
 .app-filter {
+  box-shadow: none;
+
   @include govuk-media-query($from: tablet) {
     margin-bottom: govuk-spacing(3);
   }
