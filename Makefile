@@ -52,16 +52,16 @@ sandbox:
 
 
 deploy-plan: terraform-init
-	terraform plan -var-file=terraform/workspace-variables/$(env_config).tfvars terraform
+	cd terraform &&  terraform plan -var-file=workspace-variables/$(env_config).tfvars
 
 deploy: terraform-init
-	terraform apply -var-file=terraform/workspace-variables/$(env_config).tfvars -auto-approve terraform
+	cd terraform &&  terraform apply -var-file=workspace-variables/$(env_config).tfvars -auto-approve
 
 destroy: terraform-init
-	terraform destroy -var-file=terraform/workspace-variables/$(env_config).tfvars terraform
+	cd terraform && terraform destroy -var-file=workspace-variables/$(env_config).tfvars
 
 terraform-init:
-	terraform init -reconfigure -backend-config=terraform/workspace-variables/$(env_config)_backend.tfvars $(backend_key) terraform
+	cd terraform && terraform init -reconfigure -backend-config=workspace-variables/$(env_config)_backend.tfvars $(backend_key)
 	$(if $(tag), , $(error Missing environment variable "tag"))
 	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teachers:$(tag))
 	$(if $(passcode), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))

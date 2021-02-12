@@ -30,11 +30,11 @@ variable dockerhub_username { default = null }
 
 variable dockerhub_password { default = null }
 
-variable paas_app_config_file { default = "./terraform/workspace-variables/app_config.yml" }
+variable paas_app_config_file { default = "workspace-variables/app_config.yml" }
 
-variable paas_app_secrets_file { default = "./terraform/workspace-variables/app_secrets.yml" }
+variable paas_app_secrets_file { default = "workspace-variables/app_secrets.yml" }
 
-variable infra_secrets_file { default = "./terraform/workspace-variables/infra_secrets.yml" }
+variable infra_secrets_file { default = "workspace-variables/infra_secrets.yml" }
 
 variable env_config {}
 

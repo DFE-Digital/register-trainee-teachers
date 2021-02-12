@@ -25,7 +25,7 @@ provider cloudfoundry {
   user              = var.paas_user == null ? local.infra_secrets.paas_user : var.paas_user
   password          = var.paas_password == null ? local.infra_secrets.paas_password : var.paas_password
   sso_passcode      = var.paas_sso_passcode
-  store_tokens_path = "./terraform/tokens"
+  store_tokens_path = "tokens"
   version           = "~> 0.12"
 }
 

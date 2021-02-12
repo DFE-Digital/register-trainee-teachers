@@ -85,15 +85,17 @@ jobs:
 
       - name: Terraform init
         run: |
-          terraform init -backend-config=terraform/workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars terraform
+          terraform init -backend-config=workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars
+        working-directory: terraform
         env:
           ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
           TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
 
       - name: Terraform Plan and Apply
         run: |
-          terraform plan -var-file=terraform/workspace-variables/${{ env.DEPLOY_ENV }}.tfvars terraform
-          terraform apply -var-file=terraform/workspace-variables/${{ env.DEPLOY_ENV }}.tfvars -auto-approve terraform
+          terraform plan -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars
+          terraform apply -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars -auto-approve
+        working-directory: terraform
         env:
           TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
           ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
