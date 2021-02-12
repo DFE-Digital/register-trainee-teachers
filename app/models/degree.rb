@@ -4,13 +4,13 @@ class Degree < ApplicationRecord
   include Sluggable
 
   validates :locale_code, presence: true
-  validates :uk_degree, presence: true, on: :uk
-  validates :country, presence: true, on: :non_uk
-  validates :non_uk_degree, presence: true, on: :non_uk
   validates :subject, presence: true, on: %i[uk non_uk]
+  validates :country, presence: true, on: :non_uk
+  validates :uk_degree, presence: true, on: :uk
   validates :institution, presence: true, on: :uk
   validates :graduation_year, presence: true, on: %i[uk non_uk]
   validate :graduation_year_valid, if: -> { graduation_year.present? }
+  validates :non_uk_degree, presence: true, on: :non_uk
   validates :grade, presence: true, on: :uk
 
   belongs_to :trainee
