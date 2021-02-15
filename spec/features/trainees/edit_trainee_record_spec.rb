@@ -46,7 +46,7 @@ feature "edit trainee record", type: :feature do
 
   def then_i_see_the_trn_status
     state_text = "activerecord.attributes.trainee.states.#{trainee.state}"
-    expect(record_page.trn_status.text).to eq(I18n.t(state_text).downcase)
+    expect(record_page.trn_status.text).to eq("Trainee status " + I18n.t(state_text).downcase)
   end
 
   def when_i_visit_the_trainee_record_page

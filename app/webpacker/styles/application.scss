@@ -33,10 +33,18 @@ a[href="#"] {
 }
 
 .trainee-record-header .govuk-tag {
+  left: 5px;
+  position: relative;
+  top: 6px;
+
   @include govuk-media-query($from: tablet) {
-    position: relative;
-    top: -5px;
+    top: 16px;
   }
+}
+
+.trainee-record-header-name-trn {
+  display: inline-block;
+  vertical-align: top;
 }
 
 .govuk-button--link {
