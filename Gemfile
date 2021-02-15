@@ -69,9 +69,14 @@ gem "pg_search", "~> 2.3"
 
 gem "slack-notifier"
 
+# Tracking changes to models
 gem "audited", "~> 4.9"
 
+# Trainee state and transitions
 gem "stateful_enum"
+
+# Pagination
+gem "kaminari"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.index") %>
+<%= render PageTitle::View.new(title: trainees_page_title(@paginated_trainees)) %>
 
 <h1 class="govuk-heading-xl">Trainee records</h1>
 
@@ -10,41 +10,44 @@
   </p>
 <% end %>
 
-<%= render Trainees::Filters::View.new(@filters) do |component| %>
-  <% if FeatureService.enabled?(:trainee_export) && (@draft_trainees + @trainees).any?(&:present?) %>
+<%= render PaginatedFilter::View.new(filters: @filters, collection: @paginated_trainees) do |component| %>
+  <% if FeatureService.enabled?(:trainee_export) && (@paginated_trainees).any?(&:present?) %>
     <% component.with(:filter_actions) do %>
       <p class="govuk-body govuk-!-margin-top-3"><%= govuk_link_to("Export these records", trainees_path(filter_params.merge(format: "csv")), class: "trainee-search-export") %></p>
     <% end %>
   <% end %>
 
-  <% if @draft_trainees.any? || @trainees.any? %>
+  <% if @paginated_trainees.any? %>
     <% if @draft_trainees.any? %>
       <div class="govuk-!-margin-bottom-8 app-draft-records">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Draft records (<%= @draft_trainees.count %><span class="govuk-visually-hidden"> draft <%= "record".pluralize(@draft_trainees.count) %></span>)</h2>
+            <h2 class="govuk-heading-m">Draft records (<%= @draft_trainees_count %><span class="govuk-visually-hidden"> draft <%= "record".pluralize(@draft_trainees_count) %></span>)</h2>
           </div>
         </div>
         <%= render ApplicationRecordCard::View.with_collection(@draft_trainees) %>
       </div>
     <% end %>
-    <% if @trainees.any? %>
+
+    <% if @completed_trainees.any? %>
       <div class="govuk-!-margin-bottom-8 app-non-draft-records">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Records (<%= @trainees.count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@trainees.count) %></span>)</h2>
+            <h2 class="govuk-heading-m">Records (<%= @completed_trainees_count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@completed_trainees_count) %></span>)</h2>
           </div>
         </div>
-        <%= render ApplicationRecordCard::View.with_collection(@trainees) %>
+        <%= render ApplicationRecordCard::View.with_collection(@completed_trainees) %>
       </div>
     <% end %>
+
   <% elsif @filters %>
     <h2 class="govuk-heading-m">No records found</h2>
     <p class="govuk-body">
       Try
       <%= govuk_link_to "clearing your search and filters", trainees_path %>.
     </p>
+
   <% else %>
-    <h2 class="govuk-heading-m">You do not have any records yet.</h2>
+    <h2 class="govuk-heading-m">You do not have any records yet</h2>
   <% end %>
 <% end %>

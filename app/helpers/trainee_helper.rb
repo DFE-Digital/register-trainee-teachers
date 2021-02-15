@@ -15,4 +15,15 @@ module TraineeHelper
       trainee_path(trainee)
     end
   end
+
+  def trainees_page_title(trainees)
+    total_pages = trainees.total_pages
+    return "trainees.index" if total_pages <= 1
+
+    I18n.t(
+      "components.page_titles.trainees.paginated_index",
+      current_page: trainees.current_page,
+      total_pages: total_pages,
+    )
+  end
 end

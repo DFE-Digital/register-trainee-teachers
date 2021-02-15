@@ -74,6 +74,7 @@ en:
       trainees:
         new: Add a trainee
         index: Trainee records
+        paginated_index: Trainee records (page %{current_page} of %{total_pages})
         not_supported_route: Other routes not supported
         show: Trainee record overview
         diversity:

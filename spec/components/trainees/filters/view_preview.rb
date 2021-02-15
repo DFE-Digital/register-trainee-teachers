@@ -5,7 +5,7 @@ module Trainees
   module Filters
     class ViewPreview < ViewComponent::Preview
       def default_view
-        render Trainees::Filters::View.new(filter_mock)
+        render Trainees::Filters::View.new(filters: filter_mock)
       end
 
     private

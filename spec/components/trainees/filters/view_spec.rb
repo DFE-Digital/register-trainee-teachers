@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Trainees::Filters::View do
   let(:selected_text) { "Selected filters" }
-  let(:result) { render_inline described_class.new(filters) }
+  let(:result) { render_inline described_class.new(filters: filters) }
 
   context "when no filters are applied" do
     let(:filters) { nil }
