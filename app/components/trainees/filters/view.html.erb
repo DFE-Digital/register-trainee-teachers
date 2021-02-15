@@ -1,17 +1,14 @@
-
-<div class='moj-filter-layout'>
-  <div class="moj-filter-layout__filter app-filter">
-    <div class="moj-filter">
-      <div class="moj-filter__header">
-        <div class="moj-filter__header-title">
-          <h2 class="govuk-heading-m">Filters</h2>
-        </div>
-
-        <div class="moj-filter__header-action">
-        </div>
+<div class="moj-filter-layout__filter app-filter">
+  <div class="moj-filter">
+    <div class="moj-filter__header">
+      <div class="moj-filter__header-title">
+        <h2 class="govuk-heading-m">Filters</h2>
       </div>
+      <div class="moj-filter__header-action">
+      </div>
+    </div>
 
-      <div class="moj-filter__content">
+    <div class="moj-filter__content">
 
       <% if filters %>
         <div class="moj-filter__selected">
@@ -39,52 +36,43 @@
         </div>
       <% end %>
 
-        <!-- Div made focusable to 'catch' focus from filters. see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640 -->
-        <div class="moj-filter__options" tabindex="-1">
+      <!-- Div made focusable to 'catch' focus from filters. see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640 -->
+      <div class="moj-filter__options"  tabindex="-1">
 
-          <form method="get">
-            <%= submit_tag "Apply filters", class: "govuk-button" %>
+        <form method="get">
+          <%= submit_tag "Apply filters", class: "govuk-button" %>
 
-            <div class="govuk-form-group">
-              <%= label_tag "text_search", "Search records", class: "govuk-label govuk-label--s" %>
-              <%= text_field_tag "text_search", (filters[:text_search] if filters), spellcheck: false, class: "govuk-input" %>
-            </div>
+          <div class="govuk-form-group">
+            <%= label_tag "text_search", "Search records", class: "govuk-label govuk-label--s" %>
+            <%= text_field_tag "text_search", (filters[:text_search] if filters), spellcheck: false, class: "govuk-input" %>
+          </div>
 
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                  Status
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <% Trainee.states.map do |state, _| %>
-                    <div class="govuk-checkboxes__item">
-                      <%= check_box_tag 'state[]', state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input"%>
-                      <%= label_tag "state-#{state}", label_for('state', state), class: "govuk-label govuk-checkboxes__label" %>
-                    </div>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                Status
+              </legend>
+              <div class="govuk-checkboxes govuk-checkboxes--small">
+                <% Trainee.states.map do |state, _| %>
+                  <div class="govuk-checkboxes__item">
+                    <%= check_box_tag 'state[]', state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input"%>
+                    <%= label_tag "state-#{state}", label_for('state', state), class: "govuk-label govuk-checkboxes__label" %>
+                  </div>
+                <% end %>
+              </div>
+            </fieldset>
+          </div>
 
-            <div class="govuk-form-group">
-              <%= label_tag "subject", "Subject", class: "govuk-label govuk-label--s" %>
-              <%= select_tag :subject, options_from_collection_for_select(filter_programme_subjects_options, :name, :name, (filters[:subject] if filters)), class: "govuk-select" %>
-            </div>
-          </form>
-        </div>
+          <div class="govuk-form-group">
+            <%= label_tag "subject", "Subject", class: "govuk-label govuk-label--s" %>
+            <%= select_tag :subject, options_from_collection_for_select(filter_programme_subjects_options, :name, :name, (filters[:subject] if filters)), class: "govuk-select" %>
+          </div>
+        </form>
       </div>
     </div>
 
     <% if filter_actions %>
       <%= filter_actions %>
     <% end %>
-  </div>
-
-  <div class='moj-filter-layout__content'>
-    <div class="moj-action-bar">
-      <div class="moj-action-bar__filter">
-      </div>
-    </div>
-    <%= content %>
   </div>
 </div>

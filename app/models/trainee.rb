@@ -128,6 +128,9 @@ class Trainee < ApplicationRecord
 
   scope :ordered_by_date, -> { order(updated_at: :desc) }
 
+  # Returns draft trainees first, then all trainees in any other state.
+  scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
+
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
@@ -162,5 +165,14 @@ class Trainee < ApplicationRecord
     exclude_list = %w[created_at updated_at dttp_update_sha]
 
     [as_json.except(*exclude_list), degrees, nationalities, disabilities].map(&:to_json).join(",")
+  end
+
+  def self.ordered_by_drafts_clause
+    Arel.sql <<~SQL
+      CASE trainees.state
+      WHEN #{states.fetch('draft')} THEN 0
+      ELSE 1
+      END
+    SQL
   end
 end

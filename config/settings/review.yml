@@ -7,3 +7,6 @@ features:
   enable_feedback_link: false
   enable_support_link: false
   trainee_export: true
+
+pagination:
+  records_per_page: 30

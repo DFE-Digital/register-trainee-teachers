@@ -8,3 +8,6 @@ features:
   allow_user_creation: true
   use_dfe_sign_in: false
   basic_auth: false
+
+pagination:
+  records_per_page: 30

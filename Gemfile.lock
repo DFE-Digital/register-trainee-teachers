@@ -186,6 +186,18 @@ GEM
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
+    kaminari (1.2.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
+      actionview
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
+      activerecord
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     launchy (2.5.0)
       addressable (~> 2.7)
     listen (3.4.1)
@@ -471,6 +483,7 @@ DEPENDENCIES
   govuk-components
   govuk_design_system_formbuilder
   httparty (~> 0.18)
+  kaminari
   launchy
   listen (>= 3.0.5, < 3.5)
   omniauth

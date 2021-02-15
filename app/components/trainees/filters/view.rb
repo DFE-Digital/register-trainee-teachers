@@ -4,12 +4,11 @@ module Trainees
   module Filters
     class View < GovukComponent::Base
       include ProgrammeDetailsHelper
-      attr_accessor :filters
+      attr_accessor :filters, :filter_actions
 
-      with_content_areas :filter_actions
-
-      def initialize(filters)
+      def initialize(filters:, filter_actions: nil)
         @filters = filters
+        @filter_actions = filter_actions
       end
 
     private

@@ -44,3 +44,6 @@ jobs:
 
 sidekiq:
   schedule_file: "config/sidekiq_cron_schedule.yml"
+
+pagination:
+  records_per_page: 100

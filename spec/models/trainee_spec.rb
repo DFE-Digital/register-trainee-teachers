@@ -208,6 +208,23 @@ describe Trainee do
     end
   end
 
+  describe "#ordered_by_drafts" do
+    let(:deferred_trainee_a) { create(:trainee, :deferred, id: 1) }
+    let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, id: 2) }
+    let(:draft_trainee_c) { create(:trainee, :draft, id: 3) }
+    let(:draft_trainee_d) { create(:trainee, :draft, id: 4) }
+
+    it "orders the trainees by drafts first, then any other state" do
+      expected_order = [
+        draft_trainee_c,
+        draft_trainee_d,
+        deferred_trainee_a,
+        submitted_for_trn_trainee_b,
+      ]
+      expect(Trainee.ordered_by_drafts.order(:id)).to eq(expected_order)
+    end
+  end
+
   describe "auditing" do
     it { should be_audited.associated_with(:provider) }
   end

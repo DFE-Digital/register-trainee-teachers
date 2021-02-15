@@ -5,16 +5,18 @@ class TraineesController < ApplicationController
   helper_method :filter_params
 
   def index
-    @filters = TraineeFilter.new(params: filter_params).filters
+    return redirect_to trainees_path(filter_params) if current_page_exceeds_total_pages?
 
-    @draft_trainees = Trainees::Filter.call(
-      trainees: policy_scope(Trainee.draft.ordered_by_date),
-      filters: @filters,
-    )
-    @trainees = Trainees::Filter.call(
-      trainees: policy_scope(Trainee.not_draft.ordered_by_date),
-      filters: @filters,
-    )
+    # We can't use `#draft` to find @draft_trainees since that applies a `WHERE`
+    # clause, removing Kaminari's pagination. Hence the use of `#select`.
+    #
+    # Conversely, we need to call Kaminari's `#total_count` on the ActiveRecord
+    # Relations for the pre-pagination count. Hence the secondary call to `#draft`.
+    @draft_trainees = paginated_trainees.select(&:draft?)
+    @draft_trainees_count = filtered_trainees.draft.count
+
+    @completed_trainees = paginated_trainees.reject(&:draft?)
+    @completed_trainees_count = filtered_trainees.not_draft.count
 
     respond_to do |format|
       format.html
@@ -58,6 +60,29 @@ private
     @trainee ||= Trainee.from_param(params[:id])
   end
 
+  def current_page_exceeds_total_pages?
+    paginated_trainees.total_pages.nonzero? && paginated_trainees.current_page > paginated_trainees.total_pages
+  end
+
+  def paginated_trainees
+    @paginated_trainees ||= filtered_trainees.page(params[:page] || 1)
+  end
+
+  def filtered_trainees
+    @filtered_trainees ||= Trainees::Filter.call(
+      trainees: ordered_trainees,
+      filters: filters,
+    )
+  end
+
+  def ordered_trainees
+    policy_scope(Trainee.ordered_by_drafts.ordered_by_date)
+  end
+
+  def filters
+    @filters ||= TraineeFilter.new(params: filter_params).filters
+  end
+
   def trainee_params
     params.require(:trainee).permit(:record_type, :trainee_id)
   end
@@ -67,6 +92,6 @@ private
   end
 
   def data_export
-    @data_export ||= Exports::TraineeSearchData.new(@draft_trainees + @trainees)
+    @data_export ||= Exports::TraineeSearchData.new(filtered_trainees)
   end
 end

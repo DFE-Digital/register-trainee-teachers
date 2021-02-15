@@ -1,0 +1,14 @@
+<div class='moj-filter-layout'>
+  <%= render Trainees::Filters::View.new(filters: filters, filter_actions: filter_actions) %>
+
+  <div class='moj-filter-layout__content'>
+
+    <div class="moj-action-bar">
+      <div class="moj-action-bar__filter"></div>
+    </div>
+
+    <%= content %>
+
+    <%= render Paginator::View.new(scope: collection) %>
+  </div>
+</div>
