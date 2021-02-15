@@ -116,6 +116,10 @@ en:
           show: When did the trainee defer?
         deferral_details:
           confirm: Check deferral details
+        sort_links:
+          sort_by: Sort by
+          date_updated: Date updated
+          last_name: Last name
       providers:
         index: Providers
         new: Add a provider
