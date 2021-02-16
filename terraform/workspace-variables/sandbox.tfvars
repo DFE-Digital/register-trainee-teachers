@@ -21,5 +21,6 @@ statuscake_alerts = {
     contact_group  = [188603]
     trigger_rate   = 0
     node_locations = ["UKD", "DE", "CA"]
+    paused = false
   }
 }
