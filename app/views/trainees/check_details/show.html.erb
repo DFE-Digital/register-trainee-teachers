@@ -29,18 +29,12 @@
 
 <%= render TraineeSection::View.new(trainee: @trainee, section: :degrees) %>
 
-
-
-
-
-
 <h2 class="govuk-heading-m">
   About their training
 </h2>
 <%= render Trainees::Confirmation::TrainingDetails::View.new(trainee: @trainee) %>
 
 <%= render TraineeSection::View.new(trainee: @trainee, section: :programme_details) %>
-
 
 <%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>
   <%= hidden_field_tag :trainee_id, @trainee.slug %>
