@@ -10,6 +10,6 @@ class BlueInsetTextWithLink::View < ViewComponent::Base
   end
 
   def text
-    tag.p(class: "app-inset-text__title") { title } +  govuk_link_to(link_text, url)
+    tag.p(class: "app-inset-text__title") { title } + govuk_link_to(link_text, url)
   end
 end

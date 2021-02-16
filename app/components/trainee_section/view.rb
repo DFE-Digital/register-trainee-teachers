@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class TraineeSection::View < ViewComponent::Base
-
   attr_accessor :trainee, :section
 
   def initialize(trainee:, section:)
@@ -17,7 +16,7 @@ class TraineeSection::View < ViewComponent::Base
     end
   end
 
-  private 
+private
 
   def validator
     {
@@ -25,7 +24,7 @@ class TraineeSection::View < ViewComponent::Base
       contact_details: ContactDetailForm,
       diversity: Diversities::FormValidator,
       degrees: DegreeDetailForm,
-      programme_details: ProgrammeDetailForm
+      programme_details: ProgrammeDetailForm,
     }[section]
   end
 
@@ -41,34 +40,34 @@ class TraineeSection::View < ViewComponent::Base
 
   def path
     {
-      personal_details: { 
+      personal_details: {
         not_started: "edit_trainee_personal_details_path",
-        in_progress: "trainee_personal_details_confirm_path"
+        in_progress: "trainee_personal_details_confirm_path",
       },
-      contact_details: { 
+      contact_details: {
         not_started: "edit_trainee_contact_details_path",
-        in_progress: "trainee_contact_details_confirm_path"
+        in_progress: "trainee_contact_details_confirm_path",
       },
-      diversity: { 
+      diversity: {
         not_started: "edit_trainee_diversity_disability_disclosure_path",
-        in_progress: "trainee_diversity_confirm_path"
+        in_progress: "trainee_diversity_confirm_path",
       },
-      degrees: { 
+      degrees: {
         not_started: "trainee_degrees_new_type_path",
-        in_progress: "trainee_degrees_confirm_path"
+        in_progress: "trainee_degrees_confirm_path",
       },
-      programme_details: { 
+      programme_details: {
         not_started: "edit_trainee_programme_details_path",
-        in_progress: "trainee_programme_details_confirm_path"
-      }
+        in_progress: "trainee_programme_details_confirm_path",
+      },
     }[section][status]
   end
 
   def status
-    status ||= ProgressService.call(
+    @status ||= ProgressService.call(
       validator: validator.new(trainee),
-      progress_value: trainee.progress.public_send(section)
-    ).status.parameterize(separator: '_').to_sym
+      progress_value: trainee.progress.public_send(section),
+    ).status.parameterize(separator: "_").to_sym
   end
 
   def title
