@@ -1,1 +1,1 @@
-<%= render GovukComponent::Tag.new(text: status, colour: status_colour, classes: classes) %>
+<%= render GovukComponent::Tag.new(text: "<span class='govuk-visually-hidden'>Trainee status </span>".html_safe + status, colour: status_colour, classes: classes) %>
