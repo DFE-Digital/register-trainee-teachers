@@ -27,17 +27,16 @@ class PersonalDetailForm
   validate :date_of_birth_not_in_future
   validate :nationalities_cannot_be_empty
 
-  after_validation :update_trainee_attributes
-
-  def initialize(trainee, attributes = {})
+  def initialize(trainee, attributes = {}, store = FormStore)
     @trainee = trainee
-    @attributes = attributes
+    @store = store
+    @attributes = attributes.merge(fields_from_store)
     super(fields)
   end
 
   def fields
     trainee.attributes.merge(attributes).slice(*FIELDS).merge(
-      nationality_ids: trainee.nationality_ids,
+      nationality_ids: nationalities,
       # Check for `other_is_selected?` needed for 'blank' error styling. In this case,
       # it needs to be expanded, but there are no 'other' nationalities on the trainee.
       other: other_is_selected? || other_nationalities_hash.values.any?,
@@ -57,13 +56,23 @@ class PersonalDetailForm
     end
   end
 
-  def save
-    valid? && trainee.save
+  def save_to_store
+    valid? && store.set(:personal_details, fields)
+  end
+
+  def save!
+    if valid?
+      update_trainee_attributes
+      trainee.save!
+      store.set(:personal_details, nil)
+    else
+      false
+    end
   end
 
 private
 
-  attr_reader :attributes
+  attr_reader :attributes, :store
 
   def update_trainee_attributes
     if errors.empty?
@@ -101,12 +110,12 @@ private
   end
 
   def nationalities
-    return trainee.nationality_ids if attributes[:nationality_ids].blank?
+    return trainee.nationality_ids if attributes["nationality_ids"].blank?
 
-    nationalities = attributes[:nationality_ids]
+    nationalities = attributes["nationality_ids"]
 
     if other_is_selected?
-      nationalities += [attributes[:other_nationality1], attributes[:other_nationality2], attributes[:other_nationality3]]
+      nationalities += [attributes["other_nationality1"], attributes["other_nationality2"], attributes["other_nationality3"]]
     end
 
     nationalities&.reject(&:blank?)&.uniq&.map(&:to_i)
@@ -121,7 +130,7 @@ private
   end
 
   def other_is_selected?
-    ActiveModel::Type::Boolean.new.cast(attributes[:other])
+    ActiveModel::Type::Boolean.new.cast(attributes["other"])
   end
 
   def nationalities_cannot_be_empty
@@ -129,8 +138,12 @@ private
       errors.add(:nationality_ids, :empty_nationalities)
     end
 
-    if other_is_selected? && attributes[:other_nationality1].blank?
+    if other_is_selected? && attributes["other_nationality1"].blank?
       errors.add(:other_nationality1, :blank)
     end
+  end
+
+  def fields_from_store
+    store.get(:personal_details).presence || {}
   end
 end

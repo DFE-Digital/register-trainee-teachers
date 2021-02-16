@@ -3,6 +3,7 @@
 module Trainees
   class PersonalDetailsController < ApplicationController
     before_action :ensure_trainee_is_not_draft!, only: :show
+    before_action :clear_form_stash, only: :show
 
     DOB_CONVERSION = {
       "date_of_birth(3i)" => "day",
@@ -31,7 +32,7 @@ module Trainees
       other_nationalities
       personal_detail = PersonalDetailForm.new(trainee, personal_details_params)
 
-      if personal_detail.save
+      if personal_detail.save_to_store
         redirect_to trainee_personal_details_confirm_path(personal_detail.trainee)
       else
         @personal_detail = personal_detail

@@ -1,5 +1,7 @@
 <div class="personal-details">
-  <%= render Trainees::Confirmation::PersonalDetails::View.new(trainee: @trainee) %>
+  <%= render Trainees::Confirmation::PersonalDetails::View.new(
+    form_model: PersonalDetailForm.new(@trainee)
+    ) %>
 </div>
 
 <div class="contact-details">

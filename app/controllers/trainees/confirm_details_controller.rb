@@ -13,7 +13,9 @@ module Trainees
         @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
       end
 
-      @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
+      @confirmation_component = component_klass(trainee_section_key).new(
+        form_model: PersonalDetailForm.new(trainee),
+      )
     end
 
     def update
@@ -21,8 +23,10 @@ module Trainees
 
       if trainee.draft?
         toggle_trainee_progress_field
-        trainee.save!
       end
+
+      personal_detail = PersonalDetailForm.new(trainee)
+      personal_detail.save!
 
       flash[:success] = "Trainee #{flash_message_title} updated"
 

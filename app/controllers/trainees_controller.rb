@@ -2,6 +2,7 @@
 
 class TraineesController < ApplicationController
   before_action :ensure_trainee_is_not_draft!, only: :show
+  before_action :clear_form_stash, only: :show
   helper_method :filter_params
 
   def index
