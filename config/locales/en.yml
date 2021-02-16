@@ -152,28 +152,38 @@ en:
       personal_details:
         not_started: 
           title: Personal details not started
+          link_text: Start section
         in_progress: 
           title: Personal details not marked as complete
+          link_text: Continue section
       contact_details:
         not_started: 
           title: Contact details not started
+          link_text: Start section
         in_progress: 
           title: Contact details not marked as complete
+          link_text: Continue section
       diversity:
         not_started: 
           title: Diversity information not started
+          link_text: Start section
         in_progress: 
           title: Diversity information not marked as complete
+          link_text: Continue section
       degrees:
         not_started: 
           title: Degree details not started
+          link_text: Start section
         in_progress: 
           title: Degree details not marked as complete
+          link_text: Continue section
       programme_details:
         not_started: 
           title: Programme details not started
+          link_text: Start section
         in_progress: 
           title: Programme details not marked as complete
+          link_text: Continue section
   views:
     trainees:
       edit:

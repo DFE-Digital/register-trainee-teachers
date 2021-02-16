@@ -2,82 +2,84 @@
 
 class TraineeSection::View < ViewComponent::Base
 
-  attr_accessor :trainee, :section, :validator, :confirmation_view
+  attr_accessor :trainee, :section
 
   def initialize(trainee:, section:)
     @trainee = trainee
     @section = section
+  end
 
-    case section
-    when :personal_details
-      @validator = PersonalDetailForm
-      @confirmation_view = Trainees::Confirmation::PersonalDetails::View
-    when :contact_details
-      @validator = ContactDetailForm
-      @confirmation_view = Trainees::Confirmation::ContactDetails::View
-    when :diversity
-      @validator = Diversities::FormValidator
-      @confirmation_view = Trainees::Confirmation::Diversity::View
-    when :degrees
-      @validator = DegreeDetailForm
-      @confirmation_view = Trainees::Confirmation::Degrees::View
-    when :programme_details
-      @validator = ProgrammeDetailForm
-      @confirmation_view = Trainees::Confirmation::ProgrammeDetails::View
+  def component
+    if status == :completed
+      confirmation_view.new(trainee: trainee)
+    else
+      BlueInsetTextWithLink::View.new(title: title, link_text: link_text, url: url)
     end
   end
 
-  def status
-    status = ProgressService.call(
-      validator: validator.new(trainee),
-      progress_value: trainee.progress.public_send(section)
-    ).status
+  private 
 
-    status = status.parameterize(separator: '_').to_sym
+  def validator
+    {
+      personal_details: PersonalDetailForm,
+      contact_details: ContactDetailForm,
+      diversity: Diversities::FormValidator,
+      degrees: DegreeDetailForm,
+      programme_details: ProgrammeDetailForm
+    }[section]
   end
 
-  def is_completed
+  def confirmation_view
+    {
+      personal_details: Trainees::Confirmation::PersonalDetails::View,
+      contact_details: Trainees::Confirmation::ContactDetails::View,
+      diversity: Trainees::Confirmation::Diversity::View,
+      degrees: Trainees::Confirmation::Degrees::View,
+      programme_details: Trainees::Confirmation::ProgrammeDetails::View,
+    }[section]
+  end
+
+  def path
+    {
+      personal_details: { 
+        not_started: "edit_trainee_personal_details_path",
+        in_progress: "trainee_personal_details_confirm_path"
+      },
+      contact_details: { 
+        not_started: "edit_trainee_contact_details_path",
+        in_progress: "trainee_contact_details_confirm_path"
+      },
+      diversity: { 
+        not_started: "edit_trainee_diversity_disability_disclosure_path",
+        in_progress: "trainee_diversity_confirm_path"
+      },
+      degrees: { 
+        not_started: "trainee_degrees_new_type_path",
+        in_progress: "trainee_degrees_confirm_path"
+      },
+      programme_details: { 
+        not_started: "edit_trainee_programme_details_path",
+        in_progress: "trainee_programme_details_confirm_path"
+      }
+    }[section][status]
+  end
+
+  def status
+    status ||= ProgressService.call(
+      validator: validator.new(trainee),
+      progress_value: trainee.progress.public_send(section)
+    ).status.parameterize(separator: '_').to_sym
   end
 
   def title
     I18n.t("components.missing_details.#{section}.#{status}.title")
-
   end
 
   def url
-    return is_completed
-
-    # I18n.t("components.missing_details.#{section}.#{status}.url")
-
-    get_path
-  end
-
-  def get_path
-    not_started_path_hash || not_complete_path_hash
-  end
-
-  def not_started_path_hash
-    {
-      personal_details: edit_trainee_personal_details_path(@trainee),
-      contact_details: edit_trainee_contact_details_path(@trainee),
-      diversity: edit_trainee_diversity_disability_disclosure_path(@trainee),
-      degrees: trainee_degrees_new_type_path(@trainee),
-      programme_details: edit_trainee_programme_details_path(@trainee),
-    }
-  end
-
-  def not_complete_path_hash
-    {
-      personal_details: trainee_personal_details_confirm_path(@trainee),
-      contact_details: trainee_contact_details_confirm_path(@trainee),
-      diversity: trainee_diversity_confirm_path(@trainee),
-      degrees: trainee_degrees_confirm_path(@trainee),
-      programme_details: trainee_programme_details_confirm_path(@trainee),
-    }
+    Rails.application.routes.url_helpers.public_send(path, trainee)
   end
 
   def link_text
-    return is_completed
     I18n.t("components.missing_details.#{section}.#{status}.link_text")
   end
 end

@@ -1,4 +1,2 @@
-<div class="govuk-inset-text app-inset-text--narrow-border app-inset-text--important">
-  <p class="app-inset-text__title"> <%= title %> </p>
-  <%= govuk_link_to link_text, url %>
-</div>
+<%= render GovukComponent::InsetText.new(text: text, html_attributes: {
+  class: "govuk-inset-text app-inset-text--narrow-border app-inset-text--important"}) %>

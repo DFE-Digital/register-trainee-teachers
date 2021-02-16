@@ -1,5 +1,1 @@
-<% if status == :completed %>
-  <%= render confirmation_view.new(trainee: trainee) %>
-<% else %>
-  <%= render BlueInsetTextWithLink::View.new(title: title, link_text: link_text, url: url) %>
-<% end %>
+<%= render component %>
