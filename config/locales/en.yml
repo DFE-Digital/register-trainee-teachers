@@ -163,6 +163,11 @@ en:
         programme_details: Programme details not marked as complete
   views:
     trainees:
+      components:
+        missing_details:
+          personal_details:
+            in_progress:
+              title:
       edit:
         defer: Defer
         withdraw: withdraw
