@@ -27,6 +27,7 @@ review:
 	$(eval env_config=review)
 	$(eval backend_key=-backend-config=key=$(env).terraform.tfstate)
 	$(eval export TF_VAR_paas_app_environment=$(env))
+	$(eval space=bat-qa)
 
 pentest:
 	$(eval env=pen)
@@ -35,20 +36,24 @@ pentest:
 qa:
 	$(eval env=qa)
 	$(eval env_config=qa)
+	$(eval space=bat-qa)
 
 staging:
 	$(eval env=staging)
 	$(eval env_config=staging)
+	$(eval space=bat-staging)
 
 
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval env=production)
 	$(eval env_config=production)
+	$(eval space=bat-prod)
 
 sandbox:
 	$(eval env=sandbox)
 	$(eval env_config=sandbox)
+	$(eval space=bat-sandbox)
 
 
 deploy-plan: terraform-init
@@ -68,5 +73,5 @@ terraform-init:
 	$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 
 console:
-	cf target -s bat-${env}
+	cf target -s ${space}
 	cf ssh register-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
