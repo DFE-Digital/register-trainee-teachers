@@ -40,7 +40,7 @@ module Pages
 
           @trainee.degrees.new(id: 1, locale_code: 1, subject: "subject")
 
-          render template: "trainees/check_details/show.html", locals: { "@trainee": @trainee }
+          render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
         end
 
         def continue_sections
@@ -58,13 +58,13 @@ module Pages
                                  additional_ethnic_background: "additional_ethnic_background",
                                  subject: "subject")
           @trainee.degrees.new(id: 1)
-          render template: "trainees/check_details/show.html", locals: { "@trainee": @trainee }
+          render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
         end
 
         def start_sections
           @trainee = Trainee.new(id: 1000)
 
-          render template: "trainees/check_details/show.html", locals: { "@trainee": @trainee }
+          render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
         end
       end
     end

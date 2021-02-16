@@ -39,9 +39,6 @@ class TraineeSection::View < ViewComponent::Base
   def is_completed
   end
 
-  def confirmation_view
-  end
-
   def title
     I18n.t("components.missing_details.#{section}.#{status}.title")
 

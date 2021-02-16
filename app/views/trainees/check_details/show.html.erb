@@ -21,53 +21,26 @@
   Personal details and education
 </h2>
 
-<%# if @trainee.progress.personal_details %>
-  <%#= render Trainees::Confirmation::PersonalDetails::View.new(trainee: @trainee) %>
-<%# else %>
-  <%#= render BlueInsetTextWithLink::View.new(section: :personal_details, progress: @trainee.progress.personal_details, trainee: @trainee) %>
-<%# end %>
-
-<%# if @trainee.progress.contact_details %>
-  <%#= render Trainees::Confirmation::ContactDetails::View.new(trainee: @trainee) %>
-<%# else %>
-<%#= render BlueInsetTextWithLink::View.new(:title, :url, :link_text) %>
-<%# end %>
-
 <%= render TraineeSection::View.new(trainee: @trainee, section: :personal_details) %>
 
+<%= render TraineeSection::View.new(trainee: @trainee, section: :contact_details) %>
 
-<<<<<<< Updated upstream
-<%= render partial: "trainees/check_details/section", locals: { section: :personal_details, trainee: @trainee } %>
+<%= render TraineeSection::View.new(trainee: @trainee, section: :diversity) %>
 
-<%= render partial: "trainees/check_details/section", locals: { section: :contact_details, trainee: @trainee } %>
-
-<%= render partial: "trainees/check_details/section", locals: { section: :diversity, trainee: @trainee } %>
-
-<%= render partial: "trainees/check_details/section", locals: { section: :degrees, trainee: @trainee } %>
-=======
+<%= render TraineeSection::View.new(trainee: @trainee, section: :degrees) %>
 
 
 
 
 
-<%# if @trainee.progress.diversity %>
-  <%#= render Trainees::Confirmation::Diversity::View.new(trainee: @trainee) %>
-<%# else %>
-  <%#= render BlueInsetTextWithLink::View.new(section: :diversity, progress: @trainee.progress.diversity, trainee: @trainee) %>
-<%# end %>
-
-<%# if @trainee.progress.degrees %>
-  <%#= render Trainees::Confirmation::Degrees::View.new(trainee: @trainee) %>
-<%# else %>
-  <%#= render BlueInsetTextWithLink::View.new(section: :degrees, progress: @trainee.progress.degrees, trainee: @trainee) %>
-<%# end %>
 
 <h2 class="govuk-heading-m">
   About their training
 </h2>
 <%= render Trainees::Confirmation::TrainingDetails::View.new(trainee: @trainee) %>
 
-<%= render partial: "trainees/check_details/section", locals: { section: :programme_details, trainee: @trainee } %>
+<%= render TraineeSection::View.new(trainee: @trainee, section: :programme_details) %>
+
 
 <%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>
   <%= hidden_field_tag :trainee_id, @trainee.slug %>
