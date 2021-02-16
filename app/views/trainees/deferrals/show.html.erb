@@ -5,7 +5,7 @@
 <% end %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_for(@deferral, url: trainee_deferral_path(@trainee), local: true) do |f| %>
+    <%= form_with(model: @deferral, url: trainee_deferral_path(@trainee), local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <span class="govuk-caption-l">

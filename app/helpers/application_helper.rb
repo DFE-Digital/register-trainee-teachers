@@ -23,6 +23,12 @@ module ApplicationHelper
     link_to(body, url, html_options)
   end
 
+  def form_with(*args, &block)
+    options = args.extract_options!
+    defaults = { html: { novalidate: true } }
+    super(*args << defaults.deep_merge(options), &block)
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)
