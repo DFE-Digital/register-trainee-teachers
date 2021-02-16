@@ -7,7 +7,9 @@ module Dttp
     describe PlacementAssignment do
       let(:time_now_in_zone) { Time.zone.now }
       let(:provider) { create(:provider, dttp_id: dttp_provider_id) }
-      let(:trainee) { create(:trainee, :with_programme_details, dttp_id: dttp_contact_id, provider: provider) }
+      let(:trainee) do
+        create(:trainee, :with_programme_details, :with_start_date, dttp_id: dttp_contact_id, provider: provider)
+      end
 
       let(:contact_change_set_id) { SecureRandom.uuid }
       let(:dttp_contact_id) { SecureRandom.uuid }
@@ -52,6 +54,7 @@ module Dttp
               "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
               "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_entity_id})",
               "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
+              "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
               "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{dttp_degree_institution_entity_id})",
               "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{dttp_degree_grade_entity_id})",
               "dfe_traineeid" => trainee.trainee_id,
@@ -78,6 +81,7 @@ module Dttp
               "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
               "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_programme_subject_entity_id})",
               "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
+              "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
               "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
               "dfe_traineeid" => trainee.trainee_id,
               "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
@@ -103,7 +107,10 @@ module Dttp
         end
 
         context "trainee has no trainee_id" do
-          let(:trainee) { create(:trainee, :with_programme_details, dttp_id: dttp_contact_id, provider: provider, trainee_id: nil) }
+          let(:trainee) do
+            create(:trainee, :with_programme_details, :with_start_date,
+                   dttp_id: dttp_contact_id, provider: provider, trainee_id: nil)
+          end
 
           it "passes NOTPROVIDED for dfe_traineeid" do
             expect(subject).to include(

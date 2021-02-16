@@ -2,14 +2,16 @@
 
 module Trainees
   module Confirmation
-    module TraineeId
+    module TraineeStartDate
       class View < GovukComponent::Base
         attr_accessor :trainee
 
-        delegate :trainee_id, to: :trainee
-
         def initialize(trainee:)
           @trainee = trainee
+        end
+
+        def start_date
+          trainee.commencement_date.strftime("%d %B %Y")
         end
       end
     end

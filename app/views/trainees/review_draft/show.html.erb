@@ -85,9 +85,14 @@
 
       component.slot(
         :row,
-        task_name: 'Trainee ID',
-        path: training_details_trainee_path(@trainee),
-        status: 'completed'
+        task_name: 'Trainee start date and ID',
+        path: edit_trainee_training_details_path(@trainee),
+        confirm_path: trainee_training_details_confirm_path(@trainee),
+        classes: "training-details",
+        status: ProgressService.call(
+          validator: TrainingDetailsForm.new(@trainee),
+          progress_value: @trainee.progress.training_details
+        ).status
       )
     end %>
   </div>

@@ -8,6 +8,8 @@ module ConfirmDetailsHelper
       "degrees" => "trainee_degrees_confirm_path",
       "programme-details" => "trainee_programme_details_confirm_path",
       "trainee-id" => "trainee_trainee_id_confirm_path",
+      "trainee-start-date" => "trainee_start_date_confirm_path",
+      "training-details" => "trainee_training_details_confirm_path",
     }
 
     public_send(routes[section_key.dasherize], trainee)

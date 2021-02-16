@@ -44,7 +44,7 @@ module Trainees
     end
 
     def confirm_section_title
-      trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
+      trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID").gsub(/training\sdetails/, "trainee start date and ID")
     end
 
     def flash_message_title
@@ -64,7 +64,9 @@ module Trainees
         trainee_contact_details_path,
         trainee_degrees_path,
         trainee_programme_details_path,
+        trainee_training_details_path,
         trainee_trainee_id_path,
+        trainee_start_date_path,
       ].map { |path| path.split("/").last }
     end
 

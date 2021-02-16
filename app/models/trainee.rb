@@ -13,8 +13,7 @@ class Trainee < ApplicationRecord
 
   attribute :progress, Progress.to_type
 
-  validates :record_type, presence: { message: "You must select a route" }
-  validates :trainee_id, length: { maximum: 100, message: "Your entry must not exceed 100 characters" }
+  validates :record_type, presence: { message: I18n.t("activerecord.errors.models.trainee.attributes.record_type") }
 
   enum record_type: { assessment_only: 0, provider_led: 1 }
   enum locale_code: { uk: 0, non_uk: 1 }

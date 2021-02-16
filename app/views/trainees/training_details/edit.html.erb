@@ -1,19 +1,24 @@
-<%= render PageTitle::View.new(title: "trainees.training_details.edit") %>
+<%= render PageTitle::View.new(title: t('views.forms.training_details.title') ) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render DynamicBackLink::View.new(@trainee) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop"> 
-    <%= form_with model: @trainee, local: true do |f| %>
-      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID (optional)', tag: 'h1', size: 'l' }, width: 20 do %>  
-          <p class="govuk-body govuk-hint">
-            You can assign your own ID for this trainee. This can help you identify them
-            or search for them in your trainee records later.
-          </p> 
-        <% end %>
-      <%= f.govuk_submit "Continue" %>  
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for(@training_details, url: trainee_training_details_path(@trainee), local: true) do |f| %>
+      <h1 class="govuk-heading-l"><%= t('views.forms.training_details.title') %></h1>
+
+      <%= f.govuk_date_field :commencement_date, legend: {
+        text: t("views.forms.training_details.commencement_date.label"), size: 's'
+      }, hint: { text: t("views.forms.training_details.commencement_date.hint", year: Time.zone.now.year) } %>
+
+      <%= f.govuk_text_field :trainee_id, label: {
+        text: t('views.forms.training_details.trainee_id.label'), size: 's'
+      }, hint: { text: t('views.forms.training_details.trainee_id.hint').html_safe }, width: 20 %>
+
+      <%= f.govuk_submit "Continue" %>
     <% end %>
   </div>
 </div>
+

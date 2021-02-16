@@ -14,6 +14,10 @@ module Features
       @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
     end
 
+    def confirm_training_details_page
+      @confirm_training_details_page ||= PageObjects::Trainees::ConfirmTrainingDetails.new
+    end
+
     def record_page
       @record_page ||= PageObjects::Trainees::Record.new
     end
@@ -104,6 +108,14 @@ module Features
 
     def trainee_id_edit_page
       @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeId.new
+    end
+
+    def confirm_trainee_id_page
+      @confirm_trainee_id_page ||= PageObjects::Trainees::ConfirmTraineeId.new
+    end
+
+    def trainee_start_date_edit_page
+      @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeStartDate.new
     end
 
     def outcome_date_edit_page

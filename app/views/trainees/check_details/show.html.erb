@@ -30,7 +30,7 @@
 <h2 class="govuk-heading-m">
   About their training
 </h2>
-<%= render Trainees::Confirmation::Record::View.new(trainee: @trainee) %>
+<%= render Trainees::Confirmation::TrainingDetails::View.new(trainee: @trainee) %>
 <%= render Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
 
 <%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class TrainingDetailsController < ApplicationController
+  class StartDatesController < ApplicationController
     before_action :authorize_trainee
 
     PARAM_CONVERSION = {
@@ -15,11 +15,11 @@ module Trainees
     end
 
     def update
-      @training_details = TrainingDetailsForm.new(trainee)
+      @training_details = TrainingDetailsForm.new(trainee, validate_trainee_id: false)
       @training_details.assign_attributes(trainee_params)
 
       if @training_details.save
-        redirect_to trainee_training_details_confirm_path(trainee)
+        redirect_to trainee_start_date_confirm_path(trainee)
       else
         render :edit
       end
@@ -36,7 +36,7 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:training_details_form).permit(:trainee_id, :commencement_date, *PARAM_CONVERSION.keys)
+      params.require(:training_details_form).permit(:commencement_date, *PARAM_CONVERSION.keys)
             .transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end

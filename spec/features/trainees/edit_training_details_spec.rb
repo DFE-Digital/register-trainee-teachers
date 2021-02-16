@@ -3,7 +3,10 @@
 require "rails_helper"
 
 feature "edit training details" do
+  include SummaryHelper
+
   let(:new_trainee_id) { trainee.trainee_id + "new" }
+  let(:new_start_date) { Date.tomorrow }
 
   background { given_i_am_authenticated }
 
@@ -12,7 +15,7 @@ feature "edit training details" do
     given_i_visited_the_review_draft_page
     when_i_visit_the_training_details_page
     and_i_update_the_training_details
-    then_i_am_redirected_to_the_review_draft_page
+    then_i_am_redirected_to_the_confirm_training_details_page
     and_the_training_details_are_updated
   end
 
@@ -22,11 +25,16 @@ feature "edit training details" do
 
   def and_i_update_the_training_details
     training_details_page.trainee_id.set(new_trainee_id)
+    training_details_page.set_date_fields(:commencement_date, new_start_date.strftime("%d/%m/%Y"))
     training_details_page.submit_button.click
   end
 
   def and_the_training_details_are_updated
-    when_i_visit_the_training_details_page
-    expect(training_details_page.trainee_id.value).to eq(new_trainee_id)
+    expect(confirm_training_details_page).to have_text(new_trainee_id)
+    expect(confirm_training_details_page).to have_text(date_for_summary_view(new_start_date))
+  end
+
+  def then_i_am_redirected_to_the_confirm_training_details_page
+    expect(confirm_training_details_page).to be_displayed(id: trainee.slug)
   end
 end

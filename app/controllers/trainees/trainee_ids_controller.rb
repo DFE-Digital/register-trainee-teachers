@@ -2,14 +2,25 @@
 
 module Trainees
   class TraineeIdsController < ApplicationController
+    before_action :authorize_trainee
+
     def edit
-      authorize trainee
+      @training_details = TrainingDetailsForm.new(trainee)
     end
 
     def update
-      authorize trainee
-      trainee.update!(trainee_params)
-      redirect_to trainee_trainee_id_confirm_path(trainee)
+      @training_details = TrainingDetailsForm.new(trainee, validate_commencement_date: false)
+      @training_details.assign_attributes(trainee_params)
+
+      if @training_details.save
+        redirect_to trainee_trainee_id_confirm_path(trainee)
+      else
+        render :edit
+      end
+    end
+
+    def confirm
+      page_tracker.save_as_origin!
     end
 
   private
@@ -19,7 +30,11 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:trainee).permit(:trainee_id)
+      params.require(:training_details_form).permit(:trainee_id)
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end
