@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_for(@programme_detail, url: trainee_programme_details_path(@trainee), method: :put, local: true) do |f| %>
+    <%= form_with(model: @programme_detail, url: trainee_programme_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">Programme details</h1>
