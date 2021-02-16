@@ -208,6 +208,15 @@ describe Trainee do
     end
   end
 
+  describe "#ordered_by_last_name" do
+    let(:trainee_one) { create(:trainee, last_name: "Smith") }
+    let(:trainee_two) { create(:trainee, last_name: "Jones") }
+
+    it "orders the trainess by last name in ascending order" do
+      expect(Trainee.ordered_by_last_name).to eq([trainee_two, trainee_one])
+    end
+  end
+
   describe "#ordered_by_drafts" do
     let(:deferred_trainee_a) { create(:trainee, :deferred, id: 1) }
     let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, id: 2) }

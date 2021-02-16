@@ -41,6 +41,7 @@
 
         <form method="get">
           <%= submit_tag "Apply filters", class: "govuk-button" %>
+          <%= hidden_field_tag :sort_by, params[:sort_by] %>
 
           <div class="govuk-form-group">
             <%= label_tag "text_search", "Search records", class: "govuk-label govuk-label--s" %>

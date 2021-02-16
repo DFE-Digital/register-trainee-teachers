@@ -76,7 +76,8 @@ private
   end
 
   def ordered_trainees
-    policy_scope(Trainee.ordered_by_drafts.ordered_by_date)
+    sort_scope = filter_params[:sort_by] == "last_name" ? :ordered_by_last_name : :ordered_by_date
+    policy_scope(Trainee.ordered_by_drafts.public_send(sort_scope))
   end
 
   def filters
@@ -88,7 +89,7 @@ private
   end
 
   def filter_params
-    params.permit(:subject, :text_search, record_type: [], state: [])
+    params.permit(:subject, :text_search, :sort_by, record_type: [], state: [])
   end
 
   def data_export
