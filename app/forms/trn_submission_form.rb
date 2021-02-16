@@ -7,7 +7,7 @@ class TrnSubmissionForm
 
   FORM_VALIDATORS =
     {
-      personal_details: PersonalDetailForm,
+      personal_details: PersonalDetailsForm,
       contact_details: ContactDetailForm,
       diversity: Diversities::FormValidator,
       degrees: DegreeDetailForm,

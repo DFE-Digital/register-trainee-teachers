@@ -1,29 +1,29 @@
 const prepareNationalitySelect = () => {
   const secondInputEl = document.getElementById(
-    'personal-detail-form-other-nationality2-field'
+    'personal-details-form-other-nationality2-field'
   )
   if (!secondInputEl) return
 
   const thirdInputEl = document.getElementById(
-    'personal-detail-form-other-nationality3-field'
+    'personal-details-form-other-nationality3-field'
   )
 
   const secondFormLabel = document.querySelector(
-    '[for=personal-detail-form-other-nationality2-field]'
+    '[for=personal-details-form-other-nationality2-field]'
   )
   const thirdFormLabel = document.querySelector(
-    '[for=personal-detail-form-other-nationality3-field]'
+    '[for=personal-details-form-other-nationality3-field]'
   )
 
   const secondSelectEl = document.getElementById(
-    'personal-detail-form-other-nationality2-field-select'
+    'personal-details-form-other-nationality2-field-select'
   )
   const thirdSelectEl = document.getElementById(
-    'personal-detail-form-other-nationality2-field-select'
+    'personal-details-form-other-nationality2-field-select'
   )
 
   const firstInputEl = document.getElementById(
-    'personal-detail-form-other-nationality1-field'
+    'personal-details-form-other-nationality1-field'
   )
 
   let addNationalityButton = null
@@ -47,7 +47,7 @@ const prepareNationalitySelect = () => {
     const removeLink = document.createElement('a')
     const parentEl = labelEl.parentElement
     removeLink.innerHTML = 'Remove'
-    removeLink.classList.add('govuk-link', 'personal-detail-form-other-nationality__remove-link')
+    removeLink.classList.add('govuk-link', 'app-autocomplete__remove-link')
     removeLink.href = '#'
 
     parentEl.insertBefore(removeLink, labelEl)
@@ -113,7 +113,7 @@ const prepareNationalitySelect = () => {
   addRemoveLink(thirdFormLabel, thirdInputEl, thirdSelectEl, secondInputEl)
 
   addAddNationalityButton(
-    '#personal-detail-form-other-1-conditional'
+    '#personal-details-form-other-1-conditional'
   )
 
   hideSection(secondInputEl, secondFormLabel)

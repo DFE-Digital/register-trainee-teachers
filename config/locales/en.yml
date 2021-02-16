@@ -5,12 +5,17 @@ en:
   service_name: Register trainee teachers
   cancel: Cancel and return to record
   change: Change
+  continue: Continue
+  update_record: Update record
   header:
     items:
       sign_out: Sign out
       system_admin: System admin
   components:
     confirmation:
+      not_provided: Not provided
+      heading: Confirm %{section_title}
+      cancel_and_return: Cancel and return to record
       trainee_id:
         title: Trainee ID
       start_date:
@@ -57,8 +62,6 @@ en:
       deferral_details:
         summary_title: Deferral details
         defer_date_label: Date of deferral
-      not_provided: Not provided
-      heading: Confirm %{section_title}
       flash:
         diversity: disclosure
         disclosure: diversity information
@@ -392,7 +395,7 @@ en:
             date:
               blank: You must enter an outcome date
               invalid: You must enter a valid outcome date
-        personal_detail_form:
+        personal_details_form:
             attributes:
               first_names:
                 blank: "You must enter a first name"

@@ -6,44 +6,60 @@ module Trainees
       class View < GovukComponent::Base
         include SanitizeHelper
 
-        attr_accessor :trainee
+        attr_accessor :data_model, :nationalities
 
-        def initialize(trainee:)
-          @trainee = trainee
+        def initialize(data_model:)
+          @data_model = data_model
+          @nationalities = Nationality.where(id: data_model.nationality_ids)
           @not_provided_copy = I18n.t("components.confirmation.not_provided")
         end
 
-        def full_name
-          return @not_provided_copy unless trainee.first_names && trainee.last_name
+        def trainee
+          data_model.is_a?(Trainee) ? data_model : data_model.trainee
+        end
 
-          "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}"
+        def full_name
+          return @not_provided_copy unless data_model.first_names && data_model.last_name
+
+          "#{data_model.first_names} #{data_model.middle_names} #{data_model.last_name}"
         end
 
         def date_of_birth
-          return @not_provided_copy unless trainee.date_of_birth
+          return @not_provided_copy unless data_model.date_of_birth.is_a?(Date)
 
-          trainee.date_of_birth.strftime("%-d %B %Y")
+          data_model.date_of_birth.strftime("%-d %B %Y")
         end
 
         def gender
-          return @not_provided_copy unless trainee.gender
+          return @not_provided_copy unless data_model.gender
 
-          I18n.t("components.confirmation.personal_detail.gender.#{trainee.gender}")
+          I18n.t("components.confirmation.personal_detail.gender.#{data_model.gender}")
         end
 
         def nationality
-          return @not_provided_copy if trainee.nationalities.blank?
+          return @not_provided_copy if nationalities.blank?
 
-          if trainee.nationalities.size == 1
-            trainee.nationalities.first.name.titleize
+          if nationalities.size == 1
+            nationalities.first.name.titleize
           else
-            nationalities = trainee.nationalities.map { |nationality| nationality.name.titleize }
             sanitize(tag.ul(class: "govuk-list") do
-              nationalities.each do |nationality|
-                concat tag.li(nationality)
+              nationality_names.each do |nationality_name|
+                concat tag.li(nationality_name)
               end
             end)
           end
+        end
+
+        def nationality_names
+          names = nationalities.map { |nationality| nationality.name.titleize }
+          promote_nationality(names, Dttp::CodeSets::Nationalities::IRISH.titleize)
+          promote_nationality(names, Dttp::CodeSets::Nationalities::BRITISH.titleize)
+        end
+
+        def promote_nationality(array, nationality)
+          found = array.delete(nationality)
+          array.unshift(nationality) if found
+          array
         end
       end
     end

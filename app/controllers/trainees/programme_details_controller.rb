@@ -2,6 +2,8 @@
 
 module Trainees
   class ProgrammeDetailsController < ApplicationController
+    before_action :authorize_trainee
+
     PROGRAMME_DATE_CONVERSION = {
       "programme_start_date(3i)" => "start_day",
       "programme_start_date(2i)" => "start_month",
@@ -16,14 +18,12 @@ module Trainees
                                        additional_age_range].freeze
 
     def edit
-      authorize trainee
       @programme_detail = ProgrammeDetailForm.new(trainee)
     end
 
     def update
-      authorize trainee
-      updater = ProgrammeDetails::Update.call(trainee: trainee,
-                                              attributes: programme_details_params)
+      updater = ProgrammeDetails::Update.call(trainee: trainee, attributes: programme_details_params)
+
       if updater.successful?
         redirect_to trainee_programme_details_confirm_path(trainee)
       else
@@ -54,6 +54,10 @@ module Trainees
 
     def redirect_to_confirm
       redirect_to(trainee_programme_details_confirm_path(trainee))
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end
