@@ -27,7 +27,6 @@ module Pages
                                  email: "email@example.com",
                                  programme_start_date: 6.months.ago,
                                  programme_end_date: Time.zone.now,
-                                 nationality_ids: [1],
                                  progress: Progress.new(
                                    personal_details: true,
                                    contact_details: true,
@@ -36,9 +35,8 @@ module Pages
                                    programme_details: true,
                                  ),
                                  age_range: 1,
-                                 diversity_disclosure: 1)
-
-          @trainee.degrees.new(id: 1, locale_code: 1, subject: "subject")
+                                 diversity_disclosure: 1,
+                                 degrees: [Degree.new(id: 1, locale_code: 1, subject: "subject")])
 
           render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
         end
@@ -56,8 +54,9 @@ module Pages
                                  international_address: "international_address",
                                  ethnic_background: "ethnic_background",
                                  additional_ethnic_background: "additional_ethnic_background",
-                                 subject: "subject")
-          @trainee.degrees.new(id: 1)
+                                 subject: "subject",
+                                 degrees: [Degree.new(id: 1)])
+
           render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
         end
 

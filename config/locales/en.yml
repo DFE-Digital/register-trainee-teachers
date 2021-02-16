@@ -148,7 +148,7 @@ en:
         deferred: Trainee deferred
         qts_awarded: Trainee awarded QTS
         programme_details: Programme details not started
-    missing_details:
+    sections:
       personal_details:
         not_started: 
           title: Personal details not started
@@ -181,7 +181,7 @@ en:
         not_started: 
           title: Programme details not started
           link_text: Start section
-        in_progress: 
+        in_progress:
           title: Programme details not marked as complete
           link_text: Continue section
   views:

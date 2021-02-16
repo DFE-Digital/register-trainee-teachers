@@ -44,6 +44,33 @@ FactoryBot.define do
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
 
+    trait :not_started do
+      first_names { nil }
+      middle_names { nil }
+      last_name { nil }
+      gender { nil }
+      date_of_birth { nil }
+
+      diversity_disclosure { nil }
+      ethnic_group { nil }
+      ethnic_background { nil }
+      additional_ethnic_background { nil }
+      disability_disclosure { nil }
+
+      address_line_one { nil }
+      address_line_two { nil }
+      town_city { nil }
+      postcode { nil }
+      international_address { nil }
+      locale_code { nil }
+      email { nil }
+    end
+
+    trait :in_progress do
+      with_programme_details
+      degrees { [association(:degree)] }
+    end
+
     trait :with_programme_details do
       subject { Dttp::CodeSets::ProgrammeSubjects::MAPPING.keys.sample }
       age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
