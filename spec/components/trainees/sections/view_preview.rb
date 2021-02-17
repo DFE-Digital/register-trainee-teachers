@@ -9,7 +9,8 @@ module Trainees
          contact_details
          degrees
          diversity
-         programme_details].each do |section|
+         programme_details
+         training_details].each do |section|
         define_method "continue_sections_#{section}" do
           render(Trainees::Sections::View.new(trainee: continue_sections_trainee, section: section))
         end

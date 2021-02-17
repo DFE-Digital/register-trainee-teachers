@@ -45,6 +45,7 @@ FactoryBot.define do
     end
 
     trait :not_started do
+      trainee_id { nil }
       first_names { nil }
       middle_names { nil }
       last_name { nil }
@@ -64,11 +65,28 @@ FactoryBot.define do
       international_address { nil }
       locale_code { nil }
       email { nil }
+      commencement_date { nil }
     end
 
     trait :in_progress do
       with_programme_details
-      degrees { [association(:degree)] }
+      with_start_date
+      degrees { [build(:degree, :uk_degree_with_details)] }
+    end
+
+    trait :completed do
+      in_progress
+      nationalities { [build(:nationality)] }
+      progress do
+        Progress.new(
+          personal_details: true,
+          contact_details: true,
+          diversity: true,
+          degrees: true,
+          programme_details: true,
+          training_details: true,
+        )
+      end
     end
 
     trait :with_programme_details do

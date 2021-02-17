@@ -27,6 +27,7 @@ module Trainees
           diversity: Diversities::FormValidator,
           degrees: DegreeDetailForm,
           programme_details: ProgrammeDetailForm,
+          training_details: TrainingDetailsForm,
         }[section]
       end
 
@@ -37,6 +38,7 @@ module Trainees
           diversity: Trainees::Confirmation::Diversity::View,
           degrees: Trainees::Confirmation::Degrees::View,
           programme_details: Trainees::Confirmation::ProgrammeDetails::View,
+          training_details: Trainees::Confirmation::TrainingDetails::View,
         }[section]
       end
 
@@ -61,6 +63,10 @@ module Trainees
           programme_details: {
             not_started: "edit_trainee_programme_details_path",
             in_progress: "trainee_programme_details_confirm_path",
+          },
+          training_details: {
+            not_started: "edit_trainee_training_details_path",
+            in_progress: "trainee_training_details_confirm_path",
           },
         }[section][status]
       end

@@ -9,6 +9,7 @@ module Pages
         ActionView::Base.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
 
         def completed_sections
+          nationalities = [Nationality.first || Nationality.new(id: 1)]
           @trainee = Trainee.new(id: 1000, trainee_id: "trainee_id",
                                  first_names: "first_names",
                                  last_name: "last_name",
@@ -27,18 +28,21 @@ module Pages
                                  email: "email@example.com",
                                  programme_start_date: 6.months.ago,
                                  programme_end_date: Time.zone.now,
+                                 nationalities: nationalities,
                                  progress: Progress.new(
                                    personal_details: true,
                                    contact_details: true,
                                    degrees: true,
                                    diversity: true,
                                    programme_details: true,
+                                   training_details: true,
                                  ),
                                  age_range: 1,
                                  diversity_disclosure: 1,
-                                 degrees: [Degree.new(id: 1, locale_code: 1, subject: "subject")])
+                                 degrees: [Degree.new(id: 1, locale_code: 1, subject: "subject")],
+                                 commencement_date: Time.zone.now)
 
-          render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
+          render template: template, locals: { "@trainee": @trainee }
         end
 
         def continue_sections
@@ -57,13 +61,19 @@ module Pages
                                  subject: "subject",
                                  degrees: [Degree.new(id: 1)])
 
-          render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
+          render template: template, locals: { "@trainee": @trainee }
         end
 
         def start_sections
           @trainee = Trainee.new(id: 1000)
 
-          render template: "trainees/check_details/show", locals: { "@trainee": @trainee }
+          render template: template, locals: { "@trainee": @trainee }
+        end
+
+      private
+
+        def template
+          "trainees/check_details/show"
         end
       end
     end

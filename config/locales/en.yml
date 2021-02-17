@@ -184,6 +184,13 @@ en:
         in_progress:
           title: Programme details not marked as complete
           link_text: Continue section
+      training_details:
+        not_started: 
+          title: Training details not started
+          link_text: Start section
+        in_progress:
+          title: Training details not marked as complete
+          link_text: Continue section
   views:
     trainees:
       edit:

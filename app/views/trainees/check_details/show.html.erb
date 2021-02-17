@@ -32,7 +32,8 @@
 <h2 class="govuk-heading-m">
   About their training
 </h2>
-<%= render Trainees::Confirmation::TrainingDetails::View.new(trainee: @trainee) %>
+
+<%= render Trainees::Sections::View.new(trainee: @trainee, section: :training_details) %>
 
 <%= render Trainees::Sections::View.new(trainee: @trainee, section: :programme_details) %>
 
