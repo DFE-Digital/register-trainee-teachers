@@ -1,6 +1,6 @@
 <%= render PageTitle::View.new(title: trainees_page_title(@paginated_trainees)) %>
 
-<h1 class="govuk-heading-xl">Trainee records</h1>
+<h1 class="govuk-heading-l">Trainee records (<%= @paginated_trainees.count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@paginated_trainees.count) %></span>)</h1>
 
 <% unless current_user.system_admin? %>
   <p class="govuk-body">

@@ -80,8 +80,8 @@ en:
         show: Review trainee record
       trainees:
         new: Add a trainee
-        index: Trainee records
-        paginated_index: Trainee records (page %{current_page} of %{total_pages})
+        index: Trainee records (%{trainees_count_text})
+        paginated_index: Trainee records (%{trainees_count_text}) - page %{current_page} of %{total_pages}
         not_supported_route: Other routes not supported
         show: Trainee record overview
         diversity:
