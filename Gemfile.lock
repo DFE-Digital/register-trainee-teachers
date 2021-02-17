@@ -198,9 +198,6 @@ GEM
       activerecord
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
-    kredis (0.2.3)
-      rails (>= 6.0.0)
-      redis (~> 4.2)
     launchy (2.5.0)
       addressable (~> 2.7)
     listen (3.4.1)
@@ -487,7 +484,6 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   httparty (~> 0.18)
   kaminari
-  kredis
   launchy
   listen (>= 3.0.5, < 3.5)
   omniauth

@@ -9,14 +9,13 @@ class FormStore
 
   class << self
     def get(key)
-      Kredis.json(key).value
+      JSON.parse(Redis.current.get(key.to_s))
     end
 
     def set(key, values)
       raise InvalidKeyError unless FORM_SECTION_KEYS.include?(key)
 
-      slice = Kredis.json(key)
-      slice.value = values
+      Redis.current.set(key.to_s, values.to_json)
       true
     end
 
