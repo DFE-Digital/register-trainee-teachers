@@ -58,4 +58,26 @@ private
       PageTracker.new(trainee_slug: trainee_slug, session: session, request: request)
     end
   end
+
+  def session_form_stash_key
+    "#{trainee.slug}_form_changes"
+  end
+
+  def stash_form_changes
+    session[session_form_stash_key] = { action: trainee.own_and_associated_audits.first.action, changes: trainee.own_and_associated_audits.first.audited_changes }
+  end
+
+  def clear_stash
+    session[session_form_stash_key] = nil
+  end
+
+  def cancel_form_changes
+    return if params[:cancel].blank? || session[session_form_stash_key].blank?
+
+    stash = trainee.own_and_associated_audits.where(action: session[session_form_stash_key]["action"], audited_changes: session[session_form_stash_key]["changes"])
+    return if stash.empty?
+
+    stash.first.undo
+    clear_stash
+  end
 end

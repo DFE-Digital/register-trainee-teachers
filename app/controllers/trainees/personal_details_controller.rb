@@ -3,6 +3,7 @@
 module Trainees
   class PersonalDetailsController < ApplicationController
     before_action :ensure_trainee_is_not_draft!, only: :show
+    before_action :cancel_form_changes, only: :show
 
     DOB_CONVERSION = {
       "date_of_birth(3i)" => "day",

@@ -8,11 +8,11 @@ module TraineeHelper
       .join(" ")
   end
 
-  def view_trainee(trainee)
+  def view_trainee(trainee, cancel_changes: false)
     if trainee.draft?
       review_draft_trainee_path(trainee)
     else
-      trainee_path(trainee)
+      trainee_path(trainee, cancel: cancel_changes)
     end
   end
 

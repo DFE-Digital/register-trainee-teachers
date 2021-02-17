@@ -6,6 +6,7 @@ module Trainees
     helper_method :confirm_section_title
 
     def show
+      stash_form_changes
       authorize trainee
       page_tracker.save_as_origin!
 

@@ -26,6 +26,7 @@ class Trainee < ApplicationRecord
   }
 
   audited associated_with: :provider
+  has_associated_audits
 
   enum diversity_disclosure: {
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
