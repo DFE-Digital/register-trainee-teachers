@@ -1,9 +1,9 @@
-<%= render PageTitle::View.new(title: trainees_page_title(@paginated_trainees)) %>
+<%= render PageTitle::View.new(title: trainees_page_title(@paginated_trainees, @total_trainees_count)) %>
 
 <% if @paginated_trainees.current_page > 1 %>
   <span class="govuk-caption-xl">Page <%= @paginated_trainees.current_page %> of <%= @paginated_trainees.total_pages %></span>
 <% end %>
-<h1 class="govuk-heading-xl">Trainee records (<%= @filtered_trainees.count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@filtered_trainees.count) %></span>)</h1>
+<h1 class="govuk-heading-xl">Trainee records (<%= @total_trainees_count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@total_trainees_count) %></span>)</h1>
 
 <% unless current_user.system_admin? %>
   <p class="govuk-body">

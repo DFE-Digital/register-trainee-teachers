@@ -7,6 +7,8 @@ class TraineesController < ApplicationController
   def index
     return redirect_to trainees_path(filter_params) if current_page_exceeds_total_pages?
 
+    @total_trainees_count = filtered_trainees.count
+
     # We can't use `#draft` to find @draft_trainees since that applies a `WHERE`
     # clause, removing Kaminari's pagination. Hence the use of `#select`.
     #
