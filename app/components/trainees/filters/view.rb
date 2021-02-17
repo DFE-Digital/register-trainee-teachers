@@ -11,10 +11,12 @@ module Trainees
         @filter_actions = filter_actions
       end
 
-    private
-
       def label_for(attribute, value)
         I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
+      end
+
+      def filter_label_for(filter)
+        I18n.t("components.filter.#{filter}")
       end
 
       def title_html(filter, value)
@@ -39,19 +41,17 @@ module Trainees
         end
       end
 
+    private
+
       def remove_checkbox_tag_link(filter, value)
         new_filters = filters.deep_dup
         new_filters[filter].reject! { |v| v == value }
-        "?" + new_filters.to_query
+        new_filters.to_query.blank? ? nil : "?" + new_filters.to_query
       end
 
       def remove_select_tag_link(filter)
         new_filters = filters.reject { |f| f == filter }
-        "?" + new_filters.to_query
-      end
-
-      def filter_label_for(filter)
-        I18n.t("components.filter.#{filter}")
+        new_filters.to_query.blank? ? nil : "?" + new_filters.to_query
       end
     end
   end
