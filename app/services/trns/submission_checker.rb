@@ -13,6 +13,7 @@ module Trns
       { validator: DegreeDetailForm, progress_key: :degrees },
       { validator: Diversities::FormValidator, progress_key: :diversity },
       { validator: ProgrammeDetailForm, progress_key: :programme_details },
+      { validator: TrainingDetailsForm, progress_key: :training_details },
     ].freeze
 
     def initialize(trainee:)
