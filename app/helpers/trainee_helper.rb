@@ -18,7 +18,7 @@ module TraineeHelper
 
   def trainees_page_title(trainees, total_trainees_count)
     total_pages = trainees.total_pages
-    total_trainees_count_text = total_trainees_count.to_s + " record".pluralize(total_trainees_count)
+    total_trainees_count_text = pluralize(total_trainees_count, "record")
 
     if total_pages <= 1
       return I18n.t(
