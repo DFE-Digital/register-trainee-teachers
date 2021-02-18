@@ -8,5 +8,4 @@ resource statuscake_test alert {
   trigger_rate   = each.value.trigger_rate
   confirmations  = 1
   node_locations = each.value.node_locations
-  paused         = each.value.paused
 }

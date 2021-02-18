@@ -56,6 +56,11 @@ jobs:
         run: |
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
           echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
+
+          . terraform/workspace-variables/$DEPLOY_ENV.sh
+          echo "TF_VAR_key_vault_name=$TF_VAR_key_vault_name" >> $GITHUB_ENV
+          echo "TF_VAR_key_vault_app_secret_name=$TF_VAR_key_vault_app_secret_name" >> $GITHUB_ENV
+          echo "TF_VAR_key_vault_infra_secret_name=$TF_VAR_key_vault_infra_secret_name" >> $GITHUB_ENV
         env:
           DOCKER_IMAGE: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
           DEPLOY_ENV: ${{ matrix.environment }}
@@ -69,36 +74,35 @@ jobs:
           env: ${{ matrix.environment }}
           ref: ${{ github.event.inputs.sha }}
 
-      - name: Download app configuration file
-        working-directory: terraform
-        run: |
-          echo "$APP_SECRETS" | base64 -d >> ./workspace-variables/app_secrets.yml
-          echo "$INFRA_SECRETS" | base64 -d >> ./workspace-variables/infra_secrets.yml
-        env:
-          APP_SECRETS:   ${{ secrets[format('APP_SECRETS_{0}', env.DEPLOY_ENV)] }}
-          INFRA_SECRETS: ${{ secrets[format('INFRA_SECRETS_{0}', env.DEPLOY_ENV)] }}
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
+
+      - name: Validate Key Vault Secrets
+        uses: DFE-Digital/github-actions/validate-key-vault-secrets@master
+        with:
+         KEY_VAULT: ${{ env.TF_VAR_key_vault_name }}
+         SECRETS: |
+          ${{ env.TF_VAR_key_vault_app_secret_name }}
+          ${{ env.TF_VAR_key_vault_infra_secret_name }}
+
 
       - name: Pin Terraform version
         uses: hashicorp/setup-terraform@v1.2.1
         with:
           terraform_version: 0.13.5
 
-      - name: Terraform init
+      - name: Terraform init, Terraform Plan and Apply
         run: |
           terraform init -backend-config=workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars
-        working-directory: terraform
-        env:
-          ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
-          TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
-
-      - name: Terraform Plan and Apply
-        run: |
           terraform plan -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars
           terraform apply -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars -auto-approve
+
         working-directory: terraform
         env:
-          TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
           ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
+          TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
+          TF_VAR_azure_credentials:     ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
 
       - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
         uses: benc-uk/workflow-dispatch@v1.1

@@ -1,7 +1,3 @@
-variable paas_user { default = null }
-
-variable paas_password { default = null }
-
 variable paas_sso_passcode { default = null }
 
 variable paas_app_environment {}
@@ -26,15 +22,7 @@ variable paas_worker_app_instances { default = 2 }
 
 variable paas_worker_app_memory { default = 512 }
 
-variable dockerhub_username { default = null }
-
-variable dockerhub_password { default = null }
-
 variable paas_app_config_file { default = "workspace-variables/app_config.yml" }
-
-variable paas_app_secrets_file { default = "workspace-variables/app_secrets.yml" }
-
-variable infra_secrets_file { default = "workspace-variables/infra_secrets.yml" }
 
 variable env_config {}
 
@@ -42,16 +30,26 @@ variable paas_worker_app_stopped { default = false }
 
 variable statuscake_alerts { type = map }
 
+variable key_vault_name {}
+
+variable key_vault_resource_group {}
+
+variable key_vault_app_secret_name {}
+
+variable key_vault_infra_secret_name {}
+
+variable azure_credentials { default = null }
+
 
 locals {
-  paas_api_url = "https://api.london.cloud.service.gov.uk"
-
-  app_secrets   = yamldecode(file(var.paas_app_secrets_file))
+  paas_api_url  = "https://api.london.cloud.service.gov.uk"
+  app_secrets   = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
+  infra_secrets = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
   app_config    = yamldecode(file(var.paas_app_config_file))[var.env_config]
-  infra_secrets = yamldecode(file(var.infra_secrets_file))
-
   docker_credentials = {
-    username = var.dockerhub_username == null ? local.infra_secrets.dockerhub_username : var.dockerhub_username
-    password = var.dockerhub_password == null ? local.infra_secrets.dockerhub_password : var.dockerhub_password
+    username = local.infra_secrets.DOCKERHUB_USERNAME
+    password = local.infra_secrets.DOCKERHUB_PASSWORD
   }
+
+  azure_credentials = try(jsondecode(var.azure_credentials), null)
 }

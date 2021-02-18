@@ -1,16 +1,20 @@
 # PaaS
-paas_app_environment             = "staging"
-env_config                       = "staging"
-paas_space_name                  = "bat-staging"
-paas_postgres_service_plan       = "tiny-unencrypted-11"
-paas_redis_service_plan          = "tiny-ha-5_x"
-paas_app_start_timeout           = "180"
-paas_web_app_instances           = 1
-paas_web_app_memory              = 512
-paas_worker_app_instances        = 1
-paas_worker_app_memory           = 512
-paas_worker_app_stopped          = false
+paas_app_environment       = "staging"
+env_config                 = "staging"
+paas_space_name            = "bat-staging"
+paas_postgres_service_plan = "tiny-unencrypted-11"
+paas_redis_service_plan    = "tiny-ha-5_x"
+paas_app_start_timeout     = "180"
+paas_web_app_instances     = 1
+paas_web_app_memory        = 512
+paas_worker_app_instances  = 1
+paas_worker_app_memory     = 512
+paas_worker_app_stopped    = false
 
+#KeyVault
+key_vault_resource_group = "s121t01-shared-rg"
+
+#statuscake
 statuscake_alerts = {
 
   alert = {
@@ -21,6 +25,5 @@ statuscake_alerts = {
     contact_group  = [188603]
     trigger_rate   = 0
     node_locations = ["UKD", "DE", "CA"]
-    paused = false
   }
 }
