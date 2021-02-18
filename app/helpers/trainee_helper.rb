@@ -21,8 +21,10 @@ module TraineeHelper
     total_trainees_count_text = total_trainees_count.to_s + " record".pluralize(total_trainees_count)
 
     if total_pages <= 1
-      return I18n.t("components.page_titles.trainees.index",
-                    total_trainees_count_text: total_trainees_count_text)
+      return I18n.t(
+        "components.page_titles.trainees.index",
+        total_trainees_count_text: total_trainees_count_text,
+      )
     end
 
     I18n.t(
