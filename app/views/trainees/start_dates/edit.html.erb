@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.trainee_ids.edit") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render DynamicBackLink::View.new(@trainee, text: t(:back_to_record)) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <%= form_with model: @training_details, url: trainee_start_date_path, local: true do |f| %>

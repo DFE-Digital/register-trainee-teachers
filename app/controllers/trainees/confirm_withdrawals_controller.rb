@@ -2,13 +2,13 @@
 
 module Trainees
   class ConfirmWithdrawalsController < ApplicationController
+    before_action :authorize_trainee
+
     def show
-      authorize trainee
+      page_tracker.save_as_origin!
     end
 
     def update
-      authorize trainee
-
       trainee.withdraw!
       WithdrawJob.perform_later(trainee.id)
 
@@ -20,6 +20,10 @@ module Trainees
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end
