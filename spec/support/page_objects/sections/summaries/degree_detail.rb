@@ -11,7 +11,7 @@ module PageObjects
         element :institution, ".govuk-summary-list__row.institution .govuk-summary-list__value"
         element :graduation_year, ".govuk-summary-list__row.graduation-year .govuk-summary-list__value"
         element :grade, ".govuk-summary-list__row.grade .govuk-summary-list__value"
-        element :delete_degree, ".app-summary-card__header .govuk-button--link"
+        element :delete_degree, ".app-summary-card__header .app-button--link"
       end
     end
   end

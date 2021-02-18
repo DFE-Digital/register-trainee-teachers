@@ -47,7 +47,7 @@ a[href="#"] {
   vertical-align: top;
 }
 
-.govuk-button--link {
+.app-button--link {
   @include govuk-link-common;
   @include govuk-link-style-default;
   @include govuk-link-print-friendly;
