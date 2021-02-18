@@ -53,6 +53,7 @@ en:
       heading: Confirm %{section_title}
       flash:
         diversity: disclosure
+        disclosure: diversity information
         trainee_id: ID
         trainee_start_date: start date
     programme_detail:
