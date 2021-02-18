@@ -4,6 +4,9 @@ class TrnSubmissionsController < ApplicationController
   before_action :authorize_trainee
 
   def create
+    @trn_submission = TrnSubmissionForm.new(trainee: trainee)
+    return render "trainees/check_details/show" unless @trn_submission.valid?
+
     trainee.submit_for_trn!
 
     RegisterForTrnJob.perform_later(trainee.id, current_user.dttp_id)

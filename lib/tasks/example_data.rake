@@ -60,6 +60,7 @@ namespace :example_data do
             degrees: true,
             diversity: true,
             programme_details: true,
+            training_details: true,
           }
 
           # set the submitted_for_trn_at date as they will have at least been submitted

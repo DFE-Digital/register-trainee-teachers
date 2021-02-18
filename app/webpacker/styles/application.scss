@@ -71,3 +71,8 @@ a[href="#"] {
 .app-header--full-border {
   border-bottom-color: $govuk-brand-colour;
 }
+
+.govuk-error-summary__list {
+  color: $govuk-error-colour;
+  font-weight: 700;
+}
