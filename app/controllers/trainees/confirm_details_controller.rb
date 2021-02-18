@@ -26,7 +26,7 @@ module Trainees
 
       flash[:success] = "Trainee #{flash_message_title} updated"
 
-      redirect_to page_tracker.last_origin_page_path
+      redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
     end
 
   private
