@@ -80,7 +80,7 @@ jobs:
       if: ${{ success() && github.ref == 'refs/heads/master' }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
-        workflow: '.github/workflows/deploy.yml'
+        workflow: 'Deploy to PaaS'
         token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
         inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "sha": "${{ env.SHA_TAG }}"}'
 
