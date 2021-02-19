@@ -1,0 +1,218 @@
+{
+  "id": "6252",
+  "type": "application",
+  "attributes": {
+    "support_reference": "PQ4152",
+    "status": "declined",
+    "phase": "apply_1",
+    "updated_at": "2021-02-02T00:15:00+00:00",
+    "submitted_at": "2020-12-30T00:00:00+00:00",
+    "personal_statement": "Why do you want to become a teacher?: Voluptatem ullam totam. Dolor voluptas ut. Cumque qui porro. Impedit corrupti sint. Ut eum dicta. Provident impedit iusto. Qui ea dolores. Aut ex earum. In aliquam dolores. Dolores et quo. Ut exercitationem enim. In velit et. Quidem qui aut. Omnis natus ex. Fugit provident ut. Dolorem aspernatur sed. Vero saepe blanditiis. Quia aperiam est. Dolorem totam voluptatum. Vitae voluptatum iste. Nihil dolores voluptatem. Perspiciatis repudiandae impedit. Sunt ab neque. Pariatur harum voluptas. Ullam c. \n What is your subject knowledge?: Sit nemo autem. Reprehenderit illo quis. Enim porro aliquam. Voluptatum animi hic. Quod nulla doloremque. Alias dolor et. Est libero sunt. Voluptas eos minus. Laudantium ea expedita. Omnis minus provident. Consequuntur libero eos. Magnam ea omnis. Sunt dolores eum. Quae excepturi vel. Ut exercitati.",
+    "interview_preferences": "Et quaerat quis. Nobis rerum molestiae. Maiores hic et. Debitis modi consequuntur. Porro non dolore.",
+    "reject_by_default_at": "2021-01-21T00:00:00+00:00",
+    "recruited_at": null,
+    "candidate": {
+      "id": "C5034",
+      "first_name": "Eunice",
+      "last_name": "Moore",
+      "date_of_birth": "1980-05-17",
+      "nationality": [
+        "GB",
+        "US"
+      ],
+      "domicile": "XK",
+      "uk_residency_status": "UK Citizen",
+      "english_main_language": false,
+      "english_language_qualifications": "In quia dicta. Animi harum similique. Qui ut dicta. Voluptatibus voluptates reiciendis. Deleniti aperiam id. Quas eum qui. Perspiciatis laborum molestiae. Qui omnis facilis. Adipisci repellat rem. De.",
+      "other_languages": "Ipsum exercitationem itaque. Dolorem ut dolor. Assumenda ea numquam. Eos vitae et. Fugiat iure quibusdam. Cupiditate eveniet et. Aut repellat laudantium. Quis ipsum aut. Expedita dicta id. Dicta numq.",
+      "disability_disclosure": "Amet quasi eos. Consequatur totam cumque. Itaque et soluta. In distinctio quia. Quidem voluptates quia. Earum natus cum. Et et vel. Suscipit modi sit. Facere in reprehenderit. Aperiam officiis laboriosam. Perferendis quis omnis. Sed suscipit et. Commodi mollitia incidunt. Itaque atque repudiandae. ."
+    },
+    "contact_details": {
+      "phone_number": "07594 304829",
+      "address_line1": "3997 Blanda Plaza",
+      "address_line2": "East Russellshire",
+      "address_line3": "Cleveland",
+      "address_line4": "",
+      "postcode": "Y0 3TL",
+      "country": "GB",
+      "email": "eunice.moore@example.com"
+    },
+    "course": {
+      "recruitment_cycle_year": 2021,
+      "provider_code": "1N1",
+      "site_code": "1",
+      "course_code": "239F",
+      "study_mode": "full_time",
+      "start_date": "2021-09"
+    },
+    "references": [
+      {
+        "id": 9350,
+        "name": "Ema Roberts",
+        "email": "78e53a8926@example.com",
+        "relationship": "Est mollitia architecto. Alias aspernatur et. A illum sed.",
+        "reference": "You are awesome",
+        "referee_type": "school_based",
+        "safeguarding_concerns": false
+      },
+      {
+        "id": 9351,
+        "name": "Max Schroeder",
+        "email": "410beb42e8@example.com",
+        "relationship": "Odit facere omnis. Dicta vitae quam. Perspiciatis quod ea.",
+        "reference": "You are awesome",
+        "referee_type": "academic",
+        "safeguarding_concerns": false
+      }
+    ],
+    "qualifications": {
+      "gcses": [
+        {
+          "id": 13777,
+          "qualification_type": "gcse",
+          "non_uk_qualification_type": null,
+          "subject": "science",
+          "grade": "A (Predicted)",
+          "start_year": "2021",
+          "award_year": "1968",
+          "institution_details": "Mayert Institute, GB",
+          "awarding_body": "Brighthurst Secondary College",
+          "equivalency_details": "Omnis vitae voluptas. Earum cupiditate ipsam. Maxime esse quo. Incidunt dolor dolore. Dolorum impedit deserunt. Neque consequatur saepe. Atque qui ut. Inventore fugit consectetur. Facere maiores odio.",
+          "hesa_degtype": null,
+          "hesa_degsbj": null,
+          "hesa_degclss": null,
+          "hesa_degest": null,
+          "hesa_degctry": null,
+          "hesa_degstdt": null,
+          "hesa_degenddt": null
+        },
+        {
+          "id": 13776,
+          "qualification_type": "gcse",
+          "non_uk_qualification_type": null,
+          "subject": "english",
+          "grade": "B",
+          "start_year": "2021",
+          "award_year": "2016",
+          "institution_details": "Mosciski College, GB",
+          "awarding_body": "Mallowpond Secondary College",
+          "equivalency_details": "Rerum eum nihil. Autem quis non. Sit eos ducimus. Accusamus quod eius. Doloribus eos sint. Quam id perferendis. Et voluptatum est. Quia optio officia. Fugiat voluptatem nihil. Voluptate est amet. Vol.",
+          "hesa_degtype": null,
+          "hesa_degsbj": null,
+          "hesa_degclss": null,
+          "hesa_degest": null,
+          "hesa_degctry": null,
+          "hesa_degstdt": null,
+          "hesa_degenddt": null
+        },
+        {
+          "id": 13775,
+          "qualification_type": "gcse",
+          "non_uk_qualification_type": null,
+          "subject": "maths",
+          "grade": "C (Predicted)",
+          "start_year": "2021",
+          "award_year": "1996",
+          "institution_details": "Southern Friesen Academy, GB",
+          "awarding_body": "Mallowpond High",
+          "equivalency_details": "Voluptates sint nemo. Enim sed asperiores. Enim dolores natus. Consequuntur nesciunt soluta. Velit ducimus ea. Officiis voluptatem temporibus. Rerum repellendus quas. Distinctio asperiores dolorem. S.",
+          "hesa_degtype": null,
+          "hesa_degsbj": null,
+          "hesa_degclss": null,
+          "hesa_degest": null,
+          "hesa_degctry": null,
+          "hesa_degstdt": null,
+          "hesa_degenddt": null
+        }
+      ],
+      "degrees": [
+        {
+          "id": 13778,
+          "qualification_type": "Bachelor of Agriculture",
+          "non_uk_qualification_type": null,
+          "subject": "Management studies",
+          "grade": "Aegrotat",
+          "start_year": "2021",
+          "award_year": "1976",
+          "institution_details": "Oxford Brookes University, GB",
+          "awarding_body": "Beier Institute",
+          "equivalency_details": "Aut temporibus qui. Laboriosam nobis vel. Dolores aliquam at. Itaque nostrum quia. Qui quae facere. Dicta ea distinctio. Sit nisi laboriosam. Dolore nam non. Asperiores perferendis ipsa. Sit quae con.",
+          "hesa_degtype": "057",
+          "hesa_degsbj": "100089",
+          "hesa_degclss": "08",
+          "hesa_degest": "0072",
+          "hesa_degctry": "GB",
+          "hesa_degstdt": "2021-01-01",
+          "hesa_degenddt": "1976-01-01"
+        }
+      ],
+      "other_qualifications": [
+
+      ],
+      "missing_gcses_explanation": null
+    },
+    "work_experience": {
+      "jobs": [
+        {
+          "id": 10121,
+          "start_date": "2017-03-13",
+          "end_date": "2020-02-13",
+          "role": "Teaching Assistant",
+          "organisation_name": "Ironston Secondary College",
+          "working_with_children": true,
+          "commitment": "part_time",
+          "description": "Working pattern: Voluptatum magnam corporis. N.\n\nDescription: Est a corrupti. Reiciendis et expedita. Deserunt voluptas cumque. Et nobis quia. Est qui consectetur. Quis delectus ut. Sint velit similique. Ipsam et quia. Reprehenderit modi sit. Deleniti facere est. Qui ab et. Molestias consequatur vitae. Incidunt assumenda est. Enim minus repudiandae. At invent."
+        },
+        {
+          "id": 10120,
+          "start_date": "2015-03-13",
+          "end_date": "2016-08-13",
+          "role": "Teaching Assistant",
+          "organisation_name": "Brighthurst Secondary College",
+          "working_with_children": true,
+          "commitment": "part_time",
+          "description": "Working pattern: Ut nihil in. Suscipit omnis s.\n\nDescription: Suscipit in eos. Maxime vero fugit. Esse est et. Molestiae qui ad. Rerum praesentium omnis. Voluptatum aut non. Est quibusdam molestiae. Tempore ipsam iusto. Fugit nisi quae. Enim amet accusamus. Aliquam earum eius. Dicta hic ut. Deserunt laboriosam ratione. Pariatur et eveniet. Rerum et quae. Quis."
+        }
+      ],
+      "volunteering": [
+        {
+          "id": 10122,
+          "start_date": "2002-03-08",
+          "end_date": "2018-01-29",
+          "role": "Teaching Assistant",
+          "organisation_name": "Brighthurst High",
+          "working_with_children": true,
+          "commitment": "part_time",
+          "description": "Working pattern: Occaecati doloribus voluptate.\n\nDescription: Velit cumque nesciunt. Cumque ratione mollitia. Id ipsum aliquam. Quaerat fugit velit. Modi et et. Error saepe reiciendis. Ducimus possimus voluptatem. Eum minus sed. Officiis rerum sit. Eius odio quam. Velit non temporibus. Quo doloremque consequatur. Explicabo vero voluptatem. Dicta aut possimus.."
+        }
+      ],
+      "work_history_break_explanation": "Ut aut aut. Saepe voluptates eos. Sed asperiores officia. Et et sed. Numquam unde ut. Voluptas sequi cum. Voluptates alias assumenda. Sint praesentium vitae. Et omnis reprehenderit. Ea earum saepe. Vel beatae ut. Omnis incidunt deleniti. Sit autem veniam. Sed voluptatem reiciendis. Ab dolor qui. Nulla voluptates officiis. Et natus est. Sunt et omnis. Natus autem necessitatibus. Repellendus cupidi."
+    },
+    "offer": {
+      "conditions": [
+        "Fitness to Teach check",
+        "Disclosure and Barring Service (DBS) check"
+      ],
+      "course": {
+        "recruitment_cycle_year": 2021,
+        "provider_code": "1N1",
+        "site_code": "1",
+        "course_code": "239F",
+        "study_mode": "full_time",
+        "start_date": "2021-09"
+      },
+      "offer_made_at": "2021-01-18 11:53:51 +0000",
+      "offer_accepted_at": null,
+      "offer_declined_at": "2021-02-02 00:15:00 +0000"
+    },
+    "rejection": {
+      "reason": "BLah de blajsd",
+      "date": "2021-01-14T14:45:14+00:00"
+    },
+    "withdrawal": null,
+    "further_information": "Incidunt autem laudantium. Ut dignissimos soluta. Occaecati quae sunt. Aspernatur ut esse. Sed quis placeat. Labore quis impedit. Maxime quo suscipit. Quo aspernatur molestias. Enim ducimus fugiat. Laborum quae ab. Est voluptas reiciendis. Qui est non. Dolorem corrupti dolorum. Iusto repellat est. .",
+    "safeguarding_issues_status": "has_safeguarding_issues_to_declare",
+    "safeguarding_issues_details_url": "https://qa.apply-for-teacher-training.service.gov.uk/provider/applications/6252#criminal-convictions-and-professional-misconduct",
+    "hesa_itt_data": null
+  }
+}
