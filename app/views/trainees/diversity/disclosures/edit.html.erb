@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.diversity.disclosures.edit", has_errors: @disclosure.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render DynamicBackLink::View.new(@trainee, text: "Back") %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <div class="govuk-grid-row">

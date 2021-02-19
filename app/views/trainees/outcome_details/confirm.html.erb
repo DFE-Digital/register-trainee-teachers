@@ -1,10 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.outcome_details.confirm") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: t('back_to_record'),
-    href: edit_trainee_outcome_details_outcome_date_path(@trainee)
-  ) %>
+  <%= render GovukComponent::BackLink.new(text: t(:back_to_record), href: trainee_path(@trainee)) %>
 <% end %>
 
 <div class="govuk-grid-row">
