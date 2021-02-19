@@ -19,6 +19,7 @@
 
       <%= f.govuk_radio_buttons_fieldset(:record_type, legend: { size: "s", text: "What type of training are they doing?", tag: "span"} ) do %>
         <%= f.govuk_radio_button :record_type, :assessment_only, label: { text: t("activerecord.attributes.trainee.record_types.assessment_only") }, link_errors: true %>
+        <%= f.govuk_radio_button :record_type, :provider_led, label: { text: t("activerecord.attributes.trainee.record_types.provider_led") }, link_errors: true %>
         <%= f.govuk_radio_button :record_type, :other, label: { text: "Other" } %>
       <% end %>
 

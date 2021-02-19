@@ -2,8 +2,7 @@
 
 module Trainees
   class ConfirmDetailsController < ApplicationController
-    helper_method :trainee_section_key
-    helper_method :confirm_section_title
+    helper_method :trainee_section_key, :confirm_section_title
 
     def show
       authorize trainee
@@ -40,7 +39,7 @@ module Trainees
     end
 
     def trainee_section_key
-      request.path.split("/").intersection(trainee_paths).first.underscore
+      request.path.split("/").intersection(trainee_paths).first&.underscore
     end
 
     def confirm_section_title

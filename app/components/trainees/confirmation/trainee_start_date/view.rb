@@ -11,7 +11,7 @@ module Trainees
         end
 
         def start_date
-          trainee.commencement_date.strftime("%d %B %Y")
+          trainee.commencement_date&.strftime("%d %B %Y")
         end
       end
     end

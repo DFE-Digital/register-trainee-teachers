@@ -16,10 +16,13 @@ class TrainingDetailsForm
                          },
                          if: -> { validate_trainee_id }
 
-  validate :commencement_date_valid, if: -> { validate_commencement_date }
+  validate :commencement_date_valid, if: -> { trainee.requires_start_date? && validate_commencement_date }
 
   after_validation :update_trainee_id, if: -> { validate_trainee_id && errors.empty? }
-  after_validation :update_trainee_commencement_date, if: -> { validate_commencement_date && errors.empty? }
+
+  after_validation :update_trainee_commencement_date, if: lambda {
+    trainee.requires_start_date? && validate_commencement_date && errors.empty?
+  }
 
   def initialize(trainee, validate_trainee_id: true, validate_commencement_date: true)
     @trainee = trainee

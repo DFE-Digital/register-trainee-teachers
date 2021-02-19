@@ -93,7 +93,7 @@
           validator: TrainingDetailsForm.new(@trainee),
           progress_value: @trainee.progress.training_details
         ).status
-      )
+      ) if @trainee.requires_training_details?
     end %>
   </div>
 </div>

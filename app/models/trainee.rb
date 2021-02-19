@@ -131,6 +131,8 @@ class Trainee < ApplicationRecord
   # Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
+  delegate :requires_training_details?, :requires_start_date?, to: :training_route_manager
+
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
@@ -174,5 +176,9 @@ class Trainee < ApplicationRecord
       ELSE 1
       END
     SQL
+  end
+
+  def training_route_manager
+    @training_route_manager ||= TrainingRouteManager.new(self)
   end
 end

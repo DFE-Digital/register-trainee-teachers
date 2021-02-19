@@ -26,6 +26,7 @@ features:
   enable_feedback_link: true
   basic_auth: true
   trainee_export: false
+  training_details: false
 
 dfe_sign_in:
   # Our service name
