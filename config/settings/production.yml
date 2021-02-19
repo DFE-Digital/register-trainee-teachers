@@ -15,4 +15,4 @@ dfe_sign_in:
 features:
   basic_auth: false
   enable_feedback_link: false
-  enable_support_link: false
+  enable_feedback_link: false

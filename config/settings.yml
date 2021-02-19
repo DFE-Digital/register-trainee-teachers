@@ -23,9 +23,8 @@ features:
   use_ssl: true
   use_dfe_sign_in: true
   allow_user_creation: false
-  enable_feedback_link: true
+  enable_feedback_link: false
   basic_auth: true
-  enable_support_link: true
   trainee_export: false
 
 dfe_sign_in:

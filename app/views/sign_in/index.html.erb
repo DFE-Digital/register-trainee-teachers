@@ -20,12 +20,10 @@
       <%= govuk_link_to "Sign in using Persona", "/personas", { class: "govuk-button" }  %>
     <% end %>
 
-    <% if FeatureService.enabled?("enable_support_link") %>
-      <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Register trainee teachers, email
+    <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Register trainee teachers, email
 
-      <%= support_email(subject: "Get access to Register trainee teachers") %>.
-      </p>
-    <% end %>
+    <%= support_email(subject: "Get access to Register trainee teachers") %>.
+    </p>
 
   </div>
 </div>
