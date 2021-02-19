@@ -21,10 +21,9 @@ class PersonalDetailForm
   validates :first_names, presence: true
   validates :last_name, presence: true
   validates :date_of_birth, presence: true
-  validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
-
   validate :date_of_birth_valid
   validate :date_of_birth_not_in_future
+  validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
   validate :nationalities_cannot_be_empty
 
   after_validation :update_trainee_attributes
