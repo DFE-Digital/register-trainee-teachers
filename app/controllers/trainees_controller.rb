@@ -11,14 +11,8 @@ class TraineesController < ApplicationController
 
     # We can't use `#draft` to find @draft_trainees since that applies a `WHERE`
     # clause, removing Kaminari's pagination. Hence the use of `#select`.
-    #
-    # Conversely, we need to call Kaminari's `#total_count` on the ActiveRecord
-    # Relations for the pre-pagination count. Hence the secondary call to `#draft`.
     @draft_trainees = paginated_trainees.select(&:draft?)
-    @draft_trainees_count = filtered_trainees.draft.count
-
     @completed_trainees = paginated_trainees.reject(&:draft?)
-    @completed_trainees_count = filtered_trainees.not_draft.count
 
     respond_to do |format|
       format.html
