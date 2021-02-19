@@ -17,7 +17,7 @@
     <% if FeatureService.enabled?("use_dfe_sign_in")%>
       <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe") %>
     <% else %>
-      <%= govuk_link_to "Sign in using Persona", "/personas", { class: "govuk-button" }  %>
+      <%= govuk_button_link_to "Sign in using Persona", "/personas" %>
     <% end %>
 
     <% if FeatureService.enabled?("enable_support_link") %>

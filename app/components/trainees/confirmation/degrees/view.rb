@@ -4,6 +4,7 @@ module Trainees
   module Confirmation
     module Degrees
       class View < GovukComponent::Base
+        include ApplicationHelper
         attr_accessor :degrees, :trainee, :show_add_another_degree_button, :show_delete_button
 
         def initialize(trainee:, show_add_another_degree_button: true, show_delete_button: true)
