@@ -85,6 +85,10 @@
   position: relative;
   text-decoration: none;
 
+  &:focus:before {
+    height: 7px; // Bar needs to change thickness so that we don’t rely on colour alone.
+  }
+
   &:before {
     background-color: $govuk-link-colour;
     content: "";
