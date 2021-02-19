@@ -2,9 +2,9 @@
 base_url: https://sandbox.register-trainee-teachers.education.gov.uk
 
 dttp:
-  back_office_url: https://dttp.crm4.dynamics.com/
-  scope: https://dttp.crm4.dynamics.com/.default
-  api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
+  back_office_url: https://dttp-test.crm4.dynamics.com/
+  scope: https://dttp-test.crm4.dynamics.com/.default
+  api_base_url: https://dttp-test.crm4.dynamics.com/api/data/v9.1
 
 dfe_sign_in:
   # URL that the users are redirected to for signing in
