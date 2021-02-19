@@ -1,6 +1,9 @@
-<%= render PageTitle::View.new(title: trainees_page_title(@paginated_trainees)) %>
+<%= render PageTitle::View.new(title: trainees_page_title(@paginated_trainees, @total_trainees_count)) %>
 
-<h1 class="govuk-heading-xl">Trainee records</h1>
+<% if @paginated_trainees.current_page > 1 %>
+  <span class="govuk-caption-xl">Page <%= @paginated_trainees.current_page %> of <%= @paginated_trainees.total_pages %></span>
+<% end %>
+<h1 class="govuk-heading-xl">Trainee records (<%= @total_trainees_count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@total_trainees_count) %></span>)</h1>
 
 <% unless current_user.system_admin? %>
   <p class="govuk-body">
@@ -22,7 +25,7 @@
       <div class="govuk-!-margin-bottom-8 app-draft-records">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Draft records (<%= @draft_trainees_count %><span class="govuk-visually-hidden"> draft <%= "record".pluralize(@draft_trainees_count) %></span>)</h2>
+            <h2 class="govuk-heading-m">Draft records</h2>
           </div>
         </div>
         <%= render ApplicationRecordCard::View.with_collection(@draft_trainees) %>
@@ -33,7 +36,7 @@
       <div class="govuk-!-margin-bottom-8 app-non-draft-records">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Records (<%= @completed_trainees_count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@completed_trainees_count) %></span>)</h2>
+            <h2 class="govuk-heading-m">Records</h2>
           </div>
         </div>
         <%= render ApplicationRecordCard::View.with_collection(@completed_trainees) %>
