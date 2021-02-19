@@ -8,6 +8,7 @@ module Trns
       let(:full_trainee) do
         create(
           :trainee,
+          :with_start_date,
           :with_programme_details,
           ethnic_background: "some background",
           nationalities: [create(:nationality)],

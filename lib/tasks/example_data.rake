@@ -27,20 +27,20 @@ namespace :example_data do
 
       trait_combinations = [
         [],
-        %i[with_programme_details diversity_disclosed],
-        %i[with_programme_details diversity_not_disclosed],
-        %i[submitted_for_trn with_placement_assignment with_programme_details diversity_disclosed],
-        %i[submitted_for_trn with_placement_assignment with_programme_details diversity_not_disclosed],
-        %i[trn_received with_placement_assignment with_programme_details diversity_disclosed],
-        %i[trn_received with_placement_assignment with_programme_details diversity_not_disclosed],
-        %i[recommended_for_qts with_placement_assignment with_outcome_date with_programme_details diversity_disclosed],
-        %i[recommended_for_qts with_placement_assignment with_outcome_date with_programme_details diversity_not_disclosed],
-        %i[withdrawn with_placement_assignment with_programme_details diversity_disclosed],
-        %i[withdrawn with_placement_assignment with_programme_details diversity_not_disclosed],
-        %i[deferred with_placement_assignment with_programme_details diversity_disclosed],
-        %i[deferred with_placement_assignment with_programme_details diversity_not_disclosed],
-        %i[qts_awarded with_placement_assignment with_outcome_date with_programme_details diversity_disclosed],
-        %i[qts_awarded with_placement_assignment with_outcome_date with_programme_details diversity_not_disclosed],
+        %i[with_start_date with_programme_details diversity_disclosed],
+        %i[with_start_date with_programme_details diversity_not_disclosed],
+        %i[with_start_date submitted_for_trn with_placement_assignment with_programme_details diversity_disclosed],
+        %i[with_start_date submitted_for_trn with_placement_assignment with_programme_details diversity_not_disclosed],
+        %i[with_start_date trn_received with_placement_assignment with_programme_details diversity_disclosed],
+        %i[with_start_date trn_received with_placement_assignment with_programme_details diversity_not_disclosed],
+        %i[with_start_date recommended_for_qts with_placement_assignment with_outcome_date with_programme_details diversity_disclosed],
+        %i[with_start_date recommended_for_qts with_placement_assignment with_outcome_date with_programme_details diversity_not_disclosed],
+        %i[with_start_date withdrawn with_placement_assignment with_programme_details diversity_disclosed],
+        %i[with_start_date withdrawn with_placement_assignment with_programme_details diversity_not_disclosed],
+        %i[with_start_date deferred with_placement_assignment with_programme_details diversity_disclosed],
+        %i[with_start_date deferred with_placement_assignment with_programme_details diversity_not_disclosed],
+        %i[with_start_date qts_awarded with_placement_assignment with_outcome_date with_programme_details diversity_disclosed],
+        %i[with_start_date qts_awarded with_placement_assignment with_outcome_date with_programme_details diversity_not_disclosed],
       ]
 
       rand(50...100).times do
@@ -51,7 +51,7 @@ namespace :example_data do
         trn = nil
         progress = {}
 
-        if traits.length > 2 # this trainee isn't draft
+        if traits.length > 3 # this trainee isn't draft
 
           # mark the sections complete
           progress = {
@@ -60,6 +60,7 @@ namespace :example_data do
             degrees: true,
             diversity: true,
             programme_details: true,
+            training_details: true,
           }
 
           # set the submitted_for_trn_at date as they will have at least been submitted
