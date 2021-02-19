@@ -49,6 +49,13 @@ feature "programme details", type: :feature do
       and_i_submit_the_form
       then_i_see_error_messages
     end
+
+    scenario "submitting with a partial date" do
+      when_i_visit_the_programme_details_page
+      and_i_fill_in_start_date_only
+      and_i_submit_the_form
+      then_start_date_is_still_populated
+    end
   end
 
   def when_i_visit_the_programme_details_page
@@ -100,6 +107,14 @@ feature "programme details", type: :feature do
 
   def and_the_section_should_be(status)
     expect(review_draft_page.programme_details.status.text).to eq(Progress::STATUSES[status])
+  end
+
+  def and_i_fill_in_start_date_only
+    programme_details_page.set_date_fields("programme_start_date", template.programme_start_date.strftime("%d/%m/%Y"))
+  end
+
+  def then_start_date_is_still_populated
+    expect(programme_details_page.programme_start_date_day.value).to eq(template.programme_start_date.day.to_s)
   end
 
   def then_i_see_error_messages

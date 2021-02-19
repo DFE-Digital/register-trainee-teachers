@@ -50,25 +50,11 @@ class ProgrammeDetailForm
   end
 
   def programme_start_date
-    date_hash = { start_year: start_year, start_month: start_month, start_day: start_day }
-    date_args = date_hash.values.map(&:to_i)
-
-    if Date.valid_date?(*date_args)
-      Date.new(*date_args)
-    else
-      Struct.new(*date_hash.keys).new(*date_hash.values)
-    end
+    new_date({ year: start_year, month: start_month, day: start_day })
   end
 
   def programme_end_date
-    date_hash = { end_year: end_year, end_month: end_month, end_day: end_day }
-    date_args = date_hash.values.map(&:to_i)
-
-    if Date.valid_date?(*date_args)
-      Date.new(*date_args)
-    else
-      Struct.new(*date_hash.keys).new(*date_hash.values)
-    end
+    new_date({ year: end_year, month: end_month, day: end_day })
   end
 
   def sanitise_programme_dates
@@ -101,12 +87,15 @@ private
     end
   end
 
+  def new_date(date_hash)
+    date_args = date_hash.values.map(&:to_i)
+    Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+  end
+
   def age_range
-    if main_age_range.to_sym == :other
-      additional_age_range
-    else
-      main_age_range
-    end
+    return additional_age_range if main_age_range.to_sym == :other
+
+    main_age_range
   end
 
   def age_range_valid
