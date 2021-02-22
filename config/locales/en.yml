@@ -212,14 +212,15 @@ en:
           additional_reason: Enter the reason for withdrawal
           <<: *withdrawal_reasons
       training_details:
-        title: Confirm trainee start date and ID
+        title: Trainee start date and ID
         commencement_date:
           label: Date trainee started
-          hint: When this trainee started, rather than the programme start date. For example, 9 2 %{year}
+          hint_html: When the trainee started the course. This may be different to your overall programme start date.<br><br> 
+                     For example, 9 2 %{year}
         trainee_id:
-          label: Trainee ID
-          hint: You can assign your own ID for this trainee. <br>This can help you identify them
-            or search for them in your trainee records later.
+          label: Assign a trainee ID
+          hint: This will help you to identify them and search for them in your trainee records. 
+                We may also use it if we need to get in touch with you about this trainee.
   activerecord:
     attributes:
       trainee:
