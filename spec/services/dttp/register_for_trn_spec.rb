@@ -42,6 +42,7 @@ module Dttp
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(BatchRequest).to receive(:new).and_return(batch_request)
         trainee.degrees << degree
+        trainee.nationalities << create(:nationality, :british)
       end
 
       it "submits a batch request to create contact, placement assignment and degree qualification entities and updates trainee record" do

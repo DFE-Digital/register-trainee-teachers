@@ -8,7 +8,7 @@ module Dttp
       let(:time_now_in_zone) { Time.zone.now }
       let(:provider) { build(:provider, dttp_id: provider_dttp_id) }
       let(:provider_dttp_id) { SecureRandom.uuid }
-      let(:trainee) { build(:trainee, gender: "female", provider: provider) }
+      let(:trainee) { create(:trainee, :completed, gender: "female", provider: provider) }
       let(:trainee_creator_dttp_id) { SecureRandom.uuid }
 
       subject { described_class.new(trainee, trainee_creator_dttp_id).params }
@@ -63,7 +63,7 @@ module Dttp
         end
 
         context "trainee.traineeid is null" do
-          let(:trainee) { build(:trainee, gender: "female", provider: provider, trainee_id: nil) }
+          let(:trainee) { create(:trainee, :completed, gender: "female", provider: provider, trainee_id: nil) }
 
           it "sets the dfe_traineeid to NOTPROVIDED" do
             expect(subject).to include(
@@ -85,7 +85,7 @@ module Dttp
           end
 
           context "undisclosed" do
-            let(:trainee) { build(:trainee, :diversity_not_disclosed) }
+            let(:trainee) { create(:trainee, :completed, :diversity_not_disclosed) }
             let(:ethnic_background) { Diversities::NOT_PROVIDED }
             let(:dttp_disability) { Diversities::NOT_PROVIDED }
 
@@ -96,7 +96,7 @@ module Dttp
 
           context "disclosed" do
             context "ethnicity information" do
-              let(:trainee) { build(:trainee, :diversity_disclosed, ethnic_background: ethnic_background) }
+              let(:trainee) { create(:trainee, :completed, :diversity_disclosed, ethnic_background: ethnic_background) }
 
               context "provided" do
                 let(:ethnic_background) { Diversities::IRISH }
@@ -116,7 +116,7 @@ module Dttp
             end
 
             context "disability information" do
-              let(:trainee) { create(:trainee, :diversity_disclosed, disability_disclosure: disability_disclosure) }
+              let(:trainee) { create(:trainee, :completed, :diversity_disclosed, disability_disclosure: disability_disclosure) }
 
               context "disabled" do
                 let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
@@ -163,6 +163,47 @@ module Dttp
                   expect(subject).to include(disability_param)
                 end
               end
+            end
+          end
+        end
+
+        context "nationality information" do
+          let(:expected_nationality) { create(:nationality, trait_name) }
+          let(:other_nationality) { create(:nationality, :other) }
+
+          let(:trainee) { create(:trainee) }
+
+          let(:nationality_param) do
+            { "dfe_Nationality@odata.bind" => "/dfe_nations(#{dttp_nationality_entity_id})" }
+          end
+
+          let(:dttp_nationality_entity_id) { Dttp::CodeSets::Nationalities::MAPPING[expected_nationality.name][:entity_id] }
+
+          before do
+            trainee.nationalities << [expected_nationality, other_nationality, create(:nationality)]
+          end
+
+          context "when British is selected with other nationalities" do
+            let(:trait_name) { CodeSets::Nationalities::BRITISH.to_sym }
+
+            it "sets the British nationality id" do
+              expect(subject).to include(nationality_param)
+            end
+          end
+
+          context "when Irish is selected with other nationalities" do
+            let(:trait_name) { CodeSets::Nationalities::IRISH.to_sym }
+
+            it "sets the Irish nationality id" do
+              expect(subject).to include(nationality_param)
+            end
+          end
+
+          context "when British and Irish are not selected" do
+            let(:expected_nationality) { create(:nationality, name: "chinese") }
+
+            it "sets the first nationality id" do
+              expect(subject).to include(nationality_param)
             end
           end
         end

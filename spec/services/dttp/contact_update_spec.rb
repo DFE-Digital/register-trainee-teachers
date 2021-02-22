@@ -7,8 +7,7 @@ module Dttp
     describe "#call" do
       let(:trainee) do
         create(:trainee,
-               :with_programme_details,
-               :with_start_date,
+               :completed,
                dttp_id: contact_dttp_id,
                placement_assignment_dttp_id: placement_assignment_dttp_id)
       end
