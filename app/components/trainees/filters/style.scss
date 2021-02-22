@@ -7,6 +7,19 @@
 @import "~@ministryofjustice/frontend/moj/objects/scrollable-pane";
 @import "~@ministryofjustice/frontend/moj/components/filter/filter";
 
+.app-filter {
+  box-shadow: none;
+
+  @include govuk-media-query($from: tablet) {
+    margin-bottom: govuk-spacing(3);
+  }
+}
+
+// Apply GOV.UK focus styles - only needed with js.
+.js-enabled .app-filter:focus {
+  outline: $govuk-focus-width solid $govuk-focus-colour;
+}
+
 .moj-filter-layout__content {
   overflow-x: hidden;
 }
@@ -57,22 +70,13 @@
   box-shadow: none;
 }
 
-.app-filter {
-  box-shadow: none;
-
-  @include govuk-media-query($from: tablet) {
-    margin-bottom: govuk-spacing(3);
-  }
-}
-
-// Apply GOV.UK focus styles - only needed with js.
-.js-enabled .app-filter:focus {
-  outline: $govuk-focus-width solid $govuk-focus-colour;
+.moj-filter__tag:focus, .moj-filterfe__tag:focus:hover {
+  outline: none;
+  box-shadow: 0 4px #0b0c0c;
 }
 
 // Fix for focus issue - see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640
-
 // We're catching the focus on a second element rather than having the filter component itself flash with focus when checkbox labels are clicked.
-.moj-filter__options:focus {
+.moj-filter__content:focus {
   outline: none;
 }

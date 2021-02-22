@@ -8,7 +8,8 @@
       </div>
     </div>
 
-    <div class="moj-filter__content">
+    <!-- Div made focusable to 'catch' focus from filters. see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640 -->
+    <div class="moj-filter__content" tabindex="-1">
 
       <% if filters %>
         <div class="moj-filter__selected">
@@ -36,8 +37,7 @@
         </div>
       <% end %>
 
-      <!-- Div made focusable to 'catch' focus from filters. see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640 -->
-      <div class="moj-filter__options"  tabindex="-1">
+      <div class="moj-filter__options">
 
         <form method="get">
           <%= submit_tag "Apply filters", class: "govuk-button" %>
