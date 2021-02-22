@@ -21,7 +21,7 @@ FactoryBot.define do
     ethnic_group { Diversities::ETHNIC_GROUP_ENUMS.values.sample }
     ethnic_background { nil }
     additional_ethnic_background { nil }
-    disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS.values.sample }
+    disability_disclosure { (Diversities::DISABILITY_DISCLOSURE_ENUMS.values - %w[disabled]) .sample }
 
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
