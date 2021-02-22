@@ -12,18 +12,21 @@ module Dttp
       let(:outcome_date) { Faker::Date.in_date_period }
       let(:placement_assignment_dttp_id) { SecureRandom.uuid }
       let(:path) { "/dfe_placementassignments(#{placement_assignment_dttp_id})" }
+      let(:expected_params) { { test: "value" }.to_json }
 
       before do
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(Client).to receive(:patch).and_return(dttp_response)
+        allow(Params::PlacementAssignmentOutcome)
+          .to receive(:new).with(trainee: trainee)
+          .and_return(double(to_json: expected_params))
       end
 
       context "success" do
         let(:dttp_response) { double(code: 204) }
 
         it "sends a PATCH request to set entity property 'dfe_datestandardsassessmentpassed'" do
-          body = { dfe_datestandardsassessmentpassed: outcome_date.in_time_zone.iso8601 }.to_json
-          expect(Client).to receive(:patch).with(path, body: body).and_return(dttp_response)
+          expect(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)
           described_class.call(trainee: trainee)
         end
       end
