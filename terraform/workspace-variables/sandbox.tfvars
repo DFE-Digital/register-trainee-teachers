@@ -1,15 +1,20 @@
 # PaaS
-paas_app_environment             = "sandbox"
-env_config                       = "sandbox"
-paas_space_name                  = "bat-prod"
-paas_postgres_service_plan       = "small-11"
-paas_redis_service_plan          = "micro-5_x"
-paas_app_start_timeout           = "180"
-paas_web_app_instances           = 2
-paas_web_app_memory              = 512
-paas_worker_app_instances        = 2
-paas_worker_app_memory           = 512
-paas_worker_app_stopped          = false
+paas_app_environment       = "sandbox"
+env_config                 = "sandbox"
+paas_space_name            = "bat-prod"
+paas_postgres_service_plan = "small-11"
+paas_redis_service_plan    = "micro-5_x"
+paas_app_start_timeout     = "180"
+paas_web_app_instances     = 2
+paas_web_app_memory        = 512
+paas_worker_app_instances  = 2
+paas_worker_app_memory     = 512
+paas_worker_app_stopped    = false
+
+#KeyVault
+key_vault_resource_group = "s121p01-shared-rg"
+
+#statuscake
 
 statuscake_alerts = {
 
