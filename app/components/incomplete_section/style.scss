@@ -1,0 +1,26 @@
+@import "../base.scss";
+
+.app-inset-text--narrow-border {
+  border-left-width: $govuk-border-width-narrow;
+}
+
+.app-inset-text--important {
+  border-color: govuk-colour("blue");
+
+  .app-inset-text__title {
+    color: govuk-colour("blue");
+  }
+}
+
+.app-inset-text--error {
+  border-color: $govuk-error-colour;
+
+  .app-inset-text__title {
+    color: $govuk-error-colour;
+  }
+}
+
+.app-inset-text__title {
+  @include govuk-font($size: 19, $weight: "bold");
+  margin-bottom: govuk-spacing(2);
+}

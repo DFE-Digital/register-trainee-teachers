@@ -12,10 +12,7 @@ feature "submit for TRN" do
 
   describe "submission" do
     context "when all sections are completed" do
-      before do
-        given_a_trainee_exists(:with_programme_details, degrees: [create(:degree, :uk_degree_with_details)])
-        stub_progress_service(completed: true)
-      end
+      let(:trainee) { create(:trainee, :completed, provider: current_user.provider) }
 
       scenario "can submit the application" do
         when_i_am_viewing_the_review_draft_page
@@ -29,19 +26,21 @@ feature "submit for TRN" do
         when_i_am_viewing_the_review_draft_page
         and_i_want_to_review_record_before_submitting_for_trn
         then_i_review_the_trainee_data
-        expect(page).to have_content(trainee_name(@trainee))
+        expect(page).to have_content(trainee_name(trainee))
       end
     end
 
     context "when all sections are not completed" do
       before do
         given_a_trainee_exists
-        stub_progress_service(completed: false)
       end
 
-      scenario "cannot submit the application" do
+      scenario "shows me an error if I try to submit" do
         when_i_am_viewing_the_review_draft_page
-        then_i_do_not_see_the_review_details_link
+        and_i_want_to_review_record_before_submitting_for_trn
+        then_i_review_the_trainee_data
+        and_i_click_the_submit_for_trn_button
+        then_i_see_an_error_message
       end
     end
   end
@@ -86,6 +85,12 @@ feature "submit for TRN" do
     expect(review_draft_page).to be_displayed(id: trainee.slug)
   end
 
+  def then_i_see_an_error_message
+    expect(page).to have_content(
+      I18n.t("activemodel.errors.models.trn_submission_form.attributes.trainee.incomplete"),
+    )
+  end
+
   def and_i_click_the_submit_for_trn_button
     check_details_page.submit_button.click
   end
@@ -95,7 +100,8 @@ feature "submit for TRN" do
   end
 
   def and_i_am_on_the_check_details_page
-    check_details_page.load(id: trainee.slug)
+    review_draft_page.load(id: trainee.slug)
+    review_draft_page.review_this_record_link.click
   end
 
   def when_i_click_back_to_draft_record
@@ -108,9 +114,5 @@ feature "submit for TRN" do
 
   def then_i_am_redirected_to_the_trainee_records_page
     expect(trainee_index_page).to be_displayed
-  end
-
-  def stub_progress_service(completed: false)
-    expect(Trns::SubmissionChecker).to receive(:call).with(trainee: trainee).and_return(double(successful?: completed))
   end
 end
