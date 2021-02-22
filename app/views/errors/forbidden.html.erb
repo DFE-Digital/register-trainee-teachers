@@ -3,7 +3,6 @@
 
   <h1 class="govuk-heading-l">You do not have access to view details for this trainee</h1>
 
-  <% if FeatureService.enabled?("enable_support_link") %>
-    <p class="govuk-body">If you think you should have access, contact: <%= support_email(subject: "Register trainee teachers support") %>.</p>
-  <% end %>
+  <p class="govuk-body">If you think you should have access, contact: <%= support_email(subject: "Register trainee teachers support") %>.</p>
+
 <% end %>

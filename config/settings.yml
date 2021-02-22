@@ -25,7 +25,6 @@ features:
   allow_user_creation: false
   enable_feedback_link: true
   basic_auth: true
-  enable_support_link: true
   trainee_export: false
 
 dfe_sign_in:

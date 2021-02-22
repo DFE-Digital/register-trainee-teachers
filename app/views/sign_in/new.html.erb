@@ -6,7 +6,7 @@
     <p class="govuk-body"> Although you have a DfE Sign-in account, you also need an account
                              for this service.</p>
 
-    <% if FeatureService.enabled?("enable_support_link") %>
+    <% if FeatureService.enabled?("enable_feedback_link") %>
       <p class="govuk-body"> Contact us at
       <%= support_email(subject: "Get access to Register trainee teachers") %> to ask for an account.
       </p>
