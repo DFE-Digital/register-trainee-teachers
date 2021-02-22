@@ -148,6 +148,20 @@ en:
         withdrawn: Trainee withdrawn
         deferred: Trainee deferred
         qts_awarded: Trainee awarded QTS
+    sections:
+      titles:
+        personal_details: Personal details
+        contact_details: Contact details
+        diversity: Diversity information
+        degrees: Degree details
+        programme_details: Programme details
+        training_details: Training details
+      statuses:
+        not_started: not started
+        in_progress: not marked as complete
+      link_texts:
+        not_started: Start section
+        in_progress: Continue section
   views:
     trainees:
       edit:
@@ -284,22 +298,6 @@ en:
         email:
           invalid: "You must enter an email address in the correct format, like name@example.com"
       models:
-        personal_detail_form:
-          attributes:
-            first_names:
-              blank: "You must enter a first name"
-            last_name:
-              blank: "You must enter a last name"
-            date_of_birth:
-              blank: "You must enter a date of birth"
-              invalid: "You must enter a valid date"
-              future: "You must enter a date of birth that is in the past, for example 31 3 1980"
-            gender:
-              blank: "You must select a gender"
-            nationality_ids:
-              empty_nationalities: You must select at least one nationality
-            other_nationality1:
-              blank: If you have an additional nationality, select it from the list
         contact_detail_form:
           attributes:
             locale_code:
@@ -315,6 +313,10 @@ en:
             email:
               blank: "You must enter an email address"
               invalid: "You must enter an email address in the correct format, like name@example.com"
+        degree_detail_form:
+          attributes:
+            degree_ids:
+              empty_degrees: You must have at least one degree
         diversities/disclosure_form:
           attributes:
             diversity_disclosure:
@@ -347,6 +349,29 @@ en:
               not_valid: The disability disclosure section is not valid for this trainee
             disability_ids:
               not_valid: Trainee has been disclosed as disabled but no disabilities exist
+        outcome_date_form:
+          attributes:
+            outcome_date_string:
+              blank: You must choose an outcome date
+            outcome_date:
+              blank: You must enter an outcome date
+              invalid: You must enter a valid outcome date
+        personal_detail_form:
+            attributes:
+              first_names:
+                blank: "You must enter a first name"
+              last_name:
+                blank: "You must enter a last name"
+              date_of_birth:
+                blank: "You must enter a date of birth"
+                invalid: "You must enter a valid date"
+                future: "You must enter a date of birth that is in the past, for example 31 3 1980"
+              gender:
+                blank: "You must select a gender"
+              nationality_ids:
+                empty_nationalities: You must select at least one nationality
+              other_nationality1:
+                blank: If you have an additional nationality, select it from the list
         programme_detail_form:
           attributes:
             subject:
@@ -366,17 +391,10 @@ en:
               invalid: "You must enter a valid programme end date"
               too_old: "You must enter a valid programme end date"
               before_or_same_as_start_date: "The programme end date must be after the start date"
-        outcome_date_form:
+        trn_submission_form:
           attributes:
-            outcome_date_string:
-              blank: You must choose an outcome date
-            outcome_date:
-              blank: You must enter an outcome date
-              invalid: You must enter a valid outcome date
-        degree_detail_form:
-          attributes:
-            degree_ids:
-              empty_degrees: You must have at least one degree
+            trainee:
+              incomplete: You must complete all sections before submitting for TRN
         withdrawal_form:
           attributes:
             withdraw_date_string:

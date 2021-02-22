@@ -7,7 +7,6 @@ module Trainees
     def show
       authorize trainee
       page_tracker.save_as_origin!
-      @pre_submission_checker = Trns::SubmissionChecker.call(trainee: trainee)
     end
 
   private

@@ -10,32 +10,59 @@
   ) %>
 <% end %>
 
-<h1 class="govuk-heading-l">
-  <span class="govuk-caption-l">
-    Draft record for <%= trainee_name(@trainee)  %>
-  </span>
-  Review trainee record
-</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    
+    <% if @trn_submission.errors.any? %>
+      <%= render "trainees/check_details/error_summary" %>
+    <% end %>
 
-<h2 class="govuk-heading-m">
-  Personal details and education
-</h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
+          <span class="govuk-caption-l">
+            Draft record <%= "for #{trainee_name(@trainee)}" if trainee_name(@trainee).present?  %>
+          </span>
+          Review trainee record
+        </h1>
 
-<%= render Trainees::Confirmation::PersonalDetails::View.new(trainee: @trainee) %>
-<%= render Trainees::Confirmation::ContactDetails::View.new(trainee: @trainee) %>
-<%= render Trainees::Confirmation::Diversity::View.new(trainee: @trainee) %>
-<%= render Trainees::Confirmation::Degrees::View.new(trainee: @trainee, show_add_another_degree_button: false, show_delete_button: true) %>
+        <% unless @trn_submission.all_sections_complete? %>
+          <div class="govuk-inset-text">
+            <p class="govuk-body">
+              This record is not complete and cannot be submitted for TRN. If you do not
+              have all the required information now, you can 
+              <%= govuk_link_to " save as a draft record", trainees_path %>.
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
 
+    <h2 class="govuk-heading-m">
+      Personal details and education
+    </h2>
 
-<h2 class="govuk-heading-m">
-  About their training
-</h2>
-<%= render Trainees::Confirmation::TrainingDetails::View.new(trainee: @trainee) %>
-<%= render Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :personal_details) %>
 
-<%= form_with url: trn_submissions_path, method: :post, local: true do |f| %>
-  <%= hidden_field_tag :trainee_id, @trainee.slug %>
-  <%= f.govuk_submit "Submit record and request TRN" %>
-<%- end -%>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :contact_details) %>
+
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :diversity) %>
+
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :degrees) %>
+
+    <h2 class="govuk-heading-m">
+      About their training
+    </h2>
+
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :training_details) %>
+
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :programme_details) %>
+
+    <%= form_with(model: @trn_submission, url: trn_submissions_path, method: :post, local: true) do |f| %>
+      <%= hidden_field_tag :trainee_id, @trainee.slug %>
+      <%= f.govuk_submit "Submit record and request TRN" %>
+    <% end %>
+  </div>
+</div>
 
 <p class="govuk-body"><%= govuk_link_to("Return to this draft record later", trainees_path, { id: "return-to-draft-later" }) %></p>

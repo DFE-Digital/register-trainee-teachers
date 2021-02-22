@@ -21,7 +21,7 @@ FactoryBot.define do
     ethnic_group { Diversities::ETHNIC_GROUP_ENUMS.values.sample }
     ethnic_background { nil }
     additional_ethnic_background { nil }
-    disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS.values.sample }
+    disability_disclosure { (Diversities::DISABILITY_DISCLOSURE_ENUMS.values - %w[disabled]) .sample }
 
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
@@ -42,6 +42,51 @@ FactoryBot.define do
       add_attribute("date_of_birth(3i)") { form_dob.day.to_s }
       add_attribute("date_of_birth(2i)") { form_dob.month.to_s }
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
+    end
+
+    trait :not_started do
+      trainee_id { nil }
+      first_names { nil }
+      middle_names { nil }
+      last_name { nil }
+      gender { nil }
+      date_of_birth { nil }
+
+      diversity_disclosure { nil }
+      ethnic_group { nil }
+      ethnic_background { nil }
+      additional_ethnic_background { nil }
+      disability_disclosure { nil }
+
+      address_line_one { nil }
+      address_line_two { nil }
+      town_city { nil }
+      postcode { nil }
+      international_address { nil }
+      locale_code { nil }
+      email { nil }
+      commencement_date { nil }
+    end
+
+    trait :in_progress do
+      with_programme_details
+      with_start_date
+      degrees { [build(:degree, :uk_degree_with_details)] }
+    end
+
+    trait :completed do
+      in_progress
+      nationalities { [build(:nationality)] }
+      progress do
+        Progress.new(
+          personal_details: true,
+          contact_details: true,
+          diversity: true,
+          degrees: true,
+          programme_details: true,
+          training_details: true,
+        )
+      end
     end
 
     trait :with_programme_details do
