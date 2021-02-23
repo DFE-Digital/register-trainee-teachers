@@ -1,5 +1,6 @@
 ![build](https://github.com/DFE-Digital/register-trainee-teachers/workflows/build/badge.svg)
 ![Deploy to PaaS](https://github.com/DFE-Digital/register-trainee-teachers/workflows/Deploy%20to%20PaaS/badge.svg)
+[![View performance data on Skylight](https://badges.skylight.io/status/YttDFt8jHcNT.svg?token=nRTIRMZsne7UqkwqgjCsuh0cT1z572MKKiBtrea6tFA)](https://www.skylight.io/app/applications/YttDFt8jHcNT)
 
 # Register trainee teachers
 
