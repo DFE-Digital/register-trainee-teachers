@@ -11,7 +11,7 @@
 
       <%= f.govuk_date_field :commencement_date, legend: {
         text: t("views.forms.training_details.commencement_date.label"), size: 's'
-      }, hint: { text: t("views.forms.training_details.commencement_date.hint", year: Time.zone.now.year) } %>
+      }, hint: { text: t("views.forms.training_details.commencement_date.hint_html", year: Time.zone.now.year) } %>
 
       <%= f.govuk_text_field :trainee_id, label: {
         text: t('views.forms.training_details.trainee_id.label'), size: 's'

@@ -7,9 +7,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_with model: @training_details, url: trainee_trainee_id_path, local: true do |f| %>
-      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID', tag: 'h1', size: 'l' }, width: 20 do %>
-          <p class="govuk-body govuk-hint"><%= t('views.forms.training_details.trainee_id.hint') %></p>
-        <% end %>
+      <%= f.govuk_text_field :trainee_id, label: { text: 'Trainee ID', tag: 'h1', size: 'l' }, width: 20 %>
       <%= f.govuk_submit "Continue" %>
     <% end %>
   </div>
