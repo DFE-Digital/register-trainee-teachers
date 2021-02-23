@@ -10,6 +10,8 @@
 <h1 class="govuk-heading-l">
   <% if @trainee.first_names.present? && @trainee.last_name.present? %>
     <span class="govuk-caption-l">Draft record for <%= trainee_name(@trainee) %></span>
+  <% else %>
+    <span class="govuk-caption-l">Draft record</span>
   <% end %>
   Add a trainee
 </h1>
