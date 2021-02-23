@@ -62,8 +62,8 @@ production:
 
 sandbox:
 	$(eval env=sandbox)
-	$(eval env_config=production)
-	$(eval space=sandbox)
+	$(eval env_config=sandbox)
+	$(eval space=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
 install-fetch-config:
