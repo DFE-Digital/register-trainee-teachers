@@ -11,7 +11,7 @@ RSpec.feature "Adding a degree" do
   describe "summary page" do
     scenario "no degrees entered" do
       and_i_visit_the_review_draft_page
-      then_the_degree_status_should_be(:not_started)
+      then_the_degree_status_should_be(not_started)
     end
   end
 
@@ -40,19 +40,19 @@ RSpec.feature "Adding a degree" do
         confirm_details_page.delete_button.click
         then_i_see_a_flash_message
         and_i_visit_the_review_draft_page
-        then_the_degree_status_should_be(:not_started)
+        then_the_degree_status_should_be(not_started)
       end
 
       scenario "the user confirms degree details" do
         and_confirm_my_details
         then_i_am_redirected_to_the_review_draft_page
-        then_the_degree_status_should_be(:completed)
+        then_the_degree_status_should_be(completed)
       end
 
       scenario "the user does not confirm degree details" do
         and_i_click_continue
         then_i_am_redirected_to_the_review_draft_page
-        then_the_degree_status_should_be(:in_progress)
+        then_the_degree_status_should_be(in_progress)
       end
     end
 
@@ -198,7 +198,7 @@ private
   end
 
   def then_the_degree_status_should_be(status)
-    expect(review_draft_page.degree_details.status.text).to eq(Progress::STATUSES[status])
+    expect(review_draft_page.degree_details.status.text).to eq(status)
   end
 
   def then_i_see_a_flash_message

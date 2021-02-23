@@ -12,7 +12,7 @@ feature "programme details", type: :feature do
   describe "tracking the progress" do
     scenario "renders a 'not started' status when no details provided" do
       review_draft_page.load(id: trainee.slug)
-      and_the_section_should_be(:not_started)
+      and_the_section_should_be(not_started)
     end
 
     scenario "renders an 'in progress' status when details partially provided" do
@@ -21,7 +21,7 @@ feature "programme details", type: :feature do
       and_i_submit_the_form
       and_i_confirm_my_details(checked: false, section: programme_details_section)
       then_i_am_redirected_to_the_review_draft_page
-      and_the_section_should_be(:in_progress)
+      and_the_section_should_be(in_progress)
     end
 
     scenario "renders a completed status when valid details provided" do
@@ -30,7 +30,7 @@ feature "programme details", type: :feature do
       and_i_submit_the_form
       and_i_confirm_my_details(section: programme_details_section)
       then_i_am_redirected_to_the_review_draft_page
-      and_the_section_should_be(:completed)
+      and_the_section_should_be(completed)
     end
   end
 
@@ -106,7 +106,7 @@ feature "programme details", type: :feature do
   end
 
   def and_the_section_should_be(status)
-    expect(review_draft_page.programme_details.status.text).to eq(Progress::STATUSES[status])
+    expect(review_draft_page.programme_details.status.text).to eq(status)
   end
 
   def and_i_fill_in_start_date_only

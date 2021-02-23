@@ -34,7 +34,7 @@ RSpec.describe TaskList::View do
         let(:status) { "completed" }
 
         it "renders the correct tag status" do
-          expect(component.find(".govuk-tag").text).to eq(status)
+          expect(component.find(".govuk-tag").text).to include(status)
         end
 
         it "renders the correct tag colour" do
@@ -46,7 +46,7 @@ RSpec.describe TaskList::View do
         let(:status) { "in progress" }
 
         it "renders the correct tag status" do
-          expect(component.find(".govuk-tag").text).to eq(status)
+          expect(component.find(".govuk-tag").text).to include(status)
         end
 
         it "renders the correct tag colour" do
@@ -58,13 +58,27 @@ RSpec.describe TaskList::View do
         let(:status) { "not started" }
 
         it "renders the correct tag status" do
-          expect(component.find(".govuk-tag").text).to eq(status)
+          expect(component.find(".govuk-tag").text).to include(status)
         end
 
         it "renders the correct tag colour" do
           expect(component).to have_selector(".govuk-tag--grey")
         end
       end
+    end
+  end
+
+  describe "#status_id" do
+    subject do
+      TaskList::View::Row.new(
+        task_name: "some key",
+        path: "some_path",
+        status: "completed",
+      )
+    end
+
+    it "returns a string id of the row status" do
+      expect(subject.status_id).to eq("some-key-status")
     end
   end
 end

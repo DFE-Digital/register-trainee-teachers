@@ -161,5 +161,23 @@ module Features
     def privacy_policy_page
       @privacy_policy_page ||= PageObjects::PrivacyPolicy.new
     end
+
+    def not_started
+      progress_with_prefix(Progress::STATUSES[:not_started])
+    end
+
+    def in_progress
+      progress_with_prefix(Progress::STATUSES[:in_progress])
+    end
+
+    def completed
+      progress_with_prefix(Progress::STATUSES[:completed])
+    end
+
+  private
+
+    def progress_with_prefix(status)
+      "Status #{status}"
+    end
   end
 end

@@ -42,6 +42,10 @@ private
       }.fetch(status, "grey")
     end
 
+    def status_id
+      "#{task_name.downcase.parameterize}-status"
+    end
+
   private
 
     def default_classes

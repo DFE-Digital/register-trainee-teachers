@@ -139,12 +139,12 @@ private
 
   def then_the_personal_details_section_should_be_completed
     review_draft_page.load(id: trainee.slug)
-    expect(review_draft_page.personal_details.status.text).to eq(Progress::STATUSES[:completed])
+    expect(review_draft_page.personal_details.status.text).to eq(completed)
   end
 
   def then_the_personal_details_section_should_be_in_progress
     review_draft_page.load(id: trainee.slug)
-    expect(review_draft_page.personal_details.status.text).to eq(Progress::STATUSES[:in_progress])
+    expect(review_draft_page.personal_details.status.text).to eq(in_progress)
   end
 
   def then_i_see_a_flash_message
