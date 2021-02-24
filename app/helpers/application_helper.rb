@@ -29,6 +29,14 @@ module ApplicationHelper
     super(*args << defaults.deep_merge(options), &block)
   end
 
+  def header_items(current_user)
+    return unless current_user
+
+    items = [{ name: t("header.items.sign_out"), url: sign_out_path }]
+    items.unshift({ name: t("header.items.system_admin"), url: providers_path }) if current_user.system_admin?
+    items
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

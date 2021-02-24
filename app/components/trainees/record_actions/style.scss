@@ -1,5 +1,17 @@
+@import "../../base.scss";
+
 .record-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include govuk-media-query($from: tablet) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.record-actions__links {
+  margin-top: govuk-spacing(2);
+
+  @include govuk-media-query($from: tablet) {
+    margin-top: 0;
+  }
 }
