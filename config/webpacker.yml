@@ -10,7 +10,12 @@ default: &default
   webpack_compile_output: false
 
   # Additional paths webpack should lookup modules
-  additional_paths: ["app/components", "node_modules/govuk-frontend/govuk", "node_modules/@ministryofjustice/frontend"]
+  additional_paths:
+    [
+      "app/components",
+      "node_modules/govuk-frontend/govuk",
+      "node_modules/@ministryofjustice/frontend",
+    ]
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
@@ -96,4 +101,7 @@ review:
   <<: *production
 
 staging:
+  <<: *production
+
+sandbox:
   <<: *production
