@@ -53,7 +53,7 @@ module Trainees
     end
 
     def other_nationalities
-      @other_nationalities ||= Nationality.where.not(name: NATIONALITIES + [Dttp::CodeSets::Nationalities::OTHER])
+      @other_nationalities ||= Nationality.where.not(name: NATIONALITIES)
     end
 
     def personal_details_params
