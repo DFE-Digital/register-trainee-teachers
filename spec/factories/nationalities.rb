@@ -14,6 +14,6 @@ FactoryBot.define do
   end
 
   trait :other do
-    name { "other" }
+    name { Dttp::CodeSets::Nationalities::OTHER }
   end
 end
