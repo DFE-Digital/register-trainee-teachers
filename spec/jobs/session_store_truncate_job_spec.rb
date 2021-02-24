@@ -15,7 +15,7 @@ describe SessionStoreTruncateJob do
       sessions
     end
 
-    it "should enqueue job" do
+    it "enqueues job" do
       expect {
         described_class.perform_later
       }.to have_enqueued_job
