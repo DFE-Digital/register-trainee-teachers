@@ -5,7 +5,7 @@ class SessionStoreTruncateJob < ApplicationJob
 
   def perform
     # Copying from: rake db:sessions:trim
-    cutoff_period = (ENV["SESSION_DAYS_TRIM_THRESHOLD"] || 30).to_i.days.ago
+    cutoff_period = Settings.session_store.expire_after_days.days.ago
     ActiveRecord::SessionStore::Session.where("updated_at < ?", cutoff_period).delete_all
   end
 end
