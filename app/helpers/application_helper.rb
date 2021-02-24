@@ -32,8 +32,8 @@ module ApplicationHelper
   def header_items(current_user)
     return unless current_user
 
-    items = [{ name: "Sign out", url: sign_out_path }]
-    items.unshift({ name: "System admin", url: providers_path }) if current_user.system_admin?
+    items = [{ name: t("header.items.sign_out"), url: sign_out_path }]
+    items.unshift({ name: t("header.items.system_admin"), url: providers_path }) if current_user.system_admin?
     items
   end
 

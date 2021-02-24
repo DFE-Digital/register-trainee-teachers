@@ -5,6 +5,10 @@ en:
   service_name: Register trainee teachers
   cancel: Cancel and return to record
   change: Change
+  header:
+    items:
+      sign_out: Sign out
+      system_admin: System admin
   components:
     confirmation:
       trainee_id:
