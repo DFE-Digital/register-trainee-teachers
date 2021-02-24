@@ -21,7 +21,7 @@ describe SessionStoreTruncateJob do
       }.to have_enqueued_job
     end
 
-    it "should delete only old session" do
+    it "deletes only old sessions" do
       expect(ActiveRecord::SessionStore::Session.count).to eq(2)
       described_class.perform_now
       expect(ActiveRecord::SessionStore::Session.count).to eq(1)
