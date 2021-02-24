@@ -46,3 +46,6 @@ sidekiq:
 
 pagination:
   records_per_page: 100
+
+session_store:
+  expire_after_days: 30

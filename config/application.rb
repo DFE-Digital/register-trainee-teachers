@@ -42,6 +42,6 @@ module RegisterTraineeTeachers
     config.middleware.use Rack::Deflater
     config.active_job.queue_adapter = :sidekiq
 
-    config.session_store :cookie_store, key: "_register_trainee_teachers_session", expire_after: 6.hours
+    config.session_store :active_record_store, key: "_register_trainee_teachers_session"
   end
 end
