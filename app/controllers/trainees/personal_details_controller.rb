@@ -10,7 +10,10 @@ module Trainees
       "date_of_birth(1i)" => "year",
     }.freeze
 
-    NATIONALITIES = %w[british irish].freeze
+    NATIONALITIES = [
+      Dttp::CodeSets::Nationalities::BRITISH,
+      Dttp::CodeSets::Nationalities::IRISH,
+    ].freeze
 
     def show
       authorize trainee
@@ -50,8 +53,7 @@ module Trainees
     end
 
     def other_nationalities
-      @other_nationality ||= Nationality.find_by(name: "other")
-      @other_nationalities ||= Nationality.where.not(name: NATIONALITIES)
+      @other_nationalities ||= Nationality.where.not(name: NATIONALITIES + [Dttp::CodeSets::Nationalities::OTHER])
     end
 
     def personal_details_params

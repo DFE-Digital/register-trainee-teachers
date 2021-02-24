@@ -3,31 +3,35 @@
 module Dttp
   module Mappable
     def programme_subject_id(subject)
-      Dttp::CodeSets::ProgrammeSubjects::MAPPING.dig(subject, :entity_id)
+      CodeSets::ProgrammeSubjects::MAPPING.dig(subject, :entity_id)
     end
 
     def course_phase_id(age_range)
-      Dttp::CodeSets::AgeRanges::MAPPING.dig(age_range, :entity_id)
+      CodeSets::AgeRanges::MAPPING.dig(age_range, :entity_id)
     end
 
     def degree_subject_id(subject)
-      Dttp::CodeSets::DegreeSubjects::MAPPING.dig(subject, :entity_id)
+      CodeSets::DegreeSubjects::MAPPING.dig(subject, :entity_id)
     end
 
     def degree_institution_id(institution)
-      Dttp::CodeSets::Institutions::MAPPING.dig(institution, :entity_id)
+      CodeSets::Institutions::MAPPING.dig(institution, :entity_id)
     end
 
     def degree_class_id(grade)
-      Dttp::CodeSets::Grades::MAPPING.dig(grade, :entity_id)
+      CodeSets::Grades::MAPPING.dig(grade, :entity_id)
     end
 
     def degree_country_id(country)
-      Dttp::CodeSets::Countries::MAPPING.dig(country, :entity_id)
+      CodeSets::Countries::MAPPING.dig(country, :entity_id)
     end
 
     def degree_type_id(degree_type)
-      Dttp::CodeSets::DegreeTypes::MAPPING.dig(degree_type, :entity_id)
+      CodeSets::DegreeTypes::MAPPING.dig(degree_type, :entity_id)
+    end
+
+    def dttp_nationality_id(nationality)
+      CodeSets::Nationalities::MAPPING.dig(nationality.downcase, :entity_id)
     end
 
     def dttp_disability_id(disability)

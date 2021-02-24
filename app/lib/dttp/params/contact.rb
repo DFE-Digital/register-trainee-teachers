@@ -42,6 +42,7 @@ module Dttp
           "emailaddress1" => trainee.email,
           "gendercode" => GENDER_CODES[trainee.gender.to_sym],
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
+          "dfe_Nationality@odata.bind" => "/dfe_nations(#{contact_dttp_nationality_id})",
           "dfe_EthnicityId@odata.bind" => "/dfe_ethnicities(#{contact_dttp_ethnicity_id})",
           "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{contact_dttp_disability_id})",
           "parentcustomerid_account@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
@@ -54,6 +55,10 @@ module Dttp
           "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
           "dfe_trnassessmentdate" => Time.zone.now.iso8601,
         })
+      end
+
+      def contact_dttp_nationality_id
+        dttp_nationality_id(selected_nationality)
       end
 
       def contact_dttp_ethnicity_id
@@ -82,6 +87,13 @@ module Dttp
 
       def trainee_disability_not_provided?
         trainee.disability_disclosure == Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided]
+      end
+
+      def selected_nationality
+        nationalities = trainee.nationalities.pluck(:name)
+        british_or_irish = ->(nationality) { nationality == CodeSets::Nationalities::BRITISH || CodeSets::Nationalities::IRISH }
+
+        (nationalities.select(&british_or_irish).presence || nationalities).first
       end
     end
   end
