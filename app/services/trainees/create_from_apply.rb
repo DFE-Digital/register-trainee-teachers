@@ -41,12 +41,17 @@ module Trainees
         # TODO: Use actual route type, if found.
         record_type: 1,
         programme_start_date: programme_start_date,
+        degrees: degrees,
       }.merge(address)
     end
 
     def programme_start_date
       year, month = raw_course["start_date"].split("-").map(&:to_i)
       Date.new(year, month)
+    end
+
+    def degrees
+      raw_degrees.map { |d| ::Degrees::CreateFromApply.call(attributes: d) }
     end
 
     def address
@@ -80,6 +85,10 @@ module Trainees
 
     def raw_course
       @raw_course ||= attributes["course"]
+    end
+
+    def raw_degrees
+      @raw_degrees ||= attributes["qualifications"]["degrees"]
     end
   end
 end
