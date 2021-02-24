@@ -161,7 +161,6 @@ module Dttp
         "north korean" => { entity_id: "69c297b7-5c62-e711-80d1-005056ac45bb" },
         "norwegian" => { entity_id: "777e640e-5c62-e711-80d1-005056ac45bb" },
         "omani" => { entity_id: "7f7e640e-5c62-e711-80d1-005056ac45bb" },
-        OTHER => { entity_id: "" },
         "pakistani" => { entity_id: "897e640e-5c62-e711-80d1-005056ac45bb" },
         "palauan" => { entity_id: "937e640e-5c62-e711-80d1-005056ac45bb" },
         "palestinian" => { entity_id: "ff7d640e-5c62-e711-80d1-005056ac45bb" },

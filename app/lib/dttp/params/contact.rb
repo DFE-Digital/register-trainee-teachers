@@ -92,9 +92,8 @@ module Dttp
       def selected_nationality
         nationalities = trainee.nationalities.pluck(:name)
         british_or_irish = ->(nationality) { nationality == CodeSets::Nationalities::BRITISH || CodeSets::Nationalities::IRISH }
-        other = ->(nationality) { nationality == "other" }
 
-        (nationalities.select(&british_or_irish).presence || nationalities.reject(&other).presence)&.first
+        (nationalities.select(&british_or_irish).presence || nationalities).first
       end
     end
   end
