@@ -25,7 +25,7 @@ features:
   allow_user_creation: false
   enable_feedback_link: true
   basic_auth: true
-  trainee_export: false
+  trainee_export: true
 
 dfe_sign_in:
   # Our service name
