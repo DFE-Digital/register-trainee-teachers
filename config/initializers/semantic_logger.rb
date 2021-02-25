@@ -3,9 +3,7 @@
 class CustomLogFormatter < SemanticLogger::Formatters::Raw
   def call(log, logger)
     super(log, logger)
-    format_add_type
     format_job_data
-    format_duration
     format_exception
     format_json_message_context
     format_backtrace
@@ -14,18 +12,9 @@ class CustomLogFormatter < SemanticLogger::Formatters::Raw
 
 private
 
-  def format_add_type
-    hash[:type] = "rails"
-  end
-
   def format_job_data
     hash[:job_id] = RequestStore.store[:job_id] if RequestStore.store[:job_id].present?
     hash[:job_queue] = RequestStore.store[:job_queue] if RequestStore.store[:job_queue].present?
-  end
-
-  def format_duration
-    hash[:duration] = hash[:duration_ms]
-    hash[:duration_ms] = nil
   end
 
   def format_exception
