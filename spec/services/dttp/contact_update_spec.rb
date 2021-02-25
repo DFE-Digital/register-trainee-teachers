@@ -38,14 +38,16 @@ module Dttp
       end
 
       context "error" do
-        let(:error_body) { "error" }
-        let(:contact_response) { double(code: 405, body: error_body) }
+        let(:status) { 405 }
+        let(:body) { "error" }
+        let(:headers) { { foo: "bar" } }
+        let(:contact_response) { double(code: status, body: body, headers: headers) }
 
         it "raises an error exception" do
           expect(Client).to receive(:patch).and_return(contact_response)
           expect {
             described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::ContactUpdate::Error, error_body)
+          }.to raise_error(Dttp::ContactUpdate::Error, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end

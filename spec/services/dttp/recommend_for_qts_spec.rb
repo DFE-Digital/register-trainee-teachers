@@ -29,13 +29,15 @@ module Dttp
       end
 
       context "error" do
-        let(:error_body) { "error" }
-        let(:dttp_response) { double(code: 405, body: error_body) }
+        let(:status) { 405 }
+        let(:body) { "error" }
+        let(:headers) { { foo: "bar" } }
+        let(:dttp_response) { double(code: status, body: body, headers: headers) }
 
         it "raises an error exception" do
           expect {
             described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::RecommendForQTS::Error, error_body)
+          }.to raise_error(Dttp::RecommendForQTS::Error, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end

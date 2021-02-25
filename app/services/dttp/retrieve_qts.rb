@@ -14,7 +14,9 @@ module Dttp
 
     def call
       response = Client.get("/contacts(#{trainee.dttp_id})?$select=dfe_qtsawardflag")
-      raise HttpError, response.body unless response.code == 200
+      if response.code != 200
+        raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
+      end
 
       JSON(response.body)["dfe_qtsawardflag"]
     end

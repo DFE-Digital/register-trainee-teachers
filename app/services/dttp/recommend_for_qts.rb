@@ -22,7 +22,9 @@ module Dttp
         body: body,
       )
 
-      raise Error, response.body if response.code != 204
+      if response.code != 204
+        raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
+      end
 
       response
     end

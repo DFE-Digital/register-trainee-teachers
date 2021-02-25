@@ -21,7 +21,9 @@ module Dttp
 
     def call
       response = Client.patch(path, body: params.to_json)
-      raise Error, response.body if response.code != 204
+      if response.code != 204
+        raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
+      end
     end
 
   private

@@ -33,13 +33,16 @@ module Dttp
       end
 
       context "HTTP error" do
-        let(:dttp_response) { double(code: 400, body: "error") }
+        let(:status) { 400 }
+        let(:body) { "error" }
+        let(:headers) { { foo: "bar" } }
+        let(:dttp_response) { double(code: status, body: body, headers: headers) }
 
         it "raises a HttpError error with the response body as the message" do
           expect(Client).to receive(:get).with(path).and_return(dttp_response)
           expect {
             described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::RetrieveTrn::HttpError, dttp_response.body)
+          }.to raise_error(Dttp::RetrieveTrn::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end
