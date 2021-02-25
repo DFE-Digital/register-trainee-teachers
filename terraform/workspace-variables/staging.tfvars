@@ -14,9 +14,8 @@ paas_worker_app_stopped    = false
 #KeyVault
 key_vault_resource_group = "s121t01-shared-rg"
 
-#statuscake
+#StatusCake
 statuscake_alerts = {
-
   alert = {
     website_name   = "register-staging"
     website_url    = "https://staging.register-trainee-teachers.education.gov.uk/ping"
@@ -24,6 +23,6 @@ statuscake_alerts = {
     check_rate     = 60
     contact_group  = [188603]
     trigger_rate   = 0
-    node_locations = ["UKD", "DE", "CA"]
+    node_locations = ["UKINT", "UK1", "MAN1", "MAN5", "DUB2"]
   }
 }
