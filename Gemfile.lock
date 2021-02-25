@@ -408,6 +408,10 @@ GEM
       capybara (~> 3.8)
       site_prism-all_there (>= 0.3.1, < 1.0)
     site_prism-all_there (0.3.2)
+    skylight (4.3.2)
+      skylight-core (= 4.3.2)
+    skylight-core (4.3.2)
+      activesupport (>= 4.2.0)
     slack-notifier (2.3.2)
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
@@ -515,6 +519,7 @@ DEPENDENCIES
   sidekiq-cron (~> 1.1)
   simplecov (~> 0.21.2)
   site_prism (~> 3.7)
+  skylight
   slack-notifier
   spring
   spring-commands-rspec (~> 1.0)
