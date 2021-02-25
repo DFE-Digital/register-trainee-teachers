@@ -3,12 +3,7 @@
 module StatusCard
   class ViewPreview < ViewComponent::Preview
     def single_card
-      render inline: "<div class=\"govuk-grid-row govuk-!-margin-bottom-6\"><%= render(StatusCard::View.new(card))%></div>", locals: { card: card }
-    end
-
-    def multiple_cards
-      current_user = User.new(first_name: "Darth", last_name: "Vader", email: "darth@email.com", system_admin: true)
-      render partial: "pages/badges.html.erb", locals: { current_user: current_user }
+      render(StatusCard::View.new(card))
     end
 
   private

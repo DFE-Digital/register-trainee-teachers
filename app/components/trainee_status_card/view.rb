@@ -2,7 +2,7 @@
 
 module TraineeStatusCard
   class View < GovukComponent::Base
-    attr_reader :state, :user, :target
+    attr_reader :state, :trainees, :target
 
     STATUS_COLOURS = {
       draft: "grey",
@@ -14,27 +14,18 @@ module TraineeStatusCard
       withdrawn: "red",
     }.freeze
 
-    def initialize(state:, user:, target:)
+    def initialize(state:, trainees:, target:)
       @state = state
-      @user = user
       @target = target
+      @trainees = trainees
     end
 
     def count
-      if user.system_admin?
-        Trainee.where(state: state).count
-      else
-        Trainee.where(state: state, provider: user.provider).count
-      end
+      trainees.where(state: state).count
     end
 
     def state_name
-      {
-        qts_awarded: "QTS awarded",
-        trn_received: "TRN received",
-        submitted_for_trn: "Pending TRN",
-        recommended_for_qts: "QTS recommended",
-      }[state] || state.to_s.humanize
+      I18n.t("activerecord.attributes.trainee.states.#{state}")
     end
 
     def status_colour

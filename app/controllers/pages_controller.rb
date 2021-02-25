@@ -5,6 +5,7 @@ class PagesController < ApplicationController
 
   def start
     if authenticated?
+      @trainees = policy_scope(Trainee.all)
       render :home
     else
       render :start
