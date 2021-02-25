@@ -123,7 +123,7 @@ end
 
 group :test do
   # Headless browser testing kit
-  gem "cuprite", "~> 0.11"
+  gem "cuprite", "~> 0.12"
   gem "webdrivers", "~> 4.5"
 
   gem "shoulda-matchers", "~> 4.5"
