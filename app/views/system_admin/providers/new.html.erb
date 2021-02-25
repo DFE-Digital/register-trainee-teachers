@@ -10,8 +10,8 @@
         Add a provider
       </h1>
 
-      <%= f.govuk_text_field :name, label: { text: "Provider name", size: "s" }, width: 20 %>
-      <%= f.govuk_text_field :dttp_id, label: { text: "DTTP ID", size: "s" }, width: 20 %>
+      <%= f.govuk_text_field :name, label: { text: "Provider name", size: "s" }, width: 20, autocomplete: :disabled %>
+      <%= f.govuk_text_field :dttp_id, label: { text: "DTTP ID", size: "s" }, width: 20, autocomplete: :disabled %>
 
       <%= f.govuk_submit %>
     <% end %>

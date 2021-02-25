@@ -17,9 +17,9 @@
 
         <%= f.govuk_radio_buttons_fieldset(
           :ethnic_background,
-          legend: { 
-            text: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")), 
-            tag: "h1", 
+          legend: {
+            text: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")),
+            tag: "h1",
             size: "l" }
         ) do %>
 
@@ -29,6 +29,7 @@
                 <%= f.govuk_text_field(
                   :additional_ethnic_background,
                   width: "two-thirds",
+                  autocomplete: :disabled,
                   label: { text: I18n.t("views.forms.ethnic_backgrounds.another_ethnic_background_labels.#{@trainee.ethnic_group}") }
                 ) %>
               <% end %>

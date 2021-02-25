@@ -14,34 +14,37 @@
       <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "Where does the trainee live?", size: "s" }, classes: "locale") do %>
         <%= f.govuk_radio_button :locale_code, :non_uk, label: { text: "Outside the UK" }, link_errors: true  do %>
           <%= f.govuk_text_area :international_address,
-            width: "one-quarter",
-            label: { text: "Home address" } %>
+                                width: "one-quarter",
+                                label: { text: "Home address" },
+                                autocomplete: :disabled %>
         <% end %>
 
         <%= f.govuk_radio_button :locale_code, :uk, label: { text: "In the UK" } do %>
           <%= f.govuk_fieldset legend: { text: "Home address", size: "s" } do %>
             <%= f.govuk_text_field :address_line_one,
-              width: "full",
-              label: { text: "Building and street" } %>
+                                   width: "full",
+                                   label: { text: "Building and street" },
+                                   autocomplete: :disabled %>
 
             <%= f.govuk_text_field :address_line_two,
-              width: "full",
-              label: { text: "Address line 2", hidden: true } %>
+                                   width: "full",
+                                   label: { text: "Address line 2", hidden: true },
+                                   autocomplete: :disabled %>
 
             <%= f.govuk_text_field :town_city,
-              width: "two-thirds",
-              label: { text: "Town or city" } %>
+                                   width: "two-thirds",
+                                   label: { text: "Town or city" },
+                                   autocomplete: :disabled %>
 
-            <%= f.govuk_text_field :postcode,
-              width: 10,
-              label: { text: "Postal code" } %>
+            <%= f.govuk_text_field :postcode, width: 10, label: { text: "Postal code" }, autocomplete: :disabled %>
           <% end %>
         <% end %>
       <% end %>
 
       <%= f.govuk_email_field :email,
-        width: "two-thirds",
-        label: { text: "Email address", size: "s" } %>
+                              width: "two-thirds",
+                              label: { text: "Email address", size: "s" },
+                              autocomplete: :disabled %>
 
       <%= f.govuk_submit %>
     <% end %>
