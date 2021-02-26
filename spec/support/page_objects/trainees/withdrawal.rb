@@ -7,9 +7,9 @@ module PageObjects
 
       set_url "/trainees/{id}/withdraw"
 
-      element :withdraw_date_day, "#withdrawal_form_withdraw_date_3i"
-      element :withdraw_date_month, "#withdrawal_form_withdraw_date_2i"
-      element :withdraw_date_year, "#withdrawal_form_withdraw_date_1i"
+      element :withdraw_date_day, "#withdrawal_form_date_3i"
+      element :withdraw_date_month, "#withdrawal_form_date_2i"
+      element :withdraw_date_year, "#withdrawal_form_date_1i"
 
       element :additional_withdraw_reason, "#withdrawal-form-additional-withdraw-reason-field"
 

@@ -4,12 +4,6 @@ module Trainees
   class WithdrawalsController < ApplicationController
     before_action :authorize_trainee
 
-    PARAM_DATE_CONVERSION = {
-      "withdraw_date(3i)" => "day",
-      "withdraw_date(2i)" => "month",
-      "withdraw_date(1i)" => "year",
-    }.freeze
-
     def show
       @withdrawal_form = WithdrawalForm.new(trainee)
     end
@@ -38,12 +32,11 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:withdrawal_form).permit(:withdraw_date_string,
-                                              :withdraw_reason,
-                                              :additional_withdraw_reason,
-                                              *PARAM_DATE_CONVERSION.keys).transform_keys do |key|
-        PARAM_DATE_CONVERSION.fetch(key, key)
-      end
+      params.require(:withdrawal_form)
+        .permit(:date_string, :withdraw_reason, :additional_withdraw_reason, *MultiDateForm::PARAM_CONVERSION.keys)
+        .transform_keys do |key|
+          MultiDateForm::PARAM_CONVERSION.fetch(key, key)
+        end
     end
   end
 end

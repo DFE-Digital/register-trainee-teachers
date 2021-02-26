@@ -2,12 +2,6 @@
 
 module Trainees
   class OutcomeDatesController < ApplicationController
-    PARAM_CONVERSION = {
-      "outcome_date(3i)" => "day",
-      "outcome_date(2i)" => "month",
-      "outcome_date(1i)" => "year",
-    }.freeze
-
     def edit
       authorize trainee
       @outcome = OutcomeDateForm.new(trainee)
@@ -32,9 +26,10 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:outcome_date_form).permit(:outcome_date_string, *PARAM_CONVERSION.keys)
+      params.require(:outcome_date_form)
+        .permit(:date_string, *MultiDateForm::PARAM_CONVERSION.keys)
         .transform_keys do |key|
-          PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
+          MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end
     end
   end

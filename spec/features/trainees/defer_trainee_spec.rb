@@ -94,19 +94,19 @@ feature "Deferring a trainee", type: :feature do
 
   def then_i_see_the_error_message_for_invalid_date
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.deferral_form.attributes.defer_date.invalid"),
+      I18n.t("activemodel.errors.models.deferral_form.attributes.date.invalid"),
     )
   end
 
   def then_i_see_the_error_message_for_blank_date
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.deferral_form.attributes.defer_date.blank"),
+      I18n.t("activemodel.errors.models.deferral_form.attributes.date.blank"),
     )
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.deferral_form.attributes.defer_date_string.blank"),
+      I18n.t("activemodel.errors.models.deferral_form.attributes.date_string.blank"),
     )
   end
 

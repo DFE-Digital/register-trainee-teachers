@@ -13,11 +13,11 @@
         <%= trainee_name(@trainee) %>
       </span>
 
-      <%= f.govuk_radio_buttons_fieldset(:defer_date_string, legend: { text: "When did the trainee defer?", tag: "h1", size: "l" }, classes: "deferral-date") do %>
-        <%= f.govuk_radio_button :defer_date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
-        <%= f.govuk_radio_button :defer_date_string, :yesterday, label: { text: t("views.forms.common.yesterday") } %>
-        <%= f.govuk_radio_button :defer_date_string, :other, label: { text: t("views.forms.common.specific_date") } do %>
-          <%= f.govuk_date_field :defer_date, legend: { text: t("views.forms.common.on_what_date"), size: 's' }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
+      <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: "When did the trainee defer?", tag: "h1", size: "l" }, classes: "deferral-date") do %>
+        <%= f.govuk_radio_button :date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
+        <%= f.govuk_radio_button :date_string, :yesterday, label: { text: t("views.forms.common.yesterday") } %>
+        <%= f.govuk_radio_button :date_string, :other, label: { text: t("views.forms.common.specific_date") } do %>
+          <%= f.govuk_date_field :date, legend: { text: t("views.forms.common.on_what_date"), size: 's' }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
         <% end %>
       <% end %>
 

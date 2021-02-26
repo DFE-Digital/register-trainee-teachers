@@ -4,12 +4,6 @@ module Trainees
   class DeferralsController < ApplicationController
     before_action :authorize_trainee
 
-    PARAM_CONVERSION = {
-      "defer_date(3i)" => "day",
-      "defer_date(2i)" => "month",
-      "defer_date(1i)" => "year",
-    }.freeze
-
     def show
       @deferral = DeferralForm.new(trainee)
     end
@@ -38,10 +32,11 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:deferral_form).permit(:defer_date_string, *PARAM_CONVERSION.keys)
-            .transform_keys do |key|
-        PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
-      end
+      params.require(:deferral_form)
+        .permit(:date_string, *MultiDateForm::PARAM_CONVERSION.keys)
+        .transform_keys do |key|
+          MultiDateForm::PARAM_CONVERSION.fetch(key, key)
+        end
     end
   end
 end
