@@ -30,4 +30,14 @@ describe TraineesController do
       end
     end
   end
+
+  describe "#destroy" do
+    context "with a non-draft trainee" do
+      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.provider) }
+
+      it "redirects to the trainee record page" do
+        expect(get(:destroy, params: { id: trainee })).to redirect_to(trainee_path(trainee))
+      end
+    end
+  end
 end

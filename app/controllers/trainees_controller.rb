@@ -2,6 +2,7 @@
 
 class TraineesController < ApplicationController
   before_action :ensure_trainee_is_not_draft!, only: :show
+  before_action :ensure_trainee_is_draft!, only: :destroy
   helper_method :filter_params
 
   def index
@@ -48,6 +49,13 @@ class TraineesController < ApplicationController
     authorize trainee
     trainee.update!(trainee_params)
     redirect_to page_tracker.last_origin_page_path
+  end
+
+  def destroy
+    authorize trainee
+    trainee.destroy!
+    flash[:success] = "Draft deleted"
+    redirect_to trainees_path
   end
 
 private

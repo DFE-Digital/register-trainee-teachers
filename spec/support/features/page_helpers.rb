@@ -26,6 +26,10 @@ module Features
       @review_draft_page ||= PageObjects::Trainees::ReviewDraft.new
     end
 
+    def confirm_draft_deletions_page
+      @confirm_draft_deletions_page ||= PageObjects::Trainees::ConfirmDraftDeletions.new
+    end
+
     def confirm_details_page
       @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
     end

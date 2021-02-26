@@ -41,6 +41,10 @@ class TraineePolicy
     trainee.submitted_for_trn? || trainee.trn_received?
   end
 
+  def destroy?
+    user && (user.system_admin? || user.provider_id == trainee.provider_id)
+  end
+
   alias_method :create?, :show?
   alias_method :update?, :show?
   alias_method :edit?, :show?

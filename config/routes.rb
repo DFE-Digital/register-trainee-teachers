@@ -44,13 +44,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :trainees, except: :destroy do
+  resources :trainees do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
       resource :programme_details, concerns: :confirmable, only: %i[edit update], path: "/programme-details"
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resource :trainee_id, concerns: :confirmable, only: %i[edit update], path: "/trainee-id"
       resource :start_date, concerns: :confirmable, only: %i[edit update], path: "/trainee-start-date"
+
+      get "/confirm-delete", to: "confirm_delete#show"
 
       namespace :degrees do
         get "/new/type", to: "type#new"
