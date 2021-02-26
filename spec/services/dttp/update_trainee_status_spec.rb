@@ -26,15 +26,17 @@ module Dttp
       end
 
       context "error" do
-        let(:error_body) { "error" }
-        let(:dttp_response) { double(code: 405, body: error_body) }
+        let(:status) { 405 }
+        let(:body) { "error" }
+        let(:headers) { { foo: "bar" } }
+        let(:dttp_response) { double(code: status, body: body, headers: headers) }
 
         it "raises an error exception" do
           expect(Client).to receive(:patch).and_return(dttp_response)
 
           expect {
             described_class.call(status: status, entity_id: entity_id, entity_type: entity_type)
-          }.to raise_error(described_class::Error, error_body)
+          }.to raise_error(described_class::Error, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end
