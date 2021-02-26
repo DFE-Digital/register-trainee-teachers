@@ -7,7 +7,7 @@ import {
 jest.mock('./utils/cookie_helper')
 
 const templateHTML = `
-<div class="govuk-cookie-banner govuk-cookie-banner--hidden" role="region" aria-label="Cookie banner" data-module="govuk-cookie-banner">
+<div class="govuk-cookie-banner" role="region" aria-label="Cookie banner" data-module="govuk-cookie-banner">
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
@@ -62,18 +62,14 @@ describe('CookieBanner', () => {
       viewedCookieMessageExists.mockImplementationOnce(() => false)
 
       const banner = new CookieBanner()
-      expect(banner.$module.className).not.toContain(
-        'govuk-cookie-banner--hidden'
-      )
-      expect(banner.$module.className).toContain('govuk-cookie-banner')
+      expect(banner.$module.hidden).toBeFalsy()
     })
 
     it('hides the Cookie Banner if user has hidden the banner', () => {
       viewedCookieMessageExists.mockImplementationOnce(() => true)
 
       const banner = new CookieBanner()
-      expect(banner.$module.className).toContain('govuk-cookie-banner--hidden')
-      expect(banner.$module.className).toContain('govuk-cookie-banner')
+      expect(banner.$module.hidden).toBeTruthy()
     })
   })
 
@@ -81,7 +77,7 @@ describe('CookieBanner', () => {
     it('hides the cookie banner once a user has accepted cookies', () => {
       const banner = new CookieBanner()
       banner.viewedCookieBanner()
-      expect(banner.$module.className).toContain('govuk-cookie-banner--hidden')
+      expect(banner.$module.hidden).toBeTruthy()
     })
 
     it('sets consented-to-cookies to true', () => {

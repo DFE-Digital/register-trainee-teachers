@@ -2,11 +2,7 @@
 @import "~govuk-frontend/govuk/all";
 @import "~@ministryofjustice/frontend/moj/all";
 
-.govuk-cookie-banner__hide { 
-  display: none;
-}
-
-.js-enabled .govuk-cookie-banner--hidden {
+.govuk-cookie-banner__hide {
   display: none;
 }
 

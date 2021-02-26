@@ -10,7 +10,7 @@ module PageObjects
       element :trainee_name, ".govuk-heading-xl"
       element :trn_status, ".govuk-tag.trainee-status", match: :first
 
-      element :record_outcome, ".govuk-button"
+      element :record_outcome, ".record-actions > .govuk-button"
       element :withdraw, ".govuk-link.withdraw"
 
       element :defer, ".govuk-link.defer"

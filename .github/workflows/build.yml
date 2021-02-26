@@ -69,7 +69,7 @@ jobs:
       run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'bundle exec rake spec'
 
     - name: Run Javascript tests
-      run: docker-compose exec --env -T web /bin/sh -c 'bundle exec rake javascript_specs'
+      run: docker-compose exec -T web /bin/sh -c 'yarn run test'
 
     - name: Tag docker images
       run: docker tag ${{env.DOCKER_REPO}}:${{env.BRANCH_TAG}} ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}

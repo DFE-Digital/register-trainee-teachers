@@ -4,7 +4,7 @@ module PageObjects
   module Trainees
     class ConfirmTraineeId < PageObjects::Base
       set_url "/trainees/{id}/trainee-id/confirm"
-      element :confirm, ".govuk-button"
+      element :confirm, "input[name='commit']"
     end
   end
 end

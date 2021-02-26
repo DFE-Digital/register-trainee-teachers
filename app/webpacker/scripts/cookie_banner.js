@@ -22,6 +22,8 @@ export default class CookieBanner {
     if (!viewedCookieMessageExists()) {
       this.showCookieMessage()
       this.bindEvents()
+    } else {
+      this.hideCookieMessage()
     }
   }
 
@@ -35,11 +37,11 @@ export default class CookieBanner {
   }
 
   showCookieMessage () {
-    this.$module.classList.remove('govuk-cookie-banner--hidden')
+    this.$module.hidden = false
     this.hideButton.classList.remove('govuk-cookie-banner__hide')
   }
 
   hideCookieMessage () {
-    this.$module.classList.add('govuk-cookie-banner--hidden')
+    this.$module.hidden = true
   }
 }
