@@ -6,7 +6,7 @@ describe Trainee do
   context "fields" do
     subject { build(:trainee) }
 
-    it { is_expected.to define_enum_for(:record_type).with_values(assessment_only: 0, provider_led: 1) }
+    it { is_expected.to define_enum_for(:training_route).with_values(assessment_only: 0, provider_led: 1) }
     it { is_expected.to define_enum_for(:locale_code).with_values(uk: 0, non_uk: 1) }
     it { is_expected.to define_enum_for(:gender).with_values(male: 0, female: 1, other: 2, gender_not_provided: 3) }
 
@@ -89,7 +89,7 @@ describe Trainee do
 
       describe "validation" do
         context "when record type is present" do
-          subject { build(:trainee, record_type: "assessment_only") }
+          subject { build(:trainee, training_route: "assessment_only") }
 
           it "is valid" do
             expect(subject).to be_valid
@@ -99,7 +99,7 @@ describe Trainee do
         context "when record type is not present" do
           it "is not valid" do
             expect(subject).not_to be_valid
-            expect(subject.errors.attribute_names).to include(:record_type)
+            expect(subject.errors.attribute_names).to include(:training_route)
           end
         end
       end

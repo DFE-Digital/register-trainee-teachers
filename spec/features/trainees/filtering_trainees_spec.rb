@@ -75,8 +75,8 @@ RSpec.feature "Filtering trainees" do
 private
 
   def given_trainees_exist_in_the_system
-    @assessment_only_trainee ||= create(:trainee, record_type: "assessment_only")
-    @provider_led_trainee ||= create(:trainee, record_type: "provider_led")
+    @assessment_only_trainee ||= create(:trainee, training_route: "assessment_only")
+    @provider_led_trainee ||= create(:trainee, training_route: "provider_led")
     @biology_trainee ||= create(:trainee, subject: "Biology")
     @history_trainee ||= create(:trainee, subject: "History")
     @searchable_trainee ||= create(:trainee, trn: "123")

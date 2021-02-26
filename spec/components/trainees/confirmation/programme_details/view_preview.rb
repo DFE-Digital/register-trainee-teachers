@@ -10,7 +10,7 @@ module Trainees
         end
 
         def with_no_data
-          render(Trainees::Confirmation::ProgrammeDetails::View.new(trainee: Trainee.new(id: 2, record_type: :assessment_only)))
+          render(Trainees::Confirmation::ProgrammeDetails::View.new(trainee: Trainee.new(id: 2, training_route: :assessment_only)))
         end
 
       private
@@ -21,7 +21,7 @@ module Trainees
             subject: "Primary",
             age_range: "3 to 11 programme",
             programme_start_date: Date.new(2020, 0o1, 28),
-            record_type: :assessment_only,
+            training_route: :assessment_only,
           )
         end
       end

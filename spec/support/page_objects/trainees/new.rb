@@ -7,8 +7,11 @@ module PageObjects
 
       element :page_heading, ".govuk-heading-xl"
 
-      element :assessment_only, "#trainee-record-type-assessment-only-field"
-      element :other, "#trainee-record-type-other-field"
+      element :assessment_only, "#trainee-training-route-assessment-only-field"
+
+      element :provider_led, "#trainee-training-route-provider-led-field"
+      
+      element :other, "#trainee-training-route-other-field"
 
       element :continue_button, 'input.govuk-button[type="submit"]'
     end

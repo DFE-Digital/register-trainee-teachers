@@ -12,9 +12,9 @@ module Trainees
 
       def filter_mock
         ActionController::Parameters.new({
-          record_type: %w[assessment_only],
+          training_route: %w[assessment_only],
           subject: "Biology",
-        }).permit(:subject, :text_search, record_type: [], state: [])
+        }).permit(:subject, :text_search, training_route: [], state: [])
       end
     end
   end

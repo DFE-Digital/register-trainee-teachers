@@ -20,8 +20,8 @@ module PageObjects
       element :apply_filters, "input[name='commit']"
 
       element :text_search, "#text_search"
-      element :assessment_only_checkbox, "#record_type-assessment_only"
-      element :provider_led_checkbox, "#record_type-provider_led"
+      element :assessment_only_checkbox, "#training_route-assessment_only"
+      element :provider_led_checkbox, "#training_route-provider_led"
       element :subject, "#subject"
 
       element :export_link, ".trainee-search-export"

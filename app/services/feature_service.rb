@@ -8,5 +8,6 @@ module FeatureService
       segments = feature_name.to_s.split(".")
       segments.reduce(Settings.features) { |config, segment| config[segment] }
     end
+    
   end
 end

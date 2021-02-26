@@ -34,7 +34,7 @@ module Exports
           "Trainee Id" => trainee.trainee_id,
           "TRN" => trainee.trn,
           "Status" => trainee.state,
-          "Route" => trainee.record_type,
+          "Route" => trainee.training_route,
           "Subject" => trainee.subject,
           "Programme start date" => trainee.programme_start_date,
           "Programme end date" => trainee.programme_end_date,

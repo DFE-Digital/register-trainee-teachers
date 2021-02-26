@@ -5,7 +5,7 @@ require "rails_helper"
 describe TraineeFilter do
   let(:permitted_params) do
     ActionController::Parameters.new(params)
-    .permit(:subject, :text_search, record_type: [], state: [])
+    .permit(:subject, :text_search, training_route: [], state: [])
   end
 
   subject { TraineeFilter.new(params: permitted_params) }
@@ -23,7 +23,7 @@ describe TraineeFilter do
         {
           subject: "Biology",
           text_search: "search terms",
-          record_type: %w[assessment_only],
+          training_route: %w[assessment_only],
           state: %w[draft],
         }
       end
@@ -47,13 +47,13 @@ describe TraineeFilter do
       include_examples returns_nil
     end
 
-    context "with invalid record type" do
-      let(:params) { { record_type: %w[not_a_record_type] } }
+    context "with invalid training route" do
+      let(:params) { { training_route: %w[not_a_training_route] } }
       include_examples returns_nil
     end
 
     context "with invalid state" do
-      let(:params) { { record_type: %w[not_a_state] } }
+      let(:params) { { training_route: %w[not_a_state] } }
       include_examples returns_nil
     end
 

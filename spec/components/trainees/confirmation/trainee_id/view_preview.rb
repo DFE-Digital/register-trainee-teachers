@@ -18,7 +18,7 @@ module Trainees
         def mock_trainee
           @mock_trainee ||= Trainee.new(
             id: 1,
-            record_type: :assessment_only,
+            training_route: :assessment_only,
             trainee_id: "ABC-1234-XYZ",
           )
         end

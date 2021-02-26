@@ -138,7 +138,7 @@ en:
       users:
         new: Add a user
     filter:
-      record_type: Training route
+      training_route: Training route
       state: Status
       subject: Subject
       text_search: Text search
@@ -243,7 +243,7 @@ en:
     attributes:
       trainee:
         trainee_id: "Trainee ID"
-        record_types:
+        training_routes:
           assessment_only: Assessment only
           provider_led: Provider-led
         states:
@@ -258,7 +258,7 @@ en:
       models:
         trainee:
           attributes:
-            record_type: You must select a route
+            training_route: You must select a route
         degree:
           attributes:
             uk_degree:
