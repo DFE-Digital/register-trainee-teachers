@@ -129,6 +129,30 @@ describe PageTracker do
         expect(page_tracker.previous_page_path).to eq(path_b)
       end
     end
+
+    context "on add another degree page after adding a degree" do
+      let(:path_review_draft) { "/trainees/#{trainee.slug}/review-draft" }
+      let(:path_add_degree) { "/trainees/#{trainee.slug}/degrees/new/type" }
+      let(:path_degree_details) { "/trainees/#{trainee.slug}/degrees/new?locale_code=uk" }
+      let(:path_confirm_degree) { "/trainees/#{trainee.slug}/degrees/confirm" }
+
+      let(:request_with_path) do
+        lambda { |path|
+          double(fullpath: path, head?: false, get?: true, patch?: false, put?: false)
+        }
+      end
+
+      before do
+        [path_review_draft, path_add_degree, path_degree_details, path_confirm_degree, path_add_degree].each do |p|
+          PageTracker.new(trainee_slug: trainee.slug, session: session, request: request_with_path[p]).save!
+        end
+      end
+
+      it "returns the path to the previous confirm page" do
+        page_tracker = PageTracker.new(trainee_slug: trainee.slug, session: session, request: request_with_path[path_add_degree])
+        expect(page_tracker.previous_page_path).to eq(path_confirm_degree)
+      end
+    end
   end
 
   describe "#last_origin_page_path" do
