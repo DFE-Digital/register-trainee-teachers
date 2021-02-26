@@ -1,0 +1,20 @@
+<h2 class="govuk-heading-m">
+  Your 2020 to 2021 trainees
+<%# TODO:  Make this dynamic once we have a concept of academic years %>
+</h2>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+  <% %i[draft submitted_for_trn trn_received].map do |state| %>
+    <div class="govuk-grid-column-one-third">
+      <%= render TraineeStatusCard::View.new(state: state, target: trainees_path("state[]": state), trainees: @trainees) %>
+    </div>
+  <% end %>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-6"">
+  <% %i[recommended_for_qts qts_awarded deferred withdrawn].map do |state| %>
+    <div class="govuk-grid-column-one-quarter">
+    <%= render TraineeStatusCard::View.new(state: state, target: trainees_path("state[]": state), trainees: @trainees) %>
+  </div>
+  <% end %>
+</div>
