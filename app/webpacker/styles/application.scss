@@ -9,12 +9,6 @@
   }
 }
 
-// Styles links that do not have a path or a bookmark ID
-a[href="#"] {
-  color: govuk-colour("red") !important;
-  font-weight: bolder !important;
-}
-
 // Dashed list (used in Contents links list)
 .app-list--dash li {
   position: relative;
@@ -65,6 +59,7 @@ a[href="#"] {
 }
 
 .personal-detail-form-other-nationality__remove-link {
+  @include govuk-font($size: 19);
   float: right;
 }
 
