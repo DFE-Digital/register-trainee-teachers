@@ -318,6 +318,13 @@ en:
             email:
               blank: "You must enter an email address"
               invalid: "You must enter an email address in the correct format, like name@example.com"
+        deferral_form:
+          attributes:
+            date_string:
+              blank: You must choose a deferral date
+            date:
+              blank: You must enter a deferral date
+              invalid: You must enter a valid deferral date
         degree_detail_form:
           attributes:
             degree_ids:
@@ -356,9 +363,9 @@ en:
               not_valid: Trainee has been disclosed as disabled but no disabilities exist
         outcome_date_form:
           attributes:
-            outcome_date_string:
+            date_string:
               blank: You must choose an outcome date
-            outcome_date:
+            date:
               blank: You must enter an outcome date
               invalid: You must enter a valid outcome date
         personal_detail_form:
@@ -402,22 +409,15 @@ en:
               incomplete: You must complete all sections before submitting for TRN
         withdrawal_form:
           attributes:
-            withdraw_date_string:
+            date_string:
               blank: You must choose a withdrawal date
-            withdraw_date:
+            date:
               blank: You must enter a withdrawal date
               invalid: You must enter a valid withdrawal date
             additional_withdraw_reason:
               blank: You must enter a reason
             withdraw_reason:
               invalid: You must choose a reason
-        deferral_form:
-          attributes:
-            defer_date_string:
-              blank: You must choose a deferral date
-            defer_date:
-              blank: You must enter a deferral date
-              invalid: You must enter a valid deferral date
         training_details_form:
           attributes:
             commencement_date:
