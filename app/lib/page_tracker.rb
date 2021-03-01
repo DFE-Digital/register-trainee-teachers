@@ -58,17 +58,8 @@ private
   end
 
   def reset_history_to_current_path
-    if add_another_degree_page?
-      confirm_path = history[-1]
-    end
-
     full_path_index = history.index(request.fullpath)
     session[history_session_key] = history[..full_path_index]
-    history.insert(-2, confirm_path) if confirm_path
-  end
-
-  def add_another_degree_page?
-    request.get? && request.fullpath.include?("/degrees/new/type") && history[-1].to_s.include?("/degrees/confirm")
   end
 
   def reset_origin_pages_to_current_path
