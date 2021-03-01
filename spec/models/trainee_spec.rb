@@ -88,7 +88,7 @@ describe Trainee do
       end
 
       describe "validation" do
-        context "when record type is present" do
+        context "when training route is present" do
           subject { build(:trainee, training_route: "assessment_only") }
 
           it "is valid" do
@@ -96,7 +96,7 @@ describe Trainee do
           end
         end
 
-        context "when record type is not present" do
+        context "when training route is not present" do
           it "is not valid" do
             expect(subject).not_to be_valid
             expect(subject.errors.attribute_names).to include(:training_route)
