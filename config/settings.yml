@@ -26,8 +26,7 @@ features:
   enable_feedback_link: true
   basic_auth: true
   trainee_export: true
-  routes:
-    provider_led: true
+  routes_provider_led: true
 
 dfe_sign_in:
   # Our service name
