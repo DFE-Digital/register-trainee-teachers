@@ -45,10 +45,12 @@ const prepareNationalitySelect = () => {
 
   const addRemoveLink = (labelEl, inputEl, selectEl, prevInputEl) => {
     const removeLink = document.createElement('a')
+    const parentEl = labelEl.parentElement
     removeLink.innerHTML = 'Remove'
     removeLink.classList.add('govuk-link', 'personal-detail-form-other-nationality__remove-link')
     removeLink.href = '#'
-    labelEl.appendChild(removeLink)
+
+    parentEl.insertBefore(removeLink, labelEl)
 
     if (labelEl === secondFormLabel) {
       addNthNationalityHiddenSpan(removeLink, 'second')
