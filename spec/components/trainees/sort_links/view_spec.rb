@@ -15,8 +15,9 @@ RSpec.describe Trainees::SortLinks::View do
   let(:last_name_link_text) { t("components.page_titles.trainees.sort_links.last_name") }
 
   context "no query params" do
-    it "has a link to sort by date updated" do
-      expect(component).to have_link(date_updated_link_text, href: "/?sort_by=date_updated")
+    it "has text date updated" do
+      expect(component).to_not have_link(date_updated_link_text, href: "/?sort_by=date_updated")
+      expect(component).to have_text(date_updated_link_text)
     end
 
     it "has a link to sort by last name" do

@@ -4,7 +4,7 @@ module Trainees
   module SortLinks
     class View < GovukComponent::Base
       def sort_by_date_link
-        sort_link(t("components.page_titles.trainees.sort_links.date_updated"), :date_updated)
+        default_sort_link(t("components.page_titles.trainees.sort_links.date_updated"), :date_updated)
       end
 
       def sort_by_last_name_link
@@ -13,8 +13,14 @@ module Trainees
 
     private
 
+      def default_sort_link(name, sort_by)
+        return name if params[:sort_by].nil?
+
+        sort_link(name, sort_by)
+      end
+
       def sort_link(name, sort_by)
-        sorted_by?(sort_by) ? name : link_to(name, sort_path(sort_by), class: "govuk-link")
+        sorted_by?(sort_by) ? name : link_to(name, sort_path(sort_by), class: "govuk-link govuk-link--no-visited-state")
       end
 
       def sort_path(sort_by)

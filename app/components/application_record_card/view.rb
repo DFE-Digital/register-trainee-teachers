@@ -17,7 +17,7 @@ module ApplicationRecordCard
     def trainee_name
       return "Draft record" if record.blank? || record.first_names.blank? || record.last_name.blank?
 
-      [record.first_names, record.last_name].join(" ")
+      params[:sort_by] == "last_name" ? last_name_first : first_names_first
     end
 
     def subject
@@ -50,6 +50,16 @@ module ApplicationRecordCard
       return if record.trn.blank?
 
       tag.p("TRN: " + record.trn, class: "govuk-caption-m govuk-!-font-size-16 app-application-card__trn govuk-!-margin-bottom-0 govuk-!-margin-top-0")
+    end
+
+  private
+
+    def first_names_first
+      [record.first_names, record.last_name].join(" ")
+    end
+
+    def last_name_first
+      [record.last_name, record.first_names].join(", ")
     end
   end
 end
