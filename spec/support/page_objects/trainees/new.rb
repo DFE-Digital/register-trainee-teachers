@@ -10,7 +10,7 @@ module PageObjects
       element :assessment_only, "#trainee-training-route-assessment-only-field"
 
       element :provider_led, "#trainee-training-route-provider-led-field"
-      
+
       element :other, "#trainee-training-route-other-field"
 
       element :continue_button, 'input.govuk-button[type="submit"]'
