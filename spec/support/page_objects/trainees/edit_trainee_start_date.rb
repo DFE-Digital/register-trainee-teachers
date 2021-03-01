@@ -11,7 +11,7 @@ module PageObjects
       element :commencement_date_month, "#training_details_form_commencement_date_2i"
       element :commencement_date_year, "#training_details_form_commencement_date_1i"
 
-      element :continue, ".govuk-button"
+      element :continue, "input[name='commit']"
     end
   end
 end

@@ -3,7 +3,9 @@
     "node": "12.x"
   },
   "scripts": {
-    "js:lint": "standard"
+    "js:lint": "standard",
+    "test": "jest",
+    "test:ci": "jest --ci --runInBand --coverage"
   },
   "dependencies": {
     "@ministryofjustice/frontend": "^0.2.1",
@@ -19,8 +21,12 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
+    "jest": "^26.6.3",
     "standard": "^16.0.3",
     "webpack-dev-server": "^3.11.2"
+  },
+  "standard": {
+    "env": [ "jest" ]
   },
   "license": "MIT"
 }

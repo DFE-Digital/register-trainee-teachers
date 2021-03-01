@@ -13,7 +13,7 @@ module PageObjects
 
       element :additional_withdraw_reason, "#withdrawal-form-additional-withdraw-reason-field"
 
-      element :continue, ".govuk-button"
+      element :continue, "input[name='commit']"
     end
   end
 end

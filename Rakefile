@@ -8,5 +8,11 @@ require_relative "config/application"
 Rails.application.load_tasks
 
 if %w[development test].include?(Rails.env)
-  task default: ["lint:ruby", "lint:javascript", "lint:scss", :spec]
+
+  desc "Runs JS unit tests with yarn"
+  task javascript_specs: :environment do
+    system "yarn test"
+  end
+
+  task default: ["lint:ruby", "lint:javascript", "lint:scss", :spec, :javascript_specs]
 end

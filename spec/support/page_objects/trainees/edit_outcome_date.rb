@@ -12,7 +12,7 @@ module PageObjects
       element :outcome_date_month, "#outcome_date_form_date_2i"
       element :outcome_date_year, "#outcome_date_form_date_1i"
 
-      element :continue, ".govuk-button"
+      element :continue, "input[name='commit']"
     end
   end
 end
