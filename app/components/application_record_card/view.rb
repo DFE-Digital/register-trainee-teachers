@@ -29,7 +29,7 @@ module ApplicationRecordCard
     def route
       return "No route provided" if record.training_route.blank?
 
-      record.training_route.humanize
+      t('activerecord.attributes.trainee.training_routes.' + record.training_route)
     end
 
     def updated_at
