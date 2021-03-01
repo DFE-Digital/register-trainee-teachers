@@ -9,7 +9,7 @@ module Dttp
     let(:content_id) { SecureRandom.uuid }
     let(:payload) { "payload" }
     let(:expected_url) { "#{Dttp::Client.base_uri}/$batch" }
-    let(:expected_headers) { Client.headers.merge("Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}") }
+    let(:expected_headers) { Client.headers.merge("Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}", "Authorization" => "Bearer token") }
 
     subject { described_class.new(batch_id: batch_id, change_set_id: change_set_id) }
 
