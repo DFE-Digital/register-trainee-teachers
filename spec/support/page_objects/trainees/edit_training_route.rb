@@ -3,7 +3,7 @@
 module PageObjects
   module Trainees
     class EditTrainingRoute < PageObjects::Base
-      set_url "/trainees/{id}/training-route/edit"
+      set_url "/trainees/{id}/training-routes/edit"
 
       element :page_heading, ".govuk-heading-xl"
 
