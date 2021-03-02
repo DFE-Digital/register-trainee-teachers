@@ -51,7 +51,7 @@ class TraineesController < ApplicationController
     flash[:success] = "Draft deleted"
     redirect_to trainees_path
   end
-  
+
 private
 
   def trainee
