@@ -48,7 +48,7 @@
   }
 }
 
-.moj-filter-layout__filter {
+.js-enabled .moj-filter-layout__filter {
   @include govuk-media-query($until: tablet) {
     // only display a scrollbar if it there is overflow to scroll
     overflow: auto;
