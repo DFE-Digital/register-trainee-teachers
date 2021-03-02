@@ -5,9 +5,9 @@ require "rails_helper"
 module Dttp
   describe RetrieveQts do
     describe "#call" do
-      let(:contact_entity_id) { SecureRandom.uuid }
-      let(:trainee) { create(:trainee, :recommended_for_qts, dttp_id: contact_entity_id) }
-      let(:path) { "/contacts(#{contact_entity_id})?$select=dfe_qtsawardflag" }
+      let(:placement_assignment_entity_id) { SecureRandom.uuid }
+      let(:trainee) { create(:trainee, :recommended_for_qts, placement_assignment_dttp_id: placement_assignment_entity_id) }
+      let(:path) { "/dfe_placementassignments(#{placement_assignment_entity_id})?$select=dfe_qtsawardflag" }
 
       subject { described_class.call(trainee: trainee) }
 
