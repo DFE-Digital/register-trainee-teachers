@@ -48,6 +48,15 @@
   }
 }
 
+.js-enabled .moj-filter-layout__filter {
+  @include govuk-media-query($until: tablet) {
+    // only display a scrollbar if it there is overflow to scroll
+    overflow: auto;
+    // At this width the filter has `position: fixed`. We should set a max width that will safely include the filter and a scrollbar if present 
+    max-width: calc(100vw - calc(100vw - 100%));
+  }
+}
+
 .moj-filter__header {
   background: govuk-colour("white");
   box-shadow: none;
