@@ -1,16 +1,7 @@
-<div class="govuk-!-margin-bottom sort-options">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      <p class="govuk-body">
-        <span class="govuk-!-font-weight-bold">Sort by:</span>
-        <span class="govuk-!-margin-left-1 govuk-!-margin-right-1">
-          <span class=""><%= sort_by_date_link %></span>
-        </span>
-        |
-        <span class="govuk-!-margin-left-2 govuk-!-margin-right-1">
-          <span class=""><%= sort_by_last_name_link %></span>
-        </span>
-      </p>
-    </div>
-  </div>
-</div>
+<nav class="app-sort-links" aria-label="<%= t("components.page_titles.trainees.sort_links.sort_switcher") %>">
+  <span class="app-sort-links__prefix"><%= t("components.page_titles.trainees.sort_links.sort_by") %>:</span>
+  <ul class="app-sort-links__list">
+    <li class="app-sort-links__list-item"><%= sort_by_date_link %></li>
+    <li class="app-sort-links__list-item"><%= sort_by_last_name_link %></li>
+  </ul>
+</nav>

@@ -132,6 +132,7 @@ en:
         deferral_details:
           confirm: Check deferral details
         sort_links:
+          sort_switcher: Change record sort order
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
