@@ -10,10 +10,10 @@ module Features
       @new_trainee_page ||= PageObjects::Trainees::New.new
     end
 
-    def trainee_edit_training_route_page 
+    def trainee_edit_training_route_page
       @trainee_edit_training_route_page = PageObjects::Trainees::EditTrainingRoute.new
     end
-    
+
     def training_details_page
       @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
     end

@@ -45,11 +45,11 @@ class TraineesController < ApplicationController
     end
   end
 
-  # def update
-  #   authorize trainee
-  #   trainee.update!(trainee_params)
-  #   redirect_to page_tracker.last_origin_page_path
-  # end
+  def update
+    authorize trainee
+    trainee.update!(trainee_params)
+    redirect_to trainee
+  end
 
   def edit
     authorize trainee
