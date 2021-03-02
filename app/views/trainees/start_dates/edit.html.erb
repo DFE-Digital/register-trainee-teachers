@@ -1,14 +1,11 @@
-<%= render PageTitle::View.new(title: "trainees.trainee_ids.edit") %>
+<%= render PageTitle::View.new(title: "trainees.trainee_start_date.edit") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <%= form_with model: @training_details, url: trainee_start_date_path, local: true do |f| %>
-  <%= f.govuk_date_field :commencement_date, legend: {
-    text: t("views.forms.training_details.commencement_date.label"), size: 'l', tag: "h1"
-  }, hint: { text: t("views.forms.training_details.commencement_date.hint", year: Time.zone.now.year)} %>
-
+  <%= f.govuk_date_field :commencement_date, legend: { text: t("views.forms.training_details.commencement_date.label"), size: 'l', tag: "h1" } %>
   <%= f.govuk_submit "Continue" %>
 <% end %>
 
