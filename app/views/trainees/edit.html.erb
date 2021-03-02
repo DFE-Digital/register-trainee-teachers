@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.new", has_errors: @trainee.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.edit", has_errors: @trainee.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
@@ -13,11 +13,7 @@
 
       <%= f.govuk_error_summary %>
 
-      <h1 class="govuk-heading-l">
-        Add a trainee
-      </h1>
-
-      <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: "What type of training are they doing?", tag: "span"} ) do %>
+      <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.edit"), tag: "h1"} ) do %>
         <%= f.govuk_radio_button :training_route, :assessment_only, label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
         <% if FeatureService.enabled?("routes_provider_led") %>
           <%= f.govuk_radio_button :training_route, :provider_led, label: { text: t("activerecord.attributes.trainee.training_routes.provider_led") } %> 
