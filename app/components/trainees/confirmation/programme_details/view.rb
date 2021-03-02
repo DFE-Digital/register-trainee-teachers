@@ -32,7 +32,7 @@ module Trainees
         def programme_type
           return @not_provided_copy if trainee.training_route.blank?
 
-          trainee.training_route.humanize
+          t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
         end
 
         def programme_start_date

@@ -15,13 +15,13 @@ feature "Create trainee journey" do
     then_i_should_see_the_new_trainee_overview
   end
 
-  scenario "setting up an initial provider led record", "feature_routes_provider_led": true do
+  scenario "setting up an initial provider led record", feature_routes_provider_led: true do
     and_i_select_provider_led_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview
   end
 
-  scenario "provider led radio button not shown when feature set to false", "feature_routes_provider_led": false do
+  scenario "provider led radio button not shown when feature set to false", feature_routes_provider_led: false do
     and_i_should_not_see_provider_led_route
   end
 
