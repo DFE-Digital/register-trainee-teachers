@@ -45,6 +45,7 @@
 @media (min-width: 48.0625em) {
   .moj-filter-layout__filter {
     max-width: 300px;
+    margin-bottom: 10px;
   }
 }
 
@@ -89,3 +90,14 @@
 .moj-filter__content:focus {
   outline: none;
 }
+
+.moj-filter-layout__filter-wrapper {
+  max-width: 300px;
+  margin-right: 40px;
+  min-width: 260px;
+  width: 100%;
+  @include govuk-media-query($from: desktop) {
+    float: left;
+  }
+}
+

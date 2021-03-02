@@ -24,7 +24,7 @@ module PageObjects
       element :provider_led_checkbox, "#training_route-provider_led"
       element :subject, "#subject"
 
-      element :export_link, ".trainee-search-export"
+      element :export_link, ".app-trainee-export"
     end
   end
 end
