@@ -14,13 +14,13 @@ module Trainees
     private
 
       def default_sort_link(name, sort_by)
-        return name if params[:sort_by].nil?
+        return tag.span(name, class: "app-sort-links__item") if params[:sort_by].nil?
 
         sort_link(name, sort_by)
       end
 
       def sort_link(name, sort_by)
-        sorted_by?(sort_by) ? name : link_to(name, sort_path(sort_by), class: "govuk-link govuk-link--no-visited-state")
+        sorted_by?(sort_by) ? tag.span(name, class: "app-sort-links__item") : link_to(name, sort_path(sort_by), class: "app-sort-links__item govuk-link govuk-link--no-visited-state")
       end
 
       def sort_path(sort_by)
