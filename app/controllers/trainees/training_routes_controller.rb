@@ -17,7 +17,7 @@ module Trainees
   private
 
     def trainee_params
-      params.fetch(:trainee, {}).permit(:training_route)
+      params.require(:trainee).permit(:training_route)
     end
 
     def trainee
