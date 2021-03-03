@@ -75,3 +75,8 @@
   color: $govuk-error-colour;
   font-weight: 700;
 }
+
+.app-link--warning {
+  @include govuk-link-common;
+  @include govuk-link-style-error;
+}

@@ -16,6 +16,7 @@ module PageObjects
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
 
       element :review_this_record_link, "#check-details"
+      element :delete_this_draft_link, ".app-link--warning"
     end
   end
 end
