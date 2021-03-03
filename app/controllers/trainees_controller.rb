@@ -45,12 +45,6 @@ class TraineesController < ApplicationController
     end
   end
 
-  def update
-    authorize trainee
-    trainee.update!(trainee_params)
-    redirect_to trainee
-  end
-
   def destroy
     authorize trainee
     trainee.destroy!
