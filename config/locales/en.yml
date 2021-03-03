@@ -117,6 +117,8 @@ en:
           edit: Trainee personal details
         trainee_ids:
           edit: Trainee ID
+        trainee_start_date:
+          edit: Date trainee started
         training_details:
           edit: Edit training details
         programme_details:
