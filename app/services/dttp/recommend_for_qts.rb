@@ -13,13 +13,9 @@ module Dttp
     end
 
     def call
-      body = {
-        dfe_datestandardsassessmentpassed: trainee.outcome_date.in_time_zone.iso8601,
-      }.to_json
-
       response = Client.patch(
         "/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})",
-        body: body,
+        body: params.to_json,
       )
 
       if response.code != 204
@@ -27,6 +23,12 @@ module Dttp
       end
 
       response
+    end
+
+  private
+
+    def params
+      @params ||= Params::PlacementAssignmentOutcome.new(trainee: trainee)
     end
   end
 end
