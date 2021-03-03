@@ -6,7 +6,13 @@ describe Trainee do
   context "fields" do
     subject { build(:trainee) }
 
-    it { is_expected.to define_enum_for(:training_route).with_values(assessment_only: 0, provider_led: 1) }
+    it do
+      is_expected.to define_enum_for(:training_route).with_values(
+        TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
+        TRAINING_ROUTE_ENUMS[:provider_led] => 1,
+      )
+    end
+
     it { is_expected.to define_enum_for(:locale_code).with_values(uk: 0, non_uk: 1) }
     it { is_expected.to define_enum_for(:gender).with_values(male: 0, female: 1, other: 2, gender_not_provided: 3) }
 
@@ -89,7 +95,7 @@ describe Trainee do
 
       describe "validation" do
         context "when training route is present" do
-          subject { build(:trainee, training_route: "assessment_only") }
+          subject { build(:trainee, training_route: TRAINING_ROUTE_ENUMS[:assessment_only]) }
 
           it "is valid" do
             expect(subject).to be_valid

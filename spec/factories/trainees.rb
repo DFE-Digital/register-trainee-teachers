@@ -9,7 +9,7 @@ FactoryBot.define do
 
     provider
 
-    training_route { "assessment_only" }
+    training_route { TRAINING_ROUTE_ENUMS[:assessment_only] }
 
     first_names { Faker::Name.first_name }
     middle_names { Faker::Name.middle_name }

@@ -23,7 +23,7 @@ describe TraineeFilter do
         {
           subject: "Biology",
           text_search: "search terms",
-          training_route: %w[assessment_only],
+          training_route: [TRAINING_ROUTE_ENUMS[:assessment_only]],
           state: %w[draft],
         }
       end
