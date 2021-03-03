@@ -19,10 +19,10 @@ module Trainees
 
     attr_reader :trainees, :filters
 
-    def record_type(trainees, record_type)
-      return trainees if record_type.blank?
+    def training_route(trainees, training_route)
+      return trainees if training_route.blank?
 
-      trainees.where(record_type: record_type)
+      trainees.where(training_route: training_route)
     end
 
     def state(trainees, state)
@@ -47,7 +47,7 @@ module Trainees
       # Tech note: If you're adding a new filter to the top of this list, make
       # sure that it acts on `trainees` and all other filters then act on
       # `filtered_trainees`
-      filtered_trainees = record_type(trainees, filters[:record_type])
+      filtered_trainees = training_route(trainees, filters[:training_route])
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])

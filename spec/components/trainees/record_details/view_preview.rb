@@ -26,7 +26,7 @@ module Trainees
       def mock_trainee(trainee_id, state = :draft)
         @mock_trainee ||= Trainee.new(
           id: 1,
-          record_type: :assessment_only,
+          training_route: :assessment_only,
           trainee_id: trainee_id,
           created_at: Time.zone.today,
           updated_at: Time.zone.today,

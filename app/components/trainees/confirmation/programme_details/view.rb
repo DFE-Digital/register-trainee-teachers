@@ -30,9 +30,9 @@ module Trainees
         end
 
         def programme_type
-          return @not_provided_copy if trainee.record_type.blank?
+          return @not_provided_copy if trainee.training_route.blank?
 
-          trainee.record_type.humanize
+          t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
         end
 
         def programme_start_date

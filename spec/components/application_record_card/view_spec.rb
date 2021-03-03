@@ -79,7 +79,7 @@ module ApplicationRecordCard
             first_names: "Teddy",
             last_name: "Smith",
             subject: "Designer",
-            record_type: "assessment_only",
+            training_route: "assessment_only",
             trainee_id: "132456",
             created_at: Time.zone.now,
             trn: "789456",
@@ -114,7 +114,7 @@ module ApplicationRecordCard
       end
 
       it "renders route if there is no route" do
-        expect(component.find(".app-application-card__route")).to have_text(t("activerecord.attributes.trainee.record_types.assessment_only"))
+        expect(component.find(".app-application-card__route")).to have_text(t("activerecord.attributes.trainee.training_routes.assessment_only"))
       end
     end
   end

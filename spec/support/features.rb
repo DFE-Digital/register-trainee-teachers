@@ -24,7 +24,6 @@ RSpec.configure do |config|
   config.around :each do |example|
     example.metadata.keys.grep(/^feature_.*/) do |metadata_key|
       feature = normalise_feature_name.call(metadata_key)
-
       if Settings.features.key?(feature)
         original_features[feature] = Settings.features[feature]
       end

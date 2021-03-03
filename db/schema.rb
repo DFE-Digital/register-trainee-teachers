@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_24_154323) do
+ActiveRecord::Schema.define(version: 2021_02_26_124052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2021_02_24_154323) do
     t.text "email"
     t.uuid "dttp_id"
     t.text "middle_names"
-    t.integer "record_type"
+    t.integer "training_route"
     t.text "international_address"
     t.integer "locale_code"
     t.integer "gender"
@@ -158,9 +158,9 @@ ActiveRecord::Schema.define(version: 2021_02_24_154323) do
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
-    t.index ["record_type"], name: "index_trainees_on_record_type"
     t.index ["slug"], name: "index_trainees_on_slug", unique: true
     t.index ["state"], name: "index_trainees_on_state"
+    t.index ["training_route"], name: "index_trainees_on_training_route"
   end
 
   create_table "users", force: :cascade do |t|

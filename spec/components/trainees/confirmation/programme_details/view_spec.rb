@@ -9,7 +9,7 @@ module Trainees
         alias_method :component, :page
 
         context "when data has not been provided" do
-          let(:trainee) { build(:trainee, id: 1, record_type: nil, subject: nil, age_range: nil, programme_start_date: nil) }
+          let(:trainee) { build(:trainee, id: 1, training_route: nil, subject: nil, age_range: nil, programme_start_date: nil) }
           before do
             render_inline(View.new(trainee: trainee))
           end
@@ -34,7 +34,7 @@ module Trainees
 
           it "renders the programme type" do
             expect(component.find(".govuk-summary-list__row.type-of-course .govuk-summary-list__value"))
-              .to have_text(trainee.record_type.humanize)
+              .to have_text(trainee.training_route.humanize)
           end
 
           it "renders the subject" do

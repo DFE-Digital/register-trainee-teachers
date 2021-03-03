@@ -19,19 +19,19 @@ private
 
   def merged_filters
     @merged_filters ||= text_search.merge(
-      **record_type, **state, **subject, **text_search,
+      **training_route, **state, **subject, **text_search,
     ).with_indifferent_access
   end
 
-  def record_type
-    return {} unless record_type_options.any?
+  def training_route
+    return {} unless training_route_options.any?
 
-    { "record_type" => record_type_options }
+    { "training_route" => training_route_options }
   end
 
-  def record_type_options
-    Trainee.record_types.keys.each_with_object([]) do |option, arr|
-      arr << option if params[:record_type]&.include?(option)
+  def training_route_options
+    Trainee.training_routes.keys.each_with_object([]) do |option, arr|
+      arr << option if params[:training_route]&.include?(option)
     end
   end
 

@@ -32,7 +32,7 @@ class TraineesController < ApplicationController
   end
 
   def create
-    if trainee_params[:record_type] == "other"
+    if trainee_params[:training_route] == "other"
       redirect_to trainees_not_supported_route_path
     else
       authorize @trainee = Trainee.new(trainee_params.merge(provider_id: current_user.provider_id))
@@ -81,11 +81,11 @@ private
   end
 
   def trainee_params
-    params.fetch(:trainee, {}).permit(:record_type)
+    params.fetch(:trainee, {}).permit(:training_route)
   end
 
   def filter_params
-    params.permit(:subject, :text_search, :sort_by, record_type: [], state: [])
+    params.permit(:subject, :text_search, :sort_by, training_route: [], state: [])
   end
 
   def data_export

@@ -5,6 +5,7 @@ features:
   home_text: true
   use_dfe_sign_in: false
   enable_feedback_link: false
+  routes_provider_led: true
 
 pagination:
   records_per_page: 30
