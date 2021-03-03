@@ -8,9 +8,9 @@
   <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: 'Degree subject', size: 's' },
-                                          hint: { text: 'Search for the closest matching subject. 
+                                          hint: { text: 'Search for the closest matching subject.
                                                          You can start typing to narrow down your search.' }),
-                                                           
+
     html_attributes: {
       "data-show-all-values" => true,
     }
@@ -42,11 +42,11 @@
         legend: { text: "Degree grade", size: 's' },
         classes: "degree-grade" ) do %>
 
-    <% grades.map do |name| %>
+    <% grades.each_with_index do |name, index| %>
       <% if name != "Other" %>
-        <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: true %>
+        <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: index.zero? %>
       <% else %>
-        <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: true do %>
+        <%= f.govuk_radio_button :grade, name, label: { text: name } do %>
           <%= f.govuk_text_field :other_grade, label: { text: "Enter the degree grade" }, width: "two-thirds" %>
         <% end %>
       <% end %>
