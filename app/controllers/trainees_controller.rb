@@ -51,10 +51,6 @@ class TraineesController < ApplicationController
     redirect_to trainee
   end
 
-  def edit
-    authorize trainee
-  end
-
   def destroy
     authorize trainee
     trainee.destroy!

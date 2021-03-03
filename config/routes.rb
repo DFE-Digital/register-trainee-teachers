@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resource :trainee_id, concerns: :confirmable, only: %i[edit update], path: "/trainee-id"
       resource :start_date, concerns: :confirmable, only: %i[edit update], path: "/trainee-start-date"
+      resource :training_route, only: %i[edit update], path: "/training-routes"
 
       get "/confirm-delete", to: "confirm_delete#show"
 

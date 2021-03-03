@@ -2,23 +2,33 @@
 
 require "rails_helper"
 
-feature "edit trainee training route", type: :feature do
+feature "editing a trainee training route", type: :feature do
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_trainee_exists(traits)
     and_i_visit_the_edit_training_route_page
   end
 
-  scenario "viewing the trainee's current training route" do
-    then_i_see_the_programme_details
-    and_current_training_route_should_be_selected
+  context "draft-trainee" do
+    let(:traits) { :draft }
+    scenario "viewing the draft-trainee's current training route" do
+      then_i_see_the_programme_details
+      and_current_training_route_should_be_selected
+    end
+
+    scenario "editing the draft-trainee's current training route", feature_routes_provider_led: true do
+      then_i_select_provider_led
+      and_i_submit_the_new_route
+      and_i_visit_the_edit_training_route_page
+      and_provider_led_should_be_selected
+    end
   end
 
-  scenario "editing the trainee's current training route", feature_routes_provider_led: true do
-    then_i_select_provider_led
-    and_i_submit_the_new_route
-    and_i_visit_the_edit_training_route_page
-    and_provider_led_should_be_selected
+  context "non-draft trainee" do
+    let(:traits) { :submitted_for_trn }
+    scenario "redirect when editing a non-draft trainee's training route" do
+      expect(page.current_path).to eq "/trainees/#{trainee.slug}"
+    end
   end
 
 private

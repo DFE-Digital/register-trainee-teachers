@@ -1,10 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.edit", has_errors: @trainee.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: "Back",
-    href: trainees_path
-  ) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <div class="govuk-grid-row">
