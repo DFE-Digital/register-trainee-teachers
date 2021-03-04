@@ -397,6 +397,7 @@ en:
                 blank: "You must enter a date of birth"
                 invalid: "You must enter a valid date"
                 future: "You must enter a date of birth that is in the past, for example 31 3 1980"
+                hint_html: For example, 31 3 %{year}
               gender:
                 blank: "You must select a gender"
               nationality_ids:
@@ -416,6 +417,7 @@ en:
               future: "You must enter a programme start date that is not as far in the future"
               invalid: "You must enter a valid programme start date"
               too_old: "You must enter a valid programme start date"
+              hint_html: For example, 2 11 %{year}
             programme_end_date:
               blank: "You must enter a programme end date"
               future: "You must enter a programme end date that is not as far in the future"
@@ -429,6 +431,7 @@ en:
             date:
               blank: You must enter a date of return
               invalid: You must enter a valid date of return
+              hint_html: For example, 15 6 %{year}
         trn_submission_form:
           attributes:
             trainee:
