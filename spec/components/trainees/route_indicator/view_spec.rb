@@ -23,7 +23,7 @@ RSpec.describe Trainees::RouteIndicator::View do
     let(:trainee) { create(:trainee, :submitted_for_trn) }
 
     it "wont render if the trainee is not a draft trainee" do
-      expect(component.has_content?).to eq false
+      expect(component).to have_no_content
     end
   end
 end

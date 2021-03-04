@@ -16,7 +16,7 @@ module Trainees
       end
 
       def training_route_link
-        govuk_link_to t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}").downcase,  edit_trainee_training_route_path(trainee)
+        trainee.training_route ? (govuk_link_to t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}").downcase,  edit_trainee_training_route_path(trainee)) : edit_trainee_training_route_path(trainee)
       end
     end
   end
