@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Trainees::RouteIndicator::View do
-
   alias_method :component, :page
 
   let(:trainee) { create(:trainee) }
@@ -13,7 +12,6 @@ RSpec.describe Trainees::RouteIndicator::View do
   end
 
   describe "rendered component" do
-
     it "renders the correct training route link" do
       expect(component).to have_link(href: "/trainees/#{trainee.slug}/training-routes/edit")
     end

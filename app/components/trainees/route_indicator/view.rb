@@ -12,11 +12,11 @@ module Trainees
       end
 
       def render?
-        trainee.draft?
+        trainee.training_route.present? && trainee.draft?
       end
 
       def training_route_link
-        trainee.training_route ? (govuk_link_to t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}").downcase,  edit_trainee_training_route_path(trainee)) : edit_trainee_training_route_path(trainee)
+        govuk_link_to t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}").downcase, edit_trainee_training_route_path(trainee)
       end
     end
   end
