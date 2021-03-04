@@ -4,7 +4,7 @@ feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSdYg4IA2tMiSfqIjM9C
 features:
   home_text: true
   use_dfe_sign_in: false
-  enable_feedback_link: false
+  enable_feedback_link: true
   routes_provider_led: true
 
 pagination:
