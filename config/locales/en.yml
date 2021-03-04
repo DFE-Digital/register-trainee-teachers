@@ -84,7 +84,8 @@ en:
       check_details:
         show: Review trainee record
       trainees:
-        new: Add a trainee
+        new: What type of training are they doing?
+        edit: What type of training are they doing?
         delete: Delete this draft record
         index: Trainee records (%{total_trainees_count_text})
         paginated_index: Trainee records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
@@ -262,7 +263,7 @@ en:
       models:
         trainee:
           attributes:
-            training_route: You must select a route
+            training_route: You must select a type of training
         degree:
           attributes:
             uk_degree:
