@@ -34,7 +34,7 @@ module Trainees
       def state_change_events
         state_change_audits.map do |audit|
           Event.new(
-            state_change_title(audit.audited_changes["state"][1]),
+            state_change_title(audit.audited_changes["state"]),
             username(audit),
             audit.created_at,
           )
@@ -51,8 +51,14 @@ module Trainees
         end
       end
 
-      def state_change_title(value)
-        I18n.t("components.timeline.titles.#{Trainee.states.key(value)}")
+      def state_change_title(changes)
+        from_state, to_state = changes.map { |state| Trainee.states.key(state) }
+
+        if from_state == "deferred" && to_state != "withdrawn"
+          I18n.t("components.timeline.titles.reinstated")
+        else
+          I18n.t("components.timeline.titles.#{to_state}")
+        end
       end
 
       # Fall back on the provider's name if there's no user for the audit, e.g.

@@ -22,31 +22,32 @@ class TraineePolicy
   end
 
   def show?
-    user && (user.system_admin? || user.provider_id == trainee.provider_id)
-  end
-
-  def confirm?
-    user && (user.system_admin? || user.provider_id == trainee.provider_id)
-  end
-
-  def recommended?
-    user && (user.system_admin? || user.provider_id == trainee.provider_id)
+    allowed_user?
   end
 
   def withdraw?
-    defer? || trainee.deferred?
+    allowed_user? && (defer? || trainee.deferred?)
   end
 
   def defer?
-    trainee.submitted_for_trn? || trainee.trn_received?
+    allowed_user? && (trainee.submitted_for_trn? || trainee.trn_received?)
   end
 
-  def destroy?
-    user && (user.system_admin? || user.provider_id == trainee.provider_id)
+  def reinstate?
+    allowed_user? && trainee.deferred?
   end
 
   alias_method :create?, :show?
   alias_method :update?, :show?
   alias_method :edit?, :show?
   alias_method :new?, :show?
+  alias_method :destroy?, :show?
+  alias_method :confirm?, :show?
+  alias_method :recommended?, :show?
+
+private
+
+  def allowed_user?
+    user&.system_admin? || user&.provider == trainee.provider
+  end
 end

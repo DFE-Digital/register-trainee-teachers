@@ -24,7 +24,7 @@ describe Trainees::ConfirmDeferralsController do
         post :update, params: { trainee_id: trainee }
       end
 
-      it "transitions the trainee state to defferred" do
+      it "transitions the trainee state to deferred" do
         expect(trainee.reload).to be_deferred
       end
     end

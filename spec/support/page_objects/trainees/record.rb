@@ -11,8 +11,8 @@ module PageObjects
       element :trn_status, ".govuk-tag.trainee-status", match: :first
 
       element :record_outcome, ".record-actions > .govuk-button"
+      element :reinstate, ".govuk-link.reinstate"
       element :withdraw, ".govuk-link.withdraw"
-
       element :defer, ".govuk-link.defer"
 
       section :record_detail, PageObjects::Sections::Summaries::RecordDetail, ".record-details"

@@ -8,6 +8,7 @@ describe TraineePolicy do
   let(:provider_user) { build(:user, provider: provider) }
   let(:other_provider_user) { build(:user) }
   let(:trainee) { create(:trainee, provider: provider) }
+  let(:deferred_trainee) { create(:trainee, :deferred, provider: provider) }
 
   subject { described_class }
 
@@ -15,6 +16,14 @@ describe TraineePolicy do
     it { is_expected.to permit(provider_user, trainee) }
     it { is_expected.to permit(system_admin_user, trainee) }
     it { is_expected.not_to permit(other_provider_user, trainee) }
+  end
+
+  permissions :reinstate? do
+    it { is_expected.to permit(provider_user, deferred_trainee) }
+    it { is_expected.to permit(system_admin_user, deferred_trainee) }
+    it { is_expected.not_to permit(other_provider_user, deferred_trainee) }
+    it { is_expected.not_to permit(provider_user, trainee) }
+    it { is_expected.not_to permit(system_admin_user, trainee) }
   end
 
   describe TraineePolicy::Scope do

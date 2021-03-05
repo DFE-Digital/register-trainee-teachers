@@ -154,6 +154,14 @@ module Features
       @withdrawal_confirmation_page ||= PageObjects::Trainees::ConfirmWithdrawal.new
     end
 
+    def reinstatement_page
+      @reinstatement_page ||= PageObjects::Trainees::Reinstatement.new
+    end
+
+    def reinstatement_confirmation_page
+      @reinstatement_confirmation_page ||= PageObjects::Trainees::ConfirmReinstatement.new
+    end
+
     def start_page
       @start_page ||= PageObjects::Start.new
     end

@@ -145,6 +145,11 @@ FactoryBot.define do
       state { "deferred" }
     end
 
+    trait :reinstated do
+      state { "trn_received" }
+      reinstate_date { Faker::Date.in_date_period }
+    end
+
     trait :qts_awarded do
       state { "qts_awarded" }
     end
