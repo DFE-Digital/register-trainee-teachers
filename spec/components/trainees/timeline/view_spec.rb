@@ -85,6 +85,21 @@ module Trainees
           end
         end
 
+        context "reinstated" do
+          before do
+            methods = %i[submit_for_trn! receive_trn! defer! receive_trn!]
+            call_methods!(methods, trainee)
+            render_inline(described_class.new(trainee))
+          end
+          it "shows state changes until reinstated" do
+            expect(component).to have_text(expected_title(:created))
+            expect(component).to have_text(expected_title(:submitted_for_trn))
+            expect(component).to have_text(expected_title(:trn_received))
+            expect(component).to have_text(expected_title(:deferred))
+            expect(component).to have_text(expected_title(:reinstated))
+          end
+        end
+
         context "qts_awarded" do
           before do
             methods = %i[submit_for_trn! receive_trn! recommend_for_qts! award_qts!]

@@ -93,6 +93,9 @@ Rails.application.routes.draw do
       resource :confirm_deferral, only: %i[show update], path: "/defer/confirm"
       resource :deferral, only: %i[show update], path: "/defer"
 
+      resource :confirm_reinstatement, only: %i[show update], path: "/reinstate/confirm"
+      resource :reinstatement, only: %i[show update], path: "/reinstate"
+
       resource :timeline, only: :show
     end
 

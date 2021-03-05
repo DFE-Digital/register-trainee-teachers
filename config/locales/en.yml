@@ -34,6 +34,10 @@ en:
           female: Female
           other: Other
           gender_not_provided: Not provided
+      reinstatement_details:
+        header: Check reinstatement details
+        reinstate_date_label: Date of return
+        summary_title: Reinstatement details
       withdrawal_details:
         heading: Check withdrawal details
         summary_title: Withdrawal details
@@ -132,6 +136,10 @@ en:
           show: When did the trainee defer?
         deferral_details:
           confirm: Check deferral details
+        reinstatement:
+           show: When did the trainee return?
+        confirm_reinstatement:
+          show: Check reinstatement details
         sort_links:
           sort_switcher: Change record sort order
           sort_by: Sort by
@@ -157,6 +165,7 @@ en:
         withdrawn: Trainee withdrawn
         deferred: Trainee deferred
         qts_awarded: Trainee awarded QTS
+        reinstated: Trainee reinstated
     sections:
       titles:
         personal_details: Personal details
@@ -195,6 +204,9 @@ en:
     confirm_withdrawal:
       heading: Check withdrawal details
       submit: Withdraw this trainee
+    confirm_reinstatement:
+      heading: Check reinstatement details
+      submit: Reinstate this trainee
     forms:
       common:
         today: Today
@@ -227,6 +239,8 @@ en:
         labels:
           disabled: "Yes, they shared that they’re disabled"
           no_disability: "They shared that they’re not disabled"
+      reinstatement:
+        heading: When did the trainee return?
       withdrawal_reasons:
         headings:
           withdrawal_date: When did the trainee withdraw?
@@ -408,6 +422,13 @@ en:
               invalid: "You must enter a valid programme end date"
               too_old: "You must enter a valid programme end date"
               before_or_same_as_start_date: "The programme end date must be after the start date"
+        reinstatement_form:
+          attributes:
+            date_string:
+              blank: You must choose a date of return
+            date:
+              blank: You must enter a date of return
+              invalid: You must enter a valid date of return
         trn_submission_form:
           attributes:
             trainee:

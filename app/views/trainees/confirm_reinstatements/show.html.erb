@@ -1,0 +1,24 @@
+<%= render PageTitle::View.new(title: "trainees.confirm_reinstatement.show") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(text: t(:back_to_record), href: trainee_path(@trainee)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">
+        <%= trainee_name(@trainee) %>
+      </span>
+      <%= t("views.confirm_reinstatement.heading") %>
+    </h1>
+
+    <%= render Trainees::Confirmation::ReinstatementDetails::View.new(trainee: @trainee) %>
+
+    <%= form_with url: trainee_confirm_reinstatement_path(@trainee), method: :patch, local: true do |f| %>
+      <%= f.govuk_submit  t("views.confirm_reinstatement.submit") %>
+    <%- end -%>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("cancel"), trainee_path(@trainee)) %></p>
