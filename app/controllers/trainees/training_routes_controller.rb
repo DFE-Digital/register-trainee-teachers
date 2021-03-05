@@ -11,7 +11,7 @@ module Trainees
     def update
       authorize trainee
       trainee.update!(trainee_params)
-      redirect_to trainee
+      redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
     end
 
   private
