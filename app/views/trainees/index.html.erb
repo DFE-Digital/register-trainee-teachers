@@ -16,7 +16,7 @@
 <%= render PaginatedFilter::View.new(filters: @filters, collection: @paginated_trainees) do |component| %>
   <% if FeatureService.enabled?(:trainee_export) && (@paginated_trainees).any?(&:present?) %>
     <% component.with(:filter_actions) do %>
-      <p class="govuk-body govuk-!-margin-top-3"><%= govuk_link_to("Export these records", trainees_path(filter_params.merge(format: "csv")), class: "trainee-search-export") %></p>
+      <p class="govuk-body govuk-!-margin-top-3"><%= govuk_link_to("Export these records", trainees_path(filter_params.merge(format: "csv")), class: "app-trainee-export") %></p>
     <% end %>
   <% end %>
 
