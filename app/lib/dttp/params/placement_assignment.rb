@@ -5,7 +5,6 @@ module Dttp
     class PlacementAssignment
       include Mappable
 
-      ASSESSMENT_ONLY_DTTP_ID = "99f435d5-a626-e711-80c8-0050568902d3"
       ACADEMIC_YEAR_2020_2021 = "76bcaeca-2bd1-e711-80df-005056ac45bb"
       COURSE_LEVEL_PG = 12
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
@@ -20,7 +19,7 @@ module Dttp
         if contact_change_set_id
           @params.merge!({
             "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
-            "dfe_RouteId@odata.bind" => "/dfe_routes(#{ASSESSMENT_ONLY_DTTP_ID})",
+            "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id(trainee.training_route)})",
           })
         end
       end

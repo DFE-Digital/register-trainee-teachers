@@ -18,7 +18,7 @@ module Trainees
 
       def trainee
         @trainee ||= Trainee.create!(
-          training_route: "assessment_only",
+          training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           provider: user.provider,
         )
       end

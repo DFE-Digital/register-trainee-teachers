@@ -34,6 +34,10 @@ module Dttp
       CodeSets::Nationalities::MAPPING.dig(nationality.downcase, :entity_id)
     end
 
+    def dttp_route_id(training_route)
+      CodeSets::Routes::MAPPING.dig(training_route, :entity_id)
+    end
+
     def dttp_disability_id(disability)
       CodeSets::Disabilities::MAPPING.dig(disability, :entity_id)
     end

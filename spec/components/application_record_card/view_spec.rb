@@ -79,7 +79,7 @@ module ApplicationRecordCard
             first_names: "Teddy",
             last_name: "Smith",
             subject: "Designer",
-            training_route: "assessment_only",
+            training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
             trainee_id: "132456",
             created_at: Time.zone.now,
             trn: "789456",

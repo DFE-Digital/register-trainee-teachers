@@ -15,7 +15,11 @@ class Trainee < ApplicationRecord
 
   validates :training_route, presence: { message: I18n.t("activerecord.errors.models.trainee.attributes.training_route") }
 
-  enum training_route: { assessment_only: 0, provider_led: 1 }
+  enum training_route: {
+    TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
+    TRAINING_ROUTE_ENUMS[:provider_led] => 1,
+  }
+
   enum locale_code: { uk: 0, non_uk: 1 }
   enum gender: {
     male: 0,
