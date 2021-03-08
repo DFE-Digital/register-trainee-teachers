@@ -42,12 +42,12 @@
       <%= f.govuk_date_field(:programme_start_date,
                              date_of_birth: false,
                              legend: { text: 'Programme start date', size: 's' },
-                             hint: { text: 'For example, 2 11 2020' } ) %>
+                             hint: { text: I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_start_date.hint_html", year: 1.year.ago.year ) } ) %>
 
        <%= f.govuk_date_field(:programme_end_date,
                               date_of_birth: false,
                               legend: { text: 'Programme end date', size: 's' },
-                              hint: { text: 'For example, 15 6 2021' } ) %>
+                              hint: { text: I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_end_date.hint_html", year: Time.zone.now.year) } ) %>
 
       <%= f.govuk_submit %>
     <% end %>

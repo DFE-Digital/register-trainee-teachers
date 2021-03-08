@@ -29,7 +29,7 @@
       <%= f.govuk_date_field :date_of_birth,
                              date_of_birth: true,
                              legend: { text: 'Date of birth', size: 's' },
-                             hint: { text: 'For example, 31 3 1980' } %>
+                             hint: { text: I18n.t("activemodel.errors.models.personal_detail_form.attributes.date_of_birth.hint_html", year: 41.year.ago.year) } %>
 
       <%= f.govuk_radio_buttons_fieldset(:gender, legend: { text: "Gender", size: "s" }, classes: "gender") do %>
         <%= f.govuk_radio_button :gender, :female, label: { text: "Female" }, link_errors: true %>
