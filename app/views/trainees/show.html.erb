@@ -9,3 +9,9 @@
 <div class="programme-details">
   <%= render Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
 </div>
+
+<% if @trainee.requires_placement_details? %>
+  <div class="placement-details">
+    <%= render Trainees::Confirmation::PlacementDetails::View.new(trainee: @trainee) %>
+  </div>
+<% end %>

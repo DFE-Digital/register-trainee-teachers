@@ -65,7 +65,9 @@ en:
         trainee_id: ID
         trainee_start_date: start date
     programme_detail:
-      title: "Programme details"
+      title: Programme details
+    placement_detail:
+      title: Placement details
     degrees:
       add_a_degree: Add a degree
       add_another_degree: Add another degree
@@ -174,6 +176,7 @@ en:
         degrees: Degree details
         programme_details: Programme details
         training_details: Training details
+        placement_details: Placement details
       statuses:
         not_started: not started
         in_progress: not marked as complete

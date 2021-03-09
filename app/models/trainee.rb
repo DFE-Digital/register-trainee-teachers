@@ -13,6 +13,8 @@ class Trainee < ApplicationRecord
 
   attribute :progress, Progress.to_type
 
+  delegate :requires_placement_details?, to: :training_route_manager
+
   validates :training_route, presence: { message: I18n.t("activerecord.errors.models.trainee.attributes.training_route") }
 
   enum training_route: {
@@ -27,8 +29,6 @@ class Trainee < ApplicationRecord
     other: 2,
     gender_not_provided: 3,
   }
-
-  audited associated_with: :provider
 
   enum diversity_disclosure: {
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
@@ -135,6 +135,8 @@ class Trainee < ApplicationRecord
   # Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
+  audited associated_with: :provider
+
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
@@ -178,5 +180,9 @@ class Trainee < ApplicationRecord
       ELSE 1
       END
     SQL
+  end
+
+  def training_route_manager
+    @training_route_manager ||= TrainingRouteManager.new(self)
   end
 end
