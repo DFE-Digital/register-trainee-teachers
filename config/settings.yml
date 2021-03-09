@@ -27,6 +27,7 @@ features:
   basic_auth: true
   trainee_export: true
   routes_provider_led: false
+  routes_early_years_undergrad: false
 
 dfe_sign_in:
   # Our service name

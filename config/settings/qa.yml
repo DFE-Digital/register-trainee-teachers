@@ -13,6 +13,7 @@ features:
   home_text: true
   use_dfe_sign_in: false
   routes_provider_led: true
+  routes_early_years_undergrad: true
 
 pagination:
   records_per_page: 30

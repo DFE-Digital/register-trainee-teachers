@@ -37,6 +37,10 @@ module ApplicationHelper
     items
   end
 
+  def multiple_routes_enabled?
+    %w[routes_provider_led routes_early_years_undergrad].any? { |flag| FeatureService.enabled?(flag) }
+  end
+
 private
 
   def prepend_css_class(css_class, current_class)

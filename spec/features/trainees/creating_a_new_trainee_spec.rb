@@ -25,6 +25,16 @@ feature "Create trainee journey" do
     and_i_should_not_see_provider_led_route
   end
 
+  scenario "setting up an initial early years undergrad record", feature_routes_early_years_undergrad: true do
+    and_i_select_early_years_undergrad_route
+    and_i_save_the_form
+    then_i_should_see_the_new_trainee_overview
+  end
+
+  scenario "early years undergrad radio button not shown when feature set to false", feature_routes_early_years_undergrad: false do
+    and_i_should_not_see_early_years_undergrad_route
+  end
+
   scenario "submitting without choosing a route" do
     and_i_save_the_form
     then_i_should_see_a_validation_error
@@ -48,9 +58,18 @@ private
     new_trainee_page.provider_led.click
   end
 
+  def and_i_select_early_years_undergrad_route
+    new_trainee_page.early_years_undergrad.click
+  end
+
   def and_i_should_not_see_provider_led_route
     expect(new_trainee_page).to be_displayed
     expect(new_trainee_page).to_not have_provider_led
+  end
+
+  def and_i_should_not_see_early_years_undergrad_route
+    expect(new_trainee_page).to be_displayed
+    expect(new_trainee_page).to_not have_early_years_undergrad
   end
 
   def and_i_save_the_form

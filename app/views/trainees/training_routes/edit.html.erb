@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.edit", has_errors: @trainee.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.training_routes.edit", has_errors: @trainee.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -7,18 +7,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_with model: @trainee, url: trainee_training_route_path(@trainee), local: true do |f| %>
-
       <%= f.govuk_error_summary %>
-
-      <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.edit"), tag: "h1"} ) do %>
-        <%= f.govuk_radio_button :training_route, :assessment_only, label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
-        <% if FeatureService.enabled?("routes_provider_led") %>
-          <%= f.govuk_radio_button :training_route, :provider_led, label: { text: t("activerecord.attributes.trainee.training_routes.provider_led") } %> 
-          <%= f.govuk_radio_divider %>
-        <% end %>
-        <%= f.govuk_radio_button :training_route, :other, label: { text: "Other" } %>
-      <% end %>
-
+      <%= render "form_fields", f: f %>
       <%= f.govuk_submit %>
     <% end %>
   </div>
