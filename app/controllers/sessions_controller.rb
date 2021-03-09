@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
         provider: Provider.create_or_find_by(
           name: "DfE",
           dttp_id: "00000000-0000-0000-0000-000000000000",
+          code: "000",
         ),
       )
     end
