@@ -15,7 +15,7 @@ module Trainees
         @ethnic_background.assign_attributes(ethnic_background_params)
 
         if @ethnic_background.save
-          redirect_to(edit_trainee_diversity_disability_disclosure_path(trainee))
+          redirect_to(origin_page_or_next_step)
         else
           render :edit
         end
@@ -40,6 +40,12 @@ module Trainees
 
       def background_is_different?(required_params)
         trainee.ethnic_background.present? && trainee.ethnic_background != required_params[:ethnic_background]
+      end
+
+      def origin_page_or_next_step
+        return page_tracker.last_origin_page_path if page_tracker.last_origin_page_path&.include?("diversity/confirm")
+
+        edit_trainee_diversity_disability_disclosure_path(trainee)
       end
     end
   end
