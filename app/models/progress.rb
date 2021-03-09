@@ -15,4 +15,5 @@ class Progress
   attribute :diversity, :boolean
   attribute :programme_details, :boolean
   attribute :training_details, :boolean
+  attribute :placement_details, :boolean
 end

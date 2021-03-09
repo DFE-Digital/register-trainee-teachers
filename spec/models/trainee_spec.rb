@@ -113,9 +113,9 @@ describe Trainee do
   end
 
   context "instance methods" do
-    describe "#sha" do
-      subject { create(:trainee) }
+    subject { create(:trainee) }
 
+    describe "#sha" do
       let(:expected_sha) { Digest::SHA1.hexdigest(subject.digest) }
 
       it "returns a SHA of the trainee's current state" do
@@ -124,8 +124,6 @@ describe Trainee do
     end
 
     describe "#digest" do
-      subject { create(:trainee) }
-
       let(:expected_digest) do
         subject.as_json.except(
           "created_at", "updated_at", "dttp_update_sha"
@@ -134,6 +132,19 @@ describe Trainee do
 
       it "returns a string representation of the trainee's current state" do
         expect(subject.digest).to include(expected_digest)
+      end
+    end
+
+    describe "#training_route_manager" do
+      it "returns an instance of TrainingRouteManager" do
+        expect(subject.training_route_manager).to be_an_instance_of(TrainingRouteManager)
+      end
+    end
+
+    describe "#requires_placement_details?" do
+      it "is delegated to TrainingRouteManager" do
+        expect(subject.training_route_manager).to receive(:requires_placement_details?)
+        subject.requires_placement_details?
       end
     end
   end

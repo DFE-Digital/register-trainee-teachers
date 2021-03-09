@@ -85,6 +85,7 @@ FactoryBot.define do
           degrees: true,
           programme_details: true,
           training_details: true,
+          placement_details: true,
         )
       end
     end
@@ -115,6 +116,10 @@ FactoryBot.define do
 
     trait :with_outcome_date do
       outcome_date { Faker::Date.in_date_period }
+    end
+
+    trait :provider_led do
+      training_route { "provider_led" }
     end
 
     trait :draft do
