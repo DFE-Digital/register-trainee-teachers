@@ -5,3 +5,6 @@ slack:
   webhook_url: "https://test-slack-webhook-url.com"
 features:
   basic_auth: false
+
+environment:
+  name: beta
