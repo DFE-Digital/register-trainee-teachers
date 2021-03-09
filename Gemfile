@@ -33,7 +33,7 @@ gem "canonical-rails"
 gem "sentry-raven"
 
 # Logging
-gem "amazing_print", "~> 1.2"
+gem "amazing_print", "~> 1.3"
 gem "rails_semantic_logger", "4.5.0"
 
 # Thread-safe global state
