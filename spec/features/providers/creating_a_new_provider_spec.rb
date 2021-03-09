@@ -15,6 +15,7 @@ feature "Creating a new provider" do
   scenario "submitting with valid parameters" do
     and_i_fill_in_name
     and_i_fill_in_dttp_id
+    and_i_select_apply_sync_enabled
     and_i_submit_the_form
     then_i_should_see_the_provider_index_page
   end
@@ -40,6 +41,10 @@ private
 
   def and_i_fill_in_dttp_id
     new_provider_page.dttp_id.set(dttp_id)
+  end
+
+  def and_i_select_apply_sync_enabled
+    new_provider_page.apply_sync_enabled.set(true)
   end
 
   def and_i_submit_the_form

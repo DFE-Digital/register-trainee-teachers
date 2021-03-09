@@ -30,7 +30,7 @@ module SystemAdmin
   private
 
     def provider_params
-      params.require(:provider).permit(:name, :dttp_id, :code)
+      params.require(:provider).permit(:name, :dttp_id, :code, :apply_sync_enabled)
     end
   end
 end
