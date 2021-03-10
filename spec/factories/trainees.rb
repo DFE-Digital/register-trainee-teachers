@@ -144,10 +144,12 @@ FactoryBot.define do
 
     trait :withdrawn do
       state { "withdrawn" }
+      withdraw_date { Faker::Date.in_date_period }
     end
 
     trait :deferred do
       state { "deferred" }
+      defer_date { Faker::Date.in_date_period }
     end
 
     trait :reinstated do
