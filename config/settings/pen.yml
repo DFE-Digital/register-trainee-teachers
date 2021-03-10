@@ -1,9 +1,0 @@
-# The url for this app, also used by `dfe_sign_in`
-base_url: https://pen.register-trainee-teachers.education.gov.uk
-
-dttp:
-  back_office_url: https://dttp-test.crm4.dynamics.com/
-
-features:
-  use_dfe_sign_in: false
-  basic_auth: true
