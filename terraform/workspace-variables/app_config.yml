@@ -26,7 +26,7 @@ review:
   RAILS_ENV: review
   RACK_ENV: review
 
-pen:
+audit:
   <<: *default
-  RAILS_ENV: pen
-  RACK_ENV: pen
+  RAILS_ENV: audit
+  RACK_ENV: audit
