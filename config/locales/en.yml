@@ -307,6 +307,8 @@ en:
               blank: You must enter a provider name
             dttp_id:
               invalid: You must enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e
+            code:
+              invalid: You must enter a provider code in the correct format, like 12Y
         user:
           attributes:
             first_name:

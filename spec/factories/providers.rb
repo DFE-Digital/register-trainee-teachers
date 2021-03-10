@@ -6,5 +6,6 @@ FactoryBot.define do
       "Provider #{n}"
     end
     dttp_id { SecureRandom.uuid }
+    code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
   end
 end
