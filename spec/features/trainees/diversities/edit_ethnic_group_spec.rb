@@ -79,12 +79,6 @@ feature "edit ethnic group", type: :feature do
     ethnic_group_page.load(id: trainee.slug)
   end
 
-  def and_i_choose(option)
-    ethnic_group_page.find(
-      "#diversities-ethnic-group-form-ethnic-group-#{option.dasherize}-field",
-    ).choose
-  end
-
   def and_i_submit_the_form
     ethnic_group_page.submit_button.click
   end
