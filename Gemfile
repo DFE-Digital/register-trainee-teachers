@@ -137,7 +137,7 @@ group :test do
 end
 
 # Required for example_data so needed in review, qa and pen too
-group :development, :test, :review, :qa, :pen do
+group :development, :test, :review, :qa, :audit do
   gem "factory_bot_rails"
   gem "faker"
 end

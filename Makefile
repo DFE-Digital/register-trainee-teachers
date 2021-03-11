@@ -32,14 +32,18 @@ review:
 	$(eval backend_key=-backend-config=key=$(env).terraform.tfstate)
 	$(eval export TF_VAR_paas_app_environment=$(env))
 	$(eval space=bat-qa)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+
+audit:
+	$(eval env=audit)
+	$(eval env_config=audit)
+	$(eval space=bat-qa)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+
 
 local: ## Configure local dev environment
 	$(eval env=local)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-
-pentest:
-	$(eval env=pen)
-	$(eval env_config=pen)
 
 qa:
 	$(eval env=qa)
@@ -76,32 +80,32 @@ set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
 
 edit-app-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
+	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
 		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} -f yaml -c
 
 edit-infra-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
+	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
 		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} -f yaml -c
 
 print-app-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
+	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
 		-f yaml
 
 print-infra-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
+	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
 		-f yaml
 
 deploy-plan: terraform-init
-	. terraform/workspace-variables/$(env).sh && cd terraform && terraform plan -var-file=workspace-variables/$(env_config).tfvars
+	. terraform/workspace-variables/$(env_config).sh && cd terraform && terraform plan -var-file=workspace-variables/$(env_config).tfvars
 
 deploy: terraform-init
-	cd terraform &&  terraform apply -var-file=workspace-variables/$(env_config).tfvars -auto-approve
+	. terraform/workspace-variables/$(env_config).sh && cd terraform &&  terraform apply -var-file=workspace-variables/$(env_config).tfvars -auto-approve
 
 destroy: terraform-init
 	cd terraform && terraform destroy -var-file=workspace-variables/$(env_config).tfvars
 
 terraform-init:
-	$(if $(tag), , $(error Missing environment variable "tag"))
+	$(if $(tag), , $(eval export tag=master))
 	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teachers:$(tag))
 	$(if $(passcode), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(passcode))
