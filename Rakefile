@@ -14,5 +14,5 @@ if %w[development test].include?(Rails.env)
     system "yarn test"
   end
 
-  task default: ["lint:ruby", "lint:javascript", "lint:scss", :spec, :javascript_specs]
+  task default: ["lint:erb", "lint:ruby", "lint:javascript", "lint:scss", :spec, :javascript_specs]
 end
