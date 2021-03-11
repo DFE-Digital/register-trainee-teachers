@@ -1,13 +1,13 @@
 <%= tag.ol(class: classes, **html_attributes) do %>
   <% rows.each do |row| %>
     <%= tag.li(class: row.classes, **row.html_attributes) do %>
-      <a href="<%= row.get_path  %>" class="govuk-link app-task-list__key" aria-describedby="<%= row.status_id  %>" >
+      <a href="<%= row.get_path %>" class="govuk-link app-task-list__key" aria-describedby="<%= row.status_id %>">
         <%= row.task_name %>
       </a>
       <% if any_row_has_status? %>
         <%= render GovukComponent::Tag.new(
-          text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + row.status, 
-          colour: row.get_status_colour, 
+          text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + row.status,
+          colour: row.get_status_colour,
           html_attributes: { id: row.status_id }
         ) %>
       <% end %>

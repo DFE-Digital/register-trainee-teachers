@@ -3,11 +3,11 @@
   <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:assessment_only], label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
 
   <% if FeatureService.enabled?("routes_early_years_undergrad") %>
-    <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:early_years_undergrad], label: { text: t("activerecord.attributes.trainee.training_routes.early_years_undergrad") } %> 
+    <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:early_years_undergrad], label: { text: t("activerecord.attributes.trainee.training_routes.early_years_undergrad") } %>
   <% end %>
 
   <% if FeatureService.enabled?("routes_provider_led") %>
-    <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:provider_led], label: { text: t("activerecord.attributes.trainee.training_routes.provider_led") } %> 
+    <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:provider_led], label: { text: t("activerecord.attributes.trainee.training_routes.provider_led") } %>
   <% end %>
 
   <% if multiple_routes_enabled? %>

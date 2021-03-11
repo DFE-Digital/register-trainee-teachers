@@ -19,7 +19,7 @@
       <%= f.govuk_text_field :middle_names,
                              label: { text: 'Middle names', size: 's' },
                              width: 'three-quarters',
-                             autocomplete: :disabled  %>
+                             autocomplete: :disabled %>
 
       <%= f.govuk_text_field :last_name,
                              label: { text: 'Last names', size: 's' },
@@ -54,7 +54,7 @@
         <% end %>
 
         <%= f.govuk_check_box(:other, 1, 0, multiple: false, link_errors: true) do %>
-          <% [:other_nationality1, :other_nationality2, :other_nationality3].each_with_index do |field, index|%>
+          <% [:other_nationality1, :other_nationality2, :other_nationality3].each_with_index do |field, index| %>
             <%= render "nationality_select_field", form: f, field: field, index: index, nationalities: @other_nationalities %>
           <% end %>
         <% end %>

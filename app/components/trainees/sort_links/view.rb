@@ -20,7 +20,7 @@ module Trainees
       end
 
       def sort_link(name, sort_by)
-        sorted_by?(sort_by) ? tag.span(name, class: "app-sort-links__item") : link_to(name, sort_path(sort_by), class: "app-sort-links__item govuk-link govuk-link--no-visited-state")
+        sorted_by?(sort_by) ? tag.span(name, class: "app-sort-links__item") : govuk_link_to(name, sort_path(sort_by), class: "app-sort-links__item govuk-link govuk-link--no-visited-state")
       end
 
       def sort_path(sort_by)

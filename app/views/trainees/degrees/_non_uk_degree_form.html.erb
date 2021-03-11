@@ -23,7 +23,7 @@
   <%= f.govuk_text_field :graduation_year,
                          label: { text: "Graduation year", size: 's' },
                          width: "one-quarter",
-                         autocomplete: :disabled  %>
+                         autocomplete: :disabled %>
 
   <div class="govuk-form-group">
     <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the NARIC comparable UK degree", size: 's'} do %>
@@ -36,5 +36,5 @@
     <% end %>
   </div>
 
-	<%= f.govuk_submit %>
+  <%= f.govuk_submit %>
 <% end %>
