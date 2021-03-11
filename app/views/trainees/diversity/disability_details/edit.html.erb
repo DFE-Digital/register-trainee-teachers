@@ -17,8 +17,8 @@
           hint: { text: "Select all that apply" },
           classes: "disability" do %>
 
-        <% @disabilities.each_with_index do |disability, index|  %>
-          <% if disability.name != Diversities::OTHER  %>
+        <% @disabilities.each_with_index do |disability, index| %>
+          <% if disability.name != Diversities::OTHER %>
             <%= f.govuk_check_box :disability_ids, disability.id, label: { text: disability.name, size: "s" }, hint: { text: disability.description }, link_errors: index.zero? %>
           <% else %>
             <%= f.govuk_check_box :disability_ids, disability.id, label: { text: disability.name, size: "s" }, link_errors: index.zero? do %>

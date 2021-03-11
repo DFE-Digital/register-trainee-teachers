@@ -30,7 +30,7 @@
               <ul class="moj-filter-tags">
                 <% tags_for_filter(filter, value).each do |tag| %>
                   <li>
-                    <%= link_to(tag[:title], tag[:remove_link], class: "moj-filter__tag", draggable: "false") %>
+                    <%= govuk_link_to(tag[:title], tag[:remove_link], class: "moj-filter__tag", draggable: "false") %>
                   </li>
                 <% end %>
               </ul>
@@ -57,7 +57,7 @@
                 <div class="govuk-checkboxes govuk-checkboxes--small">
                   <% Trainee.states.map do |state, _| %>
                     <div class="govuk-checkboxes__item">
-                      <%= check_box_tag 'state[]', state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input"%>
+                      <%= check_box_tag 'state[]', state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
                       <%= label_tag "state-#{state}", label_for('state', state), class: "govuk-label govuk-checkboxes__label" %>
                     </div>
                   <% end %>

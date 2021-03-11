@@ -14,7 +14,7 @@
 
     <p class="govuk-body-m"> Use DfE Sign-in to access your account.</p>
 
-    <% if FeatureService.enabled?("use_dfe_sign_in")%>
+    <% if FeatureService.enabled?("use_dfe_sign_in") %>
       <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe", class: "qa-sign_in_button") %>
     <% else %>
       <%= govuk_button_link_to "Sign in using Persona", "/personas", class: "qa-sign_in_button" %>

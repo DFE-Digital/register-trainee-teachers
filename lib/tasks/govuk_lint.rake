@@ -7,6 +7,12 @@ namespace :lint do
     system("bundle exec rubocop app config db lib spec Gemfile --format clang -a") || exit($CHILD_STATUS.exitstatus)
   end
 
+  desc "Lint erb files"
+  task erb: :environment do
+    puts "Linting erb files..."
+    system("bundle exec erblint app -a") || exit($CHILD_STATUS.exitstatus)
+  end
+
   desc "Lint JavaScript code"
   task javascript: :environment do
     puts "Linting javascript..."
