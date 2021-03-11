@@ -21,6 +21,7 @@ namespace :example_data do
         provider = Provider.find_or_create_by!(
           name: persona_attributes[:provider],
           dttp_id: SecureRandom.uuid,
+          code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
         )
         persona.update!(provider: provider)
       end
