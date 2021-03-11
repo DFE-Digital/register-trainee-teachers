@@ -13,9 +13,17 @@ module Trainees
 
       def component
         if status == :completed
-          confirmation_view_args = { trainee: trainee }
+          # Temporary conditional while we wait for all sections to support save-on-confirm
+          confirmation_view_args = if FormStore::FORM_SECTION_KEYS.include?(section)
+                                     { data_model: PersonalDetailsForm.new(trainee) }
+                                   else
+                                     { trainee: trainee }
+                                   end
 
-          confirmation_view_args.merge!({ show_add_another_degree_button: false, show_delete_button: true }) if section == :degrees
+          if section == :degrees
+            confirmation_view_args.merge!(show_add_another_degree_button: false, show_delete_button: true)
+          end
+
           confirmation_view.new(**confirmation_view_args)
         else
           IncompleteSection::View.new(title: title, link_text: link_text, url: url, error: error)

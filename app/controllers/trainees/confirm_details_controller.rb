@@ -2,27 +2,31 @@
 
 module Trainees
   class ConfirmDetailsController < ApplicationController
+    before_action :authorize_trainee
+
     helper_method :trainee_section_key
     helper_method :confirm_section_title
 
     def show
-      authorize trainee
       page_tracker.save_as_origin!
 
       if trainee.draft?
         @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
       end
 
-      @confirmation_component = component_klass(trainee_section_key).new(trainee: trainee)
+      # Temporary conditional while we wait for all sections to support save-on-confirm
+      @confirmation_component = if save_on_confirm_section?
+                                  data_model = trainee.draft? ? trainee : PersonalDetailsForm.new(trainee)
+                                  component_klass.new(data_model: data_model)
+                                else
+                                  component_klass.new(trainee: trainee)
+                                end
     end
 
     def update
-      authorize trainee
+      form_klass.new(trainee).save! if save_on_confirm_section? && !trainee.draft?
 
-      if trainee.draft?
-        toggle_trainee_progress_field
-        trainee.save!
-      end
+      toggle_trainee_progress_field if trainee.draft?
 
       flash[:success] = "Trainee #{flash_message_title} updated"
 
@@ -35,12 +39,16 @@ module Trainees
       @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
-    def component_klass(key)
-      "Trainees::Confirmation::#{key.underscore.camelcase}::View".constantize
+    def component_klass
+      "Trainees::Confirmation::#{trainee_section_key.underscore.camelcase}::View".constantize
+    end
+
+    def form_klass
+      "#{trainee_section_key.underscore.camelcase}Form".constantize
     end
 
     def trainee_section_key
-      request.path.split("/").intersection(trainee_paths).first.underscore
+      request.path.split("/").intersection(trainee_paths).first&.underscore
     end
 
     def confirm_section_title
@@ -56,6 +64,7 @@ module Trainees
 
     def toggle_trainee_progress_field
       trainee.progress.public_send("#{trainee_section_key}=", mark_as_completed_params)
+      trainee.save!
     end
 
     def trainee_paths
@@ -74,6 +83,15 @@ module Trainees
       mark_as_completed_attributes = params.require(:confirm_detail_form).permit(:mark_as_completed)[:mark_as_completed]
 
       ActiveModel::Type::Boolean.new.cast(mark_as_completed_attributes)
+    end
+
+    def authorize_trainee
+      authorize(trainee)
+    end
+
+    # TODO: remove after all sections support save-on-confirm
+    def save_on_confirm_section?
+      FormStore::FORM_SECTION_KEYS.include?(trainee_section_key&.to_sym)
     end
   end
 end

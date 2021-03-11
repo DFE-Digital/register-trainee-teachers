@@ -58,4 +58,8 @@ private
       PageTracker.new(trainee_slug: trainee_slug, session: session, request: request)
     end
   end
+
+  def clear_form_stash(trainee)
+    FormStore.clear_all(trainee.id)
+  end
 end

@@ -18,6 +18,7 @@ module Trainees
 
       def toggle_trainee_progress_field
         trainee.progress.diversity = mark_as_completed_params
+        trainee.save!
       end
     end
   end

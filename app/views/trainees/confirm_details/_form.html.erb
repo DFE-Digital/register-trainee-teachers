@@ -10,7 +10,7 @@
           <%= f.govuk_check_box :mark_as_completed, 1, 0, multiple: false, link_errors: true, label: { text: "I have completed this section " } %>
         <% end %>
       <% end %>
-      <%= f.govuk_submit %>
+      <%= f.govuk_submit @trainee.draft? ? t(:continue) : t(:update_record) %>
     <% end %>
   </div>
 </div>

@@ -2,6 +2,7 @@
 
 module Trainees
   class PersonalDetailsController < ApplicationController
+    before_action :authorize_trainee
     before_action :ensure_trainee_is_not_draft!, only: :show
 
     DOB_CONVERSION = {
@@ -16,25 +17,24 @@ module Trainees
     ].freeze
 
     def show
-      authorize trainee
       page_tracker.save_as_origin!
+      clear_form_stash(trainee)
       render layout: "trainee_record"
     end
 
     def edit
-      authorize trainee
       nationalities
       other_nationalities
-      @personal_detail = PersonalDetailForm.new(trainee)
+      @personal_detail = PersonalDetailsForm.new(trainee)
     end
 
     def update
-      authorize trainee
       nationalities
       other_nationalities
-      personal_detail = PersonalDetailForm.new(trainee, personal_details_params)
+      personal_detail = PersonalDetailsForm.new(trainee, personal_details_params)
+      save_strategy = trainee.draft? ? :save! : :save_to_store
 
-      if personal_detail.save
+      if personal_detail.public_send(save_strategy)
         redirect_to trainee_personal_details_confirm_path(personal_detail.trainee)
       else
         @personal_detail = personal_detail
@@ -57,8 +57,8 @@ module Trainees
     end
 
     def personal_details_params
-      params.require(:personal_detail_form).permit(
-        *PersonalDetailForm::FIELDS,
+      params.require(:personal_details_form).permit(
+        *PersonalDetailsForm::FIELDS,
         *DOB_CONVERSION.keys,
         :other,
         :other_nationality1,
@@ -68,6 +68,10 @@ module Trainees
       ).transform_keys do |key|
         DOB_CONVERSION.keys.include?(key) ? DOB_CONVERSION[key] : key
       end
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end

@@ -23,6 +23,7 @@ class TraineesController < ApplicationController
 
   def show
     authorize trainee
+    clear_form_stash(trainee)
     page_tracker.save_as_origin!
     render layout: "trainee_record"
   end

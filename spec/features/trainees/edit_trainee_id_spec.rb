@@ -39,7 +39,7 @@ feature "edit Trainee ID" do
 
   def when_i_confirm
     expect(confirm_details_page).to be_displayed(id: trainee.slug, section: "trainee-id")
-    confirm_details_page.continue_button.click
+    confirm_details_page.update_record_button.click
   end
 
   def then_the_trainee_id_is_updated

@@ -5,24 +5,28 @@ module Trainees
     module PersonalDetails
       class ViewPreview < ViewComponent::Preview
         def default
-          render(Trainees::Confirmation::PersonalDetails::View.new(trainee: trainee))
+          render(Trainees::Confirmation::PersonalDetails::View.new(data_model: data_model))
         end
 
         def with_multiple_nationalities
-          trainee.nationalities.push(OpenStruct.new(name: "Irish")).push(OpenStruct.new(name: "Australian"))
-          render(Trainees::Confirmation::PersonalDetails::View.new(trainee: trainee))
+          trainee.nationalities.concat([Nationality.new(name: "Irish"), Nationality.new(name: "Australian")])
+          render(Trainees::Confirmation::PersonalDetails::View.new(data_model: data_model))
         end
 
       private
 
+        def data_model
+          @data_model ||= PersonalDetailsForm.new(trainee)
+        end
+
         def trainee
-          @trainee ||= OpenStruct.new(
+          @trainee ||= Trainee.new(
             first_names: "Mary",
             last_name: "Campbell",
             date_of_birth: Date.new(1970, 7, 30),
-            gender: "2",
+            gender: :other,
             nationalities: [
-              OpenStruct.new(name: "British"),
+              Nationality.new(name: "British"),
             ],
           )
         end

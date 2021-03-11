@@ -7,12 +7,15 @@ module Trainees
     module PersonalDetails
       describe View do
         alias_method :component, :page
+        let(:personal_details_form) { PersonalDetailsForm.new(trainee) }
+        let(:british) { build(:nationality, :british) }
+        let(:irish) { build(:nationality, :irish) }
 
         context "when data has not been provided" do
           let(:trainee) { build(:trainee, id: 1, first_names: nil, date_of_birth: nil, gender: nil) }
 
           before do
-            render_inline(View.new(trainee: trainee))
+            render_inline(View.new(data_model: personal_details_form))
           end
 
           it "renders blank rows for full name, date of birth, gender and nationality" do
@@ -27,11 +30,10 @@ module Trainees
         end
 
         context "when data has been provided" do
-          let(:trainee) { build(:trainee, id: 1) }
+          let(:trainee) { create(:trainee, id: 1, nationalities: [british]) }
 
           before do
-            allow(trainee).to receive(:nationalities).and_return([OpenStruct.new(name: "British")])
-            render_inline(View.new(trainee: trainee))
+            render_inline(View.new(data_model: personal_details_form))
           end
 
           it "renders the full name" do
@@ -61,9 +63,10 @@ module Trainees
           end
 
           context "when multiple nationalities have been provided" do
+            let(:trainee) { create(:trainee, id: 1, nationalities: [british, irish]) }
+
             before do
-              allow(trainee).to receive(:nationalities).and_return([OpenStruct.new(name: "British"), OpenStruct.new(name: "Irish")])
-              render_inline(View.new(trainee: trainee))
+              render_inline(View.new(data_model: personal_details_form))
             end
 
             it "renders a list of nationalities" do
