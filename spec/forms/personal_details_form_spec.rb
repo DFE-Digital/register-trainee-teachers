@@ -113,11 +113,11 @@ describe PersonalDetailsForm, type: :model do
     end
   end
 
-  describe "#save_to_store" do
+  describe "#stash" do
     it "uses FormStore to temporarily save the fields under a key combination of trainee ID and personal_details" do
       expect(form_store).to receive(:set).with(trainee.id, :personal_details, subject.fields)
 
-      subject.save_to_store
+      subject.stash
     end
   end
 

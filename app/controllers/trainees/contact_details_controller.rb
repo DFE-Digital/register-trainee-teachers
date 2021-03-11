@@ -2,21 +2,19 @@
 
 module Trainees
   class ContactDetailsController < ApplicationController
+    before_action :authorize_trainee
+
     def edit
-      authorize trainee
-      @contact_details = ContactDetailForm.new(trainee)
+      @contact_details = ContactDetailsForm.new(trainee)
     end
 
     def update
-      authorize trainee
-      trainee.assign_contact_details(contact_details_params)
+      @contact_details = ContactDetailsForm.new(trainee, contact_details_params)
+      save_strategy = trainee.draft? ? :save! : :stash
 
-      contact_detail = ContactDetailForm.new(trainee)
-
-      if contact_detail.save
-        redirect_to_confirm
+      if @contact_details.public_send(save_strategy)
+        redirect_to trainee_contact_details_confirm_path(trainee)
       else
-        @contact_details = contact_detail
         render :edit
       end
     end
@@ -28,20 +26,18 @@ module Trainees
     end
 
     def contact_details_params
-      params.require(:contact_detail_form).permit(
-        *ContactDetailForm::FIELDS,
-      )
-    end
-
-    def redirect_to_confirm
-      redirect_to trainee_contact_details_confirm_path(trainee)
+      params.require(:contact_details_form).permit(*ContactDetailsForm::FIELDS)
     end
 
     def section_completed?
       ProgressService.call(
-        validator: ContactDetailForm.new(trainee),
+        validator: ContactDetailsForm.new(trainee),
         progress_value: trainee.progress.contact_details,
       ).completed?
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end

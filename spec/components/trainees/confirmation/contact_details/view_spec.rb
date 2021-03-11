@@ -8,9 +8,7 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
   context "when no contact details data supplied for existing trainee" do
     before(:all) do
       @result ||= render_inline(
-        Trainees::Confirmation::ContactDetails::View.new(
-          trainee: Trainee.new,
-        ),
+        Trainees::Confirmation::ContactDetails::View.new(data_model: Trainee.new),
       )
     end
 
@@ -28,7 +26,7 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
   context "UK based trainee" do
     before(:all) do
       mock_trainee.locale_code = "uk"
-      @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(trainee: mock_trainee))
+      @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(data_model: mock_trainee))
     end
 
     it "renders rows for address, email" do
@@ -55,7 +53,7 @@ RSpec.describe Trainees::Confirmation::ContactDetails::View do
     before(:all) do
       mock_trainee.locale_code = "non_uk"
       mock_trainee.email = "visit@paris.com"
-      @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(trainee: mock_trainee))
+      @result ||= render_inline(Trainees::Confirmation::ContactDetails::View.new(data_model: mock_trainee))
     end
 
     it "renders rows for address, email" do

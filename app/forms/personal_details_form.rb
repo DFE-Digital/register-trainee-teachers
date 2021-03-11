@@ -50,7 +50,7 @@ class PersonalDetailsForm
     Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
-  def save_to_store
+  def stash
     valid? && store.set(trainee.id, :personal_details, fields)
   end
 

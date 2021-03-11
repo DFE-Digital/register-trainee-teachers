@@ -40,7 +40,6 @@ feature "edit contact details", type: :feature do
   end
 
   def and_confirm_my_details
-    expect(confirm_details_page).to be_displayed(id: trainee.slug, section: "contact-details")
     confirm_details_page.submit_button.click
   end
 

@@ -16,7 +16,7 @@ module Trainees
 
       # Temporary conditional while we wait for all sections to support save-on-confirm
       @confirmation_component = if save_on_confirm_section?
-                                  data_model = trainee.draft? ? trainee : PersonalDetailsForm.new(trainee)
+                                  data_model = trainee.draft? ? trainee : form_klass.new(trainee)
                                   component_klass.new(data_model: data_model)
                                 else
                                   component_klass.new(trainee: trainee)

@@ -6,41 +6,46 @@ module Trainees
       class View < GovukComponent::Base
         include SanitizeHelper
 
-        attr_accessor :trainee
+        attr_accessor :data_model
 
-        def initialize(trainee:)
-          @trainee = trainee
+        def initialize(data_model:)
+          @data_model = data_model
           @not_provided_copy = I18n.t("components.confirmation.not_provided")
         end
 
-        def address
-          return @not_provided_copy if trainee.locale_code.nil? || (uk_address.blank? && international_address.blank?)
+        def trainee
+          data_model.is_a?(Trainee) ? data_model : data_model.trainee
+        end
 
-          address = (trainee.uk? ? uk_address : international_address).reject(&:blank?)
-                                                                      .map { |item| html_escape(item) }
-                                                                      .join(tag.br)
+        def address
+          return @not_provided_copy if data_model.locale_code.nil? || (uk_address.blank? && international_address.blank?)
+
+          address = (data_model.uk? ? uk_address : international_address).reject(&:blank?)
+                                                                         .map { |item| html_escape(item) }
+                                                                         .join(tag.br)
 
           sanitize(address)
         end
 
         def email
-          return @not_provided_copy if trainee.email.blank?
+          return @not_provided_copy if data_model.email.blank?
 
-          trainee.email
+          data_model.email
         end
 
       private
 
         def uk_address
-          [trainee.address_line_one,
-           trainee.address_line_two,
-           trainee.town_city,
-           trainee.postcode]
+          [
+            data_model.address_line_one,
+            data_model.address_line_two,
+            data_model.town_city,
+            data_model.postcode,
+          ]
         end
 
         def international_address
-          trainee.international_address
-            .split(/\r\n+/)
+          data_model.international_address.split(/\r\n+/)
         end
       end
     end

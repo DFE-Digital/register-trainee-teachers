@@ -334,7 +334,7 @@ en:
         email:
           invalid: "You must enter an email address in the correct format, like name@example.com"
       models:
-        contact_detail_form:
+        contact_details_form:
           attributes:
             locale_code:
               blank: "You must select where the trainee lives"
