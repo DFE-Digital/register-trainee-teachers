@@ -10,6 +10,7 @@ describe Trainee do
       is_expected.to define_enum_for(:training_route).with_values(
         TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
         TRAINING_ROUTE_ENUMS[:provider_led] => 1,
+        TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
       )
     end
 

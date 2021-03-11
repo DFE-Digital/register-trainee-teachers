@@ -9,6 +9,7 @@ features:
   use_dfe_sign_in: false
   basic_auth: false
   routes_provider_led: true
+  routes_early_years_undergrad: true
 
 pagination:
   records_per_page: 30

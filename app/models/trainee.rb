@@ -20,6 +20,7 @@ class Trainee < ApplicationRecord
   enum training_route: {
     TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
     TRAINING_ROUTE_ENUMS[:provider_led] => 1,
+    TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
   }
 
   enum locale_code: { uk: 0, non_uk: 1 }

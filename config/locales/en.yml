@@ -93,8 +93,6 @@ en:
       check_details:
         show: Review trainee record
       trainees:
-        new: What type of training are they doing?
-        edit: What type of training are they doing?
         delete: Delete this draft record
         index: Trainee records (%{total_trainees_count_text})
         paginated_index: Trainee records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
@@ -131,6 +129,8 @@ en:
           edit: Date trainee started
         training_details:
           edit: Edit training details
+        training_routes:
+          edit: What type of training are they doing?
         programme_details:
           edit: Programme details
         withdrawal:
@@ -271,6 +271,7 @@ en:
         training_routes:
           assessment_only: Assessment only
           provider_led: Provider-led
+          early_years_undergrad: Early years (undergrad)
         states:
           draft: Draft
           submitted_for_trn: Pending TRN
