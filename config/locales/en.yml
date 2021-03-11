@@ -426,13 +426,14 @@ en:
               future: "You must enter a programme start date that is not as far in the future"
               invalid: "You must enter a valid programme start date"
               too_old: "You must enter a valid programme start date"
-              hint_html: For example, 2 11 %{year}
+              hint_html: For example, 11 3 %{year}
             programme_end_date:
               blank: "You must enter a programme end date"
               future: "You must enter a programme end date that is not as far in the future"
               invalid: "You must enter a valid programme end date"
               too_old: "You must enter a valid programme end date"
               before_or_same_as_start_date: "The programme end date must be after the start date"
+              hint_html: For example, 11 3 %{year}
         reinstatement_form:
           attributes:
             date_string:
