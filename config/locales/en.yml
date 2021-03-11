@@ -187,6 +187,7 @@ en:
         not_started: Start section
         in_progress: Continue section
   views:
+    all_records: "All records"
     trainees:
       edit:
         defer: Defer
