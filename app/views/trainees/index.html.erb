@@ -8,8 +8,9 @@
 <% unless current_user.system_admin? %>
   <p class="govuk-body">
     <%= render GovukComponent::StartNowButton.new(
-    text: "Add a trainee",
-    href: new_trainee_path ) %>
+          text: "Add a trainee",
+          href: new_trainee_path,
+        ) %>
   </p>
 <% end %>
 

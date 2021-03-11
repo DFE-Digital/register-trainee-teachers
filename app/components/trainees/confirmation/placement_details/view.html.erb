@@ -1,11 +1,10 @@
 <%= render SummaryCard::View.new(trainee: trainee, title: summary_title,
-    heading_level: 2,
-    rows: [{
-      key: "Placements",
-      value: placements
-    }]
-) do |component| %>
+                                 heading_level: 2,
+                                 rows: [{
+                                   key: "Placements",
+                                   value: placements,
+                                 }]) do |component| %>
   <% component.with(:header_actions) do %>
-    <%= govuk_link_to 'Manage placements', trainee_path(trainee) %>
+    <%= govuk_link_to "Manage placements", trainee_path(trainee) %>
   <% end %>
 <% end %>

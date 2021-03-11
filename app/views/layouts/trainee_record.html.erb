@@ -3,18 +3,18 @@
 
   <%= content_for(:breadcrumbs) do %>
     <%= render GovukComponent::BackLink.new(
-      text: 'All records',
-      href: trainees_path
-    ) %>
+          text: "All records",
+          href: trainees_path,
+        ) %>
   <% end %>
 
   <%= render Trainees::RecordHeader::View.new(trainee: @trainee) %>
 
   <%= render TabNavigation::View.new(items: [
-    { name: "About their teacher training", url: trainee_path(@trainee) },
-    { name: "Personal details and education", url: trainee_personal_details_path(@trainee) },
-    { name: "Timeline", url: trainee_timeline_path(@trainee) },
-  ]) %>
+        { name: "About their teacher training", url: trainee_path(@trainee) },
+        { name: "Personal details and education", url: trainee_personal_details_path(@trainee) },
+        { name: "Timeline", url: trainee_timeline_path(@trainee) },
+      ]) %>
 
   <%= yield %>
 <% end %>

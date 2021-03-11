@@ -1,23 +1,24 @@
 <%= render PageTitle::View.new(title: @provider.name, has_errors: @provider.errors.present?) %>
 
 <%= render GovukComponent::BackLink.new(
-  text: "Back",
-  href: providers_path
-) %>
+      text: "Back",
+      href: providers_path,
+    ) %>
 
 <h1 class="govuk-heading-xl"><%= @provider.name %></h1>
 
 <p class="govuk-body">
   <%= render GovukComponent::StartNowButton.new(
-  text: "Add a user",
-  href: new_provider_user_path(@provider) ) %>
+        text: "Add a user",
+        href: new_provider_user_path(@provider),
+      ) %>
 </p>
 
 <% if @provider.users.any? %>
   <div class="govuk-!-margin-bottom-8">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
-        <h2 class="govuk-heading-m"><%= pluralize(@provider.users.count, 'user') %> </h2>
+        <h2 class="govuk-heading-m"><%= pluralize(@provider.users.count, "user") %> </h2>
       </div>
     </div>
     <%= render UserCard::View.with_collection(@users) %>

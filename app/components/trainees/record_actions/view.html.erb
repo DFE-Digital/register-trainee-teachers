@@ -3,7 +3,7 @@
 
     <% if can_recommend_for_qts? %>
       <%= govuk_button_link_to t("views.trainees.edit.recommend_for_qts"), edit_trainee_outcome_details_outcome_date_path(trainee),
-                              { class: "govuk-!-margin-bottom-0" } %>
+                               { class: "govuk-!-margin-bottom-0" } %>
     <% else %>
       <div class="govuk-inset-text govuk-!-margin-0">
         <%= t("views.trainees.edit.status_summary.#{trainee.state}") %>

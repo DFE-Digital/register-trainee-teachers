@@ -1,8 +1,9 @@
 <%= render FormComponents::Autocomplete::View.new(
-  form_field: form.govuk_collection_select(field, format_nationalities(nationalities, empty_option: true, description: false), :id, :name, label: { text: "Other nationality", size: "s", aria: { label: "#{(index + 1).ordinalize} additional nationality" } }),
-  classes: "govuk-!-margin-bottom-6",
-  html_attributes: {
-    "data-show-all-values" => true,
-    "data-disable-autoselect" => true,
-    "data-disable-confirm-on-blur" => true,
-    }) %>
+      form_field: form.govuk_collection_select(field, format_nationalities(nationalities, empty_option: true, description: false), :id, :name, label: { text: "Other nationality", size: "s", aria: { label: "#{(index + 1).ordinalize} additional nationality" } }),
+      classes: "govuk-!-margin-bottom-6",
+      html_attributes: {
+        "data-show-all-values" => true,
+        "data-disable-autoselect" => true,
+        "data-disable-confirm-on-blur" => true,
+      },
+    ) %>

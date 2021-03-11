@@ -12,10 +12,11 @@
         <%= f.govuk_radio_buttons_fieldset(:disability_disclosure, legend: { text: t("components.page_titles.trainees.diversity.disability_disclosure.edit"), tag: "h1", size: "l" }) do %>
           <% format_disability_disclosure_options(Diversities::DISABILITY_DISCLOSURE_ENUMS.values).each_with_index do |disclosure_option, index| %>
             <%= f.govuk_radio_button(
-              :disability_disclosure,
-              disclosure_option,
-              label: { text: I18n.t("views.forms.disability_disclosures.labels.#{disclosure_option}") },
-              link_errors: index.zero?) %>
+                  :disability_disclosure,
+                  disclosure_option,
+                  label: { text: I18n.t("views.forms.disability_disclosures.labels.#{disclosure_option}") },
+                  link_errors: index.zero?,
+                ) %>
           <% end %>
 
           <%= f.govuk_radio_divider %>

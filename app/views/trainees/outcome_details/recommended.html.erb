@@ -21,5 +21,6 @@
 <p class="govuk-body govuk-!-margin-bottom-9"><%= govuk_link_to("Check trainee statuses from your list of records", trainees_path) %></p>
 
 <%= render FeedbackLink::View.new(
-  enabled: Settings.features.enable_feedback_link,
-  feedback_link_url: Settings.feedback_link_url) %>
+      enabled: Settings.features.enable_feedback_link,
+      feedback_link_url: Settings.feedback_link_url,
+    ) %>

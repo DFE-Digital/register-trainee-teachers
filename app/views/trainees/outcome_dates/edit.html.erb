@@ -2,9 +2,9 @@
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
-    text: 'Back',
-    href: trainee_path(@trainee)
-  ) %>
+        text: "Back",
+        href: trainee_path(@trainee),
+      ) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -20,7 +20,7 @@
         <%= f.govuk_radio_button :date_string, :today, label: { text: "Today" }, link_errors: true %>
         <%= f.govuk_radio_button :date_string, :yesterday, label: { text: "Yesterday" } %>
         <%= f.govuk_radio_button :date_string, :other, label: { text: "On another day" } do %>
-          <%= f.govuk_date_field :date, legend: { text: t("views.forms.common.on_what_date"), size: 's' }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
+          <%= f.govuk_date_field :date, legend: { text: t("views.forms.common.on_what_date"), size: "s" }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
         <% end %>
       <% end %>
 

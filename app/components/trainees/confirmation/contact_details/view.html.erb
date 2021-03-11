@@ -1,17 +1,16 @@
-<%= render SummaryCard::View.new(trainee: trainee, title: 'Contact details',
-    heading_level: 2,
-    rows: [
-      {
-        key: "Address",
-        value: address,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> address</span>'.html_safe,
-                              edit_trainee_contact_details_path(trainee))
-      },
-      {
-        key: "Email address",
-        value: email ,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> email address</span>'.html_safe,
-                              edit_trainee_contact_details_path(trainee))
-      },
-    ]
-  ) %>
+<%= render SummaryCard::View.new(trainee: trainee, title: "Contact details",
+                                 heading_level: 2,
+                                 rows: [
+                                   {
+                                     key: "Address",
+                                     value: address,
+                                     action: govuk_link_to('Change<span class="govuk-visually-hidden"> address</span>'.html_safe,
+                                                           edit_trainee_contact_details_path(trainee)),
+                                   },
+                                   {
+                                     key: "Email address",
+                                     value: email,
+                                     action: govuk_link_to('Change<span class="govuk-visually-hidden"> email address</span>'.html_safe,
+                                                           edit_trainee_contact_details_path(trainee)),
+                                   },
+                                 ]) %>

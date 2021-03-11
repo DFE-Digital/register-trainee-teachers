@@ -1,4 +1,4 @@
-<%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.training_routes.edit"), tag: "h1"} ) do %>
+<%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.training_routes.edit"), tag: "h1" }) do %>
 
   <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:assessment_only], label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
 

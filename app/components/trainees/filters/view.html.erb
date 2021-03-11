@@ -20,7 +20,7 @@
               </div>
               <div class="moj-filter__heading-action">
                 <p class="govuk-body">
-                <%= govuk_link_to 'Clear<span class="govuk-visually-hidden"> all filters</span>'.html_safe, trainees_path, class: 'govuk-link--no-visited-state' %>
+                <%= govuk_link_to 'Clear<span class="govuk-visually-hidden"> all filters</span>'.html_safe, trainees_path, class: "govuk-link--no-visited-state" %>
                 </p>
               </div>
             </div>
@@ -57,8 +57,8 @@
                 <div class="govuk-checkboxes govuk-checkboxes--small">
                   <% Trainee.states.map do |state, _| %>
                     <div class="govuk-checkboxes__item">
-                      <%= check_box_tag 'state[]', state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
-                      <%= label_tag "state-#{state}", label_for('state', state), class: "govuk-label govuk-checkboxes__label" %>
+                      <%= check_box_tag "state[]", state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
+                      <%= label_tag "state-#{state}", label_for("state", state), class: "govuk-label govuk-checkboxes__label" %>
                     </div>
                   <% end %>
                 </div>

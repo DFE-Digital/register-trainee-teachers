@@ -1,25 +1,25 @@
 <%= render SummaryCard::View.new(trainee: trainee,
-  title: "Trainee progress",
-  heading_level: 2,
-  rows: [
-    {
-      key: "Trainee ID",
-      value: trainee_id,
-      action: govuk_link_to('Change<span class="govuk-visually-hidden"> trainee ID</span>'.html_safe, edit_trainee_trainee_id_path(trainee)),
-    },
-    trn_row,
-    trainee_status_row,
-    {
-      key: "Last updated",
-      value: last_updated_date,
-    },
-    {
-      key: "Record created",
-      value: date_for_summary_view(trainee.created_at),
-    },
-    {
-      key: 'Trainee start date',
-      value: trainee_start_date,
-      action: govuk_link_to('Change<span class="govuk-visually-hidden"> start date</span>'.html_safe, edit_trainee_start_date_path(trainee)),
-    }
-  ].compact) %>
+                                 title: "Trainee progress",
+                                 heading_level: 2,
+                                 rows: [
+                                   {
+                                     key: "Trainee ID",
+                                     value: trainee_id,
+                                     action: govuk_link_to('Change<span class="govuk-visually-hidden"> trainee ID</span>'.html_safe, edit_trainee_trainee_id_path(trainee)),
+                                   },
+                                   trn_row,
+                                   trainee_status_row,
+                                   {
+                                     key: "Last updated",
+                                     value: last_updated_date,
+                                   },
+                                   {
+                                     key: "Record created",
+                                     value: date_for_summary_view(trainee.created_at),
+                                   },
+                                   {
+                                     key: "Trainee start date",
+                                     value: trainee_start_date,
+                                     action: govuk_link_to('Change<span class="govuk-visually-hidden"> start date</span>'.html_safe, edit_trainee_start_date_path(trainee)),
+                                   },
+                                 ].compact) %>

@@ -12,42 +12,44 @@
       <h1 class="govuk-heading-l">Programme details</h1>
 
       <%= render FormComponents::Autocomplete::View.new(
-        form_field: f.govuk_collection_select(:subject, programme_subjects_options,
-                                              :name, :name, label: { text: 'Subject', size: 's' },
-                                              hint: { text: 'Search for the closest matching subject' }),
-        html_attributes: { "data-show-all-values" => true, } ) %>
+            form_field: f.govuk_collection_select(:subject, programme_subjects_options,
+                                                  :name, :name, label: { text: "Subject", size: "s" },
+                                                                hint: { text: "Search for the closest matching subject" }),
+            html_attributes: { "data-show-all-values" => true },
+          ) %>
 
       <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
         <% main_age_ranges_options.each_with_index do |age_range, index| %>
           <%= f.govuk_radio_button(:main_age_range, age_range,
                                    label: { text: age_range },
-                                   link_errors: index.zero? ) %>
+                                   link_errors: index.zero?) %>
         <% end %>
 
         <%= f.govuk_radio_divider %>
 
         <%= f.govuk_radio_button(:main_age_range,
                                  :other,
-                                 label: { text: "Other age range"} ) do %>
+                                 label: { text: "Other age range" }) do %>
           <%= render FormComponents::Autocomplete::View.new(
-            form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
-                                                  :name,
-                                                  :name,
-                                                  label: { text: 'Other age range', size: 's' }),
-            html_attributes: { "data-show-all-values" => true, } ) %>
+                form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
+                                                      :name,
+                                                      :name,
+                                                      label: { text: "Other age range", size: "s" }),
+                html_attributes: { "data-show-all-values" => true },
+              ) %>
 
         <% end %>
       <% end %>
 
       <%= f.govuk_date_field(:programme_start_date,
                              date_of_birth: false,
-                             legend: { text: 'Programme start date', size: 's' },
-                             hint: { text: I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_start_date.hint_html", year: Time.zone.now.year ) } ) %>
+                             legend: { text: "Programme start date", size: "s" },
+                             hint: { text: I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_start_date.hint_html", year: Time.zone.now.year) }) %>
 
        <%= f.govuk_date_field(:programme_end_date,
                               date_of_birth: false,
-                              legend: { text: 'Programme end date', size: 's' },
-                              hint: { text: I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_end_date.hint_html", year: Time.zone.now.next_year.year) } ) %>
+                              legend: { text: "Programme end date", size: "s" },
+                              hint: { text: I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_end_date.hint_html", year: Time.zone.now.next_year.year) }) %>
 
       <%= f.govuk_submit %>
     <% end %>

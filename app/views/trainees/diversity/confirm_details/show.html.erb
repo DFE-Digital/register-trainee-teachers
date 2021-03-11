@@ -5,12 +5,12 @@
 <% end %>
 
 <%= render(
-  partial: "trainees/confirm_details/form",
-  locals: {
-    heading: t("components.page_titles.trainees.diversity.confirm"),
-    confirm_detail: @confirm_detail,
-    trainee: @trainee,
-    component: @confirmation_component,
-    resource_confirm_update_path: trainee_diversity_confirm_path(@trainee),
-  }
-) %>
+      partial: "trainees/confirm_details/form",
+      locals: {
+        heading: t("components.page_titles.trainees.diversity.confirm"),
+        confirm_detail: @confirm_detail,
+        trainee: @trainee,
+        component: @confirmation_component,
+        resource_confirm_update_path: trainee_diversity_confirm_path(@trainee),
+      },
+    ) %>
