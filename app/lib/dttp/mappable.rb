@@ -49,5 +49,9 @@ module Dttp
     def dttp_status_id(status)
       CodeSets::Statuses::MAPPING.dig(status, :entity_id)
     end
+
+    def dttp_reason_for_leaving_id(reason)
+      CodeSets::ReasonsForLeavingCourse::MAPPING.dig(reason, :entity_id)
+    end
   end
 end

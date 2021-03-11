@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Dttp
-  describe RecommendForQTS do
+  describe WithdrawTrainee do
     describe "#call" do
       let(:trainee) do
         create(:trainee, :trn_received, outcome_date: outcome_date, placement_assignment_dttp_id: placement_assignment_dttp_id)
@@ -17,7 +17,7 @@ module Dttp
       before do
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(Client).to receive(:patch).and_return(dttp_response)
-        allow(Params::PlacementOutcomes::Qts)
+        allow(Params::PlacementOutcomes::Withdrawn)
           .to receive(:new).with(trainee: trainee)
           .and_return(double(to_json: expected_params))
       end
@@ -40,7 +40,7 @@ module Dttp
         it "raises an error exception" do
           expect {
             described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::RecommendForQTS::Error, "status: #{status}, body: #{body}, headers: #{headers}")
+          }.to raise_error(Dttp::WithdrawTrainee::Error, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end
