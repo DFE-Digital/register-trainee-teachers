@@ -53,7 +53,7 @@ module Trainees
     end
 
     def other_nationalities
-      @other_nationalities ||= Nationality.where.not(name: NATIONALITIES)
+      @other_nationalities ||= Nationality.all
     end
 
     def personal_details_params
