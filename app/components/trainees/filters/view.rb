@@ -3,7 +3,7 @@
 module Trainees
   module Filters
     class View < GovukComponent::Base
-      include ProgrammeDetailsHelper
+      include CourseDetailsHelper
       attr_accessor :filters, :filter_actions
 
       def initialize(filters:, filter_actions: nil)

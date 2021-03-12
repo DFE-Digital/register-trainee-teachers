@@ -4,7 +4,7 @@ require_relative "base"
 
 module PageObjects
   module Sections
-    class ProgrammeDetails < PageObjects::Sections::Base
+    class CourseDetails < PageObjects::Sections::Base
       element :status, ".govuk-tag"
     end
   end

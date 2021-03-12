@@ -13,7 +13,7 @@ class Progress
   attribute :contact_details, :boolean
   attribute :degrees, :boolean
   attribute :diversity, :boolean
-  attribute :programme_details, :boolean
+  attribute :course_details, :boolean
   attribute :training_details, :boolean
   attribute :placement_details, :boolean
 end

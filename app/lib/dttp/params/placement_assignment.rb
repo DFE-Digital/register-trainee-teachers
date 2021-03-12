@@ -33,10 +33,10 @@ module Dttp
       def build_params
         {
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.age_range)})",
-          "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{programme_subject_id(trainee.subject)})",
+          "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.subject)})",
           "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
-          "dfe_programmestartdate" => trainee.programme_start_date.in_time_zone.iso8601,
-          "dfe_programmeenddate" => trainee.programme_end_date.in_time_zone.iso8601,
+          "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
+          "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
           "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{ACADEMIC_YEAR_2020_2021})",
@@ -45,7 +45,7 @@ module Dttp
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{ITT_QUALIFICATION_AIM_QTS})",
           "dfe_programmeyear" => 1, # TODO: this will need to be derived for other routes. It's n of x year course e.g. 1 of 2
-          "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are programme_year of programme_length
+          "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are course_year of course_length
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
       end
 

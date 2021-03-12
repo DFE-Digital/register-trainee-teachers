@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProgrammeDetailForm
+class CourseDetailForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
@@ -11,12 +11,12 @@ class ProgrammeDetailForm
 
   delegate :id, :persisted?, to: :trainee
 
-  before_validation :sanitise_programme_dates
+  before_validation :sanitise_course_dates
 
   validates :subject, presence: true
   validate :age_range_valid
-  validate :programme_start_date_valid
-  validate :programme_end_date_valid
+  validate :course_start_date_valid
+  validate :course_end_date_valid
 
   after_validation :update_trainee
 
@@ -31,12 +31,12 @@ class ProgrammeDetailForm
   def fields
     attributes = {
       subject: trainee.subject,
-      start_day: trainee.programme_start_date&.day,
-      start_month: trainee.programme_start_date&.month,
-      start_year: trainee.programme_start_date&.year,
-      end_day: trainee.programme_end_date&.day,
-      end_month: trainee.programme_end_date&.month,
-      end_year: trainee.programme_end_date&.year,
+      start_day: trainee.course_start_date&.day,
+      start_month: trainee.course_start_date&.month,
+      start_year: trainee.course_start_date&.year,
+      end_day: trainee.course_end_date&.day,
+      end_month: trainee.course_end_date&.month,
+      end_year: trainee.course_end_date&.year,
     }
 
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.age_range]
@@ -49,25 +49,25 @@ class ProgrammeDetailForm
     attributes
   end
 
-  def programme_start_date
+  def course_start_date
     new_date({ year: start_year, month: start_month, day: start_day })
   end
 
-  def programme_end_date
+  def course_end_date
     new_date({ year: end_year, month: end_month, day: end_day })
   end
 
-  def sanitise_programme_dates
-    programme_dates = %w[start_day
-                         start_month
-                         start_year
-                         end_day
-                         end_month
-                         end_year]
+  def sanitise_course_dates
+    course_dates = %w[start_day
+                      start_month
+                      start_year
+                      end_day
+                      end_month
+                      end_year]
 
-    return if programme_dates.any?(&:nil?)
+    return if course_dates.any?(&:nil?)
 
-    programme_dates.each do |date_attribute|
+    course_dates.each do |date_attribute|
       date = "#{date_attribute}="
       sanitised_date = public_send(date_attribute).to_s.gsub(/\s+/, "")
       public_send(date, sanitised_date)
@@ -81,8 +81,8 @@ private
       trainee.assign_attributes({
         subject: subject,
         age_range: age_range,
-        programme_start_date: programme_start_date,
-        programme_end_date: programme_end_date,
+        course_start_date: course_start_date,
+        course_end_date: course_end_date,
       })
     end
   end
@@ -106,35 +106,35 @@ private
     end
   end
 
-  def programme_start_date_valid
+  def course_start_date_valid
     if [start_day, start_month, start_year].all?(&:blank?)
-      errors.add(:programme_start_date, :blank)
+      errors.add(:course_start_date, :blank)
     elsif start_year.to_i > next_year
-      errors.add(:programme_start_date, :future)
-    elsif !programme_start_date.is_a?(Date)
-      errors.add(:programme_start_date, :invalid)
-    elsif programme_start_date < 10.years.ago
-      errors.add(:programme_start_date, :too_old)
+      errors.add(:course_start_date, :future)
+    elsif !course_start_date.is_a?(Date)
+      errors.add(:course_start_date, :invalid)
+    elsif course_start_date < 10.years.ago
+      errors.add(:course_start_date, :too_old)
     end
   end
 
-  def programme_end_date_valid
+  def course_end_date_valid
     if [end_day, end_month, end_year].all?(&:blank?)
-      errors.add(:programme_end_date, :blank)
+      errors.add(:course_end_date, :blank)
     elsif end_year.to_i > max_years
-      errors.add(:programme_end_date, :future)
-    elsif !programme_end_date.is_a?(Date)
-      errors.add(:programme_end_date, :invalid)
-    elsif programme_end_date < 10.years.ago
-      errors.add(:programme_end_date, :too_old)
+      errors.add(:course_end_date, :future)
+    elsif !course_end_date.is_a?(Date)
+      errors.add(:course_end_date, :invalid)
+    elsif course_end_date < 10.years.ago
+      errors.add(:course_end_date, :too_old)
     end
 
     additional_validation = errors.attribute_names.none? do |attribute_name|
-      %i[programme_start_date programme_end_date].include?(attribute_name)
+      %i[course_start_date course_end_date].include?(attribute_name)
     end
 
-    if additional_validation && programme_start_date >= programme_end_date
-      errors.add(:programme_end_date, :before_or_same_as_start_date)
+    if additional_validation && course_start_date >= course_end_date
+      errors.add(:course_end_date, :before_or_same_as_start_date)
     end
   end
 

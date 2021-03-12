@@ -16,7 +16,7 @@ module PageObjects
       element :defer, ".govuk-link.defer"
 
       section :record_detail, PageObjects::Sections::Summaries::RecordDetail, ".record-details"
-      section :programme_detail, PageObjects::Sections::Summaries::ProgrammeDetail, ".programme-details"
+      section :course_detail, PageObjects::Sections::Summaries::CourseDetail, ".course-details"
 
       section :personal_detail, PageObjects::Sections::Summaries::PersonalDetail, ".personal-details"
       section :contact_detail, PageObjects::Sections::Summaries::ContactDetail, ".contact-details"

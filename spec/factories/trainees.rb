@@ -69,7 +69,7 @@ FactoryBot.define do
     end
 
     trait :in_progress do
-      with_programme_details
+      with_course_details
       with_start_date
       degrees { [build(:degree, :uk_degree_with_details)] }
     end
@@ -83,18 +83,18 @@ FactoryBot.define do
           contact_details: true,
           diversity: true,
           degrees: true,
-          programme_details: true,
+          course_details: true,
           training_details: true,
           placement_details: true,
         )
       end
     end
 
-    trait :with_programme_details do
-      subject { Dttp::CodeSets::ProgrammeSubjects::MAPPING.keys.sample }
+    trait :with_course_details do
+      subject { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
       age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
-      programme_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }
-      programme_end_date { Faker::Date.between(from: programme_start_date + 1.day, to: Time.zone.today) }
+      course_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }
+      course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
     end
 
     trait :with_start_date do

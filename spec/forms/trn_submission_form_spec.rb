@@ -21,7 +21,7 @@ describe TrnSubmissionForm, type: :model do
           diversity: true,
           contact_details: true,
           personal_details: true,
-          programme_details: true,
+          course_details: true,
           training_details: true,
         }
       end
@@ -40,7 +40,7 @@ describe TrnSubmissionForm, type: :model do
           diversity: false,
           contact_details: true,
           personal_details: true,
-          programme_details: true,
+          course_details: true,
           training_details: true,
         }
       end

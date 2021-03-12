@@ -2,8 +2,8 @@
 
 module Dttp
   module Mappable
-    def programme_subject_id(subject)
-      CodeSets::ProgrammeSubjects::MAPPING.dig(subject, :entity_id)
+    def course_subject_id(subject)
+      CodeSets::CourseSubjects::MAPPING.dig(subject, :entity_id)
     end
 
     def course_phase_id(age_range)

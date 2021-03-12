@@ -2,7 +2,7 @@
 
 module Trainees
   module Confirmation
-    module ProgrammeDetails
+    module CourseDetails
       class View < GovukComponent::Base
         include SummaryHelper
 
@@ -14,7 +14,7 @@ module Trainees
         end
 
         def summary_title
-          I18n.t("components.programme_detail.title")
+          I18n.t("components.course_detail.title")
         end
 
         def subject
@@ -29,22 +29,22 @@ module Trainees
           trainee.age_range
         end
 
-        def programme_type
+        def course_type
           return @not_provided_copy if trainee.training_route.blank?
 
           t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
         end
 
-        def programme_start_date
-          return @not_provided_copy if trainee.programme_start_date.blank?
+        def course_start_date
+          return @not_provided_copy if trainee.course_start_date.blank?
 
-          date_for_summary_view(trainee.programme_start_date)
+          date_for_summary_view(trainee.course_start_date)
         end
 
-        def programme_end_date
-          return @not_provided_copy if trainee.programme_end_date.blank?
+        def course_end_date
+          return @not_provided_copy if trainee.course_end_date.blank?
 
-          date_for_summary_view(trainee.programme_end_date)
+          date_for_summary_view(trainee.course_end_date)
         end
       end
     end

@@ -6,8 +6,8 @@
   <%= render Trainees::RecordDetails::View.new(@trainee) %>
 </div>
 
-<div class="programme-details">
-  <%= render Trainees::Confirmation::ProgrammeDetails::View.new(trainee: @trainee) %>
+<div class="course-details">
+  <%= render Trainees::Confirmation::CourseDetails::View.new(trainee: @trainee) %>
 </div>
 
 <% if @trainee.requires_placement_details? %>

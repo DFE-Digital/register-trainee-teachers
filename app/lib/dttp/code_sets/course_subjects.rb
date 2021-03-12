@@ -2,7 +2,7 @@
 
 module Dttp
   module CodeSets
-    module ProgrammeSubjects
+    module CourseSubjects
       MODERN_LANGUAGES = "6ca12838-b3cf-e911-a860-000d3ab1da01"
       PRIMARY_TEACHING = "76a12838-b3cf-e911-a860-000d3ab1da01"
 
