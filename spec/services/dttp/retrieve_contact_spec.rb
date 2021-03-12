@@ -23,9 +23,9 @@ module Dttp
             "lastname" => "Smith",
           }
         end
-        let(:dttp_response) { double(code: 200, body: "{\"contactid\":\"XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX\",\"firstname\":\"John\",\"lastname\":\"Smith\"}") }
+        let(:dttp_response) { double(code: 200, body: parsed_response.to_json) }
 
-        it "returns " do
+        it "returns a parsed response" do
           expect(described_class.call(trainee: trainee)).to eq(parsed_response)
         end
       end
