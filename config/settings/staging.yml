@@ -17,3 +17,6 @@ dfe_sign_in:
 
 features:
   basic_auth: false
+
+environment:
+  name: staging

@@ -51,3 +51,6 @@ pagination:
 
 session_store:
   expire_after_days: 30
+
+environment:
+  name: qa
