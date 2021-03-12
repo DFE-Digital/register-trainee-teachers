@@ -2,18 +2,18 @@
 
 module Dttp
   class RetrieveContact
-    include ServicePattern 
+    include ServicePattern
 
-    class HttpError < StandardError; end 
+    class HttpError < StandardError; end
 
     attr_reader :trainee
 
-    CONTACT_ATTRIBUTE_FILTERS = [
-      "emailaddress1", 
-      "firstname", 
-      "lastname", 
-      "contactid"
-    ]
+    CONTACT_ATTRIBUTE_FILTERS = %w[
+      emailaddress1
+      firstname
+      lastname
+      contactid
+    ].freeze
 
     def initialize(trainee:)
       @trainee = trainee

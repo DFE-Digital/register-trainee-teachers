@@ -16,12 +16,13 @@ module Dttp
       end
 
       context "filtered params" do
-        let(:parsed_response) { { 
-            "contactid"=>"XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-            "firstname"=>"John",
-            "lastname"=>"Smith"
+        let(:parsed_response) do
+          {
+            "contactid" => "XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "firstname" => "John",
+            "lastname" => "Smith",
           }
-        }
+        end
         let(:dttp_response) { double(code: 200, body: "{\"contactid\":\"XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX\",\"firstname\":\"John\",\"lastname\":\"Smith\"}") }
 
         it "returns " do
