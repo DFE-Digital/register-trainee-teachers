@@ -15,7 +15,8 @@
               :disability_disclosure,
               disclosure_option,
               label: { text: I18n.t("views.forms.disability_disclosures.labels.#{disclosure_option}") },
-              link_errors: index.zero?) %>
+              link_errors: index.zero?,
+            ) %>
           <% end %>
 
           <%= f.govuk_radio_divider %>

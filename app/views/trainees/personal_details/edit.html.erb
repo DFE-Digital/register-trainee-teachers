@@ -12,24 +12,24 @@
       <h1 class="govuk-heading-l">Trainee personal details</h1>
 
       <%= f.govuk_text_field :first_names,
-                             label: { text: 'First names', size: 's' },
-                             width: 'three-quarters',
+                             label: { text: "First names", size: "s" },
+                             width: "three-quarters",
                              autocomplete: :disabled %>
 
       <%= f.govuk_text_field :middle_names,
-                             label: { text: 'Middle names', size: 's' },
-                             width: 'three-quarters',
+                             label: { text: "Middle names", size: "s" },
+                             width: "three-quarters",
                              autocomplete: :disabled %>
 
       <%= f.govuk_text_field :last_name,
-                             label: { text: 'Last names', size: 's' },
-                             width: 'three-quarters',
+                             label: { text: "Last names", size: "s" },
+                             width: "three-quarters",
                              autocomplete: :disabled %>
 
       <%= f.govuk_date_field :date_of_birth,
                              date_of_birth: true,
-                             legend: { text: 'Date of birth', size: 's' },
-                             hint: { text: I18n.t("activemodel.errors.models.personal_detail_form.attributes.date_of_birth.hint_html", year: 41.year.ago.year) } %>
+                             legend: { text: "Date of birth", size: "s" },
+                             hint: { text: I18n.t("activemodel.errors.models.personal_detail_form.attributes.date_of_birth.hint_html", year: 41.years.ago.year) } %>
 
       <%= f.govuk_radio_buttons_fieldset(:gender, legend: { text: "Gender", size: "s" }, classes: "gender") do %>
         <%= f.govuk_radio_button :gender, :female, label: { text: "Female" }, link_errors: true %>
@@ -40,7 +40,7 @@
       <% end %>
 
       <%= f.govuk_check_boxes_fieldset :nationality_ids,
-                                       legend: { text: "Nationality", size: 's' },
+                                       legend: { text: "Nationality", size: "s" },
                                        hint: { text: "Select all that apply" },
                                        classes: "nationality" do %>
         <% format_nationalities(@nationalities).each do |nationality| %>
@@ -50,11 +50,12 @@
               multiple: true,
               link_errors: true,
               label: { text: nationality.name },
-              hint: { text: nationality.description }) %>
+              hint: { text: nationality.description },
+            ) %>
         <% end %>
 
         <%= f.govuk_check_box(:other, 1, 0, multiple: false, link_errors: true) do %>
-          <% [:other_nationality1, :other_nationality2, :other_nationality3].each_with_index do |field, index| %>
+          <% %i[other_nationality1 other_nationality2 other_nationality3].each_with_index do |field, index| %>
             <%= render "nationality_select_field", form: f, field: field, index: index, nationalities: @other_nationalities %>
           <% end %>
         <% end %>

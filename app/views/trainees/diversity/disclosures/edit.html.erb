@@ -15,7 +15,8 @@
           ->(value) { value },
           ->(label) { I18n.t("views.forms.diversity_disclosures.label_names.#{label}") },
           legend: { text: "Has the trainee shared diversity information?", tag: "h1", size: "l" },
-          hint: { text: "Includes ethnicity and disabilities" }) %>
+          hint: { text: "Includes ethnicity and disabilities" },
+        ) %>
 
       <%= f.govuk_submit %>
     <% end %>

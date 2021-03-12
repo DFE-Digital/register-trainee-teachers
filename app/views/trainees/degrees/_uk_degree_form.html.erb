@@ -1,4 +1,4 @@
-<%= form_with model: [ @trainee, @degree ], local: true do |f| %>
+<%= form_with model: [@trainee, @degree], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "uk" %>
 
   <%= f.govuk_error_summary %>
@@ -7,40 +7,39 @@
 
   <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:subject, subjects_options,
-                                          :name, :name, label: { text: 'Degree subject', size: 's' },
-                                          hint: { text: 'Search for the closest matching subject.
+                                          :name, :name, label: { text: "Degree subject", size: "s" },
+                                                        hint: { text: 'Search for the closest matching subject.
                                                          You can start typing to narrow down your search.' }),
 
     html_attributes: {
       "data-show-all-values" => true,
-    }
+    },
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :name,
-                                          :name, label: { text: "Type of degree", size: 's'},
-                                          hint: { text: "For example, BA, BSc or other (please specify)" } ),
+                                          :name, label: { text: "Type of degree", size: "s" },
+                                                 hint: { text: "For example, BA, BSc or other (please specify)" }),
     html_attributes: {
-      "data-show-all-values"=> true,
-    }
+      "data-show-all-values" => true,
+    },
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:institution, institutions_options, :name,
-                                          :name, label: { text: "Institution", size: 's' },
-                                          ),
+                                          :name, label: { text: "Institution", size: "s" }),
     html_attributes: {
       "data-show-all-values" => true,
-    }
+    },
   ) %>
 
   <%= f.govuk_text_field :graduation_year,
-        label: { text: "Graduation year", size: 's' },
+        label: { text: "Graduation year", size: "s" },
         width: "one-quarter" %>
 
   <%= f.govuk_radio_buttons_fieldset(:grade,
-        legend: { text: "Degree grade", size: 's' },
-        classes: "degree-grade" ) do %>
+        legend: { text: "Degree grade", size: "s" },
+        classes: "degree-grade") do %>
 
     <% grades.each_with_index do |name, index| %>
       <% if name != "Other" %>
