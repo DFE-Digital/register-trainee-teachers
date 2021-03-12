@@ -2,8 +2,8 @@
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
-    text: 'All records',
-    href: trainees_path
+    text: "All records",
+    href: trainees_path,
   ) %>
 <% end %>
 
@@ -25,6 +25,7 @@
 
     <%= render FeedbackLink::View.new(
       enabled: Settings.features.enable_feedback_link,
-      feedback_link_url: Settings.feedback_link_url) %>
+      feedback_link_url: Settings.feedback_link_url,
+    ) %>
   </div>
 </div>

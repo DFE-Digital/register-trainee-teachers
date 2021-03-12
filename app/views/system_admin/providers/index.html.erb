@@ -5,7 +5,8 @@
 <p class="govuk-body">
   <%= render GovukComponent::StartNowButton.new(
   text: "Add a provider",
-  href: new_provider_path ) %>
+  href: new_provider_path,
+) %>
 </p>
 
 <% if @providers.any? %>

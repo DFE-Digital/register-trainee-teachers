@@ -1,4 +1,4 @@
-<%= form_with model: [ @trainee, @degree ], local: true do |f| %>
+<%= form_with model: [@trainee, @degree], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "non_uk" %>
   <%= f.govuk_error_summary %>
 
@@ -6,33 +6,33 @@
 
   <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:subject, subjects_options,
-                                          :name, :name, label: { text: 'Degree subject', size: 's' },
-                                          hint: { text: 'Search for the closest matching subject.
+                                          :name, :name, label: { text: "Degree subject", size: "s" },
+                                                        hint: { text: 'Search for the closest matching subject.
                                                          You can start typing to narrow down your search.' }),
     html_attributes: {
       "data-show-all-values" => false,
-    }
+    },
   ) %>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
     form_field: f.govuk_collection_select(:country, countries_options, :name,
-                                          :name, label: { text: "Where is the degree institution based?", size: 's' }),
-    html_attributes: { "data-show-all-values" => false }
+                                          :name, label: { text: "Where is the degree institution based?", size: "s" }),
+    html_attributes: { "data-show-all-values" => false },
   ) %>
 
   <%= f.govuk_text_field :graduation_year,
-                         label: { text: "Graduation year", size: 's' },
+                         label: { text: "Graduation year", size: "s" },
                          width: "one-quarter",
                          autocomplete: :disabled %>
 
   <div class="govuk-form-group">
-    <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the NARIC comparable UK degree", size: 's'} do %>
+    <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the NARIC comparable UK degree", size: "s" } do %>
       <% NARIC_NON_UK.each do |name| %>
         <%= f.govuk_radio_button :non_uk_degree, name,
                                   label: { text: name }, link_errors: true %>
       <% end %>
       <%= f.govuk_radio_divider %>
-      <%= f.govuk_radio_button :non_uk_degree, :non_naric, label: { text: "NARIC not provided"} %>
+      <%= f.govuk_radio_button :non_uk_degree, :non_naric, label: { text: "NARIC not provided" } %>
     <% end %>
   </div>
 

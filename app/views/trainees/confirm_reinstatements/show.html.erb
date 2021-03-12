@@ -16,7 +16,7 @@
     <%= render Trainees::Confirmation::ReinstatementDetails::View.new(trainee: @trainee) %>
 
     <%= form_with url: trainee_confirm_reinstatement_path(@trainee), method: :patch, local: true do |f| %>
-      <%= f.govuk_submit  t("views.confirm_reinstatement.submit") %>
+      <%= f.govuk_submit t("views.confirm_reinstatement.submit") %>
     <%- end -%>
   </div>
 </div>

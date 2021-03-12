@@ -6,61 +6,21 @@ linters:
     rubocop_config:
       inherit_from:
         - .rubocop.yml
-      Style/FrozenStringLiteralComment:
-        Enabled: false # 666 app errors
-      Layout/TrailingEmptyLines:
-        Enabled: false # 652 app errors
-      Layout/InitialIndentation:
-        Enabled: false # 661 app errors
-      Style/TrailingCommaInArguments:
-        Enabled: false # 44 app errors
-      Layout/MultilineMethodCallBraceLayout:
-        Enabled: false # 22 app errors
-      Layout/SpaceInsideParens:
-        Enabled: false # 19 app errors
-      Layout/FirstArgumentIndentation:
-        Enabled: false # 41 app errors
-      Style/StringLiterals:
-        Enabled: false # 122 app errors
-      Layout/SpaceInsideHashLiteralBraces:
-        Enabled: false # 13 app errors
-      Style/TrailingCommaInArrayLiteral:
-        Enabled: false # 3 app errors
-      Layout/FirstArrayElementIndentation:
-        Enabled: false # 3 app errors
-      Layout/ExtraSpacing:
-        Enabled: false # 2 app errors
       Layout/ArgumentAlignment:
         Enabled: false # 10 app errors
-      Layout/SpaceInsideArrayLiteralBrackets:
-        Enabled: false # 4 app errors
-      Layout/SpaceBeforeFirstArg:
-        Enabled: false # 2 app errors
-      Lint/UselessAssignment:
-        Enabled: false # 1 app error
-      Layout/HashAlignment:
-        Enabled: false # 42 app errors
-      Layout/SpaceAroundOperators:
-        Enabled: false # 1 app error
-      Layout/ClosingParenthesisIndentation:
-        Enabled: false # 1 app error
+      Layout/CommentIndentation:
+        Enabled: false
+      Layout/FirstArgumentIndentation:
+        Enabled: false # 41 app errors
+      Layout/FirstArrayElementIndentation:
+        Enabled: false # 3 app errors
       Layout/FirstHashElementIndentation:
         Enabled: false # 5 app errors
-      Layout/MultilineHashBraceLayout:
+      Layout/InitialIndentation:
+        Enabled: false # 661 app errors
+      Layout/TrailingEmptyLines:
+        Enabled: false # 652 app errors
+      Lint/UselessAssignment:
         Enabled: false # 1 app error
-      Style/TrailingCommaInHashLiteral:
-        Enabled: false # 21 app errors
-      Layout/TrailingWhitespace:
-        Enabled: false # 4 app errors
-      Rails/PluralizationGrammar:
-        Enabled: false # 1 app error
-      Layout/BlockAlignment:
-        Enabled: false # 2 app errors
-      Layout/SpaceAfterColon:
-        Enabled: false # 2 app errors
-      Layout/SpaceBeforeComma:
-        Enabled: false # 3 app errors
-      Style/SymbolArray:
-        Enabled: false # 1 app error
-      Style/MultilineIfModifier:
-        Enabled: false # 90 errors
+      Style/FrozenStringLiteralComment:
+        Enabled: false # 666 app errors

@@ -8,7 +8,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_with model: @training_details, url: trainee_trainee_id_path, local: true do |f| %>
       <%= f.govuk_text_field :trainee_id,
-                             label: { text: 'Trainee ID', tag: 'h1', size: 'l' },
+                             label: { text: "Trainee ID", tag: "h1", size: "l" },
                              width: 20,
                              autocomplete: :disabled %>
       <%= f.govuk_submit "Continue" %>

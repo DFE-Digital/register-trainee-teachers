@@ -8,7 +8,7 @@
         <%= render GovukComponent::Tag.new(
           text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + row.status,
           colour: row.get_status_colour,
-          html_attributes: { id: row.status_id }
+          html_attributes: { id: row.status_id },
         ) %>
       <% end %>
     <% end %>
