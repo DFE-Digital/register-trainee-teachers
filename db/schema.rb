@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_154826) do
+ActiveRecord::Schema.define(version: 2021_03_15_141417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_154826) do
     t.uuid "dttp_id"
     t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -179,6 +180,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_154826) do
     t.uuid "dttp_id"
     t.boolean "system_admin", default: false
     t.index ["dfe_sign_in_uid"], name: "index_users_on_dfe_sign_in_uid", unique: true
+    t.index ["dttp_id"], name: "index_users_on_dttp_id", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider_id"], name: "index_users_on_provider_id"
   end
