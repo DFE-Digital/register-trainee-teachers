@@ -6,4 +6,6 @@ if ENV.key?("VCAP_SERVICES")
   redis_credentials = redis_config["credentials"]
 
   Redis.current = Redis.new(url: redis_credentials["uri"])
+else
+  Redis.current = Redis.new(url: ENV["REDIS_URL"])
 end
