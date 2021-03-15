@@ -75,45 +75,45 @@
     <h2 class="govuk-heading-m">About their teacher training</h2>
 
     <%= render TaskList::View.new(classes: "record-setup") do |component|
-      component.slot(
-        :row,
-        task_name: "Course details",
-        path: edit_trainee_course_details_path(@trainee),
-        confirm_path: trainee_course_details_confirm_path(@trainee),
-        classes: "course-details",
-        status: ProgressService.call(
-          validator: CourseDetailForm.new(@trainee),
-          progress_value: @trainee.progress.course_details,
-        ).status,
-      )
+          component.slot(
+            :row,
+            task_name: "Course details",
+            path: edit_trainee_course_details_path(@trainee),
+            confirm_path: trainee_course_details_confirm_path(@trainee),
+            classes: "course-details",
+            status: ProgressService.call(
+              validator: CourseDetailForm.new(@trainee),
+              progress_value: @trainee.progress.course_details,
+            ).status,
+          )
 
-      component.slot(
-        :row,
-        task_name: "Trainee start date and ID",
-        path: edit_trainee_training_details_path(@trainee),
-        confirm_path: trainee_training_details_confirm_path(@trainee),
-        classes: "training-details",
-        status: ProgressService.call(
-          validator: TrainingDetailsForm.new(@trainee),
-          progress_value: @trainee.progress.training_details,
-        ).status,
-      )
+          component.slot(
+            :row,
+            task_name: "Trainee start date and ID",
+            path: edit_trainee_training_details_path(@trainee),
+            confirm_path: trainee_training_details_confirm_path(@trainee),
+            classes: "training-details",
+            status: ProgressService.call(
+              validator: TrainingDetailsForm.new(@trainee),
+              progress_value: @trainee.progress.training_details,
+            ).status,
+          )
 
       # TODO: Populate with correct paths when created
-      if @trainee.requires_placement_details?
-        component.slot(
-          :row,
-          task_name: "Placement details",
-          path: review_draft_trainee_path(@trainee),
-          confirm_path: review_draft_trainee_path(@trainee),
-          classes: "placement-details",
-          status: ProgressService.call(
-            validator: PlacementDetailForm.new(@trainee),
-            progress_value: @trainee.progress.placement_details,
-          ).status,
-        )
-      end
-    end %>
+          if @trainee.requires_placement_details?
+            component.slot(
+              :row,
+              task_name: "Placement details",
+              path: review_draft_trainee_path(@trainee),
+              confirm_path: review_draft_trainee_path(@trainee),
+              classes: "placement-details",
+              status: ProgressService.call(
+                validator: PlacementDetailForm.new(@trainee),
+                progress_value: @trainee.progress.placement_details,
+              ).status,
+            )
+          end
+        end %>
   </div>
 </div>
 
