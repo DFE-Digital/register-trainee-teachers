@@ -7,7 +7,7 @@ module Dttp
     describe "#call" do
       let(:contact_entity_id) { SecureRandom.uuid }
       let(:trainee) { create(:trainee, dttp_id: contact_entity_id) }
-      let(:filters) { "emailaddress1,firstname,lastname,contactid" }
+      let(:filters) { "emailaddress1,firstname,lastname" }
       let(:path) { "/contacts(#{trainee.dttp_id})?$select=#{filters}" }
 
       before do
@@ -21,6 +21,7 @@ module Dttp
             "contactid" => "XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
             "firstname" => "John",
             "lastname" => "Smith",
+            "emailaddress1" => "example@example.com",
           }
         end
         let(:dttp_response) { double(code: 200, body: parsed_response.to_json) }

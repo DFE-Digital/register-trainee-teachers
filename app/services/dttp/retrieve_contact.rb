@@ -12,7 +12,6 @@ module Dttp
       emailaddress1
       firstname
       lastname
-      contactid
     ].freeze
 
     def initialize(trainee:)
