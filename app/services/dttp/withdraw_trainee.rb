@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dttp
-  class RecommendForQTS
+  class WithdrawTrainee
     include ServicePattern
 
     class Error < StandardError; end
@@ -28,7 +28,7 @@ module Dttp
   private
 
     def params
-      @params ||= Params::PlacementOutcomes::Qts.new(trainee: trainee)
+      @params ||= Params::PlacementOutcomes::Withdrawn.new(trainee: trainee)
     end
   end
 end
