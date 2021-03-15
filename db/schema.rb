@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_155415) do
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
   end
 
   create_table "sessions", force: :cascade do |t|
