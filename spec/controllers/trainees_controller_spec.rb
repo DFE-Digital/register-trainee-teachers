@@ -9,6 +9,38 @@ describe TraineesController do
     allow(controller).to receive(:current_user).and_return(user)
   end
 
+  describe "#index" do
+    context "no filters" do
+      before do
+        get(:index)
+      end
+
+      it "saves path to tracker" do
+        tracker = FilteredBackLink::Tracker.new(session: session, href: trainees_path)
+        expect(session[tracker.scope]).to eq("/trainees")
+      end
+
+      it "overrides saved path with new path" do
+        tracker = FilteredBackLink::Tracker.new(session: session, href: trainees_path)
+        expect(session[tracker.scope]).to eq("/trainees")
+
+        get(:index, params: { "commit" => "Apply filters", "sort_by" => "", "text_search" => "", "state" => %w[draft], "subject" => "All subjects" })
+        expect(session[tracker.scope]).to eq("/trainees?commit=Apply+filters&sort_by=&state%5B%5D=draft&subject=All+subjects&text_search=")
+      end
+    end
+
+    context "with draft filter" do
+      before do
+        get(:index, params: { "commit" => "Apply filters", "sort_by" => "", "text_search" => "", "state" => %w[draft], "subject" => "All subjects" })
+      end
+
+      it "saves path to tracker" do
+        tracker = FilteredBackLink::Tracker.new(session: session, href: trainees_path)
+        expect(session[tracker.scope]).to eq("/trainees?commit=Apply+filters&sort_by=&state%5B%5D=draft&subject=All+subjects&text_search=")
+      end
+    end
+  end
+
   describe "#show" do
     context "with a non-draft trainee" do
       let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.provider) }

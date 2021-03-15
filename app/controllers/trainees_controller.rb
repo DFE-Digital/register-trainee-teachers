@@ -3,6 +3,7 @@
 class TraineesController < ApplicationController
   before_action :ensure_trainee_is_not_draft!, only: :show
   before_action :ensure_trainee_is_draft!, only: :destroy
+  before_action :save_filter, only: :index
   helper_method :filter_params
 
   def index
@@ -89,6 +90,10 @@ private
 
   def filter_params
     params.permit(:subject, :text_search, :sort_by, training_route: [], state: [])
+  end
+
+  def save_filter
+    FilteredBackLink::Tracker.new(session: session, href: trainees_path).save_path(request.fullpath)
   end
 
   def data_export

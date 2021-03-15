@@ -1,9 +1,9 @@
 <%= render PageTitle::View.new(title: "trn_submissions.show") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
-    text: "All records",
+  <%= render FilteredBackLink::View.new(
     href: trainees_path,
+    text: t("views.all_records"),
   ) %>
 <% end %>
 
