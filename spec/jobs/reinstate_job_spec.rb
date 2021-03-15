@@ -36,6 +36,7 @@ describe ReinstateJob do
     allow(Dttp::UpdateTraineeStatus).to receive(:call).with(contact_update_params_without_trn)
     allow(Dttp::UpdateTraineeStatus).to receive(:call).with(placement_assignment_update_params_with_trn)
     allow(Dttp::UpdateTraineeStatus).to receive(:call).with(placement_assignment_update_params_without_trn)
+    allow(Dttp::UpdateDormancy).to receive(:call).with(trainee: trainee)
   end
 
   context "with a trainee with a trn" do

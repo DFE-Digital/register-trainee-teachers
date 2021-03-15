@@ -161,6 +161,11 @@ FactoryBot.define do
       state { "qts_awarded" }
     end
 
+    trait :with_dttp_dormancy do
+      deferred
+      dormancy_dttp_id { SecureRandom.uuid }
+    end
+
     trait :withdrawn_on_another_day do
       withdraw_date { Faker::Date.in_date_period }
     end
