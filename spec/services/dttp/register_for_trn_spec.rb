@@ -7,7 +7,7 @@ module Dttp
     include ActiveJob::TestHelper
 
     describe "#call" do
-      let(:trainee) { create(:trainee, :with_programme_details, :with_start_date) }
+      let(:trainee) { create(:trainee, :with_course_details, :with_start_date) }
       let(:degree) { build(:degree, :uk_degree_with_details) }
 
       let(:batch_request) { instance_double(BatchRequest) }

@@ -8,7 +8,7 @@ module PageObjects
     class ReviewDraft < PageObjects::Base
       set_url "/trainees/{id}/review-draft"
 
-      section :programme_details, PageObjects::Sections::ProgrammeDetails, ".app-task-list__item.programme-details"
+      section :course_details, PageObjects::Sections::CourseDetails, ".app-task-list__item.course-details"
       section :personal_details, PageObjects::Sections::PersonalDetails, ".app-task-list__item.personal-details"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
       section :diversity_section, PageObjects::Sections::Diversity, ".app-task-list__item.diversity-details"

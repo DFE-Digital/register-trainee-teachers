@@ -38,7 +38,7 @@ module Trainees
           contact_details: Trainees::Confirmation::ContactDetails::View,
           diversity: Trainees::Confirmation::Diversity::View,
           degrees: Trainees::Confirmation::Degrees::View,
-          programme_details: Trainees::Confirmation::ProgrammeDetails::View,
+          course_details: Trainees::Confirmation::CourseDetails::View,
           training_details: Trainees::Confirmation::TrainingDetails::View,
         }[section]
       end
@@ -61,9 +61,9 @@ module Trainees
             not_started: "trainee_degrees_new_type_path",
             in_progress: "trainee_degrees_confirm_path",
           },
-          programme_details: {
-            not_started: "edit_trainee_programme_details_path",
-            in_progress: "trainee_programme_details_confirm_path",
+          course_details: {
+            not_started: "edit_trainee_course_details_path",
+            in_progress: "trainee_course_details_confirm_path",
           },
           training_details: {
             not_started: "edit_trainee_training_details_path",

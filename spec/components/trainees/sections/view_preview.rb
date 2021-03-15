@@ -9,7 +9,7 @@ module Trainees
          contact_details
          degrees
          diversity
-         programme_details
+         course_details
          training_details].each do |section|
         define_method "continue_sections_#{section}" do
           trainee = continue_sections_trainee

@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-describe ProgrammeDetailForm, type: :model do
+describe CourseDetailForm, type: :model do
   let(:trainee) { build(:trainee) }
 
   subject { described_class.new(trainee) }
 
   describe "before validation" do
-    context "#sanitise_programme_dates" do
+    context "#sanitise_course_dates" do
       let(:attributes) do
         { start_day: "1 2",
           start_month: "1 1",
@@ -20,13 +20,13 @@ describe ProgrammeDetailForm, type: :model do
 
       before do
         subject.assign_attributes(attributes)
-        subject.sanitise_programme_dates
+        subject.sanitise_course_dates
         subject.valid?
       end
 
-      it "does not return programme date errors" do
-        expect(subject.errors[:programme_start_date]).to be_empty
-        expect(subject.errors[:programme_end_date]).to be_empty
+      it "does not return course date errors" do
+        expect(subject.errors[:course_start_date]).to be_empty
+        expect(subject.errors[:course_end_date]).to be_empty
       end
     end
   end
@@ -35,7 +35,7 @@ describe ProgrammeDetailForm, type: :model do
     it { is_expected.to validate_presence_of(:subject) }
 
     describe "custom" do
-      translation_key_prefix = "activemodel.errors.models.programme_detail_form.attributes"
+      translation_key_prefix = "activemodel.errors.models.course_detail_form.attributes"
 
       before do
         subject.assign_attributes(attributes)
@@ -59,8 +59,8 @@ describe ProgrammeDetailForm, type: :model do
           end
         end
 
-        context "main age range is 3 to 11 programme" do
-          let(:main_age_range) { "3 to 11 programme" }
+        context "main age range is 3 to 11 course" do
+          let(:main_age_range) { "3 to 11 course" }
           it "does not return an error message for main age range" do
             expect(subject.errors[:main_age_range]).to be_empty
           end
@@ -84,8 +84,8 @@ describe ProgrammeDetailForm, type: :model do
             end
           end
 
-          context "additional age range is 0 - 5 programme" do
-            let(:additional_age_range) { "0 - 5 programme" }
+          context "additional age range is 0 - 5 course" do
+            let(:additional_age_range) { "0 - 5 course" }
 
             it "does not return an error message for additional age range" do
               expect(subject.errors[:additional_age_range]).to be_empty
@@ -105,7 +105,7 @@ describe ProgrammeDetailForm, type: :model do
         date_error_message = "date error message"
 
         shared_examples date_error_message do |attribute_name, translation_key_suffix, day, month, year|
-          if attribute_name == :programme_start_date
+          if attribute_name == :course_start_date
             let(:start_date_attributes) do
               { start_day: day, start_month: month, start_year: year }
             end
@@ -126,7 +126,7 @@ describe ProgrammeDetailForm, type: :model do
           end
         end
 
-        describe "#programme_start_date_valid" do
+        describe "#course_start_date_valid" do
           let(:end_date_attributes) { {} }
 
           context "the start date fields are 12/11/2020" do
@@ -134,18 +134,18 @@ describe ProgrammeDetailForm, type: :model do
               { start_day: "12", start_month: "11", start_year: "2020" }
             end
 
-            it "does not return an error message for programme start date" do
-              expect(subject.errors[:programme_start_date]).to be_empty
+            it "does not return an error message for course start date" do
+              expect(subject.errors[:course_start_date]).to be_empty
             end
           end
 
-          include_examples date_error_message, :programme_start_date, :blank,
+          include_examples date_error_message, :course_start_date, :blank,
                            "", "", ""
-          include_examples date_error_message, :programme_start_date, :invalid,
+          include_examples date_error_message, :course_start_date, :invalid,
                            "foo", "foo", "foo"
 
           start_date = 10.years.ago
-          include_examples date_error_message, :programme_start_date, :too_old,
+          include_examples date_error_message, :course_start_date, :too_old,
                            start_date.day, start_date.month, start_date.year
 
           context "the start date fields are too far in future" do
@@ -153,8 +153,8 @@ describe ProgrammeDetailForm, type: :model do
               { start_day: "12", start_month: "11", start_year: "2099" }
             end
 
-            it "returns an error message for programme start date" do
-              expect(subject.errors.messages[:programme_start_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_start_date.future")
+            it "returns an error message for course start date" do
+              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_start_date.future")
             end
           end
 
@@ -163,13 +163,13 @@ describe ProgrammeDetailForm, type: :model do
               { start_day: "12", start_month: "11", start_year: "2000" }
             end
 
-            it "returns an error message for programme start date" do
-              expect(subject.errors.messages[:programme_start_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_start_date.too_old")
+            it "returns an error message for course start date" do
+              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_start_date.too_old")
             end
           end
         end
 
-        describe "#programme_end_date_valid" do
+        describe "#course_end_date_valid" do
           start_date = 1.month.ago
 
           let(:start_date_attributes) do
@@ -189,17 +189,17 @@ describe ProgrammeDetailForm, type: :model do
               }
             end
             it "does not return an error message for end date" do
-              expect(subject.errors[:programme_end_date]).to be_empty
+              expect(subject.errors[:course_end_date]).to be_empty
             end
           end
 
-          include_examples date_error_message, :programme_end_date, :blank,
+          include_examples date_error_message, :course_end_date, :blank,
                            "", "", ""
-          include_examples date_error_message, :programme_end_date, :invalid,
+          include_examples date_error_message, :course_end_date, :invalid,
                            "foo", "foo", "foo"
-          include_examples date_error_message, :programme_end_date, :before_or_same_as_start_date,
+          include_examples date_error_message, :course_end_date, :before_or_same_as_start_date,
                            start_date.day, start_date.month, start_date.year
-          include_examples date_error_message, :programme_end_date, :before_or_same_as_start_date,
+          include_examples date_error_message, :course_end_date, :before_or_same_as_start_date,
                            start_date.day, start_date.month, start_date.year - 1
 
           context "the end date fields are too far in future" do
@@ -207,8 +207,8 @@ describe ProgrammeDetailForm, type: :model do
               { end_day: "12", end_month: "11", end_year: "3000" }
             end
 
-            it "returns an error message for programme end date" do
-              expect(subject.errors.messages[:programme_end_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_end_date.future")
+            it "returns an error message for course end date" do
+              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_end_date.future")
             end
           end
 
@@ -217,8 +217,8 @@ describe ProgrammeDetailForm, type: :model do
               { end_day: "12", end_month: "11", end_year: "2001" }
             end
 
-            it "returns an error message for programme end date" do
-              expect(subject.errors.messages[:programme_end_date]).to include I18n.t("activemodel.errors.models.programme_detail_form.attributes.programme_end_date.too_old")
+            it "returns an error message for course end date" do
+              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_end_date.too_old")
             end
           end
         end
@@ -247,7 +247,7 @@ describe ProgrammeDetailForm, type: :model do
               end_day: valid_end_date.day.to_s,
               end_month: valid_end_date.month.to_s,
               end_year: valid_end_date.year.to_s,
-              main_age_range: "11 to 19 programme",
+              main_age_range: "11 to 19 course",
               subject: "Psychology" }
           end
 
@@ -257,9 +257,9 @@ describe ProgrammeDetailForm, type: :model do
               .from(nil).to(attributes[:subject])
               .and change { trainee.age_range }
               .from(nil).to(attributes[:main_age_range])
-              .and change { trainee.programme_start_date }
+              .and change { trainee.course_start_date }
               .from(nil).to(Date.parse(valid_start_date.to_s))
-              .and change { trainee.programme_end_date }
+              .and change { trainee.course_end_date }
               .from(nil).to(Date.parse(valid_end_date.to_s))
           end
         end

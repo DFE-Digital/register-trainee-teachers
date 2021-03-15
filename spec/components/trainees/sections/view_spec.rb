@@ -54,7 +54,7 @@ module Trainees
         include_examples renders_incomplete_section, :contact_details, :not_started
         include_examples renders_incomplete_section, :diversity, :not_started
         include_examples renders_incomplete_section, :degrees, :not_started
-        include_examples renders_incomplete_section, :programme_details, :not_started
+        include_examples renders_incomplete_section, :course_details, :not_started
         include_examples renders_incomplete_section, :training_details, :not_started
       end
 
@@ -65,7 +65,7 @@ module Trainees
         include_examples renders_incomplete_section, :contact_details, :in_progress
         include_examples renders_incomplete_section, :diversity, :in_progress
         include_examples renders_incomplete_section, :degrees, :in_progress
-        include_examples renders_incomplete_section, :programme_details, :in_progress
+        include_examples renders_incomplete_section, :course_details, :in_progress
         include_examples renders_incomplete_section, :training_details, :in_progress
       end
 
@@ -78,7 +78,7 @@ module Trainees
         include_examples renders_confirmation, :contact_details
         include_examples renders_confirmation, :diversity
         include_examples renders_confirmation, :degrees
-        include_examples renders_confirmation, :programme_details
+        include_examples renders_confirmation, :course_details
         include_examples renders_confirmation, :training_details
       end
 
@@ -113,9 +113,9 @@ module Trainees
             not_started: "trainee_degrees_new_type_path",
             in_progress: "trainee_degrees_confirm_path",
           },
-          programme_details: {
-            not_started: "edit_trainee_programme_details_path",
-            in_progress: "trainee_programme_details_confirm_path",
+          course_details: {
+            not_started: "edit_trainee_course_details_path",
+            in_progress: "trainee_course_details_confirm_path",
           },
           training_details: {
             not_started: "edit_trainee_training_details_path",
@@ -130,7 +130,7 @@ module Trainees
           contact_details: Trainees::Confirmation::ContactDetails::View,
           diversity: Trainees::Confirmation::Diversity::View,
           degrees: Trainees::Confirmation::Degrees::View,
-          programme_details: Trainees::Confirmation::ProgrammeDetails::View,
+          course_details: Trainees::Confirmation::CourseDetails::View,
           training_details: Trainees::Confirmation::TrainingDetails::View,
         }[section]
       end

@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   resources :trainees, except: :edit do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
-      resource :programme_details, concerns: :confirmable, only: %i[edit update], path: "/programme-details"
+      resource :course_details, concerns: :confirmable, only: %i[edit update], path: "/course-details"
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resource :trainee_id, concerns: :confirmable, only: %i[edit update], path: "/trainee-id"
       resource :start_date, concerns: :confirmable, only: %i[edit update], path: "/trainee-start-date"

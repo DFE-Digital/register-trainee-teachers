@@ -5,11 +5,11 @@ require_relative "../base"
 module PageObjects
   module Sections
     module Summaries
-      class ProgrammeDetail < PageObjects::Sections::Base
+      class CourseDetail < PageObjects::Sections::Base
         element :subject_row, ".govuk-summary-list__row.subject"
         element :age_range_row, ".govuk-summary-list__row.age-range"
-        element :start_date_row, ".govuk-summary-list__row.programme-start-date"
-        element :end_date_row, ".govuk-summary-list__row.programme-end-date"
+        element :start_date_row, ".govuk-summary-list__row.course-start-date"
+        element :end_date_row, ".govuk-summary-list__row.course-end-date"
       end
     end
   end

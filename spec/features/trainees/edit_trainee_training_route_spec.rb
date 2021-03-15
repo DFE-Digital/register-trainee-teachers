@@ -12,7 +12,7 @@ feature "editing a trainee training route", type: :feature do
   context "draft-trainee" do
     let(:traits) { :draft }
     scenario "viewing the draft-trainee's current training route" do
-      then_i_see_the_programme_details
+      then_i_see_the_course_details
       and_current_training_route_should_be_selected
     end
 
@@ -37,7 +37,7 @@ private
     trainee_edit_training_route_page.load(id: trainee.slug)
   end
 
-  def then_i_see_the_programme_details
+  def then_i_see_the_course_details
     expect(trainee_edit_training_route_page).to be_displayed
   end
 

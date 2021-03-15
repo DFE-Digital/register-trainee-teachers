@@ -72,7 +72,7 @@ module Trainees
         trainee_personal_details_path,
         trainee_contact_details_path,
         trainee_degrees_path,
-        trainee_programme_details_path,
+        trainee_course_details_path,
         trainee_training_details_path,
         trainee_trainee_id_path,
         trainee_start_date_path,

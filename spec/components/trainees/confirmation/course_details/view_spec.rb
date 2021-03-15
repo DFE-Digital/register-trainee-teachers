@@ -4,17 +4,17 @@ require "rails_helper"
 
 module Trainees
   module Confirmation
-    module ProgrammeDetails
+    module CourseDetails
       describe View do
         alias_method :component, :page
 
         context "when data has not been provided" do
-          let(:trainee) { build(:trainee, id: 1, training_route: nil, subject: nil, age_range: nil, programme_start_date: nil) }
+          let(:trainee) { build(:trainee, id: 1, training_route: nil, subject: nil, age_range: nil, course_start_date: nil) }
           before do
             render_inline(View.new(trainee: trainee))
           end
 
-          it "tells the user that no data has been entered for programme type, subject, age range, programme start date and programme end date" do
+          it "tells the user that no data has been entered for course type, subject, age range, course start date and course end date" do
             found = component.find_all(".govuk-summary-list__row")
 
             expect(found.size).to eq(5)
@@ -26,13 +26,13 @@ module Trainees
         end
 
         context "when data has been provided" do
-          let(:trainee) { build(:trainee, :with_programme_details, id: 1) }
+          let(:trainee) { build(:trainee, :with_course_details, id: 1) }
 
           before do
             render_inline(View.new(trainee: trainee))
           end
 
-          it "renders the programme type" do
+          it "renders the course type" do
             expect(component.find(".govuk-summary-list__row.type-of-course .govuk-summary-list__value"))
               .to have_text(trainee.training_route.humanize)
           end
@@ -47,9 +47,9 @@ module Trainees
               .to have_text(trainee.age_range)
           end
 
-          it "renders the programme start date" do
-            expect(component.find(".govuk-summary-list__row.programme-start-date .govuk-summary-list__value"))
-              .to have_text(trainee.programme_start_date.strftime("%-d %B %Y"))
+          it "renders the course start date" do
+            expect(component.find(".govuk-summary-list__row.course-start-date .govuk-summary-list__value"))
+              .to have_text(trainee.course_start_date.strftime("%-d %B %Y"))
           end
         end
       end

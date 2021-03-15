@@ -16,7 +16,7 @@ feature "edit trainee record", type: :feature do
       then_i_see_the_trainee_name
       then_i_see_the_trn_status
       then_i_see_the_record_details
-      then_i_see_the_programme_details
+      then_i_see_the_course_details
     end
   end
 
@@ -57,8 +57,8 @@ feature "edit trainee record", type: :feature do
     expect(record_page).to have_record_detail
   end
 
-  def then_i_see_the_programme_details
-    expect(record_page).to have_programme_detail
+  def then_i_see_the_course_details
+    expect(record_page).to have_course_detail
   end
 
   def and_i_visit_the_personal_details

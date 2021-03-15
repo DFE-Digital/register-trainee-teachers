@@ -59,7 +59,7 @@
 
     <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :training_details) %>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :programme_details) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :course_details) %>
 
     <%= form_with(model: @trn_submission, url: trn_submissions_path, method: :post, local: true) do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>

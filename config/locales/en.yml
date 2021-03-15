@@ -67,8 +67,8 @@ en:
         disclosure: diversity information
         trainee_id: ID
         trainee_start_date: start date
-    programme_detail:
-      title: Programme details
+    course_detail:
+      title: Course details
     placement_detail:
       title: Placement details
     degrees:
@@ -131,8 +131,8 @@ en:
           edit: Edit training details
         training_routes:
           edit: What type of training are they doing?
-        programme_details:
-          edit: Programme details
+        course_details:
+          edit: Course details
         withdrawal:
           show: Withdraw trainee
         confirm_withdrawal:
@@ -142,7 +142,7 @@ en:
         deferral_details:
           confirm: Check deferral details
         reinstatement:
-           show: When did the trainee return?
+          show: When did the trainee return?
         confirm_reinstatement:
           show: Check reinstatement details
         sort_links:
@@ -177,7 +177,7 @@ en:
         contact_details: Contact details
         diversity: Diversity information
         degrees: Degree details
-        programme_details: Programme details
+        course_details: Course details
         training_details: Training details
         placement_details: Placement details
       statuses:
@@ -258,12 +258,14 @@ en:
         title: Trainee start date and ID
         commencement_date:
           label: Date trainee started
-          hint_html: When the trainee started the course. This may be different to your overall programme start date.<br><br>
-                     For example, 9 2 %{year}
+          hint_html:
+            When the trainee started the course. This may be different to your overall course start date.<br><br>
+            For example, 9 2 %{year}
         trainee_id:
           label: Assign a trainee ID
-          hint: This will help you to identify them and search for them in your trainee records.
-                We may also use it if we need to get in touch with you about this trainee.
+          hint:
+            This will help you to identify them and search for them in your trainee records.
+            We may also use it if we need to get in touch with you about this trainee.
   activerecord:
     attributes:
       trainee:
@@ -397,23 +399,23 @@ en:
               blank: You must enter an outcome date
               invalid: You must enter a valid outcome date
         personal_details_form:
-            attributes:
-              first_names:
-                blank: "You must enter a first name"
-              last_name:
-                blank: "You must enter a last name"
-              date_of_birth:
-                blank: "You must enter a date of birth"
-                invalid: "You must enter a valid date"
-                future: "You must enter a date of birth that is in the past, for example 31 3 1980"
-                hint_html: For example, 31 3 %{year}
-              gender:
-                blank: "You must select a gender"
-              nationality_ids:
-                empty_nationalities: You must select at least one nationality
-              other_nationality1:
-                blank: If you have an additional nationality, select it from the list
-        programme_detail_form:
+          attributes:
+            first_names:
+              blank: "You must enter a first name"
+            last_name:
+              blank: "You must enter a last name"
+            date_of_birth:
+              blank: "You must enter a date of birth"
+              invalid: "You must enter a valid date"
+              future: "You must enter a date of birth that is in the past, for example 31 3 1980"
+              hint_html: For example, 31 3 %{year}
+            gender:
+              blank: "You must select a gender"
+            nationality_ids:
+              empty_nationalities: You must select at least one nationality
+            other_nationality1:
+              blank: If you have an additional nationality, select it from the list
+        course_detail_form:
           attributes:
             subject:
               blank: "You must select a subject"
@@ -421,18 +423,18 @@ en:
               blank: "You must select an age range"
             additional_age_range:
               blank: "You must select an age range"
-            programme_start_date:
-              blank: "You must enter a programme start date"
-              future: "You must enter a programme start date that is not as far in the future"
-              invalid: "You must enter a valid programme start date"
-              too_old: "You must enter a valid programme start date"
+            course_start_date:
+              blank: "You must enter a course start date"
+              future: "You must enter a course start date that is not as far in the future"
+              invalid: "You must enter a valid course start date"
+              too_old: "You must enter a valid course start date"
               hint_html: For example, 11 3 %{year}
-            programme_end_date:
-              blank: "You must enter a programme end date"
-              future: "You must enter a programme end date that is not as far in the future"
-              invalid: "You must enter a valid programme end date"
-              too_old: "You must enter a valid programme end date"
-              before_or_same_as_start_date: "The programme end date must be after the start date"
+            course_end_date:
+              blank: "You must enter a course end date"
+              future: "You must enter a course end date that is not as far in the future"
+              invalid: "You must enter a valid course end date"
+              too_old: "You must enter a valid course end date"
+              before_or_same_as_start_date: "The course end date must be after the start date"
               hint_html: For example, 11 3 %{year}
         reinstatement_form:
           attributes:

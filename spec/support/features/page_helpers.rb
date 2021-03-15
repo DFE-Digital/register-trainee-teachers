@@ -110,8 +110,8 @@ module Features
       @personal_details_page ||= PageObjects::Trainees::PersonalDetails.new
     end
 
-    def programme_details_page
-      @programme_details_page ||= PageObjects::Trainees::ProgrammeDetails.new
+    def course_details_page
+      @course_details_page ||= PageObjects::Trainees::CourseDetails.new
     end
 
     def trainee_id_edit_page

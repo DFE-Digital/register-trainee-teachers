@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module ProgrammeDetailsHelper
+module CourseDetailsHelper
   include ApplicationHelper
 
-  def programme_subjects_options
-    to_options(programme_subjects)
+  def course_subjects_options
+    to_options(course_subjects)
   end
 
-  def filter_programme_subjects_options
-    to_options(programme_subjects, first_value: "All subjects")
+  def filter_course_subjects_options
+    to_options(course_subjects, first_value: "All subjects")
   end
 
   def main_age_ranges_options
@@ -25,7 +25,7 @@ private
     Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option }.keys
   end
 
-  def programme_subjects
-    Dttp::CodeSets::ProgrammeSubjects::MAPPING.keys
+  def course_subjects
+    Dttp::CodeSets::CourseSubjects::MAPPING.keys
   end
 end

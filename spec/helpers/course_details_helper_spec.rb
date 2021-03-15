@@ -2,18 +2,18 @@
 
 require "rails_helper"
 
-describe ProgrammeDetailsHelper do
-  include ProgrammeDetailsHelper
+describe CourseDetailsHelper do
+  include CourseDetailsHelper
 
-  describe "#programme_subjects_options" do
+  describe "#course_subjects_options" do
     before do
-      allow(self).to receive(:programme_subjects).and_return(%w[programme_subject])
+      allow(self).to receive(:course_subjects).and_return(%w[course_subject])
     end
 
-    it "iterates over array and prints out correct programme_subjects values" do
-      expect(programme_subjects_options.size).to be 2
-      expect(programme_subjects_options.first.name).to be_nil
-      expect(programme_subjects_options.second.name).to eq "programme_subject"
+    it "iterates over array and prints out correct course_subjects values" do
+      expect(course_subjects_options.size).to be 2
+      expect(course_subjects_options.first.name).to be_nil
+      expect(course_subjects_options.second.name).to eq "course_subject"
     end
   end
 

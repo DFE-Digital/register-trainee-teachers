@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-module ProgrammeDetails
+module CourseDetails
   describe Update do
     describe ".call" do
       let(:service) { described_class.call(trainee: trainee, attributes: attributes) }
 
-      context "when programme details are valid" do
+      context "when course details are valid" do
         let(:trainee) { create(:trainee) }
 
         let(:valid_start_date) do
@@ -35,11 +35,11 @@ module ProgrammeDetails
           trainee.reload
         end
 
-        it "updates the trainee's programme details" do
+        it "updates the trainee's course details" do
           expect(trainee.subject).to eq(attributes[:subject])
           expect(trainee.age_range).to eq(attributes[:additional_age_range])
-          expect(trainee.programme_start_date).to eq(valid_start_date)
-          expect(trainee.programme_end_date).to eq(valid_end_date)
+          expect(trainee.course_start_date).to eq(valid_start_date)
+          expect(trainee.course_end_date).to eq(valid_end_date)
         end
 
         it "is successful" do
@@ -47,8 +47,8 @@ module ProgrammeDetails
         end
       end
 
-      context "when programme details are invalid" do
-        let(:trainee) { create(:trainee, :with_programme_details) }
+      context "when course details are invalid" do
+        let(:trainee) { create(:trainee, :with_course_details) }
 
         let(:attributes) do
           { start_day: nil,
@@ -67,11 +67,11 @@ module ProgrammeDetails
           trainee.reload
         end
 
-        it "does not update the trainee's programme details" do
+        it "does not update the trainee's course details" do
           expect(trainee.subject).to_not eq(nil)
           expect(trainee.age_range).to_not eq(nil)
-          expect(trainee.programme_start_date).to_not eq(nil)
-          expect(trainee.programme_end_date).to_not eq(nil)
+          expect(trainee.course_start_date).to_not eq(nil)
+          expect(trainee.course_end_date).to_not eq(nil)
         end
 
         it "is unsuccessful" do
