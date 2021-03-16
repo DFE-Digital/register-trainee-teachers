@@ -9,7 +9,7 @@ paas_web_app_instances     = 1
 paas_web_app_memory        = 512
 paas_worker_app_instances  = 1
 paas_worker_app_memory     = 512
-paas_worker_app_stopped    = false
+paas_worker_app_stopped    = true
 statuscake_alerts          = {}
 #KeyVault
 key_vault_resource_group = "s121d01-shared-rg"
