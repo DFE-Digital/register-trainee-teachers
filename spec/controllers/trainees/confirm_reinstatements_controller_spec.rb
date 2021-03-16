@@ -16,15 +16,6 @@ describe Trainees::ConfirmReinstatementsController do
     context "with a trainee with a trn" do
       let(:trn) { "trn" }
 
-      it "transitions the trainee back to trn_received" do
-        expect {
-          post :update, params: { trainee_id: trainee }
-          trainee.reload
-        }.to change {
-          trainee.state
-        } .from("deferred") .to("trn_received")
-      end
-
       it "queues a background job to reinstate a trainee" do
         expect {
           post :update, params: { trainee_id: trainee }
