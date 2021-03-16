@@ -6,30 +6,35 @@ module Diversities
     include ActiveModel::AttributeAssignment
     include ActiveModel::Validations::Callbacks
 
-    attr_accessor :trainee, :disability_ids, :additional_disability
+    attr_accessor :disability_ids, :additional_disability
+
+    attr_reader :trainee, :fields
 
     delegate :id, :persisted?, to: :trainee
-    validate :disabilities_cannot_be_empty
 
-    def initialize(trainee:, attributes: {})
+    validate :disabilities_cannot_be_empty, if: -> { disability_disclosure_form.disabled? && disabilities.empty? }
+
+    def initialize(trainee, params = {}, store = FormStore)
       @trainee = trainee
-      @attributes = attributes
+      @store = store
+      @params = params
+      @disability_disclosure_form = DisabilityDisclosureForm.new(trainee)
+      @fields = {
+        disability_ids: trainee.disability_ids,
+        additional_disability: other_trainee_disability&.additional_disability,
+      }.merge(new_attributes)
+
       super(fields)
     end
 
-    def fields
-      {
-        disability_ids: disabilities,
-        additional_disability: additional_disability_value,
-      }
-    end
-
-    def save
+    def save!
       if valid?
         Trainee.transaction do
-          update_disabilities
-          update_additional_disability_info if other_trainee_disability.present?
+          trainee.disability_ids = fields[:disability_ids] # This will actually persist the records
+          other_trainee_disability&.update!(additional_disability: fields[:additional_disability])
         end
+
+        store.set(trainee.id, :disability_detail, nil)
 
         true
       else
@@ -37,20 +42,30 @@ module Diversities
       end
     end
 
-  private
-
-    attr_reader :attributes
-
-    def disabilities_cannot_be_empty
-      return unless disabilities.empty?
-
-      errors.add(:disability_ids, :empty_disabilities)
+    def stash
+      valid? && store.set(id, :disability_detail, fields)
     end
 
     def disabilities
-      return trainee.disability_ids if attributes[:disability_ids].blank?
+      Disability.where(id: disability_ids)
+    end
 
-      attributes[:disability_ids].reject(&:blank?).map(&:to_i)
+  private
+
+    attr_reader :store, :params, :disability_disclosure_form
+
+    def new_attributes
+      if disability_disclosure_form.disabled?
+        fields_from_store.merge(params).symbolize_keys.tap do |f|
+          f[:disability_ids] = f[:disability_ids].reject(&:blank?).map(&:to_i) if f[:disability_ids]
+        end
+      else
+        { disability_ids: [], additional_disability: nil }
+      end
+    end
+
+    def disabilities_cannot_be_empty
+      errors.add(:disability_ids, :empty_disabilities)
     end
 
     def other_trainee_disability
@@ -59,19 +74,8 @@ module Diversities
       end
     end
 
-    def additional_disability_value
-      return other_trainee_disability&.additional_disability if attributes[:additional_disability].nil?
-
-      attributes[:additional_disability]
-    end
-
-    def update_disabilities
-      # This will actually persist the records due to how the association *_ids=() method works.
-      trainee.assign_attributes(disability_ids: disabilities)
-    end
-
-    def update_additional_disability_info
-      other_trainee_disability.update(additional_disability: additional_disability_value)
+    def fields_from_store
+      store.get(id, :disability_detail).presence || {}
     end
   end
 end

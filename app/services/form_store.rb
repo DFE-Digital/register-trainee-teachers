@@ -4,14 +4,20 @@ class FormStore
   class InvalidKeyError < StandardError; end
 
   FORM_SECTION_KEYS = %i[
-    contact_details
     personal_details
+    contact_details
     trainee_id
     trainee_start_date
     deferral
     reinstatement
     outcome
     withdrawal
+    diversity_disclosure
+    ethnic_group
+    ethnic_background
+    disability_disclosure
+    disability_detail
+    diversity
   ].freeze
 
   class << self

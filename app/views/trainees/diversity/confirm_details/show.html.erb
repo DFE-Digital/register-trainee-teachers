@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(title: "trainees.diversity.confirm") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render DynamicBackLink::View.new(@trainee) %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <%= render(
@@ -14,3 +14,7 @@
     resource_confirm_update_path: trainee_diversity_confirm_path(@trainee),
   },
 ) %>
+
+<% if !@trainee.draft? %>
+  <p class="govuk-body"><%= govuk_link_to(t("components.confirmation.cancel_and_return"), view_trainee(@trainee)) %></p>
+<% end %>

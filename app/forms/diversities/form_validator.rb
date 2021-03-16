@@ -11,7 +11,9 @@ module Diversities
       disability_disclosure_section: DisabilityDisclosureForm::FIELDS,
     }.freeze
 
-    attr_accessor(*(FIELDS.keys + FIELDS.values.flatten + %i[trainee disability_ids]))
+    attr_accessor(*(FIELDS.keys + FIELDS.values.flatten + %i[disability_ids]))
+
+    attr_accessor :trainee, :fields
 
     delegate :id, :persisted?, to: :trainee
 
@@ -23,11 +25,11 @@ module Diversities
 
     def initialize(trainee)
       @trainee = trainee
+      @fields = trainee.attributes
+                       .symbolize_keys
+                       .slice(*FIELDS.values.flatten)
+                       .merge(disability_ids: trainee.disability_ids)
       super(fields)
-    end
-
-    def fields
-      trainee.attributes.slice(*FIELDS.values.flatten).merge(disability_ids: trainee.disability_ids)
     end
 
   private
@@ -63,7 +65,7 @@ module Diversities
     end
 
     def validator_is_valid?(error_klass)
-      error_klass.new(trainee: trainee).valid?
+      error_klass.new(trainee).valid?
     end
 
     def add_error_for(key)

@@ -11,7 +11,7 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
     context "when trainee has not shared any ethnic or disability information" do
       before do
         trainee.diversity_disclosure = "diversity_not_disclosed"
-        render_inline(Trainees::Confirmation::Diversity::View.new(trainee: trainee))
+        render_inline(Trainees::Confirmation::Diversity::View.new(data_model: trainee))
       end
 
       it "renders with one line to say the train haven't shared data" do
@@ -29,7 +29,7 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
     context "when trainee has shared their diversity information " do
       before do
         trainee.diversity_disclosure = "diversity_disclosed"
-        render_inline(Trainees::Confirmation::Diversity::View.new(trainee: trainee))
+        render_inline(Trainees::Confirmation::Diversity::View.new(data_model: trainee))
       end
 
       it "renders with one line to say the train haven't shared data" do
@@ -49,7 +49,7 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
     let(:trainee) { build(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian]) }
     let(:expected_locale_key) { t("components.confirmation.diversity.ethnic_groups.asian_ethnic_group") }
 
-    subject { Trainees::Confirmation::Diversity::View.new(trainee: trainee) }
+    subject { Trainees::Confirmation::Diversity::View.new(data_model: trainee) }
 
     it "returns the ethnic_group if the ethnic_background is not provided" do
       expect(subject.ethnic_group_content).to eq(expected_locale_key)
@@ -83,27 +83,27 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
   describe "#get_disability_selection" do
     it "returns a message stating the user is disabled" do
       allow(trainee).to receive(:disabled?).and_return(true)
-      component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
+      component = Trainees::Confirmation::Diversity::View.new(data_model: trainee)
       expect(component.disability_selection).to eq "They shared that they’re disabled"
     end
 
     it "returns a message stating the user is not disabled" do
       allow(trainee).to receive(:disabled?).and_return(false)
       allow(trainee).to receive(:no_disability?).and_return(true)
-      component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
+      component = Trainees::Confirmation::Diversity::View.new(data_model: trainee)
       expect(component.disability_selection).to eq "They shared that they’re not disabled"
     end
 
     it "returns a message stating the user did not provide details" do
       allow(trainee).to receive(:disabled?).and_return(false)
       allow(trainee).to receive(:no_disability?).and_return(false)
-      component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
+      component = Trainees::Confirmation::Diversity::View.new(data_model: trainee)
       expect(component.disability_selection).to eq "Not provided"
     end
   end
 
   describe "#selected_disability_options" do
-    let(:component) { Trainees::Confirmation::Diversity::View.new(trainee: trainee) }
+    let(:component) { Trainees::Confirmation::Diversity::View.new(data_model: trainee) }
 
     context "when there are no disabilities" do
       it "returns a empty string if no disabilities" do

@@ -3,19 +3,19 @@
 module Trainees
   module Diversity
     class DisclosuresController < ApplicationController
+      before_action :authorize_trainee
+
       def edit
-        authorize trainee
-        @disclosure = Diversities::DisclosureForm.new(trainee: trainee)
+        @disclosure = Diversities::DisclosureForm.new(trainee)
       end
 
       def update
-        authorize trainee
-        updater = Diversities::Disclosures::Update.call(trainee: trainee, attributes: disclosure_param)
+        @disclosure = Diversities::DisclosureForm.new(trainee, disclosure_params)
+        save_strategy = trainee.draft? ? :save! : :stash
 
-        if updater.successful?
+        if @disclosure.public_send(save_strategy)
           redirect_to_relevant_step
         else
-          @disclosure = updater.disclosure
           render :edit
         end
       end
@@ -26,18 +26,22 @@ module Trainees
         @trainee ||= Trainee.from_param(params[:trainee_id])
       end
 
-      def disclosure_param
+      def disclosure_params
         return { diversity_disclosure: nil } if params[:diversities_disclosure_form].blank?
 
         params.require(:diversities_disclosure_form).permit(*Diversities::DisclosureForm::FIELDS)
       end
 
       def redirect_to_relevant_step
-        if trainee.diversity_disclosed?
+        if @disclosure.diversity_disclosed?
           redirect_to(edit_trainee_diversity_ethnic_group_path(trainee))
         else
           redirect_to(trainee_diversity_confirm_path(trainee))
         end
+      end
+
+      def authorize_trainee
+        authorize(trainee)
       end
     end
   end

@@ -24,7 +24,7 @@
 },
         ) do %>
 
-          <% Diversities::BACKGROUNDS[@trainee.ethnic_group].each_with_index do |ethnic_background, index| %>
+          <% Diversities::BACKGROUNDS[@ethnic_background.ethnic_group].each_with_index do |ethnic_background, index| %>
             <% if other_ethnic_background_option?(ethnic_background) %>
               <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background }, link_errors: index.zero?) do %>
                 <%= f.govuk_text_field(

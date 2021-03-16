@@ -68,7 +68,7 @@ feature "edit ethnic background", type: :feature do
   end
 
   def and_the_additional_background_is_cleared
-    expect(trainee.reload.additional_ethnic_background).to be_nil
+    expect(trainee.reload.additional_ethnic_background).to be_blank
   end
 
   def then_i_see_error_messages
