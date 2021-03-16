@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 2021_03_12_154826) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_154826) do
     t.string "dttp_update_sha"
     t.date "commencement_date"
     t.date "reinstate_date"
+    t.uuid "dormancy_dttp_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
