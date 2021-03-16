@@ -16,7 +16,7 @@ module Trainees
           let(:trainee) { create(:trainee, commencement_date: commencement_date) }
 
           before do
-            render_inline(View.new(trainee: trainee))
+            render_inline(View.new(data_model: trainee))
           end
 
           it "renders the trainee start date" do

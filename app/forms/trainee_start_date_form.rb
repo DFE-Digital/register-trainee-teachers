@@ -1,40 +1,44 @@
 # frozen_string_literal: true
 
-class TrainingDetailsForm
+class TraineeStartDateForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  attr_accessor :trainee, :trainee_id, :day, :month, :year
+  attr_accessor :trainee, :day, :month, :year
 
   delegate :id, :persisted?, to: :trainee
 
-  validates :trainee_id, presence: true,
-                         length: {
-                           maximum: 100,
-                           message: I18n.t("activemodel.errors.models.training_details_form.attributes.trainee_id.max_char_exceeded"),
-                         }
-
   validate :commencement_date_valid
 
-  after_validation :update_trainee_attributes, if: -> { errors.empty? }
-
-  def initialize(trainee)
+  def initialize(trainee, params = {}, store = FormStore)
     @trainee = trainee
+    @store = store
+    @params = params
+    @new_attributes = fields_from_store.merge(params).symbolize_keys
     super(fields)
   end
 
   def fields
     {
-      trainee_id: trainee.trainee_id.presence,
       day: trainee.commencement_date&.day,
       month: trainee.commencement_date&.month,
       year: trainee.commencement_date&.year,
-    }
+    }.merge(new_attributes.slice(:day, :month, :year))
   end
 
-  def save
-    valid? && trainee.save
+  def save!
+    if valid?
+      update_trainee_commencement_date
+      trainee.save!
+      store.set(trainee.id, :trainee_start_date, nil)
+    else
+      false
+    end
+  end
+
+  def stash
+    valid? && store.set(trainee.id, :trainee_start_date, fields)
   end
 
   def commencement_date
@@ -46,8 +50,10 @@ class TrainingDetailsForm
 
 private
 
-  def update_trainee_attributes
-    trainee.assign_attributes(trainee_id: trainee_id, commencement_date: commencement_date)
+  attr_reader :new_attributes, :store
+
+  def update_trainee_commencement_date
+    trainee.assign_attributes(commencement_date: commencement_date) if errors.empty?
   end
 
   def commencement_date_valid
@@ -60,5 +66,9 @@ private
 
   def valid_date?(date_args)
     Date.valid_date?(*date_args) && date_args.all?(&:positive?)
+  end
+
+  def fields_from_store
+    store.get(trainee.id, :trainee_start_date).presence || {}
   end
 end

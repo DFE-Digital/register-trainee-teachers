@@ -6,11 +6,11 @@ module Trainees
     module TraineeId
       class ViewPreview < ViewComponent::Preview
         def default
-          render(Trainees::Confirmation::TraineeId::View.new(trainee: mock_trainee))
+          render(Trainees::Confirmation::TraineeId::View.new(data_model: mock_trainee))
         end
 
         def with_no_data
-          render(Trainees::Confirmation::TraineeId::View.new(trainee: Trainee.new(id: 2)))
+          render(Trainees::Confirmation::TraineeId::View.new(data_model: Trainee.new(id: 2)))
         end
 
       private
