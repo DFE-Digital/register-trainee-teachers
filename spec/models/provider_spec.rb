@@ -19,6 +19,18 @@ describe Provider do
     end
   end
 
+  context "validates dttp_id" do
+    subject { create(:provider) }
+
+    it "validates uniqueness" do
+      expect(subject).to validate_uniqueness_of(:dttp_id).case_insensitive.with_message("You must enter a unique DTTP ID")
+    end
+  end
+
+  describe "indexes" do
+    it { should have_db_index(:dttp_id).unique(true) }
+  end
+
   describe "associations" do
     it { is_expected.to have_many(:users) }
   end
