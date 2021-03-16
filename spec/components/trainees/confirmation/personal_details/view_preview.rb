@@ -5,19 +5,15 @@ module Trainees
     module PersonalDetails
       class ViewPreview < ViewComponent::Preview
         def default
-          render(Trainees::Confirmation::PersonalDetails::View.new(data_model: data_model))
+          render(Trainees::Confirmation::PersonalDetails::View.new(data_model: trainee))
         end
 
         def with_multiple_nationalities
           trainee.nationalities.concat([Nationality.new(name: "Irish"), Nationality.new(name: "Australian")])
-          render(Trainees::Confirmation::PersonalDetails::View.new(data_model: data_model))
+          render(Trainees::Confirmation::PersonalDetails::View.new(data_model: trainee))
         end
 
       private
-
-        def data_model
-          @data_model ||= PersonalDetailsForm.new(trainee)
-        end
 
         def trainee
           @trainee ||= Trainee.new(

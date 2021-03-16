@@ -3,6 +3,7 @@
 module Trainees
   class PersonalDetailsController < ApplicationController
     before_action :authorize_trainee
+    before_action :load_all_nationalities
     before_action :ensure_trainee_is_not_draft!, only: :show
 
     DOB_CONVERSION = {
@@ -23,16 +24,12 @@ module Trainees
     end
 
     def edit
-      nationalities
-      other_nationalities
       @personal_detail = PersonalDetailsForm.new(trainee)
     end
 
     def update
-      nationalities
-      other_nationalities
       personal_detail = PersonalDetailsForm.new(trainee, personal_details_params)
-      save_strategy = trainee.draft? ? :save! : :save_to_store
+      save_strategy = trainee.draft? ? :save! : :stash
 
       if personal_detail.public_send(save_strategy)
         redirect_to trainee_personal_details_confirm_path(personal_detail.trainee)
@@ -48,12 +45,9 @@ module Trainees
       @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
-    def nationalities
-      @nationalities ||= Nationality.where(name: NATIONALITIES)
-    end
-
-    def other_nationalities
-      @other_nationalities ||= Nationality.all
+    def load_all_nationalities
+      @nationalities = Nationality.where(name: NATIONALITIES)
+      @other_nationalities = Nationality.all
     end
 
     def personal_details_params

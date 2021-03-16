@@ -15,7 +15,7 @@ module Trainees
         if status == :completed
           # Temporary conditional while we wait for all sections to support save-on-confirm
           confirmation_view_args = if FormStore::FORM_SECTION_KEYS.include?(section)
-                                     { data_model: PersonalDetailsForm.new(trainee) }
+                                     { data_model: form_klass.new(trainee) }
                                    else
                                      { trainee: trainee }
                                    end
@@ -31,6 +31,10 @@ module Trainees
       end
 
     private
+
+      def form_klass
+        "#{section.to_s.camelcase}Form".constantize
+      end
 
       def confirmation_view
         {

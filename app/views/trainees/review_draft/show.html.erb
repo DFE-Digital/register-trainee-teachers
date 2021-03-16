@@ -42,7 +42,7 @@
             path: edit_trainee_contact_details_path(@trainee),
             confirm_path: trainee_contact_details_confirm_path(@trainee),
             status: ProgressService.call(
-              validator: ContactDetailForm.new(@trainee),
+              validator: ContactDetailsForm.new(@trainee),
               progress_value: @trainee.progress.contact_details,
             ).status,
           )

@@ -3,8 +3,9 @@
 class FormStore
   class InvalidKeyError < StandardError; end
 
-  FORM_SECTION_KEYS = [
-    :personal_details,
+  FORM_SECTION_KEYS = %i[
+    personal_details
+    contact_details
   ].freeze
 
   class << self

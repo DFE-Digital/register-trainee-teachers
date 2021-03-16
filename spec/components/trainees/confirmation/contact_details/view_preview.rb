@@ -7,17 +7,17 @@ module Trainees
       class ViewPreview < ViewComponent::Preview
         def with_uk_address
           mock_trainee.locale_code = "uk"
-          render(Trainees::Confirmation::ContactDetails::View.new(trainee: mock_trainee))
+          render(Trainees::Confirmation::ContactDetails::View.new(data_model: mock_trainee))
         end
 
         def with_non_uk_address
           mock_trainee.locale_code = "non_uk"
           mock_trainee.email = "visit@paris.com"
-          render(Trainees::Confirmation::ContactDetails::View.new(trainee: mock_trainee))
+          render(Trainees::Confirmation::ContactDetails::View.new(data_model: mock_trainee))
         end
 
         def with_no_data
-          render(Trainees::Confirmation::ContactDetails::View.new(trainee: Trainee.new(id: 2)))
+          render(Trainees::Confirmation::ContactDetails::View.new(data_model: Trainee.new(id: 2)))
         end
 
       private
