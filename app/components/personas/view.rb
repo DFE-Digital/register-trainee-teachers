@@ -2,8 +2,8 @@
 
 module Personas
   class View < GovukComponent::Base
+    include ApplicationHelper
     with_collection_parameter :persona
-
     attr_reader :persona
 
     def initialize(persona:)

@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_with(model: @disability_detail, url: trainee_diversity_disability_detail_path(@trainee), method: :put, local: true) do |f| %>
+    <%= register_form_with(model: @disability_detail, url: trainee_diversity_disability_detail_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_check_boxes_fieldset :disability_ids,

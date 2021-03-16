@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_with(model: @disability_disclosure, url: trainee_diversity_disability_disclosure_path(@trainee), method: :put, local: true) do |f| %>
+    <%= register_form_with(model: @disability_disclosure, url: trainee_diversity_disability_disclosure_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
         <%= f.govuk_radio_buttons_fieldset(:disability_disclosure, legend: { text: t("components.page_titles.trainees.diversity.disability_disclosure.edit"), tag: "h1", size: "l" }) do %>
