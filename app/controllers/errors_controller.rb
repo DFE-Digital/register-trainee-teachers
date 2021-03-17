@@ -2,6 +2,7 @@
 
 class ErrorsController < ApplicationController
   skip_before_action :authenticate
+  before_action :clear_flash_messages
   layout "application"
 
   before_action :skip_authorization, only: %i[not_found internal_server_error unprocessable_entity]
@@ -26,5 +27,11 @@ class ErrorsController < ApplicationController
       format.html { render status: :unprocessable_entity }
       format.json { render json: { error: "Unprocessable entity" }, status: :unprocessable_entity }
     end
+  end
+
+private
+
+  def clear_flash_messages
+    flash.clear
   end
 end

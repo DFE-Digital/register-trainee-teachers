@@ -23,4 +23,13 @@ RSpec.describe ErrorsController, type: :controller do
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
+
+  describe "flash messages" do
+    it "will remove any flash messages" do
+      controller.action_methods.each do |action|
+        get action.to_sym, flash: { success: "Success" }
+        expect(flash[:success]).to_not be_present
+      end
+    end
+  end
 end
