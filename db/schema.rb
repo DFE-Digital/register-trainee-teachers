@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 2021_03_15_141417) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
+  create_table "courses", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+    t.bigint "provider_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
+    t.index ["provider_id"], name: "index_courses_on_provider_id"
+  end
+
   create_table "degrees", force: :cascade do |t|
     t.integer "locale_code", null: false
     t.string "uk_degree"
@@ -185,6 +195,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_141417) do
     t.index ["provider_id"], name: "index_users_on_provider_id"
   end
 
+  add_foreign_key "courses", "providers"
   add_foreign_key "degrees", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
