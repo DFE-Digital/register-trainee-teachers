@@ -29,7 +29,7 @@ class ErrorsController < ApplicationController
     end
   end
 
-  private
+private
 
   def clear_flash_messages
     flash.clear
