@@ -20,8 +20,8 @@ class SessionsController < ApplicationController
     if current_user
       DfESignInUsers::Update.call(user: current_user, dfe_sign_in_user: dfe_sign_in_user)
 
-      if session[:original_path]
-        redirect_to session[:original_path] && session.delete(:original_path)
+      if session[:redirect_back_to]
+        redirect_to session[:redirect_back_to] && session.delete(:redirect_back_to)
       else
         redirect_to root_path
       end
