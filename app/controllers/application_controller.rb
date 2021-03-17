@@ -36,8 +36,12 @@ private
     current_user.present?
   end
 
+  def save_original_path
+    session[:original_path] = request.original_fullpath
+  end
+
   def authenticate
-    redirect_to sign_in_path unless authenticated?
+    (save_original_path && (redirect_to sign_in_path)) unless authenticated?
   end
 
   def ensure_trainee_is_draft!
