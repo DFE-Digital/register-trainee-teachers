@@ -23,10 +23,10 @@ module ApplicationHelper
     link_to(body, url, html_options)
   end
 
-  def form_with(*args, &block)
+  def register_form_with(*args, &block)
     options = args.extract_options!
     defaults = { html: { novalidate: true, autocomplete: :off } }
-    super(*args << defaults.deep_merge(options), &block)
+    form_with(*args << defaults.deep_merge(options), &block)
   end
 
   def header_items(current_user)

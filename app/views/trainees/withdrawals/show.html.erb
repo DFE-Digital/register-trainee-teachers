@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_with(model: @withdrawal_form, url: trainee_withdrawal_path(@trainee), local: true) do |f| %>
+    <%= register_form_with(model: @withdrawal_form, url: trainee_withdrawal_path(@trainee), local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">

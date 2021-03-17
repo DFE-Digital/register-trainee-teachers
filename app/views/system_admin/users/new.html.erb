@@ -7,7 +7,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_with model: [@provider, @user], local: true do |f| %>
+    <%= register_form_with model: [@provider, @user], local: true do |f| %>
 
       <%= f.govuk_error_summary %>
 

@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_with(model: @outcome, url: trainee_outcome_details_outcome_date_path(@trainee), local: true) do |f| %>
+    <%= register_form_with(model: @outcome, url: trainee_outcome_details_outcome_date_path(@trainee), local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <span class="govuk-caption-l">
