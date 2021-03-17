@@ -6,3 +6,7 @@ truncate_activerecord_session_store:
   cron: "0 0 * * *"
   class: "SessionStoreTruncateJob"
   queue: default
+import_courses_from_ttapi:
+  cron: "0 2 * * *"
+  class: "TeacherTrainingApi::ImportCoursesJob"
+  queue: default

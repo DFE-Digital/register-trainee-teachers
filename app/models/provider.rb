@@ -3,6 +3,7 @@
 class Provider < ApplicationRecord
   has_many :users
   has_many :trainees
+  has_many :courses
 
   validates :name, presence: true
   validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }
