@@ -57,7 +57,7 @@ describe "Trainee state transitions" do
     context "with a :withdrawn trainee" do
       context "with an existing trn" do
         let(:trainee) { create(:trainee, :withdrawn, trn: old_trn) }
-        
+
         it "doesnt update state or trn" do
           trainee.trn_received!
           expect(trainee.state).to eq("withdrawn")
@@ -67,7 +67,7 @@ describe "Trainee state transitions" do
 
       context "without an existing trn" do
         let(:trainee) { create(:trainee, :withdrawn) }
-        
+
         it "doesnt update state but updates trn" do
           trainee.trn_received!(new_trn)
           expect(trainee.state).to eq("withdrawn")
