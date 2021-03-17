@@ -54,13 +54,35 @@ describe "Trainee state transitions" do
       end
     end
 
+    context "with a :withdrawn trainee" do
+      context "with an existing trn" do
+        let(:trainee) { create(:trainee, :withdrawn, trn: old_trn) }
+        
+        it "doesnt update state or trn" do
+          trainee.trn_received!
+          expect(trainee.state).to eq("withdrawn")
+          expect(trainee.trn).to eq(old_trn)
+        end
+      end
+
+      context "without an existing trn" do
+        let(:trainee) { create(:trainee, :withdrawn) }
+        
+        it "doesnt update state but updates trn" do
+          trainee.trn_received!(new_trn)
+          expect(trainee.state).to eq("withdrawn")
+          expect(trainee.trn).to eq(new_trn)
+        end
+      end
+    end
+
     (Trainee.states.keys - %w[submitted_for_trn deferred]).each do |state|
       context "with a :#{state} trainee" do
         let(:trainee) { create(:trainee, state) }
 
         it "raises an error" do
           expect {
-            trainee.trn_received!(new_trn)
+            trainee.receive_trn!
           }.to raise_error(RuntimeError, "Invalid transition")
         end
       end

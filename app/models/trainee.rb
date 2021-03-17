@@ -145,7 +145,9 @@ class Trainee < ApplicationRecord
   def trn_received!(new_trn = nil)
     raise StateTransitionError, "Cannot transition to :trn_received without a trn" unless new_trn || trn
 
-    receive_trn! unless deferred?
+    # Skip deferred and withdrawn to avoid state change
+    # but to still register trn
+    receive_trn! unless deferred? || withdrawn?
     # A deferred trainee will probably already have a trn - don't overwrite that!
     update!(trn: new_trn) unless trn
   end
