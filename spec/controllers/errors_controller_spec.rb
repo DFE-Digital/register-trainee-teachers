@@ -24,14 +24,12 @@ RSpec.describe ErrorsController, type: :controller do
     end
   end
 
-  describe "removes flash messages" do
+  describe "flash messages" do
     it "will remove any flash messages" do
-      get :not_found, flash: { success: "Success" }
-      expect(flash[:success]).to_not be_present
-      get :internal_server_error, flash: { success: "Success" }
-      expect(flash[:success]).to_not be_present
-      get :unprocessable_entity, flash: { success: "Success" }
-      expect(flash[:success]).to_not be_present
+      controller.action_methods.each do | action |
+        get action.to_sym, flash: { success: "Success" }
+        expect(flash[:success]).to_not be_present
+      end
     end
   end
 end
