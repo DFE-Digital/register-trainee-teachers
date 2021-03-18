@@ -3,12 +3,12 @@
 require "rails_helper"
 
 module Dttp
-  describe RetrieveContact do
+  describe Contact do
     describe "#call" do
       let(:contact_entity_id) { SecureRandom.uuid }
       let(:trainee) { create(:trainee, dttp_id: contact_entity_id) }
-      let(:filters) { "emailaddress1,firstname,lastname" }
-      let(:path) { "/contacts(#{trainee.dttp_id})?$select=#{filters}" }
+      let(:fields) { "emailaddress1,firstname,lastname" }
+      let(:path) { "/contacts(#{trainee.dttp_id})?$select=#{fields}" }
 
       before do
         allow(AccessToken).to receive(:fetch).and_return("token")
@@ -41,7 +41,7 @@ module Dttp
           expect(Client).to receive(:get).with(path).and_return(dttp_response)
           expect {
             described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::RetrieveContact::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
+          }.to raise_error(Dttp::Contact::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end

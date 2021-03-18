@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Dttp
-  class RetrieveContact
+  class Contact
     include ServicePattern
 
     class HttpError < StandardError; end
 
     attr_reader :trainee
 
-    CONTACT_ATTRIBUTE_FILTERS = %w[
+    CONTACT_ATTRIBUTE_FIELDS = %w[
       emailaddress1
       firstname
       lastname
@@ -19,7 +19,7 @@ module Dttp
     end
 
     def call
-      response = Client.get("/contacts(#{trainee.dttp_id})?$select=#{filters}")
+      response = Client.get("/contacts(#{trainee.dttp_id})?$select=#{fields}")
       if response.code != 200
         raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
       end
@@ -27,8 +27,8 @@ module Dttp
       JSON(response.body)
     end
 
-    def filters
-      CONTACT_ATTRIBUTE_FILTERS.join(",")
+    def fields
+      CONTACT_ATTRIBUTE_FIELDS.join(",")
     end
   end
 end
