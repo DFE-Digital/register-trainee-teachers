@@ -11,16 +11,17 @@ class MultiDateForm
 
   validate :date_valid
 
-  after_validation :update_trainee, if: -> { errors.empty? }
-
   PARAM_CONVERSION = {
     "date(3i)" => "day",
     "date(2i)" => "month",
     "date(1i)" => "year",
   }.freeze
 
-  def initialize(trainee)
+  def initialize(trainee, params = {}, store = FormStore)
     @trainee = trainee
+    @store = store
+    @params = params
+    @new_attributes = fields_from_store.merge(params).symbolize_keys
     super(fields)
   end
 
@@ -31,10 +32,7 @@ class MultiDateForm
       month: trainee_attribute&.month,
       year: trainee_attribute&.year,
     }.merge(additional_fields)
-  end
-
-  def save
-    valid? && trainee.save
+     .merge(new_attributes.slice(:day, :month, :year, :date_string))
   end
 
   def date
@@ -47,10 +45,30 @@ class MultiDateForm
     }[date_string.to_sym]
   end
 
+  def stash
+    valid? && store.set(trainee.id, form_store_key, fields)
+  end
+
+  def save!
+    if valid?
+      update_trainee
+      trainee.save!
+      store.set(trainee.id, form_store_key, nil)
+    else
+      false
+    end
+  end
+
 private
+
+  attr_reader :new_attributes, :store
 
   def date_field
     raise "Subclass of MultiDateForm must implement #date_field"
+  end
+
+  def form_store_key
+    raise "Subclass of MultiDateForm must implement #form_store_key"
   end
 
   def trainee_attribute
@@ -93,5 +111,9 @@ private
     elsif !date.is_a?(Date)
       errors.add(:date, :invalid)
     end
+  end
+
+  def fields_from_store
+    store.get(trainee.id, form_store_key).presence || {}
   end
 end

@@ -22,14 +22,18 @@ feature "Reinstating a trainee", type: :feature do
       when_i_choose_today
       and_i_continue
       then_i_am_redirected_to_reinstatement_confirmation_page
-      and_the_reinstate_date_is_updated
+      and_i_see_my_date(Time.zone.today)
+      when_i_reinstate
+      then_the_reinstate_date_is_updated
     end
 
     scenario "choosing yesterday" do
       when_i_choose_yesterday
       and_i_continue
       then_i_am_redirected_to_reinstatement_confirmation_page
-      and_the_reinstate_date_is_updated
+      and_i_see_my_date(Time.zone.yesterday)
+      when_i_reinstate
+      then_the_reinstate_date_is_updated
     end
 
     context "choosing another day" do
@@ -41,7 +45,9 @@ feature "Reinstating a trainee", type: :feature do
         and_i_enter_a_valid_date
         and_i_continue
         then_i_am_redirected_to_reinstatement_confirmation_page
-        and_the_reinstate_date_is_updated
+        and_i_see_my_date(@chosen_date)
+        when_i_reinstate
+        then_the_reinstate_date_is_updated
       end
 
       scenario "and not filling out the date displays the correct error" do
@@ -57,6 +63,16 @@ feature "Reinstating a trainee", type: :feature do
     end
   end
 
+  scenario "cancelling changes" do
+    when_i_choose_today
+    and_i_continue
+    then_i_am_redirected_to_reinstatement_confirmation_page
+    and_i_see_my_date(Time.zone.today)
+    when_i_cancel_my_changes
+    then_i_am_redirected_to_the_record_page
+    and_the_reinstate_date_i_chose_is_cleared
+  end
+
   def when_i_choose_today
     when_i_choose("Today")
   end
@@ -65,8 +81,13 @@ feature "Reinstating a trainee", type: :feature do
     when_i_choose("Yesterday")
   end
 
+  def when_i_reinstate
+    reinstatement_confirmation_page.reinstate.click
+  end
+
   def and_i_enter_a_valid_date
-    Faker::Date.in_date_period.tap do |reinstate_date|
+    @chosen_date = Faker::Date.in_date_period
+    @chosen_date.tap do |reinstate_date|
       reinstatement_page.set_date_fields(:reinstate_date, reinstate_date.strftime("%d/%m/%Y"))
     end
   end
@@ -117,8 +138,20 @@ feature "Reinstating a trainee", type: :feature do
     given_a_trainee_exists(:deferred)
   end
 
-  def and_the_reinstate_date_is_updated
+  def then_the_reinstate_date_is_updated
+    expect(trainee.reload.reinstate_date).not_to be_nil
+  end
+
+  def when_i_cancel_my_changes
+    reinstatement_confirmation_page.cancel.click
+  end
+
+  def then_i_am_redirected_to_the_record_page
+    expect(record_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_the_reinstate_date_i_chose_is_cleared
     trainee.reload
-    expect(page).to have_text(date_for_summary_view(trainee.reinstate_date))
+    expect(trainee.reinstate_date).to be_nil
   end
 end

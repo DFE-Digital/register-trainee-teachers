@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render Trainees::OutcomeDetails::View.new(@trainee) %>
+    <%= render Trainees::OutcomeDetails::View.new(@outcome) %>
 
     <%= register_form_with url: trainee_qts_recommendations_path, method: :post, local: true do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
@@ -24,4 +24,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", trainee_path(@trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", trainee_path(@trainee), class: "qa-cancel-link") %></p>

@@ -8,6 +8,10 @@ class FormStore
     personal_details
     trainee_id
     trainee_start_date
+    deferral
+    reinstatement
+    outcome
+    withdrawal
   ].freeze
 
   class << self

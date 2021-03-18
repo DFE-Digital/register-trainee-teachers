@@ -6,10 +6,10 @@ module Trainees
       class View < GovukComponent::Base
         include SummaryHelper
 
-        attr_reader :trainee
+        attr_reader :data_model
 
-        def initialize(trainee:)
-          @trainee = trainee
+        def initialize(data_model)
+          @data_model = data_model
         end
 
         def confirm_section_title
@@ -17,13 +17,13 @@ module Trainees
         end
 
         def withdraw_date
-          date_for_summary_view(trainee.withdraw_date)
+          date_for_summary_view(data_model.date)
         end
 
         def withdraw_reason
-          return trainee.additional_withdraw_reason if trainee.withdraw_reason == WithdrawalReasons::FOR_ANOTHER_REASON
+          return data_model.additional_withdraw_reason if data_model.withdraw_reason == WithdrawalReasons::FOR_ANOTHER_REASON
 
-          I18n.t("components.confirmation.withdrawal_details.reasons.#{trainee.withdraw_reason}")
+          I18n.t("components.confirmation.withdrawal_details.reasons.#{data_model.withdraw_reason}")
         end
       end
     end

@@ -1,10 +1,12 @@
-<%= render SummaryCard::View.new(trainee: trainee,
-                                 title: t("components.confirmation.reinstatement_details.summary_title"),
-                                 heading_level: 2,
-                                 rows: [
+<%= render SummaryCard::View.new(
+  trainee: data_model.trainee,
+  title: t("components.confirmation.reinstatement_details.summary_title"),
+  heading_level: 2,
+  rows: [
     {
       key: t("components.confirmation.reinstatement_details.reinstate_date_label"),
       value: reinstate_date,
-      action: govuk_link_to(t(:change), trainee_reinstatement_path(trainee)),
+      action: govuk_link_to(t(:change), trainee_reinstatement_path(data_model.trainee)),
     },
-  ]) %>
+  ],
+) %>

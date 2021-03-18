@@ -13,22 +13,26 @@ feature "Recording a training outcome", type: :feature do
   end
 
   scenario "submit empty form" do
-    and_i_submit_the_form
+    and_i_continue
     then_i_see_the_error_message_for_date_not_chosen
   end
 
   scenario "choosing today records the outcome" do
     when_i_choose_today
-    and_i_submit_the_form
+    and_i_continue
     then_i_am_redirected_to_the_confirm_outcome_details_page
-    and_the_outcome_date_is_updated
+    and_i_see_my_date(Time.zone.today)
+    when_i_record_the_outcome_date
+    then_the_outcome_date_is_updated
   end
 
   scenario "choosing yesterday records the outcome" do
     when_i_choose_yesterday
-    and_i_submit_the_form
+    and_i_continue
     then_i_am_redirected_to_the_confirm_outcome_details_page
-    and_the_outcome_date_is_updated
+    and_i_see_my_date(Time.zone.yesterday)
+    when_i_record_the_outcome_date
+    then_the_outcome_date_is_updated
   end
 
   context "choosing 'On another day'" do
@@ -37,22 +41,34 @@ feature "Recording a training outcome", type: :feature do
     end
 
     scenario "and not filling out a complete date displays the correct error" do
-      and_i_submit_the_form
+      and_i_continue
       then_i_see_the_error_message_for("blank")
     end
 
     scenario "and filling out an invalid date displays the correct error" do
       outcome_date_edit_page.set_date_fields("outcome_date", "32/01/2020")
-      and_i_submit_the_form
+      and_i_continue
       then_i_see_the_error_message_for("invalid")
     end
 
     scenario "and filling out a valid date" do
       when_i_chose_a_specific_date
-      and_i_submit_the_form
+      and_i_continue
       then_i_am_redirected_to_the_confirm_outcome_details_page
-      and_the_outcome_date_is_updated
+      and_i_see_my_date(@outcome_date)
+      when_i_record_the_outcome_date
+      then_the_outcome_date_is_updated
     end
+  end
+
+  scenario "cancelling changes" do
+    when_i_choose_today
+    and_i_continue
+    then_i_am_redirected_to_the_confirm_outcome_details_page
+    and_i_see_my_date(Time.zone.today)
+    when_i_cancel_my_changes
+    then_i_am_redirected_to_the_record_page
+    and_the_outcome_date_i_chose_is_cleared
   end
 
   def when_i_choose_today
@@ -65,10 +81,14 @@ feature "Recording a training outcome", type: :feature do
     when_i_choose("Yesterday")
   end
 
+  def when_i_record_the_outcome_date
+    confirm_outcome_details_page.record_outcome.click
+  end
+
   def when_i_chose_a_specific_date
-    outcome_date = Faker::Date.in_date_period
-    stub_dttp_placement_assignment_request(outcome_date: outcome_date, status: 204)
-    outcome_date_edit_page.set_date_fields("outcome_date", outcome_date.strftime("%d/%m/%Y"))
+    @outcome_date = Faker::Date.in_date_period
+    stub_dttp_placement_assignment_request(outcome_date: @outcome_date, status: 204)
+    outcome_date_edit_page.set_date_fields("outcome_date", @outcome_date.strftime("%d/%m/%Y"))
   end
 
   def and_i_am_on_the_trainee_record_page
@@ -83,7 +103,7 @@ feature "Recording a training outcome", type: :feature do
     outcome_date_edit_page.choose(option)
   end
 
-  def and_i_submit_the_form
+  def and_i_continue
     outcome_date_edit_page.continue.click
   end
 
@@ -103,8 +123,20 @@ feature "Recording a training outcome", type: :feature do
     expect(confirm_outcome_details_page).to be_displayed(id: trainee.slug)
   end
 
-  def and_the_outcome_date_is_updated
+  def then_the_outcome_date_is_updated
+    expect(trainee.reload.outcome_date).not_to be_nil
+  end
+
+  def when_i_cancel_my_changes
+    confirm_outcome_details_page.cancel.click
+  end
+
+  def then_i_am_redirected_to_the_record_page
+    expect(record_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_the_outcome_date_i_chose_is_cleared
     trainee.reload
-    expect(page).to have_text(date_for_summary_view(trainee.outcome_date))
+    expect(trainee.outcome_date).to be_nil
   end
 end

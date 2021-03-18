@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render Trainees::DeferralDetails::View.new(@trainee) %>
+    <%= render Trainees::DeferralDetails::View.new(@deferral) %>
 
     <%= register_form_with url: trainee_confirm_deferral_path(@trainee), method: :put, local: true do |f| %>
       <%= f.govuk_submit "Defer this trainee" %>
@@ -23,4 +23,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", trainee_path(@trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to("Cancel and return to record", trainee_path(@trainee), class: "qa-cancel-link") %></p>

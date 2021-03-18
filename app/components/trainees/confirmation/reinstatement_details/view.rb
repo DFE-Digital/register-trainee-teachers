@@ -6,10 +6,10 @@ module Trainees
       class View < GovukComponent::Base
         include SummaryHelper
 
-        attr_reader :trainee
+        attr_reader :data_model
 
-        def initialize(trainee:)
-          @trainee = trainee
+        def initialize(data_model)
+          @data_model = data_model
         end
 
         def confirm_section_title
@@ -17,7 +17,7 @@ module Trainees
         end
 
         def reinstate_date
-          date_for_summary_view(trainee.reinstate_date)
+          date_for_summary_view(data_model.date)
         end
       end
     end
