@@ -21,9 +21,9 @@ describe "Trainee state transitions" do
       context "with an existing trn" do
         let(:trainee) { create(:trainee, :deferred, trn: old_trn) }
 
-        it "transitions the trainee to :trn_received" do
+        it "doesnt transition the trainee to :trn_received" do
           trainee.trn_received!
-          expect(trainee.state).to eq("trn_received")
+          expect(trainee.state).to eq("deferred")
           expect(trainee.trn).to eq(old_trn)
         end
       end
@@ -36,9 +36,9 @@ describe "Trainee state transitions" do
           }.to raise_error(StateTransitionError)
         end
 
-        it "transitions the trainee to :trn_received and updates the trn" do
+        it "updates the trn but not the trainee state" do
           trainee.trn_received!(new_trn)
-          expect(trainee.state).to eq("trn_received")
+          expect(trainee.state).to eq("deferred")
           expect(trainee.trn).to eq(new_trn)
         end
       end
@@ -47,10 +47,32 @@ describe "Trainee state transitions" do
     context "with a :deferred trainee with an existing trn" do
       let(:trainee) { create(:trainee, :deferred, trn: old_trn) }
 
-      it "transitions the trainee to :trn_received" do
+      it "doesnt update state or trn" do
         trainee.trn_received!
-        expect(trainee.state).to eq("trn_received")
+        expect(trainee.state).to eq("deferred")
         expect(trainee.trn).to eq(old_trn)
+      end
+    end
+
+    context "with a :withdrawn trainee" do
+      context "with an existing trn" do
+        let(:trainee) { create(:trainee, :withdrawn, trn: old_trn) }
+
+        it "doesnt update state or trn" do
+          trainee.trn_received!
+          expect(trainee.state).to eq("withdrawn")
+          expect(trainee.trn).to eq(old_trn)
+        end
+      end
+
+      context "without an existing trn" do
+        let(:trainee) { create(:trainee, :withdrawn) }
+
+        it "doesnt update state but updates trn" do
+          trainee.trn_received!(new_trn)
+          expect(trainee.state).to eq("withdrawn")
+          expect(trainee.trn).to eq(new_trn)
+        end
       end
     end
 
@@ -60,7 +82,7 @@ describe "Trainee state transitions" do
 
         it "raises an error" do
           expect {
-            trainee.trn_received!(new_trn)
+            trainee.receive_trn!
           }.to raise_error(RuntimeError, "Invalid transition")
         end
       end
