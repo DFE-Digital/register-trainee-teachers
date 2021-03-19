@@ -6,14 +6,24 @@ describe DegreesHelper do
   include DegreesHelper
 
   describe "#hesa_degree_types_options" do
+    let(:degree_type) { "Bachelor of Arts" }
+    let(:degree_abbreviation) { "BA" }
+    let(:non_uk_degree_type) { "Unknown" }
+    let(:non_uk_degree_types) { %w[Unknown] }
+
     before do
-      allow(self).to receive(:hesa_degree_types).and_return(%w[hesa_degree_type])
+      stub_const("Dttp::CodeSets::DegreeTypes::NON_UK", [non_uk_degree_type])
+      stub_const("Dttp::CodeSets::DegreeTypes::MAPPING", {
+        degree_type => { abbreviation: degree_abbreviation },
+        non_uk_degree_type => { abbreviation: nil },
+      })
     end
 
     it "iterates over array and prints out correct hesa_degree_types values" do
-      expect(hesa_degree_types_options.size).to be 2
-      expect(hesa_degree_types_options.first.name).to be_nil
-      expect(hesa_degree_types_options.second.name).to eq "hesa_degree_type"
+      expect(hesa_degree_types_options).to match([
+        OpenStruct.new(option_name: nil, option_value: nil),
+        OpenStruct.new(option_name: "#{degree_type} (#{degree_abbreviation})", option_value: degree_type),
+      ])
     end
   end
 
