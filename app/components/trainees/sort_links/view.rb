@@ -14,7 +14,7 @@ module Trainees
     private
 
       def default_sort_link(name, sort_by)
-        return tag.span(name, class: "app-sort-links__item") if params[:sort_by].nil?
+        return tag.span(name, class: "app-sort-links__item") if params[:sort_by].blank?
 
         sort_link(name, sort_by)
       end
