@@ -17,7 +17,7 @@ describe TrainingDetailsForm, type: :model do
     end
 
     context "trainee ID" do
-      subject { described_class.new(trainee, validate_commencement_date: false) }
+      subject { described_class.new(trainee) }
 
       context "not present" do
         let(:trainee) { build(:trainee, trainee_id: nil) }
@@ -30,7 +30,7 @@ describe TrainingDetailsForm, type: :model do
       end
 
       context "over 100 characters" do
-        let(:trainee) { build(:trainee, trainee_id: SecureRandom.alphanumeric(101)) }
+        let(:trainee) { build(:trainee, commencement_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(101)) }
 
         it "returns a max character exceeded message" do
           expect(subject).not_to be_valid
@@ -41,7 +41,7 @@ describe TrainingDetailsForm, type: :model do
       end
 
       context "under 100 characters" do
-        let(:trainee) { build(:trainee, trainee_id: SecureRandom.alphanumeric(99)) }
+        let(:trainee) { build(:trainee, commencement_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(99)) }
 
         it "is valid" do
           expect(subject).to be_valid
@@ -50,7 +50,7 @@ describe TrainingDetailsForm, type: :model do
     end
 
     context "commencement date" do
-      subject { described_class.new(trainee, validate_trainee_id: false) }
+      subject { described_class.new(trainee) }
 
       before do
         subject.assign_attributes(date_attributes)

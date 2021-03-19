@@ -462,6 +462,16 @@ en:
               blank: You must enter a reason
             withdraw_reason:
               invalid: You must choose a reason
+        trainee_id_form:
+          attributes:
+            trainee_id:
+                blank: You must enter a trainee ID
+                max_char_exceeded: Your entry must not exceed 100 characters
+        trainee_start_date_form:
+          attributes:
+            commencement_date:
+                blank: You must enter a start date
+                invalid: You must enter a valid start date
         training_details_form:
           attributes:
             commencement_date:

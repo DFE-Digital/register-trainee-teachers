@@ -5,14 +5,15 @@ module Trainees
     before_action :authorize_trainee
 
     def edit
-      @training_details = TrainingDetailsForm.new(trainee)
+      @training_details = TraineeIdForm.new(trainee)
     end
 
     def update
-      @training_details = TrainingDetailsForm.new(trainee, validate_commencement_date: false)
-      @training_details.assign_attributes(trainee_params)
+      @training_details = TraineeIdForm.new(trainee, trainee_params)
 
-      if @training_details.save
+      save_strategy = trainee.draft? ? :save! : :stash
+
+      if @training_details.public_send(save_strategy)
         redirect_to trainee_trainee_id_confirm_path(trainee)
       else
         render :edit
@@ -30,7 +31,7 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:training_details_form).permit(:trainee_id)
+      params.require(:trainee_id_form).permit(:trainee_id)
     end
 
     def authorize_trainee

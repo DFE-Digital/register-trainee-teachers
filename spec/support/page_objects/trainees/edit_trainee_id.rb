@@ -5,7 +5,7 @@ module PageObjects
     class EditTraineeId < PageObjects::Base
       set_url "/trainees/{trainee_id}/trainee-id/edit"
 
-      element :trainee_id_input, "#training-details-form-trainee-id-field"
+      element :trainee_id_input, "#trainee-id-form-trainee-id-field"
       element :continue, "input[name='commit']"
     end
   end

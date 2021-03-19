@@ -7,7 +7,7 @@ module Trainees
     module TraineeStartDate
       class ViewPreview < ViewComponent::Preview
         def default
-          render(Trainees::Confirmation::TraineeStartDate::View.new(trainee: mock_trainee))
+          render(Trainees::Confirmation::TraineeStartDate::View.new(data_model: mock_trainee))
         end
 
       private

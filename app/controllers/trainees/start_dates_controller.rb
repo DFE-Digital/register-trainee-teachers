@@ -11,14 +11,15 @@ module Trainees
     }.freeze
 
     def edit
-      @training_details = TrainingDetailsForm.new(trainee)
+      @training_details = TraineeStartDateForm.new(trainee)
     end
 
     def update
-      @training_details = TrainingDetailsForm.new(trainee, validate_trainee_id: false)
-      @training_details.assign_attributes(trainee_params)
+      @training_details = TraineeStartDateForm.new(trainee, trainee_params)
 
-      if @training_details.save
+      save_strategy = trainee.draft? ? :save! : :stash
+
+      if @training_details.public_send(save_strategy)
         redirect_to trainee_start_date_confirm_path(trainee)
       else
         render :edit
@@ -36,7 +37,7 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:training_details_form).permit(:commencement_date, *PARAM_CONVERSION.keys)
+      params.require(:trainee_start_date_form).permit(:commencement_date, *PARAM_CONVERSION.keys)
             .transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end
