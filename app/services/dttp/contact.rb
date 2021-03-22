@@ -2,33 +2,32 @@
 
 module Dttp
   class Contact
-    include ServicePattern
-
-    class HttpError < StandardError; end
-
-    attr_reader :trainee
-
-    CONTACT_ATTRIBUTE_FIELDS = %w[
-      emailaddress1
-      firstname
-      lastname
-    ].freeze
-
-    def initialize(trainee:)
-      @trainee = trainee
+    def initialize(contact_data:)
+      @contact_data = contact_data
     end
 
-    def call
-      response = Client.get("/contacts(#{trainee.dttp_id})?$select=#{fields}")
-      if response.code != 200
-        raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
-      end
-
-      JSON(response.body)
+    def dttp_id
+      contact_data["contactid"]
     end
 
-    def fields
-      CONTACT_ATTRIBUTE_FIELDS.join(",")
+    def first_name
+      contact_data["firstname"]
     end
+
+    def last_name
+      contact_data["lastname"]
+    end
+
+    def email_address
+      contact_data["emailaddress1"]
+    end
+
+    def updated_on
+      contact_data["modifiedon"]
+    end
+
+  private
+
+    attr_reader :contact_data
   end
 end
