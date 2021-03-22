@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get :sha, controller: :heartbeat
 
   get "/accessibility", to: "pages#accessibility", as: :accessibility
-  get "/cookies", to: "pages#cookies", as: :cookies
+  get "/cookies", to: "pages#cookie_policy", as: :cookie_policy
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/data-requirements", to: "pages#data_requirements"
 

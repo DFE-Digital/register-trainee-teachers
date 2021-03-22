@@ -1,23 +1,3 @@
-/** @description Sets a cookie to store whether the user has seen the cookie banner
- * @param {Boolean} value - true/false
- * @returns {Boolean} true, if it successfully set the viewed_cookie_message cookie
- */
-const setViewedCookieMessage = (value) => {
-  if (typeof value === 'boolean') {
-    setCookie('viewed_cookie_message', value, { days: 182 })
-    return true
-  } else {
-    throw new Error('setViewedCookieMessage: Only accepts boolean parameters')
-  }
-}
-
-/** @summary Checks if the viewed_cookie_message cookie exists
- * @returns {Boolean} true if it finds the viewed_cookie_message & false if it does not find it
-*/
-const viewedCookieMessageExists = () => {
-  return getCookie('viewed_cookie_message') !== null
-}
-
 /**
  *  @private
  *  @summary Fetches and returns a cookie by cookie name
@@ -58,7 +38,7 @@ function setCookie (name, value, options) {
   let cookieString = name + '=' + value + '; path=/'
   if (options.days) {
     const date = new Date()
-    date.setTime(date.getTime() + (options.days * 24 * 60 * 60 * 1000))
+    date.setTime(date.getTime() + options.days * 24 * 60 * 60 * 1000)
     cookieString = cookieString + '; expires=' + date.toGMTString()
   }
   if (document.location.protocol === 'https:') {
@@ -67,7 +47,4 @@ function setCookie (name, value, options) {
   document.cookie = cookieString
 }
 
-export {
-  setViewedCookieMessage,
-  viewedCookieMessageExists
-}
+export { getCookie, setCookie }

@@ -1,6 +1,6 @@
 import {
-  setViewedCookieMessage,
-  viewedCookieMessageExists
+  getCookie,
+  setCookie
 } from './utils/cookie_helper'
 
 export default class CookieBanner {
@@ -19,29 +19,47 @@ export default class CookieBanner {
       '[data-qa="govuk-cookie-banner__hide"]'
     )
 
-    if (!viewedCookieMessageExists()) {
-      this.showCookieMessage()
-      this.bindEvents()
+    this.cookieKey = this.$module.attributes['data-cookie-banner-key'].value
+    this.cookieLength = this.$module.attributes[
+      'data-cookie-banner-period'
+    ].value
+
+    if (!this.cookieExists()) {
+      this._showCookieMessage()
+      this._bindEvents()
     } else {
-      this.hideCookieMessage()
+      this._hideCookieMessage()
     }
   }
 
-  bindEvents () {
+  viewedCookieBanner () {
+    this._hideCookieMessage()
+    this.setViewedCookie(true)
+  }
+
+  cookieExists () {
+    return getCookie(this.cookieKey) !== null
+  }
+
+  setViewedCookie (value) {
+    if (typeof value === 'boolean') {
+      setCookie(this.cookieKey, value, { days: this.cookieLength })
+      return true
+    } else {
+      throw new Error('setViewedCookie: Only accepts boolean parameters')
+    }
+  }
+
+  _bindEvents () {
     this.hideButton.addEventListener('click', () => this.viewedCookieBanner())
   }
 
-  viewedCookieBanner () {
-    this.hideCookieMessage()
-    setViewedCookieMessage(true)
-  }
-
-  showCookieMessage () {
+  _showCookieMessage () {
     this.$module.hidden = false
     this.hideButton.classList.remove('govuk-cookie-banner__hide')
   }
 
-  hideCookieMessage () {
+  _hideCookieMessage () {
     this.$module.hidden = true
   }
 }
