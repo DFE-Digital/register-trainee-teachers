@@ -6,6 +6,7 @@ require_relative "features/dttp_steps"
 require_relative "features/common_steps"
 require_relative "features/page_helpers"
 require_relative "features/diversity_steps"
+require_relative "features/confirmation_steps"
 require_relative "dfe_sign_in_user_helper"
 
 RSpec.configure do |config|
@@ -21,6 +22,7 @@ RSpec.configure do |config|
   config.include Features::CommonSteps, type: :feature
   config.include Features::PageHelpers, type: :feature
   config.include Features::DiversitySteps, type: :feature
+  config.include Features::ConfirmationSteps, type: :feature
   config.include DfESignInUserHelper, type: :feature
 
   config.around :each do |example|

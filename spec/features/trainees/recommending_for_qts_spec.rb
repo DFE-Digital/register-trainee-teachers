@@ -29,6 +29,6 @@ feature "Recommending for QTS", type: :feature do
   end
 
   def and_i_confirm_the_outcome_details
-    confirm_outcome_details_page.continue.click
+    confirm_outcome_details_page.record_outcome.click
   end
 end

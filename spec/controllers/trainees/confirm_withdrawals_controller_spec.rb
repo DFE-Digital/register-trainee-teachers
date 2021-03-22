@@ -10,6 +10,7 @@ describe Trainees::ConfirmWithdrawalsController do
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)
+    allow(WithdrawalForm).to receive(:new).with(trainee).and_return(double(save!: true))
   end
 
   describe "#update" do

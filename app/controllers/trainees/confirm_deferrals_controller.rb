@@ -6,20 +6,28 @@ module Trainees
 
     def show
       page_tracker.save_as_origin!
+      deferral
     end
 
     def update
-      trainee.defer!
-      DeferJob.perform_later(trainee.id)
+      if deferral.save!
+        trainee.defer!
 
-      flash[:success] = "Trainee deferred"
-      redirect_to trainee_path(trainee)
+        DeferJob.perform_later(trainee.id)
+
+        flash[:success] = "Trainee deferred"
+        redirect_to trainee_path(trainee)
+      end
     end
 
   private
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
+    end
+
+    def deferral
+      @deferral ||= DeferralForm.new(trainee)
     end
 
     def authorize_trainee

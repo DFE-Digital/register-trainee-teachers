@@ -13,7 +13,7 @@
       <%= t("views.confirm_reinstatement.heading") %>
     </h1>
 
-    <%= render Trainees::Confirmation::ReinstatementDetails::View.new(trainee: @trainee) %>
+    <%= render Trainees::Confirmation::ReinstatementDetails::View.new(@reinstatement) %>
 
     <%= register_form_with url: trainee_confirm_reinstatement_path(@trainee), method: :patch, local: true do |f| %>
       <%= f.govuk_submit t("views.confirm_reinstatement.submit") %>
@@ -21,4 +21,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to(t("cancel"), trainee_path(@trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to(t("cancel"), trainee_path(@trainee), class: "qa-cancel-link") %></p>

@@ -4,12 +4,15 @@ module Trainees
   class QtsRecommendationsController < ApplicationController
     def create
       authorize trainee
-      trainee.recommend_for_qts!
 
-      RecommendForQtsJob.perform_later(trainee.id)
-      RetrieveQtsJob.set(wait: RetrieveQtsJob::POLL_DELAY).perform_later(trainee.id)
+      if OutcomeDateForm.new(trainee).save!
+        trainee.recommend_for_qts!
 
-      redirect_to recommended_trainee_outcome_details_path(trainee)
+        RecommendForQtsJob.perform_later(trainee.id)
+        RetrieveQtsJob.set(wait: RetrieveQtsJob::POLL_DELAY).perform_later(trainee.id)
+
+        redirect_to recommended_trainee_outcome_details_path(trainee)
+      end
     end
 
   private

@@ -9,10 +9,9 @@ module Trainees
 
     def update
       authorize trainee
-      @outcome = OutcomeDateForm.new(trainee)
-      @outcome.assign_attributes(trainee_params)
+      @outcome = OutcomeDateForm.new(trainee, trainee_params)
 
-      if @outcome.save
+      if @outcome.stash
         redirect_to confirm_trainee_outcome_details_path(trainee)
       else
         render :edit

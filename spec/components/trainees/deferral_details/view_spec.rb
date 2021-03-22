@@ -9,14 +9,15 @@ module Trainees
 
       alias_method :component, :page
 
-      let(:trainee) { Trainee.new(defer_date: Time.zone.yesterday) }
+      let(:trainee_stub) { Trainee.new(defer_date: Time.zone.yesterday) }
+      let(:data_model) { OpenStruct.new(trainee: trainee_stub, date: trainee_stub.defer_date) }
 
       before do
-        render_inline(View.new(trainee))
+        render_inline(View.new(data_model))
       end
 
       it "renders the deferral end date" do
-        expect(component).to have_text(date_for_summary_view(trainee.defer_date))
+        expect(component).to have_text(date_for_summary_view(data_model.date))
       end
     end
   end

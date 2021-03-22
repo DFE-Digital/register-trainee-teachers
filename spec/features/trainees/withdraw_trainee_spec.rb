@@ -42,14 +42,18 @@ feature "Withdrawing a trainee", type: :feature do
       when_i_choose_today
       and_i_continue
       then_i_am_redirected_to_withdrawal_confirmation_page
-      and_the_withdraw_date_and_reason_is_updated
+      and_i_see_my_date(Time.zone.today)
+      when_i_withdraw
+      then_the_withdraw_date_and_reason_is_updated
     end
 
     scenario "yesterday" do
       when_i_choose_yesterday
       and_i_continue
       then_i_am_redirected_to_withdrawal_confirmation_page
-      and_the_withdraw_date_and_reason_is_updated
+      and_i_see_my_date(Time.zone.yesterday)
+      when_i_withdraw
+      then_the_withdraw_date_and_reason_is_updated
     end
 
     scenario "on another day" do
@@ -57,7 +61,9 @@ feature "Withdrawing a trainee", type: :feature do
       and_i_enter_a_valid_date
       and_i_continue
       then_i_am_redirected_to_withdrawal_confirmation_page
-      and_the_withdrawal_details_is_updated
+      and_i_see_my_date(@chosen_date)
+      when_i_withdraw
+      then_the_withdrawal_details_is_updated
     end
   end
 
@@ -80,6 +86,17 @@ feature "Withdrawing a trainee", type: :feature do
     end
   end
 
+  scenario "cancelling changes" do
+    when_i_choose_today
+    and_i_choose_a_specific_reason
+    and_i_continue
+    then_i_am_redirected_to_withdrawal_confirmation_page
+    and_i_see_my_date(Time.zone.today)
+    when_i_cancel_my_changes
+    then_i_am_redirected_to_the_record_page
+    and_the_withdrawal_information_i_set_is_cleared
+  end
+
   def when_i_choose_today
     when_i_choose("Today")
   end
@@ -93,7 +110,8 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def and_i_enter_a_valid_date
-    Faker::Date.in_date_period.tap do |withdraw_date|
+    @chosen_date = Faker::Date.in_date_period
+    @chosen_date.tap do |withdraw_date|
       withdrawal_page.set_date_fields(:withdraw_date, withdraw_date.strftime("%d/%m/%Y"))
     end
   end
@@ -112,6 +130,10 @@ feature "Withdrawing a trainee", type: :feature do
 
   def and_i_click_on_withdraw
     record_page.withdraw.click
+  end
+
+  def when_i_withdraw
+    withdrawal_confirmation_page.withdraw.click
   end
 
   def and_enter_an_invalid_date
@@ -162,7 +184,7 @@ feature "Withdrawing a trainee", type: :feature do
     )
   end
 
-  def and_the_withdrawal_details_is_updated
+  def then_the_withdrawal_details_is_updated
     trainee.reload
     expect(page).to have_text(date_for_summary_view(trainee.withdraw_date))
   end
@@ -171,11 +193,9 @@ feature "Withdrawing a trainee", type: :feature do
     expect(withdrawal_confirmation_page).to be_displayed(id: trainee.slug)
   end
 
-  def and_the_withdraw_date_and_reason_is_updated
+  def then_the_withdraw_date_and_reason_is_updated
     trainee.reload
     expect(page).to have_text(trainee.withdraw_date.strftime("%-d %B %Y"))
-    reason = I18n.t("components.confirmation.withdrawal_details.reasons.#{trainee.withdraw_reason}")
-    expect(page).to have_text(reason)
   end
 
   def and_the_additional_reason_is_displayed
@@ -189,5 +209,20 @@ feature "Withdrawing a trainee", type: :feature do
 
   def additional_withdraw_reason
     @additional_withdraw_reason ||= Faker::Lorem.paragraph
+  end
+
+  def when_i_cancel_my_changes
+    withdrawal_confirmation_page.cancel.click
+  end
+
+  def then_i_am_redirected_to_the_record_page
+    expect(record_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_the_withdrawal_information_i_set_is_cleared
+    trainee.reload
+    expect(trainee.withdraw_date).to be_nil
+    expect(trainee.withdraw_reason).to be_nil
+    expect(trainee.additional_withdraw_reason).to be_nil
   end
 end

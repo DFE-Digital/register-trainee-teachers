@@ -8,12 +8,13 @@ RSpec.describe Trainees::Confirmation::ReinstatementDetails::View do
   alias_method :component, :page
 
   let(:trainee) { build(:trainee, :reinstated, id: 1) }
+  let(:data_model) { OpenStruct.new(trainee: trainee, date: trainee.defer_date) }
 
   before do
-    render_inline(described_class.new(trainee: trainee))
+    render_inline(described_class.new(data_model))
   end
 
   it "renders the date the trainee was reinstated" do
-    expect(component).to have_text(date_for_summary_view(trainee.reinstate_date))
+    expect(component).to have_text(date_for_summary_view(data_model.date))
   end
 end

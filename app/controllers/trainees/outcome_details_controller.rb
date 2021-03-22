@@ -4,6 +4,7 @@ module Trainees
   class OutcomeDetailsController < ApplicationController
     def confirm
       authorize trainee
+      @outcome = OutcomeDateForm.new(trainee)
     end
 
     def recommended

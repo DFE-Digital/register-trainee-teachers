@@ -11,10 +11,9 @@ module Trainees
     def update
       authorize(trainee, :defer?)
 
-      @deferral = DeferralForm.new(trainee)
-      @deferral.assign_attributes(trainee_params)
+      @deferral = DeferralForm.new(trainee, trainee_params)
 
-      if @deferral.save
+      if @deferral.stash
         redirect_to trainee_confirm_deferral_path(trainee)
       else
         render :show

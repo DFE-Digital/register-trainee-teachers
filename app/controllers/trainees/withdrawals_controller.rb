@@ -11,10 +11,9 @@ module Trainees
     def update
       authorize(trainee, :withdraw?)
 
-      @withdrawal_form = WithdrawalForm.new(trainee)
-      @withdrawal_form.assign_attributes(trainee_params)
+      @withdrawal_form = WithdrawalForm.new(trainee, trainee_params)
 
-      if @withdrawal_form.save
+      if @withdrawal_form.stash
         redirect_to trainee_confirm_withdrawal_path(@trainee)
       else
         render :show

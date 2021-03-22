@@ -5,16 +5,17 @@ module Trainees
     module WithdrawalDetails
       class ViewPreview < ViewComponent::Preview
         def default
-          render(Trainees::Confirmation::WithdrawalDetails::View.new(trainee: trainee))
+          render(Trainees::Confirmation::WithdrawalDetails::View.new(data_model))
         end
 
       private
 
-        def trainee
-          @trainee ||= OpenStruct.new({
-            withdraw_date: Faker::Date.in_date_period,
+        def data_model
+          OpenStruct.new(
+            trainee: Trainee.new(id: 1),
+            date: Faker::Date.in_date_period,
             withdraw_reason: WithdrawalReasons::SPECIFIC.sample,
-          })
+          )
         end
       end
     end
