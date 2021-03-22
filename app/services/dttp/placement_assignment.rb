@@ -2,31 +2,26 @@
 
 module Dttp
   class PlacementAssignment
-    include ServicePattern
+    attr_reader :placement_assignment_json
 
-    class HttpError < StandardError; end
-
-    attr_reader :trainee
-
-    PLACEMENT_ASSIGNMENT_FIELDS = %w[
-      dfe_programmestartdate
-      dfe_programmeenddate
-      dfe_placementassignmentid
-      _dfe_providerid_value
-    ].freeze
-
-    def initialize(trainee:)
-      @trainee = trainee
+    def initialize(placement_assignment_json:)
+      @placement_assignment_json = placement_assignment_json
     end
 
-    def call
-      response = Client.get("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})?$select=#{PLACEMENT_ASSIGNMENT_FIELDS.join(',')}")
+    def programme_start_date
+      placement_assignment_json[:dfe_programmestartdate]
+    end
 
-      if response.code != 200
-        raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
-      end
+    def programme_end_date
+      placement_assignment_json[:dfe_programmeenddate]
+    end
 
-      JSON(response.body).slice(*PLACEMENT_ASSIGNMENT_FIELDS)
+    def placement_assignment_id
+      placement_assignment_json[:dfe_placementassignmentid]
+    end
+
+    def provider_id_value
+      placement_assignment_json[:_dfe_providerid_value]
     end
   end
 end

@@ -1,61 +1,39 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-
 module Dttp
   describe PlacementAssignment do
-    describe "#call" do
-      let(:trainee) { create(:trainee, dttp_id: :with_placement_assignment) }
-      let(:fields) { Dttp::PlacementAssignment::PLACEMENT_ASSIGNMENT_FIELDS }
-      let(:path) { "/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})?$select=#{fields.join(',')}" }
-      let(:start_date) { 1.year.ago }
-      let(:end_date) { Time.zone.now }
-      let(:placement_assignment_id) { SecureRandom.uuid }
-      let(:provider_id_value) { SecureRandom.uuid }
+    let(:programme_start_date) { 1.year.ago }
+    let(:programme_end_date) { Time.zone.now }
+    let(:placement_assignment_id) { SecureRandom.uuid }
+    let(:provider_id_value) { SecureRandom.uuid }
 
-      before do
-        allow(AccessToken).to receive(:fetch).and_return("token")
-        allow(Client).to receive(:get).with(path).and_return(dttp_response)
+    let(:placement_assignment_json) do
+      {
+        dfe_programmestartdate: programme_start_date,
+        dfe_programmeenddate: programme_end_date,
+        dfe_placementassignmentid: placement_assignment_id,
+        _dfe_providerid_value: provider_id_value,
+      }
+    end
+
+    subject { described_class.new(placement_assignment_json: placement_assignment_json) }
+
+    describe "instance methods" do
+      it "#programme_start_dates" do
+        expect(subject.programme_start_date).to eq(programme_start_date)
       end
 
-      context "Placement Assignment sample fields are available" do
-        let(:dttp_response) do
-          double(code: 200, body: { dfe_programmestartdate: start_date,
-                                    dfe_programmeenddate: end_date,
-                                    dfe_placementassignmentid: placement_assignment_id,
-                                    _dfe_providerid_value: provider_id_value }.to_json)
-        end
-
-        it "returns placement assignment JSON ruby hash" do
-          expect(described_class.call(trainee: trainee)).to eq(JSON(dttp_response.body))
-        end
+      it "#programme_end_dates" do
+        expect(subject.programme_end_date).to eq(programme_end_date)
       end
 
-      context "Placement Assignment sample fields are unavailable" do
-        let(:dttp_response) do
-          double(code: 200, body: { dfe_programmestartdate: nil,
-                                    dfe_programmeenddate: nil,
-                                    dfe_placementassignmentid: nil,
-                                    _dfe_providerid_value: nil }.to_json)
-        end
-
-        it "returns placement assignment fields as nil" do
-          expect(described_class.call(trainee: trainee).values).to eq([nil, nil, nil, nil])
-        end
+      it "#placement_assignment_id" do
+        expect(subject.placement_assignment_id).to eq(placement_assignment_id)
       end
 
-      context "HTTP error" do
-        let(:status) { 400 }
-        let(:body) { "error" }
-        let(:headers) { { foo: "bar" } }
-        let(:dttp_response) { double(code: status, body: body, headers: headers) }
-
-        it "raises a HttpError error with the response body as the message" do
-          expect(Client).to receive(:get).with(path).and_return(dttp_response)
-          expect {
-            described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::PlacementAssignment::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
-        end
+      it "#provider_id_value" do
+        expect(subject.provider_id_value).to eq(provider_id_value)
       end
     end
   end
