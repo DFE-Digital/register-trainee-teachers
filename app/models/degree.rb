@@ -28,6 +28,13 @@ class Degree < ApplicationRecord
     non_uk_degree == NON_NARIC
   end
 
+  # other_grade should be nil if grade isn't 'Other'
+  def other_grade
+    if grade == "Other"
+      self[:other_grade]
+    end
+  end
+
 private
 
   def next_year

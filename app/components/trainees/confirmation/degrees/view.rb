@@ -5,13 +5,17 @@ module Trainees
     module Degrees
       class View < GovukComponent::Base
         include ApplicationHelper
-        attr_accessor :degrees, :trainee, :show_add_another_degree_button, :show_delete_button
+        attr_accessor :degrees, :data_model, :show_add_another_degree_button, :show_delete_button
 
-        def initialize(trainee:, show_add_another_degree_button: true, show_delete_button: true)
-          @trainee = trainee
-          @degrees = trainee.degrees
+        def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true)
+          @data_model = data_model
+          @degrees = @data_model.degrees
           @show_add_another_degree_button = show_add_another_degree_button
           @show_delete_button = show_delete_button
+        end
+
+        def trainee
+          data_model.is_a?(Trainee) ? data_model : data_model.trainee
         end
 
         def degree_title(degree)

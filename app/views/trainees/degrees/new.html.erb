@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.degrees.edit", has_errors: @degree.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.degrees.edit", has_errors: @degree_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
@@ -9,6 +9,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
-    <%= @degree.uk? ? (render "uk_degree_form") : (render "non_uk_degree_form") %>
+    <%= @degree_form.uk? ? (render "uk_degree_form") : (render "non_uk_degree_form") %>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<%= register_form_with model: [@trainee, @degree], local: true do |f| %>
+<%= register_form_with model: [@trainee, @degree_form.degree], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "uk" %>
 
   <%= f.govuk_error_summary %>

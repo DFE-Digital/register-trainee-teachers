@@ -6,29 +6,29 @@ module Trainees
     module Degrees
       class ViewPreview < ViewComponent::Preview
         def with_one_uk_degree
-          render(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: single_uk_degree)))
+          render(Trainees::Confirmation::Degrees::View.new(data_model: mock_trainee(degrees: single_uk_degree)))
         end
 
         def with_multiple_uk_degree
-          render(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: multiple_uk_degrees)))
+          render(Trainees::Confirmation::Degrees::View.new(data_model: mock_trainee(degrees: multiple_uk_degrees)))
         end
 
         def with_one_non_uk_degree
-          render(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: single_non_uk_degree)))
+          render(Trainees::Confirmation::Degrees::View.new(data_model: mock_trainee(degrees: single_non_uk_degree)))
         end
 
         def with_multiple_non_uk_degree
-          render(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: multiple_non_uk_degrees)))
+          render(Trainees::Confirmation::Degrees::View.new(data_model: mock_trainee(degrees: multiple_non_uk_degrees)))
         end
 
         def with_a_mixture_of_uk_and_non_uk_degrees
-          render(Trainees::Confirmation::Degrees::View.new(trainee: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees)))
+          render(Trainees::Confirmation::Degrees::View.new(data_model: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees)))
         end
 
         def with_no_option_to_add_another_degree
           render(
             Trainees::Confirmation::Degrees::View.new(
-              trainee: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
+              data_model: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
               show_add_another_degree_button: false,
             ),
           )
@@ -37,7 +37,7 @@ module Trainees
         def with_delete_degree_button
           render(
             Trainees::Confirmation::Degrees::View.new(
-              trainee: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
+              data_model: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
               show_add_another_degree_button: false,
               show_delete_button: true,
             ),

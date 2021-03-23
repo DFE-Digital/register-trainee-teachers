@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Trainees::Confirmation::Degrees::View do
   alias_method :component, :page
   before do
-    render_inline(Trainees::Confirmation::Degrees::View.new(trainee: trainee))
+    render_inline(Trainees::Confirmation::Degrees::View.new(data_model: trainee))
   end
 
   let(:trainee) do
@@ -102,7 +102,7 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
 
     context "suppress the 'Add another degree' button" do
       before do
-        render_inline(Trainees::Confirmation::Degrees::View.new(trainee: trainee, show_add_another_degree_button: false))
+        render_inline(Trainees::Confirmation::Degrees::View.new(data_model: trainee, show_add_another_degree_button: false))
       end
 
       it "does not render 'Add another degree' button" do
