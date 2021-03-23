@@ -6,8 +6,8 @@ module Dttp
   module PlacementAssignments
     describe Fetch do
       describe "#call" do
-        let(:trainee) { create(:trainee, dttp_id: :with_placement_assignment) }
-        let(:path) { "/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})" }
+        let(:dttp_id) { SecureRandom.uuid }
+        let(:path) { "/dfe_placementassignments(#{dttp_id})" }
 
         before do
           allow(AccessToken).to receive(:fetch).and_return("token")
@@ -20,7 +20,7 @@ module Dttp
           end
 
           it "returns placement assignment JSON ruby hash" do
-            expect(described_class.call(trainee: trainee)).to be_a(Dttp::PlacementAssignment)
+            expect(described_class.call(dttp_id: dttp_id)).to be_a(Dttp::PlacementAssignment)
           end
         end
 
@@ -33,7 +33,7 @@ module Dttp
           it "raises a HttpError error with the response body as the message" do
             expect(Client).to receive(:get).with(path).and_return(dttp_response)
             expect {
-              described_class.call(trainee: trainee)
+              described_class.call(dttp_id: dttp_id)
             }.to raise_error(Dttp::PlacementAssignments::Fetch::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
           end
         end
