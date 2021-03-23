@@ -6,13 +6,13 @@ class TrainingRouteManager
   end
 
   def requires_placement_details?
-    feature_enabled?(:routes_provider_led) && provider_led?
+    feature_enabled?(:routes_provider_led_postgrad) && provider_led_postgrad?
   end
 
 private
 
-  def provider_led?
-    training_route == TRAINING_ROUTE_ENUMS[:provider_led].to_sym
+  def provider_led_postgrad?
+    training_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad].to_sym
   end
 
   def assessment_only?

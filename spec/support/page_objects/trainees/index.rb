@@ -21,7 +21,7 @@ module PageObjects
 
       element :text_search, "#text_search"
       element :assessment_only_checkbox, "#training_route-assessment_only"
-      element :provider_led_checkbox, "#training_route-provider_led"
+      element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
       element :subject, "#subject"
 
       element :export_link, ".app-trainee-export"

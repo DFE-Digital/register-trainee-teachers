@@ -123,8 +123,8 @@ FactoryBot.define do
       outcome_date { Faker::Date.in_date_period }
     end
 
-    trait :provider_led do
-      training_route { "provider_led" }
+    trait :provider_led_postgrad do
+      training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
     end
 
     trait :draft do
