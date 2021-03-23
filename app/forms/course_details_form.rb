@@ -1,13 +1,23 @@
 # frozen_string_literal: true
 
-class CourseDetailForm
+class CourseDetailsForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  attr_accessor :trainee, :subject, :main_age_range,
-                :additional_age_range, :start_day, :start_month, :start_year,
-                :end_day, :end_month, :end_year
+  FIELDS = %i[
+    subject
+    start_day
+    start_month
+    start_year
+    end_day
+    end_month
+    end_year
+    main_age_range
+    additional_age_range
+  ].freeze
+
+  attr_accessor(*FIELDS, :trainee, :fields)
 
   delegate :id, :persisted?, to: :trainee
 
@@ -18,35 +28,15 @@ class CourseDetailForm
   validate :course_start_date_valid
   validate :course_end_date_valid
 
-  after_validation :update_trainee
-
   MAX_END_YEARS = 4
 
-  def initialize(trainee)
+  def initialize(trainee, params = {}, store = FormStore)
     @trainee = trainee
-
+    @store = store
+    @params = params
+    @new_attributes = fields_from_store.merge(params).symbolize_keys
+    @fields = compute_attributes_from_trainee.merge(new_attributes)
     super(fields)
-  end
-
-  def fields
-    attributes = {
-      subject: trainee.subject,
-      start_day: trainee.course_start_date&.day,
-      start_month: trainee.course_start_date&.month,
-      start_year: trainee.course_start_date&.year,
-      end_day: trainee.course_end_date&.day,
-      end_month: trainee.course_end_date&.month,
-      end_year: trainee.course_end_date&.year,
-    }
-
-    age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.age_range]
-
-    if age_range.present?
-      attributes["#{age_range[:option]}_age_range".to_sym] = trainee.age_range
-      attributes[:main_age_range] = :other if age_range[:option] == :additional
-    end
-
-    attributes
   end
 
   def course_start_date
@@ -74,28 +64,67 @@ class CourseDetailForm
     end
   end
 
-private
-
-  def update_trainee
-    if errors.empty?
-      trainee.assign_attributes({
-        subject: subject,
-        age_range: age_range,
-        course_start_date: course_start_date,
-        course_end_date: course_end_date,
-      })
-    end
+  def stash
+    valid? && store.set(trainee.id, :course_details, fields)
   end
 
-  def new_date(date_hash)
-    date_args = date_hash.values.map(&:to_i)
-    Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+  def save!
+    if valid?
+      update_trainee_attributes
+      trainee.save!
+      store.set(trainee.id, :course_details, nil)
+    else
+      false
+    end
   end
 
   def age_range
     return additional_age_range if main_age_range.to_sym == :other
 
     main_age_range
+  end
+
+private
+
+  attr_reader :new_attributes, :store
+
+  def update_trainee_attributes
+    trainee.assign_attributes({
+      subject: subject,
+      age_range: age_range,
+      course_start_date: course_start_date,
+      course_end_date: course_end_date,
+    })
+  end
+
+  def fields_from_store
+    store.get(trainee.id, :course_details).presence || {}
+  end
+
+  def compute_attributes_from_trainee
+    attributes = {
+      subject: trainee.subject,
+      start_day: trainee.course_start_date&.day,
+      start_month: trainee.course_start_date&.month,
+      start_year: trainee.course_start_date&.year,
+      end_day: trainee.course_end_date&.day,
+      end_month: trainee.course_end_date&.month,
+      end_year: trainee.course_end_date&.year,
+    }
+
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.age_range]
+
+    if age_range.present?
+      attributes["#{age_range[:option]}_age_range".to_sym] = trainee.age_range
+      attributes[:main_age_range] = :other if age_range[:option] == :additional
+    end
+
+    attributes
+  end
+
+  def new_date(date_hash)
+    date_args = date_hash.values.map(&:to_i)
+    Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
   def age_range_valid

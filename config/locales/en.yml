@@ -418,7 +418,7 @@ en:
               empty_nationalities: You must select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list
-        course_detail_form:
+        course_details_form:
           attributes:
             subject:
               blank: "You must select a subject"

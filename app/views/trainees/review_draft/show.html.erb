@@ -82,7 +82,7 @@
             confirm_path: trainee_course_details_confirm_path(@trainee),
             classes: "course-details",
             status: ProgressService.call(
-              validator: CourseDetailForm.new(@trainee),
+              validator: CourseDetailsForm.new(@trainee),
               progress_value: @trainee.progress.course_details,
             ).status,
           )
