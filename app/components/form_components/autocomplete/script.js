@@ -8,6 +8,15 @@ const disableAutoselectOption = component => Boolean(component.getAttribute('dat
 const disableConfirmOnBlurOption = component => Boolean(component.getAttribute('data-disable-confirm-on-blur'))
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
 
+const suggestionTemplate = (value) => {
+  const matches = /(.+)\(([^)]+)\)/.exec(value)
+  if (matches) {
+    return `<span>${matches[1]}</span> <strong>(${matches[2]})</strong>`
+  } else {
+    return `<span>${value}</span>`
+  }
+}
+
 const setupAutoComplete = (component) => {
   const selectEl = component.querySelector('select')
 
@@ -16,7 +25,8 @@ const setupAutoComplete = (component) => {
     selectElement: selectEl,
     showAllValues: showAllValuesOption(component),
     autoselect: !disableAutoselectOption(component),
-    confirmOnBlur: !disableConfirmOnBlurOption(component)
+    confirmOnBlur: !disableConfirmOnBlurOption(component),
+    templates: { suggestion: suggestionTemplate }
   })
 
   // Fixes a bug whereby if the user enters a search term with no results
