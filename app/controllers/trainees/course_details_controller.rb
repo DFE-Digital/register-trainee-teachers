@@ -13,21 +13,16 @@ module Trainees
       "course_end_date(1i)" => "end_year",
     }.freeze
 
-    COURSE_DETAILS_PARAMS_KEYS = %i[subject
-                                    main_age_range
-                                    additional_age_range].freeze
-
     def edit
-      @course_detail = CourseDetailForm.new(trainee)
+      @course_details = CourseDetailsForm.new(trainee)
     end
 
     def update
-      updater = CourseDetails::Update.call(trainee: trainee, attributes: course_details_params)
-
-      if updater.successful?
+      @course_details = CourseDetailsForm.new(trainee, course_details_params.merge(course_date_params))
+      save_strategy = trainee.draft? ? :save! : :stash
+      if @course_details.public_send(save_strategy)
         redirect_to trainee_course_details_confirm_path(trainee)
       else
-        @course_detail = updater.course_detail
         render :edit
       end
     end
@@ -39,15 +34,12 @@ module Trainees
     end
 
     def course_details_params
-      params.require(:course_detail_form).permit(
-        *COURSE_DETAILS_PARAMS_KEYS,
-      ).except(*COURSE_DATE_CONVERSION.keys)
-      .merge(course_date_params)
+      params.require(:course_details_form).permit(*CourseDetailsForm::FIELDS)
     end
 
     def course_date_params
-      params.require(:course_detail_form).except(
-        *COURSE_DETAILS_PARAMS_KEYS,
+      params.require(:course_details_form).except(
+        *CourseDetailsForm::FIELDS,
       ).permit(*COURSE_DATE_CONVERSION.keys)
       .transform_keys { |key| COURSE_DATE_CONVERSION[key] }
     end

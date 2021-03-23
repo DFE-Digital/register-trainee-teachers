@@ -11,7 +11,7 @@ module Trainees
         context "when data has not been provided" do
           let(:trainee) { build(:trainee, id: 1, training_route: nil, subject: nil, age_range: nil, course_start_date: nil) }
           before do
-            render_inline(View.new(trainee: trainee))
+            render_inline(View.new(data_model: trainee))
           end
 
           it "tells the user that no data has been entered for course type, subject, age range, course start date and course end date" do
@@ -29,7 +29,7 @@ module Trainees
           let(:trainee) { build(:trainee, :with_course_details, id: 1) }
 
           before do
-            render_inline(View.new(trainee: trainee))
+            render_inline(View.new(data_model: trainee))
           end
 
           it "renders the course type" do

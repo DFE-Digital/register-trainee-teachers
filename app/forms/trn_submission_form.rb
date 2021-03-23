@@ -11,7 +11,7 @@ class TrnSubmissionForm
       contact_details: ContactDetailsForm,
       diversity: Diversities::FormValidator,
       degrees: DegreeDetailForm,
-      course_details: CourseDetailForm,
+      course_details: CourseDetailsForm,
       training_details: TrainingDetailsForm,
     }.freeze
 

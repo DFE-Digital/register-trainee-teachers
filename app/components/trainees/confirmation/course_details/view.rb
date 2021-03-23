@@ -6,11 +6,15 @@ module Trainees
       class View < GovukComponent::Base
         include SummaryHelper
 
-        attr_accessor :trainee
+        attr_accessor :data_model
 
-        def initialize(trainee:)
-          @trainee = trainee
+        def initialize(data_model:)
+          @data_model = data_model
           @not_provided_copy = I18n.t("components.confirmation.not_provided")
+        end
+
+        def trainee
+          data_model.is_a?(Trainee) ? data_model : data_model.trainee
         end
 
         def summary_title
@@ -18,15 +22,15 @@ module Trainees
         end
 
         def subject
-          return @not_provided_copy if trainee.subject.blank?
+          return @not_provided_copy if data_model.subject.blank?
 
-          trainee.subject
+          data_model.subject
         end
 
         def age_range
-          return @not_provided_copy if trainee.age_range.blank?
+          return @not_provided_copy if data_model.age_range.blank?
 
-          trainee.age_range
+          data_model.age_range
         end
 
         def course_type
@@ -36,15 +40,15 @@ module Trainees
         end
 
         def course_start_date
-          return @not_provided_copy if trainee.course_start_date.blank?
+          return @not_provided_copy if data_model.course_start_date.blank?
 
-          date_for_summary_view(trainee.course_start_date)
+          date_for_summary_view(data_model.course_start_date)
         end
 
         def course_end_date
-          return @not_provided_copy if trainee.course_end_date.blank?
+          return @not_provided_copy if data_model.course_end_date.blank?
 
-          date_for_summary_view(trainee.course_end_date)
+          date_for_summary_view(data_model.course_end_date)
         end
       end
     end

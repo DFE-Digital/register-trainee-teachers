@@ -2,14 +2,20 @@
 
 require "rails_helper"
 
-describe CourseDetailForm, type: :model do
+describe CourseDetailsForm, type: :model do
+  let(:params) { {} }
   let(:trainee) { build(:trainee) }
+  let(:form_store) { class_double(FormStore) }
 
-  subject { described_class.new(trainee) }
+  subject { described_class.new(trainee, params, form_store) }
+
+  before do
+    allow(form_store).to receive(:get).and_return(nil)
+  end
 
   describe "before validation" do
     context "#sanitise_course_dates" do
-      let(:attributes) do
+      let(:params) do
         { start_day: "1 2",
           start_month: "1 1",
           start_year: "2 0 2 0",
@@ -19,7 +25,6 @@ describe CourseDetailForm, type: :model do
       end
 
       before do
-        subject.assign_attributes(attributes)
         subject.sanitise_course_dates
         subject.valid?
       end
@@ -35,7 +40,7 @@ describe CourseDetailForm, type: :model do
     it { is_expected.to validate_presence_of(:subject) }
 
     describe "custom" do
-      translation_key_prefix = "activemodel.errors.models.course_detail_form.attributes"
+      translation_key_prefix = "activemodel.errors.models.course_details_form.attributes"
 
       before do
         subject.assign_attributes(attributes)
@@ -154,7 +159,7 @@ describe CourseDetailForm, type: :model do
             end
 
             it "returns an error message for course start date" do
-              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_start_date.future")
+              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_start_date.future")
             end
           end
 
@@ -164,7 +169,7 @@ describe CourseDetailForm, type: :model do
             end
 
             it "returns an error message for course start date" do
-              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_start_date.too_old")
+              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_start_date.too_old")
             end
           end
         end
@@ -208,7 +213,7 @@ describe CourseDetailForm, type: :model do
             end
 
             it "returns an error message for course end date" do
-              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_end_date.future")
+              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_end_date.future")
             end
           end
 
@@ -218,51 +223,61 @@ describe CourseDetailForm, type: :model do
             end
 
             it "returns an error message for course end date" do
-              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_detail_form.attributes.course_end_date.too_old")
+              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_end_date.too_old")
             end
           end
         end
       end
     end
+  end
 
-    describe "after_validation callback" do
-      describe "update_trainee" do
-        before do
-          subject.assign_attributes(attributes)
-        end
+  context "valid trainee" do
+    let(:valid_start_date) do
+      Faker::Date.between(from: 10.years.ago, to: 2.days.ago)
+    end
 
-        context "valid attributes" do
-          let(:valid_start_date) do
-            Faker::Date.between(from: 10.years.ago, to: 2.days.ago)
-          end
+    let(:valid_end_date) do
+      Faker::Date.between(from: valid_start_date + 1.day, to: Time.zone.today)
+    end
 
-          let(:valid_end_date) do
-            Faker::Date.between(from: valid_start_date + 1.day, to: Time.zone.today)
-          end
+    let(:params) do
+      { start_day: valid_start_date.day.to_s,
+        start_month: valid_start_date.month.to_s,
+        start_year: valid_start_date.year.to_s,
+        end_day: valid_end_date.day.to_s,
+        end_month: valid_end_date.month.to_s,
+        end_year: valid_end_date.year.to_s,
+        main_age_range: "11 to 19 course",
+        subject: "Psychology" }
+    end
 
-          let(:attributes) do
-            { start_day: valid_start_date.day.to_s,
-              start_month: valid_start_date.month.to_s,
-              start_year: valid_start_date.year.to_s,
-              end_day: valid_end_date.day.to_s,
-              end_month: valid_end_date.month.to_s,
-              end_year: valid_end_date.year.to_s,
-              main_age_range: "11 to 19 course",
-              subject: "Psychology" }
-          end
+    let(:trainee) { create(:trainee) }
 
-          it "changed related trainee attributes" do
-            expect { subject.valid? }
-              .to change { trainee.subject }
-              .from(nil).to(attributes[:subject])
-              .and change { trainee.age_range }
-              .from(nil).to(attributes[:main_age_range])
-              .and change { trainee.course_start_date }
-              .from(nil).to(Date.parse(valid_start_date.to_s))
-              .and change { trainee.course_end_date }
-              .from(nil).to(Date.parse(valid_end_date.to_s))
-          end
-        end
+    describe "#save!" do
+      before do
+        allow(form_store).to receive(:set).with(trainee.id, :course_details, nil)
+      end
+
+      it "changed related trainee attributes" do
+        expect { subject.save! }
+          .to change { trainee.subject }
+          .from(nil).to(params[:subject])
+          .and change { trainee.age_range }
+          .from(nil).to(params[:main_age_range])
+          .and change { trainee.course_start_date }
+          .from(nil).to(Date.parse(valid_start_date.to_s))
+          .and change { trainee.course_end_date }
+          .from(nil).to(Date.parse(valid_end_date.to_s))
+      end
+    end
+
+    describe "#stash" do
+      let(:fields) { params }
+
+      it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
+        expect(form_store).to receive(:set).with(trainee.id, :course_details, fields)
+
+        subject.stash
       end
     end
   end

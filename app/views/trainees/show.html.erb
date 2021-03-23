@@ -7,7 +7,7 @@
 </div>
 
 <div class="course-details">
-  <%= render Trainees::Confirmation::CourseDetails::View.new(trainee: @trainee) %>
+  <%= render Trainees::Confirmation::CourseDetails::View.new(data_model: @trainee) %>
 </div>
 
 <% if @trainee.requires_placement_details? %>

@@ -6,11 +6,11 @@ module Trainees
     module CourseDetails
       class ViewPreview < ViewComponent::Preview
         def default
-          render(Trainees::Confirmation::CourseDetails::View.new(trainee: mock_trainee))
+          render(Trainees::Confirmation::CourseDetails::View.new(data_model: mock_trainee))
         end
 
         def with_no_data
-          render(Trainees::Confirmation::CourseDetails::View.new(trainee: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])))
+          render(Trainees::Confirmation::CourseDetails::View.new(data_model: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])))
         end
 
       private
