@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/SymbolProc
 FactoryBot.define do
   factory :abstract_trainee, class: Trainee do
     sequence :trainee_id do |n|
-      n.to_s
+      year = (course_start_date || Faker::Date.between(from: 10.years.ago, to: Time.zone.today)).strftime("%y").to_i
+
+      "#{year}/#{year + 1}-#{n}"
     end
 
     provider
@@ -182,5 +183,3 @@ FactoryBot.define do
     end
   end
 end
-
-# rubocop:enable Style/SymbolProc
