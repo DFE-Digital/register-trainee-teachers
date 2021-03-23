@@ -348,7 +348,7 @@ GEM
     rspec-mocks (3.10.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
-    rspec-rails (5.0.0)
+    rspec-rails (5.0.1)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       railties (>= 5.2)
@@ -523,7 +523,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_semantic_logger (= 4.5.0)
   request_store (~> 1.5)
-  rspec-rails (~> 5.0.0)
+  rspec-rails (~> 5.0.1)
   rubocop-govuk
   scss_lint-govuk
   sentry-raven
