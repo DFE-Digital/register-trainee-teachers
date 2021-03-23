@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dttp
-  class Contact
+  module Contacts
     class Fetch
       include ServicePattern
 
@@ -20,7 +20,7 @@ module Dttp
           raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
         end
 
-        Contact.new(contact_data: JSON(response.body))
+        Dttp::Contact.new(contact_data: JSON(response.body))
       end
     end
   end
