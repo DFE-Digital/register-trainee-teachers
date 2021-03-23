@@ -111,6 +111,10 @@ FactoryBot.define do
       diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
     end
 
+    trait :disabled do
+      disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
+    end
+
     trait :with_placement_assignment do
       placement_assignment_dttp_id { SecureRandom.uuid }
     end

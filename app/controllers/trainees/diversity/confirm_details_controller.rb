@@ -4,10 +4,25 @@ module Trainees
   module Diversity
     class ConfirmDetailsController < Trainees::ConfirmDetailsController
       def show
-        authorize trainee
         page_tracker.save_as_origin!
-        @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
-        @confirmation_component = Trainees::Confirmation::Diversity::View.new(trainee: trainee)
+
+        if trainee.draft?
+          @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
+        end
+
+        data_model = trainee.draft? ? trainee : DiversityForm.new(trainee)
+
+        @confirmation_component = Trainees::Confirmation::Diversity::View.new(data_model: data_model)
+      end
+
+      def update
+        DiversityForm.new(trainee).save! unless trainee.draft?
+
+        toggle_trainee_progress_field if trainee.draft?
+
+        flash[:success] = "Trainee diversity updated"
+
+        redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
       end
 
     private

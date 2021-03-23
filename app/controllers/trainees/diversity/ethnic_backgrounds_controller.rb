@@ -3,18 +3,17 @@
 module Trainees
   module Diversity
     class EthnicBackgroundsController < ApplicationController
+      before_action :authorize_trainee
+
       def edit
-        authorize trainee
-        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee: trainee)
+        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee)
       end
 
       def update
-        authorize trainee
+        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee, ethnic_background_params)
+        save_strategy = trainee.draft? ? :save! : :stash
 
-        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee: trainee)
-        @ethnic_background.assign_attributes(ethnic_background_params)
-
-        if @ethnic_background.save
+        if @ethnic_background.public_send(save_strategy)
           redirect_to(origin_page_or_next_step)
         else
           render :edit
@@ -46,6 +45,10 @@ module Trainees
         return page_tracker.last_origin_page_path if page_tracker.last_origin_page_path&.include?("diversity/confirm")
 
         edit_trainee_diversity_disability_disclosure_path(trainee)
+      end
+
+      def authorize_trainee
+        authorize(trainee)
       end
     end
   end

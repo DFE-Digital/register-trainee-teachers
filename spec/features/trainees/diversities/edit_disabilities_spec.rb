@@ -5,7 +5,7 @@ require "rails_helper"
 feature "edit disability details", type: :feature do
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_disabled_trainee_exists
     given_i_visited_the_review_draft_page
     and_disabilities_exist_in_the_system
     when_i_visit_the_disability_details_page
@@ -22,6 +22,10 @@ feature "edit disability details", type: :feature do
   scenario "submitting with no disability chosen" do
     and_i_submit_the_form
     then_i_see_error_messages
+  end
+
+  def given_a_disabled_trainee_exists
+    given_a_trainee_exists(:disabled)
   end
 
   def and_disabilities_exist_in_the_system
