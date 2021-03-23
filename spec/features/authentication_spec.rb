@@ -7,11 +7,22 @@ describe "A user authenticates via DfE Sign-in" do
     given_i_am_registered_as_a_user
     and_i_have_a_dfe_sign_in_account
 
+    and_i_sign_in_via_dfe_sign_in
+
+    then_i_am_redirected_to_the_root_path
+    and_i_should_see_the_link_to_sign_out
+    and_my_details_are_refreshed
+  end
+
+  scenario "visiting an authenticated path, redirect and signing in successfully, and being redirected to original path" do
+    given_i_am_registered_as_a_user
+    and_i_have_a_dfe_sign_in_account
+
     when_i_visit_the_trainee_page
     then_i_am_redirected_to_the_sign_in_path
     and_i_sign_in_via_dfe_sign_in
 
-    then_i_am_redirected_to_the_root_path
+    then_i_am_redirected_back_to_the_trainee_page
     and_i_should_see_the_link_to_sign_out
     and_my_details_are_refreshed
 
@@ -51,6 +62,10 @@ private
     visit_sign_in_page
   end
 
+  def then_i_am_redirected_back_to_the_trainee_page
+    expect(page.current_path).to eq("/trainees")
+  end
+
   def then_i_am_redirected_to_the_root_path
     expect(page.current_path).to eq("/")
   end
@@ -70,7 +85,7 @@ private
 
   def when_i_signed_in_more_than_2_hours_ago
     Timecop.travel(Time.zone.now + 2.hours + 1.second) do
-      expect(page.current_path).to eq("/")
+      expect(page.current_path).to eq("/trainees")
 
       trainee_page = PageObjects::Trainees::Index.new
       trainee_page.load

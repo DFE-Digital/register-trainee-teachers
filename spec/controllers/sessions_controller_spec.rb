@@ -21,9 +21,21 @@ describe SessionsController, type: :controller do
         expect(session[:dfe_sign_in_user]["last_name"]).to eq(user.last_name)
       end
 
-      it "redirects to the trainees index page" do
+      it "redirects to the trainees index page if no original path stored in the session" do
         request_callback
         expect(response).to redirect_to(root_path)
+      end
+
+      it "redirects to the original requested page if it exists in the session" do
+        session[:requested_path] = "/trainees/qts_awarded"
+        request_callback
+        expect(response).to redirect_to("/trainees/qts_awarded")
+      end
+
+      it "clears the redirect_back_to key of the session after a redirect" do
+        session[:requested_path] = "/trainees/qts_awarded"
+        request_callback
+        expect(session[:requested_path]).to be_nil
       end
     end
 
