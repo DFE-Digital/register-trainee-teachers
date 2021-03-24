@@ -335,6 +335,9 @@ en:
           invalid: "You must enter a valid postcode (for example, BN1 1AA)"
         email:
           invalid: "You must enter an email address in the correct format, like name@example.com"
+        autocomplete:
+          subject: "Select a subject after typing"
+          additional_age_range: "Select an age range after typing"
       models:
         contact_details_form:
           attributes:
@@ -439,6 +442,10 @@ en:
               too_old: "You must enter a valid course end date"
               before_or_same_as_start_date: "The course end date must be after the start date"
               hint_html: For example, 11 3 %{year}
+            subject_raw:
+              inclusion: "Select a subject after typing"
+            additional_age_range_raw:
+              inclusion: "Select an age range after typing"
         reinstatement_form:
           attributes:
             date_string:
