@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "trainees/show.html.erb" do
   before do
-    allow(FeatureService).to receive(:enabled?).with(:routes_provider_led).and_return(true)
+    allow(FeatureService).to receive(:enabled?).with(:routes_provider_led_postgrad).and_return(true)
     assign(:trainee, trainee)
     render
   end
@@ -17,8 +17,8 @@ describe "trainees/show.html.erb" do
     end
   end
 
-  context "with a Provider-led trainee" do
-    let(:trainee) { create(:trainee, :provider_led) }
+  context "with a Provider-led (postgrad) trainee" do
+    let(:trainee) { create(:trainee, :provider_led_postgrad) }
 
     it "renders the placement details component" do
       expect(rendered).to have_text("Placement details")

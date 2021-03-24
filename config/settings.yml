@@ -26,7 +26,7 @@ features:
   enable_feedback_link: true
   basic_auth: true
   trainee_export: true
-  routes_provider_led: false
+  routes_provider_led_postgrad: false
   routes_early_years_undergrad: false
   import_courses_from_ttapi: false
 

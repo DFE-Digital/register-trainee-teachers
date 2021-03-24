@@ -12,7 +12,7 @@ dttp:
 features:
   home_text: true
   use_dfe_sign_in: false
-  routes_provider_led: true
+  routes_provider_led_postgrad: true
   routes_early_years_undergrad: true
 
 pagination:

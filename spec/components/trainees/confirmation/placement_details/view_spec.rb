@@ -9,7 +9,7 @@ module Trainees
         alias_method :component, :page
 
         context "when data has not been provided" do
-          let(:trainee) { create(:trainee, :provider_led) }
+          let(:trainee) { create(:trainee, :provider_led_postgrad) }
 
           before do
             render_inline(View.new(trainee: trainee))

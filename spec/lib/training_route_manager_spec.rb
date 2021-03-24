@@ -6,13 +6,9 @@ describe TrainingRouteManager do
   subject { described_class.new(trainee) }
 
   describe "#requires_placement_details?" do
-    context "with the :routes_provider_led feature flag enabled" do
-      before do
-        allow(FeatureService).to receive(:enabled?).with(:routes_provider_led).and_return(true)
-      end
-
+    context "with the :routes_provider_led_postgrad feature flag enabled", feature_routes_provider_led_postgrad: true do
       context "with a provider-led trainee" do
-        let(:trainee) { build(:trainee, :provider_led) }
+        let(:trainee) { build(:trainee, :provider_led_postgrad) }
 
         it "returns true" do
           expect(subject.requires_placement_details?).to be true
@@ -28,12 +24,8 @@ describe TrainingRouteManager do
       end
     end
 
-    context "with the :routes_provider_led feature flag disabled" do
-      let(:trainee) { build(:trainee, :provider_led) }
-
-      before do
-        allow(FeatureService).to receive(:enabled?).with(:routes_provider_led).and_return(false)
-      end
+    context "with the :routes_provider_led_postgrad feature flag disabled", feature_routes_provider_led_postgrad: false do
+      let(:trainee) { build(:trainee, :provider_led_postgrad) }
 
       it "returns false" do
         expect(subject.requires_placement_details?).to be false

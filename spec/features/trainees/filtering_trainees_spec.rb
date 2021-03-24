@@ -76,7 +76,7 @@ private
 
   def given_trainees_exist_in_the_system
     @assessment_only_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
-    @provider_led_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:provider_led])
+    @provider_led_postgrad_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
     @biology_trainee ||= create(:trainee, subject: "Biology")
     @history_trainee ||= create(:trainee, subject: "History")
     @searchable_trainee ||= create(:trainee, trn: "123")
@@ -133,12 +133,12 @@ private
 
   def then_only_assessment_only_trainees_are_visible
     expect(page).to have_text(full_name(@assessment_only_trainee))
-    expect(page).to_not have_text(full_name(@provider_led_trainee))
+    expect(page).to_not have_text(full_name(@provider_led_postgrad_trainee))
   end
 
-  def then_only_provider_led_trainees_are_visible
+  def then_only_provider_led_postgrad_trainees_are_visible
     expect(page).to_not have_text(full_name(@assessment_only_trainee))
-    expect(page).to have_text(full_name(@provider_led_trainee))
+    expect(page).to have_text(full_name(@provider_led_postgrad_trainee))
   end
 
   def then_only_biology_trainees_are_visible
@@ -150,7 +150,7 @@ private
     expect(page).to have_text(full_name(@biology_trainee))
     [
       @assessment_only_trainee,
-      @provider_led_trainee,
+      @provider_led_postgrad_trainee,
       @history_trainee,
       @searchable_trainee,
     ].each do |trainee|
@@ -162,7 +162,7 @@ private
     expect(page).to have_text(full_name(@searchable_trainee))
     [
       @assessment_only_trainee,
-      @provider_led_trainee,
+      @provider_led_postgrad_trainee,
       @history_trainee,
       @biology_trainee,
     ].each do |trainee|
@@ -186,7 +186,7 @@ private
 
   def then_i_see_my_trainee_search_results
     expect(csv_output).to include(@assessment_only_trainee.trainee_id)
-    expect(csv_output).to include(@provider_led_trainee.trainee_id)
+    expect(csv_output).to include(@provider_led_postgrad_trainee.trainee_id)
     expect(csv_output).to include(@biology_trainee.trainee_id)
     expect(csv_output).to include(@history_trainee.trainee_id)
   end
@@ -195,7 +195,7 @@ private
     expect(csv_output).to include(@biology_trainee.trainee_id)
 
     expect(csv_output).not_to include(@assessment_only_trainee.trainee_id)
-    expect(csv_output).not_to include(@provider_led_trainee.trainee_id)
+    expect(csv_output).not_to include(@provider_led_postgrad_trainee.trainee_id)
     expect(csv_output).not_to include(@searchable_trainee.trainee_id)
     expect(csv_output).not_to include(@history_trainee.trainee_id)
   end
