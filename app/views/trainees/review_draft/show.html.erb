@@ -51,7 +51,7 @@
             :row,
             task_name: "Diversity information",
             path: edit_trainee_diversity_disclosure_path(@trainee),
-            confirm_path: trainee_diversity_confirm_path(@trainee),
+            confirm_path: diversity_confirm_path(@trainee),
             classes: "diversity-details",
             status: ProgressService.call(
               validator: Diversities::FormValidator.new(@trainee),

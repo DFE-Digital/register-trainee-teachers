@@ -53,6 +53,10 @@ class DiversityForm
     @ethnic_group_form.ethnic_group
   end
 
+  def ethnic_group_provided?
+    !@ethnic_group_form.not_provided_ethnic_group?
+  end
+
   def ethnic_background
     @ethnic_background_form.ethnic_background
   end
