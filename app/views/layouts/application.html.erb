@@ -32,18 +32,8 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
-    <%= render GovukComponent::CookieBanner.new(title: "Cookies on Register trainee teachers", html_attributes: { "data-module" => "govuk-cookie-banner" }) do |component| %>
-      <% component.with(:body) do %>
-        <p class="govuk-body">We use some essential cookies to make this service work.</p>
-      <% end %>
-
-      <% component.with(:actions) do %>
-        <%= govuk_link_to("View cookies", cookies_path) %>
-
-        <button type="button" class="govuk-button govuk-cookie-banner__hide" data-qa="govuk-cookie-banner__hide">
-          Hide this message
-        </button>
-      <% end %>
+    <% unless cookie_message_seen? %>
+      <%= render("layouts/cookie_banner") %>
     <% end %>
 
     <%= govuk_skip_link %>
@@ -109,7 +99,7 @@
                 <%= govuk_link_to "Accessibility", accessibility_path, class: "govuk-footer__link" %>
               </li>
               <li class="govuk-footer__inline-list-item">
-                <%= govuk_link_to "Cookies", cookies_path, class: "govuk-footer__link" %>
+                <%= govuk_link_to "Cookies", cookie_policy_path, class: "govuk-footer__link" %>
               </li>
               <li class="govuk-footer__inline-list-item">
                 <%= govuk_link_to "Privacy policy", privacy_policy_path, class: "govuk-footer__link" %>

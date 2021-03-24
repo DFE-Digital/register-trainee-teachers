@@ -1,13 +1,16 @@
 import CookieBanner from './cookie_banner'
-import {
-  setViewedCookieMessage,
-  viewedCookieMessageExists
-} from './utils/cookie_helper'
 
-jest.mock('./utils/cookie_helper')
+// Test Helpers
+const setCookie = (cookieName, value) => {
+  document.cookie = `${cookieName}=${value};`
+}
+
+const clearCookie = (cookieName) => {
+  document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`
+}
 
 const templateHTML = `
-<div class="govuk-cookie-banner" role="region" aria-label="Cookie banner" data-module="govuk-cookie-banner">
+<div class="govuk-cookie-banner" role="region" aria-label="Cookie banner" data-module="govuk-cookie-banner" data-cookie-banner-key="viewed_cookie_message" data-cookie-banner-period="182">
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
@@ -37,9 +40,7 @@ describe('CookieBanner', () => {
   })
 
   describe('constructor', () => {
-    beforeEach(() => {
-      document.body.innerHTML = templateHTML
-    })
+    let banner
 
     afterEach(() => {
       jest.clearAllMocks()
@@ -47,43 +48,103 @@ describe('CookieBanner', () => {
 
     it("doesn't run if theres no cookie banner markup", () => {
       document.body.innerHTML = ''
-      const banner = new CookieBanner()
+      banner = new CookieBanner()
       expect(banner.$module).toBeNull()
     })
 
     it('binds event to the hide button', () => {
-      viewedCookieMessageExists.mockImplementationOnce(() => false)
-      jest.spyOn(CookieBanner.prototype, 'bindEvents')
+      jest.spyOn(CookieBanner.prototype, '_bindEvents')
+      jest
+        .spyOn(CookieBanner.prototype, 'cookieExists')
+        .mockImplementation(() => false)
       CookieBanner.init()
-      expect(CookieBanner.prototype.bindEvents).toHaveBeenCalledTimes(1)
+      expect(CookieBanner.prototype._bindEvents).toHaveBeenCalledTimes(1)
     })
 
     it('displays the Cookie Banner if user has not hidden the banner', () => {
-      viewedCookieMessageExists.mockImplementationOnce(() => false)
+      jest
+        .spyOn(CookieBanner.prototype, 'cookieExists')
+        .mockImplementation(() => false)
 
-      const banner = new CookieBanner()
+      banner = new CookieBanner()
       expect(banner.$module.hidden).toBeFalsy()
     })
 
     it('hides the Cookie Banner if user has hidden the banner', () => {
-      viewedCookieMessageExists.mockImplementationOnce(() => true)
+      jest
+        .spyOn(CookieBanner.prototype, 'cookieExists')
+        .mockImplementation(() => true)
 
-      const banner = new CookieBanner()
+      banner = new CookieBanner()
       expect(banner.$module.hidden).toBeTruthy()
     })
   })
 
   describe('viewedCookieBanner', () => {
+    let banner
+
+    beforeEach(() => {
+      banner = new CookieBanner()
+    })
+
     it('hides the cookie banner once a user has accepted cookies', () => {
-      const banner = new CookieBanner()
       banner.viewedCookieBanner()
       expect(banner.$module.hidden).toBeTruthy()
     })
 
-    it('sets consented-to-cookies to true', () => {
-      const banner = new CookieBanner()
+    it('sets viewed_cookie_message to true', () => {
+      jest.spyOn(banner, 'setViewedCookie')
       banner.viewedCookieBanner()
-      expect(setViewedCookieMessage).toBeCalled()
+      expect(banner.setViewedCookie).toHaveBeenCalledWith(true)
+    })
+  })
+
+  describe('cookie helper methods', () => {
+    let banner
+
+    beforeEach(() => {
+      banner = new CookieBanner()
+    })
+
+    afterEach(() => {
+      clearCookie(banner.cookieKey)
+    })
+
+    describe('setViewedCookie', () => {
+      it('uses a boolean value to set a cookie', () => {
+        const response = banner.setViewedCookie(true)
+        expect(document.cookie).toEqual(`${banner.cookieKey}=true`)
+        expect(response).toEqual(true)
+      })
+
+      it('uses a boolean value to set a cookie - user has not seen cookie message', () => {
+        const response = banner.setViewedCookie(false)
+        expect(document.cookie).toEqual(`${banner.cookieKey}=false`)
+        expect(response).toEqual(true)
+      })
+
+      it('raises an error if the arg is not a boolean', () => {
+        expect(banner.setViewedCookie).toThrowError(
+          new Error('setViewedCookie: Only accepts boolean parameters')
+        )
+      })
+    })
+
+    describe('cookieExists', () => {
+      beforeEach(() => {
+        jest.restoreAllMocks()
+      })
+
+      it('returns true if cookie exists', () => {
+        setCookie('viewed_cookie_message', true)
+        expect(banner.cookieExists()).toEqual(true)
+      })
+
+      it('returns false if cookie does not exist', () => {
+        setCookie('some-other-cookie', 'not-consented')
+        expect(banner.cookieExists()).toEqual(false)
+        clearCookie('some-other-cookie')
+      })
     })
   })
 })

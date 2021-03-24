@@ -16,8 +16,8 @@ class PagesController < ApplicationController
     render :accessibility
   end
 
-  def cookies
-    render :cookies
+  def cookie_policy
+    render :cookie_policy
   end
 
   def privacy_policy
