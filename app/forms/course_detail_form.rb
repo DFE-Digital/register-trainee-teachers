@@ -5,15 +5,17 @@ class CourseDetailForm
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  attr_accessor :trainee, :subject, :main_age_range,
-                :additional_age_range, :start_day, :start_month, :start_year,
+  attr_accessor :trainee, :subject, :subject_raw, :main_age_range,
+                :additional_age_range, :additional_age_range_raw,
+                :start_day, :start_month, :start_year,
                 :end_day, :end_month, :end_year
 
   delegate :id, :persisted?, to: :trainee
 
   before_validation :sanitise_course_dates
 
-  validates :subject, presence: true
+  validates :subject, autocomplete: true, presence: true
+  validates :additional_age_range, autocomplete: true, if: -> { main_age_range&.to_sym == :other }
   validate :age_range_valid
   validate :course_start_date_valid
   validate :course_end_date_valid

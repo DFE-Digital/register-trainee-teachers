@@ -335,6 +335,9 @@ en:
           invalid: "You must enter a valid postcode (for example, BN1 1AA)"
         email:
           invalid: "You must enter an email address in the correct format, like name@example.com"
+        autocomplete:
+          subject: "Select a subject after typing"
+          additional_age_range: "Select an age range after typing"
       models:
         contact_details_form:
           attributes:

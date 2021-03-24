@@ -11,11 +11,11 @@
 
       <h1 class="govuk-heading-l">Course details</h1>
 
-      <%= render FormComponents::Autocomplete::View.new(
-        form_field: f.govuk_collection_select(:subject, course_subjects_options,
-                                              :name, :name, label: { text: "Subject", size: "s" },
-                                                            hint: { text: "Search for the closest matching subject" }),
-        html_attributes: { "data-show-all-values" => true },
+      <%=  render FormComponents::Autocomplete::View.new(
+        f, :subject, course_subjects_options, :name, :name,
+        label: { text: "Subject", size: "s" },
+        hint: { text: "Search for the closest matching subject" },
+        html_attributes: { "data-show-all-values" => true }
       ) %>
 
       <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
@@ -30,13 +30,13 @@
         <%= f.govuk_radio_button(:main_age_range,
                                  :other,
                                  label: { text: "Other age range" }) do %>
-          <%= render FormComponents::Autocomplete::View.new(
-            form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
-                                                  :name,
-                                                  :name,
-                                                  label: { text: "Other age range", size: "s" }),
-            html_attributes: { "data-show-all-values" => true },
-          ) %>
+
+
+        <%=  render FormComponents::Autocomplete::View.new(
+          f, :additional_age_range, additional_age_ranges_options, :name, :name,
+          label: { text: "Other age range", size: "s" },
+          html_attributes: { "data-show-all-values" => true },
+        ) %>
 
         <% end %>
       <% end %>

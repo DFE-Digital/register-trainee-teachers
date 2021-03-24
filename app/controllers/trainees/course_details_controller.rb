@@ -13,9 +13,10 @@ module Trainees
       "course_end_date(1i)" => "end_year",
     }.freeze
 
-    COURSE_DETAILS_PARAMS_KEYS = %i[subject
+    COURSE_DETAILS_PARAMS_KEYS = %i[subject, subject_raw
                                     main_age_range
-                                    additional_age_range].freeze
+                                    additional_age_range,
+                                    additional_age_range_raw].freeze
 
     def edit
       @course_detail = CourseDetailForm.new(trainee)
