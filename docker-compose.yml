@@ -16,6 +16,7 @@ services:
   web:
     build:
       context: .
+      dockerfile: Dockerfile.test
       cache_from:
         - dfedigital/register-trainee-teachers:${BRANCH_TAG:-latest}
     image: dfedigital/register-trainee-teachers:${BRANCH_TAG:-latest}
