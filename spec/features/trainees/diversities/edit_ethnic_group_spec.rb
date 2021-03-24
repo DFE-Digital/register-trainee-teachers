@@ -63,12 +63,13 @@ feature "edit ethnic group", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee, ethnic_group: nil, provider: current_user.provider)
+    @trainee = create(:trainee, :diversity_disclosed, ethnic_group: nil, provider: current_user.provider)
   end
 
   def given_a_trainee_with_a_background_exists
     @trainee = create(
       :trainee,
+      :diversity_disclosed,
       ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:mixed],
       ethnic_background: Diversities::BACKGROUNDS[Diversities::ETHNIC_GROUP_ENUMS[:mixed]].sample,
       provider: current_user.provider,

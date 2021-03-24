@@ -10,13 +10,15 @@ module Trainees
           @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
         end
 
-        data_model = trainee.draft? ? trainee : DiversityForm.new(trainee)
+        data_model = trainee.draft? ? trainee : diversity_form
 
         @confirmation_component = Trainees::Confirmation::Diversity::View.new(data_model: data_model)
       end
 
       def update
-        DiversityForm.new(trainee).save! unless trainee.draft?
+        # For draft trainees, diversity information is saved to the DB immediately. But if the user later on
+        # decides to not share this information, we need to wipe all the data which diversity_form.save! will do.
+        diversity_form.save! if !trainee.draft? || diversity_form.diversity_not_disclosed?
 
         toggle_trainee_progress_field if trainee.draft?
 
@@ -34,6 +36,10 @@ module Trainees
       def toggle_trainee_progress_field
         trainee.progress.diversity = mark_as_completed_params
         trainee.save!
+      end
+
+      def diversity_form
+        @diversity_form ||= DiversityForm.new(trainee)
       end
     end
   end

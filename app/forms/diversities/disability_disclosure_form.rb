@@ -12,14 +12,18 @@ module Diversities
 
     attr_reader :trainee, :fields
 
-    validates :disability_disclosure, presence: true, inclusion: { in: Diversities::DISABILITY_DISCLOSURE_ENUMS.values }
+    validates :disability_disclosure,
+              presence: true,
+              inclusion: { in: Diversities::DISABILITY_DISCLOSURE_ENUMS.values },
+              if: -> { disclosure_form.diversity_disclosed? }
 
     delegate :id, :persisted?, to: :trainee
 
     def initialize(trainee, params = {}, store = FormStore)
       @trainee = trainee
       @store = store
-      new_attributes = fields_from_store.merge(params).symbolize_keys
+      @params = params
+      @disclosure_form = DisclosureForm.new(trainee)
       @fields = trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
       super(fields)
     end
@@ -52,7 +56,15 @@ module Diversities
 
   private
 
-    attr_reader :store
+    attr_reader :store, :params, :disclosure_form
+
+    def new_attributes
+      if disclosure_form.diversity_disclosed?
+        fields_from_store.merge(params).symbolize_keys
+      else
+        { disability_disclosure: nil }
+      end
+    end
 
     def fields_from_store
       store.get(id, :disability_disclosure).presence || {}

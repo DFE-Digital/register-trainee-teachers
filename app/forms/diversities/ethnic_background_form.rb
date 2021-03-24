@@ -12,18 +12,20 @@ module Diversities
     ].freeze
 
     attr_accessor(*FIELDS)
+
     attr_reader :trainee, :fields
 
     delegate :id, :persisted?, to: :trainee
     delegate :ethnic_group, to: :ethnic_group_form
 
-    validates :ethnic_background, presence: true
+    validates :ethnic_background, presence: true, if: -> { disclosure_form.diversity_disclosed? }
 
     def initialize(trainee, params = {}, store = FormStore)
       @trainee = trainee
       @store = store
+      @params = params
+      @disclosure_form = DisclosureForm.new(trainee)
       @ethnic_group_form = EthnicGroupForm.new(trainee)
-      new_attributes = fields_from_store.merge(params).symbolize_keys
       @fields = trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
       super(fields)
     end
@@ -44,7 +46,15 @@ module Diversities
 
   private
 
-    attr_reader :store, :ethnic_group_form
+    attr_reader :store, :params, :disclosure_form, :ethnic_group_form
+
+    def new_attributes
+      if disclosure_form.diversity_disclosed?
+        fields_from_store.merge(params).symbolize_keys
+      else
+        { ethnic_background: nil, additional_ethnic_background: nil }
+      end
+    end
 
     def fields_from_store
       store.get(id, :ethnic_background).presence || {}

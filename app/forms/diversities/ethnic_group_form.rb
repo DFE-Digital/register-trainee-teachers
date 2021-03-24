@@ -12,21 +12,25 @@ module Diversities
 
     attr_reader :trainee, :fields
 
-    validates :ethnic_group, presence: true, inclusion: { in: Diversities::ETHNIC_GROUP_ENUMS.values }
+    validates :ethnic_group,
+              presence: true,
+              inclusion: { in: Diversities::ETHNIC_GROUP_ENUMS.values },
+              if: -> { disclosure_form.diversity_disclosed? }
 
     delegate :id, :persisted?, to: :trainee
 
     def initialize(trainee, params = {}, store = FormStore)
       @trainee = trainee
       @store = store
-      new_attributes = fields_from_store.merge(params).symbolize_keys
+      @params = params
+      @disclosure_form = DisclosureForm.new(trainee)
       @fields = trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
       super(fields)
     end
 
     def save!
       if valid?
-        trainee.assign_attributes(nullify_ethnic_background(fields))
+        trainee.assign_attributes(fields)
         trainee.save!
         store.set(trainee.id, :ethnic_group, nil)
       else
@@ -44,12 +48,10 @@ module Diversities
 
   private
 
-    attr_reader :store
+    attr_reader :store, :params, :disclosure_form
 
-    def nullify_ethnic_background(fields)
-      return fields.merge(ethnic_background: nil, additional_ethnic_background: nil) unless trainee.ethnic_group == fields[:ethnic_group]
-
-      fields
+    def new_attributes
+      disclosure_form.diversity_disclosed? ? fields_from_store.merge(params).symbolize_keys : { ethnic_group: nil }
     end
 
     def fields_from_store

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Diversities
   describe DisabilityDetailForm, type: :model do
-    let(:trainee) { build(:trainee, :disabled) }
+    let(:trainee) { build(:trainee, :disabled, :diversity_disclosed) }
 
     subject { described_class.new(trainee) }
 

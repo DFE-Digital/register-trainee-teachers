@@ -42,6 +42,10 @@ module Diversities
       diversity_disclosure == Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
     end
 
+    def diversity_not_disclosed?
+      diversity_disclosure == Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+    end
+
   private
 
     attr_reader :store

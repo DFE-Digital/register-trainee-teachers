@@ -21,6 +21,22 @@ class DiversityForm
     ]
   end
 
+  def diversity_disclosure
+    @disclosure_form.diversity_disclosure
+  end
+
+  def diversity_disclosed?
+    @disclosure_form.diversity_disclosed?
+  end
+
+  def diversity_not_disclosed?
+    @disclosure_form.diversity_not_disclosed?
+  end
+
+  def disability_disclosure
+    @disability_disclosure_form.disability_disclosure
+  end
+
   def disabled?
     @disability_disclosure_form.disabled?
   end
@@ -31,14 +47,6 @@ class DiversityForm
 
   def disabilities
     @disability_detail_form.disabilities
-  end
-
-  def diversity_disclosure
-    @disclosure_form.diversity_disclosure
-  end
-
-  def diversity_disclosed?
-    @disclosure_form.diversity_disclosed?
   end
 
   def ethnic_group
