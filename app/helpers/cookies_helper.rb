@@ -2,6 +2,6 @@
 
 module CookiesHelper
   def cookie_message_seen?
-    cookies[:viewed_cookie_message].present?
+    cookies[Settings.cookies.cookie_banner_key].present?
   end
 end
