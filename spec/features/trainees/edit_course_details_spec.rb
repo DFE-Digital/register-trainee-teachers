@@ -56,6 +56,22 @@ feature "course details", type: :feature do
       and_i_submit_the_form
       then_start_date_is_still_populated
     end
+
+    scenario "submitting with a partial subject", js: true do
+      when_i_visit_the_course_details_page
+      and_i_fill_in_subject_without_selecting_a_value(with: "moose")
+      and_i_submit_the_form
+      then_subject_is_populated(with: "moose")
+      # TODO: error message assertion
+    end
+
+    scenario "submitting with a partial age range", js: true do
+      when_i_visit_the_course_details_page
+      and_i_fill_in_additional_age_range_without_selecting_a_value(with: "moose")
+      and_i_submit_the_form
+      then_additional_age_range_is_populated(with: "moose")
+      # TODO: error message assertion
+    end
   end
 
 private
@@ -113,6 +129,23 @@ private
 
   def and_i_fill_in_start_date_only
     course_details_page.set_date_fields("course_start_date", template.course_start_date.strftime("%d/%m/%Y"))
+  end
+
+  def and_i_fill_in_subject_without_selecting_a_value(with:)
+    course_details_page.subject_raw.fill_in with: with
+  end
+
+  def and_i_fill_in_additional_age_range_without_selecting_a_value(with:)
+    choose "Other age range", allow_label_click: true
+    course_details_page.additional_age_range.fill_in with: with
+  end
+
+  def then_additional_age_range_is_populated(with:)
+    expect(course_details_page.additional_age_range_raw.value).to eq(with)
+  end
+
+  def then_subject_is_populated(with:)
+    expect(course_details_page.subject_raw.value).to eq(with)
   end
 
   def then_start_date_is_still_populated

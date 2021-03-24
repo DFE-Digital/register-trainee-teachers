@@ -3,29 +3,38 @@
 module FormComponents
   module Autocomplete
     class ViewPreview < ViewComponent::Preview
+      include ActionView::Helpers::FormHelper
+
       def enhancing_select_list
-        render(FormComponents::Autocomplete::View.new(form_field: setup_form))
+        render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field))
       end
 
       def with_custom_class
-        render(FormComponents::Autocomplete::View.new(form_field: setup_form, classes: "app-testing-class"))
+        render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field, classes: "app-testing-class"))
       end
 
       def with_custom_html_attributes
-        render(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "test-html-attribute" => "testing" }))
+        render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "test-html-attribute" => "testing" }))
       end
 
       def with_show_all_values
-        render(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "data-show-all-values" => true }))
+        render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "data-show-all-values" => true }))
       end
 
       def with_default_value
-        render(FormComponents::Autocomplete::View.new(form_field: setup_form, html_attributes: { "data-default-value" => "France" }))
+        render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "data-default-value" => "France" }))
       end
 
     private
 
-      def setup_form
+      attr_accessor :output_buffer
+
+      class ExampleModel
+        include ActiveModel::Model
+        attr_accessor :id, :country, :country_raw
+      end
+
+      def form_field
         '<div class="govuk-form-group">
           <label class="govuk-label" for="select-1">
             Select a country
@@ -37,6 +46,12 @@ module FormComponents
             <option value="gb">United Kingdom</option>
           </select>
         </div>'
+      end
+
+      def form
+        form_for ExampleModel.new, url: "example.com" do |f|
+          return f
+        end
       end
     end
   end
