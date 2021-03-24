@@ -5,21 +5,29 @@ require "rails_helper"
 module FormComponents
   module Autocomplete
     describe View do
+      include ActionView::Helpers::FormHelper
       alias_method :component, :page
 
       it "supports custom classes on the parent container" do
-        render_inline(View.new(form_field: setup_form, classes: "test-css-class"))
+        render_inline(View.new(form, attribute_name: :country, form_field: form_field, classes: "test-css-class"))
         expect(component).to have_selector(".test-css-class")
       end
 
       it "supports custom html attributes on the parent container" do
-        render_inline(View.new(form_field: setup_form, html_attributes: { "test-attribute" => "my-custom-attribute" }))
+        render_inline(View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "test-attribute" => "my-custom-attribute" }))
         expect(component).to have_selector('[test-attribute="my-custom-attribute"]')
       end
 
     private
 
-      def setup_form
+      attr_accessor :output_buffer
+
+      class ExampleModel
+        include ActiveModel::Model
+        attr_accessor :id, :country, :country_raw
+      end
+
+      def form_field
         '<div class="govuk-form-group">
           <label class="govuk-label" for="select-1">
             Select a country
@@ -31,6 +39,12 @@ module FormComponents
             <option value="gb">United Kingdom</option>
           </select>
         </div>'
+      end
+
+      def form
+        form_for ExampleModel.new, url: "example.com" do |f|
+          return f
+        end
       end
     end
   end
