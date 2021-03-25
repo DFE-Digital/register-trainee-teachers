@@ -21,7 +21,7 @@ module TeacherTrainingApi
     def call
       return unless IMPORTABLE_STATES.include?(attrs["state"])
 
-      course.update!(name: attrs["name"])
+      map_courses_to_subjects if course.update!(name: attrs["name"])
     end
 
   private
@@ -30,6 +30,20 @@ module TeacherTrainingApi
 
     def course
       @course ||= provider.courses.find_or_initialize_by(code: attrs["code"])
+    end
+
+    def map_courses_to_subjects
+      attrs["subject_codes"].each do |subject_code|
+        map_course_to_subject(subject_code)
+      end
+    end
+
+    def map_course_to_subject(subject_code)
+      CourseSubject.create(course: course, subject: get_subject(subject_code))
+    end
+
+    def get_subject(subject_code)
+      Subject.where(code: subject_code)&.first
     end
   end
 end
