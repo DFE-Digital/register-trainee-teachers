@@ -24,6 +24,8 @@ module TeacherTrainingApi
       end
 
       context "when the course code does not exist in register" do
+        let(:course) { provider.courses.find_by(code: imported_code, name: imported_name) }
+
         context "and it's non-draft" do
           it "creates the course for the provider with the correct code and name" do
             expect { subject }.to change { provider.courses.count }.by(1)
@@ -36,7 +38,22 @@ module TeacherTrainingApi
 
           it "creates the course with the correct subjects" do
             expect { subject }.to change { CourseSubject.count }.from(0).to(1)
-            expect(provider.courses.find_by(code: imported_code, name: imported_name).subjects).to match course_subjects
+            expect(course.subjects).to match course_subjects
+          end
+
+          it "parses the start date" do
+            subject
+            expect(course.start_date).to be_instance_of(Date)
+          end
+
+          it "parses the age range" do
+            subject
+            expect(course.age_range).to eq(AgeRange::ELEVEN_TO_NINETEEN_COURSE)
+          end
+
+          it "parses qualification" do
+            subject
+            expect(course.qualification).to eq("pgce_with_qts")
           end
         end
 
