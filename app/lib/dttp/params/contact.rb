@@ -62,7 +62,7 @@ module Dttp
       end
 
       def contact_dttp_ethnicity_id
-        dttp_ethnicity_id(diversity_disclosed? ? trainee.ethnic_background : Diversities::NOT_PROVIDED)
+        dttp_ethnicity_id(diversity_disclosed? ? resolve_ethnicity_value : Diversities::NOT_PROVIDED)
       end
 
       def contact_dttp_disability_id
@@ -94,6 +94,12 @@ module Dttp
         british_or_irish = ->(nationality) { nationality == CodeSets::Nationalities::BRITISH || CodeSets::Nationalities::IRISH }
 
         (nationalities.select(&british_or_irish).presence || nationalities).first
+      end
+
+      def resolve_ethnicity_value
+        return Diversities::NOT_PROVIDED if trainee.not_provided_ethnic_group?
+
+        trainee.ethnic_background
       end
     end
   end

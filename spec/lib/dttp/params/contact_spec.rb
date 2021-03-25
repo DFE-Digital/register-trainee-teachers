@@ -98,7 +98,11 @@ module Dttp
             context "ethnicity information" do
               let(:trainee) { create(:trainee, :completed, :diversity_disclosed, ethnic_background: ethnic_background) }
 
-              context "provided" do
+              context "ethnic background provided" do
+                before do
+                  trainee.ethnic_group = Diversities::ETHNIC_GROUP_ENUMS[:white]
+                end
+
                 let(:ethnic_background) { Diversities::IRISH }
 
                 it "returns a hash with a foreign key of DTTP's 'Irish' ethnicity entity" do
@@ -106,8 +110,21 @@ module Dttp
                 end
               end
 
-              context "not provided" do
+              context "ethnic background not provided" do
                 let(:ethnic_background) { Diversities::NOT_PROVIDED }
+
+                it "returns a hash with a foreign of DTTP's 'Not known' ethnicity entity" do
+                  expect(subject).to include(ethnicity_param)
+                end
+              end
+
+              context "ethnic group not provided" do
+                let(:dttp_ethnicity_entity_id) { Dttp::CodeSets::Ethnicities::MAPPING[Diversities::NOT_PROVIDED][:entity_id] }
+                let(:ethnic_background) { nil }
+
+                before do
+                  trainee.ethnic_group = Diversities::ETHNIC_GROUP_ENUMS[:not_provided]
+                end
 
                 it "returns a hash with a foreign of DTTP's 'Not known' ethnicity entity" do
                   expect(subject).to include(ethnicity_param)
