@@ -2,9 +2,9 @@
 
 module Trainees
   class QtsRecommendationsController < ApplicationController
-    def create
-      authorize trainee
+    before_action :authorize_trainee
 
+    def create
       if OutcomeDateForm.new(trainee).save!
         trainee.recommend_for_qts!
 
@@ -19,6 +19,10 @@ module Trainees
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end

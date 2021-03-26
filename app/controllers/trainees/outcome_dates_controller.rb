@@ -2,13 +2,13 @@
 
 module Trainees
   class OutcomeDatesController < ApplicationController
+    before_action :authorize_trainee
+
     def edit
-      authorize trainee
       @outcome_form = OutcomeDateForm.new(trainee)
     end
 
     def update
-      authorize trainee
       @outcome_form = OutcomeDateForm.new(trainee, trainee_params)
 
       if @outcome_form.stash
@@ -30,6 +30,10 @@ module Trainees
         .transform_keys do |key|
           MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end

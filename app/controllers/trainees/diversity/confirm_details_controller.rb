@@ -3,6 +3,8 @@
 module Trainees
   module Diversity
     class ConfirmDetailsController < Trainees::ConfirmDetailsController
+      before_action :authorize_trainee
+
       def show
         page_tracker.save_as_origin!
 
@@ -40,6 +42,10 @@ module Trainees
 
       def diversity_form
         @diversity_form ||= DiversityForm.new(trainee)
+      end
+      
+      def authorize_trainee
+        authorize(trainee)
       end
     end
   end

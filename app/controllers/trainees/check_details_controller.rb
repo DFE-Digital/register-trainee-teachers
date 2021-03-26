@@ -3,9 +3,9 @@
 module Trainees
   class CheckDetailsController < ApplicationController
     before_action :ensure_trainee_is_draft!
+    before_action :authorize_trainee
 
     def show
-      authorize trainee
       page_tracker.save_as_origin!
       @trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
     end
@@ -14,6 +14,10 @@ module Trainees
 
     def trainee
       @trainee ||= Trainee.from_param(params[:id])
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end
