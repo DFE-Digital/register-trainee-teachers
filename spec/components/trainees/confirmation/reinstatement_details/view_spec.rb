@@ -8,7 +8,7 @@ RSpec.describe Trainees::Confirmation::ReinstatementDetails::View do
   alias_method :component, :page
 
   let(:trainee) { build(:trainee, :reinstated, id: 1) }
-  let(:data_model) { OpenStruct.new(trainee: trainee, date: trainee.defer_date) }
+  let(:data_model) { OpenStruct.new(trainee: trainee, date: trainee.reinstate_date) }
 
   before do
     render_inline(described_class.new(data_model))

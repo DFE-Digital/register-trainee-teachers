@@ -7,6 +7,21 @@ describe DiversityForm, type: :model do
 
   subject { described_class.new(trainee) }
 
+  describe "#diversity_disclosure" do
+    before do
+      allow(Diversities::EthnicBackgroundForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
+      allow(Diversities::DisabilityDisclosureForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
+      allow(Diversities::DisabilityDetailForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
+      allow(Diversities::EthnicGroupForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
+    end
+
+    it "delegates to Diversities::DisclosureForm#diversity_disclosure" do
+      expect_any_instance_of(Diversities::DisclosureForm).to receive(:diversity_disclosure)
+
+      subject.diversity_disclosure
+    end
+  end
+
   describe "#disabled?" do
     before do
       allow(Diversities::DisabilityDetailForm).to receive(:new) # form also calls disabled?() on initialisation
@@ -32,14 +47,6 @@ describe DiversityForm, type: :model do
       expect_any_instance_of(Diversities::DisabilityDetailForm).to receive(:disabilities)
 
       subject.disabilities
-    end
-  end
-
-  describe "#diversity_disclosure" do
-    it "delegates to Diversities::DisclosureForm#diversity_disclosure" do
-      expect_any_instance_of(Diversities::DisclosureForm).to receive(:diversity_disclosure)
-
-      subject.diversity_disclosure
     end
   end
 

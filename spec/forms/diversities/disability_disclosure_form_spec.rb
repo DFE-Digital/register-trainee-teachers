@@ -5,7 +5,7 @@ require "rails_helper"
 module Diversities
   describe DisabilityDisclosureForm, type: :model do
     let(:params) { {} }
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { create(:trainee, :diversity_disclosed) }
     let(:form_store) { class_double(FormStore) }
 
     subject { described_class.new(trainee, params, form_store) }
@@ -33,7 +33,7 @@ module Diversities
     end
 
     describe "#save!" do
-      let(:trainee) { create(:trainee, :not_started) }
+      let(:trainee) { create(:trainee, :not_started, :diversity_disclosed) }
       let(:disability_not_provided) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
 
       before do

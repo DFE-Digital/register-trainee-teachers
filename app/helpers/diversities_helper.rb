@@ -13,11 +13,21 @@ module DiversitiesHelper
     options.reject { |option| option == Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
   end
 
-  def back_link(trainee)
-    if trainee.ethnic_group.blank? || trainee.ethnic_background.blank?
+  def diversity_confirm_path(trainee)
+    diversity_form = DiversityForm.new(trainee)
+
+    return trainee_diversity_confirm_path(trainee) unless diversity_form.diversity_disclosed?
+
+    if diversity_form.ethnic_group.nil?
       edit_trainee_diversity_ethnic_group_path(trainee)
-    else
+    elsif diversity_form.ethnic_group_provided? && diversity_form.ethnic_background.nil?
       edit_trainee_diversity_ethnic_background_path(trainee)
+    elsif diversity_form.disability_disclosure.nil?
+      edit_trainee_diversity_disability_disclosure_path(trainee)
+    elsif diversity_form.disabilities.empty?
+      edit_trainee_diversity_disability_detail_path(trainee)
+    else
+      trainee_diversity_confirm_path(trainee)
     end
   end
 end

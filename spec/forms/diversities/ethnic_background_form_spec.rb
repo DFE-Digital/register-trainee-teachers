@@ -5,7 +5,7 @@ require "rails_helper"
 module Diversities
   describe EthnicBackgroundForm, type: :model do
     let(:params) { {} }
-    let(:trainee) { create(:trainee, :diversity_disclosed) }
+    let(:trainee) { create(:trainee, :diversity_disclosed, :with_ethnic_background) }
     let(:form_store) { class_double(FormStore) }
 
     subject { described_class.new(trainee, params, form_store) }

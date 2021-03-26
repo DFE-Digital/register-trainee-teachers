@@ -25,7 +25,7 @@ feature "edit disability details", type: :feature do
   end
 
   def given_a_disabled_trainee_exists
-    given_a_trainee_exists(:disabled)
+    given_a_trainee_exists(:diversity_disclosed, :disabled)
   end
 
   def and_disabilities_exist_in_the_system

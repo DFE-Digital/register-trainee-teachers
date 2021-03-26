@@ -41,17 +41,6 @@ feature "edit ethnic group", type: :feature do
     end
   end
 
-  scenario "updating the ethnic group clears the previous ethnic background" do
-    given_a_trainee_with_a_background_exists
-    and_i_am_on_the_diversity_ethnic_group_page
-    and_i_choose_the_asian_option
-    and_i_submit_the_form
-    then_i_am_redirected_to_the_ethnic_background_page
-    and_the_diversity_ethnic_group_is_updated_with_asian
-    and_the_previous_ethnic_background_is_cleared
-    and_i_see_ethnic_background_options_for_the_selected_group
-  end
-
   scenario "choosing not to provide ethnic group" do
     given_a_trainee_exists
     given_i_visited_the_diversities_confirm_page_page
@@ -63,12 +52,13 @@ feature "edit ethnic group", type: :feature do
   end
 
   def given_a_trainee_exists
-    @trainee = create(:trainee, ethnic_group: nil, provider: current_user.provider)
+    @trainee = create(:trainee, :diversity_disclosed, ethnic_group: nil, provider: current_user.provider)
   end
 
   def given_a_trainee_with_a_background_exists
     @trainee = create(
       :trainee,
+      :diversity_disclosed,
       ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:mixed],
       ethnic_background: Diversities::BACKGROUNDS[Diversities::ETHNIC_GROUP_ENUMS[:mixed]].sample,
       provider: current_user.provider,
