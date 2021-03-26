@@ -9,10 +9,12 @@ module TeacherTrainingApi
       let(:course) { JSON(ApiStubs::TeacherTrainingApi.course) }
       let(:code) { course["attributes"]["code"] }
       let(:name) { course["attributes"]["name"] }
-      let(:subject_object) { build(:subject) }
+      let(:subject_codes) { course["attributes"]["subject_codes"] }
+      let(:subject_object) { build(:subject, code: subject_codes.first) }
       subject { described_class.call(provider: provider, course: course) }
+
       before do
-        allow(Subject).to receive(:where) { [subject_object] }
+        allow(Subject).to receive(:where).with({ code: subject_codes }).and_return([subject_object])
       end
 
       context "when the course code does not exist in register" do
@@ -26,14 +28,9 @@ module TeacherTrainingApi
             expect(provider.courses.find_by(code: code, name: name)).to_not be_nil
           end
 
-          it "creates a join table between the course and subject" do
-            expect { subject }.to change { CourseSubject.count }.by(1)
-            expect(provider.courses.find_by(code: code, name: name).subjects.length).to eq 1
-          end
-
-          it "has accessors to course subjects" do
-            subject
-            expect(provider.courses.find_by(code: code, name: name).subjects.last).to eq subject_object
+          it "creates the course with the correct subjects" do
+            expect { subject }.to change { CourseSubject.count }.from(0).to(1)
+            expect(provider.courses.find_by(code: code, name: name).subjects).to match [subject_object]
           end
         end
 
