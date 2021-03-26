@@ -25,10 +25,6 @@ module Trainees
       end
     end
 
-    def confirm
-      page_tracker.save_as_origin!
-    end
-
   private
 
     def trainee
