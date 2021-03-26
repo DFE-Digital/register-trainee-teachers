@@ -50,35 +50,6 @@ describe SessionsController, type: :controller do
         request_callback
         expect(response).to redirect_to(sign_in_user_not_found_path)
       end
-
-      describe "save the new user", "feature_allow_user_creation": true do
-        it "creates a session for the new user" do
-          request_callback
-          expect(session[:dfe_sign_in_user]["dfe_sign_in_uid"]).to eq(user.dfe_sign_in_uid)
-          expect(session[:dfe_sign_in_user]["email"]).to eq(user.email)
-
-          expect(session[:dfe_sign_in_user]["first_name"]).to eq(user.first_name)
-          expect(session[:dfe_sign_in_user]["last_name"]).to eq(user.last_name)
-        end
-
-        it "redirects to the trainees index page" do
-          request_callback
-          expect(response).to redirect_to(root_path)
-        end
-
-        it "saved non existing user to database" do
-          expect { request_callback }.to change { User.count }
-          .from(0).to(1)
-        end
-
-        it "created provider if needed" do
-          expect { request_callback }.to change { Provider.count }
-          .from(0).to(1)
-
-          expect { request_callback }.to_not change { Provider.count }
-          .from(1)
-        end
-      end
     end
   end
 end

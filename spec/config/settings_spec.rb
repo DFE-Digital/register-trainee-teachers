@@ -27,7 +27,6 @@ describe "Settings" do
     include_examples expected_value_test, :use_ssl, features, true
     include_examples expected_value_test, :use_dfe_sign_in, features, true
     include_examples expected_value_test, :home_text, features, false
-    include_examples expected_value_test, :allow_user_creation, features, false
   end
 
   describe ".dfe_sign_in" do
