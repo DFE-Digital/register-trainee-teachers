@@ -299,6 +299,8 @@ en:
       heading: Cookies on Register trainee teachers
     badges:
       heading: Your %{start_year} to %{end_year} trainees
+    accessibility:
+      heading: Acessibility statement for Register trainee teachers
 
   activerecord:
     attributes:
