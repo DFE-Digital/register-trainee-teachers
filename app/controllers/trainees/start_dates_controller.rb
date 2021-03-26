@@ -11,15 +11,15 @@ module Trainees
     }.freeze
 
     def edit
-      @training_details = TraineeStartDateForm.new(trainee)
+      @trainee_start_date_form = TraineeStartDateForm.new(trainee)
     end
 
     def update
-      @training_details = TraineeStartDateForm.new(trainee, trainee_params)
+      @trainee_start_date_form = TraineeStartDateForm.new(trainee, trainee_params)
 
       save_strategy = trainee.draft? ? :save! : :stash
 
-      if @training_details.public_send(save_strategy)
+      if @trainee_start_date_form.public_send(save_strategy)
         redirect_to trainee_start_date_confirm_path(trainee)
       else
         render :edit

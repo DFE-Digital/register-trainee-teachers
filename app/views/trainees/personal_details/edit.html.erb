@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.personal_details.edit", has_errors: @personal_detail.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.personal_details.edit", has_errors: @personal_detail_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @personal_detail, url: trainee_personal_details_path(@trainee), method: :put, local: true) do |f| %>
+    <%= register_form_with(model: @personal_detail_form, url: trainee_personal_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">Trainee personal details</h1>

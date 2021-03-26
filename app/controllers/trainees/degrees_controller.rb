@@ -11,6 +11,7 @@ module Trainees
 
     def create
       @degree_form = @degrees_form.build_degree(degree_params)
+
       if @degree_form.save_or_stash
         redirect_to trainee_degrees_confirm_path(trainee)
       else
@@ -25,6 +26,7 @@ module Trainees
     def update
       @degree_form = @degrees_form.find_degree_from_param(params[:id])
       @degree_form.attributes = degree_params
+
       if @degree_form.save_or_stash
         redirect_to trainee_degrees_confirm_path(trainee)
       else
@@ -34,8 +36,11 @@ module Trainees
 
     def destroy
       @degree_form = @degrees_form.find_degree_from_param(params[:id])
+
       @degree_form.destroy!
+
       flash[:success] = "Trainee degree deleted"
+
       redirect_to page_tracker.last_origin_page_path
     end
 

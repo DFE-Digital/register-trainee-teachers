@@ -4,14 +4,14 @@ module Trainees
   class OutcomeDatesController < ApplicationController
     def edit
       authorize trainee
-      @outcome = OutcomeDateForm.new(trainee)
+      @outcome_form = OutcomeDateForm.new(trainee)
     end
 
     def update
       authorize trainee
-      @outcome = OutcomeDateForm.new(trainee, trainee_params)
+      @outcome_form = OutcomeDateForm.new(trainee, trainee_params)
 
-      if @outcome.stash
+      if @outcome_form.stash
         redirect_to confirm_trainee_outcome_details_path(trainee)
       else
         render :edit

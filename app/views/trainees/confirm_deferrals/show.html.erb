@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render Trainees::DeferralDetails::View.new(@deferral) %>
+    <%= render Trainees::DeferralDetails::View.new(@deferral_form) %>
 
     <%= register_form_with url: trainee_confirm_deferral_path(@trainee), method: :put, local: true do |f| %>
       <%= f.govuk_submit "Defer this trainee" %>

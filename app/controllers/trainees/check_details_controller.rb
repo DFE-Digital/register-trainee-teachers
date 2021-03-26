@@ -7,7 +7,7 @@ module Trainees
     def show
       authorize trainee
       page_tracker.save_as_origin!
-      @trn_submission = TrnSubmissionForm.new(trainee: trainee)
+      @trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
     end
 
   private

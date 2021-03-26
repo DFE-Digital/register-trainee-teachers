@@ -6,14 +6,14 @@ module Trainees
       before_action :authorize_trainee
 
       def edit
-        @disability_disclosure = Diversities::DisabilityDisclosureForm.new(trainee)
+        @disability_disclosure_form = Diversities::DisabilityDisclosureForm.new(trainee)
       end
 
       def update
-        @disability_disclosure = Diversities::DisabilityDisclosureForm.new(trainee, disability_disclosure_params)
+        @disability_disclosure_form = Diversities::DisabilityDisclosureForm.new(trainee, disability_disclosure_params)
         save_strategy = trainee.draft? ? :save! : :stash
 
-        if @disability_disclosure.public_send(save_strategy)
+        if @disability_disclosure_form.public_send(save_strategy)
           redirect_to_relevant_step
         else
           render :edit
@@ -33,7 +33,7 @@ module Trainees
       end
 
       def redirect_to_relevant_step
-        if @disability_disclosure.disability_not_provided? || @disability_disclosure.no_disability?
+        if @disability_disclosure_form.disability_not_provided? || @disability_disclosure_form.no_disability?
           redirect_to(trainee_diversity_confirm_path(trainee))
         else
           redirect_to(edit_trainee_diversity_disability_detail_path(trainee))

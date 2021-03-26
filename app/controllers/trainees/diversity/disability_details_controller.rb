@@ -7,14 +7,14 @@ module Trainees
       before_action :load_disabilities
 
       def edit
-        @disability_detail = Diversities::DisabilityDetailForm.new(trainee)
+        @disability_detail_form = Diversities::DisabilityDetailForm.new(trainee)
       end
 
       def update
-        @disability_detail = Diversities::DisabilityDetailForm.new(trainee, disability_detail_params)
+        @disability_detail_form = Diversities::DisabilityDetailForm.new(trainee, disability_detail_params)
         save_strategy = trainee.draft? ? :save! : :stash
 
-        if @disability_detail.public_send(save_strategy)
+        if @disability_detail_form.public_send(save_strategy)
           redirect_to trainee_diversity_confirm_path(trainee)
         else
           render :edit

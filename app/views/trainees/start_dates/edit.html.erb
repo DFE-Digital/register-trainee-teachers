@@ -4,7 +4,7 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<%= register_form_with model: @training_details, url: trainee_start_date_path, local: true do |f| %>
+<%= register_form_with model: @trainee_start_date_form, url: trainee_start_date_path, local: true do |f| %>
   <%= f.govuk_date_field :commencement_date, legend: { text: t("views.forms.training_details.commencement_date.label"), size: "l", tag: "h1" } %>
   <%= f.govuk_submit "Continue" %>
 <% end %>

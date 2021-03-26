@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.deferral.show", has_errors: @deferral.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.deferral.show", has_errors: @deferral_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>
@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @deferral, url: trainee_deferral_path(@trainee), local: true) do |f| %>
+    <%= register_form_with(model: @deferral_form, url: trainee_deferral_path(@trainee), local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <span class="govuk-caption-l">

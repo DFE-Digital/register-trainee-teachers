@@ -7,7 +7,7 @@ module Trainees
         page_tracker.save_as_origin!
 
         if trainee.draft?
-          @confirm_detail = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
+          @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
         end
 
         data_model = trainee.draft? ? trainee : diversity_form

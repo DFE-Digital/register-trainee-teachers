@@ -13,7 +13,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
-    <% if @trn_submission.errors.any? %>
+    <% if @trn_submission_form.errors.any? %>
       <%= render "trainees/check_details/error_summary" %>
     <% end %>
 
@@ -26,7 +26,7 @@
           Review trainee record
         </h1>
 
-        <% unless @trn_submission.all_sections_complete? %>
+        <% unless @trn_submission_form.all_sections_complete? %>
           <div class="govuk-inset-text">
             <p class="govuk-body">
               This record is not complete and cannot be submitted for TRN. If you do not
@@ -45,23 +45,23 @@
       Personal details and education
     </h2>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :personal_details) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission_form: @trn_submission_form, section: :personal_details) %>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :contact_details) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission_form: @trn_submission_form, section: :contact_details) %>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :diversity) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission_form: @trn_submission_form, section: :diversity) %>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :degrees) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission_form: @trn_submission_form, section: :degrees) %>
 
     <h2 class="govuk-heading-m">
       About their teacher training
     </h2>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :training_details) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission_form: @trn_submission_form, section: :training_details) %>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission: @trn_submission, section: :course_details) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, trn_submission_form: @trn_submission_form, section: :course_details) %>
 
-    <%= register_form_with(model: @trn_submission, url: trn_submissions_path, method: :post, local: true) do |f| %>
+    <%= register_form_with(model: @trn_submission_form, url: trn_submissions_path, method: :post, local: true) do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
       <%= f.govuk_submit "Submit record and request TRN" %>
     <% end %>

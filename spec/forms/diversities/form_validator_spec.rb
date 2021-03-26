@@ -110,16 +110,16 @@ module Diversities
               it { is_expected.to be_valid }
 
               context "when trainee is disabled" do
-                let(:disability_detail) { instance_double(DisabilityDetailForm) }
+                let(:disability_detail_form) { instance_double(DisabilityDetailForm) }
 
                 before do
                   trainee.disability_disclosure = DISABILITY_DISCLOSURE_ENUMS[:disabled]
-                  expect(DisabilityDetailForm).to receive(:new).and_return(disability_detail)
+                  expect(DisabilityDetailForm).to receive(:new).and_return(disability_detail_form)
                 end
 
                 context "when DisabilityDetailForm is valid" do
                   before do
-                    allow(disability_detail).to receive(:valid?).and_return(true)
+                    allow(disability_detail_form).to receive(:valid?).and_return(true)
                   end
 
                   it { is_expected.to be_valid }
@@ -127,7 +127,7 @@ module Diversities
 
                 context "when DisabilityDetailForm is invalid" do
                   before do
-                    allow(disability_detail).to receive(:valid?).and_return(false)
+                    allow(disability_detail_form).to receive(:valid?).and_return(false)
                   end
 
                   it "returns an error for the disability_ids key" do

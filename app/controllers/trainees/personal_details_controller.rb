@@ -24,7 +24,7 @@ module Trainees
     end
 
     def edit
-      @personal_detail = PersonalDetailsForm.new(trainee)
+      @personal_detail_form = PersonalDetailsForm.new(trainee)
     end
 
     def update
@@ -34,7 +34,7 @@ module Trainees
       if personal_detail.public_send(save_strategy)
         redirect_to trainee_personal_details_confirm_path(personal_detail.trainee)
       else
-        @personal_detail = personal_detail
+        @personal_detail_form = personal_detail
         render :edit
       end
     end

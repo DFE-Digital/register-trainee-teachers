@@ -1,6 +1,6 @@
 <%= render PageTitle::View.new(
   title: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")),
-  has_errors: @ethnic_background.errors.present?,
+  has_errors: @ethnic_background_form.errors.present?,
 ) %>
 
 <%= content_for(:breadcrumbs) do %>
@@ -12,7 +12,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @ethnic_background, url: trainee_diversity_ethnic_background_path(@trainee), method: :put, local: true) do |f| %>
+    <%= register_form_with(model: @ethnic_background_form, url: trainee_diversity_ethnic_background_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
         <%= f.govuk_radio_buttons_fieldset(
@@ -24,7 +24,7 @@
 },
         ) do %>
 
-          <% Diversities::BACKGROUNDS[@ethnic_background.ethnic_group].each_with_index do |ethnic_background, index| %>
+          <% Diversities::BACKGROUNDS[@ethnic_background_form.ethnic_group].each_with_index do |ethnic_background, index| %>
             <% if other_ethnic_background_option?(ethnic_background) %>
               <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background }, link_errors: index.zero?) do %>
                 <%= f.govuk_text_field(

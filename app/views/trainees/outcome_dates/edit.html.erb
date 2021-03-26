@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.outcome_date.edit", has_errors: @outcome.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.outcome_date.edit", has_errors: @outcome_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @outcome, url: trainee_outcome_details_outcome_date_path(@trainee), local: true) do |f| %>
+    <%= register_form_with(model: @outcome_form, url: trainee_outcome_details_outcome_date_path(@trainee), local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <span class="govuk-caption-l">
