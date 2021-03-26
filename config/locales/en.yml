@@ -288,8 +288,6 @@ en:
       give_feedback_link_desc: This is a new service. Your views will help us improve it.
       data_requirements_link: Check what data you need
       data_requirements_link_desc: The data you need to complete a trainee record.
-    cookie_policy:
-      heading: Cookies on Register trainee teachers
     start:
       bullet_desc: "Use this service to:"
       bullets:
@@ -297,6 +295,11 @@ en:
         2: get a teacher reference number (TRN) for your trainees
         3: share information about a trainee’s progress, such as whether they withdraw or defer
         4: recommend your trainees for qualified teacher status (QTS)
+    cookie_policy:
+      heading: Cookies on Register trainee teachers
+    badges:
+      heading: Your %{start_year} to %{end_year} trainees
+
   activerecord:
     attributes:
       trainee:
