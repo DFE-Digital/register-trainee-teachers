@@ -21,29 +21,23 @@ module TeacherTrainingApi
     def call
       return unless IMPORTABLE_STATES.include?(attrs["state"])
 
-      map_courses_to_subjects if course.update!(name: attrs["name"])
+      course.update!(name: name, subjects: subjects)
     end
 
   private
 
     attr_reader :provider, :attrs
 
+    def subjects
+      Subject.where(code: attrs["subject_codes"])
+    end
+
+    def name
+      attrs["name"]
+    end
+
     def course
       @course ||= provider.courses.find_or_initialize_by(code: attrs["code"])
-    end
-
-    def map_courses_to_subjects
-      attrs["subject_codes"].each do |subject_code|
-        map_course_to_subject(subject_code)
-      end
-    end
-
-    def map_course_to_subject(subject_code)
-      CourseSubject.create(course: course, subject: get_subject(subject_code))
-    end
-
-    def get_subject(subject_code)
-      Subject.where(code: subject_code)&.first
     end
   end
 end
