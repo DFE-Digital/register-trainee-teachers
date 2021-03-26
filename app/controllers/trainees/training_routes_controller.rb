@@ -5,8 +5,7 @@ module Trainees
     before_action :ensure_trainee_is_draft!
     before_action :authorize_trainee
 
-    def edit
-    end
+    def edit; end
 
     def update
       trainee.update!(trainee_params)

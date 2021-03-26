@@ -3,6 +3,7 @@
 module Trainees
   class CourseDetailsController < ApplicationController
     before_action :authorize_trainee
+    before_action :ensure_trainee_is_draft!
 
     COURSE_DATE_CONVERSION = {
       "course_start_date(3i)" => "start_day",

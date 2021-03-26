@@ -8,8 +8,7 @@ module Trainees
       @outcome_form = OutcomeDateForm.new(trainee)
     end
 
-    def recommended
-    end
+    def recommended; end
 
   private
 
