@@ -8,7 +8,9 @@ module Trainees
       @outcome_form = OutcomeDateForm.new(trainee)
     end
 
-    def recommended; end
+    def recommended
+      ensure_trainee_is_not_draft!
+    end
 
   private
 
