@@ -72,7 +72,7 @@ feature "edit ethnic background", type: :feature do
   end
 
   def then_i_see_error_messages
-    expect(page).to have_content(
+    expect(disability_disclosure_page).to have_content(
       I18n.t("activemodel.errors.models.diversities/ethnic_background_form.attributes.ethnic_background.blank"),
     )
   end

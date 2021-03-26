@@ -58,10 +58,10 @@ private
   def then_i_see_error_messages
     translation_key_prefix = "activerecord.errors.models.provider.attributes"
 
-    expect(page).to have_text(
+    expect(new_provider_page).to have_text(
       I18n.t("#{translation_key_prefix}.name.blank"),
     )
-    expect(page).to have_text(
+    expect(new_provider_page).to have_text(
       I18n.t("#{translation_key_prefix}.dttp_id.invalid"),
     )
   end

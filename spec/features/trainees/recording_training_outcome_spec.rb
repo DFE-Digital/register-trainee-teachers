@@ -108,13 +108,13 @@ feature "Recording a training outcome", type: :feature do
   end
 
   def then_i_see_the_error_message_for(type)
-    expect(page).to have_content(
+    expect(record_page).to have_content(
       I18n.t("activemodel.errors.models.outcome_date_form.attributes.date.#{type}"),
     )
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(page).to have_content(
+    expect(record_page).to have_content(
       I18n.t("activemodel.errors.models.outcome_date_form.attributes.date_string.blank"),
     )
   end
@@ -136,7 +136,6 @@ feature "Recording a training outcome", type: :feature do
   end
 
   def and_the_outcome_date_i_chose_is_cleared
-    trainee.reload
-    expect(trainee.outcome_date).to be_nil
+    expect(trainee.reload.outcome_date).to be_nil
   end
 end

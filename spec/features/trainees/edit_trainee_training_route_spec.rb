@@ -11,6 +11,7 @@ feature "editing a trainee training route", type: :feature do
 
   context "draft-trainee" do
     let(:traits) { :draft }
+
     scenario "viewing the draft-trainee's current training route" do
       then_i_see_the_course_details
       and_current_training_route_should_be_selected
@@ -26,8 +27,9 @@ feature "editing a trainee training route", type: :feature do
 
   context "non-draft trainee" do
     let(:traits) { :submitted_for_trn }
+
     scenario "redirect when editing a non-draft trainee's training route" do
-      expect(page.current_path).to eq "/trainees/#{trainee.slug}"
+      expect(record_page).to be_displayed(id: trainee.slug)
     end
   end
 
