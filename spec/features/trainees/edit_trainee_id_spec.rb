@@ -34,7 +34,7 @@ feature "edit Trainee ID" do
   end
 
   def then_i_am_taken_to_the_confirmation_page
-    expect(page.current_path).to eq("/trainees/#{trainee.slug}/trainee-id/confirm")
+    expect(confirm_trainee_id_page).to be_displayed(id: trainee.slug)
   end
 
   def when_i_confirm

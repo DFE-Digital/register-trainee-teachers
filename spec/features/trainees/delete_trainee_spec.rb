@@ -37,14 +37,14 @@ private
   end
 
   def i_am_redirected_to_the_trainee_records_list
-    expect(page.current_path).to eq("/trainees")
+    expect(trainee_index_page).to be_displayed
   end
 
   def and_i_see_a_flash_message
-    expect(page).to have_text("Draft deleted")
+    expect(review_draft_page).to have_text("Draft deleted")
   end
 
   def and_the_trainee_is_no_longer_listed
-    expect(page).to_not have_text("Trainee ID: 1")
+    expect(review_draft_page).to_not have_text("Trainee ID: 1")
   end
 end

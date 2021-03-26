@@ -113,19 +113,19 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def then_i_see_the_error_message_for_invalid_date
-    expect(page).to have_content(
+    expect(deferral_page).to have_content(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date.invalid"),
     )
   end
 
   def then_i_see_the_error_message_for_blank_date
-    expect(page).to have_content(
+    expect(deferral_page).to have_content(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date.blank"),
     )
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(page).to have_content(
+    expect(deferral_page).to have_content(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date_string.blank"),
     )
   end
@@ -139,8 +139,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def then_the_defer_date_is_updated
-    trainee.reload
-    expect(page).to have_text(date_for_summary_view(trainee.defer_date))
+    expect(deferral_confirmation_page).to have_text(date_for_summary_view(trainee.reload.defer_date))
   end
 
   def when_i_cancel_my_changes
@@ -152,7 +151,6 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def and_the_defer_date_i_chose_is_cleared
-    trainee.reload
     expect(trainee.defer_date).to be_nil
   end
 end

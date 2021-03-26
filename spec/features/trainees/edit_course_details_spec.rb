@@ -58,6 +58,8 @@ feature "course details", type: :feature do
     end
   end
 
+private
+
   def when_i_visit_the_course_details_page
     course_details_page.load(id: trainee.slug)
   end
@@ -120,19 +122,15 @@ feature "course details", type: :feature do
   def then_i_see_error_messages
     translation_key_prefix = "activemodel.errors.models.course_details_form.attributes"
 
-    expect(page).to have_content(
+    expect(course_details_page).to have_content(
       I18n.t("#{translation_key_prefix}.subject.blank"),
     )
-    expect(page).to have_content(
+    expect(course_details_page).to have_content(
       I18n.t("#{translation_key_prefix}.main_age_range.blank"),
     )
-    expect(page).to have_content(
+    expect(course_details_page).to have_content(
       I18n.t("#{translation_key_prefix}.course_start_date.blank"),
     )
-  end
-
-  def then_i_see_a_flash_message
-    expect(page).to have_text("Trainee course details updated")
   end
 
   def template
@@ -142,8 +140,6 @@ feature "course details", type: :feature do
   def then_i_am_redirected_to_the_confirm_page
     expect(confirm_details_page).to be_displayed(id: trainee.slug, section: course_details_section)
   end
-
-private
 
   def course_details_section
     "course-details"

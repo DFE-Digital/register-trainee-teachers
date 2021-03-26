@@ -155,19 +155,19 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(page).to have_content(
+    expect(withdrawal_page).to have_content(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.date_string.blank"),
     )
   end
 
   def then_i_see_the_error_message_for_invalid_date
-    expect(page).to have_content(
+    expect(withdrawal_page).to have_content(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.date.invalid"),
     )
   end
 
   def then_i_see_the_error_message_for_blank_date
-    expect(page).to have_content(
+    expect(withdrawal_page).to have_content(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.date.blank"),
     )
   end
@@ -179,14 +179,14 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def then_i_see_the_error_message_for_missing_additional_reason
-    expect(page).to have_content(
+    expect(withdrawal_page).to have_content(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.additional_withdraw_reason.blank"),
     )
   end
 
   def then_the_withdrawal_details_is_updated
     trainee.reload
-    expect(page).to have_text(date_for_summary_view(trainee.withdraw_date))
+    expect(withdrawal_page).to have_text(date_for_summary_view(trainee.withdraw_date))
   end
 
   def then_i_am_redirected_to_withdrawal_confirmation_page
@@ -195,7 +195,7 @@ feature "Withdrawing a trainee", type: :feature do
 
   def then_the_withdraw_date_and_reason_is_updated
     trainee.reload
-    expect(page).to have_text(trainee.withdraw_date.strftime("%-d %B %Y"))
+    expect(withdrawal_page).to have_text(trainee.withdraw_date.strftime("%-d %B %Y"))
   end
 
   def and_the_additional_reason_is_displayed

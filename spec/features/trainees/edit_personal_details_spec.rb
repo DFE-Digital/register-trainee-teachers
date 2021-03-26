@@ -125,12 +125,11 @@ private
   end
 
   def then_the_personal_details_are_updated
-    trainee.reload
-    expect(trainee.progress.personal_details).to be_truthy
+    expect(trainee.reload.progress.personal_details).to be_truthy
   end
 
   def then_i_see_error_messages
-    expect(page).to have_content(
+    expect(personal_details_page).to have_content(
       I18n.t(
         "activemodel.errors.models.personal_details_form.attributes.nationality_ids.empty_nationalities",
       ),
@@ -148,6 +147,6 @@ private
   end
 
   def then_i_see_a_flash_message
-    expect(page).to have_text("Trainee personal details updated")
+    expect(record_page).to have_text("Trainee personal details updated")
   end
 end

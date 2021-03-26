@@ -128,45 +128,35 @@ private
   end
 
   def then_all_trainees_are_visible
-    Trainee.all.each { |trainee| expect(page).to have_text(full_name(trainee)) }
-  end
-
-  def then_only_assessment_only_trainees_are_visible
-    expect(page).to have_text(full_name(@assessment_only_trainee))
-    expect(page).to_not have_text(full_name(@provider_led_postgrad_trainee))
-  end
-
-  def then_only_provider_led_postgrad_trainees_are_visible
-    expect(page).to_not have_text(full_name(@assessment_only_trainee))
-    expect(page).to have_text(full_name(@provider_led_postgrad_trainee))
+    Trainee.all.each { |trainee| expect(trainee_index_page).to have_text(full_name(trainee)) }
   end
 
   def then_only_biology_trainees_are_visible
-    expect(page).to have_text(full_name(@biology_trainee))
-    expect(page).to_not have_text(full_name(@history_trainee))
+    expect(trainee_index_page).to have_text(full_name(@biology_trainee))
+    expect(trainee_index_page).to_not have_text(full_name(@history_trainee))
   end
 
   def then_only_assessment_only_biology_trainees_are_visible
-    expect(page).to have_text(full_name(@biology_trainee))
+    expect(trainee_index_page).to have_text(full_name(@biology_trainee))
     [
       @assessment_only_trainee,
       @provider_led_postgrad_trainee,
       @history_trainee,
       @searchable_trainee,
     ].each do |trainee|
-      expect(page).to_not have_text(full_name(trainee))
+      expect(trainee_index_page).to_not have_text(full_name(trainee))
     end
   end
 
   def then_only_the_searchable_trainee_is_visible
-    expect(page).to have_text(full_name(@searchable_trainee))
+    expect(trainee_index_page).to have_text(full_name(@searchable_trainee))
     [
       @assessment_only_trainee,
       @provider_led_postgrad_trainee,
       @history_trainee,
       @biology_trainee,
     ].each do |trainee|
-      expect(page).to_not have_text(full_name(trainee))
+      expect(trainee_index_page).to_not have_text(full_name(trainee))
     end
   end
 
@@ -201,6 +191,6 @@ private
   end
 
   def csv_output
-    @csv_output ||= CSV.parse(page.text).flatten.compact.map(&:strip)
+    @csv_output ||= CSV.parse(trainee_index_page.text).flatten.compact.map(&:strip)
   end
 end

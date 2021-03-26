@@ -68,7 +68,7 @@ RSpec.feature "Adding a degree" do
       end
 
       scenario "records the other grade" do
-        expect(page).to have_text(other_grade)
+        expect(confirm_details_page).to have_text(other_grade)
       end
     end
 
@@ -185,7 +185,7 @@ private
   end
 
   def then_i_am_redirected_to_the_trainee_degrees_confirmation_page
-    expect(current_path).to eq("/trainees/#{trainee.slug}/degrees/confirm")
+    expect(degrees_confirm_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def and_confirm_my_details
@@ -203,6 +203,6 @@ private
   end
 
   def then_i_see_a_flash_message
-    expect(page).to have_text("Trainee degree deleted")
+    expect(confirm_details_page).to have_text("Trainee degree deleted")
   end
 end

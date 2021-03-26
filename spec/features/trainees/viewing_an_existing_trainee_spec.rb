@@ -23,6 +23,8 @@ feature "View trainees" do
     end
   end
 
+private
+
   def when_i_view_the_trainee_index_page
     trainee_index_page.load
   end
@@ -40,7 +42,7 @@ feature "View trainees" do
   end
 
   def then_i_should_see_no_access_text
-    expect(page).to have_text(t("components.page_titles.pages.forbidden"))
+    expect(review_draft_page).to have_text(t("components.page_titles.pages.forbidden"))
   end
 
   def and_i_visit_the_trainee
