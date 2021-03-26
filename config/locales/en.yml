@@ -301,6 +301,18 @@ en:
       heading: Your %{start_year} to %{end_year} trainees
     accessibility:
       heading: Acessibility statement for Register trainee teachers
+  sign_in:
+    new:
+      heading: Ask for an account to register trainee teachers
+      body: Although you have a DfE Sign-in account, you also need an account for this service.
+      contact_us_html: Contact us at %{link} to ask for an account.
+      home_button: Return home
+    index:
+      heading: Sign in to Register trainee teachers
+      body: Use DfE Sign-in to access your account.
+      dfe_sign_in_button: Sign in using DfE Sign-in
+      persona_sign_in_button: Sign in using Persona
+      get_access_html: If you do not have a DfE Sign-in account but need access to Register trainee teachers, email %{link} to ask for an account
 
   activerecord:
     attributes:
