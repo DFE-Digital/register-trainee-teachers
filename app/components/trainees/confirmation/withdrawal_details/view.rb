@@ -12,10 +12,6 @@ module Trainees
           @data_model = data_model
         end
 
-        def confirm_section_title
-          I18n.t("components.confirmation.withdrawal_details.heading")
-        end
-
         def withdraw_date
           date_for_summary_view(data_model.date)
         end

@@ -40,11 +40,9 @@ en:
           other: Other
           gender_not_provided: Not provided
       reinstatement_details:
-        header: Check reinstatement details
         reinstate_date_label: Date of return
         summary_title: Reinstatement details
       withdrawal_details:
-        heading: Check withdrawal details
         summary_title: Withdrawal details
         withdraw_date_label: Date of withdrawal
         withdraw_reason_label: Reason for withdrawal
