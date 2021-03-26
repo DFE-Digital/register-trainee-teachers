@@ -13,7 +13,7 @@ module Trainees
       if deferral.save!
         trainee.defer!
 
-        DeferJob.perform_later(trainee.id)
+        DeferJob.perform_later(trainee)
 
         flash[:success] = "Trainee deferred"
         redirect_to trainee_path(trainee)

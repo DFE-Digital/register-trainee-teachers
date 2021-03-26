@@ -12,7 +12,7 @@ module Trainees
     def update
       if withdrawal.save!
         trainee.withdraw!
-        WithdrawJob.perform_later(trainee.id)
+        WithdrawJob.perform_later(trainee)
 
         flash[:success] = "Trainee withdrawn"
         redirect_to trainee_path(trainee)

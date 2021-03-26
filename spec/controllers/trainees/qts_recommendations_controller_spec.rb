@@ -17,14 +17,14 @@ describe Trainees::QtsRecommendationsController do
     it "it updates the placement assignment in DTTP to mark it ready for QTS" do
       expect {
         post :create, params: { trainee_id: trainee }
-      }.to have_enqueued_job(RecommendForQtsJob).with(trainee.id)
+      }.to have_enqueued_job(RecommendForQtsJob).with(trainee)
     end
 
     it "queues a background job to poll for the trainee's QTS" do
       Timecop.freeze(Time.zone.now) do
         expect {
           post :create, params: { trainee_id: trainee }
-        }.to have_enqueued_job(RetrieveQtsJob).at(RetrieveQtsJob::POLL_DELAY.from_now).with(trainee.id)
+        }.to have_enqueued_job(RetrieveQtsJob).at(RetrieveQtsJob::POLL_DELAY.from_now).with(trainee)
       end
     end
 

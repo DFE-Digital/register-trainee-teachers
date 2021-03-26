@@ -9,15 +9,13 @@ class RetrieveTrnJob < ApplicationJob
   POLL_DELAY = Settings.jobs.poll_delay_hours.hours
   MAX_POLL_DURATION = Settings.jobs.max_poll_duration_days.days
 
-  def perform(trainee_id)
-    trainee = Trainee.find(trainee_id)
-
+  def perform(trainee)
     trn = Dttp::RetrieveTrn.call(trainee: trainee)
 
     if trn
       trainee.trn_received!(trn)
     elsif continue_polling?(trainee)
-      RetrieveTrnJob.set(wait: POLL_DELAY).perform_later(trainee.id)
+      RetrieveTrnJob.set(wait: POLL_DELAY).perform_later(trainee)
     end
   end
 
