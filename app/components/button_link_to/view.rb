@@ -2,13 +2,13 @@
 
 module ButtonLinkTo
   class View < GovukComponent::Base
-    attr_reader :body, :url, :class_option, :id
+    attr_reader :body, :url, :class_option, :html
 
-    def initialize(body:, url:, class_option: nil, id: nil)
+    def initialize(body:, url:, class_option: nil, **html)
       @body = body
       @url = url
       @class_option = class_option
-      @id = id
+      @html = html
     end
 
     def call
@@ -16,12 +16,9 @@ module ButtonLinkTo
         role: "button",
         data: { module: "govuk-button" },
         draggable: false,
-        id: id,
-      }.merge({ class: class_option })
+      }.merge({ class: class_option }, html)
 
       html_options[:class] = prepend_css_class("govuk-button", html_options[:class])
-
-      return link_to(body, url, html_options) if id.present?
 
       link_to(body, url, html_options)
     end
