@@ -65,7 +65,7 @@
             path: trainee_degrees_new_type_path(@trainee),
             confirm_path: trainee_degrees_confirm_path(@trainee),
             status: ProgressService.call(
-              validator: DegreeDetailForm.new(@trainee),
+              validator: DegreesForm.new(@trainee),
               progress_value: @trainee.progress.degrees,
             ).status,
             classes: "degree-details",

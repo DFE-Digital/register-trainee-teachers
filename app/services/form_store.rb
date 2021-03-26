@@ -19,6 +19,7 @@ class FormStore
     disability_disclosure
     disability_detail
     diversity
+    degrees
   ].freeze
 
   class << self

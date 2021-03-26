@@ -2,31 +2,30 @@
 
 module Trainees
   class DegreesController < ApplicationController
-    def new
-      authorize trainee
-      @degree = trainee.degrees.build(locale_code: params[:locale_code])
-    end
+    before_action :authorize_trainee
+    before_action :set_degrees_form
 
-    def edit
-      authorize trainee
-      @degree = trainee.degrees.from_param(params[:id])
+    def new
+      @degree_form = @degrees_form.build_degree(locale_code: params[:locale_code])
     end
 
     def create
-      authorize trainee
-      @degree = trainee.degrees.build(degree_params.merge(locale_code_params))
-      if @degree.save(context: @degree.locale_code.to_sym)
-        redirect_to trainee_degrees_confirm_path(@trainee)
+      @degree_form = @degrees_form.build_degree(degree_params)
+      if @degree_form.save_or_stash
+        redirect_to trainee_degrees_confirm_path(trainee)
       else
         render :new
       end
     end
 
+    def edit
+      @degree_form = @degrees_form.find_degree_from_param(params[:id])
+    end
+
     def update
-      authorize trainee
-      @degree = trainee.degrees.from_param(params[:id])
-      @degree.assign_attributes(degree_params)
-      if @degree.save(context: @degree.locale_code.to_sym)
+      @degree_form = @degrees_form.find_degree_from_param(params[:id])
+      @degree_form.attributes = degree_params
+      if @degree_form.save_or_stash
         redirect_to trainee_degrees_confirm_path(trainee)
       else
         render :edit
@@ -34,30 +33,28 @@ module Trainees
     end
 
     def destroy
-      trainee.degrees.destroy(trainee.degrees.from_param(params[:id]))
+      @degree_form = @degrees_form.find_degree_from_param(params[:id])
+      @degree_form.destroy!
       flash[:success] = "Trainee degree deleted"
-      redirect_to trainee_personal_details_path(@trainee)
+      redirect_to page_tracker.last_origin_page_path
     end
 
   private
 
-    def locale_code_params
-      params.require(:degree).permit(:locale_code) if params.dig(:degree, :locale_code).present?
+    def degree_params
+      params.require(:degree).permit(DegreeForm::FIELDS.excluding(:slug))
     end
 
-    def degree_params
-      degree_params = params.require(:degree).permit(
-        :uk_degree, :non_uk_degree, :subject, :institution, :graduation_year,
-        :grade, :other_grade, :country
-      )
-      # Blat other_grade if grade isn't 'Other'. Don't just ignore the param -
-      # other_grade may already be persisted to the database.
-      degree_params[:other_grade] = nil if degree_params[:grade] != "Other"
-      degree_params
+    def authorize_trainee
+      authorize(trainee)
     end
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
+    end
+
+    def set_degrees_form
+      @degrees_form = DegreesForm.new(trainee)
     end
   end
 end

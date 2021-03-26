@@ -10,7 +10,7 @@ class TrnSubmissionForm
       personal_details: PersonalDetailsForm,
       contact_details: ContactDetailsForm,
       diversity: Diversities::FormValidator,
-      degrees: DegreeDetailForm,
+      degrees: DegreesForm,
       course_details: CourseDetailsForm,
       training_details: TrainingDetailsForm,
     }.freeze

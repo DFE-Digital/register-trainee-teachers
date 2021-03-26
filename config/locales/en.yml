@@ -356,7 +356,7 @@ en:
             date:
               blank: You must enter a deferral date
               invalid: You must enter a valid deferral date
-        degree_detail_form:
+        degrees_form:
           attributes:
             degree_ids:
               empty_degrees: You must have at least one degree

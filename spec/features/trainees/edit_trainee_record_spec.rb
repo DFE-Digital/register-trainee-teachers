@@ -28,12 +28,6 @@ feature "edit trainee record", type: :feature do
       then_i_see_the_diversity_details
       then_i_see_the_degree_details
     end
-
-    scenario "removing a degree" do
-      and_i_visit_the_personal_details
-      and_i_remove_the_degree
-      then_i_should_not_see_any_degree
-    end
   end
 
   def given_a_trainee_exists_with_a_degree
@@ -79,13 +73,5 @@ feature "edit trainee record", type: :feature do
 
   def then_i_see_the_degree_details
     expect(record_page).to have_degree_detail
-  end
-
-  def and_i_remove_the_degree
-    record_page.degree_detail.delete_degree.click
-  end
-
-  def then_i_should_not_see_any_degree
-    expect(record_page.degree_detail.find_all(".govuk-summary-list__row")).to be_empty
   end
 end
