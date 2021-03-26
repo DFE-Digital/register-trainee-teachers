@@ -12,7 +12,7 @@ COPY .tool-versions Gemfile Gemfile.lock ./
 
 RUN apk add --update --no-cache --virtual build-dependances \
     postgresql-dev build-base && \
-    apk add --update --no-cache libpq yarn && \
+    apk add --update --no-cache libpq yarn shared-mime-info && \
     bundle install --jobs=4 && \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependances
