@@ -276,6 +276,18 @@ en:
           hint:
             This will help you to identify them and search for them in your trainee records.
             We may also use it if we need to get in touch with you about this trainee.
+  pages:
+    home:
+      heading: Register trainee teacher
+      body:
+        1: Register trainees with the Department for Education and record the outcome of their training
+      new_trainee_link: Add a Trainee
+      trainees_link: Trainee records
+      trainees_link_desc: Review and manage your trainee records.
+      give_feedback_link: Give feedback
+      give_feedback_link_desc: This is a new service. Your views will help us improve it.
+      data_requirements_link: Check what data you need
+      data_requirements_link_desc: The data you need to complete a trainee record.
   activerecord:
     attributes:
       trainee:

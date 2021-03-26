@@ -2,19 +2,18 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-  <h1 class="govuk-heading-l">Register trainee teachers</h1>
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-  <p class="govuk-body-l"> Register trainees with the Department for Education
-  and record the outcome of their training.</p>
+    <p class="govuk-body-l"> <%= t(".body.1") %></p>
 
-  <% unless current_user.system_admin? %>
-    <p class="govuk-body govuk-!-margin-bottom-0">
-      <%= render GovukComponent::StartNowButton.new(
-        text: "Add a trainee",
-        href: new_trainee_path,
-      ) %>
-    </p>
-  <% end %>
+    <% unless current_user.system_admin? %>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        <%= render GovukComponent::StartNowButton.new(
+          text: t(".new_trainee_link"),
+          href: new_trainee_path,
+        ) %>
+      </p>
+    <% end %>
   </div>
 </div>
 
@@ -23,25 +22,25 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
     <h2 class="govuk-heading-m">
-      <%= govuk_link_to "Trainee records", trainees_path, { class: "govuk-link govuk-link--no-visited-state" } %>
+      <%= govuk_link_to t(".trainees_link"), trainees_path, { class: "govuk-link govuk-link--no-visited-state" } %>
     </h2>
-    <p class="govuk-body">Review and manage your trainee records.</p>
+    <p class="govuk-body"><%= t(".trainees_link_desc") %></p>
   </div>
 
   <% if FeatureService.enabled?("enable_feedback_link") %>
     <div class="govuk-grid-column-one-third">
       <h2 class="govuk-heading-m">
-        <%= govuk_link_to "Give feedback", Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
+        <%= govuk_link_to t('.give_feedback_link'), Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
       </h2>
-      <p class="govuk-body">This is a new service. Your views will help us improve it.</p>
+      <p class="govuk-body"><%= t('.give_feedback_link_desc') %></p>
     </div>
   <% end %>
 
   <div class="govuk-grid-column-one-third">
     <h2 class="govuk-heading-m">
-      <%= govuk_link_to "Check what data you need", data_requirements_path, { class: "govuk-link govuk-link--no-visited-state" } %>
+      <%= govuk_link_to t('.data_requirements_link'), data_requirements_path, { class: "govuk-link govuk-link--no-visited-state" } %>
     </h2>
-    <p class="govuk-body">The data you need to complete a trainee record.</p>
+    <p class="govuk-body"><%= t('.data_requirements_link_desc') %></p>
   </div>
 </div>
 
