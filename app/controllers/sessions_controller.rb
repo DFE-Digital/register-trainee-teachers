@@ -6,17 +6,6 @@ class SessionsController < ApplicationController
   def callback
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])
 
-    if FeatureService.enabled?("allow_user_creation") && current_user.nil?
-      @current_user = User.new(
-        dttp_id: SecureRandom.uuid,
-        provider: Provider.create_or_find_by(
-          name: "DfE",
-          dttp_id: SecureRandom.uuid,
-          code: "000",
-        ),
-      )
-    end
-
     if current_user
       DfESignInUsers::Update.call(user: current_user, dfe_sign_in_user: dfe_sign_in_user)
 

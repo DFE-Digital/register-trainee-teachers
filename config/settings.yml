@@ -22,7 +22,6 @@ features:
   home_text: false
   use_ssl: true
   use_dfe_sign_in: true
-  allow_user_creation: false
   enable_feedback_link: true
   basic_auth: true
   trainee_export: true
@@ -59,6 +58,6 @@ session_store:
 
 teacher_training_api:
   base_url: "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1"
-  
+
 environment:
   name: qa
