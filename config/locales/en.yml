@@ -301,6 +301,8 @@ en:
       heading: Your %{start_year} to %{end_year} trainees
     accessibility:
       heading: Accessibility statement for Register trainee teachers
+    data_requirements:
+      heading: Check what data you need
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers

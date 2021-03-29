@@ -1,5 +1,83 @@
 en:
   pages:
+    data_requirements:
+      body_html: "
+        <p class='govuk-body'>You’ll need the following information about a trainee to complete their record.</p>
+
+        <h2 class='govuk-heading-m'>Personal details</h2>
+
+        <ul class='govuk-list'>
+          <li>First names</li>
+          <li>Middle names</li>
+          <li>Last or family name</li>
+          <li>Date of birth</li>
+          <li>Gender</li>
+          <li>Nationality</li>
+        </ul>
+
+        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+        <h2 class='govuk-heading-m'>Contact details</h2>
+
+        <ul class='govuk-list'>
+          <li> Address </li>
+          <li> Email address</li>
+        </ul>
+
+        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+        <h2 class='govuk-heading-m'>Diversity information (optional)</h2>
+
+        <div class='govuk-inset-text'> If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
+
+        <ul class='govuk-list'>
+          <li>Ethnicity</li>
+          <li>Disability</li>
+        </ul>
+
+        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+        <h2 class='govuk-heading-m'>Degrees</h2>
+
+        <h3 class='govuk-heading-s'>If it's a UK degree</h3>
+
+        <ul class='govuk-list'>
+          <li>Type (for example, BA, BSc or other)</li>
+          <li>Subject</li>
+          <li>Institution</li>
+          <li>Graduation year</li>
+          <li>Grade</li>
+        </ul>
+
+        <h3 class='govuk-heading-s'>If it's not a UK degree</h3>
+
+        <ul class='govuk-list'>
+          <li>NARIC comparable UK degree (if provided)</li>
+          <li>Subject</li>
+          <li>Country where the degree was obtained</li>
+          <li>Graduation year</li>
+        </ul>
+
+        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+        <h2 class='govuk-heading-m'>Course details</h2>
+
+        <ul class='govuk-list'>
+          <li>Subject</li>
+          <li>Age range</li>
+          <li>Start date</li>
+          <li>End date</li>
+        </ul>
+
+        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+        <h2 class='govuk-heading-m'>Allocations information</h2>
+
+        <p class='govuk-body'>
+          If the course has allocated places, you’ll need to know whether the trainee is using an allocated place.
+        </p>
+        "
+
     accessibility:
       body_html: "
         <p class='govuk-body'>This service is run by the Becoming a Teacher team at the Department for Education.
