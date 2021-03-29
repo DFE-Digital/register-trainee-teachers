@@ -26,10 +26,10 @@ module TeacherTrainingApi
         let(:headers) { { foo: "bar" } }
         let(:response) { double(code: status, body: body, headers: headers) }
 
-        it "raises a HttpError error with the response body as the message" do
+        it "raises a Error error with the response body as the message" do
           expect {
             described_class.call(provider: provider)
-          }.to raise_error(TeacherTrainingApi::RetrieveCourses::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
+          }.to raise_error(TeacherTrainingApi::RetrieveCourses::Error, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end

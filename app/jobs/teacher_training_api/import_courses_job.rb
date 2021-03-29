@@ -7,9 +7,9 @@ module TeacherTrainingApi
     def perform
       return unless FeatureService.enabled?("import_courses_from_ttapi")
 
-      Provider.all.each do |provider|
-        ImportProviderCoursesJob.perform_later(provider)
-      end
+      RetrieveSubjects.call.each { |s| ImportSubject.call(subject: s) }
+
+      Provider.all.each { |p| ImportProviderCoursesJob.perform_later(p) }
     end
   end
 end

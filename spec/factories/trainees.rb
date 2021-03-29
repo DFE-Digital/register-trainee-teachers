@@ -162,6 +162,7 @@ FactoryBot.define do
 
     trait :reinstated do
       state { "trn_received" }
+      defer_date { Faker::Date.in_date_period }
       reinstate_date { Faker::Date.in_date_period }
     end
 

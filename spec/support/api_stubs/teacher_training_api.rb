@@ -2,6 +2,27 @@
 
 module ApiStubs
   module TeacherTrainingApi
+    def self.subjects
+      { "data": [subject] }.to_json
+    end
+
+    def self.subject(attrs = {})
+      s = {
+        "id": "3",
+        "type": "subjects",
+        "attributes": {
+          "name": "Primary with science",
+          "code": "07",
+          "bursary_amount": "9000",
+          "early_career_payments": "8388",
+          "scholarship": "3500",
+          "subject_knowledge_enhancement_course_available": true,
+        },
+      }
+      attrs.each { |k, v| s[:attributes][k] = v }
+      s.to_json
+    end
+
     def self.courses
       { "data": [course] }.to_json
     end
