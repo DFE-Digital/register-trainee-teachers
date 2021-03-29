@@ -8,5 +8,7 @@ class CreateCourseSubjects < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :course_subjects, %i[course_id subject_id], unique: true
   end
 end

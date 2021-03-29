@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2021_03_24_164000) do
     t.bigint "subject_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id", "subject_id"], name: "index_course_subjects_on_course_id_and_subject_id", unique: true
     t.index ["course_id"], name: "index_course_subjects_on_course_id"
     t.index ["subject_id"], name: "index_course_subjects_on_subject_id"
   end
