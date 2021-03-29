@@ -63,11 +63,7 @@ module TeacherTrainingApi
             subject
             expect(provider.courses.find_by(code: code).name).to eq name
           end
-        end
 
-        context "if course has name change, subjects not duplicated" do
-          before { create(:course, code: code, provider: provider) }
-          
           it "does not create a duplicate course_subject join" do
             subject
             expect { subject }.not_to(change { CourseSubject.count })
@@ -79,8 +75,8 @@ module TeacherTrainingApi
           end
         end
 
-        context "if course has name change and course has subject change" do
-          before { create(:course, code: code, provider: provider, subjects: [ music_subject ]) }
+        context "and the course has name and subject change" do
+          before { create(:course, code: code, provider: provider, subjects: [music_subject]) }
           let(:music_subject) { create(:subject, :music) }
           it "it updates the course name and subjects" do
             subject
