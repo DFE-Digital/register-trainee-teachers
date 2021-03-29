@@ -8,8 +8,8 @@ module Trainees
       alias_method :component, :page
 
       let(:trainees_sections_component) do
-        trn_submission = TrnSubmissionForm.new(trainee: trainee)
-        described_class.new(trainee: trainee, section: section, trn_submission: trn_submission)
+        trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
+        described_class.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form)
       end
 
       before do

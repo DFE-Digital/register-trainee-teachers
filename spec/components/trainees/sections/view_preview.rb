@@ -13,28 +13,28 @@ module Trainees
          training_details].each do |section|
         define_method "continue_sections_#{section}" do
           trainee = continue_sections_trainee
-          trn_submission = TrnSubmissionForm.new(trainee: trainee)
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission: trn_submission))
+          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
         end
 
         define_method "continue_sections_#{section}_validated" do
           trainee = continue_sections_trainee
-          trn_submission = TrnSubmissionForm.new(trainee: trainee)
-          trn_submission.validate
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission: trn_submission))
+          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
+          trn_submission_form.validate
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
         end
 
         define_method "start_sections_#{section}" do
           trainee = start_sections_trainee
-          trn_submission = TrnSubmissionForm.new(trainee: trainee)
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission: trn_submission))
+          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
         end
 
         define_method "start_sections_#{section}_validated" do
           trainee = start_sections_trainee
-          trn_submission = TrnSubmissionForm.new(trainee: trainee)
-          trn_submission.validate
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission: trn_submission))
+          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
+          trn_submission_form.validate
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
         end
       end
 

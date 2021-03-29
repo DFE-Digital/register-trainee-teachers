@@ -15,7 +15,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render Trainees::OutcomeDetails::View.new(@outcome) %>
+    <%= render Trainees::OutcomeDetails::View.new(@outcome_form) %>
 
     <%= register_form_with url: trainee_qts_recommendations_path, method: :post, local: true do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>

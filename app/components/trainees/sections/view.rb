@@ -3,12 +3,12 @@
 module Trainees
   module Sections
     class View < ViewComponent::Base
-      attr_accessor :trainee, :section, :trn_submission
+      attr_accessor :trainee, :section, :trn_submission_form
 
-      def initialize(trainee:, section:, trn_submission:)
+      def initialize(trainee:, section:, trn_submission_form:)
         @trainee = trainee
         @section = section
-        @trn_submission = trn_submission
+        @trn_submission_form = trn_submission_form
       end
 
       def component
@@ -77,11 +77,11 @@ module Trainees
       end
 
       def error
-        @error ||= trn_submission.errors.present?
+        @error ||= trn_submission_form.errors.present?
       end
 
       def status
-        @status ||= trn_submission.section_status(section)
+        @status ||= trn_submission_form.section_status(section)
       end
 
       def title

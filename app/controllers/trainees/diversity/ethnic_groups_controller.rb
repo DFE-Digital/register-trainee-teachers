@@ -6,14 +6,14 @@ module Trainees
       before_action :authorize_trainee
 
       def edit
-        @ethnic_group = Diversities::EthnicGroupForm.new(trainee)
+        @ethnic_group_form = Diversities::EthnicGroupForm.new(trainee)
       end
 
       def update
-        @ethnic_group = Diversities::EthnicGroupForm.new(trainee, ethnic_group_param)
+        @ethnic_group_form = Diversities::EthnicGroupForm.new(trainee, ethnic_group_param)
         save_strategy = trainee.draft? ? :save! : :stash
 
-        if @ethnic_group.public_send(save_strategy)
+        if @ethnic_group_form.public_send(save_strategy)
           redirect_to_relevant_step
         else
           render :edit
@@ -33,7 +33,7 @@ module Trainees
       end
 
       def redirect_to_relevant_step
-        if @ethnic_group.not_provided_ethnic_group?
+        if @ethnic_group_form.not_provided_ethnic_group?
           if trainee.disability_disclosure.present?
             redirect_to(page_tracker.last_origin_page_path)
           else

@@ -6,14 +6,14 @@ module Trainees
       before_action :authorize_trainee
 
       def edit
-        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee)
+        @ethnic_background_form = Diversities::EthnicBackgroundForm.new(trainee)
       end
 
       def update
-        @ethnic_background = Diversities::EthnicBackgroundForm.new(trainee, ethnic_background_params)
+        @ethnic_background_form = Diversities::EthnicBackgroundForm.new(trainee, ethnic_background_params)
         save_strategy = trainee.draft? ? :save! : :stash
 
-        if @ethnic_background.public_send(save_strategy)
+        if @ethnic_background_form.public_send(save_strategy)
           redirect_to(origin_page_or_next_step)
         else
           render :edit

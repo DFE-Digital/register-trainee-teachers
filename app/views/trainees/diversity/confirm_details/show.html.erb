@@ -8,13 +8,13 @@
   partial: "trainees/confirm_details/form",
   locals: {
     heading: t("components.page_titles.trainees.diversity.confirm"),
-    confirm_detail: @confirm_detail,
+    confirm_detail_form: @confirm_detail_form,
     trainee: @trainee,
     component: @confirmation_component,
     resource_confirm_update_path: trainee_diversity_confirm_path(@trainee),
   },
 ) %>
 
-<% if !@trainee.draft? %>
-  <p class="govuk-body"><%= govuk_link_to(t("components.confirmation.cancel_and_return"), view_trainee(@trainee)) %></p>
-<% end %>
+<% unless @trainee.draft? %>
+  <p class="govuk-body"><%=  govuk_link_to(t("components.confirmation.cancel_and_return"), view_trainee(@trainee))  %></p>
+<%  end %>

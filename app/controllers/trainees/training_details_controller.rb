@@ -11,14 +11,14 @@ module Trainees
     }.freeze
 
     def edit
-      @training_details = TrainingDetailsForm.new(trainee)
+      @training_details_form = TrainingDetailsForm.new(trainee)
     end
 
     def update
-      @training_details = TrainingDetailsForm.new(trainee)
-      @training_details.assign_attributes(trainee_params)
+      @training_details_form = TrainingDetailsForm.new(trainee)
+      @training_details_form.assign_attributes(trainee_params)
 
-      if @training_details.save
+      if @training_details_form.save
         redirect_to trainee_training_details_confirm_path(trainee)
       else
         render :edit
