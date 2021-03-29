@@ -147,4 +147,4 @@ end
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # Force version bump as previous versions have been removed from Ruby Gems
-gem "mimemagic", "~> 0.3.5"
+gem "mimemagic", "~> 0.4.3"
