@@ -5,9 +5,7 @@ class RecommendForQtsJob < ApplicationJob
   retry_on Dttp::RecommendForQTS::Error
   retry_on Dttp::UpdateTraineeStatus::Error
 
-  def perform(trainee_id)
-    trainee = Trainee.find(trainee_id)
-
+  def perform(trainee)
     Dttp::RecommendForQTS.call(trainee: trainee)
 
     Dttp::UpdateTraineeStatus.call(

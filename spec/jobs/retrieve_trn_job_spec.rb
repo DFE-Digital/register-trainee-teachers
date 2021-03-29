@@ -17,13 +17,13 @@ describe RetrieveTrnJob do
 
     it "updates the trainee TRN attribute" do
       expect {
-        described_class.perform_now(trainee.id)
+        described_class.perform_now(trainee)
         trainee.reload
       }.to change(trainee, :trn).to(trn)
     end
 
     it "doesn't queue another job" do
-      described_class.perform_now(trainee.id)
+      described_class.perform_now(trainee)
       expect(RetrieveTrnJob).to_not have_been_enqueued
     end
   end
@@ -31,8 +31,8 @@ describe RetrieveTrnJob do
   context "TRN is not available" do
     it "queues another job to fetch the TRN 6 hours from now" do
       Timecop.freeze(Time.zone.now) do
-        described_class.perform_now(trainee.id)
-        expect(RetrieveTrnJob).to have_been_enqueued.at(6.hours.from_now).with(trainee.id)
+        described_class.perform_now(trainee)
+        expect(RetrieveTrnJob).to have_been_enqueued.at(6.hours.from_now).with(trainee)
       end
     end
 
@@ -40,7 +40,7 @@ describe RetrieveTrnJob do
       let(:trainee) { create(:trainee, submitted_for_trn_at: 2.days.ago) }
 
       it "doesn't queue another job after 2 days have passed without a TRN" do
-        described_class.perform_now(trainee.id)
+        described_class.perform_now(trainee)
         expect(RetrieveTrnJob).to_not have_been_enqueued
       end
     end
@@ -52,7 +52,7 @@ describe RetrieveTrnJob do
 
     it "raises a TraineeAttributeError" do
       expect {
-        described_class.perform_now(trainee.id)
+        described_class.perform_now(trainee)
       }.to raise_error(RetrieveTrnJob::TraineeAttributeError, error_msg)
     end
   end

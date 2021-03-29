@@ -9,8 +9,8 @@ class TrnSubmissionsController < ApplicationController
 
     trainee.submit_for_trn!
 
-    RegisterForTrnJob.perform_later(trainee.id, current_user.dttp_id)
-    RetrieveTrnJob.set(wait: RetrieveTrnJob::POLL_DELAY).perform_later(trainee.id)
+    RegisterForTrnJob.perform_later(trainee, current_user.dttp_id)
+    RetrieveTrnJob.set(wait: RetrieveTrnJob::POLL_DELAY).perform_later(trainee)
 
     redirect_to trn_submission_path(trainee)
   end

@@ -32,6 +32,6 @@ describe RecommendForQtsJob do
   it "updates the contact and placement assignment status in DTTP" do
     expect(Dttp::UpdateTraineeStatus).to receive(:call).with(expected_contact_params)
     expect(Dttp::UpdateTraineeStatus).to receive(:call).with(expected_placement_assignment_params)
-    described_class.perform_now(trainee.id)
+    described_class.perform_now(trainee)
   end
 end

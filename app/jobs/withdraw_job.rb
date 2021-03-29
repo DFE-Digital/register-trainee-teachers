@@ -4,9 +4,7 @@ class WithdrawJob < ApplicationJob
   queue_as :default
   retry_on Dttp::UpdateTraineeStatus::Error
 
-  def perform(trainee_id)
-    trainee = Trainee.find(trainee_id)
-
+  def perform(trainee)
     Dttp::UpdateTraineeStatus.call(
       status: DttpStatuses::REJECTED,
       entity_id: trainee.dttp_id,

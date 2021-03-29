@@ -4,9 +4,7 @@ class DeferJob < ApplicationJob
   queue_as :default
   retry_on Dttp::UpdateTraineeStatus::Error
 
-  def perform(trainee_id)
-    trainee = Trainee.find(trainee_id)
-
+  def perform(trainee)
     Dttp::UpdateTraineeStatus.call(
       status: DttpStatuses::DEFERRED,
       entity_id: trainee.dttp_id,

@@ -17,7 +17,7 @@ describe Trainees::ConfirmWithdrawalsController do
     it "it updates the placement assignment in DTTP to mark it as withdrawn" do
       expect {
         post :update, params: { trainee_id: trainee }
-      }.to have_enqueued_job(WithdrawJob).with(trainee.id)
+      }.to have_enqueued_job(WithdrawJob).with(trainee)
     end
 
     context "trainee state" do

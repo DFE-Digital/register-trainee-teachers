@@ -13,7 +13,7 @@ module Trainees
       if reinstatement.save!
         trainee.trn.present? ? trainee.trn_received! : trainee.submit_for_trn!
 
-        ReinstateJob.perform_later(trainee.id)
+        ReinstateJob.perform_later(trainee)
 
         flash[:success] = "Trainee reinstated"
         redirect_to trainee_path(trainee)

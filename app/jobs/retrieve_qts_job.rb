@@ -9,15 +9,13 @@ class RetrieveQtsJob < ApplicationJob
   POLL_DELAY = Settings.jobs.poll_delay_hours.hours
   MAX_POLL_DURATION = Settings.jobs.max_poll_duration_days.days
 
-  def perform(trainee_id)
-    trainee = Trainee.find(trainee_id)
-
+  def perform(trainee)
     qts_awarded = Dttp::RetrieveQts.call(trainee: trainee)
 
     if qts_awarded
       trainee.award_qts!
     elsif continue_polling?(trainee)
-      RetrieveQtsJob.set(wait: POLL_DELAY).perform_later(trainee.id)
+      RetrieveQtsJob.set(wait: POLL_DELAY).perform_later(trainee)
     end
   end
 

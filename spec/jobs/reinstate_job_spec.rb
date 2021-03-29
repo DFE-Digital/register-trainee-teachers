@@ -29,7 +29,7 @@ describe ReinstateJob do
   let(:placement_assignment_update_params_with_trn) { placement_assignment_update_params.merge(with_trn_param) }
   let(:placement_assignment_update_params_without_trn) { placement_assignment_update_params.merge(without_trn_param) }
 
-  subject { described_class.perform_now(trainee.id) }
+  subject { described_class.perform_now(trainee) }
 
   before do
     allow(Dttp::UpdateTraineeStatus).to receive(:call).with(contact_update_params_with_trn)

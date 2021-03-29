@@ -17,13 +17,13 @@ describe RetrieveQtsJob do
 
     it "transitions the trainee to qts_awarded" do
       expect {
-        described_class.perform_now(trainee.id)
+        described_class.perform_now(trainee)
         trainee.reload
       }.to change(trainee, :state).to("qts_awarded")
     end
 
     it "doesn't queue another job" do
-      described_class.perform_now(trainee.id)
+      described_class.perform_now(trainee)
       expect(RetrieveQtsJob).to_not have_been_enqueued
     end
   end
@@ -33,8 +33,8 @@ describe RetrieveQtsJob do
 
     it "queues another job to fetch the QTS 6 hours from now" do
       Timecop.freeze(Time.zone.now) do
-        described_class.perform_now(trainee.id)
-        expect(RetrieveQtsJob).to have_been_enqueued.at(6.hours.from_now).with(trainee.id)
+        described_class.perform_now(trainee)
+        expect(RetrieveQtsJob).to have_been_enqueued.at(6.hours.from_now).with(trainee)
       end
     end
 
@@ -42,7 +42,7 @@ describe RetrieveQtsJob do
       let(:trainee) { create(:trainee, recommended_for_qts_at: 2.days.ago) }
 
       it "doesn't queue another job after 2 days have passed with no QTS" do
-        described_class.perform_now(trainee.id)
+        described_class.perform_now(trainee)
         expect(RetrieveQtsJob).to_not have_been_enqueued
       end
     end
@@ -54,7 +54,7 @@ describe RetrieveQtsJob do
 
     it "raises a TraineeAttributeError" do
       expect {
-        described_class.perform_now(trainee.id)
+        described_class.perform_now(trainee)
       }.to raise_error(RetrieveQtsJob::TraineeAttributeError, error_msg)
     end
   end
