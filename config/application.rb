@@ -44,6 +44,6 @@ module RegisterTraineeTeachers
 
     config.session_store :active_record_store, key: "_register_trainee_teachers_session"
 
-    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
   end
 end

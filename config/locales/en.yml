@@ -7,6 +7,8 @@ en:
   change: Change
   continue: Continue
   update_record: Update record
+  return_home: Return home
+  mark_as_completed: I have completed this section
   header:
     items:
       sign_out: Sign out
@@ -315,6 +317,26 @@ en:
       dfe_sign_in_button: Sign in using DfE Sign-in
       persona_sign_in_button: Sign in using Persona
       get_access_html: If you do not have a DfE Sign-in account but need access to Register trainee teachers, email %{link} to ask for an account
+  errors:
+    not_found:
+      heading: Page not found
+      body: Check the web address and try again.
+      support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
+    unprocessable_entity:
+      heading: Sorry, the change you wanted was rejected
+      body: Try again later.
+      support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
+    internal_server_error:
+      heading: Sorry, something went wrong
+      body: Try again later.
+      support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
+  trainees:
+    not_supported_route:
+      heading: Other routes not supported
+      body: "%{route} is the only route currently spported by this service. More routes will be added soon."
+      bullet_desc: "You can:"
+      go_back: go back and change your answer
+      use_dttp: use DTTP to register a different route
 
   activerecord:
     attributes:
