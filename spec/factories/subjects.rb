@@ -5,4 +5,9 @@ FactoryBot.define do
     sequence(:name) { |c| "Subject #{c}" }
     code { Faker::Alphanumeric.alphanumeric(number: 2).upcase }
   end
+
+  trait :music do
+    name { "Music" }
+    code { "W3" }
+  end
 end
