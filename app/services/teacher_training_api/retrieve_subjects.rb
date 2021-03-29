@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
 module TeacherTrainingApi
-  class RetrieveCourses
+  class RetrieveSubjects
     include ServicePattern
 
     class Error < StandardError; end
-
-    def initialize(provider:)
-      @provider = provider
-    end
 
     def call
       if response.code != 200
@@ -20,11 +16,8 @@ module TeacherTrainingApi
 
   private
 
-    attr_reader :provider
-
-    # TODO: Make the recruitment cycle dynamic once we have a concept of cycles.
     def response
-      @response ||= Client.get("/recruitment_cycles/2021/providers/#{provider.code}/courses")
+      @response ||= Client.get("/subjects")
     end
   end
 end
