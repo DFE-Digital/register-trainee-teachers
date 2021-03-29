@@ -2,7 +2,7 @@
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
-    text: "Back",
+    text: t("back"),
     href: new_trainee_path,
   ) %>
 <% end %>
@@ -10,20 +10,21 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">
+      <%= t('.heading') %>
       Other routes not supported
     </h1>
 
     <p class="govuk-body">
-      <%= t("activerecord.attributes.trainee.training_routes.assessment_only") %> is the only route currently supported by this service. More routes will be added soon.
+      <%= t(".body", route: t("activerecord.attributes.trainee.training_routes.assessment_only")) %>
     </p>
 
-    <p class="govuk-body">You can:</p>
+    <p class="govuk-body"><%= t(".bullet_desc") %></p>
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        <%= govuk_link_to "go back and change your answer", new_trainee_path %>
+        <%= govuk_link_to t(".go_back"), new_trainee_path %>
       </li>
       <li>
-        <%= govuk_link_to "use DTTP to register a different route", Settings.dttp.back_office_url %>
+        <%= govuk_link_to t(".use_dttp"), Settings.dttp.back_office_url %>
       </li>
     </ul>
   </div>

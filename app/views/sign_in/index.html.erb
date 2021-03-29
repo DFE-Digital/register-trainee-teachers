@@ -15,9 +15,9 @@
     <p class="govuk-body-m"><%= t(".body") %></p>
 
     <% if FeatureService.enabled?("use_dfe_sign_in") %>
-      <%= govuk_button_to(t("dfe_sign_in_button"), "/auth/dfe", class: "qa-sign_in_button") %>
+      <%= govuk_button_to(t(".dfe_sign_in_button"), "/auth/dfe", class: "qa-sign_in_button") %>
     <% else %>
-      <%= render GovukButtonLinkTo::View.new(body: t("persona_sign_in_button"), url: "/personas", class_option: "qa-sign_in_button") %>
+      <%= render GovukButtonLinkTo::View.new(body: t(".persona_sign_in_button"), url: "/personas", class_option: "qa-sign_in_button") %>
     <% end %>
 
     <p class="govuk-body-m">

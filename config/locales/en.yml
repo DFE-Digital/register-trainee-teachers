@@ -300,7 +300,7 @@ en:
     badges:
       heading: Your %{start_year} to %{end_year} trainees
     accessibility:
-      heading: Acessibility statement for Register trainee teachers
+      heading: Accessibility statement for Register trainee teachers
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers
