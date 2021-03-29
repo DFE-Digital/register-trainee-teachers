@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= yield %>
-    <%= render GovukButtonLinkTo::View.new(body: "Return home", url: root_path) %>
+    <%= render GovukButtonLinkTo::View.new(body: t("return_home"), url: root_path) %>
   </div>
 </div>
