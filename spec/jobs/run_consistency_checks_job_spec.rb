@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe RunConsistencyChecksJob do
   include ActiveJob::TestHelper
@@ -8,12 +8,12 @@ describe RunConsistencyChecksJob do
   let(:consistency_check) { create(:consistency_check) }
 
   before do
-    allow(ConsistencyCheck).to receive(:all) { [consistency_check] }
+    consistency_check
   end
 
-  context "something" do
-    pending "it does something" do
-      
+  it "it run all consistency check jobs" do
+    ConsistencyCheck.all.each do |consistency_check|
+      expect(Dttp::CheckConsistencyJob).not_to have_been_enqueued.with(consistency_check.id)
     end
   end
 end

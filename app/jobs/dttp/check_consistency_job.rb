@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Dttp
   class CheckConsistencyJob < ApplicationJob
     queue_as :default
 
-    def perform(consistency_check_id)
+    def perform(consistency_check_id, trainee)
       consistency_check = ConsistencyCheck.find(consistency_check_id)
       dttp_contact_updated_date = Dttp::Contacts::Fetch.call(trainee: trainee).updated_at
 
