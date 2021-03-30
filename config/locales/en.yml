@@ -220,6 +220,7 @@ en:
         on_what_date: On what date?
         for_example: For example
         continue: Continue
+        cancel_and_return_to_record: "Cancel and return to record"
       diversity_disclosures:
         label_names:
           diversity_disclosed: "Yes"
