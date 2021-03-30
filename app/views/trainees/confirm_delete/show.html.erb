@@ -15,4 +15,4 @@
 
 <%= govuk_button_to "Delete this draft", trainee_path(@trainee), method: :delete, class: "govuk-button govuk-button--warning" %>
 
-<p class="govuk-body"><%= govuk_link_to(I18n.t("cancel"), trainee_path(@trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
