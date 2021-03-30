@@ -16,7 +16,7 @@ describe CreateOrUpdateConsistencyCheckJob do
 
   describe "#perform" do
     context "when a consistency check does not exist" do
-      it "it creates a new consistency check with relative fields" do
+      it "it creates a new consistency check" do
         expect { subject }.to change { ConsistencyCheck.count }.from(0).to(1)
       end
     end
@@ -37,8 +37,16 @@ describe CreateOrUpdateConsistencyCheckJob do
       it "it will update the check" do
         old_consistency_check
         subject
-        expect(ConsistencyCheck.where(trainee_id: trainee.id).first.contact_last_updated_at).to eq contact.updated_on
-        expect(ConsistencyCheck.where(trainee_id: trainee.id).first.placement_assignment_last_updated_at).to eq placement_assignment.updated_at
+        expect(
+          ConsistencyCheck.where(
+            trainee_id: trainee.id,
+          ).first.contact_last_updated_at,
+        ).to eq contact.updated_on
+        expect(
+          ConsistencyCheck.where(
+            trainee_id: trainee.id,
+          ).first.placement_assignment_last_updated_at,
+        ).to eq placement_assignment.updated_at
       end
     end
   end

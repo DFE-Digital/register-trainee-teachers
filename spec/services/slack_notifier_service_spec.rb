@@ -5,6 +5,8 @@ require "rails_helper"
 describe SlackNotifierService do
   let(:channel) { "channel" }
   let(:message) { "hello world" }
+  let(:username) { "Test Username" }
+  let(:icon_emoji) { ":inky-the-octopus:" }
   let(:slack_webhook_url) { "/slack_webhook_url" }
   let(:slack_notifier) { instance_double(Slack::Notifier) }
 
@@ -16,8 +18,8 @@ describe SlackNotifierService do
     end
 
     it "sends a message to the slack channel" do
-      expect(slack_notifier).to receive(:ping).with(message, channel: channel)
-      described_class.call(channel: channel, message: message)
+      expect(slack_notifier).to receive(:ping).with(message, icon_emoji: icon_emoji, channel: channel, username: username)
+      described_class.call(channel: channel, message: message, username: username)
     end
   end
 end
