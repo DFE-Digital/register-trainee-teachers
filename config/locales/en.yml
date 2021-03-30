@@ -169,6 +169,16 @@ en:
         deferred: Trainee deferred
         qts_awarded: Trainee awarded QTS
         reinstated: Trainee reinstated
+        age_range: Trainee course age range updated
+        subject: Trainee course subject updated
+        commencement_date: Trainee start date updated
+        trainee_id: Trainee ID updated
+        disability_disclosure: Trainee disability disclosures updated
+        trn: Trainee TRN updated
+        diversity_disclosure: Trainee diversity disclosures updated
+        locale_code: Trainee location updated
+        town_city: Trainee town/city updated
+
     sections:
       titles:
         personal_details: Personal details
