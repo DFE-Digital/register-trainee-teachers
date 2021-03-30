@@ -19,7 +19,7 @@
 
     <p class="govuk-body">DfE will contact trainees to give them their TRN.</p>
 
-    <%= render ButtonLinkTo::View.new(body: "Add another record", url: new_trainee_path) %>
+    <%= render GovukButtonLinkTo::View.new(body: "Add another record", url: new_trainee_path) %>
 
     <p class="govuk-body govuk-!-margin-bottom-9">or <%= govuk_link_to("check trainee statuses and manage records", trainees_path) %></p>
 

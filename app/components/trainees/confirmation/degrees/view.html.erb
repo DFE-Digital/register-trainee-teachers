@@ -14,6 +14,6 @@
 
 <% if show_add_another_degree_button %>
   <div class="govuk-form-group">
-    <%= render ButtonLinkTo::View.new(body: degree_button_text, url: trainee_degrees_new_type_path(trainee), class_option: "govuk-button--secondary") %>
+    <%= render GovukButtonLinkTo::View.new(body: degree_button_text, url: trainee_degrees_new_type_path(trainee), class_option: "govuk-button--secondary") %>
   </div>
 <% end %>

@@ -118,7 +118,7 @@
 </div>
 
 <h2 class="govuk-heading-m">Review and submit</h2>
-  <%= render ButtonLinkTo::View.new(body: "Review this record", url: check_details_trainee_path(@trainee), id: "check-details") %>     
+  <%= render GovukButtonLinkTo::View.new(body: "Review this record", url: check_details_trainee_path(@trainee), id: "check-details") %>     
 <p class="govuk-body"><%= govuk_link_to("Return to this draft record later", trainees_path) %></p>
 
 <p class="govuk-body govuk-!-margin-top-8">

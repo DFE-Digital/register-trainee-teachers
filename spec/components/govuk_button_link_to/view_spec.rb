@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module ButtonLinkTo
+module GovukButtonLinkTo
   describe View do
     alias_method :component, :page
 
@@ -22,7 +22,7 @@ module ButtonLinkTo
       end
 
       it "returns the correct markup with the extra options applied" do
-        expected_output = '<a role="button" data-module="govuk-button" draggable="false" class="govuk-button govuk-button--start" href="https://localhost:0103/chicken/cluck">Cluck</a>'
+        expected_output = '<a role="button" data-module="govuk-button" draggable="false" class="govuk-button--start govuk-button" href="https://localhost:0103/chicken/cluck">Cluck</a>'
 
         expect(subject).to eq(expected_output)
       end
