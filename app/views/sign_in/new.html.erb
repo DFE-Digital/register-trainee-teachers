@@ -12,7 +12,7 @@
       </p>
     <% end %>
 
-    <%= govuk_button_link_to("Return home", root_path) %>
+    <%= render GovukButtonLinkTo::View.new(body: "Return home", url: root_path) %>
 
   </div>
 </div>

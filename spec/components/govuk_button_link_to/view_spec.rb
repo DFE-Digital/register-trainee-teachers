@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-describe ApplicationHelper do
-  include ApplicationHelper
+module GovukButtonLinkTo
+  describe View do
+    alias_method :component, :page
 
-  describe "#govuk_button_link_to" do
     context "default behaviour" do
-      subject { helper.govuk_button_link_to("Hoot", "https://localhost:0103/owl/hoot") }
+      subject { described_class.new(body: "Hoot", url: "https://localhost:0103/owl/hoot").call }
 
       it "returns an anchor tag with the govuk-button class and button role" do
         expected_output = '<a role="button" data-module="govuk-button" draggable="false" class="govuk-button" href="https://localhost:0103/owl/hoot">Hoot</a>'
@@ -18,11 +18,11 @@ describe ApplicationHelper do
 
     context "with options" do
       subject do
-        helper.govuk_button_link_to("Cluck", "https://localhost:0103/chicken/cluck", class: "govuk-button--start")
+        described_class.new(body: "Cluck", url: "https://localhost:0103/chicken/cluck", class_option: "govuk-button--start").call
       end
 
       it "returns the correct markup with the extra options applied" do
-        expected_output = '<a role="button" data-module="govuk-button" draggable="false" class="govuk-button govuk-button--start" href="https://localhost:0103/chicken/cluck">Cluck</a>'
+        expected_output = '<a role="button" data-module="govuk-button" draggable="false" class="govuk-button--start govuk-button" href="https://localhost:0103/chicken/cluck">Cluck</a>'
 
         expect(subject).to eq(expected_output)
       end

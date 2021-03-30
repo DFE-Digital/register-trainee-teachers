@@ -9,20 +9,6 @@ module ApplicationHelper
     result
   end
 
-  def govuk_button_link_to(body, url, html_options = {})
-    html_options = {
-      role: "button",
-      data: { module: "govuk-button" },
-      draggable: false,
-    }.merge(html_options)
-
-    html_options[:class] = prepend_css_class("govuk-button", html_options[:class])
-
-    return link_to(url, html_options) { yield } if block_given?
-
-    link_to(body, url, html_options)
-  end
-
   def register_form_with(*args, &block)
     options = args.extract_options!
     defaults = { html: { novalidate: true, autocomplete: :off, spellcheck: false } }
@@ -39,15 +25,5 @@ module ApplicationHelper
 
   def multiple_routes_enabled?
     %w[routes_provider_led_postgrad routes_early_years_undergrad].any? { |flag| FeatureService.enabled?(flag) }
-  end
-
-private
-
-  def prepend_css_class(css_class, current_class)
-    if current_class
-      "#{css_class} #{current_class}"
-    else
-      css_class
-    end
   end
 end
