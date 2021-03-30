@@ -77,7 +77,7 @@ module ApiStubs
           "state": "published",
           "study_mode": "both",
           "summary": "PGCE with QTS full time",
-          "subject_codes": [{}],
+          "subject_codes": %w[Q3],
         },
         "relationships": {
           "recruitment_cycle": {
