@@ -16,7 +16,7 @@
 
   <%= render FormComponents::CountryAutocomplete::View.new(
     form_field: f.govuk_collection_select(:country, countries_options, :name,
-                                          :name, label: { text: "Where is the degree institution based?", size: "s" }),
+                                          :name, label: { text: "In which country is the degree institution based?", size: "s" }),
     html_attributes: { "data-show-all-values" => false },
   ) %>
 
