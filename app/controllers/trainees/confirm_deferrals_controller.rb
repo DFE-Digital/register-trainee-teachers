@@ -3,7 +3,6 @@
 module Trainees
   class ConfirmDeferralsController < ApplicationController
     before_action :authorize_trainee
-    before_action :ensure_trainee_is_not_draft!
 
     def show
       page_tracker.save_as_origin!
@@ -32,7 +31,7 @@ module Trainees
     end
 
     def authorize_trainee
-      authorize(trainee)
+      authorize(trainee, :defer?)
     end
   end
 end

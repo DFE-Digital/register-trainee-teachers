@@ -9,7 +9,7 @@ module Trainees
     end
 
     def recommended
-      ensure_trainee_is_not_draft!
+      authorize(trainee, :show_recommended?)
     end
 
   private

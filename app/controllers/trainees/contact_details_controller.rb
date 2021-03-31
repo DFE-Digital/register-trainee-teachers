@@ -3,7 +3,6 @@
 module Trainees
   class ContactDetailsController < ApplicationController
     before_action :authorize_trainee
-    before_action :ensure_trainee_is_draft!
 
     def edit
       @contact_details_form = ContactDetailsForm.new(trainee)
