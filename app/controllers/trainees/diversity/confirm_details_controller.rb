@@ -43,7 +43,7 @@ module Trainees
       def diversity_form
         @diversity_form ||= DiversityForm.new(trainee)
       end
-      
+
       def authorize_trainee
         authorize(trainee)
       end
