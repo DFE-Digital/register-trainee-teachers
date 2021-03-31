@@ -5,7 +5,8 @@ require "rails_helper"
 describe RunConsistencyChecksJob do
   include ActiveJob::TestHelper
 
-  let(:consistency_check) { create(:consistency_check) }
+  let(:trainee) { create(:trainee) }
+  let(:consistency_check) { create(:consistency_check, trainee_id: trainee.id) }
 
   before do
     consistency_check

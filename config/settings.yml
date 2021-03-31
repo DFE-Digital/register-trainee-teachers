@@ -63,4 +63,4 @@ environment:
   name: qa
 
 slack: 
-  default_channel: "#twd_publish_register_tech"
+  publish_register_alerts_channel: "#twd_publish_register_tech"

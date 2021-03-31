@@ -34,7 +34,7 @@ module Dttp
     attr_reader :path, :params, :entity_id
 
     def trainee
-      Trainee.where(dttp_id: entity_id)&.first
+      Trainee.find_by(dttp_id: entity_id)
     end
   end
 end

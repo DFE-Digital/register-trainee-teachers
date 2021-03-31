@@ -4,9 +4,9 @@ require "rails_helper"
 
 module Dttp
   describe CheckConsistencyJob do
-    let(:trainee) { build(:trainee, id: 1) }
-    let(:contact) { double({ updated_on: "2021-03-29 16:00:00.000000 +0100" }) }
-    let(:placement_assignment) { double({ updated_at: "2021-03-29 16:00:00.000000 +0100" }) }
+    let(:trainee) { create(:trainee, id: 1) }
+    let(:contact) { double({ updated_at: Faker::Date.backward(days: 2) }) }
+    let(:placement_assignment) { double({ updated_at: Faker::Date.backward(days: 2) }) }
     subject { described_class.perform_now(consistency_check.id) }
 
     before do
@@ -20,7 +20,7 @@ module Dttp
       let(:consistency_check) do
         create(:consistency_check,
                trainee_id: trainee.id,
-               contact_last_updated_at: contact.updated_on,
+               contact_last_updated_at: contact.updated_at,
                placement_assignment_last_updated_at: placement_assignment.updated_at)
       end
 
@@ -34,8 +34,8 @@ module Dttp
       let(:consistency_check) do
         create(:consistency_check,
                trainee_id: trainee.id,
-               contact_last_updated_at: (Time.zone.now - 1.day),
-               placement_assignment_last_updated_at: (Time.zone.now - 1.day))
+               contact_last_updated_at: Faker::Date.in_date_period,
+               placement_assignment_last_updated_at: Faker::Date.in_date_period)
       end
 
       it "it will throw an error and notify slack" do

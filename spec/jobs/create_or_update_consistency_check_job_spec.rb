@@ -5,8 +5,8 @@ require "rails_helper"
 describe CreateOrUpdateConsistencyCheckJob do
   include ActiveJob::TestHelper
   let(:trainee) { create(:trainee) }
-  let(:contact) { double({ updated_on: "2021-03-29 16:00:00.000000 +0100" }) }
-  let(:placement_assignment) { double({ updated_at: "2021-03-29 16:00:00.000000 +0100" }) }
+  let(:contact) { double({ updated_at: Faker::Date.backward(days: 2) }) }
+  let(:placement_assignment) { double({ updated_at: Faker::Date.backward(days: 2) }) }
 
   subject { described_class.perform_now(trainee) }
   before do
@@ -25,8 +25,8 @@ describe CreateOrUpdateConsistencyCheckJob do
       let(:old_consistency_check) do
         create(:consistency_check,
                trainee_id: trainee.id,
-               contact_last_updated_at: (Time.zone.now - 1.day),
-               placement_assignment_last_updated_at: (Time.zone.now - 1.day))
+               contact_last_updated_at: Faker::Date.backward(days: 1),
+               placement_assignment_last_updated_at: Faker::Date.backward(days: 1))
       end
 
       it "it will not make duplicate checks" do
@@ -41,7 +41,7 @@ describe CreateOrUpdateConsistencyCheckJob do
           ConsistencyCheck.where(
             trainee_id: trainee.id,
           ).first.contact_last_updated_at,
-        ).to eq contact.updated_on
+        ).to eq contact.updated_at
         expect(
           ConsistencyCheck.where(
             trainee_id: trainee.id,
