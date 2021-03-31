@@ -20,6 +20,7 @@ module TeacherTrainingApi
 
     def call
       return unless IMPORTABLE_STATES.include?(attrs[:state])
+      return if further_education_level_course?
 
       course.update!(name: attrs[:name],
                      start_date: start_date,
@@ -34,6 +35,10 @@ module TeacherTrainingApi
   private
 
     attr_reader :provider, :attrs
+
+    def further_education_level_course?
+      attrs[:level] == "further_education"
+    end
 
     def subjects
       Subject.where(code: attrs[:subject_codes])
