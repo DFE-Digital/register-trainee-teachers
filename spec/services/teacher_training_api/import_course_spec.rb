@@ -57,6 +57,14 @@ module TeacherTrainingApi
           end
         end
 
+        context "course has a further_education level" do
+          let(:imported_course) { JSON(ApiStubs::TeacherTrainingApi.course(level: "further_education")) }
+
+          it "doesn't get imported" do
+            expect { subject }.to_not(change { Course.count })
+          end
+        end
+
         context "and it's draft" do
           let(:imported_course) { JSON(ApiStubs::TeacherTrainingApi.course(state: "draft")) }
 
