@@ -17,6 +17,7 @@ module Dttp
     def initialize(status:, entity_id:, entity_type:)
       @path = ENDPOINTS[entity_type] + "(#{entity_id})"
       @params = Dttp::Params::Status.new(status: status)
+      @entity_id = entity_id
     end
 
     def call
@@ -24,10 +25,16 @@ module Dttp
       if response.code != 204
         raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
       end
+
+      CreateOrUpdateConsistencyCheckJob.perform_later(trainee)
     end
 
   private
 
-    attr_reader :path, :params
+    attr_reader :path, :params, :entity_id
+
+    def trainee
+      Trainee.where(dttp_id: entity_id)&.first
+    end
   end
 end

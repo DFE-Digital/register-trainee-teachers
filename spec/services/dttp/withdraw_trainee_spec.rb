@@ -29,6 +29,13 @@ module Dttp
           expect(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)
           described_class.call(trainee: trainee)
         end
+
+        it "enqueues the CreateOrUpdateConsistencyJob" do
+          allow(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)
+          expect {
+            described_class.call(trainee: trainee)
+          }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
+        end
       end
 
       context "error" do

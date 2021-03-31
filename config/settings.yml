@@ -61,3 +61,6 @@ teacher_training_api:
 
 environment:
   name: qa
+
+slack: 
+  default_channel: "#twd_publish_register_tech"

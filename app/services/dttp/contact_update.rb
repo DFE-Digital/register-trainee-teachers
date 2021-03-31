@@ -21,6 +21,7 @@ module Dttp
                   @placement_assignment_payload)
 
       trainee.update!(dttp_update_sha: trainee.sha)
+      CreateOrUpdateConsistencyCheckJob.perform_later(trainee)
     end
 
   private

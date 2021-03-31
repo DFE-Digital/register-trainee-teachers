@@ -10,7 +10,7 @@ module Dttp
       @dttp_placement_assignment_updated_date = Dttp::PlacementAssignments::Fetch.call(placement_assignment_dttp_id: trainee.placement_assignment_dttp_id).updated_at
 
       if contact_conflict || placement_assignment_conflict
-        SlackNotifierService.call(channel: Settings.slack.default_channel, message: "There is contact and/or Placement Assignment Conflict on Dttp", username: "DTTP Conflict Error")
+        SlackNotifierService.call(channel: Settings.slack.default_channel, message: "There is Contact and/or Placement Assignment conflict on Dttp", username: "DTTP Conflict Error")
       end
     end
 

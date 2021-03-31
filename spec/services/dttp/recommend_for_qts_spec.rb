@@ -26,8 +26,16 @@ module Dttp
         let(:dttp_response) { double(code: 204) }
 
         it "sends a PATCH request to set entity property 'dfe_datestandardsassessmentpassed'" do
+          allow(CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
           expect(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)
           described_class.call(trainee: trainee)
+        end
+
+        it "enqueues the CreateOrUpdateConsistencyJob" do
+          allow(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)
+          expect {
+            described_class.call(trainee: trainee)
+          }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
         end
       end
 

@@ -22,6 +22,7 @@ module Dttp
         raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
       end
 
+      CreateOrUpdateConsistencyCheckJob.perform_later(trainee)
       response
     end
 

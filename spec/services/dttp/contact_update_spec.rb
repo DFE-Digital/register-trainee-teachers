@@ -30,10 +30,19 @@ module Dttp
         let(:placement_response) { double(code: 204) }
 
         it "sends a PATCH request to update contact and placement assignment entities" do
+          allow(CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
           expect(Client).to receive(:patch).with(contact_path, body: contact_payload).and_return(contact_response)
           expect(Client).to receive(:patch).with(placement_path, body: placement_payload).and_return(placement_response)
 
           described_class.call(trainee: trainee)
+        end
+
+        it "enqueues the CreateOrUpdateConsistencyJob" do
+          allow(Client).to receive(:patch).with(contact_path, body: contact_payload).and_return(contact_response)
+          allow(Client).to receive(:patch).with(placement_path, body: placement_payload).and_return(placement_response)
+          expect {
+            described_class.call(trainee: trainee)
+          }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
         end
       end
 
