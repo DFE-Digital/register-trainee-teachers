@@ -30,7 +30,7 @@ module Trainees
           trainee.submit_for_trn!
         end
 
-        it "returns a state change timeline event" do
+        it "returns a 'state change' timeline event" do
           expect(subject.title).to eq(t("components.timeline.titles.trainee.submitted_for_trn"))
         end
       end
@@ -38,7 +38,7 @@ module Trainees
       context "with an associated audit" do
         let(:degree) { create(:degree, trainee: trainee) }
 
-        it "returns a state change timeline event" do
+        it "returns a 'creation' timeline event" do
           degree.reload
           expect(subject.title).to eq(t("components.timeline.titles.degree.create"))
         end
@@ -52,7 +52,7 @@ module Trainees
           trainee.degrees.first.destroy!
         end
 
-        it "returns a state change timeline event" do
+        it "returns a 'destroyed' timeline event" do
           expect(subject.title).to eq(t("components.timeline.titles.degree.destroy"))
         end
       end

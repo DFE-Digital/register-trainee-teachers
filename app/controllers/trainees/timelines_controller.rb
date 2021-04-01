@@ -5,8 +5,7 @@ module Trainees
     before_action :authorize_trainee
 
     def show
-      authorize trainee
-      @timeline_events = events.flatten.compact.sort_by(&:date).reverse
+      @timeline_events = Trainees::CreateTimeline.call(audits: audits)
       render layout: "trainee_record"
     end
 
@@ -14,10 +13,6 @@ module Trainees
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
-    def events
-      audits.map { |audit| Trainees::CreateTimelineEvents.call(audit: audit) }
     end
 
     def audits
