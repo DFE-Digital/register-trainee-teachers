@@ -35,6 +35,7 @@ Rails/NotNullColumn:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+  Safe: true
 
 Rails/CreateTableWithTimestamps:
   Exclude:
