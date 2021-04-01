@@ -6,6 +6,40 @@ describe Course do
   context "fields" do
     subject { create(:course) }
 
+    it do
+      is_expected.to define_enum_for(:level)
+        .with_values({
+          primary: 0,
+          secondary: 1,
+        })
+    end
+
+    it do
+      is_expected.to define_enum_for(:qualification)
+        .with_values({
+          qts: 0,
+          pgce_with_qts: 1,
+          pgde_with_qts: 2,
+          pgce: 3,
+          pgde: 4,
+        })
+    end
+
+    it do
+      is_expected.to define_enum_for(:age_range)
+        .with_values({
+          AgeRange::THREE_TO_SEVEN_COURSE => 0,
+          AgeRange::THREE_TO_ELEVEN_COURSE => 1,
+          AgeRange::FIVE_TO_ELEVEN_COURSE => 2,
+          AgeRange::SEVEN_TO_ELEVEN_COURSE => 3,
+          AgeRange::SEVEN_TO_FOURTEEN_COURSE => 4,
+          AgeRange::ELEVEN_TO_SIXTEEN_COURSE => 5,
+          AgeRange::ELEVEN_TO_NINETEEN_COURSE => 6,
+          AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 7,
+          AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 8,
+        })
+    end
+
     it "validates presence" do
       expect(subject).to validate_presence_of(:code)
       expect(subject).to validate_presence_of(:name)
