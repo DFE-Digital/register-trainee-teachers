@@ -37,7 +37,7 @@ private
   end
 
   def save_requested_path
-    session[:requested_path] = request.original_fullpath
+    session[:requested_path] = request.fullpath
   end
 
   def save_requested_path_and_redirect

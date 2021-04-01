@@ -14,6 +14,7 @@ describe PagesController, type: :controller do
     context "when not signed in and navigate to start page" do
       it "renders start page" do
         get :start
+        expect(session[:requested_path]).to eq "/"
         expect(response).to render_template("start")
       end
     end
@@ -28,6 +29,7 @@ describe PagesController, type: :controller do
 
     it "renders home page" do
       get :start
+      expect(session[:requested_path]).to eq "/"
       expect(response).to render_template("home")
     end
   end
