@@ -24,16 +24,11 @@ module Dttp
 
       context "success" do
         let(:dttp_response) { double(code: 204) }
+        it_behaves_like "CreateOrUpdateConsistencyCheckJob", WithdrawTrainee
 
         it "sends a PATCH request to set entity property 'dfe_datestandardsassessmentpassed'" do
           expect(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)
           described_class.call(trainee: trainee)
-        end
-
-        it "enqueues the CreateOrUpdateConsistencyJob" do
-          expect {
-            described_class.call(trainee: trainee)
-          }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
         end
       end
 
