@@ -11,6 +11,7 @@ FactoryBot.define do
     duration_in_years { 1 }
     qualification { %i[qts pgce_with_qts pgde_with_qts pgce pgde].sample }
     course_length { %w[OneYear TwoYears].sample }
+    route { TRAINING_ROUTES.keys.sample }
   end
 
   factory :course_with_a_subject do

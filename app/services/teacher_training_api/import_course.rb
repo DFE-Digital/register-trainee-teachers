@@ -29,7 +29,8 @@ module TeacherTrainingApi
                      qualification: qualification,
                      duration_in_years: duration_in_years,
                      course_length: attrs[:course_length],
-                     subjects: subjects)
+                     subjects: subjects,
+                     route: route)
     end
 
   private
@@ -64,6 +65,18 @@ module TeacherTrainingApi
       when "TwoYears" then 2
       else 1
       end
+    end
+
+    def route
+      routes = {
+        higher_education_programme: :provider_led_postgrad,
+        pg_teaching_apprenticeship: :pg_teaching_apprenticeship,
+        school_direct_salaried_training_programme: :school_direct_salaried,
+        school_direct_training_programme: :school_direct_tuition_fee,
+        scitt_programme: :provider_led_postgrad,
+      }
+
+      routes[attrs[:program_type].to_sym]
     end
 
     def course

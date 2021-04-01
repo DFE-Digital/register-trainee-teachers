@@ -17,11 +17,7 @@ class Trainee < ApplicationRecord
 
   validates :training_route, presence: { message: I18n.t("activerecord.errors.models.trainee.attributes.training_route") }
 
-  enum training_route: {
-    TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
-    TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
-    TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
-  }
+  enum training_route: TRAINING_ROUTES.select { |_routes, value| value < TRAINING_ROUTES[:school_direct_tuition_fee] }
 
   enum locale_code: { uk: 0, non_uk: 1 }
   enum gender: {
