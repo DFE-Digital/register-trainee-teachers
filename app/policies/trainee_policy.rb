@@ -37,6 +37,14 @@ class TraineePolicy
     allowed_user? && trainee.deferred?
   end
 
+  def show_recommended?
+    allowed_user? && trainee.recommended_for_qts?
+  end
+
+  def recommend_for_qts?
+    allowed_user? && trainee.trn_received?
+  end
+
   alias_method :create?, :show?
   alias_method :update?, :show?
   alias_method :edit?, :show?

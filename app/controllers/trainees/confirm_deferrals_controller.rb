@@ -31,7 +31,7 @@ module Trainees
     end
 
     def authorize_trainee
-      authorize(trainee)
+      authorize(trainee, :defer?)
     end
   end
 end

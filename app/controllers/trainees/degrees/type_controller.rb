@@ -3,13 +3,13 @@
 module Trainees
   module Degrees
     class TypeController < ApplicationController
+      before_action :authorize_trainee
+
       def new
-        authorize trainee
         @degree = trainee.degrees.build
       end
 
       def create
-        authorize trainee
         @degree = trainee.degrees.build(locale_code_params)
         if @degree.valid?
           redirect_to new_trainee_degree_path(trainee_id: params[:trainee_id], **locale_code_params)
@@ -26,6 +26,10 @@ module Trainees
 
       def trainee
         @trainee ||= Trainee.from_param(params[:trainee_id])
+      end
+
+      def authorize_trainee
+        authorize(trainee)
       end
     end
   end

@@ -2,8 +2,9 @@
 
 module Trainees
   class TimelinesController < ApplicationController
+    before_action :authorize_trainee
+
     def show
-      authorize trainee
       @timeline_events = Trainees::CreateTimelineEvents.call(audits: trainee.audits)
       render layout: "trainee_record"
     end
@@ -12,6 +13,10 @@ module Trainees
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
+    end
+
+    def authorize_trainee
+      authorize(trainee)
     end
   end
 end
