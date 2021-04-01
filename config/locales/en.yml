@@ -160,24 +160,38 @@ en:
       text_search: Text search
     timeline:
       titles:
-        created: Record created
-        draft: Trainee marked as draft
-        submitted_for_trn: Trainee submitted for TRN
-        trn_received: Received TRN for trainee
-        recommended_for_qts: Trainee recommended for QTS
-        withdrawn: Trainee withdrawn
-        deferred: Trainee deferred
-        qts_awarded: Trainee awarded QTS
-        reinstated: Trainee reinstated
-        age_range: Trainee course age range updated
-        subject: Trainee course subject updated
-        commencement_date: Trainee start date updated
-        trainee_id: Trainee ID updated
-        disability_disclosure: Trainee disability disclosures updated
-        trn: Trainee TRN updated
-        diversity_disclosure: Trainee diversity disclosures updated
-        locale_code: Trainee location updated
-        town_city: Trainee town/city updated
+        trainee:
+          create: Record created
+          draft: Trainee marked as draft
+          submitted_for_trn: Trainee submitted for TRN
+          trn_received: Received TRN for trainee
+          recommended_for_qts: Trainee recommended for QTS
+          withdrawn: Trainee withdrawn
+          deferred: Trainee deferred
+          qts_awarded: Trainee awarded QTS
+          reinstated: Trainee reinstated
+          age_range: Course age range updated
+          subject: Course subject updated
+          commencement_date: Start date updated
+          trainee_id: Trainee ID updated
+          disability_disclosure: Disability disclosures updated
+          diversity_disclosure: Diversity disclosures updated
+          locale_code: Location updated
+          town_city: Town/city updated
+        degree:
+          create: Degree added
+          destroy: Degree deleted
+          subject: Degree subject updated
+          institution: Degree institution updated
+          uk_degree: Degree type updated
+          non_uk_degree: Degree type updated
+          grade: Degree grade updated
+          other_grade: Degree grade updated
+          country: Degree country updated
+        nationalisation:
+          create: Nationality updated
+        traineedisability:
+          create: Disability details updated
 
     sections:
       titles:

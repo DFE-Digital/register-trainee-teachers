@@ -137,6 +137,7 @@ class Trainee < ApplicationRecord
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
   audited associated_with: :provider
+  has_associated_audits
 
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
