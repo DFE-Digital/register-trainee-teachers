@@ -2,9 +2,8 @@
 
 require "rails_helper"
 
-describe "trainees/review_draft/show.html.erb" do
+describe "trainees/review_draft/show.html.erb", feature_routes_provider_led_postgrad: true do
   before do
-    allow(FeatureService).to receive(:enabled?).with(:routes_provider_led_postgrad).and_return(true)
     assign(:trainee, trainee)
     render
   end

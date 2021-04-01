@@ -34,4 +34,16 @@ module TraineeHelper
       total_trainees_count_text: total_trainees_count_text,
     )
   end
+
+  def show_publish_courses?(trainee)
+    # TODO: do a look up of courses to see if there are any for this route
+    courses_available = true
+    manual_entry_chosen = PublishCourseDetailsForm.new(trainee).manual_entry_chosen?
+
+    FeatureService.enabled?(:publish_course_details) && courses_available && !manual_entry_chosen
+  end
+
+  def stashed_code(trainee)
+    PublishCourseDetailsForm.new(trainee).code || "not_used"
+  end
 end

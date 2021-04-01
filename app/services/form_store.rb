@@ -5,6 +5,7 @@ class FormStore
 
   FORM_SECTION_KEYS = %i[
     contact_details
+    course_code
     course_details
     personal_details
     trainee_id
