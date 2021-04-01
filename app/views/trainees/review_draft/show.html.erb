@@ -76,7 +76,6 @@
 
     <%= render TaskList::View.new(classes: "record-setup") do |component|
           if show_publish_courses?(@trainee)
-            require 'pry'; ::Kernel.binding.pry; hello=1
             component.slot(
               :row,
               task_name: "Course details",

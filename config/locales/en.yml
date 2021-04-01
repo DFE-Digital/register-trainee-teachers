@@ -210,6 +210,11 @@ en:
       link_texts:
         not_started: Start section
         in_progress: Continue section
+  trainees:
+    publish_course_details:
+      edit:
+        heading: What course are they doing?
+        course_not_listed: Another course not listed
   views:
     all_records: "All records"
     trainees:

@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.publish_course_details.edit", has_errors: @publish_course_details.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.course_details.edit", has_errors: @publish_course_details.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -8,11 +8,11 @@
   <%= f.govuk_error_summary %>
 
   <div class="govuk-form-group">
-    <%= f.govuk_radio_buttons_fieldset :code, legend: { text: "What course are they doing?", tag: "h1", size: "l" } do %>
+    <%= f.govuk_radio_buttons_fieldset :code, legend: { text: t(".heading"), tag: "h1", size: "l" } do %>
       <% @courses.each do |course| %>
         <%= f.govuk_radio_button :code, course.code,
           label: { text: "#{course.name} (#{course.code})" },
-          hint:  { text: "moose" },
+          hint:  { text: course.summary },
           link_errors: true
         %>
       <% end %>
@@ -22,7 +22,7 @@
       </div>
 
       <%= f.govuk_radio_button :code, PublishCourseDetailsForm::NOT_LISTED,
-        label: { text: "Another course not listed"}
+        label: { text: t(".course_not_listed") }
       %>
     <% end %>
   </div>
