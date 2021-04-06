@@ -4,6 +4,7 @@ class PagesController < ApplicationController
   skip_before_action :authenticate
 
   def start
+    session[:requested_path] = root_path
     if authenticated?
       @trainees = policy_scope(Trainee.all)
       render :home

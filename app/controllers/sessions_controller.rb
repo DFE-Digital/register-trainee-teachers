@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 
       redirect_to session.delete(:requested_path) || root_path
     else
+      session.delete(:requested_path)
       DfESignInUser.end_session!(session)
       redirect_to sign_in_user_not_found_path
     end

@@ -46,6 +46,12 @@ describe SessionsController, type: :controller do
         expect(session[:dfe_sign_in_user]).to be_nil
       end
 
+      it "deletes the requested_path session" do
+        session[:requested_path] = "/trainees/qts_awarded"
+        request_callback
+        expect(session[:requested_path]).to be_nil
+      end
+
       it "redirects to the sign in user not found page" do
         request_callback
         expect(response).to redirect_to(sign_in_user_not_found_path)
