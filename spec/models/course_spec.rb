@@ -40,6 +40,18 @@ describe Course do
         })
     end
 
+    it do
+      is_expected.to define_enum_for(:route)
+        .with_values({
+          TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
+          TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
+          TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
+          TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
+          TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
+          TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
+        })
+    end
+
     it "validates presence" do
       expect(subject).to validate_presence_of(:code)
       expect(subject).to validate_presence_of(:name)
@@ -49,6 +61,7 @@ describe Course do
       expect(subject).to validate_presence_of(:duration_in_years)
       expect(subject).to validate_presence_of(:qualification)
       expect(subject).to validate_presence_of(:course_length)
+      expect(subject).to validate_presence_of(:route)
     end
 
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:provider_id) }

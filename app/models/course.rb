@@ -11,6 +11,7 @@ class Course < ApplicationRecord
   validates :duration_in_years, presence: true
   validates :qualification, presence: true
   validates :course_length, presence: true
+  validates :route, presence: true
 
   enum level: {
     primary: 0,
@@ -24,6 +25,8 @@ class Course < ApplicationRecord
     pgce: 3,
     pgde: 4,
   }
+
+  enum route: TRAINING_ROUTES
 
   enum age_range: {
     AgeRange::THREE_TO_SEVEN_COURSE => 0,
