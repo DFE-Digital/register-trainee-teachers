@@ -62,7 +62,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
       and_some_courses_for_other_providers_or_routes_exist
       then_i_only_see_the_courses_for_my_provider_and_route
       and_i_select_a_course
-      # TODO: confirm page when it is added
+      and_i_submit_the_form
+      then_i_see_the_confirm_publish_course_page
     end
 
     scenario "selecting 'Another course not listed'" do
@@ -143,5 +144,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
       .sort
 
     expect(@matching_courses.map(&:code).sort).to eq(course_codes_on_page)
+  end
+
+  def then_i_see_the_confirm_publish_course_page
+    expect(confirm_publish_course_page).to be_displayed(trainee_id: trainee.slug, id: @matching_courses.first.code)
   end
 end
