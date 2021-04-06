@@ -282,8 +282,8 @@ en:
     home:
       heading: Register trainee teacher
       body:
-        1: Register trainees with the Department for Education and record the outcome of their training
-      new_trainee_link: Add a Trainee
+        1: Register trainees with the Department for Education and record the outcome of their training.
+      new_trainee_link: Add a trainee
       trainees_link: Trainee records
       trainees_link_desc: Review and manage your trainee records.
       give_feedback_link: Give feedback
@@ -316,7 +316,7 @@ en:
       body: Use DfE Sign-in to access your account.
       dfe_sign_in_button: Sign in using DfE Sign-in
       persona_sign_in_button: Sign in using Persona
-      get_access_html: If you do not have a DfE Sign-in account but need access to Register trainee teachers, email %{link} to ask for an account
+      get_access_html: If you do not have a DfE Sign-in account but need access to Register trainee teachers, email %{link}.
   errors:
     not_found:
       heading: Page not found
