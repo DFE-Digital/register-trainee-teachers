@@ -3,6 +3,10 @@
 require "rails_helper"
 
 feature "publish course details", type: :feature, feature_publish_course_details: true do
+  after do
+    FormStore.clear_all(trainee.id)
+  end
+
   background do
     given_i_am_authenticated
     given_a_trainee_exists
