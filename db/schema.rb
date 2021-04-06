@@ -15,6 +15,21 @@ ActiveRecord::Schema.define(version: 2021_04_01_153358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "apply_application_sync_requests", force: :cascade do |t|
+    t.integer "response_code"
+    t.boolean "successful"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "apply_applications", force: :cascade do |t|
+    t.jsonb "application"
+    t.bigint "provider_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider_id"], name: "index_apply_applications_on_provider_id"
+  end
+
   create_table "audits", force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
@@ -220,6 +235,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_153358) do
     t.index ["provider_id"], name: "index_users_on_provider_id"
   end
 
+  add_foreign_key "apply_applications", "providers"
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "courses", "providers"
