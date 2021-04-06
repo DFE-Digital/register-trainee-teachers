@@ -71,4 +71,26 @@ describe Course do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to have_many(:subjects) }
   end
+
+  describe ".end_date" do
+    it "returns nil if start_date not set" do
+      course = build(:course, start_date: nil)
+      expect(course.end_date).to be_nil
+    end
+
+    it "returns nil if duration_in_years not set" do
+      course = build(:course, start_date: Date.today, duration_in_years: nil)
+      expect(course.end_date).to be_nil
+    end
+
+    it "duration 1 year" do
+      course = build(:course, start_date: Date.today, duration_in_years: 1)
+      expect(course.end_date).to eql(1.year.from_now.to_date.prev_day)
+    end
+
+    it "duration 2 years" do
+      course = build(:course, start_date: Date.today, duration_in_years: 2)
+      expect(course.end_date).to eql(2.years.from_now.to_date.prev_day)
+    end
+  end
 end

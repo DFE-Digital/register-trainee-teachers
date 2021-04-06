@@ -210,6 +210,22 @@ en:
       link_texts:
         not_started: Start section
         in_progress: Continue section
+  trainees:
+    confirmation:
+      confirm_publish_course:
+        view:
+          change_course: Change course
+          heading: Is this the course you want to add?
+          summary_title: Course details
+          subject: Subject
+          level: Level
+          age_range: Age range
+          start_date: Start date
+          duration: Duration
+    publish_course_details:
+      edit:
+        heading: What course are they doing?
+        course_not_listed: Another course not listed
   views:
     all_records: "All records"
     trainees:
