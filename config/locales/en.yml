@@ -210,11 +210,6 @@ en:
       link_texts:
         not_started: Start section
         in_progress: Continue section
-  trainees:
-    publish_course_details:
-      edit:
-        heading: What course are they doing?
-        course_not_listed: Another course not listed
   views:
     all_records: "All records"
     trainees:
@@ -356,6 +351,10 @@ en:
       bullet_desc: "You can:"
       go_back: go back and change your answer
       use_dttp: use DTTP to register a different route
+    publish_course_details:
+      edit:
+        heading: What course are they doing?
+        course_not_listed: Another course not listed
 
   activerecord:
     attributes:

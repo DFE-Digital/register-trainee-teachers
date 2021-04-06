@@ -36,8 +36,7 @@ module TraineeHelper
   end
 
   def show_publish_courses?(trainee)
-    # TODO: do a look up of courses to see if there are any for this route
-    courses_available = true
+    courses_available = trainee.available_courses.present?
     manual_entry_chosen = PublishCourseDetailsForm.new(trainee).manual_entry_chosen?
 
     FeatureService.enabled?(:publish_course_details) && courses_available && !manual_entry_chosen

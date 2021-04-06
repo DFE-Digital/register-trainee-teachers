@@ -4,15 +4,23 @@ require "rails_helper"
 
 feature "publish course details", type: :feature, feature_publish_course_details: true do
   background do
-    some_courses_exist
     given_i_am_authenticated
     given_a_trainee_exists
+    given_some_courses_exist
     given_i_visited_the_review_draft_page
+  end
+
+  before do
+    FormStore.clear_all(trainee.id)
+  end
+
+  after do
+    FormStore.clear_all(trainee.id)
   end
 
   describe "tracking the progress" do
     scenario "renders a 'not started' status when no details provided" do
-      review_draft_page.load(id: trainee.slug)
+      when_i_visit_the_review_draft_page
       then_the_section_should_be(not_started)
     end
 
@@ -25,6 +33,19 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
   end
 
+  describe "available courses" do
+    scenario "there aren't any courses for the trainee's provider and route" do
+      given_there_arent_any_courses
+      when_i_visit_the_review_draft_page
+      then_the_link_takes_me_to_the_course_details_edit_page
+    end
+
+    scenario "there are some courses for the trainee's provider and route" do
+      when_i_visit_the_review_draft_page
+      then_the_link_takes_me_to_the_publish_course_details_page
+    end
+  end
+
   describe "selecting a course" do
     scenario "not selecting anything" do
       when_i_visit_the_publish_course_details_page
@@ -34,6 +55,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
     scenario "selecting a course" do
       when_i_visit_the_publish_course_details_page
+      and_some_courses_for_other_providers_or_routes_exist
+      then_i_only_see_the_courses_for_my_provider_and_route
       and_i_select_a_course
       # TODO: confirm page when it is added
     end
@@ -44,7 +67,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       and_i_submit_the_form
       then_i_see_the_course_details_page
       and_i_visit_the_review_draft_page
-      then_the_link_takes_me_back_to_the_course_details_edit_page
+      then_the_link_takes_me_to_the_course_details_edit_page
     end
   end
 
@@ -52,8 +75,12 @@ feature "publish course details", type: :feature, feature_publish_course_details
     expect(review_draft_page.course_details.status.text).to eq(status)
   end
 
-  def then_the_link_takes_me_back_to_the_course_details_edit_page
+  def then_the_link_takes_me_to_the_course_details_edit_page
     expect(review_draft_page.course_details.link[:href]).to eq edit_trainee_course_details_path(trainee)
+  end
+
+  def then_the_link_takes_me_to_the_publish_course_details_page
+    expect(review_draft_page.course_details.link[:href]).to eq edit_trainee_publish_course_details_path(trainee)
   end
 
   def when_i_visit_the_publish_course_details_page
@@ -90,8 +117,28 @@ feature "publish course details", type: :feature, feature_publish_course_details
     expect(course_details_page).to be_displayed(id: trainee.slug)
   end
 
-  def some_courses_exist
+  def given_some_courses_exist
     # TODO: make these match the route of the trainee
-    FactoryBot.create_list(:course, 10)
+    @matching_courses = FactoryBot.create_list(:course, 10, provider: trainee.provider, route: trainee.training_route)
+  end
+
+  def given_there_arent_any_courses
+    Course.destroy_all
+  end
+
+  def and_some_courses_for_other_providers_or_routes_exist
+    other_route = TRAINING_ROUTES.keys.excluding(trainee.training_route).sample
+    FactoryBot.create(:course, provider: trainee.provider, route: other_route)
+    FactoryBot.create(:course, route: trainee.training_route)
+  end
+
+  def then_i_only_see_the_courses_for_my_provider_and_route
+    course_codes_on_page = publish_course_details_page.course_options
+      .map { |o| o.label.text.match(/\((.*)\)/) }
+      .compact
+      .map { |m| m[1] }
+      .sort
+
+    expect(@matching_courses.map(&:code).sort).to eq(course_codes_on_page)
   end
 end

@@ -5,7 +5,7 @@ module Trainees
     before_action :authorize_trainee
 
     def edit
-      @courses = Course.take(10)
+      @courses = @trainee.available_courses
       @publish_course_details = PublishCourseDetailsForm.new(trainee)
     end
 
@@ -14,7 +14,7 @@ module Trainees
 
       result = @publish_course_details.stash
       unless result
-        @courses ||= Course.take(10)
+        @courses = @trainee.available_courses
         render :edit
         return
       end
