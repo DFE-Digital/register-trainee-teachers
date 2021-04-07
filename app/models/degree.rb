@@ -17,6 +17,8 @@ class Degree < ApplicationRecord
 
   enum locale_code: { uk: 0, non_uk: 1 }
 
+  audited associated_with: :trainee
+
   MAX_GRAD_YEARS = 60
 
   def graduation_year_valid

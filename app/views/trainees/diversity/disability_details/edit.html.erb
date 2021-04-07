@@ -22,10 +22,10 @@
         <% @disabilities.each_with_index do |disability, index| %>
           <% if disability.name != Diversities::OTHER %>
             <%= f.govuk_check_box :disability_ids, disability.id, label: { text: disability.name, size: "s" },
-                                  hint: { text: disability.description }, link_errors: index.zero? %>
+                                                                  hint: { text: disability.description }, link_errors: index.zero? %>
           <% else %>
             <%= f.govuk_check_box :disability_ids, disability.id, label: { text: disability.name, size: "s" },
-                                  link_errors: index.zero? do %>
+                                                                  link_errors: index.zero? do %>
               <%= f.govuk_text_field :additional_disability,
                                      label: { text: "Describe their disability (optional)" },
                                      width: "two-thirds",

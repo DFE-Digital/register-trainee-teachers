@@ -3,7 +3,7 @@
 class TimelineEvent
   attr_reader :title, :date, :username
 
-  def initialize(title:, date:, username: "No user recorded")
+  def initialize(title:, date:, username:)
     @title = title
     @date = date
     @username = username

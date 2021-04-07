@@ -6,47 +6,54 @@ module Trainees
   describe CreateTimelineEvents do
     let(:trainee) { create(:trainee) }
 
-    subject { described_class.call(audits: trainee.audits) }
+    subject { described_class.call(audit: trainee.own_and_associated_audits.first) }
 
     describe "#call" do
-      shared_examples "created" do
+      context "with a trainee creation audit" do
         it "returns a trainee created event" do
-          event = subject.last
-          expect(event.title).to eq(t("components.timeline.titles.created"))
+          expect(subject.title).to eq(t("components.timeline.titles.trainee.create"))
         end
       end
 
-      shared_examples "updated" do
-        it "returns a timeline event the reflects the update" do
-          event = subject[-2]
-          expect(event.title).to eq("Trainee first names updated")
-        end
-      end
-
-      context "when a trainee is just created" do
-        include_examples "created"
-      end
-
-      context "when a trainee field is updated" do
+      context "with a trainee update audit" do
         before do
           trainee.update!(first_names: "name")
         end
 
-        include_examples "created"
-        include_examples "updated"
+        it "returns a timeline event that reflects the update" do
+          expect(subject.first.title).to eq("First names updated")
+        end
       end
 
-      context "when a trainee field is updated and then the state is changed" do
+      context "with a trainee state change audit" do
         before do
-          trainee.update!(first_names: "name")
           trainee.submit_for_trn!
         end
 
-        include_examples "created"
-        include_examples "updated"
+        it "returns a 'state change' timeline event" do
+          expect(subject.title).to eq(t("components.timeline.titles.trainee.submitted_for_trn"))
+        end
+      end
 
-        it "returns a state change timeline event" do
-          expect(subject.first.title).to eq(t("components.timeline.titles.submitted_for_trn"))
+      context "with an associated audit" do
+        let(:degree) { create(:degree, trainee: trainee) }
+
+        it "returns a 'creation' timeline event" do
+          degree.reload
+          expect(subject.title).to eq(t("components.timeline.titles.degree.create"))
+        end
+      end
+
+      context "with a destroy associated audit" do
+        let(:degree) { create(:degree, trainee: trainee) }
+
+        before do
+          degree.reload
+          trainee.degrees.first.destroy!
+        end
+
+        it "returns a 'destroyed' timeline event" do
+          expect(subject.title).to eq(t("components.timeline.titles.degree.destroy"))
         end
       end
     end
