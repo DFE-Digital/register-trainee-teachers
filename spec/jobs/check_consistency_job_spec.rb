@@ -16,7 +16,7 @@ module Dttp
       allow(Trainee).to receive(:find).with(trainee.id) { trainee }
     end
 
-    context "in sync" do
+    context "when in sync" do
       let(:consistency_check) do
         create(:consistency_check,
                trainee_id: trainee.id,
@@ -24,13 +24,13 @@ module Dttp
                placement_assignment_last_updated_at: placement_assignment.updated_at)
       end
 
-      it "it will not do anything" do
+      it "does nothing" do
         expect(SlackNotifierService).to_not receive(:call)
         subject
       end
     end
 
-    context "out of sync" do
+    context "when out of sync" do
       let(:consistency_check) do
         create(:consistency_check,
                trainee_id: trainee.id,
@@ -38,7 +38,7 @@ module Dttp
                placement_assignment_last_updated_at: Faker::Date.in_date_period)
       end
 
-      it "it will throw an error and notify slack" do
+      it "notifies slack" do
         expect(SlackNotifierService).to receive(:call)
         subject
       end

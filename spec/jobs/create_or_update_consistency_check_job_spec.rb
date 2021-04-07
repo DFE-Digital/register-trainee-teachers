@@ -14,14 +14,14 @@ describe CreateOrUpdateConsistencyCheckJob do
     allow(Dttp::PlacementAssignments::Fetch).to receive(:call) { placement_assignment }
   end
 
-  describe "#perform" do
-    context "when a consistency check does not exist" do
-      it "it creates a new consistency check" do
+  describe ".perform" do
+    context "when a check doesn't exist" do
+      it "creates a consistency check" do
         expect { subject }.to change { ConsistencyCheck.count }.from(0).to(1)
       end
     end
 
-    context "when a consistency check does exist" do
+    context "when a check exists" do
       let(:old_consistency_check) do
         create(:consistency_check,
                trainee_id: trainee.id,
@@ -29,12 +29,12 @@ describe CreateOrUpdateConsistencyCheckJob do
                placement_assignment_last_updated_at: Faker::Date.backward(days: 1))
       end
 
-      it "it will not make duplicate checks" do
+      it "won't make duplicate checks" do
         subject
         expect { subject }.to_not(change { ConsistencyCheck.count })
       end
 
-      it "it will update the check" do
+      it "will update the check" do
         old_consistency_check
         subject
         expect(

@@ -13,7 +13,7 @@ module Dttp
         allow(AccessToken).to receive(:fetch).and_return("token")
       end
 
-      context "success" do
+      context "when successful" do
         let(:dttp_response) { double(code: 204) }
         let(:expected_body) { Params::Status.new(status: status).to_json }
         let(:expected_path) { described_class::ENDPOINTS[entity_type] + "(#{entity_id})" }
@@ -34,7 +34,7 @@ module Dttp
         end
       end
 
-      context "error" do
+      context "when theres an error" do
         let(:status) { 405 }
         let(:body) { "error" }
         let(:headers) { { foo: "bar" } }

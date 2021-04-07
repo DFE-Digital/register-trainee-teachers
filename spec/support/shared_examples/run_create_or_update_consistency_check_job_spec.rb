@@ -3,7 +3,7 @@
 require "rails_helper"
 
 shared_examples "CreateOrUpdateConsistencyCheckJob" do |model|
-  describe "enqueueing" do
+  describe ".perform" do
     it "enqueues the CreateOrUpdateConsistencyJob" do
       expect {
         model.call(trainee: trainee)

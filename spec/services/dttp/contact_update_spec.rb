@@ -25,7 +25,7 @@ module Dttp
         trainee.degrees << create(:degree)
       end
 
-      context "success" do
+      context "when successful" do
         let(:contact_response) { double(code: 204) }
         let(:placement_response) { double(code: 204) }
         before do
@@ -45,7 +45,7 @@ module Dttp
         end
       end
 
-      context "error" do
+      context "when theres an error" do
         let(:status) { 405 }
         let(:body) { "error" }
         let(:headers) { { foo: "bar" } }
