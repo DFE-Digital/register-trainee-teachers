@@ -46,7 +46,7 @@ module ApiStubs
             "email": "martin.wells@mailinator.com",
           },
           "course": {
-            "recruitment_cycle_year": 2020,
+            "recruitment_cycle_year": 2021,
             "course_code": "V6X1",
             "training_provider_code": "E84",
             "site_code": "-",

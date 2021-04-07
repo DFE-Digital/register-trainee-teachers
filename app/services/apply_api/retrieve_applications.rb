@@ -6,8 +6,6 @@ module ApplyApi
 
     SUCCESS = 200
 
-    RECRUITMENT_CYCLE_YEAR = 2021
-
     class HttpError < StandardError; end
 
     def initialize(changed_since:)
@@ -33,13 +31,14 @@ module ApplyApi
     end
 
     def response
-      @response ||= Client.get("/applications?#{params}")
+      @response ||= Client.get("/applications?#{query}")
     end
 
-    def params
-      params = "recruitment_cycle_year=#{RECRUITMENT_CYCLE_YEAR}"
-      params += "&changed_since=#{changed_since}" if changed_since.present?
-      params
+    def query
+      {
+        recruitment_cycle_year: Settings.current_recruitment_cycle_year,
+        changed_since: changed_since,
+      }.compact.to_query
     end
 
     def log_request!

@@ -23,10 +23,12 @@ ActiveRecord::Schema.define(version: 2021_04_01_153358) do
   end
 
   create_table "apply_applications", force: :cascade do |t|
+    t.integer "apply_id", null: false
     t.jsonb "application"
     t.bigint "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["apply_id"], name: "index_apply_applications_on_apply_id", unique: true
     t.index ["provider_id"], name: "index_apply_applications_on_provider_id"
   end
 
@@ -129,8 +131,8 @@ ActiveRecord::Schema.define(version: 2021_04_01_153358) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 

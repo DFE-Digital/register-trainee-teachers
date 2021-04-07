@@ -19,7 +19,7 @@ module ApplyApi
     end
 
     def last_successful_sync
-      ApplyApplicationSyncRequest.successful.pluck(:created_at).max
+      ApplyApplicationSyncRequest.successful.maximum(:created_at)
     end
   end
 end

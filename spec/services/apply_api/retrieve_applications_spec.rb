@@ -45,7 +45,8 @@ module ApplyApi
 
         context "when a 'changed_at' is provided" do
           let(:changed_since) { Time.zone.now }
-          let(:expected_url) { "/applications?recruitment_cycle_year=2021&changed_since=#{changed_since}" }
+          let(:expected_query) { { recruitment_cycle_year: 2021, changed_since: changed_since }.to_query }
+          let(:expected_url) { "/applications?#{expected_query}" }
 
           it "includes the changed_at param in the request" do
             expect(Client).to receive(:get).with(expected_url)

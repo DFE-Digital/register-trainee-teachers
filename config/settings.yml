@@ -44,6 +44,8 @@ apply_api:
   base_url: "base-url-from-env"
   auth_token: "auth-token-from-env"
 
+current_recruitment_cycle_year: 2021
+
 jobs:
   poll_delay_hours: 6
   max_poll_duration_days: 2
