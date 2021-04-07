@@ -7,6 +7,7 @@ module Trainees
     STATE_CHANGE = "state_change"
 
     FIELDS = %w[
+      trainee_id
       first_names
       last_name
       date_of_birth
@@ -16,6 +17,7 @@ module Trainees
       postcode
       email
       middle_names
+      training_route
       international_address
       locale_code
       gender
