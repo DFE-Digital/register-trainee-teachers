@@ -1,10 +1,9 @@
 <%= extends_layout :error do %>
   <%= render PageTitle::View.new(title: "pages.unprocessable_entity") %>
 
-  <h1 class="govuk-heading-l">Sorry, the change you wanted was rejected</h1>
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-  <p class="govuk-body">Try again later.</p>
+  <p class="govuk-body"><%= t(".body") %></p>
 
-  <p class="govuk-body">If you continue to get this message, email the Register trainee teachers team at <%= support_email %>.</p>
-
+  <p class="govuk-body"><%= t(".support_message_html", link: support_email) %></p>
 <% end %>

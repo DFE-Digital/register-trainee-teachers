@@ -43,5 +43,7 @@ module RegisterTraineeTeachers
     config.active_job.queue_adapter = :sidekiq
 
     config.session_store :active_record_store, key: "_register_trainee_teachers_session"
+
+    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
   end
 end

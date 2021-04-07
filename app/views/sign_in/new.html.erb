@@ -1,18 +1,21 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <h1 class="govuk-heading-l">Ask for an account to register trainee teachers</h1>
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-    <p class="govuk-body"> Although you have a DfE Sign-in account, you also need an account
-                             for this service.</p>
+    <p class="govuk-body"><%= t(".body") %></p>
 
     <% if FeatureService.enabled?("enable_feedback_link") %>
-      <p class="govuk-body"> Contact us at
-      <%= support_email(subject: "Get access to Register trainee teachers") %> to ask for an account.
-      </p>
+      <p class="govuk-body">
+        <%=
+          t(
+            ".contact_us_html",
+            link: support_email(subject: "Get access to Register trainee teachers")
+          )
+         %>
+       </p>
     <% end %>
 
-    <%= render GovukButtonLinkTo::View.new(body: "Return home", url: root_path) %>
-
+    <%= render GovukButtonLinkTo::View.new(body: t(".home_button"), url: root_path) %>
   </div>
 </div>

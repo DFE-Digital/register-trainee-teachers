@@ -2,7 +2,7 @@
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
-    text: "Back",
+    text: t("back"),
     href: root_path,
   ) %>
 <% end %>
@@ -10,19 +10,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <h1 class="govuk-heading-l">Sign in to Register trainee teachers</h1>
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-    <p class="govuk-body-m"> Use DfE Sign-in to access your account.</p>
+    <p class="govuk-body-m"><%= t(".body") %></p>
 
     <% if FeatureService.enabled?("use_dfe_sign_in") %>
-      <%= govuk_button_to("Sign in using DfE Sign-in", "/auth/dfe", class: "qa-sign_in_button") %>
+      <%= govuk_button_to(t(".dfe_sign_in_button"), "/auth/dfe", class: "qa-sign_in_button") %>
     <% else %>
-      <%= render GovukButtonLinkTo::View.new(body: "Sign in using Persona", url: "/personas", class_option: "qa-sign_in_button") %>
+      <%= render GovukButtonLinkTo::View.new(body: t(".persona_sign_in_button"), url: "/personas", class_option: "qa-sign_in_button") %>
     <% end %>
 
-    <p class="govuk-body-m">If you do not have a DfE Sign-in account but need access to Register trainee teachers, email
-
-    <%= support_email(subject: "Get access to Register trainee teachers") %>.
+    <p class="govuk-body-m">
+      <%=
+        t(
+          ".get_access_html",
+          link: support_email(subject: "Get access to Register trainee teachers")
+         )
+      %>
     </p>
 
   </div>
