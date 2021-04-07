@@ -62,11 +62,28 @@ describe DiversitiesHelper do
                  ethnic_group_provided?: true,
                  ethnic_background: :not_provided,
                  disability_disclosure: :disabled,
+                 disabled?: true,
                  disabilities: [])
         end
 
         it "returns the path to the disability details page" do
           expect(subject).to eq(edit_trainee_diversity_disability_detail_path(trainee))
+        end
+      end
+
+      context "ethnic group, background and no disability are specified" do
+        let(:diversity_form) do
+          double(diversity_disclosed?: true,
+                 ethnic_group: :mixed,
+                 ethnic_group_provided?: true,
+                 ethnic_background: :not_provided,
+                 disability_disclosure: :no_disability,
+                 disabled?: false,
+                 disabilities: [])
+        end
+
+        it "returns the path to the confirm page" do
+          expect(subject).to eq(trainee_diversity_confirm_path(trainee))
         end
       end
 

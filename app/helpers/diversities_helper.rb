@@ -24,7 +24,7 @@ module DiversitiesHelper
       edit_trainee_diversity_ethnic_background_path(trainee)
     elsif diversity_form.disability_disclosure.nil?
       edit_trainee_diversity_disability_disclosure_path(trainee)
-    elsif diversity_form.disabilities.empty?
+    elsif diversity_form.disabilities.empty? && diversity_form.disabled?
       edit_trainee_diversity_disability_detail_path(trainee)
     else
       trainee_diversity_confirm_path(trainee)
