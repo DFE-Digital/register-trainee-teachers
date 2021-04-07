@@ -28,7 +28,7 @@ en:
 
         <h2 class='govuk-heading-m'>Diversity information (optional)</h2>
 
-        <div class='govuk-inset-text'> If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
+        <div class='govuk-inset-text'>If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
 
         <ul class='govuk-list'>
           <li>Ethnicity</li>
@@ -39,7 +39,7 @@ en:
 
         <h2 class='govuk-heading-m'>Degrees</h2>
 
-        <h3 class='govuk-heading-s'>If it's a UK degree</h3>
+        <h3 class='govuk-heading-s'>If it’s a UK degree</h3>
 
         <ul class='govuk-list'>
           <li>Type (for example, BA, BSc or other)</li>
@@ -49,7 +49,7 @@ en:
           <li>Grade</li>
         </ul>
 
-        <h3 class='govuk-heading-s'>If it's not a UK degree</h3>
+        <h3 class='govuk-heading-s'>If it’s not a UK degree</h3>
 
         <ul class='govuk-list'>
           <li>NARIC comparable UK degree (if provided)</li>
