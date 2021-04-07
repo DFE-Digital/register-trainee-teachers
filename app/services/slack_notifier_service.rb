@@ -14,6 +14,10 @@ class SlackNotifierService
   end
 
   def call
-    @notifier.ping(@message, channel: @channel, icon_emoji: @icon_emoji, username: @username)
+    notifier.ping(message, channel: channel, icon_emoji: icon_emoji, username: username)
   end
+
+private
+
+  attr_reader :notifier, :message, :channel, :icon_emoji, :username
 end

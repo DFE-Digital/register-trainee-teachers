@@ -6,7 +6,7 @@ module Dttp
 
     class Error < StandardError; end
 
-    attr_reader :trainee
+    attr_reader :trainee, :contact_payload, :placement_assignment_payload
 
     def initialize(trainee:)
       @trainee = trainee
@@ -15,10 +15,10 @@ module Dttp
     end
 
     def call
-      dttp_update("/contacts(#{trainee.dttp_id})", @contact_payload)
+      dttp_update("/contacts(#{trainee.dttp_id})", contact_payload)
 
       dttp_update("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})",
-                  @placement_assignment_payload)
+                  placement_assignment_payload)
 
       trainee.update!(dttp_update_sha: trainee.sha)
       CreateOrUpdateConsistencyCheckJob.perform_later(trainee)
