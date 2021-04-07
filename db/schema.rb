@@ -37,14 +37,6 @@ ActiveRecord::Schema.define(version: 2021_04_01_153358) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "consistency_checks", force: :cascade do |t|
-    t.integer "trainee_id"
-    t.datetime "contact_last_updated_at"
-    t.datetime "placement_assignment_last_updated_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "course_subjects", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "subject_id", null: false
