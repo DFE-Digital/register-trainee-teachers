@@ -118,8 +118,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def given_some_courses_exist
-    # TODO: make these match the route of the trainee
-    @matching_courses = FactoryBot.create_list(:course, 10, provider: trainee.provider, route: trainee.training_route)
+    @matching_courses = create_list(:course, 10, provider: trainee.provider, route: trainee.training_route)
   end
 
   def given_there_arent_any_courses
@@ -128,8 +127,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def and_some_courses_for_other_providers_or_routes_exist
     other_route = TRAINING_ROUTES.keys.excluding(trainee.training_route).sample
-    FactoryBot.create(:course, provider: trainee.provider, route: other_route)
-    FactoryBot.create(:course, route: trainee.training_route)
+    create(:course, provider: trainee.provider, route: other_route)
+    create(:course, route: trainee.training_route)
   end
 
   def then_i_only_see_the_courses_for_my_provider_and_route
