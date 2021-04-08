@@ -18,8 +18,14 @@ module Trainees
     end
 
     def update
-      @course_details_form = CourseDetailsForm.new(trainee, course_details_params.merge(course_date_params))
+      @course_details_form = CourseDetailsForm.new(
+        trainee,
+        user: current_user,
+        params: course_details_params.merge(course_date_params),
+      )
+
       save_strategy = trainee.draft? ? :save! : :stash
+
       if @course_details_form.public_send(save_strategy)
         redirect_to trainee_course_details_confirm_path(trainee)
       else

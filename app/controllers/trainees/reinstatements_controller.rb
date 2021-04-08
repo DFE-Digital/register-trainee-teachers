@@ -11,7 +11,7 @@ module Trainees
     def update
       authorize(trainee, :reinstate?)
 
-      @reinstatement_form = ReinstatementForm.new(trainee, trainee_params)
+      @reinstatement_form = ReinstatementForm.new(trainee, params: trainee_params, user: current_user)
 
       if @reinstatement_form.stash
         redirect_to trainee_confirm_reinstatement_path(@trainee)

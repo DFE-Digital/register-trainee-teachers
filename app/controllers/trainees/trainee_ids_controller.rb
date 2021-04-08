@@ -9,7 +9,7 @@ module Trainees
     end
 
     def update
-      @trainee_id_form = TraineeIdForm.new(trainee, trainee_params)
+      @trainee_id_form = TraineeIdForm.new(trainee, params: trainee_params, user: current_user)
 
       save_strategy = trainee.draft? ? :save! : :stash
 

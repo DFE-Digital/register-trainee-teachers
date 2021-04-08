@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
-class TrainingDetailsForm
-  include ActiveModel::Model
-  include ActiveModel::AttributeAssignment
-  include ActiveModel::Validations::Callbacks
-
-  attr_accessor :trainee, :trainee_id, :day, :month, :year
-
-  delegate :id, :persisted?, to: :trainee
+class TrainingDetailsForm < TraineeForm
+  attr_accessor :trainee_id, :day, :month, :year
 
   validates :trainee_id, presence: true,
                          length: {
@@ -18,20 +12,6 @@ class TrainingDetailsForm
   validate :commencement_date_valid
 
   after_validation :update_trainee_attributes, if: -> { errors.empty? }
-
-  def initialize(trainee)
-    @trainee = trainee
-    super(fields)
-  end
-
-  def fields
-    {
-      trainee_id: trainee.trainee_id.presence,
-      day: trainee.commencement_date&.day,
-      month: trainee.commencement_date&.month,
-      year: trainee.commencement_date&.year,
-    }
-  end
 
   def save
     valid? && trainee.save
@@ -45,6 +25,15 @@ class TrainingDetailsForm
   end
 
 private
+
+  def compute_fields
+    {
+      trainee_id: trainee.trainee_id.presence,
+      day: trainee.commencement_date&.day,
+      month: trainee.commencement_date&.month,
+      year: trainee.commencement_date&.year,
+    }.merge(new_attributes.slice(:trainee_id, :day, :month, :year))
+  end
 
   def update_trainee_attributes
     trainee.assign_attributes(trainee_id: trainee_id, commencement_date: commencement_date)

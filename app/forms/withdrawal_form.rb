@@ -6,18 +6,14 @@ class WithdrawalForm < MultiDateForm
   validate :withdraw_reason_valid
   validate :additional_withdraw_reason_valid
 
-  def fields
+private
+
+  def compute_fields
     super.merge(new_attributes.slice(:withdraw_reason, :additional_withdraw_reason))
   end
 
-private
-
   def date_field
     @date_field ||= :withdraw_date
-  end
-
-  def form_store_key
-    :withdrawal
   end
 
   def additional_fields

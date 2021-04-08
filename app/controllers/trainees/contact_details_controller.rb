@@ -9,7 +9,8 @@ module Trainees
     end
 
     def update
-      @contact_details_form = ContactDetailsForm.new(trainee, contact_details_params)
+      @contact_details_form = ContactDetailsForm.new(trainee, params: contact_details_params, user: current_user)
+
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @contact_details_form.public_send(save_strategy)

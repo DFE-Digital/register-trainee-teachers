@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class CourseDetailsForm
-  include ActiveModel::Model
-  include ActiveModel::AttributeAssignment
-  include ActiveModel::Validations::Callbacks
-
+class CourseDetailsForm < TraineeForm
   FIELDS = %i[
     subject
     start_day
@@ -17,9 +13,7 @@ class CourseDetailsForm
     additional_age_range
   ].freeze
 
-  attr_accessor(*FIELDS, :trainee, :fields)
-
-  delegate :id, :persisted?, to: :trainee
+  attr_accessor(*FIELDS)
 
   before_validation :sanitise_course_dates
 
@@ -29,15 +23,6 @@ class CourseDetailsForm
   validate :course_end_date_valid
 
   MAX_END_YEARS = 4
-
-  def initialize(trainee, params = {}, store = FormStore)
-    @trainee = trainee
-    @store = store
-    @params = params
-    @new_attributes = fields_from_store.merge(params).symbolize_keys
-    @fields = compute_attributes_from_trainee.merge(new_attributes)
-    super(fields)
-  end
 
   def course_start_date
     new_date({ year: start_year, month: start_month, day: start_day })
@@ -64,15 +49,11 @@ class CourseDetailsForm
     end
   end
 
-  def stash
-    valid? && store.set(trainee.id, :course_details, fields)
-  end
-
   def save!
     if valid?
       update_trainee_attributes
       trainee.save!
-      store.set(trainee.id, :course_details, nil)
+      clear_stash
     else
       false
     end
@@ -86,7 +67,9 @@ class CourseDetailsForm
 
 private
 
-  attr_reader :new_attributes, :store
+  def compute_fields
+    compute_attributes_from_trainee.merge(new_attributes)
+  end
 
   def update_trainee_attributes
     trainee.assign_attributes({
@@ -95,10 +78,6 @@ private
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     })
-  end
-
-  def fields_from_store
-    store.get(trainee.id, :course_details).presence || {}
   end
 
   def compute_attributes_from_trainee

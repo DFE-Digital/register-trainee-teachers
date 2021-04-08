@@ -28,7 +28,7 @@ module Trainees
     end
 
     def update
-      personal_detail = PersonalDetailsForm.new(trainee, personal_details_params)
+      personal_detail = PersonalDetailsForm.new(trainee, params: personal_details_params, user: current_user)
       save_strategy = trainee.draft? ? :save! : :stash
 
       if personal_detail.public_send(save_strategy)

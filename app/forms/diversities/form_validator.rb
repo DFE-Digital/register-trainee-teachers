@@ -64,8 +64,8 @@ module Diversities
       add_error_for(:disability_ids)
     end
 
-    def validator_is_valid?(error_klass)
-      error_klass.new(trainee).valid?
+    def validator_is_valid?(form_klass)
+      form_klass.new(trainee).valid?
     end
 
     def add_error_for(key)

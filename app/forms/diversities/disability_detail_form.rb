@@ -1,30 +1,14 @@
 # frozen_string_literal: true
 
 module Diversities
-  class DisabilityDetailForm
-    include ActiveModel::Model
-    include ActiveModel::AttributeAssignment
-    include ActiveModel::Validations::Callbacks
-
+  class DisabilityDetailForm < TraineeForm
     attr_accessor :disability_ids, :additional_disability
-
-    attr_reader :trainee, :fields
-
-    delegate :id, :persisted?, to: :trainee
 
     validate :disabilities_cannot_be_empty, if: -> { disability_disclosure_form.disabled? && disabilities.empty? }
 
-    def initialize(trainee, params = {}, store = FormStore)
-      @trainee = trainee
-      @store = store
-      @params = params
+    def initialize(trainee, **kwargs)
       @disability_disclosure_form = DisabilityDisclosureForm.new(trainee)
-      @fields = {
-        disability_ids: trainee.disability_ids,
-        additional_disability: other_trainee_disability&.additional_disability,
-      }.merge(new_attributes)
-
-      super(fields)
+      super(trainee, **kwargs)
     end
 
     def save!
@@ -34,16 +18,12 @@ module Diversities
           other_trainee_disability&.update!(additional_disability: fields[:additional_disability])
         end
 
-        store.set(trainee.id, :disability_detail, nil)
+        clear_stash
 
         true
       else
         false
       end
-    end
-
-    def stash
-      valid? && store.set(id, :disability_detail, fields)
     end
 
     def disabilities
@@ -52,7 +32,14 @@ module Diversities
 
   private
 
-    attr_reader :store, :params, :disability_disclosure_form
+    attr_reader :disability_disclosure_form
+
+    def compute_fields
+      {
+        disability_ids: trainee.disability_ids,
+        additional_disability: other_trainee_disability&.additional_disability,
+      }.merge(new_attributes)
+    end
 
     def new_attributes
       if disability_disclosure_form.disabled?
@@ -72,10 +59,6 @@ module Diversities
       @other_trainee_disability ||= trainee.trainee_disabilities.includes(:disability).find do |trainee_disability|
         trainee_disability.disability.name == Diversities::OTHER
       end
-    end
-
-    def fields_from_store
-      store.get(id, :disability_detail).presence || {}
     end
   end
 end
