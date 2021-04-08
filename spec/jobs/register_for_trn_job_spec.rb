@@ -22,7 +22,7 @@ describe RegisterForTrnJob do
 
     it "queues a job to update the contact status" do
       expect { subject }.to have_enqueued_job(ChangeTraineeStatusJob).with(
-        dttp_id,
+        trainee,
         DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
         Dttp::UpdateTraineeStatus::CONTACT_ENTITY_TYPE,
       )
@@ -30,7 +30,7 @@ describe RegisterForTrnJob do
 
     it "queues a job to update the contact status" do
       expect { subject }.to have_enqueued_job(ChangeTraineeStatusJob).with(
-        placement_assignment_dttp_id,
+        trainee,
         DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
         Dttp::UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE,
       )

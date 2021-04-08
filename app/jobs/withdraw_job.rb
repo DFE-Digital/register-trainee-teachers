@@ -7,13 +7,13 @@ class WithdrawJob < ApplicationJob
   def perform(trainee)
     Dttp::UpdateTraineeStatus.call(
       status: DttpStatuses::REJECTED,
-      entity_id: trainee.dttp_id,
+      trainee: trainee,
       entity_type: Dttp::UpdateTraineeStatus::CONTACT_ENTITY_TYPE,
     )
 
     Dttp::UpdateTraineeStatus.call(
       status: DttpStatuses::REJECTED,
-      entity_id: trainee.placement_assignment_dttp_id,
+      trainee: trainee,
       entity_type: Dttp::UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE,
     )
 

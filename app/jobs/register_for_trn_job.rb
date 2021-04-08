@@ -8,13 +8,13 @@ class RegisterForTrnJob < ApplicationJob
     Dttp::RegisterForTrn.call(trainee: trainee, trainee_creator_dttp_id: trainee_creator_dttp_id)
 
     ChangeTraineeStatusJob.perform_later(
-      trainee.dttp_id,
+      trainee,
       DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
       Dttp::UpdateTraineeStatus::CONTACT_ENTITY_TYPE,
     )
 
     ChangeTraineeStatusJob.perform_later(
-      trainee.placement_assignment_dttp_id,
+      trainee,
       DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
       Dttp::UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE,
     )

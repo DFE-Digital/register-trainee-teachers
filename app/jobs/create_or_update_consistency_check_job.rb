@@ -5,7 +5,7 @@ class CreateOrUpdateConsistencyCheckJob < ApplicationJob
 
   def perform(trainee)
     contact = Dttp::Contacts::Fetch.call(trainee: trainee)
-    placement_assignment = Dttp::PlacementAssignments::Fetch.call(dttp_id: trainee.dttp_id)
+    placement_assignment = Dttp::PlacementAssignments::Fetch.call(placement_assignment_dttp_id: trainee.placement_assignment_dttp_id)
 
     consistency_check = ConsistencyCheck.find_or_create_by!(trainee_id: trainee.id)
     consistency_check.contact_last_updated_at = contact.updated_at
