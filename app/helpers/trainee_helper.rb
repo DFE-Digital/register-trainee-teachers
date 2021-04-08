@@ -41,8 +41,4 @@ module TraineeHelper
 
     FeatureService.enabled?(:publish_course_details) && courses_available && !manual_entry_chosen
   end
-
-  def stashed_code(trainee)
-    PublishCourseDetailsForm.new(trainee).code || "not_used"
-  end
 end

@@ -19,10 +19,10 @@ module Trainees
         return
       end
 
-      if course_params[:code] == PublishCourseDetailsForm::NOT_LISTED
+      if @publish_course_details.manual_entry_chosen?
         redirect_to edit_trainee_course_details_path
       else
-        redirect_to edit_trainee_confirm_publish_course_path(id: helpers.stashed_code(@trainee), trainee_id: @trainee.slug)
+        redirect_to edit_trainee_confirm_publish_course_path(id: @publish_course_details.code, trainee_id: @trainee.slug)
       end
     end
 
