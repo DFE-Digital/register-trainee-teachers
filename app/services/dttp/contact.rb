@@ -22,7 +22,7 @@ module Dttp
       contact_data["emailaddress1"]
     end
 
-    def updated_on
+    def updated_at
       contact_data["modifiedon"]
     end
 

@@ -22,6 +22,10 @@ module Dttp
       placement_assignment_data["_dfe_providerid_value"]
     end
 
+    def updated_at
+      placement_assignment_data["modifiedon"]
+    end
+
   private
 
     attr_reader :placement_assignment_data

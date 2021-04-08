@@ -25,19 +25,27 @@ module Dttp
         trainee.degrees << create(:degree)
       end
 
-      context "success" do
+      context "when successful" do
         let(:contact_response) { double(code: 204) }
         let(:placement_response) { double(code: 204) }
-
-        it "sends a PATCH request to update contact and placement assignment entities" do
+        before do
           expect(Client).to receive(:patch).with(contact_path, body: contact_payload).and_return(contact_response)
           expect(Client).to receive(:patch).with(placement_path, body: placement_payload).and_return(placement_response)
+        end
 
+        it "sends a PATCH request to update contact and placement assignment entities" do
+          allow(CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
           described_class.call(trainee: trainee)
+        end
+
+        it "enqueues the CreateOrUpdateConsistencyJob" do
+          expect {
+            described_class.call(trainee: trainee)
+          }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
         end
       end
 
-      context "error" do
+      context "when theres an error" do
         let(:status) { 405 }
         let(:body) { "error" }
         let(:headers) { { foo: "bar" } }

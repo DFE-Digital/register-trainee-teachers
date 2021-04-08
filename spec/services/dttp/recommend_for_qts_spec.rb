@@ -24,6 +24,7 @@ module Dttp
 
       context "success" do
         let(:dttp_response) { double(code: 204) }
+        it_behaves_like "CreateOrUpdateConsistencyCheckJob", RecommendForQTS
 
         it "sends a PATCH request to set entity property 'dfe_datestandardsassessmentpassed'" do
           expect(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)

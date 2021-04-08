@@ -7,14 +7,14 @@ module Dttp
 
       class HttpError < StandardError; end
 
-      attr_reader :dttp_id
+      attr_reader :placement_assignment_dttp_id
 
-      def initialize(dttp_id:)
-        @dttp_id = dttp_id
+      def initialize(placement_assignment_dttp_id:)
+        @placement_assignment_dttp_id = placement_assignment_dttp_id
       end
 
       def call
-        response = Client.get("/dfe_placementassignments(#{dttp_id})")
+        response = Client.get("/dfe_placementassignments(#{placement_assignment_dttp_id})")
 
         if response.code != 200
           raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
