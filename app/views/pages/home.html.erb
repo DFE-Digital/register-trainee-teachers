@@ -30,17 +30,17 @@
   <% if FeatureService.enabled?("enable_feedback_link") %>
     <div class="govuk-grid-column-one-third">
       <h2 class="govuk-heading-m">
-        <%= govuk_link_to t('.give_feedback_link'), Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
+        <%= govuk_link_to t(".give_feedback_link"), Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
       </h2>
-      <p class="govuk-body"><%= t('.give_feedback_link_desc') %></p>
+      <p class="govuk-body"><%= t(".give_feedback_link_desc") %></p>
     </div>
   <% end %>
 
   <div class="govuk-grid-column-one-third">
     <h2 class="govuk-heading-m">
-      <%= govuk_link_to t('.data_requirements_link'), data_requirements_path, { class: "govuk-link govuk-link--no-visited-state" } %>
+      <%= govuk_link_to t(".data_requirements_link"), data_requirements_path, { class: "govuk-link govuk-link--no-visited-state" } %>
     </h2>
-    <p class="govuk-body"><%= t('.data_requirements_link_desc') %></p>
+    <p class="govuk-body"><%= t(".data_requirements_link_desc") %></p>
   </div>
 </div>
 

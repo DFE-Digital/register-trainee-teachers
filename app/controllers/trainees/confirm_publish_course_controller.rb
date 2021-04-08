@@ -13,6 +13,7 @@ module Trainees
     def update
       @confirm_publish_course_form = ConfirmPublishCourseForm.new(@trainee, course_params)
       if @confirm_publish_course_form.save
+        clear_form_stash(@trainee)
         redirect_to review_draft_trainee_path(@trainee)
       else
         render :edit
@@ -30,7 +31,7 @@ module Trainees
     end
 
     def set_course
-      @course = Course.find_by!(code: params[:id])
+      @course = @trainee.available_courses.find_by!(code: params[:id])
     end
 
     def course_params

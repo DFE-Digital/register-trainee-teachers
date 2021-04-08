@@ -79,17 +79,17 @@ describe Course do
     end
 
     it "returns nil if duration_in_years not set" do
-      course = build(:course, start_date: Date.today, duration_in_years: nil)
+      course = build(:course, start_date: Time.zone.today, duration_in_years: nil)
       expect(course.end_date).to be_nil
     end
 
     it "duration 1 year" do
-      course = build(:course, start_date: Date.today, duration_in_years: 1)
+      course = build(:course, start_date: Time.zone.today, duration_in_years: 1)
       expect(course.end_date).to eql(1.year.from_now.to_date.prev_day)
     end
 
     it "duration 2 years" do
-      course = build(:course, start_date: Date.today, duration_in_years: 2)
+      course = build(:course, start_date: Time.zone.today, duration_in_years: 2)
       expect(course.end_date).to eql(2.years.from_now.to_date.prev_day)
     end
   end

@@ -17,6 +17,10 @@ module Trainees
           t(".heading")
         end
 
+        def heading_text
+          t(".heading_text")
+        end
+
         def summary_title
           t(".summary_title")
         end

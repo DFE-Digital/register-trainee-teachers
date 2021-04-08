@@ -1,9 +1,8 @@
 <h1 class="govuk-heading-l"><%= heading %></h1>
-<p class="govuk-body">These are the course details as listed on Publish teacher training courses.</p>
+<p class="govuk-body"><%= heading_text %></p>
 
-<%= render GovukComponent::Details.new(summary: "What if the details are incorrect?") do %>
-  <p class="govuk-body">If the details are incorrect for all trainees, you should <a class="govuk-link" href="https://www.publish-teacher-training-courses.service.gov.uk/">update the course on Publish</a>.</p>
-  <p class="govuk-body">If the details are wrong for this trainee only, you can edit them here.</p>
+<%= render GovukComponent::Details.new(summary: t(".incorrect_details_title")) do %>
+  <%= simple_format t(".incorrect_details_text"), class: "govuk-body" %>
 <% end %>
 
 <section class="app-summary-card govuk-!-margin-bottom-6">
