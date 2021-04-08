@@ -6,7 +6,7 @@ module Dttp
 
     def perform(consistency_check_id)
       @consistency_check = ConsistencyCheck.find(consistency_check_id)
-      @dttp_contact_updated_date = Dttp::Contacts::Fetch.call(trainee: trainee).updated_at
+      @dttp_contact_updated_date = Dttp::Contacts::Fetch.call(contact_entity_id: trainee.dttp_id).updated_at
       @dttp_placement_assignment_updated_date = Dttp::PlacementAssignments::Fetch.call(placement_assignment_dttp_id: trainee.placement_assignment_dttp_id).updated_at
 
       if contact_conflict || placement_assignment_conflict

@@ -7,14 +7,12 @@ module Dttp
 
       class HttpError < StandardError; end
 
-      attr_reader :trainee
-
-      def initialize(trainee:)
-        @trainee = trainee
+      def initialize(contact_entity_id:)
+        @contact_entity_id = contact_entity_id
       end
 
       def call
-        response = Client.get("/contacts(#{trainee.dttp_id})?")
+        response = Client.get("/contacts(#{contact_entity_id})?")
 
         if response.code != 200
           raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
@@ -22,6 +20,10 @@ module Dttp
 
         Dttp::Contact.new(contact_data: JSON(response.body))
       end
+
+    private
+
+      attr_reader :contact_entity_id
     end
   end
 end
