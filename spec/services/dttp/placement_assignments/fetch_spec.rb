@@ -20,7 +20,7 @@ module Dttp
           end
 
           it "returns placement assignment JSON ruby hash" do
-            expect(described_class.call(placement_assignment_dttp_id: placement_assignment_dttp_id)).to be_a(Dttp::PlacementAssignment)
+            expect(described_class.call(dttp_id: placement_assignment_dttp_id)).to be_a(Dttp::PlacementAssignment)
           end
         end
 
@@ -33,7 +33,7 @@ module Dttp
           it "raises a HttpError error with the response body as the message" do
             expect(Client).to receive(:get).with(path).and_return(dttp_response)
             expect {
-              described_class.call(placement_assignment_dttp_id: placement_assignment_dttp_id)
+              described_class.call(dttp_id: placement_assignment_dttp_id)
             }.to raise_error(Dttp::PlacementAssignments::Fetch::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
           end
         end

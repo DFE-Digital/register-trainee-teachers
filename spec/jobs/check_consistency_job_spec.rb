@@ -10,8 +10,8 @@ module Dttp
     subject { described_class.perform_now(consistency_check.id) }
 
     before do
-      allow(Dttp::Contacts::Fetch).to receive(:call).with(contact_dttp_id: trainee.dttp_id) { contact }
-      allow(Dttp::PlacementAssignments::Fetch).to receive(:call).with({ placement_assignment_dttp_id: trainee.placement_assignment_dttp_id }) { placement_assignment }
+      allow(Dttp::Contacts::Fetch).to receive(:call).with(dttp_id: trainee.dttp_id) { contact }
+      allow(Dttp::PlacementAssignments::Fetch).to receive(:call).with(dttp_id: trainee.placement_assignment_dttp_id) { placement_assignment }
       allow(SlackNotifierService).to receive(:call) { "foobar" }
       allow(Trainee).to receive(:find).with(trainee.id) { trainee }
     end
