@@ -3,10 +3,14 @@
 require "rails_helper"
 
 feature "confirm publish course", type: :feature, feature_publish_course_details: true do
+  after do
+    FormStore.clear_all(trainee.id)
+  end
+
   background do
-    given_a_course_exists
     given_i_am_authenticated
     given_a_trainee_exists
+    given_a_course_exists
     given_i_visited_the_review_draft_page
   end
 
@@ -31,7 +35,6 @@ feature "confirm publish course", type: :feature, feature_publish_course_details
   end
 
   def given_a_course_exists
-    # TODO: make these match the route of the trainee
-    @course ||= FactoryBot.create(:course)
+    @course = create(:course, provider: trainee.provider, route: trainee.training_route)
   end
 end
