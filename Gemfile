@@ -30,7 +30,8 @@ gem "foreman"
 gem "canonical-rails"
 
 # Sentry
-gem "sentry-raven"
+gem "sentry-rails"
+gem "sentry-sidekiq"
 
 # Logging
 gem "amazing_print", "~> 1.3"
