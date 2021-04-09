@@ -84,14 +84,14 @@
               confirm_path: lambda {
                 edit_trainee_confirm_publish_course_path(
                   id: form.code,
-                  trainee_id: @trainee.to_param
+                  trainee_id: @trainee.to_param,
                 )
               },
               classes: "course-details",
               status: ProgressService.call(
                 validator: form,
-                progress_value: @trainee.progress.course_details
-              ).status
+                progress_value: @trainee.progress.course_details,
+              ).status,
             )
           else
             component.slot(

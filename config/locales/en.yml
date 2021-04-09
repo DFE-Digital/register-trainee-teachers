@@ -355,6 +355,28 @@ en:
       edit:
         heading: What course are they doing?
         course_not_listed: Another course not listed
+    confirmation:
+      confirm_publish_course:
+        view:
+          change_course: Change course
+          heading: Is this the course you want to add?
+          heading_text: These are the course details as listed on Publish teacher training courses.
+          summary_title: Course details
+          subject: Subject
+          level: Level
+          age_range: Age range
+          start_date: Start date
+          duration: Duration
+          incorrect_details_title: What if the details are incorrect?
+          incorrect_details_text:
+            If the details are incorrect for all trainees, you should <a class="govuk-link" href="https://www.publish-teacher-training-courses.service.gov.uk/">update the course on Publish</a>.
+
+
+            If the details are wrong for this trainee only, you can edit them here.
+    confirm_publish_course:
+      edit:
+        confirm_course: Confirm course
+        edit_details: Edit details for this trainee only
 
   activerecord:
     attributes:

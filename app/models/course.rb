@@ -42,4 +42,11 @@ class Course < ApplicationRecord
 
   has_many :course_subjects
   has_many :subjects, through: :course_subjects
+
+  def end_date
+    return unless start_date
+    return if duration_in_years.to_i.zero?
+
+    (start_date + duration_in_years.years).prev_day
+  end
 end

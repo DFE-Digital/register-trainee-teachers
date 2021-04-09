@@ -1,0 +1,17 @@
+<%= render PageTitle::View.new(title: "trainees.confirm_publish_course.edit") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(text: t(:back), href: edit_trainee_publish_course_details_path(@trainee)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render Trainees::Confirmation::ConfirmPublishCourse::View.new(trainee: @trainee, course: @course) %>
+
+    <%= register_form_with(model: @confirm_publish_course_form, url: trainee_confirm_publish_course_path(@trainee, @course.code), method: :put, local: true) do |f| %>
+      <%= f.hidden_field :code, value: @course.code %>
+      <%= f.govuk_submit t(".confirm_course") %>
+    <% end %>
+    <p class="govuk-body"><%= govuk_link_to(t(".edit_details"), "#") %></p>
+  </div>
+</div>

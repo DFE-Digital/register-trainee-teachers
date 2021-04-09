@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 2021_04_01_153358) do
     t.string "course_length", null: false
     t.integer "qualification", null: false
     t.string "summary", null: false
-    t.integer "route", null: false
     t.integer "level", null: false
+    t.integer "route", null: false
     t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
     t.index ["provider_id"], name: "index_courses_on_provider_id"
   end

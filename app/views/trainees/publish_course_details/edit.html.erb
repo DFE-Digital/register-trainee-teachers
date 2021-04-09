@@ -12,9 +12,8 @@
       <% @courses.each do |course| %>
         <%= f.govuk_radio_button :code, course.code,
           label: { text: "#{course.name} (#{course.code})" },
-          hint:  { text: course.summary },
-          link_errors: true
-        %>
+          hint: { text: course.summary },
+          link_errors: true %>
       <% end %>
 
       <div class="govuk-radios__divider">
@@ -22,8 +21,7 @@
       </div>
 
       <%= f.govuk_radio_button :code, PublishCourseDetailsForm::NOT_LISTED,
-        label: { text: t(".course_not_listed") }
-      %>
+        label: { text: t(".course_not_listed") } %>
     <% end %>
   </div>
 

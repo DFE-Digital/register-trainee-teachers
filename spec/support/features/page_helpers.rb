@@ -118,6 +118,10 @@ module Features
       @publish_course_details_page ||= PageObjects::Trainees::PublishCourseDetails.new
     end
 
+    def confirm_publish_course_page
+      @confirm_publish_course_page ||= PageObjects::Trainees::ConfirmPublishCourse.new
+    end
+
     def trainee_id_edit_page
       @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeId.new
     end
