@@ -10,7 +10,7 @@ describe RecommendForQtsJob do
   let(:expected_contact_params) do
     {
       status: DttpStatuses::STANDARDS_MET,
-      entity_id: trainee.dttp_id,
+      trainee: trainee,
       entity_type: :contact,
     }
   end
@@ -18,7 +18,7 @@ describe RecommendForQtsJob do
   let(:expected_placement_assignment_params) do
     {
       status: DttpStatuses::STANDARDS_MET,
-      entity_id: trainee.placement_assignment_dttp_id,
+      trainee: trainee,
       entity_type: :placement_assignment,
     }
   end

@@ -9,14 +9,14 @@ describe ReinstateJob do
 
   let(:contact_update_params) do
     {
-      entity_id: trainee.dttp_id,
+      trainee: trainee,
       entity_type: Dttp::UpdateTraineeStatus::CONTACT_ENTITY_TYPE,
     }
   end
 
   let(:placement_assignment_update_params) do
     {
-      entity_id: trainee.placement_assignment_dttp_id,
+      trainee: trainee,
       entity_type: Dttp::UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE,
     }
   end

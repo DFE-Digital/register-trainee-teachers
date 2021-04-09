@@ -6,9 +6,8 @@ module Dttp
   module Contacts
     describe Fetch do
       describe "#call" do
-        let(:contact_entity_id) { SecureRandom.uuid }
-        let(:trainee) { create(:trainee, dttp_id: contact_entity_id) }
-        let(:path) { "/contacts(#{trainee.dttp_id})?" }
+        let(:dttp_id) { SecureRandom.uuid }
+        let(:path) { "/contacts(#{dttp_id})?" }
 
         before do
           allow(AccessToken).to receive(:fetch).and_return("token")
@@ -27,7 +26,7 @@ module Dttp
           let(:dttp_response) { double(code: 200, body: parsed_response.to_json) }
 
           it "returns an instance of contact" do
-            expect(described_class.call(trainee: trainee)).to be_a Contact
+            expect(described_class.call(dttp_id: dttp_id)).to be_a Contact
           end
         end
 
@@ -40,7 +39,7 @@ module Dttp
           it "raises a HttpError error with the response body as the message" do
             expect(Client).to receive(:get).with(path).and_return(dttp_response)
             expect {
-              described_class.call(trainee: trainee)
+              described_class.call(dttp_id: dttp_id)
             }.to raise_error(Contacts::Fetch::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
           end
         end

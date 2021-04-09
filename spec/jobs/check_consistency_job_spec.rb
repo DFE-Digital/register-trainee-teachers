@@ -4,14 +4,14 @@ require "rails_helper"
 
 module Dttp
   describe CheckConsistencyJob do
-    let(:trainee) { create(:trainee, id: 1) }
+    let(:trainee) { create(:trainee, dttp_id: SecureRandom.uuid) }
     let(:contact) { double({ updated_at: Faker::Date.backward(days: 2) }) }
     let(:placement_assignment) { double({ updated_at: Faker::Date.backward(days: 2) }) }
     subject { described_class.perform_now(consistency_check.id) }
 
     before do
-      allow(Dttp::Contacts::Fetch).to receive(:call).with({ trainee: trainee }) { contact }
-      allow(Dttp::PlacementAssignments::Fetch).to receive(:call).with({ placement_assignment_dttp_id: trainee.placement_assignment_dttp_id }) { placement_assignment }
+      allow(Dttp::Contacts::Fetch).to receive(:call).with(dttp_id: trainee.dttp_id) { contact }
+      allow(Dttp::PlacementAssignments::Fetch).to receive(:call).with(dttp_id: trainee.placement_assignment_dttp_id) { placement_assignment }
       allow(SlackNotifierService).to receive(:call) { "foobar" }
       allow(Trainee).to receive(:find).with(trainee.id) { trainee }
     end
