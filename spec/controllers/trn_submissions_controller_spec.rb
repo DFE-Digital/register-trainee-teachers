@@ -25,11 +25,8 @@ describe TrnSubmissionsController do
       end
 
       it "queues a background job to poll for the trainee's TRN" do
-        Timecop.freeze(Time.zone.now) do
-          expect {
-            post :create, params: { trainee_id: trainee }
-          }.to have_enqueued_job(RetrieveTrnJob).at(RetrieveTrnJob::POLL_DELAY.from_now).with(trainee)
-        end
+        expect(RetrieveTrnJob).to receive(:perform_with_default_delay).with(trainee)
+        post :create, params: { trainee_id: trainee }
       end
 
       context "trainee state" do
