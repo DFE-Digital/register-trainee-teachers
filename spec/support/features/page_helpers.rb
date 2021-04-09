@@ -114,6 +114,10 @@ module Features
       @course_details_page ||= PageObjects::Trainees::CourseDetails.new
     end
 
+    def publish_course_details_page
+      @publish_course_details_page ||= PageObjects::Trainees::PublishCourseDetails.new
+    end
+
     def trainee_id_edit_page
       @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeId.new
     end

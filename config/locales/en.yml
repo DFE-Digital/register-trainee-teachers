@@ -351,6 +351,10 @@ en:
       bullet_desc: "You can:"
       go_back: go back and change your answer
       use_dttp: use DTTP to register a different route
+    publish_course_details:
+      edit:
+        heading: What course are they doing?
+        course_not_listed: Another course not listed
 
   activerecord:
     attributes:
@@ -524,6 +528,10 @@ en:
               too_old: "You must enter a valid course end date"
               before_or_same_as_start_date: "The course end date must be after the start date"
               hint_html: For example, 11 3 %{year}
+        publish_course_details_form:
+          attributes:
+            code:
+              blank: You must select a course
         reinstatement_form:
           attributes:
             date_string:

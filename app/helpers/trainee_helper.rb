@@ -34,4 +34,11 @@ module TraineeHelper
       total_trainees_count_text: total_trainees_count_text,
     )
   end
+
+  def show_publish_courses?(trainee)
+    courses_available = trainee.available_courses.present?
+    manual_entry_chosen = PublishCourseDetailsForm.new(trainee).manual_entry_chosen?
+
+    FeatureService.enabled?(:publish_course_details) && courses_available && !manual_entry_chosen
+  end
 end

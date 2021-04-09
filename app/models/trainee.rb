@@ -177,4 +177,8 @@ class Trainee < ApplicationRecord
   def training_route_manager
     @training_route_manager ||= TrainingRouteManager.new(self)
   end
+
+  def available_courses
+    provider.courses.where(route: training_route)
+  end
 end

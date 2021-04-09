@@ -81,4 +81,55 @@ RSpec.describe TaskList::View do
       expect(subject.status_id).to eq("some-key-status")
     end
   end
+
+  describe "#get_path" do
+    subject do
+      TaskList::View::Row.new(
+        task_name: "some key",
+        path: path,
+        confirm_path: confirm_path,
+        status: status,
+      )
+    end
+    let(:confirm_path) { -> { raise hell } }
+    let(:path) { "some_path" }
+
+    context "when the status is not started" do
+      let(:status) { "not started" }
+
+      context "when the path provided is a string" do
+        it "returns the path" do
+          expect(subject.get_path).to eq "some_path"
+        end
+      end
+
+      context "when the path provided is callable" do
+        let(:path) { -> { "some_path" } }
+
+        it "calls the callable and returns the result" do
+          expect(subject.get_path).to eq "some_path"
+        end
+      end
+    end
+
+    context "when the status is in progress" do
+      let(:status) { "in_progress" }
+
+      context "when the confirm_path provided is a string" do
+        let(:confirm_path) { "confirm_path" }
+
+        it "returns the confirm_path" do
+          expect(subject.get_path).to eq "confirm_path"
+        end
+      end
+
+      context "when the confirm_path provided is callable" do
+        let(:confirm_path) { -> { "confirm_path" } }
+
+        it "calls the callable and returns the result" do
+          expect(subject.get_path).to eq "confirm_path"
+        end
+      end
+    end
+  end
 end

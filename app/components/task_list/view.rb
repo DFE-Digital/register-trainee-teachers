@@ -16,7 +16,7 @@ private
   end
 
   class Row < GovukComponent::Slot
-    attr_accessor :task_name, :status, :path, :confirm_path
+    attr_accessor :task_name, :status
 
     def initialize(task_name:, path:, confirm_path: nil, status:, classes: [], html_attributes: {})
       super(classes: classes, html_attributes: html_attributes)
@@ -28,7 +28,7 @@ private
     end
 
     def get_path
-      return path unless confirm_path
+      return path unless @confirm_path
 
       status == Progress::STATUSES[:not_started] ? path : confirm_path
     end
@@ -47,6 +47,14 @@ private
     end
 
   private
+
+    def path
+      @path.respond_to?(:call) ? @path.call : @path
+    end
+
+    def confirm_path
+      @confirm_path.respond_to?(:call) ? @confirm_path.call : @confirm_path
+    end
 
     def default_classes
       %w[app-task-list__item]

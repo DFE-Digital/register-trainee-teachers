@@ -1,0 +1,31 @@
+<%= render PageTitle::View.new(title: "trainees.course_details.edit", has_errors: @publish_course_details.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<%= register_form_with(model: @publish_course_details, url: trainee_publish_course_details_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-form-group">
+    <%= f.govuk_radio_buttons_fieldset :code, legend: { text: t(".heading"), tag: "h1", size: "l" } do %>
+      <% @courses.each do |course| %>
+        <%= f.govuk_radio_button :code, course.code,
+          label: { text: "#{course.name} (#{course.code})" },
+          hint:  { text: course.summary },
+          link_errors: true
+        %>
+      <% end %>
+
+      <div class="govuk-radios__divider">
+        or
+      </div>
+
+      <%= f.govuk_radio_button :code, PublishCourseDetailsForm::NOT_LISTED,
+        label: { text: t(".course_not_listed") }
+      %>
+    <% end %>
+  </div>
+
+  <%= f.govuk_submit %>
+<% end %>

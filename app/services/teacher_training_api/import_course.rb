@@ -30,7 +30,8 @@ module TeacherTrainingApi
                      duration_in_years: duration_in_years,
                      course_length: attrs[:course_length],
                      subjects: subjects,
-                     route: route)
+                     route: route,
+                     summary: attrs[:summary])
     end
 
   private
