@@ -30,16 +30,26 @@ describe RetrieveQtsJob do
 
   context "QTS is not awarded in DTTP" do
     let(:qts_flag) { false }
+    let(:configured_delay) { 6 }
 
-    it "queues another job to fetch the QTS 6 hours from now" do
+    before do
+      allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
+    end
+
+    it "queues another job to fetch the QTS the configured number of hours from now" do
       Timecop.freeze(Time.zone.now) do
         described_class.perform_now(trainee)
-        expect(RetrieveQtsJob).to have_been_enqueued.at(6.hours.from_now).with(trainee)
+        expect(RetrieveQtsJob).to have_been_enqueued.at(configured_delay.hours.from_now).with(trainee)
       end
     end
 
-    context "after 2 days of polling" do
-      let(:trainee) { create(:trainee, recommended_for_qts_at: 2.days.ago) }
+    context "after the configured days of polling" do
+      let(:trainee) { create(:trainee, recommended_for_qts_at: configured_limit.days.ago) }
+      let(:configured_limit) { 2 }
+
+      before do
+        allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_limit)
+      end
 
       it "doesn't queue another job after 2 days have passed with no QTS" do
         described_class.perform_now(trainee)
@@ -56,6 +66,21 @@ describe RetrieveQtsJob do
       expect {
         described_class.perform_now(trainee)
       }.to raise_error(RetrieveQtsJob::TraineeAttributeError, error_msg)
+    end
+  end
+
+  describe ".perform_with_default_delay" do
+    let(:configured_delay) { 6 }
+
+    before do
+      allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
+    end
+
+    it "enqueues the job with the configured delay" do
+      Timecop.freeze(Time.zone.now) do
+        described_class.perform_now(trainee)
+        expect(RetrieveQtsJob).to have_been_enqueued.at(configured_delay.hours.from_now).with(trainee)
+      end
     end
   end
 end
