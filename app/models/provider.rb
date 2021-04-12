@@ -3,6 +3,7 @@
 class Provider < ApplicationRecord
   has_many :users
   has_many :trainees
+  has_many :apply_applications
   has_many :courses
 
   validates :name, presence: true

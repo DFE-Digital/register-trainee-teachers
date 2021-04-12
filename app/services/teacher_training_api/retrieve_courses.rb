@@ -22,9 +22,8 @@ module TeacherTrainingApi
 
     attr_reader :provider
 
-    # TODO: Make the recruitment cycle dynamic once we have a concept of cycles.
     def response
-      @response ||= Client.get("/recruitment_cycles/2021/providers/#{provider.code}/courses")
+      @response ||= Client.get("/recruitment_cycles/#{Settings.current_recruitment_cycle_year}/providers/#{provider.code}/courses")
     end
   end
 end
