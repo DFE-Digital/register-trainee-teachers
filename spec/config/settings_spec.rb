@@ -41,7 +41,7 @@ describe "Settings" do
   describe ".jobs" do
     jobs = settings[:jobs]
 
-    include_examples expected_value_test, :poll_delay_hours, jobs, 6
-    include_examples expected_value_test, :max_poll_duration_days, jobs, 2
+    include_examples expected_value_test, :poll_delay_hours, jobs, 1
+    include_examples expected_value_test, :max_poll_duration_days, jobs, 4
   end
 end

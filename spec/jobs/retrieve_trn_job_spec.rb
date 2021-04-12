@@ -29,20 +29,31 @@ describe RetrieveTrnJob do
   end
 
   context "TRN is not available" do
+    let(:configured_delay) { 6 }
+
+    before do
+      allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
+    end
+
     it "queues another job to fetch the TRN 6 hours from now" do
       Timecop.freeze(Time.zone.now) do
         described_class.perform_now(trainee)
-        expect(RetrieveTrnJob).to have_been_enqueued.at(6.hours.from_now).with(trainee)
+        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now).with(trainee)
       end
     end
+  end
 
-    context "after 2 days of polling" do
-      let(:trainee) { create(:trainee, submitted_for_trn_at: 2.days.ago) }
+  context "after 2 days of polling" do
+    let(:trainee) { create(:trainee, submitted_for_trn_at: configured_limit.days.ago) }
+    let(:configured_limit) { 2 }
 
-      it "doesn't queue another job after 2 days have passed without a TRN" do
-        described_class.perform_now(trainee)
-        expect(RetrieveTrnJob).to_not have_been_enqueued
-      end
+    before do
+      allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_limit)
+    end
+
+    it "doesn't queue another job after 2 days have passed without a TRN" do
+      described_class.perform_now(trainee)
+      expect(RetrieveTrnJob).to_not have_been_enqueued
     end
   end
 
@@ -54,6 +65,21 @@ describe RetrieveTrnJob do
       expect {
         described_class.perform_now(trainee)
       }.to raise_error(RetrieveTrnJob::TraineeAttributeError, error_msg)
+    end
+  end
+
+  describe ".perform_with_default_delay" do
+    let(:configured_delay) { 6 }
+
+    before do
+      allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
+    end
+
+    it "queues the job to execute after the configured delay" do
+      Timecop.freeze(Time.zone.now) do
+        described_class.perform_with_default_delay(trainee)
+        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now).with(trainee)
+      end
     end
   end
 end

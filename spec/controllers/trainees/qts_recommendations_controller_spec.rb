@@ -21,11 +21,8 @@ describe Trainees::QtsRecommendationsController do
     end
 
     it "queues a background job to poll for the trainee's QTS" do
-      Timecop.freeze(Time.zone.now) do
-        expect {
-          post :create, params: { trainee_id: trainee }
-        }.to have_enqueued_job(RetrieveQtsJob).at(RetrieveQtsJob::POLL_DELAY.from_now).with(trainee)
-      end
+      expect(RetrieveQtsJob).to receive(:perform_with_default_delay).with(trainee)
+      post :create, params: { trainee_id: trainee }
     end
 
     it "redirects user to the recommended page" do

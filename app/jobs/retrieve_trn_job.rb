@@ -6,16 +6,19 @@ class RetrieveTrnJob < ApplicationJob
 
   class TraineeAttributeError < StandardError; end
 
-  POLL_DELAY = Settings.jobs.poll_delay_hours.hours
-  MAX_POLL_DURATION = Settings.jobs.max_poll_duration_days.days
-
   def perform(trainee)
     trn = Dttp::RetrieveTrn.call(trainee: trainee)
 
     if trn
       trainee.trn_received!(trn)
     elsif continue_polling?(trainee)
-      RetrieveTrnJob.set(wait: POLL_DELAY).perform_later(trainee)
+      self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee)
+    end
+  end
+
+  class << self
+    def perform_with_default_delay(trainee)
+      set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee)
     end
   end
 
@@ -26,6 +29,6 @@ private
       raise TraineeAttributeError, "Trainee#submitted_for_trn_at is nil - it should be timestamped (id: #{trainee.id})"
     end
 
-    trainee.submitted_for_trn_at > MAX_POLL_DURATION.ago
+    trainee.submitted_for_trn_at > Settings.jobs.max_poll_duration_days.days.ago
   end
 end
