@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_152050) do
+ActiveRecord::Schema.define(version: 2021_04_08_150651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,17 @@ ActiveRecord::Schema.define(version: 2021_04_07_152050) do
     t.index ["name"], name: "index_disabilities_on_name", unique: true
   end
 
+  create_table "dttp_users", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "dttp_id"
+    t.string "provider_dttp_id"
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["dttp_id"], name: "index_dttp_users_on_dttp_id", unique: true
+  end
+
   create_table "nationalisations", force: :cascade do |t|
     t.bigint "trainee_id", null: false
     t.bigint "nationality_id", null: false
@@ -177,8 +188,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_152050) do
     t.text "first_names"
     t.text "last_name"
     t.date "date_of_birth"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.text "address_line_one"
     t.text "address_line_two"
     t.text "town_city"
