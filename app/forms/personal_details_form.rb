@@ -16,7 +16,9 @@ class PersonalDetailsForm
   delegate :id, :persisted?, to: :trainee
 
   attr_accessor(*FIELDS, :trainee, :day, :month, :year, :other_nationality1,
-                :other_nationality2, :other_nationality3, :other)
+                :other_nationality1_raw, :other_nationality2,
+                :other_nationality2_raw, :other_nationality3,
+                :other_nationality3_raw, :other)
 
   validates :first_names, presence: true
   validates :last_name, presence: true
@@ -24,6 +26,7 @@ class PersonalDetailsForm
   validate :date_of_birth_valid
   validate :date_of_birth_not_in_future
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
+  validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true
   validate :nationalities_cannot_be_empty
 
   def initialize(trainee, params = {}, store = FormStore)
