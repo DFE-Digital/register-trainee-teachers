@@ -8,6 +8,8 @@ module PageObjects
       element :add_a_user, "a", text: "Add a user"
 
       elements :user_data, ".user-card"
+
+      elements :dttp_users_not_registered_data, "#user-not-registered"
     end
   end
 end
