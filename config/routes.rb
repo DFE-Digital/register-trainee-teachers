@@ -61,11 +61,12 @@ Rails.application.routes.draw do
       namespace :degrees do
         get "/new/type", to: "type#new"
         post "/new/type", to: "type#create"
+        get "/confirm", to: "confirm_details#show"
       end
 
       resources :degrees do
         collection do
-          resource :confirm_details, as: :degrees_confirm, only: %i[show update], path: "/confirm"
+          resource :confirm_details, as: :degrees_confirm, only: :update, path: "/confirm"
         end
       end
 

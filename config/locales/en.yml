@@ -72,8 +72,10 @@ en:
     placement_detail:
       title: Placement details
     degrees:
-      add_a_degree: Add a degree
       add_another_degree: Add another degree
+    incomplete_section:
+      degree_details_not_provided: Degree details not provided
+      add_degree_details: Add degree details
     page_titles:
       personas: Personas
       pages:

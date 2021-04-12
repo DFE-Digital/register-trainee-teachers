@@ -10,6 +10,7 @@ feature "deleting a degree" do
     when_i_visit_the_degrees_confirm_page
     and_i_click_the_delete_button
     then_i_should_not_see_any_degree
+    and_i_should_see_incomplete_degree_inset_text
   end
 
   scenario "with not UK degree" do
@@ -17,6 +18,7 @@ feature "deleting a degree" do
     when_i_visit_the_degrees_confirm_page
     and_i_click_the_delete_button
     then_i_should_not_see_any_degree
+    and_i_should_see_incomplete_degree_inset_text
   end
 
 private
@@ -41,6 +43,10 @@ private
   def when_i_visit_the_degrees_confirm_page
     degrees_confirm_page.load(trainee_id: trainee.slug)
     expect(degrees_confirm_page).to be_displayed(trainee_id: trainee.slug)
+  end
+
+  def and_i_should_see_incomplete_degree_inset_text
+    expect(degrees_confirm_page.inset_text.text).to include("Degree details not provided")
   end
 
   def trainee
