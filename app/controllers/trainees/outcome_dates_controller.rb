@@ -9,7 +9,7 @@ module Trainees
     end
 
     def update
-      @outcome_form = OutcomeDateForm.new(trainee, trainee_params)
+      @outcome_form = OutcomeDateForm.new(trainee, params: trainee_params, user: current_user)
 
       if @outcome_form.stash
         redirect_to confirm_trainee_outcome_details_path(trainee)

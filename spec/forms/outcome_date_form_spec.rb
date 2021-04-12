@@ -15,7 +15,7 @@ describe OutcomeDateForm, type: :model do
     }
   end
 
-  subject { described_class.new(trainee, params, form_store) }
+  subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -68,7 +68,7 @@ describe OutcomeDateForm, type: :model do
 
   describe "#stash" do
     it "uses FormStore to temporarily save the fields under a key combination of trainee ID and deferral_details" do
-      expect(form_store).to receive(:set).with(trainee.id, :outcome, subject.fields)
+      expect(form_store).to receive(:set).with(trainee.id, :outcome_date, subject.fields)
 
       subject.stash
     end
@@ -76,7 +76,7 @@ describe OutcomeDateForm, type: :model do
 
   describe "#save!" do
     it "takes any data from the form store and saves it to the database and clears the store data" do
-      expect(form_store).to receive(:set).with(trainee.id, :outcome, nil)
+      expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
 
       date_params = params.except("date_string").values.map(&:to_i)
       expect { subject.save! }.to change(trainee, :outcome_date).to(Date.new(*date_params))

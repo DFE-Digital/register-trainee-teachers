@@ -23,7 +23,7 @@ describe PersonalDetailsForm, type: :model do
     }
   end
 
-  subject { described_class.new(trainee, params, form_store) }
+  subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -52,10 +52,8 @@ describe PersonalDetailsForm, type: :model do
     end
 
     context "date of birth" do
-      subject { described_class.new(trainee, attributes) }
-
       context "invalid date" do
-        let(:attributes) { { day: 323, month: 2, year: 1987 } }
+        let(:params) { { day: 323, month: 2, year: 1987 } }
 
         before do
           subject.validate
@@ -71,7 +69,7 @@ describe PersonalDetailsForm, type: :model do
       end
 
       context "future date" do
-        let(:attributes) { { day: 1, month: 2, year: 2021 } }
+        let(:params) { { day: 1, month: 2, year: 2021 } }
 
         before do
           subject.validate

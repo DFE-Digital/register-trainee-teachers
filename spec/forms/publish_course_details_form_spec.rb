@@ -6,7 +6,7 @@ describe PublishCourseDetailsForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
   let(:form_store) { class_double(FormStore) }
-  subject { described_class.new(trainee, params, form_store) }
+  subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -22,7 +22,7 @@ describe PublishCourseDetailsForm, type: :model do
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
-        expect(form_store).to receive(:set).with(trainee.id, :course_code, params)
+        expect(form_store).to receive(:set).with(trainee.id, :publish_course_details, params)
 
         subject.stash
       end

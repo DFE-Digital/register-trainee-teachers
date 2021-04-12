@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class ContactDetailsForm
-  include ActiveModel::Model
-  include ActiveModel::AttributeAssignment
-  include ActiveModel::Validations::Callbacks
-
+class ContactDetailsForm < TraineeForm
   MANDATORY_UK_ADDRESS_FIELDS = %i[
     address_line_one
     town_city
@@ -18,9 +14,7 @@ class ContactDetailsForm
     email
   ].concat(MANDATORY_UK_ADDRESS_FIELDS).freeze
 
-  delegate :id, :persisted?, to: :trainee
-
-  attr_accessor(*FIELDS, :fields, :trainee)
+  attr_accessor(*FIELDS)
 
   before_validation :sanitise_email
 
@@ -32,14 +26,6 @@ class ContactDetailsForm
 
   validate do |record|
     EmailFormatValidator.new(record).validate
-  end
-
-  def initialize(trainee, params = {}, store = FormStore)
-    @trainee = trainee
-    @store = store
-    @new_attributes = fields_from_store.merge(params).symbolize_keys
-    @fields = trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
-    super(fields)
   end
 
   def uk?
@@ -56,13 +42,11 @@ class ContactDetailsForm
     end
   end
 
-  def stash
-    valid? && store.set(trainee.id, :contact_details, fields)
-  end
-
 private
 
-  attr_reader :new_attributes, :store
+  def compute_fields
+    trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
+  end
 
   def non_uk?
     fields[:locale_code] == "non_uk"
@@ -76,10 +60,6 @@ private
 
   def sanitise_email
     self.email = email.gsub(/\s+/, "") unless email.nil?
-  end
-
-  def fields_from_store
-    store.get(trainee.id, :contact_details).presence || {}
   end
 
   def nullify_unused_address_fields!

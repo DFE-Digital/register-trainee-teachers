@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
-class MultiDateForm
-  include ActiveModel::Model
-  include ActiveModel::AttributeAssignment
-  include ActiveModel::Validations::Callbacks
-
-  attr_accessor :trainee, :day, :month, :year, :date_string
-
-  delegate :id, :persisted?, to: :trainee
+class MultiDateForm < TraineeForm
+  attr_accessor :day, :month, :year, :date_string
 
   validate :date_valid
 
@@ -16,24 +10,6 @@ class MultiDateForm
     "date(2i)" => "month",
     "date(1i)" => "year",
   }.freeze
-
-  def initialize(trainee, params = {}, store = FormStore)
-    @trainee = trainee
-    @store = store
-    @params = params
-    @new_attributes = fields_from_store.merge(params).symbolize_keys
-    super(fields)
-  end
-
-  def fields
-    {
-      date_string: rehydrate_date_string,
-      day: trainee_attribute&.day,
-      month: trainee_attribute&.month,
-      year: trainee_attribute&.year,
-    }.merge(additional_fields)
-     .merge(new_attributes.slice(:day, :month, :year, :date_string))
-  end
 
   def date
     return unless date_string
@@ -45,15 +21,11 @@ class MultiDateForm
     }[date_string.to_sym]
   end
 
-  def stash
-    valid? && store.set(trainee.id, form_store_key, fields)
-  end
-
   def save!
     if valid?
       update_trainee
       trainee.save!
-      store.set(trainee.id, form_store_key, nil)
+      clear_stash
     else
       false
     end
@@ -61,14 +33,17 @@ class MultiDateForm
 
 private
 
-  attr_reader :new_attributes, :store
+  def compute_fields
+    {
+      date_string: rehydrate_date_string,
+      day: trainee_attribute&.day,
+      month: trainee_attribute&.month,
+      year: trainee_attribute&.year,
+    }.merge(additional_fields).merge(new_attributes.slice(:day, :month, :year, :date_string))
+  end
 
   def date_field
     raise "Subclass of MultiDateForm must implement #date_field"
-  end
-
-  def form_store_key
-    raise "Subclass of MultiDateForm must implement #form_store_key"
   end
 
   def trainee_attribute
@@ -111,9 +86,5 @@ private
     elsif !date.is_a?(Date)
       errors.add(:date, :invalid)
     end
-  end
-
-  def fields_from_store
-    store.get(trainee.id, form_store_key).presence || {}
   end
 end

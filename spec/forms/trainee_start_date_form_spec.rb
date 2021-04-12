@@ -8,15 +8,13 @@ describe TraineeStartDateForm, type: :model do
   let(:form_store) { class_double(FormStore) }
   let(:error_attr) { "activemodel.errors.models.training_details_form.attributes.commencement_date" }
 
-  subject { described_class.new(trainee, params, form_store) }
+  subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
   end
 
   describe "validations" do
-    subject { described_class.new(trainee, params) }
-
     before { subject.validate }
 
     context "invalid date" do

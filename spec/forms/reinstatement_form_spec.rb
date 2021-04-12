@@ -15,7 +15,7 @@ describe ReinstatementForm, type: :model do
     }
   end
 
-  subject { described_class.new(trainee, params, form_store) }
+  subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)

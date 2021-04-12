@@ -11,7 +11,12 @@ module Trainees
       end
 
       def update
-        @disability_detail_form = Diversities::DisabilityDetailForm.new(trainee, disability_detail_params)
+        @disability_detail_form = Diversities::DisabilityDetailForm.new(
+          trainee,
+          params: disability_detail_params,
+          user: current_user,
+        )
+
         save_strategy = trainee.draft? ? :save! : :stash
 
         if @disability_detail_form.public_send(save_strategy)

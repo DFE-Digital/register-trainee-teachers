@@ -10,7 +10,8 @@ module Trainees
       end
 
       def update
-        @disclosure_form = Diversities::DisclosureForm.new(trainee, disclosure_params)
+        @disclosure_form = Diversities::DisclosureForm.new(trainee, params: disclosure_params, user: current_user)
+
         save_strategy = trainee.draft? ? :save! : :stash
 
         if @disclosure_form.public_send(save_strategy)

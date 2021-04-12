@@ -5,14 +5,14 @@ class FormStore
 
   FORM_SECTION_KEYS = %i[
     contact_details
-    course_code
+    publish_course_details
     course_details
     personal_details
     trainee_id
     trainee_start_date
     deferral
     reinstatement
-    outcome
+    outcome_date
     withdrawal
     diversity_disclosure
     ethnic_group

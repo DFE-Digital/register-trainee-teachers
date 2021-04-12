@@ -3,9 +3,10 @@
 require "rails_helper"
 
 describe TrainingDetailsForm, type: :model do
+  let(:params) { {} }
   let(:trainee) { build(:trainee) }
 
-  subject { described_class.new(trainee) }
+  subject { described_class.new(trainee, params: params) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:trainee_id) }
@@ -17,8 +18,6 @@ describe TrainingDetailsForm, type: :model do
     end
 
     context "trainee ID" do
-      subject { described_class.new(trainee) }
-
       context "not present" do
         let(:trainee) { build(:trainee, trainee_id: nil) }
 
@@ -50,15 +49,8 @@ describe TrainingDetailsForm, type: :model do
     end
 
     context "commencement date" do
-      subject { described_class.new(trainee) }
-
-      before do
-        subject.assign_attributes(date_attributes)
-        subject.validate
-      end
-
       context "not present" do
-        let(:date_attributes) { { day: "", month: "", year: "" } }
+        let(:params) { { day: "", month: "", year: "" } }
 
         it "returns a blank error message" do
           expect(subject.errors[:commencement_date]).to include(
@@ -68,7 +60,7 @@ describe TrainingDetailsForm, type: :model do
       end
 
       context "invalid date" do
-        let(:date_attributes) { { day: "2", month: "14", year: "" } }
+        let(:params) { { day: "2", month: "14", year: "" } }
 
         it "returns an invalid date error message" do
           expect(subject.errors[:commencement_date]).to include(

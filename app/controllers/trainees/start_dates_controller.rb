@@ -15,7 +15,7 @@ module Trainees
     end
 
     def update
-      @trainee_start_date_form = TraineeStartDateForm.new(trainee, trainee_params)
+      @trainee_start_date_form = TraineeStartDateForm.new(trainee, params: trainee_params, user: current_user)
 
       save_strategy = trainee.draft? ? :save! : :stash
 

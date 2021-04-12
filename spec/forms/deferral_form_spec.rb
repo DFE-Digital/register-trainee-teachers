@@ -3,6 +3,7 @@
 require "rails_helper"
 
 describe DeferralForm, type: :model do
+  let(:user) { create(:user) }
   let(:trainee) { create(:trainee, :deferred) }
   let(:form_store) { class_double(FormStore) }
 
@@ -15,7 +16,7 @@ describe DeferralForm, type: :model do
     }
   end
 
-  subject { described_class.new(trainee, params, form_store) }
+  subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)

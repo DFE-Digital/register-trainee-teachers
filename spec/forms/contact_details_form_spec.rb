@@ -7,7 +7,7 @@ describe ContactDetailsForm, type: :model do
   let(:trainee) { build(:trainee, locale_code: nil) }
   let(:form_store) { class_double(FormStore) }
 
-  subject { described_class.new(trainee, params, form_store) }
+  subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)

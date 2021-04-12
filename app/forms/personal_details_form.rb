@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class PersonalDetailsForm
-  include ActiveModel::Model
-  include ActiveModel::AttributeAssignment
-  include ActiveModel::Validations::Callbacks
-
+class PersonalDetailsForm < TraineeForm
   FIELDS = %i[
     first_names
     middle_names
@@ -13,10 +9,7 @@ class PersonalDetailsForm
     nationality_ids
   ].freeze
 
-  delegate :id, :persisted?, to: :trainee
-
-  attr_accessor(*FIELDS, :trainee, :day, :month, :year, :other_nationality1,
-                :other_nationality2, :other_nationality3, :other)
+  attr_accessor(*FIELDS, :day, :month, :year, :other_nationality1, :other_nationality2, :other_nationality3, :other)
 
   validates :first_names, presence: true
   validates :last_name, presence: true
@@ -26,23 +19,6 @@ class PersonalDetailsForm
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
   validate :nationalities_cannot_be_empty
 
-  def initialize(trainee, params = {}, store = FormStore)
-    @trainee = trainee
-    @store = store
-    @params = params
-    @new_attributes = fields_from_store.merge(params).symbolize_keys
-    super(fields)
-  end
-
-  def fields
-    trainee.attributes
-           .symbolize_keys
-           .slice(*FIELDS)
-           .merge(new_attributes)
-           .merge(nationality_ids: nationality_ids, other: calculate_other, **date_of_birth_hash)
-           .reverse_merge(other_nationalities_hash)
-  end
-
   def date_of_birth
     date_hash = { year: year, month: month, day: day }
     date_args = date_hash.values.map(&:to_i)
@@ -50,15 +26,11 @@ class PersonalDetailsForm
     Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
-  def stash
-    valid? && store.set(trainee.id, :personal_details, fields)
-  end
-
   def save!
     if valid?
       update_trainee_attributes
       trainee.save!
-      store.set(trainee.id, :personal_details, nil)
+      clear_stash
     else
       false
     end
@@ -82,7 +54,14 @@ class PersonalDetailsForm
 
 private
 
-  attr_reader :new_attributes, :store, :params
+  def compute_fields
+    trainee.attributes
+           .symbolize_keys
+           .slice(*FIELDS)
+           .merge(new_attributes)
+           .merge(nationality_ids: nationality_ids, other: calculate_other, **date_of_birth_hash)
+           .reverse_merge(other_nationalities_hash)
+  end
 
   def update_trainee_attributes
     if errors.empty?
@@ -143,9 +122,5 @@ private
     if other_is_selected? && new_attributes[:other_nationality1].blank?
       errors.add(:other_nationality1, :blank)
     end
-  end
-
-  def fields_from_store
-    store.get(trainee.id, :personal_details).presence || {}
   end
 end

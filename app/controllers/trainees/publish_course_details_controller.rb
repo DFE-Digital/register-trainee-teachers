@@ -10,10 +10,9 @@ module Trainees
     end
 
     def update
-      @publish_course_details = PublishCourseDetailsForm.new(trainee, course_params)
+      @publish_course_details = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
 
-      result = @publish_course_details.stash
-      unless result
+      unless @publish_course_details.stash
         @courses = @trainee.available_courses
         render :edit
         return

@@ -10,7 +10,12 @@ module Trainees
       end
 
       def update
-        @ethnic_background_form = Diversities::EthnicBackgroundForm.new(trainee, ethnic_background_params)
+        @ethnic_background_form = Diversities::EthnicBackgroundForm.new(
+          trainee,
+          params: ethnic_background_params,
+          user: current_user,
+        )
+
         save_strategy = trainee.draft? ? :save! : :stash
 
         if @ethnic_background_form.public_send(save_strategy)
