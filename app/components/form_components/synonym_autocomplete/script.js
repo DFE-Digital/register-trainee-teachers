@@ -4,104 +4,78 @@ import { nodeListForEach } from 'govuk-frontend/govuk/common'
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-synonym-autocomplete"]')
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
 
-const setupAutoComplete = (component) => {
-  const selectEl = component.querySelector('select')
-  const selectOptions = Array.apply(null, selectEl.options)
+// Returns an array of integers representing the position of each regex match.
+// 0 = the beginning of the string, -1 = no match.
+const matchPositions = (string, regexes) => regexes.map(regex => string.search(regex))
 
-  // Pull out rich data from the attributes on the select options.
-  const options = selectOptions.map(option => {
+const calculateWeight = (name, synonyms, query) => {
+  const regexes = query.split(/\s+/).map(word => new RegExp('\\b' + word, 'i'))
+
+  const nameMatchPositions = matchPositions(name, regexes).filter(i => i >= 0)
+  const synonymMatchPositions = synonyms.map(synonym => matchPositions(synonym, regexes)).flat().filter(i => i >= 0)
+
+  // Require all parts of the query to be matched:
+  if (nameMatchPositions.length !== regexes.length && synonymMatchPositions.length !== regexes.length) return 0
+
+  // Case insensitive exact matches:
+  const nameIsExactMatch = name.toLowerCase() === query.toLowerCase()
+  const synonymIsExactMatch = synonyms.some(s => s.toLowerCase() === query.toLowerCase())
+  // Case insensitive 'starts with':
+  const nameStartsWithQuery = nameMatchPositions.includes(0)
+  const synonymStartsWithQuery = synonymMatchPositions.includes(0)
+  const wordInNameStartsWithQuery = nameMatchPositions.length > 0
+
+  if (nameIsExactMatch) return 100
+  if (synonymIsExactMatch) return 75
+  if (nameStartsWithQuery) return 60
+  if (synonymStartsWithQuery) return 50
+  if (wordInNameStartsWithQuery) return 25
+  return 0
+}
+
+const byWeightThenAlphabetically = (a, b) => {
+  if (a.weight > b.weight) return -1
+  if (a.weight < b.weight) return 1
+  if (a.name < b.name) return -1
+  if (a.name > b.name) return 1
+  return 0
+}
+
+const source = (q, populateResults, selectOptions) => {
+  const query = q.trim().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '')
+
+  const optionsWithWeights = selectOptions.map(option => {
     const boost = parseInt(option.getAttribute('data-boost'), 10) || 1
-    let synonyms = option.getAttribute('data-synonyms')
-    synonyms = synonyms ? synonyms.split('|') : []
-
+    const synonyms = option.getAttribute('data-synonyms') ? option.getAttribute('data-synonyms').split('|') : []
     return {
       name: option.label,
-      synonyms: synonyms,
-      boost: boost
+      weight: calculateWeight(option.label, synonyms, query) * boost
     }
   })
 
-  // Returns a weighting for an option based on it's 'closeness' to a query.
-  // The higher the weight, the better the match. Returns 0 if no match.
-  const calculateWeight = ({ name, synonyms }, query) => {
-    const queryRegexes = query.split(/\s+/).map(word => new RegExp('\\b' + word, 'i'))
+  const matches = optionsWithWeights.filter(option => option.weight > 0)
+  const results = matches.sort(byWeightThenAlphabetically).map(option => option.name)
 
-    const matchPositions = (str) => queryRegexes.map(regex => str.search(regex))
-    const nameMatchPositions = matchPositions(name).filter(i => i >= 0)
-    const synonymMatchPositions = synonyms.map(synonym => matchPositions(synonym)).flat().filter(i => i >= 0)
+  return populateResults(results)
+}
 
-    // Require all parts of the query to be matches:
-    if (nameMatchPositions.length !== queryRegexes.length && synonymMatchPositions.length !== queryRegexes.length) return 0
+const suggestion = (value, selectOptions) => {
+  const option = selectOptions.find(o => o.label === value)
+  const alt = option.getAttribute('data-alt')
+  return alt ? `<span>${value}</span> <strong>(${alt})</strong>` : `<span>${value}</span>`
+}
 
-    // Case insensitive exact matches:
-    const nameIsExactMatch = name.toLowerCase() === query.toLowerCase()
-    const synonymIsExactMatch = synonyms.some(s => s.toLowerCase() === query.toLowerCase())
-    // Case insensitive 'starts with':
-    const nameStartsWithQuery = nameMatchPositions.includes(0)
-    const synonymStartsWithQuery = synonymMatchPositions.includes(0)
-    const wordInNameStartsWithQuery = name.split(' ').map(w => matchPositions(w)).flat().includes(0)
-
-    if (nameIsExactMatch) {
-      return 100
-    } else if (synonymIsExactMatch) {
-      return 75
-    } else if (nameStartsWithQuery) {
-      return 60
-    } else if (synonymStartsWithQuery) {
-      return 50
-    } else if (wordInNameStartsWithQuery) {
-      return 25
-    } else {
-      return 0
-    }
-  }
-
-  // Sort options by their weights. If they are equally weighted, sort alphabetically.
-  const byWeightThenAlphabetically = (optionA, optionB) => {
-    if (optionA.weight > optionB.weight) {
-      return -1
-    } else if (optionA.weight < optionB.weight) {
-      return 1
-    } else if (optionA.name < optionB.name) {
-      return -1
-    } else if (optionA.name > optionB.name) {
-      return 1
-    } else {
-      return 0
-    }
-  }
-
-  const source = (q, populateResults) => {
-    // Tidy up the incoming query by trimming whitespace and removing punctuation.
-    const query = q.trim().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '')
-    // Calculate weights for all our options, boosted by any provided factor.
-    const matches = options.map(option => {
-      option.weight = calculateWeight(option, query) * option.boost
-      return option
-    })
-
-    // Remove anything that doesn't match.
-    const filteredMatches = matches.filter(option => option.weight !== 0)
-    // Sort those that do.
-    const sortedFilteredMatches = filteredMatches.sort((a, b) => byWeightThenAlphabetically(a, b))
-    // Show just the name.
-    const results = sortedFilteredMatches.map(option => option.name)
-    return populateResults(results)
-  }
-
-  const suggestionTemplate = (value) => {
-    const option = selectOptions.find(o => o.label === value)
-    const alt = option.getAttribute('data-alt')
-    return alt ? `<span>${value}</span> <strong>(${alt})</strong>` : `<span>${value}</span>`
-  }
+const setupAutoComplete = (component) => {
+  const selectEl = component.querySelector('select')
+  const selectOptions = Array.apply(null, selectEl.options)
 
   accessibleAutocomplete.enhanceSelectElement({
     defaultValue: defaultValueOption(component),
     selectElement: selectEl,
     showAllValues: true,
-    source: source,
+    source: (query, populateResults) => source(query, populateResults, selectOptions),
     templates: {
-      suggestion: suggestionTemplate
+      suggestion: (value) => suggestion(value, selectOptions)
     }
   })
 
