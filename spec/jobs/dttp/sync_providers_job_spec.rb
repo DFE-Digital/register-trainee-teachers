@@ -9,12 +9,13 @@ RSpec.describe Dttp::SyncProvidersJob, type: :job do
     allow(Dttp::RetrieveProviders).to receive(:call).with(request_uri: request_uri).and_return(provider_list)
   end
 
-  let(:provider_hash) { ApiStubs::Dttp::Provider.attributes }
+  let(:provider_one_hash) { ApiStubs::Dttp::Provider.attributes }
+  let(:provider_two_hash) { ApiStubs::Dttp::Provider.attributes }
 
   let(:request_uri) { nil }
   let(:provider_list) do
     {
-      items: [provider_hash, provider_hash],
+      items: [provider_two_hash, provider_one_hash],
       meta: { next_page_url: "https://example.com" },
     }
   end
@@ -27,15 +28,31 @@ RSpec.describe Dttp::SyncProvidersJob, type: :job do
     }.to have_enqueued_job(described_class).with("https://example.com")
   end
 
-  it "calls Dttp::ImportProvider for each provider_hash" do
-    expect(Dttp::ImportProvider).to receive(:call).with(provider_hash: provider_hash).twice
-    subject
+  it "creates a Dttp::Provider record for each unique provider" do
+    expect {
+      subject
+    }.to change(Dttp::Provider, :count).by(2)
+  end
+
+  context "when Dttp::Provider exist" do
+    let!(:dttp_provider_one) { create(:dttp_provider, dttp_id: provider_one_hash["accountid"]) }
+
+    it "adds new records" do
+      expect {
+        subject
+      }.to change(Dttp::Provider, :count).by(1)
+    end
+
+    it "updates the existing record" do
+      subject
+      expect(dttp_provider_one.reload.name).to eq("Test Organisation")
+    end
   end
 
   context "when next_page_url is not available" do
     let(:provider_list) do
       {
-        items: [provider_hash],
+        items: [provider_one_hash],
         meta: { next_page_url: nil },
       }
     end
