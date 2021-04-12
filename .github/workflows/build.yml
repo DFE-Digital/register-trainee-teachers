@@ -2,10 +2,10 @@ name: build
 
 on:
   push:
-   branches: 
+   branches:
     - master
   pull_request:
-    branches: 
+    branches:
     - master
 
 env:
@@ -62,6 +62,9 @@ jobs:
 
     - name: Run SCSS Linter
       run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
+
+    - name: Install chromedriver
+      run: docker-compose exec -T web /bin/sh -c 'apk install chromium-chromedriver'
 
     - name: Run Rspec tests
       run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'bundle exec rake spec'
