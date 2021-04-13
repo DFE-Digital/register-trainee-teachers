@@ -16,14 +16,13 @@
     },
   ) %>
 
-  <%= render FormComponents::Autocomplete::View.new(
-    form_field: f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :option_value, :option_name,
-                                          label: { text: "Type of degree", size: "s" },
-                                          hint: { text: "For example, BA, BSc or other (please specify)" }),
-    html_attributes: {
-      "data-show-all-values" => true,
-    },
-  ) %>
+  <%= render FormComponents::SynonymAutocomplete::View.new do |component| %>
+    <% component.with(:form_group) do %>
+      <%= f.label :uk_degree, "Type of degree", class: "govuk-label govuk-label--s" %>
+      <span class="govuk-hint" id="degree-uk-degree-hint">For example, BA, BSc or other (please specify)</span>
+      <%= f.select :uk_degree, options_for_select(enhanced_degree_type_options, @degree_form.degree.uk_degree), { include_blank: true }, { class: "govuk-select", id: "degree-uk-degree-field" } %>
+    <% end %>
+  <% end %>
 
   <%= render FormComponents::Autocomplete::View.new(
     form_field: f.govuk_collection_select(:institution, institutions_options, :name,
