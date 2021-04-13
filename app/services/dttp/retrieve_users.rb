@@ -6,12 +6,25 @@ module Dttp
 
     class Error < StandardError; end
 
-    DEFAULT_PATH = "/contacts?$filter=dfe_portaluser eq true"
-    MAX_PAGE_SIZE = 25
+    MAX_PAGE_SIZE = 5000
 
     HEADERS = {
       "Prefer" => "odata.maxpagesize=#{MAX_PAGE_SIZE}",
     }.freeze
+
+    FIELDS = %w[
+      firstname
+      lastname
+      emailaddress1
+      contactid
+      _parentcustomerid_value
+    ].freeze
+
+    FILTERS = [
+      "dfe_portaluser eq true",
+    ].freeze
+
+    DEFAULT_PATH = "/contacts?$filter=#{FILTERS.join('')}&$select=#{FIELDS.join(',')}"
 
     def initialize(path: nil)
       @path = path.presence || DEFAULT_PATH

@@ -188,8 +188,8 @@ ActiveRecord::Schema.define(version: 2021_04_08_150651) do
     t.text "first_names"
     t.text "last_name"
     t.date "date_of_birth"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.text "address_line_one"
     t.text "address_line_two"
     t.text "town_city"
