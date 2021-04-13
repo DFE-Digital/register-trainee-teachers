@@ -6,7 +6,7 @@ module Dttp
 
     class HttpError < StandardError; end
 
-    MAX_PAGE_SIZE = 25
+    MAX_PAGE_SIZE = 5000
 
     HEADERS = {
       "Prefer" => "odata.maxpagesize=#{MAX_PAGE_SIZE}",
@@ -22,8 +22,16 @@ module Dttp
       "c1ec33aa-216d-e711-80d2-005056ac45bb", # Non-HESA HEI
     ].freeze
 
+    FIELDS = %w[
+      name
+      dfe_ukprn
+      accountid
+    ].freeze
+
+    DEFAULT_PATH = "/accounts?$filter=dfe_provider eq true and (#{INSTITUTION_TYPE_IDS.map { |id| "_dfe_institutiontypeid_value eq #{id}" }.join(' or ')})&$select=#{FIELDS.join(',')}"
+
     def initialize(request_uri: nil)
-      @request_uri = request_uri.presence || default_page_uri
+      @request_uri = request_uri.presence || DEFAULT_PATH
     end
 
     def call
@@ -42,14 +50,6 @@ module Dttp
   private
 
     attr_reader :request_uri
-
-    def default_page_uri
-      "/accounts?$filter=dfe_provider eq true and (#{institution_type_filter})"
-    end
-
-    def institution_type_filter
-      Dttp::RetrieveProviders::INSTITUTION_TYPE_IDS.map { |id| "_dfe_institutiontypeid_value eq #{id}" }.join(" or ")
-    end
 
     def response_body
       @response_body ||= JSON(response.body)

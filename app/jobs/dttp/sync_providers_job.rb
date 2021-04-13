@@ -4,30 +4,24 @@ module Dttp
   class SyncProvidersJob < ApplicationJob
     queue_as :dttp
 
-    PROVIDER_KEYS = {
-      "name" => :name,
-      "dfe_ukprn" => :ukprn,
-      "accountid" => :dttp_id,
-    }.freeze
-
     def perform(request_uri = nil)
       @provider_list = Dttp::RetrieveProviders.call(request_uri: request_uri)
 
-      Dttp::Provider.upsert_all(attributes_for_upsert, unique_by: :dttp_id)
+      Dttp::Provider.upsert_all(provider_attributes, unique_by: :dttp_id)
 
       Dttp::SyncProvidersJob.perform_later(next_page_url) if has_next_page?
     end
 
   private
 
-    def attributes_for_upsert
-      @provider_list[:items].map do |items|
-        items.slice(*PROVIDER_KEYS.keys).transform_keys { |item| PROVIDER_KEYS[item] }
-      end
+    attr_reader :provider_list
+
+    def provider_attributes
+      Dttp::Parsers::Account.to_provider_attributes(providers: provider_list[:items])
     end
 
     def next_page_url
-      @provider_list[:meta][:next_page_url]
+      provider_list[:meta][:next_page_url]
     end
 
     def has_next_page?

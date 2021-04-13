@@ -5,7 +5,7 @@ require "rails_helper"
 module Dttp
   describe RetrieveProviders do
     let(:request_uri) { nil }
-    let(:request_headers) { { headers: { "Prefer" => "odata.maxpagesize=25" } } }
+    let(:request_headers) { { headers: { "Prefer" => "odata.maxpagesize=5000" } } }
     let(:dttp_response) { double(code: 200, body: { value: [1, 2, 3], '@odata.nextLink': "https://example.com" }.to_json) }
 
     subject { described_class.call(request_uri: request_uri) }
