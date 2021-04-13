@@ -33,6 +33,12 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
+  scenario "no matches" do
+    when_i_filter_by_a_subject_which_returns_no_matches
+    then_i_see_a_no_records_found_message
+    then_i_cant_see_sort_links
+  end
+
   context "searching" do
     before { when_i_search_for(search_term) }
 
@@ -115,6 +121,18 @@ private
 
   def when_i_clear_filters
     trainee_index_page.clear_filters_link.click
+  end
+
+  def when_i_filter_by_a_subject_which_returns_no_matches
+    when_i_filter_by_subject("Chemistry")
+  end
+
+  def then_i_see_a_no_records_found_message
+    expect(trainee_index_page.no_records_found).to have_text("No records found")
+  end
+
+  def then_i_cant_see_sort_links
+    expect(trainee_index_page).to_not have_content("Sort by")
   end
 
   def then_the_checkbox_should_still_be_checked_for(value)
