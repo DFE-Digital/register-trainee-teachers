@@ -12,19 +12,22 @@ module Dttp
       "Prefer" => "odata.maxpagesize=#{MAX_PAGE_SIZE}",
     }.freeze
 
-    FIELDS = %w[
-      firstname
-      lastname
-      emailaddress1
-      contactid
-      _parentcustomerid_value
-    ].freeze
+    SELECT = {
+      "$select" => %w[
+        firstname
+        lastname
+        emailaddress1
+        contactid
+        _parentcustomerid_value
+      ].join(",")
+    }.freeze
 
-    FILTERS = [
-      "dfe_portaluser eq true",
-    ].freeze
+    FILTER = {
+      "$filter" => "dfe_portaluser eq true",
+     }.freeze
 
-    DEFAULT_PATH = "/contacts?$filter=#{FILTERS.join('')}&$select=#{FIELDS.join(',')}"
+    QUERY = FILTER.merge(SELECT).to_query
+    DEFAULT_PATH = "/contacts?#{QUERY}"
 
     def initialize(path: nil)
       @path = path.presence || DEFAULT_PATH
