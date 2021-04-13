@@ -11,7 +11,7 @@ module Dttp
     context "class methods" do
       describe ".not_registered_with_provider" do
         let(:provider) { build(:provider) }
-        subject { create(:dttp_user, provider_id: provider.dttp_id) }
+        subject { create(:dttp_user, provider_dttp_id: provider.dttp_id) }
 
         before do
           create(:dttp_user)
