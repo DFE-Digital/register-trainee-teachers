@@ -19,12 +19,12 @@ module Dttp
         emailaddress1
         contactid
         _parentcustomerid_value
-      ].join(",")
+      ].join(","),
     }.freeze
 
     FILTER = {
       "$filter" => "dfe_portaluser eq true",
-     }.freeze
+    }.freeze
 
     QUERY = FILTER.merge(SELECT).to_query
     DEFAULT_PATH = "/contacts?#{QUERY}"
