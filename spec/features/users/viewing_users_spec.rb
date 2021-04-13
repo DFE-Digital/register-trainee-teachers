@@ -5,11 +5,10 @@ require "rails_helper"
 feature "View users" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
-    let(:dttp_user) { create(:dttp_user, provider_dttp_id: user.provider.dttp_id) }
 
     before do
-      dttp_user
       given_i_am_authenticated(user: user)
+      and_there_is_a_dttp_user
       when_i_visit_the_provider_index_page
       and_i_click_on_a_provider
       then_i_am_taken_to_the_provider_show_page
@@ -23,6 +22,10 @@ feature "View users" do
 
   def when_i_visit_the_provider_index_page
     provider_index_page.load
+  end
+
+  def and_there_is_a_dttp_user
+    create(:dttp_user, provider_dttp_id: user.provider.dttp_id)
   end
 
   def and_i_click_on_a_provider
