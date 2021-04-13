@@ -5,7 +5,7 @@ require "rails_helper"
 feature "View users" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
-    let(:dttp_user) { create(:dttp_user, provider_id: user.provider.dttp_id) }
+    let(:dttp_user) { create(:dttp_user, provider_dttp_id: user.provider.dttp_id) }
 
     before do
       dttp_user
