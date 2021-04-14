@@ -4,7 +4,7 @@ module Dttp
   class RetrieveProviders
     include ServicePattern
 
-    class HttpError < StandardError; end
+    class Error < StandardError; end
 
     MAX_PAGE_SIZE = 5000
 
@@ -36,7 +36,7 @@ module Dttp
 
     def call
       if response.code != 200
-        raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
+        raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
       end
 
       {

@@ -25,11 +25,11 @@ module Dttp
       let(:headers) { { foo: "bar" } }
       let(:dttp_response) { double(code: status, body: body, headers: headers) }
 
-      it "raises a HttpError error with the response body as the message" do
+      it "raises an Error with the response body as the message" do
         expect(Client).to receive(:get).with(String, request_headers).and_return(dttp_response)
         expect {
           subject
-        }.to raise_error(described_class::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
+        }.to raise_error(described_class::Error, "status: #{status}, body: #{body}, headers: #{headers}")
       end
     end
   end
