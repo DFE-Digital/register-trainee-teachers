@@ -213,6 +213,8 @@ en:
   views:
     all_records: "All records"
     trainees:
+      index: 
+        no_records: Your trainee records will appear here. You do not have any records yet.
       edit:
         defer: Defer
         withdraw: withdraw
