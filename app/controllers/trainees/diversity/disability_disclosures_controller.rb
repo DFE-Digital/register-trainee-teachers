@@ -39,6 +39,7 @@ module Trainees
 
       def redirect_to_relevant_step
         if @disability_disclosure_form.disability_not_provided? || @disability_disclosure_form.no_disability?
+          trainee.clear_disabilities
           redirect_to(trainee_diversity_confirm_path(trainee))
         else
           redirect_to(edit_trainee_diversity_disability_detail_path(trainee))

@@ -181,4 +181,8 @@ class Trainee < ApplicationRecord
   def available_courses
     provider.courses.where(route: training_route)
   end
+
+  def clear_disabilities
+    disabilities.clear
+  end
 end
