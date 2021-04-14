@@ -12,23 +12,23 @@ module Dttp
       "Prefer" => "odata.maxpagesize=#{MAX_PAGE_SIZE}",
     }.freeze
 
-    INSTITUTION_TYPE_IDS = [
-      "b5ec33aa-216d-e711-80d2-005056ac45bb", # EBITT
-      "b7ec33aa-216d-e711-80d2-005056ac45bb", # EYITT
-      "b9ec33aa-216d-e711-80d2-005056ac45bb", # HEI
-      "bbec33aa-216d-e711-80d2-005056ac45bb", # ITT Provider - HESA
-      "bdec33aa-216d-e711-80d2-005056ac45bb", # ITT Provider - Non-HESA
-      "bfec33aa-216d-e711-80d2-005056ac45bb", # NonHEI (data gathered under Scitt process)
-      "c1ec33aa-216d-e711-80d2-005056ac45bb", # Non-HESA HEI
-    ].freeze
+    INSTITUTION_TYPES = CodeSets::InstitutionTypes::MAPPING.values.flat_map { |institution| "_dfe_institutiontypeid_value eq #{institution[:entity_id]}" }.join(" or ")
 
-    FIELDS = %w[
-      name
-      dfe_ukprn
-      accountid
-    ].freeze
+    FILTER = {
+      "$filter" => "dfe_provider eq true and (#{INSTITUTION_TYPES})",
+    }.freeze
 
-    DEFAULT_PATH = "/accounts?$filter=dfe_provider eq true and (#{INSTITUTION_TYPE_IDS.map { |id| "_dfe_institutiontypeid_value eq #{id}" }.join(' or ')})&$select=#{FIELDS.join(',')}"
+    SELECT = {
+      "$select" => %w[
+        name
+        dfe_ukprn
+        accountid
+      ].join(","),
+    }.freeze
+
+    QUERY = FILTER.merge(SELECT).to_query
+
+    DEFAULT_PATH = "/accounts?#{QUERY}"
 
     def initialize(request_uri: nil)
       @request_uri = request_uri.presence || DEFAULT_PATH
