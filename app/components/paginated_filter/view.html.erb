@@ -6,7 +6,7 @@
     <div class="moj-action-bar">
       <div class="moj-action-bar__filter"></div>
     </div>
-    <% if !@collection.empty? %>
+    <% unless @collection.empty? %>
       <%= render Trainees::SortLinks::View.new %>
     <% end %>
     <%= content %>
