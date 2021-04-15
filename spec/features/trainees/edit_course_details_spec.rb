@@ -57,20 +57,14 @@ feature "course details", type: :feature do
       then_start_date_is_still_populated
     end
 
-    scenario "submitting with a partial subject", js: true do
+    scenario "submitting with a partial subject/age range", js: true do
       when_i_visit_the_course_details_page
       and_i_fill_in_subject_without_selecting_a_value(with: "moose")
+      and_i_fill_in_additional_age_range_without_selecting_a_value(with: "goose")
       and_i_submit_the_form
       then_subject_is_populated(with: "moose")
-      # TODO: error message assertion
-    end
-
-    scenario "submitting with a partial age range", js: true do
-      when_i_visit_the_course_details_page
-      and_i_fill_in_additional_age_range_without_selecting_a_value(with: "moose")
-      and_i_submit_the_form
-      then_additional_age_range_is_populated(with: "moose")
-      # TODO: error message assertion
+      then_additional_age_range_is_populated(with: "goose")
+      then_i_see_error_messages_for_partially_submitted_fields
     end
   end
 
@@ -163,6 +157,15 @@ private
     )
     expect(course_details_page).to have_content(
       I18n.t("#{translation_key_prefix}.course_start_date.blank"),
+    )
+  end
+
+  def then_i_see_error_messages_for_partially_submitted_fields
+    expect(course_details_page).to have_content(
+      I18n.t("activemodel.errors.validators.autocomplete.subject"),
+    )
+    expect(course_details_page).to have_content(
+      I18n.t("activemodel.errors.validators.autocomplete.additional_age_range"),
     )
   end
 

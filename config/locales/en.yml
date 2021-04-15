@@ -453,6 +453,11 @@ en:
         autocomplete:
           subject: "Select a subject after typing"
           additional_age_range: "Select an age range after typing"
+          uk_degree: "Select a nationality after typing"
+          institution: "Select an intitution after typing"
+          other_nationality1: &nationality "Select a nationality after typing"
+          other_nationality2: *nationality
+          other_nationality3: *nationality
       models:
         contact_details_form:
           attributes:

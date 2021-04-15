@@ -47,7 +47,7 @@ feature "edit personal details", type: :feature do
     and_i_fill_in_nationalities_without_selecting_a_value(with: ["moose", "on", "the loose"])
     and_i_submit_the_form
     then_nationalities_are_populated(with: ["moose", "on", "the loose"])
-    # TODO: error messages
+    then_i_see_error_messages_for_partially_completed_nationalities
   end
 
   context "as a non-draft trainee" do
@@ -175,5 +175,13 @@ private
     expect(personal_details_page.other_nationality1_raw.value).to eq nationality1
     expect(personal_details_page.other_nationality2_raw.value).to eq nationality2
     expect(personal_details_page.other_nationality3_raw.value).to eq nationality3
+  end
+
+  def then_i_see_error_messages_for_partially_completed_nationalities
+    expect(personal_details_page).to have_content(
+      I18n.t(
+        "activemodel.errors.validators.autocomplete.other_nationality1",
+      ),
+    )
   end
 end
