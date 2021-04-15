@@ -19,7 +19,7 @@ module Dttp
           [{ title: title_html(filter, value), remove_link: remove_select_tag_link(filter) }]
         end
 
-        private
+      private
 
         def title_html(filter, value)
           tag.span("Remove ", class: "govuk-visually-hidden") + value + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")

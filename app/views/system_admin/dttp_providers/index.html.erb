@@ -3,7 +3,7 @@
 <h1 class="govuk-heading-xl">Dttp Providers</h1>
 
 <%= render Dttp::Providers::Collection::View.new(filters: @filter_params, collection: @providers) do %>
-  <table class="govuk-table">
+  <table class="govuk-table" summary="DTTP Providers list">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header govuk-!-width-one-half">Provider name</th>

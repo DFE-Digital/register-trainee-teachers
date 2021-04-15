@@ -25,6 +25,5 @@ module SystemAdmin
     def filter_params
       @filter_params ||= params.permit(:text_search).presence
     end
-
   end
 end

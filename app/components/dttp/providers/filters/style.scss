@@ -1,4 +1,4 @@
-@import "../../base.scss";
+@import "../../../base.scss";
 @import "~@ministryofjustice/frontend/moj/settings/assets";
 @import "~@ministryofjustice/frontend/moj/settings/measurements";
 @import "~@ministryofjustice/frontend/moj/helpers/all";
@@ -53,7 +53,7 @@
   @include govuk-media-query($until: tablet) {
     // only display a scrollbar if it there is overflow to scroll
     overflow: auto;
-    // At this width the filter has `position: fixed`. We should set a max width that will safely include the filter and a scrollbar if present 
+    // At this width the filter has `position: fixed`. We should set a max width that will safely include the filter and a scrollbar if present
     max-width: calc(100vw - calc(100vw - 100%));
   }
 }

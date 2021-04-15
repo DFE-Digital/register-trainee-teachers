@@ -7,7 +7,6 @@ RSpec.describe Dttp::Provider, type: :model do
 
   it { is_expected.to have_db_index(:dttp_id) }
 
-
   describe "#search_by_name" do
     let!(:matching_provider) { create(:dttp_provider, name: "Test 1") }
 

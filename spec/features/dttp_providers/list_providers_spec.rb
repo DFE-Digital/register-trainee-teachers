@@ -24,5 +24,4 @@ feature "List providers" do
   def then_i_see_the_dttp_provider
     expect(dttp_provider_index_page).to have_text("Test 1")
   end
-
 end

@@ -17,7 +17,7 @@ module SystemAdmin
           filter_records
         end
 
-        private
+      private
 
         attr_reader :providers, :filters
 
