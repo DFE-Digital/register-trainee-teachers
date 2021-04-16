@@ -3,11 +3,8 @@
 class CoursesSpike < ApplicationRecord
   belongs_to :provider
 
-  validates :code, presence: true, uniqueness: { scope: :provider_id }
   validates :name, presence: true
-  validates :start_date, presence: true
   validates :level, presence: true
-  validates :age_range, presence: true
   validates :duration_in_years, presence: true
   validates :qualification, presence: true
   validates :course_length, presence: true
