@@ -66,6 +66,10 @@ module Features
       @provider_index_page ||= PageObjects::Providers::Index.new
     end
 
+    def dttp_provider_index_page
+      @provider_index_page ||= PageObjects::DttpProviders::Index.new
+    end
+
     def sign_in_page
       @sign_in_page ||= PageObjects::SignIn.new
     end

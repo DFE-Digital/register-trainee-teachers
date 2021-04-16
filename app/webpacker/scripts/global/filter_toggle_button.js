@@ -1,4 +1,3 @@
-import './style.scss'
 import $ from 'jquery'
 import { FilterToggleButton } from 'moj/all.js'
 

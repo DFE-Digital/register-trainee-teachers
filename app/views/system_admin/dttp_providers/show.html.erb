@@ -5,9 +5,7 @@
   href: providers_path,
 ) %>
 
-<h1 class="govuk-heading-l"><%= @provider.name %></h1>
-
-<%= render "system_admin/menu" %>
+<h1 class="govuk-heading-xl"><%= @provider.name %></h1>
 
 <p class="govuk-body">
   <%= render GovukComponent::StartNowButton.new(

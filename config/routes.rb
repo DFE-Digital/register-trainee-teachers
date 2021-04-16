@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     resources :providers, except: %i[edit update destroy] do
       resources :users, only: %i[new create]
     end
+    resources :dttp_providers, only: %i[index show]
   end
 
   resources :trainees, except: :edit do

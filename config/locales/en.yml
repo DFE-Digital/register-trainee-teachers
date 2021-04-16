@@ -153,6 +153,8 @@ en:
       providers:
         index: Providers
         new: Add a provider
+      dttp_providers:
+        index: Dttp Providers
       users:
         new: Add a user
     filter:

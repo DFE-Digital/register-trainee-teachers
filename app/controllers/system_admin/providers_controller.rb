@@ -2,8 +2,6 @@
 
 module SystemAdmin
   class ProvidersController < ApplicationController
-    layout "platform_admin"
-
     def index
       @providers = authorize Provider.all.order(:name)
     end
