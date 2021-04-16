@@ -27,7 +27,7 @@ FactoryBot.define do
     trait :non_uk_degree_type do
       locale_code { :non_uk }
       uk_degree { nil }
-      non_uk_degree { NARIC_NON_UK.sample }
+      non_uk_degree { ENIC_NON_UK.sample }
     end
 
     trait :non_uk_degree_with_details do

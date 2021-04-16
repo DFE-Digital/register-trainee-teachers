@@ -38,7 +38,7 @@ module Dttp
       end
 
       def non_uk_specific_params
-        degree_type = degree.non_uk_degree_non_naric? ? "Unknown" : "Degree equivalent"
+        degree_type = degree.non_uk_degree_non_enic? ? "Unknown" : "Degree equivalent"
 
         {
           "dfe_name" => degree.non_uk_degree,
