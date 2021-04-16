@@ -25,6 +25,8 @@ module PageObjects
       element :subject, "#subject"
 
       element :export_link, ".app-trainee-export"
+
+      element :no_records_found, "h2", text: "No records found"
     end
   end
 end

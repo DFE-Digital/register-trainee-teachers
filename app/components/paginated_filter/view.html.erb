@@ -6,8 +6,9 @@
     <div class="moj-action-bar">
       <div class="moj-action-bar__filter"></div>
     </div>
-
-    <%= render Trainees::SortLinks::View.new %>
+    <% unless @collection.empty? %>
+      <%= render Trainees::SortLinks::View.new %>
+    <% end %>
     <%= content %>
 
     <%= render Paginator::View.new(scope: collection) %>
