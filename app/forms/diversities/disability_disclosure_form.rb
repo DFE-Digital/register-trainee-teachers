@@ -18,6 +18,11 @@ module Diversities
       super(trainee, **kwargs)
     end
 
+    def save!
+      trainee.clear_disabilities if disability_not_provided? || no_disability?
+      super
+    end
+
     def disabled?
       fields[:disability_disclosure] == Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
     end
