@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-NARIC_NON_UK = [
+ENIC_NON_UK = [
   "Bachelor degree",
   "Ordinary bachelor degree",
   "Bachelor degree with honours",
@@ -8,4 +8,4 @@ NARIC_NON_UK = [
   "Master’s degree or Integrated Master’s degree",
 ].freeze
 
-NON_NARIC = "non_naric"
+NON_ENIC = "non_enic"

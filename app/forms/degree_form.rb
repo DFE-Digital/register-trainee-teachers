@@ -22,7 +22,7 @@ class DegreeForm
 
   validate :validate_with_degree_model
 
-  delegate :uk?, :non_uk?, :non_uk_degree_non_naric?,
+  delegate :uk?, :non_uk?, :non_uk_degree_non_enic?,
            to: :degree
 
   def initialize(degrees_form:, degree:)

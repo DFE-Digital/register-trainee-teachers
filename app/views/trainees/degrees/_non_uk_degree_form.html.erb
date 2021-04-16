@@ -26,13 +26,13 @@
                          autocomplete: :disabled %>
 
   <div class="govuk-form-group">
-    <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the NARIC comparable UK degree", size: "s" } do %>
-      <% NARIC_NON_UK.each do |name| %>
+    <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" } do %>
+      <% ENIC_NON_UK.each do |name| %>
         <%= f.govuk_radio_button :non_uk_degree, name,
                                   label: { text: name }, link_errors: true %>
       <% end %>
       <%= f.govuk_radio_divider %>
-      <%= f.govuk_radio_button :non_uk_degree, :non_naric, label: { text: "NARIC not provided" } %>
+      <%= f.govuk_radio_button :non_uk_degree, :non_enic, label: { text: "UK ENIC not provided" } %>
     <% end %>
   </div>
 

@@ -26,8 +26,8 @@ class Degree < ApplicationRecord
     errors.add(:graduation_year, :invalid) unless graduation_year.between?(next_year - MAX_GRAD_YEARS, next_year)
   end
 
-  def non_uk_degree_non_naric?
-    non_uk_degree == NON_NARIC
+  def non_uk_degree_non_enic?
+    non_uk_degree == NON_ENIC
   end
 
   # other_grade should be nil if grade isn't 'Other'

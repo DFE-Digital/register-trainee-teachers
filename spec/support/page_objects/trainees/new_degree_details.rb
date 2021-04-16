@@ -12,7 +12,7 @@ module PageObjects
       element :bachelor_degree_with_honours, "#degree-non-uk-degree-bachelor-degree-with-honours-field"
       element :postgraduate_certificate_or_postgraduate_diploma, "#degree-non-uk-degree-postgraduate-certificate-or-postgraduate-diploma-field"
       element :master_s_degree_or_integrated_master_s_degree, "#degree-non-uk-degree-master-s-degree-or-integrated-master-s-degree-field"
-      element :non_naric, "#degree-non-uk-degree-non-naric-field"
+      element :non_enic, "#degree-non-uk-degree-non-enic-field"
 
       element :subject, "#degree-subject-field"
       element :institution, "#degree-institution-field"

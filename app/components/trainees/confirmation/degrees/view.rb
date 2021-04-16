@@ -22,7 +22,7 @@ module Trainees
           if degree.uk?
             "#{degree.uk_degree}: #{degree.subject.downcase}"
           else
-            "Non-UK #{degree.non_uk_degree_non_naric? ? 'degree' : degree.non_uk_degree}: #{degree.subject.downcase}"
+            "Non-UK #{degree.non_uk_degree_non_enic? ? 'degree' : degree.non_uk_degree}: #{degree.subject.downcase}"
           end
         end
 
@@ -74,7 +74,7 @@ module Trainees
               },
               {
                 key: "Degree type",
-                value: degree.non_uk_degree == "non_naric" ? "NARIC not provided" : degree.non_uk_degree,
+                value: degree.non_uk_degree == NON_ENIC ? "UK ENIC not provided" : degree.non_uk_degree,
                 action: govuk_link_to('Change<span class="govuk-visually-hidden"> degree type</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
               },
             ]

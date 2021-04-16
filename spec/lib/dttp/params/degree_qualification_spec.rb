@@ -49,7 +49,7 @@ module Dttp
 
         context "Non-UK degree" do
           let(:degree) { build(:degree, :non_uk_degree_with_details) }
-          let(:degree_type) { degree.non_uk_degree_non_naric? ? "Unknown" : "Degree equivalent" }
+          let(:degree_type) { degree.non_uk_degree_non_enic? ? "Unknown" : "Degree equivalent" }
 
           it "returns a hash with all the Non-UK specific degree qualification fields" do
             expect(subject).to match({
