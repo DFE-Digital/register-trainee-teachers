@@ -7,13 +7,19 @@ feature "List providers" do
     let(:user) { create(:user, system_admin: true) }
 
     before do
-      @provider = create(:dttp_provider, name: "Test 1")
+      @dttp_provider = create(:dttp_provider, name: "Test 1")
+      given_i_am_authenticated(user: user)
     end
 
     scenario "list providers" do
-      given_i_am_authenticated(user: user)
       when_i_visit_the_dttp_provider_index_page
       then_i_see_the_dttp_provider
+    end
+
+    scenario "creating a provider from dttp_provider" do
+      when_i_visit_the_dttp_provider_index_page
+      and_i_click_on_create_provider_button
+      then_i_am_redirected_to_the_provider_page
     end
   end
 
@@ -23,5 +29,21 @@ feature "List providers" do
 
   def then_i_see_the_dttp_provider
     expect(dttp_provider_index_page).to have_text("Test 1")
+  end
+
+  def and_i_click_on_create_provider_button
+    click_on "Create"
+  end
+
+  def then_i_am_redirected_to_the_provider_page
+    expect(page.current_path).to eq("/system-admin/providers/#{provider.id}")
+  end
+
+  def provider_show_page
+    @provider_show_page ||= PageObjects::Providers::Show.new
+  end
+
+  def provider
+    @provider ||= Provider.find_by(dttp_id: @dttp_provider.dttp_id)
   end
 end

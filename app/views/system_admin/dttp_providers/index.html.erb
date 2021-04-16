@@ -11,6 +11,7 @@
         <th scope="col" class="govuk-table__header govuk-!-width-one-half">Provider name</th>
         <th scope="col" class="govuk-table__header govuk-!-width-one-half">DTTP Id</th>
         <th scope="col" class="govuk-table__header govuk-!-width-one-half">UKPRN</th>
+        <th scope="col" class="govuk-table__header govuk-!-width-one-half">Actions</th>
       </tr>
     </thead>
 
@@ -33,6 +34,14 @@
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
               <%= provider.ukprn %>
             </span>
+          </td>
+          <td class="govuk-table__cell">
+            <%= govuk_button_to(
+                  "Create",
+                  dttp_providers_path,
+                  params: { dttp_provider_id: provider },
+                  class: "govuk-button--secondary",
+                ) %>
           </td>
         </tr>
       <% end %>

@@ -10,6 +10,8 @@ class Provider < ApplicationRecord
   validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }
   validates :code, format: { with: /\A[A-Z0-9]+\z/i }
 
+  alias_attribute :ukprn, :code
+
   def code=(cde)
     self[:code] = cde.to_s.upcase
   end
