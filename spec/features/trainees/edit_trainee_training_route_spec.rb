@@ -17,7 +17,7 @@ feature "editing a trainee training route", type: :feature do
       and_current_training_route_should_be_selected
     end
 
-    scenario "editing a draft-trainee's current training route", feature_routes_provider_led_postgrad: true do
+    scenario "editing a draft-trainee's current training route", 'feature_routes.provider_led_postgrad': true do
       then_i_select_provider_led_postgrad
       and_i_submit_the_new_route
       and_i_visit_the_edit_training_route_page

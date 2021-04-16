@@ -6,7 +6,7 @@ describe TrainingRouteManager do
   subject { described_class.new(trainee) }
 
   describe "#requires_placement_details?" do
-    context "with the :routes_provider_led_postgrad feature flag enabled", feature_routes_provider_led_postgrad: true do
+    context "with the :routes_provider_led_postgrad feature flag enabled", 'feature_routes.provider_led_postgrad': true do
       context "with a provider-led trainee" do
         let(:trainee) { build(:trainee, :provider_led_postgrad) }
 
@@ -24,7 +24,7 @@ describe TrainingRouteManager do
       end
     end
 
-    context "with the :routes_provider_led_postgrad feature flag disabled", feature_routes_provider_led_postgrad: false do
+    context "with the :routes_provider_led_postgrad feature flag disabled", 'feature.routes_provider_led_postgrad': false do
       let(:trainee) { build(:trainee, :provider_led_postgrad) }
 
       it "returns false" do

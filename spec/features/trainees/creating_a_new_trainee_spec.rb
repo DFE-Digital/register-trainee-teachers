@@ -15,23 +15,23 @@ feature "Create trainee journey" do
     then_i_should_see_the_new_trainee_overview
   end
 
-  scenario "setting up an initial provider led record", feature_routes_provider_led_postgrad: true do
+  scenario "setting up an initial provider led record", 'feature_routes.provider_led_postgrad': true do
     and_i_select_provider_led_postgrad_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview
   end
 
-  scenario "provider led (postgrad) radio button not shown when feature set to false", feature_routes_provider_led_postgrad: false do
+  scenario "provider led (postgrad) radio button not shown when feature set to false", 'feature_routes.provider_led_postgrad': false do
     and_i_should_not_see_provider_led_postgrad_route
   end
 
-  scenario "setting up an initial early years undergrad record", feature_routes_early_years_undergrad: true do
+  scenario "setting up an initial early years undergrad record", 'feature_routes.early_years_undergrad': true do
     and_i_select_early_years_undergrad_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview
   end
 
-  scenario "early years undergrad radio button not shown when feature set to false", feature_routes_early_years_undergrad: false do
+  scenario "early years undergrad radio button not shown when feature set to false", 'feature_routes.early_years_undergrad': false do
     and_i_should_not_see_early_years_undergrad_route
   end
 

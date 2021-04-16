@@ -6,7 +6,7 @@ class TrainingRouteManager
   end
 
   def requires_placement_details?
-    feature_enabled?(:routes_provider_led_postgrad) && provider_led_postgrad?
+    feature_enabled?("routes.provider_led_postgrad") && provider_led_postgrad?
   end
 
 private

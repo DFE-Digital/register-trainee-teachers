@@ -24,6 +24,6 @@ module ApplicationHelper
   end
 
   def multiple_routes_enabled?
-    %w[routes_provider_led_postgrad routes_early_years_undergrad].any? { |flag| FeatureService.enabled?(flag) }
+    %w[routes.provider_led_postgrad routes.early_years_undergrad].any? { |flag| FeatureService.enabled?(flag) }
   end
 end
