@@ -2,8 +2,6 @@
 
 module SystemAdmin
   class UsersController < ApplicationController
-    layout "platform_admin"
-
     def new
       @user = authorize provider.users.build
     end

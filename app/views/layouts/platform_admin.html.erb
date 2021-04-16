@@ -1,8 +1,0 @@
-<%= extends_layout :application do %>
-  <%= render TabNavigation::View.new(items: [
-    { name: "Providers", url: providers_path },
-    { name: "Dttp Providers", url: dttp_providers_path },
-  ]) %>
-
-  <%= yield %>
-<% end %>
