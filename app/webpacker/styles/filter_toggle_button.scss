@@ -1,4 +1,4 @@
-@import "../../../base.scss";
+@import "../../components/base";
 @import "~@ministryofjustice/frontend/moj/settings/assets";
 @import "~@ministryofjustice/frontend/moj/settings/measurements";
 @import "~@ministryofjustice/frontend/moj/helpers/all";
@@ -6,6 +6,8 @@
 @import "~@ministryofjustice/frontend/moj/objects/filter-layout";
 @import "~@ministryofjustice/frontend/moj/objects/scrollable-pane";
 @import "~@ministryofjustice/frontend/moj/components/filter/filter";
+
+$shadow-color: #0b0c0c;
 
 .app-filter {
   box-shadow: none;
@@ -33,6 +35,7 @@
 .filter-toggle-button {
   float: right;
   margin-bottom: govuk-spacing(1);
+
   @include govuk-media-query($from: desktop) {
     display: none;
   }
@@ -80,9 +83,10 @@
   box-shadow: none;
 }
 
-.moj-filter__tag:focus, .moj-filterfe__tag:focus:hover {
+.moj-filter__tag:focus,
+.moj-filterfe__tag:focus:hover {
   outline: none;
-  box-shadow: 0 4px #0b0c0c;
+  box-shadow: 0 4px $shadow-color;
 }
 
 // Fix for focus issue - see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640
@@ -96,6 +100,7 @@
   margin-right: 40px;
   min-width: 260px;
   width: 100%;
+
   @include govuk-media-query($from: desktop) {
     float: left;
   }

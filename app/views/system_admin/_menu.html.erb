@@ -1,4 +1,4 @@
 <%= render TabNavigation::View.new(items: [
-  { name: "Providers", url: providers_path, current: (request.path.starts_with?(providers_path)) },
+  { name: "Providers", url: providers_path, current: request.path.starts_with?(providers_path) },
   { name: "Dttp Providers", url: dttp_providers_path },
 ]) %>
