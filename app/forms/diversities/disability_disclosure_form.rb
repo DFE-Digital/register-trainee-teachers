@@ -19,8 +19,10 @@ module Diversities
     end
 
     def save!
-      trainee.clear_disabilities if disability_not_provided? || no_disability?
-      super
+      ActiveRecord::Base.transaction do
+        trainee.clear_disabilities if disability_not_provided? || no_disability?
+        super
+      end
     end
 
     def disabled?
