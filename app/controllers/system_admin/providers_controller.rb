@@ -24,11 +24,7 @@ module SystemAdmin
 
     def show
       @provider = authorize Provider.find(params[:id])
-      @users = @provider.users.order(:last_name)
-      @users_not_registered = Dttp::User.not_registered_with_provider(
-        @provider.dttp_id,
-        @users.pluck(:dttp_id),
-      )
+      @users = UsersView.new(@provider)
     end
 
   private

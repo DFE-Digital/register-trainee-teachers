@@ -18,7 +18,7 @@
 
 <% if @provider.users.any? %>
   <div class="govuk-!-margin-bottom-8">
-    <%= render UserCard::View.with_collection(@users) %>
+    <%= render UserCard::View.with_collection(@users.registered) %>
   </div>
 <% else %>
   <h2 class="govuk-heading-m">There are no users yet.</h2>
@@ -26,13 +26,13 @@
 
 <h1 class="govuk-heading-m">DTTP users</h1>
 
-<% if @users_not_registered.any? %>
+<% if @users.not_registered.any? %>
   <div class="govuk-!-margin-bottom-8" id="user-not-registered">
     <div class="govuk-caption-m govuk-!-font-size-16 user-card__dttp_id">
       These users are not registered with the provider on this service.
     </div>
     
-    <%= render UserCard::View.with_collection(@users_not_registered) %>
+    <%= render UserCard::View.with_collection(@users.not_registered) %>
   </div>
 <% else %>
   <h2 class="govuk-heading-m">All users with this provider are registered.</h2>
