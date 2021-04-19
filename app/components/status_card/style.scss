@@ -20,7 +20,6 @@
 
   color: govuk-colour("white");
   background-color: $govuk-brand-colour;
-  letter-spacing: 1px;
 
   &:hover {
     background-color: govuk-shade($govuk-brand-colour, 15%);
@@ -41,6 +40,13 @@
 .app-status-card__count {
   @include govuk-font($size: 36, $weight: bold, $tabular: true);
   display: block;
+}
+
+.app-status-card__status {
+  text-decoration: underline;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .app-status-card--grey {
