@@ -2,22 +2,23 @@
 
 module SystemAdmin
   class UsersView
-    attr_reader :provider, :users
-
     def initialize(provider)
       @provider = provider
-      @users = provider.users.order(:last_name)
     end
 
     def registered
-      users
+      @registered ||= provider.users.order(:last_name)
     end
 
     def not_registered
-      Dttp::User.not_registered_with_provider(
+      @not_registered ||= Dttp::User.not_registered_with_provider(
         provider.dttp_id,
-        users.pluck(:dttp_id),
+        registered.pluck(:dttp_id),
       )
     end
+
+  private
+
+    attr_reader :provider
   end
 end
