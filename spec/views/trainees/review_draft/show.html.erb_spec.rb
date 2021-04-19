@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "trainees/review_draft/show.html.erb", feature_routes_provider_led_postgrad: true do
+describe "trainees/review_draft/show.html.erb", 'feature_routes.provider_led_postgrad': true do
   before do
     assign(:trainee, trainee)
     render

@@ -8,9 +8,10 @@ features:
   use_dfe_sign_in: false
   basic_auth: false
   import_courses_from_ttapi: true
-  routes_provider_led_postgrad: true
-  routes_early_years_undergrad: true
   publish_course_details: true
+  routes:
+    provider_led_postgrad: true
+    early_years_undergrad: true
 
 pagination:
   records_per_page: 30
