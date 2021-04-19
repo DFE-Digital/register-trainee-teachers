@@ -20,7 +20,6 @@
 
   color: govuk-colour("white");
   background-color: $govuk-brand-colour;
-  letter-spacing: 1px;
 
   &:hover {
     background-color: govuk-shade($govuk-brand-colour, 15%);
