@@ -60,7 +60,7 @@ module TeacherTrainingApi
         end
 
         def course_length
-          course["attributes"]["course_length"]
+          course["attributes"]["course_length"] || "course length not provided"
         end
 
         def course_qualification

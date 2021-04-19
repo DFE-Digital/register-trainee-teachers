@@ -36,6 +36,10 @@ class CoursesSpike < ApplicationRecord
     AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 7,
     AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 8,
     AgeRange::FOUR_TO_ELEVEN_COURSE => 9,
+    AgeRange::THREE_TO_NINE_COURSE => 10,
+    AgeRange::TWO_TO_SEVEN_COURSE => 11,
+    AgeRange::THREE_TO_SIXTEEN_COURSE => 12,
+    AgeRange::FOUR_TO_NINETEEN_COURSE => 8,
   }
 
   has_many :course_subjects

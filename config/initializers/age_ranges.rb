@@ -2,6 +2,7 @@
 
 module AgeRange
   THREE_TO_ELEVEN_COURSE = "3 to 11 course"
+  TWO_TO_SEVEN_COURSE = "2 to 7 course"
   FIVE_TO_ELEVEN_COURSE = "5 to 11 course"
   ELEVEN_TO_SIXTEEN_COURSE = "11 to 16 course"
   ELEVEN_TO_NINETEEN_COURSE = "11 to 19 course"
@@ -20,4 +21,6 @@ module AgeRange
   FOURTEEN_TO_NINETEEN_DIPLOMA = "14 to 19 diploma"
   FOURTEEN_TO_NINETEEN_DIPLOMA = "14 to 19 diploma"
   FOUR_TO_ELEVEN_COURSE = "4 to 11 course"
+  THREE_TO_SIXTEEN_COURSE = "3 to 16 course"
+  FOUR_TO_NINETEEN_COURSE = "4 to 19 course"
 end
