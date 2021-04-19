@@ -7,9 +7,9 @@ module TeacherTrainingApi
     def perform(request_uri: nil)
       @data = RetrieveCoursesSpike.call(request_uri: request_uri)
 
-      CoursesSpike.upsert_all(courses_attributes.compact, unique_by: %i[ accredited_body_code code ])
+      CoursesSpike.upsert_all(courses_attributes.compact, unique_by: %i[accredited_body_code code])
 
-      # ImportCoursesSpikeJob.perform_later(request_uri: next_page_url) if has_next_page?
+      ImportCoursesSpikeJob.perform_later(request_uri: next_page_url) if has_next_page?
     end
 
   private
@@ -25,7 +25,7 @@ module TeacherTrainingApi
     end
 
     def has_next_page?
-      next_page_url.present? 
+      next_page_url.present?
     end
   end
 end
