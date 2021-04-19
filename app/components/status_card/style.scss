@@ -42,6 +42,13 @@
   display: block;
 }
 
+.status-card__status {
+  text-decoration: underline;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
 .app-status-card--grey {
   &, &:link, &:visited {
     color: govuk-shade(govuk-colour("dark-grey", $legacy: "grey-1"), 30);
