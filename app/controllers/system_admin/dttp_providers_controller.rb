@@ -22,7 +22,7 @@ module SystemAdmin
     end
 
     def find_providers
-      authorize ::Dttp::Provider.order(:name)
+      authorize ::Dttp::Provider.left_outer_joins(:provider).order(:name)
     end
 
     def filter_params

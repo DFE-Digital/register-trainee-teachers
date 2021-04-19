@@ -36,12 +36,16 @@
             </span>
           </td>
           <td class="govuk-table__cell">
-            <%= govuk_button_to(
-                  "Create",
-                  dttp_providers_path,
-                  params: { dttp_provider_id: provider },
-                  class: "govuk-button--secondary",
-                ) %>
+            <% if provider.provider.blank? %>
+              <%= govuk_button_to(
+                    "Create",
+                    dttp_providers_path,
+                    params: { dttp_provider_id: provider },
+                    class: "govuk-button--secondary",
+                  ) %>
+            <% else %>
+              <%= govuk_link_to 'View', provider_path(provider.provider) %>
+            <% end %>
           </td>
         </tr>
       <% end %>

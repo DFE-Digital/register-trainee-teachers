@@ -21,6 +21,13 @@ feature "List providers" do
       and_i_click_on_create_provider_button
       then_i_am_redirected_to_the_provider_page
     end
+
+    scenario "navigating from dttp_provider to provider" do
+      when_a_provider_is_imported
+      when_i_visit_the_dttp_provider_index_page
+      and_i_click_on_view_button
+      then_i_am_redirected_to_the_provider_page
+    end
   end
 
   def when_i_visit_the_dttp_provider_index_page
@@ -37,6 +44,14 @@ feature "List providers" do
 
   def then_i_am_redirected_to_the_provider_page
     expect(page.current_path).to eq("/system-admin/providers/#{provider.id}")
+  end
+
+  def when_a_provider_is_imported
+    create(:provider, dttp_id: @dttp_provider.dttp_id)
+  end
+
+  def and_i_click_on_view_button
+    click_on "View"
   end
 
   def provider_show_page

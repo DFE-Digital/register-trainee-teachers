@@ -7,6 +7,16 @@ RSpec.describe Dttp::Provider, type: :model do
 
   it { is_expected.to have_db_index(:dttp_id) }
 
+  describe "associations" do
+    it {
+      is_expected.to belong_to(:provider)
+      .class_name("::Provider")
+      .with_primary_key(:dttp_id)
+      .with_primary_key(:dttp_id)
+      .optional
+    }
+  end
+
   describe "#search_by_name" do
     let!(:matching_provider) { create(:dttp_provider, name: "Test 1") }
 
