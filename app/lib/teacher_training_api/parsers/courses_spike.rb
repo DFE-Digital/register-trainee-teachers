@@ -44,7 +44,7 @@ module TeacherTrainingApi
         end
 
         def accredited_body_code
-          course["attributes"]["accredited_body_code"] || find_accredited_body_code(course)
+          course["attributes"]["accredited_body_code"] || find_accredited_body_code
         end
 
         def course_start_date
@@ -52,7 +52,9 @@ module TeacherTrainingApi
         end
 
         def course_age_range
-          Object::CoursesSpike.age_ranges[age_range(course["attributes"])]
+          age_minimum, age_maximum = course["attributes"].values_at("age_minimum", "age_maximum")
+          age_maximum = 19 if age_maximum == 18
+          "#{age_minimum} to #{age_maximum} course"
         end
 
         def course_level
@@ -67,16 +69,10 @@ module TeacherTrainingApi
           Object::CoursesSpike.qualifications[course["attributes"]["qualifications"].sort.join("_with_").to_sym]
         end
 
-        def find_accredited_body_code(course)
+        def find_accredited_body_code
           provider_id = course["relationships"]["provider"]["data"]["id"]
           # find the provider code with the provider id
           data["included"].detect { |provider| provider["id"] == provider_id }["attributes"]["code"]
-        end
-
-        def age_range(course_attributes)
-          age_minimum, age_maximum = course_attributes.values_at("age_minimum", "age_maximum")
-          age_maximum = 19 if age_maximum == 18
-          "#{age_minimum} to #{age_maximum} course"
         end
 
         def duration_in_years

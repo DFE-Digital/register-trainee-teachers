@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_04_15_144640) do
     t.string "accredited_body_code", null: false
     t.string "start_date", null: false
     t.string "level", null: false
-    t.integer "age_range", null: false
+    t.string "age_range", null: false
     t.integer "duration_in_years", null: false
     t.string "course_length", null: false
     t.integer "qualification", null: false

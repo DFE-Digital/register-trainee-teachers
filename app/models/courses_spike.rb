@@ -25,23 +25,6 @@ class CoursesSpike < ApplicationRecord
 
   enum route: TRAINING_ROUTES
 
-  enum age_range: {
-    AgeRange::THREE_TO_SEVEN_COURSE => 0,
-    AgeRange::THREE_TO_ELEVEN_COURSE => 1,
-    AgeRange::FIVE_TO_ELEVEN_COURSE => 2,
-    AgeRange::SEVEN_TO_ELEVEN_COURSE => 3,
-    AgeRange::SEVEN_TO_FOURTEEN_COURSE => 4,
-    AgeRange::ELEVEN_TO_SIXTEEN_COURSE => 5,
-    AgeRange::ELEVEN_TO_NINETEEN_COURSE => 6,
-    AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 7,
-    AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 8,
-    AgeRange::FOUR_TO_ELEVEN_COURSE => 9,
-    AgeRange::THREE_TO_NINE_COURSE => 10,
-    AgeRange::TWO_TO_SEVEN_COURSE => 11,
-    AgeRange::THREE_TO_SIXTEEN_COURSE => 12,
-    AgeRange::FOUR_TO_NINETEEN_COURSE => 8,
-  }
-
   has_many :course_subjects
   has_many :subjects, through: :course_subjects
 

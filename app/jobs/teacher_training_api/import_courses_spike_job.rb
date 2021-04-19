@@ -9,7 +9,7 @@ module TeacherTrainingApi
 
       CoursesSpike.upsert_all(courses_attributes.compact, unique_by: %i[ accredited_body_code code ])
 
-      ImportCoursesSpikeJob.perform_later(request_uri: next_page_url) if has_next_page?
+      # ImportCoursesSpikeJob.perform_later(request_uri: next_page_url) if has_next_page?
     end
 
   private
