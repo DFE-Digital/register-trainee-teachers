@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_150758) do
+ActiveRecord::Schema.define(version: 2021_04_19_084629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_150758) do
 
   create_table "dttp_providers", force: :cascade do |t|
     t.string "name"
-    t.string "dttp_id"
+    t.uuid "dttp_id"
     t.string "ukprn"
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false

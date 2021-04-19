@@ -10,6 +10,11 @@ module SystemAdmin
       @provider = authorize Dttp::Provider.find(params[:id])
     end
 
+    def create
+      @provider = authorize Provider.create!(provider_params)
+      redirect_to provider_path(@provider)
+    end
+
   private
 
     def filtered_providers
@@ -17,11 +22,19 @@ module SystemAdmin
     end
 
     def find_providers
-      authorize ::Dttp::Provider.order(:name)
+      authorize ::Dttp::Provider.left_outer_joins(:provider).order(:name)
     end
 
     def filter_params
       @filter_params ||= params.permit(:text_search).presence
+    end
+
+    def dttp_provider
+      @dttp_provider ||= ::Dttp::Provider.find(params[:dttp_provider_id])
+    end
+
+    def provider_params
+      dttp_provider.attributes.symbolize_keys.slice(:name, :dttp_id, :ukprn)
     end
   end
 end
