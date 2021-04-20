@@ -16,7 +16,7 @@
           <%= f.govuk_text_area :international_address,
                                 width: "one-quarter",
                                 label: { text: "Home address" },
-                                autocomplete: :disabled %>
+                                autocomplete: :off %>
         <% end %>
 
         <%= f.govuk_radio_button :locale_code, :uk, label: { text: "In the UK" } do %>
@@ -24,19 +24,19 @@
             <%= f.govuk_text_field :address_line_one,
                                    width: "full",
                                    label: { text: "Building and street" },
-                                   autocomplete: :disabled %>
+                                   autocomplete: :off %>
 
             <%= f.govuk_text_field :address_line_two,
                                    width: "full",
                                    label: { text: "Address line 2", hidden: true },
-                                   autocomplete: :disabled %>
+                                   autocomplete: :off %>
 
             <%= f.govuk_text_field :town_city,
                                    width: "two-thirds",
                                    label: { text: "Town or city" },
-                                   autocomplete: :disabled %>
+                                   autocomplete: :off %>
 
-            <%= f.govuk_text_field :postcode, width: 10, label: { text: "Postal code" }, autocomplete: :disabled %>
+            <%= f.govuk_text_field :postcode, width: 10, label: { text: "Postal code" }, autocomplete: :off %>
           <% end %>
         <% end %>
       <% end %>
@@ -44,7 +44,7 @@
       <%= f.govuk_email_field :email,
                               width: "two-thirds",
                               label: { text: "Email address", size: "s" },
-                              autocomplete: :disabled %>
+                              autocomplete: :off %>
 
       <%= f.govuk_submit %>
     <% end %>

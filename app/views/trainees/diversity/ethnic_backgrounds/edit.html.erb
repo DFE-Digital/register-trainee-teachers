@@ -30,7 +30,7 @@
                 <%= f.govuk_text_field(
                   :additional_ethnic_background,
                   width: "two-thirds",
-                  autocomplete: :disabled,
+                  autocomplete: :off,
                   label: { text: I18n.t("views.forms.ethnic_backgrounds.another_ethnic_background_labels.#{@trainee.ethnic_group}") },
                 ) %>
               <% end %>

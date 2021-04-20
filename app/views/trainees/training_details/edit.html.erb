@@ -15,7 +15,7 @@
 
       <%= f.govuk_text_field :trainee_id, label: {
         text: t("views.forms.training_details.trainee_id.label"), size: "s"
-      }, hint: { text: t("views.forms.training_details.trainee_id.hint").html_safe }, width: 20, autocomplete: :disabled %>
+      }, hint: { text: t("views.forms.training_details.trainee_id.hint").html_safe }, width: 20, autocomplete: :off %>
 
       <%= f.govuk_submit "Continue" %>
     <% end %>
