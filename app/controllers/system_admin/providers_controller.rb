@@ -24,7 +24,7 @@ module SystemAdmin
 
     def show
       @provider = authorize Provider.find(params[:id])
-      @users = UsersView.new(@provider)
+      @users_view = UsersView.new(@provider)
     end
 
   private

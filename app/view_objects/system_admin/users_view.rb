@@ -11,7 +11,7 @@ module SystemAdmin
     end
 
     def not_registered
-      @not_registered ||= Dttp::User.not_registered_with_provider(
+      @not_registered ||= ::Dttp::User.not_registered_with_provider(
         provider.dttp_id,
         registered.pluck(:dttp_id),
       )
