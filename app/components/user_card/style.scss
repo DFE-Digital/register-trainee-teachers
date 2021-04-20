@@ -1,24 +1,23 @@
 @import "../base.scss";
 
 .user-card {
+  border-bottom: 1px solid govuk-colour("mid-grey");
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__name {
   display: flex;
   justify-content: space-between;
-  width: 75%;
-}
+  align-items: baseline;
 
-.user-card div {
-  display: inline-block;
-}
+    &__heading {
+      margin-bottom: 0;
+    }
 
-.user-card__created {
-  text-align: right;
-}
-
-.user-card__email {
-  border-bottom: 1px solid govuk-colour("mid-grey");
-  width: 75%
-}
-
-.user-card__name {
-  margin-top: 10px;
+    &__created {
+      text-align: right;
+    }
+  }
 }

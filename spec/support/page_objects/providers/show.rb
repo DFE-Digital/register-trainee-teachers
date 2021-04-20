@@ -6,10 +6,26 @@ module PageObjects
       set_url "system-admin/providers/{id}"
 
       element :add_a_user, "a", text: "Add a user"
+      element :register_user, "#register-dttp-user"
 
-      elements :user_data, ".user-card"
+      element :registered_user_data, ".registered-users"
+      element :unregistered_user_data, ".unregistered-users"
 
-      elements :dttp_users_not_registered_data, "#user-not-registered"
+      def registered_users
+        user_cards(registered_user_data)
+      end
+
+      def unregistered_users
+        user_cards(unregistered_user_data)
+      end
+
+    private
+
+      def user_cards(element_node)
+        within(element_node) do
+          find_all(".user-card")
+        end
+      end
     end
   end
 end

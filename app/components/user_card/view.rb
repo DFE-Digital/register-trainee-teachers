@@ -6,8 +6,10 @@ module UserCard
 
     attr_reader :user
 
-    def initialize(user:)
+    def initialize(user:, show_register_button: false, registration_form_path: nil)
       @user = user
+      @show_register_button = show_register_button
+      @registration_form_path = registration_form_path
     end
 
     def updated_at
@@ -23,5 +25,9 @@ module UserCard
 
       tag.p("DTTP ID: " + user.dttp_id)
     end
+
+  private
+
+    attr_reader :show_register_button, :registration_form_path
   end
 end

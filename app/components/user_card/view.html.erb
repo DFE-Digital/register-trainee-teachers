@@ -1,14 +1,28 @@
-<div class="user-card">
-  <h2 class="govuk-heading-m user-card__name">
-    <%= user.name %>
-  </h2>
-  <div class="govuk-caption-m govuk-!-font-size-16 user-card__created">
-    <%= updated_at %>
+<div class="user-card govuk-!-margin-bottom-5">
+  <div class="user-card__name">
+    <h2 class="govuk-heading-s user-card__name__heading">
+      <%= user.name %>
+    </h2>
+    <div class="govuk-caption-m govuk-!-font-size-16 user-card__name__created">
+      <%= updated_at %>
+    </div>
   </div>
-</div>
-<div class="govuk-caption-m govuk-!-font-size-16 user-card__dttp_id">
-  <%= dttp_id %>
-</div>
-<div class="govuk-caption-m govuk-!-font-size-16 user-card__email">
-  <%= email_address %>
+
+  <div class="govuk-caption-m govuk-!-font-size-16">
+    <%= dttp_id %>
+  </div>
+
+  <div class="govuk-caption-m govuk-!-font-size-16">
+    <%= email_address %>
+  </div>
+
+  <% if show_register_button %>
+    <%= govuk_button_to(
+      "Register user to provider",
+      registration_form_path,
+      params: { dttp_user_id: user },
+      id: "register-dttp-user",
+      class: "govuk-button--secondary",
+    ) %>
+  <% end %>
 </div>

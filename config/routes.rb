@@ -41,6 +41,10 @@ Rails.application.routes.draw do
   scope module: :system_admin, path: "system-admin" do
     resources :providers, except: %i[edit update destroy] do
       resources :users, only: %i[new create]
+
+      scope module: :imports do
+        post "/users/import", to: "users#create", as: :import_user
+      end
     end
     resources :dttp_providers, only: %i[index show create]
   end
