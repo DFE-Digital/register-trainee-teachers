@@ -82,8 +82,6 @@ module Trainees
         end
 
         def degree_button_text
-          return t("components.degrees.add_a_degree") if degrees.empty?
-
           t("components.degrees.add_another_degree")
         end
 

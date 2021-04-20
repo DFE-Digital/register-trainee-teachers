@@ -86,14 +86,6 @@ RSpec.describe Trainees::Confirmation::Degrees::View do
   end
 
   describe "Degree button text" do
-    context "when there are no degrees" do
-      let(:trainee) { create(:trainee) }
-
-      it "renders 'Add a degree' button" do
-        expect(component.find(degree_button_selector)).to have_text(t("components.degrees.add_a_degree"))
-      end
-    end
-
     context "when there are degrees" do
       it "renders 'Add another degree' button" do
         expect(component.find(degree_button_selector)).to have_text(t("components.degrees.add_another_degree"))
