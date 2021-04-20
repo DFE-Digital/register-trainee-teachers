@@ -1,9 +1,11 @@
 <%= render PageTitle::View.new(title: @provider.name, has_errors: @provider.errors.present?) %>
 
-<%= render GovukComponent::BackLink.new(
-  text: "Back",
-  href: providers_path,
-) %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(
+    text: t("back"),
+    href: providers_path,
+  ) %>
+<% end %>
 
 <h1 class="govuk-heading-l"><%= @provider.name %></h1>
 
@@ -18,24 +20,28 @@
 
 <h1 class="govuk-heading-m">Registered users</h1>
 
-<% if @provider.users.any? %>
-  <div class="govuk-!-margin-bottom-8">
-    <%= render UserCard::View.with_collection(@users_view.registered) %>
+<% if @users_view.registered.any? %>
+  <div class="govuk-!-margin-bottom-8 registered-users">
+    <%= render UserCard::View.with_collection(@users_view.registered, show_register_button: false) %>
   </div>
 <% else %>
-  <h2 class="govuk-heading-m">There are no users yet.</h2>
+  <p class="govuk-body">There are no users yet.</p>
 <% end %>
 
 <h1 class="govuk-heading-m">DTTP users</h1>
 
 <% if @users_view.not_registered.any? %>
-  <div class="govuk-!-margin-bottom-8" id="user-not-registered">
-    <div class="govuk-caption-m govuk-!-font-size-16 user-card__dttp_id">
+  <div class="govuk-!-margin-bottom-8 unregistered-users">
+    <div class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-3">
       These users are not registered with the provider on this service.
     </div>
-    
-    <%= render UserCard::View.with_collection(@users_view.not_registered) %>
+
+    <%= render UserCard::View.with_collection(
+      @users_view.not_registered,
+      show_register_button: true,
+      registration_form_path: provider_import_user_path(@provider.id),
+    ) %>
   </div>
 <% else %>
-  <h2 class="govuk-heading-m">All users with this provider are registered.</h2>
+  <p class="govuk-body">All users with this provider are registered.</p>
 <% end %>

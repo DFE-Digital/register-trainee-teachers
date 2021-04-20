@@ -15,8 +15,13 @@ feature "View users" do
     end
 
     scenario "I can view the users" do
-      then_i_see_the_users
-      and_i_see_the_dttp_users_not_registered
+      then_i_see_the_registered_users
+      and_i_see_the_unregistered_users
+    end
+
+    scenario "I can register a dttp user to the provider" do
+      when_i_register_the_dttp_user
+      then_the_dttp_user_is_registered
     end
   end
 
@@ -36,12 +41,21 @@ feature "View users" do
     provider_show_page.load(id: user.provider.id)
   end
 
-  def then_i_see_the_users
-    expect(provider_show_page).to have_user_data
+  def then_i_see_the_registered_users
+    expect(provider_show_page.registered_users.size).to eq(1)
   end
 
-  def and_i_see_the_dttp_users_not_registered
-    expect(provider_show_page).to have_dttp_users_not_registered_data
+  def and_i_see_the_unregistered_users
+    expect(provider_show_page.unregistered_users.size).to eq(1)
+  end
+
+  def when_i_register_the_dttp_user
+    provider_show_page.register_user.click
+  end
+
+  def then_the_dttp_user_is_registered
+    expect(provider_show_page.registered_users.size).to eq(2)
+    expect(provider_show_page).not_to have_unregistered_user_data
   end
 
   def provider_show_page
