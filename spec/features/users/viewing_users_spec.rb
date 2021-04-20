@@ -8,6 +8,7 @@ feature "View users" do
 
     before do
       given_i_am_authenticated(user: user)
+      and_there_is_a_dttp_user
       when_i_visit_the_provider_index_page
       and_i_click_on_a_provider
       then_i_am_taken_to_the_provider_show_page
@@ -15,11 +16,16 @@ feature "View users" do
 
     scenario "I can view the users" do
       then_i_see_the_users
+      and_i_see_the_dttp_users_not_registered
     end
   end
 
   def when_i_visit_the_provider_index_page
     provider_index_page.load
+  end
+
+  def and_there_is_a_dttp_user
+    create(:dttp_user, provider_dttp_id: user.provider.dttp_id)
   end
 
   def and_i_click_on_a_provider
@@ -32,6 +38,10 @@ feature "View users" do
 
   def then_i_see_the_users
     expect(provider_show_page).to have_user_data
+  end
+
+  def and_i_see_the_dttp_users_not_registered
+    expect(provider_show_page).to have_dttp_users_not_registered_data
   end
 
   def provider_show_page

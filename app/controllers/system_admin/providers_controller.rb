@@ -22,7 +22,7 @@ module SystemAdmin
 
     def show
       @provider = authorize Provider.find(params[:id])
-      @users = @provider.users.order(:last_name)
+      @users_view = UsersView.new(@provider)
     end
 
   private
