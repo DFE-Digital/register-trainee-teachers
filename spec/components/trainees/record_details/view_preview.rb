@@ -6,19 +6,19 @@ module Trainees
   module RecordDetails
     class ViewPreview < ViewComponent::Preview
       def default
-        render(Trainees::RecordDetails::View.new(mock_trainee("default")))
+        render(View.new(trainee: mock_trainee("default"), last_updated_event: last_updated_event))
       end
 
       def with_no_trainee_id
-        render(Trainees::RecordDetails::View.new(mock_trainee(nil)))
+        render(View.new(trainee: mock_trainee(nil), last_updated_event: last_updated_event))
       end
 
       def with_deferred_status
-        render(Trainees::RecordDetails::View.new(mock_trainee("deferred", :deferred)))
+        render(View.new(trainee: mock_trainee("deferred", :deferred), last_updated_event: last_updated_event))
       end
 
       def with_withdrawn_status
-        render(Trainees::RecordDetails::View.new(mock_trainee("withdrawn", :withdrawn)))
+        render(View.new(trainee: mock_trainee("withdrawn", :withdrawn), last_updated_event: last_updated_event))
       end
 
     private
@@ -29,11 +29,15 @@ module Trainees
           training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           trainee_id: trainee_id,
           created_at: Time.zone.today,
-          updated_at: Time.zone.today,
           state: state,
+          submitted_for_trn_at: Time.zone.today,
           defer_date: state == :deferred ? Time.zone.today : nil,
           withdraw_date: state == :withdrawn ? Time.zone.today : nil,
         )
+      end
+
+      def last_updated_event
+        OpenStruct.new(date: Time.zone.today)
       end
     end
   end

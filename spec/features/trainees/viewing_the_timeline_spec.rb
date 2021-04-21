@@ -5,7 +5,7 @@ require "rails_helper"
 feature "View the timeline" do
   background do
     given_i_am_authenticated
-    given_a_trainee_exists(state: :submitted_for_trn)
+    given_a_trainee_exists(:submitted_for_trn)
   end
 
   scenario "viewing the timeline of trainee" do

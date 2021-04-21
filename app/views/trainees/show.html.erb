@@ -3,7 +3,7 @@
 </div>
 
 <div class="record-details">
-  <%= render Trainees::RecordDetails::View.new(@trainee) %>
+  <%= render Trainees::RecordDetails::View.new(trainee: @trainee, last_updated_event: last_updated_event_for(@trainee)) %>
 </div>
 
 <div class="course-details">

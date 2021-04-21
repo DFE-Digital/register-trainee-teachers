@@ -6,10 +6,11 @@ module Trainees
       include SanitizeHelper
       include SummaryHelper
 
-      attr_reader :trainee, :not_provided_copy
+      attr_reader :trainee, :last_updated_event, :not_provided_copy
 
-      def initialize(trainee)
+      def initialize(trainee:, last_updated_event:)
         @trainee = trainee
+        @last_updated_event = last_updated_event
         @not_provided_copy = I18n.t("components.confirmation.not_provided")
       end
 
@@ -22,11 +23,11 @@ module Trainees
       end
 
       def submission_date
-        render_text_with_hint(Time.zone.yesterday)
+        render_text_with_hint(trainee.submitted_for_trn_at)
       end
 
       def last_updated_date
-        render_text_with_hint(trainee.updated_at)
+        render_text_with_hint(last_updated_event.date)
       end
 
       def trn_row

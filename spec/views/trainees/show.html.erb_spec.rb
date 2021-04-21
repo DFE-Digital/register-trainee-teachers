@@ -9,7 +9,7 @@ describe "trainees/show.html.erb", 'feature_routes.provider_led_postgrad': true 
   end
 
   context "with an Assessment only trainee" do
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { create(:trainee, :submitted_for_trn) }
 
     it "does not render the placement details component" do
       expect(rendered).to_not have_text("Placement details")
@@ -17,7 +17,7 @@ describe "trainees/show.html.erb", 'feature_routes.provider_led_postgrad': true 
   end
 
   context "with a Provider-led (postgrad) trainee" do
-    let(:trainee) { create(:trainee, :provider_led_postgrad) }
+    let(:trainee) { create(:trainee, :submitted_for_trn, :provider_led_postgrad) }
 
     it "renders the placement details component" do
       expect(rendered).to have_text("Placement details")

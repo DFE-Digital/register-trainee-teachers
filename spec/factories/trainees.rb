@@ -141,6 +141,7 @@ FactoryBot.define do
     end
 
     trait :trn_received do
+      submitted_for_trn
       state { "trn_received" }
       dttp_id { SecureRandom.uuid }
     end
@@ -156,6 +157,7 @@ FactoryBot.define do
     end
 
     trait :deferred do
+      submitted_for_trn
       state { "deferred" }
       defer_date { Faker::Date.in_date_period }
     end

@@ -7,7 +7,7 @@ feature "Recording a training outcome", type: :feature do
 
   before do
     given_i_am_authenticated
-    given_a_trainee_exists(state: :trn_received)
+    given_a_trainee_exists(:trn_received)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
   end
