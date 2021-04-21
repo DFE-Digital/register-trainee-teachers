@@ -70,6 +70,10 @@ module Features
       @provider_index_page ||= PageObjects::DttpProviders::Index.new
     end
 
+    def validation_errors_index_page
+      @validation_errors_index_page ||= PageObjects::ValidationErrors::Index.new
+    end
+
     def sign_in_page
       @sign_in_page ||= PageObjects::SignIn.new
     end

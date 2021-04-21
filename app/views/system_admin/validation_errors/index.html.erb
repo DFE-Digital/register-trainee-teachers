@@ -1,0 +1,53 @@
+<%= render PageTitle::View.new(title: "validation_errors.index") %>
+
+<h1 class="govuk-heading-l">Validation errors</h1>
+
+<%= render "system_admin/menu" %>
+
+<table class="govuk-table" summary="Attribute error">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">Attribute error</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter">Error count</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @grouped_column_error_counts.each do |(form_object, attribute, message), count| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-0">
+          <span class="govuk-!-font-weight-regular"><%= form_object.demodulize.underscore.humanize %>:</span>
+          <%= attribute.humanize %>
+        </h2>
+        <p class="govuk-body govuk-!-margin-bottom-0"><%= message %></p>
+      </td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+        <%= count %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<table class="govuk-table" summary="Form">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">Form</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter">Error count</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @grouped_counts.each do |form_object, count| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-0">
+          <%= form_object.demodulize.underscore.humanize %>
+        </h2>
+      </td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">
+        <%= count %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

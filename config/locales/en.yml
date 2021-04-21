@@ -159,6 +159,8 @@ en:
         index: Dttp Providers
       users:
         new: Add a user
+      validation_errors:
+        index: Validation errors
     filter:
       training_route: Training route
       state: Status

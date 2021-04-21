@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       end
     end
     resources :dttp_providers, only: %i[index show create]
+    resources :validation_errors, only: %i[index]
   end
 
   resources :trainees, except: :edit do
