@@ -1,0 +1,12 @@
+<h1 class="govuk-heading-l">Lead school</h1>
+
+<%= register_form_with model: @trainee, url: trainee_schools_path, local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+  <div class="govuk-form-group">
+    <label class="govuk-label govuk-label--s" for="schools-autocomplete">Lead school</label>
+    <div id="schools-autocomplete" class="app-!-autocomplete--max-width-two-thirds"></div>
+  </div>
+  <%= f.text_field :first_names, id: "schools-autocomplete-no-js" %>
+  <%= f.govuk_submit "Continue", name: nil %>
+<% end %>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>

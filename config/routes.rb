@@ -101,6 +101,10 @@ Rails.application.routes.draw do
       resource :employing_schools, only: %i[update], path: "/employing-schools"
 
       resource :timeline, only: :show
+
+      resource :schools, only: %i[edit update] do
+        get "search"
+      end
     end
 
     member do
