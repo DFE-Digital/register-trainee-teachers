@@ -16,4 +16,8 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
   TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
   TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
-}.with_indifferent_access.freeze
+}.freeze
+
+TRAINING_ROUTES_FOR_TRAINEE = TRAINING_ROUTES.select { |training_route|
+  TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :provider_led_postgrad, :early_years_undergrad).include? training_route
+} .freeze
