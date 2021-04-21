@@ -390,8 +390,13 @@ en:
         trainee_id: "Trainee ID"
         training_routes:
           assessment_only: Assessment only
-          provider_led_postgrad: Provider-led (postgrad)
+          early_years_assessment_only: Early years (assessment only)
+          early_years_graduate_entry: Early years (graduate entry)
+          early_years_graduate_placement: Early years (graduate placement)
           early_years_undergrad: Early years (undergrad)
+          provider_led_postgrad: Provider-led (postgrad)
+          school_direct_salaried: School direct (salaried)
+          school_direct_tuition_fee: School direct (tuition fee)
         states:
           draft: Draft
           submitted_for_trn: Pending TRN
