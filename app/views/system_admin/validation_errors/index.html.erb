@@ -1,14 +1,14 @@
-<%= render PageTitle::View.new(title: "validation_errors.index") %>
+<%= render PageTitle::View.new(title: "validation_errors.page_title") %>
 
-<h1 class="govuk-heading-l">Validation errors</h1>
+<h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
 <%= render "system_admin/menu" %>
 
-<table class="govuk-table" summary="Attribute error">
+<table class="govuk-table" summary="<%= t(".attribute_error") %>">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">Attribute error</th>
-      <th scope="col" class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter">Error count</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-three-quarters"><%= t(".attribute_error") %></th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter"><%= t(".error_count") %></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -29,11 +29,11 @@
   </tbody>
 </table>
 
-<table class="govuk-table" summary="Form">
+<table class="govuk-table" summary="<%= t(".form") %>">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">Form</th>
-      <th scope="col" class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter">Error count</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-three-quarters"><%= t(".form") %></th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric govuk-!-width-one-quarter"><%= t(".error_count") %></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">

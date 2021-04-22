@@ -160,7 +160,7 @@ en:
       users:
         new: Add a user
       validation_errors:
-        index: Validation errors
+        page_title: Validation errors
     filter:
       training_route: Training route
       state: Status
@@ -605,3 +605,10 @@ en:
               max_char_exceeded: Your entry must not exceed 100 characters
   page_headings:
     start_page: "Register trainee teachers"
+  system_admin:
+    validation_errors:
+      index:
+        heading: Validation errors
+        attribute_error: Attribute error
+        error_count: Error count
+        form: Form

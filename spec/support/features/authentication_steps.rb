@@ -11,6 +11,10 @@ module Features
       visit_sign_in_page
     end
 
+    def given_i_am_authenticated_as_system_admin
+      given_i_am_authenticated(user: create(:user, :system_admin))
+    end
+
     def visit_sign_in_page
       sign_in_page = PageObjects::SignIn.new
       sign_in_page.load
