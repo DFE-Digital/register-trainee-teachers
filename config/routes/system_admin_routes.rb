@@ -13,6 +13,7 @@ module SystemAdminRoutes
         end
 
         resources :dttp_providers, only: %i[index show create]
+        resources :validation_errors, only: %i[index]
       end
     end
   end

@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   extend SidekiqRoutes
   extend SystemAdminRoutes
+  extend ApiRoutes
 
   get :ping, controller: :heartbeat
   get :healthcheck, controller: :heartbeat
