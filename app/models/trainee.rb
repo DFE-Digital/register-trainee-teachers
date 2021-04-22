@@ -17,7 +17,7 @@ class Trainee < ApplicationRecord
 
   validates :training_route, presence: { message: I18n.t("activerecord.errors.models.trainee.attributes.training_route") }
 
-  enum training_route: TRAINING_ROUTES.select { |_routes, value| value < TRAINING_ROUTES[:school_direct_tuition_fee] }
+  enum training_route: TRAINING_ROUTES_FOR_TRAINEE
 
   enum locale_code: { uk: 0, non_uk: 1 }
   enum gender: {
@@ -179,7 +179,7 @@ class Trainee < ApplicationRecord
   end
 
   def available_courses
-    provider.courses.where(route: training_route)
+    provider.courses.where(route: training_route) if TRAINING_ROUTES_FOR_COURSE.keys.include?(training_route)
   end
 
   def clear_disabilities

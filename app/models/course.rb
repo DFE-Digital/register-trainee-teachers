@@ -26,7 +26,7 @@ class Course < ApplicationRecord
     pgde: 4,
   }
 
-  enum route: TRAINING_ROUTES
+  enum route: TRAINING_ROUTES_FOR_COURSE
 
   enum age_range: {
     AgeRange::THREE_TO_SEVEN_COURSE => 0,

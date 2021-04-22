@@ -9,7 +9,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_trainee_exists(:with_related_courses)
     given_some_courses_exist
     given_i_visited_the_review_draft_page
   end
@@ -123,7 +123,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def given_some_courses_exist
-    @matching_courses = create_list(:course, 10, provider: trainee.provider, route: trainee.training_route)
+    @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
 
   def given_there_arent_any_courses
@@ -131,7 +131,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def and_some_courses_for_other_providers_or_routes_exist
-    other_route = TRAINING_ROUTES.keys.excluding(trainee.training_route).sample
+    other_route = TRAINING_ROUTES_FOR_COURSE.keys.excluding(trainee.training_route).sample
     create(:course, provider: trainee.provider, route: other_route)
     create(:course, route: trainee.training_route)
   end

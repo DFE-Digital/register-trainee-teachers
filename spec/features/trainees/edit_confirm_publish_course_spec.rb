@@ -9,7 +9,7 @@ feature "confirm publish course", type: :feature, feature_publish_course_details
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_trainee_exists(:with_related_courses)
     given_a_course_exists
     given_i_visited_the_review_draft_page
   end
@@ -35,6 +35,6 @@ feature "confirm publish course", type: :feature, feature_publish_course_details
   end
 
   def given_a_course_exists
-    @course = create(:course, provider: trainee.provider, route: trainee.training_route)
+    @course = trainee.provider.courses.where(route: trainee.training_route).first
   end
 end

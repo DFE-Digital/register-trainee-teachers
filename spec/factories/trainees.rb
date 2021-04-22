@@ -189,5 +189,19 @@ FactoryBot.define do
       withdraw_reason { WithdrawalReasons::FOR_ANOTHER_REASON }
       additional_withdraw_reason { Faker::Lorem.paragraph }
     end
+
+    trait :with_related_courses do
+      training_route { (TRAINING_ROUTES_FOR_TRAINEE.keys & TRAINING_ROUTES_FOR_COURSE.keys).sample }
+
+      transient do
+        courses_count { 5 }
+      end
+
+      after(:create) do |trainee, evaluator|
+        create_list(:course, evaluator.courses_count, provider: trainee.provider, route: trainee.training_route)
+
+        trainee.reload
+      end
+    end
   end
 end

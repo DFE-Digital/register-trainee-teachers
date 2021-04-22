@@ -28,8 +28,13 @@ features:
   import_applications_from_apply: false
   import_courses_from_ttapi: false
   routes:
-    provider_led_postgrad: false
-    early_years_undergrad: false
+    early_years_assessment_only: false 
+    early_years_graduate_employment_based: false 
+    early_years_graduate_entry: false 
+    early_years_undergrad: false 
+    provider_led_postgrad: false 
+    school_direct_salaried: false 
+    school_direct_tuition_fee: false
 
 dfe_sign_in:
   # Our service name
