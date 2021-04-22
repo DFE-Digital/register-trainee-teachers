@@ -9,6 +9,9 @@ class AutocompleteValidator < ActiveModel::EachValidator
 
     value = record.send(attribute)
     unless value == raw_value
+      # If the user hasn't selected something, we need to reset the value so that the autocomplete
+      # doesn't clobber the raw value when the page reloads
+      record.send("#{attribute}=", raw_value)
       record.errors.add(attribute, I18n.t("activemodel.errors.validators.autocomplete.#{attribute}"))
     end
   end
