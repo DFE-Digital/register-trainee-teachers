@@ -168,8 +168,8 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
   create_table "schools", force: :cascade do |t|
     t.string "urn", null: false
     t.string "name", null: false
-    t.string "postcode", null: false
-    t.string "town", null: false
+    t.string "postcode"
+    t.string "town"
     t.date "open_date"
     t.date "close_date"
     t.datetime "created_at", precision: 6, null: false
