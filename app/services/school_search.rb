@@ -5,7 +5,9 @@ class SchoolSearch
 
   attr_reader :query, :limit, :lead_schools_only
 
-  def initialize(query: nil, limit: nil, lead_schools_only: false)
+  DEFAULT_LIMIT = 15
+
+  def initialize(query: nil, limit: DEFAULT_LIMIT, lead_schools_only: false)
     @query = query
     @limit = limit
     @lead_schools_only = lead_schools_only

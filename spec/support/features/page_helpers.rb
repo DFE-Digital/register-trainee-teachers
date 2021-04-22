@@ -182,6 +182,10 @@ module Features
       @start_page ||= PageObjects::Start.new
     end
 
+    def lead_schools_search_page
+      @lead_schools_search_page ||= PageObjects::Trainees::LeadSchoolsSearchPage.new
+    end
+
     def accessibility_page
       @accessibility_page ||= PageObjects::Accessibility.new
     end

@@ -163,6 +163,11 @@ en:
         new: Add a user
       validation_errors:
         page_title: Validation errors
+      search_schools:
+        page_title_results: Select the lead school
+        page_title_no_results: No results
+        sub_text_results: Results for
+        sub_text_no_results: No results for
     filter:
       training_route: Training route
       state: Status
@@ -204,7 +209,6 @@ en:
           create: Nationality updated
         traineedisability:
           create: Disability details updated
-
     sections:
       titles:
         personal_details: Personal details
@@ -223,7 +227,7 @@ en:
   views:
     all_records: "All records"
     trainees:
-      index: 
+      index:
         no_records: Your trainee records will appear here. You do not have any records yet.
       edit:
         defer: Defer
@@ -612,6 +616,10 @@ en:
             trainee_id:
               blank: You must enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
+        trainee_lead_school_form:
+          attributes:
+            lead_school_id:
+              blank: You must choose a school
   page_headings:
     start_page: "Register trainee teachers"
   system_admin:

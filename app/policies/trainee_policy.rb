@@ -14,11 +14,14 @@ class TraineePolicy
     end
   end
 
-  attr_reader :user, :trainee
+  attr_reader :user, :trainee, :training_router_manager
+
+  delegate :requires_schools?, to: :training_router_manager
 
   def initialize(user, trainee)
     @user = user
     @trainee = trainee
+    @training_router_manager = TrainingRouteManager.new(trainee)
   end
 
   def show?
@@ -45,6 +48,7 @@ class TraineePolicy
     allowed_user? && trainee.trn_received?
   end
 
+  alias_method :index?, :show?
   alias_method :create?, :show?
   alias_method :update?, :show?
   alias_method :edit?, :show?

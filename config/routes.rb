@@ -94,6 +94,9 @@ Rails.application.routes.draw do
       resource :confirm_reinstatement, only: %i[show update], path: "/reinstate/confirm"
       resource :reinstatement, only: %i[show update], path: "/reinstate"
 
+      resources :lead_schools, only: %i[index], path: "/lead-schools"
+      resource :lead_schools, only: %i[update], path: "/lead-schools"
+
       resource :timeline, only: :show
     end
 
