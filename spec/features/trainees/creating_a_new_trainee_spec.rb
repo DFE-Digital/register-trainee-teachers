@@ -39,12 +39,12 @@ feature "Create trainee journey" do
     and_i_should_not_see_early_years_assessment_only_route
   end
 
-  scenario "early years graduate entry radio button not shown when feature set to false", 'feature_routes.early_years_graduate_entry': false do
-    and_i_should_not_see_early_years_graduate_entry_route
+  scenario "early years graduate employment based radio button not shown when feature set to false", 'feature_routes.early_years_graduate_employment_based': false do
+    and_i_should_not_see_early_years_graduate_employment_based_route
   end
 
-  scenario "early years graduate placement radio button not shown when feature set to false", 'feature_routes.early_years_graduate_placement': false do
-    and_i_should_not_see_early_years_graduate_placement_route
+  scenario "early years graduate entry radio button not shown when feature set to false", 'feature_routes.early_years_graduate_entry': false do
+    and_i_should_not_see_early_years_graduate_entry_route
   end
 
   scenario "school direct salaried radio button not shown when feature set to false", 'feature_routes.school_direct_salaried': false do
@@ -102,9 +102,9 @@ private
     expect(new_trainee_page).to_not have_early_years_graduate_entry
   end
 
-  def and_i_should_not_see_early_years_graduate_placement_route
+  def and_i_should_not_see_early_years_graduate_employment_based_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_early_years_graduate_placement
+    expect(new_trainee_page).to_not have_early_years_graduate_employment_based
   end
 
   def and_i_should_not_see_school_direct_salaried_route

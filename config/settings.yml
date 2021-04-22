@@ -29,8 +29,8 @@ features:
   import_courses_from_ttapi: false
   routes:
     early_years_assessment_only: false 
+    early_years_graduate_employment_based: false 
     early_years_graduate_entry: false 
-    early_years_graduate_placement: false 
     early_years_undergrad: false 
     provider_led_postgrad: false 
     school_direct_salaried: false 

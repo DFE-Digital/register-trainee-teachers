@@ -3,8 +3,8 @@
 TRAINING_ROUTE_ENUMS = {
   assessment_only: "assessment_only",
   early_years_assessment_only: "early_years_assessment_only",
+  early_years_graduate_employment_based: "early_years_graduate_employment_based",
   early_years_graduate_entry: "early_years_graduate_entry",
-  early_years_graduate_placement: "early_years_graduate_placement",
   early_years_undergrad: "early_years_undergrad",
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
   provider_led_postgrad: "provider_led_postgrad",
@@ -20,8 +20,8 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
   TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
   TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
-  TRAINING_ROUTE_ENUMS[:early_years_graduate_entry] => 7,
-  TRAINING_ROUTE_ENUMS[:early_years_graduate_placement] => 8,
+  TRAINING_ROUTE_ENUMS[:early_years_graduate_employment_based] => 7,
+  TRAINING_ROUTE_ENUMS[:early_years_graduate_entry] => 8,
 }.freeze
 
 TRAINING_ROUTES_FOR_TRAINEE = TRAINING_ROUTES.select { |training_route|
