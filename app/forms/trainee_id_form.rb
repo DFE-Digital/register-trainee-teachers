@@ -3,11 +3,7 @@
 class TraineeIdForm < TraineeForm
   attr_accessor :trainee_id
 
-  validates :trainee_id, presence: true,
-                         length: {
-                           maximum: 100,
-                           message: I18n.t("activemodel.errors.models.trainee_id_form.attributes.trainee_id.max_char_exceeded"),
-                         }
+  validates :trainee_id, presence: true
 
   def save!
     if valid?
@@ -22,10 +18,7 @@ class TraineeIdForm < TraineeForm
 private
 
   def compute_fields
-    trainee.attributes
-           .symbolize_keys
-           .slice(:trainee_id)
-           .merge(new_attributes)
+    trainee.attributes.symbolize_keys.slice(:trainee_id).merge(new_attributes)
   end
 
   def update_trainee_id
