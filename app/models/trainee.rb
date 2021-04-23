@@ -186,13 +186,4 @@ class Trainee < ApplicationRecord
   def clear_disabilities
     disabilities.clear
   end
-
-  def get_award_type
-    case training_route
-    when "early_years_undergrad"
-      "EYTS"
-    else
-      "QTS"
-    end
-  end
 end

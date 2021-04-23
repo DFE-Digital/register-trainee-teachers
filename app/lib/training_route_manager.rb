@@ -15,6 +15,8 @@ class TrainingRouteManager
 
 private
 
+  attr_reader :trainee
+
   def provider_led_postgrad?
     training_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad].to_sym
   end

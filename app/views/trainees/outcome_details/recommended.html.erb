@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.outcome_details.recommended_#{@trainee.get_award_type.downcase}") %>
+<%= render PageTitle::View.new(title: "trainees.outcome_details.recommended_#{@trainee.training_route_manager.award_type.downcase}") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(text: t(:back_to_record), href: trainee_path(@trainee)) %>
@@ -8,11 +8,11 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        <%= trainee_name(@trainee) %> recommended for <%= @trainee.get_award_type %>
+        <%= trainee_name(@trainee) %> recommended for <%= @trainee.training_route_manager.award_type %>
       </h1>
     </div>
     <p class="govuk-body">
-      The Department for Education will award <%= @trainee.get_award_type %> where appropriate within 3
+      The Department for Education will award <%= @trainee.training_route_manager.award_type %> where appropriate within 3
       working days.
     </p>
   </div>

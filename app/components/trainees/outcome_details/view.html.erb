@@ -1,6 +1,6 @@
 <%= render SummaryCard::View.new(
   trainee: data_model.trainee,
-  title: "#{data_model.trainee.get_award_type} details",
+  title: "#{data_model.trainee.training_route_manager&.award_type} details",
   heading_level: 2,
   rows: [
     {
