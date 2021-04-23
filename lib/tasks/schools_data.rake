@@ -4,13 +4,8 @@ namespace :schools_data do
   HEADERS = %w[urn name town postcode lead_school open_date close_date].freeze
   REFINED_CSV_PATH = Rails.root.join("data/schools.csv").freeze
 
-  # This task requires two csvs:
-  #  The establisment csv can be downloaded here https://get-information-schools.service.gov.uk/Downloads
-  #  under "Establishment fields"
-  #
-  #  Ask in slack for the lead schools csv as it isn't published anywhere
-
-  desc "Trim all establishment csv to only needed columns + flag lead schools"
+  # This task requires two csvs, see readme under "Regenerating data/schools.csv" for details
+  desc "Build school csv with only the required columns from the establishment and lead school csv"
   task :build_csv, %i[establishment_csv_path lead_schools_csv_path] => [:environment] do |_, args|
     urns = CSV.read(args.lead_schools_csv_path, headers: true).by_col["Lead School (URN)"].uniq
     urns = Set.new(urns)
