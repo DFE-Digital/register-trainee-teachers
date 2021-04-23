@@ -45,6 +45,30 @@ describe "schools_data:import" do
       expect(s2.open_date).to eq Date.parse("13/08/1997")
       expect(s2.close_date).to be nil
     end
+
+    context "if a school already exists" do
+      it "updates the school based on the csv" do
+        School.create(
+          urn: 12_345,
+          name: "Nice school",
+          town: "Atlantis",
+          postcode: "MYST3RY",
+          open_date: Date.today,
+          close_date: Date.today + 100.years
+        )
+
+        subject
+
+        school = School.find_by_urn(12_345)
+
+        expect(school.name).to eq "Springfield Elementary"
+        expect(school.town).to eq "Springfield"
+        expect(school.postcode).to eq "FAKE"
+        expect(school.lead_school).to be true
+        expect(school.open_date).to eq Date.parse("17/12/1989")
+        expect(school.close_date).to be nil
+      end
+    end
   end
 
   context "with invalid data" do

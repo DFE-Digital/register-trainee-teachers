@@ -36,13 +36,14 @@ namespace :schools_data do
     csv_path = args.csv_path || REFINED_CSV_PATH
     schools = CSV.read(csv_path, headers: true)
 
-    created = 0
-    schools.each do |s|
-      School.create!(s.to_h)
-      puts "created school with urn: #{s['urn']}"
-      created += 1
+    upserted = 0
+    schools.each do |school|
+      School.find_or_initialize_by(urn: school['urn'])
+        .update!(school.to_h.except(:urn))
+      puts "upserted school with urn: #{school['urn']}"
+      upserted += 1
     end
 
-    puts "Done! #{created} schools created"
+    puts "Done! #{upserted} schools upserted"
   end
 end
