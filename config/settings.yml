@@ -33,7 +33,7 @@ features:
     early_years_graduate_entry: false 
     early_years_undergrad: false 
     provider_led_postgrad: false 
-    school_direct_salaried: false 
+    school_direct_salaried: true 
     school_direct_tuition_fee: false
 
 dfe_sign_in:

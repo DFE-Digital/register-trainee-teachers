@@ -13,7 +13,7 @@ class Trainee < ApplicationRecord
 
   attribute :progress, Progress.to_type
 
-  delegate :requires_placement_details?, to: :training_route_manager
+  delegate :requires_placement_details?, :requires_schools?, to: :training_route_manager
 
   validates :training_route, presence: { message: I18n.t("activerecord.errors.models.trainee.attributes.training_route") }
 

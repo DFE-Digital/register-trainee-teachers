@@ -9,6 +9,10 @@ class TrainingRouteManager
     feature_enabled?("routes.provider_led_postgrad") && provider_led_postgrad?
   end
 
+  def requires_schools?
+    %w[routes.school_direct_salaried routes.school_direct_tuition_fee].any? { |flag| feature_enabled?(flag) } && schools_direct?
+  end
+
 private
 
   def provider_led_postgrad?
@@ -17,6 +21,10 @@ private
 
   def assessment_only?
     training_route == TRAINING_ROUTE_ENUMS[:assessment_only].to_sym
+  end
+
+  def schools_direct?
+    TRAINING_ROUTE_ENUMS.values_at(:school_direct_tuition_fee, :school_direct_salaried).include? training_route.to_s
   end
 
   def training_route
