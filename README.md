@@ -195,7 +195,7 @@ task (if school details update, or there is a new list of lead schools
 for the coming year.
 
 ```
-bundle exec rake schools_data:build_csv[establishment_csv_path, lead_schools_csv_path]
+bundle exec rake schools_data:generate_csv[establishment_csv_path, lead_schools_csv_path]
 ```
 The establisment csv can be downloaded here https://get-information-schools.service.gov.uk/Downloads
 under "Establishment fields".

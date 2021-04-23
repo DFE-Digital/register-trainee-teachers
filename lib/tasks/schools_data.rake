@@ -5,9 +5,9 @@ namespace :schools_data do
   REFINED_CSV_PATH = Rails.root.join("data/schools.csv").freeze
 
   # This task requires two csvs, see readme under "Regenerating data/schools.csv" for details
-  desc "Build school csv with only the required columns from the establishment and lead school csv"
-  task :build_csv, %i[establishment_csv_path lead_schools_csv_path output_path] => [:environment] do |_, args|
-    urns = CSV.read(args.lead_schools_csv_path, headers: true).by_col["Lead School (URN)"].uniq
+  desc "Generate school csv with only the required columns from the establishment and lead school csv"
+  task :generate_csv, %i[establishment_csv_path lead_schools_csv_path output_path] => [:environment] do |_, args|
+    urns = CSV.read(args.lead_schools_csv_path, headers: true).by_col["Lead School (URN)"]
     urns = Set.new(urns)
 
     schools = CSV.read(args.establishment_csv_path, headers: true, encoding: "windows-1251:utf-8")

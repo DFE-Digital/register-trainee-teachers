@@ -3,7 +3,7 @@
 require "rails_helper"
 require "tempfile"
 
-describe "schools_data:import" do
+describe "schools_data:generate_csv" do
   before do
     allow($stdout).to receive(:puts)
   end
@@ -44,7 +44,7 @@ describe "schools_data:import" do
       %i[establishment_csv_path lead_schools_csv_path output_path],
       [establishment_csv_path, lead_schools_csv_path, output_path],
     )
-    Rake::Task["schools_data:build_csv"].execute(args)
+    Rake::Task["schools_data:generate_csv"].execute(args)
   end
 
   it "combines the relevant fields and outputs them to a csv, tagging as lead school correctly" do
