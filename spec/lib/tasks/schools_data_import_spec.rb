@@ -4,6 +4,10 @@ require "rails_helper"
 require "tempfile"
 
 describe "schools_data:import" do
+  before do
+    allow($stdout).to receive(:puts)
+  end
+
   let(:csv) do
     Tempfile.new(["fake", ".csv"]).tap do |f|
       f.write csv_body
@@ -48,13 +52,14 @@ describe "schools_data:import" do
 
     context "if a school already exists" do
       it "updates the school based on the csv" do
-        School.create(
+        School.create!(
           urn: 12_345,
           name: "Nice school",
           town: "Atlantis",
           postcode: "MYST3RY",
-          open_date: Date.today,
-          close_date: Date.today + 100.years
+          lead_school: false,
+          open_date: Time.zone.today,
+          close_date: Time.zone.today + 100.years,
         )
 
         subject

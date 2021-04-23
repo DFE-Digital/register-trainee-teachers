@@ -6,13 +6,15 @@ namespace :schools_data do
 
   # This task requires two csvs, see readme under "Regenerating data/schools.csv" for details
   desc "Build school csv with only the required columns from the establishment and lead school csv"
-  task :build_csv, %i[establishment_csv_path lead_schools_csv_path] => [:environment] do |_, args|
+  task :build_csv, %i[establishment_csv_path lead_schools_csv_path output_path] => [:environment] do |_, args|
     urns = CSV.read(args.lead_schools_csv_path, headers: true).by_col["Lead School (URN)"].uniq
     urns = Set.new(urns)
 
     schools = CSV.read(args.establishment_csv_path, headers: true, encoding: "windows-1251:utf-8")
 
-    CSV.open(REFINED_CSV_PATH, "w+") do |csv|
+    output_path = args.output_path || REFINED_CSV_PATH
+
+    CSV.open(output_path, "w+") do |csv|
       csv << HEADERS
       schools.each do |s|
         lead_school = urns.include? s["URN"]
@@ -33,7 +35,7 @@ namespace :schools_data do
 
     upserted = 0
     schools.each do |school|
-      School.find_or_initialize_by(urn: school['urn'])
+      School.find_or_initialize_by(urn: school["urn"])
         .update!(school.to_h.except(:urn))
       puts "upserted school with urn: #{school['urn']}"
       upserted += 1
