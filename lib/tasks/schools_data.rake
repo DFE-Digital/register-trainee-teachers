@@ -16,14 +16,23 @@ namespace :schools_data do
 
     CSV.open(output_path, "w+") do |csv|
       csv << HEADERS
-      schools.each do |s|
-        lead_school = urns.include? s["URN"]
+      schools.each do |school|
+        lead_school = urns.include? school["URN"]
         town =
-          s["Town"].presence || [s["Address3"], s["Locality"]].detect(&:present?).tap do |backup|
-            puts "Town missing for school: '#{s['EstablishmentName']}', estimating as #{backup}"
+          school["Town"].presence || [school["Address3"], school["Locality"]].detect(&:present?).tap do |backup|
+            puts "Town missing for school: '#{school['EstablishmentName']}', estimating as #{backup}"
           end
 
-        csv << [s["URN"], s["EstablishmentName"], town, s["Postcode"], lead_school, s["OpenDate"], s["CloseDate"]]
+        csv <<
+          [
+            school["URN"],
+            school["EstablishmentName"],
+            town,
+            school["Postcode"],
+            lead_school,
+            school["OpenDate"],
+            school["CloseDate"],
+          ]
       end
     end
   end
