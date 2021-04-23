@@ -32,4 +32,28 @@ describe TrainingRouteManager do
       end
     end
   end
+
+  describe "#requires_schools?" do
+    %w[school_direct_tuition_fee school_direct_salaried].each do |route|
+      context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": true do
+        context "with a school direct trainee" do
+          let(:trainee) { build(:trainee, route.to_sym) }
+
+          it "returns true" do
+            expect(subject.requires_schools?).to be true
+          end
+        end
+
+        context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": false do
+          context "with a non school direct trainee" do
+            let(:trainee) { build(:trainee) }
+
+            it "returns false" do
+              expect(subject.requires_schools?).to be false
+            end
+          end
+        end
+      end
+    end
+  end
 end

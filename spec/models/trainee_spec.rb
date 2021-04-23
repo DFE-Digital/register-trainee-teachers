@@ -11,6 +11,8 @@ describe Trainee do
         TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
         TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
+        TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
+        TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
       )
     end
 
