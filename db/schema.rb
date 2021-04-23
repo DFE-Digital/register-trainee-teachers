@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_21_154952) do
+ActiveRecord::Schema.define(version: 2021_04_22_143630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 2021_04_21_154952) do
     t.string "course_length", null: false
     t.integer "qualification", null: false
     t.integer "route", null: false
-    t.integer "level", null: false
     t.string "summary", null: false
+    t.integer "level", null: false
     t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
     t.index ["provider_id"], name: "index_courses_on_provider_id"
   end
@@ -160,8 +160,8 @@ ActiveRecord::Schema.define(version: 2021_04_21_154952) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 
@@ -250,11 +250,13 @@ ActiveRecord::Schema.define(version: 2021_04_21_154952) do
     t.date "commencement_date"
     t.date "reinstate_date"
     t.uuid "dormancy_dttp_id"
+    t.bigint "lead_school_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
     t.index ["gender"], name: "index_trainees_on_gender"
+    t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
@@ -299,5 +301,6 @@ ActiveRecord::Schema.define(version: 2021_04_21_154952) do
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
   add_foreign_key "trainees", "providers"
+  add_foreign_key "trainees", "schools", column: "lead_school_id"
   add_foreign_key "users", "providers"
 end

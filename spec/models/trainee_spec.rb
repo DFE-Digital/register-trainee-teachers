@@ -51,6 +51,7 @@ describe Trainee do
     it { is_expected.to have_many(:nationalities).through(:nationalisations) }
     it { is_expected.to have_many(:trainee_disabilities).dependent(:destroy).inverse_of(:trainee) }
     it { is_expected.to have_many(:disabilities).through(:trainee_disabilities) }
+    # it { is_expected.to belong_to(:lead_school).class_name("School").optional } # TODO uncomment after merging PR 1552
   end
 
   context "validations" do
