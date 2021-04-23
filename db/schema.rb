@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_150757) do
+ActiveRecord::Schema.define(version: 2021_04_21_154952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,9 +83,9 @@ ActiveRecord::Schema.define(version: 2021_04_20_150757) do
     t.integer "duration_in_years", null: false
     t.string "course_length", null: false
     t.integer "qualification", null: false
-    t.string "summary", null: false
     t.integer "route", null: false
     t.integer "level", null: false
+    t.string "summary", null: false
     t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
     t.index ["provider_id"], name: "index_courses_on_provider_id"
   end
@@ -174,6 +174,8 @@ ActiveRecord::Schema.define(version: 2021_04_20_150757) do
     t.date "close_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "lead_school", null: false
+    t.index ["lead_school"], name: "index_schools_on_lead_school", where: "(lead_school IS TRUE)"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
