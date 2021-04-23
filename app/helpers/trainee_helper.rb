@@ -41,4 +41,8 @@ module TraineeHelper
 
     FeatureService.enabled?(:publish_course_details) && courses_available && !manual_entry_chosen
   end
+
+  def last_updated_event_for(trainee)
+    Trainees::CreateTimeline.call(audits: trainee.own_and_associated_audits).first
+  end
 end
