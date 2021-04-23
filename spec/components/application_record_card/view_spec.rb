@@ -56,6 +56,7 @@ module ApplicationRecordCard
           let(:trainee) { build(:trainee, state_expectation[:state], created_at: Time.zone.now) }
 
           it "renders '#{state_expectation[:text]}'" do
+            # byebug
             expect(component).to have_selector(".govuk-tag", text: state_expectation[:text])
           end
 
