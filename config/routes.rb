@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "routes/sidekiq_routes"
-
 Rails.application.routes.draw do
   extend SidekiqRoutes
+  extend SystemAdminRoutes
+  extend ApiRoutes
 
   get :ping, controller: :heartbeat
   get :healthcheck, controller: :heartbeat
@@ -36,18 +36,6 @@ Rails.application.routes.draw do
 
   concern :confirmable do
     resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm"
-  end
-
-  scope module: :system_admin, path: "system-admin" do
-    resources :providers, except: %i[edit update destroy] do
-      resources :users, only: %i[new create]
-
-      scope module: :imports do
-        post "/users/import", to: "users#create", as: :import_user
-      end
-    end
-    resources :dttp_providers, only: %i[index show create]
-    resources :validation_errors, only: %i[index]
   end
 
   resources :trainees, except: :edit do

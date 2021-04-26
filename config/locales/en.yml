@@ -625,3 +625,7 @@ en:
         attribute_error: Attribute error
         error_count: Error count
         form: Form
+  api:
+    schools:
+      errors:
+        bad_request: "The query param needs to be at least 3 characters"
