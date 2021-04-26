@@ -96,15 +96,11 @@ Rails.application.routes.draw do
       resource :reinstatement, only: %i[show update], path: "/reinstate"
 
       resources :lead_schools, only: %i[index], path: "/lead-schools"
-      resource :lead_schools, only: %i[update], path: "/lead-schools"
+      resource :lead_schools, only: %i[update edit], path: "/lead-schools"
       resources :employing_schools, only: %i[index], path: "/employing-schools"
       resource :employing_schools, only: %i[update], path: "/employing-schools"
 
       resource :timeline, only: :show
-
-      resource :schools, only: %i[edit update] do
-        get "search"
-      end
     end
 
     member do

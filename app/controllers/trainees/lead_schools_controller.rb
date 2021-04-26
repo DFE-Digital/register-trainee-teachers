@@ -11,6 +11,9 @@ module Trainees
       @lead_school_form = LeadSchoolForm.new(trainee)
     end
 
+    def edit
+    end
+
     def update
       @lead_school_form = LeadSchoolForm.new(trainee, params: trainee_params, user: current_user)
 

@@ -1,6 +1,6 @@
 <h1 class="govuk-heading-l">Lead school</h1>
 
-<%= register_form_with model: @trainee, url: trainee_schools_path, local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+<%= register_form_with model: @trainee, url: trainee_lead_schools_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
   <div class="govuk-form-group">
     <label class="govuk-label govuk-label--s" for="schools-autocomplete">Lead school</label>
     <div id="schools-autocomplete" class="app-!-autocomplete--max-width-two-thirds"></div>
