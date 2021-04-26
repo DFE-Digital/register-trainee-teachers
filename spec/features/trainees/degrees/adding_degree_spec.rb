@@ -78,6 +78,19 @@ RSpec.feature "Adding a degree" do
       and_i_click_the_continue_button_on_the_degree_details_page
       then_i_see_the_error_summary_for_degree_details_page
     end
+
+    scenario "the user submits partially entered autocompletes", js: true do
+      and_i_have_selected_uk_route
+      when_i_visit_the_degree_details_page
+      and_i_fill_in_subject_without_selecting_a_value(with: "moose")
+      and_i_fill_in_degree_without_selecting_a_value(with: "goose")
+      and_i_fill_in_institution_without_selecting_a_value(with: "obtuse")
+      and_i_click_continue
+      then_subject_is_populated(with: "moose")
+      then_degree_is_populated(with: "goose")
+      then_institution_is_populated(with: "obtuse")
+      then_i_see_error_messages_for_partially_submitted_fields(:subject, :uk_degree, :institution)
+    end
   end
 
   describe "Non-UK Route" do
@@ -97,6 +110,15 @@ RSpec.feature "Adding a degree" do
       when_i_visit_the_degree_details_page
       and_i_click_the_continue_button_on_the_degree_details_page
       then_i_see_the_error_summary_for_degree_details_page
+    end
+
+    scenario "the user submits partially entered autocompletes", js: true do
+      and_i_have_selected_non_uk_route
+      when_i_visit_the_degree_details_page
+      and_i_fill_in_subject_without_selecting_a_value(with: "moose")
+      and_i_click_continue
+      then_subject_is_populated(with: "moose")
+      then_i_see_error_messages_for_partially_submitted_fields(:subject)
     end
   end
 
@@ -204,5 +226,38 @@ private
 
   def then_i_see_a_flash_message
     expect(confirm_details_page).to have_text("Trainee degree deleted")
+  end
+
+  def and_i_fill_in_subject_without_selecting_a_value(with:)
+    degree_details_page.subject_raw.fill_in with: with
+  end
+
+  def then_subject_is_populated(with:)
+    expect(degree_details_page.subject_raw.value).to eq(with)
+  end
+
+  def and_i_fill_in_degree_without_selecting_a_value(with:)
+    degree_details_page.uk_degree_raw.fill_in with: with
+  end
+
+  def then_degree_is_populated(with:)
+    expect(degree_details_page.uk_degree_raw.value).to eq(with)
+  end
+
+  def and_i_fill_in_institution_without_selecting_a_value(with:)
+    degree_details_page.institution_raw.fill_in with: with
+  end
+
+  def then_institution_is_populated(with:)
+    expect(degree_details_page.institution_raw.value).to eq(with)
+  end
+
+  def then_i_see_error_messages_for_partially_submitted_fields(*fields)
+    fields.each do |f|
+      message = I18n.t(
+        "activemodel.errors.validators.autocomplete.#{f}",
+      )
+      expect(degree_details_page).to have_content(message)
+    end
   end
 end

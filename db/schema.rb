@@ -83,8 +83,8 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
     t.integer "duration_in_years", null: false
     t.string "course_length", null: false
     t.integer "qualification", null: false
-    t.integer "route", null: false
     t.string "summary", null: false
+    t.integer "route", null: false
     t.integer "level", null: false
     t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
     t.index ["provider_id"], name: "index_courses_on_provider_id"
@@ -160,8 +160,8 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 
