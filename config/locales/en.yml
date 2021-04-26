@@ -171,6 +171,8 @@ en:
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
+        search_hint: Search for a school by it’s unique reference number (URN), name or postcode
+        search_button: Search again
       search_employing_schools:
         page_title_results: Select the employing school
     filter:
@@ -635,6 +637,10 @@ en:
           attributes:
             lead_school_id:
               blank: You must choose a school
+            results_search_again_query:
+              blank: You much enter a search term
+            no_results_search_again_query:
+              blank: You much enter a search term
         employing_school_form:
           attributes:
             employing_school_id:

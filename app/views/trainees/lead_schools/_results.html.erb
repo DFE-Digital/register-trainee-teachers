@@ -1,0 +1,34 @@
+<h1 class="govuk-heading-l govuk-!-margin-bottom-1">
+  <%= t("components.page_titles.search_schools.page_title_results") %>
+</h1>
+
+<% if query.present? %>
+  <div class="govuk-hint">
+    <%= t("components.page_titles.search_schools.sub_text_results") %> ‘<%= query %>’
+  </div>
+<% end %>
+
+<%= f.govuk_error_summary %>
+
+<%= f.govuk_radio_buttons_fieldset :lead_school_id, legend: nil do %>
+  <div class="govuk-!-margin-bottom-6">
+    <% @schools.each do |school| %>
+      <%= f.govuk_radio_button :lead_school_id, school.id,
+                               label: { text: school.name },
+                               hint: { text: school_urn_and_location(school) } %>
+    <% end %>
+  </div>
+
+  <div class="govuk-!-margin-bottom-6"><%= f.govuk_radio_divider %></div>
+
+  <div class="govuk-!-margin-bottom-6">
+    <%= f.govuk_radio_button :lead_school_id,
+                             :results_search_again,
+                             label: { text: t("components.page_titles.search_schools.search_button") } do %>
+      <%= f.govuk_text_field :results_search_again_query,
+                             label: { text: t("components.page_titles.search_schools.search_hint") } %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= f.govuk_submit %>

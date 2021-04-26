@@ -10,6 +10,8 @@ namespace :example_data do
 
     Faker::Config.locale = "en-GB"
 
+    FactoryBot.create_list(:school, 50, lead_school: true)
+
     PERSONAS.each do |persona_attributes|
       persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
                                            last_name: persona_attributes[:last_name],
