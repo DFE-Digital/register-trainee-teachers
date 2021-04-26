@@ -1,12 +1,10 @@
-<%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
+<%= register_form_with model: [@trainee, @degree_form.degree], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "non_uk" %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">Degree details</h1>
 
   <%= render FormComponents::Autocomplete::View.new(
-    f,
-    attribute_name: :subject,
     form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: "Degree subject", size: "s" },
                                                         hint: { text: 'Search for the closest matching subject.

@@ -14,10 +14,6 @@ module PageObjects
       element :gender, ".govuk-radios.gender"
       element :nationality, ".govuk-checkboxes.nationality"
       element :other_nationality, "#personal-details-form-other-nationality1-field"
-      element :other_nationality1_raw, "input[data-nameoriginal='personal_details_form[other_nationality1_raw]']"
-      element :other_nationality2_raw, "input[data-nameoriginal='personal_details_form[other_nationality2_raw]']"
-      element :other_nationality3_raw, "input[data-nameoriginal='personal_details_form[other_nationality3_raw]']"
-      element :add_nationality, "#add-nationality-button"
       element :continue_button, "input[name='commit'][value='Continue']"
     end
   end
