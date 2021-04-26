@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_143630) do
+ActiveRecord::Schema.define(version: 2021_04_26_105838) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "btree_gin"
   enable_extension "plpgsql"
 
   create_table "apply_application_sync_requests", force: :cascade do |t|
@@ -83,8 +84,8 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
     t.integer "duration_in_years", null: false
     t.string "course_length", null: false
     t.integer "qualification", null: false
-    t.string "summary", null: false
     t.integer "route", null: false
+    t.string "summary", null: false
     t.integer "level", null: false
     t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
     t.index ["provider_id"], name: "index_courses_on_provider_id"
@@ -160,8 +161,8 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 
@@ -175,7 +176,11 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "lead_school", null: false
+    t.index ["close_date"], name: "index_schools_on_close_date", where: "(close_date IS NULL)"
     t.index ["lead_school"], name: "index_schools_on_lead_school", where: "(lead_school IS TRUE)"
+    t.index ["name"], name: "index_schools_on_name", using: :gin
+    t.index ["postcode"], name: "index_schools_on_postcode", using: :gin
+    t.index ["town"], name: "index_schools_on_town", using: :gin
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
