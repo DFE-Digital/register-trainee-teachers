@@ -3,7 +3,6 @@
 class CourseDetailsForm < TraineeForm
   FIELDS = %i[
     subject
-    subject_raw
     start_day
     start_month
     start_year
@@ -12,15 +11,13 @@ class CourseDetailsForm < TraineeForm
     end_year
     main_age_range
     additional_age_range
-    additional_age_range_raw
   ].freeze
 
   attr_accessor(*FIELDS)
 
   before_validation :sanitise_course_dates
 
-  validates :subject, autocomplete: true, presence: true
-  validates :additional_age_range, autocomplete: true, if: -> { main_age_range&.to_sym == :other }
+  validates :subject, presence: true
   validate :age_range_valid
   validate :course_start_date_valid
   validate :course_end_date_valid

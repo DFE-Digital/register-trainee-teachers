@@ -6,7 +6,6 @@ module PageObjects
       set_url "/trainees/{trainee_id}/degrees/new?locale_code={locale_code}"
 
       element :uk_degree, "#degree-uk-degree-field"
-      element :uk_degree_raw, "input[data-nameoriginal='degree[uk_degree_raw]']"
 
       element :bachelor_degree, "#degree-non-uk-degree-bachelor-degree-field"
       element :ordinary_bachelor_degree, "#degree-non-uk-degree-ordinary-bachelor-degree-field"
@@ -16,9 +15,7 @@ module PageObjects
       element :non_enic, "#degree-non-uk-degree-non-enic-field"
 
       element :subject, "#degree-subject-field"
-      element :subject_raw, "input[data-nameoriginal='degree[subject_raw]']"
       element :institution, "#degree-institution-field"
-      element :institution_raw, "input[data-nameoriginal='degree[institution_raw]']"
       element :graduation_year, "#degree-graduation-year-field"
       element :grade, ".degree-grade"
       element :other_grade, "#degree-other-grade-field"

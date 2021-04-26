@@ -18,31 +18,23 @@ class DegreeForm
     country
   ].freeze
 
-  AUTOCOMPLETE_FIELDS = %i[
-    uk_degree_raw
-    subject_raw
-    institution_raw
-  ].freeze
+  attr_accessor(*FIELDS, :degrees_form, :degree)
 
-  attr_accessor(*FIELDS, *AUTOCOMPLETE_FIELDS, :degrees_form, :degree)
-
-  validates :uk_degree, :subject, :institution, autocomplete: true, allow_nil: true
   validate :validate_with_degree_model
 
-  delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?,
+  delegate :uk?, :non_uk?, :non_uk_degree_non_enic?,
            to: :degree
 
-  def initialize(degrees_form:, degree:, autocomplete_params: {})
+  def initialize(degrees_form:, degree:)
     @degrees_form = degrees_form
     @degree = degree
     self.attributes = degree.attributes
       .symbolize_keys
       .slice(*FIELDS)
-    assign_attributes(autocomplete_params)
   end
 
-  def self.model_name
-    ActiveModel::Name.new(self, nil, "Degree")
+  def persisted?
+    slug.present?
   end
 
   def id

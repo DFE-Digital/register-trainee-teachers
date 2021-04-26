@@ -20,20 +20,21 @@ const suggestionTemplate = (value) => {
 const setupAutoComplete = (component) => {
   const selectEl = component.querySelector('select')
 
-  // We add a name which we base off the name for the select element and add "raw" to it, eg
-  // if there is a select input called "course_details[subject]" we add a name to the text input
-  // as "course_details[subject_raw]"
-  const matches = /(\w+)\[(\w+)\]/.exec(selectEl.name)
-  const rawFieldName = `${matches[1]}[${matches[2]}_raw]`
-
   accessibleAutocomplete.enhanceSelectElement({
     defaultValue: defaultValueOption(component),
     selectElement: selectEl,
     showAllValues: showAllValuesOption(component),
     autoselect: !disableAutoselectOption(component),
     confirmOnBlur: !disableConfirmOnBlurOption(component),
-    templates: { suggestion: suggestionTemplate },
-    name: rawFieldName
+    templates: { suggestion: suggestionTemplate }
+  })
+
+  // Fixes a bug whereby if the user enters a search term with no results
+  // accesible-autocomplete defaults to the last valid input and there is no
+  // error to handle.
+  component.querySelector('input').addEventListener('keyup', () => {
+    const noResults = component.querySelector('.autocomplete__option--no-results')
+    if (noResults) selectEl.value = ''
   })
 }
 

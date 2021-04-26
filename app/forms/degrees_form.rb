@@ -17,8 +17,8 @@ class DegreesForm
     { degree_ids: trainee.degree_ids }
   end
 
-  def build_degree(degree_params, autocomplete_params = {})
-    DegreeForm.new(degrees_form: self, degree: trainee.degrees.new(degree_params), autocomplete_params: autocomplete_params)
+  def build_degree(params)
+    DegreeForm.new(degrees_form: self, degree: trainee.degrees.new(params))
   end
 
   def find_degree_from_param(slug)

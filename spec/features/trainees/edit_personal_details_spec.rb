@@ -40,16 +40,6 @@ feature "edit personal details", type: :feature do
     then_i_see_error_messages
   end
 
-  scenario "partially entering nationality", js: true do
-    given_a_trainee_exists
-    and_nationalities_exist_in_the_system
-    when_i_visit_the_personal_details_page
-    and_i_fill_in_nationalities_without_selecting_a_value(with: ["moose", "on", "the loose"])
-    and_i_submit_the_form
-    then_nationalities_are_populated(with: ["moose", "on", "the loose"])
-    then_i_see_error_messages_for_partially_completed_nationalities
-  end
-
   context "as a non-draft trainee" do
     before do
       given_a_trainee_exists(:submitted_for_trn)
@@ -158,30 +148,5 @@ private
 
   def then_i_see_a_flash_message
     expect(record_page).to have_text("Trainee personal details updated")
-  end
-
-  def and_i_fill_in_nationalities_without_selecting_a_value(with:)
-    nationality1, nationality2, nationality3 = *with
-    personal_details_page.nationality.check "Other", allow_label_click: true
-    personal_details_page.other_nationality1_raw.fill_in with: nationality1
-    personal_details_page.add_nationality.click
-    personal_details_page.other_nationality2_raw.fill_in with: nationality2
-    personal_details_page.add_nationality.click
-    personal_details_page.other_nationality3_raw.fill_in with: nationality3
-  end
-
-  def then_nationalities_are_populated(with:)
-    nationality1, nationality2, nationality3 = *with
-    expect(personal_details_page.other_nationality1_raw.value).to eq nationality1
-    expect(personal_details_page.other_nationality2_raw.value).to eq nationality2
-    expect(personal_details_page.other_nationality3_raw.value).to eq nationality3
-  end
-
-  def then_i_see_error_messages_for_partially_completed_nationalities
-    expect(personal_details_page).to have_content(
-      I18n.t(
-        "activemodel.errors.validators.autocomplete.other_nationality1",
-      ),
-    )
   end
 end

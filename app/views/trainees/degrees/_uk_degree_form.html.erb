@@ -1,4 +1,4 @@
-<%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
+<%= register_form_with model: [@trainee, @degree_form.degree], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "uk" %>
 
   <%= f.govuk_error_summary %>
@@ -6,8 +6,6 @@
   <h1 class="govuk-heading-l">Degree details</h1>
 
   <%= render FormComponents::Autocomplete::View.new(
-    f,
-    attribute_name: :subject,
     form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: "Degree subject", size: "s" },
                                                         hint: { text: 'Search for the closest matching subject.
@@ -19,8 +17,6 @@
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
-    f,
-    attribute_name: :uk_degree,
     form_field: f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :option_value, :option_name,
                                           label: { text: "Type of degree", size: "s" },
                                           hint: { text: "For example, BA, BSc or other (please specify)" }),
@@ -30,8 +26,6 @@
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
-    f,
-    attribute_name: :institution,
     form_field: f.govuk_collection_select(:institution, institutions_options, :name,
                                           :name, label: { text: "Institution", size: "s" }),
     html_attributes: {
