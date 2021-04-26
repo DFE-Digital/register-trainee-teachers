@@ -3,7 +3,16 @@
 class School < ApplicationRecord
   include PgSearch::Model
 
-  pg_search_scope :search, against: %i[urn name town postcode], using: { tsearch: { prefix: true } }
+  before_save :update_searchable
+
+  pg_search_scope :search,
+                  against: %i[urn name town postcode],
+                  using: {
+                    tsearch: {
+                      prefix: true,
+                      tsvector_column: "searchable",
+                    },
+                  }
 
   scope :open, -> { where(close_date: nil) }
   scope :lead_only, -> { where(lead_school: true) }
@@ -11,4 +20,46 @@ class School < ApplicationRecord
   validates :urn, presence: true, uniqueness: true
   validates :name, presence: true
   validates :lead_school, inclusion: { in: [true, false] }
+
+private
+
+  # The below generates a query like:
+  #
+  #      TO_TSVECTOR(
+  #        'pg_catalog.simple',
+  #        '1000000 The Aldgate School ec3a 5de ec3a5de London'
+  #      );
+  #
+  # and assigns the result to the "searchable" field, which is used by pg_search_scope above.
+  # This creates a space seperated string with all the searchable info about a school such as:
+  #   "1000000 The Aldgate School ec3a 5de ec3a5de London"
+  #
+  # The reason for mentioning the postcode twice is that postgres will split text up by spaces
+  # into "words" when converting it into a tsvector. We would like someone to be able to type
+  # a postcode without spaces and still get a result. Without doing this, the searchable
+  # vector would look like this:
+  #   "'100000':1 '5de':6 'aldgate':3 'ec3a':5 'london':8 'school':4 'the':2"
+  #
+  # searching for ec3a5de would not match any results as it only matches if a query term is exact, or
+  # a prefix of a word. With the above query we end up with a vector like this:
+  #   "'100000':1 '5de':6 'aldgate':3 'ec3a':5 'ec3a5de':7 'london':8 'school':4 'the':2"
+  #
+  def update_searchable
+    ts_vector_value = [urn, name, postcode, postcode.delete(" "), town].join(" ")
+
+    to_tsvector = Arel::Nodes::NamedFunction.new(
+      "TO_TSVECTOR", [
+        Arel::Nodes::Quoted.new("pg_catalog.simple"),
+        Arel::Nodes::Quoted.new(ts_vector_value),
+      ]
+    )
+
+    self.searchable =
+      ActiveRecord::Base
+        .connection
+        .execute(Arel::SelectManager.new.project(to_tsvector).to_sql)
+        .first
+        .values
+        .first
+  end
 end
