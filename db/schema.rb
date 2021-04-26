@@ -86,8 +86,24 @@ ActiveRecord::Schema.define(version: 2021_04_26_162034) do
     t.integer "route", null: false
     t.string "summary", null: false
     t.integer "level", null: false
+    t.string "summary", null: false
     t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
     t.index ["provider_id"], name: "index_courses_on_provider_id"
+  end
+
+  create_table "courses_spikes", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+    t.string "accredited_body_code", null: false
+    t.string "start_date", null: false
+    t.string "level", null: false
+    t.string "age_range", null: false
+    t.integer "duration_in_years", null: false
+    t.string "course_length", null: false
+    t.integer "qualification", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["accredited_body_code", "code"], name: "index_courses_spikes_on_accredited_body_code_and_code", unique: true
   end
 
   create_table "degrees", force: :cascade do |t|
