@@ -18,6 +18,7 @@ require "audited-rspec"
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
 WebMock.disable_net_connect!(allow_localhost: true)
+Rails.application.load_tasks
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
