@@ -141,7 +141,7 @@ private
   def then_i_see_error_messages
     expect(personal_details_page).to have_content(
       I18n.t(
-        "activemodel.errors.models.personal_details_form.attributes.nationality_ids.empty_nationalities",
+        "activemodel.errors.models.personal_details_form.attributes.nationality_names.empty_nationalities",
       ),
     )
   end

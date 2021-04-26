@@ -546,7 +546,7 @@ en:
               hint_html: For example, 31 3 %{year}
             gender:
               blank: "You must select a gender"
-            nationality_ids:
+            nationality_names:
               empty_nationalities: You must select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list

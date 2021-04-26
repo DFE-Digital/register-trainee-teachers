@@ -6,6 +6,7 @@ class PersonalDetailsForm < TraineeForm
     middle_names
     last_name
     gender
+    nationality_names
     nationality_ids
   ].freeze
 
@@ -40,20 +41,34 @@ class PersonalDetailsForm < TraineeForm
     end
   end
 
+  def nationality_names
+    return @_nationality_names if defined?(@_nationality_names)
+
+    nationality_ids.map { |id| Nationality.find(id).name.titleize }
+  end
+
   def nationality_ids
-    return trainee.nationality_ids if new_attributes[:nationality_ids].blank?
+    return @_nationality_ids if defined?(@_nationality_ids)
 
-    nationalities = new_attributes[:nationality_ids]
+    @_nationality_ids =
+      begin
+        if new_attributes[:nationality_names].blank?
+          trainee.nationality_ids
+        else
+          nationalities = new_attributes[:nationality_names]
 
-    if other_is_selected?
-      nationalities += [
-        new_attributes[:other_nationality1],
-        new_attributes[:other_nationality2],
-        new_attributes[:other_nationality3],
-      ]
-    end
+          if other_is_selected?
+            nationalities += [
+              new_attributes[:other_nationality1],
+              new_attributes[:other_nationality2],
+              new_attributes[:other_nationality3],
+            ]
+          end
 
-    nationalities&.reject(&:blank?)&.map(&:to_i)&.uniq
+          nationalities.reject(&:blank?)
+            .map { |name| Nationality.find_by_name(name.downcase)&.id }.uniq
+        end
+      end
   end
 
 private
@@ -71,7 +86,8 @@ private
     if errors.empty?
       trainee.assign_attributes(
         fields.except(
-          :day, :month, :year, :other, :other_nationality1, :other_nationality2, :other_nationality3
+          :day, :month, :year, :other, :other_nationality1, :other_nationality2, :other_nationality3,
+          :other_nationality1_raw, :other_nationality2_raw, :other_nationality3_raw, :nationality_names
         ).merge(
           date_of_birth: date_of_birth, nationality_ids: nationality_ids,
         ),
@@ -89,7 +105,7 @@ private
 
   def other_nationalities_hash
     # Re-hydrate the 'Other nationality' fields from the trainee model.
-    nationality1, nationality2, nationality3 = trainee.nationalities.where.not(name: %w[british irish]).pluck(:id)
+    nationality1, nationality2, nationality3 = trainee.nationalities.where.not(name: %w[british irish]).pluck(:name).map(&:titleize)
 
     {
       other_nationality1: nationality1,
@@ -120,7 +136,7 @@ private
 
   def nationalities_cannot_be_empty
     if nationality_ids.empty?
-      errors.add(:nationality_ids, :empty_nationalities)
+      errors.add(:nationality_names, :empty_nationalities)
     end
 
     if other_is_selected? && new_attributes[:other_nationality1].blank?

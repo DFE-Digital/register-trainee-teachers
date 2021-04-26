@@ -3,10 +3,12 @@
 require "rails_helper"
 
 describe PersonalDetailsForm, type: :model do
-  let(:trainee) { create(:trainee) }
+  let(:trainee) { create(:trainee, gender: :male) }
   let(:form_store) { class_double(FormStore) }
-
-  let(:params) do
+  let(:french) { create(:nationality, name: "french") }
+  let(:american) { create(:nationality, name: "american") }
+  let(:irish) { create(:nationality, name: "irish") }
+  let(:fields) do
     {
       "first_names" => "Millie",
       "middle_names" => "Schmeler",
@@ -16,12 +18,17 @@ describe PersonalDetailsForm, type: :model do
       "month" => "11",
       "year" => "1963",
       "other" => "1",
-      "other_nationality1" => "170",
-      "other_nationality2" => "1",
-      "other_nationality3" => "",
-      "nationality_ids" => ["", "100"],
+      "other_nationality1" => "French",
+      "other_nationality1_raw" => "French",
+      "other_nationality2" => "American",
+      "other_nationality2_raw" => "American",
+      "other_nationality3" => "Irish",
+      "other_nationality3_raw" => "Irish",
+      "nationality_names" => [french.name.titleize, american.name.titleize, irish.name.titleize],
     }
   end
+
+  let(:params) { fields }
 
   subject { described_class.new(trainee, params: params, store: form_store) }
 
@@ -43,9 +50,9 @@ describe PersonalDetailsForm, type: :model do
       end
 
       it "returns an error if its empty" do
-        expect(subject.errors[:nationality_ids]).to include(
+        expect(subject.errors[:nationality_names]).to include(
           I18n.t(
-            "activemodel.errors.models.personal_details_form.attributes.nationality_ids.empty_nationalities",
+            "activemodel.errors.models.personal_details_form.attributes.nationality_names.empty_nationalities",
           ),
         )
       end
@@ -95,9 +102,12 @@ describe PersonalDetailsForm, type: :model do
   describe "#fields" do
     it "combines the data from params with the existing trainee data" do
       expect(subject.fields).to match({
-        other_nationality1: "170",
-        other_nationality2: "1",
-        other_nationality3: "",
+        other_nationality1: "French",
+        other_nationality1_raw: "French",
+        other_nationality2: "American",
+        other_nationality2_raw: "American",
+        other_nationality3: "Irish",
+        other_nationality3_raw: "Irish",
         first_names: "Millie",
         middle_names: "Schmeler",
         last_name: "Lehner",
@@ -106,7 +116,8 @@ describe PersonalDetailsForm, type: :model do
         month: "11",
         year: "1963",
         other: true,
-        nationality_ids: [100, 170, 1],
+        nationality_ids: [french.id, american.id, irish.id],
+        nationality_names: [french.name.titleize, american.name.titleize, irish.name.titleize],
       })
     end
   end
@@ -121,17 +132,20 @@ describe PersonalDetailsForm, type: :model do
 
   describe "#save!" do
     let(:params) { {} }
-    let(:nationality) { create(:nationality) }
-    let(:first_names) { Faker::Name.first_name }
 
     before do
-      allow(form_store).to receive(:get).and_return({ "first_names" => first_names, nationality_ids: [nationality.id] })
+      allow(form_store).to receive(:get).and_return(fields)
     end
 
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :personal_details, nil)
 
-      expect { subject.save! }.to change(trainee, :first_names).to(first_names)
+      expect { subject.save! }.to change(trainee, :first_names).to("Millie")
+        .and change(trainee, :middle_names).to("Schmeler")
+        .and change(trainee, :last_name).to("Lehner")
+        .and change(trainee, :gender).to("gender_not_provided")
+        .and change(trainee, :date_of_birth).to(Date.parse("11/11/1963"))
+        .and change { trainee.nationalities.map(&:name).sort }.to(%w[american french irish])
     end
   end
 end
