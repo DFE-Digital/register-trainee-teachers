@@ -10,7 +10,7 @@ module Trainees
     end
 
     def create
-      @degree_form = @degrees_form.build_degree(degree_params)
+      @degree_form = @degrees_form.build_degree(degree_params, autocomplete_params)
 
       if @degree_form.save_or_stash
         redirect_to trainee_degrees_confirm_path(trainee)
@@ -47,7 +47,11 @@ module Trainees
   private
 
     def degree_params
-      params.require(:degree).permit(DegreeForm::FIELDS.excluding(:slug))
+      params.require(:degree).permit(DegreeForm::FIELDS.excluding(:slug, *DegreeForm::AUTOCOMPLETE_FIELDS))
+    end
+
+    def autocomplete_params
+      params.require(:degree).permit(DegreeForm::AUTOCOMPLETE_FIELDS)
     end
 
     def authorize_trainee
