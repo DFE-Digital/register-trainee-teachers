@@ -5,10 +5,10 @@ class QueueTraineeUpdatesJob < ApplicationJob
 
   INVALID_STATES = %w[
     draft
-    recommended_for_qts
+    recommended_for_award
     withdrawn
     deferred
-    qts_awarded
+    awarded
   ].freeze
 
   def perform

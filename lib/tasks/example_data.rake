@@ -34,14 +34,14 @@ namespace :example_data do
         %i[with_start_date submitted_for_trn with_placement_assignment with_course_details diversity_not_disclosed],
         %i[with_start_date trn_received with_placement_assignment with_course_details diversity_disclosed],
         %i[with_start_date trn_received with_placement_assignment with_course_details diversity_not_disclosed],
-        %i[with_start_date recommended_for_qts with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
-        %i[with_start_date recommended_for_qts with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
+        %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
+        %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
         %i[with_start_date withdrawn with_placement_assignment with_course_details diversity_disclosed],
         %i[with_start_date withdrawn with_placement_assignment with_course_details diversity_not_disclosed],
         %i[with_start_date deferred with_placement_assignment with_course_details diversity_disclosed],
         %i[with_start_date deferred with_placement_assignment with_course_details diversity_not_disclosed],
-        %i[with_start_date qts_awarded with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
-        %i[with_start_date qts_awarded with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
+        %i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
+        %i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
       ]
 
       rand(50...100).times do

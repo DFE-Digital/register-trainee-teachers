@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Trainees::QtsRecommendationsController do
+describe Trainees::AwardRecommendationsController do
   include ActiveJob::TestHelper
 
   let(:current_user) { create(:user) }
@@ -17,11 +17,11 @@ describe Trainees::QtsRecommendationsController do
     it "it updates the placement assignment in DTTP to mark it ready for QTS" do
       expect {
         post :create, params: { trainee_id: trainee }
-      }.to have_enqueued_job(RecommendForQtsJob).with(trainee)
+      }.to have_enqueued_job(RecommendForAwardJob).with(trainee)
     end
 
     it "queues a background job to poll for the trainee's QTS" do
-      expect(RetrieveQtsJob).to receive(:perform_with_default_delay).with(trainee)
+      expect(RetrieveAwardJob).to receive(:perform_with_default_delay).with(trainee)
       post :create, params: { trainee_id: trainee }
     end
 
@@ -35,8 +35,8 @@ describe Trainees::QtsRecommendationsController do
         post :create, params: { trainee_id: trainee }
       end
 
-      it "transitions the trainee state to recommended_for_qts" do
-        expect(trainee.reload).to be_recommended_for_qts
+      it "transitions the trainee state to recommended_for_award" do
+        expect(trainee.reload).to be_recommended_for_award
       end
     end
   end

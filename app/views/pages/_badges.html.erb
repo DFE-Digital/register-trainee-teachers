@@ -12,7 +12,7 @@
 </div>
 
 <div class="govuk-grid-row govuk-!-margin-bottom-6">
-  <% %i[recommended_for_qts qts_awarded deferred withdrawn].map do |state| %>
+  <% %i[recommended_for_award awarded deferred withdrawn].map do |state| %>
     <div class=" govuk-grid-column-one-quarter ">
     <%= render TraineeStatusCard::View.new(state: state, target: trainees_path("state[]": state), trainees: @trainees) %>
   </div>

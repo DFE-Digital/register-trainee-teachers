@@ -14,7 +14,7 @@ RSpec.describe TraineeStatusCard::View do
 
   describe "#state_name" do
     it "returns state name in correct format" do
-      %i[draft withdrawn deferred qts_awarded trn_received submitted_for_trn recommended_for_qts].each do |state|
+      %i[draft withdrawn deferred awarded trn_received submitted_for_trn recommended_for_award].each do |state|
         expect(described_class.new(state: state,
                                    target: target, trainees: trainees).state_name).to eql(I18n.t("activerecord.attributes.trainee.states.#{state}"))
       end

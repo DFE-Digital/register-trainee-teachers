@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dttp
-  class RetrieveQts
+  class RetrieveAward
     include ServicePattern
 
     class HttpError < StandardError; end

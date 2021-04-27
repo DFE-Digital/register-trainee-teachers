@@ -3,10 +3,10 @@
 require "rails_helper"
 
 module Dttp
-  describe RetrieveQts do
+  describe RetrieveAward do
     describe "#call" do
       let(:placement_assignment_entity_id) { SecureRandom.uuid }
-      let(:trainee) { create(:trainee, :recommended_for_qts, placement_assignment_dttp_id: placement_assignment_entity_id) }
+      let(:trainee) { create(:trainee, :recommended_for_award, placement_assignment_dttp_id: placement_assignment_entity_id) }
       let(:path) { "/dfe_placementassignments(#{placement_assignment_entity_id})?$select=dfe_qtsawardflag" }
 
       subject { described_class.call(trainee: trainee) }
@@ -17,21 +17,21 @@ module Dttp
       end
 
       context "success response" do
-        let(:dttp_response) { double(code: 200, body: { dfe_qtsawardflag: qts_flag }.to_json) }
+        let(:dttp_response) { double(code: 200, body: { dfe_qtsawardflag: award_flag }.to_json) }
 
         context "QTS is awarded" do
-          let(:qts_flag) { true }
+          let(:award_flag) { true }
 
           it "returns the QTS flag" do
-            expect(subject).to eq(qts_flag)
+            expect(subject).to eq(award_flag)
           end
         end
 
         context "QTS is not awarded" do
-          let(:qts_flag) { false }
+          let(:award_flag) { false }
 
           it "returns the QTS flag" do
-            expect(subject).to eq(qts_flag)
+            expect(subject).to eq(award_flag)
           end
         end
       end
@@ -46,7 +46,7 @@ module Dttp
           expect(Client).to receive(:get).with(path).and_return(dttp_response)
           expect {
             subject
-          }.to raise_error(Dttp::RetrieveQts::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
+          }.to raise_error(Dttp::RetrieveAward::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end

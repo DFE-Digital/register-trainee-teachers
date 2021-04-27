@@ -47,8 +47,8 @@ module ApplicationRecordCard
         { state: :draft, colour: "grey", text: "draft" },
         { state: :submitted_for_trn, colour: "turquoise", text: "pending trn" },
         { state: :trn_received, colour: "blue", text: "trn received" },
-        { state: :recommended_for_qts, colour: "purple", text: "qts recommended" },
-        { state: :qts_awarded, colour: "", text: "qts awarded" },
+        { state: :recommended_for_award, colour: "purple", text: "qts recommended" },
+        { state: :awarded, colour: "", text: "qts awarded" },
         { state: :deferred, colour: "yellow", text: "deferred" },
         { state: :withdrawn, colour: "red", text: "withdrawn" },
       ].each do |state_expectation|

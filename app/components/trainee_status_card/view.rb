@@ -8,8 +8,8 @@ module TraineeStatusCard
       draft: "grey",
       submitted_for_trn: "turquoise",
       trn_received: "blue",
-      recommended_for_qts: "purple",
-      qts_awarded: "",
+      recommended_for_award: "purple",
+      awarded: "",
       deferred: "yellow",
       withdrawn: "red",
     }.freeze

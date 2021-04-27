@@ -27,13 +27,13 @@ describe SessionsController, type: :controller do
       end
 
       it "redirects to the original requested page if it exists in the session" do
-        session[:requested_path] = "/trainees/qts_awarded"
+        session[:requested_path] = "/trainees/awarded"
         request_callback
-        expect(response).to redirect_to("/trainees/qts_awarded")
+        expect(response).to redirect_to("/trainees/awarded")
       end
 
       it "clears the redirect_back_to key of the session after a redirect" do
-        session[:requested_path] = "/trainees/qts_awarded"
+        session[:requested_path] = "/trainees/awarded"
         request_callback
         expect(session[:requested_path]).to be_nil
       end
@@ -47,7 +47,7 @@ describe SessionsController, type: :controller do
       end
 
       it "deletes the requested_path session" do
-        session[:requested_path] = "/trainees/qts_awarded"
+        session[:requested_path] = "/trainees/awarded"
         request_callback
         expect(session[:requested_path]).to be_nil
       end

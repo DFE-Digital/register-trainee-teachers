@@ -83,7 +83,7 @@ Rails.application.routes.draw do
         resource :outcome_date, only: %i[edit update], path: "/outcome-date"
       end
 
-      resource :qts_recommendations, only: %i[create]
+      resource :award_recommendations, only: %i[create]
 
       resource :confirm_withdrawal, only: %i[show update], path: "/withdraw/confirm"
       resource :withdrawal, only: %i[show update], path: "/withdraw"
