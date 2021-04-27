@@ -43,7 +43,7 @@ module Dttp
           "dfe_courselevel" => COURSE_LEVEL_PG, # TODO: this can be PG (12) or UG (20).  Postgrad or undergrad. Hardcoded for now.
           "dfe_sendforregistration" => true,
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
-          "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{ITT_QUALIFICATION_AIM_QTS})",
+          "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id(trainee.training_route)})",
           "dfe_programmeyear" => 1, # TODO: this will need to be derived for other routes. It's n of x year course e.g. 1 of 2
           "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are course_year of course_length
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)

@@ -53,5 +53,9 @@ module Dttp
     def dttp_reason_for_leaving_id(reason)
       CodeSets::ReasonsForLeavingCourse::MAPPING.dig(reason, :entity_id)
     end
+
+    def dttp_qualification_aim_id(training_route)
+      CodeSets::QualificationAims::MAPPING.dig(training_route, :entity_id)
+    end
   end
 end

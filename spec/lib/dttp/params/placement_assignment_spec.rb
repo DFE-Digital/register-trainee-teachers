@@ -21,6 +21,7 @@ module Dttp
       let(:dttp_country_entity_id) { SecureRandom.uuid }
       let(:dttp_provider_id) { SecureRandom.uuid }
       let(:dttp_route_id) { Dttp::CodeSets::Routes::MAPPING[trainee.training_route][:entity_id] }
+      let(:dttp_qualification_aim_id) { Dttp::CodeSets::QualificationAims::MAPPING[trainee.training_route][:entity_id] }
 
       before do
         allow(Time).to receive(:now).and_return(time_now_in_zone)
@@ -63,7 +64,7 @@ module Dttp
               "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
               "dfe_sendforregistration" => true,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
-              "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{Dttp::Params::PlacementAssignment::ITT_QUALIFICATION_AIM_QTS})",
+              "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id})",
               "dfe_programmeyear" => 1,
               "dfe_programmelength" => 1,
               "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
@@ -89,7 +90,7 @@ module Dttp
               "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
               "dfe_sendforregistration" => true,
               "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
-              "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{Dttp::Params::PlacementAssignment::ITT_QUALIFICATION_AIM_QTS})",
+              "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id})",
               "dfe_programmeyear" => 1,
               "dfe_programmelength" => 1,
               "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
