@@ -35,7 +35,7 @@ module Trainees
   private
 
     def redirect_to_search_page
-      redirect_to trainee_lead_schools_path(trainee, q: params["input-autocomplete"]) if trainee_params[:lead_school_id].blank?
+      redirect_to trainee_lead_schools_path(trainee, query: params["input-autocomplete"]) if trainee_params[:lead_school_id].blank?
     end
 
     def load_schools
