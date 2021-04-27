@@ -20,6 +20,20 @@ feature "editing a degree" do
       and_i_click_the_continue_button
       then_i_see_the_error_summary
     end
+
+    # As we are not doing an autocomplete validation on uk_degree (type)
+    # the uk form is a superset of the non_uk one, so we just need one
+    # test for autocompletes
+    scenario "user partially submits autocompletes", js: true do
+      given_a_trainee_with_a_uk_degree
+      when_i_visit_the_edit_degree_details_page
+      and_i_fill_in_subject_without_selecting_a_value(with: "moose")
+      and_i_fill_in_institution_without_selecting_a_value(with: "obtuse")
+      and_i_click_the_continue_button
+      then_subject_is_populated(with: "moose")
+      then_institution_is_populated(with: "obtuse")
+      then_i_see_error_messages_for_partially_submitted_fields(:subject, :institution)
+    end
   end
 
   context "Non UK degree" do
@@ -97,5 +111,30 @@ private
     @non_uk_trainee ||= create(:trainee, provider: current_user.provider).tap do |t|
       t.degrees << build(:degree, :non_uk_degree_type)
     end
+  end
+
+  def then_i_see_error_messages_for_partially_submitted_fields(*fields)
+    fields.each do |f|
+      message = I18n.t(
+        "activemodel.errors.validators.autocomplete.#{f}",
+      )
+      expect(degree_details_page).to have_content(message)
+    end
+  end
+
+  def and_i_fill_in_subject_without_selecting_a_value(with:)
+    degree_details_page.subject_raw.fill_in with: with
+  end
+
+  def then_subject_is_populated(with:)
+    expect(degree_details_page.subject_raw.value).to eq(with)
+  end
+
+  def and_i_fill_in_institution_without_selecting_a_value(with:)
+    degree_details_page.institution_raw.fill_in with: with
+  end
+
+  def then_institution_is_populated(with:)
+    expect(degree_details_page.institution_raw.value).to eq(with)
   end
 end

@@ -467,6 +467,13 @@ en:
           invalid: "You must enter a valid postcode (for example, BN1 1AA)"
         email:
           invalid: "You must enter an email address in the correct format, like name@example.com"
+        autocomplete:
+          subject: "Select a subject from the list - your entry is not recognised"
+          additional_age_range: "Select an age range from the list - your entry is not recognised"
+          institution: "Select an institution from the list - your entry is not recognised"
+          other_nationality1: &nationality "Select a nationality from the list - your entry is not recognised"
+          other_nationality2: *nationality
+          other_nationality3: *nationality
       models:
         contact_details_form:
           attributes:
@@ -546,7 +553,7 @@ en:
               hint_html: For example, 31 3 %{year}
             gender:
               blank: "You must select a gender"
-            nationality_ids:
+            nationality_names:
               empty_nationalities: You must select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list

@@ -11,7 +11,7 @@ describe NationalitiesHelper do
     context "default nationalities" do
       let(:expected_nationality) do
         OpenStruct.new(
-          id: nationality.id,
+          id: nationality.name.titleize,
           name: nationality.name.titleize,
           description: t("views.default_nationalities.#{nationality.name}.description"),
         )
@@ -47,7 +47,7 @@ describe NationalitiesHelper do
 
       let(:expected_nationality) do
         OpenStruct.new(
-          id: nationality.id,
+          id: nationality.name.titleize,
           name: nationality.name.titleize,
         )
       end
@@ -63,7 +63,7 @@ describe NationalitiesHelper do
 
       let(:expected_nationality) do
         OpenStruct.new(
-          id: nationality.id,
+          id: nationality.name.titleize,
           name: nationality.name.titleize,
           description: t("views.default_nationalities.#{nationality.name}.description"),
         )

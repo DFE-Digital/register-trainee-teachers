@@ -39,13 +39,13 @@
         <%= f.govuk_radio_button :gender, :gender_not_provided, label: { text: "Not provided" } %>
       <% end %>
 
-      <%= f.govuk_check_boxes_fieldset :nationality_ids,
+      <%= f.govuk_check_boxes_fieldset :nationality_names,
                                        legend: { text: "Nationality", size: "s" },
                                        hint: { text: "Select all that apply" },
                                        classes: "nationality" do %>
         <% format_nationalities(@nationalities).each do |nationality| %>
           <%= f.govuk_check_box(
-              :nationality_ids,
+              :nationality_names,
               nationality.id,
               multiple: true,
               link_errors: true,

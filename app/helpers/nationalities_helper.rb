@@ -8,7 +8,7 @@ module NationalitiesHelper
 
     nationalities.each do |nationality|
       formatted_nationality = OpenStruct.new(
-        id: nationality.id,
+        id: nationality.name.titleize,
         name: nationality.name.titleize,
       )
 

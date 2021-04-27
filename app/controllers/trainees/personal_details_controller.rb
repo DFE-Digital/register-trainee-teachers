@@ -56,9 +56,12 @@ module Trainees
         *DOB_CONVERSION.keys,
         :other,
         :other_nationality1,
+        :other_nationality1_raw,
         :other_nationality2,
+        :other_nationality2_raw,
         :other_nationality3,
-        nationality_ids: [],
+        :other_nationality3_raw,
+        nationality_names: [],
       ).transform_keys do |key|
         DOB_CONVERSION.keys.include?(key) ? DOB_CONVERSION[key] : key
       end

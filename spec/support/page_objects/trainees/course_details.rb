@@ -7,6 +7,7 @@ module PageObjects
       set_url "/trainees/{id}/course-details/edit"
 
       element :subject, "#course-details-form-subject-field"
+      element :subject_raw, "input[data-nameoriginal='course_details_form[subject_raw]']"
 
       element :course_start_date_day, "#course_details_form_course_start_date_3i"
       element :course_start_date_month, "#course_details_form_course_start_date_2i"
@@ -23,6 +24,7 @@ module PageObjects
       element :main_age_range_other, "#course-details-form-main-age-range-other-field"
 
       element :additional_age_range, "#course-details-form-additional-age-range-field"
+      element :additional_age_range_raw, "input[data-nameoriginal='course_details_form[additional_age_range_raw]']"
 
       element :submit_button, "input[name='commit']"
     end

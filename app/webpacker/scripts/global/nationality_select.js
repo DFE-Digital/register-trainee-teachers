@@ -1,29 +1,29 @@
 const prepareNationalitySelect = () => {
-  const secondInputEl = document.getElementById(
-    'personal-details-form-other-nationality2-field'
+  const secondInputEl = document.querySelector(
+    '[id^=personal-details-form-other-nationality2-field][type=text]'
   )
   if (!secondInputEl) return
 
-  const thirdInputEl = document.getElementById(
-    'personal-details-form-other-nationality3-field'
+  const thirdInputEl = document.querySelector(
+    '[id^=personal-details-form-other-nationality3-field][type=text]'
   )
 
   const secondFormLabel = document.querySelector(
-    '[for=personal-details-form-other-nationality2-field]'
+    '[for^=personal-details-form-other-nationality2-field]'
   )
   const thirdFormLabel = document.querySelector(
-    '[for=personal-details-form-other-nationality3-field]'
+    '[for^=personal-details-form-other-nationality3-field]'
   )
 
-  const secondSelectEl = document.getElementById(
-    'personal-details-form-other-nationality2-field-select'
+  const secondSelectEl = document.querySelector(
+    '[id^=personal-details-form-other-nationality2-field][type=select]'
   )
-  const thirdSelectEl = document.getElementById(
-    'personal-details-form-other-nationality2-field-select'
+  const thirdSelectEl = document.querySelector(
+    '[for^=personal-details-form-other-nationality3-field][type=select]'
   )
 
-  const firstInputEl = document.getElementById(
-    'personal-details-form-other-nationality1-field'
+  const firstInputEl = document.querySelector(
+    '[id^=personal-details-form-other-nationality1-field][type=text]'
   )
 
   let addNationalityButton = null
