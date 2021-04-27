@@ -26,12 +26,24 @@ TRAINING_ROUTES = {
 
 TRAINING_ROUTES_FOR_TRAINEE = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :provider_led_postgrad, :early_years_undergrad, :school_direct_tuition_fee, :school_direct_salaried).include? training_route
-} .freeze
+}.freeze
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:provider_led_postgrad, :school_direct_tuition_fee, :school_direct_salaried, :pg_teaching_apprenticeship).include? training_route
-} .freeze
+}.freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only pg_teaching_apprenticeship].include? training_route
+}.freeze
+
+TRAINING_ROUTE_AWARD_TYPE = {
+  assessment_only: "QTS",
+  early_years_undergrad: "EYTS",
+  early_years_graduate_employment_based: "EYTS",
+  early_years_graduate_entry: "EYTS",
+  early_years_assessment_only: "EYTS",
+  pg_teaching_apprenticeship: "QTS",
+  provider_led_postgrad: "QTS",
+  school_direct_salaried: "QTS",
+  school_direct_tuition_fee: "QTS",
 }.freeze
