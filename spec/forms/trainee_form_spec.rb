@@ -5,7 +5,9 @@ require "rails_helper"
 class TestForm < TraineeForm
   attr_accessor :test1, :test2, :test3
   validates_presence_of :test1, :test2, :test3
-  private
+
+private
+
   def compute_fields
     {}
   end
@@ -46,5 +48,4 @@ describe TraineeForm, type: :model do
       expect(ValidationError.count).to eql(0)
     end
   end
-
 end

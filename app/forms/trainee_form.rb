@@ -46,7 +46,8 @@ private
 
   def track_validation_error
     return unless Settings.track_validation_errors
-    ValidationError.create(form_object: self.class.name, user: user, details: validation_error_details.to_h)
+
+    ValidationError.create!(form_object: self.class.name, user: user, details: validation_error_details.to_h)
   end
 
   def validation_error_details
