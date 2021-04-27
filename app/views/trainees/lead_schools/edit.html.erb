@@ -2,7 +2,7 @@
 
 <%= register_form_with model: @trainee_lead_school_form, url: trainee_lead_schools_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
   <div class="govuk-form-group">
-    <label class="govuk-label govuk-label--s" for="schools-autocomplete">Lead school</label>
+    <span class="govuk-hint">Search for a school by it's unique reference number (URN), name or postcode</span>
     <div id="schools-autocomplete-element" class="app-!-autocomplete--max-width-two-thirds"></div>
     <%= f.hidden_field :lead_school_id, id: "lead-school-id" %>
     <noscript>
