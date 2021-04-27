@@ -3,16 +3,26 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 const $form = document.querySelector('[data-module="app-schools-autocomplete"]')
 const id_element = document.getElementById("lead-school-id")
 
+let statusMessage = null
+
 const findSchools = (query, populateResults) =>  {
+  statusMessage = 'Loading...';
+
   fetch(`/api/schools?query=${query}&lead_school=true`)
     .then(response => {
       return response.json()
     })
     .then(data => {
       if (data === undefined) {
-        return 
+        return
       }
+
       let schools = query ? data.schools : []
+
+      if(schools.length === 0){
+        statusMessage = 'No results found';
+      }
+
       populateResults(schools)
     })
     .catch(err => console.log(err))
@@ -47,17 +57,18 @@ const createHiddenInput = (form) => {
 
 const setParams = (value) => {
   if (value === undefined) {
-    return 
+    return
   }
   id_element.value = value.id
 }
 
 const setupAutoComplete = (form) => {
-  const element = form.querySelector('#schools-autocomplete')
+  const element = form.querySelector('#schools-autocomplete-element')
 
   hideFallback(form)
 
   createHiddenInput(form)
+
 
   accessibleAutocomplete({
     element: element,
@@ -65,9 +76,9 @@ const setupAutoComplete = (form) => {
     minLength: 3,
     source: findSchools,
     templates: renderTemplate,
-    onConfirm: setParams, 
+    onConfirm: setParams,
     showAllValues: false,
-    autoselect: true,
+    tNoResults: () => statusMessage
   })
 }
 

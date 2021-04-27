@@ -4,6 +4,7 @@ module Trainees
   class LeadSchoolsController < ApplicationController
     before_action :authorize_trainee
     before_action :load_schools
+    before_action :redirect_to_search_page, only: [:update]
 
     helper_method :query
 
@@ -32,6 +33,10 @@ module Trainees
     end
 
   private
+
+    def redirect_to_search_page
+      redirect_to trainee_lead_schools_path(trainee, q: params['input-autocomplete']) if trainee_params[:lead_school_id].blank?
+    end
 
     def load_schools
       @schools = SchoolSearch.call(query: query, lead_schools_only: true)

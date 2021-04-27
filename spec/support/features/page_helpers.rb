@@ -190,6 +190,10 @@ module Features
       @employing_schools_search_page ||= PageObjects::Trainees::EmployingSchoolsSearch.new
     end
 
+    def edit_lead_school_page
+      @edit_lead_school_page ||= PageObjects::Trainees::EditLeadSchool.new
+    end
+
     def accessibility_page
       @accessibility_page ||= PageObjects::Accessibility.new
     end
