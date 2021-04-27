@@ -1,14 +1,14 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
 
 const $form = document.querySelector('[data-module="app-schools-autocomplete"]')
-const id_element = document.getElementById("lead-school-id")
+const idElement = document.getElementById('lead-school-id')
 
 let statusMessage = null
 
-const findSchools = (query, populateResults) =>  {
-  statusMessage = 'Loading...';
+const findSchools = (query, populateResults) => {
+  statusMessage = 'Loading...'
 
-  fetch(`/api/schools?query=${query}&lead_school=true`)
+  window.fetch(`/api/schools?query=${query}&lead_school=true`)
     .then(response => {
       return response.json()
     })
@@ -17,17 +17,16 @@ const findSchools = (query, populateResults) =>  {
         return
       }
 
-      let schools = query ? data.schools : []
+      const schools = query ? data.schools : []
 
-      if(schools.length === 0){
-        statusMessage = 'No results found';
+      if (schools.length === 0) {
+        statusMessage = 'No results found'
       }
 
       populateResults(schools)
     })
     .catch(err => console.log(err))
 }
-
 
 const suggestionTemplate = (value) => {
   return value && value.name
@@ -46,7 +45,7 @@ const setParams = (value) => {
   if (value === undefined) {
     return
   }
-  id_element.value = value.id
+  idElement.value = value.id
 }
 
 const setupAutoComplete = (form) => {
