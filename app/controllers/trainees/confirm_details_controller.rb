@@ -48,11 +48,21 @@ module Trainees
     end
 
     def trainee_section_key
-      request.path.split("/").intersection(trainee_paths).first&.underscore
+      @trainee_section_key ||= request.path.split("/").intersection(trainee_paths).first&.underscore
     end
 
     def confirm_section_title
-      trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID").gsub(/training\sdetails/, "trainee start date and ID")
+      @confirm_section_title ||=
+        begin
+          case trainee_section_key
+          when "training_details"
+            "trainee start date and ID"
+          when "lead_school"
+            "schools"
+          else
+            trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
+          end
+        end
     end
 
     def flash_message_title
@@ -76,6 +86,7 @@ module Trainees
         trainee_training_details_path,
         trainee_trainee_id_path,
         trainee_start_date_path,
+        trainee_lead_school_path,
       ].map { |path| path.split("/").last }
     end
 
