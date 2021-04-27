@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :school do
     sequence(:urn) { |n| "urn_#{n}" }
-    sequence(:name) { |n| "School #{n}" }
+    name { Faker::University.name }
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }
     lead_school { false }
