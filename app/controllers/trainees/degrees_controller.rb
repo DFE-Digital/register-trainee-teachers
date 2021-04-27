@@ -26,6 +26,7 @@ module Trainees
     def update
       @degree_form = @degrees_form.find_degree_from_param(params[:id])
       @degree_form.attributes = degree_params
+      @degree_form.assign_attributes(autocomplete_params)
 
       if @degree_form.save_or_stash
         redirect_to trainee_degrees_confirm_path(trainee)
