@@ -77,3 +77,5 @@ environment:
 
 slack:
   publish_register_alerts_channel: "#twd_publish_register_tech"
+
+track_validation_errors: true
