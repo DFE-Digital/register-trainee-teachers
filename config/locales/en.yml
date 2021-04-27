@@ -462,7 +462,6 @@ en:
         autocomplete:
           subject: "Select a subject from the list - your entry is not recognised"
           additional_age_range: "Select an age range from the list - your entry is not recognised"
-          uk_degree: "Select a type of degree from the list - your entry is not recognised"
           institution: "Select an institution from the list - your entry is not recognised"
           other_nationality1: &nationality "Select a nationality from the list - your entry is not recognised"
           other_nationality2: *nationality

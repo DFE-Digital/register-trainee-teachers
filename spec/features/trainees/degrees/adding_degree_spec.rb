@@ -83,13 +83,11 @@ RSpec.feature "Adding a degree" do
       and_i_have_selected_uk_route
       when_i_visit_the_degree_details_page
       and_i_fill_in_subject_without_selecting_a_value(with: "moose")
-      and_i_fill_in_degree_without_selecting_a_value(with: "goose")
       and_i_fill_in_institution_without_selecting_a_value(with: "obtuse")
       and_i_click_continue
       then_subject_is_populated(with: "moose")
-      then_degree_is_populated(with: "goose")
       then_institution_is_populated(with: "obtuse")
-      then_i_see_error_messages_for_partially_submitted_fields(:subject, :uk_degree, :institution)
+      then_i_see_error_messages_for_partially_submitted_fields(:subject, :institution)
     end
   end
 

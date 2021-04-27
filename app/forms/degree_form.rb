@@ -26,7 +26,7 @@ class DegreeForm
 
   attr_accessor(*FIELDS, *AUTOCOMPLETE_FIELDS, :degrees_form, :degree)
 
-  validates :uk_degree, :subject, :institution, autocomplete: true, allow_nil: true
+  validates :subject, :institution, autocomplete: true, allow_nil: true
   validate :validate_with_degree_model
 
   delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?,
