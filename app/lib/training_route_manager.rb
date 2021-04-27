@@ -13,7 +13,13 @@ class TrainingRouteManager
     %w[routes.school_direct_salaried routes.school_direct_tuition_fee].any? { |flag| feature_enabled?(flag) } && schools_direct?
   end
 
+  def award_type
+    TRAINING_ROUTE_AWARD_TYPE[training_route]
+  end
+
 private
+
+  attr_reader :trainee
 
   def provider_led_postgrad?
     training_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad].to_sym

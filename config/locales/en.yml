@@ -121,8 +121,10 @@ en:
           edit: When did they meet the standards?
           confirm: Check outcome details
         outcome_details:
-          confirm: Check QTS details
-          recommended: Trainee recommended for QTS
+          confirm_qts: Check QTS details
+          confirm_eyts: Check EYTS details
+          recommended_qts: Trainee recommended for QTS
+          recommended_eyts: Trainee recommended for EYTS
         personal_details:
           edit: Trainee personal details
         trainee_ids:
@@ -174,9 +176,11 @@ en:
           submitted_for_trn: Trainee submitted for TRN
           trn_received: Received TRN for trainee
           recommended_for_qts: Trainee recommended for QTS
+          recommended_for_eyts: Trainee recommended for EYTS
           withdrawn: Trainee withdrawn
           deferred: Trainee deferred
           qts_awarded: Trainee awarded QTS
+          eyts_awarded: Trainee awarded EYTS
           reinstated: Trainee reinstated
           age_range: Course age range updated
           subject: Course subject updated

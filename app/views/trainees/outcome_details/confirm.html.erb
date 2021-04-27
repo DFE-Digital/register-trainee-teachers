@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.outcome_details.confirm") %>
+<%= render PageTitle::View.new(title: "trainees.outcome_details.confirm_#{@trainee.award_type.downcase}") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(text: t(:back_to_record), href: trainee_path(@trainee)) %>
@@ -9,7 +9,7 @@
     <span class="govuk-caption-l">
       <%= trainee_name(@trainee) %>
     </span>
-    <h1 class="govuk-heading-l">Check QTS details</h1>
+    <h1 class="govuk-heading-l">Check <%= @trainee.award_type %> details</h1>
   </div>
 </div>
 
@@ -19,7 +19,7 @@
 
     <%= register_form_with url: trainee_qts_recommendations_path, method: :post, local: true do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
-      <%= f.govuk_submit "Recommend trainee for QTS" %>
+      <%= f.govuk_submit "Recommend trainee for #{@trainee.award_type}" %>
     <%- end -%>
   </div>
 </div>
