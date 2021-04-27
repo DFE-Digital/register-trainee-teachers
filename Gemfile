@@ -31,6 +31,7 @@ gem "canonical-rails"
 
 # Sentry
 gem "sentry-rails"
+gem "sentry-ruby"
 gem "sentry-sidekiq"
 
 # Logging
