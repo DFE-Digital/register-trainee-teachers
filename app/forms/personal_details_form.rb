@@ -44,7 +44,7 @@ class PersonalDetailsForm < TraineeForm
   def nationality_names
     return @_nationality_names if defined?(@_nationality_names)
 
-    nationality_ids.map { |id| Nationality.find(id).name.titleize }
+    @_nationality_names = nationality_ids.map { |id| Nationality.find(id).name.titleize }
   end
 
   def nationality_ids
