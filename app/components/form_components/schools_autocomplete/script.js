@@ -29,11 +29,6 @@ const findSchools = (query, populateResults) =>  {
 }
 
 
-const hideFallback = (form) => {
-  const fallbackInput = form.querySelector('#schools-autocomplete-no-js')
-  if (fallbackInput) fallbackInput.setAttribute("type", "hidden")
-}
-
 const suggestionTemplate = (value) => {
   return value && value.name
 }
@@ -47,14 +42,6 @@ const renderTemplate = {
   suggestion: suggestionTemplate
 }
 
-const createHiddenInput = (form) => {
-  const input = document.createElement('input')
-  input.setAttribute('type', 'hidden')
-  input.setAttribute('name', 'update')
-  input.setAttribute('value', 'true')
-  form.appendChild(input)
-}
-
 const setParams = (value) => {
   if (value === undefined) {
     return
@@ -64,11 +51,6 @@ const setParams = (value) => {
 
 const setupAutoComplete = (form) => {
   const element = form.querySelector('#schools-autocomplete-element')
-
-  hideFallback(form)
-
-  createHiddenInput(form)
-
 
   accessibleAutocomplete({
     element: element,

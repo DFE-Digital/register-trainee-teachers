@@ -4,8 +4,11 @@
   <div class="govuk-form-group">
     <label class="govuk-label govuk-label--s" for="schools-autocomplete">Lead school</label>
     <div id="schools-autocomplete-element" class="app-!-autocomplete--max-width-two-thirds"></div>
+    <%= f.hidden_field :lead_school_id, id: "lead-school-id" %>
+    <noscript>
+      <%= f.govuk_text_field :'input-autocomplete', name: "input-autocomplete", label: nil %>
+    </noscript>
   </div>
-  <%= f.hidden_field :lead_school_id, id: "lead-school-id" %>
   <%= f.govuk_submit "Continue" %>
 <% end %>
 

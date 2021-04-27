@@ -17,6 +17,12 @@ RSpec.feature "LeadSchoolSearch", type: :feature do
     then_i_am_redirected_to_the_confirm_training_details_page
   end
 
+  scenario "choosing a lead school without javascript" do
+    and_i_fill_in_my_lead_school_without_js
+    and_i_continue
+    then_i_am_redirected_to_the_lead_schools_page_filtered_by_my_query
+  end
+
   scenario "when a lead school is not selected", js: true do
     and_i_fill_in_my_lead_school
     and_i_continue
@@ -29,8 +35,12 @@ private
     edit_lead_school_page.lead_school.fill_in with: my_lead_school_name
   end
 
+  def and_i_fill_in_my_lead_school_without_js
+    edit_lead_school_page.no_js_lead_school.fill_in with: my_lead_school_name
+  end
+
   def and_i_click_the_first_item_in_the_list
-    using_wait_time 1 do
+    using_wait_time 2 do
       edit_lead_school_page.autocomplete_list_item.click
     end
   end
