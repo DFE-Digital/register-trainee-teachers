@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe TraineeLeadSchoolForm, type: :model do
+describe LeadSchoolForm, type: :model do
   let(:trainee) { create(:trainee) }
   let(:form_store) { class_double(FormStore) }
   let(:lead_school_id) { create(:school, lead_school: true).id }
@@ -23,14 +23,14 @@ describe TraineeLeadSchoolForm, type: :model do
       before { subject.valid? }
 
       it "returns an error" do
-        expect(subject.errors[:lead_school_id]).to include(I18n.t("activemodel.errors.models.trainee_lead_school_form.attributes.lead_school_id.blank"))
+        expect(subject.errors[:lead_school_id]).to include(I18n.t("activemodel.errors.models.lead_school_form.attributes.lead_school_id.blank"))
       end
     end
   end
 
   describe "#stash" do
-    it "uses FormStore to temporarily save the fields under a key combination of trainee ID and trainee_lead_school" do
-      expect(form_store).to receive(:set).with(trainee.id, :trainee_lead_school, subject.fields)
+    it "uses FormStore to temporarily save the fields under a key combination of trainee ID and lead_school" do
+      expect(form_store).to receive(:set).with(trainee.id, :lead_school, subject.fields)
 
       subject.stash
     end
@@ -39,7 +39,7 @@ describe TraineeLeadSchoolForm, type: :model do
   describe "#save!" do
     before do
       allow(form_store).to receive(:get).and_return({ "lead_school_id" => lead_school_id })
-      allow(form_store).to receive(:set).with(trainee.id, :trainee_lead_school, nil)
+      allow(form_store).to receive(:set).with(trainee.id, :lead_school, nil)
     end
 
     it "takes any data from the form store and saves it to the database" do

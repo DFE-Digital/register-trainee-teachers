@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_143630) do
+ActiveRecord::Schema.define(version: 2021_04_26_162034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -251,9 +251,11 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
     t.date "reinstate_date"
     t.uuid "dormancy_dttp_id"
     t.bigint "lead_school_id"
+    t.bigint "employing_school_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
+    t.index ["employing_school_id"], name: "index_trainees_on_employing_school_id"
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
     t.index ["gender"], name: "index_trainees_on_gender"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
@@ -301,6 +303,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_143630) do
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
   add_foreign_key "trainees", "providers"
+  add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"
   add_foreign_key "users", "providers"
 end

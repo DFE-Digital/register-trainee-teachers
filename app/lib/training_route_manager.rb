@@ -13,6 +13,10 @@ class TrainingRouteManager
     %w[routes.school_direct_salaried routes.school_direct_tuition_fee].any? { |flag| feature_enabled?(flag) } && schools_direct?
   end
 
+  def requires_employing_school?
+    feature_enabled?("routes.school_direct_salaried") && schools_direct_salaried?
+  end
+
   def award_type
     TRAINING_ROUTE_AWARD_TYPE[training_route]
   end
@@ -31,6 +35,10 @@ private
 
   def schools_direct?
     TRAINING_ROUTE_ENUMS.values_at(:school_direct_tuition_fee, :school_direct_salaried).include? training_route.to_s
+  end
+
+  def schools_direct_salaried?
+    training_route == TRAINING_ROUTE_ENUMS[:school_direct_salaried].to_sym
   end
 
   def training_route

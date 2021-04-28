@@ -11,6 +11,7 @@ class Trainee < ApplicationRecord
   has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
   has_many :disabilities, through: :trainee_disabilities
   belongs_to :lead_school, optional: true, class_name: "School"
+  belongs_to :employing_school, optional: true, class_name: "School"
 
   attribute :progress, Progress.to_type
 

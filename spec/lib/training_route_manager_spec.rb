@@ -44,7 +44,7 @@ describe TrainingRouteManager do
           end
         end
 
-        context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": false do
+        context "with the :routes_#{route} feature flag disabled", "feature_routes.#{route}": false do
           context "with a non school direct trainee" do
             let(:trainee) { build(:trainee) }
 
@@ -53,6 +53,34 @@ describe TrainingRouteManager do
             end
           end
         end
+      end
+    end
+  end
+
+  describe "#requires_employing_school?" do
+    context "with the :routes_school_direct_salaried feature flag enabled", "feature_routes.school_direct_salaried": true do
+      context "with a school direct salaried trainee" do
+        let(:trainee) { build(:trainee, :school_direct_salaried) }
+
+        it "returns true" do
+          expect(subject.requires_employing_school?).to be true
+        end
+      end
+
+      context "with a non school direct trainee" do
+        let(:trainee) { build(:trainee) }
+
+        it "returns false" do
+          expect(subject.requires_employing_school?).to be false
+        end
+      end
+    end
+
+    context "with the :routes_school_direct_salaried feature flag disabled", "feature_routes.school_direct_salaried": false do
+      let(:trainee) { build(:trainee) }
+
+      it "returns false" do
+        expect(subject.requires_employing_school?).to be false
       end
     end
   end

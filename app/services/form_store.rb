@@ -21,7 +21,8 @@ class FormStore
     disability_detail
     diversity
     degrees
-    trainee_lead_school
+    lead_school
+    employing_school
   ].freeze
 
   class << self
