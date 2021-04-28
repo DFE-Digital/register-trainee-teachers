@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TraineeLeadSchoolForm < TraineeForm
+class LeadSchoolForm < TraineeForm
   attr_accessor :lead_school_id
 
   validates :lead_school_id, presence: true

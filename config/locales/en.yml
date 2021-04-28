@@ -154,6 +154,8 @@ en:
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
+        employing_schools:
+          index: Select the employing school
       providers:
         index: Providers
         new: Add a provider
@@ -168,6 +170,8 @@ en:
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
+      search_employing_schools:
+        page_title_results: Select the employing school
     filter:
       training_route: Training route
       state: Status
@@ -623,9 +627,13 @@ en:
             trainee_id:
               blank: You must enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
-        trainee_lead_school_form:
+        lead_school_form:
           attributes:
             lead_school_id:
+              blank: You must choose a school
+        employing_school_form:
+          attributes:
+            employing_school_id:
               blank: You must choose a school
   page_headings:
     start_page: "Register trainee teachers"
