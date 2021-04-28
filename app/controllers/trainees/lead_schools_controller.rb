@@ -4,7 +4,7 @@ module Trainees
   class LeadSchoolsController < ApplicationController
     before_action :authorize_trainee
     before_action :load_schools
-    before_action :redirect_to_search_page, only: [:update]
+    before_action :redirect_to_search_page, only: :update
 
     helper_method :query
 
