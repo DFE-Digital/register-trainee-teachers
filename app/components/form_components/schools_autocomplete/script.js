@@ -49,6 +49,8 @@ const setParams = (value) => {
 }
 
 const setupAutoComplete = (form) => {
+  if (!form) return
+
   const element = form.querySelector('#schools-autocomplete-element')
 
   accessibleAutocomplete({
