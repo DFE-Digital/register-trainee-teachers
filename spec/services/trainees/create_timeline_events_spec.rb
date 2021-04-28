@@ -4,6 +4,8 @@ require "rails_helper"
 
 module Trainees
   describe CreateTimelineEvents do
+    let(:system_admin) { create(:user, :system_admin) }
+    let(:provider_user) { create(:user) }
     let(:trainee) { create(:trainee) }
 
     subject { described_class.call(audit: trainee.own_and_associated_audits.first) }
@@ -20,8 +22,32 @@ module Trainees
           trainee.update!(first_names: "name")
         end
 
-        it "returns a timeline event that reflects the update" do
-          expect(subject.first.title).to eq("First names updated")
+        context "made by a provider user" do
+          before do
+            trainee.own_and_associated_audits.first.update(user: provider_user)
+          end
+
+          it "returns a timeline event that reflects the update" do
+            expect(subject.first.title).to eq("First names updated")
+          end
+
+          it "returns a timeline event with the user's name" do
+            expect(subject.first.username).to eq(provider_user.name)
+          end
+        end
+
+        context "made by a system admin" do
+          before do
+            trainee.own_and_associated_audits.first.update(user: system_admin)
+          end
+
+          it "returns a timeline event that reflects the update" do
+            expect(subject.first.title).to eq("First names updated")
+          end
+
+          it "returns a timeline event obscuring the admin's name" do
+            expect(subject.first.username).to eq("DfE administrator")
+          end
         end
       end
 
