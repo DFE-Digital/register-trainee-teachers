@@ -40,6 +40,8 @@ module Trainees
       other_grade
     ].freeze
 
+    delegate :user, :created_at, :auditable_type, :audited_changes, to: :audit
+
     def initialize(audit:)
       @audit = audit
     end
@@ -48,17 +50,17 @@ module Trainees
       if create_single_event?
         TimelineEvent.new(
           title: single_event_title,
-          date: audit.created_at,
-          username: audit.user&.name,
+          date: created_at,
+          username: username,
         )
       else
-        changes.map do |field, _|
+        audited_changes.map do |field, _|
           next unless FIELDS.include?(field)
 
           TimelineEvent.new(
             title: I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated"),
-            date: audit.created_at,
-            username: audit.user&.name,
+            date: created_at,
+            username: username,
           )
         end
       end
@@ -72,19 +74,14 @@ module Trainees
       action != "update"
     end
 
-    # An audit's action can be one of "create", "destroy" or "update"
+    # An action can be one of "create", "destroy" or "update". Here, we're
+    # creating a new "state_change" action as they're displayed differently.
     def action
-      @action ||= changes.keys.include?("state") && audit.action == "update" ? STATE_CHANGE : audit.action
+      @action ||= audited_changes.keys.include?("state") && audit.action == "update" ? STATE_CHANGE : audit.action
     end
 
     def model
-      @model ||= audit.auditable_type.downcase
-    end
-
-    # `audited_changes` is a hash representing the changes applied to each field
-    # e.g. { field: ['from_value', 'to_value'] }
-    def changes
-      @changes ||= audit.audited_changes
+      @model ||= auditable_type.downcase
     end
 
     def single_event_title
@@ -94,13 +91,19 @@ module Trainees
     end
 
     def state_change_title
-      change_from, change_to = changes["state"].map { |change| Trainee.states.key(change) }
+      change_from, change_to = audited_changes["state"].map { |change| Trainee.states.key(change) }
 
       if change_from == "deferred" && change_to != "withdrawn"
         I18n.t("components.timeline.titles.trainee.reinstated")
       else
         I18n.t("components.timeline.titles.trainee.#{change_to}")
       end
+    end
+
+    def username
+      return unless user
+
+      user.system_admin? ? "DfE administrator" : user.name
     end
   end
 end
