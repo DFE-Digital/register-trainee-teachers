@@ -18,3 +18,5 @@ pagination:
 
 environment:
   name: development
+
+track_validation_errors: false

@@ -30,8 +30,6 @@ describe TraineeForm, type: :model do
 
       subject.valid?
       expect(ValidationError.count).to eql(2)
-
-      # expect(subject.errors[:course_end_date]).to be_empty
     end
   end
 
