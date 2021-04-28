@@ -119,16 +119,16 @@
             ).status,
           )
 
-        if @trainee.requires_schools?
-          component.slot(
-              :row,
-              task_name: "Schools",
-              path: review_draft_trainee_path(@trainee),
-              confirm_path: review_draft_trainee_path(@trainee),
-              classes: "school-details",
-              status: "not started",
-            )
-        end 
+          if @trainee.requires_schools?
+            component.slot(
+                :row,
+                task_name: "Schools",
+                path: review_draft_trainee_path(@trainee),
+                confirm_path: review_draft_trainee_path(@trainee),
+                classes: "school-details",
+                status: "not started",
+              )
+          end
 
       # TODO: Populate with correct paths when created
           if @trainee.requires_placement_details?
