@@ -32,7 +32,7 @@ RSpec.feature "LeadSchoolSearch", type: :feature do
 private
 
   def given_a_school_direct_salaried_trainee_exists
-    given_a_trainee_exists(:school_direct_salaried)
+    given_a_trainee_exists(:with_lead_school)
   end
 
   def and_i_fill_in_my_lead_school
