@@ -3,7 +3,11 @@
 class TraineeIdForm < TraineeForm
   attr_accessor :trainee_id
 
-  validates :trainee_id, presence: true
+  validates :trainee_id, presence: true,
+                         length: {
+                           maximum: 100,
+                           message: I18n.t("activemodel.errors.models.trainee_id_form.attributes.trainee_id.max_char_exceeded"),
+                         }
 
   def save!
     if valid?

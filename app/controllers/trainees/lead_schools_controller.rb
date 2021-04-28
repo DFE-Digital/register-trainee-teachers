@@ -13,7 +13,7 @@ module Trainees
     end
 
     def edit
-      @trainee_lead_school_form = TraineeLeadSchoolForm.new(trainee)
+      @trainee_lead_school_form = LeadSchoolForm.new(trainee)
     end
 
     def update
