@@ -122,6 +122,8 @@ en:
         degrees:
           edit: Degree details
           new: Add undergraduate degree
+        lead_schools:
+          edit: Lead school
         outcome_date:
           edit: When did they meet the standards?
           confirm: Check outcome details
@@ -410,6 +412,10 @@ en:
       edit:
         confirm_course: Confirm course
         edit_details: Edit details for this trainee only
+    lead_schools:
+      edit:
+        heading: Lead school
+        hint: Search for a school by its unique reference number (URN), name or postcode
 
   activerecord:
     attributes:

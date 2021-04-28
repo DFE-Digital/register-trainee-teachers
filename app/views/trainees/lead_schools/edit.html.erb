@@ -1,15 +1,25 @@
-<h1 class="govuk-heading-l">Lead school</h1>
+<%= render PageTitle::View.new(title: "trainees.lead_schools.edit", has_errors: @trainee_lead_school_form.errors.present?) %>
 
-<%= register_form_with model: @trainee_lead_school_form, url: trainee_lead_schools_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
-  <div class="govuk-form-group">
-    <span class="govuk-hint">Search for a school by it's unique reference number (URN), name or postcode</span>
-    <div id="schools-autocomplete-element" class="app-!-autocomplete--max-width-two-thirds"></div>
-    <%= f.hidden_field :lead_school_id, id: "lead-school-id", value: nil %>
-    <noscript>
-      <%= f.govuk_text_field :'input-autocomplete', name: "input-autocomplete", label: nil %>
-    </noscript>
-  </div>
-  <%= f.govuk_submit "Continue" %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
+
+<h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= register_form_with model: @trainee_lead_school_form, url: trainee_lead_schools_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+      <div class="govuk-form-group">
+        <span class="govuk-hint"><%= t('.hint') %></span>
+        <div id="schools-autocomplete-element" class="app-!-autocomplete--max-width-two-thirds"></div>
+        <%= f.hidden_field :lead_school_id, id: "lead-school-id", value: nil %>
+        <noscript>
+          <%= f.govuk_text_field :'input-autocomplete', name: "input-autocomplete", label: nil %>
+        </noscript>
+      </div>
+      <%= f.govuk_submit t('continue') %>
+    <% end %>
+  </div>
+</div>
 
 <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
