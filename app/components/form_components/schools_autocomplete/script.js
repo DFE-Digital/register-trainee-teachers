@@ -9,22 +9,21 @@ const findSchools = (query, populateResults) => {
   statusMessage = 'Loading...'
 
   window.fetch(`/api/schools?query=${query}&lead_school=true`)
-    .then(response => {
-      return response.json()
-    })
+    .then(response => response.json())
     .then(data => {
       if (data === undefined) {
         return
       }
 
-      const schools = query ? data.schools : []
+      const schools = data.schools
 
       if (schools.length === 0) {
         statusMessage = 'No results found'
       }
 
-      populateResults(schools)
+      return schools
     })
+    .then(schools => populateResults(schools))
     .catch(err => console.log(err))
 }
 
