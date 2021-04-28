@@ -11,8 +11,4 @@ class School < ApplicationRecord
   validates :urn, presence: true, uniqueness: true
   validates :name, presence: true
   validates :lead_school, inclusion: { in: [true, false] }
-
-  def urn_and_location
-    [urn, town, postcode].join(", ")
-  end
 end

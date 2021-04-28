@@ -348,8 +348,6 @@ en:
       heading: Accessibility statement for Register trainee teachers
     data_requirements:
       heading: Check what data you need
-    search_schools:
-      page_title: Select the lead school
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers
