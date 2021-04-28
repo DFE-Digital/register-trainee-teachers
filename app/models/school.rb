@@ -8,6 +8,7 @@ class School < ApplicationRecord
     using: {
       tsearch: {
         prefix: true,
+        tsvector_column: 'searchable',
       }
     }
 

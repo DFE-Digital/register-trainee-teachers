@@ -13,7 +13,10 @@
 ActiveRecord::Schema.define(version: 2021_04_26_105838) do
 
   # These are extensions that must be enabled in order to support this database
+<<<<<<< HEAD
   enable_extension "btree_gin"
+=======
+>>>>>>> 430ecdd3... Using a tsvector column - much faster
   enable_extension "plpgsql"
 
   create_table "apply_application_sync_requests", force: :cascade do |t|
@@ -176,11 +179,9 @@ ActiveRecord::Schema.define(version: 2021_04_26_105838) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "lead_school", null: false
-    t.index ["close_date"], name: "index_schools_on_close_date", where: "(close_date IS NULL)"
+    t.tsvector "searchable"
     t.index ["lead_school"], name: "index_schools_on_lead_school", where: "(lead_school IS TRUE)"
-    t.index ["name"], name: "index_schools_on_name", using: :gin
-    t.index ["postcode"], name: "index_schools_on_postcode", using: :gin
-    t.index ["town"], name: "index_schools_on_town", using: :gin
+    t.index ["searchable"], name: "index_schools_on_searchable", using: :gin
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 

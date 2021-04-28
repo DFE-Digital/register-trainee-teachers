@@ -1,87 +1,76 @@
 class AddSearchableToSchools < ActiveRecord::Migration[6.1]
-  def change
-    execute "CREATE EXTENSION btree_gin"
-    add_index :schools, :close_date, where: "close_date is NULL"
-    add_index :schools, :name, using: :gin
-    add_index :schools, :postcode, using: :gin
-    add_index :schools, :town, using: :gin
+  def up
+    add_column :schools, :searchable, :tsvector
+    add_index :schools, :searchable, using: :gin
+
+    execute <<-SQL
+      CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE
+      ON schools FOR EACH ROW EXECUTE PROCEDURE
+      tsvector_update_trigger(searchable, 'pg_catalog.simple', urn, name, postcode, town);
+    SQL
+  end
+
+  def down
+    execute "DROP TRIGGER tsvectorupdate ON schools"
+
+    remove_index :schools, :searchable
+    remove_column :schools, :searchable
   end
 end
 
+
 __END__
 
-irb(main):004:0> SchoolSearch.call(query: "a").analyze
-=>
-EXPLAIN ANALYZE for: SELECT "schools".* FROM "schools" INNER JOIN (SELECT "schools"."id" AS pg_search_id, (ts_rank((to_tsvector('simple', coalesc
-e("schools"."urn"::text, '')) || to_tsvector('simple', coalesce("schools"."name"::text, '')) || to_tsvector('simple', coalesce("schools"."town"::
-text, '')) || to_tsvector('simple', coalesce("schools"."postcode"::text, ''))), (to_tsquery('simple', ''' ' || 'a' || ' ''' || ':*')), 0)) AS ran
-k FROM "schools" WHERE ((to_tsvector('simple', coalesce("schools"."urn"::text, '')) || to_tsvector('simple', coalesce("schools"."name"::text, '')
-) || to_tsvector('simple', coalesce("schools"."town"::text, '')) || to_tsvector('simple', coalesce("schools"."postcode"::text, ''))) @@ (to_tsque
-ry('simple', ''' ' || 'a' || ' ''' || ':*')))) AS pg_search_f79e2ecc220dc52eaea688 ON "schools"."id" = pg_search_f79e2ecc220dc52eaea688.pg_search
-_id WHERE "schools"."close_date" IS NULL ORDER BY pg_search_f79e2ecc220dc52eaea688.rank DESC, "schools"."id" ASC
-
-                                                QUERY PLAN
+irb(main):013:0> SchoolSearch.call(query: "a").analyze
+                                                                          QUERY PLAN
 -------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------
- Gather Merge  (cost=29606.58..29641.77 rows=306 width=90) (actual time=244.603..248.447 rows=7667 loops=1)
-   Workers Planned: 1
-   Workers Launched: 1
-   ->  Sort  (cost=28606.57..28607.33 rows=306 width=90) (actual time=241.919..242.225 rows=3834 loops=2)
-         Sort Key: (ts_rank((((to_tsvector('simple'::regconfig, COALESCE((schools_1.urn)::text, ''::text)) || to_tsvector('simple'::regconfig, CO
-ALESCE((schools_1.name)::text, ''::text))) || to_tsvector('simple'::regconfig, COALESCE((schools_1.town)::text, ''::text))) || to_tsvector('simpl
-e'::regconfig, COALESCE((schools_1.postcode)::text, ''::text))), '''a'':*'::tsquery, 0)) DESC, schools.id
-         Sort Method: quicksort  Memory: 733kB
-         Worker 0:  Sort Method: quicksort  Memory: 710kB
-         ->  Nested Loop  (cost=0.29..28593.93 rows=306 width=90) (actual time=0.214..235.947 rows=3834 loops=2)
-               ->  Parallel Seq Scan on schools  (cost=0.00..2387.41 rows=15306 width=86) (actual time=0.010..11.852 rows=13642 loops=2)
-                     Filter: (close_date IS NULL)
-                     Rows Removed by Filter: 10873
-               ->  Index Scan using schools_pkey on schools schools_1  (cost=0.29..1.69 rows=1 width=61) (actual time=0.013..0.013 rows=0 loops=2
-7283)
-                     Index Cond: (id = schools.id)
-                     Filter: ((((to_tsvector('simple'::regconfig, COALESCE((urn)::text, ''::text)) || to_tsvector('simple'::regconfig, COALESCE((
-name)::text, ''::text))) || to_tsvector('simple'::regconfig, COALESCE((town)::text, ''::text))) || to_tsvector('simple'::regconfig, COALESCE((pos
-tcode)::text, ''::text))) @@ '''a'':*'::tsquery)
-                     Rows Removed by Filter: 1
- Planning Time: 0.403 ms
- Execution Time: 249.218 ms
+--------------
+ Sort  (cost=4288.64..4301.39 rows=5098 width=211) (actual time=50.240..50.776 rows=7667 loops=1)
+   Sort Key: (ts_rank(schools_1.searchable, '''a'':*'::tsquery, 0)) DESC, schools.id
+   Sort Method: quicksort  Memory: 3004kB
+   ->  Hash Join  (cost=1910.39..3974.72 rows=5098 width=211) (actual time=12.923..35.951 rows=7667 loops=1)
+         Hash Cond: (schools.id = schools_1.id)
+         ->  Seq Scan on schools  (cost=0.00..1980.81 rows=26954 width=207) (actual time=0.005..12.401 rows=27283 loops=1)
+               Filter: (close_date IS NULL)
+               Rows Removed by Filter: 21746
+         ->  Hash  (cost=1794.59..1794.59 rows=9264 width=129) (actual time=12.902..12.903 rows=11608 loops=1)
+               Buckets: 16384  Batches: 1  Memory Usage: 2140kB
+               ->  Bitmap Heap Scan on schools schools_1  (cost=187.79..1794.59 rows=9264 width=129) (actual time=3.920..9.041 rows=11608 loops=1
+)
+                     Recheck Cond: (searchable @@ '''a'':*'::tsquery)
+                     Heap Blocks: exact=1464
+                     ->  Bitmap Index Scan on index_schools_on_searchable  (cost=0.00..185.48 rows=9264 width=0) (actual time=3.737..3.737 rows=1
+1608 loops=1)
+                           Index Cond: (searchable @@ '''a'':*'::tsquery)
+ Planning Time: 0.431 ms
+ Execution Time: 52.593 ms
 (17 rows)
 
-irb(main):005:0> SchoolSearch.call(query: "alper").analyze
+irb(main):013:0> SchoolSearch.call(query: "alper").analyze
 =>
-EXPLAIN ANALYZE for: SELECT "schools".* FROM "schools" INNER JOIN (SELECT "schools"."id" AS pg_search_id, (ts_rank((to_tsvector('simple', coalesc
-e("schools"."urn"::text, '')) || to_tsvector('simple', coalesce("schools"."name"::text, '')) || to_tsvector('simple', coalesce("schools"."town"::
-text, '')) || to_tsvector('simple', coalesce("schools"."postcode"::text, ''))), (to_tsquery('simple', ''' ' || 'alper' || ' ''' || ':*')), 0)) AS
- rank FROM "schools" WHERE ((to_tsvector('simple', coalesce("schools"."urn"::text, '')) || to_tsvector('simple', coalesce("schools"."name"::text,
- '')) || to_tsvector('simple', coalesce("schools"."town"::text, '')) || to_tsvector('simple', coalesce("schools"."postcode"::text, ''))) @@ (to_t
-squery('simple', ''' ' || 'alper' || ' ''' || ':*')))) AS pg_search_f79e2ecc220dc52eaea688 ON "schools"."id" = pg_search_f79e2ecc220dc52eaea688.p
-g_search_id WHERE "schools"."close_date" IS NULL ORDER BY pg_search_f79e2ecc220dc52eaea688.rank DESC, "schools"."id" ASC
+EXPLAIN ANALYZE for: SELECT "schools".* FROM "schools" INNER JOIN (SELECT "schools"."id" AS pg_search_id, (ts_rank(("schools"."searchable"), (to_
+tsquery('simple', ''' ' || 'alper' || ' ''' || ':*')), 0)) AS rank FROM "schools" WHERE (("schools"."searchable") @@ (to_tsquery('simple', ''' '
+|| 'alper' || ' ''' || ':*')))) AS pg_search_f79e2ecc220dc52eaea688 ON "schools"."id" = pg_search_f79e2ecc220dc52eaea688.pg_search_id WHERE "scho
+ols"."close_date" IS NULL ORDER BY pg_search_f79e2ecc220dc52eaea688.rank DESC, "schools"."id" ASC
+                                                                    QUERY PLAN
+-------------------------------------------------------------------------------------------------------------------------------------------------
+--
+ Sort  (cost=327.98..328.01 rows=10 width=211) (actual time=0.453..0.454 rows=1 loops=1)
+   Sort Key: (ts_rank(schools_1.searchable, '''alper'':*'::tsquery, 0)) DESC, schools.id
+   Sort Method: quicksort  Memory: 25kB
+   ->  Nested Loop  (cost=104.44..327.82 rows=10 width=211) (actual time=0.447..0.448 rows=1 loops=1)
+         ->  Bitmap Heap Scan on schools schools_1  (cost=104.15..173.95 rows=19 width=129) (actual time=0.426..0.429 rows=2 loops=1)
+               Recheck Cond: (searchable @@ '''alper'':*'::tsquery)
+               Heap Blocks: exact=2
+               ->  Bitmap Index Scan on index_schools_on_searchable  (cost=0.00..104.14 rows=19 width=0) (actual time=0.423..0.423 rows=2 loops=1
+)
+                     Index Cond: (searchable @@ '''alper'':*'::tsquery)
+         ->  Index Scan using schools_pkey on schools  (cost=0.29..8.10 rows=1 width=207) (actual time=0.006..0.006 rows=0 loops=2)
+               Index Cond: (id = schools_1.id)
+               Filter: (close_date IS NULL)
+               Rows Removed by Filter: 0
+ Planning Time: 0.475 ms
+ Execution Time: 0.497 ms
+(15 rows)
 
-                                                  QUERY PLAN
--------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
- Gather Merge  (cost=29606.58..29641.77 rows=306 width=90) (actual time=199.228..200.617 rows=1 loops=1)
-   Workers Planned: 1
-   Workers Launched: 1
-   ->  Sort  (cost=28606.57..28607.33 rows=306 width=90) (actual time=196.112..196.113 rows=0 loops=2)
-         Sort Key: (ts_rank((((to_tsvector('simple'::regconfig, COALESCE((schools_1.urn)::text, ''::text)) || to_tsvector('simple'::regconfig, CO
-ALESCE((schools_1.name)::text, ''::text))) || to_tsvector('simple'::regconfig, COALESCE((schools_1.town)::text, ''::text))) || to_tsvector('simpl
-e'::regconfig, COALESCE((schools_1.postcode)::text, ''::text))), '''alper'':*'::tsquery, 0)) DESC, schools.id
-         Sort Method: quicksort  Memory: 25kB
-         Worker 0:  Sort Method: quicksort  Memory: 25kB
-         ->  Nested Loop  (cost=0.29..28593.93 rows=306 width=90) (actual time=122.281..196.059 rows=0 loops=2)
-               ->  Parallel Seq Scan on schools  (cost=0.00..2387.41 rows=15306 width=86) (actual time=0.008..11.247 rows=13642 loops=2)
-                     Filter: (close_date IS NULL)
-                     Rows Removed by Filter: 10873
-               ->  Index Scan using schools_pkey on schools schools_1  (cost=0.29..1.69 rows=1 width=61) (actual time=0.013..0.013 rows=0 loops=2
-7283)
-                     Index Cond: (id = schools.id)
-                     Filter: ((((to_tsvector('simple'::regconfig, COALESCE((urn)::text, ''::text)) || to_tsvector('simple'::regconfig, COALESCE((
-name)::text, ''::text))) || to_tsvector('simple'::regconfig, COALESCE((town)::text, ''::text))) || to_tsvector('simple'::regconfig, COALESCE((pos
-tcode)::text, ''::text))) @@ '''alper'':*'::tsquery)
-                     Rows Removed by Filter: 1
- Planning Time: 0.382 ms
- Execution Time: 200.672 ms
-(17 rows)
+irb(main):014:0>
