@@ -44,9 +44,7 @@ private
   end
 
   def and_i_click_the_first_item_in_the_list
-    using_wait_time 2 do
-      edit_lead_school_page.autocomplete_list_item.click
-    end
+    edit_lead_school_page.autocomplete_list_item.click
   end
 
   def and_i_continue
