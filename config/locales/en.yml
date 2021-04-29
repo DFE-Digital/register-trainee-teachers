@@ -238,7 +238,7 @@ en:
         withdraw: withdraw
         reinstate: Reinstate
         this_trainee: this trainee
-        recommend_for_qts: Recommend trainee for QTS
+        recommend_for_award: Recommend trainee for QTS
         status_summary:
           submitted_for_trn: This record is pending a TRN
           deferred: This record is deferred
@@ -415,10 +415,10 @@ en:
           draft: Draft
           submitted_for_trn: Pending TRN
           trn_received: TRN received
-          recommended_for_qts: QTS recommended
+          recommended_for_award: QTS recommended
           withdrawn: Withdrawn
           deferred: Deferred
-          qts_awarded: QTS awarded
+          awarded: QTS awarded
     errors:
       models:
         trainee:
@@ -648,3 +648,7 @@ en:
     schools:
       errors:
         bad_request: "The query param needs to be at least 3 characters"
+  exports:
+    trainees:
+      award_recommended: "Recommended for %{award_type}"
+      award_given: "Awarded %{award_type}"

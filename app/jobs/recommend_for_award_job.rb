@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class RecommendForQtsJob < ApplicationJob
+class RecommendForAwardJob < ApplicationJob
   queue_as :default
-  retry_on Dttp::RecommendForQTS::Error
+  retry_on Dttp::RecommendForAward::Error
   retry_on Dttp::UpdateTraineeStatus::Error
 
   def perform(trainee)
-    Dttp::RecommendForQTS.call(trainee: trainee)
+    Dttp::RecommendForAward.call(trainee: trainee)
 
     Dttp::UpdateTraineeStatus.call(
       status: DttpStatuses::STANDARDS_MET,

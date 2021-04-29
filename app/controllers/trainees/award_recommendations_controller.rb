@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 module Trainees
-  class QtsRecommendationsController < ApplicationController
+  class AwardRecommendationsController < ApplicationController
     before_action :authorize_trainee
 
     def create
       if OutcomeDateForm.new(trainee).save!
-        trainee.recommend_for_qts!
+        trainee.recommend_for_award!
 
-        RecommendForQtsJob.perform_later(trainee)
-        RetrieveQtsJob.perform_with_default_delay(trainee)
+        RecommendForAwardJob.perform_later(trainee)
+        RetrieveAwardJob.perform_with_default_delay(trainee)
 
         redirect_to recommended_trainee_outcome_details_path(trainee)
       end
@@ -22,7 +22,7 @@ module Trainees
     end
 
     def authorize_trainee
-      authorize(trainee, :recommend_for_qts?)
+      authorize(trainee, :recommend_for_award?)
     end
   end
 end

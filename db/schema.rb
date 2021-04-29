@@ -245,7 +245,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_162034) do
     t.string "additional_withdraw_reason"
     t.date "defer_date"
     t.string "slug", null: false
-    t.datetime "recommended_for_qts_at"
+    t.datetime "recommended_for_award_at"
     t.string "dttp_update_sha"
     t.date "commencement_date"
     t.date "reinstate_date"

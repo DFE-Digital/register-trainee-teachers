@@ -25,6 +25,6 @@ class SummaryCard::View < ViewComponent::Base
 private
 
   def prevent_action?
-    trainee.recommended_for_qts? || trainee.qts_awarded? || trainee.withdrawn?
+    trainee.recommended_for_award? || trainee.awarded? || trainee.withdrawn?
   end
 end

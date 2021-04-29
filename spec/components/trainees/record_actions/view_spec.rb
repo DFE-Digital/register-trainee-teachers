@@ -35,7 +35,7 @@ RSpec.describe Trainees::RecordActions::View do
     end
 
     context "recommended for QTS" do
-      let(:trait) { :recommended_for_qts }
+      let(:trait) { :recommended_for_award }
       include_examples "no actions"
     end
 
@@ -51,7 +51,7 @@ RSpec.describe Trainees::RecordActions::View do
     end
 
     context "QTS awarded" do
-      let(:trait) { :qts_awarded }
+      let(:trait) { :awarded }
       include_examples "no actions"
     end
   end

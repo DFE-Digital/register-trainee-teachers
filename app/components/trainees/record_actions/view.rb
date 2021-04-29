@@ -15,7 +15,7 @@ module Trainees
         trainee.submitted_for_trn? || trainee.trn_received? || trainee.deferred?
       end
 
-      def can_recommend_for_qts?
+      def can_recommend_for_award?
         trainee.trn_received?
       end
 

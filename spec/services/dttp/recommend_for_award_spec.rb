@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Dttp
-  describe RecommendForQTS do
+  describe RecommendForAward do
     describe "#call" do
       let(:trainee) do
         create(:trainee, :trn_received, outcome_date: outcome_date, placement_assignment_dttp_id: placement_assignment_dttp_id)
@@ -24,7 +24,7 @@ module Dttp
 
       context "success" do
         let(:dttp_response) { double(code: 204) }
-        it_behaves_like "CreateOrUpdateConsistencyCheckJob", RecommendForQTS
+        it_behaves_like "CreateOrUpdateConsistencyCheckJob", RecommendForAward
 
         it "sends a PATCH request to set entity property 'dfe_datestandardsassessmentpassed'" do
           expect(Client).to receive(:patch).with(path, body: expected_params).and_return(dttp_response)
@@ -41,7 +41,7 @@ module Dttp
         it "raises an error exception" do
           expect {
             described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::RecommendForQTS::Error, "status: #{status}, body: #{body}, headers: #{headers}")
+          }.to raise_error(Dttp::RecommendForAward::Error, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end
     end

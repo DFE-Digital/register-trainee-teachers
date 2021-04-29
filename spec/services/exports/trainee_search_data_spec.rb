@@ -5,7 +5,7 @@ require "rails_helper"
 module Exports
   describe TraineeSearchData do
     let(:trainee) do
-      create(:trainee, :with_course_details, :submitted_for_trn, :trn_received, :recommended_for_qts, :qts_awarded)
+      create(:trainee, :with_course_details, :submitted_for_trn, :trn_received, :recommended_for_award, :awarded)
     end
 
     subject { described_class.new([trainee]) }
@@ -17,7 +17,7 @@ module Exports
           "Last name" => trainee.last_name,
           "Trainee Id" => trainee.trainee_id,
           "TRN" => trainee.trn,
-          "Status" => trainee.state,
+          "Status" => t("exports.trainees.award_given", award_type: trainee.award_type),
           "Route" => trainee.training_route,
           "Subject" => trainee.subject,
           "Course start date" => trainee.course_start_date,
@@ -25,7 +25,7 @@ module Exports
           "Created date" => trainee.created_at,
           "Last updated date" => trainee.updated_at,
           "TRN Submitted date" => trainee.submitted_for_trn_at,
-          "QTS submitted date" => trainee.recommended_for_qts_at,
+          "Award submitted date" => trainee.recommended_for_award_at,
         }
       end
 

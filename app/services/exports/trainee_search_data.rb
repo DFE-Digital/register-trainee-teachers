@@ -33,7 +33,7 @@ module Exports
           "Last name" => trainee.last_name,
           "Trainee Id" => trainee.trainee_id,
           "TRN" => trainee.trn,
-          "Status" => trainee.state,
+          "Status" => award_state(trainee),
           "Route" => trainee.training_route,
           "Subject" => trainee.subject,
           "Course start date" => trainee.course_start_date,
@@ -41,9 +41,16 @@ module Exports
           "Created date" => trainee.created_at,
           "Last updated date" => trainee.updated_at,
           "TRN Submitted date" => trainee.submitted_for_trn_at,
-          "QTS submitted date" => trainee.recommended_for_qts_at,
+          "Award submitted date" => trainee.recommended_for_award_at,
         }
       end
+    end
+
+    def award_state(trainee)
+      {
+        recommended_for_award: I18n.t("exports.trainees.award_recommended", award_type: trainee.award_type),
+        awarded: I18n.t("exports.trainees.award_given", award_type: trainee.award_type),
+      }[trainee.state.to_sym] || trainee.state
     end
   end
 end

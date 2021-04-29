@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dttp
-  class RecommendForQTS
+  class RecommendForAward
     include ServicePattern
 
     class Error < StandardError; end

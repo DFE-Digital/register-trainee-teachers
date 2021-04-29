@@ -33,7 +33,7 @@ module Trainees
     end
 
     def authorize_trainee
-      authorize(trainee, :recommend_for_qts?)
+      authorize(trainee, :recommend_for_award?)
     end
   end
 end

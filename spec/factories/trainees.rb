@@ -154,9 +154,9 @@ FactoryBot.define do
       dttp_id { SecureRandom.uuid }
     end
 
-    trait :recommended_for_qts do
-      state { "recommended_for_qts" }
-      recommended_for_qts_at { Time.zone.now }
+    trait :recommended_for_award do
+      state { "recommended_for_award" }
+      recommended_for_award_at { Time.zone.now }
     end
 
     trait :withdrawn do
@@ -176,8 +176,8 @@ FactoryBot.define do
       reinstate_date { Faker::Date.in_date_period }
     end
 
-    trait :qts_awarded do
-      state { "qts_awarded" }
+    trait :awarded do
+      state { "awarded" }
     end
 
     trait :with_dttp_dormancy do

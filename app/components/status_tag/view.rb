@@ -13,7 +13,8 @@ private
   def status
     {
       submitted_for_trn: "pending trn",
-      recommended_for_qts: "qts recommended",
+      recommended_for_award: "qts recommended",
+      awarded: "qts awarded",
     }[trainee.state.to_sym] || trainee.state.gsub("_", " ")
   end
 
@@ -22,8 +23,8 @@ private
       draft: "grey",
       submitted_for_trn: "turquoise",
       trn_received: "blue",
-      recommended_for_qts: "purple",
-      qts_awarded: "",
+      recommended_for_award: "purple",
+      awarded: "",
       deferred: "yellow",
       withdrawn: "red",
     }[trainee.state.to_sym]

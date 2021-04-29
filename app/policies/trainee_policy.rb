@@ -41,10 +41,10 @@ class TraineePolicy
   end
 
   def show_recommended?
-    allowed_user? && trainee.recommended_for_qts?
+    allowed_user? && trainee.recommended_for_award?
   end
 
-  def recommend_for_qts?
+  def recommend_for_award?
     allowed_user? && trainee.trn_received?
   end
 

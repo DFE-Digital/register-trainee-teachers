@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-describe RecommendForQtsJob do
+describe RecommendForAwardJob do
   include ActiveJob::TestHelper
 
-  let(:trainee) { create(:trainee, :recommended_for_qts) }
+  let(:trainee) { create(:trainee, :recommended_for_award) }
 
   let(:expected_contact_params) do
     {
@@ -24,7 +24,7 @@ describe RecommendForQtsJob do
   end
 
   before do
-    allow(Dttp::RecommendForQTS).to receive(:call).with(trainee: trainee)
+    allow(Dttp::RecommendForAward).to receive(:call).with(trainee: trainee)
     allow(Dttp::UpdateTraineeStatus).to receive(:call).with(expected_contact_params)
     allow(Dttp::UpdateTraineeStatus).to receive(:call).with(expected_placement_assignment_params)
   end

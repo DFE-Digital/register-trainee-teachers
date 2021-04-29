@@ -67,10 +67,10 @@ class Trainee < ApplicationRecord
     draft: 0,
     submitted_for_trn: 1,
     trn_received: 2,
-    recommended_for_qts: 3,
+    recommended_for_award: 3,
     withdrawn: 4,
     deferred: 5,
-    qts_awarded: 6,
+    awarded: 6,
   } do
     event :submit_for_trn do
       before do
@@ -84,12 +84,12 @@ class Trainee < ApplicationRecord
       transition %i[submitted_for_trn deferred] => :trn_received
     end
 
-    event :recommend_for_qts do
+    event :recommend_for_award do
       before do
-        self.recommended_for_qts_at = Time.zone.now
+        self.recommended_for_award_at = Time.zone.now
       end
 
-      transition %i[trn_received] => :recommended_for_qts
+      transition %i[trn_received] => :recommended_for_award
     end
 
     event :withdraw do
@@ -100,8 +100,8 @@ class Trainee < ApplicationRecord
       transition %i[submitted_for_trn trn_received] => :deferred
     end
 
-    event :award_qts do
-      transition %i[recommended_for_qts] => :qts_awarded
+    event :award do
+      transition %i[recommended_for_award] => :awarded
     end
   end
 
