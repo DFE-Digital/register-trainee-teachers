@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_105838) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "lead_school", null: false
     t.tsvector "searchable"
+    t.index ["close_date"], name: "index_schools_on_close_date", where: "(close_date IS NULL)"
     t.index ["lead_school"], name: "index_schools_on_lead_school", where: "(lead_school IS TRUE)"
     t.index ["searchable"], name: "index_schools_on_searchable", using: :gin
     t.index ["urn"], name: "index_schools_on_urn", unique: true
