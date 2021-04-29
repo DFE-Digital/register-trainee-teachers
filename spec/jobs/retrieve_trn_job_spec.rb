@@ -43,15 +43,17 @@ describe RetrieveTrnJob do
     end
   end
 
-  context "after 2 days of polling" do
+  context "timing out after 4 days of polling" do
     let(:trainee) { create(:trainee, submitted_for_trn_at: configured_limit.days.ago) }
-    let(:configured_limit) { 2 }
+    let(:configured_limit) { 4 }
 
     before do
       allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_limit)
+      allow(SlackNotifierService).to receive(:call)
     end
 
-    it "doesn't queue another job after 2 days have passed without a TRN" do
+    it "doesn't queue another job after 4 days have passed without a TRN" do
+      expect(SlackNotifierService).to receive(:call)
       described_class.perform_now(trainee)
       expect(RetrieveTrnJob).to_not have_been_enqueued
     end
