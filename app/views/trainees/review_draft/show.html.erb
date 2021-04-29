@@ -115,8 +115,8 @@
       if @trainee.requires_schools?
         component.row(
             task_name: "Schools",
-            path: review_draft_trainee_path(@trainee),
-            confirm_path: review_draft_trainee_path(@trainee),
+            path: edit_trainee_lead_schools_path(@trainee),
+            confirm_path: edit_trainee_lead_schools_path(@trainee),
             classes: "school-details",
             status: "not started",
           )
