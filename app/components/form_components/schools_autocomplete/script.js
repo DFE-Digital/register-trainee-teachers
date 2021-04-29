@@ -1,9 +1,10 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
+import { nodeListForEach } from 'govuk-frontend/govuk/common'
 
-const $form = document.querySelector('[data-module="app-schools-autocomplete"]')
+const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
 const idElement = document.getElementById('lead-school-id')
 
-let statusMessage = null
+let statusMessage = ' '
 
 const guard = (data) => {
   if (data === undefined) {
@@ -45,7 +46,7 @@ const renderTemplate = {
 }
 
 const setLeadSchoolHiddenField = (value) => {
-  if (value === undefined){
+  if (value === undefined) {
     return
   }
 
@@ -63,8 +64,9 @@ const setupAutoComplete = (form) => {
     templates: renderTemplate,
     onConfirm: setLeadSchoolHiddenField,
     showAllValues: false,
+    defaultValue: element.dataset.value,
     tNoResults: () => statusMessage
   })
 }
 
-setupAutoComplete($form)
+nodeListForEach($allAutocompleteElements, setupAutoComplete)
