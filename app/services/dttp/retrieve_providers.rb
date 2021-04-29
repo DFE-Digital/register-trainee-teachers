@@ -14,8 +14,10 @@ module Dttp
 
     INSTITUTION_TYPES = CodeSets::InstitutionTypes::MAPPING.values.flat_map { |institution| "_dfe_institutiontypeid_value eq #{institution[:entity_id]}" }.join(" or ")
 
+    ACTIVE_STATECODE = 0
+    ACTIVE_STATUSCODE = 1
     FILTER = {
-      "$filter" => "dfe_provider eq true and (#{INSTITUTION_TYPES})",
+      "$filter" => "dfe_provider eq true and (#{INSTITUTION_TYPES}) and statecode eq #{ACTIVE_STATECODE} and statuscode eq #{ACTIVE_STATUSCODE}",
     }.freeze
 
     SELECT = {

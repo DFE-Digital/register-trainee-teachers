@@ -15,6 +15,15 @@ module Dttp
       allow(Client).to receive(:get).with(String, request_headers).and_return(dttp_response)
     end
 
+    let(:expected_path) do
+      "/accounts?%24filter=dfe_provider+eq+true+and+%28_dfe_institutiontypeid_value+eq+b5ec33aa-216d-e711-80d2-005056ac45bb+or+_dfe_institutiontypeid_value+eq+b7ec33aa-216d-e711-80d2-005056ac45bb+or+_dfe_institutiontypeid_value+eq+b9ec33aa-216d-e711-80d2-005056ac45bb+or+_dfe_institutiontypeid_value+eq+bbec33aa-216d-e711-80d2-005056ac45bb+or+_dfe_institutiontypeid_value+eq+bdec33aa-216d-e711-80d2-005056ac45bb+or+_dfe_institutiontypeid_value+eq+bfec33aa-216d-e711-80d2-005056ac45bb+or+_dfe_institutiontypeid_value+eq+c1ec33aa-216d-e711-80d2-005056ac45bb%29+and+statecode+eq+0+and+statuscode+eq+1&%24select=name%2Cdfe_ukprn%2Caccountid"
+    end
+
+    it "requests active organisations matching the institution type codeset" do
+      expect(Client).to receive(:get).with(expected_path, request_headers).and_return(dttp_response)
+      subject
+    end
+
     it "returns a hash containing expected items" do
       expect(subject).to eq({ items: [1, 2, 3], meta: { next_page_url: "https://example.com" } })
     end
