@@ -13,7 +13,7 @@ private
   end
 
   def date_field
-    @date_field ||= :withdraw_date
+    @date_field ||= trainee.deferred? ? :defer_date : :withdraw_date
   end
 
   def additional_fields

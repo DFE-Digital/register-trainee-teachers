@@ -42,4 +42,14 @@ RSpec.describe Trainees::Confirmation::WithdrawalDetails::View do
       expect(component).to have_text(data_model.additional_withdraw_reason)
     end
   end
+
+  context "when a deferral date is present" do
+    let(:trainee) { build(:trainee, :deferred, id: 1) }
+
+    it "renders the deferral date text " do
+      expect(component).to have_text(
+        I18n.t("components.confirmation.withdrawal_details.withdrawal_date", date: date_for_summary_view(withdraw_date)),
+      )
+    end
+  end
 end

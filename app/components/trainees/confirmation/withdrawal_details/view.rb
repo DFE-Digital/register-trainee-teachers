@@ -10,10 +10,11 @@ module Trainees
 
         def initialize(data_model)
           @data_model = data_model
+          @deferred = data_model.trainee.deferred?
         end
 
         def withdraw_date
-          date_for_summary_view(data_model.date)
+          deferred ? date_with_deferral_text : withdrawal_date
         end
 
         def withdraw_reason
@@ -21,6 +22,18 @@ module Trainees
 
           I18n.t("components.confirmation.withdrawal_details.reasons.#{data_model.withdraw_reason}")
         end
+
+      private
+
+        def date_with_deferral_text
+          I18n.t("components.confirmation.withdrawal_details.withdrawal_date", date: withdrawal_date)
+        end
+
+        def withdrawal_date
+          date_for_summary_view(data_model.date)
+        end
+
+        attr_reader :deferred
       end
     end
   end
