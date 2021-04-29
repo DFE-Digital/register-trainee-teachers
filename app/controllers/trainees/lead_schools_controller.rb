@@ -13,7 +13,7 @@ module Trainees
     end
 
     def edit
-      @trainee_lead_school_form = LeadSchoolForm.new(trainee)
+      @lead_school_form = LeadSchoolForm.new(trainee)
     end
 
     def update
@@ -28,13 +28,15 @@ module Trainees
       if @lead_school_form.public_send(save_strategy)
         redirect_to trainee_training_details_confirm_path(trainee)
       else
-        render :index
+        render :edit
       end
     end
 
   private
 
     def redirect_to_search_page
+      return if params["input-autocomplete"] && params["input-autocomplete"].length < 3
+
       redirect_to trainee_lead_schools_path(trainee, query: params["input-autocomplete"]) if trainee_params[:lead_school_id].blank?
     end
 
