@@ -5,51 +5,54 @@ const idElement = document.getElementById('lead-school-id')
 
 let statusMessage = null
 
+const guard = (data) => {
+  if (data === undefined) {
+    return new Error('An error occured')
+  }
+
+  return data
+}
+
+const mapToSchools = (data) => data.schools
+
+const tryUpdateStatusMessage = (schools) => {
+  if (schools.length === 0) {
+    statusMessage = 'No results found'
+  }
+
+  return schools
+}
+
 const findSchools = (query, populateResults) => {
-  statusMessage = 'Loading...'
+  statusMessage = 'Loading...' // Shared state
 
   window.fetch(`/api/schools?query=${query}&lead_school=true`)
     .then(response => response.json())
-    .then(data => {
-      if (data === undefined) {
-        return
-      }
-
-      const schools = data.schools
-
-      if (schools.length === 0) {
-        statusMessage = 'No results found'
-      }
-
-      return schools
-    })
-    .then(schools => populateResults(schools))
-    .catch(err => console.log(err))
+    .then(guard)
+    .then(mapToSchools)
+    .then(tryUpdateStatusMessage)
+    .then(populateResults)
+    .catch(console.log)
 }
 
 const suggestionTemplate = (value) => {
   return value && value.name
 }
 
-const inputTemplate = (value) => {
-  return value && value.name
-}
-
 const renderTemplate = {
-  inputValue: inputTemplate,
+  inputValue: suggestionTemplate,
   suggestion: suggestionTemplate
 }
 
-const setParams = (value) => {
-  if (value === undefined) {
+const setLeadSchoolHiddenField = (value) => {
+  if (value === undefined){
     return
   }
+
   idElement.value = value.id
 }
 
 const setupAutoComplete = (form) => {
-  if (!form) return
-
   const element = form.querySelector('#schools-autocomplete-element')
 
   accessibleAutocomplete({
@@ -58,7 +61,7 @@ const setupAutoComplete = (form) => {
     minLength: 3,
     source: findSchools,
     templates: renderTemplate,
-    onConfirm: setParams,
+    onConfirm: setLeadSchoolHiddenField,
     showAllValues: false,
     tNoResults: () => statusMessage
   })
