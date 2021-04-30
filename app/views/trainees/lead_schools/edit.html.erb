@@ -5,13 +5,13 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with model: @lead_school_form, url: trainee_lead_schools_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_text_field(
         :lead_school_id,
-        label: { text: t(".heading"), size: 'xl', tag: 'h1' },
+        label: { text: t(".heading"), size: 'l', tag: 'h1' },
         hint: { text: t(".hint") },
         name: :'input-autocomplete',
         'data-field' => "schools-autocomplete"
