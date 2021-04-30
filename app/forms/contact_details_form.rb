@@ -18,11 +18,11 @@ class ContactDetailsForm < TraineeForm
 
   before_validation :sanitise_email
 
-  validates :email, presence: true
   validates :locale_code, presence: true
   validate :uk_address_valid, if: -> { uk? }
   validate :international_address_valid, if: -> { non_uk? }
   validates :postcode, postcode: true, if: ->(attr) { attr.postcode.present? }
+  validates :email, presence: true
 
   validate do |record|
     EmailFormatValidator.new(record).validate

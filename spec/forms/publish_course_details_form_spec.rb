@@ -33,7 +33,7 @@ describe PublishCourseDetailsForm, type: :model do
     describe "#stash" do
       it "returns false and adds an error to the form" do
         expect(subject.stash).to eq false
-        expect(subject.errors.messages).to eq({ code: ["You must select a course"] })
+        expect(subject.errors.messages).to eq({ code: ["Select a course"] })
       end
     end
   end
