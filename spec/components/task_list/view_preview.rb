@@ -3,8 +3,7 @@
 class TaskList::ViewPreview < ViewComponent::Preview
   def default_state
     render TaskList::View.new do |component|
-      component.slot(
-        :row,
+      component.row(
         task_name: "Personal details",
         path: "#aardvark",
         status: "completed",
@@ -14,22 +13,19 @@ class TaskList::ViewPreview < ViewComponent::Preview
 
   def with_multiple_status
     render TaskList::View.new do |component|
-      component.slot(
-        :row,
+      component.row(
         task_name: "Personal details",
         path: "#aardvark",
         status: "completed",
       )
 
-      component.slot(
-        :row,
+      component.row(
         task_name: "Contact details",
         path: "#details",
         status: "in progress",
       )
 
-      component.slot(
-        :row,
+      component.row(
         task_name: "Diversity information",
         path: "#diversity",
         status: "not started",

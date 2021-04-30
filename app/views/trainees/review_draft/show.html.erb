@@ -24,8 +24,7 @@
     <h2 class="govuk-heading-m">Personal details and education</h2>
 
     <%= render TaskList::View.new do |component|
-          component.slot(
-            :row,
+          component.row(
             task_name: "Personal details",
             path: edit_trainee_personal_details_path(@trainee),
             confirm_path: trainee_personal_details_confirm_path(@trainee),
@@ -36,8 +35,7 @@
             ).status,
           )
 
-          component.slot(
-            :row,
+          component.row(
             task_name: "Contact details",
             path: edit_trainee_contact_details_path(@trainee),
             confirm_path: trainee_contact_details_confirm_path(@trainee),
@@ -47,8 +45,7 @@
             ).status,
           )
 
-          component.slot(
-            :row,
+          component.row(
             task_name: "Diversity information",
             path: edit_trainee_diversity_disclosure_path(@trainee),
             confirm_path: diversity_confirm_path(@trainee),
@@ -59,8 +56,7 @@
             ).status,
           )
 
-          component.slot(
-            :row,
+          component.row(
             task_name: "Degree",
             path: trainee_degrees_new_type_path(@trainee),
             confirm_path: trainee_degrees_confirm_path(@trainee),
@@ -77,8 +73,7 @@
     <%= render TaskList::View.new(classes: "record-setup") do |component|
       if show_publish_courses?(@trainee)
         form = PublishCourseDetailsForm.new(@trainee)
-        component.slot(
-          :row,
+        component.row(
           task_name: "Course details",
           path: edit_trainee_publish_course_details_path(@trainee),
           confirm_path: lambda {
@@ -94,8 +89,7 @@
           ).status,
         )
       else
-        component.slot(
-          :row,
+        component.row(
           task_name: "Course details",
           path: edit_trainee_course_details_path(@trainee),
           confirm_path: trainee_course_details_confirm_path(@trainee),
@@ -107,8 +101,7 @@
         )
       end
 
-      component.slot(
-        :row,
+      component.row(
         task_name: "Trainee start date and ID",
         path: edit_trainee_training_details_path(@trainee),
         confirm_path: trainee_training_details_confirm_path(@trainee),
@@ -120,8 +113,7 @@
       )
 
       if @trainee.requires_schools?
-        component.slot(
-            :row,
+        component.row(
             task_name: "Schools",
             path: review_draft_trainee_path(@trainee),
             confirm_path: review_draft_trainee_path(@trainee),
@@ -131,8 +123,7 @@
       end
 
       if @trainee.requires_placement_details?
-        component.slot(
-          :row,
+        component.row(
           task_name: "Placement details",
           path: review_draft_trainee_path(@trainee),
           confirm_path: review_draft_trainee_path(@trainee),
