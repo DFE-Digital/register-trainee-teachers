@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :school do
-    sequence(:urn) { |n| "urn_#{n}" }
+    urn { rand.to_s[2..7] }
     name { Faker::University.name }
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }

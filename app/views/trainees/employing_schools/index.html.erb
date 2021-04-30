@@ -1,34 +1,13 @@
-<%= render PageTitle::View.new(title: "search_employing_schools.page_title_results") %>
+<%= render PageTitle::View.new(title: "trainees.employing_schools.index",
+                               has_errors: @employing_school_form.errors.present?) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <% if @schools.empty? %>
-      <%= render "trainees/lead_schools/no_results" %>
-    <% else %>
-      <h1 class="govuk-heading-l govuk-!-margin-bottom-1">
-        <%= t("components.page_titles.search_employing_schools.page_title_results") %>
-      </h1>
-
-      <div class="govuk-hint"><%= t("components.page_titles.search_schools.sub_text_results") %>
-        ‘<%= params[:query] %>’
-      </div>
-
-      <%= register_form_with(model: @employing_school_form,
-                             url: trainee_employing_schools_path(@trainee),
-                             method: :put,
-                             local: true) do |f| %>
-        <%= f.govuk_error_summary %>
-
-        <div class="govuk-!-margin-bottom-6">
-          <% @schools.each do |school| %>
-            <%= f.govuk_radio_button :employing_school_id, school.id,
-                                     label: { text: school.name },
-                                     hint: { text: school_urn_and_location(school) } %>
-          <% end %>
-        </div>
-
-        <%= f.govuk_submit %>
-      <% end %>
+    <%= register_form_with(model: @employing_school_form,
+                           url: trainee_employing_schools_path(@trainee, query: params[:query]),
+                           method: :put,
+                           local: true) do |f| %>
+      <% render (@schools.empty? ? "no_results" : "results"), f: f %>
     <% end %>
   </div>
 </div>

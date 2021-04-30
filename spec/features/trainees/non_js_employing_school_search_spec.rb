@@ -16,6 +16,14 @@ RSpec.feature "Non-JS employing schools search" do
     then_i_am_redirected_to_the_confirm_training_details_page
   end
 
+  scenario "choosing search again option" do
+    and_i_choose_the_search_option
+    and_i_enter_a_search_term_that_should_yield_no_results
+    and_i_continue
+    then_i_should_see_no_results
+    and_i_should_see_a_search_again_field
+  end
+
 private
 
   def given_a_school_direct_salaried_trainee_exists
@@ -26,8 +34,20 @@ private
     employing_schools_search_page.choose_school(id: my_employing_school.id)
   end
 
-  def and_i_continue
-    employing_schools_search_page.continue.click
+  def and_i_choose_the_search_option
+    employing_schools_search_page.search_again_option.choose
+  end
+
+  def and_i_enter_a_search_term_that_should_yield_no_results
+    employing_schools_search_page.results_search_again_input.set("foo")
+  end
+
+  def then_i_should_see_no_results
+    expect(employing_schools_search_page).to have_text(t("components.page_titles.search_schools.sub_text_no_results") + " foo")
+  end
+
+  def and_i_should_see_a_search_again_field
+    expect(employing_schools_search_page).to have_no_results_search_again_input
   end
 
   def and_a_number_of_school_exists
@@ -38,15 +58,19 @@ private
     employing_schools_search_page.load(trainee_id: trainee.slug, query: query)
   end
 
+  def then_i_am_redirected_to_the_confirm_training_details_page
+    expect(confirm_training_details_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_i_continue
+    employing_schools_search_page.continue.click
+  end
+
   def query
     my_employing_school.name.split(" ").first
   end
 
   def my_employing_school
     @my_employing_school ||= @schools.sample
-  end
-
-  def then_i_am_redirected_to_the_confirm_training_details_page
-    expect(confirm_training_details_page).to be_displayed(id: trainee.slug)
   end
 end

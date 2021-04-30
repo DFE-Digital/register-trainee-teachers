@@ -155,6 +155,8 @@ en:
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
+        lead_schools:
+          index: Select the lead school
         employing_schools:
           index: Select the employing school
       providers:
@@ -167,14 +169,11 @@ en:
       validation_errors:
         page_title: Validation errors
       search_schools:
-        page_title_results: Select the lead school
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
         search_hint: Search for a school by it’s unique reference number (URN), name or postcode
         search_button: Search again
-      search_employing_schools:
-        page_title_results: Select the employing school
     filter:
       training_route: Training route
       state: Status
@@ -645,6 +644,10 @@ en:
           attributes:
             employing_school_id:
               blank: Choose a school
+            results_search_again_query:
+              blank: Enter a search term
+            no_results_search_again_query:
+              blank: Enter a search term
   page_headings:
     start_page: Register trainee teachers
   system_admin:

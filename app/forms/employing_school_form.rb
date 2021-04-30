@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-class EmployingSchoolForm < TraineeForm
+class EmployingSchoolForm < SchoolForm
   attr_accessor :employing_school_id
 
-  validates :employing_school_id, presence: true
+  validates :employing_school_id, presence: true, unless: -> { searching_again? }
+
+  alias_method :school_id, :employing_school_id
 
 private
 
