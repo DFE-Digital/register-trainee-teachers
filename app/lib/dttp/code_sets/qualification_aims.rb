@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+module Dttp
+  module CodeSets
+    module QualificationAims
+      # Most of these are currently mapped to "Qualified Teacher Status (QTS)/registration with the DFE"
+      # The full DTTP list contains a number of qualification aims which our app isn't setup to collect.
+      # The DTTP qualification aim GUIDS will likely need to be updated once we collect more details about the trainee's qualification aim.
+      MAPPING = {
+        TRAINING_ROUTE_ENUMS[:assessment_only] => { entity_id: "68cbae32-7389-e711-80d8-005056ac45bb" },
+        TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => { entity_id: "68cbae32-7389-e711-80d8-005056ac45bb" },
+        TRAINING_ROUTE_ENUMS[:early_years_undergrad] => { entity_id: "d446cd4b-4d9c-e711-80d9-005056ac45bb" },
+        TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => { entity_id: "68cbae32-7389-e711-80d8-005056ac45bb" },
+        TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: "68cbae32-7389-e711-80d8-005056ac45bb" },
+      }.freeze
+    end
+  end
+end
