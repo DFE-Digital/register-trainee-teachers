@@ -57,18 +57,32 @@ const setLeadSchoolHiddenField = (value) => {
 
 const setupAutoComplete = (form) => {
   const element = form.querySelector('#schools-autocomplete-element')
+  const inputs = form.querySelectorAll('[data-field="schools-autocomplete"]')
 
-  accessibleAutocomplete({
-    element: element,
-    id: 'schools-autocomplete',
-    minLength: 3,
-    source: findSchools,
-    templates: renderTemplate,
-    onConfirm: setLeadSchoolHiddenField,
-    showAllValues: false,
-    defaultValue: element.dataset.value,
-    tNoResults: () => statusMessage
-  })
+  try {
+    inputs.forEach(input => {
+      accessibleAutocomplete({
+        element: element,
+        id: input.id,
+        minLength: 3,
+        source: findSchools,
+        templates: renderTemplate,
+        onConfirm: setLeadSchoolHiddenField,
+        showAllValues: false,
+        tNoResults: () => statusMessage
+      })
+
+      // Move autocomplete to the form group containing the input to be replaced
+      const inputFormGroup = element.previousElementSibling
+      if (inputFormGroup.contains(input)) {
+        inputFormGroup.appendChild(element)
+      }
+
+      input.remove()
+    })
+  } catch (err) {
+    console.error('Could not enhance:', err)
+  }
 }
 
 nodeListForEach($allAutocompleteElements, setupAutoComplete)
