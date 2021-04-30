@@ -51,5 +51,9 @@ RSpec.describe Trainees::Confirmation::WithdrawalDetails::View do
         I18n.t("components.confirmation.withdrawal_details.withdrawal_date", date: date_for_summary_view(withdraw_date)),
       )
     end
+
+    it "suppress the change link" do
+      expect(component.find(".date-of-withdrawal")).not_to have_link(t(:change))
+    end
   end
 end

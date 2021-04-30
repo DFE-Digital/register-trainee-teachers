@@ -6,7 +6,7 @@ module Trainees
       class View < GovukComponent::Base
         include SummaryHelper
 
-        attr_reader :data_model
+        attr_reader :data_model, :deferred
 
         def initialize(data_model)
           @data_model = data_model
@@ -32,8 +32,6 @@ module Trainees
         def withdrawal_date
           date_for_summary_view(data_model.date)
         end
-
-        attr_reader :deferred
       end
     end
   end
