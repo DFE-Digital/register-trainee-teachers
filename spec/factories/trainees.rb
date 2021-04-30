@@ -213,5 +213,13 @@ FactoryBot.define do
         trainee.reload
       end
     end
+
+    trait :with_lead_school do
+      association :lead_school, factory: %i[school lead]
+    end
+
+    trait :with_employing_school do
+      association :employing_school, factory: :school
+    end
   end
 end

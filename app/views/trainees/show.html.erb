@@ -10,6 +10,12 @@
   <%= render Trainees::Confirmation::CourseDetails::View.new(data_model: @trainee) %>
 </div>
 
+<% if @trainee.requires_schools? %>
+  <div class="school-details">
+    <%= render Trainees::SchoolDetails::View.new(@trainee) %>
+  </div>
+<% end %>
+
 <% if @trainee.requires_placement_details? %>
   <div class="placement-details">
     <%= render Trainees::Confirmation::PlacementDetails::View.new(trainee: @trainee) %>
