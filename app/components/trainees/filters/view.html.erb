@@ -75,6 +75,8 @@
     </div>
   </div>
   <% if filter_actions %>
-    <%= filter_actions %>
+    <% filter_actions.each do |filter_action| %>
+      <%= filter_action %>
+    <% end %>
   <% end %>
 </div>

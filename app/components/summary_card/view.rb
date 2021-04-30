@@ -3,7 +3,7 @@
 class SummaryCard::View < ViewComponent::Base
   include ViewComponent::Slotable
 
-  with_content_areas :header_actions
+  renders_one :header_actions
 
   attr_accessor :trainee, :title, :heading_level
 

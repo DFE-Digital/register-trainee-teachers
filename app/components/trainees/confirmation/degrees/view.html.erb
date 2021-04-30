@@ -2,7 +2,7 @@
   <% degrees.each do |degree| %>
     <%= render SummaryCard::View.new(trainee: trainee, title: degree_title(degree), heading_level: 2, rows: get_degree_rows(degree)) do |component| %>
       <% if show_delete_button %>
-        <% component.with(:header_actions) do %>
+        <% component.header_actions do %>
           <%= register_form_with model: [trainee, degree], url: trainee_degree_path(trainee, degree), method: :delete, local: true do |f| %>
             <%= f.submit "Delete degree", class: "govuk-link app-button--link govuk-body", role: "link" %>
           <% end %>
