@@ -5,14 +5,11 @@ require "rails_helper"
 feature "Withdrawing a trainee", type: :feature do
   include SummaryHelper
 
-  background do
-    given_i_am_authenticated
-    given_a_trainee_exists_to_be_withdrawn
-    and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw
-  end
-
   context "validation errors" do
+    before do
+      when_i_am_on_the_withdrawal_page
+    end
+
     scenario "no information provided" do
       and_i_continue
       then_i_see_the_error_message_for_date_not_chosen
@@ -35,6 +32,7 @@ feature "Withdrawing a trainee", type: :feature do
 
   context "trainee withdrawn for specific reason" do
     background do
+      when_i_am_on_the_withdrawal_page
       and_i_choose_a_specific_reason
     end
 
@@ -69,6 +67,7 @@ feature "Withdrawing a trainee", type: :feature do
 
   context "trainee withdrawn for another reason" do
     background do
+      when_i_am_on_the_withdrawal_page
       and_i_choose_for_another_reason
     end
 
@@ -87,7 +86,8 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   scenario "cancelling changes" do
-    when_i_choose_today
+    when_i_am_on_the_withdrawal_page
+    and_i_choose_today
     and_i_choose_a_specific_reason
     and_i_continue
     then_i_am_redirected_to_withdrawal_confirmation_page
@@ -97,9 +97,30 @@ feature "Withdrawing a trainee", type: :feature do
     and_the_withdrawal_information_i_set_is_cleared
   end
 
+  scenario "when the trainee is deferred" do
+    given_i_am_authenticated
+    given_a_deferred_trainee_exists
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_withdraw
+    then_the_deferral_text_should_be_shown
+    when_i_choose_a_specific_reason
+    and_i_continue
+    then_i_am_redirected_to_withdrawal_confirmation_page
+    and_the_deferral_date_is_used
+  end
+
+  def when_i_am_on_the_withdrawal_page
+    given_i_am_authenticated
+    given_a_trainee_exists_to_be_withdrawn
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_withdraw
+  end
+
   def when_i_choose_today
     when_i_choose("Today")
   end
+
+  alias_method :and_i_choose_today, :when_i_choose_today
 
   def when_i_choose_yesterday
     when_i_choose("Yesterday")
@@ -144,6 +165,8 @@ feature "Withdrawing a trainee", type: :feature do
     label = I18n.t("views.forms.withdrawal_reasons.labels.#{WithdrawalReasons::SPECIFIC.sample}")
     withdrawal_page.choose(label)
   end
+
+  alias_method :when_i_choose_a_specific_reason, :and_i_choose_a_specific_reason
 
   def and_i_choose_for_another_reason
     label = I18n.t("views.forms.withdrawal_reasons.labels.#{WithdrawalReasons::FOR_ANOTHER_REASON}")
@@ -204,7 +227,11 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def given_a_trainee_exists_to_be_withdrawn
-    given_a_trainee_exists(%i[submitted_for_trn trn_received deferred].sample)
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample)
+  end
+
+  def given_a_deferred_trainee_exists
+    given_a_trainee_exists(:deferred)
   end
 
   def additional_withdraw_reason
@@ -224,5 +251,15 @@ feature "Withdrawing a trainee", type: :feature do
     expect(trainee.withdraw_date).to be_nil
     expect(trainee.withdraw_reason).to be_nil
     expect(trainee.additional_withdraw_reason).to be_nil
+  end
+
+  def then_the_deferral_text_should_be_shown
+    expect(withdrawal_page).to have_deferral_notice
+  end
+
+  def and_the_deferral_date_is_used
+    expect(withdrawal_confirmation_page).to have_text(
+      t("components.confirmation.withdrawal_details.withdrawal_date", date: date_for_summary_view(trainee.defer_date)),
+    )
   end
 end

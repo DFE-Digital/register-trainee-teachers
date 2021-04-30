@@ -46,6 +46,7 @@ en:
         summary_title: Reinstatement details
       withdrawal_details:
         summary_title: Withdrawal details
+        withdrawal_date: "%{date} (date of deferral)"
         withdraw_date_label: Date of withdrawal
         withdraw_reason_label: Reason for withdrawal
         reasons: &withdrawal_reasons
@@ -293,6 +294,9 @@ en:
           no_disability: "They shared that they’re not disabled"
       reinstatement:
         heading: When did the trainee return?
+      withdrawal_date:
+        deferral_notice_html: We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">%{date}</span> as their withdrawal date.
+        deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
       withdrawal_reasons:
         headings:
           withdrawal_date: When did the trainee withdraw?

@@ -48,26 +48,43 @@ describe WithdrawalForm, type: :model do
   end
 
   describe "#fields" do
-    let(:params) do
-      {
-        "day" => "11",
-        "month" => "11",
-        "year" => "1963",
-        "date_string" => "other",
-        "withdraw_reason" => WithdrawalReasons::HEALTH_REASONS,
-        "additional_withdraw_reason" => "",
-      }
+    context "with params" do
+      let(:params) do
+        {
+          "day" => "11",
+          "month" => "11",
+          "year" => "1963",
+          "date_string" => "other",
+          "withdraw_reason" => WithdrawalReasons::HEALTH_REASONS,
+          "additional_withdraw_reason" => "",
+        }
+      end
+
+      it "combines the data from params with the existing trainee data" do
+        expect(subject.fields).to match({
+          date_string: "other",
+          day: "11",
+          month: "11",
+          year: "1963",
+          withdraw_reason: WithdrawalReasons::HEALTH_REASONS,
+          additional_withdraw_reason: "",
+        })
+      end
     end
 
-    it "combines the data from params with the existing trainee data" do
-      expect(subject.fields).to match({
-        date_string: "other",
-        day: "11",
-        month: "11",
-        year: "1963",
-        withdraw_reason: WithdrawalReasons::HEALTH_REASONS,
-        additional_withdraw_reason: "",
-      })
+    context "with deferral" do
+      let(:trainee) { create(:trainee, :deferred) }
+
+      it "hydrates the date values from the deferral date" do
+        expect(subject.fields).to match(
+          a_hash_including(
+            date_string: "other",
+            day: trainee.defer_date.day,
+            month: trainee.defer_date.month,
+            year: trainee.defer_date.year,
+          ),
+        )
+      end
     end
   end
 

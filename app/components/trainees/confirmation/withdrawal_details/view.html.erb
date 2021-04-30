@@ -6,7 +6,7 @@
     {
       key: t("components.confirmation.withdrawal_details.withdraw_date_label"),
       value: withdraw_date,
-      action: govuk_link_to(t(:change), trainee_withdrawal_path(data_model.trainee)),
+      action: deferred ? nil : govuk_link_to(t(:change), trainee_withdrawal_path(data_model.trainee)),
     },
     {
       key: t("components.confirmation.withdrawal_details.withdraw_reason_label"),
