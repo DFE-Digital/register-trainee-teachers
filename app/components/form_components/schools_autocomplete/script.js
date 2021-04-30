@@ -25,9 +25,11 @@ const tryUpdateStatusMessage = (schools) => {
 }
 
 const findSchools = (query, populateResults) => {
+  const encodedQuery = encodeURIComponent(query)
+
   statusMessage = 'Loading...' // Shared state
 
-  window.fetch(`/api/schools?query=${query}&lead_school=true`)
+  window.fetch(`/api/schools?query=${encodedQuery}&lead_school=true`)
     .then(response => response.json())
     .then(guard)
     .then(mapToSchools)
