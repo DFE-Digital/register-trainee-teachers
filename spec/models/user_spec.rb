@@ -8,14 +8,14 @@ describe User do
       expect(subject).to validate_presence_of(:first_name)
       expect(subject).to validate_presence_of(:last_name)
       expect(subject).to validate_presence_of(:email)
-      expect(subject).to validate_presence_of(:dttp_id).with_message("You must enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949")
+      expect(subject).to validate_presence_of(:dttp_id).with_message("Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949")
     end
 
     context "system_admin" do
       before { subject.system_admin = true }
 
       it "allows empty dttp_id" do
-        expect(subject).not_to validate_presence_of(:dttp_id).with_message("You must enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949")
+        expect(subject).not_to validate_presence_of(:dttp_id).with_message("Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949")
       end
     end
   end
@@ -24,7 +24,7 @@ describe User do
     subject { create(:user) }
 
     it "validates uniqueness" do
-      expect(subject).to validate_uniqueness_of(:dttp_id).case_insensitive.with_message("You must enter a unique DTTP ID")
+      expect(subject).to validate_uniqueness_of(:dttp_id).case_insensitive.with_message("Enter a unique DTTP ID")
     end
   end
 

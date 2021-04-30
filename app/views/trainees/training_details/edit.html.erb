@@ -6,7 +6,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_for(@training_details_form, url: trainee_training_details_path(@trainee), local: true) do |f| %>
+    <%= register_form_with(model: @training_details_form, url: trainee_training_details_path(@trainee), method: :put, local: true) do |f| %>
+
+      <%= f.govuk_error_summary %>
+
       <h1 class="govuk-heading-l"><%= t("views.forms.training_details.title") %></h1>
 
       <%= f.govuk_date_field :commencement_date, legend: {

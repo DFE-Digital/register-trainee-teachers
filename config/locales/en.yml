@@ -107,7 +107,7 @@ en:
           ethnic_group:
             edit: What is their ethnic group?
           ethnic_background:
-            edit: "Which of the following best describes their %{background} background?"
+            edit: Which of the following best describes their %{background} background?
           disability_disclosure:
             edit: Has the trainee shared that they are disabled?
           disabilities:
@@ -232,7 +232,7 @@ en:
         not_started: Start section
         in_progress: Continue section
   views:
-    all_records: "All records"
+    all_records: All records
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
@@ -269,7 +269,7 @@ en:
         on_what_date: On what date?
         for_example: For example
         continue: Continue
-        cancel_and_return_to_record: "Cancel and return to record"
+        cancel_and_return_to_record: Cancel and return to record
       diversity_disclosures:
         label_names:
           diversity_disclosed: "Yes"
@@ -292,8 +292,8 @@ en:
           other_ethnic_group: Describe their ethnic background (optional)
       disability_disclosures:
         labels:
-          disabled: "Yes, they shared that they’re disabled"
-          no_disability: "They shared that they’re not disabled"
+          disabled: Yes, they shared that they’re disabled
+          no_disability: They shared that they’re not disabled
       reinstatement:
         heading: When did the trainee return?
       withdrawal_date:
@@ -373,7 +373,7 @@ en:
   trainees:
     not_supported_route:
       heading: Other routes not supported
-      body: "%{route} is the only route currently spported by this service. More routes will be added soon."
+      body: "%{route} is the only route currently supported by this service. More routes will be added soon."
       bullet_desc: "You can:"
       go_back: go back and change your answer
       use_dttp: use DTTP to register a different route
@@ -407,7 +407,7 @@ en:
   activerecord:
     attributes:
       trainee:
-        trainee_id: "Trainee ID"
+        trainee_id: Trainee ID
         training_routes:
           assessment_only: Assessment only
           early_years_assessment_only: Early years (assessment only)
@@ -429,108 +429,108 @@ en:
       models:
         trainee:
           attributes:
-            training_route: You must select a type of training
+            training_route: Select a type of training
         degree:
           attributes:
             uk_degree:
-              blank: "You must select a UK degree"
+              blank: Select a type of degree
             non_uk_degree:
-              blank: "You must select a Non-UK degree"
+              blank: Select a comparable degree
             locale_code:
-              blank: "You must select whether this is a UK or a non-UK degree"
+              blank: Select whether this is a UK or a non-UK degree
             subject:
-              blank: "You must select a subject"
+              blank: Select a degree subject
             institution:
-              blank: "You must select a institution"
+              blank: Select an institution
             grade:
-              blank: "You must select a grade"
+              blank: Select a degree grade
             graduation_year:
-              blank: "You must set a graduation year"
-              future: "You must enter a graduation year that is in the past, for example 2014"
-              invalid: "You must enter a valid graduation year"
+              blank: Enter a graduation year
+              future: Enter a graduation year that is in the past, for example 2014
+              invalid: Enter a valid graduation year
             country:
-              blank: "You must select the country where the degree was obtained"
+              blank: Select the country where the degree was obtained
         provider:
           attributes:
             name:
-              blank: You must enter a provider name
+              blank: Enter a provider name
             dttp_id:
-              invalid: You must enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e
-              taken: You must enter a unique DTTP ID
+              invalid: Enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e
+              taken: Enter a unique DTTP ID
             code:
-              invalid: You must enter a provider code in the correct format, like 12Y
+              invalid: Enter a provider code in the correct format, like 12Y
         user:
           attributes:
             first_name:
-              blank: "You must enter the user's first name"
+              blank: Enter the user's first name
             last_name:
-              blank: "You must enter the user's last name"
+              blank: Enter the user's last name
             email:
-              blank: "You must enter the user's email address"
+              blank: Enter the user's email address
             dttp_id:
-              invalid: "You must enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949"
-              taken: You must enter a unique DTTP ID
+              invalid: Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949
+              taken: Enter a unique DTTP ID
   activemodel:
     errors:
       validators:
         postcode:
-          invalid: "You must enter a valid postcode (for example, BN1 1AA)"
+          invalid: Enter a valid postcode (for example, BN1 1AA)
         email:
-          invalid: "You must enter an email address in the correct format, like name@example.com"
+          invalid: Enter an email address in the correct format, like name@example.com
         autocomplete:
-          subject: "Select a subject from the list - your entry is not recognised"
-          additional_age_range: "Select an age range from the list - your entry is not recognised"
-          institution: "Select an institution from the list - your entry is not recognised"
-          other_nationality1: &nationality "Select a nationality from the list - your entry is not recognised"
+          subject: Select a subject from the list - your entry is not recognised
+          additional_age_range: Select an age range from the list - your entry is not recognised
+          institution: Select an institution from the list - your entry is not recognised
+          other_nationality1: &nationality Select a nationality from the list - your entry is not recognised
           other_nationality2: *nationality
           other_nationality3: *nationality
       models:
         contact_details_form:
           attributes:
             locale_code:
-              blank: "You must select where the trainee lives"
+              blank: Select where the trainee lives
             international_address:
-              blank: "You must enter a home address outside the UK"
+              blank: Enter a home address outside the UK
             address_line_one:
-              blank: "You must enter the first line of the address"
+              blank: Enter the first line of the address
             town_city:
-              blank: "You must enter a town or city"
+              blank: Enter a town or city
             postcode:
-              blank: "You must enter a postcode"
+              blank: Enter a postcode
             email:
-              blank: "You must enter an email address"
-              invalid: "You must enter an email address in the correct format, like name@example.com"
+              blank: Enter an email address
+              invalid: Enter an email address in the correct format, like name@example.com
         deferral_form:
           attributes:
             date_string:
-              blank: You must choose a deferral date
+              blank: Choose a deferral date
             date:
-              blank: You must enter a deferral date
-              invalid: You must enter a valid deferral date
+              blank: Enter a deferral date
+              invalid: Enter a valid deferral date
         degrees_form:
           attributes:
             degree_ids:
-              empty_degrees: You must have at least one degree
+              empty_degrees: Add at least one degree
         diversities/disclosure_form:
           attributes:
             diversity_disclosure:
-              blank: "You must select Yes or No"
+              blank: Select Yes or No
         diversities/ethnic_group_form:
           attributes:
             ethnic_group:
-              blank: "You must select an option"
+              blank: Select an option
         diversities/ethnic_background_form:
           attributes:
             ethnic_background:
-              blank: "You must select an option"
+              blank: Select an option
         diversities/disability_disclosure_form:
           attributes:
             disability_disclosure:
-              blank: "You must select an option"
+              blank: Select an option
         diversities/disability_detail_form:
           attributes:
             disability_ids:
-              empty_disabilities: You must select at least one disability
+              empty_disabilities: Select at least one disability
         diversities/flow_validator:
           attributes:
             disclosure_section:
@@ -546,107 +546,107 @@ en:
         outcome_date_form:
           attributes:
             date_string:
-              blank: You must choose an outcome date
+              blank: Choose an outcome date
             date:
-              blank: You must enter an outcome date
-              invalid: You must enter a valid outcome date
+              blank: Enter an outcome date
+              invalid: Enter a valid outcome date
         personal_details_form:
           attributes:
             first_names:
-              blank: "You must enter a first name"
+              blank: Enter a first name
             last_name:
-              blank: "You must enter a last name"
+              blank: Enter a last name
             date_of_birth:
-              blank: "You must enter a date of birth"
-              invalid: "You must enter a valid date"
-              future: "You must enter a date of birth that is in the past, for example 31 3 1980"
+              blank: Enter a date of birth
+              invalid: Enter a valid date
+              future: Enter a date of birth that is in the past, for example 31 3 1980
               hint_html: For example, 31 3 %{year}
             gender:
-              blank: "You must select a gender"
+              blank: Select a gender
             nationality_names:
-              empty_nationalities: You must select at least one nationality
+              empty_nationalities: Select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list
         course_details_form:
           attributes:
             subject:
-              blank: "You must select a subject"
+              blank: Select a subject
             main_age_range:
-              blank: "You must select an age range"
+              blank: Select an age range
             additional_age_range:
-              blank: "You must select an age range"
+              blank: Select an age range
             course_start_date:
-              blank: "You must enter a course start date"
-              future: "You must enter a course start date that is not as far in the future"
-              invalid: "You must enter a valid course start date"
-              too_old: "You must enter a valid course start date"
+              blank: Enter a course start date
+              future: Enter a course start date that is not as far in the future
+              invalid: Enter a valid course start date
+              too_old: Enter a valid course start date
               hint_html: For example, 11 3 %{year}
             course_end_date:
-              blank: "You must enter a course end date"
-              future: "You must enter a course end date that is not as far in the future"
-              invalid: "You must enter a valid course end date"
-              too_old: "You must enter a valid course end date"
-              before_or_same_as_start_date: "The course end date must be after the start date"
+              blank: Enter a course end date
+              future: Enter a course end date that is not as far in the future
+              invalid: Enter a valid course end date
+              too_old: Enter a valid course end date
+              before_or_same_as_start_date: The course end date must be after the start date
               hint_html: For example, 11 3 %{year}
         publish_course_details_form:
           attributes:
             code:
-              blank: You must select a course
+              blank: Select a course
         reinstatement_form:
           attributes:
             date_string:
-              blank: You must choose a date of return
+              blank: Choose a date of return
             date:
-              blank: You must enter a date of return
-              invalid: You must enter a valid date of return
+              blank: Enter a date of return
+              invalid: Enter a valid date of return
               hint_html: For example, 15 6 %{year}
         trn_submission_form:
           attributes:
             trainee:
-              incomplete: You must complete all sections before submitting for TRN
+              incomplete: Complete all sections before submitting for TRN
         withdrawal_form:
           attributes:
             date_string:
-              blank: You must choose a withdrawal date
+              blank: Choose a withdrawal date
             date:
-              blank: You must enter a withdrawal date
-              invalid: You must enter a valid withdrawal date
+              blank: Enter a withdrawal date
+              invalid: Enter a valid withdrawal date
             additional_withdraw_reason:
-              blank: You must enter a reason
+              blank: Enter a reason
             withdraw_reason:
-              invalid: You must choose a reason
+              invalid: Choose a reason
         trainee_id_form:
           attributes:
             trainee_id:
-                blank: You must enter a trainee ID
+                blank: Enter a trainee ID
                 max_char_exceeded: Your entry must not exceed 100 characters
         trainee_start_date_form:
           attributes:
             commencement_date:
-                blank: You must enter a start date
-                invalid: You must enter a valid start date
+                blank: Enter a start date
+                invalid: Enter a valid start date
         training_details_form:
           attributes:
             commencement_date:
-              blank: You must enter a start date
-              invalid: You must enter a valid start date
+              blank: Enter a start date
+              invalid: Enter a valid start date
             trainee_id:
-              blank: You must enter a trainee ID
+              blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
         lead_school_form:
           attributes:
             lead_school_id:
-              blank: You must choose a school
+              blank: Choose a school
             results_search_again_query:
-              blank: You much enter a search term
+              blank: Enter a search term
             no_results_search_again_query:
-              blank: You much enter a search term
+              blank: Enter a search term
         employing_school_form:
           attributes:
             employing_school_id:
-              blank: You must choose a school
+              blank: Choose a school
   page_headings:
-    start_page: "Register trainee teachers"
+    start_page: Register trainee teachers
   system_admin:
     validation_errors:
       index:
@@ -657,8 +657,8 @@ en:
   api:
     schools:
       errors:
-        bad_request: "The query param needs to be at least 3 characters"
+        bad_request: The query param needs to be at least 3 characters
   exports:
     trainees:
-      award_recommended: "Recommended for %{award_type}"
-      award_given: "Awarded %{award_type}"
+      award_recommended: Recommended for %{award_type}
+      award_given: Awarded %{award_type}

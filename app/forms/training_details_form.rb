@@ -3,13 +3,12 @@
 class TrainingDetailsForm < TraineeForm
   attr_accessor :trainee_id, :day, :month, :year
 
+  validate :commencement_date_valid
   validates :trainee_id, presence: true,
                          length: {
                            maximum: 100,
                            message: I18n.t("activemodel.errors.models.training_details_form.attributes.trainee_id.max_char_exceeded"),
                          }
-
-  validate :commencement_date_valid
 
   after_validation :update_trainee_attributes, if: -> { errors.empty? }
 

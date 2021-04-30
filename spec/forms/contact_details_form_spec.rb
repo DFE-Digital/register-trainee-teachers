@@ -34,7 +34,7 @@ describe ContactDetailsForm, type: :model do
       end
 
       it "returns 2 errors about locale code and email" do
-        expect(subject.errors.attribute_names).to match(%i[email locale_code])
+        expect(subject.errors.attribute_names).to match(%i[locale_code email])
       end
     end
 
