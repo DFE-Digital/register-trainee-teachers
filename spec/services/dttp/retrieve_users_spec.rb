@@ -4,6 +4,12 @@ require "rails_helper"
 
 module Dttp
   describe RetrieveUsers do
+    describe "::FILTER" do
+      it "has correct filter params" do
+        expect(described_class::FILTER).to match({ "$filter" => "dfe_portaluser eq true and statecode eq 0" })
+      end
+    end
+
     describe "#call" do
       let(:options) { { headers: RetrieveUsers::HEADERS } }
       let(:path) { RetrieveUsers::DEFAULT_PATH }

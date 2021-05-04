@@ -22,8 +22,10 @@ module Dttp
       ].join(","),
     }.freeze
 
+    ACTIVE_STATECODE = 0
+
     FILTER = {
-      "$filter" => "dfe_portaluser eq true",
+      "$filter" => "dfe_portaluser eq true and statecode eq #{ACTIVE_STATECODE}",
     }.freeze
 
     QUERY = FILTER.merge(SELECT).to_query
