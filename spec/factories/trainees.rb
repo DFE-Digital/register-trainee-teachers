@@ -202,7 +202,7 @@ FactoryBot.define do
 
     trait :with_lead_school do
       school_direct_salaried
-      association :lead_school, factory: %i[school lead_school]
+      association :lead_school, factory: %i[school lead]
     end
 
     trait :with_related_courses do

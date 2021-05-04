@@ -52,7 +52,7 @@ private
   end
 
   def and_a_number_of_lead_schools_exist
-    @lead_schools = create_list(:school, 5, :lead_school)
+    @lead_schools = create_list(:school, 5, :lead)
   end
 
   def and_i_visit_the_trainee_edit_lead_school_page
