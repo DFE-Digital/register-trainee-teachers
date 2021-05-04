@@ -25,6 +25,8 @@ const tryUpdateStatusMessage = (schools) => {
 }
 
 const findSchools = (query, populateResults) => {
+  idElement.value = ''
+
   const encodedQuery = encodeURIComponent(query)
 
   statusMessage = 'Loading...' // Shared state
@@ -47,11 +49,11 @@ const suggestionTemplate = (value) => {
     return
   }
 
-  const name = `<div class="govuk-!-font-weight-bold">${value.name}</div>`
+  const name = `<div>${value.name}</div>`
 
-  const hint = `URN ${value.urn}, ${value.town}, ${value.postcode}`
+  const hints = [`URN ${value.urn}`, value.town, value.postcode].filter((item) => item)
 
-  return `${name}<span class="autocomplete__option-hint">${hint}</span>`
+  return `${name}<span class="autocomplete__option--hint">${hints.join(', ')}</span>`
 }
 
 const renderTemplate = {
