@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class TaskList::View < GovukComponent::Base
-  include ViewComponent::Slotable
-
-  with_slot :row, collection: true, class_name: "Row"
+  renders_many :rows, "Row"
 
   def any_row_has_status?
     rows.any? { |r| r.status.present? }

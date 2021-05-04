@@ -9,8 +9,7 @@ RSpec.describe TaskList::View do
 
   before(:each) do
     render_inline(TaskList::View.new) do |component|
-      component.slot(
-        :row,
+      component.row(
         task_name: "some key",
         path: "some_path",
         status: status,

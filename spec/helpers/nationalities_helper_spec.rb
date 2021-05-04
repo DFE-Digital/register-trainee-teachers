@@ -17,8 +17,8 @@ describe NationalitiesHelper do
         )
       end
 
-      context "english" do
-        let(:name) { "english" }
+      context "british" do
+        let(:name) { "british" }
 
         it "returns formatted versions of given nationality records" do
           expect(format_nationalities([nationality])).to include(expected_nationality)
@@ -43,7 +43,7 @@ describe NationalitiesHelper do
     end
 
     context "with description: false" do
-      let(:name) { "english" }
+      let(:name) { "british" }
 
       let(:expected_nationality) do
         OpenStruct.new(
@@ -58,7 +58,7 @@ describe NationalitiesHelper do
     end
 
     context "with empty_option: true" do
-      let(:name) { "english" }
+      let(:name) { "british" }
       let(:empty_option) { OpenStruct.new(id: "", name: "") }
 
       let(:expected_nationality) do

@@ -4,7 +4,7 @@
       key: "Placements",
       value: placements,
     }]) do |component| %>
-  <% component.with(:header_actions) do %>
+  <% component.header_actions do %>
     <%= govuk_link_to "Manage placements", trainee_path(trainee) %>
   <% end %>
 <% end %>

@@ -7,11 +7,11 @@
   },
 ) do |component| %>
 
-  <% component.with(:body) do %>
+  <% component.body do %>
     <p class="govuk-body">We use some essential cookies to make this service work.</p>
   <% end %>
 
-  <% component.with(:actions) do %>
+  <% component.actions do %>
     <%= govuk_link_to("View cookies", cookie_policy_path) %>
 
     <button type="button" class="govuk-button govuk-cookie-banner__hide" data-qa="govuk-cookie-banner__hide">
