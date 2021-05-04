@@ -3,6 +3,7 @@
 class RetrieveAwardJob < ApplicationJob
   queue_as :default
   retry_on Dttp::RetrieveAward::HttpError
+  include NotifyOnTimeout
 
   class TraineeAttributeError < StandardError; end
 
@@ -13,6 +14,8 @@ class RetrieveAwardJob < ApplicationJob
       trainee.award!
     elsif continue_polling?(trainee)
       self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee)
+    else
+      send_message_to_slack(trainee, self.class.name)
     end
   end
 

@@ -3,6 +3,7 @@
 class RetrieveTrnJob < ApplicationJob
   queue_as :default
   retry_on Dttp::RetrieveTrn::HttpError
+  include NotifyOnTimeout
 
   class TraineeAttributeError < StandardError; end
 
@@ -13,6 +14,8 @@ class RetrieveTrnJob < ApplicationJob
       trainee.trn_received!(trn)
     elsif continue_polling?(trainee)
       self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee)
+    else
+      send_message_to_slack(trainee, self.class.name)
     end
   end
 

@@ -43,15 +43,17 @@ describe RetrieveAwardJob do
       end
     end
 
-    context "after the configured days of polling" do
+    context "timing out after after 4 days of polling" do
       let(:trainee) { create(:trainee, recommended_for_award_at: configured_limit.days.ago) }
-      let(:configured_limit) { 2 }
+      let(:configured_limit) { 4 }
 
       before do
         allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_limit)
+        allow(SlackNotifierService).to receive(:call)
       end
 
-      it "doesn't queue another job after 2 days have passed with no QTS" do
+      it "doesn't queue another job after 4 days have passed with no QTS" do
+        expect(SlackNotifierService).to receive(:call)
         described_class.perform_now(trainee)
         expect(RetrieveAwardJob).to_not have_been_enqueued
       end
