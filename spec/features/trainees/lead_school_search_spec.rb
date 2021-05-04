@@ -14,7 +14,7 @@ RSpec.feature "LeadSchoolSearch", type: :feature do
     and_i_fill_in_my_lead_school
     and_i_click_the_first_item_in_the_list
     and_i_continue
-    then_i_am_redirected_to_the_confirm_training_details_page
+    then_i_am_redirected_to_the_confirm_lead_school_page
   end
 
   scenario "choosing a lead school without javascript" do
@@ -67,8 +67,8 @@ private
     @my_lead_school ||= @lead_schools.sample
   end
 
-  def then_i_am_redirected_to_the_confirm_training_details_page
-    expect(confirm_training_details_page).to be_displayed(id: trainee.slug)
+  def then_i_am_redirected_to_the_confirm_lead_school_page
+    expect(confirm_schools_page).to be_displayed(id: trainee.slug)
   end
 
   def then_i_am_redirected_to_the_lead_schools_page_filtered_by_my_query

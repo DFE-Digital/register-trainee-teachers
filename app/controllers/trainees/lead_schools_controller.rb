@@ -26,7 +26,7 @@ module Trainees
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @lead_school_form.public_send(save_strategy)
-        redirect_to trainee_training_details_confirm_path(trainee)
+        redirect_to trainee_lead_school_confirm_path(trainee)
       else
         render :edit
       end

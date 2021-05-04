@@ -22,6 +22,10 @@ module Features
       @confirm_training_details_page ||= PageObjects::Trainees::ConfirmTrainingDetails.new
     end
 
+    def confirm_schools_page
+      @confirm_schools_page ||= PageObjects::Trainees::ConfirmSchoolDetails.new
+    end
+
     def record_page
       @record_page ||= PageObjects::Trainees::Record.new
     end
