@@ -10,6 +10,7 @@ module ConfirmDetailsHelper
       "trainee-id" => "trainee_trainee_id_confirm_path",
       "trainee-start-date" => "trainee_start_date_confirm_path",
       "training-details" => "trainee_training_details_confirm_path",
+      "lead-school" => "trainee_lead_school_confirm_path",
     }
 
     public_send(routes[section_key.dasherize], trainee)
