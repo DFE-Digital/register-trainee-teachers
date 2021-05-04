@@ -635,7 +635,7 @@ en:
         lead_school_form:
           attributes:
             lead_school_id:
-              blank: Choose a school
+              blank: Enter a school unique reference number (URN), name or postcode
             results_search_again_query:
               blank: Enter a search term
             no_results_search_again_query:
@@ -643,7 +643,7 @@ en:
         employing_school_form:
           attributes:
             employing_school_id:
-              blank: Choose a school
+              blank: Enter a school unique reference number (URN), name or postcode
             results_search_again_query:
               blank: Enter a search term
             no_results_search_again_query:
