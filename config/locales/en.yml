@@ -639,19 +639,19 @@ en:
         lead_school_form:
           attributes:
             lead_school_id:
-              blank: Choose a school
+              blank: Enter a school unique reference number (URN), name or postcode
             results_search_again_query:
-              blank: Enter a search term
+              blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
-              blank: Enter a search term
+              blank: Enter a school unique reference number (URN), name or postcode
         employing_school_form:
           attributes:
             employing_school_id:
-              blank: Choose a school
+              blank: Enter a school unique reference number (URN), name or postcode
             results_search_again_query:
-              blank: Enter a search term
+              blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
-              blank: Enter a search term
+              blank: Enter a school unique reference number (URN), name or postcode
   page_headings:
     start_page: Register trainee teachers
   system_admin:
