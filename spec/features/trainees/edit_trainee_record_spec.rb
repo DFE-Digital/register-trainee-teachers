@@ -7,21 +7,29 @@ feature "edit trainee record", type: :feature do
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists_with_a_degree
-    when_i_visit_the_trainee_record_page
   end
 
   describe "about trainee view" do
     scenario "viewing the trainee's details" do
+      given_a_trainee_exists_with_a_degree
+      when_i_visit_the_trainee_record_page
       then_i_see_the_trainee_name
       then_i_see_the_trn_status
       then_i_see_the_record_details
       then_i_see_the_course_details
     end
+
+    scenario "viewing the trainee's school details,", "feature_routes.school_direct_salaried": true do
+      given_a_trainee_exists(:school_direct_salaried)
+      when_i_visit_the_trainee_record_page
+      then_i_see_the_school_details
+    end
   end
 
   describe "personal details and education view" do
     scenario "viewing the trainee's personal details and education" do
+      given_a_trainee_exists_with_a_degree
+      when_i_visit_the_trainee_record_page
       and_i_visit_the_personal_details
       then_i_see_the_personal_details
       then_i_see_the_contact_details
@@ -73,5 +81,9 @@ feature "edit trainee record", type: :feature do
 
   def then_i_see_the_degree_details
     expect(record_page).to have_degree_detail
+  end
+
+  def then_i_see_the_school_details
+    expect(record_page).to have_school_detail
   end
 end

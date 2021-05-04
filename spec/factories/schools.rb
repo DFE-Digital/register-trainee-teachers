@@ -16,5 +16,9 @@ FactoryBot.define do
       open_date { Faker::Date.in_date_period }
       close_date { Faker::Date.in_date_period }
     end
+
+    trait :lead do
+      lead_school { true }
+    end
   end
 end

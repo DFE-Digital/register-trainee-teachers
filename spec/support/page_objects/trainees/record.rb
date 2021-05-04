@@ -17,6 +17,7 @@ module PageObjects
 
       section :record_detail, PageObjects::Sections::Summaries::RecordDetail, ".record-details"
       section :course_detail, PageObjects::Sections::Summaries::CourseDetail, ".course-details"
+      section :school_detail, PageObjects::Sections::Summaries::SchoolDetail, ".school-details"
 
       section :personal_detail, PageObjects::Sections::Summaries::PersonalDetail, ".personal-details"
       section :contact_detail, PageObjects::Sections::Summaries::ContactDetail, ".contact-details"
