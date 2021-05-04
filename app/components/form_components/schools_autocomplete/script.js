@@ -49,11 +49,9 @@ const suggestionTemplate = (value) => {
     return
   }
 
-  const name = `<div>${value.name}</div>`
+  const hints = [`URN ${value.urn}`, value.town, value.postcode].filter(Boolean)
 
-  const hints = [`URN ${value.urn}`, value.town, value.postcode].filter((item) => item)
-
-  return `${name}<span class="autocomplete__option--hint">${hints.join(', ')}</span>`
+  return `${value.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
 }
 
 const renderTemplate = {
