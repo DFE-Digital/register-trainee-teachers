@@ -122,8 +122,6 @@ en:
         degrees:
           edit: Degree details
           new: Add undergraduate degree
-        lead_schools:
-          edit: Lead school
         outcome_date:
           edit: When did they meet the standards?
           confirm: Check outcome details
@@ -162,6 +160,7 @@ en:
           date_updated: Date updated
           last_name: Last name
         lead_schools:
+          edit: Lead school
           index: Select the lead school
         employing_schools:
           index: Select the employing school

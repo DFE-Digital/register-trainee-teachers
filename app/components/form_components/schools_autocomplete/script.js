@@ -38,12 +38,24 @@ const findSchools = (query, populateResults) => {
     .catch(console.log)
 }
 
-const suggestionTemplate = (value) => {
+const inputTemplate = (value) => {
   return value && value.name
 }
 
+const suggestionTemplate = (value) => {
+  if (!value) {
+    return
+  }
+
+  const name = `<div class="govuk-!-font-weight-bold">${value.name}</div>`
+
+  const hint = `URN ${value.urn}, ${value.town}, ${value.postcode}`
+
+  return `${name}<span class="autocomplete__option-hint">${hint}</span>`
+}
+
 const renderTemplate = {
-  inputValue: suggestionTemplate,
+  inputValue: inputTemplate,
   suggestion: suggestionTemplate
 }
 

@@ -11,7 +11,7 @@ module Api
         lead_schools_only: params[:lead_school],
       )
 
-      render json: { schools: @schools.as_json(only: %i[id name]) }
+      render json: { schools: @schools.as_json(only: %i[id name urn town postcode]) }
     end
 
   private
