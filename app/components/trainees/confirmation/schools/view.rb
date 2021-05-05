@@ -2,7 +2,7 @@
 
 module Trainees
   module Confirmation
-    module LeadSchool
+    module Schools
       class View < GovukComponent::Base
         include SummaryHelper
 
@@ -42,8 +42,33 @@ module Trainees
           @lead_school ||= School.where(id: data_model.lead_school_id).first
         end
 
-        def edit_path
-          trainee_lead_schools_path(trainee)
+        def edit_lead_school_path
+          edit_trainee_lead_schools_path(trainee)
+        end
+
+        def employing_school_name
+          return @not_provided_copy if employing_school&.name.blank?
+
+          employing_school.name
+        end
+
+        def employing_school_location
+          return @not_provided_copy if employing_school&.urn.blank?
+
+          ["URN #{employing_school.urn}", employing_school.town, employing_school.postcode].select(&:present?).join(", ")
+        end
+
+        def employing_school_partial
+          tag.p(employing_school_name, class: "govuk-body") +
+            tag.span(employing_school_location, class: "govuk-hint")
+        end
+
+        def employing_school
+          @employing_school ||= School.where(id: data_model.employing_school_id).first
+        end
+
+        def edit_employing_school_path
+          edit_trainee_employing_schools_path(trainee)
         end
       end
     end

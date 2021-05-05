@@ -3,14 +3,14 @@
 require "govuk/components"
 module Trainees
   module Confirmation
-    module LeadSchool
+    module Schools
       class ViewPreview < ViewComponent::Preview
         def default
-          render(Trainees::Confirmation::LeadSchool::View.new(data_model: mock_trainee))
+          render(Trainees::Confirmation::Schools::View.new(data_model: mock_trainee))
         end
 
         def with_no_data
-          render(Trainees::Confirmation::LeadSchool::View.new(data_model: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only], lead_school: mock_school)))
+          render(Trainees::Confirmation::Schools::View.new(data_model: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only], lead_school: mock_school)))
         end
 
       private

@@ -57,8 +57,6 @@ module Trainees
           case trainee_section_key
           when "training_details"
             "trainee start date and ID"
-          when "lead_school"
-            "schools"
           else
             trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
           end
@@ -86,7 +84,7 @@ module Trainees
         trainee_training_details_path,
         trainee_trainee_id_path,
         trainee_start_date_path,
-        trainee_lead_school_path,
+        trainee_schools_path,
       ].map { |path| path.split("/").last }
     end
 

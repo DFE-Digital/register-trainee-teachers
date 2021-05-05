@@ -35,7 +35,7 @@ module Trainees
   private
 
     def redirect_url
-      trainee.requires_employing_school? ? edit_trainee_employing_schools_path(trainee) : trainee_lead_school_confirm_path(trainee)
+      trainee.requires_employing_school? ? edit_trainee_employing_schools_path(trainee) : trainee_schools_confirm_path(trainee)
     end
 
     def redirect_to_search_page

@@ -405,10 +405,11 @@ en:
 
 
             If the details are wrong for this trainee only, you can edit them here.
-      lead_school:
+      schools:
         view:
           summary_title: Schools
           lead_school: Lead school
+          employing_school: Employing school
     confirm_publish_course:
       edit:
         confirm_course: Confirm course

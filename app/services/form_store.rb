@@ -23,6 +23,7 @@ class FormStore
     degrees
     lead_school
     employing_school
+    schools
   ].freeze
 
   class << self

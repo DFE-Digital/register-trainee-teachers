@@ -16,5 +16,5 @@ class Progress
   attribute :course_details, :boolean
   attribute :training_details, :boolean
   attribute :placement_details, :boolean
-  attribute :lead_school, :boolean
+  attribute :schools, :boolean
 end
