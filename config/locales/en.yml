@@ -230,6 +230,7 @@ en:
         course_details: Course details
         training_details: Training details
         placement_details: Placement details
+        lead_school: School details
       statuses:
         not_started: not started
         in_progress: not marked as complete
