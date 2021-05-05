@@ -40,7 +40,7 @@ module Trainees
       other_grade
     ].freeze
 
-    delegate :user, :created_at, :auditable_type, :audited_changes, to: :audit
+    delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, to: :audit
 
     def initialize(audit:)
       @audit = audit
@@ -91,12 +91,20 @@ module Trainees
     end
 
     def state_change_title
+      I18n.t("components.timeline.titles.trainee.#{state_change_action}")
+    end
+
+    def state_change_action
       change_from, change_to = audited_changes["state"].map { |change| Trainee.states.key(change) }
 
       if change_from == "deferred" && change_to != "withdrawn"
-        I18n.t("components.timeline.titles.trainee.reinstated")
+        "reinstated"
+      elsif change_to == "recommended_for_award"
+        "recommended_for_#{auditable.award_type.downcase}"
+      elsif change_to == "awarded"
+        "#{auditable.award_type.downcase}_awarded"
       else
-        I18n.t("components.timeline.titles.trainee.#{change_to}")
+        change_to
       end
     end
 

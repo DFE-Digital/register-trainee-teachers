@@ -61,6 +61,46 @@ module Trainees
         end
       end
 
+      context "with a `recommended_for_award` state change audit" do
+        before do
+          %i[submit_for_trn! receive_trn! recommend_for_award!].each { |m| trainee.public_send(m) }
+        end
+
+        context "with a QTS trainee" do
+          it "returns a 'Recommended for QTS' timeline event" do
+            expect(subject.title).to eq(t("components.timeline.titles.trainee.recommended_for_qts"))
+          end
+        end
+
+        context "with an EYTS trainee" do
+          let(:trainee) { create(:trainee, :early_years_undergrad) }
+
+          it "returns a 'Recommended for EYTS' timeline event" do
+            expect(subject.title).to eq(t("components.timeline.titles.trainee.recommended_for_eyts"))
+          end
+        end
+      end
+
+      context "with an `awarded` state change audit" do
+        before do
+          %i[submit_for_trn! receive_trn! recommend_for_award! award!].each { |m| trainee.public_send(m) }
+        end
+
+        context "with a QTS trainee" do
+          it "returns a 'QTS awarded' timeline event" do
+            expect(subject.title).to eq(t("components.timeline.titles.trainee.qts_awarded"))
+          end
+        end
+
+        context "with an EYTS trainee" do
+          let(:trainee) { create(:trainee, :early_years_undergrad) }
+
+          it "returns a 'EYTS awarded' timeline event" do
+            expect(subject.title).to eq(t("components.timeline.titles.trainee.eyts_awarded"))
+          end
+        end
+      end
+
       context "with an associated audit" do
         let(:degree) { create(:degree, trainee: trainee) }
 
