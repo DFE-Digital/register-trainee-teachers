@@ -160,8 +160,8 @@ ActiveRecord::Schema.define(version: 2021_04_26_162034) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 

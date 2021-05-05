@@ -160,6 +160,7 @@ en:
           date_updated: Date updated
           last_name: Last name
         lead_schools:
+          edit: Lead school
           index: Select the lead school
         employing_schools:
           index: Select the employing school
@@ -410,6 +411,10 @@ en:
       edit:
         confirm_course: Confirm course
         edit_details: Edit details for this trainee only
+    lead_schools:
+      edit:
+        heading: Lead school
+        hint: Search for a school by its unique reference number (URN), name or postcode
 
   activerecord:
     attributes:

@@ -40,7 +40,7 @@ module Api
           end
 
           it "returns the schools matching the query" do
-            expect(json_response["schools"]).to match([school.as_json])
+            expect(json_response["schools"]).to match([school.as_json(only: %i[id name postcode town urn])])
           end
         end
       end
@@ -66,7 +66,7 @@ module Api
         end
 
         it "returns only lead schools" do
-          expect(json_response["schools"]).to match([lead_school.as_json])
+          expect(json_response["schools"]).to match([lead_school.as_json(only: %i[id name postcode town urn])])
         end
       end
     end

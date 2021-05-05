@@ -22,10 +22,7 @@ class TraineeIdForm < TraineeForm
 private
 
   def compute_fields
-    trainee.attributes
-           .symbolize_keys
-           .slice(:trainee_id)
-           .merge(new_attributes)
+    trainee.attributes.symbolize_keys.slice(:trainee_id).merge(new_attributes)
   end
 
   def update_trainee_id
