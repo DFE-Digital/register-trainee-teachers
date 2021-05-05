@@ -48,12 +48,14 @@ describe Trainee do
 
   context "associations" do
     it { is_expected.to belong_to(:provider) }
+    it { is_expected.to belong_to(:apply_application).optional }
     it { is_expected.to have_many(:degrees).dependent(:destroy) }
     it { is_expected.to have_many(:nationalisations).dependent(:destroy).inverse_of(:trainee) }
     it { is_expected.to have_many(:nationalities).through(:nationalisations) }
     it { is_expected.to have_many(:trainee_disabilities).dependent(:destroy).inverse_of(:trainee) }
     it { is_expected.to have_many(:disabilities).through(:trainee_disabilities) }
     it { is_expected.to belong_to(:lead_school).class_name("School").optional }
+    it { is_expected.to belong_to(:employing_school).class_name("School").optional }
   end
 
   context "validations" do
@@ -149,6 +151,20 @@ describe Trainee do
       it "is delegated to TrainingRouteManager" do
         expect(subject.training_route_manager).to receive(:requires_placement_details?)
         subject.requires_placement_details?
+      end
+    end
+
+    describe "#apply_application?" do
+      subject { trainee.apply_application? }
+
+      context "the trainee has an associated apply application" do
+        let(:trainee) { create(:trainee, :with_apply_application) }
+        it { is_expected.to be true }
+      end
+
+      context "the trainee does not have an associated apply application" do
+        let(:trainee) { create(:trainee) }
+        it { is_expected.to be false }
       end
     end
   end

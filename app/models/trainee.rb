@@ -5,6 +5,7 @@ class Trainee < ApplicationRecord
   include PgSearch::Model
 
   belongs_to :provider
+  belongs_to :apply_application, optional: true
   has_many :degrees, dependent: :destroy
   has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
   has_many :nationalities, through: :nationalisations
@@ -187,5 +188,9 @@ class Trainee < ApplicationRecord
 
   def clear_disabilities
     disabilities.clear
+  end
+
+  def apply_application?
+    apply_application.present?
   end
 end
