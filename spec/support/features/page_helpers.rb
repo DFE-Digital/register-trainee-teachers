@@ -198,6 +198,10 @@ module Features
       @edit_lead_school_page ||= PageObjects::Trainees::EditLeadSchool.new
     end
 
+    def edit_employing_school_page
+      @edit_employing_school_page ||= PageObjects::Trainees::EditEmployingSchool.new
+    end
+
     def accessibility_page
       @accessibility_page ||= PageObjects::Accessibility.new
     end

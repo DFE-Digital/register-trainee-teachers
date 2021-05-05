@@ -8,7 +8,7 @@ module Api
       @schools = SchoolSearch.call(
         query: params[:query],
         limit: params[:limit],
-        lead_schools_only: params[:lead_school],
+        lead_schools_only: lead_schools_only,
       )
 
       render json: { schools: @schools.as_json(only: %i[id name urn town postcode]) }
@@ -22,6 +22,10 @@ module Api
 
     def error_response
       render_json_error(message: I18n.t("api.schools.errors.bad_request"), status: :bad_request)
+    end
+
+    def lead_schools_only
+      ActiveModel::Type::Boolean.new.cast(params[:lead_school])
     end
   end
 end

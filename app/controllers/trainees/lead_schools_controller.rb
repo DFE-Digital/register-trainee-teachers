@@ -26,13 +26,17 @@ module Trainees
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @lead_school_form.public_send(save_strategy)
-        redirect_to trainee_lead_school_confirm_path(trainee)
+        redirect_to redirect_url
       else
         render :edit
       end
     end
 
   private
+
+    def redirect_url
+      trainee.requires_employing_school? ? edit_trainee_employing_schools_path(trainee) : trainee_lead_school_confirm_path(trainee)
+    end
 
     def redirect_to_search_page
       return if params["input-autocomplete"] && params["input-autocomplete"].length < 3

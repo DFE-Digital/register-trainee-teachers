@@ -164,6 +164,7 @@ en:
           index: Select the lead school
         employing_schools:
           index: Select the employing school
+          edit: Employing school
       providers:
         index: Providers
         new: Add a provider
@@ -414,6 +415,10 @@ en:
     lead_schools:
       edit:
         heading: Lead school
+        hint: Search for a school by its unique reference number (URN), name or postcode
+    employing_schools:
+      edit:
+        heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
 
   activerecord:

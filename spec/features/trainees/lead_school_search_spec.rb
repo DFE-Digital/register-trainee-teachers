@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.feature "LeadSchoolSearch", type: :feature do
   before do
     given_i_am_authenticated
-    given_a_school_direct_salaried_trainee_exists
+    given_a_school_direct_tuition_fee_trainee_exists
     and_a_number_of_lead_schools_exist
     and_i_visit_the_trainee_edit_lead_school_page
   end
@@ -31,8 +31,8 @@ RSpec.feature "LeadSchoolSearch", type: :feature do
 
 private
 
-  def given_a_school_direct_salaried_trainee_exists
-    given_a_trainee_exists(:with_lead_school)
+  def given_a_school_direct_tuition_fee_trainee_exists
+    given_a_trainee_exists(:school_direct_tuition_fee, :with_lead_school)
   end
 
   def and_i_fill_in_my_lead_school

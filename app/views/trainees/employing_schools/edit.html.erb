@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.lead_schools.edit", has_errors: @lead_school_form.errors.present?) %>
+<%= render PageTitle::View.new(title: "trainees.employing_schools.edit", has_errors: @employing_school_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -6,20 +6,20 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @lead_school_form, url: trainee_lead_schools_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+    <%= register_form_with model: @employing_school_form, url: trainee_employing_schools_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_text_field(
-        :lead_school_id,
+        :employing_school_id,
         label: { text: t(".heading"), size: 'l', tag: 'h1' },
         hint: { text: t(".hint") },
         name: :'input-autocomplete',
         value: nil,
         'data-field' => "schools-autocomplete"
       ) %>
-      <div id="schools-autocomplete-element" data-only-lead-schools=true></div>
+      <div id="schools-autocomplete-element"></div>
 
-      <%= f.hidden_field :lead_school_id, id: "school-id", value: nil %>
+      <%= f.hidden_field :employing_school_id, id: "school-id", value: nil %>
       <%= f.govuk_submit t("continue") %>
     <% end %>
   </div>
