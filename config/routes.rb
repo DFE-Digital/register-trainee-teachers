@@ -98,7 +98,7 @@ Rails.application.routes.draw do
       resources :lead_schools, only: %i[index], path: "/lead-schools"
       resource :lead_schools, only: %i[update edit], path: "/lead-schools"
       resources :employing_schools, only: %i[index], path: "/employing-schools"
-      resource :employing_schools, only: %i[update], path: "/employing-schools"
+      resource :employing_schools, only: %i[update edit], path: "/employing-schools"
 
       resource :timeline, only: :show
     end

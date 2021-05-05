@@ -7,6 +7,7 @@ features:
   basic_auth: false
   routes:
     school_direct_salaried: true
+    school_direct_tuition_fee: true
 
 environment:
   name: beta

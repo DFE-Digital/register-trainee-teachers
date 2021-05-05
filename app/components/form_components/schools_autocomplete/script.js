@@ -2,7 +2,7 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import { nodeListForEach } from 'govuk-frontend/govuk/common'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
-const idElement = document.getElementById('lead-school-id')
+const idElement = document.getElementById('school-id')
 
 let statusMessage = ' '
 
@@ -24,14 +24,14 @@ const tryUpdateStatusMessage = (schools) => {
   return schools
 }
 
-const findSchools = (query, populateResults) => {
+const findSchools = ({ query, populateResults, onlyLeadSchools }) => {
   idElement.value = ''
 
   const encodedQuery = encodeURIComponent(query)
 
   statusMessage = 'Loading...' // Shared state
 
-  window.fetch(`/api/schools?query=${encodedQuery}&lead_school=true`)
+  window.fetch(`/api/schools?query=${encodedQuery}&lead_school=${onlyLeadSchools ? 'true' : 'false'}`)
     .then(response => response.json())
     .then(guard)
     .then(mapToSchools)
@@ -59,7 +59,7 @@ const renderTemplate = {
   suggestion: suggestionTemplate
 }
 
-const setLeadSchoolHiddenField = (value) => {
+const setSchoolHiddenField = (value) => {
   if (value === undefined) {
     return
   }
@@ -77,9 +77,15 @@ const setupAutoComplete = (form) => {
         element: element,
         id: input.id,
         minLength: 3,
-        source: findSchools,
+        source: (query, populateResults) => {
+          return findSchools({
+            query,
+            populateResults,
+            onlyLeadSchools: element.dataset.onlyLeadSchools
+          })
+        },
         templates: renderTemplate,
-        onConfirm: setLeadSchoolHiddenField,
+        onConfirm: setSchoolHiddenField,
         showAllValues: false,
         tNoResults: () => statusMessage
       })

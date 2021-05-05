@@ -200,11 +200,6 @@ FactoryBot.define do
       additional_withdraw_reason { Faker::Lorem.paragraph }
     end
 
-    trait :with_lead_school do
-      school_direct_salaried
-      association :lead_school, factory: %i[school lead]
-    end
-
     trait :with_related_courses do
       training_route { (TRAINING_ROUTES_FOR_TRAINEE.keys & TRAINING_ROUTES_FOR_COURSE.keys).sample }
 

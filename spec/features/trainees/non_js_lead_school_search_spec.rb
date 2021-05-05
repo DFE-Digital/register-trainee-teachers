@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.feature "Non-JS lead schools search" do
   before do
     given_i_am_authenticated
-    given_a_school_direct_salaried_trainee_exists
+    given_a_school_direct_tuition_fee_trainee_exists
     and_a_number_of_lead_school_exists
     and_i_am_on_the_lead_schools_page_filtered_by_my_query
   end
@@ -26,8 +26,8 @@ RSpec.feature "Non-JS lead schools search" do
 
 private
 
-  def given_a_school_direct_salaried_trainee_exists
-    given_a_trainee_exists(:school_direct_salaried)
+  def given_a_school_direct_tuition_fee_trainee_exists
+    given_a_trainee_exists(:school_direct_tuition_fee)
   end
 
   def and_i_choose_my_lead_school
