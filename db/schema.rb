@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_162034) do
+ActiveRecord::Schema.define(version: 2021_05_05_144011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -255,6 +255,8 @@ ActiveRecord::Schema.define(version: 2021_04_26_162034) do
     t.uuid "dormancy_dttp_id"
     t.bigint "lead_school_id"
     t.bigint "employing_school_id"
+    t.bigint "apply_application_id"
+    t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
@@ -305,6 +307,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_162034) do
   add_foreign_key "nationalisations", "trainees"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
+  add_foreign_key "trainees", "apply_applications"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"

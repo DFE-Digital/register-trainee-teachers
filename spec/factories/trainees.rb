@@ -225,5 +225,9 @@ FactoryBot.define do
     trait :with_employing_school do
       association :employing_school, factory: :school
     end
+
+    trait :with_apply_application do
+      apply_application
+    end
   end
 end
