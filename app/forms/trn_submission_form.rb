@@ -3,19 +3,25 @@
 class TrnSubmissionForm
   include ActiveModel::Model
 
+  class_attribute :form_validators, instance_writer: false, default: {}
+
+  class << self
+    def trn_validator(name, options)
+      form_validators[name] = options
+    end
+  end
+
+  trn_validator :personal_details, form: "PersonalDetailsForm"
+  trn_validator :contact_details, form: "ContactDetailsForm"
+  trn_validator :diversity, form: "Diversities::FormValidator"
+  trn_validator :degrees, form: "DegreesForm"
+  trn_validator :course_details, form: "CourseDetailsForm"
+  trn_validator :training_details, form: "TrainingDetailsForm"
+  trn_validator :lead_school, form: "LeadSchoolForm", if: :requires_schools?
+
+  delegate :requires_schools?, to: :trainee
+
   validate :submission_ready
-
-  FORM_VALIDATORS =
-    {
-      personal_details: PersonalDetailsForm,
-      contact_details: ContactDetailsForm,
-      diversity: Diversities::FormValidator,
-      degrees: DegreesForm,
-      course_details: CourseDetailsForm,
-      training_details: TrainingDetailsForm,
-    }.freeze
-
-  PROGRESS_KEYS = FORM_VALIDATORS.keys.freeze
 
   def initialize(trainee:)
     @trainee = trainee
@@ -26,7 +32,7 @@ class TrnSubmissionForm
   end
 
   def all_sections_complete?
-    PROGRESS_KEYS.all? do |progress_key|
+    progress_keys.all? do |progress_key|
       progress_is_completed?(progress_key)
     end
   end
@@ -36,7 +42,7 @@ private
   attr_reader :trainee
 
   def validator(section)
-    FORM_VALIDATORS[section]
+    form_validators[section][:form].constantize
   end
 
   def submission_ready
@@ -51,5 +57,16 @@ private
 
   def progress_is_completed?(progress_key)
     progress_service(progress_key).completed?
+  end
+
+  def progress_keys
+    keys = []
+    form_validators.each do |validator, options|
+      next if (condition = options[:if]) && !public_send(condition)
+
+      keys << validator
+    end
+
+    keys
   end
 end

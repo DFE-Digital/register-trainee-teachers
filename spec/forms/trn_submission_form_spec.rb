@@ -30,10 +30,20 @@ describe TrnSubmissionForm, type: :model do
         expect(subject.valid?).to be true
         expect(subject.errors).to be_empty
       end
+
+      context "requires school" do
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, :completed, progress: progress.merge(lead_school: true)) }
+
+        it "is valid" do
+          expect(subject.valid?).to be true
+          expect(subject.errors).to be_empty
+        end
+      end
     end
 
     context "when any section is invalid or incomplete" do
       subject { described_class.new(trainee: trainee) }
+
       let(:progress) do
         {
           degrees: nil,
@@ -44,7 +54,14 @@ describe TrnSubmissionForm, type: :model do
           training_details: true,
         }
       end
+
       include_examples "error"
+
+      context "requires school but incomplete" do
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, progress: progress.merge(lead_school: false)) }
+
+        include_examples "error"
+      end
     end
 
     context "with empty progress" do

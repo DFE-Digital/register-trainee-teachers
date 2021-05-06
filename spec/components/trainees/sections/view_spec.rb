@@ -56,6 +56,10 @@ module Trainees
         include_examples renders_incomplete_section, :degrees, :not_started
         include_examples renders_incomplete_section, :course_details, :not_started
         include_examples renders_incomplete_section, :training_details, :not_started
+
+        context "requires school" do
+          include_examples renders_incomplete_section, :lead_school, :not_started
+        end
       end
 
       context "trainee in progress" do
@@ -67,6 +71,12 @@ module Trainees
         include_examples renders_incomplete_section, :degrees, :in_progress
         include_examples renders_incomplete_section, :course_details, :in_progress
         include_examples renders_incomplete_section, :training_details, :in_progress
+
+        context "requires school" do
+          let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
+
+          include_examples renders_incomplete_section, :lead_school, :in_progress
+        end
       end
 
       context "trainee completed" do
@@ -80,6 +90,12 @@ module Trainees
         include_examples renders_confirmation, :degrees
         include_examples renders_confirmation, :course_details
         include_examples renders_confirmation, :training_details
+
+        context "requires school" do
+          let(:trainee) { create(:trainee, :with_lead_school, :completed) }
+
+          include_examples renders_confirmation, :lead_school
+        end
       end
 
       def expected_title(section, status)
@@ -121,6 +137,10 @@ module Trainees
             not_started: "edit_trainee_training_details_path",
             in_progress: "trainee_training_details_confirm_path",
           },
+          lead_school: {
+            not_started: "edit_trainee_lead_school_path",
+            in_progress: "trainee_lead_school_confirm_path",
+          },
         }[section][status]
       end
 
@@ -132,6 +152,7 @@ module Trainees
           degrees: Trainees::Confirmation::Degrees::View,
           course_details: Trainees::Confirmation::CourseDetails::View,
           training_details: Trainees::Confirmation::TrainingDetails::View,
+          lead_school: Trainees::Confirmation::LeadSchool::View,
         }[section]
       end
     end

@@ -40,7 +40,7 @@ module Pages
         end
 
         def trainee_with_all_sections_not_started
-          Trainee.new(id: 1000)
+          Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
         end
 
         def trainee_with_all_sections_in_progress
@@ -56,6 +56,7 @@ module Pages
                       international_address: "international_address",
                       ethnic_background: "ethnic_background",
                       additional_ethnic_background: "additional_ethnic_background",
+                      training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
                       subject: "subject",
                       degrees: [Degree.new(id: 1)])
         end
@@ -66,6 +67,7 @@ module Pages
           Trainee.new(id: 1000, trainee_id: "trainee_id",
                       first_names: "first_names",
                       last_name: "last_name",
+                      training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
                       address_line_one: "address_line_one",
                       address_line_two: "address_line_two",
                       town_city: "town_city",

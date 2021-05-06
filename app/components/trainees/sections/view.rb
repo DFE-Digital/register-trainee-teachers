@@ -44,6 +44,7 @@ module Trainees
           degrees: Trainees::Confirmation::Degrees::View,
           course_details: Trainees::Confirmation::CourseDetails::View,
           training_details: Trainees::Confirmation::TrainingDetails::View,
+          lead_school: Trainees::Confirmation::LeadSchool::View,
         }[section]
       end
 
@@ -72,6 +73,10 @@ module Trainees
           training_details: {
             not_started: "edit_trainee_training_details_path",
             in_progress: "trainee_training_details_confirm_path",
+          },
+          lead_school: {
+            not_started: "edit_trainee_lead_school_path",
+            in_progress: "trainee_lead_school_confirm_path",
           },
         }[section][status]
       end
