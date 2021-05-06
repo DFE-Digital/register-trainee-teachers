@@ -7,7 +7,6 @@ describe Provider do
     it "validates presence" do
       expect(subject).to validate_presence_of(:name).with_message("Enter a provider name")
       expect(subject).to validate_presence_of(:dttp_id).with_message("Enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e")
-      expect(subject).to validate_presence_of(:code).with_message("Enter a provider code in the correct format, like 12Y")
     end
 
     it "validates format" do
