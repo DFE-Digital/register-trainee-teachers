@@ -130,6 +130,10 @@ FactoryBot.define do
       training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
     end
 
+    trait :early_years_undergrad do
+      training_route { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+    end
+
     trait :school_direct_tuition_fee do
       training_route { TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] }
     end
