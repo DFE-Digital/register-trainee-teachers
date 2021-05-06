@@ -1,14 +1,1 @@
-<%= render SummaryCard::View.new(trainee: trainee, title: summary_title,
-                                 heading_level: 2,
-                                 rows: [
-      {
-        key: t(".lead_school"),
-        value: lead_school_partial,
-        action: govuk_link_to(t("change"), edit_lead_school_path),
-      },
-      {
-        key: t(".employing_school"),
-        value: employing_school_partial,
-        action: govuk_link_to(t("change"), edit_employing_school_path),
-      },
-    ]) %>
+<%= render SummaryCard::View.new(trainee: trainee, title: summary_title, heading_level: 2, rows: summary_rows) %>

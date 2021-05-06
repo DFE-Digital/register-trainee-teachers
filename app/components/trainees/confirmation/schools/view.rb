@@ -70,6 +70,26 @@ module Trainees
         def edit_employing_school_path
           edit_trainee_employing_schools_path(trainee)
         end
+
+        def summary_rows
+          rows = [
+            {
+              key: t(".lead_school"),
+              value: lead_school_partial,
+              action: govuk_link_to(t("change"), edit_lead_school_path),
+            },
+          ]
+
+          if trainee.requires_employing_school?
+            rows << {
+              key: t(".employing_school"),
+              value: employing_school_partial,
+              action: govuk_link_to(t("change"), edit_employing_school_path),
+            }
+          end
+
+          rows
+        end
       end
     end
   end
