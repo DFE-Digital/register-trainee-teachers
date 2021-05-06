@@ -11,7 +11,7 @@ module Trainees
          diversity
          course_details
          training_details
-         lead_school].each do |section|
+         schools].each do |section|
         define_method "continue_sections_#{section}" do
           trainee = continue_sections_trainee(section)
           trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
@@ -67,7 +67,7 @@ module Trainees
       end
 
       def training_route(section)
-        return :school_direct_salaried if section == :lead_school
+        return :school_direct_salaried if section == :schools
 
         :assessment_only
       end
