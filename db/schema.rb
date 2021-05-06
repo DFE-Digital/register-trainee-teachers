@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_144011) do
+ActiveRecord::Schema.define(version: 2021_05_05_144359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 2021_05_05_144011) do
     t.string "course_length", null: false
     t.integer "qualification", null: false
     t.integer "route", null: false
-    t.string "summary", null: false
     t.integer "level", null: false
+    t.string "summary", null: false
     t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
     t.index ["provider_id"], name: "index_courses_on_provider_id"
   end
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_144011) do
     t.uuid "dttp_id"
     t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.string "ukprn"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 
