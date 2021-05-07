@@ -35,7 +35,7 @@ module Trainees
       def form_klass
         case section
         when :schools
-          LeadSchoolForm
+          Schools::LeadSchoolForm
         else
           "#{section.to_s.camelcase}Form".constantize
         end

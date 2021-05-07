@@ -9,10 +9,10 @@ module Schools
     describe "validations" do
       context "with a school_direct_tuition_fee trainee", 'feature_routes.school_direct_tuition_fee': true do
         let(:trainee) { build(:trainee, :school_direct_tuition_fee) }
-        let(:lead_school_form) { instance_double(LeadSchoolForm) }
+        let(:lead_school_form) { instance_double(Schools::LeadSchoolForm) }
 
         before do
-          expect(LeadSchoolForm).to receive(:new).and_return(lead_school_form)
+          expect(Schools::LeadSchoolForm).to receive(:new).and_return(lead_school_form)
         end
 
         context "when LeadSchoolForm is valid" do
@@ -42,12 +42,12 @@ module Schools
 
       context "with a school_direct_salaried trainee", 'feature_routes.school_direct_salaried': true do
         let(:trainee) { build(:trainee, :school_direct_salaried) }
-        let(:lead_school_form) { instance_double(LeadSchoolForm) }
-        let(:employing_school_form) { instance_double(EmployingSchoolForm) }
+        let(:lead_school_form) { instance_double(Schools::LeadSchoolForm) }
+        let(:employing_school_form) { instance_double(Schools::EmployingSchoolForm) }
 
         before do
-          expect(LeadSchoolForm).to receive(:new).and_return(lead_school_form)
-          expect(EmployingSchoolForm).to receive(:new).and_return(employing_school_form)
+          expect(Schools::LeadSchoolForm).to receive(:new).and_return(lead_school_form)
+          expect(Schools::EmployingSchoolForm).to receive(:new).and_return(employing_school_form)
         end
 
         context "when LeadSchoolForm is valid" do
