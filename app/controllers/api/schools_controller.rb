@@ -5,16 +5,20 @@ module Api
     def index
       return error_response if invalid_query?
 
-      @schools = SchoolSearch.call(
-        query: params[:query],
-        limit: params[:limit],
-        lead_schools_only: lead_schools_only,
-      )
+      @schools = SchoolSearch.call(args)
 
       render json: { schools: @schools.as_json(only: %i[id name urn town postcode]) }
     end
 
   private
+
+    def args
+      {
+        query: params[:query],
+        limit: params[:limit],
+        lead_schools_only: lead_schools_only,
+      }.compact
+    end
 
     def invalid_query?
       params[:query].present? && params[:query].length < 3
