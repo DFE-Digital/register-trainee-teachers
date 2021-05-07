@@ -25,7 +25,7 @@ module Trainees
           @employing_school ||= School.where(id: data_model.employing_school_id).first
         end
 
-        private
+      private
 
         def change_paths(school_type)
           {

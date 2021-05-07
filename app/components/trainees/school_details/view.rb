@@ -13,7 +13,7 @@ module Trainees
         @employing_school = trainee.employing_school
       end
 
-      private
+    private
 
       def change_paths(school_type)
         {
