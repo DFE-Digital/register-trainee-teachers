@@ -45,7 +45,7 @@ Rails.application.routes.draw do
       resources :confirm_publish_course, only: %i[edit update], path: "confirm-publish-course"
 
       resource :course_details, concerns: :confirmable, only: %i[edit update], path: "/course-details"
-      resource :lead_school, concerns: :confirmable, only: %i[edit update], path: "/lead-school"
+      resource :schools, concerns: :confirmable, only: %i[edit update], path: "/schools"
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resource :trainee_id, concerns: :confirmable, only: %i[edit update], path: "/trainee-id"
       resource :start_date, concerns: :confirmable, only: %i[edit update], path: "/trainee-start-date"

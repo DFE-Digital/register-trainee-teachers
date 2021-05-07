@@ -33,7 +33,12 @@ module Trainees
     private
 
       def form_klass
-        "#{section.to_s.camelcase}Form".constantize
+        case section
+        when :schools
+          LeadSchoolForm
+        else
+          "#{section.to_s.camelcase}Form".constantize
+        end
       end
 
       def confirmation_view
@@ -44,7 +49,7 @@ module Trainees
           degrees: Trainees::Confirmation::Degrees::View,
           course_details: Trainees::Confirmation::CourseDetails::View,
           training_details: Trainees::Confirmation::TrainingDetails::View,
-          lead_school: Trainees::Confirmation::LeadSchool::View,
+          schools: Trainees::Confirmation::Schools::View,
         }[section]
       end
 
@@ -74,9 +79,9 @@ module Trainees
             not_started: "edit_trainee_training_details_path",
             in_progress: "trainee_training_details_confirm_path",
           },
-          lead_school: {
-            not_started: "edit_trainee_lead_school_path",
-            in_progress: "trainee_lead_school_confirm_path",
+          schools: {
+            not_started: "edit_trainee_lead_schools_path",
+            in_progress: "trainee_schools_confirm_path",
           },
         }[section][status]
       end

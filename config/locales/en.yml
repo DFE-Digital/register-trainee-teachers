@@ -231,6 +231,7 @@ en:
         training_details: Training details
         placement_details: Placement details
         lead_school: School details
+        schools: Schools
       statuses:
         not_started: not started
         in_progress: not marked as complete
@@ -405,10 +406,11 @@ en:
 
 
             If the details are wrong for this trainee only, you can edit them here.
-      lead_school:
+      schools:
         view:
           summary_title: Schools
           lead_school: Lead school
+          employing_school: Employing school
     confirm_publish_course:
       edit:
         confirm_course: Confirm course

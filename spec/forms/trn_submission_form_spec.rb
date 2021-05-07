@@ -32,7 +32,7 @@ describe TrnSubmissionForm, type: :model do
       end
 
       context "requires school" do
-        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, :completed, progress: progress.merge(lead_school: true)) }
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, :completed, progress: progress.merge(schools: true)) }
 
         it "is valid" do
           expect(subject.valid?).to be true
@@ -58,7 +58,7 @@ describe TrnSubmissionForm, type: :model do
       include_examples "error"
 
       context "requires school but incomplete" do
-        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, progress: progress.merge(lead_school: false)) }
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, progress: progress.merge(schools: false)) }
 
         include_examples "error"
       end

@@ -58,7 +58,7 @@ module Trainees
         include_examples renders_incomplete_section, :training_details, :not_started
 
         context "requires school" do
-          include_examples renders_incomplete_section, :lead_school, :not_started
+          include_examples renders_incomplete_section, :schools, :not_started
         end
       end
 
@@ -75,7 +75,7 @@ module Trainees
         context "requires school" do
           let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
 
-          include_examples renders_incomplete_section, :lead_school, :in_progress
+          include_examples renders_incomplete_section, :schools, :in_progress
         end
       end
 
@@ -94,7 +94,7 @@ module Trainees
         context "requires school" do
           let(:trainee) { create(:trainee, :with_lead_school, :completed) }
 
-          include_examples renders_confirmation, :lead_school
+          include_examples renders_confirmation, :schools
         end
       end
 
@@ -137,9 +137,9 @@ module Trainees
             not_started: "edit_trainee_training_details_path",
             in_progress: "trainee_training_details_confirm_path",
           },
-          lead_school: {
-            not_started: "edit_trainee_lead_school_path",
-            in_progress: "trainee_lead_school_confirm_path",
+          schools: {
+            not_started: "edit_trainee_lead_schools_path",
+            in_progress: "trainee_schools_confirm_path",
           },
         }[section][status]
       end
@@ -152,7 +152,7 @@ module Trainees
           degrees: Trainees::Confirmation::Degrees::View,
           course_details: Trainees::Confirmation::CourseDetails::View,
           training_details: Trainees::Confirmation::TrainingDetails::View,
-          lead_school: Trainees::Confirmation::LeadSchool::View,
+          schools: Trainees::Confirmation::Schools::View,
         }[section]
       end
     end
