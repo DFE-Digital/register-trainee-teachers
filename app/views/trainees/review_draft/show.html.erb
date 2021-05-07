@@ -72,16 +72,11 @@
 
     <%= render TaskList::View.new(classes: "record-setup") do |component|
       if show_publish_courses?(@trainee)
-        form = PublishCourseDetailsForm.new(@trainee)
+        form = ValidatePublishCourseForm.new(@trainee)
         component.row(
           task_name: "Course details",
           path: edit_trainee_publish_course_details_path(@trainee),
-          confirm_path: lambda {
-            edit_trainee_confirm_publish_course_path(
-              id: form.code,
-              trainee_id: @trainee.to_param,
-            )
-          },
+          confirm_path: trainee_course_details_confirm_path(@trainee),
           classes: "course-details",
           status: ProgressService.call(
             validator: form,
