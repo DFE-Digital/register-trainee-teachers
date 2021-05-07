@@ -114,12 +114,15 @@
 
       if @trainee.requires_schools?
         component.row(
-            task_name: "Schools",
-            path: edit_trainee_lead_schools_path(@trainee),
-            confirm_path: edit_trainee_lead_schools_path(@trainee),
-            classes: "school-details",
-            status: "not started",
-          )
+          task_name: "Schools",
+          path: edit_trainee_lead_schools_path(@trainee),
+          confirm_path: edit_trainee_lead_schools_path(@trainee),
+          classes: "school-details",
+          status: ProgressService.call(
+            validator: Schools::FormValidator.new(@trainee),
+            progress_value: @trainee.progress.schools,
+          ).status,
+        )
       end
 
       if @trainee.requires_placement_details?

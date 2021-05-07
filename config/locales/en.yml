@@ -653,7 +653,7 @@ en:
             trainee_id:
               blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
-        lead_school_form:
+        schools/lead_school_form:
           attributes:
             lead_school_id:
               blank: Enter a school unique reference number (URN), name or postcode
@@ -661,7 +661,7 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
-        employing_school_form:
+        schools/employing_school_form:
           attributes:
             employing_school_id:
               blank: Enter a school unique reference number (URN), name or postcode
@@ -669,6 +669,12 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
+        schools/form_validator:
+          attributes:
+            lead_school_section:
+              not_valid: The lead school section is not valid for this trainee
+            employing_school_section:
+              not_valid: The employing school is not valid for this trainee
   page_headings:
     start_page: Register trainee teachers
   system_admin:

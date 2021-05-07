@@ -9,15 +9,15 @@ module Trainees
     helper_method :query
 
     def index
-      @employing_school_form = EmployingSchoolForm.new(trainee)
+      @employing_school_form = Schools::EmployingSchoolForm.new(trainee)
     end
 
     def edit
-      @employing_school_form = EmployingSchoolForm.new(trainee)
+      @employing_school_form = Schools::EmployingSchoolForm.new(trainee)
     end
 
     def update
-      @employing_school_form = EmployingSchoolForm.new(trainee, params: trainee_params, user: current_user)
+      @employing_school_form = Schools::EmployingSchoolForm.new(trainee, params: trainee_params, user: current_user)
 
       if @employing_school_form.searching_again? && @employing_school_form.valid?
         return redirect_to trainee_employing_schools_path(@trainee, query: query)
@@ -49,8 +49,8 @@ module Trainees
     end
 
     def trainee_params
-      params.fetch(:employing_school_form, {})
-            .permit(:employing_school_id, *EmployingSchoolForm::NON_TRAINEE_FIELDS)
+      params.fetch(:schools_employing_school_form, {})
+            .permit(:employing_school_id, *Schools::EmployingSchoolForm::NON_TRAINEE_FIELDS)
     end
 
     def query

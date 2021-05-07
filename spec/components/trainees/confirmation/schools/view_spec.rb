@@ -18,7 +18,6 @@ module Trainees
 
         describe "lead school" do
           subject { component.find(".govuk-summary-list__row.lead-school .govuk-summary-list__value") }
-
           it "renders" do
             expect(subject).to have_text(trainee.lead_school.name)
             expect(subject).to have_text(trainee.lead_school.urn)
