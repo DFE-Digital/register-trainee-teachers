@@ -17,7 +17,7 @@ class TrnSubmissionForm
   trn_validator :degrees, form: "DegreesForm"
   trn_validator :course_details, form: "CourseDetailsForm"
   trn_validator :training_details, form: "TrainingDetailsForm"
-  trn_validator :schools, form: "Schools::LeadSchoolForm", if: :requires_schools?
+  trn_validator :schools, form: "Schools::FormValidator", if: :requires_schools?
 
   delegate :requires_schools?, to: :trainee
 
