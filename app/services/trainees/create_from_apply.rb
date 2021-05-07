@@ -112,7 +112,7 @@ module Trainees
     end
 
     def course
-      @course ||= Course.find_by(code: raw_course["course_code"], provider: provider)
+      @course ||= Course.find_by(code: raw_course["course_code"], accredited_body_code: provider.code)
     end
 
     def provider

@@ -5,13 +5,13 @@ module TeacherTrainingApi
     include ServicePattern
 
     def initialize(subject:)
-      @attrs = subject["attributes"]
+      @attrs = subject[:attributes]
     end
 
     def call
       return unless code
 
-      subject.update!(name: attrs["name"])
+      subject.update!(name: attrs[:name])
     end
 
   private
@@ -23,7 +23,7 @@ module TeacherTrainingApi
     end
 
     def code
-      @code ||= attrs["code"]
+      @code ||= attrs[:code]
     end
   end
 end

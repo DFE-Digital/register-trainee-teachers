@@ -6,24 +6,24 @@ module TeacherTrainingApi
 
     class Error < StandardError; end
 
-    def initialize(provider:)
-      @provider = provider
+    DEFAULT_PATH = "/courses?filter[findable]=true&include=accredited_body,provider"
+
+    def initialize(request_uri: nil)
+      @request_uri = request_uri.presence || DEFAULT_PATH
     end
 
     def call
+      response = Client.get(request_uri)
+
       if response.code != 200
         raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
       end
 
-      JSON(response.body)["data"]
+      JSON(response.body, symbolize_names: true)
     end
 
   private
 
-    attr_reader :provider
-
-    def response
-      @response ||= Client.get("/recruitment_cycles/#{Settings.current_recruitment_cycle_year}/providers/#{provider.code}/courses")
-    end
+    attr_reader :request_uri
   end
 end

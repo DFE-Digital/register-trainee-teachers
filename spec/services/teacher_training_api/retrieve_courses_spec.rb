@@ -5,18 +5,18 @@ require "rails_helper"
 module TeacherTrainingApi
   describe RetrieveCourses do
     describe "#call" do
-      let(:provider) { create(:provider) }
-      let(:path) { "/recruitment_cycles/2021/providers/#{provider.code}/courses" }
+      let(:path) { "/courses?filter[findable]=true&include=accredited_body,provider" }
 
       before do
         allow(Client).to receive(:get).with(path).and_return(response)
       end
 
       context "when the response is success" do
-        let(:response) { double(code: 200, body: ApiStubs::TeacherTrainingApi.courses) }
+        let(:response) { double(code: 200, body: ApiStubs::TeacherTrainingApi.courses.to_json) }
+        let(:expected_courses) { ApiStubs::TeacherTrainingApi.course }
 
         it "returns the courses in full" do
-          expect(described_class.call(provider: provider)).to eq JSON(response.body)["data"]
+          expect(described_class.call).to match(ApiStubs::TeacherTrainingApi.courses)
         end
       end
 
@@ -28,7 +28,7 @@ module TeacherTrainingApi
 
         it "raises a Error error with the response body as the message" do
           expect {
-            described_class.call(provider: provider)
+            described_class.call
           }.to raise_error(TeacherTrainingApi::RetrieveCourses::Error, "status: #{status}, body: #{body}, headers: #{headers}")
         end
       end

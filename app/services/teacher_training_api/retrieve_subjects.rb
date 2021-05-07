@@ -11,7 +11,7 @@ module TeacherTrainingApi
         raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
       end
 
-      JSON(response.body)["data"]
+      JSON(response.body, symbolize_names: true)[:data]
     end
 
   private
