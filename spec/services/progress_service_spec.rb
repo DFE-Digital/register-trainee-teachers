@@ -4,8 +4,11 @@ require "spec_helper"
 
 describe ProgressService do
   describe "#status" do
+    let(:trainee_stub) { instance_double(Trainee, apply_application?: false) }
+
     let(:validator_stub) do
-      OpenStruct.new(
+      double(
+        trainee: trainee_stub,
         valid?: false,
         fields: { first_name: nil },
       )
@@ -21,26 +24,39 @@ describe ProgressService do
       end
     end
 
-    context "when started but not completed" do
+    context "when started" do
       before do
         validator_stub.fields[:first_name] = "jon"
       end
 
-      it "returns an 'in progress' status" do
-        expect(subject.status).to eq(Progress::STATUSES[:in_progress])
-      end
-    end
-
-    context "when completed" do
-      let(:progress_value) { true }
-
-      before do
-        allow(validator_stub).to receive(:valid?).and_return(true)
-        validator_stub.fields[:first_name] = "jon"
+      context "not completed" do
+        it "returns an 'in progress' status" do
+          expect(subject.status).to eq(Progress::STATUSES[:in_progress])
+        end
       end
 
-      it "returns a 'completed' status" do
-        expect(subject.status).to eq(Progress::STATUSES[:completed])
+      context "and in review" do
+        let(:trainee_stub) { instance_double(Trainee, apply_application?: true) }
+
+        before do
+          allow(validator_stub).to receive(:valid?).and_return(true)
+        end
+
+        it "returns a 'review' status" do
+          expect(subject.status).to eq(Progress::STATUSES[:review])
+        end
+      end
+
+      context "and completed" do
+        let(:progress_value) { true }
+
+        before do
+          allow(validator_stub).to receive(:valid?).and_return(true)
+        end
+
+        it "returns a 'completed' status" do
+          expect(subject.status).to eq(Progress::STATUSES[:completed])
+        end
       end
     end
   end

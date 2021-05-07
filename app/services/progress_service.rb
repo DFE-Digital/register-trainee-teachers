@@ -9,10 +9,11 @@ class ProgressService
 
   def initialize(validator:, progress_value:)
     @validator = validator
-    @progress_value = progress_value
+    @marked_as_completed = progress_value
   end
 
   def status
+    return Progress::STATUSES[:review] if review?
     return Progress::STATUSES[:in_progress] if in_progress?
     return Progress::STATUSES[:completed] if completed?
 
@@ -27,11 +28,19 @@ class ProgressService
     started? && !completed?
   end
 
+  def review?
+    in_progress? && is_apply_application?
+  end
+
   def completed?
-    @validator.valid? && progress_value
+    @validator.valid? && marked_as_completed
   end
 
 private
 
-  attr_reader :validator, :progress_value
+  attr_reader :validator, :marked_as_completed
+
+  def is_apply_application?
+    validator.trainee.apply_application?
+  end
 end

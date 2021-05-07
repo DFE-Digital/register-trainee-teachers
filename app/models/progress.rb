@@ -6,6 +6,7 @@ class Progress
   STATUSES = {
     not_started: "not started",
     in_progress: "in progress",
+    review: "review",
     completed: "completed",
   }.freeze
 

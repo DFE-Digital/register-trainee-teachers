@@ -34,9 +34,10 @@ private
     def get_status_colour
       {
         # use default white text on dark blue background
-        "completed" => "blue",
-        "in progress" => "grey",
-        "not started" => "grey",
+        Progress::STATUSES[:completed] => "blue",
+        Progress::STATUSES[:in_progress] => "grey",
+        Progress::STATUSES[:review] => "pink",
+        Progress::STATUSES[:not_started] => "grey",
       }.fetch(status, "grey")
     end
 

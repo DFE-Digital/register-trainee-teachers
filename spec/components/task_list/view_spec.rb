@@ -53,6 +53,18 @@ RSpec.describe TaskList::View do
         end
       end
 
+      context "review" do
+        let(:status) { "review" }
+
+        it "renders the correct tag status" do
+          expect(component.find(".govuk-tag").text).to include(status)
+        end
+
+        it "renders the correct tag colour" do
+          expect(component).to have_selector(".govuk-tag--pink")
+        end
+      end
+
       context "not started" do
         let(:status) { "not started" }
 
