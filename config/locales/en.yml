@@ -18,6 +18,12 @@ en:
       sign_out: Sign out
       system_admin: System admin
   components:
+    heading:
+      apply_draft: 
+        registration_data_from_apply: Registration data from Apply
+      draft: 
+        personal_details_and_education: Personal details and education
+        about_their_teaching_training: About their teacher training
     confirmation:
       not_provided: Not provided
       heading: Confirm %{section_title}
@@ -109,7 +115,10 @@ en:
         index: Trainee records (%{total_trainees_count_text})
         paginated_index: Trainee records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
         not_supported_route: Other routes not supported
-        show: Trainee record overview
+        show:
+          overview: Trainee record overview
+          draft: Add a trainee
+          apply_draft: Register a trainee
         diversity:
           disclosures:
             edit: Has the trainee shared diversity information?
@@ -260,6 +269,9 @@ en:
         status_summary:
           submitted_for_trn: This record is pending a TRN
           deferred: This record is deferred
+      show:
+        draft: "Draft record"
+        apply_draft: "Apply draft"
     trainee_summary:
       contact_details:
         heading: Contact Details
