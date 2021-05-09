@@ -45,4 +45,12 @@ module TraineeHelper
   def last_updated_event_for(trainee)
     Trainees::CreateTimeline.call(audits: trainee.own_and_associated_audits).first
   end
+
+  def trainee_draft_title(trainee)
+    name = trainee_name(trainee)
+    title_suffix = "#{name.present? ? " for #{name}" : ''} "
+    translation_prefix = t("views.trainees.show.#{trainee.apply_application? ? 'apply_draft' : 'draft'}")
+
+    "#{translation_prefix}#{title_suffix}"
+  end
 end
