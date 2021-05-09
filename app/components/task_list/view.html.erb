@@ -11,6 +11,10 @@
           html_attributes: { id: row.status_id },
         ) %>
       <% end %>
+      <% if row.hint_text.present? %>
+        <br>
+        <span class="app-task-list__hint govuk-hint"><%= row.hint_text %></span>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>

@@ -14,15 +14,16 @@ private
   end
 
   class Row < GovukComponent::Slot
-    attr_accessor :task_name, :status
+    attr_accessor :task_name, :status, :hint_text
 
-    def initialize(task_name:, path:, confirm_path: nil, status:, classes: [], html_attributes: {})
+    def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, classes: [], html_attributes: {})
       super(classes: classes, html_attributes: html_attributes)
 
       @task_name = task_name
       @path = path
       @confirm_path = confirm_path
       @status = status
+      @hint_text = hint_text
     end
 
     def get_path

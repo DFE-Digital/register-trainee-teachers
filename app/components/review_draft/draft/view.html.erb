@@ -1,0 +1,40 @@
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-l"><%= trainee_draft_title(@trainee) %></span>
+  <%= t("components.page_titles.trainees.show.draft") %>
+</h1>
+
+<%= render Trainees::RouteIndicator::View.new(trainee: @trainee) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+  <h2 class="govuk-heading-m"><%= t("components.heading.draft.personal_details_and_education") %></h2>
+
+    <%= render TaskList::View.new do |component|
+        component.row(**row_helper(@trainee, :personal_details))
+        component.row(**row_helper(@trainee, :contact_details))
+        component.row(**row_helper(@trainee, :diversity_information))
+        component.row(**row_helper(@trainee, :degree))
+      end %>
+
+  <h2 class="govuk-heading-m"><%= t("components.heading.draft.about_their_teaching_training") %></h2>
+
+  <%= render TaskList::View.new(classes: "record-setup") do |component|
+        if show_publish_courses?(@trainee)
+          component.row(**row_helper(@trainee, :publish_course_details))
+        else
+          component.row(**row_helper(@trainee, :course_details))
+        end
+
+        component.row(**row_helper(@trainee, :training_details).except(:hint_text))
+
+        if @trainee.requires_schools?
+          component.row(**row_helper(@trainee, :school_details))
+        end
+
+        if @trainee.requires_placement_details?
+          component.row(**row_helper(@trainee, :placement_details))
+        end
+      end %>
+  </div>
+</div>
