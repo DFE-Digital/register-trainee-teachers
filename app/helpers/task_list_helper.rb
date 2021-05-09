@@ -7,15 +7,10 @@ module TaskListHelper
         {
           task_name: "Course details",
           path: edit_trainee_publish_course_details_path(trainee),
-          confirm_path: lambda {
-            edit_trainee_confirm_publish_course_path(
-              id: PublishCourseDetailsForm.new(trainee).code,
-              trainee_id: trainee.to_param,
-            )
-          },
+          confirm_path: trainee_course_details_confirm_path(trainee),
           classes: "course-details",
           status: ProgressService.call(
-            validator: PublishCourseDetailsForm.new(trainee),
+            validator: ValidatePublishCourseForm.new(trainee),
             progress_value: trainee.progress.course_details,
           ).status,
         },
@@ -46,16 +41,16 @@ module TaskListHelper
         },
 
       placement_details:
-       {
-         task_name: "Placement details",
-         path: review_draft_trainee_path(trainee),
-         confirm_path: review_draft_trainee_path(trainee),
-         classes: "placement-details",
-         status: ProgressService.call(
-           validator: PlacementDetailForm.new(trainee),
-           progress_value: trainee.progress.placement_details,
-         ).status,
-       },
+        {
+          task_name: "Placement details",
+          path: review_draft_trainee_path(trainee),
+          confirm_path: review_draft_trainee_path(trainee),
+          classes: "placement-details",
+          status: ProgressService.call(
+            validator: PlacementDetailForm.new(trainee),
+            progress_value: trainee.progress.placement_details,
+          ).status,
+        },
 
       school_details:
         {
@@ -72,8 +67,8 @@ module TaskListHelper
       trainee_data:
         {
           task_name: "Trainee data",
-          path: "#",
-          confirm_path: "#",
+          path: edit_trainee_apply_trainee_data_path(trainee),
+          confirm_path: edit_trainee_apply_trainee_data_path(trainee),
           classes: "trainee-data",
           status: "review",
         },
@@ -95,6 +90,7 @@ module TaskListHelper
           task_name: "Contact details",
           path: edit_trainee_contact_details_path(trainee),
           confirm_path: trainee_contact_details_confirm_path(trainee),
+          classes: "contact-details",
           status: ProgressService.call(
             validator: ContactDetailsForm.new(trainee),
             progress_value: trainee.progress.contact_details,
