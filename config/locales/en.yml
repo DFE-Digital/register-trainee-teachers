@@ -154,6 +154,8 @@ en:
           show: When did the trainee return?
         confirm_reinstatement:
           show: Check reinstatement details
+        confirm_publish_course:
+          edit: Is this the course you want to add?
         sort_links:
           sort_switcher: Change record sort order
           sort_by: Sort by

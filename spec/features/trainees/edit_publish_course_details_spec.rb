@@ -28,12 +28,13 @@ feature "publish course details", type: :feature, feature_publish_course_details
       then_the_section_should_be(not_started)
     end
 
-    scenario "renders an 'in progress' status when details partially provided" do
+    scenario "renders a 'completed' status when details fully provided" do
       when_i_visit_the_publish_course_details_page
       and_i_select_a_course
       and_i_submit_the_form
+      and_i_confirm_the_course
       and_i_visit_the_review_draft_page
-      then_the_section_should_be(in_progress)
+      then_the_section_should_be(completed)
     end
   end
 
@@ -98,6 +99,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def and_i_submit_the_form
     publish_course_details_page.submit_button.click
+  end
+
+  def and_i_confirm_the_course
+    confirm_publish_course_page.submit_button.click
   end
 
   def and_i_select_another_course_not_listed
