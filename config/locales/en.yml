@@ -9,6 +9,7 @@ en:
   update_record: Update record
   return_home: Return home
   mark_as_completed: I have completed this section
+  mark_as_reviewed: I have reviewed the trainee data
   header:
     items:
       sign_out: Sign out

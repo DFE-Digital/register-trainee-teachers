@@ -206,6 +206,10 @@ module Features
       @accessibility_page ||= PageObjects::Accessibility.new
     end
 
+    def apply_trainee_data_page
+      @apply_trainee_data_pate ||= PageObjects::Trainees::ApplyTraineeData.new
+    end
+
     def cookies_page
       @cookies_page ||= PageObjects::Cookies.new
     end

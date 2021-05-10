@@ -4,7 +4,7 @@
   </h2>
   <div class="govuk-error-summary__body">
     <ul class="govuk-list govuk-error-summary__list">
-      <% @trn_submission_form.errors.messages.map do |_, messages| %>
+      <% @form.errors.messages.map do |_, messages| %>
         <li><%= messages.first %></li>
       <% end %>
     </ul>

@@ -3,16 +3,17 @@
 module Trainees
   module Sections
     class View < ViewComponent::Base
-      attr_accessor :trainee, :section, :trn_submission_form
+      attr_accessor :trainee, :section, :form
 
-      def initialize(trainee:, section:, trn_submission_form:)
+      def initialize(trainee:, section:, form:, show_incomplete: false)
         @trainee = trainee
         @section = section
-        @trn_submission_form = trn_submission_form
+        @form = form
+        @show_incomplete = show_incomplete
       end
 
       def component
-        if status == :completed
+        if status == :completed || show_incomplete?
           # Temporary conditional while we wait for all sections to support save-on-confirm
           confirmation_view_args = if FormStore::FORM_SECTION_KEYS.include?(section)
                                      { data_model: form_klass.new(trainee) }
@@ -31,6 +32,10 @@ module Trainees
       end
 
     private
+
+      def show_incomplete?
+        @show_incomplete
+      end
 
       def form_klass
         case section
@@ -87,11 +92,11 @@ module Trainees
       end
 
       def error
-        @error ||= trn_submission_form.errors.present?
+        @error ||= form.errors.present?
       end
 
       def status
-        @status ||= trn_submission_form.section_status(section)
+        @status ||= form.section_status(section)
       end
 
       def title
