@@ -14,16 +14,16 @@ module Pages
           define_method sections do
             @trainee = trainee(sections)
 
-            @trn_submission_form = TrnSubmissionForm.new(trainee: @trainee)
-            render template: template, locals: { "@trainee": @trainee, "@trn_submission_form": @trn_submission_form }
+            @form = TrnSubmissionForm.new(trainee: @trainee)
+            render template: template, locals: { "@trainee": @trainee, "@form": @form }
           end
 
           define_method "#{sections}_validated" do
             @trainee = trainee(sections)
 
-            @trn_submission_form = TrnSubmissionForm.new(trainee: @trainee)
-            @trn_submission_form.validate
-            render template: template, locals: { "@trainee": @trainee, "@trn_submission_form": @trn_submission_form }
+            @form = TrnSubmissionForm.new(trainee: @trainee)
+            @form.validate
+            render template: template, locals: { "@trainee": @trainee, "@form": @form }
           end
         end
 

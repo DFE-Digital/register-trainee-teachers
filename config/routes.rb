@@ -100,6 +100,8 @@ Rails.application.routes.draw do
       resources :employing_schools, only: %i[index], path: "/employing-schools"
       resource :employing_schools, only: %i[update edit], path: "/employing-schools"
 
+      resource :apply_trainee_data, only: %i[update edit], path: "/apply-trainee-data"
+
       resource :timeline, only: :show
     end
 

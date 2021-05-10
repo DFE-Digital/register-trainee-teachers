@@ -14,28 +14,28 @@ module Trainees
          schools].each do |section|
         define_method "continue_sections_#{section}" do
           trainee = continue_sections_trainee(section)
-          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
+          form = TrnSubmissionForm.new(trainee: trainee)
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, form: form))
         end
 
         define_method "continue_sections_#{section}_validated" do
           trainee = continue_sections_trainee(section)
-          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
-          trn_submission_form.validate
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
+          form = TrnSubmissionForm.new(trainee: trainee)
+          form.validate
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, form: form))
         end
 
         define_method "start_sections_#{section}" do
           trainee = start_sections_trainee(section)
-          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
+          form = TrnSubmissionForm.new(trainee: trainee)
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, form: form))
         end
 
         define_method "start_sections_#{section}_validated" do
           trainee = start_sections_trainee(section)
-          trn_submission_form = TrnSubmissionForm.new(trainee: trainee)
-          trn_submission_form.validate
-          render(Trainees::Sections::View.new(trainee: trainee, section: section, trn_submission_form: trn_submission_form))
+          form = TrnSubmissionForm.new(trainee: trainee)
+          form.validate
+          render(Trainees::Sections::View.new(trainee: trainee, section: section, form: form))
         end
       end
 
