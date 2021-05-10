@@ -54,7 +54,7 @@ private
     trainee.progress.course_details = true
     trainee.assign_attributes({
       subject: subject,
-      age_range: age_range,
+      course_age_range: course&.age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     })

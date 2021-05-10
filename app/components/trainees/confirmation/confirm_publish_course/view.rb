@@ -67,7 +67,9 @@ module Trainees
           course.level&.capitalize
         end
 
-        delegate :age_range, to: :course
+        def age_range
+          age_range_for_summary_view(course.age_range)
+        end
 
         def start_date
           date_for_summary_view(course.start_date)

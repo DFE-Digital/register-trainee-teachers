@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "govuk/components"
+
 module Trainees
   module Confirmation
     module ConfirmPublishCourse
@@ -10,7 +11,8 @@ module Trainees
         end
 
         def with_no_data
-          render(Trainees::Confirmation::ConfirmPublishCourse::View.new(trainee: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only]), course: mock_course))
+          trainee = Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
+          render(Trainees::Confirmation::ConfirmPublishCourse::View.new(trainee: trainee, course: mock_course))
         end
 
       private
@@ -19,7 +21,7 @@ module Trainees
           @mock_trainee ||= Trainee.new(
             id: 1,
             subject: "Primary",
-            age_range: "3 to 11 course",
+            course_age_range: [3, 11],
             course_start_date: Date.new(2020, 0o1, 28),
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           )

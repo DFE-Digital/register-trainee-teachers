@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_085204) do
+ActiveRecord::Schema.define(version: 2021_05_10_132823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -260,6 +260,8 @@ ActiveRecord::Schema.define(version: 2021_05_06_085204) do
     t.bigint "lead_school_id"
     t.bigint "employing_school_id"
     t.bigint "apply_application_id"
+    t.integer "course_min_age"
+    t.integer "course_max_age"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"

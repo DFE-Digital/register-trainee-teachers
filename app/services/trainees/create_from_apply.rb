@@ -43,7 +43,7 @@ module Trainees
         email: raw_contact_details["email"],
         training_route: course&.route,
         subject: course&.name,
-        age_range: course&.age_range,
+        course_age_range: course&.age_range,
         course_start_date: course&.start_date,
         course_end_date: course&.end_date,
         degrees: degrees,
@@ -112,7 +112,7 @@ module Trainees
     end
 
     def course
-      @course ||= Course.find_by(code: raw_course["course_code"], accredited_body_code: provider.code)
+      @course ||= provider.courses.find_by(code: raw_course["course_code"])
     end
 
     def provider

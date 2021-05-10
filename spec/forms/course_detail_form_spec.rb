@@ -16,18 +16,17 @@ describe CourseDetailsForm, type: :model do
   describe "before validation" do
     context "#sanitise_course_dates" do
       let(:params) do
-        { start_day: "1 2",
+        {
+          start_day: "1 2",
           start_month: "1 1",
           start_year: "2 0 2 0",
           end_day: "1 2",
           end_month: "1 1",
-          end_year: "2 0 2 1" }
+          end_year: "2 0 2 1",
+        }
       end
 
-      before do
-        subject.sanitise_course_dates
-        subject.valid?
-      end
+      before { subject.valid? }
 
       it "does not return course date errors" do
         expect(subject.errors[:course_start_date]).to be_empty
@@ -64,8 +63,8 @@ describe CourseDetailsForm, type: :model do
           end
         end
 
-        context "main age range is 3 to 11 course" do
-          let(:main_age_range) { "3 to 11 course" }
+        context "main age range is 3 to 11" do
+          let(:main_age_range) { "3 to 11" }
           it "does not return an error message for main age range" do
             expect(subject.errors[:main_age_range]).to be_empty
           end
@@ -81,16 +80,14 @@ describe CourseDetailsForm, type: :model do
             let(:additional_age_range) { "" }
 
             it "returns an error message for age range is blank" do
-              expect(subject.errors[:additional_age_range]).to include(
-                I18n.t(
-                  "#{translation_key_prefix}.main_age_range.blank",
-                ),
-              )
+              expect(subject.errors[:additional_age_range]).to include(I18n.t(
+                                                                         "#{translation_key_prefix}.main_age_range.blank",
+                                                                       ))
             end
           end
 
-          context "additional age range is 0 - 5 course" do
-            let(:additional_age_range) { "0 - 5 course" }
+          context "additional age range is 0 to 5" do
+            let(:additional_age_range) { "0 to 5" }
 
             it "does not return an error message for additional age range" do
               expect(subject.errors[:additional_age_range]).to be_empty
@@ -240,6 +237,9 @@ describe CourseDetailsForm, type: :model do
       Faker::Date.between(from: valid_start_date + 1.day, to: Time.zone.today)
     end
 
+    let(:min_age) { 11 }
+    let(:max_age) { 19 }
+
     let(:params) do
       { start_day: valid_start_date.day.to_s,
         start_month: valid_start_date.month.to_s,
@@ -247,7 +247,7 @@ describe CourseDetailsForm, type: :model do
         end_day: valid_end_date.day.to_s,
         end_month: valid_end_date.month.to_s,
         end_year: valid_end_date.year.to_s,
-        main_age_range: "11 to 19 course",
+        main_age_range: "#{min_age} to #{max_age}",
         subject: "Psychology" }
     end
 
@@ -262,8 +262,10 @@ describe CourseDetailsForm, type: :model do
         expect { subject.save! }
           .to change { trainee.subject }
           .from(nil).to(params[:subject])
-          .and change { trainee.age_range }
-          .from(nil).to(params[:main_age_range])
+          .and change { trainee.course_min_age }
+          .from(nil).to(min_age)
+          .and change { trainee.course_max_age }
+          .from(nil).to(max_age)
           .and change { trainee.course_start_date }
           .from(nil).to(Date.parse(valid_start_date.to_s))
           .and change { trainee.course_end_date }

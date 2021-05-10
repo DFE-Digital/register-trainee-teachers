@@ -3,68 +3,64 @@
 require "rails_helper"
 
 feature "course details", type: :feature do
-  background do
-    given_i_am_authenticated
-    given_a_trainee_exists
-    given_i_visited_the_review_draft_page
-  end
+  include SummaryHelper
 
-  describe "tracking the progress" do
-    scenario "renders a 'not started' status when no details provided" do
-      review_draft_page.load(id: trainee.slug)
-      and_the_section_should_be(not_started)
-    end
+  background { given_i_am_authenticated }
 
-    scenario "renders an 'in progress' status when details partially provided" do
-      when_i_visit_the_course_details_page
-      and_i_enter_valid_parameters
-      and_i_submit_the_form
-      and_i_confirm_my_details(checked: false, section: course_details_section)
-      then_i_am_redirected_to_the_review_draft_page
-      and_the_section_should_be(in_progress)
-    end
-
-    scenario "renders a completed status when valid details provided" do
-      when_i_visit_the_course_details_page
-      and_i_enter_valid_parameters
-      and_i_submit_the_form
-      and_i_confirm_my_details(section: course_details_section)
-      then_i_am_redirected_to_the_review_draft_page
-      and_the_section_should_be(completed)
-    end
-  end
-
-  describe "editing the course details" do
-    scenario "submitting with valid parameters" do
-      when_i_visit_the_course_details_page
-      and_i_enter_valid_parameters
-      and_i_submit_the_form
-      and_i_confirm_my_details(checked: false, section: course_details_section)
-      then_i_am_redirected_to_the_review_draft_page
-      and_the_course_details_are_updated
-    end
-
+  context "trainee has no existing course details" do
     scenario "submitting with invalid parameters" do
+      given_a_trainee_exists
       when_i_visit_the_course_details_page
       and_i_submit_the_form
       then_i_see_error_messages
     end
+  end
 
-    scenario "submitting with a partial date" do
-      when_i_visit_the_course_details_page
-      and_i_fill_in_start_date_only
-      and_i_submit_the_form
-      then_start_date_is_still_populated
+  context "trainee has existing course details" do
+    background do
+      given_a_trainee_exists_with_course_details
+      given_i_visited_the_review_draft_page
     end
 
-    scenario "submitting with a partial subject/age range", js: true do
-      when_i_visit_the_course_details_page
-      and_i_fill_in_subject_without_selecting_a_value(with: "moose")
-      and_i_fill_in_additional_age_range_without_selecting_a_value(with: "goose")
-      and_i_submit_the_form
-      then_subject_is_populated(with: "moose")
-      then_additional_age_range_is_populated(with: "goose")
-      then_i_see_error_messages_for_partially_submitted_fields
+    describe "tracking the progress" do
+      scenario "renders an 'in progress' status when details partially provided" do
+        when_i_visit_the_course_details_page
+        and_i_enter_valid_parameters
+        and_i_submit_the_form
+        and_i_confirm_my_details(checked: false, section: course_details_section)
+        then_i_am_redirected_to_the_review_draft_page
+        and_the_section_should_be(in_progress)
+      end
+
+      scenario "renders a completed status when valid details provided" do
+        when_i_visit_the_course_details_page
+        and_i_enter_valid_parameters
+        and_i_submit_the_form
+        and_i_confirm_my_details(section: course_details_section)
+        then_i_am_redirected_to_the_review_draft_page
+        and_the_section_should_be(completed)
+      end
+    end
+
+    describe "editing the course details" do
+      scenario "submitting with valid parameters" do
+        when_i_visit_the_course_details_page
+        and_i_enter_valid_parameters
+        and_i_submit_the_form
+        and_i_confirm_my_details(checked: false, section: course_details_section)
+        then_i_am_redirected_to_the_review_draft_page
+        and_the_course_details_are_updated
+      end
+
+      scenario "submitting with a partial subject/age range", js: true do
+        when_i_visit_the_course_details_page
+        and_i_fill_in_subject_without_selecting_a_value(with: "moose")
+        and_i_fill_in_additional_age_range_without_selecting_a_value(with: "goose")
+        and_i_submit_the_form
+        then_subject_is_populated(with: "moose")
+        then_additional_age_range_is_populated(with: "goose")
+        then_i_see_error_messages_for_partially_submitted_fields
+      end
     end
   end
 
@@ -75,16 +71,17 @@ private
   end
 
   def and_i_enter_valid_parameters
-    course_details_page.subject.select(template.subject)
-    course_details_page.set_date_fields("course_start_date", template.course_start_date.strftime("%d/%m/%Y"))
-    course_details_page.set_date_fields("course_end_date", template.course_end_date.strftime("%d/%m/%Y"))
-    age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
+    course_details_page.subject.select(trainee.subject)
+    course_details_page.set_date_fields("course_start_date", trainee.course_start_date.strftime("%d/%m/%Y"))
+    course_details_page.set_date_fields("course_end_date", trainee.course_end_date.strftime("%d/%m/%Y"))
+
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.course_age_range]
 
     if age_range[:option] == :main
-      course_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}").choose
+      course_details_page.public_send("main_age_range_#{trainee.course_age_range.join('_to_')}").choose
     else
       course_details_page.main_age_range_other.choose
-      course_details_page.additional_age_range.select(template.age_range)
+      course_details_page.additional_age_range.select(trainee.course_age_range.join(" to "))
     end
   end
 
@@ -99,30 +96,26 @@ private
   def and_the_course_details_are_updated
     when_i_visit_the_course_details_page
 
-    expect(course_details_page.subject.value).to eq(template.subject)
-    expect(course_details_page.course_start_date_day.value).to eq(template.course_start_date.day.to_s)
-    expect(course_details_page.course_start_date_month.value).to eq(template.course_start_date.month.to_s)
-    expect(course_details_page.course_start_date_year.value).to eq(template.course_start_date.year.to_s)
-    expect(course_details_page.course_end_date_day.value).to eq(template.course_end_date.day.to_s)
-    expect(course_details_page.course_end_date_month.value).to eq(template.course_end_date.month.to_s)
-    expect(course_details_page.course_end_date_year.value).to eq(template.course_end_date.year.to_s)
+    expect(course_details_page.subject.value).to eq(trainee.subject)
+    expect(course_details_page.course_start_date_day.value).to eq(trainee.course_start_date.day.to_s)
+    expect(course_details_page.course_start_date_month.value).to eq(trainee.course_start_date.month.to_s)
+    expect(course_details_page.course_start_date_year.value).to eq(trainee.course_start_date.year.to_s)
+    expect(course_details_page.course_end_date_day.value).to eq(trainee.course_end_date.day.to_s)
+    expect(course_details_page.course_end_date_month.value).to eq(trainee.course_end_date.month.to_s)
+    expect(course_details_page.course_end_date_year.value).to eq(trainee.course_end_date.year.to_s)
 
-    age_range = Dttp::CodeSets::AgeRanges::MAPPING[template.age_range]
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.course_age_range]
 
     if age_range[:option] == :main
-      expect(course_details_page.public_send("main_age_range_#{template.age_range.parameterize(separator: '_')}")).to be_checked
+      expect(course_details_page.public_send("main_age_range_#{trainee.course_age_range.join('_to_')}")).to be_checked
     else
       expect(course_details_page.main_age_range_other).to be_checked
-      expect(course_details_page.additional_age_range.value).to eq(template.age_range)
+      expect(course_details_page.additional_age_range.value).to eq(age_range_for_summary_view(trainee.course_age_range))
     end
   end
 
   def and_the_section_should_be(status)
     expect(review_draft_page.course_details.status.text).to eq(status)
-  end
-
-  def and_i_fill_in_start_date_only
-    course_details_page.set_date_fields("course_start_date", template.course_start_date.strftime("%d/%m/%Y"))
   end
 
   def and_i_fill_in_subject_without_selecting_a_value(with:)
@@ -143,7 +136,7 @@ private
   end
 
   def then_start_date_is_still_populated
-    expect(course_details_page.course_start_date_day.value).to eq(template.course_start_date.day.to_s)
+    expect(course_details_page.course_start_date_day.value).to eq(trainee.course_start_date.day.to_s)
   end
 
   def then_i_see_error_messages
@@ -169,8 +162,8 @@ private
     )
   end
 
-  def template
-    @template ||= build(:trainee, :with_course_details)
+  def given_a_trainee_exists_with_course_details
+    given_a_trainee_exists(:with_course_details)
   end
 
   def then_i_am_redirected_to_the_confirm_page

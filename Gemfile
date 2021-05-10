@@ -85,6 +85,9 @@ gem "activerecord-session_store"
 # End-user application performance monitoring
 gem "skylight"
 
+# Run data migrations alongside schema migrations
+gem "data_migrate"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]

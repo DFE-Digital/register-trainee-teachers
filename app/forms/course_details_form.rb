@@ -15,17 +15,30 @@ class CourseDetailsForm < TraineeForm
     additional_age_range_raw
   ].freeze
 
+  COURSE_DATES = %i[
+    start_day
+    start_month
+    start_year
+    end_day
+    end_month
+    end_year
+  ].freeze
+
   attr_accessor(*FIELDS)
 
   before_validation :sanitise_course_dates
 
   validates :subject, autocomplete: true, presence: true
-  validates :additional_age_range, autocomplete: true, if: -> { main_age_range&.to_sym == :other }
+  validates :additional_age_range, autocomplete: true, if: -> { other_age_range? }
   validate :age_range_valid
   validate :course_start_date_valid
   validate :course_end_date_valid
 
   MAX_END_YEARS = 4
+
+  def course_age_range
+    (other_age_range? ? additional_age_range : main_age_range).split(" to ")
+  end
 
   def course_start_date
     new_date({ year: start_year, month: start_month, day: start_day })
@@ -33,23 +46,6 @@ class CourseDetailsForm < TraineeForm
 
   def course_end_date
     new_date({ year: end_year, month: end_month, day: end_day })
-  end
-
-  def sanitise_course_dates
-    course_dates = %w[start_day
-                      start_month
-                      start_year
-                      end_day
-                      end_month
-                      end_year]
-
-    return if course_dates.any?(&:nil?)
-
-    course_dates.each do |date_attribute|
-      date = "#{date_attribute}="
-      sanitised_date = public_send(date_attribute).to_s.gsub(/\s+/, "")
-      public_send(date, sanitised_date)
-    end
   end
 
   def save!
@@ -62,22 +58,20 @@ class CourseDetailsForm < TraineeForm
     end
   end
 
-  def age_range
-    return additional_age_range if main_age_range.to_sym == :other
-
-    main_age_range
-  end
-
 private
 
   def compute_fields
     compute_attributes_from_trainee.merge(new_attributes)
   end
 
+  def other_age_range?
+    main_age_range&.to_sym == :other
+  end
+
   def update_trainee_attributes
     trainee.assign_attributes({
       subject: subject,
-      age_range: age_range,
+      course_age_range: course_age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     })
@@ -94,10 +88,10 @@ private
       end_year: trainee.course_end_date&.year,
     }
 
-    age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.age_range]
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.course_age_range]
 
     if age_range.present?
-      attributes["#{age_range[:option]}_age_range".to_sym] = trainee.age_range
+      attributes["#{age_range[:option]}_age_range".to_sym] = trainee.course_age_range.join(" to ")
       attributes[:main_age_range] = :other if age_range[:option] == :additional
     end
 
@@ -112,7 +106,7 @@ private
   def age_range_valid
     if main_age_range.blank?
       errors.add(:main_age_range, :blank)
-    elsif main_age_range.to_sym == :other && additional_age_range.blank?
+    elsif other_age_range? && additional_age_range.blank?
       errors.add(:additional_age_range, :blank)
     end
   end
@@ -155,5 +149,14 @@ private
 
   def max_years
     next_year + MAX_END_YEARS
+  end
+
+  def sanitise_course_dates
+    return if COURSE_DATES.any?(&:nil?)
+
+    COURSE_DATES.each do |date_attribute|
+      sanitised_date = public_send(date_attribute).to_s.gsub(/\s+/, "")
+      public_send("#{date_attribute}=", sanitised_date)
+    end
   end
 end
