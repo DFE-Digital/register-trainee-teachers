@@ -32,7 +32,7 @@ describe TrnSubmissionForm, type: :model do
       end
 
       context "requires school" do
-        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, :completed, progress: progress.merge(schools: true)) }
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, :with_employing_school, :completed, progress: progress.merge(schools: true)) }
 
         it "is valid" do
           expect(subject.valid?).to be true
