@@ -11,27 +11,27 @@
     <h2 class="govuk-heading-m"><%= t("components.heading.apply_draft.registration_data_from_apply") %></h2>
 
       <%= render TaskList::View.new do |component|
-          if show_publish_courses?(@trainee)
-            component.row(**row_helper(@trainee, :publish_course_details))
-          else
-            component.row(**row_helper(@trainee, :course_details))
-          end
+            if show_publish_courses?(@trainee)
+              component.row(**row_helper(@trainee, :publish_course_details))
+            else
+              component.row(**row_helper(@trainee, :course_details))
+            end
 
-          component.row(**row_helper(@trainee, :trainee_data))
-        end %>
+            component.row(**row_helper(@trainee, :trainee_data))
+          end %>
 
     <h2 class="govuk-heading-m"><%= t("components.heading.draft.about_their_teaching_training") %></h2>
 
       <%= render TaskList::View.new do |component|
-          component.row(**row_helper(@trainee, :training_details))
+            component.row(**row_helper(@trainee, :training_details))
 
-          if @trainee.requires_schools?
-            component.row(**row_helper(@trainee, :school_details))
-          end
+            if @trainee.requires_schools?
+              component.row(**row_helper(@trainee, :school_details))
+            end
 
-          if @trainee.requires_placement_details?
-            component.row(**row_helper(@trainee, :placement_details))
-          end
-        end %>
+            if @trainee.requires_placement_details?
+              component.row(**row_helper(@trainee, :placement_details))
+            end
+          end %>
   </div>
 </div>
