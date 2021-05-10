@@ -17,6 +17,20 @@ RSpec.describe TaskList::View do
     end
   end
 
+  shared_examples "status indicator" do |status, colour|
+    let(:status) { status }
+
+    context status do
+      it "renders the correct tag status" do
+        expect(component.find(".govuk-tag").text).to include(status)
+      end
+
+      it "renders the correct tag colour" do
+        expect(component).to have_selector(".govuk-tag--#{colour}")
+      end
+    end
+  end
+
   context "when task data is provided" do
     context "rendered tasks" do
       it "renders a list of tasks" do
@@ -28,55 +42,10 @@ RSpec.describe TaskList::View do
       end
     end
 
-    describe "tags" do
-      context "completed" do
-        let(:status) { "completed" }
-
-        it "renders the correct tag status" do
-          expect(component.find(".govuk-tag").text).to include(status)
-        end
-
-        it "renders the correct tag colour" do
-          expect(component).to have_selector(".govuk-tag--blue")
-        end
-      end
-
-      context "in progress" do
-        let(:status) { "in progress" }
-
-        it "renders the correct tag status" do
-          expect(component.find(".govuk-tag").text).to include(status)
-        end
-
-        it "renders the correct tag colour" do
-          expect(component).to have_selector(".govuk-tag--grey")
-        end
-      end
-
-      context "review" do
-        let(:status) { "review" }
-
-        it "renders the correct tag status" do
-          expect(component.find(".govuk-tag").text).to include(status)
-        end
-
-        it "renders the correct tag colour" do
-          expect(component).to have_selector(".govuk-tag--pink")
-        end
-      end
-
-      context "not started" do
-        let(:status) { "not started" }
-
-        it "renders the correct tag status" do
-          expect(component.find(".govuk-tag").text).to include(status)
-        end
-
-        it "renders the correct tag colour" do
-          expect(component).to have_selector(".govuk-tag--grey")
-        end
-      end
-    end
+    it_behaves_like("status indicator", "completed", "blue")
+    it_behaves_like("status indicator", "in progress", "grey")
+    it_behaves_like("status indicator", "review", "pink")
+    it_behaves_like("status indicator", "not started", "grey")
   end
 
   describe "#status_id" do
