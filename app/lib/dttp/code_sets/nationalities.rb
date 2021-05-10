@@ -211,7 +211,7 @@ module Dttp
         "togolese" => { entity_id: "cf7e640e-5c62-e711-80d1-005056ac45bb" },
         "tongan" => { entity_id: "db7e640e-5c62-e711-80d1-005056ac45bb" },
         "trinidadian" => { entity_id: "df7e640e-5c62-e711-80d1-005056ac45bb" },
-        "tristanian" => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
+        "tristanian" => { entity_id: "77c297b7-5c62-e711-80d1-005056ac45bb" },
         "tunisian" => { entity_id: "d97e640e-5c62-e711-80d1-005056ac45bb" },
         "turkish" => { entity_id: "dd7e640e-5c62-e711-80d1-005056ac45bb" },
         "turkmen" => { entity_id: "dd7e640e-5c62-e711-80d1-005056ac45bb" },
