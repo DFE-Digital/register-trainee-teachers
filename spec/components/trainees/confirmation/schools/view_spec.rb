@@ -46,11 +46,6 @@ module Trainees
               expect(component).to have_link(href: "/trainees/#{trainee.slug}/employing-schools/edit")
             end
           end
-
-          it "shouldnt render employing school" do
-            expect(component.find(".govuk-summary-list__row .govuk-summary-list__value"))
-              .to_not have_text(trainee.employing_school.name)
-          end
         end
 
         context "when trainee is on a school direct tuition fee route" do
