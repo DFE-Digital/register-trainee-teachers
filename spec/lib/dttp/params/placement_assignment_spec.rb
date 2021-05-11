@@ -120,6 +120,20 @@ module Dttp
             )
           end
         end
+
+        context "Early years undergrad" do
+          let(:trainee) do
+            create(:trainee, :early_years_undergrad, :with_course_details, :with_start_date,
+                   dttp_id: dttp_contact_id, provider: provider)
+          end
+          subject { described_class.new(trainee).params }
+
+          it "course level is UG" do
+            expect(subject).to include(
+              { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
+            )
+          end
+        end
       end
     end
   end

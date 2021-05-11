@@ -7,6 +7,7 @@ module Dttp
 
       ACADEMIC_YEAR_2020_2021 = "76bcaeca-2bd1-e711-80df-005056ac45bb"
       COURSE_LEVEL_PG = 12
+      COURSE_LEVEL_UG = 20
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
 
       attr_reader :trainee, :qualifying_degree, :params
@@ -40,13 +41,21 @@ module Dttp
           "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{ACADEMIC_YEAR_2020_2021})",
-          "dfe_courselevel" => COURSE_LEVEL_PG, # TODO: this can be PG (12) or UG (20).  Postgrad or undergrad. Hardcoded for now.
+          "dfe_courselevel" => course_level,
           "dfe_sendforregistration" => true,
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id(trainee.training_route)})",
           "dfe_programmeyear" => 1, # TODO: this will need to be derived for other routes. It's n of x year course e.g. 1 of 2
           "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are course_year of course_length
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
+      end
+
+      def course_level
+        if trainee.training_route == "early_years_undergrad"
+          COURSE_LEVEL_UG
+        else
+          COURSE_LEVEL_PG
+        end
       end
 
       def uk_specific_params
