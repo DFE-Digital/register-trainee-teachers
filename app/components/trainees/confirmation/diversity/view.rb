@@ -17,10 +17,11 @@ module Trainees
         end
 
         def diversity_information_rows
+          diversity_disclosure_key = data_model.diversity_disclosure || :diversity_not_provided
           rows = [
             {
               key: "Diversity information",
-              value: I18n.t("components.confirmation.diversity.diversity_disclosure.#{data_model.diversity_disclosure}"),
+              value: I18n.t("components.confirmation.diversity.diversity_disclosure.#{diversity_disclosure_key}"),
               action: govuk_link_to('Change<span class="govuk-visually-hidden"> diversity information</span>'.html_safe,
                                     edit_trainee_diversity_disclosure_path(trainee)),
             },

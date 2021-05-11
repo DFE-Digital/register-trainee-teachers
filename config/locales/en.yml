@@ -29,6 +29,7 @@ en:
         diversity_disclosure:
           diversity_disclosed: Information disclosed
           diversity_not_disclosed: Not shared
+          diversity_not_provided: Not provided
         ethnic_groups: &ethnic_groups_labels
           asian_ethnic_group: Asian or Asian British
           black_ethnic_group: Black, African, Black British or Caribbean
