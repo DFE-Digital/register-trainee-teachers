@@ -9,6 +9,8 @@
 
 <h1 class="govuk-heading-l"><%= @provider.name %></h1>
 
+<p> <%= govuk_link_to "Edit this provider", edit_provider_path, { class: "govuk-link govuk-link--no-visited-state" } %> </p>
+
 <%= render "system_admin/menu" %>
 
 <p class="govuk-body">

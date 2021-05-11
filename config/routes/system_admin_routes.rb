@@ -4,7 +4,7 @@ module SystemAdminRoutes
   def self.extended(router)
     router.instance_exec do
       scope module: :system_admin, path: "system-admin" do
-        resources :providers, except: %i[edit update destroy] do
+        resources :providers, only: %i[index new create show edit update] do
           resources :users, only: %i[new create]
 
           scope module: :imports do
