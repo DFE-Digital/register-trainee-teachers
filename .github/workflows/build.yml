@@ -89,7 +89,7 @@ jobs:
         inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "sha": "${{ env.SHA_TAG }}"}'
 
     - name: Check for Failure
-      if: ${{ failure() && github.ref == 'refs/heads/master' }}
+      if: ${{ github.ref != 'refs/heads/master' }}
       uses: rtCamp/action-slack-notify@master
       env:
         SLACK_CHANNEL: twd_publish_register_tech
@@ -97,5 +97,5 @@ jobs:
         SLACK_ICON_EMOJI: ':github-logo:'
         SLACK_USERNAME: Register Trainee Teachers
         SLACK_TITLE: Build Failure
-        SLACK_MESSAGE: ':alert: Build failure on ${{ github.event.inputs.environment }} :sadparrot:'
+        SLACK_MESSAGE: 'test from build.yml :sadparrot:'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
