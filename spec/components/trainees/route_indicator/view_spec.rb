@@ -26,13 +26,11 @@ RSpec.describe Trainees::RouteIndicator::View do
   end
 
   describe "apply application" do
-    let(:provider) { create(:provider) }
-    let(:course) { create(:course, accredited_body_code: provider.code) }
-    let(:trainee) { create(:trainee, :with_apply_application, provider: provider, subject: course.name) }
+    let(:trainee) { create(:trainee, :with_apply_application, :with_course_details) }
 
     it "renders" do
-      expect(component).to have_content(course.name)
-      expect(component).to have_content(course.code)
+      expect(component).to have_content(trainee.subject)
+      expect(component).to have_content(trainee.course_code)
     end
   end
 end

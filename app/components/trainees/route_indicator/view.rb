@@ -17,9 +17,9 @@ module Trainees
 
       def display_text
         if trainee.apply_application?
-          "Trainee enrolled on #{course_with_code}, #{training_route}"
+          t(".apply_display_text", course_with_code: course_with_code, training_route: training_route)
         else
-          "Trainee on the #{training_route_link} route".html_safe
+          t(".display_text", training_route_link: training_route_link).html_safe
         end
       end
 
@@ -28,13 +28,9 @@ module Trainees
       end
 
       def course_code
-        return unless course&.code
+        return if trainee.course_code.blank?
 
-        "(#{course.code})"
-      end
-
-      def course
-        @course ||= trainee.provider.courses.find_by(name: trainee.subject)
+        "(#{trainee.course_code})"
       end
 
       def training_route

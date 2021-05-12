@@ -43,6 +43,7 @@ module Trainees
         email: raw_contact_details["email"],
         training_route: course&.route,
         subject: course&.name,
+        course_code: course&.code,
         course_age_range: course&.age_range,
         course_start_date: course&.start_date,
         course_end_date: course&.end_date,

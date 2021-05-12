@@ -435,6 +435,10 @@ en:
       edit:
         heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
+    route_indicator:
+      view:
+        display_text: "Trainee on the %{training_route_link} route"
+        apply_display_text: "Trainee enrolled on %{course_with_code}, %{training_route}"
 
   activerecord:
     attributes:

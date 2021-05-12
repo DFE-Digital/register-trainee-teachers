@@ -33,6 +33,7 @@ module Trainees
         email: contact_details["email"],
         training_route: course.route,
         subject: course.name,
+        course_code: course.code,
         course_min_age: course.min_age,
         course_max_age: course.max_age,
         course_start_date: course.start_date,
