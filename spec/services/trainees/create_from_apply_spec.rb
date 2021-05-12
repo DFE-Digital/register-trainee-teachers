@@ -15,7 +15,7 @@ module Trainees
       create(
         :course,
         code: course_info["course_code"],
-        provider: apply_application.provider,
+        accredited_body_code: apply_application.provider.code,
         route: :school_direct_tuition_fee,
       )
     end

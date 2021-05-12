@@ -19,7 +19,7 @@ Govuk:
 
 Govuk/GovukLinkTo:
   Exclude:
-    - "app/components/govuk_button_link_to/view.rb"  
+    - "app/components/govuk_button_link_to/view.rb"
 
 Register/RegisterFormWith:
    Include:

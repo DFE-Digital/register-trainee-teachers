@@ -10,10 +10,10 @@ module TeacherTrainingApi
       end
 
       context "when the response is success" do
-        let(:response) { double(code: 200, body: ApiStubs::TeacherTrainingApi.subjects) }
+        let(:response) { double(code: 200, body: ApiStubs::TeacherTrainingApi.subjects.to_json) }
 
         it "returns the subjects in full" do
-          expect(described_class.call).to eq JSON(response.body)["data"]
+          expect(described_class.call).to eq(ApiStubs::TeacherTrainingApi.subjects[:data])
         end
       end
 

@@ -5,9 +5,9 @@ require "rails_helper"
 module TeacherTrainingApi
   describe ImportSubject do
     describe "#call" do
-      let(:api_subject) { JSON(ApiStubs::TeacherTrainingApi.subject) }
-      let(:code) { api_subject["attributes"]["code"] }
-      let(:name) { api_subject["attributes"]["name"] }
+      let(:api_subject) { ApiStubs::TeacherTrainingApi.subject }
+      let(:code) { api_subject[:attributes][:code] }
+      let(:name) { api_subject[:attributes][:name] }
 
       subject { described_class.call(subject: api_subject) }
 

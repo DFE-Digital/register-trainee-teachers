@@ -26,21 +26,6 @@ describe Course do
     end
 
     it do
-      is_expected.to define_enum_for(:age_range)
-        .with_values({
-          AgeRange::THREE_TO_SEVEN_COURSE => 0,
-          AgeRange::THREE_TO_ELEVEN_COURSE => 1,
-          AgeRange::FIVE_TO_ELEVEN_COURSE => 2,
-          AgeRange::SEVEN_TO_ELEVEN_COURSE => 3,
-          AgeRange::SEVEN_TO_FOURTEEN_COURSE => 4,
-          AgeRange::ELEVEN_TO_SIXTEEN_COURSE => 5,
-          AgeRange::ELEVEN_TO_NINETEEN_COURSE => 6,
-          AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 7,
-          AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 8,
-        })
-    end
-
-    it do
       is_expected.to define_enum_for(:route)
         .with_values({
           TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
@@ -55,18 +40,17 @@ describe Course do
       expect(subject).to validate_presence_of(:name)
       expect(subject).to validate_presence_of(:start_date)
       expect(subject).to validate_presence_of(:level)
-      expect(subject).to validate_presence_of(:age_range)
+      expect(subject).to validate_presence_of(:min_age)
+      expect(subject).to validate_presence_of(:max_age)
       expect(subject).to validate_presence_of(:duration_in_years)
       expect(subject).to validate_presence_of(:qualification)
-      expect(subject).to validate_presence_of(:course_length)
       expect(subject).to validate_presence_of(:route)
     end
 
-    it { is_expected.to validate_uniqueness_of(:code).scoped_to(:provider_id) }
+    it { is_expected.to validate_uniqueness_of(:code) }
   end
 
   describe "associations" do
-    it { is_expected.to belong_to(:provider) }
     it { is_expected.to have_many(:subjects) }
   end
 

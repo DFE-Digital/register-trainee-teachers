@@ -137,7 +137,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def and_some_courses_for_other_providers_or_routes_exist
     other_route = TRAINING_ROUTES_FOR_COURSE.keys.excluding(trainee.training_route).sample
-    create(:course, provider: trainee.provider, route: other_route)
+    create(:course, accredited_body_code: trainee.provider.code, route: other_route)
     create(:course, route: trainee.training_route)
   end
 

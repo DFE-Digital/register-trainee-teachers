@@ -3,13 +3,18 @@
 module TeacherTrainingApi
   class ImportCoursesJob < ApplicationJob
     queue_as :default
+    retry_on TeacherTrainingApi::RetrieveCourses::Error
 
-    def perform
+    def perform(request_uri: nil)
       return unless FeatureService.enabled?("import_courses_from_ttapi")
 
-      RetrieveSubjects.call.each { |s| ImportSubject.call(subject: s) }
+      payload = RetrieveCourses.call(request_uri: request_uri)
 
-      Provider.all.each { |p| ImportProviderCoursesJob.perform_later(p) }
+      payload[:data].each do |course_data|
+        TeacherTrainingApi::ImportCourse.call(course_data: course_data, provider_data: payload[:included])
+      end
+
+      ImportCoursesJob.perform_later(request_uri: payload[:links][:next]) if payload[:links][:next]
     end
   end
 end

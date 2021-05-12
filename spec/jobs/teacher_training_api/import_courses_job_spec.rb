@@ -6,34 +6,21 @@ module TeacherTrainingApi
   describe ImportCoursesJob do
     include ActiveJob::TestHelper
 
-    let(:subject) { double }
+    let(:course_data) { double }
+    let(:provider_data) { double }
+    let(:course_payload) { { data: [course_data], included: provider_data, links: { next: nil } } }
 
     before do
-      allow(ImportSubject).to receive(:call).with(subject: subject).and_return(true)
-      allow(RetrieveSubjects).to receive(:call).and_return([subject])
+      allow(RetrieveCourses).to receive(:call).and_return(course_payload)
+      allow(ImportCourse).to receive(:call).with(course_data: course_data, provider_data: provider_data)
 
-      create_list(:provider, 2)
       described_class.perform_now
     end
 
     context "when the feature flag is turned on", feature_import_courses_from_ttapi: true do
-      it "retrieves all the subjects" do
-        expect(RetrieveSubjects).to have_received(:call)
-        expect(ImportSubject).to have_received(:call).with(subject: subject)
-      end
-
-      it "queues up a job to import courses for each provider" do
-        Provider.all.each do |provider|
-          expect(ImportProviderCoursesJob).to have_been_enqueued.with(provider)
-        end
-      end
-    end
-
-    context "when the feature flag is turned off", feature_import_courses_from_ttapi: false do
-      it "doesn't queue up anything" do
-        Provider.all.each do |provider|
-          expect(ImportProviderCoursesJob).not_to have_been_enqueued.with(provider)
-        end
+      it "queues up a job to import courses" do
+        expect(RetrieveCourses).to have_received(:call).with(request_uri: nil)
+        expect(ImportCourse).to have_received(:call).with(course_data: course_data, provider_data: provider_data)
       end
     end
   end

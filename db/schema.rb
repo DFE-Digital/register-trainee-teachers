@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_144359) do
+ActiveRecord::Schema.define(version: 2021_05_06_085204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,19 +75,22 @@ ActiveRecord::Schema.define(version: 2021_05_05_144359) do
   create_table "courses", force: :cascade do |t|
     t.string "name", null: false
     t.string "code", null: false
-    t.bigint "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "start_date", null: false
-    t.integer "age_range", null: false
     t.integer "duration_in_years", null: false
-    t.string "course_length", null: false
+    t.string "course_length"
     t.integer "qualification", null: false
     t.integer "route", null: false
-    t.integer "level", null: false
     t.string "summary", null: false
-    t.index ["provider_id", "code"], name: "index_courses_on_provider_id_and_code", unique: true
-    t.index ["provider_id"], name: "index_courses_on_provider_id"
+    t.integer "level", null: false
+    t.string "accredited_body_code", null: false
+    t.integer "min_age", null: false
+    t.integer "max_age", null: false
+    t.index ["code"], name: "index_courses_on_code", unique: true
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -302,7 +305,6 @@ ActiveRecord::Schema.define(version: 2021_05_05_144359) do
   add_foreign_key "apply_applications", "providers"
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
-  add_foreign_key "courses", "providers"
   add_foreign_key "degrees", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"

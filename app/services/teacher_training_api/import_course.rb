@@ -13,55 +13,52 @@ module TeacherTrainingApi
       withdrawn
     ].freeze
 
-    def initialize(provider:, course:)
-      @provider = provider
-      @attrs = course["attributes"].symbolize_keys
+    def initialize(course_data:, provider_data:)
+      @course_data = course_data
+      @provider_data = provider_data
+      @course_attributes = course_data[:attributes]
     end
 
     def call
-      return unless IMPORTABLE_STATES.include?(attrs[:state])
+      return unless IMPORTABLE_STATES.include?(course_attributes[:state])
       return if further_education_level_course?
 
-      course.update!(name: attrs[:name],
+      course.update!(name: course_attributes[:name],
                      start_date: start_date,
-                     level: attrs[:level],
-                     age_range: age_range,
+                     level: course_attributes[:level],
                      qualification: qualification,
+                     min_age: course_attributes[:age_minimum],
+                     max_age: course_attributes[:age_maximum],
                      duration_in_years: duration_in_years,
-                     course_length: attrs[:course_length],
+                     course_length: course_attributes[:course_length],
                      subjects: subjects,
                      route: route,
-                     summary: attrs[:summary])
+                     summary: course_attributes[:summary],
+                     accredited_body_code: accredited_body_code)
     end
 
   private
 
-    attr_reader :provider, :attrs
+    attr_reader :course_data, :provider_data, :course_attributes
 
     def further_education_level_course?
-      attrs[:level] == "further_education"
+      course_attributes[:level] == "further_education"
     end
 
     def subjects
-      Subject.where(code: attrs[:subject_codes])
+      Subject.where(code: course_attributes[:subject_codes])
     end
 
     def start_date
-      Time.strptime(attrs[:start_date], "%B %Y")
+      Time.strptime(course_attributes[:start_date], "%B %Y")
     end
 
     def qualification
-      attrs[:qualifications].sort.join("_with_")
-    end
-
-    def age_range
-      age_minimum, age_maximum = attrs.values_at(:age_minimum, :age_maximum)
-      age_maximum = 19 if age_maximum == 18 # DTTP doesn't have an entity with 18
-      "#{age_minimum} to #{age_maximum} course"
+      course_attributes[:qualifications].sort.join("_with_")
     end
 
     def duration_in_years
-      case attrs[:course_length]
+      case course_attributes[:course_length]
       when "OneYear" then 1
       when "TwoYears" then 2
       else 1
@@ -77,11 +74,20 @@ module TeacherTrainingApi
         scitt_programme: :provider_led_postgrad,
       }
 
-      routes[attrs[:program_type].to_sym]
+      routes[course_attributes[:program_type].to_sym]
+    end
+
+    def accredited_body_code
+      course_attributes[:accredited_body_code] || find_accredited_body_code
+    end
+
+    def find_accredited_body_code
+      provider = provider_data&.find { |p| p[:id] == course_data[:relationships][:provider][:data][:id] }
+      provider[:attributes][:code] if provider
     end
 
     def course
-      @course ||= provider.courses.find_or_initialize_by(code: attrs[:code])
+      @course ||= Course.find_or_initialize_by(code: course_attributes[:code])
     end
   end
 end

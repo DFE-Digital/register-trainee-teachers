@@ -213,7 +213,9 @@ FactoryBot.define do
       end
 
       after(:create) do |trainee, evaluator|
-        create_list(:course, evaluator.courses_count, provider: trainee.provider, route: trainee.training_route)
+        create_list(:course, evaluator.courses_count,
+                    accredited_body_code: trainee.provider.code,
+                    route: trainee.training_route)
 
         trainee.reload
       end
