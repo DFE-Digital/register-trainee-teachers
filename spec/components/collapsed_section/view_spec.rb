@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module IncompleteSection
+module CollapsedSection
   describe View do
     alias_method :component, :page
     let(:title) { "title" }

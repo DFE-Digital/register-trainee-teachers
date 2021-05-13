@@ -26,7 +26,7 @@ module Trainees
 
           confirmation_view.new(**confirmation_view_args)
         else
-          IncompleteSection::View.new(title: title, link_text: link_text, url: url, error: error)
+          CollapsedSection::View.new(title: title, link_text: link_text, url: url, error: error)
         end
       end
 
