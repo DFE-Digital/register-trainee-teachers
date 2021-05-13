@@ -22,19 +22,19 @@ module Trainees
           let(:section) { trainee_section }
 
           it "return correct component to render" do
-            expect(trainees_sections_component.component).to_not be_a(IncompleteSection::View)
+            expect(trainees_sections_component.component).to_not be_a(CollapsedSection::View)
             expect(trainees_sections_component.component).to be_a(expected_confirmation_view(section))
           end
         end
       end
 
-      renders_incomplete_section = "renders IncompleteSection"
+      renders_incomplete_section = "renders CollapsedSection"
       shared_examples renders_incomplete_section do |trainee_section, status|
         context trainee_section.to_s do
           let(:section) { trainee_section }
 
           it "return correct component to render" do
-            expect(trainees_sections_component.component).to be_a(IncompleteSection::View)
+            expect(trainees_sections_component.component).to be_a(CollapsedSection::View)
           end
 
           it "has title" do
