@@ -3,16 +3,16 @@
 module Trainees
   module Sections
     class View < ViewComponent::Base
-      attr_accessor :trainee, :section, :trn_submission_form
+      attr_accessor :trainee, :section, :form
 
-      def initialize(trainee:, section:, trn_submission_form:)
+      def initialize(trainee:, section:, form:)
         @trainee = trainee
         @section = section
-        @trn_submission_form = trn_submission_form
+        @form = form
       end
 
       def component
-        if status == :completed
+        if display_type == :expanded
           # Temporary conditional while we wait for all sections to support save-on-confirm
           confirmation_view_args = if FormStore::FORM_SECTION_KEYS.include?(section)
                                      { data_model: form_klass.new(trainee) }
@@ -26,7 +26,7 @@ module Trainees
 
           confirmation_view.new(**confirmation_view_args)
         else
-          IncompleteSection::View.new(title: title, link_text: link_text, url: url, error: error)
+          CollapsedSection::View.new(title: title, link_text: link_text, url: url, error: error)
         end
       end
 
@@ -83,15 +83,19 @@ module Trainees
             not_started: "edit_trainee_lead_schools_path",
             in_progress: "trainee_schools_confirm_path",
           },
-        }[section][status]
+        }[section][progress_status]
       end
 
       def error
-        @error ||= trn_submission_form.errors.present?
+        @error ||= form.errors.present?
       end
 
-      def status
-        @status ||= trn_submission_form.section_status(section)
+      def progress_status
+        @progress_status ||= form.progress_status(section)
+      end
+
+      def display_type
+        @display_type ||= form.display_type(section)
       end
 
       def title
@@ -103,7 +107,7 @@ module Trainees
       end
 
       def section_status
-        I18n.t("components.sections.statuses.#{status}")
+        I18n.t("components.sections.statuses.#{progress_status}")
       end
 
       def url
@@ -111,7 +115,7 @@ module Trainees
       end
 
       def link_text
-        link_text = I18n.t("components.sections.link_texts.#{status}")
+        link_text = I18n.t("components.sections.link_texts.#{progress_status}")
         "#{link_text}<span class=\"govuk-visually-hidden\"> #{section_title.downcase}</span>".html_safe
       end
     end

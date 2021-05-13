@@ -39,6 +39,7 @@
             task_name: "Contact details",
             path: edit_trainee_contact_details_path(@trainee),
             confirm_path: trainee_contact_details_confirm_path(@trainee),
+            classes: "contact-details",
             status: ProgressService.call(
               validator: ContactDetailsForm.new(@trainee),
               progress_value: @trainee.progress.contact_details,

@@ -8,13 +8,26 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
   let(:trainee) { create(:trainee) }
 
   describe "Diversity information" do
+    context "when the trainee has not answered any diversity questions" do
+      # This is different to the trainee explicitly choosing not to share
+      before do
+        trainee.diversity_disclosure = nil
+        render_inline(Trainees::Confirmation::Diversity::View.new(data_model: trainee))
+      end
+
+      it "renders with one line to say the trainee hasn't anwered the question" do
+        expect(component.find(".diversity-information .govuk-summary-list__value")).to have_text("Not provided")
+        expect(component).to have_selector(".govuk-summary-list__row", count: 1)
+      end
+    end
+
     context "when trainee has not shared any ethnic or disability information" do
       before do
         trainee.diversity_disclosure = "diversity_not_disclosed"
         render_inline(Trainees::Confirmation::Diversity::View.new(data_model: trainee))
       end
 
-      it "renders with one line to say the train haven't shared data" do
+      it "renders with one line to say the trainee haven't shared data" do
         expect(component.find(".diversity-information .govuk-summary-list__value")).to have_text("Not shared")
         expect(component).to have_selector(".govuk-summary-list__row", count: 1)
       end
@@ -32,7 +45,7 @@ RSpec.describe Trainees::Confirmation::Diversity::View do
         render_inline(Trainees::Confirmation::Diversity::View.new(data_model: trainee))
       end
 
-      it "renders with one line to say the train haven't shared data" do
+      it "renders with one line to say the trainee haven't shared data" do
         expect(component.find(".diversity-information .govuk-summary-list__value")).to have_text("Information disclosed")
         expect(component).to have_selector(".govuk-summary-list__row", count: 3)
       end

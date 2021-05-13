@@ -9,6 +9,10 @@ en:
   update_record: Update record
   return_home: Return home
   mark_as_completed: I have completed this section
+  mark_as_reviewed: I have reviewed the trainee data
+  education: Education
+  personal_details: Personal details
+  return_to_draft_later: Return to this draft record later
   header:
     items:
       sign_out: Sign out
@@ -28,6 +32,7 @@ en:
         diversity_disclosure:
           diversity_disclosed: Information disclosed
           diversity_not_disclosed: Not shared
+          diversity_not_provided: Not provided
         ethnic_groups: &ethnic_groups_labels
           asian_ethnic_group: Asian or Asian British
           black_ethnic_group: Black, African, Black British or Caribbean
@@ -380,6 +385,11 @@ en:
       body: Try again later.
       support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
   trainees:
+    apply_trainee_data:
+      view:
+        heading_1_name: "Draft record for %{name}"
+        heading_1_no_name: "Draft record"
+        heading_2: "Trainee Data"
     not_supported_route:
       heading: Other routes not supported
       body: "%{route} is the only route currently supported by this service. More routes will be added soon."
