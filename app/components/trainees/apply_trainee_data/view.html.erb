@@ -38,19 +38,17 @@
       <%= t("personal_details") %>
     </h2>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :personal_details, show_incomplete: true) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :personal_details) %>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :contact_details, show_incomplete: true) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :contact_details) %>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :diversity, show_incomplete: true) %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :diversity) %>
 
-    <% if @trainee.degrees.present? %>
-      <h2 class="govuk-heading-m">
-        <%= t("education") %>
-      </h2>
+    <h2 class="govuk-heading-m">
+      <%= t("education") %>
+    </h2>
 
-      <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :degrees, show_incomplete: true) %>
-    <% end %>
+    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :degrees) %>
 
     <%= register_form_with(model: @form, builder: GOVUKDesignSystemFormBuilder::FormBuilder, url: trainee_apply_trainee_data_path(trainee), method: :put, local: true) do |f| %>
         <%= f.govuk_check_boxes_fieldset :mark_as_reviewed, multiple: false, legend: { text: "" } do %>

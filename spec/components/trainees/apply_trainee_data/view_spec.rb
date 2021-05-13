@@ -13,18 +13,19 @@ module Trainees
       end
 
       context "trainee with degrees" do
-        let(:trainee) { create(:trainee, nationalities: [build(:nationality)], degrees: [build(:degree, :uk_degree_with_details)]) }
+        let(:degree) { build(:degree, :uk_degree_with_details) }
+        let(:trainee) { create(:trainee, nationalities: [build(:nationality)], degrees: [degree]) }
 
-        it "has an education section" do
-          expect(component).to have_text("Education")
+        it "has an expanded degrees section" do
+          expect(component).to have_text(degree.subject)
         end
       end
 
       context "trainee without degrees" do
         let(:trainee) { create(:trainee, nationalities: [build(:nationality)], degrees: []) }
 
-        it "does not have an education section" do
-          expect(component).to_not have_text("Education")
+        it "has a collapsed degrees section" do
+          expect(component).to have_text("Degree details not started")
         end
       end
     end

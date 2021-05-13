@@ -5,15 +5,14 @@ module Trainees
     class View < ViewComponent::Base
       attr_accessor :trainee, :section, :form
 
-      def initialize(trainee:, section:, form:, show_incomplete: false)
+      def initialize(trainee:, section:, form:)
         @trainee = trainee
         @section = section
         @form = form
-        @show_incomplete = show_incomplete
       end
 
       def component
-        if status == :completed || show_incomplete?
+        if display_type == :expanded
           # Temporary conditional while we wait for all sections to support save-on-confirm
           confirmation_view_args = if FormStore::FORM_SECTION_KEYS.include?(section)
                                      { data_model: form_klass.new(trainee) }
@@ -32,10 +31,6 @@ module Trainees
       end
 
     private
-
-      def show_incomplete?
-        @show_incomplete
-      end
 
       def form_klass
         case section
@@ -88,15 +83,19 @@ module Trainees
             not_started: "edit_trainee_lead_schools_path",
             in_progress: "trainee_schools_confirm_path",
           },
-        }[section][status]
+        }[section][progress_status]
       end
 
       def error
         @error ||= form.errors.present?
       end
 
-      def status
-        @status ||= form.section_status(section)
+      def progress_status
+        @progress_status ||= form.progress_status(section)
+      end
+
+      def display_type
+        @display_type ||= form.display_type(section)
       end
 
       def title
@@ -108,7 +107,7 @@ module Trainees
       end
 
       def section_status
-        I18n.t("components.sections.statuses.#{status}")
+        I18n.t("components.sections.statuses.#{progress_status}")
       end
 
       def url
@@ -116,7 +115,7 @@ module Trainees
       end
 
       def link_text
-        link_text = I18n.t("components.sections.link_texts.#{status}")
+        link_text = I18n.t("components.sections.link_texts.#{progress_status}")
         "#{link_text}<span class=\"govuk-visually-hidden\"> #{section_title.downcase}</span>".html_safe
       end
     end

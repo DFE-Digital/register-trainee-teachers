@@ -27,8 +27,13 @@ class TrnSubmissionForm
     @trainee = trainee
   end
 
-  def section_status(progress_key)
+  def progress_status(progress_key)
     progress_service(progress_key).status.parameterize(separator: "_").to_sym
+  end
+
+  def display_type(section_key)
+    progress = progress_status(section_key)
+    progress == :completed ? :expanded : :collapsed
   end
 
   def all_sections_complete?
