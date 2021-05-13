@@ -12,6 +12,8 @@ class ValidatePublishCourseForm < TraineeForm
 
   validates :subject, presence: true
 
+  delegate :apply_application?, to: :trainee
+
 private
 
   def compute_fields
