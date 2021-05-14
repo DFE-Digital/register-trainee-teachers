@@ -56,7 +56,7 @@ module TaskListHelper
         {
           task_name: "Lead and employing schools",
           path: edit_trainee_lead_schools_path(trainee),
-          confirm_path: trainee_schools_confirm_path(@trainee),
+          confirm_path: trainee_schools_confirm_path(trainee),
           classes: "school-details",
           status: ProgressService.call(
             validator: Schools::FormValidator.new(trainee),
