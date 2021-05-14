@@ -65,8 +65,6 @@
       <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :schools) %>
     <%- end -%>
 
-    <%= render Trainees::Sections::View.new(trainee: @trainee, form: @form, section: :schools) %>
-
     <%= register_form_with(model: @form, url: trn_submissions_path, method: :post, local: true) do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
       <%= f.govuk_submit "Submit record and request TRN" %>
