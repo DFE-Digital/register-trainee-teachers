@@ -34,6 +34,8 @@ class CourseDetailsForm < TraineeForm
   validate :course_start_date_valid
   validate :course_end_date_valid
 
+  delegate :apply_application?, to: :trainee
+
   MAX_END_YEARS = 4
 
   def course_age_range

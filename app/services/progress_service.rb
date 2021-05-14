@@ -41,6 +41,6 @@ private
   attr_reader :validator, :marked_as_completed
 
   def is_apply_application?
-    validator.trainee.apply_application?
+    validator.respond_to?(:apply_application?) && validator.apply_application?
   end
 end

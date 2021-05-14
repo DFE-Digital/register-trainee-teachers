@@ -4,11 +4,9 @@ require "spec_helper"
 
 describe ProgressService do
   describe "#status" do
-    let(:trainee_stub) { instance_double(Trainee, apply_application?: false) }
-
     let(:validator_stub) do
       double(
-        trainee: trainee_stub,
+        trainee: instance_double(Trainee),
         valid?: false,
         fields: { first_name: nil },
       )
@@ -36,10 +34,10 @@ describe ProgressService do
       end
 
       context "and in review" do
-        let(:trainee_stub) { instance_double(Trainee, apply_application?: true) }
-
         before do
           allow(validator_stub).to receive(:valid?).and_return(true)
+          allow(validator_stub).to receive(:respond_to?).with(:apply_application?).and_return(true)
+          allow(validator_stub).to receive(:apply_application?).and_return(true)
         end
 
         it "returns a 'review' status" do
