@@ -15,4 +15,6 @@ class ProviderPolicy
   alias_method :create?, :show?
   alias_method :new?, :show?
   alias_method :index?, :show?
+  alias_method :edit?, :show?
+  alias_method :update?, :show?
 end

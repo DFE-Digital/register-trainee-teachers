@@ -175,6 +175,7 @@ en:
       providers:
         index: Providers
         new: Add a provider
+        edit: Edit a provider
       dttp_providers:
         index: Dttp Providers
       users:

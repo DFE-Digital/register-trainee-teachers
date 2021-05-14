@@ -6,6 +6,8 @@ module PageObjects
       set_url "system-admin/providers/{id}"
 
       element :add_a_user, "a", text: "Add a user"
+      element :edit_this_provider, "a", text: "Edit this provider"
+
       element :register_user, "#register-dttp-user"
 
       element :registered_user_data, ".registered-users"

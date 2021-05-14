@@ -70,6 +70,10 @@ module Features
       @provider_index_page ||= PageObjects::Providers::Index.new
     end
 
+    def provider_show_page
+      @provider_show_page ||= PageObjects::Providers::Show.new
+    end
+
     def dttp_provider_index_page
       @provider_index_page ||= PageObjects::DttpProviders::Index.new
     end

@@ -1,0 +1,23 @@
+<%= render PageTitle::View.new(title: "providers.edit", has_errors: @provider.errors.present?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with model: @provider, local: true do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        Edit provider
+      </h1>
+
+      <%= f.govuk_text_field :name, label: { text: "Provider name", size: "s" }, width: 20, autocomplete: :disabled %>
+      <%= f.govuk_text_field :dttp_id, label: { text: "DTTP ID", size: "s" }, width: 20, autocomplete: :disabled %>
+      <%= f.govuk_text_field :code, label: { text: "Provider code", size: "s" }, width: 20, autocomplete: :disabled %>
+      <div class="govuk-form-group">
+        <%= f.govuk_check_box :apply_sync_enabled, true, multiple: false, label: { text: "Import application data from Apply?", size: "s" } %>
+      </div>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
