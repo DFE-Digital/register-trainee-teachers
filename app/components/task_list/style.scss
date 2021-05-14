@@ -36,6 +36,12 @@
   }
 }
 
+.app-task-list__hint {
+  margin-top: 10px;
+  margin-bottom: 0;
+  display: inline-block;
+}
+
 .app-task-list__key {
   @include govuk-responsive-margin(1, "right");
 }
