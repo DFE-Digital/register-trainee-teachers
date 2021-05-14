@@ -26,7 +26,7 @@ module Trainees
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @lead_school_form.public_send(save_strategy)
-        redirect_to redirect_url
+        redirect_to origin_page_or_next_step
       else
         render :edit
       end
@@ -54,6 +54,12 @@ module Trainees
 
     def trainee_params
       params.fetch(:schools_lead_school_form, {}).permit(:lead_school_id, *Schools::LeadSchoolForm::NON_TRAINEE_FIELDS)
+    end
+
+    def origin_page_or_next_step
+      return page_tracker.last_origin_page_path if page_tracker.last_origin_page_path&.include?("schools/confirm")
+
+      redirect_url
     end
 
     def query
