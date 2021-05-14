@@ -37,6 +37,10 @@ class Course < ApplicationRecord
   end
 
   def age_range
-    "#{min_age} to #{max_age} course"
+    [min_age, max_age].compact
+  end
+
+  def age_range=(range)
+    self.min_age, self.max_age = range
   end
 end

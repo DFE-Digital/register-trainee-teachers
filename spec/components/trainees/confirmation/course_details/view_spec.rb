@@ -9,7 +9,15 @@ module Trainees
         alias_method :component, :page
 
         context "when data has not been provided" do
-          let(:trainee) { build(:trainee, id: 1, training_route: nil, subject: nil, age_range: nil, course_start_date: nil) }
+          let(:trainee) do
+            build(:trainee, id: 1,
+                            training_route: nil,
+                            subject: nil,
+                            course_min_age: nil,
+                            course_max_age: nil,
+                            course_start_date: nil)
+          end
+
           before do
             render_inline(View.new(data_model: trainee))
           end

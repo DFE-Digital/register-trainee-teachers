@@ -22,7 +22,9 @@ module CourseDetailsHelper
 private
 
   def age_ranges(option:)
-    Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option }.keys
+    Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option }.keys.map do |age_range|
+      age_range.join(" to ")
+    end
   end
 
   def course_subjects

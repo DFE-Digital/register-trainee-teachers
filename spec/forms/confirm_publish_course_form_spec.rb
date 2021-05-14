@@ -22,8 +22,10 @@ describe ConfirmPublishCourseForm, type: :model do
         expect { subject.save }
           .to change { trainee.subject }
           .from(nil).to(course.name)
-          .and change { trainee.age_range }
-          .from(nil).to(course.age_range)
+          .and change { trainee.course_min_age }
+          .from(nil).to(course.min_age)
+          .and change { trainee.course_max_age }
+          .from(nil).to(course.max_age)
           .and change { trainee.course_start_date }
           .from(nil).to(course.start_date)
           .and change { trainee.course_end_date }

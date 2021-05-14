@@ -27,10 +27,10 @@ module Trainees
           data_model.subject
         end
 
-        def age_range
-          return @not_provided_copy if data_model.age_range.blank?
+        def course_age_range
+          return @not_provided_copy if data_model.course_age_range.blank?
 
-          data_model.age_range
+          age_range_for_summary_view(data_model.course_age_range)
         end
 
         def course_type

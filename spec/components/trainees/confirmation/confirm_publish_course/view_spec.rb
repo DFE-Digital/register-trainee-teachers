@@ -6,6 +6,8 @@ module Trainees
   module Confirmation
     module ConfirmPublishCourse
       describe View do
+        include SummaryHelper
+
         alias_method :component, :page
 
         let(:course) { build(:course, duration_in_years: 2) }
@@ -32,12 +34,12 @@ module Trainees
 
         it "renders the age range" do
           expect(component.find(".govuk-summary-list__row.age-range .govuk-summary-list__value"))
-            .to have_text(course.age_range)
+            .to have_text(age_range_for_summary_view(course.age_range))
         end
 
         it "renders the start date" do
           expect(component.find(".govuk-summary-list__row.start-date .govuk-summary-list__value"))
-            .to have_text(course.start_date.strftime("%-d %B %Y"))
+            .to have_text(date_for_summary_view(course.start_date))
         end
 
         it "renders the duration" do

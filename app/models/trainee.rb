@@ -107,23 +107,22 @@ class Trainee < ApplicationRecord
   end
 
   enum age_range: {
-    AgeRange::THREE_TO_ELEVEN_COURSE => 0,
-    AgeRange::FIVE_TO_ELEVEN_COURSE => 1,
-    AgeRange::ELEVEN_TO_SIXTEEN_COURSE => 2,
-    AgeRange::ELEVEN_TO_NINETEEN_COURSE => 3,
-    AgeRange::ZERO_TO_FIVE_COURSE => 4,
-    AgeRange::THREE_TO_SEVEN_COURSE => 5,
-    AgeRange::THREE_TO_EIGHT_COURSE => 6,
-    AgeRange::THREE_TO_NINE_COURSE => 7,
-    AgeRange::FIVE_TO_NINE_COURSE => 8,
-    AgeRange::FIVE_TO_FOURTEEN_COURSE => 9,
-    AgeRange::SEVEN_TO_ELEVEN_COURSE => 10,
-    AgeRange::SEVEN_TO_FOURTEEN_COURSE => 11,
-    AgeRange::SEVEN_TO_SIXTEEN_COURSE => 12,
-    AgeRange::NINE_TO_FOURTEEN_COURSE => 13,
-    AgeRange::NINE_TO_SIXTEEN_COURSE => 14,
-    AgeRange::FOURTEEN_TO_NINETEEN_COURSE => 15,
-    AgeRange::FOURTEEN_TO_NINETEEN_DIPLOMA => 16,
+    AgeRange::THREE_TO_ELEVEN => 0,
+    AgeRange::FIVE_TO_ELEVEN => 1,
+    AgeRange::ELEVEN_TO_SIXTEEN => 2,
+    AgeRange::ELEVEN_TO_NINETEEN => 3,
+    AgeRange::ZERO_TO_FIVE => 4,
+    AgeRange::THREE_TO_SEVEN => 5,
+    AgeRange::THREE_TO_EIGHT => 6,
+    AgeRange::THREE_TO_NINE => 7,
+    AgeRange::FIVE_TO_NINE => 8,
+    AgeRange::FIVE_TO_FOURTEEN => 9,
+    AgeRange::SEVEN_TO_ELEVEN => 10,
+    AgeRange::SEVEN_TO_FOURTEEN => 11,
+    AgeRange::SEVEN_TO_SIXTEEN => 12,
+    AgeRange::NINE_TO_FOURTEEN => 13,
+    AgeRange::NINE_TO_SIXTEEN => 14,
+    AgeRange::FOURTEEN_TO_NINETEEN => 15,
   }
 
   pg_search_scope :with_name_trainee_id_or_trn_like,
@@ -192,5 +191,13 @@ class Trainee < ApplicationRecord
 
   def apply_application?
     apply_application.present?
+  end
+
+  def course_age_range
+    [course_min_age, course_max_age].compact
+  end
+
+  def course_age_range=(range)
+    self.course_min_age, self.course_max_age = range
   end
 end
