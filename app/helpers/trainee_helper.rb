@@ -43,6 +43,6 @@ module TraineeHelper
   end
 
   def last_updated_event_for(trainee)
-    Trainees::CreateTimeline.call(audits: trainee.own_and_associated_audits).first
+    Trainees::CreateTimeline.call(trainee: trainee).first
   end
 end

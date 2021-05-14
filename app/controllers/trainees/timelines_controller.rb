@@ -5,7 +5,7 @@ module Trainees
     before_action :authorize_trainee
 
     def show
-      @timeline_events = Trainees::CreateTimeline.call(audits: audits)
+      @timeline_events = Trainees::CreateTimeline.call(trainee: trainee)
       render layout: "trainee_record"
     end
 
@@ -13,10 +13,6 @@ module Trainees
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
-    def audits
-      trainee.own_and_associated_audits
     end
 
     def authorize_trainee

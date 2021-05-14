@@ -6,26 +6,56 @@ module Trainees
   describe CreateTimeline do
     let(:trainee) { create(:trainee) }
     let(:audits) { trainee.own_and_associated_audits }
-    subject { described_class.call(audits: audits) }
+
+    subject { described_class.call(trainee: trainee) }
 
     describe "#call" do
-      context "when a trainee has been updated" do
+      context "when a trainee is updated but not yet submitted for trn" do
         before do
-          trainee.update!(first_names: "name")
-          audits.each do |audit|
-            timeline_event = double(title: "title", date: audit.created_at)
-            allow(CreateTimelineEvents).to receive(:call).with(audit: audit).and_return(timeline_event)
-          end
+          update_name
+          reload_audits
         end
 
-        it "returns two timeline events" do
+        it "returns just the creation audit" do
+          expect(subject.count).to eq(1)
+        end
+      end
+
+      context "when a trainee has been submitted for trn" do
+        before do
+          trainee.submit_for_trn!
+          reload_audits
+        end
+
+        it "returns the creation audit and the trn audit" do
           expect(subject.count).to eq(2)
         end
 
+        context "and a subsequent update is made" do
+          before do
+            Timecop.travel(Time.zone.now + 1.hour) { update_name }
+            reload_audits
+          end
+
+          it "returns the creation audit and the trn audit" do
+            expect(subject.count).to eq(3)
+          end
+        end
+
         it "returns the events in reverse order" do
-          expected_order = audits.pluck(:created_at).sort.reverse
+          expected_order = trainee.own_and_associated_audits.pluck(:created_at).sort.reverse
           expect(subject.map(&:date)).to eq(expected_order)
         end
+      end
+    end
+
+    def update_name
+      trainee.update!(first_names: "name")
+    end
+
+    def reload_audits
+      trainee.own_and_associated_audits.each do |audit|
+        allow(CreateTimelineEvents).to receive(:call).with(audit: audit).and_return(double(title: "title", date: audit.created_at))
       end
     end
   end
