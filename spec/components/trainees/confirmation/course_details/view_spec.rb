@@ -6,6 +6,8 @@ module Trainees
   module Confirmation
     module CourseDetails
       describe View do
+        include SummaryHelper
+
         alias_method :component, :page
 
         context "when data has not been provided" do
@@ -50,14 +52,14 @@ module Trainees
               .to have_text(trainee.subject)
           end
 
-          it "renders the age range" do
+          it "renders the course age range" do
             expect(component.find(".govuk-summary-list__row.age-range .govuk-summary-list__value"))
-              .to have_text(trainee.age_range)
+              .to have_text(age_range_for_summary_view(trainee.course_age_range))
           end
 
           it "renders the course start date" do
             expect(component.find(".govuk-summary-list__row.course-start-date .govuk-summary-list__value"))
-              .to have_text(trainee.course_start_date.strftime("%-d %B %Y"))
+              .to have_text(date_for_summary_view(trainee.course_start_date))
           end
         end
       end

@@ -19,9 +19,9 @@ en:
       system_admin: System admin
   components:
     heading:
-      apply_draft: 
+      apply_draft:
         registration_data_from_apply: Registration data from Apply
-      draft: 
+      draft:
         personal_details_and_education: Personal details and education
         about_their_teaching_training: About their teacher training
     confirmation:
@@ -216,7 +216,8 @@ en:
           qts_awarded: Trainee awarded QTS
           eyts_awarded: Trainee awarded EYTS
           reinstated: Trainee reinstated
-          age_range: Course age range updated
+          course_min_age: Course min age updated
+          course_max_age: Course max age updated
           subject: Course subject updated
           commencement_date: Start date updated
           trainee_id: Trainee ID updated
