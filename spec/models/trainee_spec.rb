@@ -44,6 +44,18 @@ describe Trainee do
         Diversities::ETHNIC_GROUP_ENUMS[:not_provided] => 5,
       )
     end
+
+    it do
+      is_expected.to define_enum_for(:state).with_values(
+        TRAINEE_STATE_ENUMS[:draft] => 0,
+        TRAINEE_STATE_ENUMS[:submitted_for_trn] => 1,
+        TRAINEE_STATE_ENUMS[:trn_received] => 2,
+        TRAINEE_STATE_ENUMS[:recommended_for_award] => 3,
+        TRAINEE_STATE_ENUMS[:withdrawn] => 4,
+        TRAINEE_STATE_ENUMS[:deferred] => 5,
+        TRAINEE_STATE_ENUMS[:awarded] => 6,
+      )
+    end
   end
 
   context "associations" do

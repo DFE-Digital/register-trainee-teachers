@@ -145,45 +145,45 @@ FactoryBot.define do
     end
 
     trait :draft do
-      state { "draft" }
+      state { TRAINEE_STATE_ENUMS[:draft] }
     end
 
     trait :submitted_for_trn do
-      state { "submitted_for_trn" }
+      state { TRAINEE_STATE_ENUMS[:submitted_for_trn] }
       submitted_for_trn_at { Time.zone.now }
       dttp_id { SecureRandom.uuid }
     end
 
     trait :trn_received do
       submitted_for_trn
-      state { "trn_received" }
+      state { TRAINEE_STATE_ENUMS[:trn_received] }
       dttp_id { SecureRandom.uuid }
     end
 
     trait :recommended_for_award do
-      state { "recommended_for_award" }
+      state { TRAINEE_STATE_ENUMS[:recommended_for_award] }
       recommended_for_award_at { Time.zone.now }
     end
 
     trait :withdrawn do
-      state { "withdrawn" }
+      state { TRAINEE_STATE_ENUMS[:withdrawn] }
       withdraw_date { Faker::Date.in_date_period }
     end
 
     trait :deferred do
       submitted_for_trn
-      state { "deferred" }
+      state { TRAINEE_STATE_ENUMS[:deferred] }
       defer_date { Faker::Date.in_date_period }
     end
 
     trait :reinstated do
-      state { "trn_received" }
+      state { TRAINEE_STATE_ENUMS[:trn_received] }
       defer_date { Faker::Date.in_date_period }
       reinstate_date { Faker::Date.in_date_period }
     end
 
     trait :awarded do
-      state { "awarded" }
+      state { TRAINEE_STATE_ENUMS[:awarded] }
     end
 
     trait :with_dttp_dormancy do

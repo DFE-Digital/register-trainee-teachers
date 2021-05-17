@@ -65,24 +65,30 @@ class Trainee < ApplicationRecord
   }
 
   enum state: {
-    draft: 0,
-    submitted_for_trn: 1,
-    trn_received: 2,
-    recommended_for_award: 3,
-    withdrawn: 4,
-    deferred: 5,
-    awarded: 6,
+    TRAINEE_STATE_ENUMS[:draft] => 0,
+    TRAINEE_STATE_ENUMS[:submitted_for_trn] => 1,
+    TRAINEE_STATE_ENUMS[:trn_received] => 2,
+    TRAINEE_STATE_ENUMS[:recommended_for_award] => 3,
+    TRAINEE_STATE_ENUMS[:withdrawn] => 4,
+    TRAINEE_STATE_ENUMS[:deferred] => 5,
+    TRAINEE_STATE_ENUMS[:awarded] => 6,
   } do
     event :submit_for_trn do
       before do
         self.submitted_for_trn_at = Time.zone.now
       end
 
-      transition %i[draft deferred] => :submitted_for_trn
+      transition [
+        TRAINEE_STATE_ENUMS[:draft],
+        TRAINEE_STATE_ENUMS[:deferred],
+      ] => TRAINEE_STATE_ENUMS[:submitted_for_trn]
     end
 
     event :receive_trn do
-      transition %i[submitted_for_trn deferred] => :trn_received
+      transition [
+        TRAINEE_STATE_ENUMS[:submitted_for_trn],
+        TRAINEE_STATE_ENUMS[:deferred],
+      ] => TRAINEE_STATE_ENUMS[:trn_received]
     end
 
     event :recommend_for_award do
@@ -90,19 +96,30 @@ class Trainee < ApplicationRecord
         self.recommended_for_award_at = Time.zone.now
       end
 
-      transition %i[trn_received] => :recommended_for_award
+      transition [
+        TRAINEE_STATE_ENUMS[:trn_received],
+      ] => TRAINEE_STATE_ENUMS[:recommended_for_award]
     end
 
     event :withdraw do
-      transition %i[submitted_for_trn trn_received deferred] => :withdrawn
+      transition [
+        TRAINEE_STATE_ENUMS[:submitted_for_trn],
+        TRAINEE_STATE_ENUMS[:trn_received],
+        TRAINEE_STATE_ENUMS[:deferred],
+      ] => TRAINEE_STATE_ENUMS[:withdrawn]
     end
 
     event :defer do
-      transition %i[submitted_for_trn trn_received] => :deferred
+      transition [
+        TRAINEE_STATE_ENUMS[:submitted_for_trn],
+        TRAINEE_STATE_ENUMS[:trn_received],
+      ] => TRAINEE_STATE_ENUMS[:deferred]
     end
 
     event :award do
-      transition %i[recommended_for_award] => :awarded
+      transition [
+        TRAINEE_STATE_ENUMS[:recommended_for_award],
+      ] => TRAINEE_STATE_ENUMS[:awarded]
     end
   end
 
