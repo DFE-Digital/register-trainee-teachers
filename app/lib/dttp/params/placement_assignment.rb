@@ -33,7 +33,7 @@ module Dttp
 
       def build_params
         {
-          "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.age_range)})",
+          "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.course_age_range)})",
           "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.subject)})",
           "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
           "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
