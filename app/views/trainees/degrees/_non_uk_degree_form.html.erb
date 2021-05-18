@@ -2,7 +2,13 @@
   <%= f.hidden_field :locale_code, value: "non_uk" %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">Degree details</h1>
+  <h1 class="govuk-heading-l">Non-UK degree details</h1>
+
+  <%= render FormComponents::CountryAutocomplete::View.new(
+    form_field: f.govuk_collection_select(:country, countries_options, :name,
+                                          :name, label: { text: "In which country is the degree institution based?", size: "s" }),
+    html_attributes: { "data-show-all-values" => false },
+  ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
@@ -16,17 +22,6 @@
     },
   ) %>
 
-  <%= render FormComponents::CountryAutocomplete::View.new(
-    form_field: f.govuk_collection_select(:country, countries_options, :name,
-                                          :name, label: { text: "In which country is the degree institution based?", size: "s" }),
-    html_attributes: { "data-show-all-values" => false },
-  ) %>
-
-  <%= f.govuk_text_field :graduation_year,
-                         label: { text: "Graduation year", size: "s" },
-                         width: "one-quarter",
-                         autocomplete: :disabled %>
-
   <div class="govuk-form-group">
     <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" } do %>
       <% ENIC_NON_UK.each do |name| %>
@@ -37,6 +32,11 @@
       <%= f.govuk_radio_button :non_uk_degree, :non_enic, label: { text: "UK ENIC not provided" } %>
     <% end %>
   </div>
+
+  <%= f.govuk_text_field :graduation_year,
+                         label: { text: "Graduation year", size: "s" },
+                         width: "one-quarter",
+                         autocomplete: :disabled %>
 
   <%= f.govuk_submit %>
 <% end %>
