@@ -81,6 +81,8 @@ module Pages
                       locale_code: 1,
                       postcode: "BN1 1AA",
                       email: "email@example.com",
+                      course_min_age: 0,
+                      course_max_age: 5,
                       course_start_date: 6.months.ago,
                       course_end_date: Time.zone.now,
                       nationalities: nationalities,
@@ -92,7 +94,6 @@ module Pages
                         course_details: true,
                         training_details: true,
                       ),
-                      age_range: 1,
                       diversity_disclosure: 1,
                       degrees: [Degree.new(id: 1, locale_code: 1, subject: "subject")],
                       commencement_date: Time.zone.now)

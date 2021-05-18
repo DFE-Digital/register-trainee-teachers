@@ -106,25 +106,6 @@ class Trainee < ApplicationRecord
     end
   end
 
-  enum age_range: {
-    AgeRange::THREE_TO_ELEVEN => 0,
-    AgeRange::FIVE_TO_ELEVEN => 1,
-    AgeRange::ELEVEN_TO_SIXTEEN => 2,
-    AgeRange::ELEVEN_TO_NINETEEN => 3,
-    AgeRange::ZERO_TO_FIVE => 4,
-    AgeRange::THREE_TO_SEVEN => 5,
-    AgeRange::THREE_TO_EIGHT => 6,
-    AgeRange::THREE_TO_NINE => 7,
-    AgeRange::FIVE_TO_NINE => 8,
-    AgeRange::FIVE_TO_FOURTEEN => 9,
-    AgeRange::SEVEN_TO_ELEVEN => 10,
-    AgeRange::SEVEN_TO_FOURTEEN => 11,
-    AgeRange::SEVEN_TO_SIXTEEN => 12,
-    AgeRange::NINE_TO_FOURTEEN => 13,
-    AgeRange::NINE_TO_SIXTEEN => 14,
-    AgeRange::FOURTEEN_TO_NINETEEN => 15,
-  }
-
   pg_search_scope :with_name_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name trainee_id trn],
                   using: { tsearch: { prefix: true } }

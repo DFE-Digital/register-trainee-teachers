@@ -19,7 +19,7 @@ module Trainees
           @mock_trainee ||= Trainee.new(
             id: 1,
             subject: "Primary",
-            age_range: [3, 11],
+            course_age_range: [3, 11],
             course_start_date: Date.new(2020, 0o1, 28),
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
             lead_school: mock_school,

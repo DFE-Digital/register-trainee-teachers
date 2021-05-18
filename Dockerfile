@@ -31,4 +31,4 @@ ENV ENV="/root/.ashrc"
 RUN bundle exec rake assets:precompile && \
     rm -rf node_modules tmp
 
-CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions data:migrate && bundle exec rails server -b 0.0.0.0
+CMD bundle exec rails db:migrate:with_data && bundle exec rails server -b 0.0.0.0

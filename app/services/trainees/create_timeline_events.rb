@@ -27,7 +27,8 @@ module Trainees
       additional_ethnic_background
       disability_disclosure
       subject
-      age_range
+      course_min_age
+      course_max_age
       course_start_date
       course_end_date
       commencement_date

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_153010) do
+ActiveRecord::Schema.define(version: 2021_05_17_112710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,9 @@ ActiveRecord::Schema.define(version: 2021_05_12_153010) do
     t.integer "min_age", null: false
     t.integer "max_age", null: false
     t.index ["code"], name: "index_courses_on_code", unique: true
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -234,7 +237,6 @@ ActiveRecord::Schema.define(version: 2021_05_12_153010) do
     t.text "additional_ethnic_background"
     t.integer "disability_disclosure"
     t.text "subject"
-    t.integer "age_range"
     t.date "course_start_date"
     t.jsonb "progress", default: {}
     t.bigint "provider_id", null: false
