@@ -4,6 +4,10 @@ class CourseDetailsForm < TraineeForm
   FIELDS = %i[
     subject
     subject_raw
+    subject_two
+    subject_two_raw
+    subject_three
+    subject_three_raw
     start_day
     start_month
     start_year
@@ -29,6 +33,8 @@ class CourseDetailsForm < TraineeForm
   before_validation :sanitise_course_dates
 
   validates :subject, autocomplete: true, presence: true
+  validates :subject_two, autocomplete: true, exclusion: { in: proc { |detail| [detail.subject, detail.subject_three] } }, allow_blank: true
+  validates :subject_three, autocomplete: true, exclusion: { in: proc { |detail| [detail.subject, detail.subject_two] } }, allow_blank: true
   validates :additional_age_range, autocomplete: true, if: -> { other_age_range? }
   validate :age_range_valid
   validate :course_start_date_valid
@@ -66,6 +72,10 @@ class CourseDetailsForm < TraineeForm
     end
   end
 
+  def has_additional_subjects?
+    subject_two.present? || subject_three.present?
+  end
+
 private
 
   def compute_fields
@@ -80,6 +90,8 @@ private
     trainee.assign_attributes({
       course_code: nil,
       subject: subject,
+      subject_two: subject_two,
+      subject_three: subject_three,
       course_age_range: course_age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
@@ -89,6 +101,8 @@ private
   def compute_attributes_from_trainee
     attributes = {
       subject: trainee.subject,
+      subject_two: trainee.subject_two,
+      subject_three: trainee.subject_three,
       start_day: trainee.course_start_date&.day,
       start_month: trainee.course_start_date&.month,
       start_year: trainee.course_start_date&.year,

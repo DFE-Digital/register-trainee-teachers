@@ -38,6 +38,26 @@ describe CourseDetailsForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:subject) }
 
+    context "when subjects are duplicated" do
+      let(:params) do
+        { subject: "Psychology",
+          subject_two: "Psychology",
+          subject_three: "Psychology" }
+      end
+
+      before do
+        subject.valid?
+      end
+
+      it "returns an error against subject two" do
+        expect(subject.errors[:subject_two]).not_to be_empty
+      end
+
+      it "returns an error against subject three" do
+        expect(subject.errors[:subject_three]).not_to be_empty
+      end
+    end
+
     describe "custom" do
       translation_key_prefix = "activemodel.errors.models.course_details_form.attributes"
 
@@ -248,7 +268,9 @@ describe CourseDetailsForm, type: :model do
         end_month: valid_end_date.month.to_s,
         end_year: valid_end_date.year.to_s,
         main_age_range: "#{min_age} to #{max_age}",
-        subject: "Psychology" }
+        subject: "Psychology",
+        subject_two: "Chemistry",
+        subject_three: "Art and design" }
     end
 
     let(:trainee) { create(:trainee) }

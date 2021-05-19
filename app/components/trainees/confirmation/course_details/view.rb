@@ -5,6 +5,7 @@ module Trainees
     module CourseDetails
       class View < GovukComponent::Base
         include SummaryHelper
+        include CourseDetailsHelper
 
         attr_accessor :data_model
 
@@ -34,7 +35,7 @@ module Trainees
         def subject
           return @not_provided_copy if data_model.subject.blank?
 
-          data_model.subject
+          subjects_for_summary_view(data_model.subject, data_model.subject_two, data_model.subject_three)
         end
 
         def course_age_range
