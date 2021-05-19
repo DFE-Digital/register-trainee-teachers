@@ -26,6 +26,7 @@ namespace :example_data do
           dttp_id: SecureRandom.uuid,
           code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
         )
+        FactoryBot.create_list(:course, rand(30..70), accredited_body_code: provider.code, route: "provider_led_postgrad")
         persona.update!(provider: provider)
       end
 
