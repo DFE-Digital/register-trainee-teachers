@@ -30,3 +30,8 @@ audit:
   <<: *default
   RAILS_ENV: audit
   RACK_ENV: audit
+
+rollover:
+  <<: *default
+  RAILS_ENV: rollover
+  RACK_ENV: rollover
