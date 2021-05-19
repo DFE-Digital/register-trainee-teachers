@@ -65,4 +65,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to(t("cancel"), view_trainee(@trainee)) %></p>
+<%= render(CancelLink::View.new(@trainee)) %>
