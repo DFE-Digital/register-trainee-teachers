@@ -23,7 +23,7 @@ module FlashBanner
     end
 
     def degree_deleted?
-      referer&.include?("degrees/confirm")
+      referer&.include?("degrees/confirm") && non_draft_trainee?
     end
   end
 end

@@ -33,6 +33,7 @@ module FlashBanner
       end
 
       context "deleting a degree" do
+        let(:trainee) { build(:trainee, :submitted_for_trn) }
         let(:referer) { "/trainees/123/degrees/confirm" }
 
         it "renders flash message" do
