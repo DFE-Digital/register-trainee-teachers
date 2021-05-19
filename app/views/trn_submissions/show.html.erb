@@ -25,7 +25,8 @@
 
     <%= render FeedbackLink::View.new(
       enabled: Settings.features.enable_feedback_link,
-      feedback_link_url: Settings.feedback_link_url,
+      feedback_link_url: Settings.trn_submitted_feedback_url,
+      feedback_type_text: "registering the trainee",
     ) %>
   </div>
 </div>

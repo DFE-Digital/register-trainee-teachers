@@ -22,5 +22,6 @@
 
 <%= render FeedbackLink::View.new(
   enabled: Settings.features.enable_feedback_link,
-  feedback_link_url: Settings.feedback_link_url,
+  feedback_link_url: Settings.recommended_for_award_feedback_url,
+  feedback_type_text: "recommending a trainee for #{@trainee.award_type}",
 ) %>

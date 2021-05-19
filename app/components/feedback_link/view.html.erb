@@ -1,6 +1,12 @@
 <% if enabled %>
-  <div class="govuk-inset-text">
-    <h2 class="govuk-heading-s">How are you finding this process?</h2>
-    <%= govuk_link_to "Give feedback to help improve the process of recommending trainees for QTS", feedback_link_url, { class: "govuk-body" } %>
-  </div>
+  <h2 class="govuk-heading-m">Giving us feedback</h2>
+  <p class="govuk-body govuk-!-margin-bottom-5">
+    Tell us how <%= feedback_type_text %> with the new service is working for you.
+    We use this to make improvements. It takes 3 minutes to complete
+  </p>
+  <%= render GovukButtonLinkTo::View.new(
+    body: "Give feedback (opens in a new tab)",
+    url: feedback_link_url,
+    target: "_blank"
+  ) %>
 <% end %>

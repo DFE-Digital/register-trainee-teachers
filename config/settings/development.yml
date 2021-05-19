@@ -1,5 +1,8 @@
-# The url for the google doc feedback link (non-live version)
-feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSdYg4IA2tMiSfqIjM9CslVgFzsSazznD6VoT41g19sJYCwsLQ/viewform"
+# The url for the google doc feedback link for recommended for award (non-live version)
+recommended_for_award_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSc5ZEOkwsd8NTh3USbaDIL2OSBUtzVFonm7whuXhzFmQK5DHw/viewform"
+
+# The url for the google doc feedback link for submitting a trainee for trn (non-live version)
+trn_submitted_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSeewi8Fl9b90dXjyEX3tE72De8r9yxcFyl51vgOi7hE_fFp1g/viewform"
 
 dttp:
   api_base_url: "https://dttp-dev.api.crm4.dynamics.com"
