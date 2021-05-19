@@ -34,6 +34,8 @@ en:
         title: Start date
       training_details:
         title: Trainee start date and ID
+        start_date:
+          title: Date trainee started
       diversity:
         diversity_disclosure:
           diversity_disclosed: Information disclosed
