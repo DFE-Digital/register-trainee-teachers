@@ -2,7 +2,7 @@
 
 class ChangeTraineeAgeRangeToEnumType < ActiveRecord::Migration[6.1]
   def up
-    change_column :trainees, :age_range, :integer
+    change_column :trainees, :age_range, :integer, using: "age_range::integer"
   end
 
   def down
