@@ -13,7 +13,7 @@ module FlashBanner
     let(:expected_title) { type == :success ? "Success" : "Important" }
 
     before do
-      render_inline(described_class.new(flash: flash, trainee: trainee, referer: referer))
+      render_inline(described_class.new(flash: flash, trainee: trainee))
     end
 
     context "non draft trainee" do
@@ -33,8 +33,11 @@ module FlashBanner
       end
 
       context "deleting a degree" do
-        let(:trainee) { build(:trainee, :submitted_for_trn) }
-        let(:referer) { "/trainees/123/degrees/confirm" }
+        let(:trainee) { create(:trainee, :submitted_for_trn, :with_degree) }
+
+        before do
+          trainee.degrees.destroy_all
+        end
 
         it "renders flash message" do
           expect(component).to have_text(expected_title)
