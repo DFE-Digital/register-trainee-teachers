@@ -72,6 +72,10 @@ FactoryBot.define do
     trait :in_progress do
       with_course_details
       with_start_date
+      with_degree
+    end
+
+    trait :with_degree do
       degrees { [build(:degree, :uk_degree_with_details)] }
     end
 

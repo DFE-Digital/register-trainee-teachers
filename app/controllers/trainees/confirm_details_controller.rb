@@ -52,15 +52,10 @@ module Trainees
     end
 
     def confirm_section_title
-      @confirm_section_title ||=
-        begin
-          case trainee_section_key
-          when "training_details"
-            "trainee start date and ID"
-          else
-            trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
-          end
-        end
+      @confirm_section_title ||= {
+        training_details: "trainee start date and ID",
+        degrees: "degree details",
+      }[trainee_section_key.to_sym] || trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
     end
 
     def flash_message_title

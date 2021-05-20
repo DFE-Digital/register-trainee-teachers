@@ -2,14 +2,13 @@
 
 module FlashBanner
   class View < GovukComponent::Base
-    attr_reader :flash, :trainee, :referer
+    attr_reader :flash, :trainee
 
     FLASH_TYPES = %i[success warning info].freeze
 
-    def initialize(flash:, trainee:, referer:)
+    def initialize(flash:, trainee:)
       @flash = flash
       @trainee = trainee
-      @referer = referer
     end
 
     def display?
@@ -23,7 +22,8 @@ module FlashBanner
     end
 
     def degree_deleted?
-      referer&.include?("degrees/confirm")
+      auditable = trainee.associated_audits.last
+      auditable&.auditable_type == "Degree" && auditable&.action == "destroy"
     end
   end
 end
