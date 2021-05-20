@@ -7,7 +7,6 @@
   <%= render FormComponents::CountryAutocomplete::View.new(
     form_field: f.govuk_collection_select(:country, countries_options, :name,
                                           :name, label: { text: "In which country is the degree institution based?", size: "s" }),
-    html_attributes: { "data-show-all-values" => false },
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
@@ -17,9 +16,6 @@
                                           :name, :name, label: { text: "Degree subject", size: "s" },
                                                         hint: { text: 'Search for the closest matching subject.
                                                          You can start typing to narrow down your search.' }),
-    html_attributes: {
-      "data-show-all-values" => false,
-    },
   ) %>
 
   <div class="govuk-form-group">

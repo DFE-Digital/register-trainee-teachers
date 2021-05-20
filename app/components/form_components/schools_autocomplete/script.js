@@ -76,7 +76,7 @@ const setupAutoComplete = (form) => {
       accessibleAutocomplete({
         element: element,
         id: input.id,
-        minLength: 3,
+        minLength: 2,
         source: (query, populateResults) => {
           return findSchools({
             query,
@@ -86,7 +86,6 @@ const setupAutoComplete = (form) => {
         },
         templates: renderTemplate,
         onConfirm: setSchoolHiddenField,
-        showAllValues: false,
         tNoResults: () => statusMessage
       })
 

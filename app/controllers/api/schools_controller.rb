@@ -21,7 +21,7 @@ module Api
     end
 
     def invalid_query?
-      params[:query].present? && params[:query].length < 3
+      params[:query].present? && params[:query].length < 2
     end
 
     def error_response

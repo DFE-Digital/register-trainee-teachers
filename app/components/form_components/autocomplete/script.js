@@ -3,7 +3,6 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import { nodeListForEach } from 'govuk-frontend/govuk/common'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
-const showAllValuesOption = component => Boolean(component.getAttribute('data-show-all-values'))
 const disableAutoselectOption = component => Boolean(component.getAttribute('data-disable-autoselect'))
 const disableConfirmOnBlurOption = component => Boolean(component.getAttribute('data-disable-confirm-on-blur'))
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
@@ -26,12 +25,19 @@ const setupAutoComplete = (component) => {
   const matches = /(\w+)\[(\w+)\]/.exec(selectEl.name)
   const rawFieldName = `${matches[1]}[${matches[2]}_raw]`
 
+  const setBlankValueOnClear = (value) => {
+    if (value === undefined) {
+      selectEl.selectedIndex = 0
+    }
+  }
+
   accessibleAutocomplete.enhanceSelectElement({
     defaultValue: defaultValueOption(component),
     selectElement: selectEl,
-    showAllValues: showAllValuesOption(component),
+    minLength: 2,
     autoselect: !disableAutoselectOption(component),
     confirmOnBlur: !disableConfirmOnBlurOption(component),
+    onConfirm: setBlankValueOnClear,
     templates: { suggestion: suggestionTemplate },
     name: rawFieldName
   })
