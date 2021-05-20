@@ -346,6 +346,10 @@ en:
           hint:
             This will help you to identify them and search for them in your trainee records.
             We may also use it if we need to get in touch with you about this trainee.
+      publish_course_details:
+        route_message: "Your %{route} courses in the Publish service"
+        route_titles:
+          provider_led_postgrad: provider-led postgrad
   pages:
     home:
       heading: Register trainee teacher

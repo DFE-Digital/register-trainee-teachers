@@ -19,6 +19,10 @@ module CourseDetailsHelper
     to_options(age_ranges(option: :additional))
   end
 
+  def route_title(route)
+    t("views.forms.publish_course_details.route_titles.#{route}")
+  end
+
 private
 
   def age_ranges(option:)
