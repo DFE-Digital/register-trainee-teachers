@@ -7,9 +7,15 @@ describe RetrieveTrnJob do
 
   let(:trn) { nil }
   let(:trainee) { create(:trainee, :submitted_for_trn) }
+  let(:configured_delay) { 6 }
+  let(:configured_poll_timeout_days) { 4 }
+  let(:timeout_date) { configured_poll_timeout_days.days.from_now }
 
   before do
     allow(Dttp::RetrieveTrn).to receive(:call).with(trainee: trainee).and_return(trn)
+    allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
+    allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)
+    allow(SlackNotifierService).to receive(:call)
   end
 
   context "TRN is available" do
@@ -17,44 +23,31 @@ describe RetrieveTrnJob do
 
     it "updates the trainee TRN attribute" do
       expect {
-        described_class.perform_now(trainee)
+        described_class.perform_now(trainee, timeout_date)
         trainee.reload
       }.to change(trainee, :trn).to(trn)
     end
 
     it "doesn't queue another job" do
-      described_class.perform_now(trainee)
+      described_class.perform_now(trainee, timeout_date)
       expect(RetrieveTrnJob).to_not have_been_enqueued
     end
   end
 
   context "TRN is not available" do
-    let(:configured_delay) { 6 }
-
-    before do
-      allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
-    end
-
-    it "queues another job to fetch the TRN 6 hours from now" do
+    it "queues another job to fetch the TRN after the configured delay" do
       Timecop.freeze(Time.zone.now) do
-        described_class.perform_now(trainee)
-        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now).with(trainee)
+        described_class.perform_now(trainee, timeout_date)
+        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now)
+          .with(trainee, timeout_date)
       end
     end
   end
 
-  context "timing out after 4 days of polling" do
-    let(:trainee) { create(:trainee, submitted_for_trn_at: configured_limit.days.ago) }
-    let(:configured_limit) { 4 }
-
-    before do
-      allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_limit)
-      allow(SlackNotifierService).to receive(:call)
-    end
-
-    it "doesn't queue another job after 4 days have passed without a TRN" do
+  context "time_out after has passed" do
+    it "doesn't queue another job" do
       expect(SlackNotifierService).to receive(:call)
-      described_class.perform_now(trainee)
+      described_class.perform_now(trainee, Time.zone.now - 1.minute)
       expect(RetrieveTrnJob).to_not have_been_enqueued
     end
   end
@@ -65,22 +58,17 @@ describe RetrieveTrnJob do
 
     it "raises a TraineeAttributeError" do
       expect {
-        described_class.perform_now(trainee)
+        described_class.perform_now(trainee, timeout_date)
       }.to raise_error(RetrieveTrnJob::TraineeAttributeError, error_msg)
     end
   end
 
   describe ".perform_with_default_delay" do
-    let(:configured_delay) { 6 }
-
-    before do
-      allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
-    end
-
     it "queues the job to execute after the configured delay" do
       Timecop.freeze(Time.zone.now) do
         described_class.perform_with_default_delay(trainee)
-        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now).with(trainee)
+        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now)
+          .with(trainee, configured_poll_timeout_days.day.from_now)
       end
     end
   end
