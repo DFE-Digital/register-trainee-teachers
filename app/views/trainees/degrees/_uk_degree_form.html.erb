@@ -3,7 +3,17 @@
 
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l">Degree details</h1>
+  <h1 class="govuk-heading-l">UK degree details</h1>
+
+  <%= render FormComponents::Autocomplete::View.new(
+    f,
+    attribute_name: :institution,
+    form_field: f.govuk_collection_select(:institution, institutions_options, :name,
+                                          :name, label: { text: "Institution", size: "s" }),
+    html_attributes: {
+      "data-show-all-values" => true,
+    },
+  ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
@@ -29,20 +39,6 @@
     },
   ) %>
 
-  <%= render FormComponents::Autocomplete::View.new(
-    f,
-    attribute_name: :institution,
-    form_field: f.govuk_collection_select(:institution, institutions_options, :name,
-                                          :name, label: { text: "Institution", size: "s" }),
-    html_attributes: {
-      "data-show-all-values" => true,
-    },
-  ) %>
-
-  <%= f.govuk_text_field :graduation_year,
-        label: { text: "Graduation year", size: "s" },
-        width: "one-quarter" %>
-
   <%= f.govuk_radio_buttons_fieldset(:grade,
         legend: { text: "Degree grade", size: "s" },
         classes: "degree-grade") do %>
@@ -57,5 +53,10 @@
       <% end %>
     <% end %>
   <% end %>
+
+  <%= f.govuk_text_field :graduation_year,
+        label: { text: "Graduation year", size: "s" },
+        width: "one-quarter" %>
+
   <%= f.govuk_submit %>
 <% end %>
