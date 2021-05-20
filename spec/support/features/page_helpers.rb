@@ -210,6 +210,10 @@ module Features
       @accessibility_page ||= PageObjects::Accessibility.new
     end
 
+    def recommended_for_qts_page
+      @recommended_for_qts_page ||= PageObjects::Trainees::RecommendedForQts.new
+    end
+
     def apply_trainee_data_page
       @apply_trainee_data_pate ||= PageObjects::Trainees::ApplyTraineeData.new
     end

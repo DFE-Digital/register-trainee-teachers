@@ -11,6 +11,7 @@
         <%= trainee_name(@trainee) %> recommended for <%= @trainee.award_type %>
       </h1>
     </div>
+    <h2 class="govuk-heading-m">Getting <%= @trainee.award_type %> status</h2>
     <p class="govuk-body">
       The Department for Education will award <%= @trainee.award_type %> where appropriate within 3
       working days.
@@ -18,10 +19,15 @@
   </div>
 </div>
 
-<p class="govuk-body govuk-!-margin-bottom-9"><%= govuk_link_to("Check trainee statuses from your list of records", trainees_path) %></p>
-
 <%= render FeedbackLink::View.new(
   enabled: Settings.features.enable_feedback_link,
   feedback_link_url: Settings.recommended_for_award_feedback_url,
   feedback_type_text: "recommending a trainee for #{@trainee.award_type}",
 ) %>
+
+<h2 class="govuk-heading-m">Next steps</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><%= govuk_link_to("view #{trainee_name(@trainee)}’s record", trainee_path(@trainee)) %></li>
+  <li><%= govuk_link_to("view all your records", trainees_path) %></li>
+</ul>  

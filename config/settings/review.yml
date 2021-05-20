@@ -1,9 +1,3 @@
-# The url for the google doc feedback link for recommended for award (non-live version)
-recommended_for_award_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSc5ZEOkwsd8NTh3USbaDIL2OSBUtzVFonm7whuXhzFmQK5DHw/viewform"
-
-# The url for the google doc feedback link for submitting a trainee for trn (non-live version)
-trn_submitted_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSeewi8Fl9b90dXjyEX3tE72De8r9yxcFyl51vgOi7hE_fFp1g/viewform"
-
 features:
   home_text: true
   use_dfe_sign_in: false

@@ -15,18 +15,26 @@
       </h1>
     </div>
 
+    <h2 class="govuk-heading-m">Getting a TRN</h2>
+
     <p class="govuk-body">The Department for Education (DfE) will issue a teacher reference number (TRN) within 3 working days.</p>
 
+    <h2 class="govuk-heading-m">Notifying your trainees</h2>
+
     <p class="govuk-body">DfE will contact trainees to give them their TRN.</p>
-
-    <%= render GovukButtonLinkTo::View.new(body: "Add another record", url: new_trainee_path) %>
-
-    <p class="govuk-body govuk-!-margin-bottom-9">or <%= govuk_link_to("check trainee statuses and manage records", trainees_path) %></p>
 
     <%= render FeedbackLink::View.new(
       enabled: Settings.features.enable_feedback_link,
       feedback_link_url: Settings.trn_submitted_feedback_url,
       feedback_type_text: "registering the trainee",
     ) %>
+
+    <h2 class="govuk-heading-m">Next steps</h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= govuk_link_to("view #{trainee_name(@trainee)}’s record", trainee_path(@trainee)) %></li>
+      <li><%= govuk_link_to("add a new trainee", new_trainee_path) %></li>
+      <li><%= govuk_link_to("view all your records", trainees_path) %></li>
+    </ul>
   </div>
 </div>
