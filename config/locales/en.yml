@@ -83,6 +83,7 @@ en:
         trainee_start_date: start date
     course_detail:
       title: Course details
+      details_not_on_publish: Details not on Publish
     school_details:
         summary_title: Schools
         lead_school_key: Lead school

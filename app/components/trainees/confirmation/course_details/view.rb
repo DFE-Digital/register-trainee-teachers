@@ -10,7 +10,7 @@ module Trainees
 
         def initialize(data_model:)
           @data_model = data_model
-          @not_provided_copy = I18n.t("components.confirmation.not_provided")
+          @not_provided_copy = t("components.confirmation.not_provided")
         end
 
         def trainee
@@ -18,7 +18,17 @@ module Trainees
         end
 
         def summary_title
-          I18n.t("components.course_detail.title")
+          t("components.course_detail.title")
+        end
+
+        def course_details
+          return t("components.course_detail.details_not_on_publish") if data_model.course_code.blank?
+
+          "#{course.name} (#{course.code})"
+        end
+
+        def course
+          @course ||= Course.find_by(code: data_model.course_code)
         end
 
         def subject

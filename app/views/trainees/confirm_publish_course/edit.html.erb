@@ -15,3 +15,5 @@
     <p class="govuk-body"><%= govuk_link_to(t(".edit_details"), "#") %></p>
   </div>
 </div>
+
+<%= render(CancelLink::View.new(@trainee)) %>
