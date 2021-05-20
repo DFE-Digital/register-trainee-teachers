@@ -21,7 +21,7 @@ module TeacherTrainingApi
 
     def call
       return unless IMPORTABLE_STATES.include?(course_attributes[:state])
-      return if further_education_level_course?
+      return if further_education_level_course? || invalid_age_range?
 
       course.update!(name: course_attributes[:name],
                      start_date: start_date,
@@ -43,6 +43,10 @@ module TeacherTrainingApi
 
     def further_education_level_course?
       course_attributes[:level] == "further_education"
+    end
+
+    def invalid_age_range?
+      course_attributes.values_at(:age_minimum, :age_maximum).include?(nil)
     end
 
     def subjects

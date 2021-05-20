@@ -67,6 +67,14 @@ module TeacherTrainingApi
           end
         end
 
+        context "course has an invalid age range" do
+          let(:course_attributes) { { age_minimum: nil } }
+
+          it "doesn't get imported" do
+            expect { subject }.to_not(change { Course.count })
+          end
+        end
+
         context "and it's draft" do
           let(:course_attributes) { { state: "draft" } }
 
