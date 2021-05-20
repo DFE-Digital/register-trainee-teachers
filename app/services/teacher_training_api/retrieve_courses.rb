@@ -6,7 +6,7 @@ module TeacherTrainingApi
 
     class Error < StandardError; end
 
-    DEFAULT_PATH = "/courses?filter[findable]=true&include=accredited_body,provider"
+    DEFAULT_PATH = "/courses?filter[findable]=true&include=accredited_body,provider&sort=name,provider.provider_name"
 
     def initialize(request_uri: nil)
       @request_uri = request_uri.presence || DEFAULT_PATH

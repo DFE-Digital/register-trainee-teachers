@@ -5,7 +5,7 @@ require "rails_helper"
 module TeacherTrainingApi
   describe RetrieveCourses do
     describe "#call" do
-      let(:path) { "/courses?filter[findable]=true&include=accredited_body,provider" }
+      let(:path) { "/courses?filter[findable]=true&include=accredited_body,provider&sort=name,provider.provider_name" }
 
       before do
         allow(Client).to receive(:get).with(path).and_return(response)
