@@ -3,13 +3,15 @@
 require "rails_helper"
 
 feature "publish course details", type: :feature, feature_publish_course_details: true do
+  include CourseDetailsHelper
+
   after do
     FormStore.clear_all(trainee.id)
   end
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists(:with_related_courses)
+    given_a_trainee_exists(:with_related_courses, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
     given_some_courses_exist
     given_i_visited_the_review_draft_page
   end
@@ -61,8 +63,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
     scenario "selecting a course" do
       when_i_visit_the_publish_course_details_page
       and_some_courses_for_other_providers_or_routes_exist
-      then_i_only_see_the_courses_for_my_provider_and_route
-      and_i_select_a_course
+      then_i_see_the_route_message
+      and_i_only_see_the_courses_for_my_provider_and_route
+      when_i_select_a_course
       and_i_submit_the_form
       then_i_see_the_confirm_publish_course_page
     end
@@ -96,6 +99,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
   def and_i_select_a_course
     publish_course_details_page.course_options.first.choose
   end
+
+  alias_method :when_i_select_a_course, :and_i_select_a_course
 
   def and_i_submit_the_form
     publish_course_details_page.submit_button.click
@@ -141,7 +146,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     create(:course, route: trainee.training_route)
   end
 
-  def then_i_only_see_the_courses_for_my_provider_and_route
+  def and_i_only_see_the_courses_for_my_provider_and_route
     course_codes_on_page = publish_course_details_page.course_options
       .map { |o| o.label.text.match(/\((.*)\)/) }
       .compact
@@ -149,6 +154,11 @@ feature "publish course details", type: :feature, feature_publish_course_details
       .sort
 
     expect(@matching_courses.map(&:code).sort).to eq(course_codes_on_page)
+  end
+
+  def then_i_see_the_route_message
+    expected_message = t("views.forms.publish_course_details.route_message", route: route_title(@trainee.training_route))
+    expect(publish_course_details_page.route_message.text).to eq(expected_message)
   end
 
   def then_i_see_the_confirm_publish_course_page

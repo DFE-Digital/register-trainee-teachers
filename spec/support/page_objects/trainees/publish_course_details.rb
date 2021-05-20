@@ -14,6 +14,8 @@ module PageObjects
       sections :course_options, CourseOptions, ".govuk-radios__item"
 
       element :submit_button, "input[name='commit']"
+
+      element :route_message, "#publish-course-details-form-code-hint"
     end
   end
 end
