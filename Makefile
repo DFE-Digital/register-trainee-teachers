@@ -70,6 +70,12 @@ sandbox:
 	$(eval space=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
+rollover:
+	$(eval env=rollover)
+	$(eval env_config=rollover)
+	$(eval space=bat-staging)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
+
 install-fetch-config:
 	[ ! -f bin/fetch_config.rb ] \
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
