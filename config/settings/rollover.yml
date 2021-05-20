@@ -1,0 +1,22 @@
+# The url for the google doc feedback link (non-live version)
+feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSdYg4IA2tMiSfqIjM9CslVgFzsSazznD6VoT41g19sJYCwsLQ/viewform"
+
+# The url for this app, also used by `dfe_sign_in`
+base_url: https://register-rollover.london.cloudapps.digital
+
+dttp:
+  back_office_url: https://dttp-ppad.crm4.dynamics.com/
+  scope: https://dttp-ppad.crm4.dynamics.com/.default
+  api_base_url: https://dttp-ppad.crm4.dynamics.com/api/data/v9.1
+
+dfe_sign_in:
+  # URL that the users are redirected to for signing in
+  issuer: https://pp-oidc.signin.education.gov.uk
+  # URL of the users profile
+  profile: https://pp-profile.signin.education.gov.uk
+
+features:
+  basic_auth: false
+
+environment:
+  name: rollover
