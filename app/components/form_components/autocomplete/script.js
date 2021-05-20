@@ -25,19 +25,12 @@ const setupAutoComplete = (component) => {
   const matches = /(\w+)\[(\w+)\]/.exec(selectEl.name)
   const rawFieldName = `${matches[1]}[${matches[2]}_raw]`
 
-  const setBlankValueOnClear = (value) => {
-    if (value === undefined) {
-      selectEl.selectedIndex = 0
-    }
-  }
-
   accessibleAutocomplete.enhanceSelectElement({
     defaultValue: defaultValueOption(component),
     selectElement: selectEl,
     minLength: 2,
     autoselect: !disableAutoselectOption(component),
     confirmOnBlur: !disableConfirmOnBlurOption(component),
-    onConfirm: setBlankValueOnClear,
     templates: { suggestion: suggestionTemplate },
     name: rawFieldName
   })

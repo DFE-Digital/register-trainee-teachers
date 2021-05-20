@@ -643,9 +643,9 @@ en:
             subject:
               blank: Select a subject
             subject_two:
-              exclusion: Enter a different second subject
+              duplicate: Enter a different second subject
             subject_three:
-              exclusion: Enter a different third subject
+              duplicate: Enter a different third subject
             main_age_range:
               blank: Select an age range
             additional_age_range:

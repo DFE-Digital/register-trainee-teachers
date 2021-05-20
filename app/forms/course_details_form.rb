@@ -33,12 +33,14 @@ class CourseDetailsForm < TraineeForm
   before_validation :sanitise_course_dates
 
   validates :subject, autocomplete: true, presence: true
-  validates :subject_two, autocomplete: true, exclusion: { in: proc { |detail| [detail.subject, detail.subject_three] } }, allow_blank: true
-  validates :subject_three, autocomplete: true, exclusion: { in: proc { |detail| [detail.subject, detail.subject_two] } }, allow_blank: true
+  validates :subject_two, autocomplete: true
+  validates :subject_three, autocomplete: true
   validates :additional_age_range, autocomplete: true, if: -> { other_age_range? }
   validate :age_range_valid
   validate :course_start_date_valid
   validate :course_end_date_valid
+  validate :subject_two_valid
+  validate :subject_three_valid
 
   delegate :apply_application?, to: :trainee
 
@@ -164,6 +166,18 @@ private
     if additional_validation && course_start_date >= course_end_date
       errors.add(:course_end_date, :before_or_same_as_start_date)
     end
+  end
+
+  def subject_two_valid
+    return if subject_two.blank?
+
+    errors.add(:subject_two, :duplicate) if subject == subject_two
+  end
+
+  def subject_three_valid
+    return if subject_three.blank?
+
+    errors.add(:subject_three, :duplicate) if [subject, subject_two].include?(subject_three)
   end
 
   def next_year
