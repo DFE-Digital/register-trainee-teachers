@@ -29,15 +29,14 @@ class DegreeForm
   validates :subject, :institution, autocomplete: true, allow_nil: true
   validate :validate_with_degree_model
 
-  delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?,
-           to: :degree
+  delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?, to: :degree
+
+  alias_method :to_param, :slug
 
   def initialize(degrees_form:, degree:, autocomplete_params: {})
     @degrees_form = degrees_form
     @degree = degree
-    self.attributes = degree.attributes
-      .symbolize_keys
-      .slice(*FIELDS)
+    self.attributes = degree.attributes.symbolize_keys.slice(*FIELDS)
     assign_attributes(autocomplete_params)
   end
 
@@ -45,15 +44,8 @@ class DegreeForm
     ActiveModel::Name.new(self, nil, "Degree")
   end
 
-  def id
-    slug
-  end
-
   def fields
-    degree.attributes
-      .symbolize_keys
-      .slice(*FIELDS)
-      .merge(attributes)
+    degree.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
   end
 
   def attributes
