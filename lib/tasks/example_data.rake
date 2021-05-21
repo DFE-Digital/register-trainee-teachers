@@ -13,6 +13,24 @@ namespace :example_data do
     FactoryBot.create_list(:school, 50)
     FactoryBot.create_list(:school, 50, lead_school: true)
 
+    trait_combinations = [
+      [],
+      %i[with_start_date with_course_details diversity_disclosed],
+      %i[with_start_date with_course_details diversity_not_disclosed],
+      %i[with_start_date submitted_for_trn with_placement_assignment with_course_details diversity_disclosed],
+      %i[with_start_date submitted_for_trn with_placement_assignment with_course_details diversity_not_disclosed],
+      %i[with_start_date trn_received with_placement_assignment with_course_details diversity_disclosed],
+      %i[with_start_date trn_received with_placement_assignment with_course_details diversity_not_disclosed],
+      %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
+      %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
+      %i[with_start_date withdrawn with_placement_assignment with_course_details diversity_disclosed],
+      %i[with_start_date withdrawn with_placement_assignment with_course_details diversity_not_disclosed],
+      %i[with_start_date deferred with_placement_assignment with_course_details diversity_disclosed],
+      %i[with_start_date deferred with_placement_assignment with_course_details diversity_not_disclosed],
+      %i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
+      %i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
+    ]
+
     PERSONAS.each do |persona_attributes|
       persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
                                            last_name: persona_attributes[:last_name],
@@ -20,33 +38,15 @@ namespace :example_data do
                                            dttp_id: SecureRandom.uuid,
                                            system_admin: persona_attributes[:system_admin])
 
-      if persona_attributes[:provider]
-        provider = Provider.find_or_create_by!(
-          name: persona_attributes[:provider],
-          dttp_id: SecureRandom.uuid,
-          code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
-        )
-        FactoryBot.create_list(:course, rand(30..70), accredited_body_code: provider.code, route: "provider_led_postgrad")
-        persona.update!(provider: provider)
-      end
+      next unless persona_attributes[:provider]
 
-      trait_combinations = [
-        [],
-        %i[with_start_date with_course_details diversity_disclosed],
-        %i[with_start_date with_course_details diversity_not_disclosed],
-        %i[with_start_date submitted_for_trn with_placement_assignment with_course_details diversity_disclosed],
-        %i[with_start_date submitted_for_trn with_placement_assignment with_course_details diversity_not_disclosed],
-        %i[with_start_date trn_received with_placement_assignment with_course_details diversity_disclosed],
-        %i[with_start_date trn_received with_placement_assignment with_course_details diversity_not_disclosed],
-        %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
-        %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
-        %i[with_start_date withdrawn with_placement_assignment with_course_details diversity_disclosed],
-        %i[with_start_date withdrawn with_placement_assignment with_course_details diversity_not_disclosed],
-        %i[with_start_date deferred with_placement_assignment with_course_details diversity_disclosed],
-        %i[with_start_date deferred with_placement_assignment with_course_details diversity_not_disclosed],
-        %i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details diversity_disclosed],
-        %i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details diversity_not_disclosed],
-      ]
+      provider = Provider.find_or_create_by!(
+        name: persona_attributes[:provider],
+        dttp_id: SecureRandom.uuid,
+        code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
+      )
+      FactoryBot.create_list(:course, rand(30..70), accredited_body_code: provider.code, route: "provider_led_postgrad")
+      persona.update!(provider: provider)
 
       rand(50...100).times do
         traits = trait_combinations.sample
