@@ -81,7 +81,7 @@ module Trainees
 
       context "trainee completed" do
         let(:trainee) do
-          create(:trainee, :completed)
+          create(:trainee, :completed, course_code: nil)
         end
 
         include_examples renders_confirmation, :personal_details

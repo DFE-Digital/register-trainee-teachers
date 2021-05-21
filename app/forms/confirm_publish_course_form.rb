@@ -50,15 +50,15 @@ class ConfirmPublishCourseForm
 
   def course_code
     course&.code
-  end 
-  
+  end
+
 private
 
   def update_trainee_attributes
     trainee.progress.course_details = true
     trainee.assign_attributes({
       subject: subject,
-      course_code: course_code, 
+      course_code: course_code,
       course_age_range: course&.age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
