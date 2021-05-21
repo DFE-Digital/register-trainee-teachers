@@ -82,7 +82,7 @@ module Dttp
       end
 
       def trainee_not_disabled?
-        trainee.disability_disclosure == Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_disabled]
+        trainee.disability_disclosure == Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability]
       end
 
       def trainee_disability_not_provided?
