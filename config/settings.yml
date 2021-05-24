@@ -33,6 +33,7 @@ features:
   trainee_export: true
   import_applications_from_apply: false
   import_courses_from_ttapi: false
+  publish_course_details: false
   routes:
     early_years_assessment_only: false 
     early_years_graduate_employment_based: false 
