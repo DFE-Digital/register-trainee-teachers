@@ -31,13 +31,6 @@ module Trainees
       let(:filters) { { subject: "Art and design" } }
 
       it { is_expected.to eq([trainee_with_subject]) }
-
-      context "with multiple subjects" do
-        let!(:trainee_with_subject_two) { create(:trainee, subject: Dttp::CodeSets::CourseSubjects::MAPPING.keys.last, subject_two: Dttp::CodeSets::CourseSubjects::MAPPING.keys.first) }
-        let!(:trainee_with_subject_three) { create(:trainee, subject: Dttp::CodeSets::CourseSubjects::MAPPING.keys.last, subject_three: Dttp::CodeSets::CourseSubjects::MAPPING.keys.first) }
-
-        it { is_expected.to eq([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
-      end
     end
 
     context "with text_search filter" do

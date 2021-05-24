@@ -34,7 +34,7 @@ module Trainees
     def subject(trainees, subject)
       return trainees if subject.blank?
 
-      trainees.where("subject = :subject OR subject_two = :subject OR subject_three = :subject", subject: subject)
+      trainees.with_subject(subject)
     end
 
     def text_search(trainees, text_search)

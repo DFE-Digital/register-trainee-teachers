@@ -112,6 +112,7 @@ class Trainee < ApplicationRecord
 
   scope :ordered_by_date, -> { order(updated_at: :desc) }
   scope :ordered_by_last_name, -> { order(last_name: :asc) }
+  scope :with_subject, ->(subject) { where("subject = :subject OR subject_two = :subject OR subject_three = :subject", subject: subject) }
 
   # Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
