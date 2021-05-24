@@ -7,9 +7,14 @@ class RetrieveAwardJob < ApplicationJob
 
   class TraineeAttributeError < StandardError; end
 
-  def perform(trainee, timeout_after)
+  def perform(trainee, timeout_after = nil)
     @timeout_after = timeout_after
     @trainee = trainee
+
+    if @timeout_after.nil?
+      self.class.perform_later(trainee, trainee.recommended_for_award_at + Settings.jobs.max_poll_duration_days.days)
+      return
+    end
 
     awarded = Dttp::RetrieveAward.call(trainee: trainee)
 

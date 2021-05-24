@@ -18,6 +18,18 @@ describe RetrieveTrnJob do
     allow(SlackNotifierService).to receive(:call)
   end
 
+  context "when timeout_after is nil" do
+    let(:timeout_date) { trainee.submitted_for_trn_at + configured_poll_timeout_days.days }
+
+    it "reenqueues RetrieveTrnJob with the trainee and default timeout_after" do
+      Timecop.freeze(Time.zone.now) do
+        expect {
+          described_class.perform_now(trainee, nil)
+        }.to enqueue_job(RetrieveTrnJob).with(trainee, timeout_date)
+      end
+    end
+  end
+
   context "TRN is available" do
     let(:trn) { "123" }
 
