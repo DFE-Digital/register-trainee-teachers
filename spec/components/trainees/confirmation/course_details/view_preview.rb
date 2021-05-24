@@ -24,7 +24,7 @@ module Trainees
             id: 1,
             subject: "Primary",
             course_age_range: [3, 11],
-            course_start_date: Date.new(2020, 0o1, 28),
+            course_start_date: Date.new(2020, 1, 28),
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           )
         end
@@ -35,7 +35,7 @@ module Trainees
             subject: "Primary",
             subject_two: "Science",
             course_age_range: [3, 11],
-            course_start_date: Date.new(2020, 0o1, 28),
+            course_start_date: Date.new(2020, 1, 28),
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           )
         end
