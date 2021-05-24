@@ -2,6 +2,12 @@
                                  heading_level: 2,
                                  rows: [
       {
+        key: "Course details",
+        value: course_details,
+        action: govuk_link_to('Change<span class="govuk-visually-hidden"> course details</span>'.html_safe,
+                              edit_trainee_publish_course_details_path(trainee)), 
+      },                          
+      {
         key: "Type of course",
         value: course_type,
       },

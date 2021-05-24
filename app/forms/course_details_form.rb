@@ -50,6 +50,12 @@ class CourseDetailsForm < TraineeForm
     new_date({ year: end_year, month: end_month, day: end_day })
   end
 
+  def course_code
+    return nil unless trainee.draft?
+
+    trainee.course_code
+  end
+
   def save!
     if valid?
       update_trainee_attributes
@@ -72,6 +78,7 @@ private
 
   def update_trainee_attributes
     trainee.assign_attributes({
+      course_code: nil,
       subject: subject,
       course_age_range: course_age_range,
       course_start_date: course_start_date,
