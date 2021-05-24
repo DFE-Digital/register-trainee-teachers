@@ -9,7 +9,8 @@ module FeedbackLink
     describe "feedback link" do
       before do
         render_inline(described_class.new(enabled: enabled,
-                                          feedback_link_url: "https://www.google.com"))
+                                          feedback_link_url: "https://www.google.com",
+                                          feedback_type_text: "recommend a trainee for QTS"))
       end
 
       context "when enabled" do
@@ -17,7 +18,7 @@ module FeedbackLink
 
         it "renders the feedback link" do
           expect(component).to have_link(
-            "Give feedback to help improve the process of recommending trainees for QTS",
+            "Give feedback (opens in a new tab)",
             href: "https://www.google.com",
           )
         end

@@ -20,6 +20,7 @@ feature "submit for TRN" do
         then_i_review_the_trainee_data
         and_i_click_the_submit_for_trn_button
         and_i_am_redirected_to_the_success_page
+        with_the_correct_content
       end
 
       scenario "displays trainee name" do
@@ -114,5 +115,12 @@ feature "submit for TRN" do
 
   def then_i_am_redirected_to_the_trainee_records_page
     expect(trainee_index_page).to be_displayed
+  end
+
+  def with_the_correct_content
+    expect(trn_success_page).to have_text("Record submitted for #{trainee_name(trainee)}")
+    expect(trn_success_page).to have_link("view #{trainee_name(trainee)}", href: trainee_path(trainee))
+    expect(trn_success_page).to have_link("add a new trainee", href: new_trainee_path)
+    expect(trn_success_page).to have_link("view all your records", href: trainees_path)
   end
 end
