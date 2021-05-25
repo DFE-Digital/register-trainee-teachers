@@ -8,6 +8,8 @@ module PageObjects
     class ReviewDraft < PageObjects::Base
       set_url "/trainees/{id}/review-draft"
 
+      STATUS_COMPLETED = "Status completed"
+
       section :course_details, PageObjects::Sections::CourseDetails, ".app-task-list__item.course-details"
       section :personal_details, PageObjects::Sections::PersonalDetails, ".app-task-list__item.personal-details"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
@@ -17,6 +19,30 @@ module PageObjects
 
       element :review_this_record_link, "#check-details"
       element :delete_this_draft_link, ".app-link--warning"
+
+      def has_personal_details_completed?
+        personal_details.status.text == STATUS_COMPLETED
+      end
+
+      def has_contact_details_completed?
+        contact_details.status.text == STATUS_COMPLETED
+      end
+
+      def has_diversity_information_completed?
+        diversity_section.status.text == STATUS_COMPLETED
+      end
+
+      def has_degree_details_completed?
+        degree_details.status.text == STATUS_COMPLETED
+      end
+
+      def has_course_details_completed?
+        course_details.status.text == STATUS_COMPLETED
+      end
+
+      def has_training_details_completed?
+        training_details.status.text == STATUS_COMPLETED
+      end
     end
   end
 end

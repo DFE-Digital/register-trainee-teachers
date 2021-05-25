@@ -19,7 +19,7 @@ feature "course details", type: :feature do
   context "trainee has existing course details" do
     background do
       given_a_trainee_exists_with_course_details
-      given_i_visited_the_review_draft_page
+      given_i_am_on_the_review_draft_page
     end
 
     describe "tracking the progress" do
@@ -27,31 +27,14 @@ feature "course details", type: :feature do
         when_i_visit_the_course_details_page
         and_i_enter_valid_parameters
         and_i_submit_the_form
-        and_i_confirm_my_details(checked: false, section: course_details_section)
+        and_i_continue_without_confirming_details
         then_i_am_redirected_to_the_review_draft_page
         and_the_section_should_be(in_progress)
-      end
-
-      scenario "renders a completed status when valid details provided" do
-        when_i_visit_the_course_details_page
-        and_i_enter_valid_parameters
-        and_i_submit_the_form
-        and_i_confirm_my_details(section: course_details_section)
-        then_i_am_redirected_to_the_review_draft_page
-        and_the_section_should_be(completed)
+        and_the_course_details_are_updated
       end
     end
 
     describe "editing the course details" do
-      scenario "submitting with valid parameters" do
-        when_i_visit_the_course_details_page
-        and_i_enter_valid_parameters
-        and_i_submit_the_form
-        and_i_confirm_my_details(checked: false, section: course_details_section)
-        then_i_am_redirected_to_the_review_draft_page
-        and_the_course_details_are_updated
-      end
-
       scenario "submitting with a partial subject/age range", js: true do
         when_i_visit_the_course_details_page
         and_i_fill_in_subject_without_selecting_a_value(with: "moose")
@@ -96,10 +79,6 @@ private
 
   def and_i_submit_the_form
     course_details_page.submit_button.click
-  end
-
-  def and_i_visit_the_record_page
-    record_page.load(id: trainee.slug)
   end
 
   def and_the_course_details_are_updated

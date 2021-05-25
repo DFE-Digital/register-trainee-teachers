@@ -12,7 +12,6 @@ feature "edit training details" do
 
   scenario "edit with valid parameters" do
     given_a_trainee_exists
-    given_i_visited_the_review_draft_page
     when_i_visit_the_training_details_page
     and_i_update_the_training_details
     then_i_am_redirected_to_the_confirm_training_details_page

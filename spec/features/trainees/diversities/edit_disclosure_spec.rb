@@ -6,7 +6,7 @@ feature "edit diversity disclosure", type: :feature do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(diversity_disclosure: nil)
-    given_i_visited_the_review_draft_page
+    given_i_am_on_the_review_draft_page
     and_i_am_on_the_diversity_disclosure_page
   end
 

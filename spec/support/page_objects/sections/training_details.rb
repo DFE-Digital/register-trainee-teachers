@@ -5,6 +5,7 @@ require_relative "base"
 module PageObjects
   module Sections
     class TrainingDetails < PageObjects::Sections::Base
+      element :link, ".govuk-link"
       element :status, ".govuk-tag"
     end
   end

@@ -12,7 +12,7 @@ feature "edit trainee record", type: :feature do
   describe "about trainee view" do
     scenario "viewing the trainee's details" do
       given_a_trainee_exists_with_a_degree
-      when_i_visit_the_trainee_record_page
+      and_i_am_on_the_trainee_record_page
       then_i_see_the_trainee_name
       then_i_see_the_trn_status
       then_i_see_the_record_details
@@ -21,7 +21,7 @@ feature "edit trainee record", type: :feature do
 
     scenario "viewing the trainee's school details,", "feature_routes.school_direct_salaried": true do
       given_a_trainee_exists(:school_direct_salaried)
-      when_i_visit_the_trainee_record_page
+      and_i_am_on_the_trainee_record_page
       then_i_see_the_school_details
     end
   end
@@ -29,7 +29,7 @@ feature "edit trainee record", type: :feature do
   describe "personal details and education view" do
     scenario "viewing the trainee's personal details and education" do
       given_a_trainee_exists_with_a_degree
-      when_i_visit_the_trainee_record_page
+      and_i_am_on_the_trainee_record_page
       and_i_visit_the_personal_details
       then_i_see_the_personal_details
       then_i_see_the_contact_details
@@ -49,10 +49,6 @@ feature "edit trainee record", type: :feature do
   def then_i_see_the_trn_status
     state_text = "activerecord.attributes.trainee.states.#{trainee.state}"
     expect(record_page.trn_status.text).to eq("Status " + I18n.t(state_text).downcase)
-  end
-
-  def when_i_visit_the_trainee_record_page
-    record_page.load(id: trainee.slug)
   end
 
   def then_i_see_the_record_details

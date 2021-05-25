@@ -22,12 +22,12 @@ feature "edit personal details", type: :feature do
 
   scenario "renders an 'in progress' status when valid personal details partially provided" do
     given_a_trainee_exists
-    given_i_visited_the_review_draft_page
+    given_i_am_on_the_review_draft_page
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page
-    and_i_enter_valid_parameters
+    and_i_fill_in_personal_details_form
     and_i_submit_the_form
-    and_confirm_my_details(checked: false)
+    and_i_continue_without_confirming_details
     then_i_am_redirected_to_the_review_draft_page
     then_the_personal_details_section_should_be_in_progress
   end
@@ -54,9 +54,8 @@ feature "edit personal details", type: :feature do
     before do
       given_a_trainee_exists(:submitted_for_trn)
       and_nationalities_exist_in_the_system
-      given_i_visited_the_record_page
       when_i_visit_the_personal_details_page
-      and_i_enter_valid_parameters
+      and_i_fill_in_personal_details_form
       and_i_submit_the_form
     end
 
@@ -72,54 +71,26 @@ private
 
   def given_valid_personal_details_are_provided
     given_a_trainee_exists
-    given_i_visited_the_review_draft_page
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page
-    and_i_enter_valid_parameters
+    and_i_fill_in_personal_details_form
     and_i_submit_the_form
-    and_confirm_my_details
+    and_i_confirm_my_details
     then_i_am_redirected_to_the_review_draft_page
   end
 
   def given_other_nationality_is_provided
     given_a_trainee_exists
-    given_i_visited_the_review_draft_page
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page
-    and_i_enter_valid_parameters(other_nationality: true)
+    and_i_fill_in_personal_details_form(other_nationality: true)
     and_i_submit_the_form
-    and_confirm_my_details
+    and_i_confirm_my_details
     then_i_am_redirected_to_the_review_draft_page
-  end
-
-  def and_nationalities_exist_in_the_system
-    @british ||= create(:nationality, name: "british")
-    @french ||= create(:nationality, name: "french")
   end
 
   def when_i_visit_the_personal_details_page
     personal_details_page.load(id: trainee.slug)
-  end
-
-  def and_i_enter_valid_parameters(other_nationality: false)
-    personal_details_page.first_names.set("Tim")
-    personal_details_page.last_name.set("Smith")
-    personal_details_page.set_date_fields("dob", "01/01/1986")
-    personal_details_page.gender.choose("Male")
-
-    if other_nationality
-      personal_details_page.nationality.check("Other")
-      personal_details_page.other_nationality.select(@french.name.titleize)
-    else
-      personal_details_page.nationality.check(@british.name.titleize)
-    end
-  end
-
-  def and_confirm_my_details(checked: true)
-    checked_option = checked ? "check" : "uncheck"
-    expect(confirm_details_page).to be_displayed(id: trainee.slug, section: "personal-details")
-    confirm_details_page.confirm.public_send(checked_option)
-    and_i_click_continue
   end
 
   def then_the_confirm_details_page_has_no_checkbox

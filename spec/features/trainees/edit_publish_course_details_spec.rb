@@ -13,7 +13,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     given_i_am_authenticated
     given_a_trainee_exists(:with_related_courses, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
     given_some_courses_exist
-    given_i_visited_the_review_draft_page
+    given_i_am_on_the_review_draft_page
   end
 
   before do

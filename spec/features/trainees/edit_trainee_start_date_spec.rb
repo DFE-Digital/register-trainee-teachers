@@ -10,7 +10,6 @@ feature "edit Trainee start date" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(:submitted_for_trn)
-    given_i_visited_the_record_page
     when_i_visit_the_edit_trainee_start_date_page
     when_i_change_the_start_date
     when_i_click_continue

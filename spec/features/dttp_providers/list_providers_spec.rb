@@ -54,10 +54,6 @@ feature "List providers" do
     click_on "View"
   end
 
-  def provider_show_page
-    @provider_show_page ||= PageObjects::Providers::Show.new
-  end
-
   def provider
     @provider ||= Provider.find_by(dttp_id: @dttp_provider.dttp_id)
   end

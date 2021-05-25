@@ -10,23 +10,20 @@ feature "completing the diversity section", type: :feature do
 
   context "progress tracking" do
     scenario "renders a 'not started' status when diversity details are not provided" do
-      and_i_visit_the_review_draft_page
+      given_i_am_on_the_review_draft_page
       then_the_diversity_section_should_be(not_started)
     end
 
     scenario "renders an 'in progress' status when diversity information partially provided" do
       given_valid_diversity_information
-      given_i_visited_the_review_draft_page
       when_i_visit_the_diversity_confirmation_page
       and_unconfirm_my_details
-      and_i_visit_the_record_page
-      and_i_visit_the_review_draft_page
       then_the_diversity_section_should_be(in_progress)
     end
 
     scenario "renders a completed status when valid diversity information provided" do
       given_valid_diversity_information
-      and_i_visit_the_review_draft_page
+      given_i_am_on_the_review_draft_page
       then_the_diversity_section_should_be(completed)
     end
   end
@@ -41,16 +38,6 @@ feature "completing the diversity section", type: :feature do
   end
 
 private
-
-  def and_i_visit_the_review_draft_page
-    review_draft_page.load(id: @trainee.slug)
-    expect(review_draft_page).to be_displayed(id: @trainee.slug)
-  end
-
-  def and_i_visit_the_record_page
-    review_draft_page.load(id: @trainee.slug)
-    expect(review_draft_page).to be_displayed(id: @trainee.slug)
-  end
 
   def then_the_diversity_section_should_be(status)
     expect(review_draft_page.diversity_section.status.text).to eq(status)

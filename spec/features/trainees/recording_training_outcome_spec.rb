@@ -91,10 +91,6 @@ feature "Recording a training outcome", type: :feature do
     outcome_date_edit_page.set_date_fields("outcome_date", @outcome_date.strftime("%d/%m/%Y"))
   end
 
-  def and_i_am_on_the_trainee_record_page
-    record_page.load(id: trainee.slug)
-  end
-
   def and_i_click_on_record_training_outcome
     record_page.record_outcome.click
   end
