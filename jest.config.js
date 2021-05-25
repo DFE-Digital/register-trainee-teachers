@@ -19,6 +19,7 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/app/webpacker/$1'
   },
   roots: ['app/webpacker'],
+  testEnvironment: 'jsdom',
   testMatch: ['**/app/webpacker/**/*.spec.js'],
   testURL: 'http://localhost/',
   testPathIgnorePatterns: []

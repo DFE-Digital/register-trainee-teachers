@@ -7,13 +7,21 @@ class RetrieveTrnJob < ApplicationJob
 
   class TraineeAttributeError < StandardError; end
 
-  def perform(trainee)
+  def perform(trainee, timeout_after = nil)
+    @timeout_after = timeout_after
+    @trainee = trainee
+
+    if @timeout_after.nil?
+      self.class.perform_later(trainee, trainee.submitted_for_trn_at + Settings.jobs.max_poll_duration_days.days)
+      return
+    end
+
     trn = Dttp::RetrieveTrn.call(trainee: trainee)
 
     if trn
       trainee.trn_received!(trn)
-    elsif continue_polling?(trainee)
-      self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee)
+    elsif continue_polling?
+      requeue
     else
       send_message_to_slack(trainee, self.class.name)
     end
@@ -21,17 +29,24 @@ class RetrieveTrnJob < ApplicationJob
 
   class << self
     def perform_with_default_delay(trainee)
-      set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee)
+      set(wait: Settings.jobs.poll_delay_hours.hours)
+        .perform_later(trainee, Settings.jobs.max_poll_duration_days.days.from_now)
     end
   end
 
 private
 
-  def continue_polling?(trainee)
+  attr_reader :trainee, :timeout_after
+
+  def continue_polling?
     if trainee.submitted_for_trn_at.nil?
       raise TraineeAttributeError, "Trainee#submitted_for_trn_at is nil - it should be timestamped (id: #{trainee.id})"
     end
 
-    trainee.submitted_for_trn_at > Settings.jobs.max_poll_duration_days.days.ago
+    Time.zone.now.utc < timeout_after
+  end
+
+  def requeue
+    self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee, timeout_after)
   end
 end
