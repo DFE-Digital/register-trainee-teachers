@@ -31,6 +31,7 @@ class CourseDetailsForm < TraineeForm
   attr_accessor(*FIELDS)
 
   before_validation :sanitise_course_dates
+  before_validation :sanitise_subjects
 
   validates :subject, autocomplete: true, presence: true
   validates :subject_two, autocomplete: true
@@ -186,6 +187,16 @@ private
 
   def max_years
     next_year + MAX_END_YEARS
+  end
+
+  def sanitise_subjects
+    return if subject_two.present? || subject_two_raw.present?
+
+    self.subject_two = subject_three
+    self.subject_two_raw = subject_three_raw
+
+    self.subject_three = nil
+    self.subject_three_raw = nil
   end
 
   def sanitise_course_dates

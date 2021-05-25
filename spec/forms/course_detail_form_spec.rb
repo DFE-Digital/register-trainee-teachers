@@ -58,6 +58,33 @@ describe CourseDetailsForm, type: :model do
       end
     end
 
+    context "when the first and third subjects are provided" do
+      let(:params) do
+        {
+          subject: "Psychology",
+          subject_raw: "Psychology",
+          subject_two: "",
+          subject_two_raw: "",
+          subject_three: "Mathematics",
+          subject_three_raw: "Mathematics",
+        }
+      end
+
+      before do
+        subject.valid?
+      end
+
+      it "populates subject two with the third subject" do
+        expect(subject.subject_two).to eq("Mathematics")
+        expect(subject.subject_two_raw).to eq("Mathematics")
+      end
+
+      it "clears the third subject slot" do
+        expect(subject.subject_three).to be_blank
+        expect(subject.subject_three_raw).to be_blank
+      end
+    end
+
     describe "custom" do
       translation_key_prefix = "activemodel.errors.models.course_details_form.attributes"
 
