@@ -2,7 +2,7 @@
 base_url: https://www.register-trainee-teachers.education.gov.uk
 
 # The url for the google doc feedback link (live version)
-feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSfhdvlUkg7oxPjl1C6FcJ2pnlc1OQ82r7o3ZMNKthhVAt_h5g/viewform?usp=sf_link"
+feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLScTW00rH5Gm8Ama38fgGNQ6Ek7CQPRyadjBfp3BvhYkwJS1jw/viewform"
 
 # The url for the google doc feedback link for recommended for award (live version)
 recommended_for_award_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLScqCdDNyDHNBuUDG5YGWL7TzFI2WdmL6ib5326tUsphtC7PfQ/viewform"
@@ -23,7 +23,7 @@ dfe_sign_in:
 
 features:
   basic_auth: false
-  enable_feedback_link: false
+  enable_feedback_link: true
 
 environment:
   name: beta
