@@ -22,3 +22,7 @@ import_providers_from_dttp:
   cron: "0 4 * * *"
   class: "Dttp::SyncProvidersJob"
   queue: dttp
+run_consistency_check_job:
+  cron: "0 2 * * *"
+  class: "RunConsistencyChecksJob"
+  queue: dttp
