@@ -50,6 +50,15 @@ feature "edit personal details", type: :feature do
     then_i_see_error_messages_for_partially_completed_nationalities
   end
 
+  scenario "entering valid nationalities without selecting a value", js: true do
+    given_a_trainee_exists
+    and_nationalities_exist_in_the_system
+    when_i_visit_the_personal_details_page
+    and_i_fill_in_nationalities_without_selecting_a_value(with: ["british", "french", "south african"])
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_confirm_page
+  end
+
   context "as a non-draft trainee" do
     before do
       given_a_trainee_exists(:submitted_for_trn)
@@ -87,6 +96,12 @@ private
     and_i_submit_the_form
     and_i_confirm_my_details
     then_i_am_redirected_to_the_review_draft_page
+  end
+
+  def and_nationalities_exist_in_the_system
+    @british ||= create(:nationality, name: "british")
+    @french ||= create(:nationality, name: "french")
+    @south_african ||= create(:nationality, name: "south african")
   end
 
   def when_i_visit_the_personal_details_page
@@ -154,5 +169,9 @@ private
         "activemodel.errors.validators.autocomplete.other_nationality1",
       ),
     )
+  end
+
+  def then_i_am_redirected_to_the_confirm_page
+    expect(page.current_path).to eq "/trainees/#{trainee.slug}/personal-details/confirm"
   end
 end
