@@ -6,7 +6,7 @@ feature "Create a draft trainee" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists
-    given_i_visited_the_review_draft_page
+    given_i_am_on_the_review_draft_page
   end
 
   scenario "deleting a draft trainee" do

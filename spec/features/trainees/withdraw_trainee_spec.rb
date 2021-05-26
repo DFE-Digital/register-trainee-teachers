@@ -137,10 +137,6 @@ feature "Withdrawing a trainee", type: :feature do
     end
   end
 
-  def and_i_am_on_the_trainee_record_page
-    record_page.load(id: trainee.slug)
-  end
-
   def when_i_choose(option)
     withdrawal_page.choose(option)
   end

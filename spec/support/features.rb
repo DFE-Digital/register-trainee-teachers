@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "features/authentication_steps"
-require_relative "features/trainee_steps"
-require_relative "features/dttp_steps"
-require_relative "features/common_steps"
-require_relative "features/page_helpers"
-require_relative "features/diversity_steps"
-require_relative "features/confirmation_steps"
-require_relative "features/js_helpers"
+feature_support_files = Dir["#{__dir__}/features/*"]
+feature_support_files.each { |file| require file }
+
 require_relative "dfe_sign_in_user_helper"
 
 RSpec.configure do |config|
@@ -26,14 +21,10 @@ RSpec.configure do |config|
     segments[0..-2].reduce(Settings.features) { |settings, segment| settings[segment] }[final_key.to_sym] = value
   end
 
-  config.include Features::AuthenticationSteps, type: :feature
-  config.include Features::TraineeSteps, type: :feature
-  config.include Features::DttpSteps, type: :feature
-  config.include Features::CommonSteps, type: :feature
-  config.include Features::PageHelpers, type: :feature
-  config.include Features::DiversitySteps, type: :feature
-  config.include Features::ConfirmationSteps, type: :feature
-  config.include Features::JsHelpers, type: :feature
+  feature_support_files.map { |path| File.basename(path, ".rb") }.each do |file_name|
+    config.include "Features::#{file_name.camelize}".constantize, type: :feature
+  end
+
   config.include DfESignInUserHelper, type: :feature
 
   config.around :each do |example|

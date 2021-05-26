@@ -92,10 +92,6 @@ feature "Reinstating a trainee", type: :feature do
     end
   end
 
-  def and_i_am_on_the_trainee_record_page
-    record_page.load(id: trainee.slug)
-  end
-
   def and_i_click_on_reinstate
     record_page.reinstate.click
   end
