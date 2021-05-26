@@ -3,9 +3,6 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import { nodeListForEach } from 'govuk-frontend/govuk/common'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
-const showAllValuesOption = component => Boolean(component.getAttribute('data-show-all-values'))
-const disableAutoselectOption = component => Boolean(component.getAttribute('data-disable-autoselect'))
-const disableConfirmOnBlurOption = component => Boolean(component.getAttribute('data-disable-confirm-on-blur'))
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
 
 const suggestionTemplate = (value) => {
@@ -29,9 +26,8 @@ const setupAutoComplete = (component) => {
   accessibleAutocomplete.enhanceSelectElement({
     defaultValue: defaultValueOption(component),
     selectElement: selectEl,
-    showAllValues: showAllValuesOption(component),
-    autoselect: !disableAutoselectOption(component),
-    confirmOnBlur: !disableConfirmOnBlurOption(component),
+    minLength: 2,
+    autoselect: true,
     templates: { suggestion: suggestionTemplate },
     name: rawFieldName
   })

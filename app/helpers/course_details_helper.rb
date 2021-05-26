@@ -23,6 +23,12 @@ module CourseDetailsHelper
     t("views.forms.publish_course_details.route_titles.#{route}")
   end
 
+  def subjects_for_summary_view(subject, subject_two, subject_three)
+    additional_subjects = [subject_two, subject_three].reject(&:blank?).join(" and ")
+
+    [subject, additional_subjects].reject(&:blank?).join(" with ")
+  end
+
 private
 
   def age_ranges(option:)

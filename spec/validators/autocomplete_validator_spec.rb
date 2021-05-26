@@ -43,4 +43,14 @@ describe AutocompleteValidator do
         .to("Does jeeves")
     end
   end
+
+  context "when the raw value is blank" do
+    let(:search) { "Does ask jeeves still exist?" }
+    let(:search_raw) { "" }
+
+    it "does not add an error" do
+      expect(subject).to be_valid
+      expect(subject.errors[:search]).to be_blank
+    end
+  end
 end

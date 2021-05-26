@@ -56,6 +56,25 @@ describe PersonalDetailsForm, type: :model do
           ),
         )
       end
+
+      context "when a blank autocomplete value is submitted" do
+        let(:params) do
+          ActionController::Parameters.new({
+            "other" => "1",
+            "other_nationality1" => "French",
+            "other_nationality1_raw" => "",
+            "nationality_names" => [""],
+          }).permit!
+        end
+
+        it "returns an error " do
+          expect(subject.errors[:nationality_names]).to include(
+            I18n.t(
+              "activemodel.errors.models.personal_details_form.attributes.nationality_names.empty_nationalities",
+            ),
+          )
+        end
+      end
     end
 
     context "date of birth" do

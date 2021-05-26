@@ -13,6 +13,10 @@ module Trainees
           render(Trainees::Confirmation::CourseDetails::View.new(data_model: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])))
         end
 
+        def with_multiple_subjects
+          render(Trainees::Confirmation::CourseDetails::View.new(data_model: mock_trainee_with_multiple_subjects))
+        end
+
       private
 
         def mock_trainee
@@ -20,7 +24,18 @@ module Trainees
             id: 1,
             subject: "Primary",
             course_age_range: [3, 11],
-            course_start_date: Date.new(2020, 0o1, 28),
+            course_start_date: Date.new(2020, 1, 28),
+            training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+          )
+        end
+
+        def mock_trainee_with_multiple_subjects
+          Trainee.new(
+            id: 1,
+            subject: "Primary",
+            subject_two: "Science",
+            course_age_range: [3, 11],
+            course_start_date: Date.new(2020, 1, 28),
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           )
         end

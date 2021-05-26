@@ -4,6 +4,10 @@ class CourseDetailsForm < TraineeForm
   FIELDS = %i[
     subject
     subject_raw
+    subject_two
+    subject_two_raw
+    subject_three
+    subject_three_raw
     start_day
     start_month
     start_year
@@ -27,12 +31,17 @@ class CourseDetailsForm < TraineeForm
   attr_accessor(*FIELDS)
 
   before_validation :sanitise_course_dates
+  before_validation :sanitise_subjects
 
   validates :subject, autocomplete: true, presence: true
+  validates :subject_two, autocomplete: true
+  validates :subject_three, autocomplete: true
   validates :additional_age_range, autocomplete: true, if: -> { other_age_range? }
   validate :age_range_valid
   validate :course_start_date_valid
   validate :course_end_date_valid
+  validate :subject_two_valid
+  validate :subject_three_valid
 
   delegate :apply_application?, to: :trainee
 
@@ -66,6 +75,10 @@ class CourseDetailsForm < TraineeForm
     end
   end
 
+  def has_additional_subjects?
+    subject_two.present? || subject_three.present?
+  end
+
 private
 
   def compute_fields
@@ -80,6 +93,8 @@ private
     trainee.assign_attributes({
       course_code: nil,
       subject: subject,
+      subject_two: subject_two,
+      subject_three: subject_three,
       course_age_range: course_age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
@@ -89,6 +104,8 @@ private
   def compute_attributes_from_trainee
     attributes = {
       subject: trainee.subject,
+      subject_two: trainee.subject_two,
+      subject_three: trainee.subject_three,
       start_day: trainee.course_start_date&.day,
       start_month: trainee.course_start_date&.month,
       start_year: trainee.course_start_date&.year,
@@ -152,12 +169,34 @@ private
     end
   end
 
+  def subject_two_valid
+    return if subject_two.blank?
+
+    errors.add(:subject_two, :duplicate) if subject == subject_two
+  end
+
+  def subject_three_valid
+    return if subject_three.blank?
+
+    errors.add(:subject_three, :duplicate) if [subject, subject_two].include?(subject_three)
+  end
+
   def next_year
     Time.zone.now.year.next
   end
 
   def max_years
     next_year + MAX_END_YEARS
+  end
+
+  def sanitise_subjects
+    return if subject_two.present? || subject_two_raw.present?
+
+    self.subject_two = subject_three
+    self.subject_two_raw = subject_three_raw
+
+    self.subject_three = nil
+    self.subject_three_raw = nil
   end
 
   def sanitise_course_dates

@@ -237,6 +237,22 @@ describe Trainee do
     end
   end
 
+  describe "#with_subject" do
+    let!(:trainee_with_subject) { create(:trainee, subject: "Art and design") }
+    let!(:trainee_without_subject) { create(:trainee, subject: "Mathematics") }
+
+    subject { described_class.with_subject("Art and design") }
+
+    it { is_expected.to eq([trainee_with_subject]) }
+
+    context "with multiple subjects" do
+      let!(:trainee_with_subject_two) { create(:trainee, subject: "Mathematics", subject_two: "Art and design") }
+      let!(:trainee_with_subject_three) { create(:trainee, subject: "Mathematics", subject_two: "Science", subject_three: "Art and design") }
+
+      it { is_expected.to eq([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
+    end
+  end
+
   describe "#ordered_by_drafts" do
     let(:deferred_trainee_a) { create(:trainee, :deferred, id: 1) }
     let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, id: 2) }

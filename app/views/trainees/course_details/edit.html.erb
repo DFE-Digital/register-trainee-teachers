@@ -19,8 +19,9 @@
         form_field: f.govuk_collection_select(:subject, course_subjects_options,
                                               :name, :name, label: { text: "Subject", size: "s" },
                                                             hint: { text: "Search for the closest matching subject" }),
-        html_attributes: { "data-show-all-values" => true },
       ) %>
+
+      <%= render "additional_subjects", f: f %>
 
       <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
         <% main_age_ranges_options.each_with_index do |age_range, index| %>
@@ -41,7 +42,6 @@
                                                   :name,
                                                   :name,
                                                   label: { text: "Other age range", size: "s" }),
-            html_attributes: { "data-show-all-values" => true },
           ) %>
 
         <% end %>

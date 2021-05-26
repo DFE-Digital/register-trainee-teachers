@@ -10,6 +10,12 @@ class PersonalDetailsForm < TraineeForm
     nationality_ids
   ].freeze
 
+  NATIONALITY_FIELD_MAPPINGS = {
+    other_nationality1_raw: :other_nationality1,
+    other_nationality2_raw: :other_nationality2,
+    other_nationality3_raw: :other_nationality3,
+  }.freeze
+
   attr_accessor(*FIELDS, :day, :month, :year, :other_nationality1,
                 :other_nationality1_raw, :other_nationality2,
                 :other_nationality2_raw, :other_nationality3,
@@ -52,6 +58,8 @@ class PersonalDetailsForm < TraineeForm
 
     @_nationality_ids =
       begin
+        reset_blank_nationalities
+
         if new_attributes[:nationality_names].blank?
           trainee.nationality_ids
         else
@@ -142,5 +150,13 @@ private
     if other_is_selected? && new_attributes[:other_nationality1].blank?
       errors.add(:other_nationality1, :blank)
     end
+  end
+
+  def reset_blank_nationalities
+    return if params[NATIONALITY_FIELD_MAPPINGS.keys.first].nil?
+
+    raw_values = params.slice(*NATIONALITY_FIELD_MAPPINGS.keys).transform_keys { |key| NATIONALITY_FIELD_MAPPINGS[key.to_sym] }.select { |_key, value| value.blank? }
+
+    params.merge!(raw_values)
   end
 end

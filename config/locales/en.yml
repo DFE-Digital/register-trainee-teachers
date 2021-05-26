@@ -439,11 +439,23 @@ en:
 
 
             If the details are wrong for this trainee only, you can edit them here.
+      course_details:
+        view:
+          subject:
+            one: Subject
+            other: Subjects
       schools:
         view:
           summary_title: Schools
           lead_school: Lead school
           employing_school: Employing school
+    course_details:
+      additional_subjects:
+        add_additional_subjects: Add additional subjects
+        main_subject: The first subject is the main one. It represents the bursary or scholarship available if applicable.
+        subject_hint: Search for the closest matching subject
+        subject_two: Second subject (optional)
+        subject_three: Third subject (optional)
     confirm_publish_course:
       edit:
         confirm_course: Confirm course
@@ -535,7 +547,9 @@ en:
         email:
           invalid: Enter an email address in the correct format, like name@example.com
         autocomplete:
-          subject: Select a subject from the list - your entry is not recognised
+          subject: &subject Select a subject from the list - your entry is not recognised
+          subject_two: *subject
+          subject_three: *subject
           additional_age_range: Select an age range from the list - your entry is not recognised
           institution: Select an institution from the list - your entry is not recognised
           other_nationality1: &nationality Select a nationality from the list - your entry is not recognised
@@ -628,6 +642,10 @@ en:
           attributes:
             subject:
               blank: Select a subject
+            subject_two:
+              duplicate: Enter a different second subject
+            subject_three:
+              duplicate: Enter a different third subject
             main_age_range:
               blank: Select an age range
             additional_age_range:

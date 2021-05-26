@@ -12,7 +12,7 @@
         value: course_type,
       },
       {
-        key: "Subject",
+        key: t(".subject", count: trainee.subjects.count),
         value: subject,
         action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe,
                               edit_trainee_course_details_path(trainee)),

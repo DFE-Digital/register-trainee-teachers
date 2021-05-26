@@ -17,10 +17,6 @@ module FormComponents
         render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "test-html-attribute" => "testing" }))
       end
 
-      def with_show_all_values
-        render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "data-show-all-values" => true }))
-      end
-
       def with_default_value
         render(FormComponents::Autocomplete::View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "data-default-value" => "France" }))
       end

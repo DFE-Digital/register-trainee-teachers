@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_17_112710) do
+ActiveRecord::Schema.define(version: 2021_05_19_111721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +262,8 @@ ActiveRecord::Schema.define(version: 2021_05_17_112710) do
     t.integer "course_min_age"
     t.integer "course_max_age"
     t.string "course_code"
+    t.text "subject_two"
+    t.text "subject_three"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"

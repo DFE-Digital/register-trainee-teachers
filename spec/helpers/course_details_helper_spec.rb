@@ -38,4 +38,33 @@ describe CourseDetailsHelper do
       expect(additional_age_ranges_options.second.name).to eq "additional_age_range"
     end
   end
+
+  describe "#subjects_for_summary_view" do
+    let(:subject_one) { "Biology" }
+    let(:subject_two) { "" }
+    let(:subject_three) { "" }
+
+    subject { subjects_for_summary_view(subject_one, subject_two, subject_three) }
+
+    it { is_expected.to eq("Biology") }
+
+    context "with two subjects" do
+      let(:subject_two) { "Art and design" }
+
+      it { is_expected.to eq("Biology with Art and design") }
+    end
+
+    context "without a second subject" do
+      let(:subject_three) { "Mathematics" }
+
+      it { is_expected.to eq("Biology with Mathematics") }
+    end
+
+    context "with three subjects" do
+      let(:subject_two) { "Art and design" }
+      let(:subject_three) { "Mathematics" }
+
+      it { is_expected.to eq("Biology with Art and design and Mathematics") }
+    end
+  end
 end

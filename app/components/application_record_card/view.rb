@@ -4,6 +4,7 @@ module ApplicationRecordCard
   class View < GovukComponent::Base
     include SanitizeHelper
     include TraineeHelper
+    include CourseDetailsHelper
 
     with_collection_parameter :record
 
@@ -23,7 +24,7 @@ module ApplicationRecordCard
     def subject
       return "No subject provided" if record.subject.blank?
 
-      record.subject
+      subjects_for_summary_view(record.subject, record.subject_two, record.subject_three)
     end
 
     def route
