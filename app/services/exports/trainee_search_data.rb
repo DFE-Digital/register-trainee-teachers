@@ -2,8 +2,8 @@
 
 module Exports
   class TraineeSearchData
-    def initialize(trainees)
-      @data_for_export = format_trainees(trainees)
+    def initialize(trainees, include_provider: false)
+      @data_for_export = format_trainees(trainees, include_provider)
     end
 
     def data
@@ -26,7 +26,7 @@ module Exports
 
     attr_reader :data_for_export
 
-    def format_trainees(trainees)
+    def format_trainees(trainees, include_provider)
       trainees.map do |trainee|
         {
           "First name" => trainee.first_names,
@@ -42,7 +42,9 @@ module Exports
           "Last updated date" => trainee.updated_at,
           "TRN Submitted date" => trainee.submitted_for_trn_at,
           "Award submitted date" => trainee.recommended_for_award_at,
-        }
+        }.tap do |fields|
+          fields.merge!("Provider Name" => trainee.provider.name) if include_provider
+        end
       end
     end
 

@@ -36,6 +36,14 @@ module Exports
       it "sets the correct row values" do
         expect(subject.data).to include(expected_output.values.join(","))
       end
+
+      context "with provider option enabled" do
+        subject { described_class.new([trainee], include_provider: true) }
+
+        it "includes the provider name" do
+          expect(subject.data).to include(trainee.provider.name)
+        end
+      end
     end
 
     describe "#time" do
