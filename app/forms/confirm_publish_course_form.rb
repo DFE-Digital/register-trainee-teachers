@@ -28,8 +28,11 @@ class ConfirmPublishCourseForm
   def save
     return false unless valid?
 
-    update_trainee_attributes
-    trainee.save!
+    ActiveRecord::Base.transaction do
+      trainee.clear_additional_subjects if trainee.additional_subjects?
+      update_trainee_attributes
+      trainee.save!
+    end
   end
 
   def subject
