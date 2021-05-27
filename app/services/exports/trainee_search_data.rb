@@ -33,7 +33,7 @@ module Exports
           "Last name" => trainee.last_name,
           "Trainee Id" => trainee.trainee_id,
           "TRN" => trainee.trn,
-          "Status" => award_state(trainee),
+          "Status" => status(trainee),
           "Route" => trainee.training_route,
           "Subject" => trainee.subject,
           "Course start date" => trainee.course_start_date,
@@ -48,11 +48,8 @@ module Exports
       end
     end
 
-    def award_state(trainee)
-      {
-        recommended_for_award: I18n.t("exports.trainees.award_recommended", award_type: trainee.award_type),
-        awarded: I18n.t("exports.trainees.award_given", award_type: trainee.award_type),
-      }[trainee.state.to_sym] || trainee.state
+    def status(trainee)
+      I18n.t("activerecord.attributes.trainee.states.#{trainee.state}", award_type: trainee.award_type)
     end
   end
 end

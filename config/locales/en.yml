@@ -490,10 +490,10 @@ en:
           draft: Draft
           submitted_for_trn: Pending TRN
           trn_received: TRN received
-          recommended_for_award: QTS recommended
+          recommended_for_award: "%{award_type} recommended"
           withdrawn: Withdrawn
           deferred: Deferred
-          awarded: QTS awarded
+          awarded: "%{award_type} awarded"
     errors:
       models:
         trainee:
@@ -743,7 +743,3 @@ en:
     schools:
       errors:
         bad_request: The query param needs to be at least 3 characters
-  exports:
-    trainees:
-      award_recommended: Recommended for %{award_type}
-      award_given: Awarded %{award_type}

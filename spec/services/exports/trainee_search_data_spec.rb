@@ -5,7 +5,7 @@ require "rails_helper"
 module Exports
   describe TraineeSearchData do
     let(:trainee) do
-      create(:trainee, :with_course_details, :submitted_for_trn, :trn_received, :recommended_for_award, :awarded)
+      build(:trainee, :with_course_details, :submitted_for_trn, :trn_received, :recommended_for_award, :awarded)
     end
 
     subject { described_class.new([trainee]) }
@@ -17,7 +17,7 @@ module Exports
           "Last name" => trainee.last_name,
           "Trainee Id" => trainee.trainee_id,
           "TRN" => trainee.trn,
-          "Status" => t("exports.trainees.award_given", award_type: trainee.award_type),
+          "Status" => t("activerecord.attributes.trainee.states.#{trainee.state}", award_type: trainee.award_type),
           "Route" => trainee.training_route,
           "Subject" => trainee.subject,
           "Course start date" => trainee.course_start_date,
@@ -42,6 +42,22 @@ module Exports
 
         it "includes the provider name" do
           expect(subject.data).to include(trainee.provider.name)
+        end
+      end
+
+      context "rendering various states in human readable terms" do
+        shared_examples "state is humanised" do |state|
+          context state do
+            let(:trainee) { build(:trainee, state) }
+
+            specify do
+              expect(subject.data).to include(I18n.t("activerecord.attributes.trainee.states.#{state}"))
+            end
+          end
+        end
+
+        (Trainee.states.keys - %w[recommended_for_award awarded]).each do |state|
+          it_behaves_like "state is humanised", state
         end
       end
     end
