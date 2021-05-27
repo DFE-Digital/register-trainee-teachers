@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "view pages" do
+feature "sign in page" do
   before do
     sign_in_page.load
   end
