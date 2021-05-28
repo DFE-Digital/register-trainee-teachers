@@ -186,12 +186,4 @@ class Trainee < ApplicationRecord
   def subjects
     [subject, subject_two, subject_three].reject(&:blank?)
   end
-
-  def additional_subjects?
-    subject_two || subject_three
-  end
-
-  def clear_additional_subjects
-    subject_two&.clear && subject_three&.clear
-  end
 end

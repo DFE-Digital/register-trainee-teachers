@@ -28,11 +28,8 @@ class ConfirmPublishCourseForm
   def save
     return false unless valid?
 
-    ActiveRecord::Base.transaction do
-      trainee.clear_additional_subjects if trainee.additional_subjects?
-      update_trainee_attributes
-      trainee.save!
-    end
+    update_trainee_attributes
+    trainee.save!
   end
 
   def subject
@@ -61,6 +58,8 @@ private
     trainee.progress.course_details = true
     trainee.assign_attributes({
       subject: subject,
+      subject_two: nil,
+      subject_three: nil,
       course_code: course_code,
       course_age_range: course&.age_range,
       course_start_date: course_start_date,

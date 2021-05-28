@@ -42,9 +42,9 @@ describe ConfirmPublishCourseForm, type: :model do
       it "removed the surplus subjects on save" do
         expect { subject.save }
             .to change { trainee.subject_two }
-            .from(trainee.subject_two).to("")
+            .from(trainee.subject_two).to(nil)
             .and change { trainee.subject_three }
-            .from(trainee.subject_three).to("")
+            .from(trainee.subject_three).to(nil)
       end
     end
   end
