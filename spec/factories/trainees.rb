@@ -237,5 +237,11 @@ FactoryBot.define do
     trait :with_apply_application do
       apply_application
     end
+
+    trait :with_multiple_subjects do
+      with_course_details
+      subject_two { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
+      subject_three { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
+    end
   end
 end
