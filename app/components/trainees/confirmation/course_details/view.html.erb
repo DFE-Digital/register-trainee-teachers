@@ -1,38 +1,4 @@
-<%= render SummaryCard::View.new(trainee: trainee, title: summary_title,
+<%= render SummaryCard::View.new(trainee: trainee,
+                                 title: summary_title,
                                  heading_level: 2,
-                                 rows: [
-      {
-        key: "Course details",
-        value: course_details,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> course details</span>'.html_safe,
-                              edit_trainee_publish_course_details_path(trainee)), 
-      },                          
-      {
-        key: "Type of course",
-        value: course_type,
-      },
-      {
-        key: t(".subject", count: trainee.subjects.count),
-        value: subject,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe,
-                              edit_trainee_course_details_path(trainee)),
-      },
-      {
-        key: "Age range",
-        value: course_age_range,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> age range</span>'.html_safe,
-                              edit_trainee_course_details_path(trainee)),
-      },
-      {
-        key: "Course start date",
-        value: course_start_date,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> course start date</span>'.html_safe,
-                              edit_trainee_course_details_path(trainee)),
-      },
-      {
-        key: "Course end date",
-        value: course_end_date,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> course end date</span>'.html_safe,
-                              edit_trainee_course_details_path(trainee)),
-      },
-    ]) %>
+                                 rows: rows) %>

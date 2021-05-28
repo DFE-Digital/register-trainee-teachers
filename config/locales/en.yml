@@ -83,6 +83,12 @@ en:
         trainee_start_date: start date
     course_detail:
       title: Course details
+      type_of_course: Type of course
+      subject: Subject
+      age_range: Age range
+      course_start_date: Course start date
+      course_end_date: Course end date
+      course_details: Course details
       details_not_on_publish: Details not on Publish
     school_details:
         summary_title: Schools
@@ -424,15 +430,20 @@ en:
     confirmation:
       confirm_publish_course:
         view:
+          change: Change
           change_course: Change course
           heading: Is this the course you want to add?
           heading_text: These are the course details as listed on Publish teacher training courses.
           summary_title: Course details
+          type_of_course: Subject
           subject: Subject
           level: Level
           age_range: Age range
           start_date: Start date
+          course_start_date: Course start date
+          course_end_date: Course end date
           duration: Duration
+          course_details: Course details
           incorrect_details_title: What if the details are incorrect?
           incorrect_details_text:
             If the details are incorrect for all trainees, you should <a class="govuk-link" href="https://www.publish-teacher-training-courses.service.gov.uk/">update the course on Publish</a>.

@@ -28,7 +28,7 @@ module Trainees
           it "tells the user that no data has been entered for course details, course type, subject, age range, course start date and course end date" do
             found = component.find_all(".govuk-summary-list__row")
 
-            expect(found.size).to eq(6)
+            expect(found.size).to eq(5)
 
             found.at(1..5).each do |row|
               expect(row.find(".govuk-summary-list__value")).to have_text(t("components.confirmation.not_provided"))
@@ -37,10 +37,8 @@ module Trainees
         end
 
         context "when data has been provided" do
-          subject { component.find(".govuk-summary-list__row.course-details .govuk-summary-list__value") }
-
-          context "with a publish course" do
-            let(:trainee) { create(:trainee, :with_course_details, id: 1) }
+          context "with a publish course", feature_publish_course_details: true do
+            let(:trainee) { create(:trainee, :with_course_details, :with_related_courses, courses_count: 1) }
             let(:course) { instance_double("course", name: "some_name", code: "some_code") }
 
             before do
@@ -49,12 +47,13 @@ module Trainees
             end
 
             it "renders the course details" do
-              expect(subject).to have_text("#{course.name} (#{course.code})")
+              expect(component.find(".govuk-summary-list__row.course-details .govuk-summary-list__value"))
+                .to have_text("#{course.name} (#{course.code})")
             end
 
             it "renders the course type" do
               expect(component.find(".govuk-summary-list__row.type-of-course .govuk-summary-list__value"))
-                .to have_text(trainee.training_route.humanize)
+                .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
             end
 
             it "renders the subject" do
@@ -74,14 +73,14 @@ module Trainees
           end
 
           context "without a publish course" do
-            let(:trainee) { create(:trainee, :with_course_details, course_code: nil) }
+            let(:trainee) { create(:trainee) }
 
             before do
               render_inline(View.new(data_model: trainee))
             end
 
-            it "renders the not on publish message" do
-              expect(subject).to have_text(t("components.course_detail.details_not_on_publish"))
+            it "doesn't render course details information" do
+              expect(component).not_to have_selector(".govuk-summary-list__row.course-details")
             end
           end
         end

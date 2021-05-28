@@ -6,6 +6,7 @@ module Trainees
       class View < GovukComponent::Base
         include SummaryHelper
         include CourseDetailsHelper
+        include TraineeHelper
 
         attr_accessor :data_model
 
@@ -22,14 +23,34 @@ module Trainees
           t("components.course_detail.title")
         end
 
+        def rows
+          [
+            { key: t("components.course_detail.type_of_course"), value: course_type },
+            { key: t("components.course_detail.subject"), value: subject, action: action_link("subject") },
+            { key: t("components.course_detail.age_range"), value: course_age_range, action: action_link("age range") },
+            { key: t("components.course_detail.course_start_date"), value: course_start_date, action: action_link("course start date") },
+            { key: t("components.course_detail.course_end_date"), value: course_end_date, action: action_link("course end date") },
+          ].tap do |collection|
+            if show_publish_courses?(trainee)
+              collection.unshift({
+                key: t("components.course_detail.course_details"),
+                value: course_details,
+                action: action_link("course details", path: edit_trainee_publish_course_details_path(trainee)),
+              })
+            end
+          end
+        end
+
+      private
+
+        def action_link(text, path: edit_trainee_course_details_path(trainee))
+          govuk_link_to("#{t(:change)}<span class='govuk-visually-hidden'> #{text}</span>".html_safe, path)
+        end
+
         def course_details
           return t("components.course_detail.details_not_on_publish") if data_model.course_code.blank?
 
           "#{course.name} (#{course.code})"
-        end
-
-        def course
-          @course ||= Course.find_by(code: data_model.course_code)
         end
 
         def subject
@@ -60,6 +81,10 @@ module Trainees
           return @not_provided_copy if data_model.course_end_date.blank?
 
           date_for_summary_view(data_model.course_end_date)
+        end
+
+        def course
+          @course ||= Course.find_by(code: data_model.course_code)
         end
       end
     end
