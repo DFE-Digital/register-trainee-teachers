@@ -175,12 +175,12 @@ private
       next unless find_nationality(raw_value)
 
       public_send("other_nationality#{index + 1}=", raw_value)
-      new_attributes[:"other_nationality#{index + 1}"] << raw_value
+      new_attributes[:"other_nationality#{index + 1}"] = raw_value
       nationality_ids[index] = find_nationality(raw_value).id
     end
   end
 
   def find_nationality(raw_value)
-    Nationality.find_by(name: raw_value)
+    Nationality.find_by(name: raw_value&.downcase)
   end
 end
