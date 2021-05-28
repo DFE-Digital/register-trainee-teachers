@@ -355,7 +355,7 @@ en:
           provider_led_postgrad: provider-led postgrad
   pages:
     home:
-      heading: Register trainee teacher
+      heading: Register trainee teachers
       body:
         1: Register trainees with the Department for Education and record the outcome of their training.
       new_trainee_link: Add a trainee
