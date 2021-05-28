@@ -36,12 +36,12 @@ features:
   publish_course_details: false
   run_consistency_check_job: true
   routes:
-    early_years_assessment_only: false 
-    early_years_graduate_employment_based: false 
-    early_years_graduate_entry: false 
-    early_years_undergrad: false 
-    provider_led_postgrad: false 
-    school_direct_salaried: false 
+    early_years_assessment_only: false
+    early_years_graduate_employment_based: false
+    early_years_graduate_entry: false
+    early_years_undergrad: false
+    provider_led_postgrad: false
+    school_direct_salaried: false
     school_direct_tuition_fee: false
 
 dfe_sign_in:
@@ -84,6 +84,6 @@ environment:
   name: qa
 
 slack:
-  publish_register_alerts_channel: "#twd_publish_register_tech"
+  publish_register_alerts_channel: "#twd_publish_register_support"
 
 track_validation_errors: true
