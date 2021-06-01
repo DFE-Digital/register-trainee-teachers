@@ -189,4 +189,19 @@ class Trainee < ApplicationRecord
   def subjects
     [subject, subject_two, subject_three].reject(&:blank?)
   end
+
+  def clear_course_details_attributes
+    update!({
+      course_code: nil,
+      subject: nil,
+      subject_two: nil,
+      subject_three: nil,
+      course_age_range: nil,
+      course_start_date: nil,
+      course_end_date: nil,
+      progress: {
+        course_details: false,
+      },
+    })
+  end
 end
