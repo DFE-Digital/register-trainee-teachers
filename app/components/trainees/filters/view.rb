@@ -12,7 +12,7 @@ module Trainees
       end
 
       def label_for(attribute, value)
-        I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
+        I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}", award_type: "QTS")
       end
 
       def filter_label_for(filter)

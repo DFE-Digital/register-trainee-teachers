@@ -25,7 +25,7 @@ module TraineeStatusCard
     end
 
     def state_name
-      I18n.t("activerecord.attributes.trainee.states.#{state}")
+      I18n.t("activerecord.attributes.trainee.states.#{state}", award_type: "QTS")
     end
 
     def status_colour

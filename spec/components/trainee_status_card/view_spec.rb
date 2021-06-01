@@ -16,7 +16,8 @@ RSpec.describe TraineeStatusCard::View do
     it "returns state name in correct format" do
       %i[draft withdrawn deferred awarded trn_received submitted_for_trn recommended_for_award].each do |state|
         expect(described_class.new(state: state,
-                                   target: target, trainees: trainees).state_name).to eql(I18n.t("activerecord.attributes.trainee.states.#{state}"))
+                                   target: target, trainees: trainees).state_name)
+          .to eql(I18n.t("activerecord.attributes.trainee.states.#{state}", award_type: "QTS"))
       end
     end
   end
@@ -24,8 +25,8 @@ RSpec.describe TraineeStatusCard::View do
   describe "#status_colour" do
     it "returns the correct colour for given state" do
       described_class::STATUS_COLOURS.each_key do |state|
-        expect(described_class.new(state: state,
-                                   target: target, trainees: trainees).status_colour).to eql(described_class::STATUS_COLOURS[state])
+        expect(described_class.new(state: state, target: target, trainees: trainees).status_colour)
+          .to eql(described_class::STATUS_COLOURS[state])
       end
     end
   end
