@@ -27,6 +27,7 @@ class PersonalDetailsForm < TraineeForm
   validate :date_of_birth_valid
   validate :date_of_birth_not_in_future
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
+  validate :check_raw_values
   validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true
   validate :nationalities_cannot_be_empty
 
@@ -158,5 +159,28 @@ private
     raw_values = params.slice(*NATIONALITY_FIELD_MAPPINGS.keys).transform_keys { |key| NATIONALITY_FIELD_MAPPINGS[key.to_sym] }.select { |_key, value| value.blank? }
 
     params.merge!(raw_values)
+  end
+
+  def raw_values_nationalities_array
+    [other_nationality1_raw, other_nationality2_raw, other_nationality3_raw]
+  end
+
+  def check_raw_values
+    # check the freetext responses of the user, and if
+    # they are valid responses, we use them by populating new attributes.
+    # This was to fix a bug where valid responses were not being used
+    # as they were not selected from the dropdown list
+
+    raw_values_nationalities_array.each_with_index do |raw_value, index|
+      next unless find_nationality(raw_value)
+
+      public_send("other_nationality#{index + 1}=", raw_value)
+      new_attributes[:"other_nationality#{index + 1}"] = raw_value
+      nationality_ids[index] = find_nationality(raw_value).id
+    end
+  end
+
+  def find_nationality(raw_value)
+    Nationality.find_by(name: raw_value&.downcase)
   end
 end
