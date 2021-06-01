@@ -13,6 +13,7 @@
 <%= f.hidden_field :employing_school_id, value: :no_results_search_again %>
 
 <%= f.govuk_text_field :no_results_search_again_query,
-                       label: { text: t("components.page_titles.search_schools.search_hint") } %>
+                       label: { text: t("components.page_titles.search_schools.search_hint") },
+                       class: "app-!-max-width-two-thirds" %>
 
 <%= f.govuk_submit t("components.page_titles.search_schools.search_button") %>

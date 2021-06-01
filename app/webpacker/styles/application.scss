@@ -3,6 +3,8 @@
 @import "~@ministryofjustice/frontend/moj/all";
 @import "./filter_toggle_button";
 
+@import "helpers/field-widths";
+
 .govuk-cookie-banner__hide {
   display: none;
 }

@@ -1,0 +1,90 @@
+// Custom width overrides so inputs can be fixed width regardless of display width.
+
+// Widths are constant rather than being % of column so that
+// they relate to the size of the content they contain. Applies from tablet
+// breakpoint only so they go full width on mobile to match other GOV.UK
+// services.
+@include govuk-media-query($from: tablet) {
+
+  // Widths chosen by eye to correspond to govuk widths at desktop 960px.
+  // Using ex to match govuk fixed width inputs, so they will scale acording
+  // to font size.
+  .app-\!-max-width-three-quarters {
+    max-width: 50ex !important;
+  }
+
+  .app-\!-max-width-two-thirds {
+    max-width: 44ex !important;
+  }
+
+  .app-\!-max-width-one-half {
+    max-width: 33ex !important;
+  }
+
+  .app-\!-max-width-one-third {
+    max-width: 22ex !important;
+  }
+
+  .app-\!-max-width-one-quarter {
+    max-width: 17ex !important;
+  }
+
+}
+
+
+
+// Set autocomplete widths
+
+// TODO: It would be better to add a wrapper to autocompletes instead.
+// Autocompletes need a wrapper width to be set rather than on
+// input directly because of our 'clear' button
+@mixin autocomplete-set-width($max-width) {
+
+  // Explicitly set font size on container so ex units work
+  // Assumes all autocompletes are default size.
+  // This matches govuk fixed width inputs which scale with
+  // font size.
+  @include govuk-font(19);
+
+  // Set on govuk-selects and autocompletes (clear and non-clear)
+  // There is no one selector currently we can target, so we target
+  // both, then unset where we don't need.
+  .govuk-select,
+  .autocomplete__wrapper,
+  .autocomplete-select-with-clear {
+    max-width: $max-width !important;
+  }
+
+  // Unset on autocompletes clear button is used
+  // Easier to unset than to have more complex selector above
+  .autocomplete-select-with-clear .autocomplete__wrapper {
+    max-width: inherit !important;
+  }
+
+}
+
+// Custom width overrides so inputs can be fixed width regardless of resolution.
+@include govuk-media-query($from: tablet) {
+
+  // These widths should match those set in helpers/field-widths.scss
+  .app-\!-autocomplete--max-width-three-quarters {
+    @include autocomplete-set-width(50ex);
+  }
+
+  .app-\!-autocomplete--max-width-two-thirds {
+    @include autocomplete-set-width(44ex);
+  }
+
+  .app-\!-autocomplete--max-width-one-half {
+    @include autocomplete-set-width(33ex);
+  }
+
+  .app-\!-autocomplete--max-width-one-third {
+    @include autocomplete-set-width(22ex);
+  }
+
+  .app-\!-autocomplete--max-width-one-quarter {
+    @include autocomplete-set-width(17ex);
+  }
+
+}
