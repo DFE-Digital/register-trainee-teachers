@@ -27,7 +27,8 @@
                              :results_search_again,
                              label: { text: t("components.page_titles.search_schools.search_button") } do %>
       <%= f.govuk_text_field :results_search_again_query,
-                             label: { text: t("components.page_titles.search_schools.search_hint") } %>
+                             label: { text: t("components.page_titles.search_schools.search_hint") },
+                             width: "three-quarters" %>
     <% end %>
   </div>
 <% end %>
