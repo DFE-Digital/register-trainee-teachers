@@ -87,3 +87,7 @@ slack:
   publish_register_alerts_channel: "#twd_publish_register_support"
 
 track_validation_errors: true
+
+govuk_notify:
+  api_key: please_change_me
+  welcome_email_template_id: 7765732c-f068-4c7f-abbc-ea5275a4b6ca

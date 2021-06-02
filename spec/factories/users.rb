@@ -7,6 +7,7 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     dttp_id { SecureRandom.uuid }
+    welcome_email_sent_at { Faker::Time.backward(days: 1).utc }
 
     provider
 
