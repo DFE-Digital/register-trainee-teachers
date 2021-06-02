@@ -95,13 +95,38 @@ FactoryBot.define do
         )
       end
     end
-
+    # todo, can this be deleted?
     trait :with_course_details do
       subject { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
       course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
+      with_early_years_course_details_wip
+    end
+
+    trait :with_early_years_course_details_wip do
       course_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
+    end
+
+    trait :with_course_details_wip do
+      with_early_years_course_details_wip
+      after(:build) do |trainee, evaluator|
+        if trainee.training_route == "assessment_only"
+          trainee.subject = Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample
+          # trainee.subject = create(:subject)  create using factory here?
+          trainee.course_age_range = Dttp::CodeSets::AgeRanges::MAPPING.keys.sample
+        end
+
+        if TRAINING_ROUTES_FOR_COURSE.include?(trainee.training_route)
+          course = trainee.available_courses.sample
+          trainee.course_start_date = course.start_date
+          trainee.course_end_date = course.end_date
+          trainee.subject = course.subjects.first.name
+          # trainee.subject = Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample
+          trainee.course_age_range = course.age_range
+          trainee.course_code = course.code
+        end
+      end
     end
 
     trait :with_start_date do
@@ -221,7 +246,6 @@ FactoryBot.define do
         create_list(:course_with_subjects, evaluator.courses_count,
                     accredited_body_code: trainee.provider.code,
                     route: trainee.training_route)
-
         trainee.reload
       end
     end
