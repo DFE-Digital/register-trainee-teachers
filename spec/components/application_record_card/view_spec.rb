@@ -47,13 +47,13 @@ module ApplicationRecordCard
         { state: :draft, colour: "grey", text: "draft" },
         { state: :submitted_for_trn, colour: "turquoise", text: "pending trn" },
         { state: :trn_received, colour: "blue", text: "trn received" },
-        { state: :recommended_for_award, colour: "purple", text: "qts recommended" },
-        { state: :awarded, colour: "", text: "qts awarded" },
+        { state: :recommended_for_award, colour: "purple", text: "QTS recommended" },
+        { state: :awarded, colour: "", text: "QTS awarded" },
         { state: :deferred, colour: "yellow", text: "deferred" },
         { state: :withdrawn, colour: "red", text: "withdrawn" },
       ].each do |state_expectation|
         context "when state is #{state_expectation[:state]}" do
-          let(:trainee) { build(:trainee, state_expectation[:state], created_at: Time.zone.now) }
+          let(:trainee) { build(:trainee, state_expectation[:state], training_route: TRAINING_ROUTE_ENUMS[:assessment_only], created_at: Time.zone.now) }
 
           it "renders '#{state_expectation[:text]}'" do
             expect(component).to have_selector(".govuk-tag", text: state_expectation[:text])

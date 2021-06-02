@@ -42,7 +42,7 @@ private
   end
 
   def training_route
-    @trainee.training_route.to_sym
+    @trainee.training_route&.to_sym
   end
 
   def feature_enabled?(feature_name)
