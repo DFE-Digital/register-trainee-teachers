@@ -18,6 +18,7 @@ class Trainee < ApplicationRecord
 
   delegate :award_type, :requires_placement_details?, :requires_schools?,
            :requires_employing_school?, to: :training_route_manager
+  delegate :update_training_route!, to: :route_data_manager
 
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
@@ -190,18 +191,7 @@ class Trainee < ApplicationRecord
     [subject, subject_two, subject_three].reject(&:blank?)
   end
 
-  def clear_course_details_attributes
-    update!({
-      course_code: nil,
-      subject: nil,
-      subject_two: nil,
-      subject_three: nil,
-      course_age_range: nil,
-      course_start_date: nil,
-      course_end_date: nil,
-      progress: {
-        course_details: false,
-      },
-    })
+  def route_data_manager
+    @route_data_manager ||= RouteDataManager.new(trainee: self)
   end
 end

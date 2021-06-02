@@ -10,10 +10,7 @@ module Trainees
     def update
       return redirect_url if route_not_changed?
 
-      ActiveRecord::Base.transaction do
-        trainee.update!(trainee_params)
-        trainee.clear_course_details_attributes
-      end
+      trainee.update_training_route!(training_route)
 
       redirect_url
     end
@@ -37,7 +34,11 @@ module Trainees
     end
 
     def route_not_changed?
-      trainee.training_route == trainee_params["training_route"]
+      trainee.training_route == training_route
+    end
+
+    def training_route
+      trainee_params["training_route"]
     end
   end
 end
