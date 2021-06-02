@@ -16,6 +16,7 @@ module PageObjects
       section :degree_details, PageObjects::Sections::DegreeDetails, ".degree-details"
       section :course_details, PageObjects::Sections::CourseDetails, ".app-task-list__item.course-details"
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
+      section :lead_and_employing_schools_section, PageObjects::Sections::SchoolsDetails, ".app-task-list__item.school-details"
 
       element :review_this_record_link, "#check-details"
       element :delete_this_draft_link, ".app-link--warning"
@@ -42,6 +43,10 @@ module PageObjects
 
       def has_training_details_completed?
         training_details.status.text == STATUS_COMPLETED
+      end
+
+      def has_lead_and_employing_school_information_completed?
+        lead_and_employing_schools_section.status.text == STATUS_COMPLETED
       end
     end
   end
