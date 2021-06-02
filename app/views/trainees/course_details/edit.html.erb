@@ -18,7 +18,9 @@
         attribute_name: :subject,
         form_field: f.govuk_collection_select(:subject, course_subjects_options,
                                               :name, :name, label: { text: "Subject", size: "s" },
-                                                            hint: { text: "Search for the closest matching subject" }),
+                                                            hint: { text: "Search for the closest matching subject" },
+                                                            class: "govuk-!-width-full"
+                                                            ),
       ) %>
 
       <%= render "additional_subjects", f: f %>
@@ -41,7 +43,8 @@
             form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
                                                   :name,
                                                   :name,
-                                                  label: { text: "Other age range", size: "s" }),
+                                                  label: { text: "Other age range", size: "s" },
+                                                  class: "govuk-!-width-full"),
           ) %>
 
         <% end %>

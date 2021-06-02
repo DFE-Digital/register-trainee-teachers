@@ -7,24 +7,26 @@
   <div class="govuk-details__text">
     <p class="govuk-body"><%= t(".main_subject") %></p>
 
-    <div class="govuk-!-margin-bottom-6 app-!-autocomplete--max-width-two-thirds ">
+    <div class="govuk-!-margin-bottom-6">
 
       <%= render FormComponents::Autocomplete::View.new(
         f,
         attribute_name: :subject_two,
         form_field: f.govuk_collection_select(:subject_two, course_subjects_options,
                                               :name, :name, label: { text: t(".subject_two") },
-                                                            hint: { text: t('.subject_hint') }),
+                                                            hint: { text: t('.subject_hint') },
+                                                            class: "govuk-!-width-full"),
       ) %>
     </div>
 
-    <div class="govuk-!-margin-bottom-6 app-!-autocomplete--max-width-two-thirds ">
+    <div class="govuk-!-margin-bottom-6">
       <%= render FormComponents::Autocomplete::View.new(
         f,
         attribute_name: :subject_three,
         form_field: f.govuk_collection_select(:subject_three, course_subjects_options,
                                               :name, :name, label: { text: t(".subject_three") },
-                                                            hint: { text: t('.subject_hint') }),
+                                                            hint: { text: t('.subject_hint') },
+                                                            class: "govuk-!-width-full"),
       ) %>
     </div>
 

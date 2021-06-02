@@ -16,7 +16,7 @@ module FormComponents
     private
 
       def default_classes
-        %w[]
+        %w[govuk-!-width-three-quarters]
       end
 
       def default_html_attributes
