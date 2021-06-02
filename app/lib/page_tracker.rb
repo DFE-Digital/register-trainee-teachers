@@ -77,14 +77,8 @@ private
   end
 
   def entered_an_edit_page_directly?
-    return if on_lead_school_edit_page
-
     confirm_path = history.find { |path| path.include?("confirm") }
     edit_page_path = history.find { |path| path.include?("edit") }
     confirm_path.nil? && edit_page_path.present?
-  end
-
-  def on_lead_school_edit_page
-    history.find { |path| path.include?("lead-schools/edit") }
   end
 end

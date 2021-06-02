@@ -15,6 +15,7 @@ module Trainees
 
     def edit
       page_tracker.save_as_origin!
+      backlink_to_review_draft_or_confirmation_page
       @lead_school_form = Schools::LeadSchoolForm.new(trainee)
     end
 
@@ -62,6 +63,15 @@ module Trainees
       return page_tracker.last_origin_page_path if page_tracker.last_origin_page_path&.include?("schools/confirm")
 
       redirect_url
+    end
+
+    def backlink_to_review_draft_or_confirmation_page
+      # If user comes from confirmation page they will return there otherwise they will return to review draft
+      origin_page = session["origin_pages_for_#{trainee.slug}"]
+      path_prefix = "/trainees/#{trainee.slug}/"
+      path_suffix = trainee.employing_school.nil? ? "review-draft" : "schools/confirm"
+
+      origin_page << "#{path_prefix}#{path_suffix}"
     end
 
     def query

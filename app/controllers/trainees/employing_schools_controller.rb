@@ -13,6 +13,7 @@ module Trainees
     end
 
     def edit
+      backlink_to_lead_school_edit_or_index_page
       @employing_school_form = Schools::EmployingSchoolForm.new(trainee)
     end
 
@@ -51,6 +52,14 @@ module Trainees
     def trainee_params
       params.fetch(:schools_employing_school_form, {})
             .permit(:employing_school_id, *Schools::EmployingSchoolForm::NON_TRAINEE_FIELDS)
+    end
+
+    def backlink_to_lead_school_edit_or_index_page
+      # Depends on whether JS is on or off
+      origin_pages = session["origin_pages_for_#{trainee.slug}"]
+      return if origin_pages.last.include?("/lead-schools?")
+
+      origin_pages.pop
     end
 
     def query
