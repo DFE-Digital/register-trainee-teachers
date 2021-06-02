@@ -55,6 +55,7 @@ namespace :example_data do
         submitted_for_trn_at = nil
         trn = nil
         progress = {}
+        training_route = %w[provider_led_postgrad early_years_undergrad school_direct_tuition_fee school_direct_salaried].sample
 
         if traits.length > 3 # this trainee isn't draft
 
@@ -83,6 +84,7 @@ namespace :example_data do
           trn: trn,
           progress: progress,
           updated_at: submitted_for_trn_at || created_at,
+          training_route: training_route,
         }
 
         trainee_attributes.merge!(provider: provider) if provider
