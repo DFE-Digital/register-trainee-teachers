@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "/accessibility", to: "pages#accessibility", as: :accessibility
   get "/cookies", to: "pages#cookie_policy", as: :cookie_policy
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
-  get "/data-requirements", to: "pages#data_requirements"
+  get "/guidance", to: "pages#guidance"
 
   get "/404", to: "errors#not_found", via: :all
   get "/422", to: "errors#unprocessable_entity", via: :all
