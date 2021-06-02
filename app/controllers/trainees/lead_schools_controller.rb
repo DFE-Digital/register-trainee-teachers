@@ -14,6 +14,7 @@ module Trainees
     end
 
     def edit
+      page_tracker.save_as_origin!
       @lead_school_form = Schools::LeadSchoolForm.new(trainee)
     end
 
