@@ -5,10 +5,6 @@ require "rails_helper"
 feature "publish course details", type: :feature, feature_publish_course_details: true do
   include CourseDetailsHelper
 
-  after do
-    FormStore.clear_all(trainee.id)
-  end
-
   background do
     given_i_am_authenticated
     given_a_trainee_exists(:with_related_courses, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
@@ -137,6 +133,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def given_there_arent_any_courses
+    CourseSubject.destroy_all
     Course.destroy_all
   end
 

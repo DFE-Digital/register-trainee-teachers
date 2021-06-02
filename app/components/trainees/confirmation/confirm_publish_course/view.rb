@@ -5,6 +5,7 @@ module Trainees
     module ConfirmPublishCourse
       class View < GovukComponent::Base
         include SummaryHelper
+        include CourseDetailsHelper
 
         attr_accessor :trainee, :course
 
@@ -32,26 +33,11 @@ module Trainees
               value: course_details,
               action: govuk_link_to(t(".change_course"), edit_trainee_publish_course_details_path(@trainee)),
             },
-            {
-              key: t(".subject"),
-              value: subject,
-            },
-            {
-              key: t(".level"),
-              value: level,
-            },
-            {
-              key: t(".age_range"),
-              value: age_range,
-            },
-            {
-              key: t(".start_date"),
-              value: start_date,
-            },
-            {
-              key: t(".duration"),
-              value: duration,
-            },
+            { key: t(".subject"), value: subject_names },
+            { key: t(".level"), value: level },
+            { key: t(".age_range"), value: age_range },
+            { key: t(".start_date"), value: start_date },
+            { key: t(".duration"), value: duration },
           ]
         end
 
@@ -59,8 +45,12 @@ module Trainees
           "#{course.name} (#{course.code})"
         end
 
-        def subject
-          course.name
+        def subject_names
+          subjects_for_summary_view(
+            course.subject_one&.name,
+            course.subject_two&.name,
+            course.subject_three&.name,
+          )
         end
 
         def level

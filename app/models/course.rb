@@ -43,4 +43,16 @@ class Course < ApplicationRecord
   def age_range=(range)
     self.min_age, self.max_age = range
   end
+
+  def subject_one
+    subjects&.first
+  end
+
+  def subject_two
+    subjects&.second
+  end
+
+  def subject_three
+    subjects&.third
+  end
 end

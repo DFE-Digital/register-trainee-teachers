@@ -13,7 +13,7 @@ describe ConfirmPublishCourseForm, type: :model do
 
   context "with valid params" do
     subject { described_class.new(trainee, params) }
-    let(:course) { create(:course) }
+    let(:course) { create(:course_with_subjects) }
     let(:params) { { code: course.code } }
 
     context "valid trainee" do
@@ -23,7 +23,7 @@ describe ConfirmPublishCourseForm, type: :model do
         it "changed related trainee attributes" do
           expect { subject.save }
             .to change { trainee.subject }
-            .from(nil).to(course.name)
+            .from(nil).to(course.subjects.first.name)
             .and change { trainee.course_min_age }
             .from(nil).to(course.min_age)
             .and change { trainee.course_max_age }
@@ -36,15 +36,25 @@ describe ConfirmPublishCourseForm, type: :model do
       end
     end
 
-    context "when trainee is assigned to multiple subjects" do
-      let(:trainee) { create(:trainee, :with_multiple_subjects) }
+    context "when course has multiple subjects" do
+      context "with two subjects" do
+        let(:course) { create(:course_with_subjects, subjects_count: 2) }
 
-      it "removed the surplus subjects on save" do
-        expect { subject.save }
+        it "stores the second subject" do
+          expect { subject.save }
             .to change { trainee.subject_two }
-            .from(trainee.subject_two).to(nil)
-            .and change { trainee.subject_three }
-            .from(trainee.subject_three).to(nil)
+            .from(nil).to(course.subjects.second.name)
+        end
+      end
+
+      context "with three subjects" do
+        let(:course) { create(:course_with_subjects, subjects_count: 3) }
+
+        it "stores the third subject" do
+          expect { subject.save }
+            .to change { trainee.subject_three }
+            .from(nil).to(course.subjects.third.name)
+        end
       end
     end
   end

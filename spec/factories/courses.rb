@@ -19,9 +19,15 @@ FactoryBot.define do
       time = ["full time", "part time"].sample
       [qualifications, time].join(" ")
     end
-  end
 
-  factory :course_with_a_subject do
-    subjects { [association(:subject)] }
+    factory :course_with_subjects do
+      transient do
+        subjects_count { 1 }
+      end
+
+      after(:create) do |course, evaluator|
+        create_list(:course_subjects, evaluator.subjects_count, course: course)
+      end
+    end
   end
 end

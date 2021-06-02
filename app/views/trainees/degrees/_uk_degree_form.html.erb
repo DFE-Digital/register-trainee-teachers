@@ -18,7 +18,7 @@
     form_field: f.govuk_collection_select(:subject, subjects_options,
                                           :name, :name, label: { text: "Degree subject", size: "s" },
                                                         hint: { text: 'Search for the closest matching subject.
-                                                         You can start typing to narrow down your search.' })
+                                                         You can start typing to narrow down your search.' }),
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
@@ -26,7 +26,7 @@
     attribute_name: :uk_degree,
     form_field: f.govuk_collection_select(:uk_degree, hesa_degree_types_options, :option_value, :option_name,
                                           label: { text: "Type of degree", size: "s" },
-                                          hint: { text: "For example, BA, BSc or other (please specify)" })
+                                          hint: { text: "For example, BA, BSc or other (please specify)" }),
   ) %>
 
   <%= f.govuk_radio_buttons_fieldset(:grade,
