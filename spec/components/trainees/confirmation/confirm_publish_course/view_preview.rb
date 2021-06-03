@@ -10,6 +10,12 @@ module Trainees
           render(View.new(trainee: mock_trainee, course: build_course))
         end
 
+        def with_multiple_subjects
+          course = build_course
+          course.subjects << Subject.new(name: "Subject two")
+          render(View.new(trainee: mock_trainee, course: course))
+        end
+
       private
 
         def mock_trainee
