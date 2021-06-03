@@ -106,7 +106,7 @@ en:
       pages:
         accessibility: Accessibility statement
         cookie_policy: Cookies on Register trainee teachers
-        data_requirements: Data requirements
+        guidance: Data requirements
         privacy_policy: How we use your personal data when you use Register trainee teachers
         forbidden: You do not have access to view details for this trainee
         home: Home
@@ -369,8 +369,8 @@ en:
       trainees_link_desc: Review and manage your trainee records.
       give_feedback_link: Give feedback
       give_feedback_link_desc: This is a new service. Your views will help us improve it.
-      data_requirements_link: Check what data you need
-      data_requirements_link_desc: The data you need to complete a trainee record.
+      guidance_link: Guidance
+      guidance_link_desc: Find out about Register and the data you need.
     start:
       bullet_desc: "Use this service to:"
       bullets:
@@ -384,8 +384,8 @@ en:
       heading: Your %{start_year} to %{end_year} trainees
     accessibility:
       heading: Accessibility statement for Register trainee teachers
-    data_requirements:
-      heading: Check what data you need
+    guidance:
+      heading: Guidance
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers

@@ -25,7 +25,7 @@ class PagesController < ApplicationController
     render :privacy_policy
   end
 
-  def data_requirements
-    render :data_requirements
+  def guidance
+    render :guidance
   end
 end
