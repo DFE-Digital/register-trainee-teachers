@@ -26,5 +26,15 @@ describe SystemAdmin::UsersView do
       expect(subject.not_registered.count).to eq 1
       expect(subject.not_registered.first).to eq dttp_user
     end
+
+    context "user with nil email" do
+      before do
+        dttp_user.update(email: nil)
+      end
+
+      it "does not return them" do
+        expect(subject.not_registered).not_to include(dttp_user)
+      end
+    end
   end
 end

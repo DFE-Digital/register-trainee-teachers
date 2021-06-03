@@ -14,7 +14,7 @@ module SystemAdmin
       @not_registered ||= ::Dttp::User.not_registered_with_provider(
         provider.dttp_id,
         registered.pluck(:dttp_id),
-      )
+      ).where.not(email: nil)
     end
 
   private
