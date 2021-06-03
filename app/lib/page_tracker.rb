@@ -78,7 +78,8 @@ private
 
   def entered_an_edit_page_directly?
     confirm_path = history.find { |path| path.include?("confirm") }
-    edit_page_path = history.find { |path| path.include?("edit") }
-    confirm_path.nil? && edit_page_path.present?
+    edit_page_paths = history.select { |path| path.include?("edit") }
+
+    confirm_path.nil? && edit_page_paths.size == 1
   end
 end

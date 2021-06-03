@@ -108,6 +108,18 @@ describe PageTracker do
       end
     end
 
+    context "on a consecutive edit page" do
+      let(:session) { { history_sesssion_key => [path_a, path_c, path_d], origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:request) { double(fullpath: path_c, head?: false, get?: true, patch?: false, put?: false) }
+      let(:path_d) { "/trainees/#{trainee.slug}/lead-schools/edit" }
+
+      it "returns the path to last history page" do
+        page_tracker = PageTracker.new(trainee_slug: trainee.slug, session: session, request: request)
+
+        expect(page_tracker.previous_page_path).to eq(path_c)
+      end
+    end
+
     context "on a confirm page" do
       let(:session) { { origin_pages_sesssion_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_b, head?: false, get?: true, patch?: false, put?: false) }
