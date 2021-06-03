@@ -8,9 +8,11 @@ module TraineeStatusCard
       end
     end
 
-    Trainee.states.keys.each do |state|
+    award_states = %w[qts_recommended qts_received eyts_recommended eyts_received]
+
+    (Trainee.states.keys + award_states).each do |state|
       define_method state.to_s do
-        render(TraineeStatusCard::View.new(state: state, target: Rails.application.routes.url_helpers.trainees_path("state[]": state), trainees: MockTrainees.new))
+        render(TraineeStatusCard::View.new(state: state, target: Rails.application.routes.url_helpers.trainees_path("state[]": state), count: (1..1000).sample))
       end
     end
   end
