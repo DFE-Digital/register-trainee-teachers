@@ -16,14 +16,17 @@ class Trainee < ApplicationRecord
 
   attribute :progress, Progress.to_type
 
-  delegate :requires_placement_details?, :requires_schools?, :requires_employing_school?, to: :training_route_manager
-  delegate :award_type, to: :training_route_manager
+  delegate :award_type, :requires_placement_details?, :requires_schools?,
+           :requires_employing_school?, to: :training_route_manager
 
-  validates :training_route, presence: { message: I18n.t("activerecord.errors.models.trainee.attributes.training_route") }
+  validates :training_route, presence: {
+    message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
+  }
 
   enum training_route: TRAINING_ROUTES_FOR_TRAINEE
 
   enum locale_code: { uk: 0, non_uk: 1 }
+
   enum gender: {
     male: 0,
     female: 1,

@@ -13,8 +13,8 @@ private
   def status
     {
       submitted_for_trn: "pending trn",
-      recommended_for_award: "qts recommended",
-      awarded: "qts awarded",
+      recommended_for_award: "#{trainee.award_type} recommended",
+      awarded: "#{trainee.award_type} awarded",
     }[trainee.state.to_sym] || trainee.state.gsub("_", " ")
   end
 
