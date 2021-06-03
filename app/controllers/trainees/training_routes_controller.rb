@@ -8,8 +8,6 @@ module Trainees
     def edit; end
 
     def update
-      return redirect_url if route_not_changed?
-
       trainee.update_training_route!(training_route)
 
       redirect_url
@@ -31,10 +29,6 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
-    end
-
-    def route_not_changed?
-      trainee.training_route == training_route
     end
 
     def training_route

@@ -8,12 +8,13 @@ class RouteDataManager
   end
 
   def update_training_route!(route)
-    trainee.update!(attributes(route))
+    trainee.training_route = route
+    trainee.update!(reset_course_details) if trainee.training_route_changed?
   end
 
 private
 
-  def updated_course_details
+  def reset_course_details
     {
       course_code: nil,
       subject: nil,
@@ -26,11 +27,5 @@ private
         course_details: false,
       },
     }
-  end
-
-  def attributes(route)
-    {
-      training_route: route,
-    }.merge(updated_course_details)
   end
 end
