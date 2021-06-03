@@ -34,9 +34,12 @@ describe RouteDataManager do
       context "when a trainee has course details" do
         let(:trainee) { create(:trainee, :provider_led_postgrad, :with_course_details) }
 
-        it "does not clear the course details section of the trainee" do
+        before do
           subject.update_training_route!("provider_led_postgrad")
           trainee.reload
+        end
+
+        it "does not clear the course details section of the trainee" do
           expect(trainee.course_code).to be_present
           expect(trainee.subject).to be_present
           expect(trainee.course_age_range).to be_present
