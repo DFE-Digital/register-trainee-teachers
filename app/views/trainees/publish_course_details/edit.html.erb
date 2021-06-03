@@ -11,7 +11,7 @@
     <%= f.govuk_radio_buttons_fieldset :code,
                                        legend: { text: t(".heading"), tag: "h1", size: "l" },
                                        hint: { text: t("views.forms.publish_course_details.route_message", route: route_title(@trainee.training_route)) },
-                                       classes: 'published-courses' do %>
+                                       classes: "published-courses" do %>
 
       <% @courses.each do |course| %>
         <%= f.govuk_radio_button :code, course.code,

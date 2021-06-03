@@ -1,4 +1,4 @@
-<details class="govuk-details" data-module="govuk-details" <% if f.object.has_additional_subjects? %>open<% end %>>
+<details class="govuk-details" data-module="govuk-details" <% if f.object.has_additional_subjects? %> open<% end %>>
   <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
       <%= t(".add_additional_subjects") %>
@@ -14,7 +14,7 @@
         attribute_name: :subject_two,
         form_field: f.govuk_collection_select(:subject_two, course_subjects_options,
                                               :name, :name, label: { text: t(".subject_two") },
-                                                            hint: { text: t('.subject_hint') }),
+                                                            hint: { text: t(".subject_hint") }),
       ) %>
     </div>
 
@@ -24,7 +24,7 @@
         attribute_name: :subject_three,
         form_field: f.govuk_collection_select(:subject_three, course_subjects_options,
                                               :name, :name, label: { text: t(".subject_three") },
-                                                            hint: { text: t('.subject_hint') }),
+                                                            hint: { text: t(".subject_hint") }),
       ) %>
     </div>
 

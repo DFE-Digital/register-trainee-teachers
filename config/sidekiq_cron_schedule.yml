@@ -10,8 +10,16 @@ import_applications_from_apply:
   cron: "0 1 * * *"
   class: "ApplyApi::ImportApplicationsJob"
   queue: default
-import_courses_from_ttapi:
+run_consistency_check_job:
   cron: "0 2 * * *"
+  class: "RunConsistencyChecksJob"
+  queue: dttp
+import_subjects_from_ttapi:
+  cron: "0 2 * * *"
+  class: "TeacherTrainingApi::ImportSubjectsJob"
+  queue: default
+import_courses_from_ttapi:
+  cron: "0 3 * * *"
   class: "TeacherTrainingApi::ImportCoursesJob"
   queue: default
 import_users_from_dttp:
@@ -21,8 +29,4 @@ import_users_from_dttp:
 import_providers_from_dttp:
   cron: "0 4 * * *"
   class: "Dttp::SyncProvidersJob"
-  queue: dttp
-run_consistency_check_job:
-  cron: "0 2 * * *"
-  class: "RunConsistencyChecksJob"
   queue: dttp

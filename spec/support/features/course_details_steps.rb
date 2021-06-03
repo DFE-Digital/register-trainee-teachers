@@ -27,7 +27,7 @@ module Features
 
     def given_a_course_is_available_for_selection
       trainee = trainee_from_url
-      create(:course, accredited_body_code: trainee.provider.code, route: trainee.training_route)
+      create(:course_with_subjects, accredited_body_code: trainee.provider.code, route: trainee.training_route)
     end
 
     def and_the_course_details_is_marked_completed

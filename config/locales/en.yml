@@ -440,6 +440,7 @@ en:
           summary_title: Course details
           type_of_course: Subject
           subject: Subject
+          multiple_subjects: Subjects
           level: Level
           age_range: Age range
           start_date: Start date
