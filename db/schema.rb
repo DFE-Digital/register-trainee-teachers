@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_111721) do
+ActiveRecord::Schema.define(version: 2021_06_02_105639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_111721) do
     t.datetime "last_signed_in_at"
     t.uuid "dttp_id"
     t.boolean "system_admin", default: false
+    t.datetime "welcome_email_sent_at"
     t.index ["dfe_sign_in_uid"], name: "index_users_on_dfe_sign_in_uid", unique: true
     t.index ["dttp_id"], name: "index_users_on_dttp_id", unique: true
     t.index ["email"], name: "index_users_on_email"

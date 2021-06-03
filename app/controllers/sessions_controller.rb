@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
 
     if current_user
       DfESignInUsers::Update.call(user: current_user, dfe_sign_in_user: dfe_sign_in_user)
+      SendWelcomeEmailService.call(current_user: current_user)
 
       redirect_to session.delete(:requested_path) || root_path
     else
