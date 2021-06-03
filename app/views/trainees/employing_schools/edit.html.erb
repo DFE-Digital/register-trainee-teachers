@@ -16,8 +16,9 @@
         name: :'input-autocomplete',
         value: nil,
         "data-field" => "schools-autocomplete",
+        width: "three-quarters"
       ) %>
-      <div id="schools-autocomplete-element"></div>
+      <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters"></div>
 
       <%= f.hidden_field :employing_school_id, id: "school-id", value: nil %>
       <%= f.govuk_submit t("continue") %>
