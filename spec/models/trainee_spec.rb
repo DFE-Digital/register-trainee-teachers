@@ -249,7 +249,7 @@ describe Trainee do
       let!(:trainee_with_subject_two) { create(:trainee, subject: "Mathematics", subject_two: "Art and design") }
       let!(:trainee_with_subject_three) { create(:trainee, subject: "Mathematics", subject_two: "Science", subject_three: "Art and design") }
 
-      it { is_expected.to eq([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
+      it { is_expected.to match_array([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
     end
   end
 
