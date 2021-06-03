@@ -1,0 +1,15 @@
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+  <% full_width_states.map do |state, count| %>
+    <div class="govuk-grid-column-one-third">
+      <%= render TraineeStatusCard::View.new(state: state, count: count, target: trainees_path("state[]": state)) %>
+    </div>
+  <% end %>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+  <% narrow_states.map do |state, count| %>
+    <div class="govuk-grid-column-one-quarter">
+      <%= render TraineeStatusCard::View.new(state: state, count: count, target: trainees_path("state[]": state)) %>
+    </div>
+  <% end %>
+</div>

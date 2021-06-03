@@ -505,10 +505,14 @@ en:
           draft: Draft
           submitted_for_trn: Pending TRN
           trn_received: TRN received
-          recommended_for_award: "%{award_type} recommended"
+          recommended_for_award: Qualification recommended
           withdrawn: Withdrawn
           deferred: Deferred
-          awarded: "%{award_type} awarded"
+          awarded: Qualification received
+          qts_recommended: QTS recommended
+          qts_received: QTS received
+          eyts_recommended: EYTS recommended
+          eyts_received: EYTS received
     errors:
       models:
         trainee:

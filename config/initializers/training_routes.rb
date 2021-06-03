@@ -47,3 +47,11 @@ TRAINING_ROUTE_AWARD_TYPE = {
   school_direct_salaried: "QTS",
   school_direct_tuition_fee: "QTS",
 }.freeze
+
+EARLY_YEARS_ROUTES = %i[
+  early_years_assessment_only
+  early_years_graduate_employment_based
+  early_years_graduate_entry
+  early_years_undergrad
+]
+
