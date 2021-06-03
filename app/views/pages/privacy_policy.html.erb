@@ -11,6 +11,6 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <span class="govuk-caption-l"><%= t(".pre_heading") %></span>
     <h1 class="govuk-heading-l govuk-!-margin-bottom-9"><%= t(".heading") %></h1>
-    <%= t(".body_html") %>
+    <%= t(".body_html", service_name: t("service_name"), support_email: govuk_mail_to(Settings.data_email, Settings.data_email, subject: "My personal data")) %>
   </div>
 </div>
