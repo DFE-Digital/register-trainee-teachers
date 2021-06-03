@@ -53,6 +53,10 @@ module Trainees
             it "renders the first subject's name" do
               expect(rendered_component).to have_text(expected_names)
             end
+
+            it "displays the correct subject summary label" do
+              expect(rendered_component).to have_text(I18n.t("trainees.confirmation.confirm_publish_course.view.subject"))
+            end
           end
 
           context "with two subjects" do
@@ -61,6 +65,10 @@ module Trainees
 
             it "renders the first and second subject's name" do
               expect(rendered_component).to have_text(expected_names)
+            end
+
+            it "displays the correct subject summary label" do
+              expect(rendered_component).to have_text(I18n.t("trainees.confirmation.confirm_publish_course.view.multiple_subjects"))
             end
           end
 

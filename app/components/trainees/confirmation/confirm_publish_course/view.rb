@@ -33,7 +33,7 @@ module Trainees
               value: course_details,
               action: govuk_link_to(t(".change_course"), edit_trainee_publish_course_details_path(@trainee)),
             },
-            { key: t(".subject"), value: subject_names },
+            { key: subject_key, value: subject_names },
             { key: t(".level"), value: level },
             { key: t(".age_range"), value: age_range },
             { key: t(".start_date"), value: start_date },
@@ -67,6 +67,12 @@ module Trainees
 
         def duration
           pluralize(course.duration_in_years, "year")
+        end
+
+      private
+
+        def subject_key
+          course.subjects.count > 1 ? t(".multiple_subjects") : t(".subject")
         end
       end
     end
