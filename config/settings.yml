@@ -14,6 +14,7 @@ trn_submitted_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSeewi8Fl9b
 
 # The email address for support queries
 support_email: becomingateacher@digital.education.gov.uk
+data_email: registerateacher@digital.education.gov.uk
 
 dttp:
   back_office_url: https://dttp-dev.crm4.dynamics.com/

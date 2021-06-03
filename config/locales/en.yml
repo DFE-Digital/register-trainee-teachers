@@ -107,7 +107,7 @@ en:
         accessibility: Accessibility statement
         cookie_policy: Cookies on Register trainee teachers
         guidance: Data requirements
-        privacy_policy: How we use your personal data when you use Register trainee teachers
+        privacy_policy: How we use your personal data and trainee data in Register trainee teachers
         forbidden: You do not have access to view details for this trainee
         home: Home
         not_found: Page not found
@@ -386,6 +386,9 @@ en:
       heading: Accessibility statement for Register trainee teachers
     guidance:
       heading: Guidance
+    privacy_policy:
+      pre_heading: Privacy policy
+      heading: How we use your personal data and trainee data in Register trainee teachers
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers
