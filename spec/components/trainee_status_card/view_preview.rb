@@ -12,7 +12,7 @@ module TraineeStatusCard
 
     (Trainee.states.keys + award_states).each do |state|
       define_method state.to_s do
-        render(TraineeStatusCard::View.new(state: state, target: Rails.application.routes.url_helpers.trainees_path("state[]": state), count: (1..1000).sample))
+        render(TraineeStatusCard::View.new(state: state, target: Rails.application.routes.url_helpers.trainees_path("state[]": state), count: Array(1..1000).sample))
       end
     end
   end
