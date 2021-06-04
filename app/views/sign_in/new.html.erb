@@ -7,12 +7,8 @@
 
     <% if FeatureService.enabled?("enable_feedback_link") %>
       <p class="govuk-body">
-t(
-            ".contact_us_html",
-            link: support_email(subject: "Get access to Register trainee teachers"),
-          )
-        %>
-       </p>
+        <%= t(".contact_us_html", link: support_email(subject: "Get access to Register trainee teachers")) %>
+      </p>
     <% end %>
 
     <%= render GovukButtonLinkTo::View.new(body: t(".home_button"), url: root_path) %>
