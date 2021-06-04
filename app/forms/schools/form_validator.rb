@@ -4,38 +4,44 @@ module Schools
   class FormValidator
     include ActiveModel::Model
 
-    FIELDS = {
-      lead_school_section: LeadSchoolForm::FIELDS,
-      employing_school_section: EmployingSchoolForm::FIELDS,
-    }.freeze
-
-    attr_accessor(*(FIELDS.keys + FIELDS.values.flatten))
-
-    attr_accessor :trainee, :fields
+    attr_accessor :trainee, :fields, :lead_school_form, :employing_school_form
 
     delegate :id, :persisted?, to: :trainee
 
-    validate :lead_school, if: -> { trainee.requires_schools? }
-    validate :employing_school, if: -> { trainee.requires_employing_school? }
+    validate :validate_lead_school, if: -> { trainee.requires_schools? }
+    validate :validate_employing_school, if: -> { trainee.requires_employing_school? }
+
+    delegate :lead_school_id, to: :lead_school_form
+    delegate :employing_school_id, to: :employing_school_form
 
     def initialize(trainee)
       @trainee = trainee
-      @fields = trainee.attributes.symbolize_keys.slice(*FIELDS.values.flatten)
-      super(fields)
+      @lead_school_form = LeadSchoolForm.new(trainee)
+      @employing_school_form = EmployingSchoolForm.new(trainee)
+      @fields = lead_school_form_fields.merge(employing_school_form_fields)
+    end
+
+    def save!
+      lead_school_form.save!
+      employing_school_form.save!
     end
 
   private
 
-    def lead_school
-      return if LeadSchoolForm.new(trainee).valid?
-
-      errors.add(:lead_school_section, :not_valid)
+    def validate_lead_school
+      errors.add(:lead_school_id, :not_valid) unless lead_school_form.valid?
     end
 
-    def employing_school
-      return if EmployingSchoolForm.new(trainee).valid?
+    def validate_employing_school
+      errors.add(:employing_school_id, :not_valid) unless employing_school_form.valid?
+    end
 
-      errors.add(:employing_school_section, :not_valid)
+    def lead_school_form_fields
+      lead_school_form.fields || {}
+    end
+
+    def employing_school_form_fields
+      employing_school_form.fields || {}
     end
   end
 end

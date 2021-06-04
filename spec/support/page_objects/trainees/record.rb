@@ -23,6 +23,9 @@ module PageObjects
       section :contact_detail, PageObjects::Sections::Summaries::ContactDetail, ".contact-details"
       section :diversity_detail, PageObjects::Sections::Summaries::DiversityDetail, ".diversity-details"
       section :degree_detail, PageObjects::Sections::Summaries::DegreeDetail, ".degree-details"
+
+      element :change_lead_school, "a", text: "Change lead school", visible: false
+      element :change_employing_school, "a", text: "Change employing school", visible: false
     end
   end
 end

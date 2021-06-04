@@ -752,9 +752,9 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
         schools/form_validator:
           attributes:
-            lead_school_section:
+            lead_school_id:
               not_valid: The lead school section is not valid for this trainee
-            employing_school_section:
+            employing_school_id:
               not_valid: The employing school is not valid for this trainee
   page_headings:
     start_page: Register trainee teachers

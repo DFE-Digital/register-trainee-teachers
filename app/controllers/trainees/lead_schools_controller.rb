@@ -57,9 +57,13 @@ module Trainees
     end
 
     def origin_page_or_next_step
-      return page_tracker.last_origin_page_path if page_tracker.last_origin_page_path&.include?("schools/confirm")
+      return trainee_schools_confirm_path if user_come_from_confirm_or_trainee_page?
 
       redirect_url
+    end
+
+    def user_come_from_confirm_or_trainee_page?
+      page_tracker.last_origin_page_path&.include?("schools/confirm") || page_tracker.last_origin_page_path == "/trainees/#{trainee.slug}"
     end
 
     def query
