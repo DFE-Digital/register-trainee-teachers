@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_105639) do
+ActiveRecord::Schema.define(version: 2021_06_03_171313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,15 @@ ActiveRecord::Schema.define(version: 2021_06_02_105639) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["dttp_id"], name: "index_dttp_providers_on_dttp_id", unique: true
+  end
+
+  create_table "dttp_schools", force: :cascade do |t|
+    t.string "name"
+    t.string "dttp_id"
+    t.string "urn"
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["dttp_id"], name: "index_dttp_schools_on_dttp_id", unique: true
   end
 
   create_table "dttp_users", force: :cascade do |t|
