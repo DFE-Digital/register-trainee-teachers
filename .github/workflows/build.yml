@@ -50,6 +50,15 @@ jobs:
           type=registry,ref=${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
         build-args: COMMIT_SHA=${{ github.sha }}
 
+    - name: Trigger Review App Deployment
+      if: ${{ success() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        workflow: 'Deploy to PaaS'
+        ref: ${{ github.head_ref }}
+        token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
+        inputs: '{"pr": "${{ github.event.pull_request.number }}", "sha": "${{ env.SHA_TAG }}"}'
+
     - name: Bring images up
       run: |
         docker-compose up --no-build -d
