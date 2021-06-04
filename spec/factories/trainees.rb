@@ -110,7 +110,7 @@ FactoryBot.define do
 
     trait :with_course_details_wip do
       with_early_years_course_details_wip
-      after(:build) do |trainee, evaluator|
+      after(:build) do |trainee|
         if trainee.training_route == "assessment_only"
           trainee.subject = Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample
           # trainee.subject = create(:subject)  create using factory here?
