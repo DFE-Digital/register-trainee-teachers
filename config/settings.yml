@@ -85,7 +85,10 @@ environment:
   name: qa
 
 slack:
-  publish_register_alerts_channel: "#twd_publish_register_support"
+  webhooks:
+    default: <set to register support on prod>
+    publish_register_tech_channel: <webhhook url>
+    publish_register_support_channel: <webhook url>
 
 track_validation_errors: true
 
