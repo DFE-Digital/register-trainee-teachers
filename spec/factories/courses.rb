@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :course do
     sequence(:name) { |c| "Course #{c}" }
-    code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
+    code { Faker::Alphanumeric.unique.alphanumeric(number: 4).upcase }
     accredited_body_code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     start_date { Time.zone.today }
     level { :primary }

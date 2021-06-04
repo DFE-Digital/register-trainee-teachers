@@ -13,7 +13,7 @@ namespace :example_data do
     FactoryBot.create_list(:school, 50)
     FactoryBot.create_list(:school, 50, lead_school: true)
 
-    trait_combinations = [
+    default_trait_combinations = [
       # draft
       %i[draft],
       %i[draft with_start_date with_course_details_wip diversity_disclosed],
@@ -38,6 +38,11 @@ namespace :example_data do
       %i[awarded with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed],
     ].freeze
 
+    enabled_routes = TRAINING_ROUTE_FEATURE_FLAGS.map { |flag| flag if FeatureService.enabled?("routes.#{flag}") }.compact.push(:assessment_only)
+    enabled_course_routes = enabled_routes & TRAINING_ROUTES_FOR_COURSE.keys.map(&:to_sym)
+
+    trainees_to_create = enabled_routes.map { |route| [route] << default_trait_combinations + [*0..(rand(1..3))].map { default_trait_combinations.sample } }
+
     PERSONAS.each do |persona_attributes|
       persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
                                            last_name: persona_attributes[:last_name],
@@ -53,58 +58,61 @@ namespace :example_data do
         code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       )
 
-      FactoryBot.create_list(:course, 5, accredited_body_code: provider.code, route: "provider_led_postgrad")
+      enabled_course_routes.each do |route|
+        FactoryBot.create_list(:course, rand(3..7), accredited_body_code: provider.code, route: route)
+      end
+
       persona.update!(provider: provider)
 
-      trait_combinations.each do |traits|
-        created_at = Faker::Date.between(from: 100.days.ago, to: 50.days.ago)
-        submitted_for_trn_at = nil
-        trn = nil
-        progress = {}
+      trainees_to_create.each do |training_route, traits_combinations|
+        traits_combinations.each do |traits|
+          created_at = Faker::Date.between(from: 100.days.ago, to: 50.days.ago)
+          submitted_for_trn_at = nil
+          trn = nil
+          progress = {}
 
-        unless traits.include?(:draft)
-          # mark the sections complete
-          progress = {
-            personal_details: true,
-            contact_details: true,
-            degrees: true,
-            diversity: true,
-            course_details: true,
-            training_details: true,
+          unless traits.include?(:draft)
+            # mark the sections complete
+            progress = {
+              personal_details: true,
+              contact_details: true,
+              degrees: true,
+              diversity: true,
+              course_details: true,
+              training_details: true,
+            }
+
+            # set the submitted_for_trn_at date as they will have at least been submitted
+            submitted_for_trn_at = traits.any? ? Faker::Date.between(from: created_at, to: created_at + 40.days) : nil
+
+            unless traits.include?(:submitted_for_trn)
+              # this trainee is past getting trn so set it
+              trn = Faker::Number.number(digits: 10)
+            end
+          end
+
+          trainee_attributes = {
+            created_at: created_at,
+            submitted_for_trn_at: submitted_for_trn_at,
+            trn: trn,
+            progress: progress,
+            updated_at: submitted_for_trn_at || created_at,
+            training_route: training_route,
           }
 
-          # set the submitted_for_trn_at date as they will have at least been submitted
-          submitted_for_trn_at = traits.any? ? Faker::Date.between(from: created_at, to: created_at + 40.days) : nil
+          trainee_attributes.merge!(provider: provider) if provider
 
-          unless traits.include?(:submitted_for_trn)
-            # this trainee is past getting trn so set it
-            trn = Faker::Number.number(digits: 10)
+          trainee = FactoryBot.create(:trainee, *traits, trainee_attributes)
+
+          [1, 1, 1, 1, 1, 2].sample.times do # multiple nationalities are less common
+            trainee.nationalities << Nationality.all.sample
           end
-        end
 
-        training_route = "provider_led_postgrad"
+          next if trainee.draft?
 
-        trainee_attributes = {
-          created_at: created_at,
-          submitted_for_trn_at: submitted_for_trn_at,
-          trn: trn,
-          progress: progress,
-          updated_at: submitted_for_trn_at || created_at,
-          training_route: training_route,
-        }
-
-        trainee_attributes.merge!(provider: provider) if provider
-
-        trainee = FactoryBot.create(:trainee, *traits, trainee_attributes)
-
-        [1, 1, 1, 1, 1, 2].sample.times do # multiple nationalities are less common
-          trainee.nationalities << Nationality.all.sample
-        end
-
-        next if trainee.draft?
-
-        [1, 2].sample.times do
-          trainee.degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
+          [1, 2].sample.times do
+            trainee.degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
+          end
         end
       end
     end
