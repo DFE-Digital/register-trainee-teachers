@@ -23,8 +23,8 @@ namespace :example_data do
                            trn_received: [%i[with_start_date trn_received with_placement_assignment with_course_details_wip diversity_disclosed],
                                           %i[with_start_date trn_received with_placement_assignment with_course_details_wip diversity_not_disclosed]],
 
-                           recommend_for_award: [%i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details_wip  diversity_disclosed],
-                                                 %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details_wip  diversity_not_disclosed]],
+                           recommend_for_award: [%i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details_wip diversity_disclosed],
+                                                 %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed]],
 
                            withdrawn: [%i[with_start_date withdrawn with_placement_assignment with_course_details_wip diversity_disclosed],
                                        %i[with_start_date withdrawn with_placement_assignment with_course_details_wip diversity_not_disclosed]],
@@ -89,7 +89,7 @@ namespace :example_data do
             trn: trn,
             progress: progress,
             updated_at: submitted_for_trn_at || created_at,
-            training_route: training_route
+            training_route: training_route,
           }
 
           trainee_attributes.merge!(provider: provider) if provider
