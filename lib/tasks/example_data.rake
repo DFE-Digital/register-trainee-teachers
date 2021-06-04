@@ -13,27 +13,30 @@ namespace :example_data do
     FactoryBot.create_list(:school, 50)
     FactoryBot.create_list(:school, 50, lead_school: true)
 
-    trait_combinations = { draft: [[],
-                                   %i[with_start_date with_course_details_wip diversity_disclosed],
-                                   %i[with_start_date with_course_details_wip diversity_not_disclosed]],
-
-                           submitted_for_trn: [%i[with_start_date submitted_for_trn with_placement_assignment with_course_details_wip diversity_disclosed],
-                                               %i[with_start_date submitted_for_trn with_placement_assignment with_course_details_wip diversity_not_disclosed]],
-
-                           trn_received: [%i[with_start_date trn_received with_placement_assignment with_course_details_wip diversity_disclosed],
-                                          %i[with_start_date trn_received with_placement_assignment with_course_details_wip diversity_not_disclosed]],
-
-                           recommend_for_award: [%i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details_wip diversity_disclosed],
-                                                 %i[with_start_date recommended_for_award with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed]],
-
-                           withdrawn: [%i[with_start_date withdrawn with_placement_assignment with_course_details_wip diversity_disclosed],
-                                       %i[with_start_date withdrawn with_placement_assignment with_course_details_wip diversity_not_disclosed]],
-
-                           deferred: [%i[with_start_date deferred with_placement_assignment with_course_details_wip diversity_disclosed],
-                                      %i[with_start_date deferred with_placement_assignment with_course_details_wip diversity_not_disclosed]],
-
-                           awarded: [%i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details_wip diversity_disclosed],
-                                     %i[with_start_date awarded with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed]] }.freeze
+    trait_combinations = [
+      # draft
+      %i[draft],
+      %i[draft with_start_date with_course_details_wip diversity_disclosed],
+      %i[draft with_start_date with_course_details_wip diversity_not_disclosed],
+      # submitted_for_trn
+      %i[submitted_for_trn with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
+      %i[submitted_for_trn with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
+      # trn_received
+      %i[trn_received with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
+      %i[trn_received with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
+      # recommend_for_award
+      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_disclosed],
+      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed],
+      # withdrawn
+      %i[withdrawn with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
+      %i[withdrawn with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
+      # deferred
+      %i[deferred with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
+      %i[deferred with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
+      # awarded
+      %i[awarded with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_disclosed],
+      %i[awarded with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed],
+    ].freeze
 
     PERSONAS.each do |persona_attributes|
       persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
@@ -49,62 +52,59 @@ namespace :example_data do
         dttp_id: SecureRandom.uuid,
         code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       )
+
       FactoryBot.create_list(:course, 5, accredited_body_code: provider.code, route: "provider_led_postgrad")
       persona.update!(provider: provider)
 
-      # rand(50...100).times do
-      trait_combinations.keys.each do |state|
-        trait_combinations[state].each do |traits|
-          created_at = Faker::Date.between(from: 100.days.ago, to: 50.days.ago)
-          submitted_for_trn_at = nil
-          trn = nil
-          progress = {}
+      trait_combinations.each do |traits|
+        created_at = Faker::Date.between(from: 100.days.ago, to: 50.days.ago)
+        submitted_for_trn_at = nil
+        trn = nil
+        progress = {}
 
-          if traits.length > 3 # this trainee isn't draft
-
-            # mark the sections complete
-            progress = {
-              personal_details: true,
-              contact_details: true,
-              degrees: true,
-              diversity: true,
-              course_details: true,
-              training_details: true,
-            }
-
-            # set the submitted_for_trn_at date as they will have at least been submitted
-            submitted_for_trn_at = traits.any? ? Faker::Date.between(from: created_at, to: created_at + 40.days) : nil
-
-            unless traits.include?(:submitted_for_trn)
-              # this trainee is past getting trn so set it
-              trn = Faker::Number.number(digits: 10)
-            end
-          end
-
-          training_route = "provider_led_postgrad"
-
-          trainee_attributes = {
-            created_at: created_at,
-            submitted_for_trn_at: submitted_for_trn_at,
-            trn: trn,
-            progress: progress,
-            updated_at: submitted_for_trn_at || created_at,
-            training_route: training_route,
+        unless traits.include?(:draft)
+          # mark the sections complete
+          progress = {
+            personal_details: true,
+            contact_details: true,
+            degrees: true,
+            diversity: true,
+            course_details: true,
+            training_details: true,
           }
 
-          trainee_attributes.merge!(provider: provider) if provider
+          # set the submitted_for_trn_at date as they will have at least been submitted
+          submitted_for_trn_at = traits.any? ? Faker::Date.between(from: created_at, to: created_at + 40.days) : nil
 
-          trainee = FactoryBot.create(:trainee, *traits, trainee_attributes)
-
-          [1, 1, 1, 1, 1, 2].sample.times do # multiple nationalities are less common
-            trainee.nationalities << Nationality.all.sample
+          unless traits.include?(:submitted_for_trn)
+            # this trainee is past getting trn so set it
+            trn = Faker::Number.number(digits: 10)
           end
+        end
 
-          next if trainee.draft?
+        training_route = "provider_led_postgrad"
 
-          [1, 2].sample.times do
-            trainee.degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
-          end
+        trainee_attributes = {
+          created_at: created_at,
+          submitted_for_trn_at: submitted_for_trn_at,
+          trn: trn,
+          progress: progress,
+          updated_at: submitted_for_trn_at || created_at,
+          training_route: training_route,
+        }
+
+        trainee_attributes.merge!(provider: provider) if provider
+
+        trainee = FactoryBot.create(:trainee, *traits, trainee_attributes)
+
+        [1, 1, 1, 1, 1, 2].sample.times do # multiple nationalities are less common
+          trainee.nationalities << Nationality.all.sample
+        end
+
+        next if trainee.draft?
+
+        [1, 2].sample.times do
+          trainee.degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
         end
       end
     end
