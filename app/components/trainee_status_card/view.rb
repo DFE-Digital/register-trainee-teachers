@@ -10,6 +10,10 @@ module TraineeStatusCard
       trn_received: "blue",
       recommended_for_award: "purple",
       awarded: "",
+      qts_recommended: "purple",
+      qts_received: "",
+      eyts_recommended: "purple",
+      eyts_received: "",
       deferred: "yellow",
       withdrawn: "red",
     }.freeze

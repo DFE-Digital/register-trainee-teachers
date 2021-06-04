@@ -4,41 +4,44 @@ module Badges
   class ViewPreview < ViewComponent::Preview
     include FactoryBot::Syntax::Methods
 
-    def with_no_trainees_in_award_states
-      ActiveRecord::Base.transaction do
-        trainee_id = create(:trainee, state: :draft).id
-        render(Badges::View.new(Trainee.where(id: trainee_id)))
-      end
+    def with_generic_award_states
+      counts = state_counts.merge(
+        awarded: random_count,
+        recommended_for_award: random_count,
+      )
+      render(Badges::View.new(counts))
     end
 
-    def with_trainees_only_in_eyts_states
-      ActiveRecord::Base.transaction do
-        trainee_id = create(:trainee, training_route: :early_years_undergrad, state: :awarded).id
-        render(Badges::View.new(Trainee.where(id: trainee_id)))
-      end
+    def with_eyts_states
+      counts = state_counts.merge(
+        eyts_recommended: random_count,
+        eyts_received: random_count,
+      )
+      render(Badges::View.new(counts))
     end
 
-    def with_trainees_only_in_qts_states
-      ActiveRecord::Base.transaction do
-        trainee_id = create(:trainee, training_route: :assessment_only, state: :awarded).id
-        render(Badges::View.new(Trainee.where(id: trainee_id)))
-      end
+    def with_qts_states
+      counts = state_counts.merge(
+        qts_recommended: random_count,
+        qts_received: random_count,
+      )
+      render(Badges::View.new(counts))
     end
 
-    def with_trainees_in_qts_and_eyts_states
-      ActiveRecord::Base.transaction do
-        trainee_ids = [
-          create(:trainee, training_route: :assessment_only, state: :awarded).id,
-          create(:trainee, training_route: :early_years_undergrad, state: :awarded).id,
-        ]
+  private
 
-        render(Badges::View.new(Trainee.where(id: trainee_ids)))
-      end
+    def random_count
+      Array(1..100).sample
     end
 
-    def with_no_trainees
-      trainees = Trainee.none
-      render(Badges::View.new(trainees))
+    def state_counts
+      {
+        draft: random_count,
+        submitted_for_trn: random_count,
+        trn_received: random_count,
+        deferred: random_count,
+        withdrawn: random_count,
+      }.with_indifferent_access
     end
   end
 end

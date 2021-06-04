@@ -9,13 +9,27 @@ RSpec.describe Badges::View do
 
   let(:current_user) { create(:user, system_admin: true) }
 
+  let(:counts) do
+    {
+      draft: 10,
+      submitted_for_trn: 20,
+      trn_received: 150,
+      deferred: 10,
+      withdrawn: 0,
+    }.with_indifferent_access
+  end
+
   before do
-    trainees
-    render_inline(described_class.new(Trainee.all))
+    render_inline(described_class.new(counts))
   end
 
   context "No trainees have received or are recommended for qualifications" do
-    let(:trainees) { [create(:trainee, state: :draft)] }
+    let(:counts) do
+      super().merge(
+        awarded: 0,
+        recommended_for_award: 0,
+      )
+    end
 
     it "renders neutral text for those qualification states" do
       expect(component).to have_text("Qualification recommended")
@@ -24,7 +38,12 @@ RSpec.describe Badges::View do
   end
 
   context "There are trainees recommended or have received eyts" do
-    let(:trainees) { [create(:trainee, state: :awarded, training_route: :early_years_undergrad)] }
+    let(:counts) do
+      super().merge(
+        eyts_recommended: 0,
+        eyts_received: 0,
+      )
+    end
 
     it "renders eyts text or those qualification states" do
       expect(component).to have_text("EYTS recommended")
@@ -33,25 +52,16 @@ RSpec.describe Badges::View do
   end
 
   context "There are trainees recommended or have received qts" do
-    let(:trainees) { [create(:trainee, state: :awarded, training_route: :assessment_only)] }
+    let(:counts) do
+      super().merge(
+        qts_recommended: 0,
+        qts_received: 0,
+      )
+    end
 
     it "renders qts text or those qualification states" do
       expect(component).to have_text("QTS recommended")
       expect(component).to have_text("QTS received")
-    end
-  end
-
-  context "There are trainees recommended or have received qts and eyts" do
-    let(:trainees) do
-      [
-        create(:trainee, state: :awarded, training_route: :assessment_only),
-        create(:trainee, state: :awarded, training_route: :early_years_undergrad),
-      ]
-    end
-
-    it "renders neutral text or those qualification states" do
-      expect(component).to have_text("Qualification recommended")
-      expect(component).to have_text("Qualification received")
     end
   end
 end
