@@ -30,7 +30,8 @@ review:
 	echo "setting Review $(env) environment"
 	$(eval env_config=review)
 	$(eval backend_key=-backend-config=key=$(env).terraform.tfstate)
-	$(eval export TF_VAR_paas_app_environment=$(env))
+	$(eval export TF_VAR_paas_app_environment=review)
+	$(eval export TF_VAR_paas_web_app_hostname=pr-$(env))
 	$(eval space=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 

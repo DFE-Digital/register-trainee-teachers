@@ -12,11 +12,14 @@ variable space_name {}
 
 variable deployment_strategy { default = "blue-green-v2" }
 
+variable web_app_hostname {}
+
 variable web_app_instances { default = 1 }
 
 variable web_app_memory { default = 512 }
 
 variable worker_app_instances { default = 1 }
+
 variable worker_app_memory { default = 512 }
 
 variable log_url {}
@@ -30,6 +33,7 @@ variable app_config_variable { type = map } #from yml file
 variable worker_app_stopped { default = false }
 
 locals {
+  app_name_suffix          = var.app_environment == "review" ? var.web_app_hostname : var.app_environment
   postgres_service_name    = "register-postgres-${var.app_environment}"
   redis_service_name       = "register-redis-${var.app_environment}"
   web_app_name             = "register-${var.app_environment}"
