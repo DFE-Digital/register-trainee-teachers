@@ -72,9 +72,9 @@ jobs:
             terraform init -backend-config workspace-variables/review_backend.tfvars -backend-config=key=${{ env.TF_STATE_FILE }}
             terraform destroy -var-file workspace-variables/review.tfvars -auto-approve
         env:
-          ARM_ACCESS_KEY:             ${{ secrets.ARM_ACCESS_KEY_REVIEW }}
-          TF_VAR_paas_docker_image:   ${{ env.DOCKER_IMAGE }}
-          TF_VAR_azure_credentials:   ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          ARM_ACCESS_KEY:               ${{ secrets.ARM_ACCESS_KEY_REVIEW }}
+          TF_VAR_paas_app_docker_image: ${{ env.DOCKER_IMAGE }}
+          TF_VAR_azure_credentials:     ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
       - name: Delete tf state file
         if: env.TF_STATE_EXISTS == 'true'
