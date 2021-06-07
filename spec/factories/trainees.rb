@@ -16,18 +16,22 @@ FactoryBot.define do
     additional_ethnic_background { nil }
     disability_disclosure { (Diversities::DISABILITY_DISCLOSURE_ENUMS.values - %w[disabled]).sample }
 
-    address_line_one { Faker::Address.street_address }
-    address_line_two { Faker::Address.street_name }
-    town_city { Faker::Address.city }
-    postcode { Faker::Address.postcode }
-    international_address { nil }
-    locale_code { :uk }
     email { "#{first_names}.#{last_name}@example.com" }
 
     updated_at { submitted_for_trn_at || created_at }
 
+    with_uk_contact_details
     with_personal_details
     with_training_details
+
+    trait :with_uk_contact_details do
+      address_line_one { Faker::Address.street_address }
+      address_line_two { Faker::Address.street_name }
+      town_city { Faker::Address.city }
+      postcode { Faker::Address.postcode }
+      international_address { nil }
+      locale_code { :uk }
+    end
 
     trait :with_personal_details do
       first_names { Faker::Name.first_name }
@@ -219,6 +223,7 @@ FactoryBot.define do
     end
 
     trait :awarded do
+      recommended_for_award
       state { "awarded" }
     end
 

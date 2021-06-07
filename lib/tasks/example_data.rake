@@ -10,31 +10,56 @@ namespace :example_data do
 
     Faker::Config.locale = "en-GB"
 
-    FactoryBot.create_list(:school, 50)
-    FactoryBot.create_list(:school, 50, lead_school: true)
-
-    default_trait_combinations = [
-      %i[draft],
-      %i[draft with_start_date with_related_course_details diversity_disclosed],
-      %i[draft with_start_date with_related_course_details diversity_not_disclosed],
-      %i[submitted_for_trn with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
-      %i[submitted_for_trn with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
-      %i[trn_received with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
-      %i[trn_received with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
-      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_disclosed],
-      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_not_disclosed],
-      %i[withdrawn with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
-      %i[withdrawn with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
-      %i[deferred with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
-      %i[deferred with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
-      %i[awarded with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_disclosed],
-      %i[awarded with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_not_disclosed],
-    ].freeze
+    employing_schools = FactoryBot.create_list(:school, 50)
+    lead_schools = FactoryBot.create_list(:school, 50, lead_school: true)
 
     enabled_routes = TRAINING_ROUTE_FEATURE_FLAGS.map { |flag| flag if FeatureService.enabled?("routes.#{flag}") }.compact.push(:assessment_only)
+
     enabled_course_routes = enabled_routes & TRAINING_ROUTES_FOR_COURSE.keys.map(&:to_sym)
 
-    trainees_to_create = enabled_routes.map { |route| [route] << default_trait_combinations + [*0..(rand(1..3))].map { default_trait_combinations.sample } }
+    available_traits = enabled_routes.map { |route|
+      trainee = Trainee.new(training_route: route)
+
+      [
+        route,
+        {
+          personal_details: %i[with_personal_details manually_add_nationality],
+          contact_details: %i[with_uk_contact_details],
+          training_details: %i[with_trainee_id with_start_date],
+        },
+
+        degrees: %i[manually_add_degrees],
+        course_details: %i[with_related_course_details],
+        placement_details: [*(:with_placement_assignment if trainee.requires_placement_details?)],
+        schools: [*(:manually_add_lead_school if trainee.requires_schools?), *(:manually_add_employing_school if trainee.requires_schools?)],
+      ]
+    }.product(%i[diversity_disclosed diversity_not_disclosed]).map(&:flatten)
+
+    states = %i[draft
+                submitted_for_trn
+                trn_received
+                recommended_for_award
+                withdrawn
+                deferred
+                awarded]
+
+    default_trait_combinations = (states.flat_map do |state|
+      available_traits.map do |route, default_traits, other_traits, diversity_trait|
+        non_draft = state != :draft
+
+        all_traits = default_traits.merge(other_traits)
+
+        all_traits_values = all_traits.values.flatten
+        traits = [state, diversity_trait] + all_traits_values.reject { |trait| trait.start_with?("manually_add_") }
+
+        manual_traits = all_traits_values - traits
+
+        progress = all_traits.to_h { |k, v| [k, non_draft || v.any?] }
+        [route,  traits, manual_traits, progress]
+      end
+    end).group_by(&:first).to_h
+
+    trainees_to_create = enabled_routes.flat_map { |route| default_trait_combinations[route] + [*0..(rand(1..12))].map { default_trait_combinations[route].sample } }
 
     subjects = Dttp::CodeSets::CourseSubjects::MAPPING.keys.map { |name| FactoryBot.build(:subject, name: name) }
 
@@ -61,46 +86,40 @@ namespace :example_data do
 
       persona.update!(provider: provider)
 
-      trainees_to_create.each do |training_route, traits_combinations|
-        traits_combinations.each do |traits|
-          trn = nil
-          progress = {}
-          nationalities = []
-          degrees = []
-          unless traits.include?(:draft)
-            # mark the sections complete
-            progress = {
-              personal_details: true,
-              contact_details: true,
-              degrees: true,
-              diversity: true,
-              course_details: true,
-              training_details: true,
-            }
-
-            nationalities = Nationality.all.sample([1, 1, 1, 1, 1, 2].sample)
-
-            [1, 2].sample.times do
-              degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
-            end
-
-            unless traits.include?(:submitted_for_trn)
-              # this trainee is past getting trn so set it
-              trn = Faker::Number.number(digits: 10)
-            end
-          end
-
-          trainee_attributes = {
-            trn: trn,
-            progress: progress,
-            training_route: training_route,
-            nationalities: nationalities,
-            degrees: degrees,
-            provider: provider,
-          }
-
-          FactoryBot.create(:trainee, *traits, trainee_attributes)
+      trainees_to_create.each do |training_route, traits, manual_traits, progress|
+        nationalities = []
+        if manual_traits.include?(:manually_add_nationality)
+          nationalities = Nationality.all.sample([1, 1, 1, 1, 1, 2].sample)
         end
+
+        degrees = []
+        if manual_traits.include?(:manually_add_degrees)
+          [1, 2].sample.times do
+            degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
+          end
+        end
+
+        employing_school = nil
+        if manual_traits.include?(:manually_add_employing_school)
+          employing_school = employing_schools.sample
+        end
+
+        lead_school = nil
+        if manual_traits.include?(:manually_add_lead_school)
+          lead_school = lead_schools.sample
+        end
+
+        trainee_attributes = {
+          progress: progress,
+          training_route: training_route,
+          nationalities: nationalities,
+          degrees: degrees,
+          provider: provider,
+          employing_school: employing_school,
+          lead_school: lead_school,
+        }
+
+        FactoryBot.create(:trainee, *traits, trainee_attributes)
       end
     end
   end
