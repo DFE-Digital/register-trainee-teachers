@@ -21,7 +21,7 @@ module Api
     end
 
     def invalid_query?
-      params[:query].present? && params[:query].length < 2
+      params[:query].present? && params[:query].length < SchoolSearch::MIN_QUERY_LENGTH
     end
 
     def error_response
