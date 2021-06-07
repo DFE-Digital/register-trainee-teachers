@@ -18,6 +18,6 @@ class SchoolSearch
     schools = schools.search(query) if query
     schools = schools.limit(limit) if limit
     schools = schools.lead_only if lead_schools_only
-    schools
+    schools.order(:name)
   end
 end

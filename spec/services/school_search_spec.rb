@@ -42,6 +42,21 @@ describe SchoolSearch do
       end
     end
 
+    context "search order" do
+      let!(:school_two) { create(:school, name: "The London Acorn School") }
+      let!(:school_one) { create(:school, name: "Acorn Park School") }
+
+      it "orders the results alphabetically" do
+        expect(described_class.call).to eq([school_one, school_two])
+      end
+
+      context "with a search query" do
+        it "orders the results alphabetically" do
+          expect(described_class.call(query: "acorn")).to eq([school_one, school_two])
+        end
+      end
+    end
+
     context "searching lead schools" do
       let(:lead_school) { create(:school, lead_school: true) }
 
