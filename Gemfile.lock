@@ -452,7 +452,7 @@ GEM
       capybara (~> 3.8)
       site_prism-all_there (>= 0.3.1, < 1.0)
     site_prism-all_there (0.3.2)
-    skylight (5.1.0)
+    skylight (5.1.1)
       activesupport (>= 5.2.0)
     slack-notifier (2.4.0)
     smart_properties (1.15.0)
