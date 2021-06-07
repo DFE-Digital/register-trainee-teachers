@@ -1,21 +1,13 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :abstract_trainee, class: Trainee do
-    sequence :trainee_id do |n|
-      year = (course_start_date || Faker::Date.between(from: 10.years.ago, to: Time.zone.today)).strftime("%y").to_i
-
-      "#{year}/#{year + 1}-#{n}"
-    end
+  factory :trainee do
+    created_at { Faker::Date.between(from: 100.days.ago, to: 50.days.ago) }
 
     provider
 
     training_route { TRAINING_ROUTE_ENUMS[:assessment_only] }
 
-    first_names { Faker::Name.first_name }
-    middle_names { Faker::Name.middle_name }
-    last_name { Faker::Name.last_name }
-    gender { Trainee.genders.keys.sample }
     slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
 
     diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS.values.sample }
@@ -32,17 +24,29 @@ FactoryBot.define do
     locale_code { :uk }
     email { "#{first_names}.#{last_name}@example.com" }
 
-    factory :trainee do
+    updated_at { submitted_for_trn_at || created_at }
+
+    with_personal_details
+    with_training_details
+
+    trait :with_personal_details do
+      first_names { Faker::Name.first_name }
+      middle_names { Faker::Name.middle_name }
+      last_name { Faker::Name.last_name }
+      gender { Trainee.genders.keys.sample }
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
     end
 
-    factory :trainee_for_form do
-      transient do
-        form_dob { Faker::Date.birthday(min_age: 18, max_age: 65) }
+    trait :with_training_details do
+      with_trainee_id
+      with_start_date
+    end
+
+    trait :with_trainee_id do
+      sequence :trainee_id do |n|
+        year = (course_start_date || Faker::Date.between(from: 10.years.ago, to: Time.zone.today)).strftime("%y").to_i
+        "#{year}/#{year + 1}-#{n}"
       end
-      add_attribute("date_of_birth(3i)") { form_dob.day.to_s }
-      add_attribute("date_of_birth(2i)") { form_dob.month.to_s }
-      add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
 
     trait :not_started do
@@ -79,37 +83,34 @@ FactoryBot.define do
       degrees { [build(:degree, :uk_degree_with_details)] }
     end
 
+    trait :completed_progress do
+      progress do
+        progress = Progress.new
+        progress.attributes.transform_values! { true }
+      end
+    end
+
     trait :completed do
       in_progress
       nationalities { [build(:nationality)] }
-      progress do
-        Progress.new(
-          personal_details: true,
-          contact_details: true,
-          diversity: true,
-          degrees: true,
-          course_details: true,
-          training_details: true,
-          placement_details: true,
-          schools: true,
-        )
-      end
+      completed_progress
     end
-    # todo, can this be deleted?
+
     trait :with_course_details do
       subject { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
       course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
-      with_early_years_course_details_wip
+      with_early_years_course_details
     end
 
-    trait :with_early_years_course_details_wip do
+    trait :with_early_years_course_details do
       course_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
     end
 
-    trait :with_course_details_wip do
-      with_early_years_course_details_wip
+    trait :with_related_course_details do
+      with_early_years_course_details
+
       after(:build) do |trainee|
         if trainee.training_route == "assessment_only"
           trainee.subject = Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample
@@ -119,12 +120,17 @@ FactoryBot.define do
 
         if TRAINING_ROUTES_FOR_COURSE.include?(trainee.training_route)
           course = trainee.available_courses.sample
-          trainee.course_start_date = course.start_date
-          trainee.course_end_date = course.end_date
-          trainee.subject = course.subjects.first.name
-          # trainee.subject = Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample
-          trainee.course_age_range = course.age_range
-          trainee.course_code = course.code
+
+          trainee.course_start_date = course&.start_date
+          trainee.course_end_date = course&.end_date
+          trainee.course_age_range = course&.age_range
+          trainee.course_code = course&.code
+
+          course_subjects = course&.subjects
+
+          trainee.subject = course_subjects&.first&.name
+          trainee.subject_two = course_subjects&.second&.name
+          trainee.subject_three = course_subjects&.third&.name
         end
       end
     end
@@ -179,19 +185,20 @@ FactoryBot.define do
 
     trait :submitted_for_trn do
       state { "submitted_for_trn" }
-      submitted_for_trn_at { Time.zone.now }
+      submitted_for_trn_at { Faker::Date.between(from: created_at, to: created_at + 25.days) }
       dttp_id { SecureRandom.uuid }
     end
 
     trait :trn_received do
       submitted_for_trn
       state { "trn_received" }
-      dttp_id { SecureRandom.uuid }
+      trn { Faker::Number.number(digits: 10) }
     end
 
     trait :recommended_for_award do
+      trn_received
       state { "recommended_for_award" }
-      recommended_for_award_at { Time.zone.now }
+      recommended_for_award_at { Faker::Date.between(from: submitted_for_trn_at, to: created_at + 10.days) }
     end
 
     trait :withdrawn do

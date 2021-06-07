@@ -14,34 +14,29 @@ namespace :example_data do
     FactoryBot.create_list(:school, 50, lead_school: true)
 
     default_trait_combinations = [
-      # draft
       %i[draft],
-      %i[draft with_start_date with_course_details_wip diversity_disclosed],
-      %i[draft with_start_date with_course_details_wip diversity_not_disclosed],
-      # submitted_for_trn
-      %i[submitted_for_trn with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
-      %i[submitted_for_trn with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
-      # trn_received
-      %i[trn_received with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
-      %i[trn_received with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
-      # recommend_for_award
-      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_disclosed],
-      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed],
-      # withdrawn
-      %i[withdrawn with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
-      %i[withdrawn with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
-      # deferred
-      %i[deferred with_start_date with_placement_assignment with_course_details_wip diversity_disclosed],
-      %i[deferred with_start_date with_placement_assignment with_course_details_wip diversity_not_disclosed],
-      # awarded
-      %i[awarded with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_disclosed],
-      %i[awarded with_start_date with_placement_assignment with_outcome_date with_course_details_wip diversity_not_disclosed],
+      %i[draft with_start_date with_related_course_details diversity_disclosed],
+      %i[draft with_start_date with_related_course_details diversity_not_disclosed],
+      %i[submitted_for_trn with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
+      %i[submitted_for_trn with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
+      %i[trn_received with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
+      %i[trn_received with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
+      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_disclosed],
+      %i[recommended_for_award with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_not_disclosed],
+      %i[withdrawn with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
+      %i[withdrawn with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
+      %i[deferred with_start_date with_placement_assignment with_related_course_details diversity_disclosed],
+      %i[deferred with_start_date with_placement_assignment with_related_course_details diversity_not_disclosed],
+      %i[awarded with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_disclosed],
+      %i[awarded with_start_date with_placement_assignment with_outcome_date with_related_course_details diversity_not_disclosed],
     ].freeze
 
     enabled_routes = TRAINING_ROUTE_FEATURE_FLAGS.map { |flag| flag if FeatureService.enabled?("routes.#{flag}") }.compact.push(:assessment_only)
     enabled_course_routes = enabled_routes & TRAINING_ROUTES_FOR_COURSE.keys.map(&:to_sym)
 
     trainees_to_create = enabled_routes.map { |route| [route] << default_trait_combinations + [*0..(rand(1..3))].map { default_trait_combinations.sample } }
+
+    subjects = Dttp::CodeSets::CourseSubjects::MAPPING.keys.map { |name| FactoryBot.build(:subject, name: name) }
 
     PERSONAS.each do |persona_attributes|
       persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
@@ -59,18 +54,19 @@ namespace :example_data do
       )
 
       enabled_course_routes.each do |route|
-        FactoryBot.create_list(:course, rand(3..7), accredited_body_code: provider.code, route: route)
+        FactoryBot.build_list(:course, rand(10..100), accredited_body_code: provider.code, route: route) { |course|
+          course.subjects = subjects.sample(rand(1..3))
+        }.each(&:save!)
       end
 
       persona.update!(provider: provider)
 
       trainees_to_create.each do |training_route, traits_combinations|
         traits_combinations.each do |traits|
-          created_at = Faker::Date.between(from: 100.days.ago, to: 50.days.ago)
-          submitted_for_trn_at = nil
           trn = nil
           progress = {}
-
+          nationalities = []
+          degrees = []
           unless traits.include?(:draft)
             # mark the sections complete
             progress = {
@@ -82,8 +78,11 @@ namespace :example_data do
               training_details: true,
             }
 
-            # set the submitted_for_trn_at date as they will have at least been submitted
-            submitted_for_trn_at = traits.any? ? Faker::Date.between(from: created_at, to: created_at + 40.days) : nil
+            nationalities = Nationality.all.sample([1, 1, 1, 1, 1, 2].sample)
+
+            [1, 2].sample.times do
+              degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
+            end
 
             unless traits.include?(:submitted_for_trn)
               # this trainee is past getting trn so set it
@@ -92,27 +91,15 @@ namespace :example_data do
           end
 
           trainee_attributes = {
-            created_at: created_at,
-            submitted_for_trn_at: submitted_for_trn_at,
             trn: trn,
             progress: progress,
-            updated_at: submitted_for_trn_at || created_at,
             training_route: training_route,
+            nationalities: nationalities,
+            degrees: degrees,
+            provider: provider,
           }
 
-          trainee_attributes.merge!(provider: provider) if provider
-
-          trainee = FactoryBot.create(:trainee, *traits, trainee_attributes)
-
-          [1, 1, 1, 1, 1, 2].sample.times do # multiple nationalities are less common
-            trainee.nationalities << Nationality.all.sample
-          end
-
-          next if trainee.draft?
-
-          [1, 2].sample.times do
-            trainee.degrees << FactoryBot.build(:degree, %i[uk_degree_with_details non_uk_degree_with_details].sample)
-          end
+          FactoryBot.create(:trainee, *traits, trainee_attributes)
         end
       end
     end
