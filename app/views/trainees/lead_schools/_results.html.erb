@@ -11,26 +11,22 @@
 <%= f.govuk_error_summary %>
 
 <%= f.govuk_radio_buttons_fieldset :lead_school_id, legend: nil do %>
-  <div class="govuk-!-margin-bottom-6">
     <% @schools.each_with_index do |school, index| %>
       <%= f.govuk_radio_button :lead_school_id, school.id,
-                               label: { text: school.name },
-                               link_errors: index.zero?,
-                               hint: { text: school_urn_and_location(school) } %>
+                              label: { text: school.name },
+                              link_errors: index.zero?,
+                              hint: { text: school_urn_and_location(school) } %>
     <% end %>
-  </div>
 
-  <div class="govuk-!-margin-bottom-6"><%= f.govuk_radio_divider %></div>
-
-  <div class="govuk-!-margin-bottom-6">
-    <%= f.govuk_radio_button :lead_school_id,
-                             :results_search_again,
-                             label: { text: t("components.page_titles.search_schools.search_button") } do %>
-      <%= f.govuk_text_field :results_search_again_query,
-                             label: { text: t("components.page_titles.search_schools.search_hint") },
-                             width: "three-quarters" %>
-    <% end %>
-  </div>
+  <%= f.govuk_radio_divider %>
+  
+  <%= f.govuk_radio_button :lead_school_id,
+                          :results_search_again,
+                          label: { text: t("components.page_titles.search_schools.search_button") } do %>
+    <%= f.govuk_text_field :results_search_again_query,
+                          label: { text: t("components.page_titles.search_schools.search_hint") },
+                          width: "three-quarters" %>
+  <% end %>
 <% end %>
 
 <%= f.govuk_submit %>
