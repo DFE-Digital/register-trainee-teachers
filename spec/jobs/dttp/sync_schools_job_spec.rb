@@ -35,7 +35,7 @@ RSpec.describe Dttp::SyncSchoolsJob, type: :job do
   end
 
   context "when Dttp::School exist" do
-    let!(:dttp_school_one) { create(:dttp_school, dttp_id: school_one_hash["accountid"]) }
+    let!(:dttp_school_one) { create(:dttp_school, name: "Westminster School", dttp_id: school_one_hash["accountid"]) }
 
     it "adds new records" do
       expect {
@@ -44,8 +44,7 @@ RSpec.describe Dttp::SyncSchoolsJob, type: :job do
     end
 
     it "updates the existing record" do
-      subject
-      expect(dttp_school_one.reload.name).to eq("Test School")
+      expect { subject }.to change { dttp_school_one.reload.name }.from("Westminster School").to("Test School")
     end
   end
 
