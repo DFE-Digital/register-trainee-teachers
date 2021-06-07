@@ -33,21 +33,23 @@ class CourseDetailsForm < TraineeForm
   before_validation :sanitise_course_dates
   before_validation :sanitise_subjects
 
-  validates :subject, autocomplete: true, presence: true
-  validates :subject_two, autocomplete: true
-  validates :subject_three, autocomplete: true
-  validates :additional_age_range, autocomplete: true, if: -> { other_age_range? }
-  validate :age_range_valid
+  validates :subject, autocomplete: true, presence: true, if: :require_subject?
+  validates :subject_two, autocomplete: true, if: :require_subject?
+  validates :subject_three, autocomplete: true, if: :require_subject?
+  validates :additional_age_range, autocomplete: true, if: -> { other_age_range? && require_age_range? }
+  validate :age_range_valid, if: :require_age_range?
   validate :course_start_date_valid
   validate :course_end_date_valid
-  validate :subject_two_valid
-  validate :subject_three_valid
+  validate :subject_two_valid, if: :require_subject?
+  validate :subject_three_valid, if: :require_subject?
 
   delegate :apply_application?, to: :trainee
 
   MAX_END_YEARS = 4
 
   def course_age_range
+    return unless require_age_range?
+
     (other_age_range? ? additional_age_range : main_age_range).split(" to ")
   end
 
@@ -77,6 +79,14 @@ class CourseDetailsForm < TraineeForm
 
   def has_additional_subjects?
     subject_two.present? || subject_three.present?
+  end
+
+  def require_subject?
+    !trainee.early_years_route?
+  end
+
+  def require_age_range?
+    !trainee.early_years_route?
   end
 
 private

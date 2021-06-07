@@ -84,4 +84,22 @@ describe TrainingRouteManager do
       end
     end
   end
+
+  describe "#early_years_route?" do
+    context "non early years route" do
+      let(:trainee) { build(:trainee, :school_direct_salaried) }
+
+      it "returns false" do
+        expect(subject.early_years_route?).to be false
+      end
+    end
+
+    context "early years route" do
+      let(:trainee) { build(:trainee, :early_years_undergrad) }
+
+      it "returns true" do
+        expect(subject.early_years_route?).to be true
+      end
+    end
+  end
 end

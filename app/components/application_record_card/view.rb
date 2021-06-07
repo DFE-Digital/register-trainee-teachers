@@ -22,7 +22,7 @@ module ApplicationRecordCard
     end
 
     def subject
-      return I18n.t("components.application_record_card.subject.early_years") if record.is_early_years?
+      return I18n.t("components.application_record_card.subject.early_years") if record.early_years_route?
       return I18n.t("components.application_record_card.subject.blank") if record.subject.blank?
 
       subjects_for_summary_view(record.subject, record.subject_two, record.subject_three)
