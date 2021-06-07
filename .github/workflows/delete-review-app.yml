@@ -69,8 +69,8 @@ jobs:
         if: env.TF_STATE_EXISTS == 'true'
         working-directory: terraform
         run: |
-            terraform init -backend-config workspace_variables/review_backend.tfvars -backend-config=key=${{ env.TF_STATE_FILE }}
-            terraform destroy -var-file workspace_variables/review.tfvars -auto-approve
+            terraform init -backend-config workspace-variables/review_backend.tfvars -backend-config=key=${{ env.TF_STATE_FILE }}
+            terraform destroy -var-file workspace-variables/review.tfvars -auto-approve
         env:
           ARM_ACCESS_KEY:             ${{ secrets.ARM_ACCESS_KEY_REVIEW }}
           TF_VAR_paas_docker_image:   ${{ env.DOCKER_IMAGE }}
