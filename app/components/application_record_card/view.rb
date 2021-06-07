@@ -16,13 +16,14 @@ module ApplicationRecordCard
     end
 
     def trainee_name
-      return "Draft record" if record.blank? || record.first_names.blank? || record.last_name.blank?
+      return I18n.t("components.application_record_card.trainee_name.blank") if has_no_name?
 
       params[:sort_by] == "last_name" ? last_name_first : first_names_first
     end
 
     def subject
-      return "No subject provided" if record.subject.blank?
+      return I18n.t("components.application_record_card.subject.early_years") if record.is_early_years?
+      return I18n.t("components.application_record_card.subject.blank") if record.subject.blank?
 
       subjects_for_summary_view(record.subject, record.subject_two, record.subject_three)
     end
@@ -54,6 +55,10 @@ module ApplicationRecordCard
     end
 
   private
+
+    def has_no_name?
+      record.blank? || record.first_names.blank? || record.last_name.blank?
+    end
 
     def first_names_first
       [record.first_names, record.last_name].join(" ")

@@ -24,6 +24,14 @@ en:
       draft:
         personal_details_and_education: Personal details and education
         about_their_teaching_training: About their teacher training
+    application_record_card:
+      subject:
+        early_years: "Early years teaching"
+        blank: "No subject provided"
+      route:
+        blank: "No route provided"
+      trainee_name:
+        blank: "Draft record"
     confirmation:
       not_provided: Not provided
       heading: Confirm %{section_title}
