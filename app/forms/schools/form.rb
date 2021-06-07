@@ -5,6 +5,7 @@ module Schools
     NON_TRAINEE_FIELDS = %i[
       results_search_again_query
       no_results_search_again_query
+      school_value
     ].freeze
 
     attr_accessor(*NON_TRAINEE_FIELDS)
@@ -22,6 +23,10 @@ module Schools
 
     def no_results_searching_again?
       school_id == "no_results_search_again"
+    end
+
+    def index_page_radio_buttons?
+      school_value == "true"
     end
 
   private
