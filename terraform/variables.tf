@@ -14,6 +14,8 @@ variable paas_redis_service_plan {}
 
 variable paas_deployment_strategy { default = "blue-green-v2" }
 
+variable paas_web_app_hostname {}
+
 variable paas_web_app_instances { default = 2 }
 
 variable paas_web_app_memory { default = 512 }
@@ -28,7 +30,10 @@ variable env_config {}
 
 variable paas_worker_app_stopped { default = false }
 
-variable statuscake_alerts { type = map }
+variable statuscake_alerts {
+  type    = map
+  default = {}
+}
 
 variable key_vault_name {}
 

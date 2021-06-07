@@ -23,6 +23,9 @@ on:
         description: Deploy to rollover?
         default: 'false'
         required: true
+      pr:
+        description: PR number for the review app
+        required: false
       sha:
         description: Commit sha to be deployed
         required: true
@@ -33,10 +36,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
-      environments: ${{ steps.select-environments.outputs.environments }}
+      environments: ${{ steps.select-environments.outputs.environments || steps.set-pr-environment.outputs.environments }}
     steps:
       - id:   select-environments
+        if:  github.event.inputs.pr == ''
         uses: DFE-Digital/bat-infrastructure/actions/prepare-environment-matrix@main
+      
+      - id:  set-pr-environment
+        if:  github.event.inputs.pr != ''
+        run: echo "::set-output name=environments::$PR"
+        env:
+          PR: '{"environment": ["${{ github.event.inputs.pr }}"]}'        
 
       - uses: DFE-Digital/github-actions/turnstyle@master
         name: Wait for other inprogress deployment runs
@@ -50,23 +60,31 @@ jobs:
     strategy:
        matrix: ${{ fromJson(needs.prepare-matrix.outputs.environments) }}
        max-parallel: 1
-    env:
-        DOCKER_REPO: dfedigital/register-trainee-teachers
-
     steps:
       - uses: actions/checkout@v2
 
       - name: Set Current Deployment Environment variable
         run: |
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
-          echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
 
-          . terraform/workspace-variables/$DEPLOY_ENV.sh
+          if [ ! -z "${{ github.event.inputs.pr }}" ]; then
+            PR_NUMBER=${{ github.event.inputs.pr }}
+            echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+            echo "DEPLOY_ENV=review" >> $GITHUB_ENV
+            echo "BACKEND_KEY=-backend-config=key=pr-$PR_NUMBER.tfstate" >> $GITHUB_ENV
+            echo "TF_VAR_paas_web_app_hostname=$PR_NUMBER" >> $GITHUB_ENV
+            echo "DEPLOY_URL=https://register-pr-$PR_NUMBER.london.cloudapps.digital" >> $GITHUB_ENV
+            . terraform/workspace-variables/review.sh
+          else
+            echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
+            . terraform/workspace-variables/$DEPLOY_ENV.sh
+          fi;
+
           echo "TF_VAR_key_vault_name=$TF_VAR_key_vault_name" >> $GITHUB_ENV
           echo "TF_VAR_key_vault_app_secret_name=$TF_VAR_key_vault_app_secret_name" >> $GITHUB_ENV
           echo "TF_VAR_key_vault_infra_secret_name=$TF_VAR_key_vault_infra_secret_name" >> $GITHUB_ENV
         env:
-          DOCKER_IMAGE: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
+          DOCKER_IMAGE: ${{ format('dfedigital/register-trainee-teachers:{0}', github.event.inputs.sha) }}
           DEPLOY_ENV: ${{ matrix.environment }}
 
       - name: Start ${{ matrix.environment }} Deployment
@@ -76,7 +94,6 @@ jobs:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ matrix.environment }}
-          ref: ${{ github.event.inputs.sha }}
 
       - uses: azure/login@v1
         with:
@@ -98,14 +115,13 @@ jobs:
 
       - name: Terraform init, Terraform Plan and Apply
         run: |
-          terraform init -backend-config=workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars
+          terraform init -backend-config=workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars $BACKEND_KEY
           terraform plan -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars
           terraform apply -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars -auto-approve
-
         working-directory: terraform
         env:
           ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
-          TF_VAR_paas_app_docker_image: ${{env.DOCKER_REPO}}:${{ github.event.inputs.sha }}
+          TF_VAR_paas_app_docker_image: ${{env.DOCKER_IMAGE}}
           TF_VAR_azure_credentials:     ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
 
       - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
@@ -113,7 +129,7 @@ jobs:
         with:
           workflow: Smoke Tests
           token:    ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
-          inputs:   '{"environment": "${{ env.DEPLOY_ENV }}"}'
+          inputs:   '{"environment": "${{ env.DEPLOY_ENV }}", "pr": "${{ env.PR_NUMBER }}"}'
 
       - name: Wait for smoke tests
         id: wait_for_smoke_tests
@@ -138,7 +154,7 @@ jobs:
           env: ${{ matrix.environment }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          ref: ${{ github.event.inputs.sha }}
+          env_url: ${{ env.DEPLOY_URL }}
 
       - name: Check for Failure
         if: ${{ failure() && github.ref == 'refs/heads/master' }}

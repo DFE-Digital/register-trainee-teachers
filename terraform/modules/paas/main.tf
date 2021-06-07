@@ -15,13 +15,15 @@ resource cloudfoundry_service_instance postgres_instance {
     delete = "30m"
     update = "30m"
   }
-
 }
 
 resource cloudfoundry_service_instance redis_instance {
   name         = local.redis_service_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
+  timeouts {
+    create = "30m"
+  }
 }
 
 resource cloudfoundry_app web_app {
@@ -91,7 +93,7 @@ resource cloudfoundry_route web_app_route {
 resource cloudfoundry_route web_app_service_gov_uk_route {
   domain   = data.cloudfoundry_domain.register_education_gov_uk.id
   space    = data.cloudfoundry_space.space.id
-  hostname = var.app_environment == "production" ? "www" : var.app_environment
+  hostname = var.web_app_hostname
 }
 
 resource cloudfoundry_user_provided_service logging {

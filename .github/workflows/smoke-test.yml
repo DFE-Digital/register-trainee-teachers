@@ -3,8 +3,11 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'The environment to run tests against (qa, staging , production or sandbox)'
+        description: 'The environment to run tests against (qa, staging , production, sandbox or review)'
         required: true
+      pr:
+        description: 'The PR number if the environment is review'
+        required: false
 
 jobs:
   smoke_tests:
@@ -19,12 +22,16 @@ jobs:
         with:
           ruby-version: 2.7.2
 
-      - name: Install bundler
+      - name: Set Environment variables
+        run: |
+          if [ ! -z "${{ github.event.inputs.pr }}" ]; then 
+            PR_NUMBER=${{ github.event.inputs.pr }}
+            echo "base_url: https://register-pr-$PR_NUMBER.london.cloudapps.digital" >> config/settings/review.yml
+          fi;
+
+      - name: Bundle smoke test gems
         run: |
           gem install bundler
-
-      - name: Bundle smoke test gem
-        run: |
           echo 'gem "rspec"' >> Gemfile
           bundle
 
@@ -37,7 +44,7 @@ jobs:
         run: RAILS_ENV=${{ github.event.inputs.environment }} ./bin/bundle exec rspec spec/smoke
 
       - name: 'Nofiy #twd_publish_register_tech on failure'
-        if: failure()
+        if: ${{ failure() && github.event.inputs.environment != 'review' }}
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_CHANNEL: twd_publish_register_tech

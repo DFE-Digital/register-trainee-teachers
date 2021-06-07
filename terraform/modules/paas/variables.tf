@@ -12,11 +12,14 @@ variable space_name {}
 
 variable deployment_strategy { default = "blue-green-v2" }
 
+variable web_app_hostname {}
+
 variable web_app_instances { default = 1 }
 
 variable web_app_memory { default = 512 }
 
 variable worker_app_instances { default = 1 }
+
 variable worker_app_memory { default = 512 }
 
 variable log_url {}
@@ -30,12 +33,13 @@ variable app_config_variable { type = map } #from yml file
 variable worker_app_stopped { default = false }
 
 locals {
-  postgres_service_name    = "register-postgres-${var.app_environment}"
-  redis_service_name       = "register-redis-${var.app_environment}"
-  web_app_name             = "register-${var.app_environment}"
+  app_name_suffix          = var.app_environment != "review" ? var.app_environment : "pr-${var.web_app_hostname}"
+  postgres_service_name    = "register-postgres-${local.app_name_suffix}"
+  redis_service_name       = "register-redis-${local.app_name_suffix}"
+  web_app_name             = "register-${local.app_name_suffix}"
   app_environment          = merge(var.app_config_variable, var.app_secrets_variable)
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
-  worker_app_name          = "register-worker-${var.app_environment}"
-  logging_service_name     = "register-logit-${var.app_environment}"
+  worker_app_name          = "register-worker-${local.app_name_suffix}"
+  logging_service_name     = "register-logit-${local.app_name_suffix}"
   web_app_routes           = [cloudfoundry_route.web_app_service_gov_uk_route.id, cloudfoundry_route.web_app_route.id]
 }
