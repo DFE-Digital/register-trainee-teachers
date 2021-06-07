@@ -5,8 +5,6 @@ require "rails_helper"
 RSpec.describe Badges::View do
   include Rails.application.routes.url_helpers
 
-  alias_method :component, :page
-
   let(:current_user) { create(:user, system_admin: true) }
 
   let(:counts) do
@@ -32,8 +30,8 @@ RSpec.describe Badges::View do
     end
 
     it "renders neutral text for those qualification states" do
-      expect(component).to have_text("Qualification recommended")
-      expect(component).to have_text("Qualification received")
+      expect(rendered_component).to include("Qualification recommended")
+      expect(rendered_component).to include("Qualification received")
     end
   end
 
@@ -46,8 +44,8 @@ RSpec.describe Badges::View do
     end
 
     it "renders eyts text or those qualification states" do
-      expect(component).to have_text("EYTS recommended")
-      expect(component).to have_text("EYTS received")
+      expect(rendered_component).to include("EYTS recommended")
+      expect(rendered_component).to include("EYTS received")
     end
   end
 
@@ -60,8 +58,8 @@ RSpec.describe Badges::View do
     end
 
     it "renders qts text or those qualification states" do
-      expect(component).to have_text("QTS recommended")
-      expect(component).to have_text("QTS received")
+      expect(rendered_component).to include("QTS recommended")
+      expect(rendered_component).to include("QTS received")
     end
   end
 end
