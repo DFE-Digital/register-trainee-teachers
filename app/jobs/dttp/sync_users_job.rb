@@ -4,8 +4,8 @@ module Dttp
   class SyncUsersJob < ApplicationJob
     queue_as :dttp
 
-    def perform(path = nil)
-      @user_list = Dttp::RetrieveUsers.call(path: path)
+    def perform(request_uri = nil)
+      @user_list = Dttp::RetrieveUsers.call(request_uri: request_uri)
 
       Dttp::User.upsert_all(user_attributes, unique_by: :dttp_id)
 
