@@ -3,27 +3,27 @@
 require "rails_helper"
 
 RSpec.describe ReviewDraft::Draft::View do
-  alias_method :component, :page
+  include TaskListHelper
 
   before do
     render_inline(described_class.new(trainee: trainee))
   end
 
   context "sections that appear for assessment-only trainees" do
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { build(:trainee) }
 
     it "renders correct sections for assessment-only trainees" do
-      expect(component).to have_text("Personal details")
-      expect(component).to have_text("Contact details")
-      expect(component).to have_text("Diversity information")
-      expect(component).to have_text("Degree")
-      expect(component).to have_text("Course details")
-      expect(component).to have_text("Trainee start date and ID")
+      expect(rendered_component).to have_text("Personal details")
+      expect(rendered_component).to have_text("Contact details")
+      expect(rendered_component).to have_text("Diversity information")
+      expect(rendered_component).to have_text("Degree")
+      expect(rendered_component).to have_text("Course details")
+      expect(rendered_component).to have_text("Trainee start date and ID")
     end
 
     it "does not render non assessment-only sections" do
-      expect(component).to_not have_text("Placement details")
-      expect(component).to_not have_text("Lead and employing schools")
+      expect(rendered_component).to_not have_text("Placement details")
+      expect(rendered_component).to_not have_text("Lead and employing schools")
     end
   end
 
@@ -31,11 +31,11 @@ RSpec.describe ReviewDraft::Draft::View do
     let(:trainee) { create(:trainee, :provider_led_postgrad, :with_placement_assignment) }
 
     xit "renders additional provider-led specific sections" do
-      expect(component).to have_text("Placement details")
+      expect(rendered_component).to have_text("Placement details")
     end
 
     it "does not render non provider-led sections" do
-      expect(component).to_not have_text("Lead and employing schools")
+      expect(rendered_component).to_not have_text(I18n.t("components.review_draft.draft.schools.titles.tuition"))
     end
   end
 
@@ -44,11 +44,11 @@ RSpec.describe ReviewDraft::Draft::View do
       let(:trainee) { create(:trainee, route) }
 
       it "renders additional school-direct specific sections" do
-        expect(component).to have_text("Lead and employing schools")
+        expect(rendered_component).to have_text(school_details_title(route))
       end
 
       it "does not render non school direct sections" do
-        expect(component).to_not have_text("Placement details")
+        expect(rendered_component).to_not have_text("Placement details")
       end
     end
   end

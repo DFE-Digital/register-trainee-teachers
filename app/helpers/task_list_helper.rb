@@ -54,7 +54,7 @@ module TaskListHelper
 
       school_details:
         {
-          task_name: "Lead and employing schools",
+          task_name: school_details_title(trainee.training_route),
           path: edit_trainee_lead_schools_path(trainee),
           confirm_path: trainee_schools_confirm_path(trainee),
           classes: "school-details",
@@ -123,5 +123,17 @@ module TaskListHelper
     }
 
     task_list[task]
+  end
+
+private
+
+  def school_details_title(route)
+    tuition_title = I18n.t("components.review_draft.draft.schools.titles.tuition")
+    salaried_title = I18n.t("components.review_draft.draft.schools.titles.salaried")
+
+    {
+      school_direct_tuition_fee: tuition_title,
+      school_direct_salaried: salaried_title,
+    }[route.to_sym || salaried_title]
   end
 end
