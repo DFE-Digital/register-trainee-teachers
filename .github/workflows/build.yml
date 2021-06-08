@@ -45,10 +45,20 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         load: true
         cache-to: type=inline
-        cache-from: | 
+        cache-from: |
           type=registry,ref=${{env.DOCKER_REPO}}:master
           type=registry,ref=${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
         build-args: COMMIT_SHA=${{ github.sha }}
+
+    - name: Tag master image
+      if: github.ref == 'refs/heads/master'
+      run: docker tag ${{env.DOCKER_REPO}}:${{env.SHA_TAG}} ${{env.DOCKER_REPO}}:master
+
+    - name: Push Docker Image
+      if: github.actor != 'dependabot[bot]'
+      run: |
+        docker push ${{env.DOCKER_REPO}}:${{env.SHA_TAG}}
+        docker push ${{env.DOCKER_REPO}}:master || true
 
     - name: Trigger Review App Deployment
       if: ${{ success() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
@@ -85,16 +95,6 @@ jobs:
 
     - name: Run Javascript tests
       run: docker-compose exec -T web /bin/sh -c 'yarn run test'
-
-    - name: Tag master image
-      if: github.ref == 'refs/heads/master'
-      run: docker tag ${{env.DOCKER_REPO}}:${{env.SHA_TAG}} ${{env.DOCKER_REPO}}:master
-
-    - name: Push Docker Image
-      if: github.actor != 'dependabot[bot]'
-      run: |
-        docker push ${{env.DOCKER_REPO}}:${{env.SHA_TAG}} 
-        docker push ${{env.DOCKER_REPO}}:master || true
 
     - name: Trigger QA Deployment
       if: ${{ success() && github.ref == 'refs/heads/master' }}
