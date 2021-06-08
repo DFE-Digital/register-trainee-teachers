@@ -206,6 +206,7 @@ FactoryBot.define do
     end
 
     trait :withdrawn do
+      submitted_for_trn
       state { "withdrawn" }
       withdraw_date { Faker::Date.in_date_period }
     end
