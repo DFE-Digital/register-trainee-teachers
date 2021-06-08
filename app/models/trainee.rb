@@ -17,7 +17,7 @@ class Trainee < ApplicationRecord
   attribute :progress, Progress.to_type
 
   delegate :award_type, :requires_placement_details?, :requires_schools?,
-           :requires_employing_school?, to: :training_route_manager
+           :requires_employing_school?, :is_early_years?, to: :training_route_manager
   delegate :update_training_route!, to: :route_data_manager
 
   validates :training_route, presence: {

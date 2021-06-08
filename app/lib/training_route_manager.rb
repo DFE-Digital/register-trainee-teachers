@@ -17,8 +17,17 @@ class TrainingRouteManager
     feature_enabled?("routes.school_direct_salaried") && schools_direct_salaried?
   end
 
+  def is_early_years?
+    TRAINING_ROUTE_ENUMS.values_at(
+      :early_years_assessment_only,
+      :early_years_postgrad,
+      :early_years_salaried,
+      :early_years_undergrad,
+      ).include? training_route
+  end
+
   def award_type
-    TRAINING_ROUTE_AWARD_TYPE[training_route]
+    TRAINING_ROUTE_AWARD_TYPE[training_route&.to_sym]
   end
 
 private
@@ -26,7 +35,7 @@ private
   attr_reader :trainee
 
   def provider_led_postgrad?
-    training_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad].to_sym
+    training_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad]
   end
 
   def assessment_only?
@@ -34,15 +43,15 @@ private
   end
 
   def schools_direct?
-    TRAINING_ROUTE_ENUMS.values_at(:school_direct_tuition_fee, :school_direct_salaried).include? training_route.to_s
+    TRAINING_ROUTE_ENUMS.values_at(:school_direct_tuition_fee, :school_direct_salaried).include? training_route
   end
 
   def schools_direct_salaried?
-    training_route == TRAINING_ROUTE_ENUMS[:school_direct_salaried].to_sym
+    training_route == TRAINING_ROUTE_ENUMS[:school_direct_salaried]
   end
 
   def training_route
-    @trainee.training_route&.to_sym
+    @trainee.training_route
   end
 
   def feature_enabled?(feature_name)
