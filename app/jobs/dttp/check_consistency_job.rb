@@ -25,11 +25,11 @@ module Dttp
     end
 
     def contact_conflict
-      consistency_check.contact_last_updated_at != dttp_contact_updated_date
+      consistency_check.contact_last_updated_at.utc < dttp_contact_updated_date&.to_datetime&.utc
     end
 
     def placement_assignment_conflict
-      consistency_check.placement_assignment_last_updated_at != dttp_placement_assignment_updated_date
+      consistency_check.placement_assignment_last_updated_at.utc < dttp_placement_assignment_updated_date&.to_datetime&.utc
     end
   end
 end
