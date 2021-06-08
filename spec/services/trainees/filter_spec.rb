@@ -21,9 +21,11 @@ module Trainees
 
     context "with state filter" do
       let!(:submitted_for_trn_trainee) { create(:trainee, :submitted_for_trn) }
-      let(:filters) { { state: "submitted_for_trn" } }
+      let!(:qts_awarded_trainee) { create(:trainee, :qts_awarded) }
+      let!(:eyts_awarded_trainee) { create(:trainee, :eyts_awarded) }
+      let(:filters) { { state: %w[submitted_for_trn qts_awarded] } }
 
-      it { is_expected.to eq([submitted_for_trn_trainee]) }
+      it { is_expected.to contain_exactly(submitted_for_trn_trainee, qts_awarded_trainee) }
     end
 
     context "with subject filter" do

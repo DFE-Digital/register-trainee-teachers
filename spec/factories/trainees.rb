@@ -190,6 +190,26 @@ FactoryBot.define do
       state { "awarded" }
     end
 
+    trait :eyts_awarded do
+      training_route { EARLY_YEARS_ROUTES.sample }
+      state { "awarded" }
+    end
+
+    trait :eyts_recommended do
+      training_route { EARLY_YEARS_ROUTES.sample }
+      state { "recommended_for_award" }
+    end
+
+    trait :qts_awarded do
+      training_route { "school_direct_salaried" }
+      state { "awarded" }
+    end
+
+    trait :qts_recommended do
+      training_route { "school_direct_salaried" }
+      state { "recommended_for_award" }
+    end
+
     trait :with_dttp_dormancy do
       deferred
       dormancy_dttp_id { SecureRandom.uuid }

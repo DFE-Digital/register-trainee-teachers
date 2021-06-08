@@ -25,10 +25,17 @@ module Trainees
       trainees.where(training_route: training_route)
     end
 
-    def state(trainees, state)
-      return trainees if state.blank?
+    def state(trainees, states)
+      return trainees if states.blank?
 
-      trainees.where(state: state)
+      non_award_states = states.dup
+
+      award_states = []
+      states.each do |state|
+        award_states << non_award_states.delete(state) if TraineeFilter::AWARD_STATES.include? state
+      end
+
+      trainees.where(state: non_award_states).or(trainees.with_award_states(*award_states))
     end
 
     def subject(trainees, subject)

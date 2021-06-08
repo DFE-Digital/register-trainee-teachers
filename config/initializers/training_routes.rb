@@ -47,3 +47,5 @@ TRAINING_ROUTE_AWARD_TYPE = {
   school_direct_salaried: "QTS",
   school_direct_tuition_fee: "QTS",
 }.freeze
+
+EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == "EYTS" }.keys.freeze

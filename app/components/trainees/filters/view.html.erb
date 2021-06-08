@@ -55,7 +55,7 @@
                   Status
                 </legend>
                 <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <% Trainee.states.map do |state, _| %>
+                  <% TraineeFilter::STATES.map do |state, _| %>
                     <div class="govuk-checkboxes__item">
                       <%= check_box_tag "state[]", state, checked?(:state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
                       <%= label_tag "state-#{state}", label_for("state", state), class: "govuk-label govuk-checkboxes__label" %>

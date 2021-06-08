@@ -49,6 +49,19 @@ describe Trainee do
     end
   end
 
+  context "scopes" do
+    describe "with_award_states" do
+      it "returns tainees with the correct training route and state" do
+        create(:trainee, :trn_received)
+        qts_awarded = create(:trainee, :qts_awarded)
+        eyts_recommended = create(:trainee, :eyts_recommended)
+        create(:trainee, :eyts_awarded)
+
+        expect(Trainee.with_award_states(:qts_awarded, :eyts_recommended)).to contain_exactly(qts_awarded, eyts_recommended)
+      end
+    end
+  end
+
   context "associations" do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:apply_application).optional }
