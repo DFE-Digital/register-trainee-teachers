@@ -508,11 +508,11 @@ en:
           recommended_for_award: Qualification recommended
           withdrawn: Withdrawn
           deferred: Deferred
-          awarded: Qualification received
+          awarded: Qualification awarded
           qts_recommended: QTS recommended
-          qts_received: QTS received
+          qts_awarded: QTS awarded
           eyts_recommended: EYTS recommended
-          eyts_received: EYTS received
+          eyts_awarded: EYTS awarded
     errors:
       models:
         trainee:

@@ -23,13 +23,13 @@ private
       counts["recommended_for_award"] ||= 0
     elsif eyts_trainees?
       awarded = counts.delete("awarded")
-      counts["eyts_received"] = awarded
+      counts["eyts_awarded"] = awarded
 
       recommended = counts.delete("recommended_for_award")
       counts["eyts_recommended"] = recommended
     elsif qts_trainees?
       awarded = counts.delete("awarded")
-      counts["qts_received"] = awarded
+      counts["qts_awarded"] = awarded
 
       recommended = counts.delete("recommended_for_award")
       counts["qts_recommended"] = recommended

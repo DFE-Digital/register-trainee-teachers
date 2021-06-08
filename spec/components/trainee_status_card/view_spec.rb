@@ -14,7 +14,7 @@ RSpec.describe TraineeStatusCard::View do
 
   describe "#state_name" do
     it "returns state name in correct format" do
-      award_states = %w[qts_recommended qts_received eyts_recommended eyts_received]
+      award_states = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded]
       (Trainee.states.keys + award_states).each do |state|
         expect(described_class.new(state: state,
                                    target: target, count: 1).state_name)

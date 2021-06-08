@@ -37,7 +37,7 @@ describe HomeView do
         submitted_for_trn: 0,
         trn_received: 0,
         withdrawn: 0,
-        eyts_received: 1,
+        eyts_awarded: 1,
         eyts_recommended: 0,
       )
     end
@@ -56,7 +56,7 @@ describe HomeView do
         submitted_for_trn: 0,
         trn_received: 0,
         withdrawn: 0,
-        qts_received: 1,
+        qts_awarded: 1,
         qts_recommended: 0,
       )
     end

@@ -8,7 +8,7 @@ module TraineeStatusCard
       end
     end
 
-    award_states = %w[qts_recommended qts_received eyts_recommended eyts_received]
+    award_states = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded]
 
     (Trainee.states.keys + award_states).each do |state|
       define_method state.to_s do

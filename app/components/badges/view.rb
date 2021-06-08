@@ -12,9 +12,9 @@ module Badges
       recommended_for_award
       awarded
       eyts_recommended
-      eyts_received
+      eyts_awarded
       qts_recommended
-      qts_received
+      qts_awarded
       deferred
       withdrawn
     ].freeze
