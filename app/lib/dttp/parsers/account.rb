@@ -13,6 +13,16 @@ module Dttp
             }
           end
         end
+
+        def to_school_attributes(schools:)
+          schools.map do |school|
+            {
+              name: school["name"],
+              urn: school["dfe_urn"],
+              dttp_id: school["accountid"],
+            }
+          end
+        end
       end
     end
   end
