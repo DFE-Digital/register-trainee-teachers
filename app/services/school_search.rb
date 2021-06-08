@@ -5,6 +5,7 @@ class SchoolSearch
 
   attr_reader :query, :limit, :lead_schools_only
 
+  MIN_QUERY_LENGTH = 2
   DEFAULT_LIMIT = 15
 
   def initialize(query: nil, limit: DEFAULT_LIMIT, lead_schools_only: false)
