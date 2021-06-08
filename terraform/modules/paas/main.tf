@@ -29,6 +29,7 @@ resource cloudfoundry_service_instance redis_instance {
 resource cloudfoundry_app web_app {
   name                       = local.web_app_name
   docker_image               = var.app_docker_image
+  command                    = local.web_app_start_command
   health_check_type          = "http"
   health_check_http_endpoint = "/ping"
   instances                  = var.web_app_instances

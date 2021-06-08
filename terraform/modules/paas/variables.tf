@@ -38,6 +38,8 @@ locals {
   redis_service_name       = "register-redis-${local.app_name_suffix}"
   web_app_name             = "register-${local.app_name_suffix}"
   app_environment          = merge(var.app_config_variable, var.app_secrets_variable)
+  review_app_start_command = "bundle exec rake db:schema:load db:seed example_data:generate && bundle exec rails server -b 0.0.0.0"
+  web_app_start_command    = var.app_environment == "review" ? local.review_app_start_command : "bundle exec rails db:migrate:with_data && bundle exec rails server -b 0.0.0.0"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "register-worker-${local.app_name_suffix}"
   logging_service_name     = "register-logit-${local.app_name_suffix}"
