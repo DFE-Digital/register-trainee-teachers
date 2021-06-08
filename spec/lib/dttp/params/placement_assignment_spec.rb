@@ -20,6 +20,8 @@ module Dttp
       let(:dttp_degree_grade_entity_id) { SecureRandom.uuid }
       let(:dttp_country_entity_id) { SecureRandom.uuid }
       let(:dttp_provider_id) { SecureRandom.uuid }
+      let(:dttp_lead_school_id) { SecureRandom.uuid }
+      let(:dttp_employing_school_id) { SecureRandom.uuid }
       let(:dttp_route_id) { Dttp::CodeSets::Routes::MAPPING[trainee.training_route][:entity_id] }
       let(:dttp_qualification_aim_id) { Dttp::CodeSets::QualificationAims::MAPPING[trainee.training_route][:entity_id] }
 
@@ -132,6 +134,57 @@ module Dttp
             expect(subject).to include(
               { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
             )
+          end
+        end
+
+        context "school direct (tuition fee)" do
+          let(:trainee) do
+            create(:trainee,
+                   :school_direct_tuition_fee,
+                   :with_course_details,
+                   :with_start_date,
+                   :with_lead_school,
+                   dttp_id: dttp_contact_id,
+                   provider: provider)
+          end
+
+          before do
+            create(:dttp_school, dttp_id: dttp_lead_school_id, urn: trainee.lead_school.urn)
+          end
+
+          subject { described_class.new(trainee).params }
+
+          it "sets the lead school DTTP param" do
+            expect(subject).to include({
+              "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_lead_school_id})",
+            })
+          end
+        end
+
+        context "school direct (salaried)" do
+          let(:trainee) do
+            create(:trainee,
+                   :school_direct_salaried,
+                   :with_course_details,
+                   :with_start_date,
+                   :with_lead_school,
+                   :with_employing_school,
+                   dttp_id: dttp_contact_id,
+                   provider: provider)
+          end
+
+          before do
+            create(:dttp_school, dttp_id: dttp_lead_school_id, urn: trainee.lead_school.urn)
+            create(:dttp_school, dttp_id: dttp_employing_school_id, urn: trainee.employing_school.urn)
+          end
+
+          subject { described_class.new(trainee).params }
+
+          it "sets the lead and employing school DTTP params" do
+            expect(subject).to include({
+              "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_lead_school_id})",
+              "dfe_EmployingSchoolId@odata.bind" => "/accounts(#{dttp_employing_school_id})",
+            })
           end
         end
       end
