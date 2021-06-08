@@ -22,6 +22,14 @@ module ApplicationRecordCard
       it "renders 'No subject provided'" do
         expect(component.find(".app-application-card__subject")).to have_text("No subject provided")
       end
+
+      context "and is an Early Years trainee" do
+        let(:trainee) { Trainee.new(created_at: Time.zone.now, training_route: TRAINING_ROUTE_ENUMS[:early_years_undergrad]) }
+
+        it "renders 'Early uears teaching'" do
+          expect(component.find(".app-application-card__subject")).to have_text("Early years teaching")
+        end
+      end
     end
 
     context "when the Trainee has no route" do
