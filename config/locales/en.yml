@@ -154,7 +154,8 @@ en:
           edit: Degree details
           new: Add undergraduate degree
         outcome_date:
-          edit: When did they meet the standards?
+          edit: When did they meet the QTS standards?
+          eyts_edit: When did they meet the EYTS standards?
           confirm: Check outcome details
         outcome_details:
           confirm_qts: Check QTS details

@@ -1,4 +1,6 @@
-<%= render PageTitle::View.new(title: "trainees.outcome_date.edit", has_errors: @outcome_form.errors.present?) %>
+<% text = @trainee.is_early_years? ? I18n.t("components.page_titles.trainees.outcome_date.eyts_edit") : I18n.t("components.page_titles.trainees.outcome_date.edit") %>
+
+<%= render PageTitle::View.new(title: text, has_errors: @outcome_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
@@ -16,13 +18,13 @@
         <%= trainee_name(@trainee) %>
       </span>
 
-      <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: "When did they meet the standards?", tag: "h1", size: "l" }, classes: "outcome-date") do %>
-        <%= f.govuk_radio_button :date_string, :today, label: { text: "Today" }, link_errors: true %>
-        <%= f.govuk_radio_button :date_string, :yesterday, label: { text: "Yesterday" } %>
-        <%= f.govuk_radio_button :date_string, :other, label: { text: "On another day" } do %>
-          <%= f.govuk_date_field :date, legend: { text: t("views.forms.common.on_what_date"), size: "s" }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
+        <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: text, tag: "h1", size: "l" }, classes: "outcome-date") do %>
+          <%= f.govuk_radio_button :date_string, :today, label: { text: "Today" }, link_errors: true %>
+          <%= f.govuk_radio_button :date_string, :yesterday, label: { text: "Yesterday" } %>
+          <%= f.govuk_radio_button :date_string, :other, label: { text: "On another day" } do %>
+            <%= f.govuk_date_field :date, legend: { text: t("views.forms.common.on_what_date"), size: "s" }, hint: { text: t("views.forms.common.for_example") + ", 3 12 2020" } %>
+          <% end %>
         <% end %>
-      <% end %>
 
       <%= f.govuk_submit %>
     <% end %>

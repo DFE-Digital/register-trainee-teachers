@@ -7,17 +7,28 @@ feature "Recording a training outcome", type: :feature do
 
   before do
     given_i_am_authenticated
-    given_a_trainee_exists(:trn_received)
-    and_i_am_on_the_trainee_record_page
-    and_i_click_on_record_training_outcome
   end
 
   scenario "submit empty form" do
+    given_a_trainee_exists(:trn_received)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_record_training_outcome
+    and_i_see_the_correct_title_for_non_early_years
     and_i_continue
     then_i_see_the_error_message_for_date_not_chosen
   end
 
+  scenario "view correct title for early years" do
+    given_a_trainee_exists(:trn_received, :early_years_salaried)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_record_training_outcome
+    i_see_the_correct_title_for_early_years
+  end
+
   scenario "choosing today records the outcome" do
+    given_a_trainee_exists(:trn_received)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_record_training_outcome
     when_i_choose_today
     and_i_continue
     then_i_am_redirected_to_the_confirm_outcome_details_page
@@ -27,6 +38,9 @@ feature "Recording a training outcome", type: :feature do
   end
 
   scenario "choosing yesterday records the outcome" do
+    given_a_trainee_exists(:trn_received)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_record_training_outcome
     when_i_choose_yesterday
     and_i_continue
     then_i_am_redirected_to_the_confirm_outcome_details_page
@@ -37,6 +51,9 @@ feature "Recording a training outcome", type: :feature do
 
   context "choosing 'On another day'" do
     before do
+      given_a_trainee_exists(:trn_received)
+      and_i_am_on_the_trainee_record_page
+      and_i_click_on_record_training_outcome
       when_i_choose("On another day")
     end
 
@@ -62,6 +79,9 @@ feature "Recording a training outcome", type: :feature do
   end
 
   scenario "cancelling changes" do
+    given_a_trainee_exists(:trn_received)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_record_training_outcome
     when_i_choose_today
     and_i_continue
     then_i_am_redirected_to_the_confirm_outcome_details_page
@@ -133,5 +153,17 @@ feature "Recording a training outcome", type: :feature do
 
   def and_the_outcome_date_i_chose_is_cleared
     expect(trainee.reload.outcome_date).to be_nil
+  end
+
+  def and_i_see_the_correct_title_for_non_early_years
+    expect(record_page).to have_content(
+      I18n.t("components.page_titles.trainees.outcome_date.edit"),
+    )
+  end
+
+  def i_see_the_correct_title_for_early_years
+    expect(record_page).to have_content(
+      I18n.t("components.page_titles.trainees.outcome_date.eyts_edit"),
+    )
   end
 end
