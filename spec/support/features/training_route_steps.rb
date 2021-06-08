@@ -10,6 +10,14 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:assessment_only])
     end
 
+    def given_i_have_created_a_school_direct_salaried_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:school_direct_salaried])
+    end
+
+    def given_i_have_created_a_school_direct_tuition_fee_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee])
+    end
+
   private
 
     def choose_training_route_for(route)
