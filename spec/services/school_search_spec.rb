@@ -57,6 +57,19 @@ describe SchoolSearch do
       end
     end
 
+    context "with special characters" do
+      let!(:school_two) { create(:school, name: "St Mary's Kilburn") }
+      let!(:school_one) { create(:school, name: "St Marys the Mount School") }
+
+      it "matches all" do
+        expect(described_class.call(query: "mary's")).to match_array([school_one, school_two])
+      end
+
+      it "matches all without punctuations" do
+        expect(described_class.call(query: "marys")).to match_array([school_one, school_two])
+      end
+    end
+
     context "searching lead schools" do
       let(:lead_school) { create(:school, lead_school: true) }
 
