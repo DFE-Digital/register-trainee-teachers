@@ -27,6 +27,14 @@ module Trainees
 
     private
 
+      def button_text
+        if trainee.is_early_years?
+          t("views.trainees.edit.recommend_for_eyts")
+        else
+          t("views.trainees.edit.recommend_for_award")
+        end
+      end
+
       def defer_link
         govuk_link_to t("views.trainees.edit.defer"), trainee_deferral_path(trainee), class: "defer"
       end

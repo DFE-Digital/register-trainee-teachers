@@ -284,6 +284,7 @@ en:
         reinstate: Reinstate
         this_trainee: this trainee
         recommend_for_award: Recommend trainee for QTS
+        recommend_for_eyts: Recommend trainee for EYTS
         status_summary:
           submitted_for_trn: This record is pending a TRN
           deferred: This record is deferred
