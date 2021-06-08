@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class HomeView
+  EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == "EYTS" }.keys.freeze
+
   def initialize(trainees)
     @trainees = trainees
     populate_state_counts!
