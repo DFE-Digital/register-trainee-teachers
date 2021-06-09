@@ -1,4 +1,4 @@
-<% text = @trainee.is_early_years? ? I18n.t("components.page_titles.trainees.outcome_date.eyts_edit") : I18n.t("components.page_titles.trainees.outcome_date.edit") %>
+<% text = @trainee.early_years_route? ? I18n.t("components.page_titles.trainees.outcome_date.eyts_edit") : I18n.t("components.page_titles.trainees.outcome_date.edit") %>
 
 <%= render PageTitle::View.new(title: text, has_errors: @outcome_form.errors.present?) %>
 
