@@ -28,7 +28,7 @@ module Trainees
     private
 
       def button_text
-        if trainee.is_early_years?
+        if trainee.early_years_route?
           t("views.trainees.edit.recommend_for_eyts")
         else
           t("views.trainees.edit.recommend_for_award")
