@@ -26,11 +26,11 @@ module Trainees
         def rows
           [
             { key: t("components.course_detail.type_of_course"), value: course_type },
-            { key: t("components.course_detail.subject"), value: subject, action: action_link("subject") },
-            { key: t("components.course_detail.age_range"), value: course_age_range, action: action_link("age range") },
+            ({ key: t("components.course_detail.subject"), value: subject, action: action_link("subject") } if require_subject?),
+            ({ key: t("components.course_detail.age_range"), value: course_age_range, action: action_link("age range") } if require_age_range?),
             { key: t("components.course_detail.course_start_date"), value: course_start_date, action: action_link("course start date") },
             { key: t("components.course_detail.course_end_date"), value: course_end_date, action: action_link("course end date") },
-          ].tap do |collection|
+          ].compact.tap do |collection|
             if show_publish_courses?(trainee)
               collection.unshift({
                 key: t("components.course_detail.course_details"),
@@ -42,6 +42,14 @@ module Trainees
         end
 
       private
+
+        def require_subject?
+          !trainee.early_years_route?
+        end
+
+        def require_age_range?
+          !trainee.early_years_route?
+        end
 
         def action_link(text, path: edit_trainee_course_details_path(trainee))
           govuk_link_to("#{t(:change)}<span class='govuk-visually-hidden'> #{text}</span>".html_safe, path)

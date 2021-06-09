@@ -13,37 +13,41 @@
 
       <h1 class="govuk-heading-l">Course details</h1>
 
-      <%= render FormComponents::Autocomplete::View.new(
-        f,
-        attribute_name: :subject,
-        form_field: f.govuk_collection_select(:subject, course_subjects_options,
-                                              :name, :name, label: { text: "Subject", size: "s" },
-                                                            hint: { text: "Search for the closest matching subject" }),
-      ) %>
+      <% if f.object.require_subject? %>
+        <%= render FormComponents::Autocomplete::View.new(
+          f,
+          attribute_name: :subject,
+          form_field: f.govuk_collection_select(:subject, course_subjects_options,
+                                                :name, :name, label: { text: "Subject", size: "s" },
+                                                              hint: { text: "Search for the closest matching subject" }),
+        ) %>
 
-      <%= render "additional_subjects", f: f %>
+        <%= render "additional_subjects", f: f %>
+      <% end %>
 
-      <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
-        <% main_age_ranges_options.each_with_index do |age_range, index| %>
-          <%= f.govuk_radio_button(:main_age_range, age_range,
-                                   label: { text: age_range },
-                                   link_errors: index.zero?) %>
-        <% end %>
+      <% if f.object.require_age_range? %>
+        <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
+          <% main_age_ranges_options.each_with_index do |age_range, index| %>
+            <%= f.govuk_radio_button(:main_age_range, age_range,
+                                     label: { text: age_range },
+                                     link_errors: index.zero?) %>
+          <% end %>
 
-        <%= f.govuk_radio_divider %>
+          <%= f.govuk_radio_divider %>
 
-        <%= f.govuk_radio_button(:main_age_range,
-                                 :other,
-                                 label: { text: "Other age range" }) do %>
-          <%= render FormComponents::Autocomplete::View.new(
-            f,
-            attribute_name: :additional_age_range,
-            form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
-                                                  :name,
-                                                  :name,
-                                                  label: { text: "Other age range", size: "s" }),
-          ) %>
+          <%= f.govuk_radio_button(:main_age_range,
+                                   :other,
+                                   label: { text: "Other age range" }) do %>
+            <%= render FormComponents::Autocomplete::View.new(
+              f,
+              attribute_name: :additional_age_range,
+              form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
+                                                    :name,
+                                                    :name,
+                                                    label: { text: "Other age range", size: "s" }),
+            ) %>
 
+          <% end %>
         <% end %>
       <% end %>
 

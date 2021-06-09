@@ -17,17 +17,12 @@ class TrainingRouteManager
     feature_enabled?("routes.school_direct_salaried") && schools_direct_salaried?
   end
 
-  def is_early_years?
-    TRAINING_ROUTE_ENUMS.values_at(
-      :early_years_assessment_only,
-      :early_years_postgrad,
-      :early_years_salaried,
-      :early_years_undergrad,
-    ).include? training_route
-  end
-
   def award_type
     TRAINING_ROUTE_AWARD_TYPE[training_route&.to_sym]
+  end
+
+  def early_years_route?
+    @trainee.training_route.to_s.starts_with?("early_years")
   end
 
 private
