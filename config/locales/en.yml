@@ -126,7 +126,7 @@ en:
       trn_submissions:
         show: Successfully submitted
       check_details:
-        show: Review trainee record
+        show: Check trainee record
       trainees:
         delete: Delete this draft record
         index: Trainee records (%{total_trainees_count_text})
