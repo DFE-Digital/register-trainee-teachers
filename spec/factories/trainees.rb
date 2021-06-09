@@ -153,40 +153,45 @@ FactoryBot.define do
     end
 
     trait :submitted_for_trn do
-      state { "submitted_for_trn" }
-      submitted_for_trn_at { Time.zone.now }
+      completed
       dttp_id { SecureRandom.uuid }
+      submitted_for_trn_at { Time.zone.now }
+      state { "submitted_for_trn" }
     end
 
     trait :trn_received do
       submitted_for_trn
+      trn { SecureRandom.uuid }
       state { "trn_received" }
-      dttp_id { SecureRandom.uuid }
     end
 
     trait :recommended_for_award do
-      state { "recommended_for_award" }
+      trn_received
       recommended_for_award_at { Time.zone.now }
+      state { "recommended_for_award" }
     end
 
     trait :withdrawn do
-      state { "withdrawn" }
+      trn_received
       withdraw_date { Faker::Date.in_date_period }
+      state { "withdrawn" }
     end
 
     trait :deferred do
-      submitted_for_trn
-      state { "deferred" }
+      trn_received
       defer_date { Faker::Date.in_date_period }
+      state { "deferred" }
     end
 
     trait :reinstated do
-      state { "trn_received" }
+      completed
       defer_date { Faker::Date.in_date_period }
       reinstate_date { Faker::Date.in_date_period }
+      state { "trn_received" }
     end
 
     trait :awarded do
+      recommended_for_award
       state { "awarded" }
     end
 

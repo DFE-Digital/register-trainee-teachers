@@ -29,7 +29,7 @@ describe "Trainee state transitions" do
       end
 
       context "without an existing trn" do
-        let(:trainee) { create(:trainee, :deferred) }
+        let(:trainee) { create(:trainee, :deferred, trn: nil) }
         it "raises an error if no trn is provided" do
           expect {
             trainee.trn_received!
@@ -66,7 +66,7 @@ describe "Trainee state transitions" do
       end
 
       context "without an existing trn" do
-        let(:trainee) { create(:trainee, :withdrawn) }
+        let(:trainee) { create(:trainee, :withdrawn, trn: nil) }
 
         it "doesnt update state but updates trn" do
           trainee.trn_received!(new_trn)
