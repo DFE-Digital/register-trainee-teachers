@@ -27,8 +27,8 @@ module Trainees
       additional_ethnic_background
       disability_disclosure
       subject
-      course_min_age
-      course_max_age
+      subject_two
+      subject_three
       course_start_date
       course_end_date
       commencement_date
@@ -40,6 +40,8 @@ module Trainees
       country
       other_grade
     ].freeze
+
+    AGE_RANGE_FIELDS = %w[course_min_age course_max_age].freeze
 
     delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, to: :audit
 
@@ -56,7 +58,9 @@ module Trainees
         )
       else
         audited_changes.map do |field, _|
-          next unless FIELDS.include?(field)
+          next unless FIELDS.include?(field) || AGE_RANGE_FIELDS.include?(field)
+
+          field = "course_age_range" if AGE_RANGE_FIELDS.include?(field)
 
           TimelineEvent.new(
             title: I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated"),
