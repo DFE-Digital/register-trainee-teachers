@@ -2,7 +2,7 @@
   <div class="record-actions">
 
     <% if can_recommend_for_award? %>
-      <%= render GovukButtonLinkTo::View.new(body: t("views.trainees.edit.recommend_for_award"), url: edit_trainee_outcome_details_outcome_date_path(trainee), class_option: "govuk-!-margin-bottom-0") %>
+      <%= render GovukButtonLinkTo::View.new(body: button_text, url: edit_trainee_outcome_details_outcome_date_path(trainee), class_option: "govuk-!-margin-bottom-0") %>
     <% else %>
       <div class="govuk-inset-text govuk-!-margin-0">
         <%= t("views.trainees.edit.status_summary.#{trainee.state}") %>
