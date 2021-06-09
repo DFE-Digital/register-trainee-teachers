@@ -234,9 +234,10 @@ en:
           qts_awarded: QTS awarded
           eyts_awarded: EYTS awarded
           reinstated: Trainee reinstated
-          course_min_age: Course min age updated
-          course_max_age: Course max age updated
+          course_age_range: Course age range updated
           subject: Course subject updated
+          subject_two: Course subject two updated
+          subject_three: Course subject three updated
           commencement_date: Start date updated
           trainee_id: Trainee ID updated
           disability_disclosure: Disability disclosures updated
