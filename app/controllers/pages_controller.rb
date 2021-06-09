@@ -7,6 +7,7 @@ class PagesController < ApplicationController
     session[:requested_path] = root_path
     if authenticated?
       @trainees = policy_scope(Trainee.all)
+      @home_view = HomeView.new(@trainees)
       render :home
     else
       render :start

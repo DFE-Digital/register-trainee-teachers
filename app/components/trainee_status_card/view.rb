@@ -2,7 +2,7 @@
 
 module TraineeStatusCard
   class View < GovukComponent::Base
-    attr_reader :state, :trainees, :target
+    attr_reader :state, :count, :target
 
     STATUS_COLOURS = {
       draft: "grey",
@@ -10,22 +10,22 @@ module TraineeStatusCard
       trn_received: "blue",
       recommended_for_award: "purple",
       awarded: "",
+      qts_recommended: "purple",
+      qts_received: "",
+      eyts_recommended: "purple",
+      eyts_received: "",
       deferred: "yellow",
       withdrawn: "red",
     }.freeze
 
-    def initialize(state:, trainees:, target:)
+    def initialize(state:, count:, target:)
       @state = state
       @target = target
-      @trainees = trainees
-    end
-
-    def count
-      trainees.where(state: state).count
+      @count = count
     end
 
     def state_name
-      I18n.t("activerecord.attributes.trainee.states.#{state}", award_type: "QTS")
+      I18n.t("activerecord.attributes.trainee.states.#{state}")
     end
 
     def status_colour
