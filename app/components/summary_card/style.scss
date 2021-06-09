@@ -22,11 +22,7 @@
   .app-summary-card__title {
     @include govuk-font($size: 19);
     margin-top: 0;
-    margin-bottom: govuk-spacing(2);
-
-    @include govuk-media-query($from: desktop) {
-      margin: 0;
-    }
+    margin-bottom: 0;
   }
 
   .app-summary-card__actions {
