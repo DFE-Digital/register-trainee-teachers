@@ -44,7 +44,12 @@ module Trainees
     end
 
     def form_klass
-      "#{trainee_section_key.underscore.camelcase}Form".constantize
+      case trainee_section_key
+      when "schools"
+        Schools::FormValidator
+      else
+        "#{trainee_section_key.underscore.camelcase}Form".constantize
+      end
     end
 
     def trainee_section_key

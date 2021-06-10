@@ -17,8 +17,8 @@ module Trainees
 
       def change_paths(school_type)
         {
-          lead: trainee_lead_schools_path(trainee),
-          employing: trainee_employing_schools_path(trainee),
+          lead: edit_trainee_lead_schools_path(trainee),
+          employing: edit_trainee_employing_schools_path(trainee),
         }[school_type.to_sym]
       end
     end
