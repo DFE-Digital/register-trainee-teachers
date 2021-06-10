@@ -18,6 +18,14 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee])
     end
 
+    def given_i_have_created_an_early_years_assessment_only_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:early_years_assessment_only])
+    end
+
+    def given_i_have_created_an_early_years_postgrad_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:early_years_postgrad])
+    end
+
   private
 
     def choose_training_route_for(route)
