@@ -1,6 +1,6 @@
 <%= render FormComponents::Autocomplete::View.new(
   form,
   attribute_name: field,
-  form_field: form.govuk_collection_select(field, format_nationalities(nationalities, empty_option: true, description: false), :id, :name, label: { text: "Other nationality", size: "s", aria: { label: "#{(index + 1).ordinalize} additional nationality" } }),
-  classes: "govuk-!-margin-bottom-6",
+  form_field: form.govuk_collection_select(field, nationalities_options(nationalities), :id, :name, label: { text: "Other nationality", size: "s", aria: { label: "#{(index + 1).ordinalize} additional nationality" } }),
+  classes: "govuk-!-margin-bottom-6"
 ) %>

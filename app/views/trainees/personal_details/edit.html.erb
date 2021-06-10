@@ -43,7 +43,7 @@
                                        legend: { text: "Nationality", size: "s" },
                                        hint: { text: "Select all that apply" },
                                        classes: "nationality" do %>
-        <% format_nationalities(@nationalities).each do |nationality| %>
+        <% checkbox_nationalities(@nationalities).each do |nationality| %>
           <%= f.govuk_check_box(
               :nationality_names,
               nationality.id,

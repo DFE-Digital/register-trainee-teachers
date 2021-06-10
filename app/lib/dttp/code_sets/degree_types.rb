@@ -5,6 +5,8 @@ module Dttp
     module DegreeTypes
       NON_UK = ["Degree equivalent", "Unknown"].freeze
 
+      COMMON = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
+
       MAPPING = {
         "Bachelor of Arts" => { entity_id: "db695652-c197-e711-80d8-005056ac45bb", abbreviation: "BA" },
         "Bachelor of Arts Economics" => { entity_id: "dd695652-c197-e711-80d8-005056ac45bb", abbreviation: "BAEcon" },

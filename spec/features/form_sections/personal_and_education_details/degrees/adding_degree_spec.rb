@@ -160,9 +160,7 @@ private
 
   def and_i_fill_in_the_uk_form(other_grade)
     template = build(:degree, :uk_degree_with_details)
-    degree_abbreviation = Dttp::CodeSets::DegreeTypes::MAPPING[template.uk_degree][:abbreviation]
-    option_text = degree_abbreviation ? "#{template.uk_degree} (#{degree_abbreviation})" : template.uk_degree
-    degree_details_page.uk_degree.select(option_text)
+    degree_details_page.uk_degree.select(template.uk_degree)
     degree_details_page.subject.select(template.subject)
     degree_details_page.institution.select(template.institution)
 

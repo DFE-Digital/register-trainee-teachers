@@ -1,21 +1,31 @@
 import './style.scss'
 import accessibleAutocomplete from 'accessible-autocomplete'
 import { nodeListForEach } from 'govuk-frontend/govuk/common'
+import sort from './sort.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
 
-const suggestionTemplate = (value) => {
-  const matches = /(.+)\(([^)]+)\)/.exec(value)
-  if (matches) {
-    return `<span>${matches[1]}</span> <strong>(${matches[2]})</strong>`
-  } else {
-    return `<span>${value}</span>`
+const suggestion = (value, options) => {
+  const option = options.find(o => o.name === value)
+  if (option) {
+    return option.append ? `<span>${value}</span> ${option.append}` : `<span>${value}</span>`
+  }
+}
+
+const enhanceOption = (option) => {
+  return {
+    name: option.label,
+    synonyms: (option.getAttribute('data-synonyms') ? option.getAttribute('data-synonyms').split('|') : []),
+    append: option.getAttribute('data-append'),
+    boost: (parseFloat(option.getAttribute('data-boost')) || 1)
   }
 }
 
 const setupAutoComplete = (component) => {
   const selectEl = component.querySelector('select')
+  const selectOptions = Array.from(selectEl.options)
+  const options = selectOptions.map(o => enhanceOption(o))
 
   // We add a name which we base off the name for the select element and add "raw" to it, eg
   // if there is a select input called "course_details[subject]" we add a name to the text input
@@ -27,8 +37,11 @@ const setupAutoComplete = (component) => {
     defaultValue: defaultValueOption(component),
     selectElement: selectEl,
     minLength: 2,
+    source: (query, populateResults) => {
+      populateResults(sort(query, options))
+    },
     autoselect: true,
-    templates: { suggestion: suggestionTemplate },
+    templates: { suggestion: (value) => suggestion(value, options) },
     name: rawFieldName
   })
 }
