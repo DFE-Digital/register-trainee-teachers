@@ -39,7 +39,7 @@ feature "editing a degree" do
 
     context "non-draft trainee" do
       scenario "the user enters valid details" do
-        given_a_non_trainee_with_a_uk_degree
+        given_a_non_draft_trainee_with_a_uk_degree
         when_i_visit_the_edit_degree_details_page
         and_i_enter_valid_uk_degree_details
         and_i_click_the_continue_button
@@ -75,8 +75,8 @@ private
     uk_trainee
   end
 
-  def given_a_non_trainee_with_a_uk_degree
-    uk_trainee(trait: :submitted_for_trn)
+  def given_a_non_draft_trainee_with_a_uk_degree
+    @uk_trainee ||= create(:trainee, :submitted_for_trn, provider: current_user.provider)
   end
 
   def given_a_trainee_with_a_non_uk_degree
