@@ -296,6 +296,7 @@ en:
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
+        export: Export these records
       edit:
         defer: Defer
         withdraw: withdraw

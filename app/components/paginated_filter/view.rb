@@ -2,13 +2,14 @@
 
 module PaginatedFilter
   class View < ViewComponent::Base
-    attr_reader :filters, :collection
+    attr_reader :filters, :collection, :filter_params
 
     renders_many :filter_actions
 
-    def initialize(filters:, collection:)
+    def initialize(filters:, collection:, filter_params:)
       @filters = filters
       @collection = collection
+      @filter_params = filter_params
     end
   end
 end
