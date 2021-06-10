@@ -45,6 +45,7 @@ namespace :example_data do
       )
       persona.update!(provider: provider)
 
+      courses = nil
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
         # Create some courses for that provider with some subjects
@@ -66,6 +67,7 @@ namespace :example_data do
             # Some route-specific logic, but could move into factories too
             attrs.merge!(lead_school: lead_schools.sample) if %i[school_direct_salaried school_direct_tuition_fee].include?(route)
             attrs.merge!(employing_school: employing_schools.sample) if route == :school_direct_salaried
+            attrs.merge!(course_code: courses.sample.code) unless state == :draft
 
             trainee = FactoryBot.create(:trainee, route, state, attrs)
 

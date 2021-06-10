@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_03_171313) do
+ActiveRecord::Schema.define(version: 2021_06_07_164204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -273,6 +273,7 @@ ActiveRecord::Schema.define(version: 2021_06_03_171313) do
     t.string "course_code"
     t.text "subject_two"
     t.text "subject_three"
+    t.datetime "awarded_at"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
