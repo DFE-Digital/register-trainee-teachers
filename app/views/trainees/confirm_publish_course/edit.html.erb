@@ -12,7 +12,7 @@
       <%= f.hidden_field :code, value: @course.code %>
       <%= f.govuk_submit t(".confirm_course") %>
     <% end %>
-    <p class="govuk-body"><%= govuk_link_to(t(".edit_details"), "#") %></p>
+    <p class="govuk-body"><%= govuk_link_to(t(".edit_details"),  edit_trainee_publish_course_details_path(@trainee)) %></p>
   </div>
 </div>
 

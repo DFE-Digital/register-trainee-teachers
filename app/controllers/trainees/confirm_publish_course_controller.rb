@@ -7,6 +7,7 @@ module Trainees
     before_action :set_course
 
     def edit
+      page_tracker.save_as_origin!
       @confirm_publish_course_form = ConfirmPublishCourseForm.new(@trainee)
     end
 
