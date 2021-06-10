@@ -15,33 +15,7 @@ module Schools
       allow(form_store).to receive(:get).and_return(nil)
     end
 
-    describe "validations" do
-      before { subject.valid? }
-
-      context "empty form data" do
-        let(:params) { { "query" => "w" } }
-
-        it "returns an error" do
-          expect(subject.errors[:query]).to include(I18n.t("activemodel.errors.models.schools_form.attributes.query.length", count: 2))
-        end
-      end
-
-      context "when searching again" do
-        let(:params) { { "results_search_again_query" => "a" } }
-
-        it "returns an error against the search again query" do
-          expect(subject.errors[:results_search_again_query]).to include(I18n.t("activemodel.errors.models.schools_form.attributes.query.length", count: 2))
-        end
-
-        context "with no employing school chosen and no query provided" do
-          let(:params) { { "results_search_again_query" => "", "employing_school_id" => "" } }
-
-          it "returns an error" do
-            expect(subject.errors[:employing_school_id]).to include(I18n.t("activemodel.errors.models.schools/employing_school_form.attributes.employing_school_id.blank"))
-          end
-        end
-      end
-    end
+    include_examples "school form validations", "employing_school_id"
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and employing_school" do

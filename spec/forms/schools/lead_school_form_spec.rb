@@ -15,33 +15,7 @@ module Schools
       allow(form_store).to receive(:get).and_return(nil)
     end
 
-    describe "validations" do
-      before { subject.valid? }
-
-      context "when query length is too short" do
-        let(:params) { { "query" => "a" } }
-
-        it "returns an error" do
-          expect(subject.errors[:query]).to include(I18n.t("activemodel.errors.models.schools_form.attributes.query.length", count: 2))
-        end
-      end
-
-      context "when searching again" do
-        let(:params) { { "results_search_again_query" => "a" } }
-
-        it "returns an error against the search again query" do
-          expect(subject.errors[:results_search_again_query]).to include(I18n.t("activemodel.errors.models.schools_form.attributes.query.length", count: 2))
-        end
-
-        context "with no lead school chosen and no query provided" do
-          let(:params) { { "results_search_again_query" => "", "lead_school_id" => "" } }
-
-          it "returns an error" do
-            expect(subject.errors[:lead_school_id]).to include(I18n.t("activemodel.errors.models.schools/lead_school_form.attributes.lead_school_id.blank"))
-          end
-        end
-      end
-    end
+    include_examples "school form validations", "lead_school_id"
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and lead_school" do
