@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :school do
-    urn { rand.to_s[2..7] }
+    urn { Faker::Number.unique.number(digits: 7) }
     name { Faker::University.name }
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }

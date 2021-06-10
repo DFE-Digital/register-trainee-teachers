@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :subject do
     sequence(:name) { |c| "Subject #{c}" }
-    code { Faker::Alphanumeric.alphanumeric(number: 2).upcase }
+    code { Faker::Alphanumeric.unique.alphanumeric(number: 2).upcase }
   end
 
   trait :music do
