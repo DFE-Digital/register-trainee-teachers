@@ -25,7 +25,7 @@ module Api
     end
 
     def error_response
-      render_json_error(message: I18n.t("api.schools.errors.bad_request"), status: :bad_request)
+      render_json_error(message: I18n.t("api.schools.errors.bad_request", length: SchoolSearch::MIN_QUERY_LENGTH), status: :bad_request)
     end
 
     def lead_schools_only

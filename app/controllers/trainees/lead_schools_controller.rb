@@ -4,7 +4,6 @@ module Trainees
   class LeadSchoolsController < ApplicationController
     before_action :authorize_trainee
     before_action :load_schools
-    before_action :redirect_to_search_page, only: :update
 
     helper_method :query
 
@@ -19,7 +18,7 @@ module Trainees
     def update
       @lead_school_form = Schools::LeadSchoolForm.new(trainee, params: trainee_params, user: current_user)
 
-      if @lead_school_form.searching_again? && @lead_school_form.valid?
+      if @lead_school_form.school_not_selected? && @lead_school_form.valid?
         return redirect_to trainee_lead_schools_path(@trainee, query: query)
       end
 
@@ -36,13 +35,6 @@ module Trainees
 
     def redirect_url
       trainee.requires_employing_school? ? edit_trainee_employing_schools_path(trainee) : trainee_schools_confirm_path(trainee)
-    end
-
-    def redirect_to_search_page
-      return if params["input-autocomplete"] && params["input-autocomplete"].length < SchoolSearch::MIN_QUERY_LENGTH
-      return if query.present?
-
-      redirect_to trainee_lead_schools_path(trainee, query: params["input-autocomplete"]) if trainee_params[:lead_school_id].blank?
     end
 
     def load_schools
@@ -72,7 +64,7 @@ module Trainees
       # submits the form with results but hasn't made a choice, we re-render the page with the previous results
       # including a validation message. Even though the search again field is hidden in this scenario, it will be
       # included in the form data, therefore we have to take that into account.
-      trainee_params[:results_search_again_query].presence || trainee_params[:no_results_search_again_query] || params[:query]
+      trainee_params[:results_search_again_query].presence || trainee_params[:no_results_search_again_query] || trainee_params[:query] || params[:query]
     end
 
     def index_or_edit_page

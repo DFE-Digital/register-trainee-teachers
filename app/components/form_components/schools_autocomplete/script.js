@@ -70,6 +70,8 @@ const setSchoolHiddenField = (value) => {
 const setupAutoComplete = (form) => {
   const element = form.querySelector('#schools-autocomplete-element')
   const inputs = form.querySelectorAll('[data-field="schools-autocomplete"]')
+  const defaultValueOption = element.getAttribute('data-default-value') || ''
+  const fieldName = element.getAttribute('data-field-name') || ''
 
   try {
     inputs.forEach(input => {
@@ -77,6 +79,8 @@ const setupAutoComplete = (form) => {
         element: element,
         id: input.id,
         minLength: 2,
+        defaultValue: defaultValueOption,
+        name: fieldName,
         source: (query, populateResults) => {
           return findSchools({
             query,
