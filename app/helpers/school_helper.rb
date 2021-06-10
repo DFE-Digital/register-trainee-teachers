@@ -6,7 +6,7 @@ module SchoolHelper
   end
 
   def school_detail(school)
-    return t("components.confirmation.not_provided") unless school
+    return t(:answer_missing) unless school
 
     tag.p(school.name, class: "govuk-body") + tag.span(school_urn_and_location(school), class: "govuk-hint")
   end

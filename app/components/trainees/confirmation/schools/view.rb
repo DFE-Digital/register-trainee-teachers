@@ -7,22 +7,16 @@ module Trainees
         include SummaryHelper
         include SchoolHelper
 
-        attr_accessor :data_model
+        attr_accessor :data_model, :lead_school, :employing_school
 
         def initialize(data_model:)
           @data_model = data_model
+          @lead_school = trainee.lead_school
+          @employing_school = trainee.employing_school
         end
 
         def trainee
           data_model.is_a?(Trainee) ? data_model : data_model.trainee
-        end
-
-        def lead_school
-          @lead_school ||= School.where(id: data_model.lead_school_id).first
-        end
-
-        def employing_school
-          @employing_school ||= School.where(id: data_model.employing_school_id).first
         end
 
       private
