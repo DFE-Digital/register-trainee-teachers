@@ -7,11 +7,11 @@ module Trainees
     describe View do
       include SummaryHelper
 
-      alias_method :component, :page
-
       let(:state) { :trn_received }
-      let(:trainee) { create(:trainee, state, trn: Faker::Number.number(digits: 10)) }
+      let(:training_route) { TRAINING_ROUTE_ENUMS[:assessment_only] }
+      let(:trainee) { create(:trainee, state, training_route, trn: Faker::Number.number(digits: 10)) }
       let(:trainee_status) { "trainee-status" }
+      let(:trainee_progress) { "trainee-progress" }
       let(:timeline_event) { double(date: Time.zone.today) }
 
       context "when trainee_id data has not been provided" do
@@ -21,7 +21,7 @@ module Trainees
         end
 
         it "tells the user that no data has been entered for trainee ID" do
-          expect(component.find(".govuk-summary-list__row.trainee-id .govuk-summary-list__value")).to have_text(t("components.confirmation.not_provided"))
+          expect(rendered_component).to have_text(t("components.confirmation.not_provided"))
         end
       end
 
@@ -31,22 +31,22 @@ module Trainees
         end
 
         it "renders the trainee ID" do
-          expect(component.find(summary_card_row_for("trainee-id"))).to have_text(trainee.trainee_id)
+          expect(rendered_component).to have_text(trainee.trainee_id)
         end
 
         it "renders the trainee's last timeline event date" do
-          expect(component.find(summary_card_row_for("last-updated"))).to have_text(date_for_summary_view(timeline_event.date))
+          expect(rendered_component).to have_text(date_for_summary_view(timeline_event.date))
         end
 
         it "renders the trainee record created date" do
-          expect(component.find(summary_card_row_for("record-created"))).to have_text(date_for_summary_view(trainee.created_at))
+          expect(rendered_component).to have_text(date_for_summary_view(trainee.created_at))
         end
 
         context "when trainee state is submitted_for_trn" do
           let(:trainee) { create(:trainee, :submitted_for_trn) }
 
           it "renders the trn submission date" do
-            expect(component.find(summary_card_row_for("submitted-for-trn"))).to have_text(date_for_summary_view(trainee.submitted_for_trn_at))
+            expect(rendered_component).to have_text(date_for_summary_view(trainee.submitted_for_trn_at))
           end
         end
 
@@ -54,11 +54,11 @@ module Trainees
           let(:state) { :deferred }
 
           it "renders the trainee deferral date" do
-            expect(component.find(summary_card_row_for(trainee_status))).to have_text(date_for_summary_view(trainee.defer_date))
+            expect(rendered_component).to have_text(date_for_summary_view(trainee.defer_date))
           end
 
           it "renders the trainee status tag" do
-            expect(component.find(summary_card_row_for(trainee_status))).to have_text("deferred")
+            expect(rendered_component).to have_text("deferred")
           end
         end
 
@@ -66,7 +66,39 @@ module Trainees
           let(:state) { :withdrawn }
 
           it "renders the trainee withdrawal date" do
-            expect(component.find(summary_card_row_for(trainee_status))).to have_text(date_for_summary_view(trainee.withdraw_date))
+            expect(rendered_component).to have_text(date_for_summary_view(trainee.withdraw_date))
+          end
+        end
+
+        context "when trainee state is recommended_for_award" do
+          let(:state) { :recommended_for_award }
+
+          it "renders the trainee recommended date" do
+            expect(rendered_component).to have_text(date_for_summary_view(trainee.recommended_for_award_at))
+          end
+
+          context "and the trainee is an EY trainee" do
+            let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+
+            it "renders the trainee recommended date" do
+              expect(rendered_component).to have_text(date_for_summary_view(trainee.recommended_for_award_at))
+            end
+          end
+        end
+
+        context "when trainee state is awarded" do
+          let(:state) { :awarded }
+
+          it "renders the trainee awarded date" do
+            expect(rendered_component).to have_text(date_for_summary_view(trainee.awarded_at))
+          end
+
+          context "and the trainee is an EY trainee" do
+            let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+
+            it "renders the trainee awarded date" do
+              expect(rendered_component).to have_text(date_for_summary_view(trainee.awarded_at))
+            end
           end
         end
       end

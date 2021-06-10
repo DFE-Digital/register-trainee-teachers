@@ -193,6 +193,7 @@ FactoryBot.define do
     trait :awarded do
       recommended_for_award
       state { "awarded" }
+      awarded_at { Time.zone.now }
     end
 
     trait :with_dttp_dormancy do

@@ -109,6 +109,13 @@ en:
     incomplete_section:
       degree_details_not_provided: Degree details not provided
       add_degree_details: Add degree details
+    record_details:
+      progress_date_prefix:
+        recommended_for_award: "Recommended: "
+        awarded: "Awarded: "
+      status_date_prefix:
+        deferred: "Deferral date: "
+        withdrawn: "Withdrawal date: "
     page_titles:
       personas: Personas
       pages:
