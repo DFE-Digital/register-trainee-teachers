@@ -18,10 +18,10 @@ module Diversities
     delegate :id, :persisted?, to: :trainee
 
     validate :disclosure
-    validate :ethnic_group, if: -> { trainee.ethnic_group.present? }
-    validate :ethnic_background, if: -> { trainee.ethnic_background.present? }
-    validate :disability_disclosure, if: -> { trainee.disability_disclosure.present? }
-    validate :disabilities, if: -> { trainee.disabled? }
+    validate :ethnic_group, if: -> { disclosed_and_invalid? || trainee.ethnic_group.present? }
+    validate :ethnic_background, if: -> { disclosed_and_invalid? || trainee.ethnic_background.present? }
+    validate :disability_disclosure, if: -> { disclosed_and_invalid? || trainee.disability_disclosure.present? }
+    validate :disabilities, if: -> { disability_disclosed_and_invalid? }
 
     def initialize(trainee)
       @trainee = trainee
@@ -70,6 +70,18 @@ module Diversities
 
     def add_error_for(key)
       errors.add(key, :not_valid)
+    end
+
+    def disclosed_and_invalid?
+      trainee.diversity_disclosed? && (
+        trainee.ethnic_group.blank? ||
+        trainee.ethnic_background.blank? ||
+        trainee.disability_disclosure.blank?
+      )
+    end
+
+    def disability_disclosed_and_invalid?
+      trainee.disabled? || trainee.disabilities.empty?
     end
   end
 end

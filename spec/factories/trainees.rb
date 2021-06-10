@@ -18,11 +18,11 @@ FactoryBot.define do
     gender { Trainee.genders.keys.sample }
     slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
 
-    diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS.values.sample }
-    ethnic_group { Diversities::ETHNIC_GROUP_ENUMS.values.sample }
+    diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
+    ethnic_group { nil }
     ethnic_background { nil }
     additional_ethnic_background { nil }
-    disability_disclosure { (Diversities::DISABILITY_DISCLOSURE_ENUMS.values - %w[disabled]).sample }
+    disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
 
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
@@ -116,12 +116,31 @@ FactoryBot.define do
       diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
     end
 
+    trait :with_ethnic_group do
+      ethnic_group { Diversities::ETHNIC_GROUP_ENUMS.values.sample }
+    end
+
     trait :with_ethnic_background do
       ethnic_background { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
     end
 
     trait :disabled do
       disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
+    end
+
+    trait :with_diversity_information do
+      diversity_disclosed
+      with_ethnic_group
+      with_ethnic_background
+      disabled
+
+      transient do
+        disabilities_count { 1 }
+      end
+
+      after(:create) do |trainee, evaluator|
+        create_list(:trainee_disability, evaluator.disabilities_count, trainee: trainee)
+      end
     end
 
     trait :with_placement_assignment do
