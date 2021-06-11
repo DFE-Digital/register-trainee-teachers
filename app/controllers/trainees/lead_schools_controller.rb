@@ -28,7 +28,7 @@ module Trainees
       if @lead_school_form.public_send(save_strategy)
         redirect_to origin_page_or_next_step
       else
-        render :edit
+        render index_or_edit_page
       end
     end
 
@@ -40,6 +40,7 @@ module Trainees
 
     def redirect_to_search_page
       return if params["input-autocomplete"] && params["input-autocomplete"].length < SchoolSearch::MIN_QUERY_LENGTH
+      return if query.present?
 
       redirect_to trainee_lead_schools_path(trainee, query: params["input-autocomplete"]) if trainee_params[:lead_school_id].blank?
     end
@@ -72,6 +73,10 @@ module Trainees
       # including a validation message. Even though the search again field is hidden in this scenario, it will be
       # included in the form data, therefore we have to take that into account.
       trainee_params[:results_search_again_query].presence || trainee_params[:no_results_search_again_query] || params[:query]
+    end
+
+    def index_or_edit_page
+      @lead_school_form.index_page_radio_buttons? ? :index : :edit
     end
 
     def authorize_trainee

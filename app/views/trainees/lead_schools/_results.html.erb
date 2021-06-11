@@ -1,3 +1,5 @@
+<%= f.govuk_error_summary %>
+
 <h1 class="govuk-heading-l govuk-!-margin-bottom-1">
   <%= t("components.page_titles.trainees.lead_schools.index") %>
 </h1>
@@ -8,9 +10,9 @@
   </div>
 <% end %>
 
-<%= f.govuk_error_summary %>
-
 <%= f.govuk_radio_buttons_fieldset :lead_school_id, legend: nil do %>
+  <%= f.hidden_field :school_value, value: "true" %>
+
     <% @schools.each_with_index do |school, index| %>
       <%= f.govuk_radio_button :lead_school_id, school.id,
                               label: { text: school.name },
