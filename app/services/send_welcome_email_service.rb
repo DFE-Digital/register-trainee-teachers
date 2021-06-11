@@ -8,6 +8,7 @@ class SendWelcomeEmailService
   end
 
   def call
+    return unless FeatureService.enabled?(:send_emails)
     return if current_user.welcome_email_sent_at
 
     WelcomeEmailMailer.generate(

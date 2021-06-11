@@ -3,7 +3,11 @@
 require "rails_helper"
 
 describe SendWelcomeEmailService do
-  before { Timecop.freeze }
+  before do
+    enable_features(:send_emails)
+    Timecop.freeze
+  end
+
   after { Timecop.return }
 
   context "when the user has not logged in before" do
