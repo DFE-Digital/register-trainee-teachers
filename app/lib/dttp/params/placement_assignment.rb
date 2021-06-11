@@ -47,7 +47,7 @@ module Dttp
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id(trainee.training_route)})",
           "dfe_programmeyear" => 1, # TODO: this will need to be derived for other routes. It's n of x year course e.g. 1 of 2
           "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are course_year of course_length
-        }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
+        }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params).merge(school_params)
       end
 
       def course_level
@@ -69,6 +69,18 @@ module Dttp
         {
           "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{degree_country_id(qualifying_degree.country)})",
         }
+      end
+
+      def school_params
+        return {} unless trainee.requires_schools?
+
+        params = { "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_school_id(trainee.lead_school.urn)})" }
+
+        if trainee.requires_employing_school?
+          params.merge!("dfe_EmployingSchoolId@odata.bind" => "/accounts(#{dttp_school_id(trainee.employing_school.urn)})")
+        end
+
+        params
       end
     end
   end

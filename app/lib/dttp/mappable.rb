@@ -57,5 +57,9 @@ module Dttp
     def dttp_qualification_aim_id(training_route)
       CodeSets::QualificationAims::MAPPING.dig(training_route, :entity_id)
     end
+
+    def dttp_school_id(urn)
+      Dttp::School.find_by(urn: urn)&.dttp_id
+    end
   end
 end
