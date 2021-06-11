@@ -72,7 +72,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       and_i_submit_the_form
       then_i_see_the_course_details_page
       and_i_visit_the_review_draft_page
-      then_the_link_takes_me_to_the_course_details_edit_page
+      then_the_link_takes_me_to_the_publish_course_details_page
     end
   end
 
