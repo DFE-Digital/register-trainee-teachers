@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class SchoolSearch
-  include ServicePattern
+  class << self
+    def call(**args)
+      new(**args)
+    end
+  end
 
   MIN_QUERY_LENGTH = 2
   DEFAULT_LIMIT = 15
@@ -13,6 +17,10 @@ class SchoolSearch
   end
 
   def call
+    self
+  end
+
+  def specified_schools
     schools = School.open
     schools = schools.search(query) if query
     schools = schools.limit(limit) if limit

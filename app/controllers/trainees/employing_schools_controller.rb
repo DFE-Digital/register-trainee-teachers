@@ -8,6 +8,7 @@ module Trainees
     helper_method :query
 
     def index
+      school_search
       @employing_school_form = Schools::EmployingSchoolForm.new(trainee)
     end
 
@@ -34,7 +35,15 @@ module Trainees
   private
 
     def load_schools
-      @schools = SchoolSearch.call(query: query)
+      @schools = school_search_service.specified_schools
+    end
+
+    def school_search
+      @school_search = school_search_service.call
+    end
+
+    def school_search_service
+      SchoolSearch.call(query: query)
     end
 
     def trainee

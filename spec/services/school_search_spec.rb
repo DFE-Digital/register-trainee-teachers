@@ -6,20 +6,26 @@ describe SchoolSearch do
   let(:school) { create(:school) }
 
   describe "#call" do
+    it "returns the school search service object" do
+      expect(described_class.call.call).to be_a(SchoolSearch)
+    end
+  end
+
+  describe "#specified_schools" do
     it "can search by urn" do
-      expect(described_class.call(query: school.urn)).to match([school])
+      expect(described_class.call(query: school.urn).specified_schools).to match([school])
     end
 
     it "can search by name" do
-      expect(described_class.call(query: school.name)).to match([school])
+      expect(described_class.call(query: school.name).specified_schools).to match([school])
     end
 
     it "can search by town" do
-      expect(described_class.call(query: school.town)).to match([school])
+      expect(described_class.call(query: school.town).specified_schools).to match([school])
     end
 
     it "can search by postcode" do
-      expect(described_class.call(query: school.postcode)).to match([school])
+      expect(described_class.call(query: school.postcode).specified_schools).to match([school])
     end
 
     context "database has open and closed schools" do
@@ -30,7 +36,7 @@ describe SchoolSearch do
       end
 
       it "only returns schools that are open" do
-        expect(described_class.call).to match([open_school])
+        expect(described_class.call.specified_schools).to match([open_school])
       end
     end
 
@@ -38,7 +44,7 @@ describe SchoolSearch do
       before { create_list(:school, 2, name: school.name) }
 
       it "supports truncation" do
-        expect(described_class.call(limit: 1).size).to eq(1)
+        expect(described_class.call(limit: 1).specified_schools.size).to eq(1)
       end
     end
 
@@ -84,7 +90,7 @@ describe SchoolSearch do
       end
 
       it "has a option to only search for lead schools" do
-        expect(described_class.call(lead_schools_only: true)).to match([lead_school])
+        expect(described_class.call(lead_schools_only: true).specified_schools).to match([lead_school])
       end
     end
   end
