@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class TraineeFilter
+  AWARD_STATES = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded].freeze
+  STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES
+
   def initialize(params:)
     @params = params
   end
@@ -42,7 +45,7 @@ private
   end
 
   def state_options
-    Trainee.states.keys.each_with_object([]) do |option, arr|
+    STATES.each_with_object([]) do |option, arr|
       arr << option if params[:state]&.include?(option)
     end
   end

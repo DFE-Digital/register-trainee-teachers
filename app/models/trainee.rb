@@ -125,6 +125,15 @@ class Trainee < ApplicationRecord
   # Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
+  scope :with_award_states, lambda { |*award_states|
+    qts_states = award_states.select { |s| s.start_with? "qts" }.map { |s| genericize_state(s) }
+    eyts_states = award_states.select { |s| s.start_with? "eyts" }.map { |s| genericize_state(s) }
+
+    where(training_route: EARLY_YEARS_ROUTES, state: eyts_states).or(
+      where(state: qts_states).where.not(training_route: EARLY_YEARS_ROUTES),
+    )
+  }
+
   audited associated_with: :provider
   has_associated_audits
 
@@ -197,5 +206,15 @@ class Trainee < ApplicationRecord
 
   def route_data_manager
     @route_data_manager ||= RouteDataManager.new(trainee: self)
+  end
+
+  def self.genericize_state(state)
+    if state.end_with? "awarded"
+      "awarded"
+    elsif state.end_with? "recommended"
+      "recommended_for_award"
+    else
+      state
+    end
   end
 end

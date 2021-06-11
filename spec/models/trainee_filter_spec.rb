@@ -53,7 +53,7 @@ describe TraineeFilter do
     end
 
     context "with invalid state" do
-      let(:params) { { training_route: %w[not_a_state] } }
+      let(:params) { { state: %w[not_a_state] } }
       include_examples returns_nil
     end
 
