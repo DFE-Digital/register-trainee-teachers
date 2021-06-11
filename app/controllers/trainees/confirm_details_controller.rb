@@ -14,17 +14,11 @@ module Trainees
         @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
       end
 
-      # Temporary conditional while we wait for all sections to support save-on-confirm
-      @confirmation_component = if save_on_confirm_section?
-                                  data_model = trainee.draft? ? trainee : form_klass.new(trainee)
-                                  component_klass.new(data_model: data_model)
-                                else
-                                  component_klass.new(trainee: trainee)
-                                end
+      @confirmation_component = component_klass.new(data_model: trainee.draft? ? trainee : form_klass.new(trainee))
     end
 
     def update
-      form_klass.new(trainee).save! if save_on_confirm_section? && !trainee.draft?
+      form_klass.new(trainee).save! unless trainee.draft?
 
       toggle_trainee_progress_field if trainee.draft?
 
@@ -96,11 +90,6 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
-    end
-
-    # TODO: remove after all sections support save-on-confirm
-    def save_on_confirm_section?
-      FormStore::FORM_SECTION_KEYS.include?(trainee_section_key&.to_sym)
     end
   end
 end

@@ -6,11 +6,15 @@ module Trainees
       class View < GovukComponent::Base
         include SummaryHelper
 
-        attr_accessor :trainee, :not_provided_copy
+        attr_accessor :data_model, :not_provided_copy
 
-        def initialize(trainee:)
-          @trainee = trainee
+        def initialize(data_model:)
+          @data_model = data_model
           @not_provided_copy = I18n.t("components.confirmation.not_provided")
+        end
+
+        def trainee
+          data_model.is_a?(Trainee) ? data_model : data_model.trainee
         end
 
         def trainee_id
