@@ -26,6 +26,7 @@ features:
   enable_feedback_link: true
   sync_from_dttp: true
   send_emails: true
+  run_consistency_check_job: true
 
 environment:
   name: beta
