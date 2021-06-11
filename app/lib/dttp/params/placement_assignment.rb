@@ -9,6 +9,8 @@ module Dttp
       COURSE_LEVEL_PG = 12
       COURSE_LEVEL_UG = 20
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
+      EARLY_YEARS_SUBJECT = "3aa12838-b3cf-e911-a860-000d3ab1da01"
+      EARLY_YEARS_AGE_RANGE = AgeRange::ZERO_TO_FIVE
 
       attr_reader :trainee, :qualifying_degree, :params
 
@@ -33,8 +35,8 @@ module Dttp
 
       def build_params
         {
-          "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.course_age_range)})",
-          "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.subject)})",
+          "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(course_age_range)})",
+          "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{subject_entity_id})",
           "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
           "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
@@ -50,12 +52,20 @@ module Dttp
         }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
       end
 
+      def course_age_range
+        trainee.early_years_route? ? EARLY_YEARS_AGE_RANGE : trainee.course_age_range
+      end
+
       def course_level
         if trainee.training_route == "early_years_undergrad"
           COURSE_LEVEL_UG
         else
           COURSE_LEVEL_PG
         end
+      end
+
+      def subject_entity_id
+        trainee.early_years_route? ? EARLY_YEARS_SUBJECT : course_subject_id(trainee.subject)
       end
 
       def uk_specific_params

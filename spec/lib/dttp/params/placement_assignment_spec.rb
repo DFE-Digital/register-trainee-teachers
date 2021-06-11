@@ -14,7 +14,9 @@ module Dttp
       let(:contact_change_set_id) { SecureRandom.uuid }
       let(:dttp_contact_id) { SecureRandom.uuid }
       let(:dttp_age_range_entity_id) { SecureRandom.uuid }
+      let(:dttp_ey_age_range_entity_id) { SecureRandom.uuid }
       let(:dttp_course_subject_entity_id) { SecureRandom.uuid }
+      let(:dttp_ey_subject_entity_id) { SecureRandom.uuid }
       let(:dttp_degree_subject_entity_id) { SecureRandom.uuid }
       let(:dttp_degree_institution_entity_id) { SecureRandom.uuid }
       let(:dttp_degree_grade_entity_id) { SecureRandom.uuid }
@@ -29,7 +31,10 @@ module Dttp
         trainee.degrees << degree
 
         stub_const("Dttp::CodeSets::AgeRanges::MAPPING",
-                   { trainee.course_age_range => { entity_id: dttp_age_range_entity_id } })
+                   {
+                     trainee.course_age_range => { entity_id: dttp_age_range_entity_id },
+                     AgeRange::ZERO_TO_FIVE => { entity_id: dttp_ey_age_range_entity_id },
+                   })
         stub_const("Dttp::CodeSets::CourseSubjects::MAPPING",
                    { trainee.subject => { entity_id: dttp_course_subject_entity_id } })
         stub_const("Dttp::CodeSets::DegreeSubjects::MAPPING",
@@ -128,9 +133,21 @@ module Dttp
           end
           subject { described_class.new(trainee).params }
 
-          it "course level is UG" do
+          it "returns a hash including the undergrad course level" do
             expect(subject).to include(
               { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
+            )
+          end
+
+          it "returns a hash including the Early years 0 to 5 age range" do
+            expect(subject).to include(
+              { "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_ey_age_range_entity_id})" },
+            )
+          end
+
+          it "returns a hash containing the Early years subject" do
+            expect(subject).to include(
+              { "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{Dttp::Params::PlacementAssignment::EARLY_YEARS_SUBJECT})" },
             )
           end
         end
