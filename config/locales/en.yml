@@ -91,7 +91,7 @@ en:
         trainee_start_date: start date
     course_detail:
       title: Course details
-      type_of_course: Type of course
+      type_of_course: Route
       subject: Subject
       age_range: Age range
       course_start_date: Course start date

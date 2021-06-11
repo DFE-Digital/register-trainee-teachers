@@ -25,7 +25,7 @@ module Trainees
 
         def rows
           [
-            { key: t("components.course_detail.type_of_course"), value: course_type },
+            ({ key: t("components.course_detail.type_of_course"), value: course_type } if require_course_type?),
             ({ key: t("components.course_detail.subject"), value: subject, action: action_link("subject") } if require_subject?),
             ({ key: t("components.course_detail.age_range"), value: course_age_range, action: action_link("age range") } if require_age_range?),
             { key: t("components.course_detail.course_start_date"), value: course_start_date, action: action_link("course start date") },
@@ -49,6 +49,12 @@ module Trainees
 
         def require_age_range?
           !trainee.early_years_route?
+        end
+
+        def require_course_type?
+          return true unless trainee.early_years_route?
+
+          !trainee.draft?
         end
 
         def action_link(text, path: edit_trainee_course_details_path(trainee))

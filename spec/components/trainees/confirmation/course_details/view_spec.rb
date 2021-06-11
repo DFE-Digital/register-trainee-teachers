@@ -52,7 +52,7 @@ module Trainees
             end
 
             it "renders the course type" do
-              expect(component.find(".govuk-summary-list__row.type-of-course .govuk-summary-list__value"))
+              expect(component.find(".govuk-summary-list__row.route .govuk-summary-list__value"))
                 .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
             end
 
@@ -81,6 +81,57 @@ module Trainees
 
             it "doesn't render course details information" do
               expect(component).not_to have_selector(".govuk-summary-list__row.course-details")
+            end
+          end
+        end
+
+        context "early years route" do
+          before do
+            render_inline(View.new(data_model: trainee))
+          end
+
+          context "non draft" do
+            let(:trainee) { create(:trainee, :early_years_undergrad, :with_course_details, :submitted_for_trn) }
+
+            it "renders route" do
+              expect(component).to have_text("Route")
+              expect(component.find(".govuk-summary-list__row.route .govuk-summary-list__value"))
+                .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+            end
+          end
+
+          context "non draft" do
+            let(:trainee) { create(:trainee, :early_years_undergrad, :with_course_details, :draft) }
+
+            it "does not render route" do
+              expect(component).to_not have_text("Route")
+              expect(component).to_not have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+            end
+          end
+        end
+
+        context "non early years route (assessment only)" do
+          before do
+            render_inline(View.new(data_model: trainee))
+          end
+
+          context "draft" do
+            let(:trainee) { create(:trainee, :with_course_details, :draft) }
+
+            it "renders route" do
+              expect(component).to have_text("Route")
+              expect(component.find(".govuk-summary-list__row.route .govuk-summary-list__value"))
+                .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+            end
+          end
+
+          context "non draft" do
+            let(:trainee) { create(:trainee, :with_course_details, :submitted_for_trn) }
+
+            it "renders route" do
+              expect(component).to have_text("Route")
+              expect(component.find(".govuk-summary-list__row.route .govuk-summary-list__value"))
+                .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
             end
           end
         end
