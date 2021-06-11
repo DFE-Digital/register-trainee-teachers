@@ -9,7 +9,7 @@ class SchoolSearch
   DEFAULT_LIMIT = 15
 
   def initialize(query: nil, limit: DEFAULT_LIMIT, lead_schools_only: false)
-    @query = query&.gsub(/[^0-9A-Za-z\s]/, "")
+    @query = query&.gsub(/['’.“”"]/, "")&.gsub(/[^0-9A-Za-z\s]/, " ")
     @limit = limit
     @lead_schools_only = lead_schools_only
   end
