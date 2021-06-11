@@ -22,6 +22,8 @@ module Dttp
     end
 
     def call
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       response = Client.patch(path, body: params.to_json)
       if response.code != 204
         raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"

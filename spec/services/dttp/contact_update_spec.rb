@@ -21,6 +21,7 @@ module Dttp
       let(:placement_payload) { Params::PlacementAssignment.new(trainee).to_json }
 
       before do
+        enable_features(:persist_to_dttp, "routes.school_direct_salaried")
         allow(AccessToken).to receive(:fetch).and_return("token")
         trainee.degrees << create(:degree)
       end

@@ -13,6 +13,8 @@ module Dttp
     end
 
     def call
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       response = Client.patch(
         "/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})",
         body: params.to_json,

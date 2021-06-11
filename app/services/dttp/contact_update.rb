@@ -15,6 +15,8 @@ module Dttp
     end
 
     def call
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       dttp_update("/contacts(#{trainee.dttp_id})", contact_payload)
 
       dttp_update("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})",

@@ -14,6 +14,7 @@ module Dttp
       let(:expected_dormant_id) { SecureRandom.uuid }
 
       before do
+        enable_features(:persist_to_dttp)
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(Client).to receive(:post).and_return(dttp_response)
         allow(Dttp::OdataParser).to receive(:entity_id).with(trainee.id, dttp_response).and_return(expected_dormant_id)

@@ -27,6 +27,7 @@ features:
   sync_from_dttp: true
   send_emails: true
   run_consistency_check_job: true
+  persist_to_dttp: true
 
 environment:
   name: beta

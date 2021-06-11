@@ -13,6 +13,8 @@ module Dttp
     end
 
     def call
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       build_contact_change_set
       build_placement_assignment_change_set
       build_degree_qualification_change_sets

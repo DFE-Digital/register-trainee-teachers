@@ -15,6 +15,7 @@ module Dttp
       let(:expected_params) { { test: "value" }.to_json }
 
       before do
+        enable_features(:persist_to_dttp)
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(Client).to receive(:patch).and_return(dttp_response)
         allow(Params::PlacementOutcomes::Qts)
