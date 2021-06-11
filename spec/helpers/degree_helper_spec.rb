@@ -5,7 +5,7 @@ require "rails_helper"
 describe DegreesHelper do
   include DegreesHelper
 
-  describe "#hesa_degree_types_options" do
+  describe "#degree_options" do
     let(:degree_type) { "Bachelor of Arts" }
     let(:degree_abbreviation) { "BA" }
     let(:non_uk_degree_type) { "Unknown" }
@@ -17,12 +17,17 @@ describe DegreesHelper do
         degree_type => { abbreviation: degree_abbreviation },
         non_uk_degree_type => { abbreviation: nil },
       })
+      stub_const("Dttp::CodeSets::DegreeTypes::COMMON", [degree_type])
     end
 
-    it "iterates over array and prints out correct hesa_degree_types values" do
-      expect(hesa_degree_types_options).to match([
-        OpenStruct.new(option_name: nil, option_value: nil),
-        OpenStruct.new(option_name: "#{degree_type} (#{degree_abbreviation})", option_value: degree_type),
+    it "iterates over array and prints out correct degree options" do
+      expect(degree_options).to match([
+        [nil, nil, nil],
+        [
+          degree_type,
+          degree_type,
+          { "data-append" => "<strong>(#{degree_abbreviation})</strong>", "data-boost" => 1.5, "data-synonyms" => degree_abbreviation },
+        ],
       ])
     end
   end

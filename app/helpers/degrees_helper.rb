@@ -3,15 +3,19 @@
 module DegreesHelper
   include ApplicationHelper
 
-  def hesa_degree_types_options
-    options = [OpenStruct.new(option_name: nil, option_value: nil)]
-    Dttp::CodeSets::DegreeTypes::MAPPING.each do |key, value|
-      unless Dttp::CodeSets::DegreeTypes::NON_UK.include?(key)
-        name_with_abbreviation = value[:abbreviation] ? "#{key} (#{value[:abbreviation]})" : key
-        options << OpenStruct.new(option_name: name_with_abbreviation, option_value: key)
-      end
+  def degree_options
+    options = Dttp::CodeSets::DegreeTypes::MAPPING.map do |name, attributes|
+      next if Dttp::CodeSets::DegreeTypes::NON_UK.include?(name)
+
+      data = {
+        "data-synonyms" => attributes[:abbreviation],
+        "data-append" => attributes[:abbreviation] && tag.strong("(#{attributes[:abbreviation]})"),
+        "data-boost" => (Dttp::CodeSets::DegreeTypes::COMMON.include?(name) ? 1.5 : 1),
+      }
+      [name, name, data]
     end
-    options
+    empty_result = [nil, nil, nil]
+    options.unshift(empty_result).compact
   end
 
   def institutions_options
