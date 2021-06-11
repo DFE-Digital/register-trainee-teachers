@@ -35,7 +35,7 @@ module ApplicationRecordCard
     end
 
     def updated_at
-      date_stamp = record.updated_at.presence || record.created_at
+      date_stamp = record.timeline&.first&.date.presence || record.created_at
       date_text = tag.span(date_stamp.strftime("%-d %B %Y"))
       class_list = "govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0 app-application-card__submitted"
 

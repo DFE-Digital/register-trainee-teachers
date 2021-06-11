@@ -41,10 +41,6 @@ module TraineeHelper
     FeatureService.enabled?(:publish_course_details) && courses_available
   end
 
-  def last_updated_event_for(trainee)
-    Trainees::CreateTimeline.call(trainee: trainee).first
-  end
-
   def trainee_draft_title(trainee)
     name = trainee_name(trainee)
     title_suffix = "#{name.present? ? " for #{name}" : ''} "

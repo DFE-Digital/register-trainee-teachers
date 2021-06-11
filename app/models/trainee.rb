@@ -217,4 +217,10 @@ class Trainee < ApplicationRecord
       state
     end
   end
+
+  def timeline
+    Rails.cache.fetch([self, :timeline]) do
+      Trainees::CreateTimeline.call(trainee: self)
+    end
+  end
 end
