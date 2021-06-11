@@ -36,6 +36,7 @@ features:
   import_courses_from_ttapi: false
   publish_course_details: false
   run_consistency_check_job: true
+  sync_from_dttp: false
   routes:
     early_years_assessment_only: false
     early_years_salaried: false

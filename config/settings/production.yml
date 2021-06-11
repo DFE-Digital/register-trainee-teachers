@@ -24,6 +24,7 @@ dfe_sign_in:
 features:
   basic_auth: false
   enable_feedback_link: true
+  sync_from_dttp: true
 
 environment:
   name: beta

@@ -5,6 +5,8 @@ module Dttp
     queue_as :dttp
 
     def perform(request_uri = nil)
+      return unless FeatureService.enabled?(:sync_from_dttp)
+
       @school_list = Dttp::RetrieveSchools.call(request_uri: request_uri)
 
       Dttp::School.upsert_all(school_attributes, unique_by: :dttp_id)

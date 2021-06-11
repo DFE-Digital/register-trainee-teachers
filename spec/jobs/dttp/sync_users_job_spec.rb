@@ -20,6 +20,7 @@ module Dttp
     subject { described_class.perform_now }
 
     before do
+      enable_features(:sync_from_dttp)
       allow(Dttp::RetrieveUsers).to receive(:call) { user_list }
     end
 
