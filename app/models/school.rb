@@ -12,8 +12,7 @@ class School < ApplicationRecord
                       prefix: true,
                       tsvector_column: "searchable",
                     },
-                  },
-                  order_within_rank: :name
+                  }
 
   scope :open, -> { where(close_date: nil) }
   scope :lead_only, -> { where(lead_school: true) }
