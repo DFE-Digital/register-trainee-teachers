@@ -13,6 +13,7 @@ en:
   education: Education
   personal_details: Personal details
   return_to_draft_later: Return to this draft record later
+  answer_missing: Answer missing
   header:
     items:
       sign_out: Sign out
@@ -56,6 +57,10 @@ en:
           white_ethnic_group: White
           other_ethnic_group: Another ethnic group
           not_provided_ethnic_group: Not provided
+        disability_disclosure:
+          disabled: They shared that they’re disabled
+          no_disability: They shared that they’re not disabled
+          disability_not_provided: Not provided
       personal_detail:
         gender:
           male: Male

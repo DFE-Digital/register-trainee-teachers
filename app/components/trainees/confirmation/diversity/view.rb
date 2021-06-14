@@ -21,7 +21,7 @@ module Trainees
           rows = [
             {
               key: "Diversity information",
-              value: I18n.t("components.confirmation.diversity.diversity_disclosure.#{diversity_disclosure_key}"),
+              value: t("components.confirmation.diversity.diversity_disclosure.#{diversity_disclosure_key}"),
               action: govuk_link_to('Change<span class="govuk-visually-hidden"> diversity information</span>'.html_safe,
                                     edit_trainee_diversity_disclosure_path(trainee)),
             },
@@ -47,22 +47,21 @@ module Trainees
         end
 
         def ethnic_group_content
-          value = I18n.t("components.confirmation.diversity.ethnic_groups.#{data_model.ethnic_group}")
+          return t(:answer_missing) unless data_model.ethnic_group
+
+          value = t("components.confirmation.diversity.ethnic_groups.#{data_model.ethnic_group}")
 
           if data_model.ethnic_background.present? && data_model.ethnic_background != Diversities::NOT_PROVIDED
             value += " (#{trainee_ethnic_background})"
           end
+
           value
         end
 
         def disability_selection
-          if data_model.disabled?
-            "They shared that they’re disabled"
-          elsif data_model.no_disability?
-            "They shared that they’re not disabled"
-          else
-            "Not provided"
-          end
+          return t(:answer_missing) unless data_model.disability_disclosure
+
+          t("components.confirmation.diversity.disability_disclosure.#{data_model.disability_disclosure}")
         end
 
         def selected_disability_options
