@@ -19,6 +19,7 @@ module Trainees
       end
 
       if @publish_course_details.manual_entry_chosen?
+        trainee.update!(course_code: nil)
         redirect_to edit_trainee_course_details_path
       else
         redirect_to edit_trainee_confirm_publish_course_path(id: @publish_course_details.code, trainee_id: @trainee.slug)

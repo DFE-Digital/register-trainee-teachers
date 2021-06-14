@@ -101,7 +101,7 @@ private
 
   def update_trainee_attributes
     trainee.assign_attributes({
-      course_code: nil,
+      course_code: course_code,
       subject: subject,
       subject_two: subject_two,
       subject_three: subject_three,

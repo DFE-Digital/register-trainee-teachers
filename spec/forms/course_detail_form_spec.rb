@@ -320,6 +320,19 @@ describe CourseDetailsForm, type: :model do
           .and change { trainee.course_end_date }
           .from(nil).to(Date.parse(valid_end_date.to_s))
       end
+
+      context "when a trainee has a course code" do
+        let(:trainee) { create(:trainee, course_code: Faker::Alphanumeric.alphanumeric(number: 4).upcase) }
+
+        before do
+          subject.save!
+          trainee.reload
+        end
+
+        it "doesnt wipe course code" do
+          expect(trainee.course_code).to_not eq nil
+        end
+      end
     end
 
     describe "#stash" do
