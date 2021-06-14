@@ -13,12 +13,7 @@ module Trainees
 
       def component
         if display_type == :expanded
-          # Temporary conditional while we wait for all sections to support save-on-confirm
-          confirmation_view_args = if FormStore::FORM_SECTION_KEYS.include?(section)
-                                     { data_model: form_klass.new(trainee) }
-                                   else
-                                     { trainee: trainee }
-                                   end
+          confirmation_view_args = { data_model: form_klass.new(trainee) }
 
           if section == :degrees
             confirmation_view_args.merge!(show_add_another_degree_button: false, show_delete_button: true)
