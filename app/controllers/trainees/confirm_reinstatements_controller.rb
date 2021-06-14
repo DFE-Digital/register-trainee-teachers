@@ -11,7 +11,7 @@ module Trainees
 
     def update
       if reinstatement.save!
-        trainee.trn.present? ? trainee.trn_received! : trainee.submit_for_trn!
+        trainee.trn.present? ? trainee.receive_trn! : trainee.submit_for_trn!
 
         ReinstateJob.perform_later(trainee)
 
