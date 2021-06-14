@@ -10,7 +10,7 @@ feature "edit training details" do
   background { given_i_am_authenticated }
 
   scenario "reviewing details" do
-    given_a_trainee_exists(nationalities: [build(:nationality)], degrees: [build(:degree, :uk_degree_with_details)])
+    given_a_trainee_exists(:with_diversity_information, nationalities: [build(:nationality)], degrees: [build(:degree, :uk_degree_with_details)])
     when_i_visit_the_apply_trainee_data_page
     and_i_review_the_trainee_data
     then_i_am_redirected_to_the_review_draft_page
@@ -18,7 +18,7 @@ feature "edit training details" do
   end
 
   scenario "changing an attribute" do
-    given_a_trainee_exists(nationalities: [build(:nationality)])
+    given_a_trainee_exists(:with_diversity_information, nationalities: [build(:nationality)])
     when_i_visit_the_apply_trainee_data_page
     and_i_click_to_change_the_trainee_full_name
     and_i_change_the_first_name_to("Jeff")
