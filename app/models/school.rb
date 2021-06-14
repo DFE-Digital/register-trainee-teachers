@@ -68,6 +68,6 @@ private
   end
 
   def name_without_punctuation
-    name.gsub(/['’.“”"]/, "").gsub(/[^0-9A-Za-z\s]/, " ")
+    StripPunctuation.call(string: name)
   end
 end
