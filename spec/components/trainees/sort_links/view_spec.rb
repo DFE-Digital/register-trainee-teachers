@@ -10,7 +10,7 @@ RSpec.describe Trainees::SortLinks::View do
     render_inline(described_class.new)
   end
 
-  let(:params) { {} }
+  let(:params) { ActionController::Parameters.new({}) }
   let(:date_updated_link_text) { t("components.page_titles.trainees.sort_links.date_updated") }
   let(:last_name_link_text) { t("components.page_titles.trainees.sort_links.last_name") }
 
@@ -26,7 +26,7 @@ RSpec.describe Trainees::SortLinks::View do
   end
 
   context "query params has sort_by=date_updated" do
-    let(:params) { { sort_by: :date_updated } }
+    let(:params) { ActionController::Parameters.new({ sort_by: :date_updated }) }
 
     it "changes the date_updated link to text only" do
       expect(component).to have_text(date_updated_link_text)
