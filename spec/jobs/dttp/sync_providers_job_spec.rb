@@ -6,6 +6,7 @@ RSpec.describe Dttp::SyncProvidersJob, type: :job do
   include ActiveJob::TestHelper
 
   before do
+    enable_features(:sync_from_dttp)
     allow(Dttp::RetrieveProviders).to receive(:call).with(request_uri: request_uri).and_return(provider_list)
   end
 

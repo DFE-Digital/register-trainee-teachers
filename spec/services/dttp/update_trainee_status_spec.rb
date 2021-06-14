@@ -14,6 +14,7 @@ module Dttp
       let(:expected_path) { "/contacts(#{entity_id})" }
 
       before do
+        enable_features(:persist_to_dttp)
         allow(AccessToken).to receive(:fetch).and_return("token")
       end
 

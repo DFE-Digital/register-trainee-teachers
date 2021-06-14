@@ -13,6 +13,8 @@ module Dttp
     end
 
     def call
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       response = Client.post("/dfe_dormantperiods", body: params.to_json)
 
       if response.code != 204

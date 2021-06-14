@@ -13,6 +13,8 @@ module Dttp
     end
 
     def call
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       response = Client.patch(
         "/dfe_dormantperiods(#{trainee.dormancy_dttp_id})",
         body: params.to_json,

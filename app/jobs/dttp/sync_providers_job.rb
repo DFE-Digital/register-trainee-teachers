@@ -5,6 +5,8 @@ module Dttp
     queue_as :dttp
 
     def perform(request_uri = nil)
+      return unless FeatureService.enabled?(:sync_from_dttp)
+
       @provider_list = Dttp::RetrieveProviders.call(request_uri: request_uri)
 
       Dttp::Provider.upsert_all(provider_attributes, unique_by: :dttp_id)

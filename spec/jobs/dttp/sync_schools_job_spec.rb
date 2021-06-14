@@ -6,6 +6,7 @@ RSpec.describe Dttp::SyncSchoolsJob, type: :job do
   include ActiveJob::TestHelper
 
   before do
+    enable_features(:sync_from_dttp)
     allow(Dttp::RetrieveSchools).to receive(:call).with(request_uri: request_uri).and_return(school_list)
   end
 
