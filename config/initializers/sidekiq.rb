@@ -2,8 +2,9 @@
 
 if ENV.key?("VCAP_SERVICES")
   service_config = JSON.parse(ENV["VCAP_SERVICES"])
-  redis_config = service_config["redis"].first
-  redis_credentials = redis_config["credentials"]
+  redis_config = service_config["redis"]
+  redis_worker_config = redis_config.select { |r| r["instance_name"].include?("worker") }.first
+  redis_credentials = redis_worker_config["credentials"]
 
   Sidekiq.configure_server do |config|
     config.redis = {
