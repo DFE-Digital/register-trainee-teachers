@@ -761,6 +761,12 @@ en:
             trainee_id:
               blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
+        schools_form:
+          attributes:
+            query:
+              length:
+                one: "Enter at least one character"
+                other: "Enter at least %{count} characters"
         schools/lead_school_form:
           attributes:
             lead_school_id:
@@ -795,4 +801,4 @@ en:
   api:
     schools:
       errors:
-        bad_request: The query param needs to be at least 3 characters
+        bad_request: The query param needs to be at least %{length} characters

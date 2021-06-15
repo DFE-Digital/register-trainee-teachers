@@ -8,7 +8,7 @@ module Schools
 
     attr_accessor(*FIELDS)
 
-    validates :lead_school_id, presence: true, unless: -> { searching_again? }
+    validates :lead_school_id, presence: true, unless: -> { school_not_selected? }
 
     alias_method :school_id, :lead_school_id
 

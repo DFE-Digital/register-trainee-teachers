@@ -10,15 +10,14 @@
       <%= f.govuk_error_summary %>
 
       <%= f.govuk_text_field(
-        :employing_school_id,
+        :query,
         label: { text: t(".heading"), size: "l", tag: "h1" },
         hint: { text: t(".hint") },
-        name: :'input-autocomplete',
-        value: nil,
+        value: query,
         "data-field" => "schools-autocomplete",
         width: "three-quarters",
       ) %>
-      <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters"></div>
+      <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters" data-default-value="<%= query %>" data-field-name="schools_employing_school_form[query]"></div>
 
       <%= f.hidden_field :employing_school_id, id: "school-id", value: nil %>
       <%= f.govuk_submit t("continue") %>

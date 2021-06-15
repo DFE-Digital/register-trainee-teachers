@@ -10,11 +10,15 @@
   </div>
 <% end %>
 
+
+<%= f.hidden_field :employing_school_id, value: nil %>
+
 <%= f.govuk_radio_buttons_fieldset :employing_school_id, legend: nil do %>
   <%= f.hidden_field :school_value, value: "true" %>
-  
+
     <% @schools.each_with_index do |school, index| %>
       <%= f.govuk_radio_button :employing_school_id, school.id,
+                              checked: false,
                               label: { text: school.name },
                               link_errors: index.zero?,
                               hint: { text: school_urn_and_location(school) } %>

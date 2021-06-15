@@ -15,19 +15,7 @@ module Schools
       allow(form_store).to receive(:get).and_return(nil)
     end
 
-    describe "validations" do
-      it { is_expected.to validate_presence_of(:employing_school_id) }
-
-      context "empty form data" do
-        let(:params) { { "employing_school_id" => "" } }
-
-        before { subject.valid? }
-
-        it "returns an error" do
-          expect(subject.errors[:employing_school_id]).to include(I18n.t("activemodel.errors.models.schools/employing_school_form.attributes.employing_school_id.blank"))
-        end
-      end
-    end
+    include_examples "school form validations", "employing_school_id"
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and employing_school" do
