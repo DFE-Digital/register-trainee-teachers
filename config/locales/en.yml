@@ -512,6 +512,7 @@ en:
       edit:
         heading: Lead school
         hint: Search for a school by its unique reference number (URN), name or postcode
+        description: The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
     employing_schools:
       edit:
         heading: Employing school

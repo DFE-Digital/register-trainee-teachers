@@ -12,7 +12,7 @@
       <%= f.govuk_text_field(
         :lead_school_id,
         label: { text: t(".heading"), size: "l", tag: "h1" },
-        hint: { text: t(".hint") },
+        hint: { text: "#{t('.description')}<p>#{t('.hint')}</p>".html_safe },
         name: :'input-autocomplete',
         value: nil,
         "data-field" => "schools-autocomplete",
