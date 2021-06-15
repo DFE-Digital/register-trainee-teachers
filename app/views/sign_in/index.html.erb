@@ -19,13 +19,5 @@
     <% else %>
       <%= render GovukButtonLinkTo::View.new(body: t(".persona_sign_in_button"), url: "/personas", class_option: "qa-sign_in_button") %>
     <% end %>
-
-    <p class="govuk-body-m">
-      <%= t(
-          ".get_access_html",
-          link: support_email(subject: "Get access to Register trainee teachers"),
-        ) %>
-    </p>
-
   </div>
 </div>

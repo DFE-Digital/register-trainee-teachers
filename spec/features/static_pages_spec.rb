@@ -33,6 +33,12 @@ feature "static pages" do
     then_the_start_page_is_displayed
   end
 
+  scenario "navigate to request an account" do
+    given_i_am_on_the_start_page
+    when_i_click_on_request_an_account
+    then_the_request_an_account_page_is_displayed
+  end
+
 private
 
   def given_i_am_on_the_start_page
@@ -82,5 +88,14 @@ private
   def then_i_should_see_the_privacy_policy
     expect(privacy_policy_page).to be_displayed
     expect(privacy_policy_page.page_heading).to have_text(t("components.page_titles.pages.privacy_policy"))
+  end
+
+  def when_i_click_on_request_an_account
+    start_page.request_an_account.click
+  end
+
+  def then_the_request_an_account_page_is_displayed
+    expect(request_an_account_page).to be_displayed
+    expect(request_an_account_page).to have_text("Request an account")
   end
 end
