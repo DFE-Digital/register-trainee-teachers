@@ -4,6 +4,8 @@ class CreateOrUpdateConsistencyCheckJob < ApplicationJob
   queue_as :default
 
   def perform(trainee)
+    return if trainee.draft?
+
     contact = Dttp::Contacts::Fetch.call(dttp_id: trainee.dttp_id)
     placement_assignment = Dttp::PlacementAssignments::Fetch.call(dttp_id: trainee.placement_assignment_dttp_id)
 
