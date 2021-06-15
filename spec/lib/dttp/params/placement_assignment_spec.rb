@@ -8,7 +8,7 @@ module Dttp
       let(:time_now_in_zone) { Time.zone.now }
       let(:provider) { create(:provider, dttp_id: dttp_provider_id) }
       let(:trainee) do
-        create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, provider: provider)
+        create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, provider: provider, course_age_range: AgeRange::ZERO_TO_FIVE)
       end
 
       let(:contact_change_set_id) { SecureRandom.uuid }
