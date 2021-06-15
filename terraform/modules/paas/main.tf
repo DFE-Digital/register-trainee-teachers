@@ -17,10 +17,21 @@ resource cloudfoundry_service_instance postgres_instance {
   }
 }
 
-resource cloudfoundry_service_instance redis_instance {
-  name         = local.redis_service_name
+resource cloudfoundry_service_instance worker_redis_instance {
+  name         = local.redis_worker_service_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
+  json_params  = jsonencode(local.noeviction_maxmemory_policy)
+  timeouts {
+    create = "30m"
+  }
+}
+
+resource cloudfoundry_service_instance cache_redis_instance {
+  name         = local.redis_cache_service_name
+  space        = data.cloudfoundry_space.space.id
+  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
+  json_params  = jsonencode(local.allkeys_lru_maxmemory_policy)
   timeouts {
     create = "30m"
   }
@@ -51,7 +62,10 @@ resource cloudfoundry_app web_app {
     service_instance = cloudfoundry_service_instance.postgres_instance.id
   }
   service_binding {
-    service_instance = cloudfoundry_service_instance.redis_instance.id
+    service_instance = cloudfoundry_service_instance.worker_redis_instance.id
+  }
+  service_binding {
+    service_instance = cloudfoundry_service_instance.cache_redis_instance.id
   }
   service_binding {
     service_instance = cloudfoundry_user_provided_service.logging.id
@@ -74,9 +88,11 @@ resource cloudfoundry_app worker_app {
   stopped            = var.worker_app_stopped
 
   service_binding {
-    service_instance = cloudfoundry_service_instance.redis_instance.id
+    service_instance = cloudfoundry_service_instance.worker_redis_instance.id
   }
-
+  service_binding {
+    service_instance = cloudfoundry_service_instance.cache_redis_instance.id
+  }
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres_instance.id
   }
