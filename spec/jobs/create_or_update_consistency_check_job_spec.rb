@@ -4,17 +4,26 @@ require "rails_helper"
 
 describe CreateOrUpdateConsistencyCheckJob do
   include ActiveJob::TestHelper
-  let(:trainee) { create(:trainee) }
+  let(:trainee) { create(:trainee, :submitted_for_trn) }
   let(:contact) { double({ updated_at: Faker::Date.backward(days: 2) }) }
   let(:placement_assignment) { double({ updated_at: Faker::Date.backward(days: 2) }) }
 
   subject { described_class.perform_now(trainee) }
+
   before do
     allow(Dttp::Contacts::Fetch).to receive(:call) { contact }
     allow(Dttp::PlacementAssignments::Fetch).to receive(:call) { placement_assignment }
   end
 
   describe ".perform" do
+    context "when the trainee is draft" do
+      let(:trainee) { create(:trainee, :draft) }
+
+      it "is a noop" do
+        expect { subject }.not_to(change { ConsistencyCheck.count })
+      end
+    end
+
     context "when a check doesn't exist" do
       it "creates a consistency check" do
         expect { subject }.to change { ConsistencyCheck.count }.from(0).to(1)
