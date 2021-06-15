@@ -455,7 +455,7 @@ en:
         heading_2: "Trainee Data"
     not_supported_route:
       heading: Other routes not supported
-      body: "%{route} is the only route currently supported by this service. More routes will be added soon."
+      body: You can only add trainees for the routes listed on the previous page. We’ll be adding more routes soon.
       bullet_desc: "You can:"
       go_back: go back and change your answer
       use_dttp: use DTTP to register a different route
