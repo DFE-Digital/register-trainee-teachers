@@ -43,17 +43,36 @@ describe SchoolSearch do
     end
 
     context "search order" do
-      let!(:school_two) { create(:school, name: "The London Acorn School") }
-      let!(:school_one) { create(:school, name: "Acorn Park School") }
+      let!(:school_one) { create(:school, name: "Acorn Park School, London") }
+      let!(:school_two) { create(:school, name: "Beaumont Parking School", town: "London") }
+      let!(:school_three) { create(:school, name: "Parking School, London") }
 
       it "orders the results alphabetically" do
-        expect(described_class.call).to eq([school_one, school_two])
+        expect(described_class.call).to eq([school_one, school_two, school_three])
       end
 
       context "with a search query" do
         it "orders the results alphabetically" do
-          expect(described_class.call(query: "acorn")).to eq([school_one, school_two])
+          expect(described_class.call(query: "London")).to eq([school_one, school_two, school_three])
         end
+      end
+    end
+
+    context "with special characters" do
+      let!(:school_one) { create(:school, name: "St Marys the Mount School") }
+      let!(:school_two) { create(:school, name: "St Mary's Kilburn") }
+      let!(:school_three) { create(:school, name: "Beaumont College - A Salutem/Ambito College") }
+
+      it "matches all" do
+        expect(described_class.call(query: "mary's")).to match_array([school_one, school_two])
+      end
+
+      it "matches all without punctuations" do
+        expect(described_class.call(query: "marys")).to match_array([school_one, school_two])
+      end
+
+      it "ignores non-punctuation characters" do
+        expect(described_class.call(query: "Salutem Ambito")).to eq([school_three])
       end
     end
 

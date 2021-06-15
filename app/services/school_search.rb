@@ -3,13 +3,11 @@
 class SchoolSearch
   include ServicePattern
 
-  attr_reader :query, :limit, :lead_schools_only
-
   MIN_QUERY_LENGTH = 2
   DEFAULT_LIMIT = 15
 
   def initialize(query: nil, limit: DEFAULT_LIMIT, lead_schools_only: false)
-    @query = query
+    @query = StripPunctuation.call(string: query)
     @limit = limit
     @lead_schools_only = lead_schools_only
   end
@@ -19,6 +17,10 @@ class SchoolSearch
     schools = schools.search(query) if query
     schools = schools.limit(limit) if limit
     schools = schools.lead_only if lead_schools_only
-    schools.order(:name)
+    schools.reorder(:name)
   end
+
+private
+
+  attr_reader :query, :limit, :lead_schools_only
 end

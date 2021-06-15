@@ -12,8 +12,7 @@ class School < ApplicationRecord
                       prefix: true,
                       tsvector_column: "searchable",
                     },
-                  },
-                  order_within_rank: :name
+                  }
 
   scope :open, -> { where(close_date: nil) }
   scope :lead_only, -> { where(lead_school: true) }
@@ -28,12 +27,16 @@ private
   #
   #      TO_TSVECTOR(
   #        'pg_catalog.simple',
-  #        '1000000 The Aldgate School ec3a 5de ec3a5de London'
+  #        '1000000 St Mary''s School ec3a 5de ec3a5de London'
   #      );
   #
   # and assigns the result to the "searchable" field, which is used by pg_search_scope above.
   # This creates a space seperated string with all the searchable info about a school such as:
-  #   "1000000 The Aldgate School ec3a 5de ec3a5de London"
+  #   "1000000 St Marys School ec3a 5de ec3a5de London"
+  #
+  # Special characters are stripped off in the search to ensure that a search matches with
+  # or without them, for example, searching by "mary's" or "marys" will have results including
+  # St Mary's
   #
   # The reason for mentioning the postcode twice is that postgres will split text up by spaces
   # into "words" when converting it into a tsvector. We would like someone to be able to type
@@ -46,7 +49,7 @@ private
   #   "'100000':1 '5de':6 'aldgate':3 'ec3a':5 'ec3a5de':7 'london':8 'school':4 'the':2"
   #
   def update_searchable
-    ts_vector_value = [urn, name, postcode, postcode.delete(" "), town].join(" ")
+    ts_vector_value = [urn, name, name_without_punctuation, postcode, postcode.delete(" "), town].join(" ")
 
     to_tsvector = Arel::Nodes::NamedFunction.new(
       "TO_TSVECTOR", [
@@ -62,5 +65,9 @@ private
         .first
         .values
         .first
+  end
+
+  def name_without_punctuation
+    StripPunctuation.call(string: name)
   end
 end
