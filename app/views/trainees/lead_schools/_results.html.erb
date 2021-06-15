@@ -15,8 +15,8 @@
 
 <%= f.govuk_radio_buttons_fieldset :lead_school_id, legend: nil do %>
   <%= f.hidden_field :school_value, value: "true" %>
-  
-    <% @schools.to_h[:schools].each_with_index do |school, index| %>
+
+    <% @school_search.schools.each_with_index do |school, index| %>
       <%= f.govuk_radio_button :lead_school_id, school.id,
                               checked: false,
                               label: { text: school.name },
@@ -25,7 +25,7 @@
     <% end %>
 
   <%= f.govuk_radio_divider %>
-  
+
   <%= f.govuk_radio_button :lead_school_id,
                           :results_search_again,
                           label: { text: t("components.page_titles.search_schools.search_button") } do %>
@@ -36,9 +36,9 @@
 <% end %>
 
 <%= render SchoolResultNotice::View.new(
-  search_query: query, 
-  search_limit: @schools.limit,
-  search_count: @schools.schools.unscope(:limit).count
+  search_query: query,
+  search_limit: @school_search.limit,
+  search_count: @school_search.schools.unscope(:limit).count,
 ) %>
 
 <%= f.govuk_submit %>

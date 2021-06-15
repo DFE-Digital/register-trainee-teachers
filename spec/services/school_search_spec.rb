@@ -87,5 +87,11 @@ describe SchoolSearch do
         expect(described_class.call(lead_schools_only: true).schools).to match([lead_school])
       end
     end
+
+    context "limit" do
+      it "can set a limit for the returned results" do
+        expect(described_class.call(query: school.urn, limit: 10).limit).to eq(10)
+      end
+    end
   end
 end

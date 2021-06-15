@@ -38,7 +38,7 @@ module Trainees
     end
 
     def load_schools
-      @schools = SchoolSearch.call(query: query, lead_schools_only: true)
+      @school_search = SchoolSearch.call(query: query, lead_schools_only: true)
     end
 
     def trainee

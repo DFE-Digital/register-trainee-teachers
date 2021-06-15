@@ -34,7 +34,7 @@ module Trainees
   private
 
     def load_schools
-      @schools = SchoolSearch.call(query: query)
+      @school_search = SchoolSearch.call(query: query)
     end
 
     def trainee
