@@ -6,26 +6,20 @@ describe SchoolSearch do
   let(:school) { create(:school) }
 
   describe "#call" do
-    it "returns the school search service object" do
-      expect(described_class.call.call).to be_a(SchoolSearch)
-    end
-  end
-
-  describe "#specified_schools" do
     it "can search by urn" do
-      expect(described_class.call(query: school.urn).specified_schools).to match([school])
+      expect(described_class.call(query: school.urn).schools).to match([school])
     end
 
     it "can search by name" do
-      expect(described_class.call(query: school.name).specified_schools).to match([school])
+      expect(described_class.call(query: school.name).schools).to match([school])
     end
 
     it "can search by town" do
-      expect(described_class.call(query: school.town).specified_schools).to match([school])
+      expect(described_class.call(query: school.town).schools).to match([school])
     end
 
     it "can search by postcode" do
-      expect(described_class.call(query: school.postcode).specified_schools).to match([school])
+      expect(described_class.call(query: school.postcode).schools).to match([school])
     end
 
     context "database has open and closed schools" do
@@ -36,7 +30,7 @@ describe SchoolSearch do
       end
 
       it "only returns schools that are open" do
-        expect(described_class.call.specified_schools).to match([open_school])
+        expect(described_class.call.schools).to match([open_school])
       end
     end
 
@@ -44,7 +38,7 @@ describe SchoolSearch do
       before { create_list(:school, 2, name: school.name) }
 
       it "supports truncation" do
-        expect(described_class.call(limit: 1).specified_schools.size).to eq(1)
+        expect(described_class.call(limit: 1).schools.size).to eq(1)
       end
     end
 
@@ -54,12 +48,12 @@ describe SchoolSearch do
       let!(:school_three) { create(:school, name: "Parking School, London") }
 
       it "orders the results alphabetically" do
-        expect(described_class.call).to eq([school_one, school_two, school_three])
+        expect(described_class.call.schools).to eq([school_one, school_two, school_three])
       end
 
       context "with a search query" do
         it "orders the results alphabetically" do
-          expect(described_class.call(query: "London")).to eq([school_one, school_two, school_three])
+          expect(described_class.call(query: "London").schools).to eq([school_one, school_two, school_three])
         end
       end
     end
@@ -70,15 +64,15 @@ describe SchoolSearch do
       let!(:school_three) { create(:school, name: "Beaumont College - A Salutem/Ambito College") }
 
       it "matches all" do
-        expect(described_class.call(query: "mary's")).to match_array([school_one, school_two])
+        expect(described_class.call(query: "mary's").schools).to match_array([school_one, school_two])
       end
 
       it "matches all without punctuations" do
-        expect(described_class.call(query: "marys")).to match_array([school_one, school_two])
+        expect(described_class.call(query: "marys").schools).to match_array([school_one, school_two])
       end
 
       it "ignores non-punctuation characters" do
-        expect(described_class.call(query: "Salutem Ambito")).to eq([school_three])
+        expect(described_class.call(query: "Salutem Ambito").schools).to eq([school_three])
       end
     end
 
@@ -90,7 +84,7 @@ describe SchoolSearch do
       end
 
       it "has a option to only search for lead schools" do
-        expect(described_class.call(lead_schools_only: true).specified_schools).to match([lead_school])
+        expect(described_class.call(lead_schools_only: true).schools).to match([lead_school])
       end
     end
   end

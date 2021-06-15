@@ -8,7 +8,6 @@ module Trainees
     helper_method :query
 
     def index
-      school_search
       @lead_school_form = Schools::LeadSchoolForm.new(trainee)
     end
 
@@ -39,15 +38,7 @@ module Trainees
     end
 
     def load_schools
-      @schools = school_search_service.specified_schools
-    end
-
-    def school_search
-      @school_search = school_search_service.call
-    end
-
-    def school_search_service
-      SchoolSearch.call(query: query, lead_schools_only: true)
+      @schools = SchoolSearch.call(query: query, lead_schools_only: true)
     end
 
     def trainee

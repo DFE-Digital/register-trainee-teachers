@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 class SchoolSearch
-  class << self
-    def call(**args)
-      new(**args)
-    end
-  end
+  include ServicePattern
 
   MIN_QUERY_LENGTH = 2
   DEFAULT_LIMIT = 15
@@ -17,7 +13,7 @@ class SchoolSearch
   end
 
   def call
-    self
+    OpenStruct.new(schools: specified_schools, limit: limit)
   end
 
   def specified_schools

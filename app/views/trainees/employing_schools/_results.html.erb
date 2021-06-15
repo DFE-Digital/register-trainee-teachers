@@ -37,8 +37,8 @@
 
 <%= render SchoolResultNotice::View.new(
   search_query: query, 
-  search_limit: SchoolSearch::DEFAULT_LIMIT, 
-  search_count: @schools.unscope(:limit).count
+  search_limit: @schools.limit,
+  search_count: @schools.schools.unscope(:limit).count
 ) %>
 
 <%= f.govuk_submit %>
