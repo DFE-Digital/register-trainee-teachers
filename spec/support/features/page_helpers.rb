@@ -6,6 +6,10 @@ module Features
       @trainee_index_page ||= PageObjects::Trainees::Index.new
     end
 
+    def request_an_account_page
+      @request_an_account_page ||= PageObjects::RequestAnAccount.new
+    end
+
     def new_trainee_page
       @new_trainee_page ||= PageObjects::Trainees::New.new
     end

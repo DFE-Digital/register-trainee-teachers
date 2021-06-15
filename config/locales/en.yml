@@ -130,6 +130,7 @@ en:
         privacy_policy: How we use your personal data and trainee data in Register trainee teachers
         forbidden: You do not have access to view details for this trainee
         home: Home
+        request_an_account: Request an account
         not_found: Page not found
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
@@ -393,6 +394,18 @@ en:
         route_titles:
           provider_led_postgrad: provider-led postgrad
   pages:
+    request_an_account:
+      inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,
+                            to begin with. If your organisation has not received an invite from the DfE you cannot request an account yet.
+      to_get_setup: To get set up on Register trainee teachers you need a DfE Sign-in account.
+      sign_in_account: DfE Sign-in account
+      send_email: To request an account, send an email to
+      tell_us: In your email, tell us
+      email_subject: Get set up on Register
+      bullets:
+        1: the name of your training provider
+        2: that you would like to start using Register trainee teachers
+        3: the email address associated with your DfE Sign-in account
     home:
       heading: Register trainee teachers
       body:
@@ -433,7 +446,6 @@ en:
       body: Use DfE Sign-in to access your account.
       dfe_sign_in_button: Sign in using DfE Sign-in
       persona_sign_in_button: Sign in using Persona
-      get_access_html: If you do not have a DfE Sign-in account but need access to Register trainee teachers, email %{link}.
   errors:
     not_found:
       heading: Page not found

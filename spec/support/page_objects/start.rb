@@ -6,7 +6,9 @@ module PageObjects
 
     element :page_heading, ".govuk-heading-xl"
 
-    element :sign_in, ".app-link--inverted"
+    element :sign_in, ".app-start-page-banner__button"
+
+    element :request_an_account, ".app-link--request-account"
 
     element :phase_banner, ".govuk-phase-banner"
 
