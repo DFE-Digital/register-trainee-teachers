@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_07_164204) do
+ActiveRecord::Schema.define(version: 2021_06_16_124359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "allocation_subjects", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_allocation_subjects_on_name", unique: true
+  end
 
   create_table "apply_application_sync_requests", force: :cascade do |t|
     t.integer "response_code"
@@ -201,6 +208,15 @@ ActiveRecord::Schema.define(version: 2021_06_07_164204) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
+  create_table "subject_specialisms", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "allocation_subject_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["allocation_subject_id"], name: "index_subject_specialisms_on_allocation_subject_id"
+    t.index ["name"], name: "index_subject_specialisms_on_name", unique: true
+  end
+
   create_table "subjects", force: :cascade do |t|
     t.string "code", null: false
     t.string "name", null: false
@@ -320,6 +336,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_164204) do
   add_foreign_key "degrees", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
+  add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
   add_foreign_key "trainees", "apply_applications"
