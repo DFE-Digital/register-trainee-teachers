@@ -168,7 +168,7 @@ private
       @provider_led_postgrad_trainee,
       @history_trainee,
       @biology_trainee,
-      @draft_trainee
+      @draft_trainee,
     ].each do |trainee|
       expect(trainee_index_page).to_not have_text(full_name(trainee))
     end
