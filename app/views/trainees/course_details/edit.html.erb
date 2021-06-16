@@ -19,7 +19,7 @@
           attribute_name: :course_subject_one,
           form_field: f.govuk_collection_select(:course_subject_one, course_subjects_options,
                                                 :name, :name, label: { text: "Subject", size: "s" },
-                                                              hint: { text: "Search for the closest matching subject" }),
+                                                              hint: { text: t('.subject_hint') }),
         ) %>
 
         <%= render "additional_subjects", f: f %>

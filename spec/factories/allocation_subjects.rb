@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :allocation_subject do
-    sequence(:name) { |s| "subject #{s}" }
+    sequence(:name) { |c| "Allocation Subject #{c}" }
   end
 end

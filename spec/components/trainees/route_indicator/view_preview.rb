@@ -11,7 +11,7 @@ module RouteIndicator
         render(Trainees::RouteIndicator::View.new(trainee: Trainee.new(
           training_route: training_route,
           apply_application: ApplyApplication.new,
-          course_subject_one: Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample,
+          course_subject_one: "Ancient Hebrew",
           course_code: Faker::Alphanumeric.alphanumeric(number: 4).upcase,
         )))
       end

@@ -38,6 +38,6 @@ private
   end
 
   def course_subjects
-    Dttp::CodeSets::CourseSubjects::MAPPING.keys
+    @course_subjects ||= SubjectSpecialism.all.map(&:name)
   end
 end

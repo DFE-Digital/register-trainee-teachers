@@ -96,8 +96,16 @@ FactoryBot.define do
       end
     end
 
+    trait :with_subject do
+      transient do
+        subject_name { nil }
+      end
+
+      course_subject_one { create(:subject_specialism, subject_name: subject_name).name }
+    end
+
     trait :with_course_details do
-      course_subject_one { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
+      with_subject
       course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
       course_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }
@@ -285,8 +293,9 @@ FactoryBot.define do
 
     trait :with_multiple_subjects do
       with_course_details
-      subject_two { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
-      subject_three { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
+
+      course_subject_two { create(:subject_specialism).name }
+      course_subject_three { create(:subject_specialism).name }
     end
   end
 end
