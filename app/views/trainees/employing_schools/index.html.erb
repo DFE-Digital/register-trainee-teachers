@@ -14,7 +14,7 @@
                            url: trainee_employing_schools_path(@trainee, query: params[:query]),
                            method: :put,
                            local: true) do |f| %>
-      <% render (@schools.empty? ? "no_results" : "results"), f: f %>
+      <% render (@school_search.schools.empty? ? "no_results" : "results"), f: f %>
     <% end %>
   </div>
 </div>

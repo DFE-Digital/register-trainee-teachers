@@ -13,6 +13,10 @@ class SchoolSearch
   end
 
   def call
+    OpenStruct.new(schools: specified_schools, limit: limit)
+  end
+
+  def specified_schools
     schools = School.open
     schools = schools.search(query) if query
     schools = schools.limit(limit) if limit
