@@ -4,15 +4,13 @@ module Trainees
   module Filters
     class View < GovukComponent::Base
       include CourseDetailsHelper
-      attr_accessor :filters, :filter_actions
+      include TraineeHelper
+      attr_accessor :filters, :filter_actions, :filter_options
 
-      def initialize(filters:, filter_actions: nil)
+      def initialize(filters:, filter_options:, filter_actions: nil)
         @filters = filters
         @filter_actions = filter_actions
-      end
-
-      def label_for(attribute, value)
-        I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}", award_type: "QTS")
+        @filter_options = filter_options
       end
 
       def filter_label_for(filter)
@@ -21,10 +19,6 @@ module Trainees
 
       def title_html(filter, value)
         tag.span("Remove ", class: "govuk-visually-hidden") + value + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")
-      end
-
-      def checked?(filter, value)
-        filters && filters[filter]&.include?(value)
       end
 
       def tags_for_filter(filter, value)

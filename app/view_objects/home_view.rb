@@ -10,8 +10,6 @@ class HomeView
 
 private
 
-  attr_reader :trainees
-
   def populate_state_counts!
     defaults = Trainee.states.keys.index_with { 0 }
     counts = @trainees.group(:state).count.reverse_merge(defaults)

@@ -48,4 +48,12 @@ module TraineeHelper
 
     "#{translation_prefix}#{title_suffix}"
   end
+
+  def checked?(filters, filter, value)
+    filters && filters[filter]&.include?(value)
+  end
+
+  def label_for(attribute, value)
+    I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
+  end
 end
