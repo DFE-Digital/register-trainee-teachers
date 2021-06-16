@@ -5,7 +5,7 @@ module Trainees
     before_action :authorize_trainee
 
     def show
-      @timeline_events = Trainees::CreateTimeline.call(trainee: trainee)
+      @timeline_events = trainee.timeline
       render layout: "trainee_record"
     end
 

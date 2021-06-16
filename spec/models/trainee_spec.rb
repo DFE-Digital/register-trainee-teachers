@@ -183,6 +183,28 @@ describe Trainee do
         it { is_expected.to be false }
       end
     end
+
+    describe "#timeline" do
+      context "with cache" do
+        before do
+          allow(Rails.cache).to receive(:fetch).and_return(double)
+        end
+
+        it "caches the timeline event after the initial request" do
+          expect(Trainees::CreateTimeline).to receive(:call).never
+
+          subject.timeline
+        end
+      end
+
+      context "without cache" do
+        it "calls Trainees::CreateTimeline" do
+          expect(Trainees::CreateTimeline).to receive(:call).once
+
+          subject.timeline
+        end
+      end
+    end
   end
 
   describe "#with_name_trainee_id_or_trn_like" do
