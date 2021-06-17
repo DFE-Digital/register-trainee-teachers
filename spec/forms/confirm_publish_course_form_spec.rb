@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe ConfirmPublishCourseForm, type: :model do
   let(:params) { {} }
-  let(:trainee) { build(:trainee) }
+  let(:trainee) { create(:trainee) }
   subject { described_class.new(trainee, params) }
 
   describe "validations" do
@@ -12,49 +12,43 @@ describe ConfirmPublishCourseForm, type: :model do
   end
 
   context "with valid params" do
-    subject { described_class.new(trainee, params) }
-    let(:course) { create(:course_with_subjects) }
+    let(:course) { create(:course_with_subjects, subject_names: subjects) }
     let(:params) { { code: course.code } }
+    let(:subjects) { ["Subject 1", "Subject 2", "Subject 3"] }
 
-    context "valid trainee" do
-      let(:trainee) { create(:trainee) }
+    let(:subject_specialism_one) { "Subject specialism 1" }
+    let(:subject_specialism_two) { "Subject specialism 2" }
+    let(:subject_specialism_three) { "Subject specialism 3" }
 
-      describe "#save" do
-        it "changed related trainee attributes" do
-          expect { subject.save }
-            .to change { trainee.course_subject_one }
-            .from(nil).to(course.subject_one.name)
-            .and change { trainee.course_min_age }
-            .from(nil).to(course.min_age)
-            .and change { trainee.course_max_age }
-            .from(nil).to(course.max_age)
-            .and change { trainee.course_start_date }
-            .from(nil).to(course.start_date)
-            .and change { trainee.course_end_date }
-            .from(nil).to((course.start_date + course.duration_in_years.years).to_date.prev_day)
-        end
-      end
+    before do
+      allow(CalculateSubjectSpecialisms).to(
+        receive(:call).with(subjects: subjects).and_return(
+          {
+            course_subject_one: [subject_specialism_one],
+            course_subject_two: [subject_specialism_two],
+            course_subject_three: [subject_specialism_three],
+          },
+        ),
+      )
     end
 
-    context "when course has multiple subjects" do
-      context "with two subjects" do
-        let(:course) { create(:course_with_subjects, subjects_count: 2) }
-
-        it "stores the second subject" do
-          expect { subject.save }
-            .to change { trainee.course_subject_two }
-            .from(nil).to(course.subject_two.name)
-        end
-      end
-
-      context "with three subjects" do
-        let(:course) { create(:course_with_subjects, subjects_count: 3) }
-
-        it "stores the third subject" do
-          expect { subject.save }
-            .to change { trainee.course_subject_three }
-            .from(nil).to(course.subject_three.name)
-        end
+    describe "#save" do
+      it "updates all the course related attributes" do
+        expect { subject.save }
+          .to change { trainee.course_subject_one }
+          .from(nil).to(subject_specialism_one)
+          .and change { trainee.course_subject_two }
+          .from(nil).to(subject_specialism_two)
+          .and change { trainee.course_subject_three }
+          .from(nil).to(subject_specialism_three)
+          .and change { trainee.course_min_age }
+          .from(nil).to(course.min_age)
+          .and change { trainee.course_max_age }
+          .from(nil).to(course.max_age)
+          .and change { trainee.course_start_date }
+          .from(nil).to(course.start_date)
+          .and change { trainee.course_end_date }
+          .from(nil).to((course.start_date + course.duration_in_years.years).to_date.prev_day)
       end
     end
   end

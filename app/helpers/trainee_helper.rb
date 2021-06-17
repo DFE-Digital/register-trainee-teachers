@@ -36,9 +36,7 @@ module TraineeHelper
   end
 
   def show_publish_courses?(trainee)
-    courses_available = trainee.available_courses.present?
-
-    FeatureService.enabled?(:publish_course_details) && courses_available
+    FeatureService.enabled?(:publish_course_details) && trainee.available_courses.present?
   end
 
   def trainee_draft_title(trainee)

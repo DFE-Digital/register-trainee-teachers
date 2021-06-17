@@ -65,6 +65,7 @@ module Dttp
       RUSSIAN_LANGUAGES = "Russian languages"
       SOCIAL_SCIENCES = "social sciences"
       SPANISH_LANGUAGE = "Spanish language"
+      SCIENCE = "science"
       SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS = "specialist teaching (primary with mathematics)"
       SPORT_AND_EXERCISE_SCIENCES = "sport and exercise sciences"
       SPORTS_MANAGEMENT = "sports management"
