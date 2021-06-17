@@ -7,13 +7,21 @@ describe CourseDetailsHelper do
 
   describe "#course_subjects_options" do
     before do
-      allow(self).to receive(:course_subjects).and_return(%w[course_subject])
+      create(:subject_specialism, name: "Travel and Tourism")
     end
 
-    it "iterates over array and prints out correct course_subjects values" do
-      expect(course_subjects_options.size).to be 2
+    it "iterates over Dttp::CodeSets::CourseSubjects and prints out correct course_subjects values" do
+      expect(course_subjects_options.size).to be 40
       expect(course_subjects_options.first.name).to be_nil
-      expect(course_subjects_options.second.name).to eq "course_subject"
+      expect(course_subjects_options.second.name).to eq "Art and design"
+    end
+
+    context "when the feature flag is turned on", feature_use_subject_specialisms_in_course_details: true do
+      it "iterates over subject specialisms and prints out correct course_subjects values" do
+        expect(course_subjects_options.size).to be 2
+        expect(course_subjects_options.first.name).to be_nil
+        expect(course_subjects_options.second.name).to eq "Travel and Tourism"
+      end
     end
   end
 

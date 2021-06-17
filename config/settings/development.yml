@@ -6,6 +6,7 @@ features:
   basic_auth: false
   import_courses_from_ttapi: true
   publish_course_details: true
+  use_subject_specialisms_in_course_details: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true

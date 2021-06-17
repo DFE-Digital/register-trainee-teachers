@@ -96,7 +96,7 @@ FactoryBot.define do
       end
     end
 
-    trait :with_subject do
+    trait :with_subject_specialism do
       transient do
         subject_name { nil }
       end
@@ -105,7 +105,7 @@ FactoryBot.define do
     end
 
     trait :with_course_details do
-      with_subject
+      course_subject_one { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
       course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
       course_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }
