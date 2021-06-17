@@ -22,7 +22,7 @@ feature "course details", type: :feature do
       given_i_am_on_the_review_draft_page
     end
 
-    context "when the feature flag is turned on", feature_use_subject_specialisms_in_course_details: true do
+    context "when the feature flag is turned on", feature_use_subject_specialisms: true do
       scenario "submitting with valid parameters" do
         given_a_subject_specialism_is_available_for_selection
         when_i_visit_the_course_details_page
@@ -79,7 +79,7 @@ private
   end
 
   def and_i_enter_valid_dttp_subject_parameters
-    course_details_page.subject.select(trainee.subject)
+    course_details_page.subject.select(trainee.course_subject_one)
   end
 
   def and_i_enter_valid_parameters
@@ -103,7 +103,7 @@ private
   def and_the_course_details_are_updated
     when_i_visit_the_course_details_page
 
-    expect(course_details_page.subject.value).to eq(trainee.course_subject_one)
+    expect(course_details_page.subject.value).to eq(trainee.reload.course_subject_one)
     expect(course_details_page.course_start_date_day.value).to eq(trainee.course_start_date.day.to_s)
     expect(course_details_page.course_start_date_month.value).to eq(trainee.course_start_date.month.to_s)
     expect(course_details_page.course_start_date_year.value).to eq(trainee.course_start_date.year.to_s)

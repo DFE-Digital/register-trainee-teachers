@@ -39,7 +39,7 @@ private
 
   def course_subjects
     @course_subjects ||= begin
-      return Dttp::CodeSets::CourseSubjects::MAPPING.keys unless FeatureService.enabled?(:use_subject_specialisms_in_course_details)
+      return Dttp::CodeSets::CourseSubjects::MAPPING.keys unless FeatureService.enabled?(:use_subject_specialisms)
 
       SubjectSpecialism.pluck(:name)
     end

@@ -3,7 +3,7 @@ features:
   use_dfe_sign_in: false
   enable_feedback_link: true
   publish_course_details: true
-  use_subject_specialisms_in_course_details: true
+  use_subject_specialisms: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true

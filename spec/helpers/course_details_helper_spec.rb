@@ -16,7 +16,7 @@ describe CourseDetailsHelper do
       expect(course_subjects_options.second.name).to eq "Art and design"
     end
 
-    context "when the feature flag is turned on", feature_use_subject_specialisms_in_course_details: true do
+    context "when the feature flag is turned on", feature_use_subject_specialisms: true do
       it "iterates over subject specialisms and prints out correct course_subjects values" do
         expect(course_subjects_options.size).to be 2
         expect(course_subjects_options.first.name).to be_nil
