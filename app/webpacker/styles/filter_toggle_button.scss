@@ -27,17 +27,26 @@ $shadow-color: #0b0c0c;
 }
 
 .moj-action-bar__filter {
+  float: none;
+  margin-bottom: govuk-spacing(6);
+
   @include govuk-media-query($from: desktop) {
     display: none;
   }
-}
 
-.filter-toggle-button {
-  float: right;
-  margin-bottom: govuk-spacing(1);
+  .govuk-button {
+    margin: 0;
+  }
 
-  @include govuk-media-query($from: desktop) {
-    display: none;
+  @include govuk-media-query($until: $mobile-big-start) {
+    display: block;
+    float: none;
+    margin-top: govuk-spacing(3);
+  }
+
+  @include govuk-media-query($from: $mobile-big-end) {
+    margin-top: govuk-spacing(4);
+    margin-bottom: govuk-spacing(3);
   }
 }
 
@@ -48,7 +57,7 @@ $shadow-color: #0b0c0c;
 @media (min-width: 48.0625em) {
   .moj-filter-layout__filter {
     max-width: 300px;
-    margin-bottom: 10px;
+    margin-bottom: govuk-spacing(2);
   }
 }
 
@@ -97,7 +106,7 @@ $shadow-color: #0b0c0c;
 
 .moj-filter-layout__filter-wrapper {
   max-width: 300px;
-  margin-right: 40px;
+  margin-right: govuk-spacing(7);
   min-width: 260px;
   width: 100%;
 

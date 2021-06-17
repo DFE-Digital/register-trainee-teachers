@@ -37,7 +37,7 @@ module ApplicationRecordCard
     def updated_at
       date_stamp = record.timeline&.first&.date.presence || record.created_at
       date_text = tag.span(date_stamp.strftime("%-d %B %Y"))
-      class_list = "govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0 app-application-card__submitted"
+      class_list = "govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0 application-record-card__submitted"
 
       sanitize(tag.p(date_text.prepend("Updated: "), class: class_list))
     end
@@ -45,13 +45,13 @@ module ApplicationRecordCard
     def trainee_id
       return if record.trainee_id.blank?
 
-      tag.p("Trainee ID: " + record.trainee_id, class: "govuk-caption-m govuk-!-font-size-16 app-application-card__id govuk-!-margin-bottom-0")
+      tag.p("Trainee ID: " + record.trainee_id, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__id govuk-!-margin-bottom-0")
     end
 
     def trn
       return if record.trn.blank?
 
-      tag.p("TRN: " + record.trn, class: "govuk-caption-m govuk-!-font-size-16 app-application-card__trn govuk-!-margin-bottom-0 govuk-!-margin-top-0")
+      tag.p("TRN: " + record.trn, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__trn govuk-!-margin-bottom-0 govuk-!-margin-top-0")
     end
 
   private

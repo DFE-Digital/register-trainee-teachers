@@ -1,0 +1,49 @@
+@import "../base.scss";
+
+.app-records-actions {
+  margin: 0 0 govuk-spacing(3) 0;
+  border-bottom: 1px solid govuk-colour("mid-grey");
+
+  @include govuk-media-query($until: $mobile-big-start) {
+    padding-bottom: govuk-spacing(4);
+
+    .app-sort-links {
+      margin-bottom: govuk-spacing(2);
+    }
+  }
+
+  @include govuk-media-query($from: $mobile-big-end) {
+    .app-records-actions-text-links {
+      text-align: right;
+      float: right;
+    }
+  }
+
+  @include govuk-media-query($from: desktop) {
+    .app-records-actions-text-links {
+      text-align: left;
+      float: none;
+    }
+  }
+
+  @include govuk-media-query($from: $govuk-page-width) {
+    .app-records-actions-text-links {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+
+      .app-export--link {
+        text-align: right;
+        float: none;
+        width: 40%;
+        margin-top: 3px;
+      }
+    }
+  }
+}
+
+.app-trainee-export {
+  @include govuk-font($size: 19);
+  display: inline-block;
+  margin-bottom: govuk-spacing(3);
+}

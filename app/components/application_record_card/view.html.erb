@@ -1,22 +1,24 @@
-<div class="app-application-card">
-  <div class="app-application-card_col">
-    <h<%= heading_level %> class="govuk-heading-m govuk-!-margin-bottom-3">
-      <%= govuk_link_to trainee_name, view_trainee(record) %>
-    </h<%= heading_level %>>
-    <%= trainee_id %>
-    <%= trn %>
+<div class="application-record-card">
+  <div class="application-record-card__col-trainee-course">
+    <div class="application-record-card__col-trainee">
+      <h<%= heading_level %> class="govuk-heading-m application-record-card__trainee-name">
+        <%= govuk_link_to trainee_name, view_trainee(record) %>
+      </h<%= heading_level %>>
+      <%= trainee_id %>
+      <%= trn %>
+    </div>
+
+    <div class="application-record-card__col-course">
+      <p class="govuk-body application-record-card__subject">
+        <%= subject %>
+      </p>
+      <p class="govuk-body govuk-hint application-record-card__route">
+        <%= route %>
+      </p>
+    </div>
   </div>
 
-  <div class="app-application-card_col">
-    <p class="govuk-body app-application-card__subject">
-      <%= subject %>
-    </p>
-    <p class="govuk-body govuk-hint app-application-card__route">
-      <%= route %>
-    </p>
-  </div>
-
-  <div class="app-application-card_col">
+  <div class="application-record-card__col-status">
     <%= render StatusTag::View.new(trainee: record) %>
     <%= updated_at %>
   </div>
