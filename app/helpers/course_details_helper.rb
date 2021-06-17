@@ -38,6 +38,6 @@ private
   end
 
   def course_subjects
-    @course_subjects ||= SubjectSpecialism.all.map(&:name)
+    @course_subjects ||=  SubjectSpecialism.pluck(:name)
   end
 end
