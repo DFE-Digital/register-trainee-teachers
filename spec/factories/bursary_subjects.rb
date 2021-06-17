@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :subject_specialism do
+  factory :bursary_subject do
+    bursary
     allocation_subject
-
-    sequence(:name) { |s| "subject #{s}" }
   end
 end

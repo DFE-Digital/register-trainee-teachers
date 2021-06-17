@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_124359) do
+ActiveRecord::Schema.define(version: 2021_06_17_084351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,23 @@ ActiveRecord::Schema.define(version: 2021_06_16_124359) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "bursaries", force: :cascade do |t|
+    t.string "training_route", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "bursary_subjects", force: :cascade do |t|
+    t.bigint "bursary_id"
+    t.bigint "allocation_subject_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["allocation_subject_id", "bursary_id"], name: "index_bursary_subjects_on_allocation_subject_id_and_bursary_id", unique: true
+    t.index ["allocation_subject_id"], name: "index_bursary_subjects_on_allocation_subject_id"
+    t.index ["bursary_id"], name: "index_bursary_subjects_on_bursary_id"
   end
 
   create_table "consistency_checks", force: :cascade do |t|
