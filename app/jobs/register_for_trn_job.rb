@@ -4,8 +4,8 @@ class RegisterForTrnJob < ApplicationJob
   queue_as :default
   retry_on Dttp::BatchRequest::Error
 
-  def perform(trainee, trainee_creator_dttp_id)
-    Dttp::RegisterForTrn.call(trainee: trainee, trainee_creator_dttp_id: trainee_creator_dttp_id)
+  def perform(trainee, created_by_dttp_id)
+    Dttp::RegisterForTrn.call(trainee: trainee, created_by_dttp_id: created_by_dttp_id)
 
     ChangeTraineeStatusJob.perform_later(
       trainee,

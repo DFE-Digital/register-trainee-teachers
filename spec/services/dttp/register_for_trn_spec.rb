@@ -11,7 +11,7 @@ module Dttp
       let(:degree) { build(:degree, :uk_degree_with_details) }
 
       let(:batch_request) { instance_double(BatchRequest) }
-      let(:trainee_creator_dttp_id) { SecureRandom.uuid }
+      let(:created_by_dttp_id) { SecureRandom.uuid }
 
       let(:contact_change_set_id) { SecureRandom.uuid }
       let(:placement_assignment_change_set_id) { SecureRandom.uuid }
@@ -21,7 +21,7 @@ module Dttp
       let(:placement_assignment_entity_id) { SecureRandom.uuid }
       let(:degree_qualification_entity_id) { SecureRandom.uuid }
 
-      let(:contact_payload) { Params::Contact.new(trainee, trainee_creator_dttp_id).to_json }
+      let(:contact_payload) { Params::Contact.new(trainee, created_by_dttp_id).to_json }
       let(:placement_assignment_payload) { Params::PlacementAssignment.new(trainee, contact_change_set_id).to_json }
       let(:degree_qualification_payload) do
         Params::DegreeQualification.new(degree, contact_change_set_id, placement_assignment_change_set_id).to_json
@@ -71,7 +71,7 @@ module Dttp
         expect(batch_request).to receive(:submit).and_return(dttp_response)
 
         expect {
-          described_class.call(trainee: trainee, trainee_creator_dttp_id: trainee_creator_dttp_id)
+          described_class.call(trainee: trainee, created_by_dttp_id: created_by_dttp_id)
         }.to change(trainee, :dttp_id).to(
           contact_entity_id,
         ).and change(trainee, :placement_assignment_dttp_id).to(

@@ -14,14 +14,14 @@ module Dttp
 
       TRAINEE_CONTACT_TYPE_DTTP_ID = "faba11c7-07d9-e711-80e1-005056ac45bb"
 
-      attr_reader :trainee, :trainee_creator_dttp_id, :params
+      attr_reader :trainee, :created_by_dttp_id, :params
 
-      def initialize(trainee, trainee_creator_dttp_id = nil)
+      def initialize(trainee, created_by_dttp_id = nil)
         @trainee = trainee
-        @trainee_creator_dttp_id = trainee_creator_dttp_id
+        @created_by_dttp_id = created_by_dttp_id
         @params = build_params
 
-        append_create_only_params if trainee_creator_dttp_id
+        append_create_only_params if created_by_dttp_id
       end
 
       def to_json(*_args)
@@ -52,7 +52,7 @@ module Dttp
       def append_create_only_params
         params.merge!({
           "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(#{TRAINEE_CONTACT_TYPE_DTTP_ID})",
-          "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
+          "dfe_CreatedById@odata.bind" => "/contacts(#{created_by_dttp_id})",
           "dfe_trnassessmentdate" => Time.zone.now.iso8601,
         })
       end

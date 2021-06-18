@@ -9,9 +9,9 @@ module Dttp
       let(:provider) { build(:provider, dttp_id: provider_dttp_id) }
       let(:provider_dttp_id) { SecureRandom.uuid }
       let(:trainee) { create(:trainee, :completed, gender: "female", provider: provider) }
-      let(:trainee_creator_dttp_id) { SecureRandom.uuid }
+      let(:created_by_dttp_id) { SecureRandom.uuid }
 
-      subject { described_class.new(trainee, trainee_creator_dttp_id).params }
+      subject { described_class.new(trainee, created_by_dttp_id).params }
 
       before do
         allow(Time).to receive(:now).and_return(time_now_in_zone)
@@ -35,14 +35,14 @@ module Dttp
             "gendercode" => Dttp::Params::Contact::GENDER_CODES[:female],
             "dfe_traineeid" => trainee.trainee_id,
             "dfe_ContactTypeId@odata.bind" => "/dfe_contacttypes(faba11c7-07d9-e711-80e1-005056ac45bb)",
-            "dfe_CreatedById@odata.bind" => "/contacts(#{trainee_creator_dttp_id})",
+            "dfe_CreatedById@odata.bind" => "/contacts(#{created_by_dttp_id})",
             "parentcustomerid_account@odata.bind" => "/accounts(#{provider_dttp_id})",
             "dfe_trnassessmentdate" => time_now_in_zone.in_time_zone.iso8601,
           })
         end
 
-        context "trainee_creator_dttp_id not passed" do
-          subject { described_class.new(trainee, trainee_creator_dttp_id).params }
+        context "created_by_dttp_id not passed" do
+          subject { described_class.new(trainee, created_by_dttp_id).params }
 
           it "returns a hash with only the basic contact fields" do
             expect(subject).to include({
