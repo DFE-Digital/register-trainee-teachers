@@ -24,7 +24,7 @@ module Trainees
       end
 
       def course_with_code
-        "#{trainee.subject} #{course_code}".strip
+        "#{trainee.course_subject_one} #{course_code}".strip
       end
 
       def course_code

@@ -22,8 +22,8 @@ describe ConfirmPublishCourseForm, type: :model do
       describe "#save" do
         it "changed related trainee attributes" do
           expect { subject.save }
-            .to change { trainee.subject }
-            .from(nil).to(course.subjects.first.name)
+            .to change { trainee.course_subject_one }
+            .from(nil).to(course.subject_one.name)
             .and change { trainee.course_min_age }
             .from(nil).to(course.min_age)
             .and change { trainee.course_max_age }
@@ -42,8 +42,8 @@ describe ConfirmPublishCourseForm, type: :model do
 
         it "stores the second subject" do
           expect { subject.save }
-            .to change { trainee.subject_two }
-            .from(nil).to(course.subjects.second.name)
+            .to change { trainee.course_subject_two }
+            .from(nil).to(course.subject_two.name)
         end
       end
 
@@ -52,8 +52,8 @@ describe ConfirmPublishCourseForm, type: :model do
 
         it "stores the third subject" do
           expect { subject.save }
-            .to change { trainee.subject_three }
-            .from(nil).to(course.subjects.third.name)
+            .to change { trainee.course_subject_three }
+            .from(nil).to(course.subject_three.name)
         end
       end
     end

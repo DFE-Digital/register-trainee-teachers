@@ -42,7 +42,7 @@ module Trainees
         diversity_disclosure: diversity_disclosure,
         email: raw_contact_details["email"],
         training_route: course&.route,
-        subject: course&.name,
+        course_subject_one: course&.name,
         course_code: course&.code,
         course_age_range: course&.age_range,
         course_start_date: course&.start_date,

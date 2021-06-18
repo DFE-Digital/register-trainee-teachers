@@ -32,7 +32,7 @@ module Trainees
         diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
         email: contact_details["email"],
         training_route: course.route,
-        subject: course.name,
+        course_subject_one: course.name,
         course_code: course.code,
         course_min_age: course.min_age,
         course_max_age: course.max_age,

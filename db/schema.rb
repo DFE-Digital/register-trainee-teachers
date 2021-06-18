@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_084351) do
+ActiveRecord::Schema.define(version: 2021_06_18_085011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_084351) do
     t.text "ethnic_background"
     t.text "additional_ethnic_background"
     t.integer "disability_disclosure"
-    t.text "subject"
+    t.text "course_subject_one"
     t.date "course_start_date"
     t.jsonb "progress", default: {}
     t.bigint "provider_id", null: false
@@ -301,8 +301,8 @@ ActiveRecord::Schema.define(version: 2021_06_17_084351) do
     t.integer "course_min_age"
     t.integer "course_max_age"
     t.string "course_code"
-    t.text "subject_two"
-    t.text "subject_three"
+    t.text "course_subject_two"
+    t.text "course_subject_three"
     t.datetime "awarded_at"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"

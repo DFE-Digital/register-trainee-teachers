@@ -85,7 +85,7 @@ module ApplicationRecordCard
             id: 1,
             first_names: "Teddy",
             last_name: "Smith",
-            subject: "Designer",
+            course_subject_one: "Designer",
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
             trainee_id: "132456",
             created_at: Time.zone.now,
@@ -95,9 +95,7 @@ module ApplicationRecordCard
       end
 
       before do
-        render_inline(described_class.new(
-                        record: trainee,
-                      ))
+        render_inline(described_class.new(record: trainee))
       end
 
       it "renders trainee ID" do

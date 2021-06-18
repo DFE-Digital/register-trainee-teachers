@@ -57,7 +57,7 @@ module Pages
                       ethnic_background: "ethnic_background",
                       additional_ethnic_background: "additional_ethnic_background",
                       training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
-                      subject: "subject",
+                      course_subject_one: "subject",
                       degrees: [Degree.new(id: 1)])
         end
 
@@ -75,7 +75,6 @@ module Pages
                       international_address: "international_address",
                       ethnic_background: "ethnic_background",
                       additional_ethnic_background: "additional_ethnic_background",
-                      subject: "subject",
                       gender: 1,
                       date_of_birth: Time.zone.now,
                       locale_code: 1,
@@ -83,6 +82,7 @@ module Pages
                       email: "email@example.com",
                       course_min_age: 0,
                       course_max_age: 5,
+                      course_subject_one: "subject",
                       course_start_date: 6.months.ago,
                       course_end_date: Time.zone.now,
                       nationalities: nationalities,

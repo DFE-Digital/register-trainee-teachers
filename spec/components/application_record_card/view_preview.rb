@@ -31,7 +31,7 @@ module ApplicationRecordCard
         first_names: "Tom",
         last_name: "Jones",
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
-        subject: "Primary",
+        course_subject_one: "Primary",
       )
     end
 
@@ -42,8 +42,8 @@ module ApplicationRecordCard
         first_names: "Tom",
         last_name: "Jones",
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
-        subject: "Primary",
-        subject_two: "Science",
+        course_subject_one: "Primary",
+        course_subject_two: "Science",
       )
     end
 
@@ -54,18 +54,18 @@ module ApplicationRecordCard
         first_names: "Tom",
         last_name: "Jones",
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
-        subject: "Primary",
-        subject_two: "Science",
-        subject_three: "Mathematics",
+        course_subject_one: "Primary",
+        course_subject_two: "Science",
+        course_subject_three: "Mathematics",
       )
     end
 
     def mock_multiple_trainees
       [
-        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Tom", last_name: "Jones", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], subject: "Primary", subject_two: "Mathematics", subject_three: "Latin"),
-        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Paddington", last_name: "Bear", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], subject: "Science", subject_two: "Mathematics"),
+        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Tom", last_name: "Jones", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Primary", course_subject_two: "Mathematics", course_subject_three: "Latin"),
+        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Paddington", last_name: "Bear", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Science", course_subject_two: "Mathematics"),
         Trainee.new(id: 1, created_at: Time.zone.now),
-        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Tim", last_name: "Knight", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], subject: "Maths"),
+        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Tim", last_name: "Knight", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Maths"),
         Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Toby", last_name: "Rocker"),
       ]
     end

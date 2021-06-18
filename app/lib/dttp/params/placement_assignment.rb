@@ -65,7 +65,7 @@ module Dttp
       end
 
       def subject_entity_id
-        trainee.early_years_route? ? EARLY_YEARS_SUBJECT : course_subject_id(trainee.subject)
+        trainee.early_years_route? ? EARLY_YEARS_SUBJECT : course_subject_id(trainee.course_subject_one)
       end
 
       def uk_specific_params

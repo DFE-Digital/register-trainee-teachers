@@ -2,12 +2,12 @@
 
 class CourseDetailsForm < TraineeForm
   FIELDS = %i[
-    subject
-    subject_raw
-    subject_two
-    subject_two_raw
-    subject_three
-    subject_three_raw
+    course_subject_one
+    course_subject_one_raw
+    course_subject_two
+    course_subject_two_raw
+    course_subject_three
+    course_subject_three_raw
     start_day
     start_month
     start_year
@@ -33,15 +33,17 @@ class CourseDetailsForm < TraineeForm
   before_validation :sanitise_course_dates
   before_validation :sanitise_subjects
 
-  validates :subject, autocomplete: true, presence: true, if: :require_subject?
-  validates :subject_two, autocomplete: true, if: :require_subject?
-  validates :subject_three, autocomplete: true, if: :require_subject?
+  validates :course_subject_one, autocomplete: true, presence: true, if: :require_subject?
+  validates :course_subject_two, autocomplete: true, if: :require_subject?
+  validates :course_subject_three, autocomplete: true, if: :require_subject?
   validates :additional_age_range, autocomplete: true, if: -> { other_age_range? && require_age_range? }
-  validate :age_range_valid, if: :require_age_range?
+
   validate :course_start_date_valid
   validate :course_end_date_valid
-  validate :subject_two_valid, if: :require_subject?
-  validate :subject_three_valid, if: :require_subject?
+
+  validate :age_range_valid, if: :require_age_range?
+  validate :course_subject_two_valid, if: :require_subject?
+  validate :course_subject_three_valid, if: :require_subject?
 
   delegate :apply_application?, to: :trainee
 
@@ -78,7 +80,7 @@ class CourseDetailsForm < TraineeForm
   end
 
   def has_additional_subjects?
-    subject_two.present? || subject_three.present?
+    course_subject_two.present? || course_subject_three.present?
   end
 
   def require_subject?
@@ -102,9 +104,9 @@ private
   def update_trainee_attributes
     trainee.assign_attributes({
       course_code: course_code,
-      subject: subject,
-      subject_two: subject_two,
-      subject_three: subject_three,
+      course_subject_one: course_subject_one,
+      course_subject_two: course_subject_two,
+      course_subject_three: course_subject_three,
       course_age_range: course_age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
@@ -113,9 +115,9 @@ private
 
   def compute_attributes_from_trainee
     attributes = {
-      subject: trainee.subject,
-      subject_two: trainee.subject_two,
-      subject_three: trainee.subject_three,
+      course_subject_one: trainee.course_subject_one,
+      course_subject_two: trainee.course_subject_two,
+      course_subject_three: trainee.course_subject_three,
       start_day: trainee.course_start_date&.day,
       start_month: trainee.course_start_date&.month,
       start_year: trainee.course_start_date&.year,
@@ -179,16 +181,16 @@ private
     end
   end
 
-  def subject_two_valid
-    return if subject_two.blank?
+  def course_subject_two_valid
+    return if course_subject_two.blank?
 
-    errors.add(:subject_two, :duplicate) if subject == subject_two
+    errors.add(:course_subject_two, :duplicate) if course_subject_one == course_subject_two
   end
 
-  def subject_three_valid
-    return if subject_three.blank?
+  def course_subject_three_valid
+    return if course_subject_three.blank?
 
-    errors.add(:subject_three, :duplicate) if [subject, subject_two].include?(subject_three)
+    errors.add(:course_subject_three, :duplicate) if [course_subject_one, course_subject_two].include?(course_subject_three)
   end
 
   def next_year
@@ -200,13 +202,13 @@ private
   end
 
   def sanitise_subjects
-    return if subject_two.present? || subject_two_raw.present?
+    return if course_subject_two.present? || course_subject_two_raw.present?
 
-    self.subject_two = subject_three
-    self.subject_two_raw = subject_three_raw
+    self.course_subject_two = course_subject_three
+    self.course_subject_two_raw = course_subject_three_raw
 
-    self.subject_three = nil
-    self.subject_three_raw = nil
+    self.course_subject_three = nil
+    self.course_subject_three_raw = nil
   end
 
   def sanitise_course_dates
