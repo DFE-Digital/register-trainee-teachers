@@ -52,12 +52,6 @@ RSpec/BeforeAfterAll:
     - 'spec/components/start_page_banner/view_spec.rb'
     - 'spec/components/trainees/confirmation/contact_details/view_spec.rb'
 
-# Offense count: 38
-# Cop supports --auto-correct.
-# Configuration parameters: EnabledMethods.
-RSpec/Capybara/FeatureMethods:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 RSpec/ContextMethod:

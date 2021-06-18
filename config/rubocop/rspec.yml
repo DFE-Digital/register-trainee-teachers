@@ -42,3 +42,4 @@ RSpec/Capybara/FeatureMethods:
   EnabledMethods:
     - "scenario"
     - "feature"
+    - "background"
