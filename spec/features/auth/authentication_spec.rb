@@ -66,7 +66,7 @@ private
   end
 
   def then_i_am_redirected_to_the_root_path
-    expect(page.current_path).to eq("/")
+    expect(page).to have_current_path("/")
   end
 
   def and_i_should_see_the_link_to_sign_out

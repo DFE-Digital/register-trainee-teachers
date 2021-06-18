@@ -172,6 +172,6 @@ private
   end
 
   def then_i_am_redirected_to_the_confirm_page
-    expect(page.current_path).to eq "/trainees/#{trainee.slug}/personal-details/confirm"
+    expect(page).to have_current_path "/trainees/#{trainee.slug}/personal-details/confirm", ignore_query: true
   end
 end

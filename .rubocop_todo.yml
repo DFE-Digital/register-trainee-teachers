@@ -52,16 +52,6 @@ RSpec/BeforeAfterAll:
     - 'spec/components/start_page_banner/view_spec.rb'
     - 'spec/components/trainees/confirmation/contact_details/view_spec.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-RSpec/Capybara/CurrentPathExpectation:
-  Exclude:
-    - 'spec/features/auth/authentication_spec.rb'
-    - 'spec/features/form_sections/personal_and_education_details/edit_personal_details_spec.rb'
-    - 'spec/features/form_sections/teacher_training_data/edit_trainee_start_date_spec.rb'
-    - 'spec/features/system_admin/dttp_providers/list_providers_spec.rb'
-    - 'spec/features/trainee_actions/delete_trainee_spec.rb'
-
 # Offense count: 38
 # Cop supports --auto-correct.
 # Configuration parameters: EnabledMethods.

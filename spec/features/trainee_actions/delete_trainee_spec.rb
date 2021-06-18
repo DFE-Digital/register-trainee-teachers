@@ -29,7 +29,7 @@ private
   end
 
   def then_i_see_the_confirm_page
-    expect(page.current_path).to eq("/trainees/#{trainee.slug}/confirm-delete")
+    expect(page).to have_current_path("/trainees/#{trainee.slug}/confirm-delete", ignore_query: true)
   end
 
   def then_i_click_the_delete_button
