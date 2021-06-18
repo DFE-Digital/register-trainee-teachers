@@ -2,6 +2,8 @@
 
 require "rails_helper"
 
+STATES = Trainee.states.keys.map(&:to_sym) - [:draft]
+
 describe TraineeHelper do
   include TraineeHelper
 
@@ -26,7 +28,6 @@ describe TraineeHelper do
   end
 
   describe "#view_trainee" do
-    STATES = Trainee.states.keys.map(&:to_sym) - [:draft]
     subject { view_trainee(trainee) }
 
     context "with a draft trainee" do

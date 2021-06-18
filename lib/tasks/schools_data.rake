@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-namespace :schools_data do
-  HEADERS = %w[urn name town postcode lead_school open_date close_date].freeze
-  REFINED_CSV_PATH = Rails.root.join("data/schools.csv").freeze
+HEADERS = %w[urn name town postcode lead_school open_date close_date].freeze
+REFINED_CSV_PATH = Rails.root.join("data/schools.csv").freeze
 
+namespace :schools_data do
   # This task requires two csvs, see readme under "Regenerating data/schools.csv" for details
   desc "Generate school csv with only the required columns from the establishment and lead school csv"
   task :generate_csv, %i[establishment_csv_path lead_schools_csv_path output_path] => [:environment] do |_, args|

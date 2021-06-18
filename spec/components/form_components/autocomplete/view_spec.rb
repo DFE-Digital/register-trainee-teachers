@@ -4,6 +4,11 @@ require "rails_helper"
 
 module FormComponents
   module Autocomplete
+    class ExampleModel
+      include ActiveModel::Model
+      attr_accessor :id, :country, :country_raw
+    end
+
     describe View do
       include ActionView::Helpers::FormHelper
       alias_method :component, :page
@@ -21,11 +26,6 @@ module FormComponents
     private
 
       attr_accessor :output_buffer
-
-      class ExampleModel
-        include ActiveModel::Model
-        attr_accessor :id, :country, :country_raw
-      end
 
       def form_field
         '<div class="govuk-form-group">

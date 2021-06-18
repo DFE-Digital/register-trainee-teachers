@@ -6,16 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 5
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: enums
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - 'lib/tasks/schools_data.rake'
-    - 'spec/components/form_components/autocomplete/view_spec.rb'
-    - 'spec/helpers/trainee_helper_spec.rb'
-    - 'spec/validators/autocomplete_validator_spec.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Lint/DeprecatedOpenSSLConstant:
