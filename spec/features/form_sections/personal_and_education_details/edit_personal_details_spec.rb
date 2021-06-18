@@ -68,7 +68,7 @@ feature "edit personal details", type: :feature do
       and_i_submit_the_form
     end
 
-    it "it doesn't ask me to complete the section" do
+    it "doesn't ask me to complete the section" do
       then_the_confirm_details_page_has_no_checkbox
       and_i_click_continue
       then_i_am_redirected_to_the_record_page

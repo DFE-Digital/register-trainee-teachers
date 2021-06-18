@@ -14,7 +14,7 @@ describe Trainees::AwardRecommendationsController do
   end
 
   describe "#create" do
-    it "it updates the placement assignment in DTTP to mark it ready for QTS" do
+    it "updates the placement assignment in DTTP to mark it ready for QTS" do
       expect {
         post :create, params: { trainee_id: trainee }
       }.to have_enqueued_job(RecommendForAwardJob).with(trainee)

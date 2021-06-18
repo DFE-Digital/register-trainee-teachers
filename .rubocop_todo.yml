@@ -52,18 +52,6 @@ RSpec/BeforeAfterAll:
     - 'spec/components/start_page_banner/view_spec.rb'
     - 'spec/components/trainees/confirmation/contact_details/view_spec.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: CustomTransform, IgnoredWords.
-RSpec/ExampleWording:
-  Exclude:
-    - 'spec/controllers/trainees/award_recommendations_controller_spec.rb'
-    - 'spec/controllers/trainees/confirm_deferrals_controller_spec.rb'
-    - 'spec/controllers/trainees/confirm_withdrawals_controller_spec.rb'
-    - 'spec/features/form_sections/personal_and_education_details/edit_personal_details_spec.rb'
-    - 'spec/forms/degree_form_spec.rb'
-    - 'spec/lib/page_tracker_spec.rb'
-
 # Offense count: 9
 RSpec/ExpectInHook:
   Exclude:

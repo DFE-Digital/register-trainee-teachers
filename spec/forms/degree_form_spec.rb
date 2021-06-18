@@ -92,7 +92,7 @@ describe DegreeForm, type: :model do
         allow(subject).to receive(:save!).and_return(true)
       end
 
-      it "should save!" do
+      it "save!s" do
         expect(subject.save_or_stash).to be_truthy
       end
     end
@@ -103,7 +103,7 @@ describe DegreeForm, type: :model do
         allow(subject).to receive(:stash).and_return(true)
       end
 
-      it "should stash" do
+      it "stashes" do
         expect(subject.save_or_stash).to be_truthy
       end
     end

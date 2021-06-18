@@ -61,7 +61,7 @@ describe PageTracker do
         PageTracker.new(trainee_slug: trainee.slug, session: session, request: request).save!
       end
 
-      it "it removes that page from history" do
+      it "removes that page from history" do
         expect(session[history_session_key]).to eq([path_a])
       end
     end
@@ -90,7 +90,7 @@ describe PageTracker do
         PageTracker.new(trainee_slug: trainee.slug, session: session, request: request).save_as_origin!
       end
 
-      it "it removes that page from origin pages" do
+      it "removes that page from origin pages" do
         expect(session[origin_pages_session_key]).to eq([path_a])
       end
     end
