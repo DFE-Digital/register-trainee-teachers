@@ -19,6 +19,7 @@ FactoryBot.define do
       uk_degree_type
 
       subject { Dttp::CodeSets::DegreeSubjects::MAPPING.keys.sample }
+
       institution { Dttp::CodeSets::Institutions::MAPPING.keys.sample }
       grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
@@ -34,6 +35,7 @@ FactoryBot.define do
       non_uk_degree_type
 
       subject { Dttp::CodeSets::DegreeSubjects::MAPPING.keys.sample }
+
       grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
       country { Dttp::CodeSets::Countries::MAPPING.keys.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }

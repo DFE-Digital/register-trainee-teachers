@@ -114,6 +114,7 @@ describe CourseDetailsForm, type: :model do
 
         context "main age range is 3 to 11" do
           let(:main_age_range) { "3 to 11" }
+
           it "does not return an error message for main age range" do
             expect(subject.errors[:main_age_range]).to be_empty
           end
@@ -239,6 +240,7 @@ describe CourseDetailsForm, type: :model do
                 end_year: start_date.year + 1,
               }
             end
+
             it "does not return an error message for end date" do
               expect(subject.errors[:course_end_date]).to be_empty
             end

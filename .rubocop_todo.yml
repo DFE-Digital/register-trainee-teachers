@@ -52,37 +52,6 @@ RSpec/BeforeAfterAll:
     - 'spec/components/start_page_banner/view_spec.rb'
     - 'spec/components/trainees/confirmation/contact_details/view_spec.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowConsecutiveOneLiners.
-RSpec/EmptyLineAfterExample:
-  Exclude:
-    - 'spec/components/trainees/record_actions/view_spec.rb'
-    - 'spec/helpers/support_email_helper_spec.rb'
-
-# Offense count: 66
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterFinalLet:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterHook:
-  Exclude:
-    - 'spec/forms/degree_form_spec.rb'
-
-# Offense count: 10
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterSubject:
-  Exclude:
-    - 'spec/components/task_list/view_spec.rb'
-    - 'spec/components/trainees/confirmation/schools/view_spec.rb'
-    - 'spec/forms/confirm_publish_course_form_spec.rb'
-    - 'spec/forms/trn_submission_form_spec.rb'
-    - 'spec/helpers/support_email_helper_spec.rb'
-    - 'spec/models/trainee_filter_spec.rb'
-    - 'spec/factories/*'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: CustomTransform, IgnoredWords.

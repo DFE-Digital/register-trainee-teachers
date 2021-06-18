@@ -15,6 +15,7 @@ describe TrnSubmissionForm, type: :model do
   describe "validations" do
     context "when all sections are valid and complete" do
       subject { described_class.new(trainee: trainee) }
+
       let(:progress) do
         {
           degrees: true,
@@ -66,7 +67,9 @@ describe TrnSubmissionForm, type: :model do
 
     context "with empty progress" do
       subject { described_class.new(trainee: trainee) }
+
       let(:progress) { {} }
+
       include_examples "error"
     end
   end

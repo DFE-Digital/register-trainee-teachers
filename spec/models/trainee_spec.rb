@@ -185,11 +185,13 @@ describe Trainee do
 
       context "the trainee has an associated apply application" do
         let(:trainee) { create(:trainee, :with_apply_application) }
+
         it { is_expected.to be true }
       end
 
       context "the trainee does not have an associated apply application" do
         let(:trainee) { create(:trainee) }
+
         it { is_expected.to be false }
       end
     end
@@ -233,36 +235,43 @@ describe Trainee do
 
     context "with an exactly matching first name" do
       let(:search_term) { matching_trainee.first_names }
+
       it_behaves_like "a working search"
     end
 
     context "with exactly matching (second) middle name" do
       let(:search_term) { "Secondmiddle" }
+
       it_behaves_like "a working search"
     end
 
     context "with exactly matching last name" do
       let(:search_term) { matching_trainee.last_name }
+
       it_behaves_like "a working search"
     end
 
     context "with a matching trainee id" do
       let(:search_term) { matching_trainee.trn }
+
       it_behaves_like "a working search"
     end
 
     context "with extra spaces in the search term" do
       let(:search_term) { "Firstmiddle  Secondmiddle" }
+
       it_behaves_like "a working search"
     end
 
     context "with incorrect case" do
       let(:search_term) { "firstMiddle" }
+
       it_behaves_like "a working search"
     end
 
     context "with partial search term" do
       let(:search_term) { "First" }
+
       it_behaves_like "a working search"
     end
   end

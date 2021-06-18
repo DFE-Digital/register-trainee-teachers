@@ -10,11 +10,13 @@ describe SystemAdmin::Dttp::Providers::Filter do
 
     context "with an exactly matching name" do
       let(:params) { { search_term: "Test 1" } }
+
       it { is_expected.to contain_exactly(provider) }
     end
 
     context "with partial search term" do
       let(:params) { { search_term: "test" } }
+
       it { is_expected.to contain_exactly(provider) }
     end
   end

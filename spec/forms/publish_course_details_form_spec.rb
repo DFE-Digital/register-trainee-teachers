@@ -6,6 +6,7 @@ describe PublishCourseDetailsForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
   let(:form_store) { class_double(FormStore) }
+
   subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
@@ -45,11 +46,13 @@ describe PublishCourseDetailsForm, type: :model do
 
     context "when code is nil" do
       let(:params) { { code: "not_listed" } }
+
       it { be_false }
     end
 
     context "when code is something else" do
       let(:params) { { code: "c0de" } }
+
       it { be_false }
     end
   end

@@ -57,16 +57,19 @@ RSpec.feature "Filtering trainees" do
 
     context "by name" do
       let(:search_term) { @searchable_trainee.first_names }
+
       it_behaves_like "a working search"
     end
 
     context "by trn" do
       let(:search_term) { @searchable_trainee.trn }
+
       it_behaves_like "a working search"
     end
 
     context "by trainee_id" do
       let(:search_term) { @searchable_trainee.trainee_id }
+
       it_behaves_like "a working search"
     end
   end

@@ -24,6 +24,7 @@ describe SignOutController, type: :controller do
   describe "#signout" do
     context "existing DfE user" do
       let(:provider) { "dfe" }
+
       it "redirects to the session/end " do
         request_index
         expect(response).to redirect_to(dfe_logout_url)
@@ -32,6 +33,7 @@ describe SignOutController, type: :controller do
 
     context "developer user" do
       let(:provider) { "developer" }
+
       it "redirects to the developer/sign-out" do
         request_index
         expect(response).to redirect_to("/auth/developer/sign-out")

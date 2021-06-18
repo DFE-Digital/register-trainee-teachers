@@ -7,6 +7,7 @@ describe DegreeForm, type: :model do
   let(:form_store) { class_double(FormStore) }
   let(:degrees_form) { DegreesForm.new(trainee, form_store) }
   let(:degree) { build(:degree, :uk_degree_with_details, trainee: trainee) }
+
   subject { DegreeForm.new(degrees_form: degrees_form, degree: degree) }
 
   describe "validations" do
@@ -141,6 +142,7 @@ describe DegreeForm, type: :model do
       before do
         allow(degree).to receive(:new_record?).and_return(true)
       end
+
       it "destroy degree" do
         expect(subject.destroy!).to be_nil
       end
@@ -151,6 +153,7 @@ describe DegreeForm, type: :model do
         allow(degree).to receive(:new_record?).and_return(false)
         allow(degree).to receive(:destroy!).and_return(true)
       end
+
       it "destroy degree" do
         expect(subject.destroy!).to be_truthy
       end

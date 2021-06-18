@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe PostcodeValidator do
   let(:trainee) { build :trainee }
+
   subject { ContactDetailsForm.new(trainee) }
 
   before do

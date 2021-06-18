@@ -4,7 +4,8 @@ require "rails_helper"
 
 describe ConfirmPublishCourseForm, type: :model do
   let(:params) { {} }
-  let(:trainee) { create(:trainee) }
+  let(:trainee) { build(:trainee) }
+
   subject { described_class.new(trainee, params) }
 
   describe "validations" do
@@ -12,6 +13,8 @@ describe ConfirmPublishCourseForm, type: :model do
   end
 
   context "with valid params" do
+    subject { described_class.new(trainee, params) }
+
     let(:course) { create(:course_with_subjects, subject_names: subjects) }
     let(:params) { { code: course.code } }
     let(:subjects) { ["Subject 1", "Subject 2", "Subject 3"] }

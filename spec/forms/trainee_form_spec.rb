@@ -16,6 +16,7 @@ end
 describe TraineeForm, type: :model do
   let(:user) { create(:user) }
   let(:trainee) { create(:trainee) }
+
   subject { TestForm.new(trainee, user: user) }
 
   describe "track_validation_errors: true" do

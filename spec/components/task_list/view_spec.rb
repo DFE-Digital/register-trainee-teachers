@@ -80,6 +80,7 @@ RSpec.describe TaskList::View do
         status: status,
       )
     end
+
     let(:confirm_path) { -> { raise hell } }
     let(:path) { "some_path" }
 
