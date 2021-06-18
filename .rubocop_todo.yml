@@ -60,21 +60,6 @@ RSpec/ExpectInHook:
     - 'spec/forms/diversities/form_validator_spec.rb'
     - 'spec/services/dttp/contact_update_spec.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: spec/factories.rb, spec/factories/**/*.rb, features/support/factories/**/*.rb
-RSpec/FactoryBot/FactoryClassName:
-  Exclude:
-    - 'spec/factories/course_subjects.rb'
-    - 'spec/factories/degrees.rb'
-    - 'spec/factories/dttp/users.rb'
-    - 'spec/factories/providers.rb'
-    - 'spec/factories/sessions.rb'
-    - 'spec/factories/trainee_disabilities.rb'
-    - 'spec/factories/trainees.rb'
-    - 'spec/factories/users.rb'
-
 # Offense count: 3
 # Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
 # Include: **/*_spec*rb*, **/spec/**/*
