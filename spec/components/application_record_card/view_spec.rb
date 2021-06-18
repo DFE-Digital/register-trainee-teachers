@@ -39,13 +39,13 @@ module ApplicationRecordCard
 
     context "when the Trainee has no trainee_id" do
       it "does not render trainee ID" do
-        expect(rendered_component).to_not have_selector(".application-record-card__id")
+        expect(rendered_component).not_to have_selector(".application-record-card__id")
       end
     end
 
     context "when the Trainee has no trn" do
       it "does not render trn" do
-        expect(rendered_component).to_not have_selector(".application-record-card__trn")
+        expect(rendered_component).not_to have_selector(".application-record-card__trn")
       end
     end
 

@@ -14,7 +14,7 @@ module TeacherTrainingApi
       context "when the subject code does not exist in register" do
         it "create a subject with the correct code and name" do
           subject
-          expect(Subject.find_by(code: code, name: name)).to_not be_nil
+          expect(Subject.find_by(code: code, name: name)).not_to be_nil
         end
       end
 

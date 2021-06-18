@@ -84,37 +84,37 @@ private
 
   def and_i_should_not_see_provider_led_postgrad_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_provider_led_postgrad
+    expect(new_trainee_page).not_to have_provider_led_postgrad
   end
 
   def and_i_should_not_see_early_years_undergrad_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_early_years_undergrad
+    expect(new_trainee_page).not_to have_early_years_undergrad
   end
 
   def and_i_should_not_see_early_years_assessment_only_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_early_years_assessment_only
+    expect(new_trainee_page).not_to have_early_years_assessment_only
   end
 
   def and_i_should_not_see_early_years_postgrad_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_early_years_postgrad
+    expect(new_trainee_page).not_to have_early_years_postgrad
   end
 
   def and_i_should_not_see_early_years_salaried_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_early_years_salaried
+    expect(new_trainee_page).not_to have_early_years_salaried
   end
 
   def and_i_should_not_see_school_direct_salaried_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_school_direct_salaried
+    expect(new_trainee_page).not_to have_school_direct_salaried
   end
 
   def and_i_should_not_see_school_direct_tuition_fee_route
     expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).to_not have_school_direct_tuition_fee
+    expect(new_trainee_page).not_to have_school_direct_tuition_fee
   end
 
   def and_i_save_the_form

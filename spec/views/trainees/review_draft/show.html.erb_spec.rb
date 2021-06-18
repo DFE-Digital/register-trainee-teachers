@@ -18,7 +18,7 @@ describe "trainees/review_draft/show.html.erb" do
       let(:trainee) { create(:trainee) }
 
       it "does not render the placement details component" do
-        expect(rendered).to_not have_text("Placement details")
+        expect(rendered).not_to have_text("Placement details")
       end
     end
 

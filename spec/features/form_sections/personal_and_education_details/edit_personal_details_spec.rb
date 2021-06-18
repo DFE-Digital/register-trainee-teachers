@@ -109,7 +109,7 @@ private
   end
 
   def then_the_confirm_details_page_has_no_checkbox
-    expect(confirm_details_page).to_not have_text("I have completed this section")
+    expect(confirm_details_page).not_to have_text("I have completed this section")
   end
 
   def and_i_click_continue

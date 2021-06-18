@@ -51,14 +51,14 @@ module DfESignInUsers
         end
 
         it "does not update the user's details" do
-          expect(user.email).to_not eq(dfe_sign_in_user.email)
-          expect(user.dfe_sign_in_uid).to_not eq(dfe_sign_in_user.dfe_sign_in_uid)
-          expect(user.first_name).to_not eq(dfe_sign_in_user.first_name)
-          expect(user.last_name).to_not eq(dfe_sign_in_user.last_name)
+          expect(user.email).not_to eq(dfe_sign_in_user.email)
+          expect(user.dfe_sign_in_uid).not_to eq(dfe_sign_in_user.dfe_sign_in_uid)
+          expect(user.first_name).not_to eq(dfe_sign_in_user.first_name)
+          expect(user.last_name).not_to eq(dfe_sign_in_user.last_name)
         end
 
         it "is unsuccessful" do
-          expect(service).to_not be_successful
+          expect(service).not_to be_successful
         end
       end
     end

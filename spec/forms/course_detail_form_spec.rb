@@ -336,7 +336,7 @@ describe CourseDetailsForm, type: :model do
         end
 
         it "doesnt wipe course code" do
-          expect(trainee.course_code).to_not eq nil
+          expect(trainee.course_code).not_to eq nil
         end
       end
     end

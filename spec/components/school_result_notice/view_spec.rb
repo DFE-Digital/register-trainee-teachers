@@ -49,7 +49,7 @@ module SchoolResultNotice
       let(:search_count) { 8 }
 
       it "does not render" do
-        expect(rendered_component).to_not have_css("body")
+        expect(rendered_component).not_to have_css("body")
       end
     end
   end

@@ -23,7 +23,7 @@ module CancelLink
         let(:trainee) { build(:trainee, :draft) }
 
         it "does not render the component" do
-          expect(component).to_not have_css("body")
+          expect(component).not_to have_css("body")
         end
       end
     end

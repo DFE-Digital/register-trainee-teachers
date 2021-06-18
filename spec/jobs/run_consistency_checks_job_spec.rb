@@ -26,7 +26,7 @@ describe RunConsistencyChecksJob do
     context "when the feature flag is turned off", feature_run_consistency_check_job: false do
       describe ".perform" do
         it "does not run" do
-          expect(Dttp::CheckConsistencyJob).to_not have_been_enqueued.with(consistency_check.id)
+          expect(Dttp::CheckConsistencyJob).not_to have_been_enqueued.with(consistency_check.id)
         end
       end
     end
@@ -35,7 +35,7 @@ describe RunConsistencyChecksJob do
   context "when there are no consistency checks", feature_run_consistency_check_job: true do
     describe ".perform" do
       it "does not run" do
-        expect(Dttp::CheckConsistencyJob).to_not have_been_enqueued.with(consistency_check.id)
+        expect(Dttp::CheckConsistencyJob).not_to have_been_enqueued.with(consistency_check.id)
       end
     end
   end

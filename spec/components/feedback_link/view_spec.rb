@@ -28,7 +28,7 @@ module FeedbackLink
         let(:enabled) { false }
 
         it "does not render the component" do
-          expect(component).to_not have_css(".govuk-inset-text")
+          expect(component).not_to have_css(".govuk-inset-text")
         end
       end
     end

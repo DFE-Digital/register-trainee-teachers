@@ -42,7 +42,7 @@ describe RetrieveAwardJob do
 
     it "doesn't queue another job" do
       described_class.perform_now(trainee, timeout_date)
-      expect(RetrieveAwardJob).to_not have_been_enqueued
+      expect(RetrieveAwardJob).not_to have_been_enqueued
     end
   end
 
@@ -60,7 +60,7 @@ describe RetrieveAwardJob do
       it "doesn't queue another job" do
         expect(SlackNotifierService).to receive(:call)
         described_class.perform_now(trainee, Time.zone.now - 1.minute)
-        expect(RetrieveAwardJob).to_not have_been_enqueued
+        expect(RetrieveAwardJob).not_to have_been_enqueued
       end
     end
   end

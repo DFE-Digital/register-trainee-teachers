@@ -154,7 +154,7 @@ describe DegreesForm, type: :model do
       end
 
       it "store a new degree" do
-        expect { subject.stash_degree_on_store("XXX111", { "subject" => "test1" }) }.to_not raise_exception
+        expect { subject.stash_degree_on_store("XXX111", { "subject" => "test1" }) }.not_to raise_exception
       end
     end
 
@@ -169,7 +169,7 @@ describe DegreesForm, type: :model do
       end
 
       it "store a updated degree" do
-        expect { subject.stash_degree_on_store("XXX111", { "subject" => "test1" }) }.to_not raise_exception
+        expect { subject.stash_degree_on_store("XXX111", { "subject" => "test1" }) }.not_to raise_exception
       end
     end
 
@@ -185,7 +185,7 @@ describe DegreesForm, type: :model do
       end
 
       it "store a new degree" do
-        expect { subject.stash_degree_on_store("XXX112", { "subject" => "test1" }) }.to_not raise_exception
+        expect { subject.stash_degree_on_store("XXX112", { "subject" => "test1" }) }.not_to raise_exception
       end
     end
   end
@@ -202,7 +202,7 @@ describe DegreesForm, type: :model do
     end
 
     it "delete a degree" do
-      expect { subject.delete_degree_on_store("XXX111") }.to_not raise_exception
+      expect { subject.delete_degree_on_store("XXX111") }.not_to raise_exception
     end
   end
 

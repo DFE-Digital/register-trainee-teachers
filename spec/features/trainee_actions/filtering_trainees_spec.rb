@@ -147,7 +147,7 @@ private
   end
 
   def then_i_should_not_see_sort_links
-    expect(trainee_index_page).to_not have_content("Sort by")
+    expect(trainee_index_page).not_to have_content("Sort by")
   end
 
   def then_the_checkbox_should_still_be_checked_for(value)
@@ -166,7 +166,7 @@ private
 
   def then_only_biology_trainees_are_visible
     expect(trainee_index_page).to have_text(full_name(@biology_trainee))
-    expect(trainee_index_page).to_not have_text(full_name(@history_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@history_trainee))
   end
 
   def then_only_the_searchable_trainee_is_visible
@@ -178,18 +178,18 @@ private
       @biology_trainee,
       @draft_trainee,
     ].each do |trainee|
-      expect(trainee_index_page).to_not have_text(full_name(trainee))
+      expect(trainee_index_page).not_to have_text(full_name(trainee))
     end
   end
 
   def then_only_the_draft_trainee_is_visible
     expect(trainee_index_page).to have_text(full_name(@draft_trainee))
-    expect(trainee_index_page).to_not have_text(full_name(@withdrawn_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@withdrawn_trainee))
   end
 
   def then_only_assessment_only_trainee_is_visible
     expect(trainee_index_page).to have_text(full_name(@assessment_only_trainee))
-    expect(trainee_index_page).to_not have_text(full_name(@provider_led_postgrad_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@provider_led_postgrad_trainee))
   end
 
   def then_the_tag_is_visible_for(*values)
