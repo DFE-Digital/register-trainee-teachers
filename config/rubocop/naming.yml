@@ -1,0 +1,4 @@
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: optional
+  Exclude:
+    - "spec/**/*"

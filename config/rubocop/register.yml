@@ -1,0 +1,4 @@
+Register/RegisterFormWith:
+   Include:
+    - "app/views/**/*"
+    - "app/components/**/*"

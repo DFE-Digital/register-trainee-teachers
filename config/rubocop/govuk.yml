@@ -1,0 +1,11 @@
+Govuk:
+  Include:
+    - "app/views/**/*"
+    - "app/components/**/*"
+  Exclude:
+    - "app/components/trainees/confirmation/degrees/view.html.erb"
+    - "app/components/personas/view.html.erb"
+
+Govuk/GovukLinkTo:
+  Exclude:
+    - "app/components/govuk_button_link_to/view.rb"
