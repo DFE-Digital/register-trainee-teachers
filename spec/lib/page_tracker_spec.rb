@@ -165,4 +165,16 @@ describe PageTracker do
       end
     end
   end
+
+  describe "#last_non_confirm_origin_page_path" do
+    context "when you've been to a confirm page" do
+      let(:session) { { origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:request) { double(fullpath: path_c, head?: false, get?: true, patch?: false, put?: false) }
+
+      it "returns the path to the previous origin page" do
+        page_tracker = PageTracker.new(trainee_slug: trainee.slug, session: session, request: request)
+        expect(page_tracker.last_non_confirm_origin_page_path).to eq(path_a)
+      end
+    end
+  end
 end

@@ -14,6 +14,13 @@ module CancelLink
       !@trainee.draft?
     end
 
+    def path
+      page_tracker = PageTracker.new(trainee_slug: trainee.slug, session: session, request: request)
+      # If you've arrived direcly onto a page with no history, then there will
+      # be no origin pages. view_trainee provides a sensible default.
+      page_tracker.last_non_confirm_origin_page_path || view_trainee(trainee)
+    end
+
   private
 
     attr_reader :trainee
