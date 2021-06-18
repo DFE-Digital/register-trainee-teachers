@@ -6,15 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 122
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, consistent
-Lint/SymbolConversion:
-  Exclude:
-    - 'spec/features/auth/sign_in_page_spec.rb'
-    - 'spec/support/api_stubs/apply_api.rb'
-
 # Offense count: 5
 Naming/AccessorMethodName:
   Exclude:
