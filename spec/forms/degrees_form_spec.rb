@@ -65,7 +65,7 @@ describe DegreesForm, type: :model do
     end
 
     it "find degree with slug and return DegreeForm instance" do
-      expect(trainee.degrees.count).to eql(2)
+      expect(trainee.degrees.count).to be(2)
 
       degree_form = subject.find_degree_from_param(degree1.slug)
       expect(degree_form.slug).to eql(degree1.slug)
@@ -83,7 +83,7 @@ describe DegreesForm, type: :model do
       end
 
       it "find degree with slug and return DegreeForm instance" do
-        expect(trainee.degrees.count).to eql(2)
+        expect(trainee.degrees.count).to be(2)
 
         degree_form = subject.find_degree_from_param(degree1.slug)
         expect(degree_form.slug).to eql(degree1.slug)
@@ -113,7 +113,7 @@ describe DegreesForm, type: :model do
 
     it "returns all degrees including stored" do
       degrees = subject.degrees
-      expect(degrees.count).to eql(3)
+      expect(degrees.count).to be(3)
 
       degree_form = degrees[0]
       expect(degree_form.slug).to eql(degree1.slug)

@@ -45,12 +45,6 @@ RSpec/AnyInstance:
     - 'spec/components/trainees/filters/view_spec.rb'
     - 'spec/forms/diversity_form_spec.rb'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-RSpec/BeEql:
-  Exclude:
-    - 'spec/forms/degrees_form_spec.rb'
-    - 'spec/forms/trainee_form_spec.rb'
 
 # Offense count: 4
 RSpec/BeforeAfterAll:
