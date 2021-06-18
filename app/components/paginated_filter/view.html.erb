@@ -1,5 +1,5 @@
 <div class='moj-filter-layout'>
-  <%= render Trainees::Filters::View.new(filters: filters, filter_actions: filter_actions, filter_options: filter_options) %>
+  <%= render Filters::View.new(filters: filters, filter_actions: filter_actions, filter_options: filter_options) %>
 
   <div class='moj-filter-layout__content'>
     <div class="moj-action-bar">
@@ -13,7 +13,7 @@
                 I18n.t("views.trainees.index.export"), trainees_path(filter_params.merge(format: "csv")), class: "app-trainee-export") %>
         </div>
       <% end %>
-      <%= render Trainees::SortLinks::View.new %>
+      <%= render SortLinks::View.new %>
     <% end %>
     </div>
     <%= content %>

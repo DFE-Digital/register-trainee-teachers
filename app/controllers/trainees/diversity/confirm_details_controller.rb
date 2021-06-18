@@ -14,7 +14,7 @@ module Trainees
 
         data_model = trainee.draft? ? trainee : diversity_form
 
-        @confirmation_component = Trainees::Confirmation::Diversity::View.new(data_model: data_model)
+        @confirmation_component = Confirmation::Diversity::View.new(data_model: data_model)
       end
 
       def update
