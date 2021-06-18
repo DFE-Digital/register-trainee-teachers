@@ -7,12 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-# Configuration parameters: AllowComments, AllowEmptyLambdas.
-Lint/EmptyBlock:
-  Exclude:
-    - 'spec/components/navigation_bar/view_spec.rb'
-
-# Offense count: 1
 # Configuration parameters: AllowComments.
 Lint/EmptyFile:
   Exclude:
