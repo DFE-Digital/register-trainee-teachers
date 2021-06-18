@@ -2,8 +2,7 @@
 
 class RecommendForAwardJob < ApplicationJob
   queue_as :default
-  retry_on Dttp::RecommendForAward::Error
-  retry_on Dttp::UpdateTraineeStatus::Error
+  retry_on Dttp::Client::HttpError
 
   def perform(trainee)
     Dttp::RecommendForAward.call(trainee: trainee)

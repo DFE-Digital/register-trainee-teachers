@@ -2,7 +2,7 @@
 
 class ChangeTraineeStatusJob < ApplicationJob
   queue_as :default
-  retry_on Dttp::UpdateTraineeStatus::Error
+  retry_on Dttp::Client::HttpError
 
   def perform(trainee, status, entity_type)
     Dttp::UpdateTraineeStatus.call(status: status, trainee: trainee, entity_type: entity_type)

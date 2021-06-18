@@ -12,8 +12,6 @@ module Dttp
     CONTACT_ENTITY_TYPE = :contact
     PLACEMENT_ASSIGNMENT_ENTITY_TYPE = :placement_assignment
 
-    class Error < StandardError; end
-
     def initialize(status:, entity_type:, trainee:)
       @trainee = trainee
       @entity_type = entity_type
@@ -24,17 +22,16 @@ module Dttp
     def call
       return unless FeatureService.enabled?(:persist_to_dttp)
 
-      response = Client.patch(path, body: params.to_json)
-      if response.code != 204
-        raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
-      end
-
-      CreateOrUpdateConsistencyCheckJob.perform_later(trainee)
+      CreateOrUpdateConsistencyCheckJob.perform_later(trainee) if response.success?
     end
 
   private
 
     attr_reader :path, :params, :trainee, :entity_type
+
+    def response
+      @response ||= Client.patch(path, body: params.to_json)
+    end
 
     def entity_id
       return trainee.dttp_id if entity_type == CONTACT_ENTITY_TYPE

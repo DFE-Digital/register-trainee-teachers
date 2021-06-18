@@ -19,45 +19,43 @@ module Dttp
 
       let(:contact_payload) { Params::Contact.new(trainee).to_json }
       let(:placement_payload) { Params::PlacementAssignment.new(trainee).to_json }
+      let(:contact_request_url) { "#{Settings.dttp.api_base_url}#{contact_path}" }
+      let(:placement_request_url) { "#{Settings.dttp.api_base_url}#{placement_path}" }
 
       before do
         enable_features(:persist_to_dttp, "routes.school_direct_salaried")
         allow(AccessToken).to receive(:fetch).and_return("token")
+        stub_request(:patch, contact_request_url).to_return(contact_response)
+        stub_request(:patch, placement_request_url).to_return(placement_response)
         trainee.degrees << create(:degree)
       end
 
+      subject { described_class.call(trainee: trainee) }
+
       context "when successful" do
-        let(:contact_response) { double(code: 204) }
-        let(:placement_response) { double(code: 204) }
+        let(:contact_response) { { status: 204 } }
+        let(:placement_response) { { status: 204 } }
+
         before do
-          expect(Client).to receive(:patch).with(contact_path, body: contact_payload).and_return(contact_response)
-          expect(Client).to receive(:patch).with(placement_path, body: placement_payload).and_return(placement_response)
+          expect(Client).to receive(:patch).with(contact_path, body: contact_payload).and_call_original
+          expect(Client).to receive(:patch).with(placement_path, body: placement_payload).and_call_original
         end
 
         it "sends a PATCH request to update contact and placement assignment entities" do
           allow(CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
-          described_class.call(trainee: trainee)
+          subject
         end
 
         it "enqueues the CreateOrUpdateConsistencyJob" do
           expect {
-            described_class.call(trainee: trainee)
+            subject
           }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
         end
       end
 
-      context "when theres an error" do
-        let(:status) { 405 }
-        let(:body) { "error" }
-        let(:headers) { { foo: "bar" } }
-        let(:contact_response) { double(code: status, body: body, headers: headers) }
-
-        it "raises an error exception" do
-          expect(Client).to receive(:patch).and_return(contact_response)
-          expect {
-            described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::ContactUpdate::Error, "status: #{status}, body: #{body}, headers: #{headers}")
-        end
+      it_behaves_like "an http error handler" do
+        let(:contact_response) { http_response }
+        let(:placement_response) { http_response }
       end
     end
   end

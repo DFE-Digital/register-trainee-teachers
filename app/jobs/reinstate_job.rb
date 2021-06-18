@@ -2,7 +2,7 @@
 
 class ReinstateJob < ApplicationJob
   queue_as :default
-  retry_on Dttp::UpdateTraineeStatus::Error
+  retry_on Dttp::Client::HttpError
 
   def perform(trainee)
     status = trainee.trn.present? ? DttpStatuses::YET_TO_COMPLETE_COURSE : DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED

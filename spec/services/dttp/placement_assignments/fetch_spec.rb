@@ -8,34 +8,27 @@ module Dttp
       describe "#call" do
         let(:placement_assignment_dttp_id) { SecureRandom.uuid }
         let(:path) { "/dfe_placementassignments(#{placement_assignment_dttp_id})" }
+        let(:request_url) { "#{Settings.dttp.api_base_url}#{path}" }
 
         before do
-          allow(AccessToken).to receive(:fetch).and_return("token")
-          allow(Client).to receive(:get).with(path).and_return(dttp_response)
+          allow(AccessToken).to receive(:fetch)
+          stub_request(:get, request_url).to_return(http_response)
         end
 
+        subject { described_class.call(dttp_id: placement_assignment_dttp_id) }
+
         context "Placement Assignment sample are available" do
-          let(:dttp_response) do
-            double(code: 200, body: nil)
+          let(:http_response) do
+            { status: 200, body: {}.to_json }
           end
 
           it "returns placement assignment JSON ruby hash" do
-            expect(described_class.call(dttp_id: placement_assignment_dttp_id)).to be_a(Dttp::PlacementAssignment)
+            expect(subject).to be_a(Dttp::PlacementAssignment)
           end
         end
 
-        context "HTTP error" do
-          let(:status) { 400 }
-          let(:body) { "error" }
-          let(:headers) { { foo: "bar" } }
-          let(:dttp_response) { double(code: status, body: body, headers: headers) }
-
-          it "raises a HttpError error with the response body as the message" do
-            expect(Client).to receive(:get).with(path).and_return(dttp_response)
-            expect {
-              described_class.call(dttp_id: placement_assignment_dttp_id)
-            }.to raise_error(Dttp::PlacementAssignments::Fetch::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
-          end
+        it_behaves_like "an http error handler" do
+          let(:expected_error) { Client::HttpError }
         end
       end
     end

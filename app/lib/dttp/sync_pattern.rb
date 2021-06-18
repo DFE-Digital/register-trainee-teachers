@@ -15,10 +15,6 @@ module Dttp
     end
 
     def call
-      if response.code != 200
-        raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
-      end
-
       {
         items: response_body["value"],
         meta: {

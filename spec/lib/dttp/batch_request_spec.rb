@@ -8,8 +8,8 @@ module Dttp
     let(:change_set_id) { SecureRandom.uuid }
     let(:content_id) { SecureRandom.uuid }
     let(:payload) { "payload" }
-    let(:expected_url) { "#{Dttp::Client.base_uri}/$batch" }
-    let(:expected_headers) { Client.headers.merge("Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}", "Authorization" => "Bearer token") }
+    let(:expected_url) { "#{Dttp::Client::Request.base_uri}/$batch" }
+    let(:expected_headers) { Client::Request.headers.merge("Content-Type" => "multipart/mixed;boundary=batch_#{batch_id}", "Authorization" => "Bearer token") }
 
     subject { described_class.new(batch_id: batch_id, change_set_id: change_set_id) }
 
@@ -39,7 +39,7 @@ module Dttp
             Content-Transfer-Encoding: binary
             Content-ID: #{change_set_1[:content_id]}
 
-            POST #{Dttp::Client.base_uri}/#{change_set_1[:entity]} HTTP/1.1
+            POST #{Dttp::Client::Request.base_uri}/#{change_set_1[:entity]} HTTP/1.1
             Content-Type: application/json;odata.metadata=minimal
 
             #{change_set_1[:payload]}
@@ -49,7 +49,7 @@ module Dttp
             Content-Transfer-Encoding: binary
             Content-ID: #{change_set_2[:content_id]}
 
-            POST #{Dttp::Client.base_uri}/#{change_set_2[:entity]} HTTP/1.1
+            POST #{Dttp::Client::Request.base_uri}/#{change_set_2[:entity]} HTTP/1.1
             Content-Type: application/json;odata.metadata=minimal
 
             #{change_set_2[:payload]}
@@ -65,8 +65,10 @@ module Dttp
         end
 
         context "successful" do
+          let(:response) { { status: 200, body: [].to_json } }
+
           it "sends a batch request with the correct headers and body" do
-            stub_request(:post, expected_url).with(headers: expected_headers, body: expected_body)
+            stub_request(:post, expected_url).with(headers: expected_headers, body: expected_body).to_return(response)
             subject.submit
           end
         end
@@ -74,12 +76,12 @@ module Dttp
         context "unsuccessful" do
           let(:status) { 400 }
           let(:body) { "error" }
-          let(:headers) { { foo: "bar" } }
+          let(:headers) { { "foo" => %w[bar] } }
 
           it "raises an error" do
             stub_request(:post, expected_url).to_return(status: status, body: body, headers: headers)
-            expect { subject.submit }.to raise_error(BatchRequest::Error,
-                                                     %(body: #{body}, status: #{status}, headers: {"foo"=>["bar"]}))
+            expect { subject.submit }.to raise_error(Dttp::Client::HttpError,
+                                                     "status: #{status}, body: #{body}, headers: #{headers}")
           end
         end
       end
