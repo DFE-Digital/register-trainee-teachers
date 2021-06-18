@@ -14,7 +14,7 @@ describe CourseDetailsForm, type: :model do
   end
 
   describe "before validation" do
-    context "#sanitise_course_dates" do
+    describe "#sanitise_course_dates" do
       let(:params) do
         {
           start_day: "1 2",
