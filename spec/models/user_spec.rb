@@ -33,11 +33,11 @@ describe User do
   end
 
   describe "indexes" do
-    it { should have_db_index(:dfe_sign_in_uid).unique(true) }
-    it { should have_db_index(:dttp_id).unique(true) }
+    it { is_expected.to have_db_index(:dfe_sign_in_uid).unique(true) }
+    it { is_expected.to have_db_index(:dttp_id).unique(true) }
   end
 
   describe "auditing" do
-    it { should be_audited.associated_with(:provider) }
+    it { is_expected.to be_audited.associated_with(:provider) }
   end
 end

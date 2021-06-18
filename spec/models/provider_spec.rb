@@ -27,7 +27,7 @@ describe Provider do
   end
 
   describe "indexes" do
-    it { should have_db_index(:dttp_id).unique(true) }
+    it { is_expected.to have_db_index(:dttp_id).unique(true) }
   end
 
   describe "associations" do
@@ -36,7 +36,7 @@ describe Provider do
   end
 
   describe "auditing" do
-    it { should be_audited }
-    it { should have_associated_audits }
+    it { is_expected.to be_audited }
+    it { is_expected.to have_associated_audits }
   end
 end

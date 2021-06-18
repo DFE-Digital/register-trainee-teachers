@@ -9,7 +9,7 @@ RSpec.describe Dttp::Provider, type: :model do
 
   describe "associations" do
     it {
-      is_expected.to belong_to(:provider)
+      expect(subject).to belong_to(:provider)
       .class_name("::Provider")
       .with_primary_key(:dttp_id)
       .with_primary_key(:dttp_id)
