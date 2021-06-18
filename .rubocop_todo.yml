@@ -7,12 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-# Cop supports --auto-correct.
-Lint/DeprecatedOpenSSLConstant:
-  Exclude:
-    - 'config/puma.rb'
-
-# Offense count: 1
 # Configuration parameters: IgnoreLiteralBranches, IgnoreConstantBranches.
 Lint/DuplicateBranch:
   Exclude:
