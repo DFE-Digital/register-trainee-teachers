@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.withdrawal.show", has_errors: @withdrawal_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.withdrawal.show", has_errors: @withdrawal_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>

@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: trainees_page_title(@paginated_trainees, @total_trainees_count)) %>
+<%= render PageTitle::View.new(text: trainees_page_title(@paginated_trainees, @total_trainees_count)) %>
 
 <% if @paginated_trainees.current_page > 1 %>
   <span class="govuk-caption-xl">Page <%= @paginated_trainees.current_page %> of <%= @paginated_trainees.total_pages %></span>

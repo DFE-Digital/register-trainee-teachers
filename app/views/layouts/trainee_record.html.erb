@@ -1,5 +1,5 @@
 <%= extends_layout :application do %>
-  <%= render PageTitle::View.new(title: "trainees.show.overview") %>
+  <%= render PageTitle::View.new(i18n_key: "trainees.show.overview") %>
 
   <%= content_for(:breadcrumbs) do %>
     <%= render FilteredBackLink::View.new(

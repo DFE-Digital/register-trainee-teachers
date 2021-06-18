@@ -1,6 +1,6 @@
 <% text = @trainee.early_years_route? ? I18n.t("components.page_titles.trainees.outcome_date.eyts_edit") : I18n.t("components.page_titles.trainees.outcome_date.edit") %>
 
-<%= render PageTitle::View.new(title: text, has_errors: @outcome_form.errors.present?) %>
+<%= render PageTitle::View.new(text: text, has_errors: @outcome_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(

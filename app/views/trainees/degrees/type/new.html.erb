@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: (@trainee.degrees.size > 1 ? "Add another degree" : "Add undergraduate degree"), has_errors: @degree.errors.present?) %>
+<%= render PageTitle::View.new(text: (@trainee.degrees.size > 1 ? "Add another degree" : "Add undergraduate degree"), has_errors: @degree.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>

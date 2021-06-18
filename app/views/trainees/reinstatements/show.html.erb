@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.reinstatement.show", has_errors: @reinstatement_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.reinstatement.show", has_errors: @reinstatement_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>

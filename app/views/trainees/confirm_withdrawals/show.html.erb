@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.confirm_withdrawal.show") %>
+<%= render PageTitle::View.new(i18n_key: "trainees.confirm_withdrawal.show") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(text: t(:back_to_record), href: trainee_path(@trainee)) %>
