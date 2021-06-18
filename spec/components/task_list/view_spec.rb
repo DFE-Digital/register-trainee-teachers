@@ -6,7 +6,7 @@ RSpec.describe TaskList::View do
   let(:status) { nil }
   let(:active) { true }
 
-  before(:each) do
+  before do
     render_inline(TaskList::View.new) do |component|
       component.row(
         task_name: "some key",
