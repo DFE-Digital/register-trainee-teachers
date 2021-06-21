@@ -151,12 +151,6 @@ Register/RegisterFormWith:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/RedundantFileExtensionInRequire:
-  Exclude:
-    - 'db/migrate/20201007151313_revert_previous_education.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Style/SingleArgumentDig:
   Exclude:
     - 'app/services/calculate_bursary.rb'
