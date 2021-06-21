@@ -149,13 +149,6 @@ Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/GlobalStdStream:
-  Exclude:
-    - 'config/environments/production.rb'
-    - 'config/initializers/semantic_logger.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowedReceivers.

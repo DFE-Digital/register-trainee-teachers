@@ -46,5 +46,5 @@ private
 end
 
 unless Rails.env.development? || Rails.env.test?
-  SemanticLogger.add_appender(io: STDOUT, level: :info, formatter: CustomLogFormatter.new)
+  SemanticLogger.add_appender(io: $stdout, level: :info, formatter: CustomLogFormatter.new)
 end
