@@ -49,3 +49,36 @@ TRAINING_ROUTE_AWARD_TYPE = {
 }.freeze
 
 EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == "EYTS" }.keys.freeze
+
+SEED_BURSARIES = [
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 24_000,
+    allocation_subjects: %w[Chemistry Computing Mathematics Physics],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 10_000,
+    allocation_subjects: ["Modern languages", "Classics"],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 7_000,
+    allocation_subjects: %w[Biology],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 24_000,
+    allocation_subjects: %w[Chemistry Computing Mathematics Physics],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 10_000,
+    allocation_subjects: ["Modern languages", "Classics"],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 7_000,
+    allocation_subjects: %w[Biology],
+  ),
+].freeze
