@@ -9,9 +9,8 @@ RSpec.describe Dttp::SyncProvidersJob, type: :job do
     enable_features(:sync_from_dttp)
     allow(Dttp::RetrieveProviders).to receive(:call).with(request_uri: request_uri).and_return(provider_list)
   end
-
-  let(:provider_one_hash) { ApiStubs::Dttp::Provider.attributes }
-  let(:provider_two_hash) { ApiStubs::Dttp::Provider.attributes }
+  let(:provider_one_hash) { create(:api_provider) }
+  let(:provider_two_hash) { create(:api_provider) }
 
   let(:request_uri) { nil }
   let(:provider_list) do
@@ -46,7 +45,7 @@ RSpec.describe Dttp::SyncProvidersJob, type: :job do
 
     it "updates the existing record" do
       subject
-      expect(dttp_provider_one.reload.name).to eq("Test Organisation")
+      expect(dttp_provider_one.reload.name).to eq(provider_one_hash["name"])
     end
   end
 
