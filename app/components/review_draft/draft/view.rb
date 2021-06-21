@@ -5,6 +5,7 @@ module ReviewDraft
     class View < GovukComponent::Base
       include TraineeHelper
       include TaskListHelper
+      include FundingHelper
 
       attr_reader :trainee
 
