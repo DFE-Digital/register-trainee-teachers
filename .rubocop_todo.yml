@@ -149,15 +149,6 @@ Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowedReceivers.
-Style/HashEachMethods:
-  Exclude:
-    - 'db/seeds.rb'
-    - 'spec/components/status_tag/view_preview.rb'
-    - 'spec/components/trainees/route_indicator/view_preview.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 Style/KeywordParametersOrder:

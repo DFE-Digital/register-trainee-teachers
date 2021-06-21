@@ -2,7 +2,7 @@
 
 module StatusTag
   class ViewPreview < ViewComponent::Preview
-    Trainee.states.keys.each do |state|
+    Trainee.states.each_key do |state|
       if %w[recommended_for_award awarded].include?(state)
         define_method "#{state}_qts" do
           render_tag(:assessment_only, state)
