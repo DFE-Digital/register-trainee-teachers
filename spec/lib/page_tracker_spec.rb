@@ -8,8 +8,8 @@ describe PageTracker do
   let(:path_a) { "/trainees/#{trainee.slug}/review-draft" }
   let(:path_b) { "/trainees/#{trainee.slug}/personal-details/confirm" }
   let(:path_c) { "/trainees/#{trainee.slug}/personal-details/edit" }
-  let(:history_sesssion_key) { "history_for_#{trainee.slug}" }
-  let(:origin_pages_sesssion_key) { "origin_pages_for_#{trainee.slug}" }
+  let(:history_session_key) { "history_for_#{trainee.slug}" }
+  let(:origin_pages_session_key) { "origin_pages_for_#{trainee.slug}" }
 
   describe "#save!" do
     context "within trainee specific pages" do
@@ -21,7 +21,7 @@ describe PageTracker do
         end
 
         it "doesn't record the URL to history" do
-          expect(session[history_sesssion_key]).to be_empty
+          expect(session[history_session_key]).to be_empty
         end
       end
 
@@ -35,13 +35,13 @@ describe PageTracker do
         end
 
         it "stores the pages in the order they were requested" do
-          expect(session[history_sesssion_key]).to eq([path_a, path_b])
+          expect(session[history_session_key]).to eq([path_a, path_b])
         end
       end
     end
 
     context "outside a trainee page" do
-      let(:session) { { history_sesssion_key => [path_a, path_b] } }
+      let(:session) { { history_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: "/", referer: path_a, head?: false, get?: true, patch?: false, put?: false) }
 
       before do
@@ -49,12 +49,12 @@ describe PageTracker do
       end
 
       it "ignores the request and removes all session history for that trainee" do
-        expect(session[history_sesssion_key]).to be_nil
+        expect(session[history_session_key]).to be_nil
       end
     end
 
     context "exiting a page currently stored in history" do
-      let(:session) { { history_sesssion_key => [path_a, path_b] } }
+      let(:session) { { history_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_a, head?: false, get?: true, patch?: false, put?: false) }
 
       before do
@@ -62,7 +62,7 @@ describe PageTracker do
       end
 
       it "it removes that page from history" do
-        expect(session[history_sesssion_key]).to eq([path_a])
+        expect(session[history_session_key]).to eq([path_a])
       end
     end
   end
@@ -78,12 +78,12 @@ describe PageTracker do
       end
 
       it "stores the pages in the order they were requested" do
-        expect(session[origin_pages_sesssion_key]).to eq([path_a, path_b])
+        expect(session[origin_pages_session_key]).to eq([path_a, path_b])
       end
     end
 
     context "exiting the last origin page currently stored in history" do
-      let(:session) { { origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:session) { { origin_pages_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_a, head?: false, get?: true, patch?: false, put?: false) }
 
       before do
@@ -91,14 +91,14 @@ describe PageTracker do
       end
 
       it "it removes that page from origin pages" do
-        expect(session[origin_pages_sesssion_key]).to eq([path_a])
+        expect(session[origin_pages_session_key]).to eq([path_a])
       end
     end
   end
 
   describe "#previous_page_path" do
     context "entered an edit page (path_c) directly because it's a new trainee bypassing confirm page (path_b)" do
-      let(:session) { { history_sesssion_key => [path_a, path_c], origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:session) { { history_session_key => [path_a, path_c], origin_pages_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_c, head?: false, get?: true, patch?: false, put?: false) }
 
       it "returns the path to last origin page" do
@@ -109,7 +109,7 @@ describe PageTracker do
     end
 
     context "on a consecutive edit page" do
-      let(:session) { { history_sesssion_key => [path_a, path_c, path_d], origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:session) { { history_session_key => [path_a, path_c, path_d], origin_pages_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_c, head?: false, get?: true, patch?: false, put?: false) }
       let(:path_d) { "/trainees/#{trainee.slug}/lead-schools/edit" }
 
@@ -121,7 +121,7 @@ describe PageTracker do
     end
 
     context "on a confirm page" do
-      let(:session) { { origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:session) { { origin_pages_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_b, head?: false, get?: true, patch?: false, put?: false) }
 
       it "returns the path to the previous confirm page" do
@@ -132,7 +132,7 @@ describe PageTracker do
     end
 
     context "on a non-confirm page" do
-      let(:session) { { history_sesssion_key => [path_a, path_b, path_c] } }
+      let(:session) { { history_session_key => [path_a, path_b, path_c] } }
       let(:request) { double(fullpath: path_c, head?: false, get?: true, patch?: false, put?: false) }
 
       it "returns the path to the previous confirm page" do
@@ -145,7 +145,7 @@ describe PageTracker do
 
   describe "#last_origin_page_path" do
     context "on a non-confirm page" do
-      let(:session) { { origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:session) { { origin_pages_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_b, head?: false, get?: true, patch?: false, put?: false) }
 
       it "returns the path to the previous confirm page" do
@@ -156,7 +156,7 @@ describe PageTracker do
     end
 
     context "on a non-confirm page" do
-      let(:session) { { origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:session) { { origin_pages_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_b, head?: false, get?: true, patch?: false, put?: false) }
 
       it "returns the path to the previous confirm page" do
@@ -168,7 +168,7 @@ describe PageTracker do
 
   describe "#last_non_confirm_origin_page_path" do
     context "when you've been to a confirm page" do
-      let(:session) { { origin_pages_sesssion_key => [path_a, path_b] } }
+      let(:session) { { origin_pages_session_key => [path_a, path_b] } }
       let(:request) { double(fullpath: path_c, head?: false, get?: true, patch?: false, put?: false) }
 
       it "returns the path to the previous origin page" do
