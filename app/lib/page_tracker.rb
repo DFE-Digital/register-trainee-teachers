@@ -37,6 +37,10 @@ class PageTracker
     on_confirm_page? ? origin_pages[-2] : origin_pages.last
   end
 
+  def last_non_confirm_origin_page_path
+    origin_pages.reject { |path| path.include?("confirm") }.last
+  end
+
 private
 
   attr_reader :session, :request, :history_session_key, :origin_pages_session_key
