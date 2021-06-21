@@ -6,6 +6,7 @@ module Dttp
   module Params
     describe PlacementAssignment do
       let(:time_now_in_zone) { Time.zone.now }
+      let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:provider) { create(:provider, dttp_id: dttp_provider_id) }
       let(:trainee) do
         create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, provider: provider)
@@ -45,8 +46,6 @@ module Dttp
       end
 
       subject { described_class.new(trainee, contact_change_set_id).params }
-
-      let(:degree) { build(:degree, :uk_degree_with_details) }
 
       describe "#params" do
         context "degrees" do

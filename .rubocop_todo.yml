@@ -115,14 +115,6 @@ RSpec/RepeatedExampleGroupDescription:
     - 'spec/lib/page_tracker_spec.rb'
     - 'spec/services/slack_notifier_service_spec.rb'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-RSpec/ScatteredLet:
-  Exclude:
-    - 'spec/forms/diversities/form_validator_spec.rb'
-    - 'spec/lib/dttp/params/placement_assignment_spec.rb'
-    - 'spec/services/dttp/retrieve_schools_spec.rb'
-
 # Offense count: 30
 RSpec/StubbedMock:
   Enabled: false
