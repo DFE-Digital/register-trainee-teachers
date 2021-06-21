@@ -74,6 +74,25 @@ describe Trainee do
     it { is_expected.to belong_to(:employing_school).class_name("School").optional }
   end
 
+  context "#subject_specialisms" do
+    let(:trainee) { create(:trainee, course_subject_one: specialism_one.name) }
+    let(:specialism_one) { create(:subject_specialism) }
+
+    subject { trainee.subject_specialisms }
+
+    it { is_expected.to eq([specialism_one]) }
+
+    context "with multiple subjects" do
+      let!(:specialism_two) { create(:subject_specialism) }
+      let!(:specialism_three) { create(:subject_specialism) }
+      let(:trainee) do
+        create(:trainee, course_subject_one: specialism_one.name, course_subject_two: specialism_two.name, course_subject_three: specialism_three.name)
+      end
+
+      it { is_expected.to eq([specialism_one, specialism_two, specialism_three]) }
+    end
+  end
+
   context "validations" do
     context "slug" do
       subject { create(:trainee) }

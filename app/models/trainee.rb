@@ -14,6 +14,8 @@ class Trainee < ApplicationRecord
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
 
+  has_many :subject_specialisms, ->(trainee) { unscope(:where).where(name: trainee.course_subjects).order(trainee.ordered_by_subjects_clause) }
+
   attribute :progress, Progress.to_type
 
   delegate :award_type, :requires_placement_details?, :requires_schools?,
@@ -176,6 +178,16 @@ class Trainee < ApplicationRecord
     SQL
   end
 
+  def ordered_by_subjects_clause
+    Arel.sql <<~SQL
+      CASE name
+      WHEN #{self.class.connection.quote course_subject_one} THEN 0
+      WHEN #{self.class.connection.quote course_subject_two} THEN 1
+      WHEN #{self.class.connection.quote course_subject_three} THEN 2
+      END
+    SQL
+  end
+
   def training_route_manager
     @training_route_manager ||= TrainingRouteManager.new(self)
   end
@@ -200,8 +212,8 @@ class Trainee < ApplicationRecord
     self.course_min_age, self.course_max_age = range
   end
 
-  def subjects
-    [subject, subject_two, subject_three].reject(&:blank?)
+  def course_subjects
+    [course_subject_one, course_subject_two, course_subject_three].reject(&:blank?)
   end
 
   def route_data_manager
