@@ -111,4 +111,10 @@ TRAINING_ROUTES_INITIATIVES = {
                                                   "Now Teach"],
   TRAINING_ROUTE_ENUMS[:early_years_postgrad] => ["Transition to Teach",
                                                   "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => ["Transition to Teach",
+                                                    "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => ["Transition to Teach",
+                                              "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => ["Transition to Teach",
+                                            "Now Teach"],
 }.freeze
