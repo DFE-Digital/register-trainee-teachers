@@ -149,16 +149,6 @@ Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/KeywordParametersOrder:
-  Exclude:
-    - 'app/components/feedback_link/view.rb'
-    - 'app/components/summary_card/view.rb'
-    - 'app/components/task_list/view.rb'
-    - 'app/controllers/api/application_controller.rb'
-    - 'app/services/slack_notifier_service.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/NegatedIfElseCondition:

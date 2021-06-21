@@ -101,3 +101,6 @@ Style/RedundantRegexpEscape:
 
 Style/SlicingWithRange:
   Enabled: true
+
+Style/KeywordParametersOrder:
+  Enabled: false
