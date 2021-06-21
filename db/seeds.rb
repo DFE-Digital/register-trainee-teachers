@@ -24,3 +24,11 @@ Dttp::CodeSets::AllocationSubjects::MAPPING.each do |allocation_subject, metadat
     allocation_subject.subject_specialisms.find_or_create_by!(name: subject_specialism)
   end
 end
+
+SEED_BURSARIES.each do |b|
+  bursary = Bursary.find_or_create_by!(training_route: b.training_route, amount: b.amount)
+  b.allocation_subjects.map do |subject|
+    allocation_subject = AllocationSubject.find_by!(name: subject)
+    bursary.bursary_subjects.create!(allocation_subject: allocation_subject)
+  end
+end
