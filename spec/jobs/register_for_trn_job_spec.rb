@@ -16,7 +16,7 @@ describe RegisterForTrnJob do
     subject { described_class.perform_now(trainee, creator_dttp_id) }
 
     it "registers the trainee" do
-      expect(Dttp::RegisterForTrn).to receive(:call).with(trainee: trainee, trainee_creator_dttp_id: creator_dttp_id)
+      expect(Dttp::RegisterForTrn).to receive(:call).with(trainee: trainee, created_by_dttp_id: creator_dttp_id)
       subject
     end
 

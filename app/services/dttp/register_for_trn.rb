@@ -4,11 +4,11 @@ module Dttp
   class RegisterForTrn
     include ServicePattern
 
-    attr_reader :trainee, :trainee_creator_dttp_id, :batch_request
+    attr_reader :trainee, :created_by_dttp_id, :batch_request
 
-    def initialize(trainee:, trainee_creator_dttp_id: nil)
+    def initialize(trainee:, created_by_dttp_id: nil)
       @trainee = trainee
-      @trainee_creator_dttp_id = trainee_creator_dttp_id
+      @created_by_dttp_id = created_by_dttp_id
       @batch_request = BatchRequest.new
     end
 
@@ -59,7 +59,7 @@ module Dttp
     end
 
     def build_contact_change_set
-      contact_payload = Params::Contact.new(trainee, trainee_creator_dttp_id).to_json
+      contact_payload = Params::Contact.new(trainee, created_by_dttp_id).to_json
       @contact_change_set_id = batch_request.add_change_set(entity: "contacts", payload: contact_payload)
     end
 
