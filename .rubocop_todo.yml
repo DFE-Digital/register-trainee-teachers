@@ -149,12 +149,6 @@ Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/NegatedIfElseCondition:
-  Exclude:
-    - 'app/services/trainees/create_from_apply.rb'
-
 # Offense count: 21
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
