@@ -97,7 +97,7 @@ FactoryBot.define do
     end
 
     trait :with_course_details do
-      subject { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
+      course_subject_one { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
       course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.keys.sample }
       course_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }

@@ -38,7 +38,7 @@ module Dttp
                      trainee.course_age_range => { entity_id: dttp_age_range_entity_id },
                    })
         stub_const("Dttp::CodeSets::CourseSubjects::MAPPING",
-                   { trainee.subject => { entity_id: dttp_course_subject_entity_id } })
+                   { trainee.course_subject_one => { entity_id: dttp_course_subject_entity_id } })
         stub_const("Dttp::CodeSets::DegreeSubjects::MAPPING",
                    { degree.subject => { entity_id: dttp_degree_subject_entity_id } })
         stub_const("Dttp::CodeSets::Institutions::MAPPING",

@@ -22,7 +22,7 @@ module Trainees
         def mock_trainee
           @mock_trainee ||= Trainee.new(
             id: 1,
-            subject: "Primary",
+            course_subject_one: "Primary",
             course_age_range: [3, 11],
             course_start_date: Date.new(2020, 1, 28),
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
@@ -32,8 +32,8 @@ module Trainees
         def mock_trainee_with_multiple_subjects
           Trainee.new(
             id: 1,
-            subject: "Primary",
-            subject_two: "Science",
+            course_subject_one: "Primary",
+            course_subject_two: "Science",
             course_age_range: [3, 11],
             course_start_date: Date.new(2020, 1, 28),
             training_route: TRAINING_ROUTE_ENUMS[:assessment_only],

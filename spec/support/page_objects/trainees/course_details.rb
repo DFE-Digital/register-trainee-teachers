@@ -6,8 +6,8 @@ module PageObjects
       include PageObjects::Helpers
       set_url "/trainees/{id}/course-details/edit"
 
-      element :subject, "#course-details-form-subject-field"
-      element :subject_raw, "input[data-nameoriginal='course_details_form[subject_raw]']"
+      element :subject, "#course-details-form-course-subject-one-field"
+      element :subject_raw, "input[data-nameoriginal='course_details_form[course_subject_one_raw]']"
 
       element :course_start_date_day, "#course_details_form_course_start_date_3i"
       element :course_start_date_month, "#course_details_form_course_start_date_2i"

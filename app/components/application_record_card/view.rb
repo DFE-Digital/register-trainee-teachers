@@ -23,9 +23,9 @@ module ApplicationRecordCard
 
     def subject
       return I18n.t("components.application_record_card.subject.early_years") if record.early_years_route?
-      return I18n.t("components.application_record_card.subject.blank") if record.subject.blank?
+      return I18n.t("components.application_record_card.subject.blank") if record.course_subject_one.blank?
 
-      subjects_for_summary_view(record.subject, record.subject_two, record.subject_three)
+      subjects_for_summary_view(record.course_subject_one, record.course_subject_two, record.course_subject_three)
     end
 
     def route

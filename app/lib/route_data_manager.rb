@@ -17,9 +17,9 @@ private
   def reset_course_details
     {
       course_code: nil,
-      subject: nil,
-      subject_two: nil,
-      subject_three: nil,
+      course_subject_one: nil,
+      course_subject_two: nil,
+      course_subject_three: nil,
       course_age_range: nil,
       course_start_date: nil,
       course_end_date: nil,

@@ -29,7 +29,7 @@ module Trainees
     end
 
     context "with subject filter" do
-      let!(:trainee_with_subject) { create(:trainee, subject: Dttp::CodeSets::CourseSubjects::MAPPING.keys.first) }
+      let!(:trainee_with_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::MAPPING.keys.first) }
       let(:filters) { { subject: "Art and design" } }
 
       it { is_expected.to eq([trainee_with_subject]) }

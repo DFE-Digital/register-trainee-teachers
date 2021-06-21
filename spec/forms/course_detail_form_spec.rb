@@ -36,13 +36,15 @@ describe CourseDetailsForm, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:subject) }
+    it { is_expected.to validate_presence_of(:course_subject_one) }
 
     context "when subjects are duplicated" do
       let(:params) do
-        { subject: "Psychology",
-          subject_two: "Psychology",
-          subject_three: "Psychology" }
+        {
+          course_subject_one: "Psychology",
+          course_subject_two: "Psychology",
+          course_subject_three: "Psychology",
+        }
       end
 
       before do
@@ -50,23 +52,23 @@ describe CourseDetailsForm, type: :model do
       end
 
       it "returns an error against subject two" do
-        expect(subject.errors[:subject_two]).not_to be_empty
+        expect(subject.errors[:course_subject_two]).not_to be_empty
       end
 
       it "returns an error against subject three" do
-        expect(subject.errors[:subject_three]).not_to be_empty
+        expect(subject.errors[:course_subject_three]).not_to be_empty
       end
     end
 
     context "when the first and third subjects are provided" do
       let(:params) do
         {
-          subject: "Psychology",
-          subject_raw: "Psychology",
-          subject_two: "",
-          subject_two_raw: "",
-          subject_three: "Mathematics",
-          subject_three_raw: "Mathematics",
+          course_subject_one: "Psychology",
+          course_subject_one_raw: "Psychology",
+          course_subject_two: "",
+          course_subject_two_raw: "",
+          course_subject_three: "Mathematics",
+          course_subject_three_raw: "Mathematics",
         }
       end
 
@@ -75,13 +77,13 @@ describe CourseDetailsForm, type: :model do
       end
 
       it "populates subject two with the third subject" do
-        expect(subject.subject_two).to eq("Mathematics")
-        expect(subject.subject_two_raw).to eq("Mathematics")
+        expect(subject.course_subject_two).to eq("Mathematics")
+        expect(subject.course_subject_two_raw).to eq("Mathematics")
       end
 
       it "clears the third subject slot" do
-        expect(subject.subject_three).to be_blank
-        expect(subject.subject_three_raw).to be_blank
+        expect(subject.course_subject_three).to be_blank
+        expect(subject.course_subject_three_raw).to be_blank
       end
     end
 
@@ -288,16 +290,18 @@ describe CourseDetailsForm, type: :model do
     let(:max_age) { 19 }
 
     let(:params) do
-      { start_day: valid_start_date.day.to_s,
+      {
+        start_day: valid_start_date.day.to_s,
         start_month: valid_start_date.month.to_s,
         start_year: valid_start_date.year.to_s,
         end_day: valid_end_date.day.to_s,
         end_month: valid_end_date.month.to_s,
         end_year: valid_end_date.year.to_s,
         main_age_range: "#{min_age} to #{max_age}",
-        subject: "Psychology",
-        subject_two: "Chemistry",
-        subject_three: "Art and design" }
+        course_subject_one: "Psychology",
+        course_subject_two: "Chemistry",
+        course_subject_three: "Art and design",
+      }
     end
 
     let(:trainee) { create(:trainee) }
@@ -309,8 +313,8 @@ describe CourseDetailsForm, type: :model do
 
       it "changed related trainee attributes" do
         expect { subject.save! }
-          .to change { trainee.subject }
-          .from(nil).to(params[:subject])
+          .to change { trainee.course_subject_one }
+          .from(nil).to(params[:course_subject_one])
           .and change { trainee.course_min_age }
           .from(nil).to(min_age)
           .and change { trainee.course_max_age }

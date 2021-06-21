@@ -63,7 +63,7 @@ private
   end
 
   def and_i_enter_valid_parameters
-    course_details_page.subject.select(trainee.subject)
+    course_details_page.subject.select(trainee.course_subject_one)
     course_details_page.set_date_fields("course_start_date", trainee.course_start_date.strftime("%d/%m/%Y"))
     course_details_page.set_date_fields("course_end_date", trainee.course_end_date.strftime("%d/%m/%Y"))
 
@@ -84,7 +84,7 @@ private
   def and_the_course_details_are_updated
     when_i_visit_the_course_details_page
 
-    expect(course_details_page.subject.value).to eq(trainee.subject)
+    expect(course_details_page.subject.value).to eq(trainee.course_subject_one)
     expect(course_details_page.course_start_date_day.value).to eq(trainee.course_start_date.day.to_s)
     expect(course_details_page.course_start_date_month.value).to eq(trainee.course_start_date.month.to_s)
     expect(course_details_page.course_start_date_year.value).to eq(trainee.course_start_date.year.to_s)
@@ -136,7 +136,7 @@ private
     translation_key_prefix = "activemodel.errors.models.course_details_form.attributes"
 
     expect(course_details_page).to have_content(
-      I18n.t("#{translation_key_prefix}.subject.blank"),
+      I18n.t("#{translation_key_prefix}.course_subject_one.blank"),
     )
     expect(course_details_page).to have_content(
       I18n.t("#{translation_key_prefix}.main_age_range.blank"),
@@ -148,7 +148,7 @@ private
 
   def then_i_see_error_messages_for_partially_submitted_fields
     expect(course_details_page).to have_content(
-      I18n.t("activemodel.errors.validators.autocomplete.subject"),
+      I18n.t("activemodel.errors.validators.autocomplete.course_subject_one"),
     )
     expect(course_details_page).to have_content(
       I18n.t("activemodel.errors.validators.autocomplete.additional_age_range"),
@@ -157,10 +157,10 @@ private
 
   def then_i_see_error_messages_for_blank_submitted_fields
     expect(course_details_page).to have_content(
-      I18n.t("activemodel.errors.models.course_details_form.attributes.subject.blank"),
+      I18n.t("activemodel.errors.models.course_details_form.attributes.course_subject_one.blank"),
     )
     expect(course_details_page).not_to have_content(
-      I18n.t("activemodel.errors.validators.autocomplete.subject"),
+      I18n.t("activemodel.errors.validators.autocomplete.course_subject_one"),
     )
   end
 

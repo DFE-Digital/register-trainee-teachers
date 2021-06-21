@@ -14,7 +14,7 @@ module Trainees
           let(:trainee) do
             build(:trainee, id: 1,
                             training_route: nil,
-                            subject: nil,
+                            course_subject_one: nil,
                             course_code: nil,
                             course_min_age: nil,
                             course_max_age: nil,
@@ -58,7 +58,7 @@ module Trainees
 
             it "renders the subject" do
               expect(component.find(".govuk-summary-list__row.subject .govuk-summary-list__value"))
-                .to have_text(trainee.subject)
+                .to have_text(trainee.course_subject_one)
             end
 
             it "renders the course age range" do

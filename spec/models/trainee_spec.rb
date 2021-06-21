@@ -276,16 +276,26 @@ describe Trainee do
   end
 
   describe "#with_subject" do
-    let!(:trainee_with_subject) { create(:trainee, subject: "Art and design") }
-    let!(:trainee_without_subject) { create(:trainee, subject: "Mathematics") }
+    let!(:trainee_with_subject) { create(:trainee, course_subject_one: "Art and design") }
+    let!(:trainee_without_subject) { create(:trainee, course_subject_one: "Mathematics") }
 
     subject { described_class.with_subject("Art and design") }
 
     it { is_expected.to eq([trainee_with_subject]) }
 
     context "with multiple subjects" do
-      let!(:trainee_with_subject_two) { create(:trainee, subject: "Mathematics", subject_two: "Art and design") }
-      let!(:trainee_with_subject_three) { create(:trainee, subject: "Mathematics", subject_two: "Science", subject_three: "Art and design") }
+      let!(:trainee_with_subject_two) do
+        create(:trainee,
+               course_subject_one: "Mathematics",
+               course_subject_two: "Art and design")
+      end
+
+      let!(:trainee_with_subject_three) do
+        create(:trainee,
+               course_subject_one: "Mathematics",
+               course_subject_two: "Science",
+               course_subject_three: "Art and design")
+      end
 
       it { is_expected.to match_array([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
     end

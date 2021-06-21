@@ -83,8 +83,8 @@ private
   def given_trainees_exist_in_the_system
     @assessment_only_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
     @provider_led_postgrad_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-    @biology_trainee ||= create(:trainee, subject: "Biology")
-    @history_trainee ||= create(:trainee, subject: "History")
+    @biology_trainee ||= create(:trainee, course_subject_one: "Biology")
+    @history_trainee ||= create(:trainee, course_subject_one: "History")
     @searchable_trainee ||= create(:trainee, trn: "123")
     Trainee.update_all(provider_id: @current_user.provider.id)
   end

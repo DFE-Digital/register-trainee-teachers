@@ -16,8 +16,8 @@ describe RouteDataManager do
             .from(trainee.progress.course_details).to(false)
             .and change { trainee.course_code }
             .from(trainee.course_code).to(nil)
-            .and change { trainee.subject }
-            .from(trainee.subject).to(nil)
+            .and change { trainee.course_subject_one }
+            .from(trainee.course_subject_one).to(nil)
             .and change { trainee.course_age_range }
             .from(trainee.course_age_range).to([])
             .and change { trainee.course_start_date }
@@ -41,7 +41,7 @@ describe RouteDataManager do
 
         it "does not clear the course details section of the trainee" do
           expect(trainee.course_code).to be_present
-          expect(trainee.subject).to be_present
+          expect(trainee.course_subject_one).to be_present
           expect(trainee.course_age_range).to be_present
           expect(trainee.course_start_date).to be_present
           expect(trainee.course_end_date).to be_present

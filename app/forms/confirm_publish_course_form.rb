@@ -53,9 +53,9 @@ private
   def update_trainee_attributes
     trainee.progress.course_details = true
     trainee.assign_attributes({
-      subject: course.subject_one&.name,
-      subject_two: course.subject_two&.name,
-      subject_three: course.subject_three&.name,
+      course_subject_one: course.subject_one&.name,
+      course_subject_two: course.subject_two&.name,
+      course_subject_three: course.subject_three&.name,
       course_code: course_code,
       course_age_range: course&.age_range,
       course_start_date: course_start_date,

@@ -68,9 +68,11 @@ module Trainees
         end
 
         def subject
-          return @not_provided_copy if data_model.subject.blank?
+          return @not_provided_copy if data_model.course_subject_one.blank?
 
-          subjects_for_summary_view(data_model.subject, data_model.subject_two, data_model.subject_three)
+          subjects_for_summary_view(data_model.course_subject_one,
+                                    data_model.course_subject_two,
+                                    data_model.course_subject_three)
         end
 
         def course_age_range

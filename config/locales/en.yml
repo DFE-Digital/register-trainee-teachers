@@ -612,9 +612,9 @@ en:
         email:
           invalid: Enter an email address in the correct format, like name@example.com
         autocomplete:
-          subject: &subject Select a subject from the list - your entry is not recognised
-          subject_two: *subject
-          subject_three: *subject
+          course_subject_one: &subject Select a subject from the list - your entry is not recognised
+          course_subject_two: *subject
+          course_subject_three: *subject
           additional_age_range: Select an age range from the list - your entry is not recognised
           institution: Select an institution from the list - your entry is not recognised
           other_nationality1: &nationality Select a nationality from the list - your entry is not recognised
@@ -705,11 +705,11 @@ en:
               blank: If you have an additional nationality, select it from the list
         course_details_form:
           attributes:
-            subject:
+            course_subject_one:
               blank: Select a subject
-            subject_two:
+            course_subject_two:
               duplicate: Enter a different second subject
-            subject_three:
+            course_subject_three:
               duplicate: Enter a different third subject
             main_age_range:
               blank: Select an age range

@@ -16,8 +16,8 @@
       <% if f.object.require_subject? %>
         <%= render FormComponents::Autocomplete::View.new(
           f,
-          attribute_name: :subject,
-          form_field: f.govuk_collection_select(:subject, course_subjects_options,
+          attribute_name: :course_subject_one,
+          form_field: f.govuk_collection_select(:course_subject_one, course_subjects_options,
                                                 :name, :name, label: { text: "Subject", size: "s" },
                                                               hint: { text: "Search for the closest matching subject" }),
         ) %>
