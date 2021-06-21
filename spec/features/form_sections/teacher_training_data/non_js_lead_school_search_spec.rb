@@ -67,7 +67,7 @@ private
   end
 
   def query
-    my_lead_school.name.split(" ").first
+    my_lead_school.name.split.first
   end
 
   def my_lead_school

@@ -101,11 +101,11 @@ private
   end
 
   def my_lead_school_name
-    my_lead_school.name.split(" ").first
+    my_lead_school.name.split.first
   end
 
   def my_employing_school_name
-    my_employing_school.name.split(" ").first
+    my_employing_school.name.split.first
   end
 
   def my_lead_school

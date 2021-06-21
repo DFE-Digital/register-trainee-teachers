@@ -149,18 +149,6 @@ Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: Methods.
-Style/RedundantArgument:
-  Exclude:
-    - 'spec/features/form_sections/teacher_training_data/edit_schools_spec.rb'
-    - 'spec/features/form_sections/teacher_training_data/employing_school_search_spec.rb'
-    - 'spec/features/form_sections/teacher_training_data/lead_school_search_spec.rb'
-    - 'spec/features/form_sections/teacher_training_data/non_js_employing_school_search_spec.rb'
-    - 'spec/features/form_sections/teacher_training_data/non_js_lead_school_search_spec.rb'
-    - 'spec/support/features/lead_and_employing_school_steps.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: SafeForConstants.
