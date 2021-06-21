@@ -48,6 +48,9 @@ features:
     provider_led_postgrad: false
     school_direct_salaried: false
     school_direct_tuition_fee: false
+    provider_led_undergrad: false
+    opt_in_undergrad: false
+    hpitt_postgrad: false
 
 dfe_sign_in:
   # Our service name
