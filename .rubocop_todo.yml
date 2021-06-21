@@ -103,14 +103,6 @@ RSpec/NestedGroups:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: numeric, symbolic
-RSpec/Rails/HttpStatus:
-  Exclude:
-    - 'spec/controllers/pages_controller_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 RSpec/ReceiveNever:
   Exclude:
     - 'spec/models/trainee_spec.rb'
