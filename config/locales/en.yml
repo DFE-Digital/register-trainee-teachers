@@ -510,10 +510,12 @@ en:
           lead_school: Lead school
           employing_school: Employing school
     course_details:
+      edit:
+        subject_hint: &subject_hint Search for the closest matching subject
       additional_subjects:
         add_additional_subjects: Add additional subjects
         main_subject: The first subject is the main one. It represents the bursary or scholarship available if applicable.
-        subject_hint: Search for the closest matching subject
+        subject_hint: *subject_hint
         subject_two: Second subject (optional)
         subject_three: Third subject (optional)
     confirm_publish_course:

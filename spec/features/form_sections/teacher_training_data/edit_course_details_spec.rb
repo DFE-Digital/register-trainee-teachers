@@ -22,9 +22,21 @@ feature "course details", type: :feature do
       given_i_am_on_the_review_draft_page
     end
 
+    context "when the feature flag is turned on", feature_use_subject_specialisms: true do
+      scenario "submitting with valid parameters" do
+        given_a_subject_specialism_is_available_for_selection
+        when_i_visit_the_course_details_page
+        and_i_enter_valid_subject_specialism_parameters
+        and_i_enter_valid_parameters
+        and_i_submit_the_form
+        and_the_course_details_are_updated
+      end
+    end
+
     describe "tracking the progress" do
       scenario "renders an 'in progress' status when details partially provided" do
         when_i_visit_the_course_details_page
+        and_i_enter_valid_dttp_subject_parameters
         and_i_enter_valid_parameters
         and_i_submit_the_form
         and_i_continue_without_confirming_details
@@ -62,8 +74,15 @@ private
     course_details_page.load(id: trainee.slug)
   end
 
-  def and_i_enter_valid_parameters
+  def and_i_enter_valid_subject_specialism_parameters
+    course_details_page.subject.select(@subject_specialism.name)
+  end
+
+  def and_i_enter_valid_dttp_subject_parameters
     course_details_page.subject.select(trainee.course_subject_one)
+  end
+
+  def and_i_enter_valid_parameters
     course_details_page.set_date_fields("course_start_date", trainee.course_start_date.strftime("%d/%m/%Y"))
     course_details_page.set_date_fields("course_end_date", trainee.course_end_date.strftime("%d/%m/%Y"))
 
@@ -84,7 +103,7 @@ private
   def and_the_course_details_are_updated
     when_i_visit_the_course_details_page
 
-    expect(course_details_page.subject.value).to eq(trainee.course_subject_one)
+    expect(course_details_page.subject.value).to eq(trainee.reload.course_subject_one)
     expect(course_details_page.course_start_date_day.value).to eq(trainee.course_start_date.day.to_s)
     expect(course_details_page.course_start_date_month.value).to eq(trainee.course_start_date.month.to_s)
     expect(course_details_page.course_start_date_year.value).to eq(trainee.course_start_date.year.to_s)
@@ -166,6 +185,10 @@ private
 
   def given_a_trainee_exists_with_course_details
     given_a_trainee_exists(:with_course_details)
+  end
+
+  def given_a_subject_specialism_is_available_for_selection
+    @subject_specialism = create(:subject_specialism)
   end
 
   def then_i_am_redirected_to_the_confirm_page

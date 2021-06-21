@@ -4,6 +4,10 @@ FactoryBot.define do
   factory :subject_specialism do
     allocation_subject
 
-    sequence(:name) { |s| "subject #{s}" }
+    transient do
+      subject_name { nil }
+    end
+
+    sequence(:name) { |c| subject_name.presence || "Subject Specialism #{c}" }
   end
 end

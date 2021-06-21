@@ -6,6 +6,7 @@ RSpec.feature "Filtering trainees" do
   before do
     given_i_am_authenticated
     given_trainees_exist_in_the_system
+    given_a_subject_specialism_is_available_for_selection
     when_i_visit_the_trainee_index_page
     then_all_trainees_are_visible
   end
@@ -88,12 +89,16 @@ private
   def given_trainees_exist_in_the_system
     @assessment_only_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
     @provider_led_postgrad_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-    @biology_trainee ||= create(:trainee, course_subject_one: "Biology")
-    @history_trainee ||= create(:trainee, course_subject_one: "History")
+    @biology_trainee ||= create(:trainee, :with_subject_specialism, subject_name: "Biology")
+    @history_trainee ||= create(:trainee, :with_subject_specialism, subject_name: "History")
     @searchable_trainee ||= create(:trainee, trn: "123")
     @draft_trainee ||= create(:trainee, :draft)
     @withdrawn_trainee ||= create(:trainee, :withdrawn)
     Trainee.update_all(provider_id: @current_user.provider.id)
+  end
+
+  def given_a_subject_specialism_is_available_for_selection
+    @subject_specialism ||= create(:subject_specialism, name: "Chemistry")
   end
 
   def when_i_visit_the_trainee_index_page
@@ -131,7 +136,7 @@ private
   end
 
   def when_i_filter_by_a_subject_which_returns_no_matches
-    when_i_filter_by_subject("Chemistry")
+    when_i_filter_by_subject(@subject_specialism.name)
   end
 
   def then_i_see_a_no_records_found_message
