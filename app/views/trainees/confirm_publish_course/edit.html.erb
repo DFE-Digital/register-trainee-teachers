@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.confirm_publish_course.edit") %>
+<%= render PageTitle::View.new(i18n_key: "trainees.confirm_publish_course.edit") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(text: t(:back), href: edit_trainee_publish_course_details_path(@trainee)) %>

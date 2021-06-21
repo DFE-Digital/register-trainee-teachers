@@ -1,32 +1,28 @@
 # frozen_string_literal: true
 
 class PageTitle::View < GovukComponent::Base
-  I18N_FORMAT = /^\S*\.\S*$/.freeze
-
-  attr_accessor :title
-
-  def initialize(title: "", has_errors: false)
-    @title = title
+  def initialize(i18n_key: nil, text: nil, has_errors: false)
+    @text = text
+    @i18n_key = i18n_key
     @has_errors = has_errors
   end
 
   def build_page_title
-    [build_error + build_title + build_service_name, "GOV.UK"].join(" - ")
+    [build_error + build_title, I18n.t("service_name"), "GOV.UK"].select(&:present?).join(" - ")
   end
 
 private
 
-  attr_reader :has_errors
+  attr_reader :text, :i18n_key, :has_errors
 
   def build_error
     has_errors ? "Error: " : ""
   end
 
   def build_title
-    title.match?(I18N_FORMAT) ? I18n.t("components.page_titles." + title) : title
-  end
+    return text if text.present?
+    return "" if i18n_key.blank?
 
-  def build_service_name
-    title.present? ? " - " + I18n.t("service_name") : I18n.t("service_name")
+    I18n.t("components.page_titles." + i18n_key)
   end
 end

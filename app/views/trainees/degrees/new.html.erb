@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.degrees.edit", has_errors: @degree_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.degrees.edit", has_errors: @degree_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(

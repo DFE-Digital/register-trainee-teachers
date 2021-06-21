@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.diversity.ethnic_group.edit", has_errors: @ethnic_group_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.diversity.ethnic_group.edit", has_errors: @ethnic_group_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>

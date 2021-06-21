@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: "trainees.delete") %>
+<%= render PageTitle::View.new(i18n_key: "trainees.delete") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(text: I18n.t("back_to_draft"), href: trainee_path(@trainee)) %>

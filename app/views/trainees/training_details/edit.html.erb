@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: t("views.forms.training_details.title")) %>
+<%= render PageTitle::View.new(text: t("views.forms.training_details.title")) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>

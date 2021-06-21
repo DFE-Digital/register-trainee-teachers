@@ -1,5 +1,5 @@
 <%= render PageTitle::View.new(
-  title: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")),
+  text: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")),
   has_errors: @ethnic_background_form.errors.present?,
 ) %>
 

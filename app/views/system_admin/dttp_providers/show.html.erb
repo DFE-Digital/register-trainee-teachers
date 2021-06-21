@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(title: @provider.name, has_errors: @provider.errors.present?) %>
+<%= render PageTitle::View.new(text: @provider.name, has_errors: @provider.errors.present?) %>
 
 <%= render GovukComponent::BackLink.new(
   text: "Back",
