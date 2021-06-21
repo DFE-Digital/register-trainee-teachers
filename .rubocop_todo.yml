@@ -149,23 +149,6 @@ Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 21
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: same_as_string_literals, single_quotes, double_quotes
-Style/QuotedSymbols:
-  Exclude:
-    - 'spec/components/review_draft/apply_draft/view_spec.rb'
-    - 'spec/components/review_draft/draft/view_spec.rb'
-    - 'spec/features/trainee_actions/creating_a_new_trainee_spec.rb'
-    - 'spec/features/trainee_actions/edit_trainee_training_route_spec.rb'
-    - 'spec/forms/schools/form_validator_spec.rb'
-    - 'spec/lib/training_route_manager_spec.rb'
-    - 'spec/services/dttp/retrieve_schools_spec.rb'
-    - 'spec/support/shared_examples/sync_pattern.rb'
-    - 'spec/views/trainees/review_draft/show.html.erb_spec.rb'
-    - 'spec/views/trainees/show.html.erb_spec.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: Methods.

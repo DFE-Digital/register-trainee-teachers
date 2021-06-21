@@ -27,7 +27,7 @@ RSpec.describe ReviewDraft::Draft::View do
     end
   end
 
-  context "when the trainee is on the provider-led route", 'feature_routes.provider_led_postgrad': true do
+  context "when the trainee is on the provider-led route", "feature_routes.provider_led_postgrad": true do
     let(:trainee) { create(:trainee, :provider_led_postgrad, :with_placement_assignment) }
 
     xit "renders additional provider-led specific sections" do

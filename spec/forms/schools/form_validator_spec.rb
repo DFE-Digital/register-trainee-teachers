@@ -7,7 +7,7 @@ module Schools
     subject { described_class.new(trainee) }
 
     describe "validations" do
-      context "with a school_direct_tuition_fee trainee", 'feature_routes.school_direct_tuition_fee': true do
+      context "with a school_direct_tuition_fee trainee", "feature_routes.school_direct_tuition_fee": true do
         let(:trainee) { build(:trainee, :school_direct_tuition_fee) }
         let(:lead_school_form) { instance_double(Schools::LeadSchoolForm, fields: nil, lead_school_id: nil) }
 
@@ -40,7 +40,7 @@ module Schools
         end
       end
 
-      context "with a school_direct_salaried trainee", 'feature_routes.school_direct_salaried': true do
+      context "with a school_direct_salaried trainee", "feature_routes.school_direct_salaried": true do
         let(:trainee) { build(:trainee, :school_direct_salaried) }
         let(:lead_school_form) { instance_double(Schools::LeadSchoolForm, fields: nil, lead_school_id: nil) }
         let(:employing_school_form) { instance_double(Schools::EmployingSchoolForm, fields: nil, employing_school_id: nil) }

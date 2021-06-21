@@ -10,7 +10,7 @@ RSpec.describe ReviewDraft::ApplyDraft::View do
       render_inline(described_class.new(trainee: trainee))
     end
 
-    context "when the trainee is on the provider-led route", 'feature_routes.provider_led_postgrad': true do
+    context "when the trainee is on the provider-led route", "feature_routes.provider_led_postgrad": true do
       let(:trainee) { create(:trainee, :provider_led_postgrad, :with_placement_assignment, :with_apply_application) }
 
       it "renders the correct provider-led sections" do

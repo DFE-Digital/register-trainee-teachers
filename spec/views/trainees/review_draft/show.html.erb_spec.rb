@@ -8,7 +8,7 @@ describe "trainees/review_draft/show.html.erb" do
     render
   end
 
-  describe "trainees/review_draft/show.html.erb", 'feature_routes.provider_led_postgrad': true do
+  describe "trainees/review_draft/show.html.erb", "feature_routes.provider_led_postgrad": true do
     before do
       assign(:trainee, trainee)
       render
@@ -31,7 +31,7 @@ describe "trainees/review_draft/show.html.erb" do
     end
   end
 
-  describe "trainees/review_draft/show.html.erb", 'feature_routes.provider_led_postgrad': true
+  describe "trainees/review_draft/show.html.erb", "feature_routes.provider_led_postgrad": true
 
   context "with an Apply draft trainee" do
     let(:trainee) { create(:trainee, :with_apply_application) }
