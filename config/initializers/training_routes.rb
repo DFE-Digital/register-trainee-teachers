@@ -82,3 +82,27 @@ SEED_BURSARIES = [
     allocation_subjects: %w[Biology],
   ),
 ].freeze
+
+TRAINING_ROUTES_INITIATIVES = {
+  TRAINING_ROUTE_ENUMS[:assessment_only] => ["Transition to Teach",
+                                             "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => ["Transition to Teach",
+                                                   "Now Teach",
+                                                   "Maths & Physics Chairs Programme/Researchers in Schools"],
+  TRAINING_ROUTE_ENUMS[:early_years_undergrad] => ["Transition to Teach",
+                                                   "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => ["Transition to Teach",
+                                                       "Now Teach",
+                                                       "Maths & Physics Chairs Programme/Researchers in Schools"],
+  TRAINING_ROUTE_ENUMS[:school_direct_salaried] => ["Future Teaching Scholars",
+                                                    "Maths & Physics Chairs Programme/Researchers in Schools",
+                                                    "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => ["Transition to Teach",
+                                                        "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => ["Transition to Teach",
+                                                         "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:early_years_salaried] => ["Transition to Teach",
+                                                  "Now Teach"],
+  TRAINING_ROUTE_ENUMS[:early_years_postgrad] => ["Transition to Teach",
+                                                  "Now Teach"],
+}.freeze
