@@ -5,6 +5,7 @@ module PaginatedFilter
     attr_reader :filters, :collection, :filter_params
 
     renders_many :filter_actions
+    renders_many :filter_options
 
     def initialize(filters:, collection:, filter_params:)
       @filters = filters
