@@ -203,7 +203,7 @@ describe Trainee do
         end
 
         it "caches the timeline event after the initial request" do
-          expect(Trainees::CreateTimeline).to receive(:call).never
+          expect(Trainees::CreateTimeline).not_to receive(:call)
 
           subject.timeline
         end

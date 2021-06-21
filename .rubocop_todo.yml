@@ -101,12 +101,6 @@ RSpec/NamedSubject:
 RSpec/NestedGroups:
   Max: 6
 
-# Offense count: 1
-# Cop supports --auto-correct.
-RSpec/ReceiveNever:
-  Exclude:
-    - 'spec/models/trainee_spec.rb'
-
 # Offense count: 2
 RSpec/RepeatedDescription:
   Exclude:
