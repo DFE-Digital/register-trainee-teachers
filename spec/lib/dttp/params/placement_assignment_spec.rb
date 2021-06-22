@@ -37,8 +37,6 @@ module Dttp
                      AgeRange::ZERO_TO_FIVE => { entity_id: dttp_ey_age_range_entity_id },
                      trainee.course_age_range => { entity_id: dttp_age_range_entity_id },
                    })
-        stub_const("Dttp::CodeSets::CourseSubjects::MAPPING",
-                   { trainee.course_subject_one => { entity_id: dttp_course_subject_entity_id } })
         stub_const("Dttp::CodeSets::DegreeSubjects::MAPPING",
                    { degree.subject => { entity_id: dttp_degree_subject_entity_id } })
         stub_const("Dttp::CodeSets::Institutions::MAPPING",
@@ -54,54 +52,63 @@ module Dttp
       let(:degree) { build(:degree, :uk_degree_with_details) }
 
       describe "#params" do
-        context "UK degree" do
-          it "returns a hash with all the UK specific placement assignment fields " do
-            expect(subject).to eq({
-              "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
-              "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
-              "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
-              "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
-              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_course_subject_entity_id})",
-              "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
-              "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
-              "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{dttp_degree_institution_entity_id})",
-              "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{dttp_degree_grade_entity_id})",
-              "dfe_traineeid" => trainee.trainee_id,
-              "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
-              "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
-              "dfe_sendforregistration" => true,
-              "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
-              "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id})",
-              "dfe_programmeyear" => 1,
-              "dfe_programmelength" => 1,
-              "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
-            })
+        context "degrees" do
+          before do
+            stub_const(
+              "Dttp::CodeSets::CourseSubjects::MAPPING",
+              { trainee.course_subject_one => { entity_id: dttp_course_subject_entity_id } },
+            )
           end
-        end
 
-        context "Non-UK degree" do
-          let(:degree) { build(:degree, :non_uk_degree_with_details) }
+          context "UK degree" do
+            it "returns a hash with all the UK specific placement assignment fields " do
+              expect(subject).to eq({
+                "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
+                "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
+                "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
+                "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
+                "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_course_subject_entity_id})",
+                "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
+                "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
+                "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{dttp_degree_institution_entity_id})",
+                "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{dttp_degree_grade_entity_id})",
+                "dfe_traineeid" => trainee.trainee_id,
+                "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
+                "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
+                "dfe_sendforregistration" => true,
+                "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
+                "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id})",
+                "dfe_programmeyear" => 1,
+                "dfe_programmelength" => 1,
+                "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
+              })
+            end
+          end
 
-          it "returns a hash with all the Non-UK specific placement assignment fields" do
-            expect(subject).to eq({
-              "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
-              "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
-              "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
-              "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
-              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_course_subject_entity_id})",
-              "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
-              "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
-              "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
-              "dfe_traineeid" => trainee.trainee_id,
-              "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
-              "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
-              "dfe_sendforregistration" => true,
-              "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
-              "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id})",
-              "dfe_programmeyear" => 1,
-              "dfe_programmelength" => 1,
-              "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
-            })
+          context "Non-UK degree" do
+            let(:degree) { build(:degree, :non_uk_degree_with_details) }
+
+            it "returns a hash with all the Non-UK specific placement assignment fields" do
+              expect(subject).to eq({
+                "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
+                "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
+                "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
+                "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
+                "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_course_subject_entity_id})",
+                "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
+                "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
+                "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
+                "dfe_traineeid" => trainee.trainee_id,
+                "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
+                "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
+                "dfe_sendforregistration" => true,
+                "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
+                "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id})",
+                "dfe_programmeyear" => 1,
+                "dfe_programmelength" => 1,
+                "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
+              })
+            end
           end
         end
 
@@ -112,6 +119,43 @@ module Dttp
             expect(subject).not_to include(
               { "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}" },
             )
+          end
+        end
+
+        context "subjects" do
+          let(:trainee) do
+            create(
+              :trainee,
+              :with_course_details,
+              :with_start_date,
+              dttp_id: dttp_contact_id,
+              provider: provider,
+              course_subject_one: CodeSets::CourseSubjects::BIOLOGY,
+              course_subject_two: CodeSets::CourseSubjects::CHEMISTRY,
+              course_subject_three: CodeSets::CourseSubjects::MATHEMATICS,
+            )
+          end
+
+          let(:biology_entity_id) do
+            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::BIOLOGY][:entity_id]
+          end
+
+          let(:chemistry_entity_id) do
+            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::CHEMISTRY][:entity_id]
+          end
+
+          let(:mathematics_entity_id) do
+            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::MATHEMATICS][:entity_id]
+          end
+
+          subject { described_class.new(trainee).params }
+
+          it "sets the dttp itt subject params for all given subjects" do
+            expect(subject).to include({
+              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{biology_entity_id})",
+              "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{chemistry_entity_id})",
+              "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{mathematics_entity_id})",
+            })
           end
         end
 

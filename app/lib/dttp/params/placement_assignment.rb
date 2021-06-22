@@ -36,7 +36,6 @@ module Dttp
       def build_params
         {
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(course_age_range)})",
-          "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{subject_entity_id})",
           "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
           "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
@@ -49,7 +48,10 @@ module Dttp
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id(trainee.training_route)})",
           "dfe_programmeyear" => 1, # TODO: this will need to be derived for other routes. It's n of x year course e.g. 1 of 2
           "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are course_year of course_length
-        }.merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params).merge(school_params)
+        }
+        .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
+        .merge(school_params)
+        .merge(subject_params)
       end
 
       def course_age_range
@@ -91,6 +93,28 @@ module Dttp
         end
 
         params
+      end
+
+      def subject_params
+        first_subject.merge(second_subject, third_subject).compact
+      end
+
+      def first_subject
+        subject_entity_id = trainee.early_years_route? ? EARLY_YEARS_SUBJECT : course_subject_id(trainee.course_subject_one)
+
+        { "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{subject_entity_id})" }
+      end
+
+      def second_subject
+        return {} if trainee.course_subject_two.blank?
+
+        { "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.course_subject_two)})" }
+      end
+
+      def third_subject
+        return {} if trainee.course_subject_three.blank?
+
+        { "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.course_subject_three)})" }
       end
     end
   end

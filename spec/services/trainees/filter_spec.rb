@@ -29,13 +29,14 @@ module Trainees
     end
 
     context "with subject filter" do
-      let!(:trainee_with_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::MAPPING.keys.first) }
-      let(:filters) { { subject: "Art and design" } }
+      let(:subject_name) { Dttp::CodeSets::CourseSubjects::BIOLOGY }
+      let!(:trainee_with_subject) { create(:trainee, course_subject_one: subject_name) }
+      let(:filters) { { subject: subject_name } }
 
       it { is_expected.to eq([trainee_with_subject]) }
 
       context "when the feature flag is turned on", feature_use_subject_specialisms: true do
-        let!(:trainee_with_subject) { create(:trainee, :with_subject_specialism, subject_name: "Art and design") }
+        let!(:trainee_with_subject) { create(:trainee, :with_subject_specialism, subject_name: subject_name) }
 
         it { is_expected.to eq([trainee_with_subject]) }
       end

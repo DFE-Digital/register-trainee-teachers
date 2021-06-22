@@ -276,15 +276,15 @@ describe Trainee do
   end
 
   describe "#with_subject" do
-    let!(:trainee_with_subject) { create(:trainee, course_subject_one: "Art and design") }
-    let!(:trainee_without_subject) { create(:trainee, course_subject_one: "Mathematics") }
+    let!(:trainee_with_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::BIOLOGY) }
+    let!(:trainee_without_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::MATHEMATICS) }
 
-    subject { described_class.with_subject("Art and design") }
+    subject { described_class.with_subject(Dttp::CodeSets::CourseSubjects::BIOLOGY) }
 
     it { is_expected.to eq([trainee_with_subject]) }
 
     context "with lowercase subject name" do
-      let!(:trainee_with_subject) { create(:trainee, course_subject_one: "art and design") }
+      let!(:trainee_with_subject) { create(:trainee, course_subject_one: "biology") }
 
       it { is_expected.to eq([trainee_with_subject]) }
     end
@@ -292,15 +292,15 @@ describe Trainee do
     context "with multiple subjects" do
       let!(:trainee_with_subject_two) do
         create(:trainee,
-               course_subject_one: "Mathematics",
-               course_subject_two: "Art and design")
+               course_subject_one: Dttp::CodeSets::CourseSubjects::MATHEMATICS,
+               course_subject_two: Dttp::CodeSets::CourseSubjects::BIOLOGY)
       end
 
       let!(:trainee_with_subject_three) do
         create(:trainee,
-               course_subject_one: "Mathematics",
-               course_subject_two: "Science",
-               course_subject_three: "Art and design")
+               course_subject_one: Dttp::CodeSets::CourseSubjects::MATHEMATICS,
+               course_subject_two: Dttp::CodeSets::CourseSubjects::SOCIAL_SCIENCES,
+               course_subject_three: Dttp::CodeSets::CourseSubjects::BIOLOGY)
       end
 
       it { is_expected.to match_array([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }

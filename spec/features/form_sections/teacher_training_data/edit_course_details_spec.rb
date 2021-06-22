@@ -79,7 +79,7 @@ private
   end
 
   def and_i_enter_valid_dttp_subject_parameters
-    course_details_page.subject.select(trainee.course_subject_one)
+    course_details_page.subject.select(trainee.course_subject_one.upcase_first)
   end
 
   def and_i_enter_valid_parameters

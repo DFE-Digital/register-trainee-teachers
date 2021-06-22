@@ -58,7 +58,7 @@ module Trainees
 
             it "renders the subject" do
               expect(component.find(".govuk-summary-list__row.subject .govuk-summary-list__value"))
-                .to have_text(trainee.course_subject_one)
+                .to have_text(trainee.course_subject_one.upcase_first)
             end
 
             it "renders the course age range" do
