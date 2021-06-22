@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_18_085011) do
+ActiveRecord::Schema.define(version: 2021_06_22_120839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -230,8 +230,8 @@ ActiveRecord::Schema.define(version: 2021_06_18_085011) do
     t.bigint "allocation_subject_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index "lower((name)::text)", name: "index_subject_specialisms_on_lower_name", unique: true
     t.index ["allocation_subject_id"], name: "index_subject_specialisms_on_allocation_subject_id"
-    t.index ["name"], name: "index_subject_specialisms_on_name", unique: true
   end
 
   create_table "subjects", force: :cascade do |t|
