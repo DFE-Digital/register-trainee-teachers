@@ -75,7 +75,7 @@ private
   end
 
   def and_i_enter_valid_subject_specialism_parameters
-    course_details_page.subject.select(@subject_specialism.name)
+    course_details_page.subject.select(@subject_specialism.name.upcase_first)
   end
 
   def and_i_enter_valid_dttp_subject_parameters

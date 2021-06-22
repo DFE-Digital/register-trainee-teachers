@@ -8,15 +8,15 @@
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :institution,
-    form_field: f.govuk_collection_select(:institution, institutions_options, :name,
-                                          :name, label: { text: "Institution", size: "s" }),
+    form_field: f.govuk_collection_select(:institution, institutions_options, :value,
+                                          :text, label: { text: "Institution", size: "s" }),
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
     form_field: f.govuk_collection_select(:subject, subjects_options,
-                                          :name, :name, label: { text: "Degree subject", size: "s" },
+                                          :value, :text, label: { text: "Degree subject", size: "s" },
                                                         hint: { text: 'Search for the closest matching subject.
                                                          You can start typing to narrow down your search.' }),
   ) %>

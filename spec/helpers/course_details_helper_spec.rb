@@ -7,20 +7,26 @@ describe CourseDetailsHelper do
 
   describe "#course_subjects_options" do
     before do
-      create(:subject_specialism, name: "Travel and Tourism")
+      create(:subject_specialism, name: "travel and tourism")
     end
 
     it "iterates over Dttp::CodeSets::CourseSubjects and prints out correct course_subjects values" do
       expect(course_subjects_options.size).to be 40
-      expect(course_subjects_options.first.name).to be_nil
-      expect(course_subjects_options.second.name).to eq "Art and design"
+      expect(course_subjects_options.first.value).to be_nil
+      expect(course_subjects_options.second.value).to eq "Art and design"
     end
 
     context "when the feature flag is turned on", feature_use_subject_specialisms: true do
-      it "iterates over subject specialisms and prints out correct course_subjects values" do
-        expect(course_subjects_options.size).to be 2
-        expect(course_subjects_options.first.name).to be_nil
-        expect(course_subjects_options.second.name).to eq "Travel and Tourism"
+      before do
+        create(:subject_specialism, name: "business and management")
+      end
+
+      it "iterates over subject specialisms and prints out ordered course_subjects" do
+        expect(course_subjects_options.size).to be 3
+        expect(course_subjects_options.first.value).to be_nil
+        expect(course_subjects_options.second.text).to eq "Business and management"
+        expect(course_subjects_options.third.value).to eq "travel and tourism"
+        expect(course_subjects_options.third.text).to eq "Travel and tourism"
       end
     end
   end
@@ -42,8 +48,8 @@ describe CourseDetailsHelper do
 
     it "iterates over array and prints out correct additional_age_ranges values" do
       expect(additional_age_ranges_options.size).to be 2
-      expect(additional_age_ranges_options.first.name).to be_nil
-      expect(additional_age_ranges_options.second.name).to eq "additional_age_range"
+      expect(additional_age_ranges_options.first.value).to be_nil
+      expect(additional_age_ranges_options.second.value).to eq "additional_age_range"
     end
   end
 
@@ -55,6 +61,12 @@ describe CourseDetailsHelper do
     subject { subjects_for_summary_view(subject_one, subject_two, subject_three) }
 
     it { is_expected.to eq("Biology") }
+
+    context "with lowercased first subject" do
+      let(:subject_one) { "applied biology" }
+
+      it { is_expected.to eq("Applied biology") }
+    end
 
     context "with two subjects" do
       let(:subject_two) { "Art and design" }

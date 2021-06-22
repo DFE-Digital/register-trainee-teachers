@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :allocation_subject do
-    sequence(:name) { |c| "Allocation Subject #{c}" }
+    sequence(:name) { |c| "#{Faker::Educator.course_name} #{c}" }
   end
 end

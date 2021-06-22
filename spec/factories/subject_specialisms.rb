@@ -8,6 +8,6 @@ FactoryBot.define do
       subject_name { nil }
     end
 
-    sequence(:name) { |c| subject_name.presence || "Subject Specialism #{c}" }
+    sequence(:name) { |c| subject_name.presence || "#{Faker::Educator.subject.downcase} #{c}" }
   end
 end

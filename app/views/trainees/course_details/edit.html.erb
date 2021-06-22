@@ -18,7 +18,7 @@
           f,
           attribute_name: :course_subject_one,
           form_field: f.govuk_collection_select(:course_subject_one, course_subjects_options,
-                                                :name, :name, label: { text: "Subject", size: "s" },
+                                                :value, :text, label: { text: "Subject", size: "s" },
                                                               hint: { text: t('.subject_hint') }),
         ) %>
 
@@ -42,8 +42,8 @@
               f,
               attribute_name: :additional_age_range,
               form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
-                                                    :name,
-                                                    :name,
+                                                    :value,
+                                                    :text,
                                                     label: { text: "Other age range", size: "s" }),
             ) %>
 

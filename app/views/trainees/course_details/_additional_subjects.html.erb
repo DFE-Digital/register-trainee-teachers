@@ -13,7 +13,7 @@
         f,
         attribute_name: :course_subject_two,
         form_field: f.govuk_collection_select(:course_subject_two, course_subjects_options,
-                                              :name, :name, label: { text: t(".subject_two") },
+                                              :value, :text, label: { text: t(".subject_two") },
                                                             hint: { text: t(".subject_hint") }),
       ) %>
     </div>
@@ -23,7 +23,7 @@
         f,
         attribute_name: :course_subject_three,
         form_field: f.govuk_collection_select(:course_subject_three, course_subjects_options,
-                                              :name, :name, label: { text: t(".subject_three") },
+                                              :value, :text, label: { text: t(".subject_three") },
                                                             hint: { text: t(".subject_hint") }),
       ) %>
     </div>

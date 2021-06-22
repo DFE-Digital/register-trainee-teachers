@@ -24,6 +24,12 @@ describe AutocompleteValidator do
     it "does not add an error" do
       expect(subject).to be_valid
     end
+
+    context "with different cases" do
+      let(:search_raw) { "DOes aSk JEEVes sTiLl eXisT?" }
+
+      it { is_expected.to be_valid }
+    end
   end
 
   context "when the field/raw value are different" do

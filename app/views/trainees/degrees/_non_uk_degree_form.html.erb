@@ -5,15 +5,15 @@
   <h1 class="govuk-heading-l">Non-UK degree details</h1>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
-    form_field: f.govuk_collection_select(:country, countries_options, :name,
-                                          :name, label: { text: "In which country is the degree institution based?", size: "s" }),
+    form_field: f.govuk_collection_select(:country, countries_options, :value,
+                                          :text, label: { text: "In which country is the degree institution based?", size: "s" }),
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
     form_field: f.govuk_collection_select(:subject, subjects_options,
-                                          :name, :name, label: { text: "Degree subject", size: "s" },
+                                          :value, :text, label: { text: "Degree subject", size: "s" },
                                                         hint: { text: 'Search for the closest matching subject.
                                                          You can start typing to narrow down your search.' }),
   ) %>
