@@ -75,9 +75,15 @@ module Diversities
     def disclosed_and_invalid?
       trainee.diversity_disclosed? && (
         trainee.ethnic_group.blank? ||
-        trainee.ethnic_background.blank? ||
+        ethnic_background_blank? ||
         trainee.disability_disclosure.blank?
       )
+    end
+
+    def ethnic_background_blank?
+      return false if trainee.ethnic_group == Diversities::ETHNIC_GROUP_ENUMS[:not_provided]
+
+      trainee.ethnic_background.blank?
     end
 
     def disability_disclosed_and_invalid?
