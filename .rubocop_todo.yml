@@ -149,12 +149,6 @@ Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SingleArgumentDig:
-  Exclude:
-    - 'app/services/calculate_bursary.rb'
-
 # Offense count: 22
 # Cop supports --auto-correct.
 Style/StringConcatenation:
