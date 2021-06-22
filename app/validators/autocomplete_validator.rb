@@ -8,7 +8,7 @@ class AutocompleteValidator < ActiveModel::EachValidator
     return if raw_value.nil?
 
     value = record.send(attribute)
-    if value != raw_value
+    if value.downcase != raw_value.downcase
 
       # If the user hasn't selected something, we need to reset the value so that the autocomplete
       # doesn't clobber the raw value when the page reloads

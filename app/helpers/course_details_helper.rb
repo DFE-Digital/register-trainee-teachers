@@ -26,7 +26,7 @@ module CourseDetailsHelper
   def subjects_for_summary_view(subject_one, subject_two, subject_three)
     additional_subjects = [subject_two, subject_three].reject(&:blank?).join(" and ")
 
-    [subject_one, additional_subjects].reject(&:blank?).join(" with ")
+    [subject_one&.upcase_first, additional_subjects].reject(&:blank?).join(" with ")
   end
 
 private

@@ -39,8 +39,9 @@ describe DegreesHelper do
 
     it "iterates over array and prints out correct institutions values" do
       expect(institutions_options.size).to be 2
-      expect(institutions_options.first.name).to be_nil
-      expect(institutions_options.second.name).to eq "institution"
+      expect(institutions_options.first.value).to be_nil
+      expect(institutions_options.second.value).to eq "institution"
+      expect(institutions_options.second.text).to eq "Institution"
     end
   end
 
@@ -51,8 +52,9 @@ describe DegreesHelper do
 
     it "iterates over array and prints out correct subjects values" do
       expect(subjects_options.size).to be 2
-      expect(subjects_options.first.name).to be_nil
-      expect(subjects_options.second.name).to eq "subject"
+      expect(subjects_options.first.value).to be_nil
+      expect(subjects_options.second.value).to eq "subject"
+      expect(subjects_options.second.text).to eq "Subject"
     end
   end
 
@@ -63,8 +65,9 @@ describe DegreesHelper do
 
     it "iterates over array and prints out correct countries values" do
       expect(countries_options.size).to be 2
-      expect(countries_options.first.name).to be_nil
-      expect(countries_options.second.name).to eq "country"
+      expect(countries_options.first.value).to be_nil
+      expect(countries_options.second.value).to eq "country"
+      expect(countries_options.second.text).to eq "Country"
     end
   end
 end

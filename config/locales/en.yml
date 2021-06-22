@@ -393,6 +393,7 @@ en:
         route_message: "Your %{route} courses in the Publish service"
         route_titles:
           provider_led_postgrad: provider-led postgrad
+          school_direct_salaried: School direct salaried
   pages:
     request_an_account:
       inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,
