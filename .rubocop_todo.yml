@@ -148,8 +148,3 @@ Rails/InverseOf:
 Register/RegisterFormWith:
   Exclude:
     - 'app/helpers/application_helper.rb'
-
-# Offense count: 22
-# Cop supports --auto-correct.
-Style/StringConcatenation:
-  Enabled: false

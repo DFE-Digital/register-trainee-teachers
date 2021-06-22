@@ -13,17 +13,17 @@ module UserCard
     end
 
     def updated_at
-      tag.p("Created at: " + user.created_at.strftime("%-d %B %Y"))
+      tag.p("Created at: #{user.created_at.strftime('%-d %B %Y')}")
     end
 
     def email_address
-      tag.p("Email address: " + user.email)
+      tag.p("Email address: #{user.email}")
     end
 
     def dttp_id
       return if user.dttp_id.blank?
 
-      tag.p("DTTP ID: " + user.dttp_id)
+      tag.p("DTTP ID: #{user.dttp_id}")
     end
 
   private

@@ -30,7 +30,7 @@ module Dttp
       payload = "--batch_#{batch_id}\n"
       payload += "Content-Type: multipart/mixed;boundary=changeset_#{change_set_id}\n\n"
 
-      change_sets.each { |change_set| payload += change_set_body(change_set) + "\n" }
+      change_sets.each { |change_set| payload += "#{change_set_body(change_set)}\n" }
 
       payload += "--changeset_#{change_set_id}--\n"
       payload + "--batch_#{batch_id}--\n"
