@@ -39,12 +39,12 @@ module Filters
     def remove_checkbox_tag_link(filter, value)
       new_filters = filters.deep_dup
       new_filters[filter].reject! { |v| v == value }
-      new_filters.to_query.blank? ? nil : "?" + new_filters.to_query
+      new_filters.to_query.blank? ? nil : "?#{new_filters.to_query}"
     end
 
     def remove_select_tag_link(filter)
       new_filters = filters.reject { |f| f == filter }
-      new_filters.to_query.blank? ? nil : "?" + new_filters.to_query
+      new_filters.to_query.blank? ? nil : "?#{new_filters.to_query}"
     end
   end
 end

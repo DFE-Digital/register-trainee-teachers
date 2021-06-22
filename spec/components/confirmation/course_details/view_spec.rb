@@ -103,8 +103,8 @@ module Confirmation
           let(:trainee) { create(:trainee, :early_years_undergrad, :with_course_details, :draft) }
 
           it "does not render route" do
-            expect(component).to_not have_text("Route")
-            expect(component).to_not have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+            expect(component).not_to have_text("Route")
+            expect(component).not_to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
           end
         end
       end

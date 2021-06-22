@@ -23,7 +23,7 @@ module SortLinks
     end
 
     def sort_path(sort_by)
-      request.path + "?" + request.query_parameters.merge(sort_by: sort_by).to_query
+      "#{request.path}?#{request.query_parameters.merge(sort_by: sort_by).to_query}"
     end
 
     def sorted_by?(key)

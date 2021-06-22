@@ -52,7 +52,7 @@ RSpec.describe TaskList::View do
     let(:active) { false }
 
     it "does not render a link" do
-      expect(rendered_component).to_not have_link("some key", href: "some_path")
+      expect(rendered_component).not_to have_link("some key", href: "some_path")
       expect(rendered_component).to have_text("some key")
     end
   end

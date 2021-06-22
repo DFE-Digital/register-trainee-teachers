@@ -21,7 +21,7 @@ module Sections
         let(:section) { trainee_section }
 
         it "return correct component to render" do
-          expect(trainees_sections_component.component).to_not be_a(CollapsedSection::View)
+          expect(trainees_sections_component.component).not_to be_a(CollapsedSection::View)
           expect(trainees_sections_component.component).to be_a(expected_confirmation_view(section))
         end
       end
@@ -98,7 +98,7 @@ module Sections
     end
 
     def expected_title(section, status)
-      I18n.t("components.sections.titles.#{section}") + " " + I18n.t("components.sections.statuses.#{status}")
+      "#{I18n.t("components.sections.titles.#{section}")} #{I18n.t("components.sections.statuses.#{status}")}"
     end
 
     def expected_link_text(_section, status)

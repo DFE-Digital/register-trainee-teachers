@@ -5,14 +5,15 @@ RSpec.shared_examples "rendering the funding section" do
     let(:trainee) { create(:trainee) }
 
     it "does not render the funding section" do
-      expect(rendered_component).to_not have_text("Funding")
+      expect(rendered_component).not_to have_text("Funding")
     end
   end
 
-  context "when a the funding feature flag is on", "feature_funding": true do
+  context "when a the funding feature flag is on", feature_funding: true do
     context "when a trainee on a route with a bursary" do
       let(:route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
       let(:trainee) { create(:trainee, :draft, route) }
+
       before { create(:bursary, :with_bursary_subjects, training_route: route) }
 
       context "and has not entered their course details" do

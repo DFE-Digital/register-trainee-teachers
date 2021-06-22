@@ -38,8 +38,6 @@ private
   end
 
   def course_subjects
-    @course_subjects ||= begin
-      SubjectSpecialism.order_by_name.pluck(:name)
-    end
+    @course_subjects ||= SubjectSpecialism.order_by_name.pluck(:name)
   end
 end
