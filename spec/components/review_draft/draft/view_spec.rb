@@ -52,4 +52,6 @@ RSpec.describe ReviewDraft::Draft::View do
       end
     end
   end
+
+  include_examples "rendering the funding section"
 end

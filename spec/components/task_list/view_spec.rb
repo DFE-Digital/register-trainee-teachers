@@ -3,9 +3,8 @@
 require "rails_helper"
 
 RSpec.describe TaskList::View do
-  alias_method :component, :page
-
   let(:status) { nil }
+  let(:active) { true }
 
   before(:each) do
     render_inline(TaskList::View.new) do |component|
@@ -13,6 +12,7 @@ RSpec.describe TaskList::View do
         task_name: "some key",
         path: "some_path",
         status: status,
+        active: active,
       )
     end
   end
@@ -22,11 +22,11 @@ RSpec.describe TaskList::View do
 
     context status do
       it "renders the correct tag status" do
-        expect(component.find(".govuk-tag").text).to include(status)
+        expect(rendered_component).to have_text(status)
       end
 
       it "renders the correct tag colour" do
-        expect(component).to have_selector(".govuk-tag--#{colour}")
+        expect(rendered_component).to have_selector(".govuk-tag--#{colour}")
       end
     end
   end
@@ -34,11 +34,11 @@ RSpec.describe TaskList::View do
   context "when task data is provided" do
     context "rendered tasks" do
       it "renders a list of tasks" do
-        expect(component).to have_selector(".app-task-list__item")
+        expect(rendered_component).to have_selector(".app-task-list__item")
       end
 
       it "renders the task name" do
-        expect(component).to have_link("some key", href: "some_path")
+        expect(rendered_component).to have_link("some key", href: "some_path")
       end
     end
 
@@ -46,6 +46,15 @@ RSpec.describe TaskList::View do
     it_behaves_like("status indicator", "in progress", "grey")
     it_behaves_like("status indicator", "review", "pink")
     it_behaves_like("status indicator", "not started", "grey")
+  end
+
+  context "when the task is inactive" do
+    let(:active) { false }
+
+    it "does not render a link" do
+      expect(rendered_component).to_not have_link("some key", href: "some_path")
+      expect(rendered_component).to have_text("some key")
+    end
   end
 
   describe "#status_id" do

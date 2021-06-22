@@ -32,6 +32,10 @@
             if @trainee.requires_placement_details?
               component.row(**row_helper(@trainee, :placement_details))
             end
+
+            if FeatureService.enabled?("funding")
+              component.row(**row_helper(@trainee, funding_options(@trainee)))
+            end
           end %>
   </div>
 </div>

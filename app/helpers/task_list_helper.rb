@@ -120,6 +120,26 @@ module TaskListHelper
           ).status,
           classes: "degree-details",
         },
+
+      funding_active:
+        {
+          task_name: "Funding",
+          path: "#",
+          confirm_path: "#",
+          status: "not started",
+          classes: "funding",
+        },
+
+      funding_inactive:
+        {
+          task_name: "Funding",
+          path: nil,
+          confirm_path: nil,
+          status: "cannot start yet",
+          classes: "funding",
+          hint_text: "Complete course details first",
+          active: false,
+        },
     }
 
     task_list[task]
