@@ -283,6 +283,12 @@ describe Trainee do
 
     it { is_expected.to eq([trainee_with_subject]) }
 
+    context "with lowercase subject name" do
+      let!(:trainee_with_subject) { create(:trainee, course_subject_one: "art and design") }
+
+      it { is_expected.to eq([trainee_with_subject]) }
+    end
+
     context "with multiple subjects" do
       let!(:trainee_with_subject_two) do
         create(:trainee,
