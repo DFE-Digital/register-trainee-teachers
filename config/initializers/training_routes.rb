@@ -10,6 +10,16 @@ TRAINING_ROUTE_ENUMS = {
   provider_led_postgrad: "provider_led_postgrad",
   school_direct_tuition_fee: "school_direct_tuition_fee",
   school_direct_salaried: "school_direct_salaried",
+  provider_led_undergrad: "provider_led_undergrad",
+  opt_in_undergrad: "opt_in_undergrad",
+  hpitt_postgrad: "hpitt_postgrad",
+}.freeze
+
+ROUTE_INITIATIVES_ENUMS = {
+  transition_to_teach: "transition_to_teach",
+  now_teach: "now_teach",
+  maths_physics_chairs_programme_researchers_in_schools: "maths_physics_chairs_programme_researchers_in_schools",
+  future_teaching_scholars: "future_teaching_scholars",
 }.freeze
 
 TRAINING_ROUTES = {
@@ -22,6 +32,9 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
   TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
   TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
+  TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
+  TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
+  TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
 }.freeze
 
 TRAINING_ROUTES_FOR_TRAINEE = TRAINING_ROUTES.select { |training_route|
@@ -82,3 +95,33 @@ SEED_BURSARIES = [
     allocation_subjects: %w[Biology],
   ),
 ].freeze
+
+TRAINING_ROUTE_INITIATIVES = {
+  TRAINING_ROUTE_ENUMS[:assessment_only] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                              :now_teach),
+  TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                    :now_teach,
+                                                                                    :maths_physics_chairs_programme_researchers_in_schools),
+  TRAINING_ROUTE_ENUMS[:early_years_undergrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                    :now_teach),
+  TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                        :now_teach,
+                                                                                        :maths_physics_chairs_programme_researchers_in_schools),
+  TRAINING_ROUTE_ENUMS[:school_direct_salaried] => ROUTE_INITIATIVES_ENUMS.values_at(:future_teaching_scholars,
+                                                                                     :maths_physics_chairs_programme_researchers_in_schools,
+                                                                                     :now_teach),
+  TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                         :now_teach),
+  TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                          :now_teach),
+  TRAINING_ROUTE_ENUMS[:early_years_salaried] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                   :now_teach),
+  TRAINING_ROUTE_ENUMS[:early_years_postgrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                   :now_teach),
+  TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                                     :now_teach),
+  TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                               :now_teach),
+  TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
+                                                                             :now_teach),
+}.freeze
