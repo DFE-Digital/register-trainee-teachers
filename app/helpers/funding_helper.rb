@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module FundingHelper
+  def training_initiative_options(trainee)
+    TRAINING_ROUTE_INITIATIVES[trainee.training_route]
+  end
+
   def funding_options(trainee)
     cannot_start_funding?(trainee) ? :funding_inactive : :funding_active
   end

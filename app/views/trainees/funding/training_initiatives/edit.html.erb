@@ -1,0 +1,34 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.funding.training_initiatives.edit",
+                               has_errors: @training_initiatives_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @training_initiatives_form, url: trainee_funding_training_initiative_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.training_initiatives.edit") %><h1>
+      <p class="govuk-body"><%= t("views.forms.funding.training_initiatives.description") %></p>
+
+        <%= f.govuk_radio_buttons_fieldset(:training_initiative, legend: { text: t("views.forms.funding.training_initiatives.#{training_initiative_options(@trainee).count == 2 ? "title_two" : "title"}"), size: "m" }) do %>
+          <% training_initiative_options(@trainee).each_with_index do |training_initiative, index| %>
+            <%= f.govuk_radio_button(
+              :training_initiative,
+              training_initiative,
+              label: { text: t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}") },
+              link_errors: index.zero?,
+            ) %>
+          <% end %>
+
+          <%= f.govuk_radio_divider %>
+          <%= f.govuk_radio_button :training_initiative, ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                                   label: { text: t("activerecord.attributes.trainee.training_initiatives.no_initiative") } %>
+        <% end %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

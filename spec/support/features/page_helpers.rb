@@ -22,6 +22,10 @@ module Features
       @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
     end
 
+    def training_initiative_page
+      @training_initiative_page ||= PageObjects::Trainees::Funding::TrainingInitiative.new
+    end
+
     def confirm_training_details_page
       @confirm_training_details_page ||= PageObjects::Trainees::ConfirmTrainingDetails.new
     end

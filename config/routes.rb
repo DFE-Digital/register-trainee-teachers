@@ -80,6 +80,10 @@ Rails.application.routes.draw do
         resource :disability_detail, only: %i[edit update], path: "/disabilities"
       end
 
+      namespace :funding do
+        resource :training_initiative, only: %i[edit update], path: "/training-initiative"
+      end
+
       resource :outcome_details, only: [], path: "outcome-details" do
         get "confirm"
         get "recommended"

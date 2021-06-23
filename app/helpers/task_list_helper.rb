@@ -124,9 +124,12 @@ module TaskListHelper
       funding_active:
         {
           task_name: "Funding",
-          path: "#",
-          confirm_path: "#",
-          status: "not started",
+          path: edit_trainee_funding_training_initiative_path(trainee),
+          confirm_path: edit_trainee_funding_training_initiative_path(trainee),
+          status: ProgressService.call(
+            validator: Funding::TrainingInitiativesForm.new(trainee),
+            progress_value: trainee.progress.funding,
+          ).status,
           classes: "funding",
         },
 
