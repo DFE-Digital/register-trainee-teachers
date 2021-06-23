@@ -711,7 +711,7 @@ en:
         funding/bursary_form:
           attributes:
             applying_for_bursary:
-              inclusion: Select an option
+              inclusion: Select if you are applying for a bursary for this trainee
         outcome_date_form:
           attributes:
             date_string:
