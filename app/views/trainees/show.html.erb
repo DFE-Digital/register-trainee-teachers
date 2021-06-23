@@ -1,23 +1,23 @@
 <div class="record-outcome-action-bar">
-  <%= render Trainees::RecordActions::View.new(@trainee) %>
+  <%= render RecordActions::View.new(@trainee) %>
 </div>
 
 <div class="record-details">
-  <%= render Trainees::RecordDetails::View.new(trainee: @trainee, last_updated_event: @trainee.timeline.first) %>
+  <%= render RecordDetails::View.new(trainee: @trainee, last_updated_event: @trainee.timeline.first) %>
 </div>
 
 <div class="course-details">
-  <%= render Trainees::Confirmation::CourseDetails::View.new(data_model: @trainee) %>
+  <%= render Confirmation::CourseDetails::View.new(data_model: @trainee) %>
 </div>
 
 <% if @trainee.requires_schools? %>
   <div class="school-details">
-    <%= render Trainees::SchoolDetails::View.new(@trainee) %>
+    <%= render SchoolDetails::View.new(@trainee) %>
   </div>
 <% end %>
 
 <% if @trainee.requires_placement_details? %>
   <div class="placement-details">
-    <%= render Trainees::Confirmation::PlacementDetails::View.new(trainee: @trainee) %>
+    <%= render Confirmation::PlacementDetails::View.new(trainee: @trainee) %>
   </div>
 <% end %>

@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render Trainees::Confirmation::ConfirmPublishCourse::View.new(trainee: @trainee, course: @course) %>
+    <%= render Confirmation::ConfirmPublishCourse::View.new(trainee: @trainee, course: @course) %>
 
     <%= register_form_with(model: @confirm_publish_course_form, url: trainee_confirm_publish_course_path(@trainee, @course.code), method: :put, local: true) do |f| %>
       <%= f.hidden_field :code, value: @course.code %>

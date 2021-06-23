@@ -8,7 +8,7 @@
     ) %>
   <% end %>
 
-  <%= render Trainees::RecordHeader::View.new(trainee: @trainee) %>
+  <%= render RecordHeader::View.new(trainee: @trainee) %>
 
   <%= render TabNavigation::View.new(items: [
     { name: "About their teacher training", url: trainee_path(@trainee) },
