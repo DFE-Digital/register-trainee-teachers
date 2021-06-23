@@ -56,23 +56,23 @@ Rails.application.routes.draw do
       get "/confirm-delete", to: "confirm_delete#show"
 
       namespace :degrees do
+        concerns :confirmable
         get "/new/type", to: "type#new"
         post "/new/type", to: "type#create"
         get "/confirm", to: "confirm_details#show"
       end
 
-      resources :degrees do
-        collection do
-          resource :confirm_details, as: :degrees_confirm, only: :update, path: "/confirm"
-        end
+      resources :degrees, only: %i[new edit create update destroy]
+
+      namespace :funding do
+        concerns :confirmable
+        resource :bursary, only: %i[edit update], path: "/bursary"
       end
 
       resource :personal_details, concerns: :confirmable, only: %i[show edit update], path: "/personal-details"
 
       namespace :diversity do
-        get "/confirm", to: "confirm_details#show"
-        post "/confirm", to: "confirm_details#update"
-        put "/confirm", to: "confirm_details#update"
+        concerns :confirmable
         resource :disclosure, only: %i[edit update], path: "/information-disclosed"
         resource :ethnic_group, only: %i[edit update], path: "/ethnic-group"
         resource :ethnic_background, only: %i[edit update], path: "/ethnic-background"
