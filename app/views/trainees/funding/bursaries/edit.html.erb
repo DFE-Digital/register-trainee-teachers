@@ -1,0 +1,33 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.funding.bursaries.edit",
+                               has_errors: @bursary_form.errors.present?) %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @bursary_form, url: trainee_funding_bursary_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.bursaries.edit") %><h1>
+      <p class="govuk-body"><%= t("views.forms.funding.bursaries.description_html", amount: format_currency(@amount), subject: @subject) %></p>
+
+        <%= f.govuk_radio_buttons_fieldset(:applying_for_bursary, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
+            <%= f.govuk_radio_button(
+              :applying_for_bursary,
+              "true",
+              label: { text: t("views.forms.funding.bursaries.true") },
+              link_errors: true,
+            ) %>
+
+            <%= f.govuk_radio_button(
+              :applying_for_bursary,
+              "false",
+              hint: { text: t("views.forms.funding.bursaries.false_hint") },
+              label: { text: t("views.forms.funding.bursaries.false") },
+            ) %>
+        <% end %>
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

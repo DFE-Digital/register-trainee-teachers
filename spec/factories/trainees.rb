@@ -31,6 +31,7 @@ FactoryBot.define do
     international_address { nil }
     locale_code { :uk }
     email { "#{first_names}.#{last_name}@example.com" }
+    applying_for_bursary { nil }
 
     factory :trainee do
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }

@@ -222,6 +222,10 @@ module Features
       @recommended_for_qts_page ||= PageObjects::Trainees::RecommendedForQts.new
     end
 
+    def bursary_page
+      @bursary_page ||= PageObjects::Trainees::Funding::Bursary.new
+    end
+
     def apply_trainee_data_page
       @apply_trainee_data_pate ||= PageObjects::Trainees::ApplyTraineeData.new
     end
