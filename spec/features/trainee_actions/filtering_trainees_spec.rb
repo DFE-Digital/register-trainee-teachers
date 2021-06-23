@@ -136,7 +136,7 @@ private
   end
 
   def when_i_filter_by_a_subject_which_returns_no_matches
-    when_i_filter_by_subject(@subject_specialism.name)
+    when_i_filter_by_subject(@subject_specialism.name.capitalize)
   end
 
   def then_i_see_a_no_records_found_message

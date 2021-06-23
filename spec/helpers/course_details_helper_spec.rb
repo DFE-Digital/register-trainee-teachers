@@ -11,23 +11,9 @@ describe CourseDetailsHelper do
     end
 
     it "iterates over Dttp::CodeSets::CourseSubjects and prints out correct course_subjects values" do
-      expect(course_subjects_options.size).to be 71
+      expect(course_subjects_options.size).to be 2
       expect(course_subjects_options.first.value).to be_nil
-      expect(course_subjects_options.second.value).to eq Dttp::CodeSets::CourseSubjects::ANCIENT_HEBREW
-    end
-
-    context "when the feature flag is turned on", feature_use_subject_specialisms: true do
-      before do
-        create(:subject_specialism, name: Dttp::CodeSets::CourseSubjects::BUSINESS_MANAGEMENT)
-      end
-
-      it "iterates over subject specialisms and prints out ordered course_subjects" do
-        expect(course_subjects_options.size).to be 3
-        expect(course_subjects_options.first.value).to be_nil
-        expect(course_subjects_options.second.text).to eq "Business and management"
-        expect(course_subjects_options.third.value).to eq Dttp::CodeSets::CourseSubjects::TRAVEL_AND_TOURISM
-        expect(course_subjects_options.third.text).to eq "Travel and tourism"
-      end
+      expect(course_subjects_options.second.value).to eq Dttp::CodeSets::CourseSubjects::TRAVEL_AND_TOURISM
     end
   end
 

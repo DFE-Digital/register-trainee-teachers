@@ -13,8 +13,9 @@ module Features
     end
 
     def and_the_course_details_is_complete
+      given_subject_specialisms_are_available_for_selection
       course_details_page.load(id: trainee_from_url.slug)
-      course_details_page.subject.select(Dttp::CodeSets::CourseSubjects::MAPPING.keys.first)
+      course_details_page.subject.select(subject_specialism_name)
       course_details_page.main_age_range_3_to_11.choose
       and_the_course_date_fields_are_completed
       and_the_course_details_are_submitted
@@ -31,6 +32,14 @@ module Features
     def given_a_course_is_available_for_selection
       trainee = trainee_from_url
       create(:course_with_subjects, accredited_body_code: trainee.provider.code, route: trainee.training_route)
+    end
+
+    def given_subject_specialisms_are_available_for_selection
+      create(:subject_specialism, name: subject_specialism_name)
+    end
+
+    def subject_specialism_name
+      @subject_specialism_name ||= Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample.capitalize
     end
 
     def and_the_course_details_is_marked_completed
