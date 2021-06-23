@@ -38,6 +38,16 @@ describe Trainee do
     end
 
     it do
+      is_expected.to define_enum_for(:training_initiative).with_values(
+        ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars] => 0,
+        ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools] => 1,
+        ROUTE_INITIATIVES_ENUMS[:now_teach] => 2,
+        ROUTE_INITIATIVES_ENUMS[:transition_to_teach] => 3,
+        ROUTE_INITIATIVES_ENUMS[:no_initiative] => 4,
+      )
+    end
+
+    it do
       is_expected.to define_enum_for(:ethnic_group).with_values(
         Diversities::ETHNIC_GROUP_ENUMS[:asian] => 0,
         Diversities::ETHNIC_GROUP_ENUMS[:black] => 1,

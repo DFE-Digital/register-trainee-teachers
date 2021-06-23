@@ -18,4 +18,5 @@ class Progress
   attribute :training_details, :boolean
   attribute :placement_details, :boolean
   attribute :schools, :boolean
+  attribute :funding, :boolean
 end

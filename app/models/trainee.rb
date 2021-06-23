@@ -27,6 +27,8 @@ class Trainee < ApplicationRecord
 
   enum training_route: TRAINING_ROUTES_FOR_TRAINEE
 
+  enum training_initiative: ROUTE_INITIATIVES
+
   enum locale_code: { uk: 0, non_uk: 1 }
 
   enum gender: {

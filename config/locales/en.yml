@@ -212,6 +212,9 @@ en:
         employing_schools:
           index: Select the employing school
           edit: Employing school
+        funding:
+          training_initiatives:
+            edit: Training initiatives
       providers:
         index: Providers
         new: Add a provider
@@ -394,6 +397,11 @@ en:
         route_titles:
           provider_led_postgrad: provider-led postgrad
           school_direct_salaried: School direct salaried
+      funding:
+        training_initiatives:
+          title: Is the trainee on any of these training initiatives?
+          title_two: Is the trainee on either of these training initiatives?
+          description: Training initiatives are sometimes referred to as programmes or schemes. They provide incentives and support for people training to teach. They’re separate from bursaries and scholarships.
   pages:
     request_an_account:
       inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,
@@ -562,6 +570,12 @@ en:
           qts_awarded: QTS awarded
           eyts_recommended: EYTS recommended
           eyts_awarded: EYTS awarded
+        training_initiatives:
+          transition_to_teach: Transition to teach
+          now_teach: Now teach
+          maths_physics_chairs_programme_researchers_in_schools: Maths and physics chairs programme / Researchers in schools
+          future_teaching_scholars: Future teaching scholars
+          no_initiative: Not on a training initiative
     errors:
       models:
         trainee:
@@ -682,6 +696,10 @@ en:
               not_valid: The disability disclosure section is not valid for this trainee
             disability_ids:
               not_valid: Trainee has been disclosed as disabled but no disabilities exist
+        funding/training_initiatives_form:
+          attributes:
+            training_initiative:
+              blank: Select if the trainee is on a training initiative
         outcome_date_form:
           attributes:
             date_string:

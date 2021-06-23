@@ -24,6 +24,7 @@ class FormStore
     lead_school
     employing_school
     schools
+    training_initiative
   ].freeze
 
   class << self
