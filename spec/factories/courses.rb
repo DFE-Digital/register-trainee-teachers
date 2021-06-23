@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :course do
-    sequence(:name) { |c| "Course #{c}" }
+    name { PUBLISH_SUBJECT_SPECIALISM_MAPPING.keys.sample }
     code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
     accredited_body_code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     start_date { Time.zone.today }
@@ -23,10 +23,17 @@ FactoryBot.define do
     factory :course_with_subjects do
       transient do
         subjects_count { 1 }
+        subject_names { [] }
       end
 
       after(:create) do |course, evaluator|
-        create_list(:course_subjects, evaluator.subjects_count, course: course)
+        if evaluator.subject_names.any?
+          evaluator.subject_names.each do |subject_name|
+            course.subjects << create(:subject, name: subject_name)
+          end
+        else
+          create_list(:course_subjects, evaluator.subjects_count, course: course)
+        end
       end
     end
   end

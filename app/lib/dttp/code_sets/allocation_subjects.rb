@@ -199,12 +199,19 @@ module Dttp
           entity_id: "e9f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: PRIMARY },
-          ],
-        },
-        PRIMARY_WITH_MATHEMATICS => {
-          entity_id: "51d3114a-01b5-e811-812e-5065f38b6471",
-          subject_specialisms: [
-            { name: CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS, publish_equivalent: nil },
+            { name: CourseSubjects::ENGLISH_STUDIES, publish_equivalent: "Primary with English" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with geography and history" },
+            { name: CourseSubjects::GEOGRAPHY, publish_equivalent: "Primary with geography and history" },
+            { name: CourseSubjects::HISTORY, publish_equivalent: "Primary with geography and history" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with modern languages" },
+            { name: CourseSubjects::MODERN_LANGUAGES, publish_equivalent: "Primary with modern languages" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with physical education" },
+            { name: CourseSubjects::SPORTS_MANAGEMENT, publish_equivalent: "Primary with physical education" },
+            { name: CourseSubjects::SPORT_AND_EXERCISE_SCIENCES, publish_equivalent: "Primary with physical education" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with science" },
+            { name: CourseSubjects::SCIENCE, publish_equivalent: "Primary with science" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "English as a second or other language" },
+            { name: CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS, publish_equivalent: PRIMARY_WITH_MATHEMATICS },
           ],
         },
       }.freeze

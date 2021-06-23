@@ -7,8 +7,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists(:with_related_courses, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-    given_some_courses_exist
+    given_a_trainee_exists_with_some_courses
     given_i_am_on_the_review_draft_page
   end
 
@@ -76,6 +75,11 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
   end
 
+  def given_a_trainee_exists_with_some_courses
+    given_a_trainee_exists(:with_related_courses, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+    @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
+  end
+
   def then_the_section_should_be(status)
     expect(review_draft_page.course_details.status.text).to eq(status)
   end
@@ -126,10 +130,6 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def then_i_see_the_course_details_page
     expect(course_details_page).to be_displayed(id: trainee.slug)
-  end
-
-  def given_some_courses_exist
-    @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
 
   def given_there_arent_any_courses
