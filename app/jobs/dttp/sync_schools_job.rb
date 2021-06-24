@@ -7,9 +7,9 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_from_dttp)
 
-      @school_list = Dttp::RetrieveSchools.call(request_uri: request_uri)
+      @school_list = RetrieveSchools.call(request_uri: request_uri)
 
-      Dttp::School.upsert_all(school_attributes, unique_by: :dttp_id)
+      School.upsert_all(school_attributes, unique_by: :dttp_id)
 
       Dttp::SyncSchoolsJob.perform_later(next_page_url) if has_next_page?
     end
@@ -19,7 +19,7 @@ module Dttp
     attr_reader :school_list
 
     def school_attributes
-      Dttp::Parsers::Account.to_school_attributes(schools: school_list[:items])
+      Parsers::Account.to_school_attributes(schools: school_list[:items])
     end
 
     def next_page_url

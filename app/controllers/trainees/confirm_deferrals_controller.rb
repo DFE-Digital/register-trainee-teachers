@@ -13,7 +13,7 @@ module Trainees
       if deferral_form.save!
         trainee.defer!
 
-        DeferJob.perform_later(trainee)
+        Dttp::DeferJob.perform_later(trainee)
 
         flash[:success] = "Trainee deferred"
         redirect_to trainee_path(trainee)

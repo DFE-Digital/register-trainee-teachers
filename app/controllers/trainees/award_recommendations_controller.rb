@@ -8,8 +8,8 @@ module Trainees
       if OutcomeDateForm.new(trainee).save!
         trainee.recommend_for_award!
 
-        RecommendForAwardJob.perform_later(trainee)
-        RetrieveAwardJob.perform_with_default_delay(trainee)
+        Dttp::RecommendForAwardJob.perform_later(trainee)
+        Dttp::RetrieveAwardJob.perform_with_default_delay(trainee)
 
         redirect_to recommended_trainee_outcome_details_path(trainee)
       end

@@ -17,7 +17,7 @@ describe Trainees::ConfirmDeferralsController do
     it "updates the placement assignment in DTTP to mark it as deferred" do
       expect {
         post :update, params: { trainee_id: trainee }
-      }.to have_enqueued_job(DeferJob).with(trainee)
+      }.to have_enqueued_job(Dttp::DeferJob).with(trainee)
     end
 
     context "trainee state" do

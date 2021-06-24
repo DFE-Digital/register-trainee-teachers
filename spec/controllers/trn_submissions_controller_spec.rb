@@ -21,11 +21,11 @@ describe TrnSubmissionsController do
       it "queues a background job to register trainee for TRN" do
         expect {
           post :create, params: { trainee_id: trainee }
-        }.to have_enqueued_job(RegisterForTrnJob).with(trainee, current_user.dttp_id)
+        }.to have_enqueued_job(Dttp::RegisterForTrnJob).with(trainee, current_user.dttp_id)
       end
 
       it "queues a background job to poll for the trainee's TRN" do
-        expect(RetrieveTrnJob).to receive(:perform_with_default_delay).with(trainee)
+        expect(Dttp::RetrieveTrnJob).to receive(:perform_with_default_delay).with(trainee)
         post :create, params: { trainee_id: trainee }
       end
 
