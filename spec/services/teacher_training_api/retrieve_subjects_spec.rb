@@ -5,30 +5,24 @@ require "rails_helper"
 module TeacherTrainingApi
   describe RetrieveSubjects do
     describe "#call" do
+      let(:path) { "/subjects" }
+      let(:request_url) { "#{Settings.teacher_training_api.base_url}#{path}" }
+
       before do
-        allow(Client).to receive(:get).with("/subjects").and_return(response)
+        stub_request(:get, request_url).to_return(http_response)
       end
+
+      subject { described_class.call }
 
       context "when the response is success" do
-        let(:response) { double(code: 200, body: ApiStubs::TeacherTrainingApi.subjects.to_json) }
+        let(:http_response) { { status: 200, body: ApiStubs::TeacherTrainingApi.subjects.to_json } }
 
         it "returns the subjects in full" do
-          expect(described_class.call).to eq(ApiStubs::TeacherTrainingApi.subjects[:data])
+          is_expected.to eq(ApiStubs::TeacherTrainingApi.subjects[:data])
         end
       end
 
-      context "when the response is error" do
-        let(:status) { 404 }
-        let(:body) { "error" }
-        let(:headers) { { foo: "bar" } }
-        let(:response) { double(code: status, body: body, headers: headers) }
-
-        it "raises an Error error with the response body as the message" do
-          expect {
-            described_class.call
-          }.to raise_error(TeacherTrainingApi::RetrieveSubjects::Error, "status: #{status}, body: #{body}, headers: #{headers}")
-        end
-      end
+      it_behaves_like "an http error handler"
     end
   end
 end

@@ -6,32 +6,24 @@ module TeacherTrainingApi
   describe RetrieveCourses do
     describe "#call" do
       let(:path) { "/courses?filter[findable]=true&include=accredited_body,provider&sort=name,provider.provider_name" }
+      let(:request_url) { "#{Settings.teacher_training_api.base_url}#{path}" }
 
       before do
-        allow(Client).to receive(:get).with(path).and_return(response)
+        stub_request(:get, request_url).to_return(http_response)
       end
 
+      subject { described_class.call }
+
       context "when the response is success" do
-        let(:response) { double(code: 200, body: ApiStubs::TeacherTrainingApi.courses.to_json) }
+        let(:http_response) { { status: 200, body: ApiStubs::TeacherTrainingApi.courses.to_json } }
         let(:expected_courses) { ApiStubs::TeacherTrainingApi.course }
 
         it "returns the courses in full" do
-          expect(described_class.call).to match(ApiStubs::TeacherTrainingApi.courses)
+          is_expected.to match(ApiStubs::TeacherTrainingApi.courses)
         end
       end
 
-      context "when the response is error" do
-        let(:status) { 404 }
-        let(:body) { "error" }
-        let(:headers) { { foo: "bar" } }
-        let(:response) { double(code: status, body: body, headers: headers) }
-
-        it "raises a Error error with the response body as the message" do
-          expect {
-            described_class.call
-          }.to raise_error(TeacherTrainingApi::RetrieveCourses::Error, "status: #{status}, body: #{body}, headers: #{headers}")
-        end
-      end
+      it_behaves_like "an http error handler"
     end
   end
 end

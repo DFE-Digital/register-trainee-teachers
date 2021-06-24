@@ -9,42 +9,33 @@ module Dttp
       let(:trainee) { create(:trainee, :submitted_for_trn, dttp_id: contact_entity_id) }
       let(:path) { "/contacts(#{contact_entity_id})?$select=dfe_trn" }
       let(:trn) { "trn number" }
+      let(:request_url) { "#{Settings.dttp.api_base_url}#{path}" }
 
       before do
         allow(AccessToken).to receive(:fetch).and_return("token")
-        allow(Client).to receive(:get).with(path).and_return(dttp_response)
+        stub_request(:get, request_url).to_return(http_response)
       end
+
+      subject { described_class.call(trainee: trainee) }
 
       context "TRN is available" do
         let(:trn) { "trn number" }
-        let(:dttp_response) { double(code: 200, body: { dfe_trn: trn }.to_json) }
+        let(:http_response) { { status: 200, body: { dfe_trn: trn }.to_json } }
 
         it "returns the TRN value" do
-          expect(described_class.call(trainee: trainee)).to eq(trn)
+          is_expected.to eq(trn)
         end
       end
 
       context "TRN is not available" do
-        let(:dttp_response) { double(code: 200, body: { dfe_trn: nil }.to_json) }
+        let(:http_response) { { status: 200, body: { dfe_trn: nil }.to_json } }
 
         it "does not change the trainee record" do
-          expect(described_class.call(trainee: trainee)).to be_nil
+          is_expected.to be_nil
         end
       end
 
-      context "HTTP error" do
-        let(:status) { 400 }
-        let(:body) { "error" }
-        let(:headers) { { foo: "bar" } }
-        let(:dttp_response) { double(code: status, body: body, headers: headers) }
-
-        it "raises a HttpError error with the response body as the message" do
-          expect(Client).to receive(:get).with(path).and_return(dttp_response)
-          expect {
-            described_class.call(trainee: trainee)
-          }.to raise_error(Dttp::RetrieveTrn::HttpError, "status: #{status}, body: #{body}, headers: #{headers}")
-        end
-      end
+      it_behaves_like "an http error handler"
     end
   end
 end

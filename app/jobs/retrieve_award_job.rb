@@ -2,7 +2,7 @@
 
 class RetrieveAwardJob < ApplicationJob
   queue_as :default
-  retry_on Dttp::RetrieveAward::HttpError
+  retry_on Dttp::Client::HttpError
   include NotifyOnTimeout
 
   class TraineeAttributeError < StandardError; end

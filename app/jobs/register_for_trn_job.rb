@@ -2,7 +2,7 @@
 
 class RegisterForTrnJob < ApplicationJob
   queue_as :default
-  retry_on Dttp::BatchRequest::Error
+  retry_on Dttp::Client::HttpError
 
   def perform(trainee, created_by_dttp_id)
     Dttp::RegisterForTrn.call(trainee: trainee, created_by_dttp_id: created_by_dttp_id)

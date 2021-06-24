@@ -2,10 +2,6 @@
 
 module Dttp
   class BatchRequest
-    class Error < StandardError; end
-
-    attr_reader :batch_id, :change_set_id, :headers, :change_sets
-
     def initialize(batch_id: SecureRandom.uuid, change_set_id: SecureRandom.uuid)
       @batch_id = batch_id
       @change_set_id = change_set_id
@@ -19,13 +15,16 @@ module Dttp
     end
 
     def submit
-      response = Client.post("/$batch", body: body, headers: headers)
-      raise Error, "body: #{response.body.gsub('\r', '')}, status: #{response.code}, headers: #{response.headers}" if response.code != 200
-
       response
     end
 
   private
+
+    attr_reader :batch_id, :change_set_id, :headers, :change_sets
+
+    def response
+      @response ||= Client.post_batch("/$batch", body: body, headers: headers)
+    end
 
     def body
       payload = "--batch_#{batch_id}\n"
@@ -44,7 +43,7 @@ module Dttp
         Content-Transfer-Encoding: binary
         Content-ID: #{change_set[:content_id]}
 
-        POST #{Client.base_uri}/#{change_set[:entity]} HTTP/1.1
+        POST #{Client::Request.base_uri}/#{change_set[:entity]} HTTP/1.1
         Content-Type: application/json;odata.metadata=minimal
 
         #{change_set[:payload]}

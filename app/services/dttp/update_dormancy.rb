@@ -4,10 +4,6 @@ module Dttp
   class UpdateDormancy
     include ServicePattern
 
-    class Error < StandardError; end
-
-    attr_reader :trainee
-
     def initialize(trainee:)
       @trainee = trainee
     end
@@ -15,19 +11,19 @@ module Dttp
     def call
       return unless FeatureService.enabled?(:persist_to_dttp)
 
-      response = Client.patch(
-        "/dfe_dormantperiods(#{trainee.dormancy_dttp_id})",
-        body: params.to_json,
-      )
-
-      if response.code != 204
-        raise Error, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
-      end
-
       response
     end
 
   private
+
+    attr_reader :trainee
+
+    def response
+      @response ||= Client.patch(
+        "/dfe_dormantperiods(#{trainee.dormancy_dttp_id})",
+        body: params.to_json,
+      )
+    end
 
     def params
       @params ||= Params::Dormancy.new(trainee: trainee)

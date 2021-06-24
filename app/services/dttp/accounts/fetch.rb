@@ -5,24 +5,20 @@ module Dttp
     class Fetch
       include ServicePattern
 
-      class HttpError < StandardError; end
-
-      attr_reader :dttp_id
-
       def initialize(dttp_id:)
         @dttp_id = dttp_id
       end
 
       def call
-        response = Client.get("/accounts(#{dttp_id})")
+        Dttp::Account.new(account_data: JSON(response.body))
+      end
 
-        if response.code != 200
-          raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}"
-        end
+    private
 
-        account_data = JSON(response.body)
+      attr_reader :dttp_id
 
-        Dttp::Account.new(account_data: account_data)
+      def response
+        @response ||= Client.get("/accounts(#{dttp_id})")
       end
     end
   end
