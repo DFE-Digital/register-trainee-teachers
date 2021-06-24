@@ -26,7 +26,7 @@ module PageObjects
       element :additional_age_range, "#course-details-form-additional-age-range-field"
       element :additional_age_range_raw, "input[data-nameoriginal='course_details_form[additional_age_range_raw]']"
 
-      element :submit_button, "input[name='commit']"
+      element :submit_button, "button[type='submit']"
     end
   end
 end

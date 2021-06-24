@@ -11,7 +11,7 @@ module PageObjects
         element :white, "#diversities-ethnic-group-form-ethnic-group-white-ethnic-group-field"
         element :other, "#diversities-ethnic-group-form-ethnic-group-other-ethnic-group-field"
         element :not_provided, "#diversities-ethnic-group-form-ethnic-group-not-provided-ethnic-group-field"
-        element :submit_button, "input[name='commit']"
+        element :submit_button, "button[type='submit']"
       end
     end
   end

@@ -8,7 +8,7 @@ module PageObjects
         element :disabled, "#diversities-disability-disclosure-form-disability-disclosure-disabled-field"
         element :no_disability, "#diversities-disability-disclosure-form-disability-disclosure-no-disability-field"
         element :disability_not_provided, "#diversities-disability-disclosure-form-disability-disclosure-disability-not-provided-field"
-        element :submit_button, "input[name='commit']"
+        element :submit_button, "button[type='submit']"
       end
     end
   end

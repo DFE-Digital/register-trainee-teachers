@@ -5,7 +5,7 @@ module PageObjects
     class Index < PageObjects::Base
       set_url "/personas"
 
-      element :sign_in_button, 'input.govuk-button[type="submit"]'
+      element :sign_in_button, 'button.govuk-button[type="submit"]'
     end
   end
 end

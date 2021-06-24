@@ -18,7 +18,7 @@ module PageObjects
       element :other_nationality2_raw, "input[data-nameoriginal='personal_details_form[other_nationality2_raw]']"
       element :other_nationality3_raw, "input[data-nameoriginal='personal_details_form[other_nationality3_raw]']"
       element :add_nationality, "#add-nationality-button"
-      element :continue_button, "input[name='commit'][value='Continue']"
+      element :continue_button, "button[type='submit']", text: "Continue"
     end
   end
 end

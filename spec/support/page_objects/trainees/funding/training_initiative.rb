@@ -8,7 +8,7 @@ module PageObjects
 
         element :transition_to_teach, "#funding-training-initiatives-form-training-initiative-transition-to-teach-field"
 
-        element :submit_button, "input[name='commit']"
+        element :submit_button, "button[type='submit']"
       end
     end
   end

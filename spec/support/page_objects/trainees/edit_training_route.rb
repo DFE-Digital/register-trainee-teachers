@@ -13,7 +13,7 @@ module PageObjects
 
       element :other, "#trainee-training-route-other-field"
 
-      element :continue_button, 'input.govuk-button[type="submit"]'
+      element :continue_button, 'button.govuk-button[type="submit"]'
     end
   end
 end

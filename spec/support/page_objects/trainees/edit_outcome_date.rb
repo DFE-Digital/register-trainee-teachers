@@ -12,7 +12,7 @@ module PageObjects
       element :outcome_date_month, "#outcome_date_form_date_2i"
       element :outcome_date_year, "#outcome_date_form_date_1i"
 
-      element :continue, "input[name='commit']"
+      element :continue, "button[type='submit']"
     end
   end
 end

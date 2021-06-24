@@ -9,7 +9,7 @@ module PageObjects
       element :non_uk_degree, "#degree-locale-code-non-uk-field"
 
       element :error_summary, ".govuk-error-summary"
-      element :continue, "input[name='commit']"
+      element :continue, "button[type='submit']"
     end
   end
 end

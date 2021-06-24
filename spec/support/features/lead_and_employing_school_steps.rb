@@ -48,7 +48,7 @@ module Features
     end
 
     def and_i_continue
-      find('input.govuk-button[type="submit"]').click
+      find('button.govuk-button[type="submit"]').click
     end
 
     def and_the_lead_and_employing_schools_section_is_marked_completed

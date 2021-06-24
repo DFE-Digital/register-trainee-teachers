@@ -11,7 +11,7 @@ module PageObjects
       element :reinstate_date_month, "#reinstatement_form_date_2i"
       element :reinstate_date_year, "#reinstatement_form_date_1i"
 
-      element :continue, "input[name='commit']"
+      element :continue, "button[type='submit']"
     end
   end
 end

@@ -8,7 +8,7 @@ module PageObjects
       element :employing_school, "#schools-employing-school-form-query-field"
       element :no_js_employing_school, "#schools-employing-school-form-query-field"
       element :autocomplete_list_item, "#schools-employing-school-form-query-field__listbox li:first-child"
-      element :submit, 'input.govuk-button[type="submit"]'
+      element :submit, 'button.govuk-button[type="submit"]'
     end
   end
 end

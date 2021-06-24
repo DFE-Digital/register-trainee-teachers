@@ -17,7 +17,7 @@ module PageObjects
 
       element :filter_tags, ".moj-filter-tags"
       element :clear_filters_link, "a", text: "Clear"
-      element :apply_filters, "input[name='commit']"
+      element :apply_filters, "input[type='submit'][value='Apply filters']"
 
       element :text_search, "#text_search"
       element :assessment_only_checkbox, "#training_route-assessment_only"
