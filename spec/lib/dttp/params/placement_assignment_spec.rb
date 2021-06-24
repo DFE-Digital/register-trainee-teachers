@@ -33,10 +33,7 @@ module Dttp
         trainee.degrees << degree
 
         stub_const("Dttp::CodeSets::AgeRanges::MAPPING",
-                   {
-                     AgeRange::ZERO_TO_FIVE => { entity_id: dttp_ey_age_range_entity_id },
-                     trainee.course_age_range => { entity_id: dttp_age_range_entity_id },
-                   })
+                   { trainee.course_age_range => { entity_id: dttp_age_range_entity_id } })
         stub_const("Dttp::CodeSets::DegreeSubjects::MAPPING",
                    { degree.subject => { entity_id: dttp_degree_subject_entity_id } })
         stub_const("Dttp::CodeSets::Institutions::MAPPING",
@@ -177,7 +174,12 @@ module Dttp
             create(:trainee, :early_years_undergrad, :with_course_details, :with_start_date,
                    dttp_id: dttp_contact_id, provider: provider)
           end
+
           subject { described_class.new(trainee).params }
+
+          before do
+            stub_const("Dttp::CodeSets::AgeRanges::MAPPING", { AgeRange::ZERO_TO_FIVE => { entity_id: dttp_ey_age_range_entity_id } })
+          end
 
           it "returns a hash including the undergrad course level" do
             expect(subject).to include(
