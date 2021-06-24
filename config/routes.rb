@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   end
 
   concern :confirmable do
-    resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm"
+    resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "/trainees/confirm_details"
   end
 
   resources :trainees, except: :edit do
@@ -56,16 +56,16 @@ Rails.application.routes.draw do
       get "/confirm-delete", to: "confirm_delete#show"
 
       namespace :degrees do
-        concerns :confirmable
+        resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "confirm_details"
         get "/new/type", to: "type#new"
         post "/new/type", to: "type#create"
-        get "/confirm", to: "confirm_details#show"
       end
 
       resources :degrees, only: %i[new edit create update destroy]
 
       namespace :funding do
         concerns :confirmable
+        resource :training_initiative, only: %i[edit update], path: "/training-initiative"
         resource :bursary, only: %i[edit update], path: "/bursary"
       end
 
@@ -78,10 +78,6 @@ Rails.application.routes.draw do
         resource :ethnic_background, only: %i[edit update], path: "/ethnic-background"
         resource :disability_disclosure, only: %i[edit update], path: "/disability-disclosure"
         resource :disability_detail, only: %i[edit update], path: "/disabilities"
-      end
-
-      namespace :funding do
-        resource :training_initiative, only: %i[edit update], path: "/training-initiative"
       end
 
       resource :outcome_details, only: [], path: "outcome-details" do

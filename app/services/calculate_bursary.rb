@@ -15,8 +15,9 @@ class CalculateBursary
 
       # Bursaries are awarded based on the allocation subject for a given
       # subject specialism.
-      allocation_subject = SubjectSpecialism.find_by!(name: subject).allocation_subject
-      allocation_subject.bursaries.find_by(training_route: route)&.amount
+      if (allocation_subject = SubjectSpecialism.find_by(name: subject)&.allocation_subject)
+        allocation_subject.bursaries.find_by(training_route: route)&.amount
+      end
     end
 
   private

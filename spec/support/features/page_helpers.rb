@@ -22,10 +22,6 @@ module Features
       @training_details_page ||= PageObjects::Trainees::TrainingDetails.new
     end
 
-    def training_initiative_page
-      @training_initiative_page ||= PageObjects::Trainees::Funding::TrainingInitiative.new
-    end
-
     def confirm_training_details_page
       @confirm_training_details_page ||= PageObjects::Trainees::ConfirmTrainingDetails.new
     end
@@ -222,8 +218,16 @@ module Features
       @recommended_for_qts_page ||= PageObjects::Trainees::RecommendedForQts.new
     end
 
+    def training_initiative_page
+      @training_initiative_page ||= PageObjects::Trainees::Funding::TrainingInitiative.new
+    end
+
     def bursary_page
       @bursary_page ||= PageObjects::Trainees::Funding::Bursary.new
+    end
+
+    def confirm_funding_page
+      @confirm_funding_page ||= PageObjects::Trainees::ConfirmFunding.new
     end
 
     def apply_trainee_data_page
