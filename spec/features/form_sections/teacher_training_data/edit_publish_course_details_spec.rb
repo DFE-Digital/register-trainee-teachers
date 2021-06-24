@@ -145,7 +145,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def and_i_only_see_the_courses_for_my_provider_and_route
     course_codes_on_page = publish_course_details_page.course_options
-      .map { |o| o.label.text.match(/\((.*)\)/) }
+      .map { |o| o.label.text.match(/\((.{4})\)/) }
       .compact
       .map { |m| m[1] }
       .sort
