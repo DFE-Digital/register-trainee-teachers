@@ -14,8 +14,6 @@ inherit_from:
   - ./config/rubocop/rails.yml
   - ./config/rubocop/style.yml
   - ./config/rubocop/rspec.yml
-  - ./config/rubocop/govuk.yml
-  - ./config/rubocop/register.yml
   - .rubocop_todo.yml
 
 AllCops:
@@ -24,3 +22,30 @@ AllCops:
     - "bin/*"
     - "db/schema.rb"
     - "node_modules/**/*"
+
+
+# These can't be moved into their own config files. erb_lint won't find them unless the require is
+# in the same file with them. If we do that the path becomes ../../lib etc. Rubocop can resolve this fine
+# but erb_lint can't so one or other of them doesn't work.
+
+Govuk:
+  Include:
+    - "app/views/**/*"
+    - "app/components/**/*"
+  Exclude:
+    - "app/components/trainees/confirmation/degrees/view.html.erb"
+    - "app/components/personas/view.html.erb"
+
+Govuk/GovukLinkTo:
+  Exclude:
+    - "app/components/govuk_button_link_to/view.rb"
+
+Govuk/GovukSubmit:
+  Exclude:
+    - "app/components/confirmation/degrees/view.html.erb"
+    - "app/components/personas/view.html.erb"
+
+Register/RegisterFormWith:
+   Include:
+    - "app/views/**/*"
+    - "app/components/**/*"

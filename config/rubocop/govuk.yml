@@ -1,3 +1,8 @@
+require:
+  - ../../lib/rubocop/cop/govuk/govuk_button_to.rb
+  - ../../lib/rubocop/cop/govuk/govuk_link_to.rb
+  - ../../lib/rubocop/cop/govuk/govuk_submit.rb
+
 Govuk:
   Include:
     - "app/views/**/*"

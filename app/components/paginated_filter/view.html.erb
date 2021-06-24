@@ -8,7 +8,10 @@
           <% if FeatureService.enabled?(:trainee_export) %>
             <div class="app-export--link">
               <%= govuk_link_to(
-                    I18n.t("views.trainees.index.export"), trainees_path(filter_params.merge(format: "csv")), class: "app-trainee-export") %>
+                I18n.t("views.trainees.index.export"),
+                trainees_path(filter_params.merge(format: "csv")),
+                class: "app-trainee-export",
+              ) %>
             </div>
           <% end %>
           <%= render SortLinks::View.new %>

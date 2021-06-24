@@ -24,3 +24,4 @@ linters:
         Enabled: false # 1 app error
       Style/FrozenStringLiteralComment:
         Enabled: false # 666 app errors
+

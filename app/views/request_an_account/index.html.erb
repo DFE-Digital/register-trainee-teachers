@@ -2,7 +2,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l"><%=t("components.page_titles.pages.request_an_account") %></h1>
+    <h1 class="govuk-heading-l"><%= t("components.page_titles.pages.request_an_account") %></h1>
       <h2 class="govuk-body-m">
         <%= t("pages.request_an_account.inviting_limited_itt") %>
       </h2>
@@ -13,7 +13,7 @@
         Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.
       </h2>
     <hr class='govuk-section-break govuk-section-break--m govuk-section-break'>
-      <h2 class="govuk-body-m"><%= t("pages.request_an_account.send_email")  %>
+      <h2 class="govuk-body-m"><%= t("pages.request_an_account.send_email") %>
         <%= govuk_mail_to(Settings.support_email,
                           Settings.support_email,
                           subject: t("pages.request_an_account.email_subject")) %>
