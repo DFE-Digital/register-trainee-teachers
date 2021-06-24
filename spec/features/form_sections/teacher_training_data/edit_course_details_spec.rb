@@ -22,27 +22,26 @@ feature "course details", type: :feature do
       given_i_am_on_the_review_draft_page
     end
 
-    context "when the feature flag is turned on", feature_use_subject_specialisms: true do
-      scenario "submitting with valid parameters" do
-        given_a_subject_specialism_is_available_for_selection
-        when_i_visit_the_course_details_page
-        and_i_enter_valid_subject_specialism_parameters
-        and_i_enter_valid_parameters
-        and_i_submit_the_form
-        and_the_course_details_are_updated
-      end
+    scenario "submitting with valid parameters" do
+      given_a_subject_specialism_is_available_for_selection
+      when_i_visit_the_course_details_page
+      and_i_choose_a_specialism
+      and_i_enter_valid_parameters
+      and_i_submit_the_form
+      then_the_course_details_are_updated
     end
 
     describe "tracking the progress" do
       scenario "renders an 'in progress' status when details partially provided" do
+        given_a_subject_specialism_is_available_for_selection
         when_i_visit_the_course_details_page
-        and_i_enter_valid_dttp_subject_parameters
+        and_i_choose_a_specialism
         and_i_enter_valid_parameters
         and_i_submit_the_form
         and_i_continue_without_confirming_details
         then_i_am_redirected_to_the_review_draft_page
         and_the_section_should_be(in_progress)
-        and_the_course_details_are_updated
+        then_the_course_details_are_updated
       end
     end
 
@@ -74,12 +73,8 @@ private
     course_details_page.load(id: trainee.slug)
   end
 
-  def and_i_enter_valid_subject_specialism_parameters
+  def and_i_choose_a_specialism
     course_details_page.subject.select(@subject_specialism.name.upcase_first)
-  end
-
-  def and_i_enter_valid_dttp_subject_parameters
-    course_details_page.subject.select(trainee.course_subject_one.upcase_first)
   end
 
   def and_i_enter_valid_parameters
@@ -100,7 +95,7 @@ private
     course_details_page.submit_button.click
   end
 
-  def and_the_course_details_are_updated
+  def then_the_course_details_are_updated
     when_i_visit_the_course_details_page
 
     expect(course_details_page.subject.value).to eq(trainee.reload.course_subject_one)

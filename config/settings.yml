@@ -40,7 +40,6 @@ features:
   send_emails: false
   persist_to_dttp: false
   funding: false
-  use_subject_specialisms: false
   routes:
     early_years_assessment_only: false
     early_years_salaried: false

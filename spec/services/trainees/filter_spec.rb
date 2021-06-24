@@ -34,12 +34,6 @@ module Trainees
       let(:filters) { { subject: subject_name } }
 
       it { is_expected.to eq([trainee_with_subject]) }
-
-      context "when the feature flag is turned on", feature_use_subject_specialisms: true do
-        let!(:trainee_with_subject) { create(:trainee, :with_subject_specialism, subject_name: subject_name) }
-
-        it { is_expected.to eq([trainee_with_subject]) }
-      end
     end
 
     context "with text_search filter" do
