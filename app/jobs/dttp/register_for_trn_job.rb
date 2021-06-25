@@ -6,6 +6,8 @@ module Dttp
     retry_on Client::HttpError
 
     def perform(trainee, created_by_dttp_id)
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       RegisterForTrn.call(trainee: trainee, created_by_dttp_id: created_by_dttp_id)
 
       ChangeTraineeStatusJob.perform_later(

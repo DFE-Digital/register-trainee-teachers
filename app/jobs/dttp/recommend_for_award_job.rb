@@ -6,6 +6,8 @@ module Dttp
     retry_on Client::HttpError
 
     def perform(trainee)
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       RecommendForAward.call(trainee: trainee)
 
       UpdateTraineeStatus.call(
