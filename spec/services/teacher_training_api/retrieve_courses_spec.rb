@@ -19,7 +19,7 @@ module TeacherTrainingApi
         let(:expected_courses) { ApiStubs::TeacherTrainingApi.course }
 
         it "returns the courses in full" do
-          is_expected.to match(ApiStubs::TeacherTrainingApi.courses)
+          expect(subject).to match(ApiStubs::TeacherTrainingApi.courses)
         end
       end
 

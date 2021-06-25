@@ -24,6 +24,7 @@ RSpec.shared_examples "dttp trainee update" do |dttp_param_processor|
 
   context "success" do
     let(:http_response) { { status: 204 } }
+
     it_behaves_like "CreateOrUpdateConsistencyCheckJob", described_class
 
     it "sends a PATCH request to set entity property 'dfe_datestandardsassessmentpassed'" do

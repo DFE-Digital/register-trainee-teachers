@@ -18,7 +18,7 @@ module TeacherTrainingApi
         let(:http_response) { { status: 200, body: ApiStubs::TeacherTrainingApi.subjects.to_json } }
 
         it "returns the subjects in full" do
-          is_expected.to eq(ApiStubs::TeacherTrainingApi.subjects[:data])
+          expect(subject).to eq(ApiStubs::TeacherTrainingApi.subjects[:data])
         end
       end
 
