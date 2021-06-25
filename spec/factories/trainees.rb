@@ -292,11 +292,9 @@ FactoryBot.define do
       apply_application
     end
 
-    trait :with_multiple_subjects do
-      with_course_details
-
-      course_subject_two { create(:subject_specialism).name }
-      course_subject_three { create(:subject_specialism).name }
+    trait :with_funding do
+      training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
+      applying_for_bursary { Faker::Boolean.boolean }
     end
   end
 end

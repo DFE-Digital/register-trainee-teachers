@@ -1,20 +1,26 @@
 # frozen_string_literal: true
 
 class RouteDataManager
-  attr_reader :trainee
-
   def initialize(trainee:)
     @trainee = trainee
   end
 
   def update_training_route!(route)
     trainee.training_route = route
-    trainee.update!(reset_course_details) if trainee.training_route_changed?
+    reset_trainee_details if trainee.training_route_changed?
+    trainee.save!
   end
 
 private
 
-  def reset_course_details
+  attr_reader :trainee
+
+  def reset_trainee_details
+    trainee.assign_attributes(course_details.merge(funding_details))
+    reset_progress
+  end
+
+  def course_details
     {
       course_code: nil,
       course_subject_one: nil,
@@ -23,9 +29,18 @@ private
       course_age_range: nil,
       course_start_date: nil,
       course_end_date: nil,
-      progress: {
-        course_details: false,
-      },
     }
+  end
+
+  def funding_details
+    {
+      training_initiative: nil,
+      applying_for_bursary: nil,
+    }
+  end
+
+  def reset_progress
+    trainee.progress.course_details = false
+    trainee.progress.funding = false
   end
 end

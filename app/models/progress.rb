@@ -10,13 +10,13 @@ class Progress
     completed: "completed",
   }.freeze
 
-  attribute :personal_details, :boolean
-  attribute :contact_details, :boolean
-  attribute :degrees, :boolean
-  attribute :diversity, :boolean
-  attribute :course_details, :boolean
-  attribute :training_details, :boolean
-  attribute :placement_details, :boolean
-  attribute :schools, :boolean
-  attribute :funding, :boolean
+  attribute :personal_details, :boolean, default: false
+  attribute :contact_details, :boolean, default: false
+  attribute :degrees, :boolean, default: false
+  attribute :diversity, :boolean, default: false
+  attribute :course_details, :boolean, default: false
+  attribute :training_details, :boolean, default: false
+  attribute :placement_details, :boolean, default: false
+  attribute :schools, :boolean, default: false
+  attribute :funding, :boolean, default: false
 end
