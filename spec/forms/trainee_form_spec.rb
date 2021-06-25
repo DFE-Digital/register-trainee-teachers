@@ -16,6 +16,7 @@ end
 describe TraineeForm, type: :model do
   let(:user) { create(:user) }
   let(:trainee) { create(:trainee) }
+
   subject { TestForm.new(trainee, user: user) }
 
   describe "track_validation_errors: true" do
@@ -26,10 +27,10 @@ describe TraineeForm, type: :model do
     it "saves validation errors" do
       subject.valid?
       expect(ValidationError.last.form_object).to eql("TestForm")
-      expect(ValidationError.count).to eql(1)
+      expect(ValidationError.count).to be(1)
 
       subject.valid?
-      expect(ValidationError.count).to eql(2)
+      expect(ValidationError.count).to be(2)
     end
   end
 
@@ -40,10 +41,10 @@ describe TraineeForm, type: :model do
 
     it "saves validation errors" do
       subject.valid?
-      expect(ValidationError.count).to eql(0)
+      expect(ValidationError.count).to be(0)
 
       subject.valid?
-      expect(ValidationError.count).to eql(0)
+      expect(ValidationError.count).to be(0)
     end
   end
 end

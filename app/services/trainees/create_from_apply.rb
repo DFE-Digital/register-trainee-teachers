@@ -58,7 +58,7 @@ module Trainees
     end
 
     def address
-      raw_contact_details["country"] != "GB" ? international_address : uk_address
+      raw_contact_details["country"] == "GB" ? uk_address : international_address
     end
 
     def international_address

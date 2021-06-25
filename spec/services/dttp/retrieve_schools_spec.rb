@@ -5,18 +5,17 @@ require "rails_helper"
 module Dttp
   describe RetrieveSchools do
     let(:request_uri) { nil }
+    let(:expected_path) do
+      "/accounts?%24filter=dfe_provider+eq+false&%24select=name%2Cdfe_urn%2Caccountid"
+    end
     let(:request_headers) { { headers: { "Prefer" => "odata.maxpagesize=5000" } } }
-    let(:http_response) { { status: 200, body: { value: [1, 2, 3], '@odata.nextLink': "https://example.com" }.to_json } }
+    let(:http_response) { { status: 200, body: { value: [1, 2, 3], "@odata.nextLink": "https://example.com" }.to_json } }
 
     subject { described_class.call(request_uri: request_uri) }
 
     before do
       allow(AccessToken).to receive(:fetch).and_return("token")
       stub_request(:get, "#{Settings.dttp.api_base_url}#{expected_path}").to_return(http_response)
-    end
-
-    let(:expected_path) do
-      "/accounts?%24filter=dfe_provider+eq+false&%24select=name%2Cdfe_urn%2Caccountid"
     end
 
     it "requests schools" do

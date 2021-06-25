@@ -27,7 +27,7 @@ module Dttp
 
         def remove_select_tag_link(filter)
           new_filters = filters.reject { |f| f == filter }
-          new_filters.to_query.blank? ? nil : "?" + new_filters.to_query
+          new_filters.to_query.blank? ? nil : "?#{new_filters.to_query}"
         end
       end
     end

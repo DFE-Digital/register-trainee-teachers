@@ -62,11 +62,7 @@ module TeacherTrainingApi
     end
 
     def duration_in_years
-      case course_attributes[:course_length]
-      when "OneYear" then 1
-      when "TwoYears" then 2
-      else 1
-      end
+      course_attributes[:course_length] == "TwoYears" ? 2 : 1
     end
 
     def route

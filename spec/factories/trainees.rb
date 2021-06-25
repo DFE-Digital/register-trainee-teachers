@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :abstract_trainee, class: Trainee do
+  factory :abstract_trainee, class: "Trainee" do
     sequence :trainee_id do |n|
       year = (course_start_date || Faker::Date.between(from: 10.years.ago, to: Time.zone.today)).strftime("%y").to_i
 

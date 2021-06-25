@@ -7,7 +7,7 @@ describe Trainee do
     subject { build(:trainee) }
 
     it do
-      is_expected.to define_enum_for(:training_route).with_values(
+      expect(subject).to define_enum_for(:training_route).with_values(
         TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
         TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
@@ -23,14 +23,14 @@ describe Trainee do
     it { is_expected.to define_enum_for(:gender).with_values(male: 0, female: 1, other: 2, gender_not_provided: 3) }
 
     it do
-      is_expected.to define_enum_for(:diversity_disclosure).with_values(
+      expect(subject).to define_enum_for(:diversity_disclosure).with_values(
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] => 1,
       )
     end
 
     it do
-      is_expected.to define_enum_for(:disability_disclosure).with_values(
+      expect(subject).to define_enum_for(:disability_disclosure).with_values(
         Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] => 0,
         Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] => 1,
         Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] => 2,
@@ -38,7 +38,7 @@ describe Trainee do
     end
 
     it do
-      is_expected.to define_enum_for(:training_initiative).with_values(
+      expect(subject).to define_enum_for(:training_initiative).with_values(
         ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars] => 0,
         ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools] => 1,
         ROUTE_INITIATIVES_ENUMS[:now_teach] => 2,
@@ -48,7 +48,7 @@ describe Trainee do
     end
 
     it do
-      is_expected.to define_enum_for(:ethnic_group).with_values(
+      expect(subject).to define_enum_for(:ethnic_group).with_values(
         Diversities::ETHNIC_GROUP_ENUMS[:asian] => 0,
         Diversities::ETHNIC_GROUP_ENUMS[:black] => 1,
         Diversities::ETHNIC_GROUP_ENUMS[:mixed] => 2,
@@ -185,11 +185,13 @@ describe Trainee do
 
       context "the trainee has an associated apply application" do
         let(:trainee) { create(:trainee, :with_apply_application) }
+
         it { is_expected.to be true }
       end
 
       context "the trainee does not have an associated apply application" do
         let(:trainee) { create(:trainee) }
+
         it { is_expected.to be false }
       end
     end
@@ -201,7 +203,7 @@ describe Trainee do
         end
 
         it "caches the timeline event after the initial request" do
-          expect(Trainees::CreateTimeline).to receive(:call).never
+          expect(Trainees::CreateTimeline).not_to receive(:call)
 
           subject.timeline
         end
@@ -233,36 +235,43 @@ describe Trainee do
 
     context "with an exactly matching first name" do
       let(:search_term) { matching_trainee.first_names }
+
       it_behaves_like "a working search"
     end
 
     context "with exactly matching (second) middle name" do
       let(:search_term) { "Secondmiddle" }
+
       it_behaves_like "a working search"
     end
 
     context "with exactly matching last name" do
       let(:search_term) { matching_trainee.last_name }
+
       it_behaves_like "a working search"
     end
 
     context "with a matching trainee id" do
       let(:search_term) { matching_trainee.trn }
+
       it_behaves_like "a working search"
     end
 
     context "with extra spaces in the search term" do
       let(:search_term) { "Firstmiddle  Secondmiddle" }
+
       it_behaves_like "a working search"
     end
 
     context "with incorrect case" do
       let(:search_term) { "firstMiddle" }
+
       it_behaves_like "a working search"
     end
 
     context "with partial search term" do
       let(:search_term) { "First" }
+
       it_behaves_like "a working search"
     end
   end
@@ -335,6 +344,6 @@ describe Trainee do
   end
 
   describe "auditing" do
-    it { should be_audited.associated_with(:provider) }
+    it { is_expected.to be_audited.associated_with(:provider) }
   end
 end

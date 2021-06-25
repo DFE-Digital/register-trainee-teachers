@@ -32,7 +32,7 @@ module Features
     end
 
     def and_all_sections_are_complete
-      expect(check_details_page).to_not have_text("Start section")
+      expect(check_details_page).not_to have_text("Start section")
     end
 
     def when_i_submit_for_trn

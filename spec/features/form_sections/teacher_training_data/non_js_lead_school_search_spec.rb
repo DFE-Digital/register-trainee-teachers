@@ -43,7 +43,7 @@ private
   end
 
   def then_i_should_see_no_results
-    expect(lead_schools_search_page).to have_text(t("components.page_titles.search_schools.sub_text_no_results") + " foo")
+    expect(lead_schools_search_page).to have_text("#{t('components.page_titles.search_schools.sub_text_no_results')} foo")
   end
 
   def and_i_should_see_a_search_again_field
@@ -67,7 +67,7 @@ private
   end
 
   def query
-    my_lead_school.name.split(" ").first
+    my_lead_school.name.split.first
   end
 
   def my_lead_school

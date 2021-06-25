@@ -5,7 +5,7 @@ require "rails_helper"
 feature "edit training details" do
   include SummaryHelper
 
-  let(:new_trainee_id) { trainee.trainee_id + "new" }
+  let(:new_trainee_id) { "#{trainee.trainee_id}new" }
 
   background { given_i_am_authenticated }
 

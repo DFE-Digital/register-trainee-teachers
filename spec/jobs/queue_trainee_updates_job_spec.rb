@@ -39,7 +39,7 @@ describe QueueTraineeUpdatesJob do
       described_class.perform_now
 
       Trainee.all.each do |trainee|
-        expect(UpdateTraineeToDttpJob).to_not have_been_enqueued.with(trainee)
+        expect(UpdateTraineeToDttpJob).not_to have_been_enqueued.with(trainee)
       end
     end
   end
@@ -57,7 +57,7 @@ describe QueueTraineeUpdatesJob do
       described_class.perform_now
 
       Trainee.all.each do |trainee|
-        expect(UpdateTraineeToDttpJob).to_not have_been_enqueued.with(trainee)
+        expect(UpdateTraineeToDttpJob).not_to have_been_enqueued.with(trainee)
       end
     end
   end

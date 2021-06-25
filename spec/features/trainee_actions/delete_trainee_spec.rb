@@ -29,7 +29,7 @@ private
   end
 
   def then_i_see_the_confirm_page
-    expect(page.current_path).to eq("/trainees/#{trainee.slug}/confirm-delete")
+    expect(page).to have_current_path("/trainees/#{trainee.slug}/confirm-delete", ignore_query: true)
   end
 
   def then_i_click_the_delete_button
@@ -45,6 +45,6 @@ private
   end
 
   def and_the_trainee_is_no_longer_listed
-    expect(review_draft_page).to_not have_text("Trainee ID: 1")
+    expect(review_draft_page).not_to have_text("Trainee ID: 1")
   end
 end

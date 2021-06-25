@@ -24,6 +24,7 @@ module ApplyApi
 
       context "when the last sync was successful" do
         let(:last_sync) { Time.zone.yesterday }
+
         before { create(:apply_application_sync_request, :successful, created_at: last_sync) }
 
         it "imports just the new applications from Apply" do
@@ -37,6 +38,7 @@ module ApplyApi
       context "when the last sync was unsuccessful" do
         let(:last_successful_sync) { Time.zone.yesterday }
         let(:last_sync) { Time.zone.today }
+
         before do
           create(:apply_application_sync_request, :successful, created_at: last_successful_sync)
           create(:apply_application_sync_request, :unsuccessful, created_at: last_sync)

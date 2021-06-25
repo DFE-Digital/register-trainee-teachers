@@ -35,7 +35,7 @@ feature "edit Trainee start date" do
   end
 
   def then_i_am_taken_to_the_confirmation_page
-    expect(page.current_path).to eq("/trainees/#{trainee.slug}/trainee-start-date/confirm")
+    expect(page).to have_current_path("/trainees/#{trainee.slug}/trainee-start-date/confirm", ignore_query: true)
   end
 
   def when_i_confirm

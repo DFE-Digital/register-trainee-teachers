@@ -48,7 +48,7 @@ describe SessionsController, type: :controller do
       let(:user) { build(:user) }
 
       it "does not call send welcome email service" do
-        expect(SendWelcomeEmailService).to_not receive(:call)
+        expect(SendWelcomeEmailService).not_to receive(:call)
         request_callback
       end
 

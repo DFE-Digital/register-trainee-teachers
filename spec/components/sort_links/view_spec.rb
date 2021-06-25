@@ -16,7 +16,7 @@ RSpec.describe SortLinks::View do
 
   context "no query params" do
     it "has text date updated" do
-      expect(component).to_not have_link(date_updated_link_text, href: "/?sort_by=date_updated")
+      expect(component).not_to have_link(date_updated_link_text, href: "/?sort_by=date_updated")
       expect(component).to have_text(date_updated_link_text)
     end
 
@@ -30,7 +30,7 @@ RSpec.describe SortLinks::View do
 
     it "changes the date_updated link to text only" do
       expect(component).to have_text(date_updated_link_text)
-      expect(component).to_not have_link(date_updated_link_text, href: "/?sort_by=date_updated")
+      expect(component).not_to have_link(date_updated_link_text, href: "/?sort_by=date_updated")
     end
 
     it "continues to render the last_name link" do

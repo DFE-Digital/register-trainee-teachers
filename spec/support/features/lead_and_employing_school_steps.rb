@@ -40,11 +40,11 @@ module Features
     end
 
     def and_i_fill_in_my_lead_school
-      edit_lead_school_page.no_js_lead_school.fill_in with: @lead_school.name.split(" ").first
+      edit_lead_school_page.no_js_lead_school.fill_in with: @lead_school.name.split.first
     end
 
     def and_i_fill_in_my_employing_school
-      edit_employing_school_page.no_js_employing_school.fill_in with: @employing_school.name.split(" ").first
+      edit_employing_school_page.no_js_employing_school.fill_in with: @employing_school.name.split.first
     end
 
     def and_i_continue

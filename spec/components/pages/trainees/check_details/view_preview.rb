@@ -30,13 +30,10 @@ module Pages
       private
 
         def trainee(section)
-          if section == :start_sections
-            trainee_with_all_sections_not_started
-          elsif section == :continue_sections
-            trainee_with_all_sections_in_progress
-          else
-            trainee_with_all_sections_completed
-          end
+          return trainee_with_all_sections_not_started if section == :start_sections
+          return trainee_with_all_sections_in_progress if section == :continue_sections
+
+          trainee_with_all_sections_completed
         end
 
         def trainee_with_all_sections_not_started

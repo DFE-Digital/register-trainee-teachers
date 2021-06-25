@@ -28,7 +28,7 @@ RSpec.describe ErrorsController, type: :controller do
     it "will remove any flash messages" do
       controller.action_methods.each do |action|
         get action.to_sym, flash: { success: "Success" }
-        expect(flash[:success]).to_not be_present
+        expect(flash[:success]).not_to be_present
       end
     end
   end

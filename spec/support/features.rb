@@ -27,7 +27,7 @@ RSpec.configure do |config|
 
   config.include DfESignInUserHelper, type: :feature
 
-  config.around :each do |example|
+  config.around do |example|
     original_features = {}
     features = example.metadata.keys.grep(/^feature_.*/)
 

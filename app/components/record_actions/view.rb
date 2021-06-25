@@ -19,9 +19,9 @@ module RecordActions
     end
 
     def action_links
-      return reinstate_link + " or " + withdraw_link if trainee.deferred?
+      return "#{reinstate_link} or #{withdraw_link}".html_safe if trainee.deferred?
 
-      defer_link + " or " + withdraw_link
+      "#{defer_link} or #{withdraw_link}".html_safe
     end
 
   private

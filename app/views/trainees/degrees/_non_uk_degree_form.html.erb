@@ -12,17 +12,19 @@
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
-    form_field: f.govuk_collection_select(:subject, subjects_options,
-                                          :value, :text, label: { text: "Degree subject", size: "s" },
-                                                        hint: { text: 'Search for the closest matching subject.
-                                                         You can start typing to narrow down your search.' }),
+    form_field: f.govuk_collection_select(
+      :subject, subjects_options, :value, :text,
+      label: { text: "Degree subject", size: "s" },
+      hint: {
+        text: "Search for the closest matching subject. You can start typing to narrow down your search.",
+      }
+    ),
   ) %>
 
   <div class="govuk-form-group">
     <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" } do %>
       <% ENIC_NON_UK.each do |name| %>
-        <%= f.govuk_radio_button :non_uk_degree, name,
-                                  label: { text: name }, link_errors: true %>
+        <%= f.govuk_radio_button :non_uk_degree, name, label: { text: name }, link_errors: true %>
       <% end %>
       <%= f.govuk_radio_divider %>
       <%= f.govuk_radio_button :non_uk_degree, :non_enic, label: { text: "UK ENIC not provided" } %>

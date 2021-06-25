@@ -19,7 +19,7 @@ namespace :country_autocomplete_graph do
 
       original_location_graph.each do |key, value|
         inbound_nodes = value.dig("edges", "from").join
-        if key == primary_key || inbound_nodes.include?(primary_key) || inbound_nodes.include?(country_code.downcase + ":")
+        if key == primary_key || inbound_nodes.include?(primary_key) || inbound_nodes.include?("#{country_code.downcase}:")
           results[key] = value
         end
       end

@@ -30,6 +30,7 @@ module RecordHeader
 
       context "where a name is nil" do
         let(:middle_names) { nil }
+
         it "renders the trainee name" do
           expect(component.find(".govuk-heading-xl")).to have_text("Dave Smith")
         end
@@ -37,6 +38,7 @@ module RecordHeader
 
       context "where a name is an empty string" do
         let(:middle_names) { "" }
+
         it "renders the trainee name" do
           expect(component.find(".govuk-heading-xl")).to have_text("Dave Smith")
         end
@@ -58,7 +60,7 @@ module RecordHeader
 
       context "where a trn is not present" do
         it "does not render the trn" do
-          expect(component).to_not have_css(".govuk-caption-l")
+          expect(component).not_to have_css(".govuk-caption-l")
         end
       end
     end

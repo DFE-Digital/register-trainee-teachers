@@ -1,0 +1,7 @@
+require:
+  - ../../lib/rubocop/cop/register/register_form_with.rb
+
+Register/RegisterFormWith:
+   Include:
+    - "app/views/**/*"
+    - "app/components/**/*"

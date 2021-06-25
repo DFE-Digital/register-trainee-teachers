@@ -17,6 +17,7 @@ feature "View trainees" do
 
   context "when trainee does not belong to me" do
     let(:trainee) { create(:trainee) }
+
     scenario "viewing the personal details of trainee" do
       and_i_visit_the_trainee
       then_i_should_see_no_access_text

@@ -22,12 +22,12 @@ RSpec.describe ReviewDraft::Draft::View do
     end
 
     it "does not render non assessment-only sections" do
-      expect(rendered_component).to_not have_text("Placement details")
-      expect(rendered_component).to_not have_text("Lead and employing schools")
+      expect(rendered_component).not_to have_text("Placement details")
+      expect(rendered_component).not_to have_text("Lead and employing schools")
     end
   end
 
-  context "when the trainee is on the provider-led route", 'feature_routes.provider_led_postgrad': true do
+  context "when the trainee is on the provider-led route", "feature_routes.provider_led_postgrad": true do
     let(:trainee) { create(:trainee, :provider_led_postgrad, :with_placement_assignment) }
 
     xit "renders additional provider-led specific sections" do
@@ -35,7 +35,7 @@ RSpec.describe ReviewDraft::Draft::View do
     end
 
     it "does not render non provider-led sections" do
-      expect(rendered_component).to_not have_text(I18n.t("components.review_draft.draft.schools.titles.tuition"))
+      expect(rendered_component).not_to have_text(I18n.t("components.review_draft.draft.schools.titles.tuition"))
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe ReviewDraft::Draft::View do
       end
 
       it "does not render non school direct sections" do
-        expect(rendered_component).to_not have_text("Placement details")
+        expect(rendered_component).not_to have_text("Placement details")
       end
     end
   end

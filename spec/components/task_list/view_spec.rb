@@ -6,7 +6,7 @@ RSpec.describe TaskList::View do
   let(:status) { nil }
   let(:active) { true }
 
-  before(:each) do
+  before do
     render_inline(TaskList::View.new) do |component|
       component.row(
         task_name: "some key",
@@ -52,7 +52,7 @@ RSpec.describe TaskList::View do
     let(:active) { false }
 
     it "does not render a link" do
-      expect(rendered_component).to_not have_link("some key", href: "some_path")
+      expect(rendered_component).not_to have_link("some key", href: "some_path")
       expect(rendered_component).to have_text("some key")
     end
   end
@@ -80,6 +80,7 @@ RSpec.describe TaskList::View do
         status: status,
       )
     end
+
     let(:confirm_path) { -> { raise hell } }
     let(:path) { "some_path" }
 

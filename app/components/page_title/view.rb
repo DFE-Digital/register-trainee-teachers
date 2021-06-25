@@ -23,6 +23,6 @@ private
     return text if text.present?
     return "" if i18n_key.blank?
 
-    I18n.t("components.page_titles." + i18n_key)
+    I18n.t("components.page_titles.#{i18n_key}")
   end
 end

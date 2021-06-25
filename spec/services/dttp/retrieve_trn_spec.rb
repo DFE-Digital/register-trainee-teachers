@@ -23,7 +23,7 @@ module Dttp
         let(:http_response) { { status: 200, body: { dfe_trn: trn }.to_json } }
 
         it "returns the TRN value" do
-          is_expected.to eq(trn)
+          expect(subject).to eq(trn)
         end
       end
 
@@ -31,7 +31,7 @@ module Dttp
         let(:http_response) { { status: 200, body: { dfe_trn: nil }.to_json } }
 
         it "does not change the trainee record" do
-          is_expected.to be_nil
+          expect(subject).to be_nil
         end
       end
 

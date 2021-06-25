@@ -9,7 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Load Nationalities
-Dttp::CodeSets::Nationalities::MAPPING.keys.each do |nationality|
+Dttp::CodeSets::Nationalities::MAPPING.each_key do |nationality|
   Nationality.find_or_create_by(name: nationality)
 end
 

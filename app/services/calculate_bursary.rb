@@ -22,7 +22,7 @@ class CalculateBursary
   private
 
     def raise_if_route_not_recognised!(route)
-      raise "Training route '#{route}' not recognised" unless TRAINING_ROUTE_ENUMS.dig(route)
+      raise "Training route '#{route}' not recognised" unless TRAINING_ROUTE_ENUMS[route]
     end
   end
 end

@@ -43,7 +43,7 @@ feature "List providers" do
   end
 
   def then_i_am_redirected_to_the_provider_page
-    expect(page.current_path).to eq("/system-admin/providers/#{provider.id}")
+    expect(page).to have_current_path("/system-admin/providers/#{provider.id}", ignore_query: true)
   end
 
   def when_a_provider_is_imported

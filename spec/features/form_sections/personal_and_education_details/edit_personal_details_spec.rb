@@ -68,7 +68,7 @@ feature "edit personal details", type: :feature do
       and_i_submit_the_form
     end
 
-    it "it doesn't ask me to complete the section" do
+    it "doesn't ask me to complete the section" do
       then_the_confirm_details_page_has_no_checkbox
       and_i_click_continue
       then_i_am_redirected_to_the_record_page
@@ -109,7 +109,7 @@ private
   end
 
   def then_the_confirm_details_page_has_no_checkbox
-    expect(confirm_details_page).to_not have_text("I have completed this section")
+    expect(confirm_details_page).not_to have_text("I have completed this section")
   end
 
   def and_i_click_continue
@@ -172,6 +172,6 @@ private
   end
 
   def then_i_am_redirected_to_the_confirm_page
-    expect(page.current_path).to eq "/trainees/#{trainee.slug}/personal-details/confirm"
+    expect(page).to have_current_path "/trainees/#{trainee.slug}/personal-details/confirm", ignore_query: true
   end
 end

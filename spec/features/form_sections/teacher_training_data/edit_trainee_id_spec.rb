@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "edit Trainee ID" do
-  let(:new_trainee_id) { trainee.trainee_id + "new" }
+  let(:new_trainee_id) { "#{trainee.trainee_id}new" }
 
   background do
     given_i_am_authenticated

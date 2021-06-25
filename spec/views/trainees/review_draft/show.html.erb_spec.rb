@@ -3,7 +3,12 @@
 require "rails_helper"
 
 describe "trainees/review_draft/show.html.erb" do
-  describe "trainees/review_draft/show.html.erb", 'feature_routes.provider_led_postgrad': true do
+  before do
+    assign(:trainee, trainee)
+    render
+  end
+
+  describe "trainees/review_draft/show.html.erb", "feature_routes.provider_led_postgrad": true do
     before do
       assign(:trainee, trainee)
       render
@@ -13,7 +18,7 @@ describe "trainees/review_draft/show.html.erb" do
       let(:trainee) { create(:trainee) }
 
       it "does not render the placement details component" do
-        expect(rendered).to_not have_text("Placement details")
+        expect(rendered).not_to have_text("Placement details")
       end
     end
 
@@ -26,11 +31,7 @@ describe "trainees/review_draft/show.html.erb" do
     end
   end
 
-  describe "trainees/review_draft/show.html.erb", 'feature_routes.provider_led_postgrad': true
-  before do
-    assign(:trainee, trainee)
-    render
-  end
+  describe "trainees/review_draft/show.html.erb", "feature_routes.provider_led_postgrad": true
 
   context "with an Apply draft trainee" do
     let(:trainee) { create(:trainee, :with_apply_application) }

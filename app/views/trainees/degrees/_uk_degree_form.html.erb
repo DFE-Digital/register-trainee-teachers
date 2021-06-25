@@ -15,16 +15,20 @@
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
-    form_field: f.govuk_collection_select(:subject, subjects_options,
-                                          :value, :text, label: { text: "Degree subject", size: "s" },
-                                                        hint: { text: 'Search for the closest matching subject.
-                                                         You can start typing to narrow down your search.' }),
+    form_field: f.govuk_collection_select(
+      :subject,
+      subjects_options,
+      :value,
+      :text,
+      label: { text: "Degree subject", size: "s" },
+      hint: { text: "Search for the closest matching subject. You can start typing to narrow down your search." },
+    ),
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :uk_degree,
-    form_field: f.govuk_select(:uk_degree, options_for_select(degree_options, @degree_form.degree.uk_degree), label: { text: "Type of degree", size: "s" }, hint: { text: "For example, BA, BSc or other (please specify)" })
+    form_field: f.govuk_select(:uk_degree, options_for_select(degree_options, @degree_form.degree.uk_degree), label: { text: "Type of degree", size: "s" }, hint: { text: "For example, BA, BSc or other (please specify)" }),
   ) %>
 
   <%= f.govuk_radio_buttons_fieldset(:grade,

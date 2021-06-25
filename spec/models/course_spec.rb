@@ -7,7 +7,7 @@ describe Course do
     subject { create(:course) }
 
     it do
-      is_expected.to define_enum_for(:level)
+      expect(subject).to define_enum_for(:level)
         .with_values({
           primary: 0,
           secondary: 1,
@@ -15,7 +15,7 @@ describe Course do
     end
 
     it do
-      is_expected.to define_enum_for(:qualification)
+      expect(subject).to define_enum_for(:qualification)
         .with_values({
           qts: 0,
           pgce_with_qts: 1,
@@ -26,7 +26,7 @@ describe Course do
     end
 
     it do
-      is_expected.to define_enum_for(:route)
+      expect(subject).to define_enum_for(:route)
         .with_values({
           TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
           TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,

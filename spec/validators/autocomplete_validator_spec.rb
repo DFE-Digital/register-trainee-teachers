@@ -2,14 +2,14 @@
 
 require "rails_helper"
 
+class Validatable
+  include ActiveModel::Validations
+  attr_accessor :search, :search_raw
+
+  validates :search, autocomplete: true
+end
+
 describe AutocompleteValidator do
-  class Validatable
-    include ActiveModel::Validations
-    attr_accessor :search, :search_raw
-
-    validates :search, autocomplete: true
-  end
-
   subject do
     Validatable.new.tap do |v|
       v.search = search

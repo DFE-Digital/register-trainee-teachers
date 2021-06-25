@@ -1,13 +1,32 @@
-inherit_gem:
-  rubocop-govuk:
-    - config/default.yml
-    - config/rails.yml
-
 require:
+  - rubocop-rails
+  - rubocop-rspec
   - ./lib/rubocop/cop/govuk/govuk_button_to.rb
   - ./lib/rubocop/cop/govuk/govuk_link_to.rb
   - ./lib/rubocop/cop/govuk/govuk_submit.rb
   - ./lib/rubocop/cop/register/register_form_with.rb
+
+inherit_from:
+  - ./config/rubocop/layout.yml
+  - ./config/rubocop/lint.yml
+  - ./config/rubocop/metrics.yml
+  - ./config/rubocop/naming.yml
+  - ./config/rubocop/rails.yml
+  - ./config/rubocop/style.yml
+  - ./config/rubocop/rspec.yml
+  - .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "bin/*"
+    - "db/schema.rb"
+    - "node_modules/**/*"
+
+
+# These can't be moved into their own config files. erb_lint won't find them unless the require is
+# in the same file with them. If we do that the path becomes ../../lib etc. Rubocop can resolve this fine
+# but erb_lint can't so one or other of them doesn't work.
 
 Govuk:
   Include:
@@ -21,22 +40,12 @@ Govuk/GovukLinkTo:
   Exclude:
     - "app/components/govuk_button_link_to/view.rb"
 
+Govuk/GovukSubmit:
+  Exclude:
+    - "app/components/confirmation/degrees/view.html.erb"
+    - "app/components/personas/view.html.erb"
+
 Register/RegisterFormWith:
    Include:
     - "app/views/**/*"
     - "app/components/**/*"
-
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - "spec/**/*"
-
-Rails/NotNullColumn:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: true
-  Safe: true
-
-Rails/CreateTableWithTimestamps:
-  Exclude:
-    - "db/migrate/20210108163200_install_audited.rb"

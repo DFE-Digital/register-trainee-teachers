@@ -34,7 +34,7 @@ module TeacherTrainingApi
 
           it "create a course with the correct code and name" do
             subject
-            expect(course).to_not be_nil
+            expect(course).not_to be_nil
           end
 
           it "creates the course with the correct subjects" do
@@ -63,7 +63,7 @@ module TeacherTrainingApi
           let(:course_attributes) { { level: "further_education" } }
 
           it "doesn't get imported" do
-            expect { subject }.to_not(change { Course.count })
+            expect { subject }.not_to(change { Course.count })
           end
         end
 
@@ -71,7 +71,7 @@ module TeacherTrainingApi
           let(:course_attributes) { { age_minimum: nil } }
 
           it "doesn't get imported" do
-            expect { subject }.to_not(change { Course.count })
+            expect { subject }.not_to(change { Course.count })
           end
         end
 
@@ -99,7 +99,7 @@ module TeacherTrainingApi
 
         context "with the same subjects" do
           it "does not create duplicate course subjects" do
-            expect { subject }.to_not(change { CourseSubject.count })
+            expect { subject }.not_to(change { CourseSubject.count })
           end
         end
 
@@ -116,7 +116,7 @@ module TeacherTrainingApi
           end
 
           it "does not create duplicate course subjects" do
-            expect { subject }.to_not(change { CourseSubject.count })
+            expect { subject }.not_to(change { CourseSubject.count })
           end
         end
 
@@ -135,7 +135,7 @@ module TeacherTrainingApi
           end
 
           it "does not create duplicate course subjects" do
-            expect { subject }.to_not(change { CourseSubject.count })
+            expect { subject }.not_to(change { CourseSubject.count })
           end
         end
       end

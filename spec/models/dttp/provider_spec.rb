@@ -9,7 +9,7 @@ RSpec.describe Dttp::Provider, type: :model do
 
   describe "associations" do
     it {
-      is_expected.to belong_to(:provider)
+      expect(subject).to belong_to(:provider)
       .class_name("::Provider")
       .with_primary_key(:dttp_id)
       .with_primary_key(:dttp_id)
@@ -24,11 +24,13 @@ RSpec.describe Dttp::Provider, type: :model do
 
     context "with an exactly matching name" do
       let(:search_term) { "Test 1" }
+
       it { is_expected.to contain_exactly(matching_provider) }
     end
 
     context "with partial search term" do
       let(:search_term) { "test" }
+
       it { is_expected.to contain_exactly(matching_provider) }
     end
   end

@@ -78,7 +78,7 @@ private
   end
 
   def and_i_should_not_see_any_disabilities_listed
-    expect(disabilities_page).to_not have_content("Disabilities shared:")
+    expect(disabilities_page).not_to have_content("Disabilities shared:")
   end
 
   def then_i_see_error_messages

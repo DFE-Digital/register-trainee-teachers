@@ -40,7 +40,7 @@ describe CreateOrUpdateConsistencyCheckJob do
 
       it "won't make duplicate checks" do
         subject
-        expect { subject }.to_not(change { ConsistencyCheck.count })
+        expect { subject }.not_to(change { ConsistencyCheck.count })
       end
 
       it "will update the check" do

@@ -9,6 +9,7 @@ RSpec.describe Dttp::SyncProvidersJob, type: :job do
     enable_features(:sync_from_dttp)
     allow(Dttp::RetrieveProviders).to receive(:call).with(request_uri: request_uri).and_return(provider_list)
   end
+
   let(:provider_one_hash) { create(:api_provider) }
   let(:provider_two_hash) { create(:api_provider) }
 

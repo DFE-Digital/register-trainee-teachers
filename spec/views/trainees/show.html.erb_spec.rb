@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "trainees/show.html.erb", 'feature_routes.provider_led_postgrad': true do
+describe "trainees/show.html.erb", "feature_routes.provider_led_postgrad": true do
   before do
     assign(:trainee, trainee)
     render
@@ -12,7 +12,7 @@ describe "trainees/show.html.erb", 'feature_routes.provider_led_postgrad': true 
     let(:trainee) { create(:trainee, :submitted_for_trn) }
 
     it "does not render the placement details component" do
-      expect(rendered).to_not have_text("Placement details")
+      expect(rendered).not_to have_text("Placement details")
     end
   end
 

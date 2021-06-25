@@ -20,6 +20,7 @@ module Confirmation
 
         describe "lead school" do
           subject { component.find(".govuk-summary-list__row.lead-school .govuk-summary-list__value") }
+
           it "renders" do
             expect(subject).to have_text(trainee.lead_school.name)
             expect(subject).to have_text(trainee.lead_school.urn)
@@ -34,6 +35,7 @@ module Confirmation
 
         describe "employing school" do
           subject { component.find(".govuk-summary-list__row.employing-school .govuk-summary-list__value") }
+
           it "renders" do
             expect(subject).to have_text(trainee.employing_school.name)
             expect(subject).to have_text(trainee.employing_school.urn)
@@ -52,6 +54,7 @@ module Confirmation
 
         describe "lead school" do
           subject { component.find(".govuk-summary-list__row.lead-school .govuk-summary-list__value") }
+
           it "renders" do
             expect(subject).to have_text(trainee.lead_school.name)
             expect(subject).to have_text(trainee.lead_school.urn)
@@ -66,10 +69,10 @@ module Confirmation
 
         describe "employing school" do
           it "does not render" do
-            expect(component).to_not have_text(trainee.employing_school.name)
-            expect(component).to_not have_text(trainee.employing_school.urn)
-            expect(component).to_not have_text(trainee.employing_school.town)
-            expect(component).to_not have_text(trainee.employing_school.postcode)
+            expect(component).not_to have_text(trainee.employing_school.name)
+            expect(component).not_to have_text(trainee.employing_school.urn)
+            expect(component).not_to have_text(trainee.employing_school.town)
+            expect(component).not_to have_text(trainee.employing_school.postcode)
           end
         end
       end
