@@ -5,8 +5,10 @@ require "rails_helper"
 feature "edit bursary", type: :feature do
   background { given_i_am_authenticated }
 
+  let(:course_subject) { Dttp::CodeSets::CourseSubjects::LAW }
+
   before do
-    given_a_trainee_exists(:provider_led_postgrad, course_subject_one: "astrology")
+    given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject)
     and_a_bursary_exists_for_their_subject
     when_i_visit_the_bursary_page
   end
@@ -53,6 +55,6 @@ private
   def and_a_bursary_exists_for_their_subject
     bursary = create(:bursary, training_route: :provider_led_postgrad, amount: 100_000)
     allocation_subject = create(:allocation_subject, name: "magic", bursaries: [bursary])
-    create(:subject_specialism, allocation_subject: allocation_subject, name: "astrology")
+    create(:subject_specialism, allocation_subject: allocation_subject, name: course_subject)
   end
 end
