@@ -72,6 +72,7 @@ class CourseDetailsForm < TraineeForm
   def save!
     if valid?
       update_trainee_attributes
+      clear_bursary_information if course_subjects_changed?
       trainee.save!
       clear_stash
     else
@@ -111,6 +112,18 @@ private
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     })
+  end
+
+  def clear_bursary_information
+    trainee.progress.funding = false
+
+    trainee.assign_attributes({
+      applying_for_bursary: nil,
+    })
+  end
+
+  def course_subjects_changed?
+    trainee.course_subject_one_changed? || trainee.course_subject_two_changed? || trainee.course_subject_three_changed?
   end
 
   def compute_attributes_from_trainee
