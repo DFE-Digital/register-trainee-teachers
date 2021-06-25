@@ -1,57 +1,88 @@
 @import "../base.scss";
 
-.app-application-card {
+.application-record-card {
   border-bottom: 1px solid govuk-colour("mid-grey");
-  margin-bottom: 15px;
-  padding-bottom: 15px;
+  margin-bottom: govuk-spacing(3);
+  padding-bottom: govuk-spacing(3);
 
   @include govuk-media-query($from: tablet) {
     display: flex;
     align-items: stretch;
   }
-}
 
-.app-application-card:first-of-type {
-  border-top: 1px solid govuk-colour("mid-grey");
-  padding-top: 15px;
-}
-
-// Trainee column
-.app-application-card_col:nth-last-child(3) {
-  @include govuk-media-query($from: tablet) {
-    width: 40%;
-    padding-right: 15px;
-  }
-}
-
-// Course details column
-.app-application-card_col:nth-last-child(2) {
-  @include govuk-media-query($until: tablet) {
-    margin-top: govuk-spacing(2);
-    margin-bottom: govuk-spacing(2);
-  }
-  @include govuk-media-query($from: tablet) {
-    width: 25%;
-  }
-}
-
-// Status column
-.app-application-card_col:nth-last-child(1) {
-  @include govuk-media-query($from: tablet) {
+  @include govuk-media-query($from: $mobile-small-end) {
     display: flex;
-    flex-direction: column;
-    width: 35%;
     justify-content: space-between;
-    height: 100%;
-    text-align: right;
   }
+
+  .application-record-card__col-trainee-course {
+    @include govuk-media-query($from: $mobile-small-end) {
+      width: 60%;
+    }
+
+    @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
+      width: 65%;
+      padding-right: govuk-spacing(3);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @include govuk-media-query($from: $govuk-page-width) {
+      width: 65%;
+      padding-right: govuk-spacing(3);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .application-record-card__col-trainee {
+      margin-bottom: govuk-spacing(2);
+      width: 100%;
+      padding-right: govuk-spacing(3);
+
+      @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
+        width: 60%;
+      }
+
+      @include govuk-media-query($from: $govuk-page-width) {
+        width: 60%;
+      }
+    }
+
+    .application-record-card__col-course {
+      width: 100%;
+
+      @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
+        width: 40%;
+      }
+
+      @include govuk-media-query($from: $govuk-page-width) {
+        width: 40%;
+      }
+    }
+  }
+
+  .application-record-card__col-status {
+    margin-top: govuk-spacing(2);
+
+    @include govuk-media-query($from: $mobile-small-end) {
+      width: 35%;
+      margin-top: 0;
+      text-align: right;
+    }
+
+    @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
+      width: 35%;
+    }
+  }
+
 }
 
-.app-application-card_col .govuk-tag {
-  align-self: flex-end;
+.application-record-card:first-of-type {
+  border-top: 1px solid govuk-colour("mid-grey");
+  padding-top: govuk-spacing(3);
 }
 
-.app-application-card__primary {
+.application-record-card__primary {
   @include govuk-media-query($from: tablet) {
     width: 60%;
   }
@@ -61,7 +92,7 @@
   }
 }
 
-.app-application-card__secondary {
+.application-record-card__secondary {
   @include govuk-media-query($from: tablet) {
     display: flex;
     flex-direction: column;
@@ -71,7 +102,7 @@
   }
 }
 
-.app-application-card__status {
+.application-record-card__status {
   margin-bottom: govuk-spacing(2);
   margin-top: govuk-spacing(3);
   @include govuk-media-query($from: tablet) {
@@ -80,20 +111,27 @@
   }
 }
 
-.app-application-card__subject,
-.app-application-card__route {
+.application-record-card__subject,
+.application-record-card__route {
   @include govuk-font(16);
   @include govuk-responsive-margin(0, "bottom");
 }
 
-.app-application-card__submitted {
+.application-record-card__submitted {
   overflow-wrap: break-word;
 
   span {
-    display: block;
+    @include govuk-media-query($from: $mobile-small-end) {
+      display: block;
+    }
   }
 }
 
-.app-application-card__id {
+.application-record-card__trainee-name {
+  margin-bottom: govuk-spacing(1);
+}
+
+.application-record-card__id {
   overflow-wrap: break-word;
+  margin-top: 0;
 }

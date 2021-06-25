@@ -81,16 +81,3 @@
   @include govuk-link-common;
   @include govuk-link-style-error;
 }
-
-@media (min-width: 54.5em) {
-  .app-records-actions {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-    align-items: baseline;
-  }
-}
-
-.app-trainee-export {
-  @include govuk-font($size: 19);
-}

@@ -11,9 +11,9 @@ module PageObjects
 
       element :draft_trainee_data, ".app-draft-records"
 
-      elements :trainee_data, ".app-application-card"
+      elements :trainee_data, ".application-record-card"
 
-      elements :trainee_name, ".app-application-card .govuk-link"
+      elements :trainee_name, ".application-record-card .govuk-link"
 
       element :filter_tags, ".moj-filter-tags"
       element :clear_filters_link, "a", text: "Clear"
