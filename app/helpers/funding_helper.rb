@@ -9,6 +9,15 @@ module FundingHelper
     cannot_start_funding?(trainee) ? :funding_inactive : :funding_active
   end
 
+  def format_currency(amount)
+    number_to_currency(
+      amount,
+      unit: "£",
+      locale: :uk,
+      strip_insignificant_zeros: true,
+    )
+  end
+
 private
 
   def cannot_start_funding?(trainee)

@@ -25,6 +25,7 @@ class FormStore
     employing_school
     schools
     training_initiative
+    bursary
   ].freeze
 
   class << self

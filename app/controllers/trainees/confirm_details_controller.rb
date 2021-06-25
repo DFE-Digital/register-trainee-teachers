@@ -46,8 +46,10 @@ module Trainees
       end
     end
 
+    # Returns the route that the confirm path is nested under for each confirm path
+    # eg /trainees/HxA35kmiNdtwNGnWYjr6FbJZ/funding/confirm returns 'funding'
     def trainee_section_key
-      @trainee_section_key ||= request.path.split("/").intersection(trainee_paths).first&.underscore
+      @trainee_section_key ||= request.path.split("/")[-2]&.underscore
     end
 
     def confirm_section_title
@@ -67,19 +69,6 @@ module Trainees
     def toggle_trainee_progress_field
       trainee.progress.public_send("#{trainee_section_key}=", mark_as_completed_params)
       trainee.save!
-    end
-
-    def trainee_paths
-      @trainee_paths ||= [
-        trainee_personal_details_path,
-        trainee_contact_details_path,
-        trainee_degrees_path,
-        trainee_course_details_path,
-        trainee_training_details_path,
-        trainee_trainee_id_path,
-        trainee_start_date_path,
-        trainee_schools_path,
-      ].map { |path| path.split("/").last }
     end
 
     def mark_as_completed_params

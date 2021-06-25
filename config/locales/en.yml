@@ -215,6 +215,8 @@ en:
         funding:
           training_initiatives:
             edit: Training initiatives
+          bursaries:
+            edit: Bursary funding
       providers:
         index: Providers
         new: Add a provider
@@ -402,6 +404,12 @@ en:
           title: Is the trainee on any of these training initiatives?
           title_two: Is the trainee on either of these training initiatives?
           description: Training initiatives are sometimes referred to as programmes or schemes. They provide incentives and support for people training to teach. They’re separate from bursaries and scholarships.
+        bursaries:
+          description_html: The course you have selected has a bursary available of %{amount} for %{subject}. You need to check if the trainee is eligible for this bursary </br></br> <a target="_blank" href="https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-fu[…]er-training-bursaries-funding-manual-2021-to-2022-academic-year">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>
+          title: Are you applying for a bursary for this trainee?
+          true: Yes, apply for a bursary
+          false: No, do not apply for a bursary
+          false_hint: For example, the trainee is not eligible or has applied for a scholarship
   pages:
     request_an_account:
       inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,
@@ -701,6 +709,10 @@ en:
           attributes:
             training_initiative:
               blank: Select if the trainee is on a training initiative
+        funding/bursary_form:
+          attributes:
+            applying_for_bursary:
+              inclusion: Select if you are applying for a bursary for this trainee
         outcome_date_form:
           attributes:
             date_string:
