@@ -27,6 +27,7 @@ module Dttp
       let(:dttp_employing_school_id) { SecureRandom.uuid }
       let(:dttp_route_id) { Dttp::CodeSets::Routes::MAPPING[trainee.training_route][:entity_id] }
       let(:dttp_qualification_aim_id) { Dttp::CodeSets::QualificationAims::MAPPING[trainee.training_route][:entity_id] }
+      let(:dttp_training_initiative_entity_id) { SecureRandom.uuid }
 
       before do
         allow(Time).to receive(:now).and_return(time_now_in_zone)
@@ -132,25 +133,13 @@ module Dttp
             )
           end
 
-          let(:biology_entity_id) do
-            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::BIOLOGY][:entity_id]
-          end
-
-          let(:chemistry_entity_id) do
-            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::CHEMISTRY][:entity_id]
-          end
-
-          let(:mathematics_entity_id) do
-            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::MATHEMATICS][:entity_id]
-          end
-
           subject { described_class.new(trainee).params }
 
           it "sets the dttp itt subject params for all given subjects" do
             expect(subject).to include({
-              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{biology_entity_id})",
-              "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{chemistry_entity_id})",
-              "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{mathematics_entity_id})",
+              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::BIOLOGY][:entity_id]})",
+              "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::CHEMISTRY][:entity_id]})",
+              "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::MATHEMATICS][:entity_id]})",
             })
           end
         end
@@ -247,6 +236,46 @@ module Dttp
               "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_lead_school_id})",
               "dfe_EmployingSchoolId@odata.bind" => "/accounts(#{dttp_employing_school_id})",
             })
+          end
+        end
+
+        context "funding", feature_show_funding: true do
+          before do
+            stub_const("Dttp::CodeSets::TrainingInitiatives::MAPPING", { trainee.training_initiative => { entity_id: dttp_training_initiative_entity_id } })
+          end
+
+          context "but the send_funding_to_dttp feature flag is off" do
+            it "doesn't send funding information" do
+              expect(subject).not_to include({
+                "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
+              })
+            end
+          end
+
+          context "and the send_funding_to_dttp feature flag is on", feature_send_funding_to_dttp: true do
+            context "but the trainee has no initiative" do
+              let(:trainee) do
+                create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative])
+              end
+
+              it "doesn't send funding information" do
+                expect(subject).not_to include({
+                  "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
+                })
+              end
+            end
+
+            context "and the trainee has an initiative" do
+              let(:trainee) do
+                create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, training_initiative: ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars])
+              end
+
+              it "sends funding information" do
+                expect(subject).to include({
+                  "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
+                })
+              end
+            end
           end
         end
       end

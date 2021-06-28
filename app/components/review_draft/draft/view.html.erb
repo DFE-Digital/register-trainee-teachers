@@ -32,7 +32,7 @@
           component.row(**row_helper(@trainee, :school_details))
         end
 
-        if FeatureService.enabled?("funding")
+        if FeatureService.enabled?(:show_funding)
           component.row(**row_helper(@trainee, funding_options(@trainee)))
         end
 

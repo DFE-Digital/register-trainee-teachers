@@ -52,6 +52,7 @@ module Dttp
         .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
         .merge(school_params)
         .merge(subject_params)
+        .merge(funding_params)
       end
 
       def course_age_range
@@ -115,6 +116,18 @@ module Dttp
         return {} if trainee.course_subject_three.blank?
 
         { "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.course_subject_three)})" }
+      end
+
+      def funding_params
+        return {} unless send_funding_to_dttp? && trainee.training_initiative != ROUTE_INITIATIVES_ENUMS[:no_initiative]
+
+        {
+          "dfe_initiative1id_value" => "/dfe_initiatives(#{training_initiative_id(trainee.training_initiative)})",
+        }
+      end
+
+      def send_funding_to_dttp?
+        FeatureService.enabled?(:show_funding) && FeatureService.enabled?(:send_funding_to_dttp)
       end
     end
   end
