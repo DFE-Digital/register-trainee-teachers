@@ -133,25 +133,13 @@ module Dttp
             )
           end
 
-          let(:biology_entity_id) do
-            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::BIOLOGY][:entity_id]
-          end
-
-          let(:chemistry_entity_id) do
-            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::CHEMISTRY][:entity_id]
-          end
-
-          let(:mathematics_entity_id) do
-            CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::MATHEMATICS][:entity_id]
-          end
-
           subject { described_class.new(trainee).params }
 
           it "sets the dttp itt subject params for all given subjects" do
             expect(subject).to include({
-              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{biology_entity_id})",
-              "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{chemistry_entity_id})",
-              "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{mathematics_entity_id})",
+              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::BIOLOGY][:entity_id]})",
+              "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::CHEMISTRY][:entity_id]})",
+              "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::MATHEMATICS][:entity_id]})",
             })
           end
         end
@@ -258,7 +246,7 @@ module Dttp
 
           context "but the send_funding_to_dttp feature flag is off" do
             it "doesn't send funding information" do
-              expect(subject).to_not include({
+              expect(subject).not_to include({
                 "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
               })
             end
@@ -271,7 +259,7 @@ module Dttp
               end
 
               it "doesn't send funding information" do
-                expect(subject).to_not include({
+                expect(subject).not_to include({
                   "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
                 })
               end

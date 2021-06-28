@@ -4,7 +4,6 @@ features:
   enable_feedback_link: true
   publish_course_details: true
   show_funding: true
-  use_subject_specialisms: true
   persist_to_dttp: false
   routes:
     provider_led_postgrad: true
