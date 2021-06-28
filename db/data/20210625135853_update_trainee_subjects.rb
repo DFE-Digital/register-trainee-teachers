@@ -18,7 +18,7 @@ class UpdateTraineeSubjects < ActiveRecord::Migration[6.1]
     "Physics" => Dttp::CodeSets::CourseSubjects::PHYSICS,
     "Primary" => Dttp::CodeSets::CourseSubjects::PRIMARY_TEACHING,
     "Psychology" => Dttp::CodeSets::CourseSubjects::PSYCHOLOGY,
-    "Religious education" => Dttp::CodeSets::CourseSubjects::RELIGIOUS_EDUCATION_DTTP_ID,
+    "Religious education" => Dttp::CodeSets::CourseSubjects::RELIGIOUS_STUDIES,
     "Science" => Dttp::CodeSets::CourseSubjects::GENERAL_SCIENCES,
     "Spanish" => Dttp::CodeSets::CourseSubjects::SPANISH_LANGUAGE,
   }.freeze
