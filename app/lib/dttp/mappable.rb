@@ -61,5 +61,9 @@ module Dttp
     def dttp_school_id(urn)
       Dttp::School.find_by(urn: urn)&.dttp_id
     end
+
+    def training_initiative_id(training_initiative)
+      CodeSets::TrainingInitiatives::MAPPING.dig(training_initiative, :entity_id)
+    end
   end
 end

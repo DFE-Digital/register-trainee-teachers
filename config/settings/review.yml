@@ -3,7 +3,8 @@ features:
   use_dfe_sign_in: false
   enable_feedback_link: true
   publish_course_details: true
-  funding: true
+  show_funding: true
+  use_subject_specialisms: true
   persist_to_dttp: false
   routes:
     provider_led_postgrad: true

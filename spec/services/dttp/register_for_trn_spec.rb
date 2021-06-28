@@ -39,7 +39,7 @@ module Dttp
       end
 
       before do
-        enable_features(:persist_to_dttp, "routes.school_direct_salaried")
+        enable_features(:persist_to_dttp, "routes.school_direct_salaried", :show_funding, :send_funding_to_dttp)
         allow(AccessToken).to receive(:fetch).and_return("token")
         allow(BatchRequest).to receive(:new).and_return(batch_request)
         trainee.degrees << degree
