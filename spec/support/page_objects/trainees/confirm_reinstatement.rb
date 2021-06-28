@@ -5,7 +5,7 @@ module PageObjects
     class ConfirmReinstatement < PageObjects::Base
       set_url "/trainees/{id}/reinstate/confirm"
 
-      element :reinstate, "input[name='commit']"
+      element :reinstate, "button[type='submit']"
       element :cancel, ".govuk-link.qa-cancel-link"
     end
   end

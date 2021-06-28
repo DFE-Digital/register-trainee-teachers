@@ -8,7 +8,7 @@ module PageObjects
         element :bangladeshi, "#diversities-ethnic-background-form-ethnic-background-bangladeshi-field"
         element :arab, "#diversities-ethnic-background-form-ethnic-background-arab-field"
         element :not_provided, "#diversities-ethnic-background-form-ethnic-background-not-provided-field"
-        element :submit_button, "input[name='commit']"
+        element :submit_button, "button[type='submit']"
       end
     end
   end

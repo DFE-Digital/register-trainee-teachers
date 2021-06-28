@@ -9,7 +9,7 @@ module PageObjects
       element :dttp_id, "#provider-dttp-id-field"
       element :apply_sync_enabled, "#provider-apply-sync-enabled-true-field"
 
-      element :submit, 'input.govuk-button[type="submit"]'
+      element :submit, 'button.govuk-button[type="submit"]'
     end
   end
 end

@@ -7,7 +7,7 @@ module PageObjects
         set_url "/trainees/{id}/diversity/disabilities/edit"
 
         element :disability, ".govuk-checkboxes.disability"
-        element :submit_button, "input[name='commit']"
+        element :submit_button, "button[type='submit']"
       end
     end
   end

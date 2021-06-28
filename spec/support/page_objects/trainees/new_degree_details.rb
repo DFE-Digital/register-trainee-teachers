@@ -26,7 +26,7 @@ module PageObjects
       element :country, "#degree-country-field"
 
       element :error_summary, ".govuk-error-summary"
-      element :continue, "input[name='commit']"
+      element :continue, "button[type='submit']"
     end
   end
 end

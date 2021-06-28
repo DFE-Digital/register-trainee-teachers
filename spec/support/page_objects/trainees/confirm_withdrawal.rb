@@ -5,7 +5,7 @@ module PageObjects
     class ConfirmWithdrawal < PageObjects::Base
       set_url "/trainees/{id}/withdraw/confirm"
 
-      element :withdraw, "input[name='commit']"
+      element :withdraw, "button[type='submit']"
       element :cancel, ".govuk-link.qa-cancel-link"
     end
   end

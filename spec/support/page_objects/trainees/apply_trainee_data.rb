@@ -7,7 +7,7 @@ module PageObjects
 
       element :full_name_change_link, ".full-name a"
       element :i_have_reviewed_checkbox, "#apply-trainee-data-form-mark-as-reviewed-1-field"
-      element :continue, "input[name='commit'][value='Continue']"
+      element :continue, "button[type='submit']", text: "Continue"
     end
   end
 end

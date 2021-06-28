@@ -5,7 +5,7 @@ module PageObjects
     class ConfirmDeferral < PageObjects::Base
       set_url "/trainees/{id}/defer/confirm"
 
-      element :defer, "input[name='commit']"
+      element :defer, "button[type='submit']"
       element :cancel, ".govuk-link.qa-cancel-link"
     end
   end

@@ -9,7 +9,7 @@ module PageObjects
       element :main_content, "#main-content"
       element :delete_degree, "input[value='Delete degree']"
       element :inset_text, ".govuk-inset-text"
-      element :update_record_button, "input[name='commit'][value='Update record']"
+      element :update_record_button, "button[type='submit']", text: "Update record"
     end
   end
 end

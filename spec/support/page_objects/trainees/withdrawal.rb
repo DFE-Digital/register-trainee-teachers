@@ -13,7 +13,7 @@ module PageObjects
 
       element :additional_withdraw_reason, "#withdrawal-form-additional-withdraw-reason-field"
 
-      element :continue, "input[name='commit']"
+      element :continue, "button[type='submit']"
 
       section :deferral_notice, PageObjects::Sections::DeferralNotice, ".deferral-notice"
     end

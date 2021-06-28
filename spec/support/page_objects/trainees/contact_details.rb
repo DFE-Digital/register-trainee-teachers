@@ -12,7 +12,7 @@ module PageObjects
       element :postcode, "#contact-details-form-postcode-field"
       element :email, "#contact-details-form-email-field"
       element :international_address, "#contact-details-form-international-address-field"
-      element :submit_button, "input[name='commit']"
+      element :submit_button, "button[type='submit']"
     end
   end
 end

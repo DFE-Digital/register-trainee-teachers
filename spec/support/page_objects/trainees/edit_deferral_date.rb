@@ -12,7 +12,7 @@ module PageObjects
       element :defer_date_month, "#deferral_form_date_2i"
       element :defer_date_year, "#deferral_form_date_1i"
 
-      element :continue, "input[name='commit']"
+      element :continue, "button[type='submit']"
     end
   end
 end

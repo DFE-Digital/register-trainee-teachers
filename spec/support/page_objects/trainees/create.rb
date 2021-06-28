@@ -6,7 +6,7 @@ module PageObjects
       set_url "/trainees/new"
 
       element :trainee_id_field, "#trainee-trainee-id-field"
-      element :continue, "input[name='commit']"
+      element :continue, "button[type='submit']"
     end
   end
 end
