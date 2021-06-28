@@ -9,7 +9,7 @@ module PageObjects
         element :applying_for_bursary, "#funding-bursary-form-applying-for-bursary-true-field"
         element :not_applying_for_bursary, "#funding-bursary-form-applying-for-bursary-false-field"
 
-        element :submit_button, "input[name='commit']"
+        element :submit_button, "button[type='submit']"
       end
     end
   end
