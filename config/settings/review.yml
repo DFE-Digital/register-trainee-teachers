@@ -4,6 +4,7 @@ features:
   enable_feedback_link: true
   publish_course_details: true
   funding: true
+  persist_to_dttp: false
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true

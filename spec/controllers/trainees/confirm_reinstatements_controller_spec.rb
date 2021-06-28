@@ -20,7 +20,7 @@ describe Trainees::ConfirmReinstatementsController do
       it "queues a background job to reinstate a trainee" do
         expect {
           post :update, params: { trainee_id: trainee }
-        }.to have_enqueued_job(ReinstateJob).with(trainee)
+        }.to have_enqueued_job(Dttp::ReinstateJob).with(trainee)
       end
 
       context "trainee has a trn" do
@@ -61,7 +61,7 @@ describe Trainees::ConfirmReinstatementsController do
       it "queues a background job to reinstate a trainee" do
         expect {
           post :update, params: { trainee_id: trainee }
-        }.to have_enqueued_job(ReinstateJob).with(trainee)
+        }.to have_enqueued_job(Dttp::ReinstateJob).with(trainee)
       end
     end
   end

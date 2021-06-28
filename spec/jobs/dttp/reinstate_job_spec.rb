@@ -1,0 +1,63 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+module Dttp
+  describe ReinstateJob do
+    include ActiveJob::TestHelper
+
+    let(:trainee) { create(:trainee, :deferred, trn: trn) }
+
+    let(:contact_update_params) do
+      {
+        trainee: trainee,
+        entity_type: UpdateTraineeStatus::CONTACT_ENTITY_TYPE,
+      }
+    end
+
+    let(:placement_assignment_update_params) do
+      {
+        trainee: trainee,
+        entity_type: UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE,
+      }
+    end
+
+    let(:with_trn_param) { { status: DttpStatuses::YET_TO_COMPLETE_COURSE } }
+    let(:without_trn_param) { { status: DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED } }
+
+    let(:contact_update_params_with_trn) { contact_update_params.merge(with_trn_param) }
+    let(:contact_update_params_without_trn) { contact_update_params.merge(without_trn_param) }
+    let(:placement_assignment_update_params_with_trn) { placement_assignment_update_params.merge(with_trn_param) }
+    let(:placement_assignment_update_params_without_trn) { placement_assignment_update_params.merge(without_trn_param) }
+
+    subject { described_class.perform_now(trainee) }
+
+    before do
+      allow(UpdateTraineeStatus).to receive(:call).with(contact_update_params_with_trn)
+      allow(UpdateTraineeStatus).to receive(:call).with(contact_update_params_without_trn)
+      allow(UpdateTraineeStatus).to receive(:call).with(placement_assignment_update_params_with_trn)
+      allow(UpdateTraineeStatus).to receive(:call).with(placement_assignment_update_params_without_trn)
+      allow(UpdateDormancy).to receive(:call).with(trainee: trainee)
+    end
+
+    context "with a trainee with a trn" do
+      let(:trn) { "trn" }
+
+      it "updates the contact status and the placement assignment status to 'Yet to complete course' in DTTP" do
+        expect(UpdateTraineeStatus).to receive(:call).with(contact_update_params_with_trn)
+        expect(UpdateTraineeStatus).to receive(:call).with(placement_assignment_update_params_with_trn)
+        subject
+      end
+    end
+
+    context "with a trainee without a trn" do
+      let(:trn) { nil }
+
+      it "updates the contact status and the placement assignment status to 'Prospective trainee - TREFNO requested' in DTTP" do
+        expect(UpdateTraineeStatus).to receive(:call).with(contact_update_params_without_trn)
+        expect(UpdateTraineeStatus).to receive(:call).with(placement_assignment_update_params_without_trn)
+        subject
+      end
+    end
+  end
+end

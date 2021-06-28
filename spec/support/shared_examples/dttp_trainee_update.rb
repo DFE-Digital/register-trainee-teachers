@@ -34,12 +34,16 @@ RSpec.shared_examples "dttp trainee update" do |dttp_param_processor|
   end
 
   it_behaves_like "an http error handler" do
-    it "does not enqueue the CreateOrUpdateConsistencyCheckJob" do
-      allow(Dttp::Client).to receive(:patch).with(path, body: expected_params).and_return(instance_double("HTTParty::Response", success?: false))
+    it "does not enqueue the Dttp::CreateOrUpdateConsistencyCheckJob" do
+      allow(Dttp::Client).to receive(:patch).with(path, body: expected_params).and_return(
+        instance_double("HTTParty::Response", success?: false),
+      )
+
       ActiveJob::Base.queue_adapter = :test
 
       subject
-      expect(CreateOrUpdateConsistencyCheckJob).not_to have_been_enqueued
+
+      expect(Dttp::CreateOrUpdateConsistencyCheckJob).not_to have_been_enqueued
     end
   end
 end

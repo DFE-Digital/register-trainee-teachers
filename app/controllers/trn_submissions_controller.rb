@@ -9,8 +9,8 @@ class TrnSubmissionsController < ApplicationController
 
     trainee.submit_for_trn!
 
-    RegisterForTrnJob.perform_later(trainee, current_user.dttp_id)
-    RetrieveTrnJob.perform_with_default_delay(trainee)
+    Dttp::RegisterForTrnJob.perform_later(trainee, current_user.dttp_id)
+    Dttp::RetrieveTrnJob.perform_with_default_delay(trainee)
 
     redirect_to trn_submission_path(trainee)
   end

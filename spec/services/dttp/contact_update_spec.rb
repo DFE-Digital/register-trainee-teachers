@@ -42,14 +42,14 @@ module Dttp
         end
 
         it "sends a PATCH request to update contact and placement assignment entities" do
-          allow(CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
+          allow(Dttp::CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
           subject
         end
 
         it "enqueues the CreateOrUpdateConsistencyJob" do
           expect {
             subject
-          }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
+          }.to have_enqueued_job(Dttp::CreateOrUpdateConsistencyCheckJob).with(trainee)
         end
       end
 

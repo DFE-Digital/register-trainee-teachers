@@ -7,7 +7,7 @@ shared_examples "CreateOrUpdateConsistencyCheckJob" do |model|
     it "enqueues the CreateOrUpdateConsistencyJob" do
       expect {
         model.call(trainee: trainee)
-      }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
+      }.to have_enqueued_job(Dttp::CreateOrUpdateConsistencyCheckJob).with(trainee)
     end
   end
 end
