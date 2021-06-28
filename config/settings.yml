@@ -103,3 +103,7 @@ track_validation_errors: true
 govuk_notify:
   api_key: please_change_me
   welcome_email_template_id: 7765732c-f068-4c7f-abbc-ea5275a4b6ca
+
+google_tag_manager:
+  tracking_id: GTM-PD8MFNL
+  auth_id: O3Y_kHqIkzLf5m0xGNafIA
