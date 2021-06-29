@@ -339,6 +339,24 @@ describe CourseDetailsForm, type: :model do
           expect(trainee.course_code).not_to eq nil
         end
       end
+
+      context "when the course_subject has changed" do
+        let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true) }
+        let(:trainee) { create(:trainee, :with_funding, :with_course_details, course_subject_one: Dttp::CodeSets::CourseSubjects::BIOLOGY, progress: progress) }
+        let(:params) do
+          {
+            course_subject_one: Dttp::CodeSets::CourseSubjects::HISTORICAL_LINGUISTICS,
+          }
+        end
+
+        it "nullifies the bursary information and resets funding section progress" do
+          expect { subject.save! }
+          .to change { trainee.applying_for_bursary }
+          .from(trainee.applying_for_bursary).to(nil)
+          .and change { trainee.progress.funding }
+          .from(true).to(false)
+        end
+      end
     end
 
     describe "#stash" do
