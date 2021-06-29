@@ -17,7 +17,10 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   routes:
-    provider_led_postgrad: true 
+    provider_led_postgrad: true
 
 environment:
   name: staging
+
+google_tag_manager:
+  auth_id: h9MLvalp6AuXoRufPTHO_A
