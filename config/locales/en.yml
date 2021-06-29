@@ -519,6 +519,13 @@ en:
         summary_title: Schools
         lead_school: Lead school
         employing_school: Employing school
+    funding:
+      view:
+        title: Funding
+        training_initiative: Training initiative
+        bursary_funding: Bursary funding
+        bursury_applied_for: Bursary applied for
+        no_bursury_applied_for: Not bursary funded
   trainees:
     not_supported_route:
       heading: Other routes not supported

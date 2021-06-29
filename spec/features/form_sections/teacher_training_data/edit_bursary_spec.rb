@@ -16,9 +16,8 @@ feature "edit bursary", type: :feature do
   scenario "edit with valid parameters" do
     and_i_update_the_bursary
 
-    # TODO: uncomment this when the confrimation page is added
-    # and_i_submit_the_form
-    # then_i_am_redirected_to_the_funding_confirmation_page
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_funding_confirmation_page
   end
 
   scenario "submitting with invalid parameters" do
@@ -56,5 +55,9 @@ private
     bursary = create(:bursary, training_route: :provider_led_postgrad, amount: 100_000)
     allocation_subject = create(:allocation_subject, name: "magic", bursaries: [bursary])
     create(:subject_specialism, allocation_subject: allocation_subject, name: course_subject)
+  end
+
+  def then_i_am_redirected_to_the_funding_confirmation_page
+    expect(confirm_funding_page).to be_displayed(id: trainee.slug)
   end
 end
