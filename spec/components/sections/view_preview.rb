@@ -10,7 +10,8 @@ module Sections
        diversity
        course_details
        training_details
-       schools].each do |section|
+       schools
+       funding].each do |section|
       define_method "continue_sections_#{section}" do
         trainee = continue_sections_trainee(section)
         form = TrnSubmissionForm.new(trainee: trainee)
@@ -57,7 +58,9 @@ module Sections
         course_subject_one: "subject",
         training_route: TRAINING_ROUTE_ENUMS[training_route(section)],
         lead_school: School.new(id: 1),
-        degrees: [Degree.new(id: 1)]
+        degrees: [Degree.new(id: 1)],
+        training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+        applying_for_bursary: true
       )
     end
 

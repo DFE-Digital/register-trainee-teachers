@@ -55,7 +55,9 @@ module Pages
                       additional_ethnic_background: "additional_ethnic_background",
                       training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
                       course_subject_one: "subject",
-                      degrees: [Degree.new(id: 1)])
+                      degrees: [Degree.new(id: 1)],
+                      training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+                      applying_for_bursary: true)
         end
 
         def trainee_with_all_sections_completed
@@ -90,10 +92,13 @@ module Pages
                         diversity: true,
                         course_details: true,
                         training_details: true,
+                        funding: true,
                       ),
                       diversity_disclosure: 1,
                       degrees: [Degree.new(id: 1, locale_code: 1, subject: "subject")],
-                      commencement_date: Time.zone.now)
+                      commencement_date: Time.zone.now,
+                      training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+                      applying_for_bursary: true)
         end
 
         def template

@@ -59,6 +59,10 @@ module Sections
       context "requires school" do
         include_examples renders_incomplete_section, :schools, :not_started
       end
+
+      context "when the funding flag is on", feature_show_funding: true do
+        include_examples renders_incomplete_section, :funding, :not_started
+      end
     end
 
     context "trainee in progress" do
@@ -75,6 +79,12 @@ module Sections
         let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
 
         include_examples renders_incomplete_section, :schools, :in_progress
+      end
+
+      context "when the funding flag is on", feature_show_funding: true do
+        let(:trainee) { create(:trainee, :in_progress, applying_for_bursary: false, training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach]) }
+
+        include_examples renders_incomplete_section, :funding, :in_progress
       end
     end
 
@@ -94,6 +104,12 @@ module Sections
         let(:trainee) { create(:trainee, :with_lead_school, :completed) }
 
         include_examples renders_confirmation, :schools
+      end
+
+      context "when the funding flag is on", feature_show_funding: true do
+        let(:trainee) { create(:trainee, :completed, applying_for_bursary: false, training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach]) }
+
+        include_examples renders_confirmation, :funding
       end
     end
 
@@ -140,6 +156,10 @@ module Sections
           not_started: "edit_trainee_lead_schools_path",
           in_progress: "trainee_schools_confirm_path",
         },
+        funding: {
+          not_started: "edit_trainee_funding_training_initiative_path",
+          in_progress: "trainee_funding_confirm_path",
+        },
       }[section][status]
     end
 
@@ -152,6 +172,7 @@ module Sections
         course_details: Confirmation::CourseDetails::View,
         training_details: Confirmation::TrainingDetails::View,
         schools: Confirmation::Schools::View,
+        funding: Confirmation::Funding::View,
       }[section]
     end
   end

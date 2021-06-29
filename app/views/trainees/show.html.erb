@@ -21,3 +21,9 @@
     <%= render Confirmation::PlacementDetails::View.new(trainee: @trainee) %>
   </div>
 <% end %>
+
+<% if FeatureService.enabled?(:show_funding) %>
+  <div class="funding">
+    <%= render Confirmation::Funding::View.new(data_model: @trainee) %>
+  </div>
+<% end %>

@@ -226,4 +226,8 @@ class Trainee < ApplicationRecord
       Trainees::CreateTimeline.call(trainee: self)
     end
   end
+
+  def bursary_amount
+    CalculateBursary.for_route_and_subject(training_route.to_sym, course_subject_one)
+  end
 end
