@@ -1,6 +1,6 @@
 update_trainees_to_dttp:
   cron: "0 0 * * *"
-  class: "QueueTraineeUpdatesJob"
+  class: "Dttp::QueueTraineeUpdatesJob"
   queue: dttp
 truncate_activerecord_session_store:
   cron: "0 0 * * *"
@@ -12,7 +12,7 @@ import_applications_from_apply:
   queue: default
 run_consistency_check_job:
   cron: "0 2 * * *"
-  class: "RunConsistencyChecksJob"
+  class: "Dttp::RunConsistencyChecksJob"
   queue: dttp
 import_subjects_from_ttapi:
   cron: "0 2 * * *"
