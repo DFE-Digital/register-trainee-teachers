@@ -75,6 +75,10 @@ module Dttp
       UK_GOVERNMENT_PARLIAMENTARY_STUDIES = "UK government / Parliamentary studies"
       WELSH_LANGUAGE = "Welsh language"
 
+      # TODO: legacy subjects. Update when these are added to DTTP
+      DESIGN_TECHNOLOGY = "Design and technology"
+      PHYSICAL_EDUCATION = "Physical education"
+
       CLASSICS_DTTP_ID = "ca8274df-181e-e711-80c8-0050568902d3"
       EARLY_YEARS_DTTP_ID = "f08274df-181e-e711-80c8-0050568902d3"
       MATHEMATICS_DTTP_ID = "768274df-181e-e711-80c8-0050568902d3"
@@ -152,6 +156,9 @@ module Dttp
         TRAVEL_AND_TOURISM => { entity_id: "94a12838-b3cf-e911-a860-000d3ab1da01" },
         UK_GOVERNMENT_PARLIAMENTARY_STUDIES => { entity_id: "96a12838-b3cf-e911-a860-000d3ab1da01" },
         WELSH_LANGUAGE => { entity_id: "98a12838-b3cf-e911-a860-000d3ab1da01" },
+        # TODO: update these when they have been added to DTTP
+        DESIGN_TECHNOLOGY => { entity_id: "36a12838-b3cf-e911-a860-000d3ab1da01" },
+        PHYSICAL_EDUCATION => { entity_id: "8ea12838-b3cf-e911-a860-000d3ab1da01" },
       }.freeze
     end
   end
