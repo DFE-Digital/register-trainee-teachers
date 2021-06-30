@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CourseDetailsForm < TraineeForm
+  include CourseFormHelpers
+
   FIELDS = %i[
     course_subject_one
     course_subject_one_raw
@@ -112,18 +114,6 @@ private
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     })
-  end
-
-  def clear_bursary_information
-    trainee.progress.funding = false
-
-    trainee.assign_attributes({
-      applying_for_bursary: nil,
-    })
-  end
-
-  def course_subjects_changed?
-    trainee.course_subject_one_changed? || trainee.course_subject_two_changed? || trainee.course_subject_three_changed?
   end
 
   def compute_attributes_from_trainee

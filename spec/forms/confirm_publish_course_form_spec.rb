@@ -53,6 +53,19 @@ describe ConfirmPublishCourseForm, type: :model do
           .and change { trainee.course_end_date }
           .from(nil).to((course.start_date + course.duration_in_years.years).to_date.prev_day)
       end
+
+      context "when the course_subject has changed" do
+        let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true) }
+        let(:trainee) { build(:trainee, applying_for_bursary: true, progress: progress) }
+
+        it "nullifies the bursary information and resets funding section progress" do
+          expect { subject.save }
+          .to change { trainee.applying_for_bursary }
+          .from(true).to(nil)
+          .and change { trainee.progress.funding }
+          .from(true).to(false)
+        end
+      end
     end
   end
 end
