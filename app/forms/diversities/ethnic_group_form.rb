@@ -4,6 +4,8 @@ module Diversities
   class EthnicGroupForm < TraineeForm
     FIELDS = %i[
       ethnic_group
+      ethnic_background
+      additional_ethnic_background
     ].freeze
 
     attr_accessor(*FIELDS)
@@ -31,7 +33,11 @@ module Diversities
     end
 
     def new_attributes
-      disclosure_form.diversity_disclosed? ? fields_from_store.merge(params).symbolize_keys : { ethnic_group: nil }
+      (disclosure_form.diversity_disclosed? ? fields_from_store.merge(params).symbolize_keys : { ethnic_group: nil }).tap do |attrs|
+        if attrs[:ethnic_group] == Diversities::ETHNIC_GROUP_ENUMS[:not_provided]
+          attrs.merge!(ethnic_background: nil, additional_ethnic_background: nil)
+        end
+      end
     end
   end
 end
