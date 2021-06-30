@@ -61,9 +61,13 @@
 
     <%= render Sections::View.new(trainee: @trainee, form: @form, section: :training_details) %>
 
-    <%- if @trainee.requires_schools? %>
+    <% if @trainee.requires_schools? %>
       <%= render Sections::View.new(trainee: @trainee, form: @form, section: :schools) %>
-    <%- end -%>
+    <% end %>
+
+    <% if FeatureService.enabled?(:show_funding) %>
+      <%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding) %>
+    <% end %>
 
     <%= register_form_with(model: @form, url: trn_submissions_path, method: :post, local: true) do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>

@@ -43,7 +43,7 @@ module Trainees
 
       def load_bursary_info!
         @subject = @trainee.course_subject_one
-        @amount = CalculateBursary.for_route_and_subject(@trainee.training_route.to_sym, @subject)
+        @amount = @trainee.bursary_amount
       end
     end
   end

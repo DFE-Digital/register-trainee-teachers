@@ -30,6 +30,8 @@ module Sections
       case section
       when :schools
         Schools::FormValidator
+      when :funding
+        Funding::FormValidator
       else
         "#{section.to_s.camelcase}Form".constantize
       end
@@ -44,6 +46,7 @@ module Sections
         course_details: Confirmation::CourseDetails::View,
         training_details: Confirmation::TrainingDetails::View,
         schools: Confirmation::Schools::View,
+        funding: Confirmation::Funding::View,
       }[section]
     end
 
@@ -76,6 +79,10 @@ module Sections
         schools: {
           not_started: "edit_trainee_lead_schools_path",
           in_progress: "trainee_schools_confirm_path",
+        },
+        funding: {
+          not_started: "edit_trainee_funding_training_initiative_path",
+          in_progress: "trainee_funding_confirm_path",
         },
       }[section][progress_status]
     end

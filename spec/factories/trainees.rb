@@ -93,6 +93,7 @@ FactoryBot.define do
           training_details: true,
           placement_details: true,
           schools: true,
+          funding: true,
         )
       end
     end
