@@ -15,7 +15,12 @@ module Trainees
         save_strategy = trainee.draft? ? :save! : :stash
 
         if @training_initiatives_form.public_send(save_strategy)
-          redirect_to review_draft_trainee_path(trainee)
+          if trainee.bursary_amount.present?
+            redirect_to edit_trainee_funding_bursary_path(trainee)
+          else
+            trainee.update!(applying_for_bursary: false)
+            redirect_to trainee_funding_confirm_path(trainee)
+          end
         else
           render :edit
         end

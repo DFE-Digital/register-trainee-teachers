@@ -403,8 +403,8 @@ en:
         route_message: "Your %{route} courses in the Publish service"
         route_titles:
           provider_led_postgrad: provider-led postgrad
-          school_direct_salaried: School direct salaried
-          school_direct_tuition_fee: School direct tuition fee
+          school_direct_salaried: school direct salaried
+          school_direct_tuition_fee: school direct tuition fee
       funding:
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
