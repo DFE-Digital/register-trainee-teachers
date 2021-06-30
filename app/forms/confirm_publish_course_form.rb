@@ -4,6 +4,7 @@ class ConfirmPublishCourseForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
+  include CourseFormHelpers
 
   FIELDS = %i[
     code
@@ -24,6 +25,8 @@ class ConfirmPublishCourseForm
     return false unless valid?
 
     update_trainee_attributes
+
+    clear_bursary_information if course_subjects_changed?
     trainee.save!
   end
 
