@@ -58,6 +58,12 @@ staging:
 	$(eval space=bat-staging)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
 
+pen:
+	$(eval env=pen)
+	$(eval env_config=pen)
+	$(eval space=bat-staging)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
+
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval env=production)
