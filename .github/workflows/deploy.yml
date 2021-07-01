@@ -23,6 +23,10 @@ on:
         description: Deploy to rollover?
         default: 'false'
         required: true
+      pen:
+        description: Deploy to pen test?
+        default: 'false'
+        required: true
       pr:
         description: PR number for the review app
         required: false
@@ -41,12 +45,12 @@ jobs:
       - id:   select-environments
         if:  github.event.inputs.pr == ''
         uses: DFE-Digital/bat-infrastructure/actions/prepare-environment-matrix@main
-      
+
       - id:  set-pr-environment
         if:  github.event.inputs.pr != ''
         run: echo "::set-output name=environments::$PR"
         env:
-          PR: '{"environment": ["${{ github.event.inputs.pr }}"]}'        
+          PR: '{"environment": ["${{ github.event.inputs.pr }}"]}'
 
       - uses: DFE-Digital/github-actions/turnstyle@master
         name: Wait for other inprogress deployment runs
