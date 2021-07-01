@@ -56,6 +56,11 @@ jobs:
         name: Wait for other inprogress deployment runs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          initial-wait-seconds: 12
+          poll-interval-seconds: 20
+          abort-after-seconds: 1800
+          same-branch-only: true
 
   deploy:
     name: ${{ matrix.environment }} Deployment
