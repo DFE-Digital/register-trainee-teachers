@@ -96,13 +96,13 @@ jobs:
     - name: Run Javascript tests
       run: docker-compose exec -T web /bin/sh -c 'yarn run test'
 
-    - name: Trigger QA Deployment
+    - name: Trigger Deployment
       if: ${{ success() && github.ref == 'refs/heads/master' }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: 'Deploy to PaaS'
         token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
-        inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "rollover": "true", "sha": "${{ env.SHA_TAG }}"}'
+        inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "rollover": "true", "pen": "true", "sha": "${{ env.SHA_TAG }}"}'
 
     - name: Check for Failure
       if: ${{ failure() && github.ref == 'refs/heads/master' }}
