@@ -29,6 +29,8 @@ class Trainee < ApplicationRecord
 
   enum training_initiative: ROUTE_INITIATIVES
 
+  enum bursary_tier: BURSARY_TIERS
+
   enum locale_code: { uk: 0, non_uk: 1 }
 
   enum gender: {

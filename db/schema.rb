@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_120839) do
+ActiveRecord::Schema.define(version: 2021_07_02_093832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,8 +304,9 @@ ActiveRecord::Schema.define(version: 2021_06_22_120839) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at"
-    t.integer "training_initiative"
     t.boolean "applying_for_bursary"
+    t.integer "training_initiative"
+    t.integer "bursary_tier"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
