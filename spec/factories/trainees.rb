@@ -297,5 +297,10 @@ FactoryBot.define do
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
       applying_for_bursary { Faker::Boolean.boolean }
     end
+
+    trait :with_tiered_bursary do
+      applying_for_bursary { true }
+      bursary_tier { BURSARY_TIER_ENUMS[:tier_one] }
+    end
   end
 end
