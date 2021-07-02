@@ -8,6 +8,7 @@ class RouteDataManager
   def update_training_route!(route)
     trainee.training_route = route
     reset_trainee_details if trainee.training_route_changed?
+    trainee.set_early_years_course_subject
     trainee.save!
   end
 

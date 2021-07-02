@@ -40,6 +40,7 @@ class TraineesController < ApplicationController
       redirect_to trainees_not_supported_route_path
     else
       authorize @trainee = Trainee.new(trainee_params.merge(provider_id: current_user.provider_id))
+      trainee.set_early_years_course_subject
       if trainee.save
         redirect_to review_draft_trainee_path(trainee)
       else

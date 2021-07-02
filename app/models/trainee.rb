@@ -232,4 +232,10 @@ class Trainee < ApplicationRecord
   def bursary_amount
     CalculateBursary.for_route_and_subject(training_route.to_sym, course_subject_one)
   end
+
+  def set_early_years_course_subject
+    if early_years_route?
+      self.course_subject_one = Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING
+    end
+  end
 end

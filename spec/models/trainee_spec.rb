@@ -362,4 +362,13 @@ describe Trainee do
   describe "auditing" do
     it { is_expected.to be_audited.associated_with(:provider) }
   end
+
+  describe "#set_early_years_course_subject" do
+    let(:trainee) { build(:trainee, :early_years_undergrad) }
+
+    it "sets course_subject_one to early years teaching" do
+      trainee.set_early_years_course_subject
+      expect(trainee.course_subject_one).to eq(Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING)
+    end
+  end
 end

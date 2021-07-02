@@ -25,6 +25,7 @@ feature "Create trainee journey" do
     and_i_select_early_years_undergrad_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview
+    and_trainee_course_subject_one_set_to_early_years_teaching
   end
 
   scenario "provider led postgrad radio button not shown when feature set to false", "feature_routes.provider_led_postgrad": false do
@@ -127,5 +128,9 @@ private
 
   def then_i_should_see_a_validation_error
     expect(new_trainee_page).to have_content(I18n.t("activerecord.errors.models.trainee.attributes.training_route"))
+  end
+
+  def and_trainee_course_subject_one_set_to_early_years_teaching
+    expect(Trainee.last.course_subject_one).to eq(Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING)
   end
 end
