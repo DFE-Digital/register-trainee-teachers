@@ -1,0 +1,40 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.course_details.edit", has_errors: @subject_specialisms_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<%= register_form_with(model: @subject_specialisms_form, url: trainee_subject_specialisms_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.hidden_field :course_code, value: params[:course_code] %>
+
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-form-group">
+
+    <%= f.govuk_check_boxes_fieldset :subject_specialisms,
+                                      legend: { text: t(".heading"), tag: "h1", size: "l" },
+                                      classes: "subject-specialisms" do %>
+
+      <div class="govuk-hint" id="language-subject-specialisms-form-subject-specialisms-hint">
+        <p class="govuk-body govuk-hint">
+          These language specialisms are recorded on the trainee's QTS award.
+        </p>
+        <p class="govuk-body govuk-hint">
+          Choose up to three.
+        </p>
+      <div>
+
+      <% @subject_specialisms.each_with_index do |subject, index| %>
+        <%= f.govuk_check_box(
+            :subject_specialisms,
+            subject,
+            multiple: true,
+            link_errors: index.zero?,
+            label: { text: subject },
+          ) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= f.govuk_submit %>
+<% end %>

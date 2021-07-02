@@ -543,6 +543,9 @@ en:
       edit:
         heading: What course are they doing?
         course_not_listed: Another course not listed
+    subject_specialisms:
+      edit:
+        heading: Which language specialisms has the trainee chosen to study?
     course_details:
       edit:
         subject_hint: &subject_hint Search for the closest matching subject
@@ -675,6 +678,11 @@ en:
             email:
               blank: Enter an email address
               invalid: Enter an email address in the correct format, like name@example.com
+        language_subject_specialisms_form:
+          attributes:
+            subject_specialisms:
+              blank: Select at least one subject
+              invalid: Select a maximum of three subjects
         deferral_form:
           attributes:
             date_string:
