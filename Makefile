@@ -29,9 +29,9 @@ help:
 review:
 	echo "setting Review $(env) environment"
 	$(eval env_config=review)
-	$(eval backend_key=-backend-config=key=$(env).terraform.tfstate)
+	$(eval backend_key=-backend-config=key=pr-$(env).tfstate)
 	$(eval export TF_VAR_paas_app_environment=review)
-	$(eval export TF_VAR_paas_web_app_hostname=pr-$(env))
+	$(eval export TF_VAR_paas_web_app_hostname=$(env))
 	$(eval space=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 
@@ -115,7 +115,7 @@ deploy: terraform-init
 	. terraform/workspace-variables/$(env_config).sh && cd terraform &&  terraform apply -var-file=workspace-variables/$(env_config).tfvars -auto-approve
 
 destroy: terraform-init
-	cd terraform && terraform destroy -var-file=workspace-variables/$(env_config).tfvars
+	. terraform/workspace-variables/$(env_config).sh && cd terraform && terraform destroy -var-file=workspace-variables/$(env_config).tfvars
 
 terraform-init:
 	$(if $(tag), , $(eval export tag=master))
