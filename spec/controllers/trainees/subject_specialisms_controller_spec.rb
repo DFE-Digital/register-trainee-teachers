@@ -11,6 +11,14 @@ describe Trainees::SubjectSpecialismsController do
   end
 
   describe "#update" do
+    context "with empty form params" do
+      let!(:course) { create(:course_with_subjects, subjects_count: 1) }
+      it "rerenders the page" do
+        put(:update, params: { trainee_id: trainee, position: 1 })
+        expect(response.code).to eq("200")
+      end
+    end
+
     context "there are more specialisms to choose" do
       let!(:course) { create(:course_with_subjects, subjects_count: 2) }
 

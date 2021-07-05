@@ -2,7 +2,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
-<%= register_form_with(model: @select_specialism_form, url: trainee_subject_specialism_path(@trainee, position), method: :put, local: true) do |f| %>
+<%= register_form_with(model: @subject_specialism_form, url: trainee_subject_specialism_path(@trainee, position), method: :put, local: true) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-form-group">

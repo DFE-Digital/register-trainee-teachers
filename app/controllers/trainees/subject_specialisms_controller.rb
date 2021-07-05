@@ -56,6 +56,8 @@ module Trainees
     end
 
     def specialism_params
+      return {} unless params[:subject_specialism_form].present?
+
       params.require(:subject_specialism_form).permit(:"specialism#{position}")
     end
 
