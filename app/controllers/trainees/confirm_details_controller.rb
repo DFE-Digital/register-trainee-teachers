@@ -54,7 +54,7 @@ module Trainees
 
     def confirm_section_title
       @confirm_section_title ||= {
-        training_details: "trainee start date and ID",
+        training_details: "start date and ID",
         degrees: "degree details",
         funding: "funding details",
       }[trainee_section_key.to_sym] || trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
