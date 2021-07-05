@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe LanguageSubjectSpecialismsForm, type: :model do
+describe LanguageSpecialismsForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
   let(:form_store) { class_double(FormStore) }
@@ -15,32 +15,32 @@ describe LanguageSubjectSpecialismsForm, type: :model do
 
   describe "validations" do
     context "when no subjects are supplied" do
-      let(:params) { { subject_specialisms: [] } }
+      let(:params) { { language_specialisms: [] } }
 
       before do
         subject.valid?
       end
 
       it "returns an error" do
-        expect(subject.errors[:subject_specialisms]).to include(
+        expect(subject.errors[:language_specialisms]).to include(
           I18n.t(
-            "activemodel.errors.models.language_subject_specialisms_form.attributes.subject_specialisms.blank",
+            "activemodel.errors.models.language_specialisms_form.attributes.language_specialisms.blank",
           ),
         )
       end
     end
 
     context "when more than three subjects are supplied" do
-      let(:params) { { subject_specialisms: %w[french german spanish mandarin] } }
+      let(:params) { { language_specialisms: %w[french german spanish mandarin] } }
 
       before do
         subject.valid?
       end
 
       it "returns an error" do
-        expect(subject.errors[:subject_specialisms]).to include(
+        expect(subject.errors[:language_specialisms]).to include(
           I18n.t(
-            "activemodel.errors.models.language_subject_specialisms_form.attributes.subject_specialisms.invalid",
+            "activemodel.errors.models.language_specialisms_form.attributes.language_specialisms.invalid",
           ),
         )
       end
@@ -48,13 +48,13 @@ describe LanguageSubjectSpecialismsForm, type: :model do
   end
 
   context "valid trainee" do
-    let(:params) { { subject_specialisms: %w[french german spanish] } }
+    let(:params) { { language_specialisms: %w[french german spanish] } }
 
     let(:trainee) { create(:trainee) }
 
     describe "#save!" do
       before do
-        allow(form_store).to receive(:set).with(trainee.id, :language_subject_specialisms, nil)
+        allow(form_store).to receive(:set).with(trainee.id, :language_specialisms, nil)
       end
 
       it "changes related trainee attributes" do
@@ -71,8 +71,8 @@ describe LanguageSubjectSpecialismsForm, type: :model do
     describe "#stash" do
       let(:fields) { params }
 
-      it "uses FormStore to temporarily save the fields under a key combination of trainee ID and language_subject_specialisms" do
-        expect(form_store).to receive(:set).with(trainee.id, :language_subject_specialisms, fields)
+      it "uses FormStore to temporarily save the fields under a key combination of trainee ID and language_specialisms" do
+        expect(form_store).to receive(:set).with(trainee.id, :language_specialisms, fields)
 
         subject.stash
       end

@@ -26,7 +26,7 @@ class FormStore
     schools
     training_initiative
     bursary
-    language_subject_specialisms
+    language_specialisms
   ].freeze
 
   class << self

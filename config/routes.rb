@@ -69,7 +69,7 @@ Rails.application.routes.draw do
         resource :bursary, only: %i[edit update], path: "/bursary"
       end
 
-      resource :subject_specialisms, only: %i[edit update], path: "/subject-specialisms"
+      resource :language_specialisms, only: %i[edit update], path: "/language-specialisms"
 
       resource :personal_details, concerns: :confirmable, only: %i[show edit update], path: "/personal-details"
 
