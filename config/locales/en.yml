@@ -223,6 +223,8 @@ en:
             edit: Bursary funding
         language_specialisms:
           edit: Choose subject specialisms
+        subject_specialisms:
+          edit: Which specialism has the trainee chosen to study?
       providers:
         index: Providers
         new: Add a provider
@@ -572,6 +574,10 @@ en:
       edit:
         heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
+    subject_specialisms:
+      edit:
+        heading: Which %{subject} specialism has the trainee chosen to study?
+        hint: This specialism is what is recorded on the trainee's QTS award
 
   activerecord:
     attributes:
@@ -838,6 +844,10 @@ en:
               length:
                 one: "Enter at least one character"
                 other: "Enter at least %{count} characters"
+        subject_specialism_form:
+          attributes:
+            specialism:
+              blank: Select a specialism
         schools/lead_school_form:
           attributes:
             lead_school_id:

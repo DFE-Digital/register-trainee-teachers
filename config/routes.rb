@@ -107,6 +107,8 @@ Rails.application.routes.draw do
       resource :apply_trainee_data, only: %i[update edit], path: "/apply-trainee-data"
 
       resource :timeline, only: :show
+
+      resource :subject_specialism, only: %i[edit update], path: "/subject-specialism/:position"
     end
 
     member do
