@@ -76,32 +76,57 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 24_000,
-    allocation_subjects: %w[Chemistry Computing Mathematics Physics],
+    allocation_subjects: [
+      Dttp::CodeSets::AllocationSubjects::CHEMISTRY,
+      Dttp::CodeSets::AllocationSubjects::COMPUTING,
+      Dttp::CodeSets::AllocationSubjects::MATHEMATICS,
+      Dttp::CodeSets::AllocationSubjects::PHYSICS,
+    ],
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 10_000,
-    allocation_subjects: ["Modern languages", "Classics"],
+    allocation_subjects: [
+      Dttp::CodeSets::AllocationSubjects::MODERN_LANGUAGES,
+      Dttp::CodeSets::AllocationSubjects::CLASSICS,
+    ],
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 7_000,
-    allocation_subjects: %w[Biology],
+    allocation_subjects: [
+      Dttp::CodeSets::AllocationSubjects::BIOLOGY,
+    ],
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     amount: 24_000,
-    allocation_subjects: %w[Chemistry Computing Mathematics Physics],
+    allocation_subjects: [
+      Dttp::CodeSets::AllocationSubjects::CHEMISTRY,
+      Dttp::CodeSets::AllocationSubjects::COMPUTING,
+      Dttp::CodeSets::AllocationSubjects::MATHEMATICS,
+      Dttp::CodeSets::AllocationSubjects::PHYSICS,
+    ],
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     amount: 10_000,
-    allocation_subjects: ["Modern languages", "Classics"],
+    allocation_subjects: [
+      Dttp::CodeSets::AllocationSubjects::MODERN_LANGUAGES,
+      Dttp::CodeSets::AllocationSubjects::CLASSICS,
+    ],
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     amount: 7_000,
-    allocation_subjects: %w[Biology],
+    allocation_subjects: [
+      Dttp::CodeSets::AllocationSubjects::BIOLOGY,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
+    amount: 14_000,
+    allocation_subjects: [Dttp::CodeSets::AllocationSubjects::EARLY_YEARS_ITT],
   ),
 ].freeze
 
