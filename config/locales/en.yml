@@ -221,6 +221,8 @@ en:
             edit: Training initiatives
           bursaries:
             edit: Bursary funding
+        language_specialisms:
+          edit: Choose subject specialisms
       providers:
         index: Providers
         new: Add a provider
@@ -543,6 +545,11 @@ en:
       edit:
         heading: What course are they doing?
         course_not_listed: Another course not listed
+    language_specialisms:
+      edit:
+        heading: Which language specialisms has the trainee chosen to study?
+        hint: These language specialisms are recorded on the trainee's QTS award.
+        additional_hint: Choose up to three.
     course_details:
       edit:
         subject_hint: &subject_hint Search for the closest matching subject
@@ -675,6 +682,11 @@ en:
             email:
               blank: Enter an email address
               invalid: Enter an email address in the correct format, like name@example.com
+        language_specialisms_form:
+          attributes:
+            language_specialisms:
+              blank: Select at least one subject
+              invalid: Select a maximum of three subjects
         deferral_form:
           attributes:
             date_string:

@@ -1,0 +1,40 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.language_specialisms.edit", has_errors: @language_specialisms_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<%= register_form_with(model: @language_specialisms_form, url: trainee_language_specialisms_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.hidden_field :course_code, value: params[:course_code] %>
+
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-form-group">
+
+    <%= f.govuk_check_boxes_fieldset :language_specialisms,
+                                      legend: { text: t(".heading"), tag: "h1", size: "l" },
+                                      classes: "language-specialisms" do %>
+
+      <div class="govuk-hint" id="language-language-specialisms-form-language-specialisms-hint">
+        <p class="govuk-body govuk-hint">
+          <%= t(".hint") %>
+        </p>
+        <p class="govuk-body govuk-hint">
+          <%= t(".additional_hint") %>
+        </p>
+      <div>
+
+      <% @language_specialisms.each_with_index do |language, index| %>
+        <%= f.govuk_check_box(
+            :language_specialisms,
+            language,
+            multiple: true,
+            link_errors: index.zero?,
+            label: { text: language },
+          ) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= f.govuk_submit %>
+<% end %>
