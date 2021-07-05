@@ -1,0 +1,32 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.course_details.edit", has_errors: @select_specialism_form.errors.present?) %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+<%= register_form_with(model: @select_specialism_form, url: trainee_subject_specialism_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-form-group">
+
+    <%= f.govuk_radio_buttons_fieldset :"specialism_#{position}",
+                                      legend: { text: t(".heading", subject: @subject), tag: "h1", size: "l" } do %>
+
+      <div class="govuk-hint">
+        <p class="govuk-body govuk-hint">
+        <%= t(".hint") %>
+        </p>
+      <div>
+
+      <% @specialisms.each_with_index do |subject, index| %>
+        <%= f.govuk_radio_button(
+            :"specialism_#{position}",
+            subject,
+            multiple: true,
+            link_errors: index.zero?,
+            label: { text: subject },
+          ) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= f.govuk_submit %>
+<% end %>
