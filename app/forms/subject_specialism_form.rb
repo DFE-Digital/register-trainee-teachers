@@ -6,16 +6,16 @@ class SubjectSpecialismForm < TraineeForm
   include ActiveModel::Validations::Callbacks
 
   FIELDS = %i[
-    specialism_1
-    specialism_2
-    specialism_3
+    specialism1
+    specialism2
+    specialism3
     course_subject_one
     course_subject_two
     course_subject_three
   ].freeze
 
   ERROR_TRANSLATION_KEY =
-    "activemodel.errors.models.subject_specialism_form.attributes.specialism.blank".freeze
+    "activemodel.errors.models.subject_specialism_form.attributes.specialism.blank"
 
   validate :specialism_is_present
 
@@ -37,11 +37,11 @@ class SubjectSpecialismForm < TraineeForm
     end
   end
 
-  private
+private
 
   def update_trainee_attributes
     (1..3).each do |i|
-      trainee.send("#{subject_attribute(i)}=", fields[:"specialism_#{i}"])
+      trainee.send("#{subject_attribute(i)}=", fields[:"specialism#{i}"])
     end
   end
 
@@ -54,7 +54,7 @@ class SubjectSpecialismForm < TraineeForm
   end
 
   def specialism_attribute
-    @_specialism_attribute ||= "specialism_#{@position}"
+    @_specialism_attribute ||= "specialism#{@position}"
   end
 
   def to_word(number)
@@ -78,15 +78,3 @@ class SubjectSpecialismForm < TraineeForm
     :subject_specialism
   end
 end
-
-
-#/subject_specialism/3
-#
-#specialism_3
-#specialisms[:course_subject_3]
-#
-#
-#if save?
-#  if current_position < 3 && specialisms(course_subject#{position+1}.present?
-#
-#end

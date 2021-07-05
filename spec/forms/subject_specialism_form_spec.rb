@@ -16,15 +16,15 @@ describe SubjectSpecialismForm, type: :model do
   describe "validations" do
     let(:position) { 1 }
 
-    it "validates the presence of the course subject matching the position"  do
+    it "validates the presence of the course subject matching the position" do
       expect(subject.valid?).to eq false
-      expect(subject.errors[:specialism_1]).to contain_exactly("Select a specialism")
+      expect(subject.errors[:specialism1]).to contain_exactly("Select a specialism")
     end
   end
 
   describe "#stash" do
     let(:position) { 1 }
-    let(:params) { { specialism_1: "special" } }
+    let(:params) { { specialism1: "special" } }
 
     it "uses FormStore to temporarily save the fields under a key combination of trainee ID and subject_specialism" do
       expect(form_store).to receive(:set).with(trainee.id, :subject_specialism,  subject.fields)
@@ -36,8 +36,8 @@ describe SubjectSpecialismForm, type: :model do
     let(:position) { nil }
     let(:stashed_fields) do
       {
-        specialism_1: "pizza",
-        specialism_2: "oragami",
+        specialism1: "pizza",
+        specialism2: "oragami",
       }
     end
 

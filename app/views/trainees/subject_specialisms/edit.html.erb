@@ -2,12 +2,12 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
-<%= register_form_with(model: @select_specialism_form, url: trainee_subject_specialism_path(@trainee), method: :put, local: true) do |f| %>
+<%= register_form_with(model: @select_specialism_form, url: trainee_subject_specialism_path(@trainee, position), method: :put, local: true) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-form-group">
 
-    <%= f.govuk_radio_buttons_fieldset :"specialism_#{position}",
+    <%= f.govuk_radio_buttons_fieldset :"specialism#{position}",
                                       legend: { text: t(".heading", subject: @subject), tag: "h1", size: "l" } do %>
 
       <div class="govuk-hint">
@@ -18,7 +18,7 @@
 
       <% @specialisms.each_with_index do |subject, index| %>
         <%= f.govuk_radio_button(
-            :"specialism_#{position}",
+            :"specialism#{position}",
             subject,
             multiple: true,
             link_errors: index.zero?,

@@ -6,11 +6,24 @@ module Trainees
     helper_method :position
 
     def edit
-      # PITA
-      course = Course.find(10)
+      course = Course.first
       @subject = course.subjects[position - 1].name
       @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
-      @select_specialism_form = SelectSpecialismForm.new(trainee, position)
+      @subject_specialism_form = SubjectSpecialismForm.new(trainee, position)
+    end
+
+    def update
+      @subject_specialism_form = SubjectSpecialismForm.new(trainee, position, params: specialism_params)
+      save_strategy = trainee.draft? ? :save! : :stash
+
+      if @subject_specialism_form.public_send(save_strategy)
+        redirect_to next_step_path
+      else
+        course = Course.first
+        @subject = course.subjects[position - 1].name
+        @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
+        render :edit
+      end
     end
 
   private
@@ -24,7 +37,7 @@ module Trainees
     end
 
     def position_in_words
-      @_piw ||= to_word(position)
+      @_position_in_words ||= to_word(position)
     end
 
     def to_word(number)
@@ -33,13 +46,29 @@ module Trainees
         "one"
       when 2
         "two"
-      when
+      when 3
         "three"
       end
     end
 
     def authorize_trainee
       authorize(trainee)
+    end
+
+    def specialism_params
+      params.require(:subject_specialism_form).permit(:"specialism#{position}")
+    end
+
+    def next_step_path
+      course = Course.first
+      specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))
+      next_position = position + 1
+      if specialisms[:"course_subject_#{to_word(next_position)}"].present?
+        edit_trainee_subject_specialism_path(@trainee, next_position)
+      else
+        # TODO: redirect to confirm path when it exists
+        "www.example.com"
+      end
     end
   end
 end
