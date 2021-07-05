@@ -223,6 +223,8 @@ en:
             edit: Bursary funding
         language_specialisms:
           edit: Choose subject specialisms
+        subject_specialisms:
+          edit: Which specialism has the trainee chosen to study?
       providers:
         index: Providers
         new: Add a provider
