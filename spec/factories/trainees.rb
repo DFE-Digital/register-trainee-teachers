@@ -165,6 +165,10 @@ FactoryBot.define do
       training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
     end
 
+    trait :early_years_postgrad do
+      training_route { TRAINING_ROUTE_ENUMS[:early_years_postgrad] }
+    end
+
     trait :early_years_undergrad do
       training_route { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
     end

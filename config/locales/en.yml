@@ -418,8 +418,21 @@ en:
             They provide incentives and support for people training to teach.<br><br>
             If you’re not sure if the trainee is on an initiative you could check with a colleague or ask the trainee directly.
         bursaries:
-          description_html: The course you have selected has a bursary available of %{amount} for %{subject}. You need to check if the trainee is eligible for this bursary </br></br> <a target="_blank" href="https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-fu[…]er-training-bursaries-funding-manual-2021-to-2022-academic-year">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>
-          early_years_description_html: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary.<br/><br/> <a target=\"_blank\" href=\"https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-fu[…]er-training-bursaries-funding-manual-2021-to-2022-academic-year\">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>"
+          non_tiered:
+            description: The course you have selected has a bursary available of %{amount} for %{subject}. You need to check if the trainee is eligible for this bursary.
+            early_years_description: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary."
+          tiered:
+            description: Early years (postgrad) has a bursary available. You need to check if the trainee is eligible for this bursary.
+            tier_one:
+              label: Yes - Tier 1 (£5,000)
+              hint: First-class honours degree, doctoral degree, medical masters (distinction)
+            tier_two:
+              label: Yes - Tier 2 (£4,000)
+              hint: 2:1 honours degree, master’s degree
+            tier_three:
+              label: Yes - Tier 3 (£2,000)
+              hint: 2:2 honours degree
+          guidance_html: <a target="_blank" href="https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-funding-manual/initial-teacher-training-bursaries-funding-manual-2021-to-2022-academic-year#training-bursary-award-and-eligibility">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>
           title: Are you applying for a bursary for this trainee?
           true: Yes, apply for a bursary
           false: No, do not apply for a bursary
@@ -539,6 +552,10 @@ en:
       bursary_funding: Bursary funding
       bursury_applied_for: Bursary applied for
       no_bursury_applied_for: Not bursary funded
+      tiered_bursary_applied_for:
+        tier_one: Applied for Tier 1
+        tier_two: Applied for Tier 2
+        tier_three: Applied for Tier 3
   trainees:
     not_supported_route:
       heading: Other routes not supported

@@ -16,6 +16,24 @@ module Funding
 
     describe "validations" do
       it { is_expected.to validate_inclusion_of(:applying_for_bursary).in_array([true, false]) }
+      it { is_expected.to validate_inclusion_of(:bursary_tier).in_array(Trainee.bursary_tiers.keys) }
+
+      context "when bursary_tier is set" do
+        let(:params) do
+          {
+            "bursary_tier" => "tier_one",
+            "applying_for_bursary" => "false",
+          }
+        end
+
+        before do
+          subject.valid?
+        end
+
+        it "sets applying_for_bursary to true" do
+          expect(subject.applying_for_bursary).to eq(true)
+        end
+      end
     end
 
     describe "#stash" do

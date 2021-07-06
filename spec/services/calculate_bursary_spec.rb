@@ -37,6 +37,13 @@ describe CalculateBursary do
     end
   end
 
+  describe "#for_tier" do
+    it { expect(described_class.for_tier("invalid")).to be_nil }
+    it { expect(described_class.for_tier(BURSARY_TIERS.keys.first)).to eq 5000 }
+    it { expect(described_class.for_tier(BURSARY_TIERS.keys.second)).to eq 4000 }
+    it { expect(described_class.for_tier(BURSARY_TIERS.keys.third)).to eq 2000 }
+  end
+
   describe "#for_route_and_subject" do
     let(:route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
     let(:subject_specialism) { create(:subject_specialism) }
