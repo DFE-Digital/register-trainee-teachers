@@ -44,7 +44,7 @@ en:
       training_details:
         title: Trainee start date and ID
         start_date:
-          title: Trainee's start date
+          title: Trainee’s start date
       funding:
         title: Funding
         training_initiative:
@@ -184,7 +184,7 @@ en:
         trainee_ids:
           edit: Trainee ID
         trainee_start_date:
-          edit: Trainee's start date
+          edit: Trainee’s start date
         training_details:
           edit: Edit training details
         training_routes:
@@ -394,7 +394,7 @@ en:
       training_details:
         title: Trainee start date and ID
         commencement_date:
-          label: What is the trainee's start date?
+          label: What is the trainee’s start date?
           hint_html:
             When the trainee started the course. This may be different to your overall course start date.<br><br>
             For example, 9 2 %{year}
@@ -413,7 +413,10 @@ en:
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
           title_two: Is the trainee on either of these training initiatives?
-          description: Training initiatives are sometimes referred to as programmes or schemes. They provide incentives and support for people training to teach. They’re separate from bursaries and scholarships.
+          description_html:
+            Training initiatives are separate from bursaries and scholarships and are sometimes referred to as programmes or schemes.
+            They provide incentives and support for people training to teach.<br><br>
+            If you’re not sure if the trainee is on an initiative you could check with a colleague or ask the trainee directly.
         bursaries:
           description_html: The course you have selected has a bursary available of %{amount} for %{subject}. You need to check if the trainee is eligible for this bursary </br></br> <a target="_blank" href="https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-fu[…]er-training-bursaries-funding-manual-2021-to-2022-academic-year">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>
           title: Are you applying for a bursary for this trainee?
@@ -550,7 +553,7 @@ en:
     language_specialisms:
       edit:
         heading: Which language specialisms has the trainee chosen to study?
-        hint: These language specialisms are recorded on the trainee's QTS award.
+        hint: These language specialisms are recorded on the trainee’s QTS award.
         additional_hint: Choose up to three.
     course_details:
       edit:
@@ -577,7 +580,7 @@ en:
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
-        hint: This specialism is what is recorded on the trainee's QTS award
+        hint: This specialism is what is recorded on the trainee’s QTS award
 
   activerecord:
     attributes:
@@ -647,11 +650,11 @@ en:
         user:
           attributes:
             first_name:
-              blank: Enter the user's first name
+              blank: Enter the user’s first name
             last_name:
-              blank: Enter the user's last name
+              blank: Enter the user’s last name
             email:
-              blank: Enter the user's email address
+              blank: Enter the user’s email address
             dttp_id:
               invalid: Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949
               taken: Enter a unique DTTP ID
