@@ -1,7 +1,4 @@
-<h1 class="govuk-heading-l">
-  <span class="govuk-caption-l"><%= trainee_draft_title(@trainee) %></span>
-  <%= t("components.page_titles.trainees.show.draft") %>
-</h1>
+<%= trainee_draft_title(trainee) %>
 
 <%= render RouteIndicator::View.new(trainee: @trainee) %>
 
