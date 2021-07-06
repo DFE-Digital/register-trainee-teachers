@@ -2,7 +2,7 @@
 
 module FundingHelper
   def training_initiative_options(trainee)
-    TRAINING_ROUTE_INITIATIVES[trainee.training_route]
+    TRAINING_ROUTE_INITIATIVES[trainee.training_route].sort
   end
 
   def funding_options(trainee)
