@@ -7,6 +7,7 @@ module PageObjects
         set_url "/trainees/{id}/funding/bursary/edit"
 
         element :applying_for_bursary, "#funding-bursary-form-applying-for-bursary-true-field"
+        element :bursary_tier, "#funding-bursary-form-bursary-tier-tier-one-field"
         element :not_applying_for_bursary, "#funding-bursary-form-applying-for-bursary-false-field"
 
         element :submit_button, "button[type='submit']"
