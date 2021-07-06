@@ -5,9 +5,10 @@ require "rails_helper"
 feature "publish course details", type: :feature, feature_publish_course_details: true do
   include CourseDetailsHelper
 
+  let(:subject) { nil}
   background do
     given_i_am_authenticated
-    given_a_trainee_exists_with_some_courses
+    given_a_trainee_exists_with_some_courses(with_subjects: [subject].compact)
     given_i_am_on_the_review_draft_page
   end
 
@@ -50,19 +51,50 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   describe "selecting a course" do
     scenario "not selecting anything" do
+      given_a_trainee_exists_with_some_courses
       when_i_visit_the_publish_course_details_page
       and_i_submit_the_form
       then_i_see_an_error_message
     end
 
-    scenario "selecting a course" do
-      when_i_visit_the_publish_course_details_page
-      and_some_courses_for_other_providers_or_routes_exist
-      then_i_see_the_route_message
-      and_i_only_see_the_courses_for_my_provider_and_route
-      when_i_select_a_course
-      and_i_submit_the_form
-      then_i_see_the_confirm_publish_course_page
+    describe "selecting a course with one specialism" do
+      let(:subject) { Dttp::CodeSets::AllocationSubjects::MUSIC }
+
+      scenario do
+        when_i_visit_the_publish_course_details_page
+        and_some_courses_for_other_providers_or_routes_exist
+        then_i_see_the_route_message
+        and_i_only_see_the_courses_for_my_provider_and_route
+        when_i_select_a_course
+        and_i_submit_the_form
+        then_i_see_the_confirm_publish_course_page
+      end
+    end
+
+    describe "selecting a course with multiple possible specialisms" do
+      let(:subject) { Dttp::CodeSets::AllocationSubjects::COMPUTING }
+
+      scenario do
+        when_i_visit_the_publish_course_details_page
+        and_some_courses_for_other_providers_or_routes_exist
+        and_i_only_see_the_courses_for_my_provider_and_route
+        when_i_select_a_course
+        and_i_submit_the_form
+        then_i_see_the_subject_specialism_page
+      end
+    end
+
+    describe "selecting a course with multiple possible language specialisms" do
+      let(:subject) { "French" }
+
+      scenario do
+        when_i_visit_the_publish_course_details_page
+        and_some_courses_for_other_providers_or_routes_exist
+        and_i_only_see_the_courses_for_my_provider_and_route
+        when_i_select_a_course
+        and_i_submit_the_form
+        then_i_see_the_language_specialism_page
+      end
     end
 
     scenario "selecting 'Another course not listed'" do
@@ -75,8 +107,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
   end
 
-  def given_a_trainee_exists_with_some_courses
-    given_a_trainee_exists(:with_related_courses, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+  def given_a_trainee_exists_with_some_courses(with_subjects: [])
+    given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
 
@@ -160,5 +192,13 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def then_i_see_the_confirm_publish_course_page
     expect(confirm_publish_course_page).to be_displayed(trainee_id: trainee.slug, id: @matching_courses.first.code)
+  end
+
+  def then_i_see_the_subject_specialism_page
+    expect(subject_specialism_page).to be_displayed(trainee_id: trainee.slug, position: 1)
+  end
+
+  def then_i_see_the_language_specialism_page
+    expect(language_specialism_page).to be_displayed(trainee_id: trainee.slug)
   end
 end

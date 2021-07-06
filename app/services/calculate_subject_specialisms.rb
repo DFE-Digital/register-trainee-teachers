@@ -10,16 +10,25 @@ class CalculateSubjectSpecialisms
   end
 
   def call
-    return attributes_for_language_subject if all_subjects_are_language?
-    return attributes_for_primary_subject if primary_subject?
-    return attributes_for_single_subject if single_subject?
-
-    attributes_for_multiple_subjects
+    case specialism_type
+    when :language
+      attributes_for_language_subject
+    when :primary
+      attributes_for_primary_subject
+    when :single_subject
+      attributes_for_single_subject
+    else
+      attributes_for_multiple_subjects
+    end
   end
 
 private
 
-  attr_accessor :subjects
+  attr_reader :subjects
+
+  def specialism_type
+    @specialism_type ||= CalculateSubjectSpecialismType.call(subjects: subjects)
+  end
 
   def attributes_for_language_subject
     specialisms = subjects.flat_map { |subject| lookup_subject_specialism(subject) }
@@ -53,18 +62,6 @@ private
       course_subject_two: lookup_subject_specialism(second_subject),
       course_subject_three: lookup_subject_specialism(third_subject),
     }
-  end
-
-  def single_subject?
-    subjects.size == 1
-  end
-
-  def primary_subject?
-    single_subject? && subjects.first.include?(Dttp::CodeSets::AllocationSubjects::PRIMARY)
-  end
-
-  def all_subjects_are_language?
-    subjects.all? { |subject| PUBLISH_LANGUAGE_SUBJECTS.include?(subject) }
   end
 
   def lookup_subject_specialism(subject)
