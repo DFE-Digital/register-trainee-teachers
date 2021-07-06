@@ -35,7 +35,7 @@ en:
         blank: "Draft record"
     confirmation:
       not_provided: Not provided
-      heading: Confirm %{section_title}
+      heading: "Confirm trainee’s %{section_title}"
       cancel_and_return: Cancel and return to record
       trainee_id:
         title: Trainee ID
