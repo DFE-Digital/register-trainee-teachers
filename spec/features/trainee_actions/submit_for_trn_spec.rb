@@ -118,7 +118,7 @@ feature "submit for TRN" do
   end
 
   def with_the_correct_content
-    expect(trn_success_page).to have_text("Record submitted for #{trainee_name(trainee)}")
+    expect(trn_success_page).to have_text("#{trainee_name(trainee)} is registered")
     expect(trn_success_page).to have_link("view #{trainee_name(trainee)}", href: trainee_path(trainee))
     expect(trn_success_page).to have_link("add a new trainee", href: new_trainee_path)
     expect(trn_success_page).to have_link("view all your records", href: trainees_path)

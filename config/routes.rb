@@ -119,7 +119,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :trn_submissions, only: %i[create show], param: :trainee_id
+  resources :trn_submissions, only: %i[create show], param: :trainee_id, path: "trainee-registrations"
 
   root to: "pages#start"
 end
