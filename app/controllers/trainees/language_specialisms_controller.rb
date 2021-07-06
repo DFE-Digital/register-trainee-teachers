@@ -32,7 +32,7 @@ module Trainees
     end
 
     def course_code
-      params[:course_code] || params[:language_specialisms_form][:course_code]
+      params[:course_code] || params.dig(:language_specialisms_form, :course_code) || Course.first.code
     end
 
     def load_language_specialisms

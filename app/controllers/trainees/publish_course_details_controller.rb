@@ -22,11 +22,31 @@ module Trainees
         trainee.update!(course_code: nil)
         redirect_to edit_trainee_course_details_path
       else
-        redirect_to edit_trainee_confirm_publish_course_path(id: @publish_course_details.code, trainee_id: @trainee.slug)
+        if specialism_type == :language
+          redirect_to edit_trainee_language_specialisms_path(@trainee)
+        elsif course_has_one_specialism?
+          redirect_to edit_trainee_confirm_publish_course_path(id: @publish_course_details.code, trainee_id: @trainee.slug)
+        else
+          redirect_to edit_trainee_subject_specialism_path(@trainee, 1)
+        end
       end
     end
 
   private
+
+    def course_has_one_specialism?
+      CalculateSubjectSpecialisms.call(subjects: course_subjects).all? do |_, v|
+        v.count < 2
+      end
+    end
+
+    def specialism_type
+      @specialism_type ||= CalculateSubjectSpecialismType.call(subjects: course_subjects)
+    end
+
+    def course_subjects
+      @course_subjects ||= Course.find_by_code(@publish_course_details.code).subjects.map(&:name)
+    end
 
     def course_params
       params.fetch(:publish_course_details_form, {}).permit(:code)
