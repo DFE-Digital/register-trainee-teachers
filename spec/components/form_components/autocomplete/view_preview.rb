@@ -31,17 +31,19 @@ module FormComponents
       end
 
       def form_field
-        '<div class="govuk-form-group">
-          <label class="govuk-label" for="select-1">
-            Select a country
-          </label>
-          <select class="govuk-select" id="select-1" name="select-1">
-            <option value="">Select a country</option>
-            <option value="fr">France</option>
-            <option value="de">Germany</option>
-            <option value="gb">United Kingdom</option>
-          </select>
-        </div>'
+        <<~EOSQL
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="select-1">
+              Select a country
+            </label>
+            <select class="govuk-select" id="select-1" name="select-1">
+              <option value="">Select a country</option>
+              <option value="fr">France</option>
+              <option value="de">Germany</option>
+              <option value="gb">United Kingdom</option>
+            </select>
+          </div>
+        EOSQL
       end
 
       def form
