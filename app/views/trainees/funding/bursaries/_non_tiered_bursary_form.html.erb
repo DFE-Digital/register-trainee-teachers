@@ -9,10 +9,9 @@
       subject: @subject,
       training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}")
     ) %>
-    </br>
-    </br>
-    <%= t("views.forms.funding.bursaries.guidance_html") %>
   </p>
+  <p class="govuk-body"><%= t("views.forms.funding.bursaries.guidance_html") %></p>
+
 
   <%= f.govuk_radio_buttons_fieldset(:applying_for_bursary, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
       <%= f.govuk_radio_button(

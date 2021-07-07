@@ -2,12 +2,8 @@
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.bursaries.edit") %><h1>
-  <p class="govuk-body">
-    <%= t("views.forms.funding.bursaries.tiered.description") %>
-    </br>
-    </br>
-    <%= t("views.forms.funding.bursaries.guidance_html") %>
-  </p>
+  <p class="govuk-body"><%= t("views.forms.funding.bursaries.tiered.description") %></p>
+  <p class="govuk-body"><%= t("views.forms.funding.bursaries.guidance_html") %></p>
 
   <%= f.govuk_radio_buttons_fieldset(:bursary_tier, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
 
@@ -25,12 +21,14 @@
 
     <%= f.govuk_radio_divider %>
 
-      <%= f.govuk_radio_button(
-        :bursary_tier,
-        "",
+    <%= f.govuk_radio_button(
+      :bursary_tier,
+      "",
+      {
         hint: { text: t("views.forms.funding.bursaries.false_hint") },
         label: { text: t("views.forms.funding.bursaries.false") },
-      ) %>
+      }.merge(@trainee.applying_for_bursary.nil? ? { checked: false } : {} )
+    ) %>
   <% end %>
   <%= f.govuk_submit %>
 <% end %>
