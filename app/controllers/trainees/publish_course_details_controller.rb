@@ -21,14 +21,12 @@ module Trainees
       if @publish_course_details.manual_entry_chosen?
         trainee.update!(course_code: nil)
         redirect_to edit_trainee_course_details_path
+      elsif specialism_type == :language
+        redirect_to edit_trainee_language_specialisms_path(@trainee)
+      elsif course_has_one_specialism?
+        redirect_to edit_trainee_confirm_publish_course_path(id: @publish_course_details.code, trainee_id: @trainee.slug)
       else
-        if specialism_type == :language
-          redirect_to edit_trainee_language_specialisms_path(@trainee)
-        elsif course_has_one_specialism?
-          redirect_to edit_trainee_confirm_publish_course_path(id: @publish_course_details.code, trainee_id: @trainee.slug)
-        else
-          redirect_to edit_trainee_subject_specialism_path(@trainee, 1)
-        end
+        redirect_to edit_trainee_subject_specialism_path(@trainee, 1)
       end
     end
 
