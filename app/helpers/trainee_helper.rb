@@ -40,11 +40,9 @@ module TraineeHelper
   end
 
   def trainee_draft_title(trainee)
-    name = trainee_name(trainee)
-    title_suffix = "#{name.present? ? " for #{name}" : ''} "
-    translation_prefix = t("views.trainees.show.#{trainee.apply_application? ? 'apply_draft' : 'draft'}")
+    draft_or_apply_draft_caption = t("views.trainees.show.#{trainee.apply_application? ? 'apply_draft' : 'draft'}")
 
-    "#{translation_prefix}#{title_suffix}"
+    tag.span(draft_or_apply_draft_caption, class: "govuk-caption-l") + tag.h1(trainee_name(trainee).presence || t("components.page_titles.trainees.show.#{trainee.apply_application? ? 'apply_draft' : 'draft'}"), class: "govuk-heading-l")
   end
 
   def checked?(filters, filter, value)
