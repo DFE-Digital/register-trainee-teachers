@@ -416,6 +416,7 @@ en:
           description: Training initiatives are sometimes referred to as programmes or schemes. They provide incentives and support for people training to teach. They’re separate from bursaries and scholarships.
         bursaries:
           description_html: The course you have selected has a bursary available of %{amount} for %{subject}. You need to check if the trainee is eligible for this bursary </br></br> <a target="_blank" href="https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-fu[…]er-training-bursaries-funding-manual-2021-to-2022-academic-year">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>
+          early_years_description_html: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary.<br/><br/> <a target=\"_blank\" href=\"https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-fu[…]er-training-bursaries-funding-manual-2021-to-2022-academic-year\">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>"
           title: Are you applying for a bursary for this trainee?
           true: Yes, apply for a bursary
           false: No, do not apply for a bursary
