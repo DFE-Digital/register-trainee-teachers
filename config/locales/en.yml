@@ -44,7 +44,7 @@ en:
       training_details:
         title: Trainee start date and ID
         start_date:
-          title: Trainee's start date
+          title: Trainee’s start date
       funding:
         title: Funding
         training_initiative:
@@ -394,7 +394,7 @@ en:
       training_details:
         title: Trainee start date and ID
         commencement_date:
-          label: What is the trainee's start date?
+          label: What is the trainee’s start date?
           hint_html:
             When the trainee started the course. This may be different to your overall course start date.<br><br>
             For example, 9 2 %{year}
