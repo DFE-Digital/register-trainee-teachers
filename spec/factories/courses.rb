@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :course do
     name { PUBLISH_SUBJECT_SPECIALISM_MAPPING.keys.sample }
-    code { Faker::Alphanumeric.unique.alphanumeric(number: 4).upcase }
+    code { Faker::Alphanumeric.unique.alphanumeric(number: 4, min_alpha: 1).upcase }
     accredited_body_code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     start_date { Time.zone.today }
     level { :primary }
