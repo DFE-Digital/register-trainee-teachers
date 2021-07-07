@@ -55,7 +55,7 @@ module Trainees
     end
 
     def index_or_edit_page
-      @employing_school_form.index_page_radio_buttons? ? :index : :edit
+      @employing_school_form.search_results_found? ? :index : :edit
     end
 
     def authorize_trainee
