@@ -91,7 +91,7 @@ module Trainees
 
       it "adds the trianee's disabilities" do
         trainee = create_trainee_from_apply
-        expect(trainee.disabilities.map(&:name)).to eq(["Blind", "Long-standing illness"])
+        expect(trainee.disabilities.map(&:name)).to match_array(["Blind", "Long-standing illness"])
       end
     end
 
@@ -102,7 +102,7 @@ module Trainees
 
       it "adds the trianee's nationalities" do
         trainee = create_trainee_from_apply
-        expect(trainee.nationalities.map(&:name)).to eq(%w[british tristanian])
+        expect(trainee.nationalities.map(&:name)).to match_array(%w[british tristanian])
       end
     end
   end
