@@ -6,7 +6,6 @@ module Trainees
     helper_method :position
 
     def edit
-      course = Course.first
       @subject = course.subjects[position - 1].name
       @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position)
@@ -19,7 +18,6 @@ module Trainees
       if @subject_specialism_form.public_send(save_strategy)
         redirect_to next_step_path
       else
-        course = Course.first
         @subject = course.subjects[position - 1].name
         @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
         render :edit
@@ -61,8 +59,11 @@ module Trainees
       params.require(:subject_specialism_form).permit(:"specialism#{position}")
     end
 
+    def course
+      @course ||= trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(trainee).code)
+    end
+
     def next_step_path
-      course = Course.first
       specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))
       next_position = position + 1
       if specialisms[:"course_subject_#{to_word(next_position)}"].present?

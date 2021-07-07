@@ -5,7 +5,8 @@ require "rails_helper"
 feature "publish course details", type: :feature, feature_publish_course_details: true do
   include CourseDetailsHelper
 
-  let(:subject) { nil}
+  let(:subject) { nil }
+
   background do
     given_i_am_authenticated
     given_a_trainee_exists_with_some_courses(with_subjects: [subject].compact)

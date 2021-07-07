@@ -11,10 +11,11 @@ class CalculateSubjectSpecialismType
     return :language if all_subjects_are_language?
     return :primary if primary_subject?
     return :single_subject if single_subject?
-    return :multuple_subjects
+
+    :multuple_subjects
   end
 
-  private
+private
 
   attr_reader :subjects
 
