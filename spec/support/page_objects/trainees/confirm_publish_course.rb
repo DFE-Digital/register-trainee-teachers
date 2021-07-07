@@ -4,7 +4,7 @@ module PageObjects
   module Trainees
     class ConfirmPublishCourse < PageObjects::Base
       include PageObjects::Helpers
-      set_url "/trainees/{trainee_id}/confirm-publish-course/{id}/edit"
+      set_url "/trainees/{trainee_id}/confirm-publish-course/edit"
 
       element :confirm_course_button, "button[type='submit']", text: "Confirm course"
       element :submit_button, "button[type='submit']"

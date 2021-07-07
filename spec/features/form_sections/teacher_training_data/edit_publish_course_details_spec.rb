@@ -192,7 +192,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def then_i_see_the_confirm_publish_course_page
-    expect(confirm_publish_course_page).to be_displayed(trainee_id: trainee.slug, id: @matching_courses.first.code)
+    expect(confirm_publish_course_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def then_i_see_the_subject_specialism_page

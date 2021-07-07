@@ -32,7 +32,7 @@ module Trainees
     end
 
     def set_course
-      @course = @trainee.available_courses.find_by!(code: params[:id])
+      @course = @trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(@trainee).code)
     end
 
     def course_params
