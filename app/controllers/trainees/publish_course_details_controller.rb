@@ -10,24 +10,39 @@ module Trainees
     end
 
     def update
+      rerender_page =
+        proc do
+          @courses = @trainee.available_courses
+          render :edit
+          return
+        end
+
       @publish_course_details = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
 
+      rerender_page.call unless @publish_course_details.valid?
+
+      redirect_path =
+        if @publish_course_details.manual_entry_chosen?
+          edit_trainee_course_details_path
+        elsif specialism_type == :language
+          @publish_course_details.specialism_form = :language
+          edit_trainee_language_specialisms_path(@trainee)
+        elsif course_has_one_specialism?
+          edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
+        else
+          @publish_course_details.specialism_form = :general
+          edit_trainee_subject_specialism_path(@trainee, 1)
+        end
+
       unless @publish_course_details.stash
-        @courses = @trainee.available_courses
-        render :edit
-        return
+        rerender_page.call
       end
 
       if @publish_course_details.manual_entry_chosen?
         trainee.update!(course_code: nil)
-        redirect_to edit_trainee_course_details_path
-      elsif specialism_type == :language
-        redirect_to edit_trainee_language_specialisms_path(@trainee)
-      elsif course_has_one_specialism?
-        redirect_to edit_trainee_confirm_publish_course_path(id: @publish_course_details.code, trainee_id: @trainee.slug)
-      else
-        redirect_to edit_trainee_subject_specialism_path(@trainee, 1)
       end
+
+      redirect_to redirect_path
     end
 
   private
