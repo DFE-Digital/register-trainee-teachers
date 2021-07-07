@@ -9,7 +9,6 @@ module Dttp
       COURSE_LEVEL_PG = 12
       COURSE_LEVEL_UG = 20
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
-      EARLY_YEARS_SUBJECT = "3aa12838-b3cf-e911-a860-000d3ab1da01"
       EARLY_YEARS_AGE_RANGE = AgeRange::ZERO_TO_FIVE
 
       attr_reader :trainee, :qualifying_degree, :params
@@ -68,7 +67,7 @@ module Dttp
       end
 
       def subject_entity_id
-        trainee.early_years_route? ? EARLY_YEARS_SUBJECT : course_subject_id(trainee.course_subject_one)
+        course_subject_id(trainee.course_subject_one)
       end
 
       def uk_specific_params
@@ -101,8 +100,6 @@ module Dttp
       end
 
       def first_subject
-        subject_entity_id = trainee.early_years_route? ? EARLY_YEARS_SUBJECT : course_subject_id(trainee.course_subject_one)
-
         { "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{subject_entity_id})" }
       end
 

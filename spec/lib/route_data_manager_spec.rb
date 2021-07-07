@@ -74,6 +74,21 @@ describe RouteDataManager do
       end
     end
 
+    context "when a trainee selects early_years_undergrad route" do
+      let(:trainee) { create(:trainee, :assessment_only) }
+
+      subject do
+        described_class.new(trainee: trainee).update_training_route!("early_years_undergrad")
+      end
+
+      it "trainee course_subject_one set to early years teaching" do
+        expect { subject }
+          .to change { trainee.training_route }
+          .from(trainee.training_route).to("early_years_undergrad")
+        expect(trainee.course_subject_one).to eq(Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING)
+      end
+    end
+
     context "when a trainee selects the same route" do
       before do
         subject

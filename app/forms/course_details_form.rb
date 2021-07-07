@@ -105,22 +105,26 @@ private
   end
 
   def update_trainee_attributes
-    trainee.assign_attributes({
+    attributes = {
       course_code: course_code,
-      course_subject_one: course_subject_one,
-      course_subject_two: course_subject_two,
-      course_subject_three: course_subject_three,
       course_age_range: course_age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
-    })
+    }
+
+    unless trainee.early_years_route?
+      attributes.merge!({
+        course_subject_one: course_subject_one,
+        course_subject_two: course_subject_two,
+        course_subject_three: course_subject_three,
+      })
+    end
+
+    trainee.assign_attributes(attributes)
   end
 
   def compute_attributes_from_trainee
     attributes = {
-      course_subject_one: trainee.course_subject_one,
-      course_subject_two: trainee.course_subject_two,
-      course_subject_three: trainee.course_subject_three,
       start_day: trainee.course_start_date&.day,
       start_month: trainee.course_start_date&.month,
       start_year: trainee.course_start_date&.year,
@@ -128,6 +132,14 @@ private
       end_month: trainee.course_end_date&.month,
       end_year: trainee.course_end_date&.year,
     }
+
+    unless trainee.early_years_route?
+      attributes.merge!({
+        course_subject_one: trainee.course_subject_one,
+        course_subject_two: trainee.course_subject_two,
+        course_subject_three: trainee.course_subject_three,
+      })
+    end
 
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.course_age_range]
 

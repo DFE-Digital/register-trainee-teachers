@@ -369,4 +369,22 @@ describe CourseDetailsForm, type: :model do
       end
     end
   end
+
+  describe "#compute_fields" do
+    context "non early_years route" do
+      let(:trainee) { build(:trainee) }
+
+      it "include course subject columns" do
+        expect(subject.send(:compute_fields)).to include(:course_subject_one, :course_subject_two, :course_subject_three)
+      end
+    end
+
+    context "early_years route" do
+      let(:trainee) { build(:trainee, :early_years_undergrad) }
+
+      it "shouldnt include course subject columns" do
+        expect(subject.send(:compute_fields)).not_to include(:course_subject_one, :course_subject_two, :course_subject_three)
+      end
+    end
+  end
 end

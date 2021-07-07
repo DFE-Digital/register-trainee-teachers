@@ -167,6 +167,7 @@ module Dttp
 
           before do
             stub_const("Dttp::CodeSets::AgeRanges::MAPPING", { AgeRange::ZERO_TO_FIVE => { entity_id: dttp_ey_age_range_entity_id } })
+            trainee.set_early_years_course_subject
           end
 
           it "returns a hash including the undergrad course level" do
@@ -183,7 +184,7 @@ module Dttp
 
           it "returns a hash containing the Early years subject" do
             expect(subject).to include(
-              { "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{Dttp::Params::PlacementAssignment::EARLY_YEARS_SUBJECT})" },
+              { "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING][:entity_id]})" },
             )
           end
         end
