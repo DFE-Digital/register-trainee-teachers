@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :subject do
-    sequence(:name) { PUBLISH_SUBJECT_SPECIALISM_MAPPING.keys.sample }
+    name { ["Primary with geography and history", "Primary with modern languages", "Primary with physical education", "Primary with science"].sample }
     code { Faker::Alphanumeric.unique.alphanumeric(number: 2).upcase }
   end
 
