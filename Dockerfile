@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine3.12
+FROM ruby:2.7.4-alpine3.12
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
@@ -31,6 +31,6 @@ ENV ENV="/root/.ashrc"
 RUN bundle exec rake assets:precompile && \
     rm -rf node_modules tmp
 
-CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \ 
+CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails data:migrate && \
     bundle exec rails server -b 0.0.0.0
