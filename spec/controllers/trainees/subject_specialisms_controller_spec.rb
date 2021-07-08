@@ -32,7 +32,7 @@ describe Trainees::SubjectSpecialismsController do
     end
 
     context "there are no more specialisms to choose" do
-      let!(:course) { create(:course_with_subjects, subjects_count: 1) }
+      let!(:course) { create(:course_with_subjects, subjects_count: 1, subject_names: [Dttp::CodeSets::AllocationSubjects::ART_AND_DESIGN]) }
 
       # TODO: update this when  the confirm page exists
       it "redirects to the confirm page" do
