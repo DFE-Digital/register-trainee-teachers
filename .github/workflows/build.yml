@@ -24,10 +24,7 @@ jobs:
       name: Checkout
 
     - name: Set environment variables
-      run: |
-        GIT_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c 1-7)
-        echo "GIT_SHA_SHORT=$GIT_SHA_SHORT" >> $GITHUB_ENV
-        echo "SHA_TAG=$GIT_SHA_SHORT" >> $GITHUB_ENV
+      run: echo "SHA_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
     - name: Login to DockerHub
       if: github.actor != 'dependabot[bot]'
@@ -119,7 +116,7 @@ jobs:
       with:
         workflow: 'Deploy to PaaS'
         token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
-        inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "rollover": "true", "sha": "${{ env.SHA_TAG }}"}'
+        inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "sha": "${{ env.SHA_TAG }}"}'
 
     - name: Check for Failure
       if: ${{ failure() && github.ref == 'refs/heads/master' }}
