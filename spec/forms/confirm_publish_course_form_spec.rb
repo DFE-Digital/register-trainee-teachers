@@ -27,7 +27,7 @@ describe ConfirmPublishCourseForm, type: :model do
       [
         subject_specialism_one,
         subject_specialism_two,
-        subject_specialism_three
+        subject_specialism_three,
       ]
     end
 

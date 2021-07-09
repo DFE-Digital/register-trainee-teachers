@@ -25,9 +25,10 @@ module Trainees
 
     def specialisms
       specialism_form_type = PublishCourseDetailsForm.new(@trainee).specialism_form
-      if specialism_form_type == :language
+      case specialism_form_type
+      when :language
         LanguageSpecialsimsForm.new(@trainee).language_specialisms
-      elsif specialism_form_type == :general
+      when :general
         SubjectSpecialismForm.new(@trainee).specialisms
       else
         CalculateSubjectSpecialisms.call(subjects: @course.subjects.pluck(:name))

@@ -58,7 +58,7 @@ module Trainees
 
       params
         .require(:subject_specialism_form)
-        .permit(:"specialism#{position}", :"specialism#{position}" => [])
+        .permit(:"specialism#{position}", "specialism#{position}": [])
         .transform_values(&:first)
     end
 
