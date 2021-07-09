@@ -40,6 +40,10 @@ local: ## Configure local dev environment
 	$(eval DEPLOY_ENV=local)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 
+ci:	## Run in automation environment
+	$(eval export DISABLE_PASSCODE=true)
+	$(eval export AUTO_APPROVE=-auto-approve)
+
 qa:
 	$(eval DEPLOY_ENV=qa)
 	$(eval SPACE=bat-qa)
@@ -87,18 +91,21 @@ print-infra-secrets: install-fetch-config set-azure-account
 		-f yaml
 
 deploy-plan: terraform-init
-	. terraform/workspace-variables/$(DEPLOY_ENV).sh && cd terraform && terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars
+	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
+	terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars
 
 deploy: terraform-init
-	. terraform/workspace-variables/$(DEPLOY_ENV).sh && cd terraform &&  terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars -auto-approve
+	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
+	terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 destroy: terraform-init
-	. terraform/workspace-variables/$(DEPLOY_ENV).sh && cd terraform && terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars
+	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
+	terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
 
 terraform-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
 	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teachers:$(IMAGE_TAG))
-	$(if $(PASSCODE), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 	az account set -s $(AZ_SUBSCRIPTION) && az account show \
 	&& cd terraform && terraform init -reconfigure -backend-config=workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
