@@ -19,14 +19,6 @@ on:
         description: Deploy to sandbox?
         default: 'false'
         required: true
-      rollover:
-        description: Deploy to rollover?
-        default: 'false'
-        required: true
-      pen:
-        description: Deploy to pen test?
-        default: 'false'
-        required: true
       pr:
         description: PR number for the review app
         required: false
