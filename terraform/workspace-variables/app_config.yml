@@ -11,11 +11,6 @@ staging:
   RAILS_ENV: staging
   RACK_ENV: staging
 
-pen:
-  <<: *default
-  RAILS_ENV: pen
-  RACK_ENV: pen
-
 production:
   <<: *default
   RAILS_ENV: production
@@ -30,8 +25,3 @@ review:
   <<: *default
   RAILS_ENV: review
   RACK_ENV: review
-
-rollover:
-  <<: *default
-  RAILS_ENV: rollover
-  RACK_ENV: rollover
