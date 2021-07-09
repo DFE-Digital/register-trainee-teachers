@@ -24,10 +24,7 @@ jobs:
       name: Checkout
 
     - name: Set environment variables
-      run: |
-        GIT_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c 1-7)
-        echo "GIT_SHA_SHORT=$GIT_SHA_SHORT" >> $GITHUB_ENV
-        echo "SHA_TAG=$GIT_SHA_SHORT" >> $GITHUB_ENV
+      run: echo "SHA_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
     - name: Login to DockerHub
       if: github.actor != 'dependabot[bot]'
