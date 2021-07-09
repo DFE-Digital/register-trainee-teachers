@@ -24,11 +24,11 @@ module Trainees
       redirect_path =
         if @publish_course_details.manual_entry_chosen?
           edit_trainee_course_details_path
+        elsif course_has_one_specialism?
+          edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
         elsif specialism_type == :language
           @publish_course_details.specialism_form = :language
           edit_trainee_language_specialisms_path(@trainee)
-        elsif course_has_one_specialism?
-          edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
         else
           @publish_course_details.specialism_form = :general
           edit_trainee_subject_specialism_path(@trainee, 1)
