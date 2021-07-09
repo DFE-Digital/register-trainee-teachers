@@ -38,7 +38,7 @@ yarn-debug.log*
 tfplan
 *.tfplan
 *.plan
-**/tokens
+**/*token*
 *secret*.tfvars
 !terraform/**/app_config.yml
 terraform/**/*.yml

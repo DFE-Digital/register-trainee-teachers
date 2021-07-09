@@ -22,10 +22,10 @@ terraform {
 
 provider cloudfoundry {
   api_url           = local.paas_api_url
-  user              = try(local.infra_secrets.CF_USER, null)
-  password          = try(local.infra_secrets.CF_PASSWORD, null)
-  sso_passcode      = var.paas_sso_passcode
-  store_tokens_path = "tokens"
+  user              = var.paas_sso_passcode == "" ? local.infra_secrets.CF_USER : null
+  password          = var.paas_sso_passcode == "" ? local.infra_secrets.CF_PASSWORD : null
+  sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
+  store_tokens_path = var.paas_sso_passcode != "" ? ".cftoken" : null
   version           = "~> 0.12"
 }
 
