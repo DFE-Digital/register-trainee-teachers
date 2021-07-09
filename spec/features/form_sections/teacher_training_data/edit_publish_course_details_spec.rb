@@ -5,11 +5,11 @@ require "rails_helper"
 feature "publish course details", type: :feature, feature_publish_course_details: true do
   include CourseDetailsHelper
 
-  let(:subject) { nil }
+  let(:subjects) { [] }
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists_with_some_courses(with_subjects: [subject].compact)
+    given_a_trainee_exists_with_some_courses(with_subjects: subjects)
     given_i_am_on_the_review_draft_page
   end
 
@@ -27,13 +27,50 @@ feature "publish course details", type: :feature, feature_publish_course_details
       then_the_section_should_be(not_started)
     end
 
-    scenario "renders a 'completed' status when details fully provided" do
-      when_i_visit_the_publish_course_details_page
-      and_i_select_a_course
-      and_i_submit_the_form
-      and_i_confirm_the_course
-      and_i_visit_the_review_draft_page
-      then_the_section_should_be(completed)
+    describe "with a course that doesn't require selecting a specialism" do
+      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::HISTORY] }
+      scenario "renders a 'completed' status when details fully provided" do
+        when_i_visit_the_publish_course_details_page
+        and_i_select_a_course
+        and_i_submit_the_form
+        and_i_confirm_the_course
+        and_i_visit_the_review_draft_page
+        then_the_section_should_be(completed)
+      end
+    end
+
+    describe "with a course that requires selecting multiple specialisms" do
+      let(:subjects) do
+        [
+          Dttp::CodeSets::AllocationSubjects::COMPUTING,
+          Dttp::CodeSets::AllocationSubjects::MATHEMATICS
+        ]
+      end
+
+      scenario "renders a 'completed' status when details fully provided" do
+        when_i_visit_the_publish_course_details_page
+        and_i_select_a_course
+        and_i_submit_the_form
+        and_i_select_a_specialism
+        and_i_submit_the_specialism_form
+        and_i_select_a_specialism
+        and_i_submit_the_specialism_form
+        # TODO check contents of confirm page
+        and_i_confirm_the_course
+      end
+    end
+
+    describe "with a course that requires selecting language specialisms" do
+      let(:subjects) { ["Modern languages (other)"] }
+
+      scenario "renders a 'completed' status when details fully provided" do
+        when_i_visit_the_publish_course_details_page
+        and_i_select_a_course
+        and_i_submit_the_form
+        and_i_select_two_langauges
+        # TODO check contents of confirm page
+        and_i_confirm_the_course
+      end
     end
   end
 
@@ -59,7 +96,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "selecting a course with one specialism" do
-      let(:subject) { Dttp::CodeSets::AllocationSubjects::MUSIC }
+      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::MUSIC] }
 
       scenario do
         when_i_visit_the_publish_course_details_page
@@ -73,7 +110,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "selecting a course with multiple possible specialisms" do
-      let(:subject) { Dttp::CodeSets::AllocationSubjects::COMPUTING }
+      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::COMPUTING] }
 
       scenario do
         when_i_visit_the_publish_course_details_page
@@ -82,19 +119,6 @@ feature "publish course details", type: :feature, feature_publish_course_details
         when_i_select_a_course
         and_i_submit_the_form
         then_i_see_the_subject_specialism_page
-      end
-    end
-
-    describe "selecting a course with multiple possible language specialisms" do
-      let(:subject) { "French" }
-
-      scenario do
-        when_i_visit_the_publish_course_details_page
-        and_some_courses_for_other_providers_or_routes_exist
-        and_i_only_see_the_courses_for_my_provider_and_route
-        when_i_select_a_course
-        and_i_submit_the_form
-        then_i_see_the_language_specialism_page
       end
     end
 
@@ -133,10 +157,18 @@ feature "publish course details", type: :feature, feature_publish_course_details
     publish_course_details_page.course_options.first.choose
   end
 
+  def and_i_select_two_langauges
+    language_specialism_page.language_specialisms.take(2).each(&:click)
+  end
+
   alias_method :when_i_select_a_course, :and_i_select_a_course
 
   def and_i_submit_the_form
     publish_course_details_page.submit_button.click
+  end
+
+  def and_i_submit_the_specialism_form
+    subject_specialism_page.submit_button.click
   end
 
   def and_i_confirm_the_course
@@ -149,6 +181,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def and_i_visit_the_review_draft_page
     review_draft_page.load(id: trainee.slug)
+  end
+
+  def and_i_select_a_specialism
+    subject_specialism_page.specialism_options.first.choose
   end
 
   alias_method :when_i_visit_the_review_draft_page, :and_i_visit_the_review_draft_page

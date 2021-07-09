@@ -8,6 +8,7 @@ class ConfirmPublishCourseForm
 
   FIELDS = %i[
     code
+    specialism_form
   ].freeze
 
   attr_accessor(*FIELDS, :trainee)

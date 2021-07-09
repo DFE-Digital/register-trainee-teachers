@@ -56,7 +56,10 @@ module Trainees
     def specialism_params
       return {} if params[:subject_specialism_form].blank?
 
-      params.require(:subject_specialism_form).permit(:"specialism#{position}")
+      params
+        .require(:subject_specialism_form)
+        .permit(:"specialism#{position}", :"specialism#{position}" => [])
+        .transform_values(&:first)
     end
 
     def course
@@ -69,8 +72,7 @@ module Trainees
       if specialisms[:"course_subject_#{to_word(next_position)}"].present?
         edit_trainee_subject_specialism_path(@trainee, next_position)
       else
-        # TODO: redirect to confirm path when it exists
-        "www.example.com"
+        edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
       end
     end
   end

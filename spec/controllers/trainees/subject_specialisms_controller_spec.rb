@@ -61,7 +61,7 @@ describe Trainees::SubjectSpecialismsController do
       it "redirects to the confirm page" do
         put(:update, params: { trainee_id: trainee, position: 1, subject_specialism_form: { specialism1: "moose" } })
         expect(response).to redirect_to(
-          "www.example.com",
+          edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
         )
       end
     end
