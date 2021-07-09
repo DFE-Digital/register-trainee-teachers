@@ -31,11 +31,6 @@ review:
   RAILS_ENV: review
   RACK_ENV: review
 
-audit:
-  <<: *default
-  RAILS_ENV: audit
-  RACK_ENV: audit
-
 rollover:
   <<: *default
   RAILS_ENV: rollover
