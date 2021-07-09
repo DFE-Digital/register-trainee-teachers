@@ -30,15 +30,15 @@ module Dttp
         ART_AND_DESIGN => {
           entity_id: "aff10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::GRAPHIC_DESIGN, publish_equivalent: ART_AND_DESIGN },
             { name: CourseSubjects::CREATIVE_ARTS_AND_DESIGN, publish_equivalent: ART_AND_DESIGN },
+            { name: CourseSubjects::GRAPHIC_DESIGN, publish_equivalent: ART_AND_DESIGN },
           ],
         },
         BIOLOGY => {
           entity_id: "b1f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::APPLIED_BIOLOGY, publish_equivalent: BIOLOGY },
             { name: CourseSubjects::BIOLOGY, publish_equivalent: BIOLOGY },
+            { name: CourseSubjects::APPLIED_BIOLOGY, publish_equivalent: BIOLOGY },
             { name: CourseSubjects::ENVIRONMENTAL_SCIENCES, publish_equivalent: BIOLOGY },
             { name: CourseSubjects::GENERAL_SCIENCES, publish_equivalent: BIOLOGY },
           ],
@@ -46,8 +46,8 @@ module Dttp
         BUSINESS_STUDIES => {
           entity_id: "b3f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::BUSINESS_MANAGEMENT, publish_equivalent: BUSINESS_STUDIES },
             { name: CourseSubjects::BUSINESS_STUDIES, publish_equivalent: BUSINESS_STUDIES },
+            { name: CourseSubjects::BUSINESS_MANAGEMENT, publish_equivalent: BUSINESS_STUDIES },
             { name: CourseSubjects::RETAIL_MANAGEMENT, publish_equivalent: BUSINESS_STUDIES },
             { name: CourseSubjects::RECREATION_AND_LEISURE_STUDIES, publish_equivalent: BUSINESS_STUDIES },
           ],
@@ -62,9 +62,9 @@ module Dttp
         CLASSICS => {
           entity_id: "b9f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::ANCIENT_HEBREW, publish_equivalent: CLASSICS },
             { name: CourseSubjects::CLASSICAL_STUDIES, publish_equivalent: CLASSICS },
             { name: CourseSubjects::CLASSICAL_GREEK_STUDIES, publish_equivalent: CLASSICS },
+            { name: CourseSubjects::ANCIENT_HEBREW, publish_equivalent: CLASSICS },
             { name: CourseSubjects::HISTORICAL_LINGUISTICS, publish_equivalent: CLASSICS },
             { name: CourseSubjects::LATIN_LANGUAGE, publish_equivalent: CLASSICS },
           ],
@@ -139,14 +139,14 @@ module Dttp
         MODERN_LANGUAGES => {
           entity_id: "dbf10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::FRENCH_LANGUAGE, publish_equivalent: "French" },
-            { name: CourseSubjects::GERMAN_LANGUAGE, publish_equivalent: "German" },
-            { name: CourseSubjects::ITALIAN_LANGUAGE, publish_equivalent: "Italian" },
             { name: CourseSubjects::MODERN_LANGUAGES, publish_equivalent: "Modern languages (other)" },
-            { name: CourseSubjects::CHINESE_LANGUAGES, publish_equivalent: "Mandarin" },
             { name: CourseSubjects::ARABIC_LANGUAGES, publish_equivalent: "Modern languages (other)" },
             { name: CourseSubjects::WELSH_LANGUAGE, publish_equivalent: "Modern languages (other)" },
             { name: CourseSubjects::PORTUGUESE_LANGUAGE, publish_equivalent: "Modern languages (other)" },
+            { name: CourseSubjects::FRENCH_LANGUAGE, publish_equivalent: "French" },
+            { name: CourseSubjects::GERMAN_LANGUAGE, publish_equivalent: "German" },
+            { name: CourseSubjects::ITALIAN_LANGUAGE, publish_equivalent: "Italian" },
+            { name: CourseSubjects::CHINESE_LANGUAGES, publish_equivalent: "Mandarin" },
             { name: CourseSubjects::RUSSIAN_LANGUAGES, publish_equivalent: "Russian" },
             { name: CourseSubjects::SPANISH_LANGUAGE, publish_equivalent: "Spanish" },
           ],
@@ -176,16 +176,16 @@ module Dttp
         PHYSICAL_EDUCATION => {
           entity_id: "e3f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::DANCE, publish_equivalent: "Dance" },
-            { name: CourseSubjects::SPORTS_MANAGEMENT, publish_equivalent: PHYSICAL_EDUCATION },
             { name: CourseSubjects::SPORT_AND_EXERCISE_SCIENCES, publish_equivalent: PHYSICAL_EDUCATION },
+            { name: CourseSubjects::SPORTS_MANAGEMENT, publish_equivalent: PHYSICAL_EDUCATION },
+            { name: CourseSubjects::DANCE, publish_equivalent: "Dance" },
           ],
         },
         RELIGIOUS_EDUCATION => {
           entity_id: "f7f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::PHILOSOPHY, publish_equivalent: "Philosophy" },
             { name: CourseSubjects::RELIGIOUS_STUDIES, publish_equivalent: "Religious education" },
+            { name: CourseSubjects::PHILOSOPHY, publish_equivalent: "Philosophy" },
           ],
         },
         PHYSICS => {
@@ -199,18 +199,18 @@ module Dttp
           entity_id: "e9f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: PRIMARY },
-            { name: CourseSubjects::ENGLISH_STUDIES, publish_equivalent: "Primary with English" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "English as a second or other language" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with modern languages" },
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with geography and history" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with physical education" },
+            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with science" },
+            { name: CourseSubjects::ENGLISH_STUDIES, publish_equivalent: "Primary with English" },
             { name: CourseSubjects::GEOGRAPHY, publish_equivalent: "Primary with geography and history" },
             { name: CourseSubjects::HISTORY, publish_equivalent: "Primary with geography and history" },
-            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with modern languages" },
             { name: CourseSubjects::MODERN_LANGUAGES, publish_equivalent: "Primary with modern languages" },
-            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with physical education" },
             { name: CourseSubjects::SPORTS_MANAGEMENT, publish_equivalent: "Primary with physical education" },
             { name: CourseSubjects::SPORT_AND_EXERCISE_SCIENCES, publish_equivalent: "Primary with physical education" },
-            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with science" },
             { name: CourseSubjects::SCIENCE, publish_equivalent: "Primary with science" },
-            { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "English as a second or other language" },
             { name: CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS, publish_equivalent: PRIMARY_WITH_MATHEMATICS },
           ],
         },
