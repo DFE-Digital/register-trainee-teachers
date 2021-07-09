@@ -15,7 +15,7 @@ module Trainees
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @language_specialisms_form.public_send(save_strategy)
-        # TODO: do something
+        redirect_to edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
       else
         render :edit
       end

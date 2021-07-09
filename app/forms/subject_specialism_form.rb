@@ -21,7 +21,7 @@ class SubjectSpecialismForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
-  def initialize(trainee, position, params: {}, user: nil, store: FormStore)
+  def initialize(trainee, position = nil, params: {}, user: nil, store: FormStore)
     @position = position
     @trainee = trainee
     super(trainee, params: params, user: user, store: store)
@@ -35,6 +35,10 @@ class SubjectSpecialismForm < TraineeForm
     else
       false
     end
+  end
+
+  def specialisms
+    [specialim1, specialism2, specialism3].compact
   end
 
 private
