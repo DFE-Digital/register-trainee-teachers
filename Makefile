@@ -13,10 +13,10 @@ help:
 	@echo "  deploy-plan - Print out the plan for the deploy, does not deploy."
 	@echo ""
 	@echo "Command Options:"
-	@echo "      env      - name of the environment being setup, set this when creating review apps"
-	@echo "      tag      - git sha of a built image, see builds in GitHub Actions"
-	@echo "      passcode - your authentication code for GOVUK PaaS, retrieve from"
-	@echo "                 https://login.london.cloud.service.gov.uk/passcode"
+	@echo "      APP_NAME  - name of the app being setup, required only for review apps"
+	@echo "      IMAGE_TAG - git sha of a built image, see builds in GitHub Actions"
+	@echo "      PASSCODE  - your authentication code for GOVUK PaaS, retrieve from"
+	@echo "                  https://login.london.cloud.service.gov.uk/passcode"
 	@echo ""
 	@echo "Examples:"
 	@echo "  Create a review app"
@@ -24,44 +24,41 @@ help:
 	@echo "    visit https://login.london.cloud.service.gov.uk/passcode. Then run"
 	@echo "    deploy-plan to test:"
 	@echo ""
-	@echo "        make review env=REVIEW_APP_NAME deploy-plan tag=GIT_REF passcode=AUTHCODE"
+	@echo "        make review APP_NAME=PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF PASSCODE=AUTHCODE"
 
 review:
-	echo "setting Review $(env) environment"
-	$(eval env_config=review)
-	$(eval backend_key=-backend-config=key=pr-$(env).tfstate)
+	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a name for your review app))
+	$(eval DEPLOY_ENV=review)
+	$(eval backend_key=-backend-config=key=pr-$(APP_NAME).tfstate)
 	$(eval export TF_VAR_paas_app_environment=review)
-	$(eval export TF_VAR_paas_web_app_hostname=$(env))
-	$(eval space=bat-qa)
+	$(eval export TF_VAR_paas_web_app_hostname=$(APP_NAME))
+	$(eval SPACE=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+	echo https://register-pr-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
 
 local: ## Configure local dev environment
-	$(eval env=local)
+	$(eval DEPLOY_ENV=local)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 
 qa:
-	$(eval env=qa)
-	$(eval env_config=qa)
-	$(eval space=bat-qa)
+	$(eval DEPLOY_ENV=qa)
+	$(eval SPACE=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 
 staging:
-	$(eval env=staging)
-	$(eval env_config=staging)
-	$(eval space=bat-staging)
+	$(eval DEPLOY_ENV=staging)
+	$(eval SPACE=bat-staging)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
 
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
-	$(eval env=production)
-	$(eval env_config=production)
-	$(eval space=bat-prod)
+	$(eval DEPLOY_ENV=production)
+	$(eval SPACE=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
 sandbox:
-	$(eval env=sandbox)
-	$(eval env_config=sandbox)
-	$(eval space=bat-prod)
+	$(eval DEPLOY_ENV=sandbox)
+	$(eval SPACE=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
 install-fetch-config:
@@ -74,39 +71,38 @@ set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
 
 edit-app-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
+	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
 		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} -f yaml -c
 
 edit-infra-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
+	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
 		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} -f yaml -c
 
 print-app-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
+	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
 		-f yaml
 
 print-infra-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(env_config).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
+	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
 		-f yaml
 
 deploy-plan: terraform-init
-	. terraform/workspace-variables/$(env_config).sh && cd terraform && terraform plan -var-file=workspace-variables/$(env_config).tfvars
+	. terraform/workspace-variables/$(DEPLOY_ENV).sh && cd terraform && terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars
 
 deploy: terraform-init
-	. terraform/workspace-variables/$(env_config).sh && cd terraform &&  terraform apply -var-file=workspace-variables/$(env_config).tfvars -auto-approve
+	. terraform/workspace-variables/$(DEPLOY_ENV).sh && cd terraform &&  terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars -auto-approve
 
 destroy: terraform-init
-	. terraform/workspace-variables/$(env_config).sh && cd terraform && terraform destroy -var-file=workspace-variables/$(env_config).tfvars
+	. terraform/workspace-variables/$(DEPLOY_ENV).sh && cd terraform && terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars
 
 terraform-init:
-	$(if $(tag), , $(eval export tag=master))
-	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teachers:$(tag))
-	$(if $(passcode), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-	$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
+	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teachers:$(IMAGE_TAG))
+	$(if $(PASSCODE), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 	az account set -s $(AZ_SUBSCRIPTION) && az account show \
-	&& cd terraform && terraform init -reconfigure -backend-config=workspace-variables/$(env_config)_backend.tfvars $(backend_key)
-
+	&& cd terraform && terraform init -reconfigure -backend-config=workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
 console:
-	cf target -s ${space}
-	cf ssh register-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
+	cf target -s ${SPACE}
+	cf ssh register-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
