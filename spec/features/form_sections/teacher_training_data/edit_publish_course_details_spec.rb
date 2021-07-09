@@ -29,6 +29,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
     describe "with a course that doesn't require selecting a specialism" do
       let(:subjects) { [Dttp::CodeSets::AllocationSubjects::HISTORY] }
+
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
         and_i_select_a_course
@@ -43,7 +44,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       let(:subjects) do
         [
           Dttp::CodeSets::AllocationSubjects::COMPUTING,
-          Dttp::CodeSets::AllocationSubjects::MATHEMATICS
+          Dttp::CodeSets::AllocationSubjects::MATHEMATICS,
         ]
       end
 
@@ -55,7 +56,6 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_submit_the_specialism_form
         and_i_select_a_specialism
         and_i_submit_the_specialism_form
-        # TODO check contents of confirm page
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -71,7 +71,6 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_submit_the_form
         and_i_select_two_langauges
         and_i_submit_the_language_specialism_form
-        # TODO check contents of confirm page
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
