@@ -68,12 +68,11 @@ jobs:
         run: |
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
 
-          if [ ! -z "${{ github.event.inputs.pr }}" ]; then
+          if [ -n "${{ github.event.inputs.pr }}" ]; then
             PR_NUMBER=${{ github.event.inputs.pr }}
             echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+            echo "APP_NAME=$PR_NUMBER" >> $GITHUB_ENV
             echo "DEPLOY_ENV=review" >> $GITHUB_ENV
-            echo "BACKEND_KEY=-backend-config=key=pr-$PR_NUMBER.tfstate" >> $GITHUB_ENV
-            echo "TF_VAR_paas_web_app_hostname=$PR_NUMBER" >> $GITHUB_ENV
             echo "DEPLOY_URL=https://register-pr-$PR_NUMBER.london.cloudapps.digital" >> $GITHUB_ENV
             . terraform/workspace-variables/review.sh
           else
@@ -85,7 +84,6 @@ jobs:
           echo "TF_VAR_key_vault_app_secret_name=$TF_VAR_key_vault_app_secret_name" >> $GITHUB_ENV
           echo "TF_VAR_key_vault_infra_secret_name=$TF_VAR_key_vault_infra_secret_name" >> $GITHUB_ENV
         env:
-          DOCKER_IMAGE: ${{ format('dfedigital/register-trainee-teachers:{0}', github.event.inputs.sha) }}
           DEPLOY_ENV: ${{ matrix.environment }}
 
       - name: Start ${{ matrix.environment }} Deployment
@@ -108,22 +106,18 @@ jobs:
           ${{ env.TF_VAR_key_vault_app_secret_name }}
           ${{ env.TF_VAR_key_vault_infra_secret_name }}
 
-
       - name: Pin Terraform version
         uses: hashicorp/setup-terraform@v1.2.1
         with:
           terraform_version: 0.13.5
 
       - name: Terraform init, Terraform Plan and Apply
-        run: |
-          terraform init -backend-config=workspace-variables/${{ env.DEPLOY_ENV }}_backend.tfvars $BACKEND_KEY
-          terraform plan -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars
-          terraform apply -var-file=workspace-variables/${{ env.DEPLOY_ENV }}.tfvars -auto-approve
-        working-directory: terraform
+        run: make ${{ env.DEPLOY_ENV }} ci deploy
         env:
-          ARM_ACCESS_KEY: ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
-          TF_VAR_paas_app_docker_image: ${{env.DOCKER_IMAGE}}
-          TF_VAR_azure_credentials:     ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
+          ARM_ACCESS_KEY:           ${{ secrets[format('ARM_ACCESS_KEY_{0}', env.DEPLOY_ENV)] }}
+          TF_VAR_azure_credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
+          IMAGE_TAG:                ${{ github.event.inputs.sha }}
+          CONFIRM_PRODUCTION:       yes
 
       - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
         uses: benc-uk/workflow-dispatch@v1.1
