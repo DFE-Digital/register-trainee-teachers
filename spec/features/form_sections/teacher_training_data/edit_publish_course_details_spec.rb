@@ -57,6 +57,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_submit_the_specialism_form
         # TODO check contents of confirm page
         and_i_confirm_the_course
+        and_i_visit_the_review_draft_page
+        then_the_section_should_be(completed)
       end
     end
 
@@ -68,8 +70,11 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_course
         and_i_submit_the_form
         and_i_select_two_langauges
+        and_i_submit_the_language_specialism_form
         # TODO check contents of confirm page
         and_i_confirm_the_course
+        and_i_visit_the_review_draft_page
+        then_the_section_should_be(completed)
       end
     end
   end
@@ -158,7 +163,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def and_i_select_two_langauges
-    language_specialism_page.language_specialisms.take(2).each(&:click)
+    language_specialism_page.language_specialism_options.take(2).each do |checkbox|
+      click(checkbox.input)
+    end
   end
 
   alias_method :when_i_select_a_course, :and_i_select_a_course
@@ -169,6 +176,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def and_i_submit_the_specialism_form
     subject_specialism_page.submit_button.click
+  end
+
+  def and_i_submit_the_language_specialism_form
+    language_specialism_page.submit_button.click
   end
 
   def and_i_confirm_the_course
