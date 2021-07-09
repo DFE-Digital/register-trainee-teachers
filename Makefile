@@ -35,13 +35,6 @@ review:
 	$(eval space=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 
-audit:
-	$(eval env=audit)
-	$(eval env_config=audit)
-	$(eval space=bat-qa)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-
-
 local: ## Configure local dev environment
 	$(eval env=local)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
