@@ -13,9 +13,8 @@ module Trainees
 
     def update
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position, params: specialism_params)
-      save_strategy = trainee.draft? ? :save! : :stash
 
-      if @subject_specialism_form.public_send(save_strategy)
+      if @subject_specialism_form.stash
         redirect_to next_step_path
       else
         @subject = course.subjects[position - 1].name

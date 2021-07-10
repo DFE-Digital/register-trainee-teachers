@@ -38,7 +38,7 @@ class SubjectSpecialismForm < TraineeForm
   end
 
   def specialisms
-    [specialim1, specialism2, specialism3].compact
+    [specialism1, specialism2, specialism3].compact
   end
 
 private

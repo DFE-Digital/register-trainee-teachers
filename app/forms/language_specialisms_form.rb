@@ -23,6 +23,10 @@ class LanguageSpecialismsForm < TraineeForm
     clear_stash
   end
 
+  def languages
+    @languages ||= language_specialisms.reject(&:blank?)
+  end
+
 private
 
   def update_trainee_attributes
@@ -41,10 +45,6 @@ private
         trainee.course_subject_three,
       ].compact,
     }.merge(new_attributes)
-  end
-
-  def languages
-    @languages ||= language_specialisms.reject(&:blank?)
   end
 
   def language_specialism_count
