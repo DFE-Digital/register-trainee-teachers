@@ -24,14 +24,14 @@ module Trainees
   private
 
     def specialisms
-      specialism_form_type = PublishCourseDetailsForm.new(@trainee).specialism_form
+      specialism_form_type = PublishCourseDetailsForm.new(@trainee).specialism_form&.to_sym
       case specialism_form_type
       when :language
-        LanguageSpecialsimsForm.new(@trainee).language_specialisms
+        LanguageSpecialismsForm.new(@trainee).languages
       when :general
         SubjectSpecialismForm.new(@trainee).specialisms
       else
-        CalculateSubjectSpecialisms.call(subjects: @course.subjects.pluck(:name))
+        CalculateSubjectSpecialisms.call(subjects: @course.subjects.pluck(:name)).values.map(&:first).compact
       end
     end
 

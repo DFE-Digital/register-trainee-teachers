@@ -16,6 +16,11 @@ class PublishCourseDetailsForm < TraineeForm
     code == NOT_LISTED
   end
 
+  def specialism_form=(form)
+    @specialism_form = form
+    @fields.merge!(specialism_form: form)
+  end
+
 private
 
   def compute_fields

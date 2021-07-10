@@ -12,9 +12,7 @@ module Trainees
     def update
       @language_specialisms_form = LanguageSpecialismsForm.new(trainee, params: language_specialism_params, user: current_user)
 
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @language_specialisms_form.public_send(save_strategy)
+      if @language_specialisms_form.stash
         redirect_to edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
       else
         render :edit
