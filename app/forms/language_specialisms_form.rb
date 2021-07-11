@@ -15,14 +15,6 @@ class LanguageSpecialismsForm < TraineeForm
 
   validate :language_specialism_count
 
-  def save!
-    return false unless valid?
-
-    update_trainee_attributes
-    trainee.save!
-    clear_stash
-  end
-
   def languages
     @languages ||= language_specialisms.reject(&:blank?)
   end

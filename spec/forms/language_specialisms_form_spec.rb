@@ -52,22 +52,6 @@ describe LanguageSpecialismsForm, type: :model do
 
     let(:trainee) { create(:trainee) }
 
-    describe "#save!" do
-      before do
-        allow(form_store).to receive(:set).with(trainee.id, :language_specialisms, nil)
-      end
-
-      it "changes related trainee attributes" do
-        expect { subject.save! }
-          .to change { trainee.course_subject_one }
-          .from(nil).to("french")
-          .and change { trainee.course_subject_two }
-          .from(nil).to("german")
-          .and change { trainee.course_subject_three }
-          .from(nil).to("spanish")
-      end
-    end
-
     describe "#stash" do
       let(:fields) { params }
 
