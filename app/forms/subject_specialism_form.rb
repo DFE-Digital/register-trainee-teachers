@@ -27,16 +27,6 @@ class SubjectSpecialismForm < TraineeForm
     super(trainee, params: params, user: user, store: store)
   end
 
-  def save!
-    if valid?
-      update_trainee_attributes
-      trainee.save!
-      store.set(trainee.id, :subject_specialism, nil)
-    else
-      false
-    end
-  end
-
   def specialisms
     [specialism1, specialism2, specialism3].compact
   end
