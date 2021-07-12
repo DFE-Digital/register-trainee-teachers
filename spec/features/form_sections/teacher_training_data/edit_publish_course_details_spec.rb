@@ -34,6 +34,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
         when_i_visit_the_publish_course_details_page
         and_i_select_a_course
         and_i_submit_the_form
+        then_i_should_see_the_subject_described_as("History")
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -52,10 +53,11 @@ feature "publish course details", type: :feature, feature_publish_course_details
         when_i_visit_the_publish_course_details_page
         and_i_select_a_course
         and_i_submit_the_form
-        and_i_select_a_specialism
+        and_i_select_a_specialism("applied computing")
         and_i_submit_the_specialism_form
-        and_i_select_a_specialism
+        and_i_select_a_specialism("mathematics")
         and_i_submit_the_specialism_form
+        then_i_should_see_the_subject_described_as("Applied computing with mathematics")
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -69,8 +71,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         when_i_visit_the_publish_course_details_page
         and_i_select_a_course
         and_i_submit_the_form
-        and_i_select_two_langauges
+        and_i_select_languages("Arabic languages", "Welsh language", "Portuguese language")
         and_i_submit_the_language_specialism_form
+        then_i_should_see_the_subject_described_as("Arabic languages with Welsh language and Portuguese language")
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -161,10 +164,12 @@ feature "publish course details", type: :feature, feature_publish_course_details
     publish_course_details_page.course_options.first.choose
   end
 
-  def and_i_select_two_langauges
-    language_specialism_page.language_specialism_options.take(2).each do |checkbox|
-      click(checkbox.input)
+  def and_i_select_languages(*languages)
+    options = language_specialism_page.language_specialism_options.select do |option|
+      languages.include?(option.label.text)
     end
+
+    options.each { |checkbox| click(checkbox.input) }
   end
 
   alias_method :when_i_select_a_course, :and_i_select_a_course
@@ -193,8 +198,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
     review_draft_page.load(id: trainee.slug)
   end
 
-  def and_i_select_a_specialism
-    subject_specialism_page.specialism_options.first.choose
+  def and_i_select_a_specialism(specialism)
+    option = subject_specialism_page.specialism_options.find { |option| option.label.text == specialism }
+    option.choose
   end
 
   alias_method :when_i_visit_the_review_draft_page, :and_i_visit_the_review_draft_page
@@ -247,5 +253,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def then_i_see_the_language_specialism_page
     expect(language_specialism_page).to be_displayed(trainee_id: trainee.slug)
+  end
+
+  def then_i_should_see_the_subject_described_as(description)
+    expect(confirm_publish_course_page.subject_description).to eq(description)
   end
 end

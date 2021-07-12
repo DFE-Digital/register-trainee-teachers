@@ -6,11 +6,12 @@ module Confirmation
       include SummaryHelper
       include CourseDetailsHelper
 
-      attr_accessor :trainee, :course
+      attr_accessor :trainee, :course, :specialisms
 
-      def initialize(trainee:, course:)
+      def initialize(trainee:, course:, specialisms:)
         @trainee = trainee
         @course = course
+        @specialisms = specialisms
       end
 
       def heading
@@ -45,10 +46,11 @@ module Confirmation
       end
 
       def subject_names
+        specialism1, specialism2, specialism3 = *specialisms
         subjects_for_summary_view(
-          course.subject_one&.name,
-          course.subject_two&.name,
-          course.subject_three&.name,
+          specialism1,
+          specialism2,
+          specialism3
         )
       end
 

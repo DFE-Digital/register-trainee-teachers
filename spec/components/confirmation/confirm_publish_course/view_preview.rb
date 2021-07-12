@@ -6,13 +6,25 @@ module Confirmation
   module ConfirmPublishCourse
     class ViewPreview < ViewComponent::Preview
       def default
-        render(View.new(trainee: mock_trainee, course: build_course))
+        render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms))
       end
 
-      def with_multiple_subjects
+      def with_two_subjects
         course = build_course
-        course.subjects << Subject.new(name: "Subject two")
-        render(View.new(trainee: mock_trainee, course: course))
+        course.subjects << Subject.new(name: "Subject 2")
+        specialisms = build_specialisms
+        specialisms << "Specialism 2"
+        render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms))
+      end
+
+      def with_three_subjects
+        course = build_course
+        course.subjects << Subject.new(name: "Subject 2")
+        course.subjects << Subject.new(name: "Subject 3")
+        specialisms = build_specialisms
+        specialisms << "Specialism 2"
+        specialisms << "Specialism 3"
+        render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms))
       end
 
     private
@@ -39,6 +51,10 @@ module Confirmation
           duration_in_years: 1,
           subjects: [Subject.new(name: "Subject 1")],
         )
+      end
+
+      def build_specialisms
+        ["Specialism 1"]
       end
     end
   end
