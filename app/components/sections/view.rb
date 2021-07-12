@@ -39,14 +39,14 @@ module Sections
 
     def confirmation_view
       {
-        personal_details: Confirmation::PersonalDetails::View,
-        contact_details: Confirmation::ContactDetails::View,
-        diversity: Confirmation::Diversity::View,
-        degrees: Confirmation::Degrees::View,
-        course_details: Confirmation::CourseDetails::View,
-        training_details: Confirmation::TrainingDetails::View,
-        schools: Confirmation::Schools::View,
-        funding: Confirmation::Funding::View,
+        personal_details: PersonalDetails::View,
+        contact_details: ContactDetails::View,
+        diversity: Diversity::View,
+        degrees: Degrees::View,
+        course_details: CourseDetails::View,
+        training_details: TrainingDetails::View,
+        schools: Schools::View,
+        funding: Funding::View,
       }[section]
     end
 
