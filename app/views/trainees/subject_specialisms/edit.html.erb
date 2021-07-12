@@ -16,13 +16,13 @@
         </p>
       <div>
 
-      <% @specialisms.each_with_index do |subject, index| %>
+      <% @specialisms.each_with_index do |specialism, index| %>
         <%= f.govuk_radio_button(
             :"specialism#{position}",
-            subject,
+            specialism,
             multiple: true,
             link_errors: index.zero?,
-            label: { text: subject },
+            label: { text: specialism.upcase_first },
           ) %>
       <% end %>
     <% end %>
