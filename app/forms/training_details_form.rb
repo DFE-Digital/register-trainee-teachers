@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 class TrainingDetailsForm < TraineeForm
-  attr_accessor :trainee_id, :day, :month, :year
+  COMMENCEMENT_DATE_RADIO_OPTION_COURSE = "course"
+  COMMENCEMENT_DATE_RADIO_OPTION_MANUAL = "manual"
 
+  attr_accessor :trainee_id, :day, :month, :year, :commencement_date_radio_option
+
+  delegate :course_start_date, to: :trainee
+
+  validates :commencement_date_radio_option, inclusion: { in: [COMMENCEMENT_DATE_RADIO_OPTION_COURSE, COMMENCEMENT_DATE_RADIO_OPTION_MANUAL] }, if: :course_start_date
   validate :commencement_date_valid
   validates :trainee_id, presence: true,
                          length: {
@@ -17,10 +23,13 @@ class TrainingDetailsForm < TraineeForm
   end
 
   def commencement_date
-    date_hash = { year: year, month: month, day: day }
-    date_args = date_hash.values.map(&:to_i)
-
-    valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+    if commencement_date_radio_option == COMMENCEMENT_DATE_RADIO_OPTION_COURSE
+      course_start_date
+    else
+      date_hash = { year: year, month: month, day: day }
+      date_args = date_hash.values.map(&:to_i)
+      valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+    end
   end
 
 private
@@ -31,7 +40,14 @@ private
       day: trainee.commencement_date&.day,
       month: trainee.commencement_date&.month,
       year: trainee.commencement_date&.year,
-    }.merge(new_attributes.slice(:trainee_id, :day, :month, :year))
+      commencement_date_radio_option: compute_commencement_date_radio_option,
+    }.merge(new_attributes.slice(:trainee_id, :day, :month, :year, :commencement_date_radio_option))
+  end
+
+  def compute_commencement_date_radio_option
+    return unless trainee.commencement_date
+
+    course_start_date == trainee.commencement_date ? COMMENCEMENT_DATE_RADIO_OPTION_COURSE : COMMENCEMENT_DATE_RADIO_OPTION_MANUAL
   end
 
   def update_trainee_attributes
@@ -39,6 +55,8 @@ private
   end
 
   def commencement_date_valid
+    return if course_start_date && commencement_date_radio_option != COMMENCEMENT_DATE_RADIO_OPTION_MANUAL
+
     if [day, month, year].all?(&:blank?)
       errors.add(:commencement_date, :blank)
     elsif !commencement_date.is_a?(Date)

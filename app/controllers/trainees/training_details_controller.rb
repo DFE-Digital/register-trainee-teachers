@@ -31,7 +31,7 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:training_details_form).permit(:trainee_id, :commencement_date, *PARAM_CONVERSION.keys)
+      params.require(:training_details_form).permit(:trainee_id, :commencement_date, :commencement_date_radio_option, *PARAM_CONVERSION.keys)
             .transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end

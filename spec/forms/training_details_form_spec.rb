@@ -50,7 +50,7 @@ describe TrainingDetailsForm, type: :model do
 
     context "commencement date" do
       context "not present" do
-        let(:params) { { day: "", month: "", year: "" } }
+        let(:params) { { commencement_date_radio_option: "manual", day: "", month: "", year: "" } }
 
         it "returns a blank error message" do
           expect(subject.errors[:commencement_date]).to include(
@@ -60,7 +60,7 @@ describe TrainingDetailsForm, type: :model do
       end
 
       context "invalid date" do
-        let(:params) { { day: "2", month: "14", year: "" } }
+        let(:params) { { commencement_date_radio_option: "manual", day: "2", month: "14", year: "" } }
 
         it "returns an invalid date error message" do
           expect(subject.errors[:commencement_date]).to include(

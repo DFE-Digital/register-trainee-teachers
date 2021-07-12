@@ -12,6 +12,7 @@ module Features
 
     def and_i_fill_in_the_training_details_form
       training_details_page.trainee_id.set("123")
+      training_details_page.commencement_date_radio_option_manual&.choose
       training_details_page.set_date_fields(:commencement_date, Date.tomorrow.strftime("%d/%m/%Y"))
       training_details_page.submit_button.click
     end
