@@ -550,8 +550,8 @@ en:
       title: Funding
       training_initiative: Training initiative
       bursary_funding: Bursary funding
-      bursury_applied_for: Bursary applied for
-      no_bursury_applied_for: Not bursary funded
+      bursary_applied_for: Bursary applied for
+      no_bursary_applied_for: Not bursary funded
       tiered_bursary_applied_for:
         tier_one: Applied for Tier 1
         tier_two: Applied for Tier 2
@@ -763,7 +763,9 @@ en:
         funding/bursary_form:
           attributes:
             applying_for_bursary:
-              inclusion: Select if you are applying for a bursary for this trainee
+              inclusion: &bursary_selection_required Select if you are applying for a bursary for this trainee
+            bursary_tier:
+              inclusion: *bursary_selection_required
         outcome_date_form:
           attributes:
             date_string:
@@ -899,7 +901,9 @@ en:
               training_initiative:
                 blank: Select if the trainee is on a training initiative
               applying_for_bursary:
-                inclusion: Select if you are applying for a bursary for this trainee
+                inclusion: *bursary_selection_required
+              bursary_tier:
+                inclusion: *bursary_selection_required
   page_headings:
     start_page: Register trainee teachers
   system_admin:

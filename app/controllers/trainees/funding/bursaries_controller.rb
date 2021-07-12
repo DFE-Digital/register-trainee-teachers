@@ -32,7 +32,7 @@ module Trainees
       def bursary_params
         return { applying_for_bursary: nil } if params[:funding_bursary_form].blank?
 
-        params.require(:funding_bursary_form).permit(:applying_for_bursary, :bursary_tier)
+        params.require(:funding_bursary_form).permit(:applying_for_bursary, :bursary_tier, :tiered_bursary_form)
       end
 
       def authorize_trainee

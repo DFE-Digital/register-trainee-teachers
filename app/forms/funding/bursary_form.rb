@@ -5,6 +5,11 @@ module Funding
     FIELDS = %i[
       applying_for_bursary
       bursary_tier
+      tiered_bursary_form
+    ].freeze
+
+    NON_TRAINEE_FIELDS = %i[
+      tiered_bursary_form
     ].freeze
 
     attr_accessor(*FIELDS)
@@ -12,7 +17,7 @@ module Funding
     before_validation :set_applying_for_bursary
 
     validates :applying_for_bursary, inclusion: { in: [true, false] }
-    validates :bursary_tier, inclusion: { in: Trainee.bursary_tiers.keys }, allow_blank: true
+    validates :bursary_tier, inclusion: { in: Trainee.bursary_tiers.keys }, if: :requires_bursary_tier?
 
     def applying_for_bursary=(value)
       @applying_for_bursary = ActiveModel::Type::Boolean.new.cast(value)
@@ -30,6 +35,18 @@ module Funding
 
     def form_store_key
       :bursary
+    end
+
+    def requires_bursary_tier?
+      bursary_tier.present? || tier_not_selected?
+    end
+
+    def tier_not_selected?
+      tiered_bursary_form.present? && bursary_tier.nil?
+    end
+
+    def fields_to_ignore_before_stash_or_save
+      NON_TRAINEE_FIELDS
     end
   end
 end

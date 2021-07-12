@@ -16,7 +16,16 @@ module Funding
 
     describe "validations" do
       it { is_expected.to validate_inclusion_of(:applying_for_bursary).in_array([true, false]) }
-      it { is_expected.to validate_inclusion_of(:bursary_tier).in_array(Trainee.bursary_tiers.keys) }
+
+      context "with tiered_bursary_form" do
+        let(:params) do
+          {
+            "tiered_bursary_form" => "true",
+          }
+        end
+
+        it { is_expected.to validate_inclusion_of(:bursary_tier).in_array(Trainee.bursary_tiers.keys) }
+      end
 
       context "when bursary_tier is set" do
         let(:params) do
@@ -26,11 +35,10 @@ module Funding
           }
         end
 
-        before do
-          subject.valid?
-        end
+        it { is_expected.to validate_inclusion_of(:bursary_tier).in_array(Trainee.bursary_tiers.keys) }
 
         it "sets applying_for_bursary to true" do
+          subject.valid?
           expect(subject.applying_for_bursary).to eq(true)
         end
       end

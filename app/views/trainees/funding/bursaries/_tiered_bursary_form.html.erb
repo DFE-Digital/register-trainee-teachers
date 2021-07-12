@@ -8,6 +8,7 @@
   <%= f.govuk_radio_buttons_fieldset(:bursary_tier, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
 
     <%= f.hidden_field :applying_for_bursary, value: false %>
+    <%= f.hidden_field :tiered_bursary_form, value: true %>
 
     <% BURSARY_TIERS.each do |tier_key, _tier_value| %>
       <%= f.govuk_radio_button(
