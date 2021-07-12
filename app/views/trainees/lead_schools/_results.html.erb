@@ -1,12 +1,11 @@
 <%= f.govuk_error_summary %>
 
 <%= f.hidden_field :lead_school_id, value: nil %>
+<%= f.hidden_field :search_results_found, value: "true" %>
 
-<%= f.govuk_radio_buttons_fieldset :lead_school_id, 
-  legend: { text: t("components.page_titles.trainees.lead_schools.index"), tag: "h1", size: "l" }, 
+<%= f.govuk_radio_buttons_fieldset :lead_school_id,
+  legend: { text: t("components.page_titles.trainees.lead_schools.index"), tag: "h1", size: "l" },
   hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} ‘#{query}’" } do %>
-  <%= f.hidden_field :school_value, value: "true" %>
-
     <% @school_search.schools.each_with_index do |school, index| %>
       <%= f.govuk_radio_button :lead_school_id, school.id,
                               checked: false,

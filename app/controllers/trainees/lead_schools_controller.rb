@@ -3,12 +3,12 @@
 module Trainees
   class LeadSchoolsController < ApplicationController
     before_action :authorize_trainee
-    before_action :load_schools
 
     helper_method :query
 
     def index
       @lead_school_form = Schools::LeadSchoolForm.new(trainee)
+      @school_search = SchoolSearch.call(query: query, lead_schools_only: true)
     end
 
     def edit
@@ -27,6 +27,7 @@ module Trainees
       if @lead_school_form.public_send(save_strategy)
         redirect_to origin_page_or_next_step
       else
+        @school_search = SchoolSearch.call(query: params[:query], lead_schools_only: true)
         render index_or_edit_page
       end
     end
@@ -35,10 +36,6 @@ module Trainees
 
     def redirect_url
       trainee.requires_employing_school? ? edit_trainee_employing_schools_path(trainee) : trainee_schools_confirm_path(trainee)
-    end
-
-    def load_schools
-      @school_search = SchoolSearch.call(query: query, lead_schools_only: true)
     end
 
     def trainee
@@ -68,7 +65,7 @@ module Trainees
     end
 
     def index_or_edit_page
-      @lead_school_form.index_page_radio_buttons? ? :index : :edit
+      @lead_school_form.search_results_found? || @lead_school_form.no_results_searching_again? ? :index : :edit
     end
 
     def authorize_trainee

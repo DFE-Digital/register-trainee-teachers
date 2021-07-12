@@ -10,7 +10,7 @@ PUBLISH_SUBJECT_SPECIALISM_MAPPING = Dttp::CodeSets::AllocationSubjects::MAPPING
 end
 
 PUBLISH_LANGUAGE_SUBJECTS = Dttp::CodeSets::AllocationSubjects::MAPPING[
-  Dttp::CodeSets::AllocationSubjects::MODERN_LANGUAGES][:subject_specialisms
-].map { |subject_specialism|
+  Dttp::CodeSets::AllocationSubjects::MODERN_LANGUAGES
+][:subject_specialisms].map { |subject_specialism|
   subject_specialism[:publish_equivalent]
 }.uniq

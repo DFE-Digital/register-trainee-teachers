@@ -854,6 +854,8 @@ en:
               blank: Select a specialism
         schools/lead_school_form:
           attributes:
+            query:
+              blank: Enter a school unique reference number (URN), name or postcode
             lead_school_id:
               blank: Select a lead school or search again
             results_search_again_query:
@@ -862,6 +864,8 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
         schools/employing_school_form:
           attributes:
+            query:
+              blank: Enter a school unique reference number (URN), name or postcode
             employing_school_id:
               blank: Select an employing school or search again
             results_search_again_query:
