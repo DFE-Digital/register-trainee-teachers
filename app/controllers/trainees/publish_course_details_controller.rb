@@ -10,42 +10,48 @@ module Trainees
     end
 
     def update
-      rerender_page =
-        proc do
-          @courses = @trainee.available_courses
-          render :edit
-          return
-        end
-
       @publish_course_details = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
 
-      rerender_page.call unless @publish_course_details.valid?
-
-      redirect_path =
-        if @publish_course_details.manual_entry_chosen?
-          edit_trainee_course_details_path
-        elsif course_has_one_specialism?
-          edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
-        elsif specialism_type == :language
-          @publish_course_details.specialism_form = :language
-          edit_trainee_language_specialisms_path(@trainee)
-        else
-          @publish_course_details.specialism_form = :general
-          edit_trainee_subject_specialism_path(@trainee, 1)
-        end
-
-      unless @publish_course_details.stash
-        rerender_page.call
+      unless @publish_course_details.valid? && set_specialism_form_type && @publish_course_details.stash
+        rerender_page
+        return
       end
 
       if @publish_course_details.manual_entry_chosen?
         trainee.update!(course_code: nil)
       end
 
-      redirect_to redirect_path
+      redirect_to next_step_path
     end
 
   private
+
+    def rerender_page
+      @courses = @trainee.available_courses
+      render :edit
+    end
+
+    def set_specialism_form_type
+      return true if @publish_course_details.manual_entry_chosen?
+
+      if %i[language general].include? specialism_type
+        @publish_course_details.specialism_form = specialism_type
+      end
+
+      true
+    end
+
+    def next_step_path
+      if @publish_course_details.manual_entry_chosen?
+        edit_trainee_course_details_path
+      elsif course_has_one_specialism?
+        edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
+      elsif specialism_type == :language
+        edit_trainee_language_specialisms_path(@trainee)
+      else
+        edit_trainee_subject_specialism_path(@trainee, 1)
+      end
+    end
 
     def course_has_one_specialism?
       CalculateSubjectSpecialisms.call(subjects: course_subjects).all? do |_, v|

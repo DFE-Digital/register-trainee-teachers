@@ -12,7 +12,7 @@ class CalculateSubjectSpecialismType
     return :primary if primary_subject?
     return :single_subject if single_subject?
 
-    :multuple_subjects
+    :multiple_subjects
   end
 
 private
