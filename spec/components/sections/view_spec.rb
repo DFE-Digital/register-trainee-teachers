@@ -4,8 +4,6 @@ require "rails_helper"
 
 module Sections
   describe View do
-    alias_method :component, :page
-
     let(:trainees_sections_component) do
       form = TrnSubmissionForm.new(trainee: trainee)
       described_class.new(trainee: trainee, section: section, form: form)
@@ -37,11 +35,11 @@ module Sections
         end
 
         it "has title" do
-          expect(component).to have_css(".app-inset-text__title", text: expected_title(section, status))
+          expect(rendered_component).to have_css(".app-inset-text__title", text: expected_title(section, status))
         end
 
         it "has link" do
-          expect(component).to have_link(expected_link_text(section, status), href: expected_href(section, status, trainee))
+          expect(rendered_component).to have_link(expected_link_text(section, status), href: expected_href(section, status, trainee))
         end
       end
     end
@@ -165,14 +163,14 @@ module Sections
 
     def expected_confirmation_view(section)
       {
-        personal_details: Confirmation::PersonalDetails::View,
-        contact_details: Confirmation::ContactDetails::View,
-        diversity: Confirmation::Diversity::View,
-        degrees: Confirmation::Degrees::View,
-        course_details: Confirmation::CourseDetails::View,
-        training_details: Confirmation::TrainingDetails::View,
-        schools: Confirmation::Schools::View,
-        funding: Confirmation::Funding::View,
+        personal_details: PersonalDetails::View,
+        contact_details: ContactDetails::View,
+        diversity: Diversity::View,
+        degrees: Degrees::View,
+        course_details: CourseDetails::View,
+        training_details: TrainingDetails::View,
+        schools: Schools::View,
+        funding: Funding::View,
       }[section]
     end
   end

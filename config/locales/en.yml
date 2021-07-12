@@ -499,47 +499,46 @@ en:
     view:
       display_text: "Trainee on the %{training_route_link} route."
       apply_display_text: "Trainee enrolled on %{course_with_code}, %{training_route}."
-  confirmation:
-    confirm_publish_course:
-      view:
-        change: Change
-        change_course: Change course
-        heading: Is this the course you want to add?
-        heading_text: These are the course details as listed on Publish teacher training courses.
-        summary_title: Course details
-        type_of_course: Subject
-        subject: Subject
-        multiple_subjects: Subjects
-        level: Level
-        age_range: Age range
-        start_date: Start date
-        course_start_date: Course start date
-        course_end_date: Course end date
-        duration: Duration
-        course_details: Course details
-        incorrect_details_title: What if the details are incorrect?
-        incorrect_details_text:
-          If the details are incorrect for all trainees, you should <a class="govuk-link" href="https://www.publish-teacher-training-courses.service.gov.uk/">update the course on Publish</a>.
+  confirm_publish_course:
+    view:
+      change: Change
+      change_course: Change course
+      heading: Is this the course you want to add?
+      heading_text: These are the course details as listed on Publish teacher training courses.
+      summary_title: Course details
+      type_of_course: Subject
+      subject: Subject
+      multiple_subjects: Subjects
+      level: Level
+      age_range: Age range
+      start_date: Start date
+      course_start_date: Course start date
+      course_end_date: Course end date
+      duration: Duration
+      course_details: Course details
+      incorrect_details_title: What if the details are incorrect?
+      incorrect_details_text:
+        If the details are incorrect for all trainees, you should <a class="govuk-link" href="https://www.publish-teacher-training-courses.service.gov.uk/">update the course on Publish</a>.
 
 
-          If the details are wrong for this trainee only, you can edit them here.
-    course_details:
-      view:
-        subject:
-          one: Subject
-          other: Subjects
-    schools:
-      view:
-        summary_title: Schools
-        lead_school: Lead school
-        employing_school: Employing school
-    funding:
-      view:
-        title: Funding
-        training_initiative: Training initiative
-        bursary_funding: Bursary funding
-        bursury_applied_for: Bursary applied for
-        no_bursury_applied_for: Not bursary funded
+        If the details are wrong for this trainee only, you can edit them here.
+  course_details:
+    view:
+      subject:
+        one: Subject
+        other: Subjects
+  schools:
+    view:
+      summary_title: Schools
+      lead_school: Lead school
+      employing_school: Employing school
+  funding:
+    view:
+      title: Funding
+      training_initiative: Training initiative
+      bursary_funding: Bursary funding
+      bursury_applied_for: Bursary applied for
+      no_bursury_applied_for: Not bursary funded
   trainees:
     not_supported_route:
       heading: Other routes not supported

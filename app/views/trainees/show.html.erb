@@ -7,7 +7,7 @@
 </div>
 
 <div class="course-details">
-  <%= render Confirmation::CourseDetails::View.new(data_model: @trainee) %>
+  <%= render CourseDetails::View.new(data_model: @trainee) %>
 </div>
 
 <% if @trainee.requires_schools? %>
@@ -18,12 +18,12 @@
 
 <% if @trainee.requires_placement_details? %>
   <div class="placement-details">
-    <%= render Confirmation::PlacementDetails::View.new(trainee: @trainee) %>
+    <%= render PlacementDetails::View.new(trainee: @trainee) %>
   </div>
 <% end %>
 
 <% if FeatureService.enabled?(:show_funding) %>
   <div class="funding">
-    <%= render Confirmation::Funding::View.new(data_model: @trainee) %>
+    <%= render Funding::View.new(data_model: @trainee) %>
   </div>
 <% end %>
