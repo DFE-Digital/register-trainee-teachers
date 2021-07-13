@@ -137,11 +137,38 @@ feature "publish course details", type: :feature, feature_publish_course_details
       and_i_visit_the_review_draft_page
       then_the_link_takes_me_to_the_publish_course_details_page
     end
+
+    describe "selecting a new course from the confirm page" do
+      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::COMPUTING] }
+
+      scenario do
+        given_a_course_exists(with_subjects: ["Modern languages (other)"])
+        when_i_visit_the_publish_course_details_page
+        when_i_select_a_course("Computing")
+        and_i_submit_the_form
+        and_i_select_a_specialism("Applied computing")
+        and_i_submit_the_specialism_form
+        then_i_should_see_the_subject_described_as("Applied computing")
+        when_i_visit_the_publish_course_details_page
+        when_i_select_a_course("Modern languages (other)")
+        and_i_submit_the_form
+        and_i_select_languages("Arabic languages", "Welsh language", "Portuguese language")
+        and_i_submit_the_language_specialism_form
+        then_i_should_see_the_subject_described_as("Arabic languages with Welsh language and Portuguese language")
+      end
+    end
   end
 
   def given_a_trainee_exists_with_some_courses(with_subjects: [])
     given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
+  end
+
+  def given_a_course_exists(with_subjects: [])
+    create_list(:course_with_subjects, 1,
+                subject_names: with_subjects,
+                accredited_body_code: @trainee.provider.code,
+                route: @trainee.training_route)
   end
 
   def then_the_section_should_be(status)
@@ -160,8 +187,13 @@ feature "publish course details", type: :feature, feature_publish_course_details
     publish_course_details_page.load(id: trainee.slug)
   end
 
-  def and_i_select_a_course
-    publish_course_details_page.course_options.first.choose
+  def and_i_select_a_course(course_title = nil)
+    if course_title
+      option = publish_course_details_page.course_options.find { |o| o.label.text.include?(course_title) }
+      option.choose
+    else
+      publish_course_details_page.course_options.first.choose
+    end
   end
 
   def and_i_select_languages(*languages)

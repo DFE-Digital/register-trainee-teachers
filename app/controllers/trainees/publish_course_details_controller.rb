@@ -32,13 +32,25 @@ module Trainees
     end
 
     def set_specialism_form_type
-      return true if @publish_course_details.manual_entry_chosen?
+      type =
+        if @publish_course_details.manual_entry_chosen? || !%i[language general].include?(specialism_type)
+          nil
+        else
+          specialism_type
+        end
 
-      if %i[language general].include? specialism_type
-        @publish_course_details.specialism_form = specialism_type
-      end
+      # If this is being changed from the confirm page, there may be something in these stashes that the
+      # user won't get a change to change - if there were more specialisms chosen for the previosu option
+      clear_form_stashes
+
+      @publish_course_details.specialism_form = type
 
       true
+    end
+
+    def clear_form_stashes
+      FormStore.set(@trainee.id, :subject_specialism, nil)
+      FormStore.set(@trainee.id, :language_specialisms, nil)
     end
 
     def next_step_path
