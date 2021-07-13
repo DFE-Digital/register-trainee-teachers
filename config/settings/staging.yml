@@ -14,6 +14,7 @@ dfe_sign_in:
 
 features:
   basic_auth: false
+  sync_from_dttp: true
   import_courses_from_ttapi: true
   publish_course_details: true
   persist_to_dttp: true
