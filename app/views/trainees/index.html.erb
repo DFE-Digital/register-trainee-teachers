@@ -53,8 +53,26 @@
 
   <% component.filter_option do %>
     <div class="govuk-form-group">
-      <%= label_tag "text_search", "Search records", class: "govuk-label govuk-label--s" %>
+      <%= label_tag "text_search", t("views.trainees.index.filters.search"), class: "govuk-label govuk-label--s" %>
       <%= text_field_tag "text_search", (@filters[:text_search] if @filters), spellcheck: false, class: "govuk-input" %>
+    </div>
+  <% end %>
+
+  <% component.filter_option do %>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <%= t("views.trainees.index.filters.level") %>
+        </legend>
+        <div class="govuk-checkboxes govuk-checkboxes--small">
+          <% %w[early_years primary secondary].map do |level| %>
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag "level[]", level, checked?(@filters, :level, level), id: "level-#{level}", class: "govuk-checkboxes__input" %>
+              <%= label_tag "level-#{level}", label_for("level", level), class: "govuk-label govuk-checkboxes__label" %>
+            </div>
+          <% end %>
+        </div>
+      </fieldset>
     </div>
   <% end %>
 
@@ -63,7 +81,7 @@
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-            Type of training
+            <%= t("views.trainees.index.filters.type_of_training") %>
           </legend>
           <div class="govuk-checkboxes govuk-checkboxes--small">
             <% @training_routes.map do |training_route, _| %>
@@ -82,7 +100,7 @@
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-          Status
+          <%= t("views.trainees.index.filters.status") %>
         </legend>
         <div class="govuk-checkboxes govuk-checkboxes--small">
           <% TraineeFilter::STATES.map do |state, _| %>
@@ -98,7 +116,7 @@
 
   <% component.filter_option do %>
     <div class="govuk-form-group">
-      <%= label_tag "subject", "Subject", class: "govuk-label govuk-label--s" %>
+      <%= label_tag "subject", t("views.trainees.index.filters.subject"), class: "govuk-label govuk-label--s" %>
       <%= select_tag :subject, options_from_collection_for_select(
         filter_course_subjects_options,
         :value,

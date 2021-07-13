@@ -19,6 +19,10 @@ module Trainees
 
     attr_reader :trainees, :filters
 
+    def level(trainees, levels)
+      return trainees if levels.blank?
+    end
+
     def training_route(trainees, training_route)
       return trainees if training_route.blank?
 
@@ -58,6 +62,7 @@ module Trainees
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
+      filtered_trainees = level(filtered_trainees, filters[:level])
       filtered_trainees
     end
   end
