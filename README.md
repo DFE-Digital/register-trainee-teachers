@@ -204,3 +204,24 @@ To create the lead schools csv, there is a spreadsheet in google drive: https://
 
 The second tab: "MASTER LIST_All Lead Schools" must be exported as a csv.
 
+## Running Apply application import against example data
+
+Add the following to your `development.local.yml`:
+```yml
+features:
+  import_applications_from_apply: true
+
+apply_api:
+  base_url: "https://sandbox.apply-for-teacher-training.service.gov.uk/register-api"
+  auth_token: <request token from Apply team>
+```
+Running the following script:
+```
+ApplyApi::ImportApplication.class_eval do
+  def provider
+    Provider.all.sample
+  end
+end
+ApplyApplicationSyncRequest.delete_all
+ApplyApi::ImportApplicationsJob.perform_now
+```

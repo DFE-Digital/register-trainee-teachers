@@ -27,7 +27,7 @@ module ApplyApi
     def query
       {
         recruitment_cycle_year: Settings.current_recruitment_cycle_year,
-        changed_since: changed_since,
+        changed_since: changed_since&.utc&.iso8601,
       }.compact.to_query
     end
   end
