@@ -16,6 +16,7 @@ module PageObjects
       section :degree_details, PageObjects::Sections::DegreeDetails, ".degree-details"
       section :course_details, PageObjects::Sections::CourseDetails, ".app-task-list__item.course-details"
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
+      section :funding_section, PageObjects::Sections::Funding, ".app-task-list__item.funding"
       section :lead_and_employing_schools_section, PageObjects::Sections::SchoolsDetails, ".app-task-list__item.school-details"
 
       element :review_this_record_link, "#check-details"

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "assessment-only end-to-end journey", type: :feature do
+feature "assessment-only end-to-end journey", feature_show_funding: true, type: :feature do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN" do
@@ -13,6 +13,7 @@ feature "assessment-only end-to-end journey", type: :feature do
     and_the_degree_details_is_complete
     and_the_course_details_is_complete
     and_the_trainee_start_date_and_id_is_complete
+    and_the_funding_details_is_complete
     and_the_draft_record_has_been_reviewed
     and_all_sections_are_complete
     when_i_submit_for_trn

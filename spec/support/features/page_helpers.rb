@@ -226,6 +226,10 @@ module Features
       @bursary_page ||= PageObjects::Trainees::Funding::Bursary.new
     end
 
+    def edit_funding_page
+      @edit_funding_page ||= PageObjects::Trainees::EditTraineeFunding.new
+    end
+
     def confirm_funding_page
       @confirm_funding_page ||= PageObjects::Trainees::ConfirmFunding.new
     end
