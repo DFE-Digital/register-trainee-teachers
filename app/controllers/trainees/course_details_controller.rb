@@ -27,7 +27,7 @@ module Trainees
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @course_details_form.public_send(save_strategy)
-        redirect_to trainee_course_details_confirm_path(trainee)
+        redirect_to relevant_redirect_path
       else
         render :edit
       end
@@ -56,6 +56,10 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
+    end
+
+    def relevant_redirect_path
+      trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_course_details_confirm_path(trainee)
     end
   end
 end
