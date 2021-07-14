@@ -33,10 +33,12 @@ module Trainees
 
     def set_specialism_form_type
       type =
-        if @publish_course_details.manual_entry_chosen? || !%i[language general].include?(specialism_type)
+        if @publish_course_details.manual_entry_chosen? || course_has_one_specialism?
           nil
+        elsif specialism_type == :language
+          :language
         else
-          specialism_type
+          :general
         end
 
       # If this is being changed from the confirm page, there may be something in these stashes that the
