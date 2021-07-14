@@ -3,11 +3,11 @@
 module Trainees
   class SubjectSpecialismsController < ApplicationController
     before_action :authorize_trainee
-    helper_method :position
+    helper_method :position, :course_code
 
     def edit
       @subject = course.subjects[position - 1].name
-      @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
+      @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))[:"course_subject_#{position_in_words}"]
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position)
     end
 
@@ -62,17 +62,23 @@ module Trainees
     end
 
     def course
-      @course ||= trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(trainee).code)
+      @course ||= trainee.available_courses.find_by_code!(course_code)
     end
 
     def next_step_path
       specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))
       next_position = position + 1
       if specialisms[:"course_subject_#{to_word(next_position)}"].present?
-        edit_trainee_subject_specialism_path(@trainee, next_position)
+        edit_trainee_subject_specialism_path(trainee, next_position, course_code: course_code)
+      elsif params[:course_code].present?
+        trainee_apply_registrations_confirm_course_path(trainee)
       else
-        edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
+        edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
       end
+    end
+
+    def course_code
+      params[:course_code] || PublishCourseDetailsForm.new(trainee).code
     end
   end
 end
