@@ -107,7 +107,6 @@ private
   def update_trainee_attributes
     attributes = {
       course_code: course_code,
-      course_age_range: course_age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     }
@@ -117,6 +116,7 @@ private
         course_subject_one: course_subject_one,
         course_subject_two: course_subject_two,
         course_subject_three: course_subject_three,
+        course_age_range: course_age_range,
       })
     end
 
@@ -143,7 +143,7 @@ private
 
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.course_age_range]
 
-    if age_range.present?
+    if age_range.present? && !trainee.early_years_route?
       attributes["#{age_range[:option]}_age_range".to_sym] = trainee.course_age_range.join(" to ")
       attributes[:main_age_range] = :other if age_range[:option] == :additional
     end

@@ -167,24 +167,12 @@ module Dttp
 
           before do
             stub_const("Dttp::CodeSets::AgeRanges::MAPPING", { AgeRange::ZERO_TO_FIVE => { entity_id: dttp_ey_age_range_entity_id } })
-            trainee.set_early_years_course_subject
+            trainee.set_early_years_course_details
           end
 
           it "returns a hash including the undergrad course level" do
             expect(subject).to include(
               { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
-            )
-          end
-
-          it "returns a hash including the Early years 0 to 5 age range" do
-            expect(subject).to include(
-              { "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_ey_age_range_entity_id})" },
-            )
-          end
-
-          it "returns a hash containing the Early years subject" do
-            expect(subject).to include(
-              { "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING][:entity_id]})" },
             )
           end
         end
