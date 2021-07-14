@@ -29,6 +29,14 @@ module CourseDetailsHelper
     [subject_one&.upcase_first, additional_subjects].reject(&:blank?).join(" with ")
   end
 
+  def format_language(language)
+    if language =~ /language$/
+      language.gsub(" language", "").chomp
+    else
+      language
+    end
+  end
+
 private
 
   def age_ranges(option:)

@@ -91,9 +91,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         when_i_visit_the_publish_course_details_page
         and_i_select_a_course
         and_i_submit_the_form
-        and_i_select_languages("Arabic languages", "Welsh language", "Portuguese language")
+        and_i_select_languages("Arabic languages", "Welsh", "Portuguese")
         and_i_submit_the_language_specialism_form
-        then_i_should_see_the_subject_described_as("Arabic languages with Welsh language and Portuguese language")
+        then_i_should_see_the_subject_described_as("Arabic languages with Portuguese and Welsh")
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -194,9 +194,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         when_i_visit_the_publish_course_details_page
         when_i_select_a_course("Modern languages (other)")
         and_i_submit_the_form
-        and_i_select_languages("Arabic languages", "Welsh language", "Portuguese language")
+        and_i_select_languages("Arabic languages", "Welsh", "Portuguese")
         and_i_submit_the_language_specialism_form
-        then_i_should_see_the_subject_described_as("Arabic languages with Welsh language and Portuguese language")
+        then_i_should_see_the_subject_described_as("Arabic languages with Portuguese and Welsh")
       end
     end
   end

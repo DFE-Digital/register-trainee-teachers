@@ -45,7 +45,7 @@ module ConfirmPublishCourse
     end
 
     def subject_names
-      specialism1, specialism2, specialism3 = *specialisms
+      specialism1, specialism2, specialism3 = *specialisms.map { |s| format_language(s) }
       subjects_for_summary_view(
         specialism1,
         specialism2,

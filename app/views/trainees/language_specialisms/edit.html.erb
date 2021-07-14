@@ -32,7 +32,7 @@
                 language,
                 multiple: true,
                 link_errors: index.zero?,
-                label: { text: language.upcase_first },
+                label: { text: format_language(language).upcase_first },
               ) %>
           <% end %>
         <% end %>
