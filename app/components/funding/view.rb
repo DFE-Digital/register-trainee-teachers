@@ -46,11 +46,15 @@ module Funding
     end
 
     def show_bursary_funding?
-      bursary_amount.present?
+      trainee.can_apply_for_bursary?
     end
 
     def bursary_amount
-      @bursary_amount ||= CalculateBursary.for_route_and_subject(trainee.training_route.to_sym, course_subject_one)
+      @bursary_amount ||= if trainee.bursary_tier.present?
+                            CalculateBursary.for_tier(trainee.bursary_tier)
+                          else
+                            trainee.bursary_amount
+                          end
     end
 
     def training_initiative
@@ -62,13 +66,17 @@ module Funding
     end
 
     def bursary_funding
-      if trainee.applying_for_bursary.nil?
-        t("components.confirmation.not_provided")
-      elsif trainee.applying_for_bursary
-        "#{t('.bursury_applied_for')}<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}".html_safe
-      else
-        t(".no_bursury_applied_for")
-      end
+      return t("components.confirmation.not_provided") if trainee.applying_for_bursary.nil?
+
+      return "#{t(".tiered_bursary_applied_for.#{trainee.bursary_tier}")}#{bursary_funding_hint}".html_safe if trainee.bursary_tier.present?
+
+      return "#{t('.bursary_applied_for')}#{bursary_funding_hint}".html_safe if trainee.applying_for_bursary
+
+      t(".no_bursary_applied_for")
+    end
+
+    def bursary_funding_hint
+      "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
     end
 
     def action_link(text, path)

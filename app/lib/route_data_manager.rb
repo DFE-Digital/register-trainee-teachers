@@ -37,6 +37,7 @@ private
     {
       training_initiative: nil,
       applying_for_bursary: nil,
+      bursary_tier: nil,
     }
   end
 

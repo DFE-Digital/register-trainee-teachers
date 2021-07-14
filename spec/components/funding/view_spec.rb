@@ -8,6 +8,15 @@ module Funding
       render_inline(View.new(data_model: trainee))
     end
 
+    context "with tieried bursary" do
+      let(:trainee) { build(:trainee, :early_years_postgrad, applying_for_bursary: true, bursary_tier: BURSARY_TIERS.keys.first) }
+
+      it "renders tiered bursary text" do
+        expect(rendered_component).to have_text("Applied for Tier 1")
+        expect(rendered_component).to have_text("£5,000 estimated bursary")
+      end
+    end
+
     context "assessment only route" do
       let(:trainee) { build(:trainee, training_initiative: training_initiative) }
 

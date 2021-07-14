@@ -24,6 +24,14 @@ feature "edit training initiative", type: :feature do
     then_i_am_redirected_to_the_funding_confirmation_page
   end
 
+  scenario "edit with valid parameters on the early_years_postgrad route" do
+    given_a_trainee_exists(:early_years_postgrad)
+    when_i_visit_the_training_initiative_page
+    and_i_update_the_training_initiative
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_bursary_page
+  end
+
   scenario "submitting with invalid parameters" do
     given_a_trainee_exists
     when_i_visit_the_training_initiative_page

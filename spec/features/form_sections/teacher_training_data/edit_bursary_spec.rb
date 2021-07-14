@@ -7,22 +7,31 @@ feature "edit bursary", type: :feature do
 
   let(:course_subject) { Dttp::CodeSets::CourseSubjects::LAW }
 
-  before do
+  scenario "edit with valid parameters" do
     given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject)
     and_a_bursary_exists_for_their_subject
     when_i_visit_the_bursary_page
-  end
-
-  scenario "edit with valid parameters" do
-    and_i_update_the_bursary
+    and_i_choose_applying_for_bursary
 
     and_i_submit_the_form
     then_i_am_redirected_to_the_funding_confirmation_page
   end
 
   scenario "submitting with invalid parameters" do
+    given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject)
+    and_a_bursary_exists_for_their_subject
+    when_i_visit_the_bursary_page
     and_i_submit_the_form
     then_i_see_error_messages
+  end
+
+  scenario "edit with valid parameters for tiered bursary" do
+    given_a_trainee_exists(:early_years_postgrad)
+    when_i_visit_the_bursary_page
+    and_i_choose_the_applicable_bursary_tier
+
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_funding_confirmation_page
   end
 
 private
@@ -31,8 +40,12 @@ private
     bursary_page.load(id: trainee.slug)
   end
 
-  def and_i_update_the_bursary
+  def and_i_choose_applying_for_bursary
     bursary_page.applying_for_bursary.click
+  end
+
+  def and_i_choose_the_applicable_bursary_tier
+    bursary_page.bursary_tier.click
   end
 
   def and_i_submit_the_form

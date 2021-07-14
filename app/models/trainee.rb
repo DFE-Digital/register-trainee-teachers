@@ -238,4 +238,8 @@ class Trainee < ApplicationRecord
       self.course_subject_one = Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING
     end
   end
+
+  def can_apply_for_bursary?
+    training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || bursary_amount.present?
+  end
 end

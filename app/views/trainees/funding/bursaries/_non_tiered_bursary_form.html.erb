@@ -1,0 +1,32 @@
+<%= register_form_with(model: @bursary_form, url: trainee_funding_bursary_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.bursaries.edit") %></h1>
+  <p class="govuk-body">
+    <%= t(
+      (@trainee.early_years_route? ? "views.forms.funding.bursaries.non_tiered.early_years_description" : "views.forms.funding.bursaries.non_tiered.description"),
+      amount: format_currency(@amount),
+      subject: @subject,
+      training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}")
+    ) %>
+  </p>
+  <p class="govuk-body"><%= t("views.forms.funding.bursaries.guidance_html") %></p>
+
+
+  <%= f.govuk_radio_buttons_fieldset(:applying_for_bursary, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
+      <%= f.govuk_radio_button(
+        :applying_for_bursary,
+        "true",
+        label: { text: t("views.forms.funding.bursaries.true") },
+        link_errors: true,
+      ) %>
+
+      <%= f.govuk_radio_button(
+        :applying_for_bursary,
+        "false",
+        hint: { text: t("views.forms.funding.bursaries.false_hint") },
+        label: { text: t("views.forms.funding.bursaries.false") },
+      ) %>
+  <% end %>
+  <%= f.govuk_submit %>
+<% end %>
