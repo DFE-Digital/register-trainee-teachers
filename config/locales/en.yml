@@ -580,7 +580,7 @@ en:
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
-        hint: This specialism is what is recorded on the trainee’s QTS award
+        hint: This specialism is what is recorded on the trainee’s QTS award.
 
   activerecord:
     attributes:
