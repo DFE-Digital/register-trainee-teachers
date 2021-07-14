@@ -42,7 +42,7 @@
     </div>
 
     <h2 class="govuk-heading-m">
-      Personal details and education
+      <%= @trainee.apply_application? ? "Registration data from Apply" : "Personal details and education" %>
     </h2>
 
     <%= render Sections::View.new(trainee: @trainee, form: @form, section: :personal_details) %>
