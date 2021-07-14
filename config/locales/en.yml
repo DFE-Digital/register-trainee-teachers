@@ -694,8 +694,8 @@ en:
         language_specialisms_form:
           attributes:
             language_specialisms:
-              blank: Select at least one subject
-              invalid: Select a maximum of three subjects
+              blank: Select at least one language
+              invalid: Select a maximum of three language
         deferral_form:
           attributes:
             date_string:
