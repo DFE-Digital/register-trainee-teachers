@@ -37,8 +37,8 @@ module Dttp
         BIOLOGY => {
           entity_id: "b1f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::APPLIED_BIOLOGY, publish_equivalent: BIOLOGY },
             { name: CourseSubjects::BIOLOGY, publish_equivalent: BIOLOGY },
+            { name: CourseSubjects::APPLIED_BIOLOGY, publish_equivalent: BIOLOGY },
             { name: CourseSubjects::ENVIRONMENTAL_SCIENCES, publish_equivalent: BIOLOGY },
             { name: CourseSubjects::GENERAL_SCIENCES, publish_equivalent: BIOLOGY },
           ],
@@ -46,8 +46,8 @@ module Dttp
         BUSINESS_STUDIES => {
           entity_id: "b3f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::BUSINESS_MANAGEMENT, publish_equivalent: BUSINESS_STUDIES },
             { name: CourseSubjects::BUSINESS_STUDIES, publish_equivalent: BUSINESS_STUDIES },
+            { name: CourseSubjects::BUSINESS_MANAGEMENT, publish_equivalent: BUSINESS_STUDIES },
             { name: CourseSubjects::RECREATION_AND_LEISURE_STUDIES, publish_equivalent: BUSINESS_STUDIES },
             { name: CourseSubjects::RETAIL_MANAGEMENT, publish_equivalent: BUSINESS_STUDIES },
           ],
@@ -55,8 +55,8 @@ module Dttp
         CHEMISTRY => {
           entity_id: "b5f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::APPLIED_CHEMISTRY, publish_equivalent: CHEMISTRY },
             { name: CourseSubjects::CHEMISTRY, publish_equivalent: CHEMISTRY },
+            { name: CourseSubjects::APPLIED_CHEMISTRY, publish_equivalent: CHEMISTRY },
           ],
         },
         CLASSICS => {
@@ -198,16 +198,16 @@ module Dttp
         PRIMARY => {
           entity_id: "e9f10516-aac2-e611-80be-00155d010316",
           subject_specialisms: [
-            { name: CourseSubjects::ENGLISH_STUDIES, publish_equivalent: "Primary with English" },
-            { name: CourseSubjects::GEOGRAPHY, publish_equivalent: "Primary with geography and history" },
-            { name: CourseSubjects::HISTORY, publish_equivalent: "Primary with geography and history" },
-            { name: CourseSubjects::MODERN_LANGUAGES, publish_equivalent: "Primary with modern languages" },
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "English as a second or other language" },
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with geography and history" },
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with modern languages" },
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with physical education" },
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: "Primary with science" },
             { name: CourseSubjects::PRIMARY_TEACHING, publish_equivalent: PRIMARY },
+            { name: CourseSubjects::ENGLISH_STUDIES, publish_equivalent: "Primary with English" },
+            { name: CourseSubjects::GEOGRAPHY, publish_equivalent: "Primary with geography and history" },
+            { name: CourseSubjects::HISTORY, publish_equivalent: "Primary with geography and history" },
+            { name: CourseSubjects::MODERN_LANGUAGES, publish_equivalent: "Primary with modern languages" },
             { name: CourseSubjects::SCIENCE, publish_equivalent: "Primary with science" },
             { name: CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS, publish_equivalent: PRIMARY_WITH_MATHEMATICS },
             { name: CourseSubjects::SPORTS_MANAGEMENT, publish_equivalent: "Primary with physical education" },
