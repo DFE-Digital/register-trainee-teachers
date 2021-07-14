@@ -21,6 +21,12 @@ module Trainees
 
     def level(trainees, levels)
       return trainees if levels.blank?
+
+      age_ranges = levels.flat_map { |level| COURSE_LEVELS[level.to_sym] }.uniq
+
+      query = Array.new(age_ranges.length, "(course_min_age = ? AND course_max_age = ?)").join("OR")
+
+      trainees.where(query, *age_ranges.flatten)
     end
 
     def training_route(trainees, training_route)

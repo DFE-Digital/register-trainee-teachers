@@ -2,7 +2,7 @@
 
 COURSE_LEVELS = {
   early_years: [
-    AgeRange::ZERO_TO_FIVE
+    AgeRange::ZERO_TO_FIVE,
   ],
   primary: [
     AgeRange::THREE_TO_ELEVEN,
@@ -19,6 +19,6 @@ COURSE_LEVELS = {
     AgeRange::NINE_TO_SIXTEEN,
   ],
   secondary: [
-    AgeRange::FOURTEEN_TO_NINETEEN
-  ]
+    AgeRange::FOURTEEN_TO_NINETEEN,
+  ],
 }.freeze

@@ -167,6 +167,8 @@ FactoryBot.define do
 
     trait :early_years_undergrad do
       training_route { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+      course_subject_one { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING }
+      course_age_range { AgeRange::ZERO_TO_FIVE }
     end
 
     trait :school_direct_tuition_fee do
