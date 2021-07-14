@@ -8,7 +8,7 @@
   <div class="govuk-form-group">
 
     <%= f.govuk_radio_buttons_fieldset :"specialism#{position}",
-                                      legend: { text: t(".heading", subject: @subject), tag: "h1", size: "l" } do %>
+                                      legend: { text: t(".heading", subject: @subject.downcase), tag: "h1", size: "l" } do %>
 
       <div class="govuk-hint">
         <p class="govuk-body govuk-hint">
