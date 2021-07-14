@@ -20,6 +20,7 @@ module PageObjects
       element :apply_filters, "input[type='submit'][value='Apply filters']"
 
       element :text_search, "#text_search"
+      element :early_years_checkbox, "#level-early_years"
       element :assessment_only_checkbox, "#training_route-assessment_only"
       element :draft_checkbox, "#state-draft"
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
