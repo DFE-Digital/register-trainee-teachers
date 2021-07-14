@@ -99,6 +99,28 @@ feature "publish course details", type: :feature, feature_publish_course_details
         then_the_section_should_be(completed)
       end
     end
+
+    describe "with a course that has a miture of multiple specalism subjects single specialism ones" do
+      let(:subjects) do
+        [
+          Dttp::CodeSets::AllocationSubjects::MUSIC,
+          Dttp::CodeSets::AllocationSubjects::COMPUTING,
+          Dttp::CodeSets::AllocationSubjects::HISTORY,
+        ]
+      end
+
+      scenario "renders a 'completed' status when details fully provided" do
+        when_i_visit_the_publish_course_details_page
+        and_i_select_a_course
+        and_i_submit_the_form
+        and_i_select_a_specialism("Applied computing")
+        and_i_submit_the_specialism_form
+        then_i_should_see_the_subject_described_as("Music education and teaching with applied computing and history")
+        and_i_confirm_the_course
+        and_i_visit_the_review_draft_page
+        then_the_section_should_be(completed)
+      end
+    end
   end
 
   describe "available courses" do

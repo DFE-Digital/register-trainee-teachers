@@ -8,6 +8,13 @@ module Trainees
     def edit
       @subject = course.subjects[position - 1].name
       @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
+
+      if @specialisms.count == 1
+        SubjectSpecialismForm.new(trainee, position, params: { "specialism#{position}": @specialisms.first }).stash
+        redirect_to next_step_path
+        return
+      end
+
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position)
     end
 
