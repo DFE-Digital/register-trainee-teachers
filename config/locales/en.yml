@@ -695,7 +695,7 @@ en:
           attributes:
             language_specialisms:
               blank: Select at least one language
-              invalid: Select a maximum of three language
+              invalid: Select a maximum of three languages
         deferral_form:
           attributes:
             date_string:
