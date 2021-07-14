@@ -141,14 +141,14 @@ module Dttp
           subject_specialisms: [
             { name: CourseSubjects::MODERN_LANGUAGES, publish_equivalent: "Modern languages (other)" },
             { name: CourseSubjects::ARABIC_LANGUAGES, publish_equivalent: "Modern languages (other)" },
-            { name: CourseSubjects::WELSH_LANGUAGE, publish_equivalent: "Modern languages (other)" },
-            { name: CourseSubjects::PORTUGUESE_LANGUAGE, publish_equivalent: "Modern languages (other)" },
+            { name: CourseSubjects::CHINESE_LANGUAGES, publish_equivalent: "Mandarin" },
             { name: CourseSubjects::FRENCH_LANGUAGE, publish_equivalent: "French" },
             { name: CourseSubjects::GERMAN_LANGUAGE, publish_equivalent: "German" },
             { name: CourseSubjects::ITALIAN_LANGUAGE, publish_equivalent: "Italian" },
-            { name: CourseSubjects::CHINESE_LANGUAGES, publish_equivalent: "Mandarin" },
+            { name: CourseSubjects::PORTUGUESE_LANGUAGE, publish_equivalent: "Modern languages (other)" },
             { name: CourseSubjects::RUSSIAN_LANGUAGES, publish_equivalent: "Russian" },
             { name: CourseSubjects::SPANISH_LANGUAGE, publish_equivalent: "Spanish" },
+            { name: CourseSubjects::WELSH_LANGUAGE, publish_equivalent: "Modern languages (other)" },
           ],
         },
         MUSIC => {
