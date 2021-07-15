@@ -19,7 +19,7 @@
             </p>
           <div>
 
-          <% @specialisms.each_with_index do |specialism, index| %>
+          <% sort_specialisms(@subject, @specialisms).each_with_index do |specialism, index| %>
             <%= f.govuk_radio_button(
                 :"specialism#{position}",
                 specialism,

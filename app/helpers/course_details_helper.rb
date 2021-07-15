@@ -37,6 +37,26 @@ module CourseDetailsHelper
     end
   end
 
+  def sort_specialisms(subject, specialisms)
+    specialisms.sort do |a, b|
+      if a.downcase == subject.downcase
+        -1
+      else
+        a <=> b
+      end
+    end
+  end
+
+  def sort_languages(languages)
+    languages.sort do |a, b|
+      if a.include? Dttp::CodeSets::AllocationSubjects::MODERN_LANGUAGES.downcase
+        -1
+      else
+        a <=> b
+      end
+    end
+  end
+
 private
 
   def age_ranges(option:)
