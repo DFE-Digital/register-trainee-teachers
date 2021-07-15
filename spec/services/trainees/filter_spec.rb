@@ -19,6 +19,16 @@ module Trainees
       it { is_expected.to eq([provider_led_postgrad_trainee]) }
     end
 
+    context "with level filter" do
+      let!(:early_years_trainee) { create(:trainee, :early_years_undergrad) }
+      let!(:primary_trainee) { create(:trainee, course_age_range: AgeRange::FIVE_TO_ELEVEN) }
+      let!(:primary_and_secondary_trainee) { create(:trainee, course_age_range: AgeRange::SEVEN_TO_SIXTEEN) }
+      let!(:secondary_trainee) { create(:trainee, course_age_range: AgeRange::FOURTEEN_TO_NINETEEN) }
+      let(:filters) { { level: %w[primary] } }
+
+      it { is_expected.to eq([primary_trainee, primary_and_secondary_trainee]) }
+    end
+
     context "with state filter" do
       let!(:submitted_for_trn_trainee) { create(:trainee, :submitted_for_trn) }
       let!(:qts_awarded_trainee) { create(:trainee, :qts_awarded) }

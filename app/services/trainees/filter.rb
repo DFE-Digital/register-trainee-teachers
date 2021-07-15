@@ -19,6 +19,16 @@ module Trainees
 
     attr_reader :trainees, :filters
 
+    def level(trainees, levels)
+      return trainees if levels.blank?
+
+      age_ranges = levels.flat_map { |level| COURSE_LEVELS[level.to_sym] }.uniq
+
+      query = Array.new(age_ranges.length, "(course_min_age = ? AND course_max_age = ?)").join("OR")
+
+      trainees.where(query, *age_ranges.flatten)
+    end
+
     def training_route(trainees, training_route)
       return trainees if training_route.blank?
 
@@ -58,6 +68,7 @@ module Trainees
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
+      filtered_trainees = level(filtered_trainees, filters[:level])
       filtered_trainees
     end
   end
