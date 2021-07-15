@@ -19,6 +19,11 @@ COURSE_LEVELS = {
     AgeRange::NINE_TO_SIXTEEN,
   ],
   secondary: [
+    AgeRange::FIVE_TO_FOURTEEN,
+    AgeRange::SEVEN_TO_FOURTEEN,
+    AgeRange::SEVEN_TO_SIXTEEN,
+    AgeRange::NINE_TO_FOURTEEN,
+    AgeRange::NINE_TO_SIXTEEN,
     AgeRange::FOURTEEN_TO_NINETEEN,
   ],
 }.freeze
