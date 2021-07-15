@@ -12,6 +12,9 @@ module PageObjects
       element :commencement_date_month, "#training_details_form_commencement_date_2i"
       element :commencement_date_year, "#training_details_form_commencement_date_1i"
 
+      element :commencement_date_option_course, "#training-details-form-commencement-date-option-course-field"
+      element :commencement_date_option_manual, "#training-details-form-commencement-date-option-manual-field"
+
       element :submit_button, "button[type='submit']"
     end
   end
