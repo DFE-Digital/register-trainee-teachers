@@ -77,7 +77,7 @@ describe('sort', () => {
     const options = [
       { name: 'plants' }
     ]
-    expect(sort("plant's", options)).toEqual(['plants'])
+    expect(sort('plant’s', options)).toEqual(['plants'])
     expect(sort('(plants)', options)).toEqual(['plants'])
   })
 

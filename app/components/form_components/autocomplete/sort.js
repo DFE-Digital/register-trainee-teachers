@@ -3,7 +3,7 @@ const matchPositions = (string, regexes) => regexes.map(regex => string.search(r
 
 // Returns a lowercase string with some common punctation removed / replaced
 // by whitespace.
-const clean = s => s.trim().replace(/'/g, '').replace(/[.,"/#!$%^&*;:{}=\-_`~()]/g, ' ').toLowerCase()
+const clean = s => s.trim().replace(/['’]/g, '').replace(/[.,"/#!$%^&*;:{}=\-_`~()]/g, ' ').toLowerCase()
 
 // Determines how closely a query matches either an option's name/synonyms.
 // Returns an integer ranging from 0 (no match) to 100 (exact name match).
