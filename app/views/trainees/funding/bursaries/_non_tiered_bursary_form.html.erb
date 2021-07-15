@@ -7,11 +7,10 @@
       (@trainee.early_years_route? ? "views.forms.funding.bursaries.non_tiered.early_years_description" : "views.forms.funding.bursaries.non_tiered.description"),
       amount: format_currency(@amount),
       subject: @subject,
-      training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}")
+      training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
     ) %>
   </p>
-  <p class="govuk-body"><%= t("views.forms.funding.bursaries.guidance_html") %></p>
-
+  <p class="govuk-body"><%= t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_html' : 'guidance_html'}") %></p>
 
   <%= f.govuk_radio_buttons_fieldset(:applying_for_bursary, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
       <%= f.govuk_radio_button(

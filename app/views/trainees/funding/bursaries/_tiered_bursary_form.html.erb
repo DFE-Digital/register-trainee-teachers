@@ -1,9 +1,9 @@
 <%= register_form_with(model: @bursary_form, url: trainee_funding_bursary_path(@trainee), method: :put, local: true) do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.bursaries.edit") %><h1>
+  <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.bursaries.edit") %></h1>
   <p class="govuk-body"><%= t("views.forms.funding.bursaries.tiered.description") %></p>
-  <p class="govuk-body"><%= t("views.forms.funding.bursaries.guidance_html") %></p>
+  <p class="govuk-body"><%= t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_html' : 'guidance_html'}") %></p>
 
   <%= f.govuk_radio_buttons_fieldset(:bursary_tier, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
 
