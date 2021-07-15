@@ -29,6 +29,9 @@ class DegreeForm
   validates :subject, :institution, autocomplete: true, allow_nil: true
   validate :validate_with_degree_model
 
+  validates :institution, inclusion: { in: Degree::INSTITUTIONS }, allow_nil: true
+  validates :subject, inclusion: { in: Degree::SUBJECTS }, allow_nil: true
+
   delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?, to: :degree
 
   alias_method :to_param, :slug

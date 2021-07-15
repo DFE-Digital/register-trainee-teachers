@@ -3,6 +3,9 @@
 class Degree < ApplicationRecord
   include Sluggable
 
+  INSTITUTIONS = Dttp::CodeSets::Institutions::MAPPING.keys
+  SUBJECTS = Dttp::CodeSets::DegreeSubjects::MAPPING.keys
+
   validates :locale_code, presence: true
   validates :institution, presence: true, on: :uk
   validates :country, presence: true, on: :non_uk
