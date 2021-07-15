@@ -1,8 +1,9 @@
 // Returns an array of integers representing the position of each regex match.
 const matchPositions = (string, regexes) => regexes.map(regex => string.search(regex)).filter(i => i >= 0)
 
-// Returns a lowercase string with some common punctation removed.
-const clean = s => s.trim().replace(/[.,'"/#!$%^&*;:{}=\-_`~()]/g, '').toLowerCase()
+// Returns a lowercase string with some common punctation removed / replaced
+// by whitespace.
+const clean = s => s.trim().replace(/'/g, '').replace(/[.,"/#!$%^&*;:{}=\-_`~()]/g, ' ').toLowerCase()
 
 // Determines how closely a query matches either an option's name/synonyms.
 // Returns an integer ranging from 0 (no match) to 100 (exact name match).
