@@ -20,5 +20,5 @@ COURSE_LEVELS = {
   ],
   secondary: [
     AgeRange::FOURTEEN_TO_NINETEEN,
-  ]
+  ],
 }.freeze
