@@ -78,7 +78,7 @@ describe('sort', () => {
       { name: 'plants' }
     ]
     expect(sort("plant's", options)).toEqual(['plants'])
-    expect(sort("(plants)", options)).toEqual(['plants'])
+    expect(sort('(plants)', options)).toEqual(['plants'])
   })
 
   it('can handle query with missing punctuation', () => {
