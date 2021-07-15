@@ -22,8 +22,20 @@ private
 
   def merged_filters
     @merged_filters ||= text_search.merge(
-      **training_route, **state, **subject, **text_search,
+      **level, **training_route, **state, **subject, **text_search,
     ).with_indifferent_access
+  end
+
+  def level
+    return {} unless level_options.any?
+
+    { "level" => level_options }
+  end
+
+  def level_options
+    COURSE_LEVELS.keys.map(&:to_s).each_with_object([]) do |option, arr|
+      arr << option if params[:level]&.include?(option)
+    end
   end
 
   def training_route

@@ -91,7 +91,7 @@ private
   end
 
   def filter_params
-    params.permit(:subject, :text_search, :sort_by, training_route: [], state: [])
+    params.permit(:subject, :text_search, :sort_by, level: [], training_route: [], state: [])
   end
 
   def save_filter

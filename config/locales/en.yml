@@ -242,6 +242,7 @@ en:
         search_hint: Search for a school by it’s unique reference number (URN), name or postcode
         search_button: Search again
     filter:
+      level: Course level
       training_route: Training route
       state: Status
       subject: Subject
@@ -317,6 +318,12 @@ en:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
         export: Export these records
+        filters:
+          level: Course level
+          search: Search records
+          status: Status
+          subject: Subject
+          type_of_training: Type of training
       edit:
         defer: Defer
         withdraw: withdraw
@@ -630,6 +637,10 @@ en:
           maths_physics_chairs_programme_researchers_in_schools: Maths and physics chairs programme / Researchers in schools
           future_teaching_scholars: Future teaching scholars
           no_initiative: Not on a training initiative
+        levels:
+          early_years: Early years
+          primary: Primary
+          secondary: Secondary
     errors:
       models:
         trainee:

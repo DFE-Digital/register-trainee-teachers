@@ -27,6 +27,11 @@ RSpec.feature "Filtering trainees" do
     then_only_the_draft_trainee_is_visible
   end
 
+  scenario "can filter by level" do
+    when_i_filter_by_early_years_level
+    then_only_the_early_years_trainee_is_visible
+  end
+
   scenario "can filter by training route" do
     when_i_filter_by_assessment_only
     then_only_assessment_only_trainee_is_visible
@@ -97,6 +102,8 @@ private
     @searchable_trainee ||= create(:trainee, trn: "123")
     @draft_trainee ||= create(:trainee, :draft)
     @withdrawn_trainee ||= create(:trainee, :withdrawn)
+    @early_years_trainee ||= create(:trainee, :early_years_undergrad)
+    @primary_trainee ||= create(:trainee, course_age_range: AgeRange::THREE_TO_EIGHT)
     Trainee.update_all(provider_id: @current_user.provider.id)
   end
 
@@ -126,6 +133,11 @@ private
 
   def when_i_filter_by_subject(value)
     trainee_index_page.subject.select(value)
+    trainee_index_page.apply_filters.click
+  end
+
+  def when_i_filter_by_early_years_level
+    trainee_index_page.early_years_checkbox.click
     trainee_index_page.apply_filters.click
   end
 
@@ -190,6 +202,11 @@ private
   def then_only_assessment_only_trainee_is_visible
     expect(trainee_index_page).to have_text(full_name(@assessment_only_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@provider_led_postgrad_trainee))
+  end
+
+  def then_only_the_early_years_trainee_is_visible
+    expect(trainee_index_page).to have_text(full_name(@early_years_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@primary_trainee))
   end
 
   def then_the_tag_is_visible_for(*values)
