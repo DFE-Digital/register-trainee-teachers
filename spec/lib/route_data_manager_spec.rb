@@ -83,11 +83,12 @@ describe RouteDataManager do
         described_class.new(trainee: trainee).update_training_route!("early_years_undergrad")
       end
 
-      it "trainee course_subject_one set to early years teaching" do
+      it "sets course_subject_one to early years teaching and age_range to 0-5" do
         expect { subject }
           .to change { trainee.training_route }
           .from(trainee.training_route).to("early_years_undergrad")
         expect(trainee.course_subject_one).to eq(Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING)
+        expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
       end
     end
 

@@ -386,9 +386,10 @@ describe Trainee do
   describe "#set_early_years_course_subject" do
     let(:trainee) { build(:trainee, :early_years_undergrad) }
 
-    it "sets course_subject_one to early years teaching" do
-      trainee.set_early_years_course_subject
+    it "sets course_subject_one to early years teaching and age range to 0-5" do
+      trainee.set_early_years_course_details
       expect(trainee.course_subject_one).to eq(Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING)
+      expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
     end
   end
 end
