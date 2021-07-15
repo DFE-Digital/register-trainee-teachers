@@ -304,7 +304,7 @@ en:
         trainee_data: Trainee data
         schools: Schools
         funding: Funding
-        funding_inactive: Funding section cannot be started yet
+        funding_inactive: Funding cannot be started yet
       statuses:
         not_provided: not provided
         not_started: not started
