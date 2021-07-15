@@ -21,20 +21,14 @@ class SubjectSpecialismForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
-  def initialize(trainee, position, params: {}, user: nil, store: FormStore)
+  def initialize(trainee, position = nil, params: {}, user: nil, store: FormStore)
     @position = position
     @trainee = trainee
     super(trainee, params: params, user: user, store: store)
   end
 
-  def save!
-    if valid?
-      update_trainee_attributes
-      trainee.save!
-      store.set(trainee.id, :subject_specialism, nil)
-    else
-      false
-    end
+  def specialisms
+    [specialism1, specialism2, specialism3].compact
   end
 
 private

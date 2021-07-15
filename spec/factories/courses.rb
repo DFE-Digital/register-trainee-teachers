@@ -26,6 +26,12 @@ FactoryBot.define do
         subject_names { [] }
       end
 
+      before(:create) do |course, evaluator|
+        if evaluator.subject_names.any?
+          course.name = evaluator.subject_names.join(" and ")
+        end
+      end
+
       after(:create) do |course, evaluator|
         if evaluator.subject_names.any?
           evaluator.subject_names.each do |subject_name|

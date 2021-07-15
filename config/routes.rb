@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
       resource :publish_course_details, only: %i[edit update], path: "/publish-course-details"
-      resources :confirm_publish_course, only: %i[edit update], path: "confirm-publish-course"
+      resource :confirm_publish_course, only: %i[edit update], path: "confirm-publish-course", controller: "/trainees/confirm_publish_course"
 
       resource :course_details, concerns: :confirmable, only: %i[edit update], path: "/course-details"
       resource :schools, concerns: :confirmable, only: %i[edit update], path: "/schools"

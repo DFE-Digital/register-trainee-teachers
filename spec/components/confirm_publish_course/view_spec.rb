@@ -11,9 +11,10 @@ module ConfirmPublishCourse
 
     context "default behaviour" do
       let(:course) { build(:course, duration_in_years: 2) }
+      let(:specialisms) { ["Specialism 1"] }
 
       before do
-        render_inline(View.new(trainee: trainee, course: course))
+        render_inline(View.new(trainee: trainee, course: course, specialisms: specialisms))
       end
 
       it "renders the course details" do
@@ -41,12 +42,13 @@ module ConfirmPublishCourse
       let(:course) { create(:course_with_subjects, subjects_count: subject_count) }
 
       before do
-        render_inline(View.new(trainee: trainee, course: course))
+        render_inline(View.new(trainee: trainee, course: course, specialisms: specialisms))
       end
 
       context "with one subject" do
+        let(:specialisms) { ["Specialism 1"] }
         let(:subject_count) { 1 }
-        let(:expected_names) { subjects_for_summary_view(course.subjects.first.name, nil, nil) }
+        let(:expected_names) { subjects_for_summary_view(specialisms.first, nil, nil) }
 
         it "renders the first subject's name" do
           expect(rendered_component).to have_text(expected_names)
@@ -58,8 +60,9 @@ module ConfirmPublishCourse
       end
 
       context "with two subjects" do
+        let(:specialisms) { ["Specialism 1", "Specialism 2"] }
         let(:subject_count) { 2 }
-        let(:expected_names) { subjects_for_summary_view(course.subjects.first.name, course.subjects.second.name, nil) }
+        let(:expected_names) { subjects_for_summary_view(specialisms.first, specialisms.second, nil) }
 
         it "renders the first and second subject's name" do
           expect(rendered_component).to have_text(expected_names)
@@ -71,8 +74,9 @@ module ConfirmPublishCourse
       end
 
       context "with three subjects" do
+        let(:specialisms) { ["Specialism 1", "Specialism 2", "Specialism 3"] }
         let(:subject_count) { 3 }
-        let(:expected_names) { subjects_for_summary_view(course.subjects.first.name, course.subjects.second.name, course.subjects.third.name) }
+        let(:expected_names) { subjects_for_summary_view(*specialisms) }
 
         it "renders the first, second and third subject's name" do
           expect(rendered_component).to have_text(expected_names)

@@ -12,10 +12,8 @@ module Trainees
     def update
       @language_specialisms_form = LanguageSpecialismsForm.new(trainee, params: language_specialism_params, user: current_user)
 
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @language_specialisms_form.public_send(save_strategy)
-        # TODO: do something
+      if @language_specialisms_form.stash
+        redirect_to edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
       else
         render :edit
       end
@@ -28,11 +26,7 @@ module Trainees
     end
 
     def course
-      trainee.available_courses.find_by!(code: course_code)
-    end
-
-    def course_code
-      params[:course_code] || params[:language_specialisms_form][:course_code]
+      trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(trainee).code)
     end
 
     def load_language_specialisms

@@ -5,6 +5,7 @@ class PublishCourseDetailsForm < TraineeForm
 
   FIELDS = %i[
     code
+    specialism_form
   ].freeze
 
   attr_accessor(*FIELDS)
@@ -13,6 +14,11 @@ class PublishCourseDetailsForm < TraineeForm
 
   def manual_entry_chosen?
     code == NOT_LISTED
+  end
+
+  def specialism_form=(form)
+    @specialism_form = form
+    @fields.merge!(specialism_form: form)
   end
 
 private

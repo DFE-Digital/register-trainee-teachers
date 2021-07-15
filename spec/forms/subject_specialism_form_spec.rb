@@ -31,24 +31,4 @@ describe SubjectSpecialismForm, type: :model do
       subject.stash
     end
   end
-
-  describe "#save!" do
-    let(:position) { nil }
-    let(:stashed_fields) do
-      {
-        specialism1: "pizza",
-        specialism2: "oragami",
-      }
-    end
-
-    before do
-      allow(form_store).to receive(:get).and_return(stashed_fields)
-      allow(form_store).to receive(:set).with(trainee.id, :subject_specialism, nil)
-    end
-
-    it "takes any data from the form store and saves it to the database" do
-      expect { subject.save! }.to change(trainee, :course_subject_one).to("pizza")
-        .and change(trainee, :course_subject_two).to("oragami")
-    end
-  end
 end
