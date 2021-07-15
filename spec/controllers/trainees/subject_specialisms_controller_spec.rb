@@ -30,9 +30,15 @@ describe Trainees::SubjectSpecialismsController do
 
     context "there are more specialisms to choose" do
       let!(:course) do
+        subjects =
+          [
+            Dttp::CodeSets::AllocationSubjects::ART_AND_DESIGN,
+            Dttp::CodeSets::AllocationSubjects::BIOLOGY,
+          ]
         create(
           :course_with_subjects,
           subjects_count: 2,
+          subject_names: subjects,
           accredited_body_code: trainee.provider.code,
           route: trainee.training_route,
         )
@@ -57,7 +63,6 @@ describe Trainees::SubjectSpecialismsController do
         )
       end
 
-      # TODO: update this when  the confirm page exists
       it "redirects to the confirm page" do
         put(:update, params: { trainee_id: trainee, position: 1, subject_specialism_form: { specialism1: "moose" } })
         expect(response).to redirect_to(
