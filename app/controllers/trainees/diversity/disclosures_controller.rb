@@ -37,7 +37,7 @@ module Trainees
         if @disclosure_form.diversity_disclosed?
           redirect_to(edit_trainee_diversity_ethnic_group_path(trainee))
         else
-          redirect_to(trainee_diversity_confirm_path(trainee))
+          trainee.apply_application? ? redirect_to(page_tracker.last_origin_page_path) : redirect_to(trainee_diversity_confirm_path(trainee))
         end
       end
 

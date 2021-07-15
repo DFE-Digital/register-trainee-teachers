@@ -30,4 +30,20 @@ describe Trainees::PersonalDetailsController do
       end
     end
   end
+
+  describe "#update" do
+    context "with an apply draft trainee" do
+      let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.provider) }
+
+      before do
+        allow(PersonalDetailsForm).to receive(:new).and_return(double(save!: true))
+        allow(controller).to receive(:page_tracker).and_return(double(last_origin_page_path: "/trainees/#{trainee.slug}/relevant-redirect", save!: nil))
+        allow(controller).to receive(:personal_details_params).and_return(nil)
+      end
+
+      it "redirects to /relevant-redirect after update" do
+        expect(put(:update, params: { trainee_id: trainee.slug })).to redirect_to("/trainees/#{trainee.slug}/relevant-redirect")
+      end
+    end
+  end
 end
