@@ -77,16 +77,17 @@ describe('sort', () => {
     const options = [
       { name: 'plants' }
     ]
-    expect(sort("plant's", options)).toEqual(['plants'])
-    expect(sort("'plant'", options)).toEqual(['plants'])
-    expect(sort('plant(s)', options)).toEqual(['plants'])
+    expect(sort('plant’s', options)).toEqual(['plants'])
+    expect(sort('(plants)', options)).toEqual(['plants'])
   })
 
   it('can handle query with missing punctuation', () => {
     const options = [
       { name: "plant's leaf" },
-      { name: 'flower', synonyms: ["plant's leaf"] }
+      { name: 'flower', synonyms: ["plant's leaf"] },
+      { name: 'flower/rose' }
     ]
     expect(sort('plants leaf', options)).toEqual(["plant's leaf", 'flower'])
+    expect(sort('flower rose', options)).toEqual(['flower/rose'])
   })
 })
