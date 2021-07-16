@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: t("views.forms.training_details.title")) %>
+<%= render PageTitle::View.new(text: t("views.forms.training_details.title"), has_errors: @training_details_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -12,9 +12,20 @@
 
       <h1 class="govuk-heading-l"><%= t("views.forms.training_details.title") %></h1>
 
-      <%= f.govuk_date_field :commencement_date, legend: {
-        text: t("views.forms.training_details.commencement_date.label"), size: "s"
-      }, hint: { text: t("views.forms.training_details.commencement_date.hint_html", year: Time.zone.now.year) } %>
+      <% if @training_details_form.course_start_date %>
+        <%= f.govuk_radio_buttons_fieldset(:commencement_date_radio_option, legend: { text: t("views.forms.training_details.commencement_date_radio_option.label"), size: "s" }, hint: { text: t("views.forms.training_details.commencement_date_radio_option.hint", year: Time.zone.now.year) }) do %>
+          <%= f.govuk_radio_button :commencement_date_radio_option, TrainingDetailsForm::COMMENCEMENT_DATE_RADIO_OPTION_COURSE, checked: (@training_details_form.commencement_date_radio_option == TrainingDetailsForm::COMMENCEMENT_DATE_RADIO_OPTION_COURSE), value: true, link_errors: true, label: { text: t("views.forms.training_details.commencement_date_radio_option.course", date: @training_details_form.course_start_date.strftime("%e %B %Y")) } %>
+          <%= f.govuk_radio_button :commencement_date_radio_option, TrainingDetailsForm::COMMENCEMENT_DATE_RADIO_OPTION_MANUAL, checked: (@training_details_form.commencement_date_radio_option == TrainingDetailsForm::COMMENCEMENT_DATE_RADIO_OPTION_MANUAL), link_errors: true, label: { text: t("views.forms.training_details.commencement_date_radio_option.manual") } do %>
+            <%= f.govuk_date_field :commencement_date, legend: {
+              text: t("views.forms.training_details.commencement_date_manual.label"), size: "s"
+            }, hint: { text: t("views.forms.training_details.commencement_date_manual.hint", year: Time.zone.now.year) } %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= f.govuk_date_field :commencement_date, legend: {
+          text: t("views.forms.training_details.commencement_date.label"), size: "s"
+        }, hint: { text: t("views.forms.training_details.commencement_date.hint", year: Time.zone.now.year).html_safe } %>
+      <% end %>
 
       <%= f.govuk_text_field :trainee_id, label: {
         text: t("views.forms.training_details.trainee_id.label"), size: "s"

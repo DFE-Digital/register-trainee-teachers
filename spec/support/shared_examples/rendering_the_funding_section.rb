@@ -24,7 +24,7 @@ RSpec.shared_examples "rendering the funding section" do
       end
 
       context "and has entered their course details" do
-        before { trainee.update!(course_subject_one: "subject") }
+        before { trainee.course_subject_one = "subject" }
 
         it "renders the funding section as 'not started'" do
           render_inline(described_class.new(trainee: trainee))

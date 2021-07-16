@@ -400,16 +400,28 @@ en:
           <<: *withdrawal_reasons
       training_details:
         title: Trainee start date and ID
+        commencement_date_radio_option:
+          label: What is the trainee’s start date?
+          hint: This is the date the trainee starts on the course. This can be different from the course start date.
+          course: Use the course start date – %{date}
+          manual: Enter another date
         commencement_date:
           label: What is the trainee’s start date?
-          hint_html:
-            When the trainee started the course. This may be different to your overall course start date.<br><br>
-            For example, 9 2 %{year}
+          hint:
+            This is the date the trainee starts on the course. This can be different from the course start date.<br>
+            For example, 9 7 %{year}
+        commencement_date_manual:
+          label: Trainee start date
+          hint: For example, 9 7 %{year}
         trainee_id:
           label: Assign a trainee ID
           hint:
             This will help you to identify them and search for them in your trainee records.
             We may also use it if we need to get in touch with you about this trainee.
+      start_dates:
+        commencement_date:
+          label: What is the trainee’s start date?
+          hint: This is the date the trainee starts on the course. This can be different from the course start date.
       publish_course_details:
         route_message: "Your %{route} courses in the Publish service"
         route_titles:
@@ -871,6 +883,8 @@ en:
             trainee_id:
               blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
+            commencement_date_radio_option:
+              inclusion: Choose a start date
         schools_form:
           attributes:
             query:
