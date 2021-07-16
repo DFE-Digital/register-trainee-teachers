@@ -452,6 +452,7 @@ en:
               label: Yes - Tier 3 (£2,000)
               hint: 2:2 honours degree
           guidance_html: <a target="_blank" href="https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-funding-manual/initial-teacher-training-bursaries-funding-manual-2021-to-2022-academic-year#training-bursary-award-and-eligibility">DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)</a>
+          early_years_guidance_html: "<a target=_blank href=https://www.gov.uk/guidance/early-years-initial-teacher-training-2021-to-2022-funding-guidance>Early years initial teacher training: 2021 to 2022 funding guidance (opens in new tab)</a>"
           title: Are you applying for a bursary for this trainee?
           true: Yes, apply for a bursary
           false: No, do not apply for a bursary
