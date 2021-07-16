@@ -16,8 +16,9 @@ class ConfirmPublishCourseForm
 
   validates :code, presence: true
 
-  def initialize(trainee, params = {})
+  def initialize(trainee, specialisms, params = {})
     @trainee = trainee
+    @specialisms = specialisms
     super(params)
   end
 
@@ -33,13 +34,14 @@ class ConfirmPublishCourseForm
 private
 
   def update_trainee_attributes
+    specialism1, specialism2, specialism3 = *@specialisms
     trainee.progress.course_details = true
     trainee.assign_attributes({
       # Taking the first specialism for each subject until we have built
       # the capability for the user to choose from multiple options.
-      course_subject_one: subject_specialisms[:course_subject_one].first,
-      course_subject_two: subject_specialisms[:course_subject_two].first,
-      course_subject_three: subject_specialisms[:course_subject_three].first,
+      course_subject_one: specialism1,
+      course_subject_two: specialism2,
+      course_subject_three: specialism3,
       course_code: course.code,
       course_age_range: course.age_range,
       course_start_date: course.start_date,

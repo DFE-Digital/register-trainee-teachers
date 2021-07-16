@@ -5,15 +5,16 @@ require "rails_helper"
 describe ConfirmPublishCourseForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
+  let(:specialisms) { [] }
 
-  subject { described_class.new(trainee, params) }
+  subject { described_class.new(trainee, specialisms, params) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:code) }
   end
 
   context "with valid params" do
-    subject { described_class.new(trainee, params) }
+    subject { described_class.new(trainee, specialisms, params) }
 
     let(:course) { create(:course_with_subjects, subject_names: subjects) }
     let(:params) { { code: course.code } }
@@ -22,17 +23,12 @@ describe ConfirmPublishCourseForm, type: :model do
     let(:subject_specialism_one) { "Subject specialism 1" }
     let(:subject_specialism_two) { "Subject specialism 2" }
     let(:subject_specialism_three) { "Subject specialism 3" }
-
-    before do
-      allow(CalculateSubjectSpecialisms).to(
-        receive(:call).with(subjects: subjects).and_return(
-          {
-            course_subject_one: [subject_specialism_one],
-            course_subject_two: [subject_specialism_two],
-            course_subject_three: [subject_specialism_three],
-          },
-        ),
-      )
+    let(:specialisms) do
+      [
+        subject_specialism_one,
+        subject_specialism_two,
+        subject_specialism_three,
+      ]
     end
 
     describe "#save" do

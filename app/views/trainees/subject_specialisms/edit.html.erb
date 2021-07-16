@@ -2,31 +2,36 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
-<%= register_form_with(model: @subject_specialism_form, url: trainee_subject_specialism_path(@trainee, position), method: :put, local: true) do |f| %>
-  <%= f.govuk_error_summary %>
 
-  <div class="govuk-form-group">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @subject_specialism_form, url: trainee_subject_specialism_path(@trainee, position), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
 
-    <%= f.govuk_radio_buttons_fieldset :"specialism#{position}",
-                                      legend: { text: t(".heading", subject: @subject), tag: "h1", size: "l" } do %>
+      <div class="govuk-form-group">
 
-      <div class="govuk-hint">
-        <p class="govuk-body govuk-hint">
-        <%= t(".hint") %>
-        </p>
-      <div>
+        <%= f.govuk_radio_buttons_fieldset :"specialism#{position}",
+                                          legend: { text: t(".heading", subject: @subject.downcase), tag: "h1", size: "l" } do %>
 
-      <% @specialisms.each_with_index do |subject, index| %>
-        <%= f.govuk_radio_button(
-            :"specialism#{position}",
-            subject,
-            multiple: true,
-            link_errors: index.zero?,
-            label: { text: subject },
-          ) %>
-      <% end %>
+          <div class="govuk-hint">
+            <p class="govuk-body govuk-hint">
+            <%= t(".hint") %>
+            </p>
+          <div>
+
+          <% sort_specialisms(@subject, @specialisms).each_with_index do |specialism, index| %>
+            <%= f.govuk_radio_button(
+                :"specialism#{position}",
+                specialism,
+                multiple: true,
+                link_errors: index.zero?,
+                label: { text: specialism.upcase_first },
+              ) %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= f.govuk_submit %>
     <% end %>
   </div>
-
-  <%= f.govuk_submit %>
-<% end %>
+</div>

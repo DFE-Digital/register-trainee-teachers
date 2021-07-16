@@ -138,6 +138,14 @@ module Features
       @publish_course_details_page ||= PageObjects::Trainees::PublishCourseDetails.new
     end
 
+    def subject_specialism_page
+      @subject_specialism_page ||= PageObjects::Trainees::SubjectSpecialism.new
+    end
+
+    def language_specialism_page
+      @language_specialism_page ||= PageObjects::Trainees::LanguageSpecialism.new
+    end
+
     def confirm_publish_course_page
       @confirm_publish_course_page ||= PageObjects::Trainees::ConfirmPublishCourse.new
     end

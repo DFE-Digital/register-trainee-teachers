@@ -6,20 +6,24 @@ module Trainees
     helper_method :position
 
     def edit
-      course = Course.first
       @subject = course.subjects[position - 1].name
       @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
+
+      if @specialisms.count == 1
+        SubjectSpecialismForm.new(trainee, position, params: { "specialism#{position}": @specialisms.first }).stash
+        redirect_to next_step_path
+        return
+      end
+
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position)
     end
 
     def update
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position, params: specialism_params)
-      save_strategy = trainee.draft? ? :save! : :stash
 
-      if @subject_specialism_form.public_send(save_strategy)
+      if @subject_specialism_form.stash
         redirect_to next_step_path
       else
-        course = Course.first
         @subject = course.subjects[position - 1].name
         @specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))[:"course_subject_#{position_in_words}"]
         render :edit
@@ -58,18 +62,23 @@ module Trainees
     def specialism_params
       return {} if params[:subject_specialism_form].blank?
 
-      params.require(:subject_specialism_form).permit(:"specialism#{position}")
+      params
+        .require(:subject_specialism_form)
+        .permit(:"specialism#{position}", "specialism#{position}": [])
+        .transform_values(&:first)
+    end
+
+    def course
+      @course ||= trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(trainee).code)
     end
 
     def next_step_path
-      course = Course.first
       specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))
       next_position = position + 1
       if specialisms[:"course_subject_#{to_word(next_position)}"].present?
         edit_trainee_subject_specialism_path(@trainee, next_position)
       else
-        # TODO: redirect to confirm path when it exists
-        "www.example.com"
+        edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
       end
     end
   end
