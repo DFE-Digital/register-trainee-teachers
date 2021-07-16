@@ -29,7 +29,7 @@ module Trainees
       @degree_form.assign_attributes(autocomplete_params)
 
       if @degree_form.save_or_stash
-        redirect_to trainee_degrees_confirm_path(trainee)
+        redirect_to relevant_redirect_path
       else
         render :edit
       end
@@ -65,6 +65,10 @@ module Trainees
 
     def set_degrees_form
       @degrees_form = DegreesForm.new(trainee)
+    end
+
+    def relevant_redirect_path
+      trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_degrees_confirm_path(trainee)
     end
   end
 end
