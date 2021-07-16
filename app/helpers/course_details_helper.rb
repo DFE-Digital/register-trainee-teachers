@@ -8,7 +8,7 @@ module CourseDetailsHelper
   end
 
   def filter_course_subjects_options
-    to_options(course_subjects, first_value: "All subjects")
+    to_options(all_subjects, first_value: "All subjects")
   end
 
   def main_age_ranges_options
@@ -67,5 +67,10 @@ private
 
   def course_subjects
     @course_subjects ||= SubjectSpecialism.order_by_name.pluck(:name)
+  end
+
+  def all_subjects
+    @all_subjects ||= (SubjectSpecialism.pluck(:name) + AllocationSubject.pluck(:name))
+      .map(&:downcase).uniq.sort
   end
 end
