@@ -4,7 +4,7 @@ class TraineesController < ApplicationController
   before_action :ensure_trainee_is_not_draft!, only: :show
   before_action :ensure_trainee_is_draft!, only: :destroy
   before_action :save_filter, only: :index
-  helper_method :filter_params
+  helper_method :filter_params, :multiple_record_sources?
 
   def index
     return redirect_to trainees_path(filter_params) if current_page_exceeds_total_pages?
@@ -16,7 +16,6 @@ class TraineesController < ApplicationController
     @draft_trainees = paginated_trainees.select(&:draft?)
     @completed_trainees = paginated_trainees.reject(&:draft?)
     @training_routes = policy_scope(Trainee).group(:training_route).count.keys
-    @trainees_imported_from_apply_count = policy_scope(Trainee.with_apply_application).count
 
     respond_to do |format|
       format.html
@@ -93,6 +92,14 @@ private
 
   def filter_params
     params.permit(:subject, :text_search, :sort_by, level: [], training_route: [], state: [], record_source: [])
+  end
+
+  def multiple_record_sources?
+    @multiple_record_sources ||= begin
+      apply_count = policy_scope(Trainee).with_apply_application.count
+      manual_count = policy_scope(Trainee).with_manual_application.count
+      apply_count.positive? && manual_count.positive?
+    end
   end
 
   def save_filter
