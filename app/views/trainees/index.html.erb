@@ -106,8 +106,13 @@
           <div class="govuk-checkboxes govuk-checkboxes--small">
             
               <div class="govuk-checkboxes__item">
-                <%= check_box_tag "record_source[]", "imported_from_apply", checked?(@filters, :record_source, "imported_from_apply"), id: "record_source-imported_from_apply", class: "govuk-checkboxes__input" %>
-                <%= label_tag "record_source-imported_from_apply", label_for("record_source", "imported_from_apply"), class: "govuk-label govuk-checkboxes__label" %>
+                <%= check_box_tag "record_source[]", "apply", checked?(@filters, :record_source, "apply"), id: "record_source-apply", class: "govuk-checkboxes__input" %>
+                <%= label_tag "record_source-apply", label_for("record_source", "apply"), class: "govuk-label govuk-checkboxes__label" %>
+              </div>
+
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag "record_source[]", "manual", checked?(@filters, :record_source, "manual"), id: "record_source-manual", class: "govuk-checkboxes__input" %>
+                <%= label_tag "record_source-manual", label_for("record_source", "manual"), class: "govuk-label govuk-checkboxes__label" %>
               </div>
             
           </div>

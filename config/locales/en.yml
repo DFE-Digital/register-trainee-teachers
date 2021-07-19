@@ -626,7 +626,8 @@ en:
     attributes:
       trainee:
         record_sources:
-          imported_from_apply: Imported from Apply
+          apply: Imported from Apply
+          manual: Added manually
         trainee_id: Trainee ID
         training_routes:
           assessment_only: Assessment only

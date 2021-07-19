@@ -5,7 +5,7 @@ require "rails_helper"
 describe TraineeFilter do
   let(:permitted_params) do
     ActionController::Parameters.new(params)
-    .permit(:subject, :text_search, training_route: [], state: [])
+    .permit(:subject, :text_search, training_route: [], state: [], record_source: [])
   end
 
   subject { TraineeFilter.new(params: permitted_params) }
@@ -45,6 +45,12 @@ describe TraineeFilter do
 
     context "with 'All subjects'" do
       let(:params) { { subject: "All subjects" } }
+
+      include_examples returns_nil
+    end
+
+    context "with invalid record_source" do
+      let(:params) { { record_source: %w[hackerman] } }
 
       include_examples returns_nil
     end

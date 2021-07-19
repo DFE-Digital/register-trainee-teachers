@@ -139,6 +139,7 @@ class Trainee < ApplicationRecord
     )
   }
 
+  scope :with_manual_application, -> { where(apply_application: nil) }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
 
   audited associated_with: :provider

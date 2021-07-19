@@ -30,7 +30,9 @@ module Trainees
     end
 
     def record_source(trainees, record_source)
-      return trainees if record_source.blank?
+      return trainees if record_source.blank? || record_source.size > 1
+
+      return trainees.with_manual_application if record_source.include? "manual"
 
       trainees.with_apply_application
     end
