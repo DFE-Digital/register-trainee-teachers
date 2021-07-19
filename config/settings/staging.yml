@@ -19,6 +19,8 @@ features:
   publish_course_details: true
   persist_to_dttp: true
   routes:
+    early_years_assessment_only: true
+    early_years_postgrad: true
     provider_led_postgrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
