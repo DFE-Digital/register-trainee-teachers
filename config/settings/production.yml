@@ -28,6 +28,10 @@ features:
   send_emails: true
   run_consistency_check_job: true
   persist_to_dttp: true
+  routes:
+    provider_led_postgrad: true
+    school_direct_salaried: true
+    school_direct_tuition_fee: true
 
 environment:
   name: beta
