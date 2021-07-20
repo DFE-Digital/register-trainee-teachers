@@ -12,6 +12,8 @@ module Dttp
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => { entity_id: "d446cd4b-4d9c-e711-80d9-005056ac45bb" },
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => { entity_id: "68cbae32-7389-e711-80d8-005056ac45bb" },
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: "68cbae32-7389-e711-80d8-005056ac45bb" },
+        TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => { entity_id: "e0113eff-141e-e711-80c8-0050568902d3" },
+        TRAINING_ROUTE_ENUMS[:early_years_postgrad] => { entity_id: "d446cd4b-4d9c-e711-80d9-005056ac45bb" },
       }.freeze
     end
   end
