@@ -7,8 +7,9 @@ module ApplyApi
     def perform
       return unless FeatureService.enabled?("import_applications_from_apply")
 
-      new_applications.each do |application|
-        ImportApplication.call(application: application)
+      new_applications.each do |application_data|
+        application_record = ImportApplication.call(application_data: application_data)
+        Trainees::CreateFromApply.call(application: application_record)
       end
     end
 

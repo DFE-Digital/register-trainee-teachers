@@ -4,22 +4,21 @@ module ApplyApi
   class ImportApplication
     include ServicePattern
 
-    def initialize(application:)
-      @raw_application = application
+    def initialize(application_data:)
+      @application_data = application_data
     end
 
     def call
       return unless provider
 
-      application.update!(
-        application: raw_application.to_json,
-        provider: provider,
-      )
+      application.update!(application: application_data.to_json, provider: provider)
+
+      application
     end
 
   private
 
-    attr_reader :raw_application
+    attr_reader :application_data
 
     def provider
       @provider ||= Provider.find_by(code: provider_code)
@@ -32,11 +31,11 @@ module ApplyApi
     end
 
     def provider_code
-      @provider_code ||= raw_application["attributes"]["course"]["training_provider_code"]
+      @provider_code ||= application_data["attributes"]["course"]["training_provider_code"]
     end
 
     def apply_id
-      @apply_id ||= raw_application["id"]
+      @apply_id ||= application_data["id"]
     end
   end
 end

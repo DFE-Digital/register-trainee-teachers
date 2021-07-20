@@ -6,17 +6,19 @@ module ApplyApi
   describe ImportApplicationsJob do
     include ActiveJob::TestHelper
 
-    let(:application) { double("application") }
+    let(:application_data) { double("application_data") }
+    let(:application_record) { double("application_record") }
 
     before do
-      allow(RetrieveApplications).to receive(:call).and_return([application])
+      allow(RetrieveApplications).to receive(:call).and_return([application_data])
     end
 
     context "when the feature flag is turned on", feature_import_applications_from_apply: true do
       context "when there have been no previous syncs" do
-        it "imports all applications from Apply" do
+        it "imports application data from Apply and creates a trainee record" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: nil)
-          expect(ImportApplication).to receive(:call).with(application: application)
+          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(Trainees::CreateFromApply).to receive(:call).with(application: application_record)
 
           described_class.perform_now
         end
@@ -29,7 +31,8 @@ module ApplyApi
 
         it "imports just the new applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: last_sync)
-          expect(ImportApplication).to receive(:call).with(application: application)
+          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(Trainees::CreateFromApply).to receive(:call).with(application: application_record)
 
           described_class.perform_now
         end
@@ -46,7 +49,8 @@ module ApplyApi
 
         it "imports just the new applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: last_successful_sync)
-          expect(ImportApplication).to receive(:call).with(application: application)
+          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(Trainees::CreateFromApply).to receive(:call).with(application: application_record)
 
           described_class.perform_now
         end
@@ -56,7 +60,8 @@ module ApplyApi
     context "when the feature flag is turned off", feature_import_applications_from_apply: false do
       it "does nothing" do
         expect(RetrieveApplications).not_to receive(:call).with(changed_since: nil)
-        expect(ImportApplication).not_to receive(:call).with(application: application)
+        expect(ImportApplication).not_to receive(:call).with(application_data: application_data)
+        expect(Trainees::CreateFromApply).not_to receive(:call).with(application: application_record)
 
         described_class.perform_now
       end
