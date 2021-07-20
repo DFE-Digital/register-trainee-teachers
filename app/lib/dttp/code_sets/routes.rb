@@ -9,6 +9,8 @@ module Dttp
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => { entity_id: "6b89922e-acc2-e611-80be-00155d010316" },
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => { entity_id: "6f89922e-acc2-e611-80be-00155d010316" },
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: "7789922e-acc2-e611-80be-00155d010316" },
+        TRAINING_ROUTE_ENUMS[:early_years_postgrad] => { entity_id: "6789922e-acc2-e611-80be-00155d010316" },
+        TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => { entity_id: "6589922e-acc2-e611-80be-00155d010316" },
       }.freeze
     end
   end
