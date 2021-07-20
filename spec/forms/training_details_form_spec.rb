@@ -5,6 +5,7 @@ require "rails_helper"
 describe TrainingDetailsForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
+  let(:error_attr) { "activemodel.errors.models.training_details_form.attributes" }
 
   subject { described_class.new(trainee, params: params) }
 
@@ -23,7 +24,7 @@ describe TrainingDetailsForm, type: :model do
 
         it "returns a blank error message" do
           expect(subject.errors[:trainee_id]).to include(
-            I18n.t("activemodel.errors.models.training_details_form.attributes.trainee_id.blank"),
+            I18n.t("#{error_attr}.trainee_id.blank"),
           )
         end
       end
@@ -34,7 +35,7 @@ describe TrainingDetailsForm, type: :model do
         it "returns a max character exceeded message" do
           expect(subject).not_to be_valid
           expect(subject.errors[:trainee_id]).to include(
-            I18n.t("activemodel.errors.models.training_details_form.attributes.trainee_id.max_char_exceeded"),
+            I18n.t("#{error_attr}.trainee_id.max_char_exceeded"),
           )
         end
       end
@@ -54,7 +55,7 @@ describe TrainingDetailsForm, type: :model do
 
         it "returns a blank error message" do
           expect(subject.errors[:commencement_date]).to include(
-            I18n.t("activemodel.errors.models.training_details_form.attributes.commencement_date.blank"),
+            I18n.t("#{error_attr}.commencement_date.blank"),
           )
         end
       end
@@ -64,8 +65,18 @@ describe TrainingDetailsForm, type: :model do
 
         it "returns an invalid date error message" do
           expect(subject.errors[:commencement_date]).to include(
-            I18n.t("activemodel.errors.models.training_details_form.attributes.commencement_date.invalid"),
+            I18n.t("#{error_attr}.commencement_date.invalid"),
           )
+        end
+      end
+
+      context "date is before the course start date" do
+        let(:trainee) do
+          build(:trainee, course_start_date: Time.zone.today, commencement_date: 1.day.ago)
+        end
+
+        it "is invalid" do
+          expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.commencement_date.not_before_course_start_date"))
         end
       end
     end

@@ -879,11 +879,13 @@ en:
             commencement_date:
                 blank: Enter a start date
                 invalid: Enter a valid start date
+                not_before_course_start_date: &not_before_course_start_date The date must not be before the course start date
         training_details_form:
           attributes:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
+              not_before_course_start_date: *not_before_course_start_date
             trainee_id:
               blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters

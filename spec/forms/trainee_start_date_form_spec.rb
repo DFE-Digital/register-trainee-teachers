@@ -6,7 +6,7 @@ describe TraineeStartDateForm, type: :model do
   let(:params) { { year: "2020", month: "12", day: "20" } }
   let(:trainee) { build(:trainee, :not_started) }
   let(:form_store) { class_double(FormStore) }
-  let(:error_attr) { "activemodel.errors.models.training_details_form.attributes.commencement_date" }
+  let(:error_attr) { "activemodel.errors.models.trainee_start_date_form.attributes.commencement_date" }
 
   subject { described_class.new(trainee, params: params, store: form_store) }
 
@@ -30,6 +30,16 @@ describe TraineeStartDateForm, type: :model do
 
       it "is invalid" do
         expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.blank"))
+      end
+    end
+
+    context "date is before the course start date" do
+      let(:trainee) do
+        build(:trainee, course_start_date: Time.zone.today, commencement_date: 1.day.ago)
+      end
+
+      it "is invalid" do
+        expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.not_before_course_start_date"))
       end
     end
   end

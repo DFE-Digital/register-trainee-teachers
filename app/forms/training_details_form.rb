@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TrainingDetailsForm < TraineeForm
+  include TrainingDetailsHelper
+
   COMMENCEMENT_DATE_RADIO_OPTION_COURSE = "course"
   COMMENCEMENT_DATE_RADIO_OPTION_MANUAL = "manual"
 
@@ -61,6 +63,8 @@ private
       errors.add(:commencement_date, :blank)
     elsif !commencement_date.is_a?(Date)
       errors.add(:commencement_date, :invalid)
+    elsif date_before_course_start_date?(commencement_date, trainee.course_start_date)
+      errors.add(:commencement_date, :not_before_course_start_date)
     end
   end
 
