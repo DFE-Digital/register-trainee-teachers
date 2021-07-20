@@ -6,7 +6,8 @@ module Trainees
   describe Filter do
     subject { described_class.call(trainees: trainees, filters: filters) }
 
-    let!(:generic_trainee) { create(:trainee) }
+    let!(:draft_trainee) { create(:trainee, :draft) }
+    let!(:apply_draft_trainee) { create(:trainee, :with_apply_application) }
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
 
@@ -33,9 +34,18 @@ module Trainees
       let!(:submitted_for_trn_trainee) { create(:trainee, :submitted_for_trn) }
       let!(:qts_awarded_trainee) { create(:trainee, :qts_awarded) }
       let!(:eyts_awarded_trainee) { create(:trainee, :eyts_awarded) }
-      let(:filters) { { state: %w[submitted_for_trn qts_awarded] } }
 
-      it { is_expected.to contain_exactly(submitted_for_trn_trainee, qts_awarded_trainee) }
+      context "with trn_submitted, qts_awarded" do
+        let(:filters) { { state: %w[submitted_for_trn qts_awarded] } }
+
+        it { is_expected.to contain_exactly(submitted_for_trn_trainee, qts_awarded_trainee) }
+      end
+
+      context "with only draft trainees" do
+        let(:filters) { { state: %w[draft] } }
+
+        it { is_expected.to contain_exactly(draft_trainee, apply_draft_trainee) }
+      end
     end
 
     context "with subject filter" do
@@ -51,6 +61,24 @@ module Trainees
       let(:filters) { { text_search: "Boaty" } }
 
       it { is_expected.to eq([named_trainee]) }
+    end
+
+    context "with record_source filter set to apply" do
+      let(:filters) { { record_source: %w[apply] } }
+
+      it { is_expected.to contain_exactly(apply_draft_trainee) }
+    end
+
+    context "with record_source filter set to manual" do
+      let(:filters) { { record_source: %w[manual] } }
+
+      it { is_expected.to contain_exactly(draft_trainee) }
+    end
+
+    context "with record_source filter set to both manual and apply" do
+      let(:filters) { { record_source: %w[apply manual] } }
+
+      it { is_expected.to contain_exactly(apply_draft_trainee, draft_trainee) }
     end
   end
 end

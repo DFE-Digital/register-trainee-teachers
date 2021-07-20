@@ -29,6 +29,14 @@ module Trainees
       trainees.where(query, *age_ranges.flatten)
     end
 
+    def record_source(trainees, record_source)
+      return trainees if record_source.blank? || record_source.size > 1
+
+      return trainees.with_manual_application if record_source.include? "manual"
+
+      trainees.with_apply_application
+    end
+
     def training_route(trainees, training_route)
       return trainees if training_route.blank?
 
@@ -69,6 +77,7 @@ module Trainees
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
       filtered_trainees = level(filtered_trainees, filters[:level])
+      filtered_trainees = record_source(filtered_trainees, filters[:record_source])
       filtered_trainees
     end
   end

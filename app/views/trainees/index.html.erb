@@ -96,6 +96,31 @@
     <% end %>
   <% end %>
 
+  <% if FeatureService.enabled?(:imported_from_apply_filter) && multiple_record_sources? %>
+    <% component.filter_option do %>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+            Record source
+          </legend>
+          <div class="govuk-checkboxes govuk-checkboxes--small">
+            
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag "record_source[]", "apply", checked?(@filters, :record_source, "apply"), id: "record_source-apply", class: "govuk-checkboxes__input" %>
+                <%= label_tag "record_source-apply", label_for("record_source", "apply"), class: "govuk-label govuk-checkboxes__label" %>
+              </div>
+
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag "record_source[]", "manual", checked?(@filters, :record_source, "manual"), id: "record_source-manual", class: "govuk-checkboxes__input" %>
+                <%= label_tag "record_source-manual", label_for("record_source", "manual"), class: "govuk-label govuk-checkboxes__label" %>
+              </div>
+            
+          </div>
+        </fieldset>
+      </div>
+    <% end %>
+  <% end %>
+
   <% component.filter_option do %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
@@ -103,7 +128,7 @@
           <%= t("views.trainees.index.filters.status") %>
         </legend>
         <div class="govuk-checkboxes govuk-checkboxes--small">
-          <% TraineeFilter::STATES.map do |state, _| %>
+          <% TraineeFilter::STATES.each do |state, _| %>
             <div class="govuk-checkboxes__item">
               <%= check_box_tag "state[]", state, checked?(@filters, :state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
               <%= label_tag "state-#{state}", label_for("state", state), class: "govuk-label govuk-checkboxes__label" %>

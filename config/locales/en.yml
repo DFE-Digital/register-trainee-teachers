@@ -244,6 +244,7 @@ en:
     filter:
       level: Course level
       training_route: Training route
+      record_source: Record source
       state: Status
       subject: Subject
       text_search: Text search
@@ -626,6 +627,9 @@ en:
   activerecord:
     attributes:
       trainee:
+        record_sources:
+          apply: Imported from Apply
+          manual: Added manually
         trainee_id: Trainee ID
         training_routes:
           assessment_only: Assessment only
@@ -639,6 +643,7 @@ en:
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
         states:
           draft: Draft
+          apply_draft: Apply Draft
           submitted_for_trn: Pending TRN
           trn_received: TRN received
           recommended_for_award: Qualification recommended

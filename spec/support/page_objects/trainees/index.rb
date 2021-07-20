@@ -23,6 +23,7 @@ module PageObjects
       element :early_years_checkbox, "#level-early_years"
       element :assessment_only_checkbox, "#training_route-assessment_only"
       element :draft_checkbox, "#state-draft"
+      element :imported_from_apply_checkbox, "#record_source-apply"
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
       element :subject, "#subject"
 

@@ -70,13 +70,31 @@ describe Trainee do
 
   context "scopes" do
     describe "with_award_states" do
-      it "returns tainees with the correct training route and state" do
+      it "returns trainees with the correct training route and state" do
         create(:trainee, :trn_received)
         qts_awarded = create(:trainee, :qts_awarded)
         eyts_recommended = create(:trainee, :eyts_recommended)
         create(:trainee, :eyts_awarded)
 
         expect(Trainee.with_award_states(:qts_awarded, :eyts_recommended)).to contain_exactly(qts_awarded, eyts_recommended)
+      end
+    end
+
+    describe ".with_apply_application" do
+      let!(:manual_trainee) { create(:trainee) }
+      let!(:apply_trainee) { create(:trainee, :with_apply_application) }
+
+      it "returns trainees from apply" do
+        expect(described_class.with_apply_application).to contain_exactly(apply_trainee)
+      end
+    end
+
+    describe ".with_manual_application" do
+      let!(:manual_trainee) { create(:trainee) }
+      let!(:apply_trainee) { create(:trainee, :with_apply_application) }
+
+      it "returns trainees from apply" do
+        expect(described_class.with_manual_application).to contain_exactly(manual_trainee)
       end
     end
   end

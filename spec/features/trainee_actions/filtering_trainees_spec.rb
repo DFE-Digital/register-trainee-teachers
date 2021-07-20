@@ -22,6 +22,17 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
+  scenario "can filter by apply_drafts", feature_imported_from_apply_filter: true do
+    when_i_filter_by_apply_draft_status
+    then_only_the_apply_draft_trainee_is_visible
+  end
+
+  scenario "when all trainees are from a single source", feature_imported_from_apply_filter: true do
+    given_all_trainees_are_from_a_single_source
+    when_i_visit_the_trainee_index_page
+    then_the_record_source_filter_is_not_visible
+  end
+
   scenario "can filter by status" do
     when_i_filter_by_draft_status
     then_only_the_draft_trainee_is_visible
@@ -104,7 +115,16 @@ private
     @withdrawn_trainee ||= create(:trainee, :withdrawn)
     @early_years_trainee ||= create(:trainee, :early_years_undergrad)
     @primary_trainee ||= create(:trainee, course_age_range: AgeRange::THREE_TO_EIGHT)
+    @apply_draft_trainee ||= create(:trainee, :with_apply_application)
     Trainee.update_all(provider_id: @current_user.provider.id)
+  end
+
+  def given_all_trainees_are_from_a_single_source
+    Trainee.with_apply_application.destroy_all
+  end
+
+  def then_the_record_source_filter_is_not_visible
+    expect(trainee_index_page).not_to have_text("Record source")
   end
 
   def given_a_subject_specialism_is_available_for_selection
@@ -123,6 +143,11 @@ private
 
   def when_i_filter_by_draft_status
     trainee_index_page.draft_checkbox.click
+    trainee_index_page.apply_filters.click
+  end
+
+  def when_i_filter_by_apply_draft_status
+    trainee_index_page.imported_from_apply_checkbox.click
     trainee_index_page.apply_filters.click
   end
 
@@ -192,6 +217,11 @@ private
     ].each do |trainee|
       expect(trainee_index_page).not_to have_text(full_name(trainee))
     end
+  end
+
+  def then_only_the_apply_draft_trainee_is_visible
+    expect(trainee_index_page).to have_text(full_name(@apply_draft_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@draft_trainee))
   end
 
   def then_only_the_draft_trainee_is_visible

@@ -4,6 +4,8 @@ class TraineeFilter
   AWARD_STATES = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded].freeze
   STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES
 
+  RECORD_SOURCES = %w[apply manual].freeze
+
   def initialize(params:)
     @params = params
   end
@@ -22,7 +24,7 @@ private
 
   def merged_filters
     @merged_filters ||= text_search.merge(
-      **level, **training_route, **state, **subject, **text_search,
+      **level, **training_route, **state, **subject, **text_search, **record_source,
     ).with_indifferent_access
   end
 
@@ -42,6 +44,16 @@ private
     return {} unless training_route_options.any?
 
     { "training_route" => training_route_options }
+  end
+
+  def record_source
+    return {} unless record_source_options.any?
+
+    { "record_source" => record_source_options }
+  end
+
+  def record_source_options
+    (params[:record_source].presence || []) & RECORD_SOURCES
   end
 
   def training_route_options
