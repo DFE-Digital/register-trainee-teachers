@@ -12,22 +12,30 @@ module Dttp
     let(:configured_poll_timeout_days) { 4 }
     let(:timeout_date) { configured_poll_timeout_days.days.from_now }
 
+    let(:run_date) { "01/08/2021" }
+    let(:clockover_date) { "01/08/2021" }
+
+    around do |example|
+      Timecop.freeze(run_date) do
+        example.run
+      end
+    end
+
     before do
       allow(RetrieveTrn).to receive(:call).with(trainee: trainee).and_return(trn)
       allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
       allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)
       allow(SlackNotifierService).to receive(:call)
+      allow(Settings).to receive(:clockover_date).and_return(clockover_date)
     end
 
     context "when timeout_after is nil" do
       let(:timeout_date) { trainee.submitted_for_trn_at + configured_poll_timeout_days.days }
 
       it "re-enqueues RetrieveTrnJob with the trainee and default timeout_after" do
-        Timecop.freeze(Time.zone.now) do
-          expect {
-            described_class.perform_now(trainee, nil)
-          }.to enqueue_job(RetrieveTrnJob).with(trainee, timeout_date)
-        end
+        expect {
+          described_class.perform_now(trainee, nil)
+        }.to enqueue_job(RetrieveTrnJob).with(trainee, timeout_date)
       end
     end
 
@@ -49,11 +57,9 @@ module Dttp
 
     context "TRN is not available" do
       it "queues another job to fetch the TRN after the configured delay" do
-        Timecop.freeze(Time.zone.now) do
-          described_class.perform_now(trainee, timeout_date)
-          expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now)
-            .with(trainee, timeout_date)
-        end
+        described_class.perform_now(trainee, timeout_date)
+        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now)
+          .with(trainee, timeout_date)
       end
     end
 
@@ -78,11 +84,20 @@ module Dttp
 
     describe ".perform_with_default_delay" do
       it "queues the job to execute after the configured delay" do
-        Timecop.freeze(Time.zone.now) do
-          described_class.perform_with_default_delay(trainee)
-          expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now)
-            .with(trainee, configured_poll_timeout_days.day.from_now)
-        end
+        described_class.perform_with_default_delay(trainee)
+        expect(RetrieveTrnJob).to have_been_enqueued.at(configured_delay.hours.from_now)
+          .with(trainee, configured_poll_timeout_days.day.from_now)
+      end
+    end
+
+    context "before clockover" do
+      let(:run_date) { "31/07/2021" }
+
+      it "requeues the job after clockover" do
+        clockover_date_as_time = Time.zone.parse(clockover_date)
+        expect(RetrieveTrnJob).to receive(:set).with(wait_until: clockover_date_as_time).and_return(job = double)
+        expect(job).to receive(:perform_later).with(trainee, clockover_date_as_time + configured_poll_timeout_days.days)
+        described_class.perform_now(trainee, timeout_date)
       end
     end
   end
