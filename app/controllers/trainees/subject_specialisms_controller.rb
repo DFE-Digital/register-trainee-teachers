@@ -2,6 +2,8 @@
 
 module Trainees
   class SubjectSpecialismsController < ApplicationController
+    include PublishCourseNextPath
+
     before_action :authorize_trainee
     helper_method :position
 
@@ -77,10 +79,8 @@ module Trainees
       next_position = position + 1
       if specialisms[:"course_subject_#{to_word(next_position)}"].present?
         edit_trainee_subject_specialism_path(trainee, next_position)
-      elsif trainee.apply_application?
-        trainee_apply_applications_confirm_courses_path(trainee)
       else
-        edit_trainee_confirm_publish_course_path(trainee)
+        publish_course_next_path
       end
     end
 
