@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TraineeStartDateForm < TraineeForm
+  include TrainingDetailsHelper
+
   attr_accessor :day, :month, :year
 
   validate :commencement_date_valid
@@ -41,6 +43,8 @@ private
       errors.add(:commencement_date, :blank)
     elsif !commencement_date.is_a?(Date)
       errors.add(:commencement_date, :invalid)
+    elsif date_before_course_start_date?(commencement_date, trainee.course_start_date)
+      errors.add(:commencement_date, :not_before_course_start_date)
     end
   end
 
