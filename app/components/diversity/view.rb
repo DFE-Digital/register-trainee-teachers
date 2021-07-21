@@ -89,7 +89,12 @@ module Diversity
     end
 
     def additional_disability_for(disability)
-      additional_disability = data_model.trainee_disabilities.where(disability_id: disability.id).first.additional_disability
+      additional_disability = if data_model.is_a?(Trainee)
+                                data_model.trainee_disabilities.where(disability_id: disability.id).first.additional_disability
+                              else
+                                data_model.additional_disability
+                              end
+
       return if additional_disability.blank?
 
       "(#{additional_disability})"
