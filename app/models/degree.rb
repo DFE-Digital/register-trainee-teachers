@@ -6,14 +6,19 @@ class Degree < ApplicationRecord
   INSTITUTIONS = Dttp::CodeSets::Institutions::MAPPING.keys
   SUBJECTS = Dttp::CodeSets::DegreeSubjects::MAPPING.keys
 
+  attr_writer :is_apply_import
+
   validates :locale_code, presence: true
-  validates :institution, presence: true, on: :uk
-  validates :country, presence: true, on: :non_uk
-  validates :subject, presence: true, on: %i[uk non_uk]
-  validates :uk_degree, presence: true, on: :uk
-  validates :non_uk_degree, presence: true, on: :non_uk
-  validates :grade, presence: true, on: :uk
-  validates :graduation_year, presence: true, on: %i[uk non_uk]
+  with_options unless: :apply_import? do
+    validates :institution, presence: true, on: :uk
+    validates :country, presence: true, on: :non_uk
+    validates :subject, presence: true, on: %i[uk non_uk]
+    validates :uk_degree, presence: true, on: :uk
+    validates :non_uk_degree, presence: true, on: :non_uk
+    validates :grade, presence: true, on: :uk
+    validates :graduation_year, presence: true, on: %i[uk non_uk]
+  end
+
   validate :graduation_year_valid, if: -> { graduation_year.present? }
 
   belongs_to :trainee
@@ -38,6 +43,10 @@ class Degree < ApplicationRecord
     if grade == "Other"
       self[:other_grade]
     end
+  end
+
+  def apply_import?
+    ActiveModel::Type::Boolean.new.cast(@is_apply_import)
   end
 
 private

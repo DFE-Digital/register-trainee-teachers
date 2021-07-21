@@ -10,20 +10,13 @@ module Trainees
 
     def call
       trainee.save!
+      create_degrees!
       trainee
     end
 
   private
 
     attr_reader :application
-
-    def attributes
-      @attributes ||= parsed_application["attributes"]
-    end
-
-    def parsed_application
-      @parsed_application ||= JSON.parse(application.application)
-    end
 
     def trainee
       @trainee ||= Trainee.new(mapped_attributes)
@@ -43,14 +36,13 @@ module Trainees
         email: raw_contact_details["email"],
         course_code: course&.code,
         training_route: course&.route,
-        degrees: degrees,
         disabilities: disabilities,
         nationalities: nationalities,
       }.merge(address)
     end
 
-    def degrees
-      raw_degrees.map { |degree| ::Degrees::CreateFromApply.call(attributes: degree) }
+    def create_degrees!
+      ::Degrees::CreateFromApply.call(trainee: trainee)
     end
 
     def address
@@ -117,19 +109,15 @@ module Trainees
     end
 
     def raw_trainee
-      @raw_trainee ||= attributes["candidate"]
+      @raw_trainee ||= application.application_attributes["candidate"]
     end
 
     def raw_contact_details
-      @raw_contact_details ||= attributes["contact_details"]
+      @raw_contact_details ||= application.application_attributes["contact_details"]
     end
 
     def raw_course
-      @raw_course ||= attributes["course"]
-    end
-
-    def raw_degrees
-      @raw_degrees ||= attributes["qualifications"]["degrees"]
+      @raw_course ||= application.application_attributes["course"]
     end
   end
 end

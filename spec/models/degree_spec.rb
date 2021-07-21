@@ -81,4 +81,18 @@ RSpec.describe Degree, type: :model do
       end
     end
   end
+
+  describe "#apply_import?" do
+    let(:degree) { create(:degree) }
+
+    subject { degree.apply_import? }
+
+    it { is_expected.to be_falsey }
+
+    context "when is_apply_import is set to true" do
+      let(:degree) { create(:degree, is_apply_import: "true") }
+
+      it { is_expected.to be_truthy }
+    end
+  end
 end

@@ -71,6 +71,11 @@ module Trainees
       expect(trainee.provider).to eq(apply_application.provider)
     end
 
+    it "calls the Degrees::CreateFromApply service" do
+      expect(::Degrees::CreateFromApply).to receive(:call).and_call_original
+      create_trainee_from_apply
+    end
+
     context "with a uk address" do
       it { is_expected.to have_attributes(uk_address_attributes) }
     end

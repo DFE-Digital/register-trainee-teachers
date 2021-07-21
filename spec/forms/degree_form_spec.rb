@@ -11,20 +11,22 @@ describe DegreeForm, type: :model do
   subject { DegreeForm.new(degrees_form: degrees_form, degree: degree) }
 
   describe "validations" do
-    subject { DegreeForm.new(degrees_form: degrees_form, degree: Degree.new) }
+    let(:degree) { Degree.new(locale_code: :uk) }
 
-    it "uk degree" do
-      subject.locale_code = :uk
+    it "requires subject to be present" do
       expect(subject.valid?).to be_falsey
       expect(subject.errors[:subject]).to be_present
       expect(subject.errors[:uk_degree]).to be_present
     end
 
-    it "non uk degree" do
-      subject.locale_code = :non_uk
-      expect(subject.valid?).to be_falsey
-      expect(subject.errors[:subject]).to be_present
-      expect(subject.errors[:country]).to be_present
+    context "non_uk degree" do
+      let(:degree) { Degree.new(locale_code: :non_uk) }
+
+      it "requires the subject and country to be present" do
+        expect(subject.valid?).to be_falsey
+        expect(subject.errors[:subject]).to be_present
+        expect(subject.errors[:country]).to be_present
+      end
     end
   end
 
@@ -156,6 +158,32 @@ describe DegreeForm, type: :model do
 
       it "destroy degree" do
         expect(subject.destroy!).to be_truthy
+      end
+    end
+  end
+
+  describe "#save_and_return_invalid_data!" do
+    before do
+      allow(subject).to receive(:save_or_stash).and_return(true)
+    end
+
+    it "saves and returns a blank hash" do
+      expect(subject).to receive(:save_or_stash)
+      expect(subject.save_and_return_invalid_data!).to eq({})
+    end
+
+    context "when the trainee has invalid data" do
+      let(:degree) { build(:degree, :uk_degree_with_details, trainee: trainee, institution: "Fake University") }
+
+      it "saves and returns a hash containing invalid data" do
+        expect(subject).to receive(:save_or_stash)
+        expect(subject.save_and_return_invalid_data!).to eq({ institution: "Fake University" })
+      end
+
+      it "nullifies the invalid value" do
+        expect {
+          subject.save_and_return_invalid_data!
+        }.to change { subject.institution }.from("Fake University").to(nil)
       end
     end
   end

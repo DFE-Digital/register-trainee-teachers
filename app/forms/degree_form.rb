@@ -92,6 +92,19 @@ class DegreeForm
     degree.destroy! unless degree.new_record?
   end
 
+  def save_and_return_invalid_data!
+    invalid_data = {}
+
+    valid?
+
+    errors.each do |error|
+      invalid_data[error.attribute.to_sym] = send(error.attribute)
+      send("#{error.attribute}=", nil)
+    end
+
+    save_or_stash && invalid_data
+  end
+
 private
 
   def validate_with_degree_model
