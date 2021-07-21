@@ -1,0 +1,9 @@
+<%= render GovukComponent::NotificationBanner.new(title: 'Information', disable_auto_focus: true) do %>
+  <p class="govuk-body"><%= t(".invalid_answers_summary", total_invalid_fields: invalid_fields.size) %></p>
+
+  <ul class="govuk-list app-invalid-answer__list">
+    <% invalid_fields.each do |field| %>
+      <li><%= link_to(t(".invalid_answer_text", invalid_field: field.to_s.upcase_first), "##{field}", class: "govuk-notification-banner__link") %></li>
+    <% end %>          
+  </ul>
+<% end %>
