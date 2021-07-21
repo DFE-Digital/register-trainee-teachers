@@ -49,6 +49,10 @@ class DiversityForm
     @disability_detail_form.disabilities
   end
 
+  def additional_disability
+    @disability_detail_form.additional_disability
+  end
+
   def ethnic_group
     @ethnic_group_form.ethnic_group
   end
