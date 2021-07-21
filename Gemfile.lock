@@ -197,7 +197,7 @@ GEM
       cliver (~> 0.3)
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
-    ffi (1.15.0)
+    ffi (1.15.3)
     foreman (0.87.2)
     fugit (1.4.4)
       et-orbi (~> 1.1, >= 1.1.8)
@@ -244,7 +244,7 @@ GEM
     kaminari-core (1.2.1)
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.5.1)
+    listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.10.0)
@@ -362,7 +362,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.6)
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redis (4.2.5)
@@ -548,7 +548,7 @@ DEPENDENCIES
   httparty (~> 0.18)
   kaminari
   launchy
-  listen (>= 3.0.5, < 3.6)
+  listen (>= 3.0.5, < 3.7)
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
