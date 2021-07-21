@@ -93,11 +93,28 @@ module Dttp
     context "before clockover" do
       let(:run_date) { "31/07/2021" }
 
-      it "requeues the job after clockover" do
-        clockover_date_as_time = Time.zone.parse(clockover_date)
-        expect(RetrieveTrnJob).to receive(:set).with(wait_until: clockover_date_as_time).and_return(job = double)
-        expect(job).to receive(:perform_later).with(trainee, clockover_date_as_time + configured_poll_timeout_days.days)
-        described_class.perform_now(trainee, timeout_date)
+      context "trainee is not assessment only" do
+        before do
+          trainee.provider_led_postgrad!
+        end
+
+        it "requeues the job after clockover" do
+          clockover_date_as_time = Time.zone.parse(clockover_date)
+          expect(RetrieveTrnJob).to receive(:set).with(wait_until: clockover_date_as_time).and_return(job = double)
+          expect(job).to receive(:perform_later).with(trainee, clockover_date_as_time + configured_poll_timeout_days.days)
+          described_class.perform_now(trainee, timeout_date)
+        end
+      end
+
+      context "trainee is assessment only" do
+        before do
+          trainee.assessment_only!
+        end
+
+        it "runs the job" do
+          expect(RetrieveTrn).to receive(:call)
+          described_class.perform_now(trainee, timeout_date)
+        end
       end
     end
   end
