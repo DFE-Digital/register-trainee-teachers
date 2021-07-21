@@ -85,6 +85,26 @@ describe TrainingRouteManager do
     end
   end
 
+  describe "#requires_itt_start_date?" do
+    context "with the :routes_pg_teaching_apprenticeship feature flag enabled", "feature_routes.pg_teaching_apprenticeship": true do
+      context "with a pg teaching apprenticeship trainee" do
+        let(:trainee) { build(:trainee, :pg_teaching_apprenticeship) }
+
+        it "returns true" do
+          expect(subject.requires_itt_start_date?).to be true
+        end
+      end
+
+      context "with a non pg teaching apprenticeship trainee" do
+        let(:trainee) { build(:trainee) }
+
+        it "returns false" do
+          expect(subject.requires_itt_start_date?).to be false
+        end
+      end
+    end
+  end
+
   describe "#early_years_route?" do
     context "non early years route" do
       let(:trainee) { build(:trainee, :school_direct_salaried) }
