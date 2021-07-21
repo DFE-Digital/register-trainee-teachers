@@ -13,7 +13,7 @@ module Dttp
       @timeout_after = timeout_after
       @trainee = trainee
 
-      if before_clockover?
+      if before_clockover? && trainee_is_not_assessment_only?
         requeue_after_clockover
         return
       end
@@ -59,6 +59,10 @@ module Dttp
 
     def requeue_after_clockover
       self.class.set(wait_until: clockover_date).perform_later(trainee, clockover_date + Settings.jobs.max_poll_duration_days.days)
+    end
+
+    def trainee_is_not_assessment_only?
+      !(trainee.assessment_only? || trainee.early_years_assessment_only?)
     end
   end
 end
