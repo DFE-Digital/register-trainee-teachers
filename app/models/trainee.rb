@@ -125,7 +125,13 @@ class Trainee < ApplicationRecord
 
   scope :ordered_by_date, -> { order(updated_at: :desc) }
   scope :ordered_by_last_name, -> { order(last_name: :asc) }
-  scope :with_subject, ->(subject) { where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject", subject: subject.downcase) }
+
+  scope :with_subject_or_allocation_subject, lambda { |subject|
+    select("trainees.*", ordered_by_drafts_clause)
+      .joins(join_allocation_subjects_clause)
+      .where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject OR LOWER(allocation_subjects.name) = :subject", subject: subject.downcase)
+      .distinct
+  }
 
   # Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
@@ -175,6 +181,13 @@ class Trainee < ApplicationRecord
       WHEN #{states.fetch('draft')} THEN 0
       ELSE 1
       END
+    SQL
+  end
+
+  def self.join_allocation_subjects_clause
+    Arel.sql <<~SQL
+      LEFT JOIN subject_specialisms AS specialism ON specialism.name = trainees.course_subject_one OR specialism.name = trainees.course_subject_two OR specialism.name = trainees.course_subject_three
+      LEFT JOIN allocation_subjects ON specialism.allocation_subject_id = allocation_subjects.id
     SQL
   end
 

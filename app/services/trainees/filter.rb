@@ -59,7 +59,7 @@ module Trainees
     def subject(trainees, subject)
       return trainees if subject.blank?
 
-      trainees.with_subject(subject)
+      trainees.with_subject_or_allocation_subject(subject)
     end
 
     def text_search(trainees, text_search)

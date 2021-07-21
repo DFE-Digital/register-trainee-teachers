@@ -165,14 +165,29 @@ FactoryBot.define do
       training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
     end
 
+    trait :with_early_years_course_details do
+      course_subject_one { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING }
+      course_age_range { AgeRange::ZERO_TO_FIVE }
+    end
+
+    trait :early_years_assessment_only do
+      training_route { TRAINING_ROUTE_ENUMS[:early_years_assessment_only] }
+      with_early_years_course_details
+    end
+
+    trait :early_years_salaried do
+      training_route { TRAINING_ROUTE_ENUMS[:early_years_salaried] }
+      with_early_years_course_details
+    end
+
     trait :early_years_postgrad do
       training_route { TRAINING_ROUTE_ENUMS[:early_years_postgrad] }
+      with_early_years_course_details
     end
 
     trait :early_years_undergrad do
       training_route { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
-      course_subject_one { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING }
-      course_age_range { AgeRange::ZERO_TO_FIVE }
+      with_early_years_course_details
     end
 
     trait :school_direct_tuition_fee do

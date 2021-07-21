@@ -78,6 +78,13 @@ namespace :example_data do
               )
             end
 
+            if route.to_s.include?("early_years")
+              attrs.merge!(
+                course_subject_one: Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING,
+                course_age_range: AgeRange::ZERO_TO_FIVE,
+              )
+            end
+
             trainee = FactoryBot.create(:trainee, route, state, attrs)
 
             # Add an extra nationality 20% of the time
