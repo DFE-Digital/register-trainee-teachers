@@ -1,0 +1,39 @@
+# frozen_string_literal: true
+
+module Trainees
+  class IttStartDatesController < ApplicationController
+    before_action :authorize_trainee
+
+    def edit
+      @start_form = IttStartDateForm.new(trainee)
+    end
+
+    def update
+      @start_form = IttStartDateForm.new(trainee, params: trainee_params, user: current_user)
+
+      if @start_form.stash
+        redirect_to edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
+      else
+        render :edit
+      end
+    end
+
+  private
+
+    def trainee
+      @trainee ||= Trainee.from_param(params[:trainee_id])
+    end
+
+    def trainee_params
+      params.require(:itt_start_date_form)
+        .permit(:date_string, *MultiDateForm::PARAM_CONVERSION.keys)
+        .transform_keys do |key|
+          MultiDateForm::PARAM_CONVERSION.fetch(key, key)
+        end.merge({ date_string: :other })
+    end
+
+    def authorize_trainee
+      authorize(trainee, :requires_itt_start_date?)
+    end
+  end
+end

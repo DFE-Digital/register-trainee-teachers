@@ -191,6 +191,8 @@ en:
           edit: What type of training are they doing?
         course_details:
           edit: Course details
+        start_date:
+          edit: ITT start date
         withdrawal:
           show: Withdraw trainee
         confirm_withdrawal:
@@ -862,6 +864,13 @@ en:
               empty_nationalities: Select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list
+        itt_start_date_form:
+          attributes:
+            date_string:
+              blank: Enter an ITT start date
+            date:
+              blank: Enter an ITT start date
+              invalid: Enter a valid ITT start date
         course_details_form:
           attributes:
             course_subject_one:

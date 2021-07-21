@@ -28,6 +28,7 @@ class FormStore
     bursary
     language_specialisms
     subject_specialism
+    itt_start_date
   ].freeze
 
   class << self
