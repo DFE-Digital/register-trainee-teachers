@@ -2,13 +2,14 @@
 
 RSpec.shared_examples "rendering course confirmation" do
   let(:trainee) { build(:trainee) }
+  let(:itt_start_date) { nil }
 
   context "default behaviour" do
     let(:course) { build(:course, duration_in_years: 2) }
     let(:specialisms) { ["Specialism 1"] }
 
     before do
-      render_inline(described_class.new(trainee: trainee, course: course, specialisms: specialisms))
+      render_inline(described_class.new(trainee: trainee, course: course, specialisms: specialisms, itt_start_date: itt_start_date))
     end
 
     it "renders the course details" do
@@ -30,13 +31,21 @@ RSpec.shared_examples "rendering course confirmation" do
     it "renders the duration" do
       expect(rendered_component).to have_text("#{course.duration_in_years} years")
     end
+
+    context "with itt_start_date set" do
+      let(:itt_start_date) { Time.zone.now }
+
+      it "renders the itt start date" do
+        expect(rendered_component).to have_text(date_for_summary_view(course.start_date))
+      end
+    end
   end
 
   context "course subjects" do
     let(:course) { create(:course_with_subjects, subjects_count: subject_count) }
 
     before do
-      render_inline(described_class.new(trainee: trainee, course: course, specialisms: specialisms))
+      render_inline(described_class.new(trainee: trainee, course: course, specialisms: specialisms, itt_start_date: itt_start_date))
     end
 
     context "with one subject" do

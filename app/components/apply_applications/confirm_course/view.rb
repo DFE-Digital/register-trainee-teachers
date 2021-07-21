@@ -6,12 +6,13 @@ module ApplyApplications
       include SummaryHelper
       include CourseDetailsHelper
 
-      attr_accessor :trainee, :course, :specialisms
+      attr_accessor :trainee, :course, :specialisms, :itt_start_date
 
-      def initialize(trainee:, course:, specialisms:)
+      def initialize(trainee:, course:, specialisms:, itt_start_date:)
         @trainee = trainee
         @course = course
         @specialisms = specialisms
+        @itt_start_date = itt_start_date
       end
 
       def heading
@@ -60,7 +61,7 @@ module ApplyApplications
       end
 
       def start_date
-        date_for_summary_view(course.start_date)
+        date_for_summary_view(itt_start_date || course.start_date)
       end
 
       def duration
