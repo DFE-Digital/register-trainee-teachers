@@ -7,7 +7,7 @@ describe WithdrawalForm, type: :model do
   let(:trainee) { create(:trainee, :withdrawn, :withdrawn_for_another_reason) }
   let(:form_store) { class_double(FormStore) }
 
-  subject { described_class.new(trainee, params: params, store: form_store) }
+  subject { described_class.new(trainee, params: params.stringify_keys, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -44,6 +44,8 @@ describe WithdrawalForm, type: :model do
           )
         end
       end
+
+      include_examples "date is not before course start date", :withdrawal_form
     end
   end
 
@@ -51,24 +53,17 @@ describe WithdrawalForm, type: :model do
     context "with params" do
       let(:params) do
         {
-          "day" => "11",
-          "month" => "11",
-          "year" => "1963",
-          "date_string" => "other",
-          "withdraw_reason" => WithdrawalReasons::HEALTH_REASONS,
-          "additional_withdraw_reason" => "",
+          year: trainee.course_start_date.year,
+          month: trainee.course_start_date.month,
+          day: trainee.course_start_date.day,
+          date_string: "other",
+          withdraw_reason: WithdrawalReasons::HEALTH_REASONS,
+          additional_withdraw_reason: "",
         }
       end
 
       it "combines the data from params with the existing trainee data" do
-        expect(subject.fields).to match({
-          date_string: "other",
-          day: "11",
-          month: "11",
-          year: "1963",
-          withdraw_reason: WithdrawalReasons::HEALTH_REASONS,
-          additional_withdraw_reason: "",
-        })
+        expect(subject.fields).to match(params)
       end
     end
 

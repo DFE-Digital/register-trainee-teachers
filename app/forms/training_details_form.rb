@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TrainingDetailsForm < TraineeForm
-  include TrainingDetailsHelper
+  include TrainingDatesHelper
 
   COMMENCEMENT_DATE_RADIO_OPTION_COURSE = "course"
   COMMENCEMENT_DATE_RADIO_OPTION_MANUAL = "manual"

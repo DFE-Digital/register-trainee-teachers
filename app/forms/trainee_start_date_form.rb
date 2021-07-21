@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TraineeStartDateForm < TraineeForm
-  include TrainingDetailsHelper
+  include TrainingDatesHelper
 
   attr_accessor :day, :month, :year
 
