@@ -16,7 +16,7 @@ class TraineePolicy
 
   attr_reader :user, :trainee, :training_router_manager
 
-  delegate :requires_schools?, :requires_employing_school?, to: :training_router_manager
+  delegate :requires_schools?, :requires_employing_school?, :requires_itt_start_date?, to: :training_router_manager
 
   def initialize(user, trainee)
     @user = user
