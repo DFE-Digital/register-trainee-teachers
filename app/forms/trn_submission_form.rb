@@ -17,7 +17,7 @@ class TrnSubmissionForm
   trn_validator :degrees, form: "DegreesForm", unless: :apply_application?
   trn_validator :course_details, form: "CourseDetailsForm"
   trn_validator :training_details, form: "TrainingDetailsForm"
-  trn_validator :trainee_data, form: "ApplyTraineeDataForm", if: :apply_application?
+  trn_validator :trainee_data, form: "ApplyApplications::TraineeDataForm", if: :apply_application?
   trn_validator :schools, form: "Schools::FormValidator", if: :requires_schools?
   trn_validator :funding, form: "Funding::FormValidator", if: :funding_details_collected?
 

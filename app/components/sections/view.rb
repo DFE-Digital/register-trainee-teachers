@@ -95,9 +95,9 @@ module Sections
           review: "trainee_funding_confirm_path",
         },
         trainee_data: {
-          not_started: "edit_trainee_apply_trainee_data_path",
-          in_progress: "edit_trainee_apply_trainee_data_path",
-          review: "edit_trainee_apply_trainee_data_path",
+          not_started: "edit_trainee_apply_applications_trainee_data_path",
+          in_progress: "edit_trainee_apply_applications_trainee_data_path",
+          review: "edit_trainee_apply_applications_trainee_data_path",
         },
       }[section][progress_status]
     end

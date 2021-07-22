@@ -6,8 +6,8 @@ module TaskListHelper
       publish_course_details:
         {
           task_name: "Course details",
-          path: edit_trainee_publish_course_details_path(trainee),
-          confirm_path: trainee_course_details_confirm_path(trainee),
+          path: (trainee.apply_application? ? trainee_apply_applications_course_details_path(trainee) : edit_trainee_publish_course_details_path(trainee)),
+          confirm_path: (trainee.apply_application? ? trainee_apply_applications_course_details_path(trainee) : trainee_course_details_confirm_path(trainee)),
           classes: "course-details",
           status: ProgressService.call(
             validator: ValidatePublishCourseForm.new(trainee),
@@ -18,8 +18,8 @@ module TaskListHelper
       course_details:
         {
           task_name: "Course details",
-          path: edit_trainee_course_details_path(trainee),
-          confirm_path: trainee_course_details_confirm_path(trainee),
+          path: (trainee.apply_application? ? trainee_apply_applications_course_details_path(trainee) : edit_trainee_course_details_path(trainee)),
+          confirm_path: (trainee.apply_application? ? trainee_apply_applications_course_details_path(trainee) : trainee_course_details_confirm_path(trainee)),
           classes: "course-details",
           status: ProgressService.call(
             validator: CourseDetailsForm.new(trainee),
@@ -67,12 +67,12 @@ module TaskListHelper
       trainee_data:
         {
           task_name: "Trainee data",
-          path: edit_trainee_apply_trainee_data_path(trainee),
-          confirm_path: edit_trainee_apply_trainee_data_path(trainee),
+          path: edit_trainee_apply_applications_trainee_data_path(trainee),
+          confirm_path: edit_trainee_apply_applications_trainee_data_path(trainee),
           classes: "trainee-data",
           status: ProgressService.call(
-            validator: ApplyTraineeDataForm.new(trainee),
-            progress_value: ApplyTraineeDataForm.new(trainee).progress,
+            validator: ApplyApplications::TraineeDataForm.new(trainee),
+            progress_value: ApplyApplications::TraineeDataForm.new(trainee).progress,
           ).status,
         },
 

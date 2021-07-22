@@ -134,6 +134,14 @@ module Features
       @course_details_page ||= PageObjects::Trainees::CourseDetails.new
     end
 
+    def apply_registrations_course_details_page
+      @apply_registrations_course_details_page ||= PageObjects::Trainees::ApplyRegistrations::CourseDetails.new
+    end
+
+    def apply_registrations_confirm_course_page
+      @apply_registrations_confirm_course_page ||= PageObjects::Trainees::ApplyRegistrations::ConfirmCourse.new
+    end
+
     def publish_course_details_page
       @publish_course_details_page ||= PageObjects::Trainees::PublishCourseDetails.new
     end
@@ -243,7 +251,7 @@ module Features
     end
 
     def apply_trainee_data_page
-      @apply_trainee_data_pate ||= PageObjects::Trainees::ApplyTraineeData.new
+      @apply_trainee_data_pate ||= PageObjects::Trainees::ApplyRegistrations::TraineeData.new
     end
 
     def cookies_page

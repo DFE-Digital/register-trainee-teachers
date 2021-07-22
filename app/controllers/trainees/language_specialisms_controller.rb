@@ -13,7 +13,7 @@ module Trainees
       @language_specialisms_form = LanguageSpecialismsForm.new(trainee, params: language_specialism_params, user: current_user)
 
       if @language_specialisms_form.stash
-        redirect_to edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
+        redirect_to next_step_path
       else
         render :edit
       end
@@ -21,12 +21,20 @@ module Trainees
 
   private
 
+    def next_step_path
+      if trainee.apply_application?
+        trainee_apply_applications_confirm_courses_path(trainee)
+      else
+        edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
+      end
+    end
+
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
     def course
-      trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(trainee).code)
+      trainee.available_courses.find_by_code!(course_code)
     end
 
     def load_language_specialisms
@@ -39,6 +47,14 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
+    end
+
+    def publish_course_details_form
+      @publish_course_details_form ||= PublishCourseDetailsForm.new(trainee)
+    end
+
+    def course_code
+      publish_course_details_form.code || trainee.course_code
     end
   end
 end

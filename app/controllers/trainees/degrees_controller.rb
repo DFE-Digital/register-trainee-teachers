@@ -13,7 +13,7 @@ module Trainees
       @degree_form = @degrees_form.build_degree(degree_params, autocomplete_params)
 
       if @degree_form.save_or_stash
-        trainee.apply_application? ? (redirect_to edit_trainee_apply_trainee_data_path(trainee)) : (redirect_to trainee_degrees_confirm_path(trainee))
+        redirect_to redirect_path
       else
         render :new
       end
@@ -46,6 +46,14 @@ module Trainees
     end
 
   private
+
+    def redirect_path
+      if trainee.apply_application?
+        edit_trainee_apply_applications_trainee_data_path(trainee)
+      else
+        trainee_degrees_confirm_path(trainee)
+      end
+    end
 
     def degree_params
       params.require(:degree).permit(DegreeForm::FIELDS.excluding(:slug, *DegreeForm::AUTOCOMPLETE_FIELDS))
