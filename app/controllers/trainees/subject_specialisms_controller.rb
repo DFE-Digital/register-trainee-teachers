@@ -69,17 +69,27 @@ module Trainees
     end
 
     def course
-      @course ||= trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(trainee).code)
+      @course ||= trainee.available_courses.find_by_code!(course_code)
     end
 
     def next_step_path
       specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))
       next_position = position + 1
       if specialisms[:"course_subject_#{to_word(next_position)}"].present?
-        edit_trainee_subject_specialism_path(@trainee, next_position)
+        edit_trainee_subject_specialism_path(trainee, next_position)
+      elsif trainee.apply_application?
+        trainee_apply_applications_confirm_courses_path(trainee)
       else
-        edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
+        edit_trainee_confirm_publish_course_path(trainee)
       end
+    end
+
+    def publish_course_details_form
+      @publish_course_details_form ||= PublishCourseDetailsForm.new(trainee)
+    end
+
+    def course_code
+      publish_course_details_form.code || trainee.course_code
     end
   end
 end
