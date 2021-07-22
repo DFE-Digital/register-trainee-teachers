@@ -15,6 +15,12 @@ $govuk-border-width-narrow: 5px;
   .app-inset-text__title {
     color: govuk-colour("blue");
   }
+
+  &.app-inset-text--no_padding {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
 }
 
 .app-inset-text--error {

@@ -34,6 +34,7 @@ en:
       trainee_name:
         blank: "Draft record"
     confirmation:
+      missing: missing
       not_provided: Not provided
       heading: "Confirm trainee’s %{section_title}"
       cancel_and_return: Cancel and return to record
@@ -66,7 +67,10 @@ en:
           no_disability: They shared that they’re not disabled
           disability_not_provided: Not provided
       personal_detail:
-        gender:
+        full_name: Full name
+        date_of_birth: Date of birth
+        gender: Gender
+        genders:
           male: Male
           female: Female
           other: Other

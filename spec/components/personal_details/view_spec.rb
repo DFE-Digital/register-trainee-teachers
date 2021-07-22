@@ -20,7 +20,8 @@ module PersonalDetails
       end
 
       it "tells the user that no data has been entered" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.not_provided"), count: 4)
+        expect(rendered_component).to have_selector(".govuk-summary-list__value",
+                                                    text: t("components.confirmation.not_provided"), count: 3)
       end
     end
 
@@ -46,7 +47,7 @@ module PersonalDetails
       it "renders the gender" do
         expect(rendered_component)
           .to have_text(
-            I18n.t("components.confirmation.personal_detail.gender.#{trainee.gender}"),
+            I18n.t("components.confirmation.personal_detail.genders.#{trainee.gender}"),
           )
       end
 
