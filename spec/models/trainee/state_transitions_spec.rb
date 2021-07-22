@@ -118,5 +118,15 @@ describe "Trainee state transitions" do
     it "sets the #submitted_for_trn_at" do
       expect(subject.submitted_for_trn_at).to eq(time_now)
     end
+
+    context "with an apply application" do
+      let(:apply_application) { create(:apply_application, invalid_data: { "unmappable info": "unmappable value" }) }
+
+      subject { create(:trainee, apply_application: apply_application) }
+
+      it "wipes out the apply application's invalid_data" do
+        expect(apply_application.invalid_data).to be_nil
+      end
+    end
   end
 end
