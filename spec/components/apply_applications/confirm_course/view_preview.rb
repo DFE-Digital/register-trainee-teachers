@@ -6,19 +6,23 @@ module ApplyApplications
   module ConfirmCourse
     class ViewPreview < ViewComponent::Preview
       def default
-        render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms))
+        render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms, itt_start_date: nil))
+      end
+
+      def default_with_itt_start_date
+        render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms, itt_start_date: Time.zone.today))
       end
 
       def with_two_subjects
         course = build_course(subject_names: ["Subject 2"])
         specialisms = build_specialisms << "Specialism 2"
-        render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms))
+        render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms, itt_start_date: nil))
       end
 
       def with_three_subjects
         course = build_course(subject_names: ["Subject 2", "Subject 3"])
         specialisms = build_specialisms.concat(["Specialism 2", "Specialism 3"])
-        render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms))
+        render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms, itt_start_date: nil))
       end
 
     private
