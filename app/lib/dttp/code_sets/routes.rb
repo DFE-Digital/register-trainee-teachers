@@ -11,6 +11,7 @@ module Dttp
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: "7789922e-acc2-e611-80be-00155d010316" },
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => { entity_id: "6789922e-acc2-e611-80be-00155d010316" },
         TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => { entity_id: "6589922e-acc2-e611-80be-00155d010316" },
+        TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => { entity_id: "cf9154ee-5678-e811-80f6-005056ac45bb" },
       }.freeze
     end
   end
