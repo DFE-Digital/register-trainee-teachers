@@ -6,23 +6,27 @@ module Hoppit
   class << self
     def import_row(csv_row)
       trainee = build_trainee(csv_row)
-      degree =
-        if csv_row["Country (Non UK) degree"].blank?
-          build_uk_degree(trainee, csv_row)
-        else
-          build_non_uk_degree(trainee, csv_row)
-        end
+      degree = build_degree(trainee, csv_row)
 
       trainee.course_code = find_course(trainee, csv_row).code
+
       trainee.save!
       degree.save!
+    end
+
+    def build_degree(trainee, csv_row)
+      if csv_row["Country (Non UK) degree"].blank?
+        build_uk_degree(trainee, csv_row)
+      else
+        build_non_uk_degree(trainee, csv_row)
+      end
     end
 
     def build_uk_degree(trainee, row)
       Degree.new(trainee: trainee).tap do |degree|
         degree.locale_code = :uk
         degree.uk_degree = validate_uk_degree(row["Degree type"])
-        degree.grade = validate_degree_grade(row["Degree grade"])
+        degree.grade = to_degree_grade(row["Degree grade"])
         degree.graduation_year = row["Graduation year"]
         degree.institution = row["Institution"]
         degree.subject = validate_degree_subject(row["Subject of UG. degree"])

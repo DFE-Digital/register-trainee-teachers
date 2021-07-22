@@ -57,6 +57,54 @@ describe Hoppit do
     end
   end
 
+  describe "build_degree" do
+    subject { Hoppit.build_degree(trainee, csv_row) }
+
+    let(:trainee) { build(:trainee) }
+
+    context "when the degree country row is blank" do
+      let(:csv_row) do
+        {
+          "Degree type" => "Master of Music",
+          "Degree grade" => "Pass",
+          "Graduation year" => 2021,
+          "Institution" => "University of Central Lancashire",
+          "Subject of UG. degree" => "Volcanology",
+        }
+      end
+
+      it "builds a uk degree" do
+        expect(subject.locale_code).to eq "uk"
+        expect(subject.trainee).to eq trainee
+        expect(subject.uk_degree).to eq "Master of Music"
+        expect(subject.grade).to eq "Pass"
+        expect(subject.graduation_year).to eq 2021
+        expect(subject.institution).to eq "University of Central Lancashire"
+        expect(subject.subject).to eq "Volcanology"
+      end
+    end
+
+    context "when the degree country row is not blank" do
+      let(:csv_row) do
+        {
+          "Country (Non UK) degree" => "France",
+          "UK ENIC equivalent (Non UK)" => "Bachelor degree",
+          "Undergrad degree date obtained (Non UK)" => "13/04/2021",
+          "Subject of UG. Degree (Non UK)" => "Volcanology",
+        }
+      end
+
+      it "builds a non_uk degree" do
+        expect(subject.locale_code).to eq "non_uk"
+        expect(subject.trainee).to eq trainee
+        expect(subject.non_uk_degree).to eq "Bachelor degree"
+        expect(subject.graduation_year).to eq 2021
+        expect(subject.subject).to eq "Volcanology"
+        expect(subject.country).to eq "France"
+      end
+    end
+  end
+
   describe "to_age_range" do
     subject { Hoppit.to_age_range(age_range) }
 
