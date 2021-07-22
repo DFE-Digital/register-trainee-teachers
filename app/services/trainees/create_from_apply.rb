@@ -10,6 +10,8 @@ module Trainees
 
     def call
       trainee.save!
+      save_personal_details!
+      save_invalid_data!
       create_degrees!
       trainee
     end
@@ -37,12 +39,30 @@ module Trainees
         course_code: course&.code,
         training_route: course&.route,
         disabilities: disabilities,
-        nationalities: nationalities,
       }.merge(address)
+    end
+
+    def personal_details_params
+      {
+        nationality_names: nationality_names,
+      }
     end
 
     def create_degrees!
       ::Degrees::CreateFromApply.call(trainee: trainee)
+    end
+
+    def personal_details_form
+      @personal_details_form ||= PersonalDetailsForm.new(trainee, params: personal_details_params)
+    end
+
+    def save_personal_details!
+      personal_details_form.save!
+    end
+
+    def save_invalid_data!
+      invalid_nationalities = nationality_names - trainee.nationalities.pluck(:name)
+      application.update!(nationalities_invalid_data: invalid_nationalities)
     end
 
     def address
@@ -92,12 +112,8 @@ module Trainees
       raw_trainee["disabilities"].map { |disability| ApplyApi::CodeSets::Disabilities::MAPPING[disability] }
     end
 
-    def nationalities
-      @nationalities ||= Nationality.where(name: nationality_names)
-    end
-
     def nationality_names
-      raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
+      @nationality_names ||= raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
     end
 
     def course

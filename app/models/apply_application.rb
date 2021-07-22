@@ -6,8 +6,13 @@ class ApplyApplication < ApplicationRecord
   validates :application, presence: true
 
   store_accessor :invalid_data, :degrees, suffix: true
+  store_accessor :invalid_data, :nationalities, suffix: true
 
   def degrees_invalid_data
+    super || {}
+  end
+
+  def nationalities_invalid_data
     super || {}
   end
 
