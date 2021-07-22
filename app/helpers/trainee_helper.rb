@@ -52,4 +52,14 @@ module TraineeHelper
   def label_for(attribute, value)
     I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
   end
+
+  def invalid_data_message(form_section, trainee)
+    if trainee.apply_application?
+      # TODO: Remove this and add in the invalid data form for Apply Draft Applications
+      data = { "degrees" => { "institution" => "Southampton University" } }
+      return if data["degrees"][form_section].nil?
+
+      t("components.invalid_data_text.static_text", query: data["degrees"][form_section])
+    end
+  end
 end

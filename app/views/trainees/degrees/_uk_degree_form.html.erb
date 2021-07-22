@@ -1,18 +1,25 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "uk" %>
-
   <%= f.govuk_error_summary %>
+  <%= render InvalidDataSummary::View.new(data: { "degrees" => [{ "institution" => "University of Warwick" }] } ) %>  
 
   <h1 class="govuk-heading-l">UK degree details</h1>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :institution,
-    form_field: f.govuk_select(
-      :institution,
-      options_for_select(institutions_options, @degree_form.degree.institution),
-      label: { text: "Institution", size: "s" }
-    ),
+    form_field: f.govuk_collection_select(:institution, 
+                                          options_for_select(institutions_options, @degree_form.degree.institution),
+                                          :value,
+                                          :text,
+                                          form_group: { 
+                                            class: invalid_data_message("institution", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+                                            label: { text: "Institution",
+                                            size: "s",
+                                            hint: { text: "" }
+                                          }) do 
+      render InvalidDataText::View.new(trainee: @trainee, form_section: :institution)
+    end,
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
@@ -21,25 +28,38 @@
     form_field: f.govuk_select(
       :subject,
       options_for_select(subjects_options, @degree_form.degree.subject),
+      :value,
+      :text,
+      form_group: { class: invalid_data_message("subject", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
       label: { text: "Degree subject", size: "s" },
-      hint: { text: "Search for the closest matching subject. You can start typing to narrow down your search." },
-    ),
+      hint: { text: "" }
+    ) do 
+     render InvalidDataText::View.new(trainee: @trainee, form_section: :subject, hint: "Search for the closest matching subject" )
+    end,
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :uk_degree,
     form_field: f.govuk_select(
-      :uk_degree,
-      options_for_select(degree_type_options, @degree_form.degree.uk_degree),
-      label: { text: "Type of degree", size: "s" },
-      hint: { text: "For example, BA, BSc or other (please specify)" }
-    ),
-  ) %>
+      :uk_degree, 
+      options_for_select(degree_options, @degree_form.degree.uk_degree), 
+      form_group: { class: invalid_data_message("uk_degree", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+      label: { text: "Type of degree", size: "s" }, 
+      hint: -> do %>
+        <p class="govuk-body govuk-hint"> <%= "For example, BA, BSc or other (please specify)"  %></p> 
+        <%= tag.div(invalid_data_message("uk_degree", @trainee), class: "app-inset-text__title govuk-!-margin-bottom-3") %>
+      <% end %> 
+    <% ),
+    ) %>
 
   <%= f.govuk_radio_buttons_fieldset(:grade,
         legend: { text: "Degree grade", size: "s" },
-        classes: "degree-grade") do %>
+        form_group: { class: invalid_data_message("uk_degree", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+        hint: -> do %>
+          <%= tag.div(invalid_data_message("grade", @trainee), class: "app-inset-text__title govuk-!-margin-bottom-3") %>
+        <% end, %> 
+        <% classes: "degree-grade") do %>
 
     <% grades.each_with_index do |name, index| %>
       <% if name != "Other" %>
