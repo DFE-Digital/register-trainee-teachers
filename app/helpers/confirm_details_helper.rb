@@ -17,4 +17,8 @@ module ConfirmDetailsHelper
 
     public_send(routes[section_key.dasherize], trainee)
   end
+
+  def checkbox_text(section_key, trainee)
+    t("mark_as_completed", action: trainee.apply_application? && section_key == "course_details" ? "reviewed" : "completed")
+  end
 end
