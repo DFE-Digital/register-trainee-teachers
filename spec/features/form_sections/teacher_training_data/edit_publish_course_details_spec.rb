@@ -6,10 +6,11 @@ feature "publish course details", type: :feature, feature_publish_course_details
   include CourseDetailsHelper
 
   let(:subjects) { [] }
+  let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
 
   background do
     given_i_am_authenticated
-    given_a_trainee_exists_with_some_courses(with_subjects: subjects)
+    given_a_trainee_exists_with_some_courses(with_subjects: subjects, with_training_route: training_route)
     given_i_am_on_the_review_draft_page
   end
 
@@ -147,14 +148,42 @@ feature "publish course details", type: :feature, feature_publish_course_details
     describe "selecting a course with one specialism" do
       let(:subjects) { [Dttp::CodeSets::AllocationSubjects::MUSIC] }
 
-      scenario do
+      before do
         when_i_visit_the_publish_course_details_page
         and_some_courses_for_other_providers_or_routes_exist
         then_i_see_the_route_message
         and_i_only_see_the_courses_for_my_provider_and_route
         when_i_select_a_course
         and_i_submit_the_form
+      end
+
+      scenario do
         then_i_see_the_confirm_publish_course_page
+      end
+
+      context "trainee is on the pg teaching apprenticeship training route", "feature_routes.pg_teaching_apprenticeship": true do
+        let(:training_route) { TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] }
+
+        scenario "with valid itt start date" do
+          then_i_see_the_itt_start_date_edit_page
+          and_i_set_itt_start_date("1/01/2020")
+          and_i_continue
+          then_i_see_the_confirm_publish_course_page
+        end
+
+        scenario "with invalid itt start date" do
+          then_i_see_the_itt_start_date_edit_page
+          and_i_set_itt_start_date("32/01/2020")
+          and_i_continue
+          then_i_see_the_error_message_for("invalid")
+        end
+
+        scenario "without itt start date" do
+          then_i_see_the_itt_start_date_edit_page
+
+          and_i_continue
+          then_i_see_the_error_message_for("invalid")
+        end
       end
     end
 
@@ -201,8 +230,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
   end
 
-  def given_a_trainee_exists_with_some_courses(with_subjects: [])
-    given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+  def given_a_trainee_exists_with_some_courses(with_subjects: [], with_training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+    given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: with_training_route)
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
 
@@ -312,6 +341,20 @@ feature "publish course details", type: :feature, feature_publish_course_details
     expect(@matching_courses.map(&:code).sort).to eq(course_codes_on_page)
   end
 
+  def and_i_set_itt_start_date(date)
+    itt_start_date_edit_page.set_date_fields("itt_start_date", date)
+  end
+
+  def and_i_continue
+    itt_start_date_edit_page.continue.click
+  end
+
+  def then_i_see_the_error_message_for(type)
+    expect(itt_start_date_edit_page).to have_content(
+      I18n.t("activemodel.errors.models.itt_start_date_form.attributes.date.#{type}"),
+    )
+  end
+
   def then_i_see_the_route_message
     expected_message = t("views.forms.publish_course_details.route_message", route: route_title(@trainee.training_route))
     expect(publish_course_details_page.route_message.text).to eq(expected_message)
@@ -319,6 +362,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def then_i_see_the_confirm_publish_course_page
     expect(confirm_publish_course_page).to be_displayed(trainee_id: trainee.slug)
+  end
+
+  def then_i_see_the_itt_start_date_edit_page
+    expect(itt_start_date_edit_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def then_i_see_the_subject_specialism_page
