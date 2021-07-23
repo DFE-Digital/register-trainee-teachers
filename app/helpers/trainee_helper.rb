@@ -55,11 +55,11 @@ module TraineeHelper
 
   def invalid_data_message(form_section, trainee)
     if trainee.apply_application?
-      # TODO: Remove this and add in the invalid data form for Apply Draft Applications
-      data = { "degrees" => { "institution" => "Southampton University" } }
-      return if data["degrees"][form_section].nil?
+      data = JSON(trainee.apply_application.invalid_data)
 
-      t("components.invalid_data_text.static_text", query: data["degrees"][form_section])
+      return if trainee.apply_application.invalid_data.nil? || data.nil? || data["degrees"][trainee.slug][form_section].nil?
+
+      t("components.invalid_data_text.static_text", query: data["degrees"][trainee.slug][form_section])
     end
   end
 end

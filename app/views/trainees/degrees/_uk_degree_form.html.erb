@@ -1,7 +1,7 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "uk" %>
   <%= f.govuk_error_summary %>
-  <%= render InvalidDataSummary::View.new(data: { "degrees" => [{ "institution" => "University of Warwick" }] } ) %>  
+  <%= render InvalidDataSummary::View.new(data: @trainee.apply_application.invalid_data) %>  
 
   <h1 class="govuk-heading-l">UK degree details</h1>
 

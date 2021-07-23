@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 class InvalidDataSummary::View < GovukComponent::Base
-  def initialize(data: {})
+  def initialize(data: "{}")
     @data = data
   end
 
   def invalid_fields
-    data.values.flatten.map(&:keys).flatten
+    JSON(data).values.flatten.map(&:values).flatten
   end
 
   def render?
-    data&.any?
+    return if data.nil?
+
+    JSON(data)&.any?
   end
 
 private
