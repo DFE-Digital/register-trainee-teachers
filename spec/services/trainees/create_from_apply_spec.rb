@@ -86,11 +86,6 @@ module Trainees
       it { is_expected.to have_attributes(non_uk_address_attributes) }
     end
 
-    it "updates invalid entries against the ApplyApplication" do
-      create_trainee_from_apply
-      expect(trainee.apply_application.nationalities_invalid_data).to match_array(%w[tristanian british])
-    end
-
     context "when disabilities exist" do
       before do
         Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h))
@@ -111,7 +106,17 @@ module Trainees
       end
 
       it "does not store invalid data" do
-        expect(trainee.apply_application.nationalities_invalid_data).to be_empty
+        expect(trainee.apply_application.nationalities_invalid_data).to eq({})
+      end
+
+      context "when the trainee's nationalities is unrecognised" do
+        before do
+          stub_const("ApplyApi::CodeSets::Nationalities::MAPPING", { "AL" => "albanian", "GB" => "british" })
+        end
+
+        it "does not store invalid data" do
+          expect(trainee.apply_application.nationalities_invalid_data).to eq(["SH"])
+        end
       end
     end
   end

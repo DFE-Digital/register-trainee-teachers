@@ -61,8 +61,8 @@ module Trainees
     end
 
     def save_invalid_data!
-      invalid_nationalities = nationality_names - trainee.nationalities.pluck(:name)
-      application.update!(nationalities_invalid_data: invalid_nationalities)
+      invalid_nationalities = raw_trainee["nationality"] - ApplyApi::CodeSets::Nationalities::MAPPING.keys
+      application.update!(nationalities_invalid_data: invalid_nationalities) if invalid_nationalities.present?
     end
 
     def address
