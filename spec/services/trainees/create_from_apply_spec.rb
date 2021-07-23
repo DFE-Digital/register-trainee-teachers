@@ -86,6 +86,11 @@ module Trainees
       it { is_expected.to have_attributes(non_uk_address_attributes) }
     end
 
+    it "does not capture to sentry" do
+      expect(Sentry).not_to receive(:capture_message)
+      create_trainee_from_apply
+    end
+
     context "when disabilities exist" do
       before do
         Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h))
@@ -105,17 +110,14 @@ module Trainees
         expect(trainee.nationalities.map(&:name)).to match_array(%w[british tristanian])
       end
 
-      it "does not store invalid data" do
-        expect(trainee.apply_application.nationalities_invalid_data).to eq({})
-      end
-
       context "when the trainee's nationalities is unrecognised" do
         before do
           stub_const("ApplyApi::CodeSets::Nationalities::MAPPING", { "AL" => "albanian", "GB" => "british" })
         end
 
-        it "does not store invalid data" do
-          expect(trainee.apply_application.nationalities_invalid_data).to eq(["SH"])
+        it "captures a message to sentry" do
+          expect(Sentry).to receive(:capture_message).with(("Cannot map nationality from ApplyApplication id: #{apply_application.id}, code: SH"))
+          create_trainee_from_apply
         end
       end
     end

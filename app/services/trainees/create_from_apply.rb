@@ -11,7 +11,6 @@ module Trainees
     def call
       trainee.save!
       save_personal_details!
-      save_invalid_data!
       create_degrees!
       trainee
     end
@@ -58,11 +57,15 @@ module Trainees
 
     def save_personal_details!
       personal_details_form.save!
+      verify_nationalities_data!
     end
 
-    def save_invalid_data!
+    def verify_nationalities_data!
       invalid_nationalities = raw_trainee["nationality"] - ApplyApi::CodeSets::Nationalities::MAPPING.keys
-      application.update!(nationalities_invalid_data: invalid_nationalities) if invalid_nationalities.present?
+
+      return if invalid_nationalities.blank?
+
+      Sentry.capture_message "Cannot map nationality from ApplyApplication id: #{application.id}, code: #{invalid_nationalities.join(', ')}"
     end
 
     def address
