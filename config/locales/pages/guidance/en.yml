@@ -146,24 +146,18 @@ en:
 
         <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
 
-        <h3 class='govuk-heading-m'>Allocations information</h3>
+        <h3 class='govuk-heading-m'>Trainee start date and ID</h3>
 
-        <p class='govuk-body'>
-          If the course has allocated places, you'll need to know whether the trainee is using an allocated place.
-        </p>
+          <ul class='govuk-list'>
+          <li>Trainee start date</li>
+          <li>Trainee ID (assigned by you)</li>
+        </ul>
 
         <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
 
-        <h3 class='govuk-heading-m'>Placement details</h3>
+        <h3 class='govuk-heading-m'>Schools</h3>
 
-        <p class='govuk-body'>This is required for all training types except assessment only.</p>
-
-
-        <ul class='govuk-list'>
-          <li>Unique reference number (URN) of the placement school or college</li>
-          <li>Start month</li>
-          <li>Duration in weeks</li>
-        </ul>
+        <p class='govuk-body'>This is only required for school direct and teaching apprenticeship routes</p>
 
         <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
 
