@@ -29,6 +29,9 @@ class DegreeForm
   validates :subject, :institution, autocomplete: true, allow_nil: true
   validate :validate_with_degree_model
 
+  validates :institution, inclusion: { in: Degree::INSTITUTIONS }, allow_nil: true
+  validates :subject, inclusion: { in: Degree::SUBJECTS }, allow_nil: true
+
   delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?, to: :degree
 
   alias_method :to_param, :slug
@@ -87,6 +90,19 @@ class DegreeForm
   def destroy!
     degrees_form.delete_degree_on_store(slug)
     degree.destroy! unless degree.new_record?
+  end
+
+  def save_and_return_invalid_data!
+    invalid_data = {}
+
+    valid?
+
+    errors.each do |error|
+      invalid_data[error.attribute.to_sym] = send(error.attribute)
+      send("#{error.attribute}=", nil)
+    end
+
+    save_or_stash && invalid_data
   end
 
 private

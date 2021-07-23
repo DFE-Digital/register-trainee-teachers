@@ -71,6 +71,11 @@ module Trainees
       expect(trainee.provider).to eq(apply_application.provider)
     end
 
+    it "calls the Degrees::CreateFromApply service" do
+      expect(::Degrees::CreateFromApply).to receive(:call).and_call_original
+      create_trainee_from_apply
+    end
+
     context "with a uk address" do
       it { is_expected.to have_attributes(uk_address_attributes) }
     end
@@ -79,6 +84,11 @@ module Trainees
       let(:apply_application) { create(:apply_application, application: ApiStubs::ApplyApi.non_uk_application.to_json) }
 
       it { is_expected.to have_attributes(non_uk_address_attributes) }
+    end
+
+    it "does not capture to sentry" do
+      expect(Sentry).not_to receive(:capture_message)
+      create_trainee_from_apply
     end
 
     context "when disabilities exist" do
@@ -98,6 +108,17 @@ module Trainees
 
       it "adds the trainee's nationalities" do
         expect(trainee.nationalities.map(&:name)).to match_array(%w[british tristanian])
+      end
+
+      context "when the trainee's nationalities is unrecognised" do
+        before do
+          stub_const("ApplyApi::CodeSets::Nationalities::MAPPING", { "AL" => "albanian", "GB" => "british" })
+        end
+
+        it "captures a message to sentry" do
+          expect(Sentry).to receive(:capture_message).with(("Cannot map nationality from ApplyApplication id: #{apply_application.id}, code: SH"))
+          create_trainee_from_apply
+        end
       end
     end
   end

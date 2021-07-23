@@ -85,6 +85,7 @@ class Trainee < ApplicationRecord
     event :submit_for_trn do
       before do
         self.submitted_for_trn_at = Time.zone.now
+        apply_application&.update!(invalid_data: nil)
       end
 
       transition %i[draft deferred] => :submitted_for_trn

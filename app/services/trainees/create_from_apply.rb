@@ -10,20 +10,14 @@ module Trainees
 
     def call
       trainee.save!
+      save_personal_details!
+      create_degrees!
       trainee
     end
 
   private
 
     attr_reader :application
-
-    def attributes
-      @attributes ||= parsed_application["attributes"]
-    end
-
-    def parsed_application
-      @parsed_application ||= JSON.parse(application.application)
-    end
 
     def trainee
       @trainee ||= Trainee.new(mapped_attributes)
@@ -43,14 +37,35 @@ module Trainees
         email: raw_contact_details["email"],
         course_code: course&.code,
         training_route: course&.route,
-        degrees: degrees,
         disabilities: disabilities,
-        nationalities: nationalities,
       }.merge(address)
     end
 
-    def degrees
-      raw_degrees.map { |degree| ::Degrees::CreateFromApply.call(attributes: degree) }
+    def personal_details_params
+      {
+        nationality_names: nationality_names,
+      }
+    end
+
+    def create_degrees!
+      ::Degrees::CreateFromApply.call(trainee: trainee)
+    end
+
+    def personal_details_form
+      @personal_details_form ||= PersonalDetailsForm.new(trainee, params: personal_details_params)
+    end
+
+    def save_personal_details!
+      personal_details_form.save!
+      verify_nationalities_data!
+    end
+
+    def verify_nationalities_data!
+      invalid_nationalities = raw_trainee["nationality"] - ApplyApi::CodeSets::Nationalities::MAPPING.keys
+
+      return if invalid_nationalities.blank?
+
+      Sentry.capture_message "Cannot map nationality from ApplyApplication id: #{application.id}, code: #{invalid_nationalities.join(', ')}"
     end
 
     def address
@@ -100,12 +115,8 @@ module Trainees
       raw_trainee["disabilities"].map { |disability| ApplyApi::CodeSets::Disabilities::MAPPING[disability] }
     end
 
-    def nationalities
-      @nationalities ||= Nationality.where(name: nationality_names)
-    end
-
     def nationality_names
-      raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
+      @nationality_names ||= raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
     end
 
     def course
@@ -117,19 +128,15 @@ module Trainees
     end
 
     def raw_trainee
-      @raw_trainee ||= attributes["candidate"]
+      @raw_trainee ||= application.application_attributes["candidate"]
     end
 
     def raw_contact_details
-      @raw_contact_details ||= attributes["contact_details"]
+      @raw_contact_details ||= application.application_attributes["contact_details"]
     end
 
     def raw_course
-      @raw_course ||= attributes["course"]
-    end
-
-    def raw_degrees
-      @raw_degrees ||= attributes["qualifications"]["degrees"]
+      @raw_course ||= application.application_attributes["course"]
     end
   end
 end
