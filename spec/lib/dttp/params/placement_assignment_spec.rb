@@ -78,6 +78,7 @@ module Dttp
                 "dfe_programmeyear" => 1,
                 "dfe_programmelength" => 1,
                 "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
+                "dfe_undergraddegreedateobtained" => "#{degree.graduation_year}-01-01",
               })
             end
           end
@@ -104,6 +105,7 @@ module Dttp
                 "dfe_programmeyear" => 1,
                 "dfe_programmelength" => 1,
                 "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
+                "dfe_undergraddegreedateobtained" => "#{degree.graduation_year}-01-01",
               })
             end
           end
