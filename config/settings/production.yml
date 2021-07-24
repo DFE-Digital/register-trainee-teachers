@@ -26,7 +26,6 @@ features:
   enable_feedback_link: true
   sync_from_dttp: true
   send_emails: true
-  run_consistency_check_job: true
   persist_to_dttp: true
   import_courses_from_ttapi: true
   publish_course_details: true
