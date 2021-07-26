@@ -542,6 +542,9 @@ en:
     view:
       display_text: "Trainee on the %{training_route_link} route."
       apply_display_text: "Trainee enrolled on %{course_with_code}, %{training_route}."
+  error_summary:
+    view:
+      heading: There is a problem
   confirm_publish_course:
     view:
       change: Change
