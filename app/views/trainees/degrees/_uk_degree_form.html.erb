@@ -1,7 +1,9 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "uk" %>
   <%= f.govuk_error_summary %>
-  <%= render InvalidDataSummary::View.new(data: @trainee.apply_application.invalid_data) %>  
+  <% if @trainee.has_invalid_apply_data? %>
+    <%= render InvalidDataSummary::View.new(data: @trainee.apply_application.invalid_data) %>
+  <% end %>
 
   <h1 class="govuk-heading-l">UK degree details</h1>
 
@@ -13,9 +15,11 @@
                                           :value,
                                           :text,
                                           form_group: { 
-                                            class: invalid_data_message("institution", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
-                                            label: { text: "Institution",
+                                            class: invalid_data_message("institution", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" 
+                                          },
+                                          label: { text: "Institution",
                                             size: "s",
+                                            id: "degree-institution-label",
                                             hint: { text: "" }
                                           }) do 
       render InvalidDataText::View.new(trainee: @trainee, form_section: :institution)
@@ -31,7 +35,7 @@
       :value,
       :text,
       form_group: { class: invalid_data_message("subject", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
-      label: { text: "Degree subject", size: "s" },
+      label: { text: "Degree subject", size: "s", id: "degree-subject-label" },
       hint: { text: "" }
     ) do 
      render InvalidDataText::View.new(trainee: @trainee, form_section: :subject, hint: "Search for the closest matching subject" )
@@ -73,8 +77,11 @@
   <% end %>
 
   <%= f.govuk_text_field :graduation_year,
-        label: { text: "Graduation year", size: "s" },
-        width: "one-quarter" %>
+        width: "one-quarter",
+        form_group: { class: invalid_data_message("graduation_year", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+        label: { text: "Graduation year", size: "s", "degree-graduation-year-label" } do 
+          render InvalidDataText::View.new(trainee: @trainee, form_section: :graduation_year, hint: "" )
+        end %>
 
   <%= f.govuk_submit %>
 <% end %>

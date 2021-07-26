@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class InvalidDataSummary::View < GovukComponent::Base
-  def initialize(data: "{}")
+  def initialize(data: "{}", section: "degrees")
     @data = data
+    @section = section
   end
 
   def invalid_fields
-    JSON(data).values.flatten.map(&:values).flatten
+    JSON(data)[section].values.first
   end
 
   def render?
@@ -17,5 +18,5 @@ class InvalidDataSummary::View < GovukComponent::Base
 
 private
 
-  attr_reader :data
+  attr_reader :data, :section
 end

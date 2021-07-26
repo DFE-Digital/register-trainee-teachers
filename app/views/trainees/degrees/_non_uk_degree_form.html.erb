@@ -1,24 +1,35 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "non_uk" %>
   <%= f.govuk_error_summary %>
-  <%= render InvalidDataSummary::View.new(data: { "degrees" => [{ "institution" => "University of Warwick" }] } ) %>  
+  <% if @trainee.has_invalid_apply_data? %>
+    <%= render InvalidDataSummary::View.new(data: @trainee.apply_application.invalid_data) %>
+  <% end %>
 
   <h1 class="govuk-heading-l">Non-UK degree details</h1>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
-    form_field: f.govuk_collection_select(:country, countries_options, :value,
-                                          :text, label: { text: "In which country is the degree institution based?", size: "s" }) do 
-      render InvalidDataText::View.new(trainee: @trainee, form_section: :subject)
+    form_field: f.govuk_collection_select(:country, 
+                                          countries_options,
+                                          :value,
+                                          :text,
+                                          form_group: { class: invalid_data_message("country", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+                                          label: { text: "In which country is the degree institution based?", size: "s", id: "degree-institution-label" }) do 
+      render InvalidDataText::View.new(trainee: @trainee, form_section: :country)
     end,
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
-    form_field: f.govuk_select(
-      :subject,
+    form_field: f.govuk_collection_select(
+      :subject, 
       options_for_select(subjects_options, @degree_form.degree.subject),
-      label: { text: "Degree subject", size: "s" },
+      :value, 
+      :text,
+      form_group: { 
+        class: invalid_data_message("subject", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group"
+      },
+      label: { text: "Degree subject", size: "s", id: "degree-subject-label" },
       hint: {
         text: "",
       }
@@ -43,9 +54,12 @@
   </div>
 
   <%= f.govuk_text_field :graduation_year,
-                         label: { text: "Graduation year", size: "s" },
+                         form_group: { class: invalid_data_message("graduation_year", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
                          width: "one-quarter",
-                         autocomplete: :disabled %>
+                         autocomplete: :disabled, 
+                         label: { text: "Graduation year", size: "s", id: "degree-graduation-year-label", } do 
+                            render InvalidDataText::View.new(trainee: @trainee, form_section: :graduation_year, hint: "")
+                          end %>
 
   <%= f.govuk_submit %>
 <% end %>

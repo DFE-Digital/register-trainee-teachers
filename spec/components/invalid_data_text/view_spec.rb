@@ -10,8 +10,8 @@ module InvalidDataText
       render_inline(described_class.new(trainee: trainee, form_section: form_section))
     end
 
-    context "when there is invalid data for an apply trainee" do 
-      let(:trainee) { create(:trainee, :with_apply_application)}
+    context "when there is invalid data for an apply trainee" do
+      let(:trainee) { create(:trainee, :with_apply_application) }
       let(:form_section) { :institution }
 
       it "renders the correct css" do
@@ -21,7 +21,7 @@ module InvalidDataText
     end
 
     context "when there is valid data for an apply trainee" do
-      let(:trainee) { create(:trainee, :with_apply_application)}
+      let(:trainee) { create(:trainee, :with_apply_application) }
       let(:form_section) { :subject }
 
       it "renders the correct css" do
