@@ -5,13 +5,13 @@ module Trainees
     before_action :authorize_trainee
 
     def edit
-      @start_form = IttStartDateForm.new(trainee)
+      @itt_start_date_form = IttStartDateForm.new(trainee)
     end
 
     def update
-      @start_form = IttStartDateForm.new(trainee, params: trainee_params, user: current_user)
+      @itt_start_date_form = IttStartDateForm.new(trainee, params: trainee_params, user: current_user)
 
-      if @start_form.stash
+      if @itt_start_date_form.stash
         redirect_to edit_trainee_confirm_publish_course_path(trainee_id: @trainee.slug)
       else
         render :edit

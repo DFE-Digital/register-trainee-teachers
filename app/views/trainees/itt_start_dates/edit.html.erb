@@ -1,6 +1,6 @@
 <% text = I18n.t("components.page_titles.trainees.itt_start_date.edit") %>
 
-<%= render PageTitle::View.new(text: text, has_errors: @start_form.errors.present?) %>
+<%= render PageTitle::View.new(text: text, has_errors: @itt_start_date_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
@@ -11,7 +11,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @start_form, 
+    <%= register_form_with(model: @itt_start_date_form, 
                            url: trainee_course_details_itt_start_date_path(@trainee), 
                            local: true) do |f| %>
       <%= f.govuk_error_summary %>
