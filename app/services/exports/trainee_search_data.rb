@@ -9,7 +9,7 @@ module Exports
     def data
       header_row ||= data_for_export.first&.keys
 
-      CSV.generate(headers: true) do |rows|
+      CSV.generate(headers: true, quote_char: "'") do |rows|
         rows << header_row
 
         data_for_export.map(&:values).each do |value|
