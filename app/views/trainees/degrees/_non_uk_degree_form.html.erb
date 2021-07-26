@@ -1,7 +1,7 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "non_uk" %>
   <%= f.govuk_error_summary %>
-  <% if @trainee.has_invalid_apply_data? %>
+  <% if @trainee.invalid_apply_data? %>
     <%= render InvalidDataSummary::View.new(data: @trainee.apply_application.invalid_data) %>
   <% end %>
 
@@ -21,21 +21,18 @@
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
-    form_field: f.govuk_collection_select(
+    form_field: f.govuk_select(
       :subject, 
       options_for_select(subjects_options, @degree_form.degree.subject),
-      :value, 
-      :text,
       form_group: { 
         class: invalid_data_message("subject", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group"
       },
       label: { text: "Degree subject", size: "s", id: "degree-subject-label" },
-      hint: {
-        text: "",
-      }
-    ) do 
-      render InvalidDataText::View.new(trainee: @trainee, form_section: :subject, hint: "Search for the closest matching subject. You can start typing to narrow down your search.")
-    end,
+      hint: -> do %>
+        <p class="govuk-body govuk-hint"> <%= "Search for the closest matching subject"  %></p> 
+        <%= tag.div(invalid_data_message("subject", @trainee), class: "app-inset-text__title govuk-!-margin-bottom-3") %>
+      <% end %> 
+    <% ),
   ) %>
 
   <div class="govuk-form-group">

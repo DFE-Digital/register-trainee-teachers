@@ -7,13 +7,13 @@ class InvalidDataSummary::View < GovukComponent::Base
   end
 
   def invalid_fields
-    JSON(data)[section].values.first
+    data[section].values.first
   end
 
   def render?
-    return if data.nil?
+    return if data.empty?
 
-    JSON(data)&.any?
+    data&.any?
   end
 
 private

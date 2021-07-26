@@ -11,12 +11,12 @@ module InvalidDataText
     end
 
     context "when there is invalid data for an apply trainee" do
-      let(:trainee) { create(:trainee, :with_apply_application) }
+      let(:trainee) { create(:trainee, :with_invalid_apply_application, slug: "XXLbvaRY42wP52hWiP78r94m") }
       let(:form_section) { :institution }
 
       it "renders the correct css" do
         expect(component).to have_css(".app-inset-text__title")
-        expect(component).to have_text("The trainee entered ‘Southampton University’. You need to search for the closest match.")
+        expect(component).to have_text("The trainee entered ‘University of Warwick’. You need to search for the closest match.")
       end
     end
 

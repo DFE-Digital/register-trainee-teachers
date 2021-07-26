@@ -5,10 +5,11 @@ require "rails_helper"
 module InvalidDataSummary
   describe View, type: :component do
     context "when there is invalid data" do
-      let(:data) { { "degrees" => [{ "institution" => "University of Warwick" }] } }
+      let(:trainee) { build(:trainee) }
+      let(:data) { { "degrees" => { trainee.slug.to_s => { "institution" => "University of Warwick" } } } }
 
       before do
-        render_inline(described_class.new(data: data))
+        render_inline(described_class.new(data: data, section: "degrees"))
       end
 
       it "renders the summary text" do
@@ -19,7 +20,7 @@ module InvalidDataSummary
 
       it "renders a list of links for each invalid field" do
         link_text = I18n.t("invalid_data_summary.view.invalid_answer_text", invalid_field: "Institution")
-        expect(rendered_component).to have_link(link_text, href: "#institution")
+        expect(rendered_component).to have_link(link_text, href: "#degree-institution-label")
       end
     end
 

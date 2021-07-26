@@ -50,11 +50,11 @@ describe TraineeHelper do
   end
 
   describe "#invalid_data_message" do
-    let(:trainee) { create(:trainee, :with_apply_application) }
+    let(:trainee) { create(:trainee, :with_invalid_apply_application, slug: "XXLbvaRY42wP52hWiP78r94m") }
 
     context "with invalid data" do
       it "return the invalid data message" do
-        expect(invalid_data_message("institution", trainee)).to eq("The trainee entered ‘Southampton University’. You need to search for the closest match.")
+        expect(invalid_data_message("institution", trainee)).to eq("The trainee entered ‘University of Warwick’. You need to search for the closest match.")
       end
     end
 
