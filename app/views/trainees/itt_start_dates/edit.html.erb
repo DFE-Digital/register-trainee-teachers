@@ -1,4 +1,4 @@
-<% text = I18n.t("components.page_titles.trainees.start_date.edit") %>
+<% text = I18n.t("components.page_titles.trainees.itt_start_date.edit") %>
 
 <%= render PageTitle::View.new(text: text, has_errors: @start_form.errors.present?) %>
 
@@ -11,11 +11,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @start_form, url: trainee_course_details_itt_start_date_path(@trainee), local: true) do |f| %>
+    <%= register_form_with(model: @start_form, 
+                           url: trainee_course_details_itt_start_date_path(@trainee), 
+                           local: true) do |f| %>
       <%= f.govuk_error_summary %>
-        <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: text, tag: "h1", size: "l" }, classes: "start-date", hint: {text: "The start date of the Initial Teacher Training portion of their course. "}) do %>
+        <%= f.govuk_fieldset(legend: { text: text, tag: "h1", size: "l" }) do %>
             <%= f.govuk_date_field :date, legend: { text: "" }, 
-            hint: { text: "#{t('views.forms.common.for_example')}, 3 12 2020" } %>
+            hint: -> do %>
+              <p class="govuk-body govuk-hint"> <%= t("components.itt_start_date.hint") %> </p>
+              <p class="govuk-body govuk-hint"> <%= "#{t('views.forms.common.for_example')}, 26 7 2021" %> </p>
+            <% end %>
           <div>
         <% end %>
 

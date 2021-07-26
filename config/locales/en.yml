@@ -125,6 +125,8 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
+    itt_start_date:
+      hint: The start date of the Initial Teacher Training portion of their course.
     page_titles:
       personas: Personas
       pages:
@@ -191,7 +193,7 @@ en:
           edit: What type of training are they doing?
         course_details:
           edit: Course details
-        start_date:
+        itt_start_date:
           edit: ITT start date
         withdrawal:
           show: Withdraw trainee
