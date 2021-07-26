@@ -14,7 +14,7 @@ module PublishCourseNextPath
     if trainee.apply_application?
       trainee_apply_applications_confirm_courses_path(trainee)
     else
-      edit_trainee_confirm_publish_course_path(@trainee)
+      edit_trainee_confirm_publish_course_path(trainee)
     end
   end
 end
