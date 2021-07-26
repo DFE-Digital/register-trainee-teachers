@@ -43,6 +43,7 @@ module Dttp
               "dfe_DegreeSubjectId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
               "dfe_DegreeTypeId@odata.bind" => "/dfe_degreetypes(#{dttp_degree_type_id})",
               "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{dttp_degree_institution_entity_id})",
+              "dfe_undergraddegreedateobtained" => "#{degree.graduation_year}-01-01",
             })
           end
         end
@@ -59,6 +60,7 @@ module Dttp
               "dfe_DegreeSubjectId@odata.bind" => "/dfe_jacses(#{dttp_degree_subject_entity_id})",
               "dfe_DegreeTypeId@odata.bind" => "/dfe_degreetypes(#{dttp_degree_type_id})",
               "dfe_DegreeCountryId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
+              "dfe_undergraddegreedateobtained" => "#{degree.graduation_year}-01-01",
             })
           end
         end

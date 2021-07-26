@@ -25,6 +25,7 @@ module Dttp
           "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
           "dfe_TrainingRecordId@odata.bind" => "$#{placement_assignment_change_set_id}",
           "dfe_DegreeSubjectId@odata.bind" => "/dfe_jacses(#{degree_subject_id(degree.subject)})",
+          "dfe_undergraddegreedateobtained" => "#{degree.graduation_year}-01-01",
         }.merge(degree.uk? ? uk_specific_params : non_uk_specific_params)
       end
 
