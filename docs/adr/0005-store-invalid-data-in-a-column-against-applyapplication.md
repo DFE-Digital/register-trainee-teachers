@@ -20,7 +20,7 @@ On the other hand, if we did move it to `Trainee`, it could get confusing, since
 
 ## Decision
 
-We decided to keep it on the `ApplyApplication` model, and wipe it out on sucessful submission of a TRN.
+We decided to keep it on the `ApplyApplication` model, and wipe it out on successful submission of a TRN.
 
 ## Consequences
 
