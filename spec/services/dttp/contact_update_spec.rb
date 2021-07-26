@@ -57,6 +57,28 @@ module Dttp
         let(:contact_response) { http_response }
         let(:placement_response) { http_response }
       end
+
+      context "when the trainee doesn't have a lead school" do
+        let(:contact_response) { { status: 204 } }
+        let(:placement_response) { { status: 204 } }
+        let(:trainee) { create(:trainee, lead_school_id: nil) }
+
+        context "and persist_to_dttp is enabled" do
+          it "raises an error" do
+            expect { subject }.to raise_error(NoMethodError)
+          end
+        end
+
+        context "and persist_to_dttp is disabled" do
+          before do
+            disable_features(:persist_to_dttp, "routes.school_direct_salaried", "routes.school_direct_tuition_fee", "routes.pg_teaching_apprenticeship", :show_funding, :send_funding_to_dttp)
+          end
+
+          it "doesn't raise an error" do
+            expect { subject }.not_to raise_error
+          end
+        end
+      end
     end
   end
 end
