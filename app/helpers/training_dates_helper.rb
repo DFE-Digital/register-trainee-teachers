@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module TrainingDetailsHelper
+module TrainingDatesHelper
   def date_before_course_start_date?(commencement_date, course_start_date)
     return false if course_start_date.blank?
 

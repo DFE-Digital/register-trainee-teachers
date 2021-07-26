@@ -790,6 +790,7 @@ en:
             date:
               blank: Enter a deferral date
               invalid: Enter a valid deferral date
+              not_before_course_start_date: &not_before_course_start_date The date must not be before the course start date
         degrees_form:
           attributes:
             degree_ids:
@@ -843,6 +844,7 @@ en:
             date:
               blank: Enter an outcome date
               invalid: Enter a valid outcome date
+              not_before_course_start_date: *not_before_course_start_date
         personal_details_form:
           attributes:
             first_names:
@@ -897,6 +899,7 @@ en:
               blank: Enter a date of return
               invalid: Enter a valid date of return
               hint_html: For example, 15 6 %{year}
+              not_before_course_start_date: *not_before_course_start_date
         trn_submission_form:
           attributes:
             trainee:
@@ -908,6 +911,7 @@ en:
             date:
               blank: Enter a withdrawal date
               invalid: Enter a valid withdrawal date
+              not_before_course_start_date: *not_before_course_start_date
             additional_withdraw_reason:
               blank: Enter a reason
             withdraw_reason:
@@ -922,7 +926,7 @@ en:
             commencement_date:
                 blank: Enter a start date
                 invalid: Enter a valid start date
-                not_before_course_start_date: &not_before_course_start_date The date must not be before the course start date
+                not_before_course_start_date: *not_before_course_start_date
         training_details_form:
           attributes:
             commencement_date:

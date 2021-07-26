@@ -8,14 +8,14 @@ describe OutcomeDateForm, type: :model do
 
   let(:params) do
     {
-      "year" => "1963",
-      "month" => "11",
-      "day" => "11",
-      "date_string" => "other",
+      year: trainee.course_start_date.year,
+      month: trainee.course_start_date.month,
+      day: trainee.course_start_date.day,
+      date_string: "other",
     }
   end
 
-  subject { described_class.new(trainee, params: params, store: form_store) }
+  subject { described_class.new(trainee, params: params.stringify_keys, store: form_store) }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -52,17 +52,14 @@ describe OutcomeDateForm, type: :model do
           )
         end
       end
+
+      include_examples "date is not before course start date", :outcome_date_form
     end
   end
 
   describe "#fields" do
     it "combines the data from params with the existing trainee data" do
-      expect(subject.fields).to match({
-        date_string: "other",
-        day: "11",
-        month: "11",
-        year: "1963",
-      })
+      expect(subject.fields).to match(params)
     end
   end
 

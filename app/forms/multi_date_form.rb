@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MultiDateForm < TraineeForm
+  include TrainingDatesHelper
+
   attr_accessor :day, :month, :year, :date_string
 
   validate :date_valid
@@ -85,6 +87,8 @@ private
       errors.add(:date, :blank)
     elsif !date.is_a?(Date)
       errors.add(:date, :invalid)
+    elsif date_before_course_start_date?(date, trainee.course_start_date)
+      errors.add(:date, :not_before_course_start_date)
     end
   end
 end
