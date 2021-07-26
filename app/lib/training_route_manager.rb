@@ -29,6 +29,10 @@ class TrainingRouteManager
     training_route.to_s.starts_with?("early_years")
   end
 
+  def itt_route?
+    ITT_TRAINING_ROUTES.keys.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
+  end
+
 private
 
   attr_reader :trainee
@@ -36,6 +40,6 @@ private
   delegate :training_route, to: :trainee
 
   def enabled?(training_route_enums_key)
-    FeatureService.enabled?("routes.#{training_route_enums_key}") && training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key]
+    FeatureService.enabled?("routes.#{training_route_enums_key}") && training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym]
   end
 end
