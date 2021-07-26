@@ -5,6 +5,8 @@ module Dttp
     include ServicePattern
 
     def initialize(trainee:)
+      return unless FeatureService.enabled?(:persist_to_dttp)
+
       @trainee = trainee
       @contact_payload = Params::Contact.new(trainee)
       @placement_assignment_payload = Params::PlacementAssignment.new(trainee)
