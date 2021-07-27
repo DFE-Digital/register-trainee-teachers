@@ -13,7 +13,7 @@
 
       <% if any_row_has_status? %>
         <%= render GovukComponent::Tag.new(
-          text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + row.status,
+          text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + I18n.t(row.status),
           colour: row.get_status_colour,
           html_attributes: { id: row.status_id },
         ) %>

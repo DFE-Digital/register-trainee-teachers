@@ -30,14 +30,19 @@ private
     def get_path
       return path unless @confirm_path
 
-      status == Progress::STATUSES[:incomplete] ? path : confirm_path
+      if Progress::STATUSES.slice(:incomplete, :in_progress_invalid).values.include? status
+        path
+      else
+        confirm_path
+      end
     end
 
     def get_status_colour
       {
         # use default white text on dark blue background
         Progress::STATUSES[:completed] => "blue",
-        Progress::STATUSES[:in_progress] => "grey",
+        Progress::STATUSES[:in_progress_valid] => "grey",
+        Progress::STATUSES[:in_progress_invalid] => "grey",
         Progress::STATUSES[:review] => "pink",
         Progress::STATUSES[:incomplete] => "grey",
       }.fetch(status, "grey")

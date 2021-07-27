@@ -14,7 +14,8 @@ class ProgressService
 
   def status
     return Progress::STATUSES[:review] if review?
-    return Progress::STATUSES[:in_progress] if in_progress?
+    return Progress::STATUSES[:in_progress_valid] if in_progress_valid?
+    return Progress::STATUSES[:in_progress_invalid] if in_progress_invalid?
     return Progress::STATUSES[:completed] if completed?
 
     Progress::STATUSES[:incomplete]
@@ -24,12 +25,16 @@ class ProgressService
     @validator.fields.values.flatten.compact.any?
   end
 
-  def in_progress?
+  def in_progress_valid?
+    started? && @validator.valid? && !completed?
+  end
+
+  def in_progress_invalid?
     started? && !completed?
   end
 
   def review?
-    in_progress? && is_apply_application?
+    (in_progress_valid? || in_progress_invalid?) && is_apply_application?
   end
 
   def completed?

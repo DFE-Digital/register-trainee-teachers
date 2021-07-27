@@ -66,23 +66,24 @@ module Sections
     context "trainee in progress" do
       let(:trainee) { create(:trainee, :in_progress) }
 
-      include_examples renders_incomplete_section, :personal_details, :in_progress
-      include_examples renders_incomplete_section, :contact_details, :in_progress
-      include_examples renders_incomplete_section, :diversity, :in_progress
-      include_examples renders_incomplete_section, :degrees, :in_progress
-      include_examples renders_incomplete_section, :course_details, :in_progress
-      include_examples renders_incomplete_section, :training_details, :in_progress
+      # Personal details is invalid due to nationalities being missing
+      include_examples renders_incomplete_section, :personal_details, :in_progress_invalid
+      include_examples renders_incomplete_section, :contact_details, :in_progress_valid
+      include_examples renders_incomplete_section, :diversity, :in_progress_valid
+      include_examples renders_incomplete_section, :degrees, :in_progress_valid
+      include_examples renders_incomplete_section, :course_details, :in_progress_valid
+      include_examples renders_incomplete_section, :training_details, :in_progress_valid
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
 
-        include_examples renders_incomplete_section, :schools, :in_progress
+        include_examples renders_incomplete_section, :schools, :in_progress_valid
       end
 
       context "when the funding flag is on", feature_show_funding: true do
         let(:trainee) { create(:trainee, :in_progress, applying_for_bursary: false, training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach]) }
 
-        include_examples renders_incomplete_section, :funding, :in_progress
+        include_examples renders_incomplete_section, :funding, :in_progress_valid
       end
     end
 
@@ -128,35 +129,35 @@ module Sections
       {
         personal_details: {
           incomplete: "edit_trainee_personal_details_path",
-          in_progress: "trainee_personal_details_confirm_path",
+          in_progress_invalid: "edit_trainee_personal_details_path",
         },
         contact_details: {
           incomplete: "edit_trainee_contact_details_path",
-          in_progress: "trainee_contact_details_confirm_path",
+          in_progress_valid: "trainee_contact_details_confirm_path",
         },
         diversity: {
           incomplete: "edit_trainee_diversity_disclosure_path",
-          in_progress: "trainee_diversity_confirm_path",
+          in_progress_valid: "trainee_diversity_confirm_path",
         },
         degrees: {
           incomplete: "trainee_degrees_new_type_path",
-          in_progress: "trainee_degrees_confirm_path",
+          in_progress_valid: "trainee_degrees_confirm_path",
         },
         course_details: {
           incomplete: "edit_trainee_course_details_path",
-          in_progress: "trainee_course_details_confirm_path",
+          in_progress_valid: "trainee_course_details_confirm_path",
         },
         training_details: {
           incomplete: "edit_trainee_training_details_path",
-          in_progress: "trainee_training_details_confirm_path",
+          in_progress_valid: "trainee_training_details_confirm_path",
         },
         schools: {
           incomplete: "edit_trainee_lead_schools_path",
-          in_progress: "trainee_schools_confirm_path",
+          in_progress_valid: "trainee_schools_confirm_path",
         },
         funding: {
           incomplete: "edit_trainee_funding_training_initiative_path",
-          in_progress: "trainee_funding_confirm_path",
+          in_progress_valid: "trainee_funding_confirm_path",
         },
       }[section][status]
     end

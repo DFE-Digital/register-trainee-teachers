@@ -5,7 +5,8 @@ class Progress
 
   STATUSES = {
     incomplete: "incomplete",
-    in_progress: "in progress",
+    in_progress_valid: "in_progress_valid",
+    in_progress_invalid: "in_progress_invalid",
     review: "review",
     completed: "completed",
   }.freeze
