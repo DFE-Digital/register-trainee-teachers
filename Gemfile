@@ -29,6 +29,9 @@ gem "foreman"
 # Canonical meta tag
 gem "canonical-rails"
 
+# Soft delete records
+gem "discard", "~> 1.2"
+
 # Sentry
 gem "sentry-rails"
 gem "sentry-ruby"

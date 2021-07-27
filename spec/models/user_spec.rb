@@ -40,4 +40,36 @@ describe User do
   describe "auditing" do
     it { is_expected.to be_audited.associated_with(:provider) }
   end
+
+  describe "#discard" do
+    subject { create(:user) }
+
+    context "before discarding" do
+      it { is_expected.not_to be_discarded }
+
+      it "is in kept" do
+        expect(User.kept).to eq([subject])
+      end
+
+      it "is not in discarded" do
+        expect(User.discarded).to be_empty
+      end
+    end
+
+    context "after discarding" do
+      before do
+        subject.discard
+      end
+
+      it { is_expected.to be_discarded }
+
+      it "is not in kept" do
+        expect(User.kept).to be_empty
+      end
+
+      it "is in discarded" do
+        expect(User.discarded).to eq([subject])
+      end
+    end
+  end
 end

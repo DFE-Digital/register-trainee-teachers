@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_15_074856) do
+ActiveRecord::Schema.define(version: 2021_07_22_130748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,8 +194,8 @@ ActiveRecord::Schema.define(version: 2021_07_15_074856) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
@@ -336,7 +336,9 @@ ActiveRecord::Schema.define(version: 2021_07_15_074856) do
     t.uuid "dttp_id"
     t.boolean "system_admin", default: false
     t.datetime "welcome_email_sent_at"
+    t.datetime "discarded_at"
     t.index ["dfe_sign_in_uid"], name: "index_users_on_dfe_sign_in_uid", unique: true
+    t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["dttp_id"], name: "index_users_on_dttp_id", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider_id"], name: "index_users_on_provider_id"

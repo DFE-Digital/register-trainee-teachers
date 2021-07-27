@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include Discard::Model
+
   belongs_to :provider, optional: true
 
   has_many :trainees, through: :provider
