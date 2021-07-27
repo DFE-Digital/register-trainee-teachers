@@ -16,7 +16,7 @@
       <div class="govuk-grid-column-two-thirds-from-desktop">
         <%= render ErrorSummary::View.new(has_errors: @form.errors.any?) do %>
           <% @form.errors.messages.map do |_, messages| %>
-            <li><%= messages.first %></li>
+            <%= tag.li(messages.first) %>
           <% end %>
         <% end %>
 
