@@ -12,13 +12,14 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-
-    <% if @form.errors.any? %>
-      <%= render "trainees/check_details/error_summary" %>
-    <% end %>
-
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
+        <%= render ErrorSummary::View.new(has_errors: @form.errors.any?) do %>
+          <% @form.errors.messages.map do |_, messages| %>
+            <%= tag.li(messages.first) %>
+          <% end %>
+        <% end %>
+
         <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
           <span class="govuk-caption-l">
             <% if trainee_name(@trainee).present? %>
