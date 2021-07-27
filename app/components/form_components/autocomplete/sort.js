@@ -28,12 +28,14 @@ const calculateWeight = (rawName, query, rawSynonyms = []) => {
   const nameStartsWithQuery = nameMatchPositions.includes(0)
   const synonymStartsWithQuery = synonymMatchPositions.includes(0)
   const wordInNameStartsWithQuery = nameMatchPositions.length > 0
+  const wordInSynonymStartsWithQuery = synonymMatchPositions.length > 0
 
   if (nameIsExactMatch) return 100
   if (synonymIsExactMatch) return 75
   if (nameStartsWithQuery) return 60
   if (synonymStartsWithQuery) return 50
   if (wordInNameStartsWithQuery) return 25
+  if (wordInSynonymStartsWithQuery) return 10
 
   return 0
 }
