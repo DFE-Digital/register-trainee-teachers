@@ -10,7 +10,14 @@
       training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
     ) %>
   </p>
-  <p class="govuk-body"><%= t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_html' : 'guidance_html'}") %></p>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(
+      t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_link_text' : 'guidance_link_text'}"),
+      t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_url' : 'guidance_url'}"),
+      { target: "_blank", rel: "noreferrer noopener" }
+    ) %>
+  </p>
 
   <%= f.govuk_radio_buttons_fieldset(:applying_for_bursary, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
       <%= f.govuk_radio_button(
