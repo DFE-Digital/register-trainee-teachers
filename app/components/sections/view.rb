@@ -26,7 +26,7 @@ module Sections
       confirmation_view_args = { data_model: form_klass.new(trainee) }
 
       if section == :degrees
-        confirmation_view_args.merge!(show_add_another_degree_button: false, show_delete_button: true)
+        confirmation_view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
       end
       confirmation_view_args
     end

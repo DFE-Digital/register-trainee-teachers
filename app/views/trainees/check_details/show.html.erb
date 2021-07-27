@@ -19,7 +19,7 @@
             <%= tag.li(messages.first) %>
           <% end %>
         <% end %>
-      
+
         <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
           <span class="govuk-caption-l">
             Draft record <%= "for #{trainee_name(@trainee)}" if trainee_name(@trainee).present? %>
@@ -50,7 +50,7 @@
 
     <%= register_form_with(model: @form, url: trn_submissions_path, method: :post, local: true) do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
-      <%= f.govuk_submit "Submit record and request TRN" %>
+      <%= f.govuk_submit "Register trainee and request TRN" %>
     <% end %>
   </div>
 </div>
