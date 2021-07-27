@@ -27,49 +27,27 @@ module Degrees
     def get_degree_rows(degree)
       if degree.uk?
         [
-          {
-            key: "Institution",
-            value: degree.institution,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> institution</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-          },
-          {
-            key: "Subject",
-            value: degree.subject,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-          },
-          {
-            key: "Degree type",
-            value: degree.uk_degree,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> degree type</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-          },
+          mappable_field_row(degree, :institution, "Institution"),
+          mappable_field_row(degree, :subject, "Subject"),
+          mappable_field_row(degree, :uk_degree, "Degree type"),
           {
             key: "Grade",
             value: grade_for(degree),
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> grade</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
+            action: govuk_link_to('Change<span class="govuk-visually-hidden"> grade</span>'.html_safe,
+                                  edit_trainee_degree_path(trainee, degree)),
           },
           {
             key: "Graduation year",
             value: degree.graduation_year,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> graduation year</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
+            action: govuk_link_to('Change<span class="govuk-visually-hidden"> graduation year</span>'.html_safe,
+                                  edit_trainee_degree_path(trainee, degree)),
           },
         ]
       else
         [
-          {
-            key: "Country",
-            value: degree.country,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> country</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-          },
-          {
-            key: "Subject",
-            value: degree.subject,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> subject</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-          },
-          {
-            key: "Degree type",
-            value: degree.non_uk_degree == NON_ENIC ? "UK ENIC not provided" : degree.non_uk_degree,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> degree type</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-          },
+          mappable_field_row(degree, :country, "Country"),
+          mappable_field_row(degree, :subject, "Subject"),
+          mappable_field_row(degree, :non_uk_degree, "Degree type", non_uk_degree_type(degree)),
           {
             key: "Graduation year",
             value: degree.graduation_year,
@@ -85,10 +63,23 @@ module Degrees
 
   private
 
+    def non_uk_degree_type(degree)
+      degree.non_uk_degree == NON_ENIC ? "UK ENIC not provided" : degree.non_uk_degree
+    end
+
     def grade_for(degree)
       return degree.grade += " (#{degree.other_grade})" if degree.other_grade.present?
 
       degree.grade
+    end
+
+    def mappable_field_row(degree, field_name, field_label, field_value = nil)
+      MappableFieldRow.new(invalid_data: trainee.apply_application&.degrees_invalid_data,
+                           record_id: degree.to_param,
+                           field_name: field_name,
+                           field_value: field_value || degree.public_send(field_name),
+                           field_label: field_label,
+                           action_url: edit_trainee_degree_path(trainee, degree)).to_h
     end
   end
 end

@@ -31,11 +31,20 @@ module PersonalDetails
     def gender
       return @not_provided_copy unless data_model.gender
 
-      I18n.t("components.confirmation.personal_detail.gender.#{data_model.gender}")
+      I18n.t("components.confirmation.personal_detail.genders.#{data_model.gender}")
     end
 
+    def nationality_row
+      MappableFieldRow.new(field_value: nationality,
+                           field_label: "Nationality",
+                           text: t("components.confirmation.missing"),
+                           action_url: edit_trainee_personal_details_path(trainee)).to_h
+    end
+
+  private
+
     def nationality
-      return @not_provided_copy if nationalities.blank?
+      return if nationalities.blank?
 
       if nationalities.size == 1
         nationalities.first.name.titleize
