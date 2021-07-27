@@ -147,7 +147,10 @@ module Dttp
         "University Church Free School CH1 1QP" => { entity_id: "7678f34a-2887-e711-80d8-005056ac45bb" },
         "University College Birmingham" => { entity_id: "fa70f34a-2887-e711-80d8-005056ac45bb" },
         "University College Cardiff" => { entity_id: "264b9247-7042-e811-80ff-3863bb3640b8" },
-        "University College London" => { entity_id: "a27af34a-2887-e711-80d8-005056ac45bb" },
+        "University College London" => {
+          entity_id: "a27af34a-2887-e711-80d8-005056ac45bb",
+          synonyms: ["UCL"],
+        },
         "University for the Creative Arts" => { entity_id: "354b9247-7042-e811-80ff-3863bb3640b8" },
         "University of Bedfordshire" => { entity_id: "fc70f34a-2887-e711-80d8-005056ac45bb" },
         "University of Bolton" => { entity_id: "dfdb7129-7042-e811-80ff-3863bb3640b8" },

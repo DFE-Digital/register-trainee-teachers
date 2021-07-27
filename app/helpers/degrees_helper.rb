@@ -3,27 +3,29 @@
 module DegreesHelper
   include ApplicationHelper
 
-  def degree_options
-    options = Dttp::CodeSets::DegreeTypes::MAPPING.map do |name, attributes|
+  def degree_type_options
+    to_enhanced_options(degree_type_data) do |name, attributes|
       next if Dttp::CodeSets::DegreeTypes::NON_UK.include?(name)
 
       data = {
-        "data-synonyms" => attributes[:abbreviation],
+        "data-synonyms" => (attributes[:synonyms] || []) << attributes[:abbreviation],
         "data-append" => attributes[:abbreviation] && tag.strong("(#{attributes[:abbreviation]})"),
         "data-boost" => (Dttp::CodeSets::DegreeTypes::COMMON.include?(name) ? 1.5 : 1),
       }
       [name, name, data]
     end
-    empty_result = [nil, nil, nil]
-    options.unshift(empty_result).compact
   end
 
   def institutions_options
-    to_options(Degree::INSTITUTIONS)
+    to_enhanced_options(institution_data) do |name, attributes|
+      [name, name, { "data-synonyms" => attributes[:synonyms] }]
+    end
   end
 
   def subjects_options
-    to_options(Degree::SUBJECTS)
+    to_enhanced_options(subject_data) do |name, attributes|
+      [name, name, { "data-synonyms" => attributes[:synonyms] }]
+    end
   end
 
   def countries_options
@@ -35,6 +37,18 @@ module DegreesHelper
   end
 
 private
+
+  def institution_data
+    Dttp::CodeSets::Institutions::MAPPING
+  end
+
+  def subject_data
+    Dttp::CodeSets::DegreeSubjects::MAPPING
+  end
+
+  def degree_type_data
+    Dttp::CodeSets::DegreeTypes::MAPPING
+  end
 
   def countries
     Dttp::CodeSets::Countries::MAPPING.keys
