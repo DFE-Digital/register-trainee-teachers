@@ -27,4 +27,8 @@ private
   def prevent_action?
     trainee.recommended_for_award? || trainee.awarded? || trainee.withdrawn?
   end
+
+  def row_title(key)
+    key.parameterize
+  end
 end

@@ -11,6 +11,7 @@ module PageObjects
       STATUS_COMPLETED = "Status completed"
 
       section :personal_details, PageObjects::Sections::PersonalDetails, ".app-task-list__item.personal-details"
+      section :apply_trainee_data, PageObjects::Sections::ApplyTraineeData, ".app-task-list__item.trainee-data"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
       section :diversity_section, PageObjects::Sections::Diversity, ".app-task-list__item.diversity-details"
       section :degree_details, PageObjects::Sections::DegreeDetails, ".degree-details"
