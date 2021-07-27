@@ -25,9 +25,31 @@ module Pages
             @form.validate
             render template: template, locals: { "@trainee": @trainee, "@form": @form }
           end
+
+          define_method "#{sections}_itt" do
+            @trainee = itt_trainee(sections)
+
+            @form = TrnSubmissionForm.new(trainee: @trainee)
+            render template: template, locals: { "@trainee": @trainee, "@form": @form }
+          end
+
+          define_method "#{sections}_itt_validated" do
+            @trainee = itt_trainee(sections)
+
+            @form = TrnSubmissionForm.new(trainee: @trainee)
+            @form.validate
+            render template: template, locals: { "@trainee": @trainee, "@form": @form }
+          end
         end
 
       private
+
+        def itt_trainee(section)
+          return trainee_with_all_sections_incomplete(training_route_enums_key: :pg_teaching_apprenticeship) if section == :start_sections
+          return trainee_with_all_sections_in_progress(training_route_enums_key: :pg_teaching_apprenticeship) if section == :continue_sections
+
+          trainee_with_all_sections_completed(training_route_enums_key: :pg_teaching_apprenticeship)
+        end
 
         def trainee(section)
           return trainee_with_all_sections_incomplete if section == :start_sections
@@ -36,11 +58,11 @@ module Pages
           trainee_with_all_sections_completed
         end
 
-        def trainee_with_all_sections_incomplete
-          Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
+        def trainee_with_all_sections_incomplete(training_route_enums_key: :assessment_only)
+          Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key])
         end
 
-        def trainee_with_all_sections_in_progress
+        def trainee_with_all_sections_in_progress(training_route_enums_key: :assessment_only)
           Trainee.new(id: 1000, trainee_id: "trainee_id",
                       first_names: "first_names",
                       last_name: "last_name",
@@ -53,20 +75,20 @@ module Pages
                       international_address: "international_address",
                       ethnic_background: "ethnic_background",
                       additional_ethnic_background: "additional_ethnic_background",
-                      training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+                      training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key],
                       course_subject_one: "subject",
                       degrees: [Degree.new(id: 1)],
                       training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
                       applying_for_bursary: true)
         end
 
-        def trainee_with_all_sections_completed
+        def trainee_with_all_sections_completed(training_route_enums_key: :assessment_only)
           nationalities = [Nationality.first || Nationality.new(id: 1)]
 
           Trainee.new(id: 1000, trainee_id: "trainee_id",
                       first_names: "first_names",
                       last_name: "last_name",
-                      training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+                      training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key],
                       address_line_one: "address_line_one",
                       address_line_two: "address_line_two",
                       town_city: "town_city",
@@ -98,7 +120,8 @@ module Pages
                       degrees: [Degree.new(id: 1, locale_code: 1, subject: "subject")],
                       commencement_date: Time.zone.now,
                       training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
-                      applying_for_bursary: true)
+                      applying_for_bursary: true,
+                      provider: Provider.new)
         end
 
         def template

@@ -3,84 +3,72 @@
 require "rails_helper"
 
 describe TrainingRouteManager do
-  subject { described_class.new(trainee) }
+  let(:training_route_manager) { described_class.new(trainee) }
 
-  describe "#requires_placement_details?" do
-    context "with the :routes_provider_led_postgrad feature flag enabled", "feature_routes.provider_led_postgrad": true do
-      context "with a provider-led trainee" do
-        let(:trainee) { build(:trainee, :provider_led_postgrad) }
+  shared_context "route checks" do |method_name, training_route_enums_key, other_training_route|
+    describe "##{method_name}" do
+      subject do
+        training_route_manager.public_send(method_name)
+      end
+
+      context "trainee on a #{training_route_enums_key} training route" do
+        let(:trainee) { build(:trainee, training_route: training_route_enums_key) }
 
         it "returns true" do
-          expect(subject.requires_placement_details?).to be true
+          expect(subject).to be true
         end
       end
 
-      context "with a non provider-led trainee" do
-        let(:trainee) { build(:trainee) }
+      context "trainee on a non #{training_route_enums_key} training route " do
+        let(:trainee) { build(:trainee, other_training_route || :assessment_only) }
 
         it "returns false" do
-          expect(subject.requires_placement_details?).to be false
+          expect(subject).to be false
         end
-      end
-    end
-
-    context "with the :routes_provider_led_postgrad feature flag disabled", "feature.routes_provider_led_postgrad": false do
-      let(:trainee) { build(:trainee, :provider_led_postgrad) }
-
-      it "returns false" do
-        expect(subject.requires_placement_details?).to be false
       end
     end
   end
 
-  describe "#requires_schools?" do
-    %w[school_direct_tuition_fee school_direct_salaried].each do |route|
-      context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": true do
-        context "with a school direct trainee" do
-          let(:trainee) { build(:trainee, route.to_sym) }
+  shared_examples "enabled? checks" do |method_name, training_route_enums_key, other_training_route|
+    describe "##{method_name}" do
+      subject do
+        training_route_manager.public_send(method_name)
+      end
+
+      context "with the :routes_#{training_route_enums_key} feature flag enabled", "feature_routes.#{training_route_enums_key}": true do
+        context "trainee on a #{training_route_enums_key} training route" do
+          let(:trainee) { build(:trainee, training_route: training_route_enums_key) }
 
           it "returns true" do
-            expect(subject.requires_schools?).to be true
+            expect(subject).to be true
           end
         end
 
-        context "with the :routes_#{route} feature flag disabled", "feature_routes.#{route}": false do
-          context "with a non school direct trainee" do
-            let(:trainee) { build(:trainee) }
+        context "trainee on a non #{training_route_enums_key} training route " do
+          let(:trainee) { build(:trainee, other_training_route || :assessment_only) }
 
-            it "returns false" do
-              expect(subject.requires_schools?).to be false
-            end
+          it "returns false" do
+            expect(subject).to be false
           end
         end
       end
-    end
-  end
 
-  describe "#requires_employing_school?" do
-    context "with the :routes_school_direct_salaried feature flag enabled", "feature_routes.school_direct_salaried": true do
-      context "with a school direct salaried trainee" do
-        let(:trainee) { build(:trainee, :school_direct_salaried) }
+      context "with the :routes_#{training_route_enums_key} feature flag disabled", "feature_routes.#{training_route_enums_key}": false do
+        context "trainee on a #{training_route_enums_key} training route" do
+          let(:trainee) { build(:trainee, training_route: training_route_enums_key) }
 
-        it "returns true" do
-          expect(subject.requires_employing_school?).to be true
+          it "returns false" do
+            expect(subject).to be false
+          end
         end
-      end
 
-      context "with a non school direct trainee" do
-        let(:trainee) { build(:trainee) }
+        context "trainee on a non #{training_route_enums_key} training route " do
+          let(:trainee) { build(:trainee, other_training_route || :assessment_only) }
 
-        it "returns false" do
-          expect(subject.requires_employing_school?).to be false
+          it "returns false" do
+            expect(subject).to be false
+          end
         end
-      end
-    end
-
-    context "with the :routes_school_direct_salaried feature flag disabled", "feature_routes.school_direct_salaried": false do
-      let(:trainee) { build(:trainee) }
-
-      it "returns false" do
-        expect(subject.requires_employing_school?).to be false
       end
     end
   end
@@ -122,4 +110,24 @@ describe TrainingRouteManager do
       end
     end
   end
+
+  include_examples "enabled? checks", "requires_placement_details?", "provider_led_postgrad"
+  include_examples "enabled? checks", "requires_schools?", "school_direct_salaried"
+  include_examples "enabled? checks", "requires_schools?", "school_direct_tuition_fee"
+  include_examples "enabled? checks", "requires_schools?", "pg_teaching_apprenticeship"
+  include_examples "enabled? checks", "requires_employing_school?", "school_direct_salaried"
+  include_examples "enabled? checks", "requires_employing_school?",
+                   "pg_teaching_apprenticeship"
+
+  include_examples "route checks", "early_years_route?", "early_years_assessment_only"
+  include_examples "route checks", "early_years_route?", "early_years_postgrad"
+  include_examples "route checks", "early_years_route?", "early_years_salaried"
+  include_examples "route checks", "early_years_route?", "early_years_undergrad"
+
+  include_examples "route checks", "itt_route?", "early_years_undergrad"
+  include_examples "route checks", "itt_route?", "pg_teaching_apprenticeship"
+
+  # NOTE: `no op`, these routes are not available in the database yet.
+  # include_examples "enabled? checks", "itt_route?", "provider_led_undergrad"
+  # include_examples "enabled? checks", "itt_route?", "opt_in_undergrad"
 end

@@ -30,7 +30,7 @@ class TrainingRouteManager
   end
 
   def itt_route?
-    ITT_TRAINING_ROUTES.keys.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
+    ITT_TRAINING_ROUTES.keys.any? { |training_route_enums_key| training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym] }
   end
 
 private
