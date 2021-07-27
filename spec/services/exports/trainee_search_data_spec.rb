@@ -37,6 +37,16 @@ module Exports
         expect(subject.data).to include(expected_output.values.join(","))
       end
 
+      context "when names contain whitespace or vulnerable characters" do
+        before do
+          trainee.update!(first_names: "Christophe", last_name: "=SUM(A1&A2)")
+        end
+
+        it "adds an apostrophe before vulnerable characters" do
+          expect(subject.data).to include("Christophe,'=SUM(A1&A2)")
+        end
+      end
+
       context "with provider option enabled" do
         subject { described_class.new([trainee], include_provider: true) }
 
