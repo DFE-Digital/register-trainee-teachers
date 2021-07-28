@@ -1,15 +1,13 @@
-<div class="govuk-grid-row govuk-!-margin-bottom-6">
-  <% full_width_states.map do |state, count| %>
-    <div class="govuk-grid-column-one-third">
-      <%= render TraineeStatusCard::View.new(state: state, count: count, target: trainees_path("state[]": state)) %>
-    </div>
-  <% end %>
-</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="app-home-statuses">
+        <% full_width_states.map do |state, count| %>
+            <%= render TraineeStatusCard::View.new(state: state, count: count, target: trainees_path("state[]": state)) %>
+        <% end %>
 
-<div class="govuk-grid-row govuk-!-margin-bottom-6">
-  <% narrow_states.map do |state, count| %>
-    <div class="govuk-grid-column-one-quarter">
-      <%= render TraineeStatusCard::View.new(state: state, count: count, target: trainees_path("state[]": state)) %>
+        <% narrow_states.map do |state, count| %>
+            <%= render TraineeStatusCard::View.new(state: state, count: count, target: trainees_path("state[]": state)) %>
+        <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
