@@ -11,7 +11,7 @@ RSpec.feature "Adding a degree" do
   describe "summary page" do
     scenario "no degrees entered" do
       given_i_am_on_the_review_draft_page
-      then_the_degree_status_should_be(not_started)
+      then_the_degree_status_should_be(incomplete)
     end
   end
 
@@ -37,7 +37,7 @@ RSpec.feature "Adding a degree" do
         confirm_details_page.delete_button.click
         then_i_see_a_flash_message
         given_i_am_on_the_review_draft_page
-        then_the_degree_status_should_be(not_started)
+        then_the_degree_status_should_be(incomplete)
       end
 
       scenario "the user confirms degree details" do

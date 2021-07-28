@@ -33,7 +33,7 @@ module Diversities
     end
 
     describe "#save!" do
-      let(:trainee) { create(:trainee, :not_started, :diversity_disclosed) }
+      let(:trainee) { create(:trainee, :incomplete, :diversity_disclosed) }
       let(:disability_not_provided) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
 
       before do

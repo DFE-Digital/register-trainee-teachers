@@ -44,22 +44,22 @@ module Sections
       end
     end
 
-    context "trainee not started" do
-      let(:trainee) { create(:trainee, :not_started) }
+    context "trainee incomplete" do
+      let(:trainee) { create(:trainee, :incomplete) }
 
-      include_examples renders_incomplete_section, :personal_details, :not_started
-      include_examples renders_incomplete_section, :contact_details, :not_started
-      include_examples renders_incomplete_section, :diversity, :not_started
-      include_examples renders_incomplete_section, :degrees, :not_started
-      include_examples renders_incomplete_section, :course_details, :not_started
-      include_examples renders_incomplete_section, :training_details, :not_started
+      include_examples renders_incomplete_section, :personal_details, :incomplete
+      include_examples renders_incomplete_section, :contact_details, :incomplete
+      include_examples renders_incomplete_section, :diversity, :incomplete
+      include_examples renders_incomplete_section, :degrees, :incomplete
+      include_examples renders_incomplete_section, :course_details, :incomplete
+      include_examples renders_incomplete_section, :training_details, :incomplete
 
       context "requires school" do
-        include_examples renders_incomplete_section, :schools, :not_started
+        include_examples renders_incomplete_section, :schools, :incomplete
       end
 
       context "when the funding flag is on", feature_show_funding: true do
-        include_examples renders_incomplete_section, :funding, :not_started
+        include_examples renders_incomplete_section, :funding, :incomplete
       end
     end
 
@@ -127,35 +127,35 @@ module Sections
     def expected_path(section, status)
       {
         personal_details: {
-          not_started: "edit_trainee_personal_details_path",
+          incomplete: "edit_trainee_personal_details_path",
           in_progress: "trainee_personal_details_confirm_path",
         },
         contact_details: {
-          not_started: "edit_trainee_contact_details_path",
+          incomplete: "edit_trainee_contact_details_path",
           in_progress: "trainee_contact_details_confirm_path",
         },
         diversity: {
-          not_started: "edit_trainee_diversity_disclosure_path",
+          incomplete: "edit_trainee_diversity_disclosure_path",
           in_progress: "trainee_diversity_confirm_path",
         },
         degrees: {
-          not_started: "trainee_degrees_new_type_path",
+          incomplete: "trainee_degrees_new_type_path",
           in_progress: "trainee_degrees_confirm_path",
         },
         course_details: {
-          not_started: "edit_trainee_course_details_path",
+          incomplete: "edit_trainee_course_details_path",
           in_progress: "trainee_course_details_confirm_path",
         },
         training_details: {
-          not_started: "edit_trainee_training_details_path",
+          incomplete: "edit_trainee_training_details_path",
           in_progress: "trainee_training_details_confirm_path",
         },
         schools: {
-          not_started: "edit_trainee_lead_schools_path",
+          incomplete: "edit_trainee_lead_schools_path",
           in_progress: "trainee_schools_confirm_path",
         },
         funding: {
-          not_started: "edit_trainee_funding_training_initiative_path",
+          incomplete: "edit_trainee_funding_training_initiative_path",
           in_progress: "trainee_funding_confirm_path",
         },
       }[section][status]

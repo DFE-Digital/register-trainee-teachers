@@ -46,7 +46,7 @@ FactoryBot.define do
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
 
-    trait :not_started do
+    trait :incomplete do
       trainee_id { nil }
       first_names { nil }
       middle_names { nil }

@@ -9,9 +9,9 @@ feature "completing the diversity section", type: :feature do
   end
 
   context "progress tracking" do
-    scenario "renders a 'not started' status when diversity details are not provided" do
+    scenario "renders a 'incomplete' status when diversity details are not provided" do
       given_i_am_on_the_review_draft_page
-      then_the_diversity_section_should_be(not_started)
+      then_the_diversity_section_should_be(incomplete)
     end
 
     scenario "renders an 'in progress' status when diversity information partially provided" do

@@ -45,7 +45,7 @@ RSpec.describe TaskList::View do
     it_behaves_like("status indicator", "completed", "blue")
     it_behaves_like("status indicator", "in progress", "grey")
     it_behaves_like("status indicator", "review", "pink")
-    it_behaves_like("status indicator", "not started", "grey")
+    it_behaves_like("status indicator", "incomplete", "grey")
   end
 
   context "when the task is inactive" do
@@ -84,8 +84,8 @@ RSpec.describe TaskList::View do
     let(:confirm_path) { -> { raise hell } }
     let(:path) { "some_path" }
 
-    context "when the status is not started" do
-      let(:status) { "not started" }
+    context "when the status is incomplete" do
+      let(:status) { "incomplete" }
 
       context "when the path provided is a string" do
         it "returns the path" do

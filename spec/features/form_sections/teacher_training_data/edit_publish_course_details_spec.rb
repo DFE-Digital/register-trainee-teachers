@@ -23,9 +23,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   describe "tracking the progress" do
-    scenario "renders a 'not started' status when no details provided" do
+    scenario "renders a 'incomplete' status when no details provided" do
       when_i_visit_the_review_draft_page
-      then_the_section_should_be(not_started)
+      then_the_section_should_be(incomplete)
     end
 
     describe "with a course that doesn't require selecting a specialism" do

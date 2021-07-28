@@ -30,13 +30,13 @@ module Pages
       private
 
         def trainee(section)
-          return trainee_with_all_sections_not_started if section == :start_sections
+          return trainee_with_all_sections_incomplete if section == :start_sections
           return trainee_with_all_sections_in_progress if section == :continue_sections
 
           trainee_with_all_sections_completed
         end
 
-        def trainee_with_all_sections_not_started
+        def trainee_with_all_sections_incomplete
           Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
         end
 

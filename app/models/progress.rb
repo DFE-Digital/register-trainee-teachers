@@ -4,7 +4,7 @@ class Progress
   include StoreModel::Model
 
   STATUSES = {
-    not_started: "not started",
+    incomplete: "incomplete",
     in_progress: "in progress",
     review: "review",
     completed: "completed",
