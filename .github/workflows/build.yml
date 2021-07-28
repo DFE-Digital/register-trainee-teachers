@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DOCKER_REPO: dfedigital/register-trainee-teachers
+      DOCKER_IMAGE: dfedigital/register-trainee-teachers
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
@@ -24,11 +24,17 @@ jobs:
 
     - name: Set environment variables (push)
       if: github.event_name == 'push'
-      run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+      run: |
+        GIT_BRANCH=${GITHUB_REF##*/}
+        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
     - name: Set environment variables (pull_request)
       if: github.event_name == 'pull_request'
-      run: echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+      run: |
+        GIT_BRANCH=${GITHUB_HEAD_REF##*/}
+        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+        echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
 
     - name: Login to DockerHub
       if: github.actor != 'dependabot[bot]'
@@ -44,24 +50,27 @@ jobs:
     - name: Build Docker Image
       uses: docker/build-push-action@v2
       with:
-        tags: ${{env.DOCKER_REPO}}:${{env.IMAGE_TAG}}
+        tags: |
+          ${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
+          ${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}
         builder: ${{ steps.buildx.outputs.name }}
         load: true
         cache-to: type=inline
         cache-from: |
-          type=registry,ref=${{env.DOCKER_REPO}}:master
-          type=registry,ref=${{env.DOCKER_REPO}}:${{env.IMAGE_TAG}}
+          type=registry,ref=${{env.DOCKER_IMAGE}}:master
+          type=registry,ref=${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
+          type=registry,ref=${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}
         build-args: COMMIT_SHA=${{ github.sha }}
 
     - name: Tag master image
       if: github.ref == 'refs/heads/master'
-      run: docker tag ${{env.DOCKER_REPO}}:${{env.IMAGE_TAG}} ${{env.DOCKER_REPO}}:master
+      run: docker tag ${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}} ${{env.DOCKER_IMAGE}}:master
 
     - name: Push Docker Image
       if: github.actor != 'dependabot[bot]'
       run: |
-        docker push ${{env.DOCKER_REPO}}:${{env.IMAGE_TAG}}
-        docker push ${{env.DOCKER_REPO}}:master || true
+        docker push ${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
+        docker push ${{env.DOCKER_IMAGE}}:master || true
 
     - name: Trigger Review App Deployment
       if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
