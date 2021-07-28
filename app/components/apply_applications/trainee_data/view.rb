@@ -11,6 +11,7 @@ module ApplyApplications
       def initialize(trainee, form)
         @trainee = trainee
         @form = form
+        @apply_invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
       end
     end
   end

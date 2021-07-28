@@ -20,6 +20,14 @@
           <% end %>
         <% end %>
 
+        <%= render InformationSummary::View.new(renderable: @form.errors.empty?) do |component| %>
+          <% component.header  do %>
+            <%= @apply_invalid_data_view.summary_content %>
+          <% end %>
+
+          <%= @apply_invalid_data_view.summary_items_content %>
+        <% end %>
+
         <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
           <span class="govuk-caption-l">
             <% if trainee_name(@trainee).present? %>
@@ -30,8 +38,6 @@
           </span>
           <%= t(".heading_2") %>
         </h1>
-
-        <%= render RouteIndicator::View.new(trainee: @trainee) %>
       </div>
     </div>
 

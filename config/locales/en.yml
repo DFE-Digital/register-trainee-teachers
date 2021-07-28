@@ -332,6 +332,11 @@ en:
             pg_teaching_apprenticeship: Schools
   views:
     all_records: All records
+    apply_invalid_data_view:
+      invalid_answers_summary:
+        one: "This application contains 1 answer that you need to amend. This is because it was entered in a free text format."
+        other: "This application contains %{count} answers that you need to amend. This is because they were entered in a free text format."
+      unrecognised_field_text: "%{invalid_field} is not recognised"
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
@@ -542,6 +547,11 @@ en:
       heading: Sorry, something went wrong
       body: Try again later.
       support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
+  apply_trainee_data:
+    view:
+      heading_1_name: "Draft record for %{name}"
+      heading_1_no_name: "Draft record"
+      heading_2: "Trainee Data"
   route_indicator:
     view:
       display_text: "Trainee on the %{training_route_link} route."
