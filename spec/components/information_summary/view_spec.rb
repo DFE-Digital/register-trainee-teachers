@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module MissingDataSummary
+module InformationSummary
   describe View, type: :component do
     context "when there is missing data content" do
       context "with header content" do

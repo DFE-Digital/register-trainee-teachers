@@ -15,7 +15,7 @@ describe ApplyInvalidDataView do
     context "when there is only one invalid data" do
       it "returns the singular invalid answer summary" do
         expect(subject.summary_content).to eq(
-          I18n.t("views.apply_invalid_data_view.invalid_answer_summary"),
+          I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: 1),
         )
       end
     end
@@ -28,7 +28,7 @@ describe ApplyInvalidDataView do
       end
 
       it "returns the pluralised invalid answer summary" do
-        expected_text = I18n.t("views.apply_invalid_data_view.invalid_answers_summary", total_invalid_fields: 2)
+        expected_text = I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: 2)
 
         expect(subject.summary_content).to eq(expected_text)
       end

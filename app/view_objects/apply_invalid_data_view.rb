@@ -10,9 +10,7 @@ class ApplyInvalidDataView
   end
 
   def summary_content
-    return pluralised_invalid_answers_summary if invalid_fields.size > 1
-
-    I18n.t("views.apply_invalid_data_view.invalid_answer_summary")
+    I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: invalid_fields.size)
   end
 
   def summary_items_content
@@ -48,9 +46,5 @@ private
     degree_fields.map do |_k, field_and_values|
       field_and_values.keys
     end
-  end
-
-  def pluralised_invalid_answers_summary
-    I18n.t("views.apply_invalid_data_view.invalid_answers_summary", total_invalid_fields: invalid_fields.size)
   end
 end

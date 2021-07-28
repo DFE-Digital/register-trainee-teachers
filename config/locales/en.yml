@@ -329,8 +329,9 @@ en:
   views:
     all_records: All records
     apply_invalid_data_view:
-      invalid_answer_summary: "This application contains 1 answer that you need to amend. This is because it was entered in a free text format."
-      invalid_answers_summary: "This application contains %{total_invalid_fields} answers that you need to amend. This is because they were entered in a free text format."
+      invalid_answers_summary:
+        one: "This application contains 1 answer that you need to amend. This is because it was entered in a free text format."
+        other: "This application contains %{count} answers that you need to amend. This is because they were entered in a free text format."
       unrecognised_field_text: "%{invalid_field} is not recognised"
     trainees:
       index:
@@ -547,8 +548,6 @@ en:
       heading_1_name: "Draft record for %{name}"
       heading_1_no_name: "Draft record"
       heading_2: "Trainee Data"
-      invalid_answers_summary: "This application contains %{total_invalid_fields} answer that you need to amend. This is because they were entered in a free text format."
-      invalid_answer_text: "%{invalid_field} is not recognised"
   route_indicator:
     view:
       display_text: "Trainee on the %{training_route_link} route."

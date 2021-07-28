@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module MissingDataSummary
+module InformationSummary
   class ViewPreview < ViewComponent::Preview
     def default
       render(View.new(renderable: true)) do

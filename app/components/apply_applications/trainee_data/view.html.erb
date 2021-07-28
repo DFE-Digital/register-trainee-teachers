@@ -20,7 +20,7 @@
           <% end %>
         <% end %>
 
-        <%= render MissingDataSummary::View.new(renderable: @form.errors.any?) do |component| %>
+        <%= render InformationSummary::View.new(renderable: @form.errors.empty?) do |component| %>
           <% component.header  do %>
             <%= @apply_invalid_data_view.summary_content %>
           <% end %>
