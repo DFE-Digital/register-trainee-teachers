@@ -23,13 +23,14 @@ RUN  yarn install --frozen-lockfile && \
 
 COPY . .
 
-ARG COMMIT_SHA
-ENV COMMIT_SHA=$COMMIT_SHA
 RUN echo export PATH=/usr/local/bin:\$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
 
 RUN bundle exec rake assets:precompile && \
     rm -rf node_modules tmp
+
+ARG COMMIT_SHA
+ENV COMMIT_SHA=$COMMIT_SHA
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails data:migrate && \
