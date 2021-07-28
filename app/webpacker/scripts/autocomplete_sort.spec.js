@@ -47,6 +47,14 @@ describe('sort', () => {
     expect(sort('flo', options)).toEqual(['plant', 'pretty flower'])
   })
 
+  it('prioritises word in name starts with over word in synonym starts with', () => {
+    const options = [
+      { name: 'pretty flower' },
+      { name: 'rose', synonyms: ['pretty flower'] }
+    ]
+    expect(sort('flo', options)).toEqual(['pretty flower', 'rose'])
+  })
+
   it('requires all parts of the query to be matched in either name or synonym', () => {
     const options = [
       { name: 'flower', synonyms: [] },
