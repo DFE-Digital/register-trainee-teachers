@@ -17,7 +17,7 @@ class ProgressService
     return Progress::STATUSES[:in_progress] if in_progress?
     return Progress::STATUSES[:completed] if completed?
 
-    Progress::STATUSES[:not_started]
+    Progress::STATUSES[:incomplete]
   end
 
   def started?

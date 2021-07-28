@@ -17,8 +17,8 @@ describe ProgressService do
     subject { described_class.new(validator: validator_stub, progress_value: progress_value) }
 
     context "when not in progress or completed" do
-      it "returns a 'not started' status" do
-        expect(subject.status).to eq(Progress::STATUSES[:not_started])
+      it "returns a 'incomplete' status" do
+        expect(subject.status).to eq(Progress::STATUSES[:incomplete])
       end
     end
 

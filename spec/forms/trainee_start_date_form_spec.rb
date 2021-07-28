@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe TraineeStartDateForm, type: :model do
   let(:params) { { year: "2020", month: "12", day: "20" } }
-  let(:trainee) { build(:trainee, :not_started) }
+  let(:trainee) { build(:trainee, :incomplete) }
   let(:form_store) { class_double(FormStore) }
   let(:error_attr) { "activemodel.errors.models.trainee_start_date_form.attributes.commencement_date" }
 

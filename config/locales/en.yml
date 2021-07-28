@@ -315,12 +315,12 @@ en:
         funding_inactive: Funding cannot be started yet
       statuses:
         not_provided: not provided
-        not_started: not started
+        incomplete: not started
         in_progress: not marked as complete
         review: not reviewed
       link_texts:
         not_provided: Add degree details
-        not_started: Start section
+        incomplete: Start section
         in_progress: Continue section
         review: Review their data
         funding_inactive:  Complete course details first

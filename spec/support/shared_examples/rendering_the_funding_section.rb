@@ -26,9 +26,9 @@ RSpec.shared_examples "rendering the funding section" do
       context "and has entered their course details" do
         before { trainee.course_subject_one = "subject" }
 
-        it "renders the funding section as 'not started'" do
+        it "renders the funding section as 'incomplete'" do
           render_inline(described_class.new(trainee: trainee))
-          expect(rendered_component).to have_css "#funding-status", text: "not started"
+          expect(rendered_component).to have_css "#funding-status", text: "incomplete"
         end
       end
     end
@@ -38,9 +38,9 @@ RSpec.shared_examples "rendering the funding section" do
 
       before { create(:bursary, :with_bursary_subjects, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) }
 
-      it "renders the funding section as 'not started'" do
+      it "renders the funding section as 'incomplete'" do
         render_inline(described_class.new(trainee: trainee))
-        expect(rendered_component).to have_css "#funding-status", text: "not started"
+        expect(rendered_component).to have_css "#funding-status", text: "incomplete"
       end
     end
   end

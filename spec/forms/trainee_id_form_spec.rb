@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe TraineeIdForm, type: :model do
   let(:params) { {} }
-  let(:trainee) { build(:trainee, :not_started) }
+  let(:trainee) { build(:trainee, :incomplete) }
   let(:form_store) { class_double(FormStore) }
 
   subject { described_class.new(trainee, params: params, store: form_store) }

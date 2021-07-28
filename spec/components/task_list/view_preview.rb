@@ -40,7 +40,7 @@ class TaskList::ViewPreview < ViewComponent::Preview
       component.row(
         task_name: "Diversity information",
         path: "#diversity",
-        status: "not started",
+        status: "incomplete",
       )
 
       component.row(
