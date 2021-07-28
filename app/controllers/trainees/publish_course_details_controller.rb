@@ -2,6 +2,8 @@
 
 module Trainees
   class PublishCourseDetailsController < ApplicationController
+    include PublishCourseNextPath
+
     before_action :authorize_trainee
 
     def edit
@@ -49,17 +51,18 @@ module Trainees
     def clear_form_stashes
       FormStore.set(@trainee.id, :subject_specialism, nil)
       FormStore.set(@trainee.id, :language_specialisms, nil)
+      FormStore.set(@trainee.id, :itt_start_date, nil)
     end
 
     def next_step_path
       if @publish_course_details_form.manual_entry_chosen?
         edit_trainee_course_details_path(@trainee)
       elsif course_has_one_specialism?
-        course_confirmation_path
+        publish_course_next_path
       elsif specialism_type == :language
-        edit_trainee_language_specialisms_path(@trainee)
+        edit_trainee_language_specialisms_path(trainee)
       else
-        edit_trainee_subject_specialism_path(@trainee, 1)
+        edit_trainee_subject_specialism_path(trainee, 1)
       end
     end
 
@@ -87,14 +90,6 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
-    end
-
-    def course_confirmation_path
-      if trainee.apply_application?
-        trainee_apply_applications_confirm_courses_path(trainee)
-      else
-        edit_trainee_confirm_publish_course_path(@trainee)
-      end
     end
   end
 end

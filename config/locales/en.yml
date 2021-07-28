@@ -129,6 +129,8 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
+    itt_start_date:
+      hint: The start date of the Initial Teacher Training portion of their course.
     page_titles:
       personas: Personas
       pages:
@@ -195,6 +197,8 @@ en:
           edit: What type of training are they doing?
         course_details:
           edit: Course details
+        itt_start_date:
+          edit: ITT start date
         withdrawal:
           show: Withdraw trainee
         confirm_withdrawal:
@@ -879,6 +883,13 @@ en:
               empty_nationalities: Select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list
+        itt_start_date_form:
+          attributes:
+            date_string:
+              blank: Enter an ITT start date
+            date:
+              blank: Enter an ITT start date
+              invalid: Enter a valid ITT start date
         course_details_form:
           attributes:
             course_subject_one:

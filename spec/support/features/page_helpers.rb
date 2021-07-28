@@ -158,6 +158,10 @@ module Features
       @confirm_publish_course_page ||= PageObjects::Trainees::ConfirmPublishCourse.new
     end
 
+    def itt_start_date_edit_page
+      @itt_start_date_page ||= PageObjects::Trainees::EditIttStartDate.new
+    end
+
     def trainee_id_edit_page
       @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeId.new
     end

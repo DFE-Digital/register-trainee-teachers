@@ -2,6 +2,8 @@
 
 module Trainees
   class LanguageSpecialismsController < ApplicationController
+    include PublishCourseNextPath
+
     before_action :authorize_trainee
     before_action :load_language_specialisms
 
@@ -22,11 +24,7 @@ module Trainees
   private
 
     def next_step_path
-      if trainee.apply_application?
-        trainee_apply_applications_confirm_courses_path(trainee)
-      else
-        edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
-      end
+      publish_course_next_path
     end
 
     def trainee

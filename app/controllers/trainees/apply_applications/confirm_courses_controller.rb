@@ -7,14 +7,15 @@ module Trainees
       before_action :set_course
       before_action :set_specialisms
       helper_method :course_code
+      before_action :set_itt_start_date
 
       def show
         page_tracker.save_as_origin!
-        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms)
+        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms, @itt_start_date)
       end
 
       def update
-        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms, course_params)
+        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms, @itt_start_date, course_params)
 
         if @confirm_course_form.save
           clear_form_stash(trainee)
@@ -32,6 +33,12 @@ module Trainees
 
       def set_course
         @course = trainee.available_courses.find_by!(code: course_code)
+      end
+
+      def set_itt_start_date
+        @itt_start_date = if @trainee.requires_itt_start_date?
+                            IttStartDateForm.new(@trainee).date
+                          end
       end
 
       def set_specialisms

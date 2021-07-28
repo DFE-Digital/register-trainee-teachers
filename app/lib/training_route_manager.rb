@@ -17,6 +17,10 @@ class TrainingRouteManager
     %i[school_direct_salaried pg_teaching_apprenticeship].any? { |training_route_enums_key| enabled?(training_route_enums_key) }
   end
 
+  def requires_itt_start_date?
+    enabled? :pg_teaching_apprenticeship
+  end
+
   def award_type
     TRAINING_ROUTE_AWARD_TYPE[training_route&.to_sym]
   end

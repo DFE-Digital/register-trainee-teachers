@@ -10,13 +10,15 @@ module ApplyApplications
       mark_as_reviewed
     ].freeze
 
-    attr_accessor(*FIELDS, :trainee, :specialisms, :params)
+    attr_accessor(*FIELDS, :trainee, :specialisms, :itt_start_date, :params)
 
     delegate :id, :persisted?, to: :trainee
 
-    def initialize(trainee, specialisms, params = {})
+    def initialize(trainee, specialisms, itt_start_date, params = {})
       @trainee = trainee
       @specialisms = specialisms
+      @itt_start_date = itt_start_date
+
       assign_attributes({ mark_as_reviewed: trainee.progress.course_details }.merge(params))
     end
 
@@ -36,7 +38,7 @@ module ApplyApplications
         training_route: course&.route,
         course_code: course.code,
         course_age_range: course.age_range,
-        course_start_date: course.start_date,
+        course_start_date: itt_start_date || course.start_date,
         course_end_date: course.end_date,
         course_subject_one: course_subject_one,
         course_subject_two: course_subject_two,
