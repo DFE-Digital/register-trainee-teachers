@@ -12,12 +12,11 @@
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
-    form_field: f.govuk_collection_select(
-      :subject, subjects_options, :value, :text,
+    form_field: f.govuk_select(
+      :subject,
+      options_for_select(subjects_options, @degree_form.degree.subject),
       label: { text: "Degree subject", size: "s" },
-      hint: {
-        text: "Search for the closest matching subject. You can start typing to narrow down your search.",
-      }
+      hint: { text: "Search for the closest matching subject. You can start typing to narrow down your search." },
     ),
   ) %>
 

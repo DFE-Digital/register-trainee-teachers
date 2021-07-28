@@ -9,6 +9,13 @@ module ApplicationHelper
     result
   end
 
+  def to_enhanced_options(data, &to_data_attrs)
+    options = data.map { |name, attrs| to_data_attrs.call(name, attrs) }
+
+    empty_result = [nil, nil, nil]
+    options.unshift(empty_result).compact
+  end
+
   def register_form_with(*args, &block)
     options = args.extract_options!
     defaults = { html: { novalidate: true, autocomplete: :off, spellcheck: false } }
