@@ -35,6 +35,22 @@ describe ApplyInvalidDataView do
     end
   end
 
+  describe "#invalid_data?" do
+    subject { described_class.new(application).invalid_data? }
+
+    it { is_expected.to be_truthy }
+
+    context "when there are no invalid data" do
+      let(:application) do
+        instance_double(ApplyApplication, invalid_data: {
+          "degrees" => { "BUpwce1Qe9RDM3A9AmgsmaNT" => {} },
+        })
+      end
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
   describe "#summary_items_content" do
     it "returns the invalid answer summary items" do
       expected_markup = "<li><a class=\"govuk-notification-banner__link\" href=\"#subject\">Subject is not recognised</a></li>"

@@ -14,22 +14,7 @@
   <div class="govuk-grid-column-full">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
-        <%= render ErrorSummary::View.new(has_errors: @form.errors.any?) do |component| %>
-          <% component.header  do %>
-            <%= @apply_invalid_data_view.summary_content %>
-          <% end %>
-
-          <%= @apply_invalid_data_view.summary_items_content %>
-        <% end %>
-
-        <%= render InformationSummary::View.new(renderable: @form.errors.empty?) do |component| %>
-          <% component.header  do %>
-            <%= @apply_invalid_data_view.summary_content %>
-          <% end %>
-
-          <%= @apply_invalid_data_view.summary_items_content %>
-        <% end %>
-
+        <%= render ApplyApplications::ReviewSummary::View.new(has_errors: form.errors.any?, trainee: @trainee) %>
         <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
           <span class="govuk-caption-l">
             <% if trainee_name(@trainee).present? %>

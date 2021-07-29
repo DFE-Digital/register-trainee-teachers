@@ -3,15 +3,15 @@
 class ErrorSummary::View < GovukComponent::Base
   renders_one :header
 
-  def initialize(has_errors: false)
-    @has_errors = has_errors
+  def initialize(renderable: false)
+    @renderable = renderable
   end
 
   def render?
-    has_errors
+    renderable
   end
 
 private
 
-  attr_reader :has_errors
+  attr_reader :renderable
 end

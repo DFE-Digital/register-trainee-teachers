@@ -27,6 +27,10 @@ class ApplyInvalidDataView
     )
   end
 
+  def invalid_data?
+    invalid_fields.size.positive?
+  end
+
 private
 
   attr_reader :apply_application, :invalid_fields
