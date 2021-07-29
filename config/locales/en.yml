@@ -889,7 +889,7 @@ en:
               blank: Enter an ITT start date
             date:
               blank: Enter an ITT start date
-              future: Enter an ITT start date that is not as far in the future
+              future: Enter an ITT start date closer to today
               invalid: Enter a valid ITT start date
               too_old: Enter a valid ITT start date
         course_details_form:
