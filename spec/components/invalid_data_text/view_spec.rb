@@ -11,7 +11,7 @@ module InvalidDataText
     end
 
     context "when there is invalid data for an apply trainee" do
-      let(:trainee) { create(:trainee, :with_invalid_apply_application, slug: "XXLbvaRY42wP52hWiP78r94m") }
+      let(:trainee) { create(:trainee, :with_invalid_apply_application) }
       let(:form_section) { :institution }
 
       it "renders the correct css" do

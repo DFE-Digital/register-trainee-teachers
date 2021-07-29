@@ -7,6 +7,7 @@ module Trainees
 
     def new
       @degree_form = @degrees_form.build_degree(locale_code: params[:locale_code])
+      apply_invalid_data_view
     end
 
     def create
@@ -21,6 +22,7 @@ module Trainees
 
     def edit
       @degree_form = @degrees_form.find_degree_from_param(params[:id])
+      apply_invalid_data_view
     end
 
     def update
@@ -52,6 +54,12 @@ module Trainees
         edit_trainee_apply_applications_trainee_data_path(trainee)
       else
         trainee_degrees_confirm_path(trainee)
+      end
+    end
+
+    def apply_invalid_data_view
+      if trainee.invalid_apply_data?
+        @apply_invalid_data_view ||= ApplyInvalidDataView.new(trainee.apply_application)
       end
     end
 

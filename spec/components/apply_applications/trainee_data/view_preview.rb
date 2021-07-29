@@ -20,7 +20,7 @@ module ApplyApplications
         @trainee ||= Trainee.new(
           id: 0,
           degrees: degrees,
-          apply_application: ApplyApplication.new(invalid_data: {}),
+          apply_application: ApplyApplication.new(invalid_data: "{}"),
         ).tap do |t|
           t.degrees&.singleton_class&.class_eval do
             # This is to avoid having activerecord call an sql query when

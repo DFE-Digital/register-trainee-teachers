@@ -22,7 +22,7 @@ module InvalidDataText
       @apply_application ||= ApplyApplication.new(
         id: 1,
         application: { bob: "bob" }.to_json,
-        invalid_data: { "degrees" => { "XXLbvaRY42wP52hWiP78r94m" => { institution: "University of Warwick" } } },
+        invalid_data: { "degrees" => { "XXLbvaRY42wP52hWiP78r94m" => { institution: "University of Warwick" } } }.to_json,
         provider: Provider.last,
       )
     end

@@ -50,7 +50,7 @@ describe TraineeHelper do
   end
 
   describe "#invalid_data_message" do
-    let(:trainee) { create(:trainee, :with_invalid_apply_application, slug: "XXLbvaRY42wP52hWiP78r94m") }
+    let(:trainee) { create(:trainee, :with_invalid_apply_application) }
 
     context "with invalid data" do
       it "return the invalid data message" do

@@ -1,8 +1,13 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "uk" %>
   <%= f.govuk_error_summary %>
-  <% if @trainee.invalid_apply_data? %>
-    <%= render InvalidDataSummary::View.new(data: @trainee.apply_application.invalid_data) %>
+  
+  <%= render InformationSummary::View.new(renderable: @trainee.invalid_apply_data? ) do |component| %>
+    <% component.header  do %>
+      <%= @apply_invalid_data_view.summary_content %>
+    <% end %>
+
+    <%= @apply_invalid_data_view.summary_items_content %>
   <% end %>
 
   <h1 class="govuk-heading-l">UK degree details</h1>
@@ -17,7 +22,7 @@
                                 },
                                 label: { text: "Institution",
                                   size: "s",
-                                  id: "degree-institution-label",
+                                  id: "degrees-institution-label",
                                 },
                                 hint: -> do %>
         <%= tag.div(invalid_data_message("institution", @trainee), class: "app-inset-text__title govuk-!-margin-bottom-3") %>
@@ -32,7 +37,7 @@
       :subject,
       options_for_select(subjects_options, @degree_form.degree.subject),
       form_group: { class: invalid_data_message("subject", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
-      label: { text: "Degree subject", size: "s", id: "degree-subject-label" },
+      label: { text: "Degree subject", size: "s", id: "degrees-subject-label" },
       hint: -> do %>
         <p class="govuk-body govuk-hint"> <%= "Search for the closest matching subject"  %></p> 
         <%= tag.div(invalid_data_message("subject", @trainee), class: "app-inset-text__title govuk-!-margin-bottom-3") %>
@@ -47,7 +52,7 @@
       :uk_degree, 
       options_for_select(degree_type_options, @degree_form.degree.uk_degree), 
       form_group: { class: invalid_data_message("uk_degree", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
-      label: { text: "Type of degree", size: "s" }, 
+      label: { text: "Type of degree", size: "s" , id: "degrees-uk-degree-label" }, 
       hint: -> do %>
         <p class="govuk-body govuk-hint"> <%= "For example, BA, BSc or other (please specify)"  %></p> 
         <%= tag.div(invalid_data_message("uk_degree", @trainee), class: "app-inset-text__title govuk-!-margin-bottom-3") %>
@@ -56,8 +61,8 @@
     ) %>
 
   <%= f.govuk_radio_buttons_fieldset(:grade,
-        legend: { text: "Degree grade", size: "s" },
-        form_group: { class: invalid_data_message("uk_degree", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+        legend: { text: "Degree grade", size: "s", id: "degrees-grade-label" },
+        form_group: { class: invalid_data_message("grade", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
         hint: -> do %>
           <%= tag.div(invalid_data_message("grade", @trainee), class: "app-inset-text__title govuk-!-margin-bottom-3") %>
         <% end, %> 
@@ -77,7 +82,7 @@
   <%= f.govuk_text_field :graduation_year,
         width: "one-quarter",
         form_group: { class: invalid_data_message("graduation_year", @trainee) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
-        label: { text: "Graduation year", size: "s", id: "degree-graduation-year-label" } do 
+        label: { text: "Graduation year", size: "s", id: "degrees-graduation-year-label" } do 
           render InvalidDataText::View.new(trainee: @trainee, form_section: :graduation_year, hint: "" )
         end %>
 

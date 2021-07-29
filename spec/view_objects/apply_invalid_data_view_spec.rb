@@ -6,7 +6,7 @@ describe ApplyInvalidDataView do
   let(:application) do
     instance_double(ApplyApplication, invalid_data: {
       "degrees" => { "BUpwce1Qe9RDM3A9AmgsmaNT" => { "subject" => "Master's Degree" } },
-    })
+    }.to_json)
   end
 
   subject { described_class.new(application) }
@@ -24,7 +24,7 @@ describe ApplyInvalidDataView do
       let(:application) do
         instance_double(ApplyApplication, invalid_data: {
           "degrees" => { "BUpwce1Qe9RDM3A9AmgsmaNT" => { "subject" => "Master's Degree", "institution" => "University of Warwicks" } },
-        })
+        }.to_json)
       end
 
       it "returns the pluralised invalid answer summary" do
@@ -53,7 +53,7 @@ describe ApplyInvalidDataView do
 
   describe "#summary_items_content" do
     it "returns the invalid answer summary items" do
-      expected_markup = "<li><a class=\"govuk-notification-banner__link\" href=\"#subject\">Subject is not recognised</a></li>"
+      expected_markup = "<li><a class=\"govuk-notification-banner__link\" href=\"#degrees-subject-label\">Subject is not recognised</a></li>"
       expect(subject.summary_items_content).to include(expected_markup)
     end
   end

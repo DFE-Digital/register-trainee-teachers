@@ -18,8 +18,8 @@ class ApplyInvalidDataView
       invalid_fields.map do |field|
         tag.li(
           link_to(
-            I18n.t("views.apply_invalid_data_view.unrecognised_field_text", invalid_field: field.to_s.upcase_first),
-            "##{field}",
+            I18n.t("views.apply_invalid_data_view.unrecognised_field_text", invalid_field: field.to_s.humanize.upcase_first),
+            "##{section_key_id_prefix}-#{field.dasherize}-label",
             class: "govuk-notification-banner__link",
           ),
         )
@@ -36,9 +36,11 @@ private
   attr_reader :apply_application, :invalid_fields
 
   def populate_invalid_fields
+    return {} if apply_application.invalid_data.blank?
+
     fields = []
 
-    apply_application.invalid_data.each do |section_key, field_and_values|
+    JSON(apply_application.invalid_data).each do |section_key, field_and_values|
       field_names = section_key == "degrees" ? populate_degree_fields(field_and_values) : field_and_values.keys
       fields << field_names
     end
@@ -50,5 +52,9 @@ private
     degree_fields.map do |_k, field_and_values|
       field_and_values.keys
     end
+  end
+
+  def section_key_id_prefix
+    JSON(apply_application.invalid_data).map { |section_key, _field_and_values| section_key }.join
   end
 end
