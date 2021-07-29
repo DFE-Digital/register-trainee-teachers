@@ -8,13 +8,11 @@
   @include govuk-media-query($from: desktop) {
     padding: govuk-spacing(4);
   }
- 
-  margin-bottom: govuk-spacing(3);
 
   @include govuk-media-query($from: tablet) {
     margin-bottom: govuk-spacing(0);
   }
-  
+
   outline: 2px solid transparent;
   outline-offset: -2px;
 
@@ -46,13 +44,23 @@
   text-decoration: underline;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  hyphens: auto;
+  hyphens: none;
+}
+
+.app-home-statuses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    @include govuk-media-query($from: tablet) {
+      grid-template-columns: 1fr 1fr 1fr 1fr
+    }
+    gap: govuk-spacing(4);
+    grid-auto-rows: 1fr;
 }
 
 .app-status-card--grey {
   &, &:link, &:visited {
     color: govuk-shade(govuk-colour("dark-grey", $legacy: "grey-1"), 30);
-    background: govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 90); 
+    background: govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 90);
   }
   &:hover {
     background: govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 80);
