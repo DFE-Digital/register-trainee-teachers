@@ -26,6 +26,7 @@ class PersonalDetailsForm < TraineeForm
   validates :date_of_birth, presence: true
   validate :date_of_birth_valid
   validate :date_of_birth_not_in_future
+  validate :date_of_birth_year_is_four_digits
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
   validate :check_raw_values
   validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true
@@ -129,6 +130,10 @@ private
 
   def date_of_birth_not_in_future
     errors.add(:date_of_birth, :future) if date_of_birth.is_a?(Date) && date_of_birth > Time.zone.today
+  end
+
+  def date_of_birth_year_is_four_digits
+    errors.add(:date_of_birth, :invalid_year) if date_of_birth.is_a?(Date) && date_of_birth.year.digits.length != 4
   end
 
   def calculate_other

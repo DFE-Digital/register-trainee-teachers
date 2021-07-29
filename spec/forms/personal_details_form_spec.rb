@@ -94,6 +94,20 @@ describe PersonalDetailsForm, type: :model do
         end
       end
 
+      context "invalid date year" do
+        let(:params) { { day: 1, month: 4, year: 21 } }
+
+        before do
+          subject.validate
+        end
+
+        it "returns an invalid year error message" do
+          expect(subject.errors[:date_of_birth]).to include(
+            I18n.t("activemodel.errors.models.personal_details_form.attributes.date_of_birth.invalid_year"),
+          )
+        end
+      end
+
       context "future date" do
         let(:params) { { day: 1, month: 2, year: 2021 } }
 

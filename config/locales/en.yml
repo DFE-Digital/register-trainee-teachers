@@ -884,6 +884,7 @@ en:
             date_of_birth:
               blank: Enter a date of birth
               invalid: Enter a valid date
+              invalid_year: The year must include 4 numbers
               future: Enter a date of birth that is in the past, for example 31 3 1980
               hint_html: For example, 31 3 %{year}
             gender:
@@ -971,6 +972,7 @@ en:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
+              invalid_year: The year must include 4 numbers
               not_before_course_start_date: *not_before_course_start_date
             trainee_id:
               blank: Enter a trainee ID
