@@ -588,7 +588,8 @@ en:
       multiple_subjects: Subjects
       level: Level
       age_range: Age range
-      start_date: Start date
+      itt_start_date: ITT start date
+      itt_end_date: ITT end date
       course_start_date: Course start date
       course_end_date: Course end date
       duration: Duration
@@ -617,7 +618,8 @@ en:
         multiple_subjects: Subjects
         level: Level
         age_range: Age range
-        start_date: Start date
+        itt_start_date: ITT start date
+        itt_end_date: ITT end date
         course_start_date: Course start date
         course_end_date: Course end date
         duration: Duration
