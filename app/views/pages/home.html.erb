@@ -2,48 +2,93 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
-
-    <p class="govuk-body-l"> <%= t(".body.1") %></p>
-
-    <% unless current_user.system_admin? %>
-      <p class="govuk-body govuk-!-margin-bottom-0">
-        <%= render GovukComponent::StartNowButton.new(
-          text: t(".new_trainee_link"),
-          href: new_trainee_path,
-        ) %>
-      </p>
+    <% if current_user.provider %>
+      <span class="govuk-caption-l"><%= current_user.provider.name %></span>
     <% end %>
+    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+    <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
+    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
+      <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
+        <li>
+          <%= govuk_link_to(
+            t(".draft_trainees_link", count: @home_view.draft_trainees_count),
+            trainees_path("state[]": :draft),
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
+      <% end %>
+      <% if @home_view.draft_apply_trainees_count > 0 %>
+        <li>
+          <%= govuk_link_to(
+            t(".draft_apply_trainees_link", count: @home_view.draft_apply_trainees_count),
+            trainees_path("state[]": :draft, "record_source[]": :apply),
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
+      <% end %>
+      <% unless current_user.system_admin? %>
+        <li class="govuk-!-margin-bottom-0">
+          <%= govuk_link_to(
+            t(".new_trainee_link"),
+            new_trainee_path,
+            { class: "govuk-link--no-visited-state" }
+          ) %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
 
-<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-third">
-    <h2 class="govuk-heading-m">
-      <%= govuk_link_to t(".trainees_link"), trainees_path, { class: "govuk-link govuk-link--no-visited-state" } %>
-    </h2>
-    <p class="govuk-body"><%= t(".trainees_link_desc") %></p>
-  </div>
-
-  <% if FeatureService.enabled?("enable_feedback_link") %>
-    <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-heading-m">
-        <%= govuk_link_to t(".give_feedback_link"), Settings.feedback_link_url, { class: "govuk-link govuk-link--no-visited-state" } %>
-      </h2>
-      <p class="govuk-body"><%= t(".give_feedback_link_desc") %></p>
-    </div>
-  <% end %>
-
-  <div class="govuk-grid-column-one-third">
-    <h2 class="govuk-heading-m">
-      <%= govuk_link_to t(".guidance_link"), guidance_path, { class: "govuk-link govuk-link--no-visited-state" } %>
-    </h2>
-    <p class="govuk-body"><%= t(".guidance_link_desc") %></p>
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h2 class="govuk-heading-l"><%= t(".registered_heading") %></h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <% if @home_view.registered_trainees_count > 0 %>
+        <li>
+          <%= govuk_link_to(
+            t(".registered_trainees_link", count: @home_view.registered_trainees_count),
+            trainees_path({ "state": @registered_states_for_filter }),
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
 
-  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+<%= render "badges" %>
 
-  <%= render "badges" %>
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h2 class="govuk-heading-l"><%= t(".guidance_heading") %></h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to(
+          t(".guidance_about_link"),
+          guidance_path(anchor: "section-about-register"),
+          { class: "govuk-link--no-visited-state" }
+        )%>
+      </li>
+      <li>
+        <%= govuk_link_to(
+          t(".guidance_data_link"),
+          guidance_path(anchor: "section-check-data"),
+          { class: "govuk-link--no-visited-state" }
+        )%>
+      </li>
+      <% if FeatureService.enabled?("enable_feedback_link") %>
+        <li>
+          <%= govuk_link_to(
+            t(".give_feedback_link"),
+            Settings.feedback_link_url,
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
+      <% end%>
+    </ul>
+  </div>
+</div>

@@ -1,12 +1,35 @@
 # frozen_string_literal: true
 
 class HomeView
+  REGISTERED_STATES_FOR_FILTER = %w[submitted_for_trn trn_received qts_recommended
+                                    eyts_recommended withdrawn deferred qts_awarded
+                                    eyts_awarded].freeze
+
+  REGISTERED_STATES = %w[submitted_for_trn trn_received recommended_for_award
+                         awarded deferred withdrawn].freeze
+
   def initialize(trainees)
     @trainees = trainees
     populate_state_counts!
   end
 
   attr_reader :state_counts
+
+  def registered_state_counts
+    @registered_state_counts ||= state_counts.slice(*REGISTERED_STATES)
+  end
+
+  def registered_trainees_count
+    @registered_trainees_count ||= registered_state_counts.values.sum
+  end
+
+  def draft_trainees_count
+    @draft_trainees_count ||= state_counts["draft"]
+  end
+
+  def draft_apply_trainees_count
+    @trainees.draft.with_apply_application.count
+  end
 
 private
 
