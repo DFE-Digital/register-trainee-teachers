@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "hoppit:import" do
+describe "hpitt:import" do
   before do
     # Load Nationalities
     Dttp::CodeSets::Nationalities::MAPPING.each_key do |nationality|
@@ -17,7 +17,7 @@ describe "hoppit:import" do
 
   subject do
     args = Rake::TaskArguments.new([:csv_path], [csv_path])
-    Rake::Task["hoppit:import"].execute(args)
+    Rake::Task["hpitt:import"].execute(args)
   end
 
   let!(:school) { create(:school, urn: 123) }
@@ -35,7 +35,7 @@ describe "hoppit:import" do
 
   context "with valid data" do
     let(:csv_path) {
-      File.join(__dir__, "..", "..", "support", "fixtures", "hoppit_import.csv")
+      File.join(__dir__, "..", "..", "support", "fixtures", "hpitt_import.csv")
     }
 
     it "creates the trainee/degree" do
@@ -86,7 +86,7 @@ describe "hoppit:import" do
     # This csv has two rows, the second row has a school urn for a school that
     # doesn't exist
     let(:csv_path) {
-      File.join(__dir__, "..", "..", "support", "fixtures", "hoppit_import_invalid.csv")
+      File.join(__dir__, "..", "..", "support", "fixtures", "hpitt_import_invalid.csv")
     }
 
     it "gives an error including which row had the problem, and doesn't create the valid trainee" do

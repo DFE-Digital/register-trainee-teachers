@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Hoppit do
+describe HPITT do
   describe "find_course" do
     let(:trainee) { create(:trainee, :school_direct_salaried) }
     let(:csv_row) do
@@ -13,7 +13,7 @@ describe Hoppit do
       }
     end
 
-    subject { Hoppit.find_course(trainee, csv_row) }
+    subject { HPITT.find_course(trainee, csv_row) }
 
     context "if a course can't be found" do
       it "raises an error" do
@@ -58,7 +58,7 @@ describe Hoppit do
   end
 
   describe "build_degree" do
-    subject { Hoppit.build_degree(trainee, csv_row) }
+    subject { HPITT.build_degree(trainee, csv_row) }
 
     let(:trainee) { build(:trainee) }
 
@@ -106,7 +106,7 @@ describe Hoppit do
   end
 
   describe "to_age_range" do
-    subject { Hoppit.to_age_range(age_range) }
+    subject { HPITT.to_age_range(age_range) }
 
     context "an age rage can be found" do
       let(:age_range) { "Other 5-14 programme" }
@@ -126,7 +126,7 @@ describe Hoppit do
   end
 
   describe "to_degree_grade" do
-    subject { Hoppit.to_degree_grade(degree_grade) }
+    subject { HPITT.to_degree_grade(degree_grade) }
 
     context "a degree grade can be found" do
       let(:degree_grade) { "First-class honours" }
@@ -146,7 +146,7 @@ describe Hoppit do
   end
 
   describe "to_training_route" do
-    subject { Hoppit.to_training_route(training_route) }
+    subject { HPITT.to_training_route(training_route) }
 
     context "a training route can be found" do
       let(:training_route) { "Early years (undergrad)" }
@@ -166,7 +166,7 @@ describe Hoppit do
   end
 
   describe "validate_uk_degree" do
-    subject { Hoppit.validate_uk_degree(degree_type) }
+    subject { HPITT.validate_uk_degree(degree_type) }
 
     context "the degree type can be found" do
       let(:degree_type) { "Doctor of Divinity" }
@@ -186,7 +186,7 @@ describe Hoppit do
   end
 
   describe "validate_degree_subject" do
-    subject { Hoppit.validate_degree_subject(degree_subject) }
+    subject { HPITT.validate_degree_subject(degree_subject) }
 
     context "the degree subejct can be found" do
       let(:degree_subject) { "Bob Dylan Studies" }
@@ -206,7 +206,7 @@ describe Hoppit do
   end
 
   describe "validate_enic_non_uk" do
-    subject { Hoppit.validate_enic_non_uk_degree(enic) }
+    subject { HPITT.validate_enic_non_uk_degree(enic) }
 
     context "the enic value can be found" do
       let(:enic) {  "Bachelor degree" }
