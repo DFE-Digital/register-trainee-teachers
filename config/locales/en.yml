@@ -926,27 +926,27 @@ en:
               blank: Select an age range
             course_start_date:
               blank: Enter a course start date
-              future: Enter a course start date that is not as far in the future
+              future: Enter a course start date closer to today
               invalid: Enter a valid course start date
               too_old: Enter a valid course start date
               hint_html: For example, 11 3 %{year}
             course_end_date:
               blank: Enter a course end date
-              future: Enter a course end date that is not as far in the future
+              future: Enter a course end date closer to today
               invalid: Enter a valid course end date
               too_old: Enter a valid course end date
               before_or_same_as_start_date: The course end date must be after the start date
               hint_html: For example, 11 3 %{year}
             itt_start_date:
               blank: Enter an ITT start date
-              future: Enter an ITT start date that is not as far in the future
+              future: Enter an ITT start date closer to today
               invalid: Enter a valid ITT start date
               too_old: Enter a valid ITT start date
               hint_html: <p class="govuk-body govuk-hint">The start date of the Initial Teacher Training portion of their course.</p>
                <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
             itt_end_date:
               blank: Enter an ITT end date
-              future: Enter an ITT end date that is not as far in the future
+              future: Enter an ITT end date closer to today
               invalid: Enter a valid ITT end date
               too_old: Enter a valid ITT end date
               before_or_same_as_start_date: The ITT end date must be after the start date
