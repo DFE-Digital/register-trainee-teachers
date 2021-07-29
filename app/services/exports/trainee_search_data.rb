@@ -2,6 +2,8 @@
 
 module Exports
   class TraineeSearchData
+    VULNERABLE_CHARACTERS = ["=", "+", "-", "@"].freeze
+
     def initialize(trainees, include_provider: false)
       @data_for_export = format_trainees(trainees, include_provider)
     end
@@ -29,9 +31,9 @@ module Exports
     def format_trainees(trainees, include_provider)
       trainees.map do |trainee|
         {
-          "First name" => trainee.first_names,
-          "Last name" => trainee.last_name,
-          "Trainee Id" => trainee.trainee_id,
+          "First name" => sanitise(trainee.first_names),
+          "Last name" => sanitise(trainee.last_name),
+          "Trainee Id" => sanitise(trainee.trainee_id),
           "TRN" => trainee.trn,
           "Status" => status(trainee),
           "Route" => trainee.training_route,
@@ -43,13 +45,17 @@ module Exports
           "TRN Submitted date" => trainee.submitted_for_trn_at,
           "Award submitted date" => trainee.recommended_for_award_at,
         }.tap do |fields|
-          fields.merge!("Provider Name" => trainee.provider.name) if include_provider
+          fields.merge!("Provider Name" => sanitise(trainee.provider.name)) if include_provider
         end
       end
     end
 
     def status(trainee)
       I18n.t("activerecord.attributes.trainee.states.#{trainee.state}", award_type: trainee.award_type)
+    end
+
+    def sanitise(value)
+      value&.start_with?(*VULNERABLE_CHARACTERS) ? value.prepend("'") : value
     end
   end
 end
