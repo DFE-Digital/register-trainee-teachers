@@ -70,6 +70,16 @@ describe TrainingDetailsForm, type: :model do
         end
       end
 
+      context "invalid date year" do
+        let(:params) { { commencement_date_radio_options: "manual", day: "1", month: "4", year: "21" } }
+
+        it "returns an invalid year error message" do
+          expect(subject.errors[:commencement_date]).to include(
+            I18n.t("#{error_attr}.commencement_date.invalid_year"),
+          )
+        end
+      end
+
       context "date is before the course start date" do
         let(:trainee) do
           build(:trainee, course_start_date: Time.zone.today, commencement_date: 1.day.ago)

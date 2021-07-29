@@ -12,6 +12,7 @@ class TrainingDetailsForm < TraineeForm
 
   validates :commencement_date_radio_option, inclusion: { in: [COMMENCEMENT_DATE_RADIO_OPTION_COURSE, COMMENCEMENT_DATE_RADIO_OPTION_MANUAL] }, if: :course_start_date
   validate :commencement_date_valid
+  validate :commencement_date_year_is_four_digits
   validates :trainee_id, presence: true,
                          length: {
                            maximum: 100,
@@ -66,6 +67,10 @@ private
     elsif date_before_course_start_date?(commencement_date, trainee.course_start_date)
       errors.add(:commencement_date, :not_before_course_start_date)
     end
+  end
+
+  def commencement_date_year_is_four_digits
+    errors.add(:commencement_date, :invalid_year) if commencement_date.is_a?(Date) && commencement_date.year.digits.length != 4
   end
 
   def valid_date?(date_args)
