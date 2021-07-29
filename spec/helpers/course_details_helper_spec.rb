@@ -7,13 +7,13 @@ describe CourseDetailsHelper do
 
   describe "#course_subjects_options" do
     before do
-      create(:subject_specialism, name: Dttp::CodeSets::CourseSubjects::TRAVEL_AND_TOURISM)
+      create(:subject_specialism, name: CourseSubjects::TRAVEL_AND_TOURISM)
     end
 
-    it "iterates over Dttp::CodeSets::CourseSubjects and prints out correct course_subjects values" do
+    it "iterates over CourseSubjects and prints out correct course_subjects values" do
       expect(course_subjects_options.size).to be 2
       expect(course_subjects_options.first.value).to be_nil
-      expect(course_subjects_options.second.value).to eq Dttp::CodeSets::CourseSubjects::TRAVEL_AND_TOURISM
+      expect(course_subjects_options.second.value).to eq CourseSubjects::TRAVEL_AND_TOURISM
     end
   end
 

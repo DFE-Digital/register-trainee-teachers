@@ -108,8 +108,8 @@ private
   def given_trainees_exist_in_the_system
     @assessment_only_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
     @provider_led_postgrad_trainee ||= create(:trainee, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-    @biology_trainee ||= create(:trainee, :with_subject_specialism, subject_name: Dttp::CodeSets::CourseSubjects::BIOLOGY)
-    @history_trainee ||= create(:trainee, :with_subject_specialism, subject_name: Dttp::CodeSets::CourseSubjects::HISTORY)
+    @biology_trainee ||= create(:trainee, :with_subject_specialism, subject_name: CourseSubjects::BIOLOGY)
+    @history_trainee ||= create(:trainee, :with_subject_specialism, subject_name: CourseSubjects::HISTORY)
     @searchable_trainee ||= create(:trainee, trn: "123")
     @draft_trainee ||= create(:trainee, :draft)
     @withdrawn_trainee ||= create(:trainee, :withdrawn)
@@ -128,7 +128,7 @@ private
   end
 
   def given_a_subject_specialism_is_available_for_selection
-    @subject_specialism ||= create(:subject_specialism, name: Dttp::CodeSets::CourseSubjects::CHEMISTRY)
+    @subject_specialism ||= create(:subject_specialism, name: CourseSubjects::CHEMISTRY)
   end
 
   def when_i_visit_the_trainee_index_page

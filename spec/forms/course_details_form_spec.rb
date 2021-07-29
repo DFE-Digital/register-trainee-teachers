@@ -342,10 +342,10 @@ describe CourseDetailsForm, type: :model do
 
       context "when the course_subject has changed" do
         let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true) }
-        let(:trainee) { create(:trainee, :with_funding, :with_course_details, course_subject_one: Dttp::CodeSets::CourseSubjects::BIOLOGY, progress: progress) }
+        let(:trainee) { create(:trainee, :with_funding, :with_course_details, course_subject_one: CourseSubjects::BIOLOGY, progress: progress) }
         let(:params) do
           {
-            course_subject_one: Dttp::CodeSets::CourseSubjects::HISTORICAL_LINGUISTICS,
+            course_subject_one: CourseSubjects::HISTORICAL_LINGUISTICS,
           }
         end
 
