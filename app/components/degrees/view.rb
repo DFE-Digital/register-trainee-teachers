@@ -3,13 +3,13 @@
 module Degrees
   class View < GovukComponent::Base
     include ApplicationHelper
-    attr_accessor :degrees, :data_model, :show_add_another_degree_button, :show_delete_button
 
-    def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true)
+    def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true, error: false)
       @data_model = data_model
       @degrees = @data_model.degrees
       @show_add_another_degree_button = show_add_another_degree_button
       @show_delete_button = show_delete_button
+      @error = error
     end
 
     def trainee
@@ -63,6 +63,8 @@ module Degrees
 
   private
 
+    attr_accessor :degrees, :data_model, :show_add_another_degree_button, :show_delete_button, :error
+
     def non_uk_degree_type(degree)
       degree.non_uk_degree == NON_ENIC ? "UK ENIC not provided" : degree.non_uk_degree
     end
@@ -79,7 +81,8 @@ module Degrees
                            field_name: field_name,
                            field_value: field_value || degree.public_send(field_name),
                            field_label: field_label,
-                           action_url: edit_trainee_degree_path(trainee, degree)).to_h
+                           action_url: edit_trainee_degree_path(trainee, degree),
+                           error: error).to_h
     end
   end
 end

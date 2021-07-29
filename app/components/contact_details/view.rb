@@ -4,11 +4,12 @@ module ContactDetails
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    attr_accessor :data_model
+    attr_accessor :data_model, :error
 
-    def initialize(data_model:)
+    def initialize(data_model:, error: false)
       @data_model = data_model
       @not_provided_copy = I18n.t("components.confirmation.not_provided")
+      @error = error
     end
 
     def trainee

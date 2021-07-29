@@ -316,6 +316,10 @@ FactoryBot.define do
       apply_application
     end
 
+    trait :with_invalid_apply_application do
+      association :apply_application, :with_invalid_data
+    end
+
     trait :with_funding do
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
       applying_for_bursary { Faker::Boolean.boolean }

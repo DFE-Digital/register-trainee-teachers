@@ -8,6 +8,7 @@ describe MappableFieldRow do
     let(:field_name) { :subject }
     let(:field_label) { "Subject" }
     let(:field_value) { nil }
+    let(:error) { nil }
     let(:action_url) { "/abc" }
     let(:apply_subject_value) { "Master's Degree" }
 
@@ -17,7 +18,8 @@ describe MappableFieldRow do
                           field_name: field_name,
                           field_value: field_value,
                           field_label: field_label,
-                          action_url: action_url).to_h
+                          action_url: action_url,
+                          error: error).to_h
     end
 
     context "field value matches error value" do
@@ -43,6 +45,14 @@ describe MappableFieldRow do
 
       it "doesn't set the action key" do
         expect(subject).not_to have_key(:action)
+      end
+
+      context "when error is set to true" do
+        let(:error) { true }
+
+        it "uses the app-inset-text--error class" do
+          expect(subject[:value]).to include("app-inset-text--error")
+        end
       end
     end
 

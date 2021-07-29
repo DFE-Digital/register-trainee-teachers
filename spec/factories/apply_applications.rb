@@ -6,5 +6,9 @@ FactoryBot.define do
     application { ApiStubs::ApplyApi.application }
     invalid_data { {} }
     provider
+
+    trait :with_invalid_data do
+      invalid_data { { "degrees" => { "BUpwce1Qe9RDM3A9AmgsmaNT" => { "subject" => "Master's Degree" } } } }
+    end
   end
 end

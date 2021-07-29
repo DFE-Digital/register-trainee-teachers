@@ -11,6 +11,7 @@ class MappableFieldRow
     @field_value = options[:field_value]
     @field_label = options[:field_label]
     @action_url = options[:action_url]
+    @error = options[:error]
     @text = options[:text] || "not recognised"
   end
 
@@ -20,7 +21,7 @@ class MappableFieldRow
 
 private
 
-  attr_accessor :invalid_data, :record_id, :field_name, :field_value, :field_label, :text, :action_url
+  attr_accessor :invalid_data, :record_id, :field_name, :field_value, :field_label, :text, :action_url, :error
 
   def value_attribute
     return { value: unmapped_value.html_safe } if field_value.nil?
@@ -37,7 +38,7 @@ private
 
   def unmapped_value
     <<~HTML
-      <div class="govuk-inset-text app-inset-text--narrow-border app-inset-text--important app-inset-text--no_padding">
+      <div class="govuk-inset-text app-inset-text--narrow-border app-inset-text--#{@error ? 'error' : 'important'} app-inset-text--no_padding">
         <p class="app-inset-text__title govuk-!-margin-bottom-2">#{field_label} is #{text}</p>
         #{original_value_html}
         <div>

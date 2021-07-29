@@ -4,10 +4,9 @@ module TrainingDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_accessor :data_model, :not_provided_copy
-
-    def initialize(data_model:)
+    def initialize(data_model:, error: false)
       @data_model = data_model
+      @error = error
       @not_provided_copy = I18n.t("components.confirmation.not_provided")
     end
 
@@ -22,5 +21,9 @@ module TrainingDetails
     def trainee_start_date
       trainee.commencement_date.present? ? date_for_summary_view(trainee.commencement_date) : not_provided_copy
     end
+
+  private
+
+    attr_accessor :data_model, :not_provided_copy, :error
   end
 end

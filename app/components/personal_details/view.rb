@@ -4,12 +4,13 @@ module PersonalDetails
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    attr_accessor :data_model, :nationalities
+    attr_accessor :data_model, :nationalities, :error
 
-    def initialize(data_model:)
+    def initialize(data_model:, error: false)
       @data_model = data_model
       @nationalities = Nationality.where(id: data_model.nationality_ids)
       @not_provided_copy = I18n.t("components.confirmation.not_provided")
+      @error = error
     end
 
     def trainee
@@ -38,7 +39,8 @@ module PersonalDetails
       MappableFieldRow.new(field_value: nationality,
                            field_label: "Nationality",
                            text: t("components.confirmation.missing"),
-                           action_url: edit_trainee_personal_details_path(trainee)).to_h
+                           action_url: edit_trainee_personal_details_path(trainee),
+                           error: error).to_h
     end
 
   private

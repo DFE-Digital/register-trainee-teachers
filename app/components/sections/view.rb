@@ -23,7 +23,7 @@ module Sections
     delegate :funding_options, to: :helpers
 
     def confirmation_view_args
-      confirmation_view_args = { data_model: form_klass.new(trainee) }
+      confirmation_view_args = { data_model: form_klass.new(trainee), error: error }
 
       if section == :degrees
         confirmation_view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
