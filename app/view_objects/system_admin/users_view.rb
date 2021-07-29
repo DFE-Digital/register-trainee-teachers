@@ -7,7 +7,7 @@ module SystemAdmin
     end
 
     def registered
-      @registered ||= provider.users.order(:last_name)
+      @registered ||= provider.users.kept.order(:last_name)
     end
 
     def not_registered

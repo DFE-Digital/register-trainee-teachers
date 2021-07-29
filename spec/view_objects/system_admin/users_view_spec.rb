@@ -19,6 +19,17 @@ describe SystemAdmin::UsersView do
       expect(subject.registered.count).to eq 1
       expect(subject.registered.first).to eq user
     end
+
+    context "soft deleted" do
+      before do
+        user.update(discarded_at: Faker::Time.backward(days: 1).utc)
+      end
+
+      it "doesnt return users" do
+        expect(subject.registered.count).not_to eq 1
+        expect(subject.registered.first).not_to eq user
+      end
+    end
   end
 
   describe "#not_registered" do
