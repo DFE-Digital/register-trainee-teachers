@@ -14,6 +14,11 @@ en:
   personal_details: Personal details
   return_to_draft_later: Return to this draft record later
   answer_missing: Answer missing
+  incomplete: incomplete
+  in_progress_valid: in progress
+  in_progress_invalid: in progress
+  review: review
+  completed: completed
   header:
     items:
       sign_out: Sign out
@@ -316,12 +321,14 @@ en:
       statuses:
         not_provided: not provided
         incomplete: not started
-        in_progress: not marked as complete
+        in_progress_valid: not marked as complete
+        in_progress_invalid: not marked as complete
         review: not reviewed
       link_texts:
         not_provided: Add degree details
         incomplete: Start section
-        in_progress: Continue section
+        in_progress_valid: Continue section
+        in_progress_invalid: Continue section
         review: Review their data
         funding_inactive:  Complete course details first
     school_result_notice:

@@ -267,15 +267,15 @@ module Features
     end
 
     def incomplete
-      progress_with_prefix(Progress::STATUSES[:incomplete])
+      progress_with_prefix(I18n.t("incomplete"))
     end
 
     def in_progress
-      progress_with_prefix(Progress::STATUSES[:in_progress])
+      progress_with_prefix(I18n.t("in_progress_valid"))
     end
 
     def completed
-      progress_with_prefix(Progress::STATUSES[:completed])
+      progress_with_prefix(I18n.t("completed"))
     end
 
   private
