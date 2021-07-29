@@ -7,10 +7,11 @@ describe IttStartDateForm, type: :model do
   let(:form_store) { class_double(FormStore) }
 
   let(:params) do
+    date = Faker::Date.between(from: 10.years.ago, to: 2.days.ago)
     {
-      year: "1963",
-      month: "11",
-      day: "11",
+      year: date.year.to_s,
+      month: date.month.to_s,
+      day: date.day.to_s,
       date_string: "other",
     }
   end
@@ -48,6 +49,38 @@ describe IttStartDateForm, type: :model do
           expect(subject.errors[:date]).to include(
             I18n.t(
               "activemodel.errors.models.itt_start_date_form.attributes.date.invalid",
+            ),
+          )
+        end
+      end
+
+      context "future date" do
+        before do
+          subject.year = "2099"
+          subject.validate
+        end
+
+        it "is invalid" do
+          expect(subject.errors[:date]).to include(
+            I18n.t(
+              "activemodel.errors.models.itt_start_date_form.attributes.date.future",
+            ),
+          )
+        end
+      end
+
+      context "too old date" do
+        before do
+          subject.day = "12"
+          subject.month = "11"
+          subject.year = "2000"
+          subject.validate
+        end
+
+        it "is invalid" do
+          expect(subject.errors[:date]).to include(
+            I18n.t(
+              "activemodel.errors.models.itt_start_date_form.attributes.date.too_old",
             ),
           )
         end
