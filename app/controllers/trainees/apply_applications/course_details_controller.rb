@@ -40,7 +40,7 @@ module Trainees
       end
 
       def course_has_one_specialism?
-        CalculateSubjectSpecialisms.call(subjects: course_subjects).values.flatten.size == 1
+        CalculateSubjectSpecialisms.call(subjects: course_subjects).all? { |_, v| v.count < 2 }
       end
 
       def course_subjects
