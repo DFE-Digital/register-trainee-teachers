@@ -30,15 +30,10 @@ describe Trainees::SubjectSpecialismsController do
 
     context "there are more specialisms to choose" do
       let!(:course) do
-        subjects =
-          [
-            Dttp::CodeSets::AllocationSubjects::ART_AND_DESIGN,
-            Dttp::CodeSets::AllocationSubjects::BIOLOGY,
-          ]
         create(
           :course_with_subjects,
           subjects_count: 2,
-          subject_names: subjects,
+          subject_names: [AllocationSubjects::ART_AND_DESIGN, AllocationSubjects::BIOLOGY],
           accredited_body_code: trainee.provider.code,
           route: trainee.training_route,
         )
@@ -46,9 +41,8 @@ describe Trainees::SubjectSpecialismsController do
 
       it "redirects to the next position" do
         put(:update, params: { trainee_id: trainee, position: 1, subject_specialism_form: { specialism1: "moose" } })
-        expect(response).to redirect_to(
-          edit_trainee_subject_specialism_path(trainee, 2),
-        )
+
+        expect(response).to redirect_to(edit_trainee_subject_specialism_path(trainee, 2))
       end
     end
 
@@ -58,7 +52,7 @@ describe Trainees::SubjectSpecialismsController do
           :course_with_subjects,
           subjects_count: 1,
           accredited_body_code: trainee.provider.code,
-          subject_names: [Dttp::CodeSets::AllocationSubjects::ART_AND_DESIGN],
+          subject_names: [AllocationSubjects::ART_AND_DESIGN],
           route: trainee.training_route,
         )
       end

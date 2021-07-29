@@ -36,7 +36,7 @@ module Trainees
     end
 
     def load_language_specialisms
-      @language_specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))[:course_subject_one]
+      @language_specialisms = PUBLISH_SUBJECT_SPECIALISM_MAPPING[PublishSubjects::MODERN_LANGUAGES]
     end
 
     def language_specialism_params

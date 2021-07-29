@@ -13,7 +13,7 @@ feature "apply registrations", type: :feature do
   end
 
   describe "with a course that doesn't require selecting a specialism" do
-    let(:subjects) { [Dttp::CodeSets::AllocationSubjects::HISTORY] }
+    let(:subjects) { ["History"] }
 
     scenario "reviewing course" do
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
@@ -24,7 +24,7 @@ feature "apply registrations", type: :feature do
   end
 
   describe "with a course that requires selecting multiple specialisms" do
-    let(:subjects) { [Dttp::CodeSets::AllocationSubjects::ART_AND_DESIGN] }
+    let(:subjects) { ["Art and design"] }
 
     scenario "selecting specialisms" do
       then_i_am_on_the_apply_applications_course_details_page

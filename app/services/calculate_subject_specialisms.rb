@@ -15,7 +15,7 @@ class CalculateSubjectSpecialisms
       attributes_for_language_subject
     when :primary
       attributes_for_primary_subject
-    when :single_subject
+    when :single
       attributes_for_single_subject
     else
       attributes_for_multiple_subjects
@@ -31,7 +31,7 @@ private
   end
 
   def attributes_for_language_subject
-    specialisms = subjects.flat_map { |subject| lookup_subject_specialism(subject) }
+    specialisms = modern_language_filter(subjects).flat_map { |subject| lookup_subject_specialism(subject) }
 
     {
       course_subject_one: specialisms, course_subject_two: [], course_subject_three: []
@@ -66,5 +66,21 @@ private
 
   def lookup_subject_specialism(subject)
     PUBLISH_SUBJECT_SPECIALISM_MAPPING.fetch(subject, [])
+  end
+
+  def modern_language_filter(subjects)
+    # We want to avoid 2 scenarios when a course has more than one language and one of those subjects is
+    # "Modern Languages" or "Modern languages (other)".
+    #
+    # Scenario 1:
+    #   A language course has 2 subjects for example: "German" and "Modern languages (other)". We don't
+    #   care about "Modern languages (other)" so we need to get rid of it.
+    #
+    # Scenario 2:
+    #   A language course has several subjects including "Modern Languages" or "Modern languages (other)".
+    #   If the method above "attributes_for_language_subject" attempts to lookup the specialisms for
+    #   modern languages, it will get all the languages which doesn't add any value. The provider is
+    #   going to have to choose the languages anyway.
+    subjects.size > 1 ? subjects.reject { |s| s.downcase.include?("modern") } : subjects
   end
 end

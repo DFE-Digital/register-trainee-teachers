@@ -22,13 +22,7 @@ class LanguageSpecialismsForm < TraineeForm
 private
 
   def compute_fields
-    {
-      language_specialisms: [
-        trainee.course_subject_one,
-        trainee.course_subject_two,
-        trainee.course_subject_three,
-      ].compact,
-    }.merge(new_attributes)
+    { language_specialisms: languages_specialisms_from_trainee_record }.merge(new_attributes)
   end
 
   def language_specialism_count
@@ -37,5 +31,10 @@ private
     elsif languages.length > 3
       errors.add(:language_specialisms, :invalid)
     end
+  end
+
+  def languages_specialisms_from_trainee_record
+    # If the course subjects are not language specialisms, they shouldn't be included
+    trainee.course_subjects & PUBLISH_SUBJECT_SPECIALISM_MAPPING[PublishSubjects::MODERN_LANGUAGES]
   end
 end
