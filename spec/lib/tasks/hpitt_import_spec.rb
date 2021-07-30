@@ -68,6 +68,7 @@ describe "hpitt:import" do
 
       expect(trainee.training_route).to eq "school_direct_salaried"
       expect(trainee.trn).to eq "1234"
+      expect(trainee.trainee_id).to eq "L0V3LYiD"
 
       expect(trainee.degrees.count).to eq 1
       degree = trainee.degrees.first

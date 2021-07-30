@@ -62,7 +62,7 @@ module HPITT
     end
 
     def build_trainee(csv_row)
-      trainee = Trainee.new
+      trainee = Trainee.find_or_initialize_by(trainee_id: csv_row["Trainee ID"])
 
       # TODO: Temporary, the provider code will need to be added to this csv
       trainee.provider = Provider.first
