@@ -112,3 +112,5 @@ google_tag_manager:
   env_id: 11
 
 clockover_date: "03/08/2021"
+
+blazer_database_url: <set from env>

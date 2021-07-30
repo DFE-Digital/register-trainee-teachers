@@ -23,3 +23,5 @@ environment:
   name: development
 
 track_validation_errors: false
+
+blazer_database_url: postgresql://localhost/register_trainee_teacher_data_development
