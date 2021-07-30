@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate
   before_action :track_page
-
+  after_action :save_origin_path
   include Pundit
 
   rescue_from Pundit::NotAuthorizedError do
@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
 private
+
+  def save_origin_path
+    session[:origin_path] = request.original_fullpath
+  end
 
   def enforce_basic_auth
     authenticate_or_request_with_http_basic do |username, password|
