@@ -15,6 +15,7 @@ en:
   return_to_draft_later: Return to this draft record later
   answer_missing: Answer missing
   incomplete: incomplete
+  cannot_start_yet: cannot start yet
   in_progress_valid: in progress
   in_progress_invalid: in progress
   review: review

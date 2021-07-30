@@ -141,7 +141,7 @@ module TaskListHelper
           task_name: "Funding",
           path: nil,
           confirm_path: nil,
-          status: "cannot start yet",
+          status: "cannot_start_yet",
           classes: "funding",
           hint_text: "Complete course details first",
           active: false,
