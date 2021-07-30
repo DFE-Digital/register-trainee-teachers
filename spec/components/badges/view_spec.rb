@@ -9,7 +9,6 @@ RSpec.describe Badges::View do
 
   let(:counts) do
     {
-      draft: 10,
       submitted_for_trn: 20,
       trn_received: 150,
       deferred: 10,

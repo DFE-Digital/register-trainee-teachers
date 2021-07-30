@@ -36,7 +36,6 @@ module Badges
 
     def state_counts
       {
-        draft: random_count,
         submitted_for_trn: random_count,
         trn_received: random_count,
         deferred: random_count,

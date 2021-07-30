@@ -509,16 +509,17 @@ en:
         2: that you would like to start using Register trainee teachers
         3: the email address associated with your DfE Sign-in account
     home:
-      heading: Register trainee teachers
-      body:
-        1: Register trainees with the Department for Education and record the outcome of their training.
-      new_trainee_link: Add a trainee
-      trainees_link: Trainee records
-      trainees_link_desc: Review and manage your trainee records.
-      give_feedback_link: Give feedback
-      give_feedback_link_desc: This is a new service. Your views will help us improve it.
-      guidance_link: Guidance
-      guidance_link_desc: Find out about Register and the data you need.
+      heading: Your trainee teachers
+      draft_heading: Draft trainees
+      draft_trainees_link: View all draft trainees (%{count})
+      draft_apply_trainees_link: View draft trainees imported from Apply (%{count})
+      new_trainee_link: Create a new trainee record
+      registered_heading: Registered trainees
+      registered_trainees_link: View all registered trainees (%{count})
+      guidance_heading: Guidance and feedback
+      guidance_about_link: Find out about Register trainee teachers
+      guidance_data_link: Check what data you need to provide
+      give_feedback_link: Give feedback to help us improve Register trainee teachers
     start:
       bullet_desc: "Use this service to:"
       bullets:
@@ -529,7 +530,7 @@ en:
     cookie_policy:
       heading: Cookies on Register trainee teachers
     badges:
-      heading: Your %{start_year} to %{end_year} trainees
+      heading: "%{start_year} to %{end_year} trainees"
     accessibility:
       heading: Accessibility statement for Register trainee teachers
     guidance:
