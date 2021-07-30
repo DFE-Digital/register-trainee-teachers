@@ -46,5 +46,18 @@ describe ApplicationController, type: :controller do
         expect(response.body).to include "current user is nil!"
       end
     end
+
+    context "there is a user but they have been deleted" do
+      let(:dfe_sign_in_email) { user.email }
+
+      before do
+        user.discard!
+      end
+
+      it "returns nil" do
+        get :index
+        expect(response.body).to include "current user is nil!"
+      end
+    end
   end
 end

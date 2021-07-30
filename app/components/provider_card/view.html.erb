@@ -3,6 +3,6 @@
     <%= govuk_link_to provider.name, provider_path(provider) %>
   </h2>
   <p class="govuk-body govuk-hint">
-    <%= pluralize(provider.users.count, "user") %>
+    <%= pluralize(provider.users.kept.count, "user") %>
   </p>
 </div>

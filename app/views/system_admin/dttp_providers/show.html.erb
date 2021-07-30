@@ -14,11 +14,11 @@
 ) %>
 </p>
 
-<% if @provider.users.any? %>
+<% if @provider.users.kept.any? %>
   <div class="govuk-!-margin-bottom-8">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
-        <h2 class="govuk-heading-m"><%= pluralize(@provider.users.count, "user") %> </h2>
+        <h2 class="govuk-heading-m"><%= pluralize(@provider.users.kept.count, "user") %> </h2>
       </div>
     </div>
     <%= render UserCard::View.with_collection(@users) %>

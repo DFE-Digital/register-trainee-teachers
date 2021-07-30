@@ -29,7 +29,7 @@ private
   end
 
   def current_user
-    @current_user ||= User.find_by("LOWER(email) = ?", dfe_sign_in_user&.email)
+    @current_user ||= User.kept.find_by("LOWER(email) = ?", dfe_sign_in_user&.email)
   end
 
   def authenticated?
