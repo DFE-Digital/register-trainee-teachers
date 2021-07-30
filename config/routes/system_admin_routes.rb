@@ -4,7 +4,8 @@ module SystemAdminRoutes
   def self.extended(router)
     router.instance_exec do
       scope module: :system_admin, path: "system-admin" do
-        mount Blazer::Engine, at: "blazer"
+        mount Blazer::Engine, at: "/blazer", constraints: SystemAdminConstraint.new
+        get "/blazer", to: redirect("/sign-in"), status: 302
 
         resources :providers, only: %i[index new create show edit update] do
           resources :users, only: %i[new create]
