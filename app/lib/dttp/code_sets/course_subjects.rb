@@ -14,6 +14,7 @@ module Dttp
       BUSINESS_STUDIES = "business studies"
       CHEMISTRY = "chemistry"
       CHILD_DEVELOPMENT = "child development"
+      CITIZENSHIP = "Citizenship"
       CHINESE_LANGUAGES = "Chinese languages"
       CLASSICAL_GREEK_STUDIES = "classical Greek studies"
       CLASSICAL_STUDIES = "classical studies"
@@ -22,10 +23,12 @@ module Dttp
       CREATIVE_ARTS_AND_DESIGN = "creative arts and design"
       DANCE = "dance"
       DESIGN = "design"
+      DESIGN_TECHNOLOGY = "Design and technology"
       DRAMA = "drama"
       EARLY_YEARS_TEACHING = "early years teaching"
       ECONOMICS = "economics"
       ENGLISH_STUDIES = "English studies"
+      ENGLISH_AS_A_FOREIGN_LANGUAGE = "English as a foreign language"
       ENVIRONMENTAL_SCIENCES = "environmental sciences"
       FOOD_AND_BEVERAGE_STUDIES = "food and beverage studies"
       FRENCH_LANGUAGE = "French language"
@@ -42,6 +45,7 @@ module Dttp
       HOSPITALITY = "hospitality"
       INFORMATION_TECHNOLOGY = "information technology"
       ITALIAN_LANGUAGE = "Italian language"
+      JAPANESE = "Japanese"
       LATIN_LANGUAGE = "Latin language"
       LAW = "law"
       MANUFACTURING_ENGINEERING = "manufacturing engineering"
@@ -52,6 +56,7 @@ module Dttp
       MUSIC_EDUCATION_AND_TEACHING = "music education and teaching"
       PERFORMING_ARTS = "performing arts"
       PHILOSOPHY = "philosophy"
+      PHYSICAL_EDUCATION = "Physical education"
       PHYSICS = "physics"
       PORTUGUESE_LANGUAGE = "Portuguese language"
       PRIMARY_TEACHING = "primary teaching"
@@ -75,28 +80,24 @@ module Dttp
       UK_GOVERNMENT_PARLIAMENTARY_STUDIES = "UK government / Parliamentary studies"
       WELSH_LANGUAGE = "Welsh language"
 
-      # TODO: legacy subjects. Update when these are added to DTTP
-      DESIGN_TECHNOLOGY = "Design and technology"
-      PHYSICAL_EDUCATION = "Physical education"
-
       CLASSICS_DTTP_ID = "ca8274df-181e-e711-80c8-0050568902d3"
       EARLY_YEARS_DTTP_ID = "f08274df-181e-e711-80c8-0050568902d3"
-      MATHEMATICS_DTTP_ID = "768274df-181e-e711-80c8-0050568902d3"
       MODERN_LANGUAGES_DTTP_ID = "6ca12838-b3cf-e911-a860-000d3ab1da01"
       RELIGIOUS_EDUCATION_DTTP_ID = "dc8274df-181e-e711-80c8-0050568902d3"
 
       MAPPING = {
-        ANCIENT_HEBREW => { entity_id: CLASSICS_DTTP_ID },
+        ANCIENT_HEBREW => { entity_id: "5fcd03f1-83ef-eb11-bacb-000d3ab62e3c" },
         APPLIED_BIOLOGY => { entity_id: "11a12838-b3cf-e911-a860-000d3ab1da01" },
         APPLIED_CHEMISTRY => { entity_id: "6a8274df-181e-e711-80c8-0050568902d3" },
         APPLIED_COMPUTING => { entity_id: "1ea12838-b3cf-e911-a860-000d3ab1da01" },
         APPLIED_PHYSICS => { entity_id: "20a12838-b3cf-e911-a860-000d3ab1da01" },
-        ARABIC_LANGUAGES => { entity_id: MODERN_LANGUAGES_DTTP_ID },
+        ARABIC_LANGUAGES => { entity_id: "b7f49dcd-aaeb-eb11-bacb-0022489ad2a6" },
         BIOLOGY => { entity_id: "568274df-181e-e711-80c8-0050568902d3" },
         BUSINESS_MANAGEMENT => { entity_id: "24a12838-b3cf-e911-a860-000d3ab1da01" },
         BUSINESS_STUDIES => { entity_id: "a68274df-181e-e711-80c8-0050568902d3" },
         CHEMISTRY => { entity_id: "688274df-181e-e711-80c8-0050568902d3" },
         CHILD_DEVELOPMENT => { entity_id: EARLY_YEARS_DTTP_ID },
+        CITIZENSHIP => { entity_id: "9b49f1a0-55f0-eb11-bacb-000d3ab62a71" },
         CHINESE_LANGUAGES => { entity_id: "1e2ed06f-f303-eb11-a813-000d3ad82cac" },
         CLASSICAL_GREEK_STUDIES => { entity_id: "2aa12838-b3cf-e911-a860-000d3ab1da01" },
         CLASSICAL_STUDIES => { entity_id: "2ca12838-b3cf-e911-a860-000d3ab1da01" },
@@ -105,9 +106,11 @@ module Dttp
         CREATIVE_ARTS_AND_DESIGN => { entity_id: "32a12838-b3cf-e911-a860-000d3ab1da01" },
         DANCE => { entity_id: "34a12838-b3cf-e911-a860-000d3ab1da01" },
         DESIGN => { entity_id: "36a12838-b3cf-e911-a860-000d3ab1da01" },
+        DESIGN_TECHNOLOGY => { entity_id: "f7e9d9d5-55f0-eb11-bacb-000d3ab62a71" },
         DRAMA => { entity_id: "e88274df-181e-e711-80c8-0050568902d3" },
         EARLY_YEARS_TEACHING => { entity_id: "3aa12838-b3cf-e911-a860-000d3ab1da01" },
         ECONOMICS => { entity_id: "928274df-181e-e711-80c8-0050568902d3" },
+        ENGLISH_AS_A_FOREIGN_LANGUAGE => { entity_id: "e291379f-52f0-eb11-bacb-000d3ab62e3c" },
         ENGLISH_STUDIES => { entity_id: "3ea12838-b3cf-e911-a860-000d3ab1da01" },
         ENVIRONMENTAL_SCIENCES => { entity_id: "40a12838-b3cf-e911-a860-000d3ab1da01" },
         FOOD_AND_BEVERAGE_STUDIES => { entity_id: "42a12838-b3cf-e911-a860-000d3ab1da01" },
@@ -125,16 +128,18 @@ module Dttp
         HOSPITALITY => { entity_id: "5aa12838-b3cf-e911-a860-000d3ab1da01" },
         INFORMATION_TECHNOLOGY => { entity_id: "5ca12838-b3cf-e911-a860-000d3ab1da01" },
         ITALIAN_LANGUAGE => { entity_id: "5ea12838-b3cf-e911-a860-000d3ab1da01" },
+        JAPANESE => { entity_id: "2a2f8b82-55f0-eb11-bacb-000d3ab62a71" },
         LATIN_LANGUAGE => { entity_id: "c68274df-181e-e711-80c8-0050568902d3" },
         LAW => { entity_id: "62a12838-b3cf-e911-a860-000d3ab1da01" },
         MANUFACTURING_ENGINEERING => { entity_id: "64a12838-b3cf-e911-a860-000d3ab1da01" },
         MATERIALS_SCIENCE => { entity_id: "66a12838-b3cf-e911-a860-000d3ab1da01" },
-        MATHEMATICS => { entity_id: MATHEMATICS_DTTP_ID },
+        MATHEMATICS => { entity_id: "768274df-181e-e711-80c8-0050568902d3" },
         MEDIA_AND_COMMUNICATION_STUDIES => { entity_id: "6aa12838-b3cf-e911-a860-000d3ab1da01" },
         MODERN_LANGUAGES => { entity_id: MODERN_LANGUAGES_DTTP_ID },
         MUSIC_EDUCATION_AND_TEACHING => { entity_id: "6ea12838-b3cf-e911-a860-000d3ab1da01" },
         PERFORMING_ARTS => { entity_id: "70a12838-b3cf-e911-a860-000d3ab1da01" },
         PHILOSOPHY => { entity_id: RELIGIOUS_EDUCATION_DTTP_ID },
+        PHYSICAL_EDUCATION => { entity_id: "93748bba-55f0-eb11-bacb-000d3ab62a71" },
         PHYSICS => { entity_id: "72a12838-b3cf-e911-a860-000d3ab1da01" },
         PORTUGUESE_LANGUAGE => { entity_id: "74a12838-b3cf-e911-a860-000d3ab1da01" },
         PRIMARY_TEACHING => { entity_id: "76a12838-b3cf-e911-a860-000d3ab1da01" },
@@ -151,14 +156,11 @@ module Dttp
         SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS => { entity_id: "8ca12838-b3cf-e911-a860-000d3ab1da01" },
         SPORT_AND_EXERCISE_SCIENCES => { entity_id: "8ea12838-b3cf-e911-a860-000d3ab1da01" },
         SPORTS_MANAGEMENT => { entity_id: "90a12838-b3cf-e911-a860-000d3ab1da01" },
-        STATISTICS => { entity_id: MATHEMATICS_DTTP_ID },
+        STATISTICS => { entity_id: "a72916df-83ef-eb11-bacb-000d3ab62e3c" },
         TEXTILES_TECHNOLOGY => { entity_id: "92a12838-b3cf-e911-a860-000d3ab1da01" },
         TRAVEL_AND_TOURISM => { entity_id: "94a12838-b3cf-e911-a860-000d3ab1da01" },
         UK_GOVERNMENT_PARLIAMENTARY_STUDIES => { entity_id: "96a12838-b3cf-e911-a860-000d3ab1da01" },
         WELSH_LANGUAGE => { entity_id: "98a12838-b3cf-e911-a860-000d3ab1da01" },
-        # TODO: update these when they have been added to DTTP
-        DESIGN_TECHNOLOGY => { entity_id: "36a12838-b3cf-e911-a860-000d3ab1da01" },
-        PHYSICAL_EDUCATION => { entity_id: "8ea12838-b3cf-e911-a860-000d3ab1da01" },
       }.freeze
     end
   end
