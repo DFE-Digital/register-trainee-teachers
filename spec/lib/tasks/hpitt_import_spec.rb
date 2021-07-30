@@ -41,58 +41,71 @@ describe "hpitt:import" do
     it "creates the trainee/degree" do
       expect { subject }.to change { Trainee.count }.from(0).to(1)
 
-      trainee = Trainee.first
-      expect(trainee.course_age_range).to eq [0, 5]
-      expect(trainee.course_start_date).to eq Date.parse("13/04/2018")
-
-      expect(trainee.address_line_one).to eq "Buckingham Palace"
-      expect(trainee.address_line_two).to eq "The mall"
-      expect(trainee.postcode).to eq "SW1A 1AA"
-      expect(trainee.town_city).to eq "Preston"
-
-      expect(trainee.first_names).to eq "Jeff"
-      expect(trainee.middle_names).to eq "Goeff"
-      expect(trainee.last_name).to eq "McJeff"
-      expect(trainee.date_of_birth).to eq Date.parse("13/04/1992")
-      expect(trainee.email).to eq "jeff@example.com"
-      expect(trainee.gender).to eq "female"
-
-      expect(trainee.withdraw_date).to eq Date.parse("13/04/2020")
-      expect(trainee.defer_date).to eq Date.parse("13/04/2021")
-
-      expect(trainee.nationalities.count).to eq 1
-      expect(trainee.nationalities.first).to eq Nationality.find_by_name("luxembourger")
-      expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
-      expect(trainee.employing_school).to eq school
-      expect(trainee.provider).to eq provider
-
-      expect(trainee.training_route).to eq "school_direct_salaried"
-      expect(trainee.trn).to eq "1234"
-      expect(trainee.trainee_id).to eq "L0V3LYiD"
-
-      expect(trainee.degrees.count).to eq 1
-      degree = trainee.degrees.first
-      expect(degree.locale_code).to eq "non_uk"
-      expect(degree.non_uk_degree).to eq "Bachelor degree"
-      expect(degree.subject).to eq "Toxicology"
-      expect(degree.country).to eq "France"
-
-      expect(trainee.course_code).to eq course.code
+      expect_trainee_to_have_attributes_from_csv(Trainee.first)
     end
   end
 
   context "with invalid data" do
-    RSpec::Matchers.define_negated_matcher :not_change, :change
-
     # This csv has two rows, the second row has a school urn for a school that
     # doesn't exist
     let(:csv_path) {
       File.join(__dir__, "..", "..", "support", "fixtures", "hpitt_import_invalid.csv")
     }
 
-    it "gives an error including which row had the problem, and doesn't create the valid trainee" do
-      expect { subject }.to not_change { Trainee.count }
-        .and raise_error(having_attributes(message: "error on row 2: Couldn't find School"))
+    it "gives an error including which row had the problem, and still creates the valid trainee" do
+      expect { subject }.to change { Trainee.count }.from(0).to(1)
+      # TODO: error csv
     end
+  end
+
+  context "with a preexisting trainee" do
+    let(:csv_path) {
+      File.join(__dir__, "..", "..", "support", "fixtures", "hpitt_import.csv")
+    }
+
+    it "edits the existing trainee" do
+      trainee = create(:trainee, trainee_id: "L0V3LYiD")
+      expect { subject }.not_to(change { Trainee.count })
+      expect_trainee_to_have_attributes_from_csv(trainee)
+    end
+  end
+
+  def expect_trainee_to_have_attributes_from_csv(trainee)
+    expect(trainee.reload.course_age_range).to eq [0, 5]
+    expect(trainee.course_start_date).to eq Date.parse("13/04/2018")
+
+    expect(trainee.address_line_one).to eq "Buckingham Palace"
+    expect(trainee.address_line_two).to eq "The mall"
+    expect(trainee.postcode).to eq "SW1A 1AA"
+    expect(trainee.town_city).to eq "Preston"
+
+    expect(trainee.first_names).to eq "Jeff"
+    expect(trainee.middle_names).to eq "Goeff"
+    expect(trainee.last_name).to eq "McJeff"
+    expect(trainee.date_of_birth).to eq Date.parse("13/04/1992")
+    expect(trainee.email).to eq "jeff@example.com"
+    expect(trainee.gender).to eq "female"
+
+    expect(trainee.withdraw_date).to eq Date.parse("13/04/2020")
+    expect(trainee.defer_date).to eq Date.parse("13/04/2021")
+
+    expect(trainee.nationalities.count).to eq 1
+    expect(trainee.nationalities.first).to eq Nationality.find_by_name("luxembourger")
+    expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
+    expect(trainee.employing_school).to eq school
+    expect(trainee.provider).to eq provider
+
+    expect(trainee.training_route).to eq "school_direct_salaried"
+    expect(trainee.trn).to eq "1234"
+    expect(trainee.trainee_id).to eq "L0V3LYiD"
+
+    expect(trainee.degrees.count).to eq 1
+    degree = trainee.degrees.first
+    expect(degree.locale_code).to eq "non_uk"
+    expect(degree.non_uk_degree).to eq "Bachelor degree"
+    expect(degree.subject).to eq "Toxicology"
+    expect(degree.country).to eq "France"
+
+    expect(trainee.course_code).to eq course.code
   end
 end
