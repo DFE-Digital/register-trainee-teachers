@@ -55,9 +55,9 @@ module TraineeHelper
 
   def invalid_data_message(form_section, trainee)
     if trainee.apply_application?
-      data = JSON(trainee.apply_application.invalid_data)
+      data = trainee.apply_application.invalid_data
 
-      return if trainee.apply_application.invalid_data.blank? || data.blank? || data["degrees"][trainee.slug][form_section].nil?
+      return if data.blank? || data["degrees"][trainee.slug][form_section].nil?
 
       t("components.invalid_data_text.static_text", query: data["degrees"][trainee.slug][form_section])
     end

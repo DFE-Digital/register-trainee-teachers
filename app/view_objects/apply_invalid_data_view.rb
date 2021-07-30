@@ -36,11 +36,9 @@ private
   attr_reader :apply_application, :invalid_fields
 
   def populate_invalid_fields
-    return {} if apply_application.invalid_data.blank?
-
     fields = []
 
-    JSON(apply_application.invalid_data).each do |section_key, field_and_values|
+    apply_application.invalid_data.each do |section_key, field_and_values|
       field_names = section_key == "degrees" ? populate_degree_fields(field_and_values) : field_and_values.keys
       fields << field_names
     end
@@ -55,6 +53,6 @@ private
   end
 
   def section_key_id_prefix
-    JSON(apply_application.invalid_data).map { |section_key, _field_and_values| section_key }.join
+    apply_application.invalid_data.map { |section_key, _field_and_values| section_key }.join
   end
 end
