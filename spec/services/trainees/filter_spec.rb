@@ -27,7 +27,7 @@ module Trainees
       let!(:secondary_trainee) { create(:trainee, course_age_range: AgeRange::FOURTEEN_TO_NINETEEN) }
       let(:filters) { { level: %w[primary] } }
 
-      it { is_expected.to eq([primary_trainee, primary_and_secondary_trainee]) }
+      it { is_expected.to contain_exactly(primary_trainee, primary_and_secondary_trainee) }
     end
 
     context "with state filter" do
