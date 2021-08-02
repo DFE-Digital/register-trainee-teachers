@@ -5,9 +5,6 @@ class HomeView
                                     eyts_recommended withdrawn deferred qts_awarded
                                     eyts_awarded].freeze
 
-  REGISTERED_STATES = %w[submitted_for_trn trn_received recommended_for_award
-                         awarded deferred withdrawn].freeze
-
   def initialize(trainees)
     @trainees = trainees
     populate_state_counts!
@@ -16,7 +13,7 @@ class HomeView
   attr_reader :state_counts
 
   def registered_state_counts
-    @registered_state_counts ||= state_counts.slice(*REGISTERED_STATES)
+    @registered_state_counts ||= state_counts.except("draft")
   end
 
   def registered_trainees_count
