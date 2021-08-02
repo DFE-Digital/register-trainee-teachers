@@ -2,7 +2,9 @@
   <div class="govuk-grid-column-full">
     <div class="app-home-statuses">
         <% state_counts.map do |state, count| %>
-            <%= render TraineeStatusCard::View.new(state: state, count: count, target: trainees_path("state[]": state)) %>
+            <%= render TraineeStatusCard::View.new(state: state,
+                                                   count: count,
+                                                   target: trainees_path(state: map_state_to_filter_params(state))) %>
         <% end %>
     </div>
   </div>
