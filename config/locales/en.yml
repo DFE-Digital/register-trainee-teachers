@@ -531,8 +531,6 @@ en:
         4: recommend your trainees for qualified teacher status (QTS) or early years teacher status (EYTS)
     cookie_policy:
       heading: Cookies on Register trainee teachers
-    badges:
-      heading: "%{start_year} to %{end_year} trainees"
     accessibility:
       heading: Accessibility statement for Register trainee teachers
     guidance:
