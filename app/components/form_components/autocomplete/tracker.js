@@ -13,14 +13,16 @@ const trackFailedSearch = (queries, failedSearches) => {
   if (pressedDelete && !isSubstring) failedSearches.push(lastQuery)
 }
 
-const sendTrackingEvent = (val, failedSearches) => {
-  if (val && failedSearches.length > 0) {
+const sendTrackingEvent = (failedSearches, val) => {
+  if (failedSearches.length > 0) {
     window.dataLayer.push({
       event: 'autocomplete-search',
       failedSearches: failedSearches,
       match: val
     })
   }
+  // Clear out the failedSearches array
+  failedSearches.splice(0, failedSearches.length)
 }
 
 export { trackFailedSearch, sendTrackingEvent }

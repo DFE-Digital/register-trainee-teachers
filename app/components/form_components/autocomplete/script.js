@@ -53,7 +53,7 @@ const setupAutoComplete = (component) => {
     templates: { suggestion: (value) => suggestion(value, options) },
     name: rawFieldName,
     onConfirm: (val) => {
-      sendTrackingEvent(val, failedSearches)
+      sendTrackingEvent(failedSearches, val)
       // The below is copied directly from autocomplete source code. Providing
       // your own `onConfirm` function seems to override the default functionality... https://github.com/alphagov/accessible-autocomplete/blob/935f0d43aea1c606e6b38985e3fe7049ddbe98be/src/wrapper.js
       const requestedOption = [].filter.call(selectOptions, option => (option.textContent || option.innerText) === val)[0]
