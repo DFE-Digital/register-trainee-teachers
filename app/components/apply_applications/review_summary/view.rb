@@ -5,22 +5,36 @@ module ApplyApplications
     class View < GovukComponent::Base
       renders_one :header
 
-      def initialize(has_errors:, trainee:)
-        @has_errors = has_errors
+      def initialize(form:, trainee:)
+        @has_errors = form.errors.any?
+        @form = form
+        @trainee = trainee
         @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
       end
 
       def render?
-        invalid_data_view.invalid_data?
+        errors_captured? || invalid_data_exists?
       end
 
       def summary_component
-        @summary_component ||= has_errors ? ErrorSummary::View : InformationSummary::View
+        @summary_component ||= errors_captured? ? ErrorSummary::View : InformationSummary::View
       end
 
     private
 
-      attr_reader :invalid_data_view, :has_errors
+      def invalid_data_exists?
+        form_is_valid = form.valid?
+
+        form.errors.clear unless errors_captured?
+
+        !form_is_valid && invalid_data_view.invalid_data?
+      end
+
+      def errors_captured?
+        @has_errors
+      end
+
+      attr_reader :invalid_data_view, :form
     end
   end
 end

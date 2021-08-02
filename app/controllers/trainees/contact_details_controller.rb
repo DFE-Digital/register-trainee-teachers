@@ -30,13 +30,6 @@ module Trainees
       params.require(:contact_details_form).permit(*ContactDetailsForm::FIELDS)
     end
 
-    def section_completed?
-      ProgressService.call(
-        validator: ContactDetailsForm.new(trainee),
-        progress_value: trainee.progress.contact_details,
-      ).completed?
-    end
-
     def authorize_trainee
       authorize(trainee)
     end
