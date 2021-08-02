@@ -35,6 +35,11 @@ module Schools
               },
               if: -> { no_results_searching_again? }
 
+    def initialize(trainee, **kwargs)
+      @non_search_validation = kwargs.delete(:non_search_validation)
+      super(trainee, **kwargs)
+    end
+
     def search_results_found?
       search_results_found == "true"
     end
@@ -63,6 +68,10 @@ module Schools
 
     def fields_to_ignore_before_stash_or_save
       NON_TRAINEE_FIELDS
+    end
+
+    def non_search_validation?
+      @non_search_validation == true
     end
   end
 end

@@ -22,8 +22,9 @@ module Wizards
       end
 
       def start_point
-        return edit_trainee_lead_schools_path(trainee) unless ::Schools::LeadSchoolForm.new(trainee).valid?
-        return edit_trainee_employing_schools_path(trainee) unless ::Schools::EmployingSchoolForm.new(trainee).valid?
+        return edit_trainee_lead_schools_path(trainee) unless lead_school_selected?
+
+        edit_trainee_employing_schools_path(trainee) unless employing_school_selected?
       end
 
     private
@@ -42,6 +43,14 @@ module Wizards
 
       def user_come_from_confirm_or_trainee_page?
         page_tracker.last_origin_page_path&.include?("schools/confirm") || page_tracker.last_origin_page_path == "/trainees/#{trainee.slug}"
+      end
+
+      def lead_school_selected?
+        ::Schools::LeadSchoolForm.new(trainee, non_search_validation: true).valid?
+      end
+
+      def employing_school_selected?
+        ::Schools::EmployingSchoolForm.new(trainee, non_search_validation: true).valid?
       end
     end
   end

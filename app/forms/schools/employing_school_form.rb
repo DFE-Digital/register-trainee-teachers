@@ -10,7 +10,7 @@ module Schools
 
     validates :employing_school_id,
               presence: true,
-              if: -> { search_results_found? || results_search_again_query.blank? }
+              if: -> { non_search_validation? || (search_results_found? && results_search_again_query.blank?) }
 
     alias_method :school_id, :employing_school_id
 
