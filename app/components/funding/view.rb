@@ -5,9 +5,9 @@ module Funding
     include SanitizeHelper
     include FundingHelper
 
-    def initialize(data_model:, error: false)
+    def initialize(data_model:, has_errors: false)
       @data_model = data_model
-      @error = error
+      @has_errors = has_errors
     end
 
     def trainee
@@ -40,7 +40,7 @@ module Funding
 
   private
 
-    attr_accessor :data_model, :error
+    attr_accessor :data_model, :has_errors
 
     def course_subject_one
       trainee.course_subject_one

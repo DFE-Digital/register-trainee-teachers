@@ -4,13 +4,11 @@ module PersonalDetails
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    attr_accessor :data_model, :nationalities, :error
-
-    def initialize(data_model:, error: false)
+    def initialize(data_model:, has_errors: false)
       @data_model = data_model
       @nationalities = Nationality.where(id: data_model.nationality_ids)
       @not_provided_copy = I18n.t("components.confirmation.not_provided")
-      @error = error
+      @has_errors = has_errors
     end
 
     def trainee
@@ -40,10 +38,12 @@ module PersonalDetails
                            field_label: "Nationality",
                            text: t("components.confirmation.missing"),
                            action_url: edit_trainee_personal_details_path(trainee),
-                           error: error).to_h
+                           has_errors: has_errors).to_h
     end
 
   private
+
+    attr_accessor :data_model, :nationalities, :has_errors
 
     def nationality
       return if nationalities.blank?

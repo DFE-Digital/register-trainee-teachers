@@ -34,10 +34,10 @@ module CollapsedSection
       end
     end
 
-    context "error" do
+    context "has_errors" do
       before do
         render_inline(
-          described_class.new(title: title, link_text: link_text, url: url, error: true),
+          described_class.new(title: title, link_text: link_text, url: url, has_errors: true),
         )
       end
 

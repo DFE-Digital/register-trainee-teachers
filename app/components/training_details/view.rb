@@ -4,9 +4,9 @@ module TrainingDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    def initialize(data_model:, error: false)
+    def initialize(data_model:, has_errors: false)
       @data_model = data_model
-      @error = error
+      @has_errors = has_errors
       @not_provided_copy = I18n.t("components.confirmation.not_provided")
     end
 
@@ -24,6 +24,6 @@ module TrainingDetails
 
   private
 
-    attr_accessor :data_model, :not_provided_copy, :error
+    attr_accessor :data_model, :not_provided_copy, :has_errors
   end
 end

@@ -23,7 +23,7 @@ module Sections
     delegate :funding_options, to: :helpers
 
     def confirmation_view_args
-      confirmation_view_args = { data_model: form_klass.new(trainee), error: error }
+      confirmation_view_args = { data_model: form_klass.new(trainee), has_errors: form_has_errors? }
 
       if section == :degrees
         confirmation_view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
@@ -32,14 +32,14 @@ module Sections
     end
 
     def collapsed_funding_inactive_section_args
-      { title: I18n.t("components.sections.titles.funding_inactive"), hint_text: I18n.t("components.sections.link_texts.funding_inactive"), error: error }
+      { title: I18n.t("components.sections.titles.funding_inactive"), hint_text: I18n.t("components.sections.link_texts.funding_inactive"), has_errors: form_has_errors? }
     end
 
     def collapsed_section_args
       if section == :funding && funding_options(trainee) == :funding_inactive
         collapsed_funding_inactive_section_args
       else
-        { title: title, link_text: link_text, url: url, error: error }
+        { title: title, link_text: link_text, url: url, has_errors: form_has_errors? }
       end
     end
 
@@ -128,8 +128,8 @@ module Sections
       }[section][progress_status]
     end
 
-    def error
-      @error ||= form.errors.present?
+    def form_has_errors?
+      @form_has_errors ||= form.errors.present?
     end
 
     def progress_status

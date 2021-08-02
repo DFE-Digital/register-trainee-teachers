@@ -5,9 +5,9 @@ module Schools
     include SummaryHelper
     include SchoolHelper
 
-    def initialize(data_model:, error: false)
+    def initialize(data_model:, has_errors: false)
       @data_model = data_model
-      @error = error
+      @has_errors = has_errors
       @lead_school = trainee.lead_school
       @employing_school = trainee.employing_school
     end

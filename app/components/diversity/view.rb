@@ -4,9 +4,9 @@ module Diversity
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, error: false)
+    def initialize(data_model:, has_errors: false)
       @data_model = data_model
-      @error = error
+      @has_errors = has_errors
     end
 
     def trainee
@@ -73,7 +73,7 @@ module Diversity
 
   private
 
-    attr_accessor :data_model, :error
+    attr_accessor :data_model, :has_errors
 
     def render_disabilities
       data_model.disabilities.each do |disability|
