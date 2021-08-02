@@ -65,6 +65,24 @@ describe TraineeHelper do
     end
   end
 
+  describe "#degree_with_invalid_data?" do
+    context "apply trainee has degree with invalid data" do
+      let(:trainee) { create(:trainee, :with_invalid_apply_application) }
+
+      it "returns true" do
+        expect(degree_with_invalid_data?(trainee)).to be(true)
+      end
+    end
+
+    context "apply trainee has degree with no invalid data" do
+      let(:trainee) { create(:trainee, :with_apply_application, :with_degree) }
+
+      it "returns false" do
+        expect(degree_with_invalid_data?(trainee)).to be(false)
+      end
+    end
+  end
+
   describe "#trainees_page_title" do
     let(:page_size) { 25 }
     # Using an `object_double` here to stub ActiveRecord::Relation passed into

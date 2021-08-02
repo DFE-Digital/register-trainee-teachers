@@ -57,9 +57,28 @@ module TraineeHelper
     if trainee.apply_application?
       data = trainee.apply_application.invalid_data
 
-      return if data.blank? || data["degrees"][trainee.slug][form_section].nil?
+      return if invalid_data_does_not_exist?(form_section, trainee)
 
-      t("components.invalid_data_text.static_text", query: data["degrees"][trainee.slug][form_section])
+      t("components.invalid_data_text.static_text", query: data["degrees"][degree_slug(trainee)][form_section])
     end
+  end
+
+  def degree_with_invalid_data?(trainee)
+    data = trainee.apply_application.invalid_data
+
+    return false if data.blank?
+
+    data["degrees"][degree_slug(trainee)].present?
+  end
+
+private
+
+  def invalid_data_does_not_exist?(form_section, trainee)
+    data = trainee.apply_application.invalid_data
+    data.blank? || data["degrees"][degree_slug(trainee)].nil? || data["degrees"][degree_slug(trainee)][form_section].nil?
+  end
+
+  def degree_slug(trainee)
+    trainee.degrees.map(&:slug).join
   end
 end

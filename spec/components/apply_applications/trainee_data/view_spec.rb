@@ -35,17 +35,17 @@ module ApplyApplications
         end
       end
 
-      context "apply trainee without invalid data" do 
+      context "apply trainee without invalid data" do
         let(:apply_application) { create(:apply_application, invalid_data: nil) }
         let(:trainee) do
           create(:trainee, nationalities: [build(:nationality)], degrees: [], apply_application: apply_application)
         end
 
-        it "does not render the information summary component" do 
-          expect(component).to_not have_text("is not recognised")
-          expect(component).to_not have_text("This application contains")
-        end 
-      end 
+        it "does not render the information summary component" do
+          expect(component).not_to have_text("is not recognised")
+          expect(component).not_to have_text("This application contains")
+        end
+      end
     end
   end
 end

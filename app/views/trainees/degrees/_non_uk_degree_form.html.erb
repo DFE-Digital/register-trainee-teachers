@@ -1,13 +1,15 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "non_uk" %>
   <%= f.govuk_error_summary %>
- 
-  <%= render InformationSummary::View.new(renderable: @trainee.invalid_apply_data? ) do |component| %>
-    <% component.header  do %>
-      <%= @apply_invalid_data_view.summary_content %>
-    <% end %>
 
-    <%= @apply_invalid_data_view.summary_items_content %>
+  <% if @trainee.invalid_apply_data? && degree_with_invalid_data?(@trainee)%>
+    <%= render InformationSummary::View.new(renderable: @trainee.invalid_apply_data? ) do |component| %>
+      <% component.header  do %>
+        <%= @apply_invalid_data_view.summary_content %>
+      <% end %>
+
+      <%= @apply_invalid_data_view.summary_items_content %>
+    <% end %>
   <% end %>
   
 

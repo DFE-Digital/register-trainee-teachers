@@ -14,13 +14,13 @@ module ApplyApplications
         @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
       end
 
-    private 
+    private
 
-      def invalid_data? 
+      def invalid_data?
         if trainee.invalid_apply_data?
           ApplyInvalidDataView.new(trainee.apply_application)
-        end 
-      end 
+        end
+      end
     end
   end
 end
