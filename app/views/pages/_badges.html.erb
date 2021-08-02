@@ -1,6 +1,1 @@
-<h2 class="govuk-heading-m">
-  <%= t(".heading", start_year: 2020, end_year: 2021) %>
-<%# TODO:  Make this dynamic once we have a concept of academic years %>
-</h2>
-
-<%= render Badges::View.new(@home_view.registered_state_counts) %>
+<%= render Badges::View.new(@home_view.state_counts) %>
