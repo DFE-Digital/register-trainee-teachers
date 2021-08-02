@@ -114,7 +114,9 @@ en:
       subject: Subject
       age_range: Age range
       course_start_date: Course start date
+      itt_start_date: ITT start date
       course_end_date: Course end date
+      itt_end_date: ITT end date
       course_details: Course details
       details_not_on_publish: Details not on Publish
     school_details:
@@ -586,7 +588,8 @@ en:
       multiple_subjects: Subjects
       level: Level
       age_range: Age range
-      start_date: Start date
+      itt_start_date: ITT start date
+      itt_end_date: ITT end date
       course_start_date: Course start date
       course_end_date: Course end date
       duration: Duration
@@ -615,7 +618,8 @@ en:
         multiple_subjects: Subjects
         level: Level
         age_range: Age range
-        start_date: Start date
+        itt_start_date: ITT start date
+        itt_end_date: ITT end date
         course_start_date: Course start date
         course_end_date: Course end date
         duration: Duration
@@ -778,6 +782,12 @@ en:
               invalid: Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949
               taken: Enter a unique DTTP ID
   activemodel:
+    attributes:
+      course_details_form:
+        course_start_date: Course start date
+        itt_start_date: ITT start date
+        course_end_date: Course end date
+        itt_end_date: ITT end date
     errors:
       validators:
         postcode:
@@ -918,17 +928,32 @@ en:
               blank: Select an age range
             course_start_date:
               blank: Enter a course start date
-              future: Enter a course start date that is not as far in the future
+              future: Enter a course start date closer to today
               invalid: Enter a valid course start date
               too_old: Enter a valid course start date
               hint_html: For example, 11 3 %{year}
             course_end_date:
               blank: Enter a course end date
-              future: Enter a course end date that is not as far in the future
+              future: Enter a course end date closer to today
               invalid: Enter a valid course end date
               too_old: Enter a valid course end date
               before_or_same_as_start_date: The course end date must be after the start date
               hint_html: For example, 11 3 %{year}
+            itt_start_date:
+              blank: Enter an ITT start date
+              future: Enter an ITT start date closer to today
+              invalid: Enter a valid ITT start date
+              too_old: Enter a valid ITT start date
+              hint_html: <p class="govuk-body govuk-hint">The start date of the Initial Teacher Training portion of their course.</p>
+               <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
+            itt_end_date:
+              blank: Enter an ITT end date
+              future: Enter an ITT end date closer to today
+              invalid: Enter a valid ITT end date
+              too_old: Enter a valid ITT end date
+              before_or_same_as_start_date: The ITT end date must be after the start date
+              hint_html: <p class="govuk-body govuk-hint">The end date of the Initial Teacher Training portion of their course.</p>
+               <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
         publish_course_details_form:
           attributes:
             code:

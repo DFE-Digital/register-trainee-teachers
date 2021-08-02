@@ -34,7 +34,23 @@ class TraineeForm
     valid? && store.set(id, form_store_key, fields.except(*fields_to_ignore_before_stash_or_save))
   end
 
+  def course_start_date_attribute_name
+    "#{course_date_attribute_name_prefix}_start_date".to_sym
+  end
+
+  def course_end_date_attribute_name
+    "#{course_date_attribute_name_prefix}_end_date".to_sym
+  end
+
 private
+
+  def course_date_attribute_name_prefix
+    itt_route? ? :itt : :course
+  end
+
+  def itt_route?
+    trainee.itt_route?
+  end
 
   def compute_fields
     raise NotImplementedError

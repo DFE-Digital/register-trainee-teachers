@@ -32,6 +32,9 @@ class CourseDetailsForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
+  alias_attribute :itt_start_date, :course_start_date
+  alias_attribute :itt_end_date, :course_end_date
+
   before_validation :sanitise_course_dates
   before_validation :sanitise_subjects
 
@@ -166,33 +169,33 @@ private
 
   def course_start_date_valid
     if [start_day, start_month, start_year].all?(&:blank?)
-      errors.add(:course_start_date, :blank)
+      errors.add(course_start_date_attribute_name, :blank)
     elsif start_year.to_i > next_year
-      errors.add(:course_start_date, :future)
+      errors.add(course_start_date_attribute_name, :future)
     elsif !course_start_date.is_a?(Date)
-      errors.add(:course_start_date, :invalid)
+      errors.add(course_start_date_attribute_name, :invalid)
     elsif course_start_date < 10.years.ago
-      errors.add(:course_start_date, :too_old)
+      errors.add(course_start_date_attribute_name, :too_old)
     end
   end
 
   def course_end_date_valid
     if [end_day, end_month, end_year].all?(&:blank?)
-      errors.add(:course_end_date, :blank)
+      errors.add(course_end_date_attribute_name, :blank)
     elsif end_year.to_i > max_years
-      errors.add(:course_end_date, :future)
+      errors.add(course_end_date_attribute_name, :future)
     elsif !course_end_date.is_a?(Date)
-      errors.add(:course_end_date, :invalid)
+      errors.add(course_end_date_attribute_name, :invalid)
     elsif course_end_date < 10.years.ago
-      errors.add(:course_end_date, :too_old)
+      errors.add(course_end_date_attribute_name, :too_old)
     end
 
     additional_validation = errors.attribute_names.none? do |attribute_name|
-      %i[course_start_date course_end_date].include?(attribute_name)
+      [course_start_date_attribute_name, course_end_date_attribute_name].include?(attribute_name)
     end
 
     if additional_validation && course_start_date >= course_end_date
-      errors.add(:course_end_date, :before_or_same_as_start_date)
+      errors.add(course_end_date_attribute_name, :before_or_same_as_start_date)
     end
   end
 

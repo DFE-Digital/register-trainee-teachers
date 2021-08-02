@@ -56,15 +56,15 @@
         <% end %>
       <% end %>
 
-      <%= f.govuk_date_field(:course_start_date,
+      <%= f.govuk_date_field(f.object.course_start_date_attribute_name,
                              date_of_birth: false,
-                             legend: { text: "Course start date", size: "s" },
-                             hint: { text: I18n.t("activemodel.errors.models.course_details_form.attributes.course_start_date.hint_html", year: Time.zone.now.year) }) %>
+                             legend: { text: CourseDetailsForm.human_attribute_name(f.object.course_start_date_attribute_name), size: "s" },
+                             hint: { text: t("activemodel.errors.models.course_details_form.attributes.#{f.object.course_start_date_attribute_name}.hint_html", year: Time.zone.now.year) }) %>
 
-       <%= f.govuk_date_field(:course_end_date,
+       <%= f.govuk_date_field(f.object.course_end_date_attribute_name,
                               date_of_birth: false,
-                              legend: { text: "Course end date", size: "s" },
-                              hint: { text: I18n.t("activemodel.errors.models.course_details_form.attributes.course_end_date.hint_html", year: Time.zone.now.next_year.year) }) %>
+                              legend: { text: CourseDetailsForm.human_attribute_name(f.object.course_end_date_attribute_name), size: "s" },
+                              hint: { text: t("activemodel.errors.models.course_details_form.attributes.#{f.object.course_end_date_attribute_name}.hint_html", year: Time.zone.now.next_year.year) }) %>
 
       <%= f.govuk_submit %>
     <% end %>
@@ -72,3 +72,5 @@
 </div>
 
 <%= render(CancelLink::View.new(@trainee)) %>
+
+

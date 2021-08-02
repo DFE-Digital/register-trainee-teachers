@@ -26,8 +26,8 @@ module CourseDetails
         ({ key: t("components.course_detail.type_of_course"), value: course_type } if require_course_type?),
         ({ key: t("components.course_detail.subject"), value: subject, action: action_link("subject") } if require_subject?),
         ({ key: t("components.course_detail.age_range"), value: course_age_range, action: action_link("age range") } if require_age_range?),
-        { key: t("components.course_detail.course_start_date"), value: course_start_date, action: action_link("course start date") },
-        { key: t("components.course_detail.course_end_date"), value: course_end_date, action: action_link("course end date") },
+        { key: t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_start_date"), value: course_start_date, action: action_link("course start date") },
+        { key: t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_end_date"), value: course_end_date, action: action_link("course end date") },
       ].compact.tap do |collection|
         if show_publish_courses?(trainee)
           collection.unshift({
@@ -40,6 +40,10 @@ module CourseDetails
     end
 
   private
+
+    def itt_route?
+      trainee.itt_route?
+    end
 
     def require_subject?
       !trainee.early_years_route?

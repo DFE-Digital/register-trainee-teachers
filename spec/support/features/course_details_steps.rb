@@ -48,14 +48,26 @@ module Features
     end
 
     def and_the_course_date_fields_are_completed
-      course_details_page.set_date_fields("course_start_date", "11/3/2021")
-      course_details_page.set_date_fields("course_end_date", "11/3/2022")
+      course_details_page.set_date_fields(start_date, "11/3/2021")
+      course_details_page.set_date_fields(end_date, "11/3/2022")
     end
 
     def and_the_course_details_are_submitted
       course_details_page.submit_button.click
       confirm_details_page.confirm.click
       confirm_details_page.continue_button.click
+    end
+
+  private
+
+    def start_date
+      trainee = trainee_from_url
+      trainee.itt_route? ? "itt_start_date" : "course_start_date"
+    end
+
+    def end_date
+      trainee = trainee_from_url
+      trainee.itt_route? ? "itt_end_date" : "course_end_date"
     end
   end
 end

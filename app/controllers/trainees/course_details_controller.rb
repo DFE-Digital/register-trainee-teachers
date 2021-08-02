@@ -4,13 +4,13 @@ module Trainees
   class CourseDetailsController < ApplicationController
     before_action :authorize_trainee
 
-    COURSE_DATE_CONVERSION = {
-      "course_start_date(3i)" => "start_day",
-      "course_start_date(2i)" => "start_month",
-      "course_start_date(1i)" => "start_year",
-      "course_end_date(3i)" => "end_day",
-      "course_end_date(2i)" => "end_month",
-      "course_end_date(1i)" => "end_year",
+    DATE_CONVERSION = {
+      "_start_date(3i)" => "start_day",
+      "_start_date(2i)" => "start_month",
+      "_start_date(1i)" => "start_year",
+      "_end_date(3i)" => "end_day",
+      "_end_date(2i)" => "end_month",
+      "_end_date(1i)" => "end_year",
     }.freeze
 
     def edit
@@ -39,6 +39,12 @@ module Trainees
       @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
+    def date_conversion
+      @date_conversion ||= DATE_CONVERSION.transform_keys do |key|
+        "#{trainee.itt_route? ? 'itt' : 'course'}#{key}"
+      end
+    end
+
     def course_details_params
       params.require(:course_details_form).permit(*CourseDetailsForm::FIELDS)
     end
@@ -46,8 +52,8 @@ module Trainees
     def course_date_params
       params.require(:course_details_form).except(
         *CourseDetailsForm::FIELDS,
-      ).permit(*COURSE_DATE_CONVERSION.keys)
-      .transform_keys { |key| COURSE_DATE_CONVERSION[key] }
+      ).permit(*date_conversion.keys)
+      .transform_keys { |key| date_conversion[key] }
     end
 
     def redirect_to_confirm
