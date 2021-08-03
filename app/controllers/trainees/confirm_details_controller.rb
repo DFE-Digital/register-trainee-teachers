@@ -12,6 +12,7 @@ module Trainees
 
       if trainee.draft?
         @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
+        @missing_data_view = MissingDataView.new(form_klass.new(trainee))
       end
 
       @confirmation_component = component_klass.new(data_model: trainee.draft? ? trainee : form_klass.new(trainee))
@@ -41,6 +42,8 @@ module Trainees
       case trainee_section_key
       when "schools"
         Schools::FormValidator
+      when "funding"
+        ::Funding::TrainingInitiativesForm
       else
         "#{trainee_section_key.underscore.camelcase}Form".constantize
       end

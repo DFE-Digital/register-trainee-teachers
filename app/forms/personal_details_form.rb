@@ -21,7 +21,7 @@ class PersonalDetailsForm < TraineeForm
                 :other_nationality2_raw, :other_nationality3,
                 :other_nationality3_raw, :other)
 
-  validates :first_names, presence: true
+  validates :first_names, presence: true, on: %i[save missing_data]
   validates :last_name, presence: true
   validates :date_of_birth, presence: true
   validate :date_of_birth_valid
@@ -40,7 +40,7 @@ class PersonalDetailsForm < TraineeForm
   end
 
   def save!
-    if valid?
+    if valid?(:save)
       update_trainee_attributes
       trainee.save!
       clear_stash
@@ -79,6 +79,12 @@ class PersonalDetailsForm < TraineeForm
             .map { |name| Nationality.find_by_name(name.downcase)&.id }.uniq
         end
       end
+  end
+
+  def missing_fields
+    return [] if valid?(:missing_data)
+
+    errors.attribute_names
   end
 
 private
