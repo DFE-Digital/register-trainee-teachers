@@ -39,4 +39,24 @@ describe Provider do
     it { is_expected.to be_audited }
     it { is_expected.to have_associated_audits }
   end
+
+  describe "#hpitt_postgrad?" do
+    let(:hpitt_provider) { create(:provider) }
+
+    context "provider is a teach first provider" do
+      subject { build(:provider, code: hpitt_provider.code) }
+
+      it "returns true" do
+        expect(subject.hpitt_postgrad?).to be true
+      end
+    end
+
+    context "provider is not a teach first provider" do
+      subject { build(:provider, code: hpitt_provider.code.reverse) }
+
+      it "returns false" do
+        expect(subject.hpitt_postgrad?).to be false
+      end
+    end
+  end
 end
