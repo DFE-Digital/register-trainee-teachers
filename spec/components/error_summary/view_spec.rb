@@ -8,7 +8,7 @@ module ErrorSummary
       let(:error_markup) {  "<li>This is an error item</li>".html_safe }
 
       before do
-        render_inline(described_class.new(has_errors: true)) do
+        render_inline(described_class.new(renderable: true)) do
           error_markup
         end
       end
@@ -20,7 +20,7 @@ module ErrorSummary
 
     context "when has_errors is false" do
       before do
-        render_inline(described_class.new(has_errors: false))
+        render_inline(described_class.new(renderable: false))
       end
 
       it "does not render" do

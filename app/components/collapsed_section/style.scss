@@ -25,9 +25,16 @@ $govuk-border-width-narrow: 5px;
 
 .app-inset-text--error {
   border-color: $govuk-error-colour;
+  margin: govuk-spacing(0) auto govuk-spacing(4);
 
   .app-inset-text__title {
     color: $govuk-error-colour;
+  }
+
+  &.app-inset-text--no_padding {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
   }
 }
 

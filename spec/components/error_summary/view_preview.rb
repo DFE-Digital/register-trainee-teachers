@@ -3,7 +3,7 @@
 module ErrorSummary
   class ViewPreview < ViewComponent::Preview
     def default
-      render(View.new(has_errors: true)) do
+      render(View.new(renderable: true)) do
         "<li>This is an error item</li>".html_safe
       end
     end

@@ -6,6 +6,7 @@ class DegreesForm
   attr_accessor :trainee, :degree_ids
 
   validate :degrees_cannot_be_empty
+  validate :degrees_cannot_be_invalid
 
   def initialize(trainee, store = FormStore)
     @trainee = trainee
@@ -83,5 +84,15 @@ private
 
   def degrees_cannot_be_empty
     errors.add(:degree_ids, :empty_degrees) if trainee.degrees.empty?
+  end
+
+  def degrees_cannot_be_invalid
+    errors.add(:degree_ids, :invalid) unless all_degrees_are_valid?
+  end
+
+  def all_degrees_are_valid?
+    trainee.degrees.all? do |degree|
+      DegreeForm.new(degrees_form: self, degree: degree).valid?
+    end
   end
 end

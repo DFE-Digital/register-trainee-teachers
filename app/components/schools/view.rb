@@ -5,10 +5,9 @@ module Schools
     include SummaryHelper
     include SchoolHelper
 
-    attr_accessor :data_model, :lead_school, :employing_school
-
-    def initialize(data_model:)
+    def initialize(data_model:, has_errors: false)
       @data_model = data_model
+      @has_errors = has_errors
       @lead_school = trainee.lead_school
       @employing_school = trainee.employing_school
     end
@@ -18,6 +17,8 @@ module Schools
     end
 
   private
+
+    attr_accessor :data_model, :lead_school, :employing_school
 
     def change_paths(school_type)
       {

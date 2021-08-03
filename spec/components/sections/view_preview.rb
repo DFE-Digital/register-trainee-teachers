@@ -58,7 +58,7 @@ module Sections
         course_subject_one: "subject",
         training_route: TRAINING_ROUTE_ENUMS[training_route(section)],
         lead_school: School.new(id: 1),
-        degrees: [Degree.new(id: 1)],
+        degrees: [Degree.new(id: 1, locale_code: :uk)],
         training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
         applying_for_bursary: true
       )

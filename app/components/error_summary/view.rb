@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 class ErrorSummary::View < GovukComponent::Base
-  def initialize(has_errors: false)
-    @has_errors = has_errors
+  renders_one :header
+
+  def initialize(renderable: false)
+    @renderable = renderable
   end
 
   def render?
-    has_errors
+    renderable
   end
 
 private
 
-  attr_reader :has_errors
+  attr_reader :renderable
 end

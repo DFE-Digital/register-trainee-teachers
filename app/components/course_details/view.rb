@@ -6,10 +6,9 @@ module CourseDetails
     include CourseDetailsHelper
     include TraineeHelper
 
-    attr_accessor :data_model
-
-    def initialize(data_model:)
+    def initialize(data_model:, has_errors: false)
       @data_model = data_model
+      @has_errors = has_errors
       @not_provided_copy = t("components.confirmation.not_provided")
     end
 
@@ -40,6 +39,8 @@ module CourseDetails
     end
 
   private
+
+    attr_accessor :data_model, :has_errors
 
     def itt_route?
       trainee.itt_route?

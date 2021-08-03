@@ -19,6 +19,8 @@ module ApplyApplications
 
     delegate :apply_application?, to: :trainee
 
+    validate :submission_ready
+
     attr_accessor :mark_as_reviewed
 
     def initialize(trainee)
@@ -26,19 +28,13 @@ module ApplyApplications
     end
 
     def save
-      return unless all_forms_valid?
+      return unless valid?
 
       trainee.progress.personal_details = true
       trainee.progress.contact_details = true
       trainee.progress.diversity = true
       trainee.progress.degrees = true
       trainee.save!
-    end
-
-    def all_forms_valid?
-      form_validators.keys.all? do |section|
-        validator(section).new(trainee).valid?
-      end
     end
 
     def progress_status(progress_key)
@@ -66,6 +62,16 @@ module ApplyApplications
     end
 
   private
+
+    def all_forms_valid?
+      form_validators.keys.all? do |section|
+        validator(section).new(trainee).valid?
+      end
+    end
+
+    def submission_ready
+      errors.add(:trainee, :incomplete) unless all_forms_valid?
+    end
 
     def progress_service(progress_key)
       validator = validator(progress_key).new(trainee)

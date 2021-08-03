@@ -77,7 +77,7 @@ module Pages
                       additional_ethnic_background: "additional_ethnic_background",
                       training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key],
                       course_subject_one: "subject",
-                      degrees: [Degree.new(id: 1)],
+                      degrees: [Degree.new(id: 1, locale_code: :uk)],
                       training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
                       applying_for_bursary: true)
         end

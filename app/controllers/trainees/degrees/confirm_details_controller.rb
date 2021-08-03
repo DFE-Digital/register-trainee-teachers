@@ -15,7 +15,7 @@ module Trainees
         data_model = trainee.draft? ? trainee : degrees_form
 
         @confirmation_component = if trainee.degrees.empty?
-                                    CollapsedSection::View.new(title: t("components.incomplete_section.degree_details_not_provided"), link_text: t("components.incomplete_section.add_degree_details"), url: trainee_degrees_new_type_path(@trainee), error: false)
+                                    CollapsedSection::View.new(title: t("components.incomplete_section.degree_details_not_provided"), link_text: t("components.incomplete_section.add_degree_details"), url: trainee_degrees_new_type_path(@trainee), has_errors: false)
                                   else
                                     ::Degrees::View.new(data_model: data_model)
                                   end

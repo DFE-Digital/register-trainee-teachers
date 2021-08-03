@@ -4,6 +4,7 @@ module Trainees
   module ApplyApplications
     class TraineeDataController < ApplicationController
       before_action :authorize_trainee
+      before_action :require_review_acknowledgement, only: :update
 
       def edit
         page_tracker.save_as_origin!
@@ -11,14 +12,12 @@ module Trainees
       end
 
       def update
-        if params[:apply_applications_trainee_data_form][:mark_as_reviewed] == "1"
-          @trainee_data_form = ::ApplyApplications::TraineeDataForm.new(trainee)
+        @trainee_data_form = ::ApplyApplications::TraineeDataForm.new(trainee)
 
-          if @trainee_data_form.save
-            redirect_to trainee_path(trainee)
-          else
-            render :edit
-          end
+        if @trainee_data_form.save
+          redirect_to trainee_path(trainee)
+        else
+          render :edit
         end
       end
 
@@ -30,6 +29,14 @@ module Trainees
 
       def authorize_trainee
         authorize(trainee)
+      end
+
+      def require_review_acknowledgement
+        redirect_to review_draft_trainee_path(trainee) unless marked_as_reviewed?
+      end
+
+      def marked_as_reviewed?
+        params[:apply_applications_trainee_data_form][:mark_as_reviewed] == "1"
       end
     end
   end

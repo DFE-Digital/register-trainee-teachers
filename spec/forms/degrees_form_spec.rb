@@ -16,10 +16,18 @@ describe DegreesForm, type: :model do
 
       context "with degrees" do
         before do
-          trainee.degrees << build(:degree)
+          trainee.degrees << build(:degree, :uk_degree_with_details)
         end
 
         it { is_expected.to be_valid }
+      end
+
+      context "with invalid degrees" do
+        before do
+          trainee.degrees << create(:degree, subject: "")
+        end
+
+        it { is_expected.not_to be_valid }
       end
 
       context "with no degrees" do

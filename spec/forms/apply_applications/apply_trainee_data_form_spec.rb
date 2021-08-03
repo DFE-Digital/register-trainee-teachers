@@ -10,9 +10,13 @@ module ApplyApplications
       context "when one or more of the forms is invalid" do
         let(:trainee) { create(:trainee, :with_apply_application) }
 
+        before do
+          subject.valid?
+        end
+
         it "returns the entire form as invalid" do
           expect(subject.progress).to eq false
-          expect(subject.all_forms_valid?).to eq false
+          expect(subject.errors).not_to be_empty
         end
       end
 
@@ -21,7 +25,7 @@ module ApplyApplications
 
         it "returns the entire form as invalid" do
           expect(subject.progress).to eq true
-          expect(subject.all_forms_valid?).to eq true
+          expect(subject.errors).to be_empty
         end
       end
     end

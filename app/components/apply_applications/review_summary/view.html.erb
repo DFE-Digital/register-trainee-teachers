@@ -1,0 +1,7 @@
+<%= render summary_component.new(renderable: render?) do |component| %>
+  <% component.header  do %>
+    <%= invalid_data_view.summary_content %>
+  <% end %>
+
+  <%= invalid_data_view.summary_items_content %>
+<% end %>

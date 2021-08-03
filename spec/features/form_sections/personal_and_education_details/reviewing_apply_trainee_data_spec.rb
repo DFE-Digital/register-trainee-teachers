@@ -17,6 +17,13 @@ feature "edit training details" do
     and_the_relevant_sections_are_completed
   end
 
+  scenario "reviewing with invalid data" do
+    given_a_trainee_with_invalid_data_from_apply_exist
+    when_i_visit_the_apply_trainee_data_page
+    and_i_review_the_trainee_data
+    then_i_see_error_messages
+  end
+
   scenario "changing an attribute" do
     given_a_trainee_with_degrees_exist
     when_i_visit_the_apply_trainee_data_page
@@ -34,6 +41,10 @@ feature "edit training details" do
     )
   end
 
+  def given_a_trainee_with_invalid_data_from_apply_exist
+    given_a_trainee_exists(:with_invalid_apply_application)
+  end
+
   def when_i_visit_the_apply_trainee_data_page
     apply_trainee_data_page.load(id: trainee.slug)
   end
@@ -49,6 +60,10 @@ feature "edit training details" do
 
   def and_the_relevant_sections_are_completed
     expect(review_draft_page.apply_trainee_data.status.text).to eq("Status completed")
+  end
+
+  def then_i_see_error_messages
+    expect(apply_trainee_data_page).to have_content(I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: 1))
   end
 
   def and_i_click_to_change_the_trainee_full_name
