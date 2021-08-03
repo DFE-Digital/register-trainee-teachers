@@ -8,9 +8,9 @@ class CalculateSubjectSpecialismType
   end
 
   def call
-    return :language if all_subjects_are_language?
     return :primary if primary_subject?
-    return :single_subject if single_subject?
+    return :language if language_specialism?
+    return :single if single_subject?
 
     :multiple_subjects
   end
@@ -19,15 +19,24 @@ private
 
   attr_reader :subjects
 
-  def single_subject?
-    subjects.size == 1
+  def language_specialism?
+    modern_languages_only? || all_subjects_are_language?
   end
 
   def primary_subject?
-    single_subject? && subjects.first.include?(Dttp::CodeSets::AllocationSubjects::PRIMARY)
+    single_subject? && subjects.first.include?(AllocationSubjects::PRIMARY)
+  end
+
+  def modern_languages_only?
+    # This is will cover cases where subject is "Modern Languages" or "Modern languages (other)"
+    single_subject? && subjects.first.downcase.include?("modern")
   end
 
   def all_subjects_are_language?
-    subjects.all? { |subject| PUBLISH_LANGUAGE_SUBJECTS.include?(subject) }
+    subjects.all? { |subject| PUBLISH_LANGUAGES.include?(subject) }
+  end
+
+  def single_subject?
+    subjects.size == 1
   end
 end

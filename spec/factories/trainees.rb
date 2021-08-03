@@ -166,7 +166,7 @@ FactoryBot.define do
     end
 
     trait :with_early_years_course_details do
-      course_subject_one { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING }
+      course_subject_one { CourseSubjects::EARLY_YEARS_TEACHING }
       course_age_range { AgeRange::ZERO_TO_FIVE }
     end
 

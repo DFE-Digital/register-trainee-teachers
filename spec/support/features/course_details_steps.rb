@@ -31,8 +31,10 @@ module Features
 
     def given_a_course_is_available_for_selection
       trainee = trainee_from_url
-      history = Dttp::CodeSets::AllocationSubjects::HISTORY
-      create(:course_with_subjects, accredited_body_code: trainee.provider.code, route: trainee.training_route, subject_names: [history])
+      create(:course_with_subjects,
+             accredited_body_code: trainee.provider.code,
+             route: trainee.training_route,
+             subject_names: [AllocationSubjects::HISTORY])
     end
 
     def given_subject_specialisms_are_available_for_selection

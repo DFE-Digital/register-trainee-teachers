@@ -38,23 +38,11 @@ module CourseDetailsHelper
   end
 
   def sort_specialisms(subject, specialisms)
-    specialisms.sort do |a, b|
-      if a.downcase == subject.downcase
-        -1
-      else
-        a <=> b
-      end
-    end
+    specialisms.sort { |a, b| a.downcase == subject.downcase ? -1 : a <=> b }
   end
 
   def sort_languages(languages)
-    languages.sort do |a, b|
-      if a.include? Dttp::CodeSets::AllocationSubjects::MODERN_LANGUAGES.downcase
-        -1
-      else
-        a <=> b
-      end
-    end
+    languages.sort { |a, b| a.include?(AllocationSubjects::MODERN_LANGUAGES.downcase) ? -1 : a <=> b }
   end
 
 private

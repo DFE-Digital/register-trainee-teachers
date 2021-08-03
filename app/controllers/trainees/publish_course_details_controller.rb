@@ -67,9 +67,7 @@ module Trainees
     end
 
     def course_has_one_specialism?
-      CalculateSubjectSpecialisms.call(subjects: course_subjects).all? do |_, v|
-        v.count < 2
-      end
+      CalculateSubjectSpecialisms.call(subjects: course_subjects).all? { |_, v| v.count < 2 }
     end
 
     def specialism_type

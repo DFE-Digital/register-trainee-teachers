@@ -365,10 +365,10 @@ describe Trainee do
   end
 
   describe "#with_subject_or_allocation_subject" do
-    let!(:trainee_with_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::BIOLOGY) }
-    let!(:trainee_without_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::MATHEMATICS) }
+    let!(:trainee_with_subject) { create(:trainee, course_subject_one: CourseSubjects::BIOLOGY) }
+    let!(:trainee_without_subject) { create(:trainee, course_subject_one: CourseSubjects::MATHEMATICS) }
 
-    subject { described_class.with_subject_or_allocation_subject(Dttp::CodeSets::CourseSubjects::BIOLOGY) }
+    subject { described_class.with_subject_or_allocation_subject(CourseSubjects::BIOLOGY) }
 
     it { is_expected.to eq([trainee_with_subject]) }
 
@@ -381,15 +381,15 @@ describe Trainee do
     context "with multiple subjects" do
       let!(:trainee_with_subject_two) do
         create(:trainee,
-               course_subject_one: Dttp::CodeSets::CourseSubjects::MATHEMATICS,
-               course_subject_two: Dttp::CodeSets::CourseSubjects::BIOLOGY)
+               course_subject_one: CourseSubjects::MATHEMATICS,
+               course_subject_two: CourseSubjects::BIOLOGY)
       end
 
       let!(:trainee_with_subject_three) do
         create(:trainee,
-               course_subject_one: Dttp::CodeSets::CourseSubjects::MATHEMATICS,
-               course_subject_two: Dttp::CodeSets::CourseSubjects::SOCIAL_SCIENCES,
-               course_subject_three: Dttp::CodeSets::CourseSubjects::BIOLOGY)
+               course_subject_one: CourseSubjects::MATHEMATICS,
+               course_subject_two: CourseSubjects::SOCIAL_SCIENCES,
+               course_subject_three: CourseSubjects::BIOLOGY)
       end
 
       it { is_expected.to match_array([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
@@ -431,7 +431,7 @@ describe Trainee do
 
     it "sets course_subject_one to early years teaching and age range to 0-5" do
       trainee.set_early_years_course_details
-      expect(trainee.course_subject_one).to eq(Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING)
+      expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
       expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
     end
   end

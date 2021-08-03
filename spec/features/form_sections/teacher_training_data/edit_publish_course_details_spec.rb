@@ -29,7 +29,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "with a course that doesn't require selecting a specialism" do
-      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::HISTORY] }
+      let(:subjects) { [AllocationSubjects::HISTORY] }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
@@ -43,11 +43,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "with a course that requires selecting a single specialism" do
-      let(:subjects) do
-        [
-          Dttp::CodeSets::AllocationSubjects::COMPUTING,
-        ]
-      end
+      let(:subjects) { [AllocationSubjects::COMPUTING] }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
@@ -63,12 +59,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "with a course that requires selecting multiple specialisms" do
-      let(:subjects) do
-        [
-          Dttp::CodeSets::AllocationSubjects::COMPUTING,
-          Dttp::CodeSets::AllocationSubjects::MATHEMATICS,
-        ]
-      end
+      let(:subjects) { [AllocationSubjects::COMPUTING, AllocationSubjects::MATHEMATICS] }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
@@ -104,9 +95,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
     describe "with a course that has a miture of multiple specalism subjects single specialism ones" do
       let(:subjects) do
         [
-          Dttp::CodeSets::AllocationSubjects::MUSIC,
-          Dttp::CodeSets::AllocationSubjects::COMPUTING,
-          Dttp::CodeSets::AllocationSubjects::HISTORY,
+          AllocationSubjects::MUSIC,
+          AllocationSubjects::COMPUTING,
+          AllocationSubjects::HISTORY,
         ]
       end
 
@@ -146,7 +137,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "selecting a course with one specialism" do
-      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::MUSIC] }
+      let(:subjects) { [AllocationSubjects::MUSIC] }
 
       before do
         when_i_visit_the_publish_course_details_page
@@ -188,7 +179,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "selecting a course with multiple possible specialisms" do
-      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::COMPUTING] }
+      let(:subjects) { [AllocationSubjects::COMPUTING] }
 
       scenario do
         when_i_visit_the_publish_course_details_page
@@ -210,7 +201,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
 
     describe "selecting a new course from the confirm page" do
-      let(:subjects) { [Dttp::CodeSets::AllocationSubjects::COMPUTING] }
+      let(:subjects) { [AllocationSubjects::COMPUTING] }
 
       scenario do
         given_a_course_exists(with_subjects: ["Modern languages (other)"])

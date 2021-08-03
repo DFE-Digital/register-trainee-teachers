@@ -2,6 +2,8 @@
 
 module Trainees
   class IttStartDatesController < ApplicationController
+    include PublishCourseNextPath
+
     before_action :authorize_trainee
 
     def edit
@@ -12,7 +14,7 @@ module Trainees
       @itt_start_date_form = IttStartDateForm.new(trainee, params: trainee_params, user: current_user)
 
       if @itt_start_date_form.stash
-        redirect_to edit_trainee_confirm_publish_course_path(trainee.slug)
+        redirect_to course_confirmation_path
       else
         render :edit
       end

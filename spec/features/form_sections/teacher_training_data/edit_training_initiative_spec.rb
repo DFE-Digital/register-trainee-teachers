@@ -5,7 +5,7 @@ require "rails_helper"
 feature "edit training initiative", type: :feature do
   background { given_i_am_authenticated }
 
-  let(:course_subject) { Dttp::CodeSets::CourseSubjects::LAW }
+  let(:course_subject) { CourseSubjects::LAW }
 
   scenario "edit with valid parameters with bursary" do
     given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject)

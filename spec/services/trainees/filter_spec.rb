@@ -49,7 +49,7 @@ module Trainees
     end
 
     context "with subject filter" do
-      let(:subject_name) { Dttp::CodeSets::CourseSubjects::BIOLOGY }
+      let(:subject_name) { CourseSubjects::BIOLOGY }
       let!(:trainee_with_subject) { create(:trainee, course_subject_one: subject_name) }
       let(:filters) { { subject: subject_name } }
 

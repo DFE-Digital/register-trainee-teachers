@@ -18,13 +18,13 @@ Diversities::SEED_DISABILITIES.each do |disability|
   Disability.find_or_create_by!(name: disability.name, description: disability.description)
 end
 
-Dttp::CodeSets::AllocationSubjects::MAPPING.each do |allocation_subject, metadata|
+ALLOCATION_SUBJECT_SPECIALISM_MAPPING.each do |allocation_subject, subject_specialisms|
   allocation_subject = AllocationSubject.find_or_create_by!(name: allocation_subject)
-  if allocation_subject.name == Dttp::CodeSets::AllocationSubjects::PRIMARY
-    allocation_subject.subject_specialisms.find_or_create_by!(name: Dttp::CodeSets::CourseSubjects::PRIMARY_TEACHING)
+  if allocation_subject.name == AllocationSubjects::PRIMARY
+    allocation_subject.subject_specialisms.find_or_create_by!(name: CourseSubjects::PRIMARY_TEACHING)
   else
-    metadata[:subject_specialisms].each do |subject_specialism|
-      allocation_subject.subject_specialisms.find_or_create_by!(name: subject_specialism[:name])
+    subject_specialisms.each do |subject_specialism_name|
+      allocation_subject.subject_specialisms.find_or_create_by!(name: subject_specialism_name)
     end
   end
 end

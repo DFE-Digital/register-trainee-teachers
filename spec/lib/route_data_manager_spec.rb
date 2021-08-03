@@ -87,7 +87,7 @@ describe RouteDataManager do
         expect { subject }
           .to change { trainee.training_route }
           .from(trainee.training_route).to("early_years_undergrad")
-        expect(trainee.course_subject_one).to eq(Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING)
+        expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
         expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
       end
     end

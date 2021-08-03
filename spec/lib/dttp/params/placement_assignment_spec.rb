@@ -129,9 +129,9 @@ module Dttp
               :with_start_date,
               dttp_id: dttp_contact_id,
               provider: provider,
-              course_subject_one: CodeSets::CourseSubjects::BIOLOGY,
-              course_subject_two: CodeSets::CourseSubjects::CHEMISTRY,
-              course_subject_three: CodeSets::CourseSubjects::MATHEMATICS,
+              course_subject_one: CourseSubjects::BIOLOGY,
+              course_subject_two: CourseSubjects::CHEMISTRY,
+              course_subject_three: CourseSubjects::MATHEMATICS,
             )
           end
 
@@ -139,9 +139,9 @@ module Dttp
 
           it "sets the dttp itt subject params for all given subjects" do
             expect(subject).to include({
-              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::BIOLOGY][:entity_id]})",
-              "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::CHEMISTRY][:entity_id]})",
-              "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CodeSets::CourseSubjects::MATHEMATICS][:entity_id]})",
+              "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CourseSubjects::BIOLOGY][:entity_id]})",
+              "dfe_ITTSubject2Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CourseSubjects::CHEMISTRY][:entity_id]})",
+              "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{CodeSets::CourseSubjects::MAPPING[CourseSubjects::MATHEMATICS][:entity_id]})",
             })
           end
         end
