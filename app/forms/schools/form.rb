@@ -7,6 +7,7 @@ module Schools
       results_search_again_query
       no_results_search_again_query
       search_results_found
+      non_search_validation
     ].freeze
 
     attr_accessor(*NON_TRAINEE_FIELDS)
@@ -34,11 +35,6 @@ module Schools
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { no_results_searching_again? }
-
-    def initialize(trainee, **kwargs)
-      @non_search_validation = kwargs.delete(:non_search_validation)
-      super(trainee, **kwargs)
-    end
 
     def search_results_found?
       search_results_found == "true"
@@ -71,7 +67,7 @@ module Schools
     end
 
     def non_search_validation?
-      @non_search_validation == true
+      non_search_validation == true
     end
   end
 end

@@ -14,22 +14,23 @@ module Wizards
         origin_page_or_next_step
       end
 
-      def any_form_incomplete?
-        ProgressService.call(
-          validator: ::Schools::FormValidator.new(trainee),
-          progress_value: trainee.progress.schools,
-        ).in_progress_invalid?
-      end
-
       def start_point
+        return unless any_form_incomplete?
         return edit_trainee_lead_schools_path(trainee) unless lead_school_selected?
 
-        edit_trainee_employing_schools_path(trainee) unless employing_school_selected?
+        edit_trainee_employing_schools_path(trainee)
       end
 
     private
 
       attr_reader :trainee, :page_tracker
+
+      def any_form_incomplete?
+        ProgressService.call(
+          validator: ::Schools::FormValidator.new(trainee, non_search_validation: true),
+          progress_value: trainee.progress.schools,
+        ).in_progress_invalid?
+      end
 
       def redirect_url
         trainee.requires_employing_school? ? edit_trainee_employing_schools_path(trainee) : trainee_schools_confirm_path(trainee)
@@ -46,11 +47,11 @@ module Wizards
       end
 
       def lead_school_selected?
-        ::Schools::LeadSchoolForm.new(trainee, non_search_validation: true).valid?
+        ::Schools::LeadSchoolForm.new(trainee, params: { non_search_validation: true }).valid?
       end
 
       def employing_school_selected?
-        ::Schools::EmployingSchoolForm.new(trainee, non_search_validation: true).valid?
+        ::Schools::EmployingSchoolForm.new(trainee, params: { non_search_validation: true }).valid?
       end
     end
   end

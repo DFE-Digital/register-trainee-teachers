@@ -18,14 +18,8 @@ module Wizards
         end
       end
 
-      def any_form_incomplete?
-        ProgressService.call(
-          validator: ::Diversities::FormValidator.new(trainee),
-          progress_value: trainee.progress.diversity,
-        ).in_progress_invalid?
-      end
-
       def start_point
+        return unless any_form_incomplete?
         return edit_trainee_diversity_disclosure_path(trainee) unless ::Diversities::DisclosureForm.new(trainee).valid?
         return edit_trainee_diversity_ethnic_group_path(trainee) unless ::Diversities::EthnicGroupForm.new(trainee).valid?
         return edit_trainee_diversity_ethnic_background_path(trainee) unless ::Diversities::EthnicBackgroundForm.new(trainee).valid?
@@ -37,6 +31,13 @@ module Wizards
     private
 
       attr_reader :trainee, :page_tracker
+
+      def any_form_incomplete?
+        ProgressService.call(
+          validator: ::Diversities::FormValidator.new(trainee),
+          progress_value: trainee.progress.diversity,
+        ).in_progress_invalid?
+      end
 
       def disclosure_form
         @disclosure_form ||= ::Diversities::DisclosureForm.new(trainee)

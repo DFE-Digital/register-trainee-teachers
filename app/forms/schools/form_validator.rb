@@ -14,10 +14,10 @@ module Schools
     delegate :lead_school_id, to: :lead_school_form
     delegate :employing_school_id, to: :employing_school_form
 
-    def initialize(trainee)
+    def initialize(trainee, non_search_validation: false)
       @trainee = trainee
-      @lead_school_form = LeadSchoolForm.new(trainee)
-      @employing_school_form = EmployingSchoolForm.new(trainee)
+      @lead_school_form = LeadSchoolForm.new(trainee, params: { non_search_validation: non_search_validation })
+      @employing_school_form = EmployingSchoolForm.new(trainee, params: { non_search_validation: non_search_validation })
       @fields = lead_school_form_fields.merge(employing_school_form_fields)
     end
 

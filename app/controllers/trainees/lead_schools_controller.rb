@@ -2,7 +2,7 @@
 
 module Trainees
   class LeadSchoolsController < ApplicationController
-    before_action :authorize_trainee, :validate_form_completedness
+    before_action :authorize_trainee, :validate_form_completeness
 
     helper_method :query
 
@@ -62,18 +62,15 @@ module Trainees
       @step_wizard ||= Wizards::Schools::StepWizard.new(trainee: trainee, page_tracker: page_tracker)
     end
 
-    def validate_form_completedness
+    def validate_form_completeness
+      return if trainee.lead_school_id.blank?
       return if user_came_from_backlink?
 
-      redirect_to step_wizard.start_point if any_form_partially_complete?
+      redirect_to step_wizard.start_point if step_wizard.start_point.present?
     end
 
     def user_came_from_backlink?
       session[:origin_path]&.include?("edit")
-    end
-
-    def any_form_partially_complete?
-      step_wizard.any_form_incomplete?
     end
   end
 end

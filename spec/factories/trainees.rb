@@ -127,7 +127,7 @@ FactoryBot.define do
     end
 
     trait :with_ethnic_group do
-      ethnic_group { Diversities::ETHNIC_GROUP_ENUMS.values.sample }
+      ethnic_group { (Diversities::ETHNIC_GROUP_ENUMS.values - ["not_provided_ethnic_group"]).sample }
     end
 
     trait :with_ethnic_background do
