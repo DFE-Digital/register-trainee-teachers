@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   has_many :trainees, through: :provider
 
+  scope :system_admins, -> { where(system_admin: true) }
+
   before_validation :sanitise_email
 
   validates :first_name, presence: true

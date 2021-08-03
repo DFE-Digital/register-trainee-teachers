@@ -1,0 +1,6 @@
+# see https://github.com/ankane/blazer for more info
+
+data_sources:
+  main:
+    url: <%= Settings.blazer_database_url %>
+override_csp: true

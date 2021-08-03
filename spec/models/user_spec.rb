@@ -72,4 +72,22 @@ describe User do
       end
     end
   end
+
+  describe ".system_admins" do
+    context "a system admin" do
+      let!(:system_admin) { create(:user, :system_admin) }
+
+      it "is returned" do
+        expect(User.system_admins).to contain_exactly(system_admin)
+      end
+    end
+
+    context "a non-system admin" do
+      let!(:user) { create(:user) }
+
+      it "is not returned" do
+        expect(User.system_admins).to be_empty
+      end
+    end
+  end
 end
