@@ -7,19 +7,39 @@ describe TrainingRouteManager do
 
   describe "#requires_placement_details?" do
     context "with the :routes_provider_led_postgrad feature flag enabled", "feature_routes.provider_led_postgrad": true do
-      context "with a provider-led trainee" do
-        let(:trainee) { build(:trainee, :provider_led_postgrad) }
+      context "with placement feature enabled", feature_placements: true do
+        context "with a provider-led trainee" do
+          let(:trainee) { build(:trainee, :provider_led_postgrad) }
 
-        it "returns true" do
-          expect(subject.requires_placement_details?).to be true
+          it "returns true" do
+            expect(subject.requires_placement_details?).to be true
+          end
+        end
+
+        context "with a non provider-led trainee" do
+          let(:trainee) { build(:trainee) }
+
+          it "returns false" do
+            expect(subject.requires_placement_details?).to be false
+          end
         end
       end
 
-      context "with a non provider-led trainee" do
-        let(:trainee) { build(:trainee) }
+      context "with placement feature disabled", feature_placements: false do
+        context "with a provider-led trainee" do
+          let(:trainee) { build(:trainee, :provider_led_postgrad) }
 
-        it "returns false" do
-          expect(subject.requires_placement_details?).to be false
+          it "returns false" do
+            expect(subject.requires_placement_details?).to be false
+          end
+        end
+
+        context "with a non provider-led trainee" do
+          let(:trainee) { build(:trainee) }
+
+          it "returns false" do
+            expect(subject.requires_placement_details?).to be false
+          end
         end
       end
     end

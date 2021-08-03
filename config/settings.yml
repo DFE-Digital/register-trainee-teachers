@@ -42,6 +42,7 @@ features:
   show_funding: false
   send_funding_to_dttp: false
   imported_from_apply_filter: false
+  placements: false
   routes:
     early_years_assessment_only: false
     early_years_salaried: false

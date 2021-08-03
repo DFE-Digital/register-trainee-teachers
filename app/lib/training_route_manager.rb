@@ -6,7 +6,7 @@ class TrainingRouteManager
   end
 
   def requires_placement_details?
-    enabled? :provider_led_postgrad
+    FeatureService.enabled?("placements") && enabled?(:provider_led_postgrad)
   end
 
   def requires_schools?
