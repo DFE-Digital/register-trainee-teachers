@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  extend SidekiqRoutes
   extend SystemAdminRoutes
   extend ApiRoutes
 
