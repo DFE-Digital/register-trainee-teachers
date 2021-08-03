@@ -34,3 +34,7 @@ import_users_from_dttp:
   cron: "0 4 * * *"
   class: "Dttp::SyncUsersJob"
   queue: dttp
+delete_empty_trainees:
+  cron: "0 0 * * *"
+  class: "DeleteEmptyTraineesJob"
+  queue: default

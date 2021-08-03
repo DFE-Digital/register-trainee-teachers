@@ -5,7 +5,7 @@ module Trainees
     include ServicePattern
 
     def initialize(trainees:, filters:)
-      @trainees = trainees
+      @trainees = remove_empty_trainees(trainees)
       @filters = filters
     end
 
@@ -18,6 +18,10 @@ module Trainees
   private
 
     attr_reader :trainees, :filters
+
+    def remove_empty_trainees(trainees)
+      trainees.where.not(id: FindEmptyTrainees.call(trainees: trainees, ids_only: true))
+    end
 
     def level(trainees, levels)
       return trainees if levels.blank?
@@ -77,8 +81,8 @@ module Trainees
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
       filtered_trainees = level(filtered_trainees, filters[:level])
-      filtered_trainees = record_source(filtered_trainees, filters[:record_source])
-      filtered_trainees
+
+      record_source(filtered_trainees, filters[:record_source])
     end
   end
 end

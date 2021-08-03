@@ -11,7 +11,16 @@ module Trainees
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
 
-    it { is_expected.to eq(trainees) }
+    it { is_expected.to match_array(trainees) }
+
+    context "empty trainee exists" do
+      let!(:empty_trainee) do
+        Trainee.create(provider_id: draft_trainee.provider.id,
+                       training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
+      end
+
+      it { is_expected.not_to include(empty_trainee) }
+    end
 
     context "with training_route filter" do
       let!(:provider_led_postgrad_trainee) { create(:trainee, :provider_led_postgrad) }
