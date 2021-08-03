@@ -21,6 +21,8 @@ class PersonalDetailsForm < TraineeForm
                 :other_nationality2_raw, :other_nationality3,
                 :other_nationality3_raw, :other)
 
+  before_validation :set_nationalities_from_raw_values
+
   validates :first_names, presence: true
   validates :last_name, presence: true
   validates :date_of_birth, presence: true
@@ -28,8 +30,7 @@ class PersonalDetailsForm < TraineeForm
   validate :date_of_birth_not_in_future
   validate :date_of_birth_year_is_four_digits
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
-  validate :check_raw_values
-  validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true
+  validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true, if: :other_is_selected?
   validate :nationalities_cannot_be_empty
 
   def date_of_birth
@@ -60,28 +61,32 @@ class PersonalDetailsForm < TraineeForm
 
     @_nationality_ids =
       begin
-        reset_blank_nationalities
+        nationality_params = new_attributes.merge(blank_nationalities_params)
 
-        if new_attributes[:nationality_names].blank?
+        if nationality_params[:nationality_names].blank?
           trainee.nationality_ids
         else
-          nationalities = new_attributes[:nationality_names]
+          nationalities = nationality_params[:nationality_names]
 
           if other_is_selected?
             nationalities += [
-              new_attributes[:other_nationality1],
-              new_attributes[:other_nationality2],
-              new_attributes[:other_nationality3],
+              nationality_params[:other_nationality1],
+              nationality_params[:other_nationality2],
+              nationality_params[:other_nationality3],
             ]
           end
 
           nationalities.reject(&:blank?)
-            .map { |name| Nationality.find_by_name(name.downcase)&.id }.uniq
+            .map { |name| Nationality.find_by_name(name.downcase)&.id }.uniq.compact
         end
       end
   end
 
 private
+
+  def new_attributes
+    @_new_attributes ||= super
+  end
 
   def compute_fields
     trainee.attributes
@@ -158,30 +163,46 @@ private
     end
   end
 
-  def reset_blank_nationalities
-    return if params[NATIONALITY_FIELD_MAPPINGS.keys.first].nil?
+  def blank_nationalities_params
+    return {} if params[NATIONALITY_FIELD_MAPPINGS.keys.first].nil?
 
-    raw_values = params.slice(*NATIONALITY_FIELD_MAPPINGS.keys).transform_keys { |key| NATIONALITY_FIELD_MAPPINGS[key.to_sym] }.select { |_key, value| value.blank? }
-
-    params.merge!(raw_values)
+    if other_is_selected?
+      params.slice(*NATIONALITY_FIELD_MAPPINGS.keys).transform_keys { |key| NATIONALITY_FIELD_MAPPINGS[key.to_sym] }.select { |_key, value| value.blank? }
+    else
+      {
+        other_nationality1: "",
+        other_nationality2: "",
+        other_nationality3: "",
+        other_nationality1_raw: "",
+        other_nationality2_raw: "",
+        other_nationality3_raw: "",
+      }
+    end
   end
 
   def raw_values_nationalities_array
     [other_nationality1_raw, other_nationality2_raw, other_nationality3_raw]
   end
 
-  def check_raw_values
+  def set_nationalities_from_raw_values
+    return unless other_is_selected?
+
     # check the freetext responses of the user, and if
     # they are valid responses, we use them by populating new attributes.
     # This was to fix a bug where valid responses were not being used
     # as they were not selected from the dropdown list
 
     raw_values_nationalities_array.each_with_index do |raw_value, index|
-      next unless find_nationality(raw_value)
+      found_nationality = find_nationality(raw_value)
+      next unless found_nationality
 
-      public_send("other_nationality#{index + 1}=", raw_value)
-      new_attributes[:"other_nationality#{index + 1}"] = raw_value
-      nationality_ids[index] = find_nationality(raw_value).id
+      titleized_name = found_nationality.name.titleize
+      public_send("other_nationality#{index + 1}=", titleized_name)
+      new_attributes[:"other_nationality#{index + 1}"] = titleized_name
+      new_attributes[:"other_nationality#{index + 1}_raw"] = titleized_name
+      public_send("other_nationality#{index + 1}_raw=", titleized_name)
+
+      nationality_ids << found_nationality.id if nationality_ids.exclude?(found_nationality.id)
     end
   end
 
