@@ -19,6 +19,7 @@ class CourseDetailsForm < TraineeForm
     main_age_range
     additional_age_range
     additional_age_range_raw
+    study_mode
   ].freeze
 
   COURSE_DATES = %i[
@@ -43,6 +44,8 @@ class CourseDetailsForm < TraineeForm
   validates :course_subject_three, autocomplete: true, if: :require_subject?
   validates :additional_age_range, autocomplete: true, if: -> { other_age_range? && require_age_range? }
 
+  validates :study_mode, inclusion: { in: COURSE_STUDY_ENUMS.values }, if: :requires_study_mode?
+
   validate :course_start_date_valid
   validate :course_end_date_valid
 
@@ -50,7 +53,7 @@ class CourseDetailsForm < TraineeForm
   validate :course_subject_two_valid, if: :require_subject?
   validate :course_subject_three_valid, if: :require_subject?
 
-  delegate :apply_application?, to: :trainee
+  delegate :apply_application?, :requires_study_mode?, to: :trainee
 
   MAX_END_YEARS = 4
 
@@ -123,6 +126,12 @@ private
       })
     end
 
+    if requires_study_mode?
+      attributes.merge!({
+        study_mode: study_mode,
+      })
+    end
+
     trainee.assign_attributes(attributes)
   end
 
@@ -141,6 +150,12 @@ private
         course_subject_one: trainee.course_subject_one,
         course_subject_two: trainee.course_subject_two,
         course_subject_three: trainee.course_subject_three,
+      })
+    end
+
+    if requires_study_mode?
+      attributes.merge!({
+        study_mode: trainee.study_mode,
       })
     end
 

@@ -6,6 +6,8 @@ module CourseDetails
     include CourseDetailsHelper
     include TraineeHelper
 
+    delegate :requires_study_mode?, to: :trainee
+
     def initialize(data_model:, has_errors: false)
       @data_model = data_model
       @has_errors = has_errors
@@ -25,6 +27,7 @@ module CourseDetails
         ({ key: t("components.course_detail.type_of_course"), value: course_type } if require_course_type?),
         ({ key: t("components.course_detail.subject"), value: subject, action: action_link("subject") } if require_subject?),
         ({ key: t("components.course_detail.age_range"), value: course_age_range, action: action_link("age range") } if require_age_range?),
+        ({ key: t("components.course_detail.study_mode"), value: study_mode, action: action_link("full time or part time") } if requires_study_mode?),
         { key: t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_start_date"), value: course_start_date, action: action_link("course start date") },
         { key: t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_end_date"), value: course_end_date, action: action_link("course end date") },
       ].compact.tap do |collection|
@@ -82,6 +85,12 @@ module CourseDetails
       return @not_provided_copy if data_model.course_age_range.blank?
 
       age_range_for_summary_view(data_model.course_age_range)
+    end
+
+    def study_mode
+      return @not_provided_copy if data_model.study_mode.blank?
+
+      t("components.course_detail.study_mode_values.#{trainee.study_mode}")
     end
 
     def course_type

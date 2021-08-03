@@ -22,8 +22,8 @@ module CourseDetails
       end
 
       it "tells the user that no data has been entered for course details, course type, subject, age range, course start date and course end date" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 5)
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.not_provided"), count: 5)
+        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.not_provided"), count: 6)
       end
     end
 
@@ -124,6 +124,31 @@ module CourseDetails
           expect(rendered_component)
             .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
         end
+      end
+    end
+
+    context "route with study_mode" do
+      let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: "full_time") }
+
+      before do
+        render_inline(View.new(data_model: trainee))
+      end
+
+      it "renders study_mode" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+      end
+    end
+
+    context "route without study_mode" do
+      let(:trainee) { create(:trainee, :early_years_undergrad, study_mode: nil) }
+
+      before do
+        render_inline(View.new(data_model: trainee))
+      end
+
+      it "does not render study_mode" do
+        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time")
       end
     end
   end

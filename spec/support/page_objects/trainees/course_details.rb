@@ -9,6 +9,9 @@ module PageObjects
       element :subject, "#course-details-form-course-subject-one-field"
       element :subject_raw, "input[data-nameoriginal='course_details_form[course_subject_one_raw]']"
 
+      element :study_mode_full_time, "input[name='course_details_form[study_mode]'][value='full_time']"
+      element :study_mode_part_time, "input[name='course_details_form[study_mode]'][value='part_time']"
+
       element :course_start_date_day, "#course_details_form_course_start_date_3i"
       element :course_start_date_month, "#course_details_form_course_start_date_2i"
       element :course_start_date_year, "#course_details_form_course_start_date_1i"

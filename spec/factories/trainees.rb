@@ -166,6 +166,7 @@ FactoryBot.define do
 
     trait :provider_led_postgrad do
       training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+      study_mode { COURSE_STUDY_ENUMS[:full_time] }
     end
 
     trait :with_early_years_course_details do
@@ -195,10 +196,12 @@ FactoryBot.define do
 
     trait :school_direct_tuition_fee do
       training_route { TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] }
+      study_mode { COURSE_STUDY_ENUMS[:full_time] }
     end
 
     trait :school_direct_salaried do
       training_route { TRAINING_ROUTE_ENUMS[:school_direct_salaried] }
+      study_mode { COURSE_STUDY_ENUMS[:full_time] }
     end
 
     trait :draft do
