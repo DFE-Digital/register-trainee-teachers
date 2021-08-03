@@ -3,6 +3,7 @@
 module PersonalDetails
   class View < GovukComponent::Base
     include SanitizeHelper
+    include SummaryHelper
 
     def initialize(data_model:, has_errors: false)
       @data_model = data_model
@@ -33,6 +34,8 @@ module PersonalDetails
       mappable_field(
         [data_model.first_names, data_model.last_name].any?(&:nil?) ? nil : name,
         t("components.confirmation.personal_detail.full_name"),
+        edit_trainee_personal_details_path(trainee),
+        has_errors,
       )
     end
 
@@ -40,6 +43,8 @@ module PersonalDetails
       mappable_field(
         data_model.date_of_birth.is_a?(Date) ? data_model.date_of_birth.strftime("%-d %B %Y") : nil,
         t("components.confirmation.personal_detail.date_of_birth"),
+        edit_trainee_personal_details_path(trainee),
+        has_errors,
       )
     end
 
@@ -47,11 +52,18 @@ module PersonalDetails
       mappable_field(
         data_model.gender ? I18n.t("components.confirmation.personal_detail.genders.#{data_model.gender}") : nil,
         t("components.confirmation.personal_detail.gender"),
+        edit_trainee_personal_details_path(trainee),
+        has_errors,
       )
     end
 
     def nationality_row
-      mappable_field(nationality, t("components.confirmation.personal_detail.nationality"))
+      mappable_field(
+        nationality,
+        t("components.confirmation.personal_detail.nationality"),
+        edit_trainee_personal_details_path(trainee),
+        has_errors,
+      )
     end
 
     def nationality
@@ -78,16 +90,6 @@ module PersonalDetails
       found = array.delete(nationality)
       array.unshift(nationality) if found
       array
-    end
-
-    def mappable_field(field_value, field_label)
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: edit_trainee_personal_details_path(trainee),
-        has_errors: has_errors,
-      ).to_h
     end
   end
 end

@@ -14,8 +14,8 @@ RSpec.describe ContactDetails::View do
       expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
-    it "tells the user that no data has been entered" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Not provided", count: 2)
+    it "tells the user that the data is missing" do
+      expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 2)
     end
   end
 

@@ -14,7 +14,7 @@ describe ContactDetailsForm, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:locale_code) }
+    it { is_expected.to validate_presence_of(:locale_code).on(%i[save missing_data]) }
     it { is_expected.to validate_presence_of(:email) }
 
     context "empty form data" do
@@ -30,7 +30,7 @@ describe ContactDetailsForm, type: :model do
       end
 
       before do
-        subject.valid?
+        subject.valid?(:save)
       end
 
       it "returns 2 errors about locale code and email" do

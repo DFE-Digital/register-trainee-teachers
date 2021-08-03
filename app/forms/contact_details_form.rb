@@ -18,7 +18,7 @@ class ContactDetailsForm < TraineeForm
 
   before_validation :sanitise_email
 
-  validates :locale_code, presence: true
+  validates :locale_code, presence: true, on: %i[save missing_data]
   validate :uk_address_valid, if: -> { uk? }
   validate :international_address_valid, if: -> { non_uk? }
   validates :postcode, postcode: true, if: ->(attr) { attr.postcode.present? }
@@ -33,7 +33,7 @@ class ContactDetailsForm < TraineeForm
   end
 
   def save!
-    if valid?
+    if valid?(:save)
       update_trainee_attributes
       trainee.save!
       store.set(trainee.id, :contact_details, nil)
