@@ -788,6 +788,7 @@ en:
           school_direct_salaried: School direct (salaried)
           school_direct_tuition_fee: School direct (tuition fee)
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
+          hpitt_postgrad: Teach First
         states:
           draft: Draft
           apply_draft: Apply Draft

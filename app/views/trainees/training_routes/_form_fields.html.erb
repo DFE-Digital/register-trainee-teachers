@@ -8,6 +8,10 @@
     <% end %>
   <% end %>
 
+  <% if current_user.provider.hpitt_postgrad? %>
+    <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:hpitt_postgrad], label: { text: t("activerecord.attributes.trainee.training_routes.hpitt_postgrad") } %>
+  <% end %>
+
   <% if multiple_routes_enabled? %>
     <%= f.govuk_radio_divider %>
   <% end %>
