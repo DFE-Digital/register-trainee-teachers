@@ -22,7 +22,7 @@ RSpec.describe Diversity::View do
     end
 
     context "when trainee has shared their diversity information " do
-      let(:trainee) { build(:trainee, :diversity_disclosed) }
+      let(:trainee) { create(:trainee, :with_diversity_information) }
 
       it "renders with one line to say the trainee has shared data" do
         expect(rendered_component).to have_text("Information disclosed")
@@ -38,35 +38,30 @@ RSpec.describe Diversity::View do
   end
 
   describe "ethnic selection" do
-    let(:trainee) { build(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian]) }
+    let(:trainee) { build(:trainee, :diversity_disclosed, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:asian]) }
     let(:expected_locale_key) { t("components.confirmation.diversity.ethnic_groups.asian_ethnic_group") }
 
-    subject { Diversity::View.new(data_model: trainee) }
-
     it "returns the ethnic_group if the ethnic_background is not provided" do
-      expect(subject.ethnic_group_content).to eq(expected_locale_key)
+      expect(rendered_component).to have_text(expected_locale_key)
     end
 
     context "ethnic background" do
       let(:ethnic_background) { Diversities::ANOTHER_ETHNIC_BACKGROUND }
-      let(:trainee) { build(:trainee, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:other], ethnic_background: ethnic_background) }
+      let(:trainee) { build(:trainee, :diversity_disclosed, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:other], ethnic_background: ethnic_background) }
       let(:expected_locale_key) { t("components.confirmation.diversity.ethnic_groups.other_ethnic_group") }
 
       context "when ethnic_background provided" do
         it "returns the ethnic_background alongside the ethnic_group" do
-          expect(subject.ethnic_group_content).to eq("#{expected_locale_key} (#{ethnic_background})")
+          expect(rendered_component).to have_text("#{expected_locale_key} (#{ethnic_background})")
         end
       end
 
       context "when additional_ethnic_background provided" do
         let(:additional_background) { "some additional background" }
-
-        before do
-          trainee.additional_ethnic_background = additional_background
-        end
+        let(:trainee) { build(:trainee, :diversity_disclosed, ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:other], ethnic_background: ethnic_background, additional_ethnic_background: additional_background) }
 
         it "returns the additional_ethnic_background alongside the ethnic_group" do
-          expect(subject.ethnic_group_content).to eq("#{expected_locale_key} (#{additional_background})")
+          expect(rendered_component).to have_text("#{expected_locale_key} (#{additional_background})")
         end
       end
     end
@@ -74,19 +69,18 @@ RSpec.describe Diversity::View do
 
   describe "#disability_selection" do
     let(:disability_disclosure) { nil }
-    let(:trainee) { build(:trainee, disability_disclosure: disability_disclosure) }
+    let(:trainee) { build(:trainee, :diversity_disclosed, disability_disclosure: disability_disclosure) }
 
-    let(:rendered_component) { Diversity::View.new(data_model: trainee) }
-
-    it "returns answer missing" do
-      expect(rendered_component.disability_selection).to eq("Answer missing")
+    it "returns disability is missing" do
+      expect(rendered_component).to have_text("Disability is missing")
     end
 
     context "disabled" do
       let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
+      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilites_disclosed, disability_disclosure: disability_disclosure) }
 
       it "returns a message stating the user is disabled" do
-        expect(rendered_component.disability_selection).to eq("They shared that they’re disabled")
+        expect(rendered_component).to have_text("They shared that they’re disabled")
       end
     end
 
@@ -94,7 +88,7 @@ RSpec.describe Diversity::View do
       let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] }
 
       it "returns a message stating the user is not disabled" do
-        expect(rendered_component.disability_selection).to eq("They shared that they’re not disabled")
+        expect(rendered_component).to have_text("They shared that they’re not disabled")
       end
     end
 
@@ -102,31 +96,26 @@ RSpec.describe Diversity::View do
       let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
 
       it "returns a message stating the user did not provide details" do
-        expect(rendered_component.disability_selection).to eq("Not provided")
+        expect(rendered_component).to have_text("Not provided")
       end
     end
   end
 
   describe "selected disability options" do
-    let(:trainee) { build(:trainee) }
-    let(:rendered_component) { Diversity::View.new(data_model: trainee) }
+    let(:trainee) { create(:trainee, :diversity_disclosed, :disabled) }
 
     context "when there are no disabilities" do
-      it "returns a empty string if no disabilities" do
-        expect(rendered_component.selected_disability_options).to be_empty
+      it "returns disability is missing" do
+        expect(rendered_component).to have_text("Disability is missing")
       end
     end
 
     context "when there are disabilities" do
-      let(:disabilities_stub) { [double(name: "some disability")] }
-
-      before do
-        allow(trainee).to receive(:disabilities).and_return(disabilities_stub)
-      end
+      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilites_disclosed) }
 
       it "renders the disability names" do
         trainee.disabilities.each do |disability|
-          expect(rendered_component.selected_disability_options).to include(disability.name)
+          expect(rendered_component).to have_text(disability.name)
         end
       end
     end
@@ -134,11 +123,11 @@ RSpec.describe Diversity::View do
     context "when additional disability has been provided" do
       let(:disability) { build(:disability, name: Diversities::OTHER) }
       let(:trainee_disability) { build(:trainee_disability, additional_disability: "some additional disability", disability: disability) }
-      let(:trainee) { create(:trainee, trainee_disabilities: [trainee_disability]) }
+      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled, trainee_disabilities: [trainee_disability]) }
 
       it "renders the additional disability" do
         expected_text = "#{disability.name.downcase} (#{trainee_disability.additional_disability})"
-        expect(rendered_component.selected_disability_options).to include(expected_text)
+        expect(rendered_component).to have_text(expected_text)
       end
     end
   end

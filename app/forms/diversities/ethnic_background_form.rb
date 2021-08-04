@@ -11,7 +11,7 @@ module Diversities
 
     delegate :ethnic_group, to: :ethnic_group_form
 
-    validates :ethnic_background, presence: true, if: -> { disclosure_form.diversity_disclosed? }
+    validates :ethnic_background, presence: true, if: :requires_ethnic_background?
 
     def initialize(trainee, **kwargs)
       @disclosure_form = DisclosureForm.new(trainee)
@@ -22,6 +22,10 @@ module Diversities
   private
 
     attr_reader :disclosure_form, :ethnic_group_form
+
+    def requires_ethnic_background?
+      disclosure_form.diversity_disclosed? && !ethnic_group_form.not_provided_ethnic_group?
+    end
 
     def compute_fields
       trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)

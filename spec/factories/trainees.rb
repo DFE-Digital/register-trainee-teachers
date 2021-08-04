@@ -138,12 +138,8 @@ FactoryBot.define do
       disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
     end
 
-    trait :with_diversity_information do
-      diversity_disclosed
-      with_ethnic_group
-      with_ethnic_background
+    trait :disabled_with_disabilites_disclosed do
       disabled
-
       transient do
         disabilities_count { 1 }
       end
@@ -151,6 +147,13 @@ FactoryBot.define do
       after(:create) do |trainee, evaluator|
         create_list(:trainee_disability, evaluator.disabilities_count, trainee: trainee)
       end
+    end
+
+    trait :with_diversity_information do
+      diversity_disclosed
+      with_ethnic_group
+      with_ethnic_background
+      disabled_with_disabilites_disclosed
     end
 
     trait :with_placement_assignment do

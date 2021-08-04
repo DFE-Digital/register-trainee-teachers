@@ -61,10 +61,12 @@ en:
         training_initiative:
           title: Training initiative
       diversity:
+        diversity_disclosure_title: &diversity_information Diversity information
         diversity_disclosure:
           diversity_disclosed: Information disclosed
           diversity_not_disclosed: Not shared
-          diversity_not_provided: Not provided
+        ethnicity_title: &ethnicity Ethnicity
+        disability_title: &disability Disability
         ethnic_groups: &ethnic_groups_labels
           asian_ethnic_group: Asian or Asian British
           black_ethnic_group: Black, African, Black British or Caribbean
@@ -316,7 +318,7 @@ en:
       titles:
         personal_details: Personal details
         contact_details: Contact details
-        diversity: Diversity information
+        diversity: *diversity_information
         degrees: Degree details
         course_details: Course details
         training_details: Training details
@@ -369,6 +371,11 @@ en:
         nationality_names: *nationality
         locale_code: *address
         email: *email_address
+        ethnic_background: *ethnicity
+        ethnic_group: *ethnicity
+        diversity_disclosure: *diversity_information
+        disability_disclosure: *disability
+        disability_ids: *disability
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.

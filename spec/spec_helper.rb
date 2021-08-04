@@ -28,6 +28,8 @@ RSpec.configure do |config|
     config.default_formatter = "doc"
   end
 
+  config.filter_run_when_matching :focus
+
   config.profile_examples = 3
 
   config.order = :random
