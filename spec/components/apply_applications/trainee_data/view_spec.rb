@@ -36,7 +36,7 @@ module ApplyApplications
       end
 
       context "apply trainee without invalid data" do
-        let(:apply_application) { create(:apply_application, invalid_data: nil) }
+        let(:apply_application) { create(:apply_application) }
         let(:trainee) do
           create(:trainee, nationalities: [build(:nationality)], degrees: [], apply_application: apply_application)
         end

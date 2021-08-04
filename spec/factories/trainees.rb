@@ -329,7 +329,11 @@ FactoryBot.define do
     end
 
     trait :with_invalid_apply_application do
+      degrees { [build(:degree)] }
       association :apply_application, :with_invalid_data
+      after(:build) do |trainee, _evaluator|
+        trainee.apply_application.invalid_data = { "degrees" => { trainee.degrees.map(&:slug).join => { institution: "University of Warwick" } } }
+      end
     end
 
     trait :with_funding do
