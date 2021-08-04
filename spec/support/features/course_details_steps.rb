@@ -9,10 +9,6 @@ module Features
       publish_course_details_page.course_options.first.choose
       publish_course_details_page.submit_button.click
       confirm_publish_course_page.confirm_course_button.click
-
-      # TODO: remove after [2328] - course study mode set from publish course
-      Trainee.last.update(study_mode: "full_time")
-
       and_the_course_details_is_marked_completed
     end
 

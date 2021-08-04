@@ -27,14 +27,6 @@ module Trainees
       publish_course_next_path
     end
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
-    def course
-      trainee.available_courses.find_by_code!(course_code)
-    end
-
     def load_language_specialisms
       @language_specialisms = PUBLISH_SUBJECT_SPECIALISM_MAPPING[PublishSubjects::MODERN_LANGUAGES]
     end
@@ -45,10 +37,6 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
-    end
-
-    def publish_course_details_form
-      @publish_course_details_form ||= PublishCourseDetailsForm.new(trainee)
     end
 
     def course_code

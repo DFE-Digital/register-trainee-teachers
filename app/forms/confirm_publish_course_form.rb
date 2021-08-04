@@ -10,16 +10,17 @@ class ConfirmPublishCourseForm
     code
   ].freeze
 
-  attr_accessor(*FIELDS, :trainee, :specialisms, :itt_start_date)
+  attr_accessor(*FIELDS, :trainee, :specialisms, :itt_start_date, :course_study_mode)
 
   delegate :id, :persisted?, to: :trainee
 
   validates :code, presence: true
 
-  def initialize(trainee, specialisms, itt_start_date, params = {})
+  def initialize(trainee, specialisms, itt_start_date, course_study_mode, params = {})
     @trainee = trainee
     @specialisms = specialisms
     @itt_start_date = itt_start_date
+    @course_study_mode = course_study_mode
     super(params)
   end
 
@@ -34,9 +35,14 @@ class ConfirmPublishCourseForm
 
 private
 
+  def study_mode
+    course_study_mode || course.study_mode
+  end
+
   def update_trainee_attributes
     specialism1, specialism2, specialism3 = *specialisms
     trainee.progress.course_details = true
+
     trainee.assign_attributes({
       course_subject_one: specialism1,
       course_subject_two: specialism2,
@@ -44,6 +50,7 @@ private
       course_code: course.code,
       course_age_range: course.age_range,
       course_start_date: itt_start_date || course.start_date,
+      study_mode: study_mode,
       course_end_date: course.end_date,
     })
   end

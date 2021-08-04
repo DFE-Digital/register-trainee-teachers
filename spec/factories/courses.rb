@@ -13,14 +13,16 @@ FactoryBot.define do
     qualification { %i[qts pgce_with_qts pgde_with_qts pgce pgde].sample }
     course_length { %w[OneYear TwoYears].sample }
     route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
+    study_mode { COURSE_STUDY_MODES.keys.sample }
 
     summary do |builder|
       qualifications = builder.qualification.to_s.gsub("_", " ").upcase.gsub("WITH", "with")
-      time = ["full time", "part time"].sample
-      [qualifications, time].join(" ")
+      study_mode = builder.study_mode.to_s.humanize(capitalize: false)
+      [qualifications, study_mode].join(" ")
     end
 
     factory :course_with_subjects do
+      study_mode { "full_time" }
       transient do
         subjects_count { 1 }
         subject_names { [] }

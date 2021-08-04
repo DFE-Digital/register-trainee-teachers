@@ -90,8 +90,8 @@ namespace :example_data do
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
         REAL_PUBLISH_COURSES_WITH_SUBJECTS.each do |course_name, subject_names|
-          FactoryBot.build(:course, accredited_body_code: provider.code, route: route, name: course_name) { |course|
-            course.subjects = Subject.where(name: subject_names).sort_by { |subject| subject_names.index(subject.name) }
+          FactoryBot.build(:course, accredited_body_code: provider.code, route: route, name: course_name, study_mode: COURSE_STUDY_MODES.keys.sample) { |course|
+            course.subjects = Subject.where(name: subject_names)
           }.save!
         end
       end

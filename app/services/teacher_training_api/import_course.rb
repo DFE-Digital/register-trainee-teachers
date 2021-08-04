@@ -33,7 +33,9 @@ module TeacherTrainingApi
                      course_length: course_attributes[:course_length],
                      subjects: subjects,
                      route: route,
-                     summary: course_attributes[:summary])
+                     summary: course_attributes[:summary],
+                     study_mode: course_attributes[:study_mode],
+                     accredited_body_code: accredited_body_code)
     end
 
   private

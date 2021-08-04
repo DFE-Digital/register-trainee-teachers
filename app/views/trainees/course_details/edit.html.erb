@@ -58,8 +58,8 @@
 
       <% if f.object.requires_study_mode? %>
         <%= f.govuk_radio_buttons_fieldset(:study_mode, legend: { text: t(".study_mode_label"), size: "s" }) do %>
-          <%= f.govuk_radio_button :study_mode, COURSE_STUDY_ENUMS[:full_time], label: { text: t(".study_mode_full_time") }, link_errors: true %>
-          <%= f.govuk_radio_button :study_mode, COURSE_STUDY_ENUMS[:part_time], label: { text: t(".study_mode_part_time") } %>
+          <%= f.govuk_radio_button :study_mode, COURSE_STUDY_MODES[:full_time], label: { text: t(".study_mode_full_time") }, link_errors: true %>
+          <%= f.govuk_radio_button :study_mode, COURSE_STUDY_MODES[:part_time], label: { text: t(".study_mode_part_time") } %>
         <% end %>
       <% end %>
 

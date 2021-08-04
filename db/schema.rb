@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 2021_08_09_143338) do
     t.string "accredited_body_code", null: false
     t.integer "min_age", null: false
     t.integer "max_age", null: false
+    t.integer "study_mode"
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code", unique: true
   end
 
@@ -250,8 +251,8 @@ ActiveRecord::Schema.define(version: 2021_08_09_143338) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.string "ukprn"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
