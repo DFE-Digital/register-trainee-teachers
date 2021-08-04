@@ -16,6 +16,18 @@ module Diversities
 
     describe "validations" do
       it { is_expected.to validate_presence_of(:ethnic_background) }
+
+      context "when diversity is not disclosed" do
+        let(:trainee) { build(:trainee) }
+
+        it { is_expected.not_to validate_presence_of(:ethnic_background) }
+      end
+
+      context "when enthic group is not provided" do
+        let(:trainee) { build(:trainee, :diversity_disclosed, ethnic_group: Trainee.ethnic_groups[:not_provided_ethnic_group]) }
+
+        it { is_expected.not_to validate_presence_of(:ethnic_background) }
+      end
     end
 
     describe "#stash" do
