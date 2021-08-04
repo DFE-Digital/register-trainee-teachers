@@ -98,7 +98,7 @@ const setupAutoComplete = (form) => {
         },
         templates: renderTemplate,
         onConfirm: (value) => {
-          sendTrackingEvent(failedSearches)
+          sendTrackingEvent(failedSearches, value)
           setSchoolHiddenField(value)
         },
         tNoResults: () => statusMessage
