@@ -21,9 +21,28 @@ module CourseDetails
         render_inline(View.new(data_model: trainee))
       end
 
-      it "tells the user that no data has been entered for course details, course type, subject, age range, course start date and course end date" do
+      it "renders 6 rows" do
         expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.not_provided"), count: 6)
+      end
+
+      it "renders course details as no provided" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.not_provided"))
+      end
+
+      it "renders missing hint for subject" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Subject is missing")
+      end
+
+      it "renders missing hint for age range" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Age range is missing")
+      end
+
+      it "renders missing hint for course start date" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Course start date is missing")
+      end
+
+      it "renders missing hint for course end date" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Course end date is missing")
       end
     end
 
@@ -37,27 +56,27 @@ module CourseDetails
           render_inline(View.new(data_model: trainee))
         end
 
-        it "renderendered_rs the course details" do
+        it "renders the course details" do
           expect(rendered_component)
             .to have_text("#{course.name} (#{course.code})")
         end
 
-        it "renderendered_rs the course type" do
+        it "renders the course type" do
           expect(rendered_component)
             .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
         end
 
-        it "rendrendered_ers the subject" do
+        it "renders the subject" do
           expect(rendered_component)
             .to have_text(trainee.course_subject_one.upcase_first)
         end
 
-        it "renderendered_rs the course age range" do
+        it "renders the course age range" do
           expect(rendered_component)
             .to have_text(age_range_for_summary_view(trainee.course_age_range))
         end
 
-        it "renderendered_rs the course start date" do
+        it "renders the course start date" do
           expect(rendered_component)
             .to have_text(date_for_summary_view(trainee.course_start_date))
         end

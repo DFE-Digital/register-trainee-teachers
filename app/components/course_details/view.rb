@@ -6,8 +6,6 @@ module CourseDetails
     include CourseDetailsHelper
     include TraineeHelper
 
-    delegate :requires_study_mode?, to: :trainee
-
     def initialize(data_model:, has_errors: false)
       @data_model = data_model
       @has_errors = has_errors
@@ -24,12 +22,12 @@ module CourseDetails
 
     def rows
       [
-        ({ key: t("components.course_detail.type_of_course"), value: course_type } if require_course_type?),
-        ({ key: t("components.course_detail.subject"), value: subject, action: action_link("subject") } if require_subject?),
-        ({ key: t("components.course_detail.age_range"), value: course_age_range, action: action_link("age range") } if require_age_range?),
-        ({ key: t("components.course_detail.study_mode"), value: study_mode, action: action_link("full time or part time") } if requires_study_mode?),
-        { key: t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_start_date"), value: course_start_date, action: action_link("course start date") },
-        { key: t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_end_date"), value: course_end_date, action: action_link("course end date") },
+        type_of_course,
+        subject_row,
+        age_range_row,
+        study_mode_row,
+        course_date_row(course_start_date, :start),
+        course_date_row(course_end_date, :end),
       ].compact.tap do |collection|
         if show_publish_courses?(trainee)
           collection.unshift({
@@ -44,6 +42,34 @@ module CourseDetails
   private
 
     attr_accessor :data_model, :has_errors
+
+    def type_of_course
+      if require_course_type?
+        { key: t("components.course_detail.type_of_course"), value: course_type }
+      end
+    end
+
+    def subject_row
+      if require_subject?
+        mappable_field(subject, t("components.course_detail.subject"))
+      end
+    end
+
+    def age_range_row
+      if require_age_range?
+        mappable_field(course_age_range, t("components.course_detail.age_range"))
+      end
+    end
+
+    def study_mode_row
+      if trainee.requires_study_mode?
+        mappable_field(study_mode, t("components.course_detail.study_mode"))
+      end
+    end
+
+    def course_date_row(value, context)
+      mappable_field(value, t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_#{context}_date"))
+    end
 
     def itt_route?
       trainee.itt_route?
@@ -74,23 +100,19 @@ module CourseDetails
     end
 
     def subject
-      return @not_provided_copy if data_model.course_subject_one.blank?
-
-      subjects_for_summary_view(data_model.course_subject_one,
-                                data_model.course_subject_two,
-                                data_model.course_subject_three)
+      if data_model.course_subject_one.present?
+        subjects_for_summary_view(data_model.course_subject_one,
+                                  data_model.course_subject_two,
+                                  data_model.course_subject_three)
+      end
     end
 
     def course_age_range
-      return @not_provided_copy if data_model.course_age_range.blank?
-
-      age_range_for_summary_view(data_model.course_age_range)
+      age_range_for_summary_view(data_model.course_age_range) if data_model.course_age_range.present?
     end
 
     def study_mode
-      return @not_provided_copy if data_model.study_mode.blank?
-
-      t("components.course_detail.study_mode_values.#{trainee.study_mode}")
+      t("components.course_detail.study_mode_values.#{trainee.study_mode}") if trainee.study_mode.present?
     end
 
     def course_type
@@ -100,19 +122,25 @@ module CourseDetails
     end
 
     def course_start_date
-      return @not_provided_copy if data_model.course_start_date.blank?
-
-      date_for_summary_view(data_model.course_start_date)
+      date_for_summary_view(data_model.course_start_date) if data_model.course_start_date.present?
     end
 
     def course_end_date
-      return @not_provided_copy if data_model.course_end_date.blank?
-
-      date_for_summary_view(data_model.course_end_date)
+      date_for_summary_view(data_model.course_end_date) if data_model.course_end_date.present?
     end
 
     def course
       @course ||= Course.find_by(code: data_model.course_code)
+    end
+
+    def mappable_field(field_value, field_label)
+      MappableFieldRow.new(
+        field_value: field_value,
+        field_label: field_label,
+        text: t("components.confirmation.missing"),
+        action_url: edit_trainee_course_details_path(trainee),
+        has_errors: has_errors,
+      ).to_h
     end
   end
 end
