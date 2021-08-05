@@ -353,7 +353,7 @@ en:
         other: "This application contains %{count} answers that you need to amend. This is because they were entered in a free text format."
       unrecognised_field_text: "%{invalid_field} is not recognised"
     mappable_field_row:
-      default_hint_text_html: 'Enter an answer %{field_label} <span class="govuk-visually-hidden"> for %{field_label}</span>'
+      default_hint_text_html: 'Enter an answer <span class="govuk-visually-hidden"> for %{field_label}</span>'
       apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
     missing_data_view:
       missing_fields_summary:
