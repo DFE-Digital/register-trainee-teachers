@@ -8,6 +8,9 @@ describe PersonalDetailsForm, type: :model do
   let(:french) { create(:nationality, name: "french") }
   let(:american) { create(:nationality, name: "american") }
   let(:irish) { create(:nationality, name: "irish") }
+  let(:british) { create(:nationality, name: "british") }
+  let(:jamaican) { create(:nationality, name: "jamaican") }
+
   let(:fields) do
     {
       "first_names" => "Millie",
@@ -168,17 +171,57 @@ describe PersonalDetailsForm, type: :model do
 
     before do
       allow(form_store).to receive(:get).and_return(fields)
+      allow(form_store).to receive(:set).with(trainee.id, :personal_details, nil)
     end
 
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :personal_details, nil)
-
       expect { subject.save! }.to change(trainee, :first_names).to("Millie")
         .and change(trainee, :middle_names).to("Schmeler")
         .and change(trainee, :last_name).to("Lehner")
         .and change(trainee, :gender).to("gender_not_provided")
         .and change(trainee, :date_of_birth).to(Date.parse("11/11/1963"))
         .and change { trainee.nationalities.map(&:name).sort }.to(%w[american french irish])
+    end
+
+    context "other nationalities contains only raw values" do
+      let(:params) {
+        {
+          "other" => "1",
+          "other_nationality1" => "",
+          "other_nationality1_raw" => french.name,
+          "other_nationality2" => "",
+          "other_nationality2_raw" => jamaican.name,
+          "other_nationality3" => "",
+          "other_nationality3_raw" => "",
+          "nationality_names" => [british.name.titleize],
+        }
+      }
+
+      it "correctly saves the nationalities" do
+        subject.save!
+        expect(trainee.nationalities.map(&:name).sort).to eq %w[british french jamaican]
+      end
+    end
+
+    context "the 'other' checkbox is unticked" do
+      let(:params) {
+        {
+          "other" => "0",
+          "other_nationality1" => "",
+          "other_nationality1_raw" => french.name,
+          "other_nationality2" => "",
+          "other_nationality2_raw" => jamaican.name,
+          "other_nationality3" => "",
+          "other_nationality3_raw" => "",
+          "nationality_names" => [british.name.titleize],
+        }
+      }
+
+      it "doesnt save the other nationalities" do
+        subject.save!
+        expect(trainee.nationalities.map(&:name)).to eq ["british"]
+      end
     end
   end
 end
