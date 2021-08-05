@@ -9,7 +9,7 @@ module Dttp
       let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:provider) { create(:provider, dttp_id: dttp_provider_id) }
       let(:trainee) do
-        create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, provider: provider)
+        create(:trainee, :with_course_details, :with_start_date, course_start_date: Date.parse("10/10/2020"), dttp_id: dttp_contact_id, provider: provider)
       end
 
       let(:contact_change_set_id) { SecureRandom.uuid }
@@ -49,6 +49,63 @@ module Dttp
       subject { described_class.new(trainee, contact_change_set_id).params }
 
       describe "#params" do
+        describe "academic year" do
+          let(:trainee) { create(:trainee, :with_course_details, :with_start_date, course_start_date: Date.parse(start_date)) }
+          let(:expected_value) { "/dfe_academicyears(#{expected_year})" }
+
+          subject do
+            super()["dfe_AcademicYearId@odata.bind"]
+          end
+
+          context "trainee with course in 20/21" do
+            let(:expected_year) { Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021 }
+
+            context "1/8/2020" do
+              let(:start_date) { "1/8/2020" }
+
+              it { is_expected.to eq(expected_value) }
+            end
+
+            context "31/7/2021" do
+              let(:start_date) { "31/7/2021" }
+
+              it { is_expected.to eq(expected_value) }
+            end
+          end
+
+          context "trainee with course in 21/22" do
+            let(:expected_year) { Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2021_2022 }
+
+            context "1/8/2021" do
+              let(:start_date) { "1/8/2021" }
+
+              it { is_expected.to eq(expected_value) }
+            end
+
+            context "31/7/2022" do
+              let(:start_date) { "31/7/2022" }
+
+              it { is_expected.to eq(expected_value) }
+            end
+          end
+
+          context "trainee with course in 22/23" do
+            let(:expected_year) { Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2022_2023 }
+
+            context "1/8/2022" do
+              let(:start_date) { "1/8/2022" }
+
+              it { is_expected.to eq(expected_value) }
+            end
+
+            context "31/7/2023" do
+              let(:start_date) { "31/7/2023" }
+
+              it { is_expected.to eq(expected_value) }
+            end
+          end
+        end
+
         context "degrees" do
           before do
             stub_const(
