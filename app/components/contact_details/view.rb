@@ -6,33 +6,33 @@ module ContactDetails
 
     def initialize(data_model:, has_errors: false)
       @data_model = data_model
-      @not_provided_copy = I18n.t("components.confirmation.not_provided")
       @has_errors = has_errors
     end
 
-    def trainee
-      data_model.is_a?(Trainee) ? data_model : data_model.trainee
-    end
-
-    def address
-      return @not_provided_copy if data_model.locale_code.nil? || (uk_address.blank? && international_address.blank?)
-
-      address = (data_model.uk? ? uk_address : international_address).reject(&:blank?)
-                                                                      .map { |item| html_escape(item) }
-                                                                      .join(tag.br)
-
-      sanitize(address)
-    end
-
-    def email
-      return @not_provided_copy if data_model.email.blank?
-
-      data_model.email
+    def contact_detail_rows
+      [
+        address_row,
+        email_row,
+      ].compact
     end
 
   private
 
     attr_accessor :data_model, :has_errors
+
+    def trainee
+      data_model.is_a?(Trainee) ? data_model : data_model.trainee
+    end
+
+    def address_row
+      is_invalid_address = data_model.locale_code.nil? || (uk_address.blank? && international_address.blank?)
+
+      mappable_field(is_invalid_address ? nil : formatted_address, t(".address"))
+    end
+
+    def email_row
+      mappable_field(data_model.email.presence, t(".email"))
+    end
 
     def uk_address
       [
@@ -45,6 +45,26 @@ module ContactDetails
 
     def international_address
       data_model.international_address.split(/\r\n+/)
+    end
+
+    def formatted_address
+      address = (data_model.uk? ? uk_address : international_address)
+        .reject(&:blank?)
+        .map { |item| html_escape(item) }
+        .join(tag.br)
+
+      sanitize(address)
+    end
+
+    def mappable_field(field_value, field_label)
+      MappableFieldRow.new(
+        field_value: field_value,
+        field_label: field_label,
+        text: t("components.confirmation.missing"),
+        action_url: edit_trainee_contact_details_path(trainee),
+        has_errors: has_errors,
+        apply_draft: trainee.apply_application?,
+      ).to_h
     end
   end
 end

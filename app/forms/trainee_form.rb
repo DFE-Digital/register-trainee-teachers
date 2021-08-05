@@ -42,6 +42,12 @@ class TraineeForm
     "#{course_date_attribute_name_prefix}_end_date".to_sym
   end
 
+  def missing_fields
+    return [] if valid?
+
+    errors.attribute_names
+  end
+
 private
 
   def course_date_attribute_name_prefix
