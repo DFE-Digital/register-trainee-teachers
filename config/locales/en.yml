@@ -343,8 +343,8 @@ en:
         schools:
           titles:
             tuition: Lead school
-            salaried: Schools
-            pg_teaching_apprenticeship: Schools
+            salaried: Lead and employing schools
+            pg_teaching_apprenticeship: Lead and employing schools
   views:
     all_records: All records
     apply_invalid_data_view:
