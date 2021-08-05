@@ -10,6 +10,7 @@ module Trainees
 
         if trainee.draft?
           @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
+          @missing_data_view = MissingDataView.new(diversity_form)
         end
 
         data_model = trainee.draft? ? trainee : diversity_form

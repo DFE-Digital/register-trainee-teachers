@@ -13,6 +13,7 @@ class MappableFieldRow
     @action_url = options[:action_url]
     @has_errors = options[:has_errors]
     @text = options[:text] || "not recognised"
+    @apply_draft = options[:apply_draft] || false
   end
 
   def to_h
@@ -21,7 +22,7 @@ class MappableFieldRow
 
 private
 
-  attr_accessor :invalid_data, :record_id, :field_name, :field_value, :field_label, :text, :action_url, :has_errors
+  attr_accessor :invalid_data, :record_id, :field_name, :field_value, :field_label, :text, :action_url, :has_errors, :apply_draft
 
   def value_attribute
     return { value: unmapped_value.html_safe } if field_value.nil?
@@ -43,7 +44,7 @@ private
         #{original_value_html}
         <div>
           <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" href="#{action_url}">
-            Review the trainee’s answer<span class="govuk-visually-hidden"> for #{field_label.downcase}</span>
+            #{field_hint_text(field_label)}
           </a>
         </div>
       </div>
@@ -56,5 +57,11 @@ private
 
   def original_value
     invalid_data&.dig(record_id, field_name.to_s)
+  end
+
+  def field_hint_text(field_label)
+    return I18n.t("views.mappable_field_row.default_hint_text_html", field_label: field_label.downcase) unless apply_draft
+
+    I18n.t("views.mappable_field_row.apply_field_hint_text_html", field_label: field_label.downcase)
   end
 end

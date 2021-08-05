@@ -81,6 +81,12 @@ class PersonalDetailsForm < TraineeForm
       end
   end
 
+  def missing_fields
+    return [] if valid?
+
+    errors.attribute_names
+  end
+
 private
 
   def compute_fields

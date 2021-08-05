@@ -76,13 +76,16 @@ module Degrees
     end
 
     def mappable_field_row(degree, field_name, field_label, field_value = nil)
-      MappableFieldRow.new(invalid_data: trainee.apply_application&.degrees_invalid_data,
-                           record_id: degree.to_param,
-                           field_name: field_name,
-                           field_value: field_value || degree.public_send(field_name),
-                           field_label: field_label,
-                           action_url: edit_trainee_degree_path(trainee, degree),
-                           has_errors: has_errors).to_h
+      MappableFieldRow.new(
+        invalid_data: trainee.apply_application&.degrees_invalid_data,
+        record_id: degree.to_param,
+        field_name: field_name,
+        field_value: field_value || degree.public_send(field_name),
+        field_label: field_label,
+        action_url: edit_trainee_degree_path(trainee, degree),
+        has_errors: has_errors,
+        apply_draft: trainee.apply_application?,
+      ).to_h
     end
   end
 end

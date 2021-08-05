@@ -13,13 +13,16 @@ describe MappableFieldRow do
     let(:apply_subject_value) { "Master's Degree" }
 
     subject do
-      described_class.new(invalid_data: invalid_data,
-                          record_id: record_id,
-                          field_name: field_name,
-                          field_value: field_value,
-                          field_label: field_label,
-                          action_url: action_url,
-                          has_errors: has_errors).to_h
+      described_class.new(
+        invalid_data: invalid_data,
+        record_id: record_id,
+        field_name: field_name,
+        field_value: field_value,
+        field_label: field_label,
+        action_url: action_url,
+        has_errors: has_errors,
+        apply_draft: true,
+      ).to_h
     end
 
     context "field value matches error value" do
@@ -73,10 +76,13 @@ describe MappableFieldRow do
 
     context "no has_errors but value missing" do
       subject do
-        described_class.new(field_value: nil,
-                            field_label: field_label,
-                            text: "missing",
-                            action_url: action_url).to_h
+        described_class.new(
+          field_value: nil,
+          field_label: field_label,
+          text: "missing",
+          action_url: action_url,
+          apply_draft: true,
+        ).to_h
       end
 
       let(:expected_html) do
