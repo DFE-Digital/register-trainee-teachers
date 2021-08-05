@@ -19,9 +19,11 @@ module PersonalDetails
         expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 4)
       end
 
-      it "tells the user that no data has been entered" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value",
-                                                    text: t("components.confirmation.not_provided"), count: 3)
+      it "tells the user that the data is missing" do
+        expect(rendered_component).to have_selector(
+          ".govuk-summary-list__value",
+          text: t("components.confirmation.missing"), count: 4,
+        )
       end
     end
 

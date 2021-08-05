@@ -73,14 +73,15 @@ en:
           no_disability: They shared that they’re not disabled
           disability_not_provided: Not provided
       personal_detail:
-        full_name: Full name
-        date_of_birth: Date of birth
-        gender: Gender
+        full_name: &full_name Full name
+        date_of_birth: &date_of_birth Date of birth
+        gender: &gender Gender
         genders:
           male: Male
           female: Female
           other: Other
           gender_not_provided: Not provided
+        nationality: &nationality Nationality
       reinstatement_details:
         reinstate_date_label: Date of return
         summary_title: Reinstatement details
@@ -351,6 +352,20 @@ en:
         one: "This application contains 1 answer that you need to amend. This is because it was entered in a free text format."
         other: "This application contains %{count} answers that you need to amend. This is because they were entered in a free text format."
       unrecognised_field_text: "%{invalid_field} is not recognised"
+    mappable_field_row:
+      default_hint_text_html: 'Enter an answer <span class="govuk-visually-hidden"> for %{field_label}</span>'
+      apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
+    missing_data_view:
+      missing_fields_summary:
+        one: "This section contains 1 question that you need to complete."
+        other: "This section contains questions which you need to complete."
+      missing_field_text: "%{missing_field} is missing"
+      missing_fields_mapping:
+        first_names: *full_name
+        last_name: *full_name
+        date_of_birth: *date_of_birth
+        gender: *gender
+        nationality_names: *nationality
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
