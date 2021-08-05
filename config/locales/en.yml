@@ -24,6 +24,10 @@ en:
     items:
       sign_out: Sign out
       system_admin: System admin
+  contact_details:
+    view:
+      address: &address Address
+      email: &email_address Email address
   components:
     heading:
       apply_draft:
@@ -366,6 +370,8 @@ en:
         date_of_birth: *date_of_birth
         gender: *gender
         nationality_names: *nationality
+        locale_code: *address
+        email: *email_address
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
