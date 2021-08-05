@@ -6,6 +6,9 @@ module Dttp
       include Mappable
 
       ACADEMIC_YEAR_2020_2021 = "76bcaeca-2bd1-e711-80df-005056ac45bb"
+      ACADEMIC_YEAR_2021_2022 = "21196925-17b9-e911-a863-000d3ab0dc71"
+      ACADEMIC_YEAR_2022_2023 = "ed0db9f4-eff5-eb11-94ef-000d3ab1e900"
+
       COURSE_LEVEL_PG = 12
       COURSE_LEVEL_UG = 20
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
@@ -39,7 +42,7 @@ module Dttp
           "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
           "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
-          "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{ACADEMIC_YEAR_2020_2021})",
+          "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{academic_year})",
           "dfe_courselevel" => course_level,
           "dfe_sendforregistration" => true,
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
@@ -117,6 +120,12 @@ module Dttp
 
       def send_funding_to_dttp?
         FeatureService.enabled?(:show_funding) && FeatureService.enabled?(:send_funding_to_dttp)
+      end
+
+      def academic_year
+        return ACADEMIC_YEAR_2020_2021 if trainee.course_start_date.between?(Date.parse("1/8/2020"), Date.parse("31/7/2021"))
+        return ACADEMIC_YEAR_2021_2022 if trainee.course_start_date.between?(Date.parse("1/8/2021"), Date.parse("31/7/2022"))
+        return ACADEMIC_YEAR_2022_2023 if trainee.course_start_date.between?(Date.parse("1/8/2022"), Date.parse("31/7/2023"))
       end
     end
   end
