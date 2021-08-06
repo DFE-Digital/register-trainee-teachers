@@ -5,8 +5,6 @@ class SummaryCard::View < ViewComponent::Base
 
   renders_one :header_actions
 
-  attr_accessor :trainee, :title, :heading_level
-
   def initialize(trainee:, title:, heading_level: 2, rows:)
     @trainee = trainee
     @title = title
@@ -23,6 +21,8 @@ class SummaryCard::View < ViewComponent::Base
   end
 
 private
+
+  attr_accessor :trainee, :title, :heading_level
 
   def prevent_action?
     trainee.recommended_for_award? || trainee.awarded? || trainee.withdrawn?
