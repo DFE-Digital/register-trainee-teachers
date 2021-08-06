@@ -2,8 +2,8 @@
   <%= f.hidden_field :locale_code, value: "uk" %>
   <%= f.govuk_error_summary %>
 
-  <% if @trainee.invalid_apply_data? && degree_with_invalid_data?(@trainee)%>
-    <%= render InformationSummary::View.new(renderable: @trainee.invalid_apply_data? ) do |component| %>
+  <% if @trainee.invalid_apply_data? && degree_with_invalid_data?(@trainee) %>
+    <%= render ApplyApplications::ReviewSummary::View.new(form: @degree_form, trainee: @trainee) do |component| %>
       <% component.header  do %>
         <%= @apply_invalid_data_view.summary_content %>
       <% end %>

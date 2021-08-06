@@ -6,6 +6,7 @@ module Trainees
     before_action :set_degrees_form
 
     def new
+      @trainee = trainee
       @degree_form = @degrees_form.build_degree(locale_code: params[:locale_code])
       apply_invalid_data_view
     end

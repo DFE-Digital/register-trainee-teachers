@@ -68,7 +68,7 @@ module TraineeHelper
 
     return false if data.blank?
 
-    data["degrees"][degree_slug(trainee)].present?
+    data["degrees"][trainee.slug].present?
   end
 
 private
