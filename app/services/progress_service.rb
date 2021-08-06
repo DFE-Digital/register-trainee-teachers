@@ -25,6 +25,10 @@ class ProgressService
     @validator.fields.values.flatten.compact.any?
   end
 
+  def not_started?
+    !started?
+  end
+
   def in_progress_valid?
     started? && @validator.valid? && !completed?
   end
