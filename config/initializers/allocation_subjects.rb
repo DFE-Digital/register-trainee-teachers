@@ -21,6 +21,6 @@ module AllocationSubjects
   PHYSICAL_EDUCATION = "Physical education"
   PHYSICS = "Physics"
   PRIMARY = "Primary"
-  RELIGIOUS_EDUCATION = "Religious education"
   PRIMARY_WITH_MATHEMATICS = "Primary with mathematics"
+  RELIGIOUS_EDUCATION = "Religious education"
 end

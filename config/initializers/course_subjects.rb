@@ -25,7 +25,7 @@ module CourseSubjects
   DRAMA = "drama"
   EARLY_YEARS_TEACHING = "early years teaching"
   ECONOMICS = "economics"
-  ENGLISH_AS_A_FOREIGN_LANGUAGE = "English as a foreign language"
+  ENGLISH_AS_SECOND_LANGUAGE = "English as a second or other language"
   ENGLISH_STUDIES = "English studies"
   ENVIRONMENTAL_SCIENCES = "environmental sciences"
   FOOD_AND_BEVERAGE_STUDIES = "food and beverage studies"

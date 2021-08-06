@@ -34,6 +34,7 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::INFORMATION_TECHNOLOGY,
   ],
   AllocationSubjects::DESIGN_AND_TECHNOLOGY => [
+    CourseSubjects::DESIGN_AND_TECHNOLOGY,
     CourseSubjects::CONSTRUCTION_AND_THE_BUILT_ENVIRONMENT,
     CourseSubjects::DESIGN,
     CourseSubjects::FOOD_AND_BEVERAGE_STUDIES,
@@ -72,6 +73,7 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::MODERN_LANGUAGES,
     CourseSubjects::ARABIC_LANGUAGES,
     CourseSubjects::CHINESE_LANGUAGES,
+    CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE,
     CourseSubjects::FRENCH_LANGUAGE,
     CourseSubjects::GERMAN_LANGUAGE,
     CourseSubjects::ITALIAN_LANGUAGE,
@@ -86,6 +88,7 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
   ],
   AllocationSubjects::OTHER_SUBJECTS => [
     CourseSubjects::CHILD_DEVELOPMENT,
+    CourseSubjects::CITIZENSHIP,
     CourseSubjects::HAIR_AND_BEAUTY_SCIENCES,
     CourseSubjects::HEALTH_AND_SOCIAL_CARE,
     CourseSubjects::HEALTH_STUDIES,
@@ -98,6 +101,7 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::UK_GOVERNMENT_PARLIAMENTARY_STUDIES,
   ],
   AllocationSubjects::PHYSICAL_EDUCATION => [
+    CourseSubjects::PHYSICAL_EDUCATION,
     CourseSubjects::DANCE,
     CourseSubjects::SPORTS_MANAGEMENT,
     CourseSubjects::SPORT_AND_EXERCISE_SCIENCES,

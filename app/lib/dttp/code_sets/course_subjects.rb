@@ -32,7 +32,7 @@ module Dttp
         ::CourseSubjects::DRAMA => { entity_id: "e88274df-181e-e711-80c8-0050568902d3" },
         ::CourseSubjects::EARLY_YEARS_TEACHING => { entity_id: "3aa12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::ECONOMICS => { entity_id: "928274df-181e-e711-80c8-0050568902d3" },
-        ::CourseSubjects::ENGLISH_AS_A_FOREIGN_LANGUAGE => { entity_id: "231774a1-e5ee-eb11-bacb-000d3ab62638" },
+        ::CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE => { entity_id: "231774a1-e5ee-eb11-bacb-000d3ab62638" },
         ::CourseSubjects::ENGLISH_STUDIES => { entity_id: "3ea12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::ENVIRONMENTAL_SCIENCES => { entity_id: "40a12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::FOOD_AND_BEVERAGE_STUDIES => { entity_id: "42a12838-b3cf-e911-a860-000d3ab1da01" },

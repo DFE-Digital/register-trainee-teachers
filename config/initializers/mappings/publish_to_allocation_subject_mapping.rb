@@ -5,6 +5,7 @@ module PublishSubjects
   MODERN_LANGUAGES_OTHER = "Modern languages (other)"
 
   ENGLISH = "English"
+  ENGLISH_AS_SECOND_LANGUAGE = "English as a second or other language"
   FRENCH = "French"
   GERMAN = "German"
   ITALIAN = "Italian"
@@ -14,8 +15,8 @@ module PublishSubjects
   SPANISH = "Spanish"
 end
 
-PUBLISH_LANGUAGES = [
-  PublishSubjects::ENGLISH,
+PUBLISH_MODERN_LANGUAGES = [
+  PublishSubjects::ENGLISH_AS_SECOND_LANGUAGE,
   PublishSubjects::FRENCH,
   PublishSubjects::GERMAN,
   PublishSubjects::ITALIAN,
@@ -31,16 +32,19 @@ PUBLISH_SUBJECT_SPECIALISM_MAPPING = {
   # Subjects with a simple 1-to-1 specialism mapping
   "Citizenship" => [CourseSubjects::CITIZENSHIP],
   "Communication and media studies" => [CourseSubjects::MEDIA_AND_COMMUNICATION_STUDIES],
-  "Design and technology" => [CourseSubjects::DESIGN_AND_TECHNOLOGY],
   "Economics" => [CourseSubjects::ECONOMICS],
   "Geography" => [CourseSubjects::GEOGRAPHY],
+  "Health and social care" => [CourseSubjects::HEALTH_AND_SOCIAL_CARE],
   "History" => [CourseSubjects::HISTORY],
   "Music" => [CourseSubjects::MUSIC_EDUCATION_AND_TEACHING],
   "Philosophy" => [CourseSubjects::PHILOSOPHY],
-  "Psychology" => AllocationSubjects::OTHER_SUBJECTS,
+  "Physics" => [CourseSubjects::PHYSICS],
+  "Psychology" => [CourseSubjects::PSYCHOLOGY],
+  "Religious education" => [CourseSubjects::RELIGIOUS_STUDIES],
   "Social sciences" => [CourseSubjects::SOCIAL_SCIENCES],
 
   PublishSubjects::ENGLISH => [CourseSubjects::ENGLISH_STUDIES],
+  PublishSubjects::ENGLISH_AS_SECOND_LANGUAGE => [CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE],
   PublishSubjects::FRENCH => [CourseSubjects::FRENCH_LANGUAGE],
   PublishSubjects::GERMAN => [CourseSubjects::GERMAN_LANGUAGE],
   PublishSubjects::ITALIAN => [CourseSubjects::ITALIAN_LANGUAGE],
@@ -59,8 +63,10 @@ PUBLISH_SUBJECT_SPECIALISM_MAPPING = {
   "Chemistry" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::CHEMISTRY],
   "Classics" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::CLASSICS],
   "Computing" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::COMPUTING],
-  "Mathematics" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::MATHEMATICS],
+  "Design and technology" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::DESIGN_AND_TECHNOLOGY],
   "Drama" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::DRAMA],
+  "Mathematics" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::MATHEMATICS],
+  "Physical education" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::PHYSICAL_EDUCATION],
 
   # Primary subject and its derivatives
   "Primary" => [CourseSubjects::PRIMARY_TEACHING],
