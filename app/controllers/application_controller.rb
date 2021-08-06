@@ -22,6 +22,10 @@ private
     session[:origin_path] = request.original_fullpath
   end
 
+  def user_came_from_backlink?
+    session[:origin_path]&.include?("edit")
+  end
+
   def enforce_basic_auth
     authenticate_or_request_with_http_basic do |username, password|
       BasicAuthenticable.authenticate(username, password)

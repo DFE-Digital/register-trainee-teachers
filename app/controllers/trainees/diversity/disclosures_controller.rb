@@ -38,7 +38,7 @@ module Trainees
       end
 
       def step_wizard
-        @step_wizard ||= Wizards::Diversities::StepWizard.new(trainee: trainee, page_tracker: page_tracker)
+        @step_wizard ||= Wizards::DiversitiesStepWizard.new(trainee: trainee, page_tracker: page_tracker)
       end
 
       def validate_form_completeness
@@ -46,10 +46,6 @@ module Trainees
         return if user_came_from_backlink?
 
         redirect_to step_wizard.start_point if step_wizard.start_point.present?
-      end
-
-      def user_came_from_backlink?
-        session[:origin_path]&.include?("edit")
       end
     end
   end
