@@ -150,6 +150,12 @@ en:
       title: Placement details
     degrees:
       add_another_degree: Add another degree
+      institution: &institution Institution
+      subject: &subject Subject
+      degree_type: &degree_type Degree type
+      grade: &grade Grade
+      graduation_year: &graduation_year Graduation year
+      country: &country Country
     incomplete_section:
       degree_details_not_provided: Degree details not provided
       add_degree_details: Add degree details
@@ -427,6 +433,13 @@ en:
         itt_end_date: *itt_end_date
         training_initiative: *training_initiative
         applying_for_bursary: *bursary_funding
+        institution: *institution
+        subject: *subject
+        uk_degree: *degree_type
+        non_uk_degree: *degree_type
+        grade: *grade
+        graduation_year: *graduation_year
+        country: *country
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
