@@ -30,6 +30,7 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   routes:
+    pg_teaching_apprenticeship: true
     provider_led_postgrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
