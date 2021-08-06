@@ -32,6 +32,7 @@ features:
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true
+    pg_teaching_apprenticeship: true
     provider_led_postgrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
