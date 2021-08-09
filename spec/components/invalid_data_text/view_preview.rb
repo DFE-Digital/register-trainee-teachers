@@ -5,7 +5,7 @@ require "govuk/components"
 module InvalidDataText
   class ViewPreview < ViewComponent::Preview
     def default
-      render View.new(trainee: trainee, form_section: :institution, hint: "I am a very good hint!")
+      render View.new(degree: degree, form_section: :institution, hint: "I am a very good hint!")
     end
 
   private
@@ -13,8 +13,15 @@ module InvalidDataText
     def trainee
       @trainee ||= Trainee.new(
         id: 1,
-        slug: "XXLbvaRY42wP52hWiP78r94m",
         apply_application: apply_application,
+      )
+    end
+
+    def degree
+      @degree ||= Degree.new(
+        id: 1,
+        slug: "XXLbvaRY42wP52hWiP78r94m",
+        trainee: trainee,
       )
     end
 

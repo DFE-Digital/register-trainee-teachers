@@ -53,32 +53,19 @@ module TraineeHelper
     I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
   end
 
-  def invalid_data_message(form_section, trainee)
-    if trainee.apply_application?
-      data = trainee.apply_application.invalid_data
+  def invalid_data_message(form_section, degree)
+    data = degree&.trainee&.apply_application&.invalid_data
 
-      return if invalid_data_does_not_exist?(form_section, trainee)
+    return if data&.dig("degrees", degree.slug, form_section).blank?
 
-      t("components.invalid_data_text.static_text", query: data["degrees"][degree_slug(trainee)][form_section])
-    end
+    t("components.invalid_data_text.static_text", query: data["degrees"][degree.slug][form_section])
   end
 
-  def degree_with_invalid_data?(trainee)
-    data = trainee.apply_application.invalid_data
+  def degree_with_invalid_data?(degree)
+    data = degree&.trainee&.apply_application&.invalid_data
 
     return false if data.blank?
 
-    data["degrees"][trainee.slug].present?
-  end
-
-private
-
-  def invalid_data_does_not_exist?(form_section, trainee)
-    data = trainee.apply_application.invalid_data
-    data.blank? || data["degrees"][degree_slug(trainee)].nil? || data["degrees"][degree_slug(trainee)][form_section].nil?
-  end
-
-  def degree_slug(trainee)
-    trainee.degrees.map(&:slug).join
+    data["degrees"][degree.slug].present?
   end
 end

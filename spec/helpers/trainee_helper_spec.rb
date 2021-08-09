@@ -51,35 +51,36 @@ describe TraineeHelper do
 
   describe "#invalid_data_message" do
     let(:trainee) { create(:trainee, :with_invalid_apply_application) }
+    let(:degree) { trainee.degrees.first }
 
     context "with invalid data" do
       it "return the invalid data message" do
-        expect(invalid_data_message("institution", trainee)).to eq("The trainee entered ‘University of Warwick’. You need to search for the closest match.")
+        expect(invalid_data_message("institution", degree)).to eq("The trainee entered ‘University of Warwick’. You need to search for the closest match.")
       end
     end
 
     context "without invalid data" do
       it "returns nil as no invalid data found" do
-        expect(invalid_data_message("subject", trainee)).to eq(nil)
+        expect(invalid_data_message("subject", degree)).to eq(nil)
       end
     end
   end
 
   describe "#degree_with_invalid_data?" do
+    let(:degree) { trainee.degrees.first }
+
+    subject { degree_with_invalid_data?(degree) }
+
     context "apply trainee has degree with invalid data" do
       let(:trainee) { create(:trainee, :with_invalid_apply_application) }
 
-      it "returns true" do
-        expect(degree_with_invalid_data?(trainee)).to be(true)
-      end
+      it { is_expected.to be_truthy }
     end
 
     context "apply trainee has degree with no invalid data" do
       let(:trainee) { create(:trainee, :with_apply_application, :with_degree) }
 
-      it "returns false" do
-        expect(degree_with_invalid_data?(trainee)).to be(false)
-      end
+      it { is_expected.to be_falsey }
     end
   end
 

@@ -272,10 +272,6 @@ class Trainee < ApplicationRecord
     training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || bursary_amount.present?
   end
 
-  def invalid_apply_data?
-    apply_application&.invalid_data.present?
-  end
-
 private
 
   def value_digest

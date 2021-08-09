@@ -2,23 +2,21 @@
 
 class InvalidDataText::View < GovukComponent::Base
   include TraineeHelper
-  attr_reader :hint_text, :trainee, :form_section
 
-  def initialize(trainee:, form_section:, hint: "")
-    @trainee = trainee
-    @form_section = form_section.to_s
+  def initialize(degree:, form_section:, hint: "")
+    @data_text = invalid_data_message(form_section.to_s, degree)
     @hint_text = hint
   end
 
   def content
-    if invalid_data_message(form_section, trainee)
-      hint << tag.div(invalid_data_message(form_section, trainee), class: "app-inset-text__title govuk-!-margin-bottom-3")
-    else
-      hint
-    end
+    return hint if data_text.blank?
+
+    hint << tag.div(data_text, class: "app-inset-text__title govuk-!-margin-bottom-3")
   end
 
 private
+
+  attr_reader :hint_text, :data_text
 
   def hint
     tag.div(hint_text, class: "govuk-hint")

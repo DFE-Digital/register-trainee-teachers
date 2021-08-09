@@ -4,11 +4,11 @@ module Trainees
   class DegreesController < ApplicationController
     before_action :authorize_trainee
     before_action :set_degrees_form
+    before_action :apply_invalid_data_view, only: %i[new edit]
 
     def new
       @trainee = trainee
       @degree_form = @degrees_form.build_degree(locale_code: params[:locale_code])
-      apply_invalid_data_view
     end
 
     def create
@@ -23,7 +23,6 @@ module Trainees
 
     def edit
       @degree_form = @degrees_form.find_degree_from_param(params[:id])
-      apply_invalid_data_view
     end
 
     def update
@@ -59,8 +58,8 @@ module Trainees
     end
 
     def apply_invalid_data_view
-      if trainee.invalid_apply_data?
-        @apply_invalid_data_view ||= ApplyInvalidDataView.new(trainee.apply_application)
+      if trainee.apply_application&.invalid_data.present?
+        @apply_invalid_data_view ||= ApplyInvalidDataView.new(@trainee.apply_application)
       end
     end
 
