@@ -21,7 +21,21 @@ module Funding
       @fields = bursary_form_fields.merge(training_initiatives_form_fields)
     end
 
+    def missing_fields
+      bursary_forms.flat_map do |form|
+        form.valid?
+        form.errors.attribute_names
+      end
+    end
+
   private
+
+    def bursary_forms
+      [
+        training_initiatives_form,
+        (bursary_form if trainee.can_apply_for_bursary?),
+      ].compact
+    end
 
     def validate_bursary
       errors.add(:applying_for_bursary, :inclusion) unless bursary_form.valid?

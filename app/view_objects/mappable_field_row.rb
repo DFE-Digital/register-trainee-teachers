@@ -31,7 +31,7 @@ private
   end
 
   def action_attribute
-    return {} if field_value.nil?
+    return {} if field_value.nil? || action_url.nil?
 
     html = %(Change <span class="govuk-visually-hidden">#{field_label.downcase}</span>).html_safe
     { action: govuk_link_to(html, action_url) }
