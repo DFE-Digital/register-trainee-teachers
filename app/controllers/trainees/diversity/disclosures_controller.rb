@@ -3,7 +3,7 @@
 module Trainees
   module Diversity
     class DisclosuresController < ApplicationController
-      before_action :authorize_trainee
+      before_action :authorize_trainee, :validate_form_completeness
 
       def edit
         @disclosure_form = Diversities::DisclosureForm.new(trainee)
@@ -15,7 +15,7 @@ module Trainees
         save_strategy = trainee.draft? ? :save! : :stash
 
         if @disclosure_form.public_send(save_strategy)
-          redirect_to_relevant_step
+          redirect_to step_wizard.next_step
         else
           render :edit
         end
@@ -33,16 +33,19 @@ module Trainees
         params.require(:diversities_disclosure_form).permit(*Diversities::DisclosureForm::FIELDS)
       end
 
-      def redirect_to_relevant_step
-        if @disclosure_form.diversity_disclosed?
-          redirect_to(edit_trainee_diversity_ethnic_group_path(trainee))
-        else
-          trainee.apply_application? ? redirect_to(page_tracker.last_origin_page_path) : redirect_to(trainee_diversity_confirm_path(trainee))
-        end
-      end
-
       def authorize_trainee
         authorize(trainee)
+      end
+
+      def step_wizard
+        @step_wizard ||= Wizards::DiversitiesStepWizard.new(trainee: trainee, page_tracker: page_tracker)
+      end
+
+      def validate_form_completeness
+        return unless trainee.diversity_disclosed?
+        return if user_came_from_backlink?
+
+        redirect_to step_wizard.start_point if step_wizard.start_point.present?
       end
     end
   end

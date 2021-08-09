@@ -7,6 +7,7 @@ module Schools
       results_search_again_query
       no_results_search_again_query
       search_results_found
+      non_search_validation
     ].freeze
 
     attr_accessor(*NON_TRAINEE_FIELDS)
@@ -63,6 +64,10 @@ module Schools
 
     def fields_to_ignore_before_stash_or_save
       NON_TRAINEE_FIELDS
+    end
+
+    def non_search_validation?
+      non_search_validation == true
     end
   end
 end

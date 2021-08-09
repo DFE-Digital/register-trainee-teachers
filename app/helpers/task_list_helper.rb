@@ -59,7 +59,7 @@ module TaskListHelper
           confirm_path: trainee_schools_confirm_path(trainee),
           classes: "school-details",
           status: ProgressService.call(
-            validator: Schools::FormValidator.new(trainee),
+            validator: Schools::FormValidator.new(trainee, non_search_validation: true),
             progress_value: trainee.progress.schools,
           ).status,
         },
