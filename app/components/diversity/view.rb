@@ -14,37 +14,49 @@ module Diversity
     end
 
     def diversity_information_rows
-      diversity_disclosure_key = data_model.diversity_disclosure || :diversity_not_provided
-      rows = [
-        {
-          key: "Diversity information",
-          value: t("components.confirmation.diversity.diversity_disclosure.#{diversity_disclosure_key}"),
-          action: govuk_link_to('Change<span class="govuk-visually-hidden"> diversity information</span>'.html_safe,
-                                edit_trainee_diversity_disclosure_path(trainee)),
-        },
-      ]
+      rows = [diversity_disclosure_row]
 
       if data_model.diversity_disclosed?
-        rows << {
-          key: "Ethnicity",
-          value: ethnic_group_content,
-          action: govuk_link_to('Change<span class="govuk-visually-hidden"> ethnicity</span>'.html_safe,
-                                edit_trainee_diversity_ethnic_group_path(trainee)),
-        }
+        rows << ethnicity_row
 
-        rows << {
-          key: "Disability",
-          value: tag.p(disability_selection, class: "govuk-body") + selected_disability_options,
-          action: govuk_link_to('Change<span class="govuk-visually-hidden"> disability</span>'.html_safe,
-                                edit_trainee_diversity_disability_disclosure_path(trainee)),
-        }
+        rows << disability_row
       end
 
       rows
     end
 
+  private
+
+    attr_accessor :data_model, :has_errors
+
+    def diversity_disclosure_row
+      field_value = data_model.diversity_disclosure ? t("components.confirmation.diversity.diversity_disclosure.#{data_model.diversity_disclosure}") : nil
+      mappable_field(
+        field_value,
+        t("components.confirmation.diversity.diversity_disclosure_title"),
+        edit_trainee_diversity_disclosure_path(trainee),
+      )
+    end
+
+    def ethnicity_row
+      mappable_field(
+        ethnic_group_content,
+        t("components.confirmation.diversity.ethnicity_title"),
+        edit_trainee_diversity_ethnic_group_path(trainee),
+      )
+    end
+
+    def disability_row
+      mappable_field(
+        disability_content,
+        t("components.confirmation.diversity.disability_title"),
+        edit_trainee_diversity_disability_disclosure_path(trainee),
+      )
+    end
+
     def ethnic_group_content
-      return t(:answer_missing) unless data_model.ethnic_group
+      return unless data_model.ethnic_group
+      return if data_model.ethnic_group != Diversities::ETHNIC_GROUP_ENUMS[:not_provided] && data_model.ethnic_background.blank?
 
       value = t("components.confirmation.diversity.ethnic_groups.#{data_model.ethnic_group}")
 
@@ -55,14 +67,20 @@ module Diversity
       value
     end
 
+    def disability_content
+      return if disabilities_incomplete?
+
+      tag.p(disability_selection, class: "govuk-body") + selected_disability_options
+    end
+
     def disability_selection
-      return t(:answer_missing) unless data_model.disability_disclosure
+      return nil unless data_model.disability_disclosure
 
       t("components.confirmation.diversity.disability_disclosure.#{data_model.disability_disclosure}")
     end
 
     def selected_disability_options
-      return "" if data_model.disabilities.empty?
+      return nil if data_model.disabilities.empty?
 
       selected = tag.p("Disabilities shared:", class: "govuk-body")
 
@@ -71,9 +89,11 @@ module Diversity
       end)
     end
 
-  private
+    def disabilities_incomplete?
+      return true if disability_selection.nil?
 
-    attr_accessor :data_model, :has_errors
+      data_model.disability_disclosure == Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] && data_model.disabilities.empty?
+    end
 
     def render_disabilities
       data_model.disabilities.each do |disability|
@@ -107,6 +127,16 @@ module Diversity
 
     def trainee_ethnic_background
       data_model.additional_ethnic_background.presence || data_model.ethnic_background
+    end
+
+    def mappable_field(field_value, field_label, action_url)
+      MappableFieldRow.new(
+        field_value: field_value,
+        field_label: field_label,
+        text: t("components.confirmation.missing"),
+        action_url: action_url,
+        has_errors: has_errors,
+      ).to_h
     end
   end
 end
