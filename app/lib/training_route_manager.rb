@@ -33,6 +33,16 @@ class TrainingRouteManager
     ITT_TRAINING_ROUTES.keys.any? { |training_route_enums_key| training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym] }
   end
 
+  def requires_study_mode?
+    return false if early_years_route?
+
+    [
+      TRAINING_ROUTE_ENUMS[:assessment_only],
+      TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+      TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    ].exclude?(training_route)
+  end
+
 private
 
   attr_reader :trainee

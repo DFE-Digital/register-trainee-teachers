@@ -9,14 +9,21 @@ module Features
       publish_course_details_page.course_options.first.choose
       publish_course_details_page.submit_button.click
       confirm_publish_course_page.confirm_course_button.click
+
+      # TODO: remove after [2328] - course study mode set from publish course
+      Trainee.last.update(study_mode: "full_time")
+
       and_the_course_details_is_marked_completed
     end
 
-    def and_the_course_details_is_complete
+    def and_the_course_details_is_complete(requires_study_mode: false)
       given_subject_specialisms_are_available_for_selection
       course_details_page.load(id: trainee_from_url.slug)
       course_details_page.subject.select(subject_specialism_name)
       course_details_page.main_age_range_3_to_11.choose
+      if requires_study_mode
+        and_the_course_study_mode_field_is_completed
+      end
       and_the_course_date_fields_are_completed
       and_the_course_details_are_submitted
       and_the_course_details_is_marked_completed
@@ -47,6 +54,10 @@ module Features
 
     def and_the_course_details_is_marked_completed
       expect(review_draft_page).to have_course_details_completed
+    end
+
+    def and_the_course_study_mode_field_is_completed
+      course_details_page.study_mode_full_time.choose
     end
 
     def and_the_course_date_fields_are_completed

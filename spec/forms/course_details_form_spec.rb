@@ -277,6 +277,44 @@ describe CourseDetailsForm, type: :model do
         end
       end
     end
+
+    context "study_mode" do
+      context "required route" do
+        before do
+          subject.valid?
+        end
+
+        context "study_mode is blank" do
+          let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: nil) }
+
+          it "returns an error" do
+            expect(subject.errors[:study_mode]).not_to be_empty
+          end
+        end
+
+        context "study_mode is set" do
+          let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: COURSE_STUDY_ENUMS[:full_time]) }
+
+          it "no error" do
+            expect(subject.errors[:study_mode]).to be_empty
+          end
+        end
+      end
+
+      context "not required route" do
+        let(:trainee) { create(:trainee, :early_years_undergrad, study_mode: nil) }
+
+        before do
+          subject.valid?
+        end
+
+        context "study_mode is blank" do
+          it "no error" do
+            expect(subject.errors[:study_mode]).to be_empty
+          end
+        end
+      end
+    end
   end
 
   context "valid trainee" do

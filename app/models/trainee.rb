@@ -16,8 +16,15 @@ class Trainee < ApplicationRecord
 
   attribute :progress, Progress.to_type
 
-  delegate :award_type, :requires_placement_details?, :requires_schools?,
-           :requires_employing_school?, :early_years_route?, :requires_itt_start_date?, :itt_route?, to: :training_route_manager
+  delegate :award_type,
+           :requires_placement_details?,
+           :requires_schools?,
+           :requires_employing_school?,
+           :early_years_route?,
+           :requires_itt_start_date?,
+           :itt_route?,
+           :requires_study_mode?,
+           to: :training_route_manager
 
   delegate :update_training_route!, to: :route_data_manager
 
@@ -72,6 +79,8 @@ class Trainee < ApplicationRecord
     WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER => 8,
     WithdrawalReasons::WRITTEN_OFF_AFTER_LAPSE_OF_TIME => 9,
   }
+
+  enum study_mode: COURSE_STUDY_MODES
 
   enum state: {
     draft: 0,

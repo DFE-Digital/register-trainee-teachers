@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_28_124925) do
+ActiveRecord::Schema.define(version: 2021_08_02_154125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -250,8 +250,8 @@ ActiveRecord::Schema.define(version: 2021_07_28_124925) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.string "ukprn"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
@@ -364,6 +364,7 @@ ActiveRecord::Schema.define(version: 2021_07_28_124925) do
     t.boolean "applying_for_bursary"
     t.integer "training_initiative"
     t.integer "bursary_tier"
+    t.integer "study_mode"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"

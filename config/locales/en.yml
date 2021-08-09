@@ -126,6 +126,10 @@ en:
       itt_end_date: ITT end date
       course_details: Course details
       details_not_on_publish: Details not on Publish
+      study_mode: Full time or part time
+      study_mode_values:
+        full_time: Full time
+        part_time: Part time
     school_details:
         summary_title: Schools
         lead_school_key: Lead school
@@ -691,6 +695,9 @@ en:
     course_details:
       edit:
         subject_hint: &subject_hint Search for the closest matching subject
+        study_mode_label: Full time or part time?
+        study_mode_full_time: Full time
+        study_mode_part_time: Part time
       additional_subjects:
         add_additional_subjects: Add additional subjects
         main_subject: The first subject is the main one. It represents the bursary or scholarship available if applicable.
@@ -952,6 +959,8 @@ en:
               blank: Select an age range
             additional_age_range:
               blank: Select an age range
+            study_mode:
+              inclusion: Select full time or part time
             course_start_date:
               blank: Enter a course start date
               future: Enter a course start date closer to today
