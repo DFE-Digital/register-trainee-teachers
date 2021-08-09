@@ -89,18 +89,18 @@ describe DiversityForm, type: :model do
   describe "#missing_fields" do
     subject { described_class.new(trainee).missing_fields }
 
-    it { is_expected.to eq([]) }
+    it { is_expected.to eq([[]]) }
 
     context "with invalid diversity forms" do
       let(:trainee) { build(:trainee, diversity_disclosure: nil) }
 
-      it { is_expected.to eq([:diversity_disclosure]) }
+      it { is_expected.to eq([[:diversity_disclosure]]) }
     end
 
     context "with multiple invalid diversity forms" do
       let(:trainee) { build(:trainee, :diversity_disclosed, :disabled) }
 
-      it { is_expected.to eq(%i[ethnic_background ethnic_group disability_ids]) }
+      it { is_expected.to eq([%i[ethnic_background ethnic_group disability_ids]]) }
     end
   end
 end

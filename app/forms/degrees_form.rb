@@ -73,7 +73,7 @@ class DegreesForm
   def missing_fields
     return [] if valid?
 
-    degree_forms.flat_map do |degree_form|
+    degree_forms.map do |degree_form|
       degree_form.valid?
       degree_form.errors.attribute_names
     end

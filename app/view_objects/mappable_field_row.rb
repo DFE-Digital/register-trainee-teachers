@@ -12,7 +12,7 @@ class MappableFieldRow
     @field_label = options[:field_label]
     @action_url = options[:action_url]
     @has_errors = options[:has_errors]
-    @text = options[:text] || "not recognised"
+    @text = options[:text]
     @apply_draft = options[:apply_draft] || false
   end
 

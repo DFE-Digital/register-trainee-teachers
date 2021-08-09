@@ -74,9 +74,11 @@ class DiversityForm
   end
 
   def missing_fields
-    diversity_forms.flat_map do |diversity_form|
-      diversity_form.valid?
-      diversity_form.errors.attribute_names
-    end
+    [
+      diversity_forms.flat_map do |diversity_form|
+        diversity_form.valid?
+        diversity_form.errors.attribute_names
+      end,
+    ]
   end
 end

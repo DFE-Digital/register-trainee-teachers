@@ -45,7 +45,7 @@ class TraineeForm
   def missing_fields
     return [] if valid?
 
-    errors.attribute_names
+    [errors.attribute_names]
   end
 
 private
