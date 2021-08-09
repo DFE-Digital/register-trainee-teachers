@@ -46,8 +46,6 @@ describe Course do
       expect(subject).to validate_presence_of(:qualification)
       expect(subject).to validate_presence_of(:route)
     end
-
-    it { is_expected.to validate_uniqueness_of(:code) }
   end
 
   describe "associations" do

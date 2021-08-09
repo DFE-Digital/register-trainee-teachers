@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_154125) do
+ActiveRecord::Schema.define(version: 2021_08_09_143338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 2021_08_02_154125) do
     t.string "accredited_body_code", null: false
     t.integer "min_age", null: false
     t.integer "max_age", null: false
-    t.index ["code"], name: "index_courses_on_code", unique: true
+    t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code", unique: true
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -250,8 +250,8 @@ ActiveRecord::Schema.define(version: 2021_08_02_154125) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
