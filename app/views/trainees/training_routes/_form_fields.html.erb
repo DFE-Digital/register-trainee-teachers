@@ -1,20 +1,20 @@
 <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.training_routes.edit"), tag: "h1" }) do %>
 
-  <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:assessment_only], label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
-
-  <% TRAINING_ROUTE_FEATURE_FLAGS.each do |training_route| %>
-    <% if FeatureService.enabled?("routes.#{training_route}") %>
-      <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[training_route], label: { text: t("activerecord.attributes.trainee.training_routes.#{training_route}") } %>
-    <% end %>
-  <% end %>
-
   <% if current_user.provider.hpitt_postgrad? %>
     <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:hpitt_postgrad], label: { text: t("activerecord.attributes.trainee.training_routes.hpitt_postgrad") } %>
-  <% end %>
+  <% else %>
+    <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:assessment_only], label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
 
-  <% if multiple_routes_enabled? %>
-    <%= f.govuk_radio_divider %>
-  <% end %>
+    <% TRAINING_ROUTE_FEATURE_FLAGS.each do |training_route| %>
+      <% if FeatureService.enabled?("routes.#{training_route}") %>
+        <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[training_route], label: { text: t("activerecord.attributes.trainee.training_routes.#{training_route}") } %>
+      <% end %>
+    <% end %>
 
-  <%= f.govuk_radio_button :training_route, :other, label: { text: "Other" } %>
+    <% if multiple_routes_enabled? %>
+      <%= f.govuk_radio_divider %>
+    <% end %>
+
+    <%= f.govuk_radio_button :training_route, :other, label: { text: "Other" } %>
+  <% end %>
 <% end %>

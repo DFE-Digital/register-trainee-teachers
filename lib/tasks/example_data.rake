@@ -82,7 +82,7 @@ namespace :example_data do
       provider = Provider.find_or_create_by!(
         name: persona_attributes[:provider],
         dttp_id: SecureRandom.uuid,
-        code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
+        code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       )
 
       persona.update!(provider: provider)
@@ -97,6 +97,9 @@ namespace :example_data do
       end
 
       provider_course_codes = provider.courses.pluck(:code)
+
+      # Hpitt provider can only have trainees on the hpitt_postgrad route
+      enabled_routes = [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] if provider.hpitt_postgrad?
 
       # For each route that's enabled...
       enabled_routes.each do |route|
