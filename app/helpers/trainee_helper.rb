@@ -60,12 +60,4 @@ module TraineeHelper
 
     t("components.invalid_data_text.static_text", query: data["degrees"][degree.slug][form_section])
   end
-
-  def degree_with_invalid_data?(degree)
-    data = degree&.trainee&.apply_application&.invalid_data
-
-    return false if data.blank?
-
-    data["degrees"][degree.slug].present?
-  end
 end

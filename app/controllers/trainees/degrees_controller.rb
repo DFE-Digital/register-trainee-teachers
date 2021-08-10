@@ -4,7 +4,7 @@ module Trainees
   class DegreesController < ApplicationController
     before_action :authorize_trainee
     before_action :set_degrees_form
-    before_action :apply_invalid_data_view, only: %i[new edit]
+    before_action :set_degree_form, only: %i[edit update destroy]
 
     def new
       @trainee = trainee
@@ -21,12 +21,9 @@ module Trainees
       end
     end
 
-    def edit
-      @degree_form = @degrees_form.find_degree_from_param(params[:id])
-    end
+    def edit; end
 
     def update
-      @degree_form = @degrees_form.find_degree_from_param(params[:id])
       @degree_form.attributes = degree_params
       @degree_form.assign_attributes(autocomplete_params)
 
@@ -38,8 +35,6 @@ module Trainees
     end
 
     def destroy
-      @degree_form = @degrees_form.find_degree_from_param(params[:id])
-
       @degree_form.destroy!
 
       flash[:success] = "Trainee degree deleted"
@@ -54,12 +49,6 @@ module Trainees
         edit_trainee_apply_applications_trainee_data_path(trainee)
       else
         trainee_degrees_confirm_path(trainee)
-      end
-    end
-
-    def apply_invalid_data_view
-      if trainee.apply_application&.invalid_data.present?
-        @apply_invalid_data_view ||= ApplyInvalidDataView.new(@trainee.apply_application)
       end
     end
 
@@ -81,6 +70,10 @@ module Trainees
 
     def set_degrees_form
       @degrees_form = DegreesForm.new(trainee)
+    end
+
+    def set_degree_form
+      @degree_form = @degrees_form.find_degree_from_param(params[:id])
     end
 
     def relevant_redirect_path

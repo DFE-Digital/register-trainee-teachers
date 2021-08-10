@@ -1,27 +1,22 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "non_uk" %>
-  <%= f.govuk_error_summary %>
 
-  <% if degree_with_invalid_data?(@degree_form.degree) %>
-    <%= render ApplyApplications::ReviewSummary::View.new(form: @degree_form, trainee: @trainee) do |component| %>
-      <% component.header  do %>
-        <%= @apply_invalid_data_view.summary_content %>
-      <% end %>
-
-      <%= @apply_invalid_data_view.summary_items_content %>
-    <% end %>
+  <% if f.govuk_error_summary.present? %>
+    <%= f.govuk_error_summary %>
+  <% else %>
+    <%= render ApplyApplications::ReviewSummary::View.new(form: @degree_form, trainee: @trainee, degree: @degree_form.degree) %>
   <% end %>
-  
 
   <h1 class="govuk-heading-l">Non-UK degree details</h1>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
+    attribute_name: :country,
     form_field: f.govuk_collection_select(:country, 
                                           countries_options,
                                           :value,
                                           :text,
                                           form_group: { class: invalid_data_message("country", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
-                                          label: { text: "In which country is the degree institution based?", size: "s", id: "degrees-country-label" }) do 
+                                          label: { text: "In which country is the degree institution based?", size: "s" }) do
       render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :country)
     end,
   ) %>
@@ -35,12 +30,12 @@
       form_group: { 
         class: invalid_data_message("subject", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group"
       },
-      label: { text: "Degree subject", size: "s", id: "degrees-subject-label" },
+      label: { text: "Degree subject", size: "s" },
       hint: -> { render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :subject, hint: 'Search for the closest matching subject') }),
   ) %>
 
-  <div class="govuk-form-group">
-    <%= f.govuk_radio_buttons_fieldset(:non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s", id: "degrees-non-uk-label" },  
+  <div class="govuk-form-group" id="non_uk_degree">
+    <%= f.govuk_radio_buttons_fieldset(:non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" },
         form_group: { class: invalid_data_message("non_uk_degree", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
         hint: -> {  render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :non_uk_degree)  },
         ) do %>
@@ -53,10 +48,10 @@
   </div>
 
   <%= f.govuk_text_field :graduation_year,
-                         form_group: { class: invalid_data_message("graduation_year", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+                         form_group: { class: invalid_data_message("graduation_year", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group", id: :graduation_year },
                          width: "one-quarter",
                          autocomplete: :disabled, 
-                         label: { text: "Graduation year", size: "s", id: "degrees-graduation-year-label", } do 
+                         label: { text: "Graduation year", size: "s" } do
                             render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :graduation_year)
                           end %>
 
