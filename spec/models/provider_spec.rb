@@ -41,22 +41,18 @@ describe Provider do
   end
 
   describe "#hpitt_postgrad?" do
-    let(:hpitt_provider) { create(:provider) }
+    subject { build(:provider, code: code).hpitt_postgrad? }
 
     context "provider is a teach first provider" do
-      subject { build(:provider, code: hpitt_provider.code) }
+      let(:code) { TEACH_FIRST_PROVIDER_CODE }
 
-      it "returns true" do
-        expect(subject.hpitt_postgrad?).to be true
-      end
+      it { is_expected.to be_truthy }
     end
 
     context "provider is not a teach first provider" do
-      subject { build(:provider, code: hpitt_provider.code.reverse) }
+      let(:code) { TEACH_FIRST_PROVIDER_CODE.reverse }
 
-      it "returns false" do
-        expect(subject.hpitt_postgrad?).to be false
-      end
+      it { is_expected.to be_falsey }
     end
   end
 end

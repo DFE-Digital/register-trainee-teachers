@@ -13,10 +13,11 @@ describe Trainee do
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
+        TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
         TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
-        TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
+        TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
       )
     end
 

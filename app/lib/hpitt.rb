@@ -65,7 +65,7 @@ module HPITT
       trainee = Trainee.find_or_initialize_by(trainee_id: csv_row["Trainee ID"])
 
       # TODO: Temporary, the provider code will need to be added to this csv
-      trainee.provider = Provider.first
+      trainee.provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
 
       assign_field = lambda do |field_name|
         lambda do |field_value|

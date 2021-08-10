@@ -297,7 +297,7 @@ FactoryBot.define do
     end
 
     trait :with_related_courses do
-      training_route { (TRAINING_ROUTES_FOR_TRAINEE.keys & TRAINING_ROUTES_FOR_COURSE.keys).sample }
+      training_route { (TRAINING_ROUTES_FOR_TRAINEE.keys & TRAINING_ROUTES_FOR_COURSE.keys - ["hpitt_postgrad"]).sample }
 
       transient do
         courses_count { 5 }

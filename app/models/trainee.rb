@@ -286,6 +286,6 @@ private
   end
 
   def hpitt_provider?
-    @hpitt_provider ||= provider.hpitt_postgrad?
+    @hpitt_provider ||= provider&.hpitt_postgrad?
   end
 end
