@@ -34,6 +34,7 @@ class TrainingRouteManager
   end
 
   def requires_study_mode?
+    return false unless FeatureService.enabled?("course_study_mode")
     return false if early_years_route?
 
     [

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "school-direct-tuition-fee end-to-end journey", feature_show_funding: true, type: :feature do
+feature "school-direct-tuition-fee end-to-end journey", feature_show_funding: true, feature_course_study_mode: true, type: :feature do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.school_direct_tuition_fee": true do

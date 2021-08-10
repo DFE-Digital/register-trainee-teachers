@@ -278,7 +278,7 @@ describe CourseDetailsForm, type: :model do
       end
     end
 
-    context "study_mode" do
+    context "study_mode", feature_course_study_mode: true do
       context "required route" do
         before do
           subject.valid?
