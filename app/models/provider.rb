@@ -20,7 +20,7 @@ class Provider < ApplicationRecord
   end
 
   def hpitt_postgrad?
-    # An arbitrary provider set here until we receive a list of teach first providers
+    # TODO: An arbitrary provider set here until we receive a list of teach first providers
     code == TEACH_FIRST_PROVIDER_CODE
   end
 end
