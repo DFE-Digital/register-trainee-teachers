@@ -12,6 +12,7 @@ module Funding
     validate :validate_training_initiative
 
     delegate :applying_for_bursary, to: :bursary_form
+    delegate :bursary_tier, to: :bursary_form
     delegate :training_initiative, to: :training_initiatives_form
 
     def initialize(trainee)
@@ -19,6 +20,10 @@ module Funding
       @bursary_form = BursaryForm.new(trainee)
       @training_initiatives_form = TrainingInitiativesForm.new(trainee)
       @fields = bursary_form_fields.merge(training_initiatives_form_fields)
+    end
+
+    def save!
+      bursary_forms.each(&:save!)
     end
 
     def missing_fields
