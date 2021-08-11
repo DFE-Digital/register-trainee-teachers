@@ -38,6 +38,7 @@ module Trainees
         course_code: course&.code,
         training_route: course&.route,
         disabilities: disabilities,
+        study_mode: study_mode,
       }.merge(address)
     end
 
@@ -137,6 +138,10 @@ module Trainees
 
     def raw_course
       @raw_course ||= application.application_attributes["course"]
+    end
+
+    def study_mode
+      @study_mode ||= TRAINEE_STUDY_MODE_ENUMS[raw_course["study_mode"]]
     end
   end
 end

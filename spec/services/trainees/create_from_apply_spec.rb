@@ -36,6 +36,7 @@ module Trainees
         email: contact_details["email"],
         training_route: course.route,
         course_code: course.code,
+        study_mode: "full_time",
       }
     end
 
