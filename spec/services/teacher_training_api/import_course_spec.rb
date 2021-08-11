@@ -5,56 +5,53 @@ require "rails_helper"
 module TeacherTrainingApi
   describe ImportCourse do
     describe "#call" do
-      let(:course_attributes) { {} }
+      let(:course_attributes) { { subject_codes: %w[C6 BW] } }
       let(:course_data) { ApiStubs::TeacherTrainingApi.course(course_attributes) }
       let(:course_code) { course_data[:attributes][:code] }
       let(:course_name) { course_data[:attributes][:name] }
+      let(:accredited_body_code) { course_data[:attributes][:accredited_body_code] }
       let(:course_subject_codes) { course_data[:attributes][:subject_codes] }
-      let(:provider_data) { [] }
+      let(:course) { Course.find_by(code: course_code, accredited_body_code: accredited_body_code) }
 
-      let(:course_subjects) do
-        course_subject_codes.map do |subject_code|
-          build(:subject, code: subject_code)
+      before do
+        # Using reverse() to test ordering of course.subjects matches the order of course_subject_codes
+        course_subject_codes.reverse.map do |subject_code|
+          create(:subject, code: subject_code)
         end
       end
 
-      subject { described_class.call(course_data: course_data, provider_data: provider_data) }
-
-      before do
-        allow(Subject).to receive(:where).with({ code: course_subject_codes }).and_return(course_subjects)
-      end
+      subject { described_class.call(course_data: course_data, provider_data: {}) }
 
       context "when the course code does not exist in register" do
-        let(:course) { Course.find_by(code: course_code, name: course_name) }
-
         context "and it's non-draft" do
-          it "creates the course for the provider with the correct code and name" do
-            expect { subject }.to change { Course.count }.by(1)
+          before { subject }
+
+          it "create a course with the name" do
+            expect(course.name).to eq(course_name)
           end
 
-          it "create a course with the correct code and name" do
-            subject
-            expect(course).not_to be_nil
+          it "create a course with the correct code" do
+            expect(course.code).to eq(course_code)
           end
 
-          it "creates the course with the correct subjects" do
-            expect { subject }.to change { CourseSubject.count }.from(0).to(1)
-            expect(course.subjects).to match course_subjects
+          it "create a course with the correct accredited_body_code" do
+            expect(course.accredited_body_code).to eq(accredited_body_code)
+          end
+
+          it "creates the course with subjects in the exact order they come from the API" do
+            expect(course.subjects.pluck(:code)).to eq(course_subject_codes)
           end
 
           it "parses the start date" do
-            subject
             expect(course.start_date).to be_instance_of(Date)
           end
 
           it "parses the min and max age" do
-            subject
             expect(course.min_age).to eq(course_data[:attributes][:age_minimum])
             expect(course.max_age).to eq(course_data[:attributes][:age_maximum])
           end
 
           it "parses qualification" do
-            subject
             expect(course.qualification).to eq("pgce_with_qts")
           end
         end
@@ -88,19 +85,9 @@ module TeacherTrainingApi
         end
       end
 
-      context "when the course code already exists for that provider" do
-        before { create(:course, code: course_code, name: course_name, subjects: course_subjects) }
-
-        context "with the same name" do
-          it "does not create duplicate course" do
-            expect { subject }.not_to(change { Course.count })
-          end
-        end
-
-        context "with the same subjects" do
-          it "does not create duplicate course subjects" do
-            expect { subject }.not_to(change { CourseSubject.count })
-          end
+      context "when the course with subjects already exists for that provider" do
+        before do
+          create(:course_with_subjects, code: course_code, accredited_body_code: accredited_body_code)
         end
 
         context "with a different name" do
@@ -108,42 +95,33 @@ module TeacherTrainingApi
 
           it "updates the name" do
             subject
-            expect(Course.find_by(code: course_code).name).to eq(course_attributes[:name])
+            expect(course.name).to eq(course_attributes[:name])
           end
 
           it "does not create duplicate course" do
             expect { subject }.not_to(change { Course.count })
-          end
-
-          it "does not create duplicate course subjects" do
-            expect { subject }.not_to(change { CourseSubject.count })
           end
         end
 
-        context "with a different subjects" do
-          let(:course_subjects) { [music_subject] }
-
-          let(:music_subject) { create(:subject, :music) }
+        context "with a different subject" do
+          let(:subject_code) { "CW" }
+          let(:course_attributes) { { subject_codes: [subject_code] } }
 
           it "updates the subjects" do
             subject
-            expect(Course.find_by(code: course_code).subjects).to eq course_subjects
-          end
-
-          it "does not create duplicate course" do
-            expect { subject }.not_to(change { Course.count })
+            expect(course.subjects.pluck(:code)).to eq([subject_code])
           end
 
           it "does not create duplicate course subjects" do
-            expect { subject }.not_to(change { CourseSubject.count })
+            expect { subject }.not_to(change { Subject.count })
           end
         end
       end
 
-      xcontext "when the course code already exists in register, but for a different provider" do
+      context "same course, different provider" do
         before { create(:course, code: course_code) }
 
-        it "creates the course for the new provider" do
+        it "creates the course for the provider" do
           expect { subject }.to change { Course.count }.by(1)
         end
       end

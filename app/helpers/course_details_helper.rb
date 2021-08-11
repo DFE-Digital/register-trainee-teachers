@@ -30,11 +30,7 @@ module CourseDetailsHelper
   end
 
   def format_language(language)
-    if language =~ /language$/
-      language.gsub(" language", "").chomp
-    else
-      language
-    end
+    language =~ /language$/ && !language.include?("English") ? language.gsub(" language", "").chomp : language
   end
 
   def sort_specialisms(subject, specialisms)

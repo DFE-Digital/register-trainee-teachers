@@ -20,20 +20,20 @@ private
   attr_reader :subjects
 
   def language_specialism?
-    modern_languages_only? || all_subjects_are_language?
+    subject_is_modern_languages? || all_subjects_are_modern_languages?
   end
 
   def primary_subject?
     single_subject? && subjects.first.include?(AllocationSubjects::PRIMARY)
   end
 
-  def modern_languages_only?
+  def subject_is_modern_languages?
     # This is will cover cases where subject is "Modern Languages" or "Modern languages (other)"
     single_subject? && subjects.first.downcase.include?("modern")
   end
 
-  def all_subjects_are_language?
-    subjects.all? { |subject| PUBLISH_LANGUAGES.include?(subject) }
+  def all_subjects_are_modern_languages?
+    subjects.all? { |subject| PUBLISH_MODERN_LANGUAGES.include?(subject) }
   end
 
   def single_subject?

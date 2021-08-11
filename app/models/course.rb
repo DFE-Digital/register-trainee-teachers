@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
-  validates :code, presence: true, uniqueness: true
+  validates :code, presence: true
   validates :name, presence: true
   validates :start_date, presence: true
   validates :level, presence: true
@@ -27,7 +27,9 @@ class Course < ApplicationRecord
   enum route: TRAINING_ROUTES_FOR_COURSE
 
   has_many :course_subjects
-  has_many :subjects, through: :course_subjects
+
+  # Order scope is critical - do not remove (see TeacherTrainingApi::ImportCourse#subjects)
+  has_many :subjects, -> { order("course_subjects.id") }, through: :course_subjects
 
   def end_date
     return unless start_date

@@ -33,8 +33,7 @@ module TeacherTrainingApi
                      course_length: course_attributes[:course_length],
                      subjects: subjects,
                      route: route,
-                     summary: course_attributes[:summary],
-                     accredited_body_code: accredited_body_code)
+                     summary: course_attributes[:summary])
     end
 
   private
@@ -50,7 +49,14 @@ module TeacherTrainingApi
     end
 
     def subjects
-      Subject.where(code: course_attributes[:subject_codes])
+      codes = course_attributes[:subject_codes]
+      # It's critical that the ordering of course.subjects ends up matching the order of
+      # course_attributes[:subject_codes] because first subject will determine if the
+      # trainee is entitled to a bursary (see Trainees::Funding::BursariesController#load_bursary_info!).
+      #
+      # By ordering it correctly here, ActiveRecord will create the association records in the same order,
+      # and then we just need to add the scope order("course_subjects.id") to Course#subjects.
+      Subject.where(code: codes).sort_by { |subject| codes.index(subject.code) }
     end
 
     def start_date
@@ -87,7 +93,8 @@ module TeacherTrainingApi
     end
 
     def course
-      @course ||= Course.find_or_initialize_by(code: course_attributes[:code])
+      @course ||= Course.find_or_initialize_by(code: course_attributes[:code],
+                                               accredited_body_code: accredited_body_code)
     end
   end
 end
