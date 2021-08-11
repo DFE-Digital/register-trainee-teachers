@@ -16,7 +16,7 @@ module FormComponents
     private
 
       def default_classes
-        %w[]
+        %w[app-!-autocomplete--max-width-two-thirds]
       end
 
       def default_html_attributes

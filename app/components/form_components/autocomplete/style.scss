@@ -1,5 +1,51 @@
 @import "../../base.scss";
 
+@mixin autocomplete-set-width($max-width) {
+  // Explicitly set font size on container so ex units work
+  // Assumes all autocompletes are default size.
+  // This matches govuk fixed width inputs which scale with
+  // font size.
+  @include govuk-font(19);
+
+  // Set on govuk-selects and autocompletes (clear and non-clear)
+  // There is no one selector currently we can target, so we target
+  // both, then unset where we don't need.
+  .govuk-select,
+  .autocomplete__wrapper,
+  .autocomplete-select-with-clear {
+    max-width: $max-width !important;
+  }
+
+  // Unset on autocompletes clear button is used
+  // Easier to unset than to have more complex selector above
+  .autocomplete-select-with-clear .autocomplete__wrapper {
+    max-width: inherit !important;
+  }
+}
+
+// Custom width overrides so inputs can be fixed width regardless of resolution.
+@include govuk-media-query($from: tablet) {
+  .app-\!-autocomplete--max-width-three-quarters {
+    @include autocomplete-set-width(50ex);
+  }
+
+  .app-\!-autocomplete--max-width-two-thirds {
+    @include autocomplete-set-width(44ex);
+  }
+
+  .app-\!-autocomplete--max-width-one-half {
+    @include autocomplete-set-width(33ex);
+  }
+
+  .app-\!-autocomplete--max-width-one-third {
+    @include autocomplete-set-width(22ex);
+  }
+
+  .app-\!-autocomplete--max-width-one-quarter {
+    @include autocomplete-set-width(17ex);
+  }
+}
+
 .autocomplete__wrapper {
   @include govuk-typography-common();
   position: relative;
