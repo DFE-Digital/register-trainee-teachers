@@ -60,19 +60,19 @@ module Funding
     end
 
     def training_initiative
-      return if trainee.training_initiative.nil?
+      return if data_model.training_initiative.nil?
 
-      t("activerecord.attributes.trainee.training_initiatives.#{trainee.training_initiative}")
+      t("activerecord.attributes.trainee.training_initiatives.#{data_model.training_initiative}")
     end
 
     def bursary_funding
-      return if trainee.can_apply_for_bursary? && trainee.applying_for_bursary.nil?
+      return if trainee.can_apply_for_bursary? && data_model.applying_for_bursary.nil?
 
       return t(".no_bursary_available") if !trainee.can_apply_for_bursary?
 
-      return "#{t(".tiered_bursary_applied_for.#{trainee.bursary_tier}")}#{bursary_funding_hint}".html_safe if trainee.bursary_tier.present?
+      return "#{t(".tiered_bursary_applied_for.#{data_model.bursary_tier}")}#{bursary_funding_hint}".html_safe if data_model.bursary_tier.present?
 
-      return "#{t('.bursary_applied_for')}#{bursary_funding_hint}".html_safe if trainee.applying_for_bursary
+      return "#{t('.bursary_applied_for')}#{bursary_funding_hint}".html_safe if data_model.applying_for_bursary
 
       t(".no_bursary_applied_for")
     end
