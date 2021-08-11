@@ -15,7 +15,7 @@ REAL_PUBLISH_COURSES_WITH_SUBJECTS = {
   "Citizenship with Religious education" => ["Citizenship", "Religious education"],
   "Computer Science" => ["Computing"],
   "Design and technology" => ["Design and technology"],
-  "Drama (with English)" => %w[English Drama],
+  "Drama (with English)" => %w[Drama English],
   "Drama" => ["Drama"],
   "English" => ["English"],
   "Geography" => ["Geography"],
@@ -91,7 +91,7 @@ namespace :example_data do
       enabled_course_routes.each do |route|
         REAL_PUBLISH_COURSES_WITH_SUBJECTS.each do |course_name, subject_names|
           FactoryBot.build(:course, accredited_body_code: provider.code, route: route, name: course_name) { |course|
-            course.subjects = Subject.where(name: subject_names)
+            course.subjects = Subject.where(name: subject_names).sort_by { |subject| subject_names.index(subject.name) }
           }.save!
         end
       end
