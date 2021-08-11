@@ -412,6 +412,7 @@ en:
         course_end_date: &course_end_date Course end date
         duration: Duration
         course_details: Course details
+        study_mode: Full time or part time
   views:
     all_records: All records
     apply_invalid_data_view:
