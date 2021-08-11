@@ -165,27 +165,29 @@ describe TrainingRouteManager do
     end
   end
 
-  describe "#requires_study_mode?" do
-    {
-      assessment_only: false,
-      early_years_assessment_only: false,
-      early_years_postgrad: false,
-      early_years_salaried: false,
-      early_years_undergrad: false,
-      pg_teaching_apprenticeship: false,
-      opt_in_undergrad: false,
+  context "with the :course_study_mode feature flag enabled", feature_course_study_mode: true do
+    describe "#requires_study_mode?" do
+      {
+        assessment_only: false,
+        early_years_assessment_only: false,
+        early_years_postgrad: false,
+        early_years_salaried: false,
+        early_years_undergrad: false,
+        pg_teaching_apprenticeship: false,
+        opt_in_undergrad: false,
 
-      provider_led_postgrad: true,
-      school_direct_tuition_fee: true,
-      school_direct_salaried: true,
-      provider_led_undergrad: true,
-      hpitt_postgrad: true,
-    }.each do |route, return_val|
-      context "route #{route}" do
-        let(:trainee) { Struct.new(:training_route).new(route.to_s) }
+        provider_led_postgrad: true,
+        school_direct_tuition_fee: true,
+        school_direct_salaried: true,
+        provider_led_undergrad: true,
+        hpitt_postgrad: true,
+      }.each do |route, return_val|
+        context "route #{route}" do
+          let(:trainee) { Struct.new(:training_route).new(route.to_s) }
 
-        it "returns #{return_val}" do
-          expect(subject.requires_study_mode?).to be(return_val)
+          it "returns #{return_val}" do
+            expect(subject.requires_study_mode?).to be(return_val)
+          end
         end
       end
     end
