@@ -18,29 +18,30 @@ module Funding
       t(".title")
     end
 
-    def rows
-      rows = [
-        {
-          key: t(".training_initiative"),
-          value: training_initiative,
-          action: action_link("training initiative", edit_trainee_funding_training_initiative_path(trainee)),
-        },
-      ]
-
-      if show_bursary_funding?
-        rows << {
-          key: t(".bursary_funding"),
-          value: bursary_funding,
-          action: (action_link("bursary funding", edit_trainee_funding_bursary_path(trainee)) if trainee.can_apply_for_bursary?),
-        }
-      end
-
-      rows
+    def funding_detail_rows
+      [
+        training_initiative_row,
+        bursary_funding_row,
+      ].compact
     end
 
   private
 
     attr_accessor :data_model, :has_errors
+
+    def training_initiative_row
+      mappable_field(training_initiative, t(".training_initiative"), edit_trainee_funding_training_initiative_path(trainee))
+    end
+
+    def bursary_funding_row
+      return unless show_bursary_funding?
+
+      mappable_field(
+        bursary_funding,
+        t(".bursary_funding"),
+        (edit_trainee_funding_bursary_path(trainee) if trainee.can_apply_for_bursary?),
+      )
+    end
 
     def course_subject_one
       trainee.course_subject_one
@@ -59,15 +60,13 @@ module Funding
     end
 
     def training_initiative
-      if trainee.training_initiative.nil?
-        t("components.confirmation.not_provided")
-      else
-        t("activerecord.attributes.trainee.training_initiatives.#{trainee.training_initiative}")
-      end
+      return if trainee.training_initiative.nil?
+
+      t("activerecord.attributes.trainee.training_initiatives.#{trainee.training_initiative}")
     end
 
     def bursary_funding
-      return t("components.confirmation.not_provided") if trainee.can_apply_for_bursary? && trainee.applying_for_bursary.nil?
+      return if trainee.can_apply_for_bursary? && trainee.applying_for_bursary.nil?
 
       return t(".no_bursary_available") if !trainee.can_apply_for_bursary?
 
@@ -82,8 +81,14 @@ module Funding
       "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
     end
 
-    def action_link(text, path)
-      govuk_link_to("#{t(:change)}<span class='govuk-visually-hidden'> #{text}</span>".html_safe, path)
+    def mappable_field(field_value, field_label, section_url)
+      MappableFieldRow.new(
+        field_value: field_value,
+        field_label: field_label,
+        text: t("components.confirmation.missing"),
+        action_url: section_url,
+        has_errors: has_errors,
+      ).to_h
     end
   end
 end

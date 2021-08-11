@@ -43,7 +43,7 @@ module Trainees
       when "schools"
         Schools::FormValidator
       when "funding"
-        ::Funding::TrainingInitiativesForm
+        ::Funding::FormValidator
       else
         "#{trainee_section_key.underscore.camelcase}Form".constantize
       end
