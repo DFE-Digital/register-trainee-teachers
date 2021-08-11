@@ -10,7 +10,7 @@ module Trainees
 
         if trainee.draft?
           @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.degrees)
-          @missing_data_view = MissingDataView.new(degrees_form)
+          @missing_data_view = MissingDataView.new(degrees_form, multiple_records: true)
         end
 
         data_model = trainee.draft? ? trainee : degrees_form

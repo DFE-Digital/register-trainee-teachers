@@ -408,10 +408,12 @@ en:
       default_hint_text_html: 'Enter an answer <span class="govuk-visually-hidden"> for %{field_label}</span>'
       apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
     missing_data_view:
+      degrees_form: degree
       missing_fields_summary:
         one: "This section contains 1 question that you need to complete."
         other: "This section contains questions which you need to complete."
-      missing_field_text: "%{missing_field} is missing"
+      single_missing_field_text_html: '%{missing_field} is missing'
+      multiple_missing_field_text_html: '%{missing_field} is missing<span class="govuk-visually-hidden"> for %{section_label}</span>'
       missing_fields_mapping:
         first_names: *full_name
         last_name: *full_name

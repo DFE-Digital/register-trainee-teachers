@@ -4,13 +4,14 @@ class MissingDataView
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::TagHelper
 
-  def initialize(form_instance)
+  def initialize(form_instance, multiple_records: false)
     @form_instance = form_instance
+    @multiple_records = multiple_records
     @missing_fields = populate_missing_fields
   end
 
   def summary_content
-    I18n.t("views.missing_data_view.missing_fields_summary", count: missing_fields.size)
+    I18n.t("views.missing_data_view.missing_fields_summary", count: missing_fields.flatten.size)
   end
 
   def missing_items_content
@@ -19,7 +20,7 @@ class MissingDataView
         fieldset.map do |field|
           tag.li(
             link_to(
-              I18n.t("views.missing_data_view.missing_field_text", missing_field: get_display_name(field)),
+              get_link_text(field, index),
               get_link_anchor(field, index),
               class: "govuk-notification-banner__link",
             ),
@@ -30,7 +31,7 @@ class MissingDataView
   end
 
   def missing_data?
-    missing_fields.size.positive?
+    missing_fields.flatten.size.positive?
   end
 
 private
@@ -38,9 +39,30 @@ private
   attr_reader :form_instance, :missing_fields
 
   def get_link_anchor(field, index)
-    return "##{get_display_name(field).parameterize}" if missing_fields.size == 1
+    return "##{get_display_name(field).parameterize}" if missing_fields.flatten.size == 1
 
     "##{get_display_name(field).parameterize}-#{index}"
+  end
+
+  def get_link_text(field, index)
+    return multiple_record_link_text(field, index) if multiple_records?
+
+    single_record_link_text(field)
+  end
+
+  def multiple_records?
+    @multiple_records
+  end
+
+  def single_record_link_text(field)
+    I18n.t("views.missing_data_view.single_missing_field_text_html",
+           missing_field: get_display_name(field)).html_safe
+  end
+
+  def multiple_record_link_text(field, index)
+    I18n.t("views.missing_data_view.multiple_missing_field_text_html",
+           missing_field: get_display_name(field),
+           section_label: "#{I18n.t("views.missing_data_view.#{form_instance.model_name.i18n_key}")} #{index}").html_safe
   end
 
   def get_display_name(field)

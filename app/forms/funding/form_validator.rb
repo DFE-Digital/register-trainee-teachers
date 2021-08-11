@@ -27,10 +27,12 @@ module Funding
     end
 
     def missing_fields
-      bursary_forms.flat_map do |form|
-        form.valid?
-        form.errors.attribute_names
-      end
+      [
+        bursary_forms.flat_map do |form|
+          form.valid?
+          form.errors.attribute_names
+        end,
+      ]
     end
 
   private
