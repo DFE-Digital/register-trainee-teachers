@@ -29,7 +29,7 @@ describe "hpitt:import" do
       duration_in_years: 1,
       start_date: Date.parse("13/04/2018"),
       name: "Toxicology",
-      route: "hpitt_postgrad",
+      route: "school_direct_salaried",
     )
   end
 

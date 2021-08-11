@@ -48,7 +48,6 @@ module HPITT
         duration_in_years: csv_row["Duration"].scan(/\d+/).first.to_i,
         start_date: Date.parse(csv_row["Course start date"]),
         name: csv_row["ITT Subject 1"],
-        route: trainee.training_route,
       )
 
       case potential_courses.count

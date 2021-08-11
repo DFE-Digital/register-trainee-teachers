@@ -32,7 +32,6 @@ describe Course do
           TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
           TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
           TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
-          TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
         })
     end
 
