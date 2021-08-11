@@ -40,6 +40,11 @@ en:
         tier_one: Applied for Tier 1
         tier_two: Applied for Tier 2
         tier_three: Applied for Tier 3
+  schools:
+    view:
+      summary_title: Schools
+      lead_school: &lead_school Lead school
+      employing_school: &employing_school Employing school
   components:
     heading:
       apply_draft:
@@ -442,6 +447,8 @@ en:
         grade: *grade
         graduation_year: *graduation_year
         country: *country
+        lead_school_id: *lead_school
+        employing_school_id: *employing_school
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
@@ -694,11 +701,6 @@ en:
       subject:
         one: Subject
         other: Subjects
-  schools:
-    view:
-      summary_title: Schools
-      lead_school: Lead school
-      employing_school: Employing school
   trainees:
     not_supported_route:
       heading: Other routes not supported
