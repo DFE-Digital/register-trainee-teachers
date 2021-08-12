@@ -66,13 +66,13 @@ en:
       heading: "Confirm trainee’s %{section_title}"
       cancel_and_return: Cancel and return to record
       trainee_id:
-        title: Trainee ID
+        title: &trainee_id Trainee ID
       start_date:
         title: Start date
       training_details:
         title: Trainee start date and ID
         start_date:
-          title: Trainee’s start date
+          title: &commencement_date Trainee’s start date
       funding:
         title: Funding
         training_initiative:
@@ -449,6 +449,8 @@ en:
         country: *country
         lead_school_id: *lead_school
         employing_school_id: *employing_school
+        commencement_date: *commencement_date
+        trainee_id: *trainee_id
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.

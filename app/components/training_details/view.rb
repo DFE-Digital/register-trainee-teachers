@@ -7,23 +7,36 @@ module TrainingDetails
     def initialize(data_model:, has_errors: false)
       @data_model = data_model
       @has_errors = has_errors
-      @not_provided_copy = I18n.t("components.confirmation.not_provided")
     end
 
     def trainee
       data_model.is_a?(Trainee) ? data_model : data_model.trainee
     end
 
-    def trainee_id
-      trainee.trainee_id.presence || not_provided_copy
-    end
-
-    def trainee_start_date
-      trainee.commencement_date.present? ? date_for_summary_view(trainee.commencement_date) : not_provided_copy
+    def training_details_rows
+      [
+        mappable_field_row(trainee_start_date, t("components.confirmation.training_details.start_date.title")),
+        mappable_field_row(trainee.trainee_id, t("components.confirmation.trainee_id.title")),
+      ]
     end
 
   private
 
     attr_accessor :data_model, :not_provided_copy, :has_errors
+
+    def trainee_start_date
+      date_for_summary_view(trainee.commencement_date) if trainee.commencement_date.present?
+    end
+
+    def mappable_field_row(field_value, field_label)
+      MappableFieldRow.new(
+        field_value: field_value,
+        field_label: field_label,
+        text: t("components.confirmation.missing"),
+        action_url: edit_trainee_training_details_path(trainee),
+        has_errors: has_errors,
+        apply_draft: trainee.apply_application?,
+      ).to_h
+    end
   end
 end
