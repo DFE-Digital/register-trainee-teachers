@@ -81,4 +81,12 @@ class DiversityForm
       end,
     ]
   end
+
+  def valid?
+    diversity_forms.all?(&:valid?)
+  end
+
+  def errors
+    diversity_forms.flat_map { |diversity_forms| diversity_forms.errors.to_a }
+  end
 end
