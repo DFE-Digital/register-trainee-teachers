@@ -17,6 +17,7 @@ module PageObjects
       element :school_direct_salaried, "#trainee-training-route-school-direct-salaried-field"
       element :school_direct_tuition_fee, "#trainee-training-route-school-direct-tuition-fee-field"
       element :pg_teaching_apprenticeship, "#trainee-training-route-pg-teaching-apprenticeship-field"
+      element :hpitt_postgrad, "#trainee-training-route-hpitt-postgrad-field"
 
       element :other, "#trainee-training-route-other-field"
 

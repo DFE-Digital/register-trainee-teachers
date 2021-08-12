@@ -10,6 +10,10 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:assessment_only])
     end
 
+    def given_i_have_created_a_teach_first_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:hpitt_postgrad])
+    end
+
     def given_i_have_created_a_school_direct_salaried_trainee
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:school_direct_salaried])
     end

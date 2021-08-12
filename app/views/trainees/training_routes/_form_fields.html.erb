@@ -1,6 +1,6 @@
 <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.training_routes.edit"), tag: "h1" }) do %>
 
-  <% if current_user.provider.hpitt_postgrad? %>
+  <% if FeatureService.enabled?('enable_teach_first_provider') && current_user.provider.hpitt_postgrad? %>
     <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:hpitt_postgrad], label: { text: t("activerecord.attributes.trainee.training_routes.hpitt_postgrad") } %>
   <% else %>
     <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:assessment_only], label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
