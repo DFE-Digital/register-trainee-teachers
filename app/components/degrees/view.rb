@@ -20,39 +20,25 @@ module Degrees
       if degree.uk?
         "#{degree.uk_degree}: #{degree.subject&.downcase}"
       else
-        "Non-UK #{degree.non_uk_degree_non_enic? ? 'degree' : degree.non_uk_degree}: #{degree.subject.downcase}"
+        "Non-UK #{degree.non_uk_degree_non_enic? ? 'degree' : degree.non_uk_degree}: #{degree.subject&.downcase}"
       end
     end
 
     def get_degree_rows(degree)
       if degree.uk?
         [
-          mappable_field_row(degree, :institution, "Institution"),
-          mappable_field_row(degree, :subject, "Subject"),
-          mappable_field_row(degree, :uk_degree, "Degree type"),
-          {
-            key: "Grade",
-            value: grade_for(degree),
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> grade</span>'.html_safe,
-                                  edit_trainee_degree_path(trainee, degree)),
-          },
-          {
-            key: "Graduation year",
-            value: degree.graduation_year,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> graduation year</span>'.html_safe,
-                                  edit_trainee_degree_path(trainee, degree)),
-          },
+          mappable_field_row(degree, :institution, t("components.degrees.institution")),
+          mappable_field_row(degree, :subject, t("components.degrees.subject")),
+          mappable_field_row(degree, :uk_degree, t("components.degrees.degree_type")),
+          mappable_field_row(degree, :grade, t("components.degrees.grade"), grade_for(degree)),
+          mappable_field_row(degree, :graduation_year, t("components.degrees.graduation_year")),
         ]
       else
         [
-          mappable_field_row(degree, :country, "Country"),
-          mappable_field_row(degree, :subject, "Subject"),
-          mappable_field_row(degree, :non_uk_degree, "Degree type", non_uk_degree_type(degree)),
-          {
-            key: "Graduation year",
-            value: degree.graduation_year,
-            action: govuk_link_to('Change<span class="govuk-visually-hidden"> graduation year</span>'.html_safe, edit_trainee_degree_path(trainee, degree)),
-          },
+          mappable_field_row(degree, :country, t("components.degrees.country")),
+          mappable_field_row(degree, :subject, t("components.degrees.subject")),
+          mappable_field_row(degree, :non_uk_degree, t("components.degrees.degree_type"), non_uk_degree_type(degree)),
+          mappable_field_row(degree, :graduation_year, t("components.degrees.graduation_year")),
         ]
       end
     end
@@ -82,6 +68,7 @@ module Degrees
         field_name: field_name,
         field_value: field_value || degree.public_send(field_name),
         field_label: field_label,
+        text: t("components.confirmation.missing"),
         action_url: edit_trainee_degree_path(trainee, degree),
         has_errors: has_errors,
         apply_draft: trainee.apply_application?,

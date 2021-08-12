@@ -70,6 +70,15 @@ class DegreesForm
     degrees.each(&:save!)
   end
 
+  def missing_fields
+    return [] if valid?
+
+    degree_forms.map do |degree_form|
+      degree_form.valid?
+      degree_form.errors.attribute_names
+    end
+  end
+
 private
 
   attr_reader :store
@@ -90,9 +99,13 @@ private
     errors.add(:degree_ids, :invalid) unless all_degrees_are_valid?
   end
 
-  def all_degrees_are_valid?
-    trainee.degrees.all? do |degree|
-      DegreeForm.new(degrees_form: self, degree: degree).valid?
+  def degree_forms
+    trainee.degrees.map do |degree|
+      DegreeForm.new(degrees_form: self, degree: degree)
     end
+  end
+
+  def all_degrees_are_valid?
+    degree_forms.all?(&:valid?)
   end
 end

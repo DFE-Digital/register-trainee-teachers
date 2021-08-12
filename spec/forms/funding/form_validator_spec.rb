@@ -138,11 +138,11 @@ module Funding
       context "when valid" do
         let(:trainee) { build(:trainee, :with_funding, applying_for_bursary: false) }
 
-        it { is_expected.to eq([]) }
+        it { is_expected.to eq([[]]) }
       end
 
       context "with invalid TrainingInitiativesForm form" do
-        it { is_expected.to eq([:training_initiative]) }
+        it { is_expected.to eq([[:training_initiative]]) }
       end
 
       context "with invalid TrainingInitiativesForm and Bursary form" do
@@ -150,7 +150,7 @@ module Funding
           allow(trainee).to receive(:bursary_amount).and_return(1)
         end
 
-        it { is_expected.to eq(%i[training_initiative applying_for_bursary]) }
+        it { is_expected.to eq([%i[training_initiative applying_for_bursary]]) }
       end
     end
   end
