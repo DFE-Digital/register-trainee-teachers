@@ -72,6 +72,16 @@ module Dttp
           end
         end
 
+        context "when gender is gender_not_provided" do
+          let(:trainee) { create(:trainee, :completed, gender: "gender_not_provided", provider: provider) }
+
+          it "maps gender to other" do
+            expect(subject).to include({
+              "gendercode" => Dttp::Params::Contact::GENDER_CODES[:other],
+            })
+          end
+        end
+
         context "diversity information" do
           let(:dttp_ethnicity_entity_id) { Dttp::CodeSets::Ethnicities::MAPPING[ethnic_background][:entity_id] }
           let(:dttp_disability_entity_id) { Dttp::CodeSets::Disabilities::MAPPING[dttp_disability][:entity_id] }
