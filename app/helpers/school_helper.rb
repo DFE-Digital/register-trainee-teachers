@@ -6,7 +6,7 @@ module SchoolHelper
   end
 
   def school_detail(school)
-    return t(:answer_missing) unless school
+    return unless school
 
     tag.p(school.name, class: "govuk-body") + tag.span(school_urn_and_location(school), class: "govuk-hint")
   end
@@ -16,24 +16,20 @@ module SchoolHelper
   end
 
   def lead_school_row
-    {
-      key: t("components.school_details.lead_school_key"),
-      value: school_detail(lead_school),
-      action: change_link(:lead),
-    }
+    mappable_field(
+      school_detail(lead_school),
+      t("components.school_details.lead_school_key"),
+      change_paths(:lead),
+    )
   end
 
   def employing_school_row
     return unless trainee.requires_employing_school?
 
-    {
-      key: t("components.school_details.employing_school_key"),
-      value: school_detail(employing_school),
-      action: change_link(:employing),
-    }
-  end
-
-  def change_link(school_type)
-    govuk_link_to("Change<span class='govuk-visually-hidden'> #{school_type} school</span>".html_safe, change_paths(school_type))
+    mappable_field(
+      school_detail(employing_school),
+      t("components.school_details.employing_school_key"),
+      change_paths(:employing),
+    )
   end
 end

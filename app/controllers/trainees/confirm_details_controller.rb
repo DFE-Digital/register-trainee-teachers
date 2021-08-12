@@ -2,6 +2,9 @@
 
 module Trainees
   class ConfirmDetailsController < ApplicationController
+    SCHOOLS_KEY = "schools"
+    FUNDING_KEY = "funding"
+
     before_action :authorize_trainee
 
     helper_method :trainee_section_key
@@ -12,7 +15,7 @@ module Trainees
 
       if trainee.draft?
         @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
-        @missing_data_view = MissingDataView.new(form_klass.new(trainee))
+        @missing_data_view = MissingDataView.new(form_instance)
       end
 
       @confirmation_component = component_klass.new(data_model: trainee.draft? ? trainee : form_klass.new(trainee))
@@ -40,13 +43,17 @@ module Trainees
 
     def form_klass
       case trainee_section_key
-      when "schools"
+      when SCHOOLS_KEY
         Schools::FormValidator
-      when "funding"
+      when FUNDING_KEY
         ::Funding::FormValidator
       else
         "#{trainee_section_key.underscore.camelcase}Form".constantize
       end
+    end
+
+    def form_instance
+      trainee_section_key == SCHOOLS_KEY ? form_klass.new(trainee, non_search_validation: true) : form_klass.new(trainee)
     end
 
     # Returns the route that the confirm path is nested under for each confirm path

@@ -21,12 +21,28 @@ module Schools
       @fields = lead_school_form_fields.merge(employing_school_form_fields)
     end
 
+    def missing_fields
+      [
+        school_forms.flat_map do |form|
+          form.valid?
+          form.errors.attribute_names
+        end,
+      ]
+    end
+
     def save!
       lead_school_form.save!
       employing_school_form.save!
     end
 
   private
+
+    def school_forms
+      [
+        (lead_school_form if trainee.requires_schools?),
+        (employing_school_form if trainee.requires_employing_school?),
+      ].compact
+    end
 
     def validate_lead_school
       errors.add(:lead_school_id, :not_valid) unless lead_school_form.valid?

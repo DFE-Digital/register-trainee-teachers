@@ -4,28 +4,22 @@ require "rails_helper"
 
 module SchoolDetails
   describe View do
-    alias_method :component, :page
-
     shared_examples("school row") do |field_name|
-      subject do
-        component.find(".govuk-summary-list__row.#{field_name.parameterize}")
-      end
-
       it "renders the school type" do
-        expect(subject).to have_text(field_name.humanize)
+        expect(rendered_component).to have_text(field_name.humanize)
       end
 
       it "renders the school name" do
-        expect(subject).to have_text(school.name)
+        expect(rendered_component).to have_text(school.name)
       end
 
       it "renders the school location" do
         expected_location_format = "URN #{school.urn}, #{school.town}, #{school.postcode}"
-        expect(subject).to have_text(expected_location_format)
+        expect(rendered_component).to have_text(expected_location_format)
       end
 
       it "renders the school change link" do
-        expect(subject).to have_link(t("change"))
+        expect(rendered_component).to have_link(t("change"))
       end
     end
 

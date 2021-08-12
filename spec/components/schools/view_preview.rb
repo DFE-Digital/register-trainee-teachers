@@ -8,20 +8,25 @@ module Schools
       render(View.new(data_model: mock_trainee))
     end
 
+    def with_employing_school
+      render(View.new(data_model: mock_trainee(with_employing_school: true, route: TRAINING_ROUTE_ENUMS[:school_direct_salaried])))
+    end
+
     def with_no_data
-      render(View.new(data_model: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only], lead_school: mock_school)))
+      render(View.new(data_model: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])))
     end
 
   private
 
-    def mock_trainee
-      @mock_trainee ||= Trainee.new(
+    def mock_trainee(with_employing_school: false, route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee])
+      Trainee.new(
         id: 1,
         course_subject_one: "Primary",
         course_age_range: [3, 11],
         course_start_date: Date.new(2020, 0o1, 28),
-        training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+        training_route: route,
         lead_school: mock_school,
+        employing_school: with_employing_school ? mock_school : nil,
       )
     end
 

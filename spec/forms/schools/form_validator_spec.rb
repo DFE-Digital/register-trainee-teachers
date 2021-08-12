@@ -123,6 +123,56 @@ module Schools
           end
         end
       end
+
+      describe "#missing_fields" do
+        let(:trainee) { build(:trainee, :school_direct_tuition_fee) }
+
+        subject { described_class.new(trainee).missing_fields }
+
+        context "when valid" do
+          it { is_expected.to eq([[]]) }
+        end
+
+        context "with invalid LeadSchoolForm form", "feature_routes.school_direct_tuition_fee": true do
+          let(:lead_school_form) do
+            instance_double(
+              Schools::LeadSchoolForm,
+              fields: nil,
+              lead_school_id: nil,
+              non_search_validation: true,
+              errors: double(attribute_names: [:lead_school_id]),
+            )
+          end
+
+          before do
+            allow(Schools::LeadSchoolForm).to receive(:new).and_return(lead_school_form)
+            allow(lead_school_form).to receive(:valid?).and_return(false)
+          end
+
+          it { is_expected.to include([:lead_school_id]) }
+
+          context "with invalid LeadSchoolForm and EmployingSchoolForm form", "feature_routes.school_direct_tuition_fee": true, "feature_routes.school_direct_salaried": true do
+            let(:employing_school_form) do
+              instance_double(
+                Schools::EmployingSchoolForm,
+                fields: nil,
+                employing_school_id: nil,
+                non_search_validation: true,
+                errors: double(attribute_names: [:employing_school_id]),
+              )
+            end
+
+            let(:trainee) { build(:trainee, :school_direct_salaried) }
+
+            before do
+              allow(Schools::EmployingSchoolForm).to receive(:new).and_return(employing_school_form)
+              allow(employing_school_form).to receive(:valid?).and_return(false)
+            end
+
+            it { is_expected.to include(%i[lead_school_id employing_school_id]) }
+          end
+        end
+      end
     end
   end
 end

@@ -20,5 +20,14 @@ module SchoolDetails
         employing: edit_trainee_employing_schools_path(trainee),
       }[school_type.to_sym]
     end
+
+    def mappable_field(field_value, field_label, section_url)
+      MappableFieldRow.new(
+        field_value: field_value,
+        field_label: field_label,
+        text: t("components.confirmation.missing"),
+        action_url: section_url,
+      ).to_h
+    end
   end
 end
