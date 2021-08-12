@@ -107,6 +107,6 @@ private
   end
 
   def data_export
-    @data_export ||= Exports::TraineeSearchData.new(filtered_trainees, include_provider: current_user.system_admin?)
+    @data_export ||= Exports::TraineeSearchData.new(filtered_trainees)
   end
 end

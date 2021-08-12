@@ -6,10 +6,6 @@ class StatusTag::View < GovukComponent::Base
     @trainee = trainee
   end
 
-private
-
-  attr_accessor :trainee
-
   def status
     {
       submitted_for_trn: "pending trn",
@@ -17,6 +13,10 @@ private
       awarded: "#{trainee.award_type} awarded",
     }[trainee.state.to_sym] || trainee.state.gsub("_", " ")
   end
+
+private
+
+  attr_accessor :trainee
 
   def status_colour
     {
