@@ -13,7 +13,7 @@ module FundingHelper
     number_to_currency(
       amount,
       unit: "£",
-      locale: :uk,
+      locale: :en,
       strip_insignificant_zeros: true,
     )
   end
