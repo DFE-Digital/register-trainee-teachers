@@ -19,8 +19,8 @@ module RecordDetails
         render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
       end
 
-      it "tells the user that no data has been entered for trainee ID" do
-        expect(rendered_component).to have_text(t("components.confirmation.not_provided"))
+      it "tells the user that the data is missing" do
+        expect(rendered_component).to have_text(t("components.confirmation.missing"))
       end
     end
 

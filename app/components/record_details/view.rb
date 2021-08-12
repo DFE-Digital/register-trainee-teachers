@@ -10,34 +10,35 @@ module RecordDetails
     def initialize(trainee:, last_updated_event:)
       @trainee = trainee
       @last_updated_event = last_updated_event
-      @not_provided_copy = I18n.t("components.confirmation.not_provided")
     end
 
-    def trainee_id
-      trainee.trainee_id.presence || not_provided_copy
+    def record_detail_rows
+      [
+        trainee_id_row,
+        trn_row,
+        trainee_progress_row,
+        trainee_status_row,
+        last_updated_row,
+        record_created_row,
+        trainee_start_date_row,
+      ].compact
     end
 
-    def trainee_start_date
-      trainee.commencement_date.present? ? date_for_summary_view(trainee.commencement_date) : not_provided_copy
-    end
+  private
 
-    def submission_date
-      render_text_with_hint(trainee.submitted_for_trn_at)
-    end
-
-    def last_updated_date
-      render_text_with_hint(last_updated_event.date)
+    def trainee_id_row
+      mappable_field(trainee.trainee_id.presence, t(".trainee_id"), edit_trainee_trainee_id_path(trainee))
     end
 
     def trn_row
       if trainee.trn.present?
         {
-          key: "TRN",
+          key: t(".trn"),
           value: trainee.trn,
         }
       else
         {
-          key: "Submitted for TRN",
+          key: t(".submitted_for_trn"),
           value: submission_date,
         }
       end
@@ -56,12 +57,28 @@ module RecordDetails
       return unless trainee.deferred? || trainee.withdrawn?
 
       {
-        key: "Trainee status",
+        key: t(".trainee_status"),
         value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + status_date,
       }
     end
 
-  private
+    def last_updated_row
+      {
+        key: t(".last_updated"),
+        value: last_updated_date,
+      }
+    end
+
+    def record_created_row
+      {
+        key: t(".record_created"),
+        value: date_for_summary_view(trainee.created_at),
+      }
+    end
+
+    def trainee_start_date_row
+      mappable_field(trainee_start_date, t(".trainee_start_date"), edit_trainee_start_date_path(trainee))
+    end
 
     def render_text_with_hint(date)
       hint_text = tag.span(time_ago_in_words(date).concat(" ago"), class: "govuk-hint")
@@ -69,16 +86,28 @@ module RecordDetails
       sanitize(tag.p(date_for_summary_view(date), class: "govuk-body") + hint_text)
     end
 
+    def trainee_start_date
+      trainee.commencement_date.present? ? date_for_summary_view(trainee.commencement_date) : nil
+    end
+
+    def submission_date
+      render_text_with_hint(trainee.submitted_for_trn_at)
+    end
+
+    def last_updated_date
+      render_text_with_hint(last_updated_event.date)
+    end
+
     def progress_date
       return unless trainee_progress_date
 
-      I18n.t("components.record_details.progress_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_progress_date)
+      I18n.t(".progress_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_progress_date)
     end
 
     def status_date
       return unless trainee_status_date
 
-      I18n.t("components.record_details.status_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_status_date)
+      I18n.t(".status_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_status_date)
     end
 
     def trainee_progress_date
@@ -93,6 +122,15 @@ module RecordDetails
         deferred: trainee.defer_date,
         withdrawn: trainee.withdraw_date,
       }[trainee.state.to_sym]
+    end
+
+    def mappable_field(field_value, field_label, section_url)
+      MappableFieldRow.new(
+        field_value: field_value,
+        field_label: field_label,
+        text: t("components.confirmation.missing"),
+        action_url: section_url,
+      ).to_h
     end
   end
 end
