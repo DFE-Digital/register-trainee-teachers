@@ -5,11 +5,13 @@ module Dttp
     class Contact
       include Mappable
 
+      OTHER_GENDER_CODE = 389_040_000
+
       GENDER_CODES = {
         male: 1,
         female: 2,
-        other: 389_040_000,
-        gender_not_provided: nil,
+        other: OTHER_GENDER_CODE,
+        gender_not_provided: OTHER_GENDER_CODE,
       }.freeze
 
       TRAINEE_CONTACT_TYPE_DTTP_ID = "faba11c7-07d9-e711-80e1-005056ac45bb"
