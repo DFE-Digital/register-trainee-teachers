@@ -103,7 +103,7 @@ namespace :example_data do
         # And for all possible trainee states...
         Trainee.states.keys.map(&:to_sym).each do |state|
           # Create small number of trainees
-          sample_size = rand(1...4)
+          sample_size = rand(4...8)
 
           sample_size.times do |sample_index|
             attrs = { created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago) }
