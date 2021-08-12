@@ -51,7 +51,7 @@
                                  label: { text: t("views.forms.withdrawal_reasons.labels.for_another_reason") } do %>
           <%= f.govuk_text_field :additional_withdraw_reason,
                                  label: { text: t("views.forms.withdrawal_reasons.labels.additional_reason") },
-                                 autocomplete: :disabled %>
+                                 autocomplete: :off %>
         <% end %>
 
         <%= f.govuk_radio_button :withdraw_reason, WithdrawalReasons::UNKNOWN,
