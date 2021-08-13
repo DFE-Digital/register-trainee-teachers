@@ -5,7 +5,7 @@ require "rails_helper"
 describe WithdrawalDetails::View do
   include SummaryHelper
 
-  let(:trainee) { build(:trainee, :withdrawn_on_another_day, id: 1) }
+  let(:trainee) { build(:trainee, :with_withdrawal_date, id: 1) }
   let(:withdraw_date) { trainee.withdraw_date }
   let(:withdraw_reason) { nil }
   let(:additional_withdraw_reason) { nil }

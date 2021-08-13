@@ -3,7 +3,6 @@
 require "rails_helper"
 
 describe DeferralForm, type: :model do
-  let(:user) { create(:user) }
   let(:trainee) { create(:trainee, :deferred) }
   let(:form_store) { class_double(FormStore) }
 
