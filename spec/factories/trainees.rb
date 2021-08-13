@@ -227,9 +227,17 @@ FactoryBot.define do
       state { "recommended_for_award" }
     end
 
+    trait :with_withdrawal_date do
+      transient do
+        withdrawal_date_after { course_start_date || Time.zone.today.beginning_of_year }
+      end
+
+      withdraw_date { Faker::Date.between(from: withdrawal_date_after + 1.day, to: Time.zone.today.end_of_year) }
+    end
+
     trait :withdrawn do
       trn_received
-      withdraw_date { Faker::Date.in_date_period }
+      with_withdrawal_date
       state { "withdrawn" }
     end
 
@@ -277,17 +285,13 @@ FactoryBot.define do
       dormancy_dttp_id { SecureRandom.uuid }
     end
 
-    trait :withdrawn_on_another_day do
-      withdraw_date { Faker::Date.in_date_period }
-    end
-
     trait :withdrawn_for_specific_reason do
-      withdraw_date { Time.zone.today }
+      with_withdrawal_date
       withdraw_reason { WithdrawalReasons::SPECIFIC.sample }
     end
 
     trait :withdrawn_for_another_reason do
-      withdraw_date { Faker::Date.in_date_period }
+      with_withdrawal_date
       withdraw_reason { WithdrawalReasons::FOR_ANOTHER_REASON }
       additional_withdraw_reason { Faker::Lorem.paragraph }
     end
