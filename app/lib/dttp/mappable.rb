@@ -10,6 +10,10 @@ module Dttp
       CodeSets::AgeRanges::MAPPING.dig(age_range, :entity_id)
     end
 
+    def course_study_mode_id(study_mode)
+      CodeSets::CourseStudyModes::MAPPING.dig(study_mode, :entity_id)
+    end
+
     def degree_subject_id(subject)
       CodeSets::DegreeSubjects::MAPPING.dig(subject, :entity_id)
     end

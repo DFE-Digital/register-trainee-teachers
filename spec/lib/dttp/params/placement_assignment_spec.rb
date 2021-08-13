@@ -378,6 +378,50 @@ module Dttp
             end
           end
         end
+
+        context "study_mode enabled", feature_course_study_mode: true do
+          context "has study_mode set" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :provider_led_postgrad,
+                :with_course_details,
+                :with_start_date,
+                dttp_id: dttp_contact_id,
+                provider: provider,
+                study_mode: COURSE_STUDY_MODES[:full_time],
+              )
+            end
+
+            subject { described_class.new(trainee).params }
+
+            it "sets study_mode" do
+              expect(subject).to include({
+                "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{CodeSets::CourseStudyModes::MAPPING[COURSE_STUDY_MODES[:full_time]][:entity_id]})",
+              })
+            end
+          end
+
+          context "study_mode is not set" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :early_years_assessment_only,
+                :with_course_details,
+                :with_start_date,
+                dttp_id: dttp_contact_id,
+                provider: provider,
+                study_mode: nil,
+              )
+            end
+
+            subject { described_class.new(trainee).params }
+
+            it "does not set study_mode" do
+              expect(subject.keys).not_to include("dfe_StudyModeId@odata.bind")
+            end
+          end
+        end
       end
     end
   end
