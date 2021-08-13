@@ -45,6 +45,21 @@ en:
       summary_title: Schools
       lead_school: &lead_school Lead school
       employing_school: &employing_school Employing school
+  record_details:
+    view:
+      trainee_id: Trainee ID
+      submitted_for_trn: Submitted for TRN
+      trainee_status: Trainee status
+      last_updated: Last updated
+      record_created: Record created
+      trainee_start_date: Trainee start date
+      trn: TRN
+      progress_date_prefix:
+        recommended_for_award: "Recommended: "
+        awarded: "Awarded: "
+      status_date_prefix:
+        deferred: "Deferral date: "
+        withdrawn: "Withdrawal date: "
   components:
     heading:
       apply_draft:
@@ -164,13 +179,6 @@ en:
     incomplete_section:
       degree_details_not_provided: Degree details not provided
       add_degree_details: Add degree details
-    record_details:
-      progress_date_prefix:
-        recommended_for_award: "Recommended: "
-        awarded: "Awarded: "
-      status_date_prefix:
-        deferred: "Deferral date: "
-        withdrawn: "Withdrawal date: "
     itt_start_date:
       hint: The start date of the Initial Teacher Training part of their course.
     page_titles:
