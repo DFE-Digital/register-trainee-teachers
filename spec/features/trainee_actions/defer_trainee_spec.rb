@@ -86,7 +86,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def and_i_enter_a_valid_date
-    @chosen_date = Faker::Date.in_date_period
+    @chosen_date = valid_date_after_course_start_date
     @chosen_date.tap do |defer_date|
       deferral_page.set_date_fields(:defer_date, defer_date.strftime("%d/%m/%Y"))
     end

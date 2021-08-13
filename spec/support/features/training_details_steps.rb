@@ -16,5 +16,9 @@ module Features
       training_details_page.set_date_fields(:commencement_date, Date.tomorrow.strftime("%d/%m/%Y"))
       training_details_page.submit_button.click
     end
+
+    def valid_date_after_course_start_date
+      Faker::Date.between(from: trainee.course_start_date, to: trainee.course_start_date + 1.year)
+    end
   end
 end
