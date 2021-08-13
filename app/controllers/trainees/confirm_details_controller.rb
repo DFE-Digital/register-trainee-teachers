@@ -6,6 +6,8 @@ module Trainees
     FUNDING_KEY = "funding"
 
     before_action :authorize_trainee
+    before_action :load_form
+    before_action :load_missing_data_view
 
     helper_method :trainee_section_key
     helper_method :confirm_section_title
@@ -15,29 +17,36 @@ module Trainees
 
       if trainee.draft?
         @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
-        @missing_data_view = MissingDataView.new(form_instance)
       end
 
-      @confirmation_component = component_klass.new(data_model: trainee.draft? ? trainee : form_klass.new(trainee))
+      @confirmation_component = view_component.new(data_model: data_model)
     end
 
     def update
-      form_klass.new(trainee).save! unless trainee.draft?
+      if @form.valid?
+        trainee.draft? ? toggle_trainee_progress_field : @form.save!
 
-      toggle_trainee_progress_field if trainee.draft?
+        flash[:success] = "Trainee #{flash_message_title} updated"
 
-      flash[:success] = "Trainee #{flash_message_title} updated"
+        redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
+      else
+        @confirmation_component = view_component.new(data_model: data_model, has_errors: true)
 
-      redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
+        render :show
+      end
     end
 
   private
+
+    def data_model
+      trainee.draft? ? trainee : @form
+    end
 
     def trainee
       @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
-    def component_klass
+    def view_component
       "::#{trainee_section_key.underscore.camelcase}::View".constantize
     end
 
@@ -52,12 +61,8 @@ module Trainees
       end
     end
 
-    def form_instance
-      trainee_section_key == SCHOOLS_KEY ? form_klass.new(trainee, non_search_validation: true) : form_klass.new(trainee)
-    end
-
     # Returns the route that the confirm path is nested under for each confirm path
-    # eg /trainees/HxA35kmiNdtwNGnWYjr6FbJZ/funding/confirm returns 'funding'
+    # eg /trainees/<slug>/funding/confirm returns 'funding'
     def trainee_section_key
       @trainee_section_key ||= request.path.split("/")[-2]&.underscore
     end
@@ -90,6 +95,18 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
+    end
+
+    def load_form
+      @form = build_form
+    end
+
+    def load_missing_data_view
+      @missing_data_view = MissingDataView.new(build_form)
+    end
+
+    def build_form
+      trainee_section_key == SCHOOLS_KEY ? form_klass.new(trainee, non_search_validation: true) : form_klass.new(trainee)
     end
   end
 end

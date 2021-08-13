@@ -77,7 +77,7 @@ Rails.application.routes.draw do
       resource :personal_details, concerns: :confirmable, only: %i[show edit update], path: "/personal-details"
 
       namespace :diversity do
-        concerns :confirmable
+        resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "confirm_details"
         resource :disclosure, only: %i[edit update], path: "/information-disclosed"
         resource :ethnic_group, only: %i[edit update], path: "/ethnic-group"
         resource :ethnic_background, only: %i[edit update], path: "/ethnic-background"

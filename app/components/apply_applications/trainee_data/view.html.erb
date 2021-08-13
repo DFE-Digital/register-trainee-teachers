@@ -3,7 +3,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
     text: t("back_to_draft"),
-    href: review_draft_trainee_path(@trainee),
+    href: review_draft_trainee_path(trainee),
     html_attributes: {
       id: "back-to-draft-record",
     },
@@ -14,11 +14,11 @@
   <div class="govuk-grid-column-full">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
-        <%= render ApplyApplications::ReviewSummary::View.new(form: @form, trainee: @trainee) %>
+        <%= render ReviewSummary::View.new(form: form, invalid_data_view: invalid_data_view) %>
         <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
           <span class="govuk-caption-l">
-            <% if trainee_name(@trainee).present? %>
-              <%= t(".heading_1_name", name: trainee_name(@trainee)) %>
+            <% if trainee_name(trainee).present? %>
+              <%= t(".heading_1_name", name: trainee_name(trainee)) %>
             <% else %>
               <%= t(".heading_1_no_name") %>
             <% end %>
@@ -32,19 +32,19 @@
       <%= t("personal_details") %>
     </h2>
 
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :personal_details) %>
+    <%= render Sections::View.new(trainee: trainee, form: form, section: :personal_details) %>
 
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :contact_details) %>
+    <%= render Sections::View.new(trainee: trainee, form: form, section: :contact_details) %>
 
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :diversity) %>
+    <%= render Sections::View.new(trainee: trainee, form: form, section: :diversity) %>
 
     <h2 class="govuk-heading-m">
       <%= t("education") %>
     </h2>
 
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :degrees) %>
+    <%= render Sections::View.new(trainee: trainee, form: form, section: :degrees) %>
 
-    <%= register_form_with(model: @form, builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    <%= register_form_with(model: form, builder: GOVUKDesignSystemFormBuilder::FormBuilder,
                            url: trainee_apply_applications_trainee_data_path(trainee),
                            method: :put,
                            local: true) do |f| %>

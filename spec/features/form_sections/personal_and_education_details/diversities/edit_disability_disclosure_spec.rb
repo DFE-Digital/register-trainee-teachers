@@ -46,11 +46,15 @@ feature "edit disability disclosure", type: :feature do
 private
 
   def given_a_trainee_exists_with_no_disability_disclosure
-    given_a_trainee_exists(:diversity_disclosed, disability_disclosure: nil)
+    given_a_trainee_exists(:diversity_disclosed, :with_diversity_information, disability_disclosure: nil)
   end
 
   def given_a_trainee_exists_with_a_disability
-    given_a_trainee_exists(:diversity_disclosed, disability_disclosure: :disabled, disabilities: [create(:disability)])
+    given_a_trainee_exists(:diversity_disclosed,
+                           :with_ethnic_group,
+                           :with_ethnic_background,
+                           disability_disclosure: :disabled,
+                           disabilities: [create(:disability)])
   end
 
   def and_i_am_on_the_disability_disclosure_page

@@ -4,6 +4,8 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
+<%= render ReviewSummary::View.new(form: @form, invalid_data_view: @missing_data_view) %>
+
 <%= render(
   partial: "trainees/confirm_details/form",
   locals: {

@@ -3,17 +3,12 @@
 module Trainees
   module Degrees
     class ConfirmDetailsController < Trainees::ConfirmDetailsController
-      before_action :authorize_trainee
-
       def show
         page_tracker.save_as_origin!
 
         if trainee.draft?
           @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.degrees)
-          @missing_data_view = MissingDataView.new(degrees_form, multiple_records: true)
         end
-
-        data_model = trainee.draft? ? trainee : degrees_form
 
         @confirmation_component = if trainee.degrees.empty?
                                     CollapsedSection::View.new(
@@ -29,8 +24,12 @@ module Trainees
 
     private
 
-      def degrees_form
-        @degrees_form ||= DegreesForm.new(trainee)
+      def load_missing_data_view
+        @missing_data_view = MissingDataView.new(build_form, multiple_records: true)
+      end
+
+      def build_form
+        DegreesForm.new(trainee)
       end
     end
   end

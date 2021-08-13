@@ -4,14 +4,7 @@
   <%= render DynamicBackLink::View.new(@trainee) %>
 <% end %>
 
-<%= render InformationSummary::View.new(renderable: @missing_data_view&.missing_data?) do |component| %>
-  <% component.header  do %>
-    <%= @missing_data_view.summary_content %>
-  <% end %>
-
-  <%= @missing_data_view.missing_items_content %>
-<% end %>
-
+<%= render ReviewSummary::View.new(form: @form, invalid_data_view: @missing_data_view) %>
 
 <%= render(
   partial: "form",

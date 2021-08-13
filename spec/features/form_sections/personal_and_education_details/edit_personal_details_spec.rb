@@ -76,7 +76,29 @@ feature "edit personal details", type: :feature do
     end
   end
 
+  scenario "when trying to 'complete' an invalid form" do
+    given_a_trainee_exists
+    and_i_am_on_confirm_personal_details_page
+    and_i_check_the_checkbox
+    and_i_click_continue
+    then_i_see_error_messages_related_to_missing_fields
+  end
+
 private
+
+  def then_i_see_error_messages_related_to_missing_fields
+    text = I18n.t("views.missing_data_view.single_missing_field_text_html", missing_field: "Nationality")
+    expect(confirm_details_page).to have_content(text)
+    expect(confirm_details_page).to have_css(".govuk-error-summary")
+  end
+
+  def and_i_am_on_confirm_personal_details_page
+    confirm_details_page.load(id: trainee.slug, section: "personal-details")
+  end
+
+  def and_i_check_the_checkbox
+    confirm_details_page.confirm.click
+  end
 
   def given_valid_personal_details_are_provided
     given_a_trainee_exists
