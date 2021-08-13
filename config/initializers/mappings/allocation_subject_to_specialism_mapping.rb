@@ -2,7 +2,7 @@
 
 ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
   AllocationSubjects::ART_AND_DESIGN => [
-    CourseSubjects::CREATIVE_ARTS_AND_DESIGN,
+    CourseSubjects::ART_AND_DESIGN,
     CourseSubjects::GRAPHIC_DESIGN,
   ],
   AllocationSubjects::BIOLOGY => [
