@@ -69,7 +69,7 @@ feature "Recording a training outcome", type: :feature do
     end
 
     scenario "and filling out a valid date" do
-      when_i_chose_a_specific_date
+      and_i_enter_a_valid_date
       and_i_continue
       then_i_am_redirected_to_the_confirm_outcome_details_page
       and_i_see_my_date(@outcome_date)
@@ -105,8 +105,8 @@ feature "Recording a training outcome", type: :feature do
     confirm_outcome_details_page.record_outcome.click
   end
 
-  def when_i_chose_a_specific_date
-    @outcome_date = Faker::Date.in_date_period
+  def and_i_enter_a_valid_date
+    @outcome_date = valid_date_after_course_start_date
     stub_dttp_placement_assignment_request(outcome_date: @outcome_date, status: 204)
     outcome_date_edit_page.set_date_fields("outcome_date", @outcome_date.strftime("%d/%m/%Y"))
   end
