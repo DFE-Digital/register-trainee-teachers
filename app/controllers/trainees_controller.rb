@@ -103,6 +103,8 @@ private
   end
 
   def save_filter
+    return if request.format.csv?
+
     FilteredBackLink::Tracker.new(session: session, href: trainees_path).save_path(request.fullpath)
   end
 
