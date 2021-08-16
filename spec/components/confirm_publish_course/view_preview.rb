@@ -5,11 +5,15 @@ require "govuk/components"
 module ConfirmPublishCourse
   class ViewPreview < ViewComponent::Preview
     def default
-      render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms, itt_start_date: nil))
+      render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms, itt_start_date: nil, course_study_mode: nil))
     end
 
     def default_with_itt_start_date
-      render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms, itt_start_date: Time.zone.today))
+      render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms, itt_start_date: Time.zone.today, course_study_mode: nil))
+    end
+
+    def default_with_study_mode
+      render(View.new(trainee: mock_trainee, course: build_course, specialisms: build_specialisms, itt_start_date: Time.zone.today, course_study_mode: "full_time"))
     end
 
     def with_two_subjects
@@ -17,7 +21,7 @@ module ConfirmPublishCourse
       course.subjects << Subject.new(name: "Subject 2")
       specialisms = build_specialisms
       specialisms << "Specialism 2"
-      render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms, itt_start_date: nil))
+      render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms, itt_start_date: nil, course_study_mode: nil))
     end
 
     def with_three_subjects
@@ -27,7 +31,7 @@ module ConfirmPublishCourse
       specialisms = build_specialisms
       specialisms << "Specialism 2"
       specialisms << "Specialism 3"
-      render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms, itt_start_date: nil))
+      render(View.new(trainee: mock_trainee, course: course, specialisms: specialisms, itt_start_date: nil, course_study_mode: nil))
     end
 
   private
@@ -53,6 +57,7 @@ module ConfirmPublishCourse
         start_date: Time.zone.today,
         duration_in_years: 1,
         subjects: [Subject.new(name: "Subject 1")],
+        study_mode: "part_time",
       )
     end
 

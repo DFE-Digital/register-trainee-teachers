@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-# Enforces HTTP Basic Auth
 module PublishCourseNextPath
   def publish_course_next_path
     if trainee.requires_itt_start_date?
       edit_trainee_course_details_itt_start_date_path(trainee)
+    elsif requires_study_mode?
+      edit_trainee_course_details_study_mode_path(trainee)
     else
       course_confirmation_path
     end
@@ -16,5 +17,23 @@ module PublishCourseNextPath
     else
       edit_trainee_confirm_publish_course_path(trainee)
     end
+  end
+
+  def trainee
+    @trainee ||= Trainee.from_param(params[:trainee_id])
+  end
+
+  def course
+    @course ||= trainee.available_courses.find_by_code!(course_code)
+  end
+
+  def publish_course_details_form
+    @publish_course_details_form ||= PublishCourseDetailsForm.new(trainee)
+  end
+
+  def requires_study_mode?
+    return false unless course || trainee.requires_study_mode?
+
+    course.study_mode == "full_time_or_part_time"
   end
 end

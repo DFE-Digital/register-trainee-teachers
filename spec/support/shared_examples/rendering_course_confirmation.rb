@@ -1,15 +1,34 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "rendering course confirmation" do
-  let(:trainee) { build(:trainee) }
+  let(:trainee) { build(:trainee, :provider_led_postgrad, study_mode: "full_time") }
   let(:itt_start_date) { nil }
 
-  context "default behaviour" do
+  let(:args) do
+    if described_class == ConfirmPublishCourse::View
+      {
+        trainee: trainee,
+        course: course,
+        specialisms: specialisms,
+        itt_start_date: itt_start_date,
+        course_study_mode: "full_time",
+      }
+    else
+      {
+        trainee: trainee,
+        course: course,
+        specialisms: specialisms,
+        itt_start_date: itt_start_date,
+      }
+    end
+  end
+
+  context "default behaviour", feature_course_study_mode: true do
     let(:course) { build(:course, duration_in_years: 2) }
     let(:specialisms) { ["Specialism 1"] }
 
     before do
-      render_inline(described_class.new(trainee: trainee, course: course, specialisms: specialisms, itt_start_date: itt_start_date))
+      render_inline(described_class.new(**args))
     end
 
     it "renders the course details" do
@@ -32,6 +51,28 @@ RSpec.shared_examples "rendering course confirmation" do
       expect(rendered_component).to have_text("#{course.duration_in_years} years")
     end
 
+    if described_class == ConfirmPublishCourse::View
+      it "renders study_mode" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+      end
+
+      it "renders the selected study_mode" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+      end
+    else
+      it "does not render study_mode" do
+        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+      end
+
+      it "does not render the selected study_mode" do
+        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+      end
+    end
+
+    it "renders 7 rows on the confirmation page" do
+      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
+    end
+
     context "with itt_start_date set" do
       let(:itt_start_date) { Time.zone.now }
 
@@ -45,7 +86,7 @@ RSpec.shared_examples "rendering course confirmation" do
     let(:course) { create(:course_with_subjects, subjects_count: subject_count) }
 
     before do
-      render_inline(described_class.new(trainee: trainee, course: course, specialisms: specialisms, itt_start_date: itt_start_date))
+      render_inline(described_class.new(**args))
     end
 
     context "with one subject" do

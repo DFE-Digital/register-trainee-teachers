@@ -5,13 +5,14 @@ module ConfirmPublishCourse
     include SummaryHelper
     include CourseDetailsHelper
 
-    attr_accessor :trainee, :course, :specialisms, :itt_start_date
+    attr_accessor :trainee, :course, :specialisms, :itt_start_date, :course_study_mode
 
-    def initialize(trainee:, course:, specialisms:, itt_start_date:)
+    def initialize(trainee:, course:, specialisms:, itt_start_date:, course_study_mode:)
       @trainee = trainee
       @course = course
       @specialisms = specialisms
       @itt_start_date = itt_start_date
+      @course_study_mode = course_study_mode
     end
 
     def heading
@@ -38,7 +39,8 @@ module ConfirmPublishCourse
         { key: t(".age_range"), value: age_range },
         { key: t(".#{itt_route? ? 'itt' : 'course'}_start_date"), value: start_date },
         { key: t(".duration"), value: duration },
-      ]
+        ({ key: t(".study_mode"), value: study_mode } if requires_study_mode?),
+      ].compact
     end
 
     def course_details
@@ -70,6 +72,10 @@ module ConfirmPublishCourse
       pluralize(course.duration_in_years, "year")
     end
 
+    def study_mode
+      (course_study_mode || course.study_mode).humanize
+    end
+
   private
 
     def itt_route?
@@ -79,5 +85,7 @@ module ConfirmPublishCourse
     def subject_key
       course.subjects.count > 1 ? t(".multiple_subjects") : t(".subject")
     end
+
+    delegate :requires_study_mode?, to: :trainee
   end
 end

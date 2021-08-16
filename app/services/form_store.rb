@@ -29,6 +29,7 @@ class FormStore
     language_specialisms
     subject_specialism
     itt_start_date
+    study_modes
   ].freeze
 
   class << self

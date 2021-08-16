@@ -44,7 +44,7 @@ class CourseDetailsForm < TraineeForm
   validates :course_subject_three, autocomplete: true, if: :require_subject?
   validates :additional_age_range, autocomplete: true, if: -> { other_age_range? && require_age_range? }
 
-  validates :study_mode, inclusion: { in: COURSE_STUDY_ENUMS.values }, if: :requires_study_mode?
+  validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODES.keys }, if: :requires_study_mode?
 
   validate :course_start_date_valid
   validate :course_end_date_valid

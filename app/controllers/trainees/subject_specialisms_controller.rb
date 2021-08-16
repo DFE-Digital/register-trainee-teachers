@@ -34,10 +34,6 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def position
       params[:position].to_i
     end
@@ -70,10 +66,6 @@ module Trainees
         .transform_values(&:first)
     end
 
-    def course
-      @course ||= trainee.available_courses.find_by_code!(course_code)
-    end
-
     def next_step_path
       specialisms = CalculateSubjectSpecialisms.call(subjects: course.subjects.map(&:name))
       next_position = position + 1
@@ -82,10 +74,6 @@ module Trainees
       else
         publish_course_next_path
       end
-    end
-
-    def publish_course_details_form
-      @publish_course_details_form ||= PublishCourseDetailsForm.new(trainee)
     end
 
     def course_code

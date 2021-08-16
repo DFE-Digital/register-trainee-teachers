@@ -53,5 +53,6 @@ config/localhost/https/localhost.key
 config/localhost/https/localhost.crt
 .nvmrc
 .ruby-version
+/.idea
 
 bin/fetch_config.rb

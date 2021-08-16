@@ -7,18 +7,17 @@ module Trainees
     before_action :authorize_trainee
 
     def edit
-      @courses = @trainee.available_courses
+      @courses = trainee.available_courses
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee)
     end
 
     def update
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
-
       if course_chosen?
         trainee.update!(course_code: nil) if @publish_course_details_form.manual_entry_chosen?
         redirect_to next_step_path
       else
-        @courses = @trainee.available_courses
+        @courses = trainee.available_courses
         render :edit
       end
     end
@@ -27,6 +26,10 @@ module Trainees
 
     def course_chosen?
       @publish_course_details_form.valid? && set_specialism_form_type && @publish_course_details_form.stash
+    end
+
+    def course_code
+      @publish_course_details_form.code
     end
 
     def set_specialism_form_type
@@ -49,14 +52,14 @@ module Trainees
     end
 
     def clear_form_stashes
-      FormStore.set(@trainee.id, :subject_specialism, nil)
-      FormStore.set(@trainee.id, :language_specialisms, nil)
-      FormStore.set(@trainee.id, :itt_start_date, nil)
+      FormStore.set(trainee.id, :subject_specialism, nil)
+      FormStore.set(trainee.id, :language_specialisms, nil)
+      FormStore.set(trainee.id, :itt_start_date, nil)
     end
 
     def next_step_path
       if @publish_course_details_form.manual_entry_chosen?
-        edit_trainee_course_details_path(@trainee)
+        edit_trainee_course_details_path(trainee)
       elsif course_has_one_specialism?
         publish_course_next_path
       elsif specialism_type == :language
@@ -80,10 +83,6 @@ module Trainees
 
     def course_params
       params.fetch(:publish_course_details_form, {}).permit(:code)
-    end
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
     def authorize_trainee

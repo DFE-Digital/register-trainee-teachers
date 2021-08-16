@@ -25,6 +25,7 @@ class Course < ApplicationRecord
   }
 
   enum route: TRAINING_ROUTES_FOR_COURSE
+  enum study_mode: COURSE_STUDY_MODE_ENUMS
 
   has_many :course_subjects
 

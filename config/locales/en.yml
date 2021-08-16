@@ -249,6 +249,8 @@ en:
           edit: Course details
         itt_start_date:
           edit: ITT start date
+        study_mode:
+          edit: Is the trainee full time or part time?
         withdrawal:
           show: Withdraw trainee
         confirm_withdrawal:
@@ -459,6 +461,7 @@ en:
         employing_school_id: *employing_school
         commencement_date: *commencement_date
         trainee_id: *trainee_id
+        study_mode: Select if the trainee is full time or part time
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
@@ -699,6 +702,7 @@ en:
       course_start_date: Course start date
       course_end_date: Course end date
       duration: Duration
+      study_mode: Full time or part time
       course_details: Course details
       incorrect_details_title: What if the details are incorrect?
       incorrect_details_text:
@@ -973,6 +977,10 @@ en:
               empty_nationalities: Select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list
+        study_modes_form:
+          attributes:
+            study_mode:
+              inclusion: Select if the trainee is full time or part time
         itt_start_date_form:
           attributes:
             date_string:

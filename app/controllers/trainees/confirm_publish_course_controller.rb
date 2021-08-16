@@ -2,22 +2,20 @@
 
 module Trainees
   class ConfirmPublishCourseController < ApplicationController
-    before_action :set_trainee
-    before_action :authorize_trainee
-    before_action :set_course
-    before_action :set_specialisms
-    before_action :set_itt_start_date
+    include PublishCourseNextPath
+
+    before_action :authorize_trainee, :course
 
     def edit
       page_tracker.save_as_origin!
-      @confirm_publish_course_form = ConfirmPublishCourseForm.new(@trainee, @specialisms, @itt_start_date)
+      @confirm_publish_course_form = ConfirmPublishCourseForm.new(trainee, specialisms, itt_start_date, course_study_mode)
     end
 
     def update
-      @confirm_publish_course_form = ConfirmPublishCourseForm.new(@trainee, @specialisms, @itt_start_date, course_params)
+      @confirm_publish_course_form = ConfirmPublishCourseForm.new(trainee, specialisms, itt_start_date, course_study_mode, course_params)
       if @confirm_publish_course_form.save
-        clear_form_stash(@trainee)
-        redirect_to review_draft_trainee_path(@trainee)
+        clear_form_stash(trainee)
+        redirect_to review_draft_trainee_path(trainee)
       else
         render :edit
       end
@@ -25,35 +23,37 @@ module Trainees
 
   private
 
-    def set_itt_start_date
-      @itt_start_date = if @trainee.requires_itt_start_date?
-                          IttStartDateForm.new(@trainee).date
-                        end
+    def course_study_mode
+      @course_study_mode ||= if trainee.requires_study_mode?
+                               StudyModesForm.new(trainee).study_mode
+                             end
     end
 
-    def set_specialisms
-      specialism_form_type = PublishCourseDetailsForm.new(@trainee).specialism_form&.to_sym
-      @specialisms =
+    def itt_start_date
+      @itt_start_date ||= if trainee.requires_itt_start_date?
+                            IttStartDateForm.new(trainee).date
+                          end
+    end
+
+    def specialisms
+      specialism_form_type = PublishCourseDetailsForm.new(trainee).specialism_form&.to_sym
+      @specialisms ||=
         case specialism_form_type
         when :language
-          LanguageSpecialismsForm.new(@trainee).languages
+          LanguageSpecialismsForm.new(trainee).languages
         when :general
-          SubjectSpecialismForm.new(@trainee).specialisms
+          SubjectSpecialismForm.new(trainee).specialisms
         else
-          CalculateSubjectSpecialisms.call(subjects: @course.subjects.pluck(:name)).values.map(&:first).compact
+          CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name)).values.map(&:first).compact
         end
     end
 
-    def set_trainee
-      @trainee = Trainee.from_param(params[:trainee_id])
-    end
-
     def authorize_trainee
-      authorize(@trainee)
+      authorize(trainee)
     end
 
-    def set_course
-      @course = @trainee.available_courses.find_by_code!(PublishCourseDetailsForm.new(@trainee).code)
+    def course_code
+      publish_course_details_form.code
     end
 
     def course_params

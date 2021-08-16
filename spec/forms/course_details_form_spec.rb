@@ -293,7 +293,7 @@ describe CourseDetailsForm, type: :model do
         end
 
         context "study_mode is set" do
-          let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: COURSE_STUDY_ENUMS[:full_time]) }
+          let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: COURSE_STUDY_MODES[:full_time]) }
 
           it "no error" do
             expect(subject.errors[:study_mode]).to be_empty

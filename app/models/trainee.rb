@@ -80,7 +80,7 @@ class Trainee < ApplicationRecord
     WithdrawalReasons::WRITTEN_OFF_AFTER_LAPSE_OF_TIME => 9,
   }
 
-  enum study_mode: COURSE_STUDY_MODES
+  enum study_mode: TRAINEE_STUDY_MODES
 
   enum state: {
     draft: 0,

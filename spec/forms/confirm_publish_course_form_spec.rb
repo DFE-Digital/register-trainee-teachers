@@ -2,13 +2,14 @@
 
 require "rails_helper"
 
-describe ConfirmPublishCourseForm, type: :model do
+describe ConfirmPublishCourseForm, feature_course_study_mode: true, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
   let(:specialisms) { [] }
   let(:itt_start_date) { nil }
+  let(:course_study_mode) { nil }
 
-  subject { described_class.new(trainee, specialisms, itt_start_date, params) }
+  subject { described_class.new(trainee, specialisms, itt_start_date, course_study_mode, params) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:code) }
@@ -56,6 +57,16 @@ describe ConfirmPublishCourseForm, type: :model do
           expect { subject.save }
             .to change { trainee.course_start_date }
             .from(nil).to(itt_start_date)
+        end
+      end
+
+      context "with study_mode set" do
+        let(:course_study_mode) { "full_time" }
+
+        it "updates all the course related attributes and study_mode" do
+          expect { subject.save }
+            .to change { trainee.study_mode }
+            .from(nil).to(course_study_mode)
         end
       end
 

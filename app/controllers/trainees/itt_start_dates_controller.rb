@@ -22,10 +22,6 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def trainee_params
       params.require(:itt_start_date_form)
         .permit(:date_string, *MultiDateForm::PARAM_CONVERSION.keys)

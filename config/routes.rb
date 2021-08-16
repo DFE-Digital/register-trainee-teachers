@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       resource :course_details, only: %i[edit update], path: "/course-details" do
         concerns :confirmable
         resource :itt_start_date, only: %i[edit update], path: "/start-date"
+        resource :study_mode, only: %i[edit update], path: "/study-mode"
       end
 
       resource :schools, concerns: :confirmable, only: %i[edit update], path: "/schools"
