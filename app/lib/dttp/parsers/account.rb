@@ -20,6 +20,7 @@ module Dttp
               name: school["name"],
               urn: school["dfe_urn"],
               dttp_id: school["accountid"],
+              status_code: school["statuscode"],
             }
           end
         end

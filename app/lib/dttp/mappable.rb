@@ -59,7 +59,7 @@ module Dttp
     end
 
     def dttp_school_id(urn)
-      Dttp::School.find_by(urn: urn)&.dttp_id
+      Dttp::School.active.find_by!(urn: urn)&.dttp_id
     end
 
     def training_initiative_id(training_initiative)

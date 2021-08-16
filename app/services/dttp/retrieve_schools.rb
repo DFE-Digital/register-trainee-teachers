@@ -5,24 +5,19 @@ module Dttp
     include ServicePattern
     include SyncPattern
 
-    FILTER = {
-      "$filter" => "dfe_provider eq false",
-    }.freeze
-
     SELECT = {
       "$select" => %w[
         name
         dfe_urn
         accountid
+        statuscode
       ].join(","),
     }.freeze
-
-    QUERY = FILTER.merge(SELECT).to_query
 
   private
 
     def default_path
-      @default_path ||= "/accounts?#{QUERY}"
+      @default_path ||= "/accounts?#{SELECT.to_query}"
     end
   end
 end
