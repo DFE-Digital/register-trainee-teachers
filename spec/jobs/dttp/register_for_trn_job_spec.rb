@@ -8,18 +8,11 @@ module Dttp
     let(:dttp_id) { SecureRandom.uuid }
     let(:placement_assignment_dttp_id) { SecureRandom.uuid }
     let(:creator_dttp_id) { SecureRandom.uuid }
-    let(:run_date) { "01/08/2021" }
 
     before do
       enable_features(:persist_to_dttp)
 
       allow(RegisterForTrn).to receive(:call)
-    end
-
-    around do |example|
-      Timecop.freeze(run_date) do
-        example.run
-      end
     end
 
     describe "#perform_now" do
@@ -44,29 +37,6 @@ module Dttp
           DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED,
           UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE,
         )
-      end
-
-      context "for non-AO trainees" do
-        let(:clockover_date) { "01/08/2021" }
-
-        before do
-          allow(Settings).to receive(:clockover_date).and_return(clockover_date)
-        end
-
-        context "before clockover" do
-          let(:run_date) { "31/07/2021" }
-
-          it "requeues the job for after clockover" do
-            expect(RegisterForTrnJob).to receive(:set).with(wait_until: Time.zone.parse(clockover_date)).and_return(job = double)
-            expect(job).to receive(:perform_later).with(trainee, creator_dttp_id)
-            subject
-          end
-
-          it "does not make the request to DTTP" do
-            expect(RegisterForTrn).not_to receive(:call)
-            subject
-          end
-        end
       end
     end
   end
