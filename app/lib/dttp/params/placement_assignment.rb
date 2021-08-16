@@ -136,9 +136,10 @@ module Dttp
 
       def dttp_recognised_initiative?
         [
-          ROUTE_INITIATIVES_ENUMS[:no_initiative],
-          ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars],
-        ].exclude?(trainee.training_initiative)
+          ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+          ROUTE_INITIATIVES_ENUMS[:now_teach],
+          ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
+        ].include?(trainee.training_initiative)
       end
     end
   end
