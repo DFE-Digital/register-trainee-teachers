@@ -40,6 +40,16 @@ module ApplyApi
           end
         end
       end
+
+      context "when the provider type is an HEI" do
+        before do
+          application_data["attributes"]["course"]["training_provider_type"] = "university"
+        end
+
+        it "will not create apply application " do
+          expect { subject }.not_to(change { ApplyApplication.count })
+        end
+      end
     end
   end
 end

@@ -10,6 +10,7 @@ module ApplyApi
 
     def call
       return unless provider
+      return if provider_a_hei?
 
       application.update!(application: application_data.to_json, provider: provider)
 
@@ -36,6 +37,10 @@ module ApplyApi
 
     def apply_id
       @apply_id ||= application_data["id"]
+    end
+
+    def provider_a_hei?
+      application_data["attributes"]["course"]["training_provider_type"] == "university"
     end
   end
 end
