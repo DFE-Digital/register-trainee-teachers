@@ -269,7 +269,6 @@ module Dttp
             it "raises an active record error" do
               expect { described_class.new(trainee).params }.to raise_error(ActiveRecord::RecordNotFound)
             end
-
           end
         end
 
