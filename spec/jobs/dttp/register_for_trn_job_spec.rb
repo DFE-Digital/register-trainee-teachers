@@ -56,32 +56,15 @@ module Dttp
         context "before clockover" do
           let(:run_date) { "31/07/2021" }
 
-          context "the trainee is assessment only" do
-            before do
-              trainee.early_years_assessment_only!
-            end
-
-            it "runs the job" do
-              expect(RegisterForTrn).to receive(:call).with(trainee: trainee, created_by_dttp_id: creator_dttp_id)
-              subject
-            end
+          it "requeues the job for after clockover" do
+            expect(RegisterForTrnJob).to receive(:set).with(wait_until: Time.zone.parse(clockover_date)).and_return(job = double)
+            expect(job).to receive(:perform_later).with(trainee, creator_dttp_id)
+            subject
           end
 
-          context "the trainee is not assessment only" do
-            before do
-              trainee.provider_led_postgrad!
-            end
-
-            it "requeues the job for after clockover" do
-              expect(RegisterForTrnJob).to receive(:set).with(wait_until: Time.zone.parse(clockover_date)).and_return(job = double)
-              expect(job).to receive(:perform_later).with(trainee, creator_dttp_id)
-              subject
-            end
-
-            it "does not make the request to DTTP" do
-              expect(RegisterForTrn).not_to receive(:call)
-              subject
-            end
+          it "does not make the request to DTTP" do
+            expect(RegisterForTrn).not_to receive(:call)
+            subject
           end
         end
       end
