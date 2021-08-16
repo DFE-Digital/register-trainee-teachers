@@ -1,5 +1,12 @@
 <%= render PageTitle::View.new(i18n_key: "pages.accessibility") %>
 
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(
+    text: t("back"),
+    href: root_path,
+    ) %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l govuk-!-margin-bottom-9"><%= t(".heading") %></h1>
