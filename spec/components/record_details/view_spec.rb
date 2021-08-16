@@ -67,6 +67,10 @@ module RecordDetails
         it "renders the trainee withdrawal date" do
           expect(rendered_component).to have_text(date_for_summary_view(trainee.withdraw_date))
         end
+
+        it "renders the trainee state" do
+          expect(rendered_component).to have_text(I18n.t("record_details.view.status_date_prefix.#{trainee.state}"))
+        end
       end
 
       context "when trainee state is recommended_for_award" do
