@@ -178,6 +178,28 @@ module Dttp
           end
         end
 
+        context "Future Teaching Scholars route" do
+          context "with a trainee on the future_teaching_scholars initiative" do
+            let(:future_teaching_scholars) { ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars] }
+            let(:dttp_fts_route_id) { Dttp::CodeSets::Routes::MAPPING[future_teaching_scholars][:entity_id] }
+
+            let(:trainee) do
+              create(
+                :trainee,
+                :with_course_details,
+                :with_start_date,
+                dttp_id: dttp_contact_id,
+                provider: provider,
+                training_initiative: future_teaching_scholars,
+              )
+            end
+
+            it "sends the training initiative as a DTTP route" do
+              expect(subject["dfe_RouteId@odata.bind"]).to eq "/dfe_routes(#{dttp_fts_route_id})"
+            end
+          end
+        end
+
         context "subjects" do
           let(:trainee) do
             create(
@@ -303,22 +325,52 @@ module Dttp
           context "and the send_funding_to_dttp feature flag is on", feature_send_funding_to_dttp: true do
             context "but the trainee has no initiative" do
               let(:trainee) do
-                create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative])
+                create(
+                  :trainee,
+                  :with_course_details,
+                  :with_start_date,
+                  dttp_id: dttp_contact_id,
+                  training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                )
               end
 
-              it "doesn't send funding information" do
+              it "doesn't send the initiative" do
                 expect(subject).not_to include({
                   "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
                 })
               end
             end
 
-            context "and the trainee has an initiative" do
+            context "but the trainee in on an initiative not recognised by DTTP" do
               let(:trainee) do
-                create(:trainee, :with_course_details, :with_start_date, dttp_id: dttp_contact_id, training_initiative: ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars])
+                create(
+                  :trainee,
+                  :with_course_details,
+                  :with_start_date,
+                  dttp_id: dttp_contact_id,
+                  training_initiative: ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars],
+                )
               end
 
-              it "sends funding information" do
+              it "doesn't send the initiative" do
+                expect(subject).not_to include({
+                  "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
+                })
+              end
+            end
+
+            context "and the trainee has an initiative recognised by DTTP" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  :with_course_details,
+                  :with_start_date,
+                  dttp_id: dttp_contact_id,
+                  training_initiative: ROUTE_INITIATIVES_ENUMS[:now_teach],
+                )
+              end
+
+              it "sends the initiative" do
                 expect(subject).to include({
                   "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
                 })

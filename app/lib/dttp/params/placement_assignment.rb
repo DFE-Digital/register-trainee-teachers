@@ -23,7 +23,7 @@ module Dttp
         if contact_change_set_id
           @params.merge!({
             "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
-            "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id(trainee.training_route)})",
+            "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id(training_route)})",
           })
         end
       end
@@ -54,7 +54,7 @@ module Dttp
         .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
         .merge(school_params)
         .merge(subject_params)
-        .merge(funding_params)
+        .merge(training_initiative_param)
       end
 
       def course_level
@@ -110,8 +110,8 @@ module Dttp
         { "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.course_subject_three)})" }
       end
 
-      def funding_params
-        return {} unless send_funding_to_dttp? && trainee.training_initiative != ROUTE_INITIATIVES_ENUMS[:no_initiative]
+      def training_initiative_param
+        return {} unless send_funding_to_dttp? && dttp_recognised_initiative?
 
         {
           "dfe_initiative1id_value" => "/dfe_initiatives(#{training_initiative_id(trainee.training_initiative)})",
@@ -126,6 +126,20 @@ module Dttp
         return ACADEMIC_YEAR_2020_2021 if trainee.course_start_date.between?(Date.parse("1/8/2020"), Date.parse("31/7/2021"))
         return ACADEMIC_YEAR_2021_2022 if trainee.course_start_date.between?(Date.parse("1/8/2021"), Date.parse("31/7/2022"))
         return ACADEMIC_YEAR_2022_2023 if trainee.course_start_date.between?(Date.parse("1/8/2022"), Date.parse("31/7/2023"))
+      end
+
+      def training_route
+        return trainee.training_initiative if trainee.future_teaching_scholars?
+
+        trainee.training_route
+      end
+
+      def dttp_recognised_initiative?
+        [
+          ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+          ROUTE_INITIATIVES_ENUMS[:now_teach],
+          ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
+        ].include?(trainee.training_initiative)
       end
     end
   end
