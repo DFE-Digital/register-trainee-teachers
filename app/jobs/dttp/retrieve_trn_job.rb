@@ -5,18 +5,12 @@ module Dttp
     queue_as :default
     retry_on Client::HttpError
     include NotifyOnTimeout
-    include ClockoverDependent
 
     class TraineeAttributeError < StandardError; end
 
     def perform(trainee, timeout_after = nil)
       @timeout_after = timeout_after
       @trainee = trainee
-
-      if before_clockover? && trainee_is_not_assessment_only?
-        requeue_after_clockover
-        return
-      end
 
       if @timeout_after.nil?
         self.class.perform_later(trainee, trainee.submitted_for_trn_at + Settings.jobs.max_poll_duration_days.days)
@@ -55,14 +49,6 @@ module Dttp
 
     def requeue
       self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee, timeout_after)
-    end
-
-    def requeue_after_clockover
-      self.class.set(wait_until: clockover_date).perform_later(trainee, clockover_date + Settings.jobs.max_poll_duration_days.days)
-    end
-
-    def trainee_is_not_assessment_only?
-      !(trainee.assessment_only? || trainee.early_years_assessment_only?)
     end
   end
 end
