@@ -3,8 +3,8 @@
 class InvalidDataText::View < GovukComponent::Base
   include TraineeHelper
 
-  def initialize(degree:, form_section:, hint: "")
-    @data_text = invalid_data_message(form_section.to_s, degree)
+  def initialize(form_section:, hint: "", degree_form:)
+    @data_text = invalid_data_message(form_section.to_s, degree_form.degree) unless degree_form.errors.any?
     @hint_text = hint
   end
 

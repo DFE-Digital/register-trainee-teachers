@@ -60,4 +60,14 @@ module TraineeHelper
 
     t("components.invalid_data_text.static_text", query: data["degrees"][degree.slug][form_section])
   end
+
+  def invalid_data_class(form:, field:)
+    if invalid_data_message(field, form.degree)
+      return "govuk-form-group govuk-form-group--error" if form.errors.any?
+
+      "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important app-inset-text--no_padding"
+    else
+      "govuk-form-group"
+    end
+  end
 end

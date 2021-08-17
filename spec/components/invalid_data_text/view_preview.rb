@@ -5,7 +5,7 @@ require "govuk/components"
 module InvalidDataText
   class ViewPreview < ViewComponent::Preview
     def default
-      render View.new(degree: degree, form_section: :institution, hint: "I am a very good hint!")
+      render View.new(form_section: :institution, hint: "I am a very good hint!", degree_form: degree_form)
     end
 
   private
@@ -22,6 +22,13 @@ module InvalidDataText
         id: 1,
         slug: "XXLbvaRY42wP52hWiP78r94m",
         trainee: trainee,
+      )
+    end
+
+    def degree_form
+      @degree_form ||= OpenStruct.new(
+        degree: degree,
+        errors: OpenStruct.new(any?: nil),
       )
     end
 

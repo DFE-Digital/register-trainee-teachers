@@ -15,9 +15,9 @@
                                           countries_options,
                                           :value,
                                           :text,
-                                          form_group: { class: invalid_data_message("country", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
+                                          form_group: { class: invalid_data_class(form: @degree_form, field: "country") },
                                           label: { text: "In which country is the degree institution based?", size: "s" }) do
-      render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :country)
+      render InvalidDataText::View.new(form_section: :country, degree_form: @degree_form)
     end,
   ) %>
 
@@ -28,16 +28,16 @@
       :subject, 
       options_for_select(subjects_options, @degree_form.degree.subject),
       form_group: { 
-        class: invalid_data_message("subject", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group"
+        class: invalid_data_class(form: @degree_form, field: "subject")
       },
       label: { text: "Degree subject", size: "s" },
-      hint: -> { render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :subject, hint: 'Search for the closest matching subject') }),
+      hint: -> { render InvalidDataText::View.new(form_section: :subject, hint: 'Search for the closest matching subject', degree_form: @degree_form) }),
   ) %>
 
   <div class="govuk-form-group" id="non_uk_degree">
     <%= f.govuk_radio_buttons_fieldset(:non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" },
-        form_group: { class: invalid_data_message("non_uk_degree", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group" },
-        hint: -> {  render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :non_uk_degree)  },
+        form_group: { class: invalid_data_class(form: @degree_form, field: "non_uk_degree") },
+        hint: -> {  render InvalidDataText::View.new(form_section: :non_uk_degree, degree_form: @degree_form) },
         ) do %>
       <% ENIC_NON_UK.each do |name| %>
         <%= f.govuk_radio_button :non_uk_degree, name, label: { text: name }, link_errors: true %>
@@ -48,11 +48,11 @@
   </div>
 
   <%= f.govuk_text_field :graduation_year,
-                         form_group: { class: invalid_data_message("graduation_year", @degree_form.degree) ? "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important" : "govuk-form-group", id: :graduation_year },
+                         form_group: { class: invalid_data_class(form: @degree_form, field: "graduation_year"), id: :graduation_year },
                          width: "one-quarter",
                          autocomplete: :disabled, 
                          label: { text: "Graduation year", size: "s" } do
-                            render InvalidDataText::View.new(degree: @degree_form.degree, form_section: :graduation_year)
+                            render InvalidDataText::View.new(form_section: :graduation_year, degree_form: @degree_form)
                           end %>
 
   <%= f.govuk_submit %>
