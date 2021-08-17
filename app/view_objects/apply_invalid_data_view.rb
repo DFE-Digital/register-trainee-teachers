@@ -56,7 +56,7 @@ private
   end
 
   def populate_degree_fields(degree_fields)
-    return [degree_fields[degree.to_param].keys] if degree.present?
+    return [degree_fields[degree.to_param]&.keys].compact if degree.present?
 
     degree_fields.map do |_k, field_and_values|
       field_and_values.keys

@@ -28,7 +28,9 @@ describe ApplyInvalidDataView do
   end
 
   describe "#invalid_data?" do
-    subject { described_class.new(application).invalid_data? }
+    subject { described_class.new(application, degree: degree).invalid_data? }
+
+    let(:degree) { nil }
 
     it { is_expected.to be_truthy }
 
@@ -40,6 +42,14 @@ describe ApplyInvalidDataView do
       end
 
       it { is_expected.to be_falsey }
+    end
+
+    context "with degrees" do
+      let(:degree) { create(:degree) }
+
+      it "scopes the invalid data to the degree" do
+        expect(subject).to be_falsey
+      end
     end
   end
 
