@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.trainee_start_date.edit") %>
+<%= render PageTitle::View.new(i18n_key: "trainees.trainee_start_date.edit", has_errors: @trainee_start_date_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -6,7 +6,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @trainee_start_date_form, url: trainee_start_date_path, local: true do |f| %>
+    <%= register_form_with(model: @trainee_start_date_form, url: trainee_start_date_path, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
       <%= f.govuk_date_field :commencement_date, legend: {
         text: t("views.forms.start_dates.commencement_date.label"), size: "l", tag: "h1"
       }, hint: { text: t("views.forms.start_dates.commencement_date.hint") } %>

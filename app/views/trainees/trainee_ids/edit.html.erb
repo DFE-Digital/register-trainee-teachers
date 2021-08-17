@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.trainee_ids.edit") %>
+<%= render PageTitle::View.new(i18n_key: "trainees.trainee_ids.edit", has_errors: @trainee_id_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -6,7 +6,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @trainee_id_form, url: trainee_trainee_id_path, local: true do |f| %>
+    <%= register_form_with(model: @trainee_id_form, url: trainee_trainee_id_path, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
       <%= f.govuk_text_field :trainee_id,
                              label: { text: "Trainee ID", tag: "h1", size: "l" },
                              width: 20,
