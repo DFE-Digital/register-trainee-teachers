@@ -8,6 +8,8 @@ module ApplyApplications
 
       attr_accessor :trainee, :course, :specialisms, :itt_start_date
 
+      delegate :requires_study_mode?, :itt_route?, to: :trainee
+
       def initialize(trainee:, course:, specialisms:, itt_start_date:)
         @trainee = trainee
         @course = course
@@ -36,7 +38,8 @@ module ApplyApplications
           { key: t(".age_range"), value: age_range },
           { key: t(".#{itt_route? ? 'itt' : 'course'}_start_date"), value: start_date },
           { key: t(".duration"), value: duration },
-        ]
+          ({ key: t(".study_mode"), value: @trainee.study_mode.humanize } if requires_study_mode?),
+        ].compact
       end
 
       def course_details
@@ -69,10 +72,6 @@ module ApplyApplications
       end
 
     private
-
-      def itt_route?
-        trainee.itt_route?
-      end
 
       def subject_key
         course.subjects.count > 1 ? t(".multiple_subjects") : t(".subject")
