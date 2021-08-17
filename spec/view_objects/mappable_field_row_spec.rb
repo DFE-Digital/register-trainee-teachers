@@ -35,7 +35,7 @@ describe MappableFieldRow do
             <p class="app-inset-text__title govuk-!-margin-bottom-2">#{field_label} is not recognised</p>
             <div class="govuk-!-margin-bottom-1">#{apply_subject_value}</div>
             <div>
-              <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" href="#{action_url}">
+              <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" name="#{field_label.downcase}" href="#{action_url}">
                 Review the trainee’s answer<span class="govuk-visually-hidden"> for #{field_label.downcase}</span>
               </a>
             </div>
@@ -92,7 +92,7 @@ describe MappableFieldRow do
             <p class="app-inset-text__title govuk-!-margin-bottom-2">#{field_label} is missing</p>
             #{''}
             <div>
-              <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" href="#{action_url}">
+              <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" name="#{field_label.downcase}" href="#{action_url}">
                 Review the trainee’s answer<span class="govuk-visually-hidden"> for #{field_label.downcase}</span>
               </a>
             </div>

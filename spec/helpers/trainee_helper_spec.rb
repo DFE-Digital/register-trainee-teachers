@@ -55,7 +55,7 @@ describe TraineeHelper do
 
     context "with invalid data" do
       it "return the invalid data message" do
-        expect(invalid_data_message("institution", degree)).to eq("The trainee entered ‘University of Warwick’. You need to search for the closest match.")
+        expect(invalid_data_message("institution", degree)).to eq("The trainee entered ‘University of Warwick’, which was not recognised. You need to search for the closest match.")
       end
     end
 

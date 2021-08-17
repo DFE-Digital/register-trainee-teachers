@@ -4,6 +4,16 @@ class ApplyInvalidDataView
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::TagHelper
 
+  APPLY_INVALID_DATA_FIELDS_ORDER = %w[
+    institution
+    country
+    subject
+    uk_degree
+    non_uk_degree
+    grade
+    graduation_year
+  ].freeze
+
   def initialize(apply_application, degree: nil)
     @apply_application = apply_application
     @degree = degree
@@ -52,7 +62,7 @@ private
       fields << field_names
     end
 
-    fields.flatten(1)
+    [APPLY_INVALID_DATA_FIELDS_ORDER & fields.flatten]
   end
 
   def populate_degree_fields(degree_fields)

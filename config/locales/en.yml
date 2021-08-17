@@ -180,7 +180,7 @@ en:
       degree_details_not_provided: Degree details not provided
       add_degree_details: Add degree details
     invalid_data_text:
-      static_text: The trainee entered ‘%{query}’. You need to search for the closest match.
+      static_text: The trainee entered ‘%{query}’, which was not recognised. You need to search for the closest match.
     record_details:
       progress_date_prefix:
         recommended_for_award: "Recommended: "

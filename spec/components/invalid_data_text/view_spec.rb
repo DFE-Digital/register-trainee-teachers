@@ -17,7 +17,7 @@ module InvalidDataText
 
       it "renders the correct css" do
         expect(rendered_component).to have_css(".app-inset-text__title")
-        expect(rendered_component).to have_text("The trainee entered ‘University of Warwick’. You need to search for the closest match.")
+        expect(rendered_component).to have_text("The trainee entered ‘University of Warwick’, which was not recognised. You need to search for the closest match.")
       end
     end
 
