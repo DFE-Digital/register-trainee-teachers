@@ -14,7 +14,7 @@ module Trainees
       @itt_start_date_form = IttStartDateForm.new(trainee, params: trainee_params, user: current_user)
 
       if @itt_start_date_form.stash
-        redirect_to course_confirmation_path
+        redirect_to study_mode_or_confirmation_path
       else
         render :edit
       end
@@ -28,6 +28,10 @@ module Trainees
         .transform_keys do |key|
           MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end.merge({ date_string: :other })
+    end
+
+    def course_code
+      publish_course_details_form.code
     end
 
     def authorize_trainee

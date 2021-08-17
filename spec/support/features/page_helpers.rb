@@ -162,6 +162,10 @@ module Features
       @itt_start_date_page ||= PageObjects::Trainees::EditIttStartDate.new
     end
 
+    def study_mode_edit_page
+      @study_mode_edit_page ||= PageObjects::Trainees::EditStudyMode.new
+    end
+
     def trainee_id_edit_page
       @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeId.new
     end
