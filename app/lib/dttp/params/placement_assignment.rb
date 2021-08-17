@@ -55,6 +55,7 @@ module Dttp
         .merge(school_params)
         .merge(subject_params)
         .merge(training_initiative_param)
+        .merge(study_mode_params)
       end
 
       def course_level
@@ -115,6 +116,14 @@ module Dttp
 
         {
           "dfe_initiative1id_value" => "/dfe_initiatives(#{training_initiative_id(trainee.training_initiative)})",
+        }
+      end
+
+      def study_mode_params
+        return {} if trainee.study_mode.blank?
+
+        {
+          "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{course_study_mode_id(trainee.study_mode)})",
         }
       end
 
