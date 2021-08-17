@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TrainingDetailsForm < TraineeForm
-  include TrainingDatesHelper
+  include DatesHelper
 
   COMMENCEMENT_DATE_RADIO_OPTION_COURSE = "course"
   COMMENCEMENT_DATE_RADIO_OPTION_MANUAL = "manual"
@@ -71,9 +71,5 @@ private
 
   def commencement_date_year_is_four_digits
     errors.add(:commencement_date, :invalid_year) if commencement_date.is_a?(Date) && commencement_date.year.digits.length != 4
-  end
-
-  def valid_date?(date_args)
-    Date.valid_date?(*date_args) && date_args.all?(&:positive?)
   end
 end

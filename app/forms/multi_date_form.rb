@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MultiDateForm < TraineeForm
-  include TrainingDatesHelper
+  include DatesHelper
 
   attr_accessor :day, :month, :year, :date_string
 
@@ -77,7 +77,7 @@ private
     date_hash = { year: year, month: month, day: day }
     date_args = date_hash.values.map(&:to_i)
 
-    Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+    valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
   def date_valid
