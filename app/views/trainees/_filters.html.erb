@@ -1,0 +1,89 @@
+<form method="get" id="js-live-filter">
+  <%= submit_tag "Apply filters", class: "govuk-button", id: "js-submit" %>
+  <%= hidden_field_tag :sort_by, params[:sort_by] %>
+
+  <div class="govuk-form-group">
+    <%= label_tag "text_search", t("views.trainees.index.filters.search"), class: "govuk-label govuk-label--s" %>
+    <%= text_field_tag "text_search", (filters[:text_search] if filters), spellcheck: false, class: "govuk-input" %>
+  </div>
+
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        <%= t("views.trainees.index.filters.level") %>
+      </legend>
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% COURSE_LEVELS.keys.map do |level| %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag "level[]", level, checked?(filters, :level, level.to_s), id: "level-#{level}", class: "govuk-checkboxes__input" %>
+            <%= label_tag "level-#{level}", label_for("level", level), class: "govuk-label govuk-checkboxes__label" %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+
+  <% unless training_routes.count < 2 %>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <%= t("views.trainees.index.filters.type_of_training") %>
+        </legend>
+        <div class="govuk-checkboxes govuk-checkboxes--small">
+          <% training_routes.map do |training_route, _| %>
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag "training_route[]", training_route, checked?(filters, :training_route, training_route), id: "training_route-#{training_route}", class: "govuk-checkboxes__input" %>
+              <%= label_tag "training_route-#{training_route}", label_for("training_route", training_route), class: "govuk-label govuk-checkboxes__label" %>
+            </div>
+          <% end %>
+        </div>
+      </fieldset>
+    </div>
+  <% end %>
+
+  <% if FeatureService.enabled?(:imported_from_apply_filter) && multiple_record_sources? %>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          Record source
+        </legend>
+        <div class="govuk-checkboxes govuk-checkboxes--small">
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag "record_source[]", "apply", checked?(filters, :record_source, "apply"), id: "record_source-apply", class: "govuk-checkboxes__input" %>
+              <%= label_tag "record_source-apply", label_for("record_source", "apply"), class: "govuk-label govuk-checkboxes__label" %>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag "record_source[]", "manual", checked?(filters, :record_source, "manual"), id: "record_source-manual", class: "govuk-checkboxes__input" %>
+              <%= label_tag "record_source-manual", label_for("record_source", "manual"), class: "govuk-label govuk-checkboxes__label" %>
+            </div>
+        </div>
+      </fieldset>
+    </div>
+  <% end %>
+
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        <%= t("views.trainees.index.filters.status") %>
+      </legend>
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% TraineeFilter::STATES.each do |state, _| %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag "state[]", state, checked?(filters, :state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
+            <%= label_tag "state-#{state}", label_for("state", state), class: "govuk-label govuk-checkboxes__label" %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-form-group">
+    <%= label_tag "subject", t("views.trainees.index.filters.subject"), class: "govuk-label govuk-label--s" %>
+    <%= select_tag :subject, options_from_collection_for_select(
+      filter_course_subjects_options,
+      :value,
+      :text,
+      ->(object) { object.text == filters[:subject] if filters },
+    ), class: "govuk-select" %>
+  </div>
+</form>
