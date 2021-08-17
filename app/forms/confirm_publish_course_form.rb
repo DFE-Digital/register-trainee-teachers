@@ -36,6 +36,8 @@ class ConfirmPublishCourseForm
 private
 
   def study_mode
+    return unless trainee.requires_study_mode?
+
     course_study_mode || course.study_mode
   end
 

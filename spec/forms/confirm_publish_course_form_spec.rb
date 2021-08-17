@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ConfirmPublishCourseForm, feature_course_study_mode: true, type: :model do
+describe ConfirmPublishCourseForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
   let(:specialisms) { [] }
@@ -60,13 +60,28 @@ describe ConfirmPublishCourseForm, feature_course_study_mode: true, type: :model
         end
       end
 
-      context "with study_mode set" do
-        let(:course_study_mode) { "full_time" }
+      context "course study mode feature enabled", feature_course_study_mode: true do
+        context "with study_mode set" do
+          let(:trainee) { build(:trainee, :provider_led_postgrad, study_mode: nil) }
+          let(:course_study_mode) { "full_time" }
 
-        it "updates all the course related attributes and study_mode" do
-          expect { subject.save }
-            .to change { trainee.study_mode }
-            .from(nil).to(course_study_mode)
+          it "updates all the course related attributes and study_mode" do
+            expect { subject.save }
+              .to change { trainee.study_mode }
+              .from(nil).to(course_study_mode)
+          end
+        end
+      end
+
+      context "course study mode feature disabled", feature_course_study_mode: false do
+        context "with study_mode set" do
+          let(:trainee) { build(:trainee, :provider_led_postgrad, study_mode: nil) }
+          let(:course_study_mode) { "full_time" }
+
+          it "does not update study_mode" do
+            expect { subject.save }
+              .not_to(change { trainee.study_mode })
+          end
         end
       end
 

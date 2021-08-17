@@ -32,7 +32,8 @@ module PublishCourseNextPath
   end
 
   def requires_study_mode?
-    return false unless course || trainee.requires_study_mode?
+    return false unless trainee.requires_study_mode?
+    return false if course.blank?
 
     course.study_mode == "full_time_or_part_time"
   end
