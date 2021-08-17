@@ -6,7 +6,7 @@ module Dttp
   describe RetrieveSchools do
     let(:request_uri) { nil }
     let(:expected_path) do
-      "/accounts?%24filter=dfe_provider+eq+false&%24select=name%2Cdfe_urn%2Caccountid"
+      "/accounts?%24select=name%2Cdfe_urn%2Caccountid%2Cstatuscode"
     end
     let(:request_headers) { { headers: { "Prefer" => "odata.maxpagesize=5000" } } }
     let(:http_response) { { status: 200, body: { value: [1, 2, 3], "@odata.nextLink": "https://example.com" }.to_json } }

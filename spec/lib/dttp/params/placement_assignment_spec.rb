@@ -269,16 +269,28 @@ module Dttp
                    provider: provider)
           end
 
-          before do
-            create(:dttp_school, dttp_id: dttp_lead_school_id, urn: trainee.lead_school.urn)
+          context "with a valid school" do
+            before do
+              create(:dttp_school, :active, dttp_id: dttp_lead_school_id, urn: trainee.lead_school.urn)
+            end
+
+            subject { described_class.new(trainee).params }
+
+            it "sets the lead school DTTP param" do
+              expect(subject).to include({
+                "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_lead_school_id})",
+              })
+            end
           end
 
-          subject { described_class.new(trainee).params }
+          context "with an invalid school" do
+            before do
+              create(:dttp_school)
+            end
 
-          it "sets the lead school DTTP param" do
-            expect(subject).to include({
-              "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_lead_school_id})",
-            })
+            it "raises an active record error" do
+              expect { described_class.new(trainee).params }.to raise_error(ActiveRecord::RecordNotFound)
+            end
           end
         end
 
@@ -295,8 +307,8 @@ module Dttp
           end
 
           before do
-            create(:dttp_school, dttp_id: dttp_lead_school_id, urn: trainee.lead_school.urn)
-            create(:dttp_school, dttp_id: dttp_employing_school_id, urn: trainee.employing_school.urn)
+            create(:dttp_school, :active, dttp_id: dttp_lead_school_id, urn: trainee.lead_school.urn)
+            create(:dttp_school, :active, dttp_id: dttp_employing_school_id, urn: trainee.employing_school.urn)
           end
 
           subject { described_class.new(trainee).params }

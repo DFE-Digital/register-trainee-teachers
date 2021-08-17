@@ -7,5 +7,9 @@ FactoryBot.define do
     end
     dttp_id { SecureRandom.uuid }
     urn { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
+
+    trait :active do
+      status_code { Dttp::School::STATUS_CODES[:active] }
+    end
   end
 end
