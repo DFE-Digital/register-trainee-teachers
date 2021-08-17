@@ -1,9 +1,14 @@
 <%= render PageTitle::View.new(text: trainees_page_title(@paginated_trainees, @total_trainees_count)) %>
 
 <% if @paginated_trainees.current_page > 1 %>
-  <span class="govuk-caption-xl">Page <%= @paginated_trainees.current_page %> of <%= @paginated_trainees.total_pages %></span>
+  <span class="govuk-caption-xl">
+    Page <%= @paginated_trainees.current_page %> of <%= @paginated_trainees.total_pages %>
+  </span>
 <% end %>
-<h1 class="govuk-heading-xl">Trainee records (<%= @total_trainees_count %><span class="govuk-visually-hidden"> <%= "record".pluralize(@total_trainees_count) %></span>)</h1>
+
+<h1 class="govuk-heading-xl" aria-live="polite">
+  Trainee records (<span id="js-trainee-count"><%= @total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(@total_trainees_count) %></span>)
+</h1>
 
 <% unless current_user.system_admin? %>
   <p class="govuk-body">
@@ -14,140 +19,51 @@
   </p>
 <% end %>
 
-<%= render PaginatedFilter::View.new(filters: @filters, collection: @paginated_trainees, filter_params: filter_params) do |component| %>
-  <% if @paginated_trainees.any? %>
-    <% if @draft_trainees.any? %>
-      <div class="govuk-!-margin-bottom-8 app-draft-records">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Draft records</h2>
+<div class='moj-filter-layout'>
+  <div class="moj-filter-layout__filter-wrapper app-filter">
+    <div class="moj-filter-layout__filter">
+      <div class="moj-filter">
+        <div class="moj-filter__header">
+          <div class="moj-filter__header-title">
+            <h2 class="govuk-heading-m"><%= t("components.filter.title")%></h2>
+          </div>
+          <div class="moj-filter__header-action">
           </div>
         </div>
-        <%= render ApplicationRecordCard::View.with_collection(@draft_trainees) %>
-      </div>
-    <% end %>
 
-    <% if @completed_trainees.any? %>
-      <div class="govuk-!-margin-bottom-8 app-non-draft-records">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-m">Records</h2>
+        <!-- Div made focusable to 'catch' focus from filters. see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640 -->
+        <div class="moj-filter__content" tabindex="-1">
+          <div id='js-selected-filters'>
+            <%= render "trainees/selected_filters", filters: @filters %>
+          </div>
+          <div class="moj-filter__options">
+            <%= render "trainees/filters",
+              filters: @filters,
+              training_routes: @training_routes
+            %>
           </div>
         </div>
-        <%= render ApplicationRecordCard::View.with_collection(@completed_trainees) %>
       </div>
-    <% end %>
-
-  <% elsif @filters %>
-    <h2 class="govuk-heading-m">No records found</h2>
-    <p class="govuk-body">
-      Try
-      <%= govuk_link_to "clearing your search and filters", trainees_path %>.
-    </p>
-
-  <% else %>
-    <h2 class="govuk-heading-m">
-      <%= t("views.trainees.index.no_records") %>
-    </h2>
-  <% end %>
-
-  <% component.filter_option do %>
-    <div class="govuk-form-group">
-      <%= label_tag "text_search", t("views.trainees.index.filters.search"), class: "govuk-label govuk-label--s" %>
-      <%= text_field_tag "text_search", (@filters[:text_search] if @filters), spellcheck: false, class: "govuk-input" %>
     </div>
-  <% end %>
+  </div>
 
-  <% component.filter_option do %>
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-          <%= t("views.trainees.index.filters.level") %>
-        </legend>
-        <div class="govuk-checkboxes govuk-checkboxes--small">
-          <% COURSE_LEVELS.keys.map do |level| %>
-            <div class="govuk-checkboxes__item">
-              <%= check_box_tag "level[]", level, checked?(@filters, :level, level.to_s), id: "level-#{level}", class: "govuk-checkboxes__input" %>
-              <%= label_tag "level-#{level}", label_for("level", level), class: "govuk-label govuk-checkboxes__label" %>
-            </div>
-          <% end %>
-        </div>
-      </fieldset>
-    </div>
-  <% end %>
-
-  <% unless @training_routes.count < 2 %>
-    <% component.filter_option do %>
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-            <%= t("views.trainees.index.filters.type_of_training") %>
-          </legend>
-          <div class="govuk-checkboxes govuk-checkboxes--small">
-            <% @training_routes.map do |training_route, _| %>
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag "training_route[]", training_route, checked?(@filters, :training_route, training_route), id: "training_route-#{training_route}", class: "govuk-checkboxes__input" %>
-                <%= label_tag "training_route-#{training_route}", label_for("training_route", training_route), class: "govuk-label govuk-checkboxes__label" %>
-              </div>
-            <% end %>
-          </div>
-        </fieldset>
+  <div class='moj-filter-layout__content'>
+    <div class="app-records-actions">
+      <div class="app-records-actions-text-links" id="js-action-bar">
+        <%= render "trainees/action_bar", paginated_trainees: @paginated_trainees %>
       </div>
-    <% end %>
-  <% end %>
-
-  <% if FeatureService.enabled?(:imported_from_apply_filter) && multiple_record_sources? %>
-    <% component.filter_option do %>
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-            Record source
-          </legend>
-          <div class="govuk-checkboxes govuk-checkboxes--small">
-            
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag "record_source[]", "apply", checked?(@filters, :record_source, "apply"), id: "record_source-apply", class: "govuk-checkboxes__input" %>
-                <%= label_tag "record_source-apply", label_for("record_source", "apply"), class: "govuk-label govuk-checkboxes__label" %>
-              </div>
-
-              <div class="govuk-checkboxes__item">
-                <%= check_box_tag "record_source[]", "manual", checked?(@filters, :record_source, "manual"), id: "record_source-manual", class: "govuk-checkboxes__input" %>
-                <%= label_tag "record_source-manual", label_for("record_source", "manual"), class: "govuk-label govuk-checkboxes__label" %>
-              </div>
-            
-          </div>
-        </fieldset>
+      <div class="moj-action-bar">
+        <div class="moj-action-bar__filter"></div>
       </div>
-    <% end %>
-  <% end %>
-
-  <% component.filter_option do %>
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-          <%= t("views.trainees.index.filters.status") %>
-        </legend>
-        <div class="govuk-checkboxes govuk-checkboxes--small">
-          <% TraineeFilter::STATES.each do |state, _| %>
-            <div class="govuk-checkboxes__item">
-              <%= check_box_tag "state[]", state, checked?(@filters, :state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
-              <%= label_tag "state-#{state}", label_for("state", state), class: "govuk-label govuk-checkboxes__label" %>
-            </div>
-          <% end %>
-        </div>
-      </fieldset>
     </div>
-  <% end %>
 
-  <% component.filter_option do %>
-    <div class="govuk-form-group">
-      <%= label_tag "subject", t("views.trainees.index.filters.subject"), class: "govuk-label govuk-label--s" %>
-      <%= select_tag :subject, options_from_collection_for_select(
-        filter_course_subjects_options,
-        :value,
-        :text,
-        ->(object) { object.text == @filters[:subject] if @filters },
-      ), class: "govuk-select" %>
+    <div id='js-results'>
+      <%= render "trainees/results",
+        paginated_trainees: @paginated_trainees,
+        draft_trainees: @draft_trainees,
+        completed_trainees: @completed_trainees,
+        filters: @filters
+      %>
     </div>
-  <% end %>
-<% end %>
+  </div>
+</div>

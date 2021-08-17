@@ -1,0 +1,25 @@
+<% if filters %>
+  <div class="moj-filter__selected">
+    <div class="moj-filter__selected-heading">
+      <div class="moj-filter__heading-title">
+        <h2 class="govuk-heading-m"><%= t("components.filter.selected_title")%></h2>
+      </div>
+      <div class="moj-filter__heading-action">
+        <p class="govuk-body">
+        <%= govuk_link_to 'Clear<span class="govuk-visually-hidden"> all filters</span>'.html_safe, trainees_path, class: "govuk-link--no-visited-state" %>
+        </p>
+      </div>
+    </div>
+
+    <% filters.each do |filter, value| %>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= filter_label_for(filter) %></h3>
+      <ul class="moj-filter-tags">
+        <% tags_for_filter(filters, filter, value).each do |tag| %>
+          <li>
+            <%= govuk_link_to(tag[:title], tag[:remove_link], class: "moj-filter__tag", draggable: "false") %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>

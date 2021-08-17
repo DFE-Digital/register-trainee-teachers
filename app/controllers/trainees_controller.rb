@@ -5,6 +5,7 @@ class TraineesController < ApplicationController
   before_action :ensure_trainee_is_draft!, only: :destroy
   before_action :save_filter, only: :index
   helper_method :filter_params, :multiple_record_sources?
+  include TraineeHelper
 
   def index
     return redirect_to trainees_path(filter_params) if current_page_exceeds_total_pages?
@@ -19,6 +20,7 @@ class TraineesController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.js { render json: json_response }
       format.csv { send_data data_export.data, filename: data_export.filename, disposition: :attachment }
     end
   end
@@ -110,5 +112,28 @@ private
 
   def data_export
     @data_export ||= Exports::TraineeSearchData.new(filtered_trainees)
+  end
+
+  def json_response
+    {
+      results: render_partial("trainees/results", {
+        paginated_trainees: @paginated_trainees,
+        draft_trainees: @draft_trainees,
+        completed_trainees: @completed_trainees,
+        filters: @filters,
+      }),
+      selected_filters: render_partial("trainees/selected_filters", {
+        filters: @filters,
+      }),
+      action_bar: render_partial("trainees/action_bar", {
+        paginated_trainees: @paginated_trainees,
+      }),
+      trainee_count: @total_trainees_count,
+      page_title: trainees_page_title(@paginated_trainees, @total_trainees_count),
+    }
+  end
+
+  def render_partial(partial, locals)
+    (render_to_string(formats: %w[html], partial: partial, locals: locals) || "").squish
   end
 end

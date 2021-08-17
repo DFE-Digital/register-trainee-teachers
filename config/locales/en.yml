@@ -307,6 +307,8 @@ en:
         search_hint: Search for a school by it’s unique reference number (URN), name or postcode
         search_button: Search again
     filter:
+      title: Filters
+      selected_title: Selected filters
       level: Course level
       training_route: Training route
       record_source: Record source
