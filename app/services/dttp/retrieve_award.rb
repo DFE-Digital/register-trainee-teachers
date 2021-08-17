@@ -9,7 +9,7 @@ module Dttp
     end
 
     def call
-      JSON(response.body)["dfe_qtsawardflag"]
+      JSON(response.body).slice("dfe_qtsawardflag", "dfe_qtseytsawarddate")
     end
 
   private
@@ -17,7 +17,7 @@ module Dttp
     attr_reader :trainee
 
     def response
-      @response ||= Client.get("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})?$select=dfe_qtsawardflag")
+      @response ||= Client.get("/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})?$select=dfe_qtsawardflag,dfe_qtseytsawarddate")
     end
   end
 end

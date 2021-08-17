@@ -124,10 +124,6 @@ class Trainee < ApplicationRecord
     end
 
     event :award do
-      before do
-        self.awarded_at = Time.zone.now
-      end
-
       transition %i[recommended_for_award] => :awarded
     end
   end

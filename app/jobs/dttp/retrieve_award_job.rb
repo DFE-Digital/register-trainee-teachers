@@ -19,9 +19,8 @@ module Dttp
         return
       end
 
-      awarded = RetrieveAward.call(trainee: trainee)
-
-      if awarded
+      if awarded?
+        trainee.awarded_at = award_status["dfe_qtseytsawarddate"]
         trainee.award!
       elsif continue_polling?
         requeue
@@ -40,6 +39,14 @@ module Dttp
   private
 
     attr_reader :timeout_after, :trainee
+
+    def award_status
+      @award_status ||= RetrieveAward.call(trainee: trainee)
+    end
+
+    def awarded?
+      award_status&.dig("dfe_qtsawardflag")
+    end
 
     def continue_polling?
       if trainee.recommended_for_award_at.nil?
