@@ -65,6 +65,7 @@ class DegreeForm
 
   def save_or_stash
     if degrees_form.trainee.draft?
+      clear_relevant_invalid_apply_data if apply_invalid_data_includes_slug?
       save!
     else
       stash
@@ -114,5 +115,16 @@ private
         errors.add(e.attribute, e.message)
       end
     end
+  end
+
+  def apply_invalid_data_includes_slug?
+    return unless degrees_form.trainee.invalid_apply_data?
+
+    degrees_form.trainee.apply_application.invalid_data["degrees"].keys.include? slug
+  end
+
+  def clear_relevant_invalid_apply_data
+    degrees_form.trainee.apply_application.invalid_data.tap { |invalid_data| invalid_data["degrees"].delete(slug) }
+    degrees_form.trainee.apply_application.save!
   end
 end

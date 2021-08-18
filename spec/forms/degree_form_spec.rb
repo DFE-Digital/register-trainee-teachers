@@ -109,6 +109,15 @@ describe DegreeForm, type: :model do
         expect(subject.save_or_stash).to be_truthy
       end
     end
+
+    context "when the degree exists in apply_application.invalid_data" do
+      let(:trainee) { build(:trainee, :with_invalid_apply_application) }
+      let(:degree) { trainee.degrees.first }
+
+      it "deletes the invalid degree" do
+        expect { subject.save_or_stash }.to (change { trainee.apply_application.invalid_data["degrees"].length }).from(1).to 0
+      end
+    end
   end
 
   describe "#stash" do
