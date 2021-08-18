@@ -54,13 +54,9 @@ module Dttp
         .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
         .merge(school_params)
         .merge(subject_params)
-<<<<<<< HEAD
+        .merge(study_mode_params)
         .merge(training_initiative_params)
         .merge(bursary_params)
-=======
-        .merge(training_initiative_param)
-        .merge(study_mode_params)
->>>>>>> master
       end
 
       def course_level
