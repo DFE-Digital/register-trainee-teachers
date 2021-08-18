@@ -4,10 +4,13 @@ require "rails_helper"
 
 describe ConfirmPublishCourseForm, type: :model do
   let(:params) { {} }
-  let(:trainee) { build(:trainee) }
+  let(:trainee) { create(:trainee, training_route: training_route, applying_for_bursary: true, progress: progress) }
+  let(:training_route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
   let(:specialisms) { [] }
   let(:itt_start_date) { nil }
   let(:course_study_mode) { nil }
+  let(:progress) { Progress.new }
+  let(:applying_for_bursary) { nil }
 
   subject { described_class.new(trainee, specialisms, itt_start_date, course_study_mode, params) }
 
@@ -16,7 +19,7 @@ describe ConfirmPublishCourseForm, type: :model do
   end
 
   context "with valid params" do
-    let(:course) { create(:course_with_subjects, subject_names: subjects) }
+    let(:course) { create(:course_with_subjects, subject_names: subjects, accredited_body_code: trainee.provider.code, route: training_route) }
     let(:params) { { code: course.code } }
     let(:subjects) { ["Subject 1", "Subject 2", "Subject 3"] }
 
@@ -62,7 +65,6 @@ describe ConfirmPublishCourseForm, type: :model do
 
       context "course study mode feature enabled", feature_course_study_mode: true do
         context "with study_mode set" do
-          let(:trainee) { build(:trainee, :provider_led_postgrad, study_mode: nil) }
           let(:course_study_mode) { "full_time" }
 
           it "updates all the course related attributes and study_mode" do
@@ -75,7 +77,6 @@ describe ConfirmPublishCourseForm, type: :model do
 
       context "course study mode feature disabled", feature_course_study_mode: false do
         context "with study_mode set" do
-          let(:trainee) { build(:trainee, :provider_led_postgrad, study_mode: nil) }
           let(:course_study_mode) { "full_time" }
 
           it "does not update study_mode" do
@@ -87,7 +88,7 @@ describe ConfirmPublishCourseForm, type: :model do
 
       context "when the course_subject has changed" do
         let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true) }
-        let(:trainee) { build(:trainee, applying_for_bursary: true, progress: progress) }
+        let(:applying_for_bursary) { true }
 
         it "nullifies the bursary information and resets funding section progress" do
           expect { subject.save }
