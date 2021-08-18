@@ -17,8 +17,6 @@ module ApplyApi
       application.update!(application: application_data.to_json, provider: provider)
 
       application
-    rescue NoMethodError
-      raise ApplyApiMissingDataError
     end
 
   private
@@ -36,7 +34,7 @@ module ApplyApi
     end
 
     def provider_code
-      @provider_code ||= application_data["attributes"]["course"]["training_provider_code"]
+      @provider_code ||= course_attributes("training_provider_code")
     end
 
     def apply_id
@@ -44,7 +42,13 @@ module ApplyApi
     end
 
     def provider_a_hei?
-      application_data["attributes"]["course"]["training_provider_type"] == "university"
+      course_attributes("training_provider_type") == "university"
+    end
+
+    def course_attributes(attribute_name)
+      application_data["attributes"]["course"][attribute_name]
+    rescue NoMethodError
+      raise ApplyApiMissingDataError
     end
   end
 end

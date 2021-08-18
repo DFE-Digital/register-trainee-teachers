@@ -50,6 +50,14 @@ module ApplyApi
           expect { subject }.not_to(change { ApplyApplication.count })
         end
       end
+
+      context "when there is missing data" do
+        let(:application_data) { { "attributes" => { "course" => nil } } }
+
+        it "will not create apply application " do
+          expect { subject }.to raise_error ApplyApi::ImportApplication::ApplyApiMissingDataError
+        end
+      end
     end
   end
 end

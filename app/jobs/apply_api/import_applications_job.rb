@@ -9,9 +9,9 @@ module ApplyApi
 
       new_applications.each do |application_data|
         application_record = ImportApplication.call(application_data: application_data)
-        Trainees::CreateFromApply.call(application: application_record) unless application_record.nil?
-      rescue ApplyApiMissingDataError
-        Sentry.capture_message "The data from Apply has missing attributes"
+        Trainees::CreateFromApply.call(application: application_record) if application_record.present?
+      rescue ApplyApi::ImportApplication::ApplyApiMissingDataError
+        Sentry.capture_message "The data from Apply has missing attributes, Application ID: #{application_data['id']}"
       end
     end
 
