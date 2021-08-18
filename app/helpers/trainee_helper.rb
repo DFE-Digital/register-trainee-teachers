@@ -62,9 +62,9 @@ module TraineeHelper
   end
 
   def invalid_data_class(form:, field:)
-    if invalid_data_message(field, form.degree)
-      return "govuk-form-group govuk-form-group--error" if form.errors.any?
+    return "govuk-form-group govuk-form-group--error" if form.errors.any?
 
+    if invalid_data_message(field, form.degree)
       "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important app-inset-text--no_padding"
     else
       "govuk-form-group"

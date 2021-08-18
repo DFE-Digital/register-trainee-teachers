@@ -62,7 +62,7 @@ private
       fields << field_names
     end
 
-    [APPLY_INVALID_DATA_FIELDS_ORDER & fields.flatten]
+    [fields.flatten.sort { |a, b| APPLY_INVALID_DATA_FIELDS_ORDER.find_index(a) <=> APPLY_INVALID_DATA_FIELDS_ORDER.find_index(b) }]
   end
 
   def populate_degree_fields(degree_fields)

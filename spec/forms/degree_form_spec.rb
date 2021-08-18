@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe DegreeForm, type: :model do
   let(:trainee) { build(:trainee) }
-  let(:form_store) { class_double(FormStore) }
+  let(:form_store) { class_double(FormStore, get: nil, set: nil) }
   let(:degrees_form) { DegreesForm.new(trainee, form_store) }
   let(:degree) { build(:degree, :uk_degree_with_details, trainee: trainee) }
 
