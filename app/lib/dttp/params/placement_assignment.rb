@@ -54,8 +54,13 @@ module Dttp
         .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
         .merge(school_params)
         .merge(subject_params)
+<<<<<<< HEAD
+        .merge(training_initiative_params)
+        .merge(bursary_params)
+=======
         .merge(training_initiative_param)
         .merge(study_mode_params)
+>>>>>>> master
       end
 
       def course_level
@@ -111,12 +116,31 @@ module Dttp
         { "dfe_ITTSubject3Id@odata.bind" => "/dfe_subjects(#{course_subject_id(trainee.course_subject_three)})" }
       end
 
-      def training_initiative_param
+      def training_initiative_params
         return {} unless send_funding_to_dttp? && dttp_recognised_initiative?
 
         {
-          "dfe_initiative1id_value" => "/dfe_initiatives(#{training_initiative_id(trainee.training_initiative)})",
+          "dfe_Initiative1Id@odata.bind" => "/dfe_initiatives(#{training_initiative_id(trainee.training_initiative)})",
         }
+      end
+
+      def bursary_params
+        return {} unless send_funding_to_dttp?
+        return { "dfe_allocatedplace" => 2 } unless trainee.applying_for_bursary
+
+        { "dfe_allocatedplace" => 1 }.merge(bursary_details_params)
+      end
+
+      def bursary_details_params
+        if trainee.bursary_tier.present?
+          {
+            "dfe_ITTFundingBandId@odata.bind" => "/dfe_ittfundingbands(#{funding_bands_id(trainee.bursary_tier)})",
+          }
+        else
+          {
+            "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{bursary_details_id(trainee.training_route)})",
+          }
+        end
       end
 
       def study_mode_params
