@@ -14,7 +14,7 @@ module Wizards
     end
 
     def start_point
-      return unless any_form_incomplete?
+      return unless forms_to_complete?
       return edit_trainee_lead_schools_path(trainee) unless lead_school_selected?
 
       edit_trainee_employing_schools_path(trainee)
@@ -24,11 +24,8 @@ module Wizards
 
     attr_reader :trainee, :page_tracker
 
-    def any_form_incomplete?
-      ProgressService.call(
-        validator: ::Schools::FormValidator.new(trainee, non_search_validation: true),
-        progress_value: trainee.progress.schools,
-      ).in_progress_invalid?
+    def forms_to_complete?
+      progress_service.not_started? || progress_service.in_progress_invalid?
     end
 
     def redirect_url
@@ -51,6 +48,13 @@ module Wizards
 
     def employing_school_selected?
       ::Schools::EmployingSchoolForm.new(trainee, params: { non_search_validation: true }).valid?
+    end
+
+    def progress_service
+      @progress_service ||= ProgressService.call(
+        validator: ::Schools::FormValidator.new(trainee, non_search_validation: true),
+        progress_value: trainee.progress.schools,
+      )
     end
   end
 end
