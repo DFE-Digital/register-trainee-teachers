@@ -130,7 +130,7 @@ module CourseDetails
     end
 
     def course
-      @course ||= Course.find_by(code: data_model.course_code)
+      @course ||= trainee.available_courses.find_by(code: data_model.course_code)
     end
 
     def mappable_field(field_value, field_label)

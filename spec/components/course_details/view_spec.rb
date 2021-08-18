@@ -48,15 +48,25 @@ module CourseDetails
 
     context "when data has been provided" do
       context "with a publish course", feature_publish_course_details: true do
-        let(:trainee) { create(:trainee, :with_course_details, :with_related_courses, courses_count: 1) }
-        let(:course) { instance_double("course", name: "some_name", code: "some_code") }
+        let(:trainee) { create(:trainee, :with_course_details, training_route: training_route) }
+        let(:training_route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
+
+        let(:course) { create(:course_with_subjects, code: trainee.course_code, accredited_body_code: trainee.provider.code, route: training_route) }
+
+        let(:unrelated_course) { create(:course_with_subjects, code: trainee.course_code) }
 
         before do
-          allow(Course).to receive(:find_by).with(code: trainee.course_code).and_return(course)
+          unrelated_course
+          course
           render_inline(View.new(data_model: trainee))
         end
 
-        it "renders the course details" do
+        it "renders the incorrect course details" do
+          expect(rendered_component)
+          .not_to have_text("#{unrelated_course.name} (#{unrelated_course.code})")
+        end
+
+        it "renders the correct course details" do
           expect(rendered_component)
             .to have_text("#{course.name} (#{course.code})")
         end
