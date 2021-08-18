@@ -58,6 +58,6 @@ private
   end
 
   def course
-    @course ||= Course.find_by(code: code)
+    @course ||= trainee.available_courses.find_by(code: code)
   end
 end
