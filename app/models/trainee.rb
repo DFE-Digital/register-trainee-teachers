@@ -32,6 +32,9 @@ class Trainee < ApplicationRecord
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
 
+  validates :training_route, inclusion: { in: [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] }, if: :hpitt_provider?
+  validates :training_route, exclusion: { in: [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] }, unless: :hpitt_provider?
+
   enum training_route: TRAINING_ROUTES_FOR_TRAINEE
 
   enum training_initiative: ROUTE_INITIATIVES
@@ -280,5 +283,9 @@ private
         assoc.map(&:serializable_hash).flat_map(&:values).compact
       end
     ).join(",")
+  end
+
+  def hpitt_provider?
+    @hpitt_provider ||= provider&.hpitt_postgrad?
   end
 end

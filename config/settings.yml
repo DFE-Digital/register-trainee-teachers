@@ -44,6 +44,7 @@ features:
   imported_from_apply_filter: false
   placements: false
   course_study_mode: false
+  enable_teach_first_provider: false
   routes:
     early_years_assessment_only: false
     early_years_salaried: false

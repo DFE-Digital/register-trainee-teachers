@@ -13,10 +13,11 @@ describe Trainee do
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
+        TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
         TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
-        TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
+        TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
       )
     end
 
@@ -112,6 +113,31 @@ describe Trainee do
   end
 
   context "validations" do
+    context "training route" do
+      let(:provider) { build(:provider, code: TEACH_FIRST_PROVIDER_CODE) }
+      let(:training_route) { TRAINING_ROUTE_ENUMS[:hpitt_postgrad] }
+
+      subject { build(:trainee, provider: provider, training_route: training_route) }
+
+      it "can only have trainees on the hpitt_postgrad route" do
+        expect(subject).to be_valid
+      end
+
+      context "with trainees on any other route" do
+        let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context "when the provider is not an hpitt provider" do
+        let(:provider) { build(:provider) }
+
+        it "cannot have trainees on the hpitt_postgrad route" do
+          expect(subject).not_to be_valid
+        end
+      end
+    end
+
     context "slug" do
       subject { create(:trainee) }
 

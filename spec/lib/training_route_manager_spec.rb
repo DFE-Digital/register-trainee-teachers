@@ -180,7 +180,7 @@ describe TrainingRouteManager do
         school_direct_tuition_fee: true,
         school_direct_salaried: true,
         provider_led_undergrad: true,
-        hpitt_postgrad: true,
+        hpitt_postgrad: false,
       }.each do |route, return_val|
         context "route #{route}" do
           let(:trainee) { Struct.new(:training_route).new(route.to_s) }

@@ -9,7 +9,7 @@ describe "example_data:generate" do
     Nationality.create!(name: Dttp::CodeSets::Nationalities::MAPPING.keys.first)
   end
 
-  it "creates two providers" do
-    expect { subject }.to change(Provider, :count).by(2)
+  it "creates three providers" do
+    expect { subject }.to change(Provider, :count).by(3)
   end
 end

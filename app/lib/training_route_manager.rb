@@ -41,6 +41,7 @@ class TrainingRouteManager
       TRAINING_ROUTE_ENUMS[:assessment_only],
       TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
       TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+      TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
     ].exclude?(training_route)
   end
 

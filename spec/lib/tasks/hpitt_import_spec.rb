@@ -21,7 +21,7 @@ describe "hpitt:import" do
   end
 
   let!(:school) { create(:school, urn: 123) }
-  let!(:provider) { create(:provider) }
+  let!(:provider) { create(:provider, code: TEACH_FIRST_PROVIDER_CODE) }
   let!(:course) do
     create(
       :course,
@@ -95,7 +95,7 @@ describe "hpitt:import" do
     expect(trainee.employing_school).to eq school
     expect(trainee.provider).to eq provider
 
-    expect(trainee.training_route).to eq "school_direct_salaried"
+    expect(trainee.training_route).to eq "hpitt_postgrad"
     expect(trainee.trn).to eq "1234"
     expect(trainee.trainee_id).to eq "L0V3LYiD"
 

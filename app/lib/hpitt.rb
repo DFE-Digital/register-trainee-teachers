@@ -48,7 +48,6 @@ module HPITT
         duration_in_years: csv_row["Duration"].scan(/\d+/).first.to_i,
         start_date: Date.parse(csv_row["Course start date"]),
         name: csv_row["ITT Subject 1"],
-        route: trainee.training_route,
       )
 
       case potential_courses.count
@@ -65,7 +64,7 @@ module HPITT
       trainee = Trainee.find_or_initialize_by(trainee_id: csv_row["Trainee ID"])
 
       # TODO: Temporary, the provider code will need to be added to this csv
-      trainee.provider = Provider.first
+      trainee.provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
 
       assign_field = lambda do |field_name|
         lambda do |field_value|

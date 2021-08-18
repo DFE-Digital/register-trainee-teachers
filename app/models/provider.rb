@@ -18,4 +18,9 @@ class Provider < ApplicationRecord
   def code=(cde)
     self[:code] = cde.to_s.upcase
   end
+
+  def hpitt_postgrad?
+    # TODO: An arbitrary provider set here until we receive a list of teach first providers
+    code == TEACH_FIRST_PROVIDER_CODE
+  end
 end
