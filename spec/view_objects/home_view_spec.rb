@@ -3,12 +3,14 @@
 require "rails_helper"
 
 describe HomeView do
+  let(:draft_trainee) { create(:trainee, :draft) }
+
   subject { described_class.new(trainees) }
 
   describe "#state_counts" do
     context "no trainees in award states" do
       let(:trainees) do
-        trainee_id = create(:trainee, :draft).id
+        trainee_id = draft_trainee.id
         Trainee.where(id: trainee_id)
       end
 
@@ -104,7 +106,7 @@ describe HomeView do
   describe "#registered_trainees_count" do
     let(:trainees) do
       trainee_ids = [
-        create(:trainee, :draft).id,
+        draft_trainee.id,
         create(:trainee, :assessment_only, :awarded).id,
         create(:trainee, :early_years_undergrad, :awarded).id,
       ]
@@ -119,7 +121,7 @@ describe HomeView do
   describe "#draft_trainees_count" do
     let(:trainees) do
       trainee_ids = [
-        create(:trainee, :draft).id,
+        draft_trainee.id,
         create(:trainee, :assessment_only, :awarded).id,
         create(:trainee, :early_years_undergrad, :awarded).id,
       ]
@@ -129,12 +131,26 @@ describe HomeView do
     it "returns the number of trainees in draft states" do
       expect(subject.draft_trainees_count).to eq(1)
     end
+
+    context "with empty trainee exists" do
+      let(:trainees) do
+        trainee_ids = [
+          draft_trainee.id,
+          Trainee.create!(provider: draft_trainee.provider, training_route: TRAINING_ROUTE_ENUMS[:assessment_only]).id,
+        ]
+        Trainee.where(id: trainee_ids)
+      end
+
+      it "does not include empty trainees" do
+        expect(subject.draft_trainees_count).to eq(1)
+      end
+    end
   end
 
   describe "#draft_apply_trainees_count" do
     let(:trainees) do
       trainee_ids = [
-        create(:trainee, :draft).id,
+        draft_trainee.id,
         create(:trainee, :draft, :with_apply_application).id,
         create(:trainee, :awarded, :with_apply_application).id,
       ]

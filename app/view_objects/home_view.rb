@@ -6,7 +6,7 @@ class HomeView
                                     eyts_awarded].freeze
 
   def initialize(trainees)
-    @trainees = trainees
+    @trainees = Trainees::Filter.call(trainees: trainees, filters: {})
     populate_state_counts!
   end
 
@@ -25,14 +25,16 @@ class HomeView
   end
 
   def draft_apply_trainees_count
-    @trainees.draft.with_apply_application.count
+    trainees.draft.with_apply_application.count
   end
 
 private
 
+  attr_reader :trainees
+
   def populate_state_counts!
     defaults = Trainee.states.keys.index_with { 0 }
-    counts = @trainees.group(:state).count.reverse_merge(defaults)
+    counts = trainees.group(:state).count.reverse_merge(defaults)
 
     if eyts_trainees? == qts_trainees?
       counts["awarded"] ||= 0
@@ -55,14 +57,10 @@ private
   end
 
   def eyts_trainees?
-    return @_eyts_trainees if defined?(@_eyts_trainees)
-
-    @_eyts_trainees = @trainees.with_award_states("eyts_recommended", "eyts_awarded").count.positive?
+    @eyts_trainees ||= trainees.with_award_states("eyts_recommended", "eyts_awarded").count.positive?
   end
 
   def qts_trainees?
-    return @_qts_trainees if defined?(@_qts_trainees)
-
-    @_qts_trainees = @trainees.with_award_states("qts_recommended", "qts_awarded").count.positive?
+    @qts_trainees ||= trainees.with_award_states("qts_recommended", "qts_awarded").count.positive?
   end
 end
