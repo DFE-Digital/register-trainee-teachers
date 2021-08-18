@@ -4,6 +4,8 @@ module ApplyApi
   class ImportApplication
     include ServicePattern
 
+    class ApplyApiMissingDataError < StandardError; end
+
     def initialize(application_data:)
       @application_data = application_data
     end
@@ -15,6 +17,8 @@ module ApplyApi
       application.update!(application: application_data.to_json, provider: provider)
 
       application
+    rescue NoMethodError
+      raise ApplyApiMissingDataError
     end
 
   private
