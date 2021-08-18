@@ -6,5 +6,7 @@ Sentry.init do |config|
     filter.filter(event.to_hash)
   end
 
+  config.traces_sample_rate = 0.5
+
   config.release = ENV["COMMIT_SHA"]
 end
