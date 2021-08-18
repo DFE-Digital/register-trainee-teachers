@@ -3,6 +3,44 @@
 require "rails_helper"
 
 describe "Trainee state transitions" do
+  describe "#award_qts!" do
+    let(:awarded_at) { "2019-06-28T23:00:00Z" }
+    let(:trainee) { create(:trainee, :recommended_for_award) }
+
+    subject { trainee.award_qts!(awarded_at) }
+
+    context "with a :recommended_for_award trainee" do
+      it "transitions the trainee to :awarded and updates the awarded_at" do
+        subject
+        trainee.reload
+        expect(trainee.state).to eq("awarded")
+        expect(trainee.awarded_at).to eq(awarded_at)
+      end
+    end
+
+    context "with no awarded_at date" do
+      let(:awarded_at) { nil }
+
+      it "raises an error if no awarded_at is provided" do
+        expect {
+          subject
+        }.to raise_error(StateTransitionError)
+      end
+    end
+
+    (Trainee.states.keys - %w[recommended_for_award]).each do |state|
+      context "with a :#{state} trainee" do
+        let(:trainee) { create(:trainee, state) }
+
+        it "raises an error" do
+          expect {
+            subject
+          }.to raise_error(RuntimeError, "Invalid transition")
+        end
+      end
+    end
+  end
+
   describe "#trn_received!" do
     let(:old_trn) { "123" }
     let(:new_trn) { "abc" }

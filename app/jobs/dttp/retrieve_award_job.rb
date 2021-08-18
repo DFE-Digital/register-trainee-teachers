@@ -20,8 +20,7 @@ module Dttp
       end
 
       if awarded?
-        trainee.awarded_at = award_status["dfe_qtseytsawarddate"]
-        trainee.award!
+        trainee.award_qts!(award_status["dfe_qtseytsawarddate"])
       elsif continue_polling?
         requeue
       else
