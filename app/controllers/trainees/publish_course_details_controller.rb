@@ -78,7 +78,7 @@ module Trainees
     end
 
     def course_subjects
-      @course_subjects ||= Course.find_by_code(@publish_course_details_form.code).subjects.map(&:name)
+      @course_subjects ||= trainee.available_courses.find_by(code: @publish_course_details_form.code).subjects.map(&:name)
     end
 
     def course_params
