@@ -2,6 +2,7 @@
 
 class CourseDetailsForm < TraineeForm
   include CourseFormHelpers
+  include DatesHelper
 
   FIELDS = %i[
     course_subject_one
@@ -171,7 +172,7 @@ private
 
   def new_date(date_hash)
     date_args = date_hash.values.map(&:to_i)
-    Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+    valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
   def age_range_valid

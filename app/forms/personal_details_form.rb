@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PersonalDetailsForm < TraineeForm
+  include DatesHelper
+
   FIELDS = %i[
     first_names
     middle_names
@@ -37,7 +39,7 @@ class PersonalDetailsForm < TraineeForm
     date_hash = { year: year, month: month, day: day }
     date_args = date_hash.values.map(&:to_i)
 
-    Date.valid_date?(*date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+    valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
   def save!

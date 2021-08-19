@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TraineeStartDateForm < TraineeForm
-  include TrainingDatesHelper
+  include DatesHelper
 
   attr_accessor :day, :month, :year
 
@@ -46,10 +46,6 @@ private
     elsif date_before_course_start_date?(commencement_date, trainee.course_start_date)
       errors.add(:commencement_date, :not_before_course_start_date)
     end
-  end
-
-  def valid_date?(date_args)
-    Date.valid_date?(*date_args) && date_args.all?(&:positive?)
   end
 
   def fields_from_store
