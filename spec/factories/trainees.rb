@@ -86,6 +86,7 @@ FactoryBot.define do
 
     trait :completed do
       in_progress
+      with_funding
       nationalities { [build(:nationality)] }
       progress do
         Progress.new(
