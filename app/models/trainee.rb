@@ -125,7 +125,7 @@ class Trainee < ApplicationRecord
 
     event :award do
       before do
-        self.awarded_at = Time.zone.now
+        raise StateTransitionError, "Cannot transition to :awarded without an awarded_at date" if awarded_at.blank?
       end
 
       transition %i[recommended_for_award] => :awarded
@@ -176,6 +176,11 @@ class Trainee < ApplicationRecord
     receive_trn! unless deferred? || withdrawn?
     # A deferred trainee will probably already have a trn - don't overwrite that!
     update!(trn: new_trn) unless trn
+  end
+
+  def award_qts!(awarded_at)
+    self.awarded_at = awarded_at
+    award!
   end
 
   def dttp_id=(value)

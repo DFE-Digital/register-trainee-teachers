@@ -7,7 +7,7 @@ module Dttp
     describe "#call" do
       let(:placement_assignment_entity_id) { SecureRandom.uuid }
       let(:trainee) { create(:trainee, :recommended_for_award, placement_assignment_dttp_id: placement_assignment_entity_id) }
-      let(:path) { "/dfe_placementassignments(#{placement_assignment_entity_id})?$select=dfe_qtsawardflag" }
+      let(:path) { "/dfe_placementassignments(#{placement_assignment_entity_id})?$select=dfe_qtsawardflag,dfe_qtseytsawarddate" }
       let(:request_url) { "#{Settings.dttp.api_base_url}#{path}" }
 
       subject { described_class.call(trainee: trainee) }
@@ -18,21 +18,21 @@ module Dttp
       end
 
       context "success response" do
-        let(:http_response) { { status: 200, body: { dfe_qtsawardflag: award_flag }.to_json } }
+        let(:http_response) { { status: 200, body: response_body.to_json } }
 
         context "QTS is awarded" do
-          let(:award_flag) { true }
+          let(:response_body) { { "dfe_qtsawardflag" => true, "dfe_qtseytsawarddate" => "2019-06-28T23:00:00Z" } }
 
           it "returns the QTS flag" do
-            expect(subject).to eq(award_flag)
+            expect(subject).to eq(response_body)
           end
         end
 
         context "QTS is not awarded" do
-          let(:award_flag) { false }
+          let(:response_body) { { "dfe_qtsawardflag" => false, "dfe_qtseytsawarddate" => nil } }
 
           it "returns the QTS flag" do
-            expect(subject).to eq(award_flag)
+            expect(subject).to eq(response_body)
           end
         end
       end

@@ -6,7 +6,7 @@ module Dttp
   describe RetrieveAwardJob do
     include ActiveJob::TestHelper
 
-    let(:award_flag) { nil }
+    let(:award_status) { nil }
     let(:trainee) { create(:trainee, :recommended_for_award) }
     let(:configured_delay) { 6 }
     let(:configured_poll_timeout_days) { 4 }
@@ -15,7 +15,7 @@ module Dttp
     before do
       enable_features(:persist_to_dttp)
 
-      allow(RetrieveAward).to receive(:call).with(trainee: trainee).and_return(award_flag)
+      allow(RetrieveAward).to receive(:call).with(trainee: trainee).and_return(award_status)
       allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
       allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)
       allow(SlackNotifierService).to receive(:call)
@@ -34,13 +34,14 @@ module Dttp
     end
 
     context "Award is awarded in DTTP" do
-      let(:award_flag) { true }
+      let(:award_status) { { "dfe_qtsawardflag" => true, "dfe_qtseytsawarddate" => "2019-06-28T23:00:00Z" } }
 
       it "transitions the trainee to awarded" do
         expect {
           described_class.perform_now(trainee, timeout_date)
           trainee.reload
         }.to change(trainee, :state).to("awarded")
+        .and change(trainee, :awarded_at).to(award_status["dfe_qtseytsawarddate"].to_datetime)
       end
 
       it "doesn't queue another job" do
@@ -50,7 +51,7 @@ module Dttp
     end
 
     context "Award is not awarded in DTTP" do
-      let(:award_flag) { false }
+      let(:award_status) { { "dfe_qtsawardflag" => false, "dfe_qtseytsawarddate" => nil } }
 
       it "queues another job to fetch the Award the configured number of hours from now" do
         Timecop.freeze(Time.zone.now) do
