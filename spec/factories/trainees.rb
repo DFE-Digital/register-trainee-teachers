@@ -302,13 +302,15 @@ FactoryBot.define do
       transient do
         courses_count { 5 }
         subject_names { [] }
+        study_mode { "full_time" }
       end
 
       after(:create) do |trainee, evaluator|
         create_list(:course_with_subjects, evaluator.courses_count,
                     subject_names: evaluator.subject_names,
                     accredited_body_code: trainee.provider.code,
-                    route: trainee.training_route)
+                    route: trainee.training_route,
+                    study_mode: evaluator.study_mode)
 
         trainee.reload
       end

@@ -22,15 +22,19 @@ FactoryBot.define do
     end
 
     factory :course_with_subjects do
-      study_mode { "full_time" }
       transient do
         subjects_count { 1 }
         subject_names { [] }
+        study_mode { "full_time" }
       end
 
       before(:create) do |course, evaluator|
         if evaluator.subject_names.any?
           course.name = evaluator.subject_names.join(" and ")
+        end
+
+        if evaluator.study_mode.present?
+          course.study_mode = evaluator.study_mode
         end
       end
 

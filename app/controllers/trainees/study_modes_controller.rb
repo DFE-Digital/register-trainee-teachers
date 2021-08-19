@@ -7,7 +7,7 @@ module Trainees
     before_action :authorize_trainee
 
     def edit
-      @study_mode_form = StudyModesForm.new(trainee)
+      @study_mode_form = StudyModesForm.new(trainee, params: { study_mode: nil })
     end
 
     def update

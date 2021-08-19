@@ -7,6 +7,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   let(:subjects) { [] }
   let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+  let(:study_mode) { "full_time" }
 
   background do
     given_i_am_authenticated
@@ -162,7 +163,30 @@ feature "publish course details", type: :feature, feature_publish_course_details
           then_i_see_the_confirm_publish_course_page
         end
 
-        scenario "with invalid itt start date" do
+        context "course study_mode is full_time_or_part_time" do
+          let(:study_mode) { "full_time_or_part_time" }
+          let(:with_valid_itt_start_date) { "with valid itt start date" }
+
+          context "with study_mode off", feature_course_study_mode: false do
+            scenario :with_valid_itt_start_date do
+              then_i_see_the_itt_start_date_edit_page
+              and_i_set_itt_start_date("1/01/2020")
+              and_i_continue
+              then_i_see_the_confirm_publish_course_page
+            end
+          end
+
+          context "with study_mode on", feature_course_study_mode: true do
+            scenario :with_valid_itt_start_date do
+              then_i_see_the_itt_start_date_edit_page
+              and_i_set_itt_start_date("9/09/2020")
+              and_i_continue
+              then_i_see_the_study_mode_edit_page
+            end
+          end
+        end
+
+        scenario :with_valid_itt_start_date do
           then_i_see_the_itt_start_date_edit_page
           and_i_set_itt_start_date("32/01/2020")
           and_i_continue
@@ -222,7 +246,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def given_a_trainee_exists_with_some_courses(with_subjects: [], with_training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-    given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: with_training_route)
+    given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: with_training_route, study_mode: study_mode)
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
 
@@ -353,6 +377,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def then_i_see_the_confirm_publish_course_page
     expect(confirm_publish_course_page).to be_displayed(trainee_id: trainee.slug)
+  end
+
+  def then_i_see_the_study_mode_edit_page
+    expect(study_mode_edit_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def then_i_see_the_itt_start_date_edit_page

@@ -4,7 +4,13 @@ module PublishCourseNextPath
   def publish_course_next_path
     if trainee.requires_itt_start_date?
       edit_trainee_course_details_itt_start_date_path(trainee)
-    elsif requires_study_mode?
+    else
+      study_mode_or_confirmation_path
+    end
+  end
+
+  def study_mode_or_confirmation_path
+    if requires_study_mode?
       edit_trainee_course_details_study_mode_path(trainee)
     else
       course_confirmation_path
