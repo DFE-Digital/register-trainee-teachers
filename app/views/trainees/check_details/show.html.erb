@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "check_details.show") %>
+<%= render PageTitle::View.new(i18n_key: "check_details.show", has_errors: @form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLink.new(
