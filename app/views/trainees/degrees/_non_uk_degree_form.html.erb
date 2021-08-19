@@ -4,7 +4,7 @@
   <% if f.govuk_error_summary.present? %>
     <%= f.govuk_error_summary %>
   <% else %>
-    <%= render ReviewSummary::View.new(form: @degree_form, invalid_data_view: ApplyInvalidDataView.new(@trainee.apply_application, degree: @degree_form.degree)) %>
+    <%= render ReviewSummary::View.new(form: @degree_form, invalid_data_view: ApplyInvalidDataView.new(@trainee.apply_application, degree: @degree_form.degree, on_form_page: true)) %>
   <% end %>
 
   <h1 class="govuk-heading-l">Non-UK degree details</h1>

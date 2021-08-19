@@ -14,9 +14,10 @@ class ApplyInvalidDataView
     graduation_year
   ].freeze
 
-  def initialize(apply_application, degree: nil)
+  def initialize(apply_application, degree: nil, on_form_page: false)
     @apply_application = apply_application
     @degree = degree
+    @on_form_page = on_form_page
     @invalid_fields = populate_invalid_fields
   end
 
@@ -49,9 +50,14 @@ private
   attr_reader :apply_application, :invalid_fields, :degree
 
   def get_link_anchor(field, index)
+    return get_form_page_link_anchor(field) if @on_form_page
     return "##{field.parameterize}" if invalid_fields.size == 1
 
     "##{field.parameterize}-#{index}"
+  end
+
+  def get_form_page_link_anchor(field)
+    "#degree-#{field.parameterize}-field" if invalid_fields.size == 1
   end
 
   def populate_invalid_fields
@@ -63,6 +69,9 @@ private
     end
 
     fields.flatten(1).reverse.map do |degree_fields|
+      # The reversing of the fields needs to be checked in production,
+      # as it may prevent the hyperlinks from appending the correct
+      # index onto it
       degree_fields.sort { |a, b| APPLY_INVALID_DATA_FIELDS_ORDER.find_index(a) <=> APPLY_INVALID_DATA_FIELDS_ORDER.find_index(b) }
     end
   end
