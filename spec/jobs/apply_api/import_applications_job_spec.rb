@@ -59,11 +59,10 @@ module ApplyApi
       context "when ImportApplication returns ApplyApiMissingDataError" do
         before do
           allow(ImportApplication).to receive(:call).with(application_data: application_data).and_raise ApplyApi::ImportApplication::ApplyApiMissingDataError
-          allow(application_data).to receive(:[]).and_return("1")
         end
 
         it "is rescued and captured by Sentry" do
-          expect(Sentry).to receive(:capture_message).with("The data from Apply has missing attributes, Application ID: 1")
+          expect(Sentry).to receive(:capture_exception).with(ApplyApi::ImportApplication::ApplyApiMissingDataError)
           described_class.perform_now
         end
       end
