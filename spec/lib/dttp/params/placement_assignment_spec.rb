@@ -28,8 +28,6 @@ module Dttp
       let(:dttp_route_id) { Dttp::CodeSets::Routes::MAPPING[trainee.training_route][:entity_id] }
       let(:dttp_qualification_aim_id) { Dttp::CodeSets::QualificationAims::MAPPING[trainee.training_route][:entity_id] }
       let(:dttp_training_initiative_entity_id) { SecureRandom.uuid }
-      let(:dttp_bursary_details_entity_id) { SecureRandom.uuid }
-      let(:dttp_funding_band_entity_id) { SecureRandom.uuid }
 
       before do
         allow(Time).to receive(:now).and_return(time_now_in_zone)
@@ -324,6 +322,9 @@ module Dttp
         end
 
         context "bursary details", feature_show_funding: true do
+          let(:dttp_bursary_details_entity_id) { SecureRandom.uuid }
+          let(:dttp_funding_band_entity_id) { SecureRandom.uuid }
+
           before do
             stub_const(
               "Dttp::CodeSets::BursaryDetails::MAPPING",

@@ -5,6 +5,7 @@ module Dttp
     def bursary_details_id(bursary_amount)
       CodeSets::BursaryDetails::MAPPING.dig(bursary_amount, :entity_id)
     end
+
     def course_subject_id(subject)
       CodeSets::CourseSubjects::MAPPING.dig(subject, :entity_id)
     end
