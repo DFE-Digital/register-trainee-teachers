@@ -52,6 +52,11 @@ namespace :example_data do
   task generate: :environment do
     raise "THIS TASK CANNOT BE RUN IN PRODUCTION" if Rails.env.production?
 
+    if Trainee.any?
+      puts "Noop as DB already contains data"
+      exit
+    end
+
     Faker::Config.locale = "en-GB"
 
     # Base our example data on the currently switched-on feature flags
