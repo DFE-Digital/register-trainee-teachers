@@ -40,7 +40,7 @@ module Trainees
     # created e.g. when a user saves more than one disability for a trainee.
     # For now, just show one 'create' timeline entry.
     def grouped_audits
-      audits.group_by(&:request_uuid).map { |_, audits| audits.first }
+      audits.includes(:user).group_by(&:request_uuid).map { |_, audits| audits.first }
     end
 
     def audits
