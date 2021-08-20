@@ -101,7 +101,7 @@ module RecordDetails
     def progress_date
       return unless trainee_progress_date
 
-      I18n.t(".progress_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_progress_date)
+      I18n.t("record_details.view.progress_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_progress_date)
     end
 
     def status_date
