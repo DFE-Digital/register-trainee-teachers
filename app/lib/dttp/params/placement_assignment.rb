@@ -13,6 +13,9 @@ module Dttp
       COURSE_LEVEL_UG = 20
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
 
+      ALLOCATED_PLACE = 1
+      NO_ALLOCATED_PLACE = 2
+
       attr_reader :trainee, :qualifying_degree, :params
 
       def initialize(trainee, contact_change_set_id = nil)
@@ -122,9 +125,9 @@ module Dttp
 
       def bursary_params
         return {} unless send_funding_to_dttp?
-        return { "dfe_allocatedplace" => 2 } unless trainee.applying_for_bursary
+        return { "dfe_allocatedplace" => NO_ALLOCATED_PLACE } unless trainee.applying_for_bursary
 
-        { "dfe_allocatedplace" => 1 }.merge(bursary_details_params)
+        { "dfe_allocatedplace" => ALLOCATED_PLACE }.merge(bursary_details_params)
       end
 
       def bursary_details_params
