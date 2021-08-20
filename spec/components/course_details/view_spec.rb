@@ -61,7 +61,7 @@ module CourseDetails
           render_inline(View.new(data_model: trainee))
         end
 
-        it "renders the incorrect course details" do
+        it "doesn't render the incorrect course details" do
           expect(rendered_component)
           .not_to have_text("#{unrelated_course.name} (#{unrelated_course.code})")
         end
