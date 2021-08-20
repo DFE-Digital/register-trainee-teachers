@@ -1,5 +1,6 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
 import { nodeListForEach } from 'govuk-frontend/govuk/common'
+import tracker from '../tracker.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
 const idElement = document.getElementById('school-id')
@@ -82,6 +83,7 @@ const setupAutoComplete = (form) => {
         defaultValue: defaultValueOption,
         name: fieldName,
         source: (query, populateResults) => {
+          tracker.trackSearch(query)
           return findSchools({
             query,
             populateResults,
@@ -89,7 +91,10 @@ const setupAutoComplete = (form) => {
           })
         },
         templates: renderTemplate,
-        onConfirm: setSchoolHiddenField,
+        onConfirm: (value) => {
+          tracker.sendTrackingEvent(value, fieldName)
+          setSchoolHiddenField(value)
+        },
         tNoResults: () => statusMessage
       })
 
