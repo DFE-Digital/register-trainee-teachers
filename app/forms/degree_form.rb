@@ -66,7 +66,7 @@ class DegreeForm
   def save_or_stash
     if degrees_form.trainee.draft?
       if save!
-        clear_relevant_invalid_apply_data if apply_invalid_data_includes_slug? && errors.empty?
+        clear_relevant_invalid_apply_data if apply_invalid_data_includes_slug?
         true
       end
     else
