@@ -39,7 +39,7 @@ private
   attr_reader :form_instance, :missing_fields
 
   def get_link_anchor(field, index)
-    return "##{get_display_name(field).parameterize}" if missing_fields.flatten.size == 1
+    return "##{get_display_name(field).parameterize}" if missing_fields.size == 1
 
     "##{get_display_name(field).parameterize}-#{index}"
   end

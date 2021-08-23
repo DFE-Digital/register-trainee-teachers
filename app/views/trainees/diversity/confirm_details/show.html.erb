@@ -1,10 +1,14 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.diversity.confirm") %>
+<%= render PageTitle::View.new(i18n_key: "trainees.diversity.confirm", has_errors: @form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<%= render ReviewSummary::View.new(form: @form, invalid_data_view: @missing_data_view) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render ReviewSummary::View.new(form: @form, invalid_data_view: @missing_data_view) %>
+  </div>
+</div>
 
 <%= render(
   partial: "trainees/confirm_details/form",
