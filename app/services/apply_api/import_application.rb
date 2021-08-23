@@ -4,12 +4,15 @@ module ApplyApi
   class ImportApplication
     include ServicePattern
 
+    class ApplyApiMissingDataError < StandardError; end
+
     def initialize(application_data:)
       @application_data = application_data
     end
 
     def call
       return unless provider
+      return if provider_a_hei?
 
       application.update!(application: application_data.to_json, provider: provider)
 
@@ -31,11 +34,21 @@ module ApplyApi
     end
 
     def provider_code
-      @provider_code ||= application_data["attributes"]["course"]["training_provider_code"]
+      @provider_code ||= course_attributes("training_provider_code")
     end
 
     def apply_id
       @apply_id ||= application_data["id"]
+    end
+
+    def provider_a_hei?
+      course_attributes("training_provider_type") == "university"
+    end
+
+    def course_attributes(attribute_name)
+      application_data["attributes"]["course"][attribute_name]
+    rescue NoMethodError
+      raise ApplyApiMissingDataError, "Apply application_id #{apply_id} could not be imported"
     end
   end
 end
