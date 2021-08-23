@@ -68,7 +68,10 @@ private
       fields << field_names
     end
 
-    fields.flatten(1).map do |degree_fields|
+    fields.flatten(1).reverse.map do |degree_fields|
+      # TODO: Check in what order the apply data is saved
+      # as we may need to remove the reverse function
+      # in order for the hyperlinks to work in the correct order
       degree_fields.sort { |a, b| APPLY_INVALID_DATA_FIELDS_ORDER.find_index(a) <=> APPLY_INVALID_DATA_FIELDS_ORDER.find_index(b) }
     end
   end
