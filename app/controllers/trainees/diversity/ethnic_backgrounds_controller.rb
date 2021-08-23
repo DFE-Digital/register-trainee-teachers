@@ -4,6 +4,7 @@ module Trainees
   module Diversity
     class EthnicBackgroundsController < ApplicationController
       before_action :authorize_trainee
+      before_action :unregister_page_from_tracker
 
       def edit
         @ethnic_background_form = Diversities::EthnicBackgroundForm.new(trainee)

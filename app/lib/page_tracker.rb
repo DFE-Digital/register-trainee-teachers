@@ -41,6 +41,10 @@ class PageTracker
     origin_pages.reject { |path| path.include?("confirm") }.last
   end
 
+  def unregister_current_page
+    history.delete(request.fullpath)
+  end
+
 private
 
   attr_reader :session, :request, :history_session_key, :origin_pages_session_key

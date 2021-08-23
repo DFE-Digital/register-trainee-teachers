@@ -18,6 +18,11 @@ module Wizards
     end
 
     def start_point
+      # As this is essentially a redirect, we want to remove the page
+      # from the page tracker, to give the illusion it was never
+      # visited at all
+      page_tracker&.unregister_current_page
+
       return unless any_form_incomplete?
       return edit_trainee_diversity_disclosure_path(trainee) unless ::Diversities::DisclosureForm.new(trainee).valid?
       return edit_trainee_diversity_ethnic_group_path(trainee) unless ::Diversities::EthnicGroupForm.new(trainee).valid?

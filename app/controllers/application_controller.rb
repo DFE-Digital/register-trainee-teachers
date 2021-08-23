@@ -76,6 +76,10 @@ private
     end
   end
 
+  def unregister_page_from_tracker
+    page_tracker.unregister_current_page
+  end
+
   def clear_form_stash(trainee)
     FormStore.clear_all(trainee.id)
   end

@@ -5,6 +5,7 @@ module Trainees
     class DisabilityDetailsController < ApplicationController
       before_action :authorize_trainee
       before_action :load_disabilities
+      before_action :unregister_page_from_tracker
 
       def edit
         @disability_detail_form = Diversities::DisabilityDetailForm.new(trainee)
