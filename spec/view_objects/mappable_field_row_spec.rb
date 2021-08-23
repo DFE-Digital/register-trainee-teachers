@@ -57,6 +57,10 @@ describe MappableFieldRow do
         it "uses the app-inset-text--error class" do
           expect(subject[:value]).to include("app-inset-text--error")
         end
+
+        it "has a visually hidden error prefix" do
+          expect(subject[:value]).to include('<span class="govuk-visually-hidden">Error:</span>')
+        end
       end
     end
 

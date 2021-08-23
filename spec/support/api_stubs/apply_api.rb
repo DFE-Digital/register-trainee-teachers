@@ -174,6 +174,8 @@ module ApiStubs
         recruitment_cycle_year: 2021,
         course_code: "V6X1",
         training_provider_code: "E84",
+        training_provider_type: "scitt",
+        accredited_provider_type: nil,
         site_code: "-",
         study_mode: "full_time",
       }

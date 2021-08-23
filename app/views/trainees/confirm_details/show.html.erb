@@ -1,10 +1,14 @@
-<%= render PageTitle::View.new(text: t("components.confirmation.heading", section_title: confirm_section_title)) %>
+<%= render PageTitle::View.new(text: t("components.confirmation.heading", section_title: confirm_section_title), has_errors: @form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee) %>
 <% end %>
 
-<%= render ReviewSummary::View.new(form: @form, invalid_data_view: @missing_data_view) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render ReviewSummary::View.new(form: @form, invalid_data_view: @missing_data_view) %>
+  </div>
+</div>
 
 <%= render(
   partial: "form",

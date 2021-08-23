@@ -55,6 +55,17 @@ module ApplyApi
           described_class.perform_now
         end
       end
+
+      context "when ImportApplication returns ApplyApiMissingDataError" do
+        before do
+          allow(ImportApplication).to receive(:call).with(application_data: application_data).and_raise ApplyApi::ImportApplication::ApplyApiMissingDataError
+        end
+
+        it "is rescued and captured by Sentry" do
+          expect(Sentry).to receive(:capture_exception).with(ApplyApi::ImportApplication::ApplyApiMissingDataError)
+          described_class.perform_now
+        end
+      end
     end
 
     context "when the feature flag is turned off", feature_import_applications_from_apply: false do

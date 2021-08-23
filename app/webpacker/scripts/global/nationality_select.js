@@ -86,6 +86,7 @@ const prepareNationalitySelect = () => {
     addNationalityButton = document.createElement('button')
     addNationalityButton.innerHTML = 'Add another nationality'
     addNationalityButton.id = 'add-nationality-button'
+    addNationalityButton.type = 'button'
     addNationalityButton.classList.add(
       'govuk-button',
       'govuk-button--secondary'
