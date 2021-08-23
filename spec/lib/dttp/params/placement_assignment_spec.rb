@@ -321,16 +321,92 @@ module Dttp
           end
         end
 
-        context "funding", feature_show_funding: true do
+        context "bursary details", feature_show_funding: true do
+          let(:dttp_bursary_details_entity_id) { SecureRandom.uuid }
+          let(:dttp_funding_band_entity_id) { SecureRandom.uuid }
+
           before do
-            stub_const("Dttp::CodeSets::TrainingInitiatives::MAPPING", { trainee.training_initiative => { entity_id: dttp_training_initiative_entity_id } })
+            stub_const(
+              "Dttp::CodeSets::BursaryDetails::MAPPING",
+              { trainee.training_route => { entity_id: dttp_bursary_details_entity_id } },
+            )
+            stub_const(
+              "Dttp::CodeSets::FundingBands::MAPPING",
+              { trainee.bursary_tier => { entity_id: dttp_funding_band_entity_id } },
+            )
+          end
+
+          context "when the send_funding_to_dttp feature flag is off" do
+            it "doesn't send bursary details" do
+              expect(subject.keys).not_to include("dfe_ITTFundingBandId@odata.bind")
+              expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
+              expect(subject.keys).not_to include("dfe_allocatedplace")
+            end
+          end
+
+          context "when the send_funding_to_dttp feature flag is on", feature_send_funding_to_dttp: true do
+            context "and the trainee is not applying for a bursary" do
+              it "sends the correct params" do
+                expect(subject).to include({ "dfe_allocatedplace" => 2 })
+                expect(subject.keys).not_to include("dfe_ITTFundingBandId@odata.bind")
+                expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
+              end
+            end
+
+            context "and the trainee is applying for a tiered bursary" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  :with_course_details,
+                  :with_start_date,
+                  :with_tiered_bursary,
+                  dttp_id: dttp_contact_id,
+                )
+              end
+
+              it "sends the correct params" do
+                expect(subject).to include({ "dfe_allocatedplace" => 1 })
+                expect(subject).to include({
+                  "dfe_ITTFundingBandId@odata.bind" => "/dfe_ittfundingbands(#{dttp_funding_band_entity_id})",
+                })
+                expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
+              end
+            end
+
+            context "and the trainee is applying for a subject-related bursary" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  :provider_led_postgrad,
+                  :with_course_details,
+                  :with_start_date,
+                  :with_bursary,
+                  dttp_id: dttp_contact_id,
+                )
+              end
+
+              it "sends the correct params" do
+                expect(subject).to include({ "dfe_allocatedplace" => 1 })
+                expect(subject.keys).not_to include("dfe_ITTFundingBandId@odata.bind")
+                expect(subject).to include({
+                  "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{dttp_bursary_details_entity_id})",
+                })
+              end
+            end
+          end
+        end
+
+        context "training initiative", feature_show_funding: true do
+          before do
+            stub_const(
+              "Dttp::CodeSets::TrainingInitiatives::MAPPING",
+              { trainee.training_initiative => { entity_id: dttp_training_initiative_entity_id } },
+            )
           end
 
           context "but the send_funding_to_dttp feature flag is off" do
-            it "doesn't send funding information" do
-              expect(subject).not_to include({
-                "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
-              })
+            it "doesn't send an initiative" do
+              expect(subject.keys).not_to include("dfe_Initiative1Id@odata.bind")
             end
           end
 
@@ -348,7 +424,7 @@ module Dttp
 
               it "doesn't send the initiative" do
                 expect(subject).not_to include({
-                  "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
+                  "dfe_Initiative1Id@odata.bind" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
                 })
               end
             end
@@ -366,7 +442,7 @@ module Dttp
 
               it "doesn't send the initiative" do
                 expect(subject).not_to include({
-                  "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
+                  "dfe_Initiative1Id@odata.bind" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
                 })
               end
             end
@@ -384,7 +460,7 @@ module Dttp
 
               it "sends the initiative" do
                 expect(subject).to include({
-                  "dfe_initiative1id_value" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
+                  "dfe_Initiative1Id@odata.bind" => "/dfe_initiatives(#{dttp_training_initiative_entity_id})",
                 })
               end
             end
