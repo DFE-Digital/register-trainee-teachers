@@ -1,9 +1,8 @@
 import tracker from '../../components/form_components/tracker.js'
 
 describe('tracker', () => {
-
   beforeAll(() => {
-    jest.spyOn(Date, 'now').mockImplementation(() => Date.now());
+    jest.spyOn(Date, 'now').mockImplementation(() => Date.now())
   })
 
   afterAll(() => { jest.restoreAllMocks() })
