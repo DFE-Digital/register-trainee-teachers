@@ -18,6 +18,8 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   persist_to_dttp: true
+  show_funding: true
+  send_funding_to_dttp: true
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true
