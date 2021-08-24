@@ -319,7 +319,7 @@ describe CourseDetailsForm, type: :model do
 
   context "valid trainee" do
     let(:valid_start_date) do
-      Faker::Date.between(from: 10.years.ago, to: 2.days.ago)
+      Faker::Date.between(from: 1.year.ago, to: 2.days.ago)
     end
 
     let(:valid_end_date) do

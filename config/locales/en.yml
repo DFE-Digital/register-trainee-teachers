@@ -1028,7 +1028,7 @@ en:
               blank: Enter a course start date
               future: Enter a course start date closer to today
               invalid: Enter a valid course start date
-              too_old: Enter a valid course start date
+              too_old: The course start date must be after 31 July 2020
               hint_html: For example, 11 3 %{year}
             course_end_date:
               blank: Enter a course end date

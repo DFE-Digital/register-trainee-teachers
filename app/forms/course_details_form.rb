@@ -192,7 +192,7 @@ private
       errors.add(course_start_date_attribute_name, :future)
     elsif !course_start_date.is_a?(Date)
       errors.add(course_start_date_attribute_name, :invalid)
-    elsif course_start_date < 10.years.ago
+    elsif course_start_date < earliest_valid_start_date
       errors.add(course_start_date_attribute_name, :too_old)
     end
   end
@@ -235,6 +235,10 @@ private
 
   def max_years
     next_year + MAX_END_YEARS
+  end
+
+  def earliest_valid_start_date
+    Date.parse("1/8/2020")
   end
 
   def sanitise_subjects
