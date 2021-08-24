@@ -25,5 +25,5 @@ environment:
 # Temporary for testing
 google_tag_manager:
   tracking_id: GTM-PD8MFNL
-  auth_id: 4QOTj7cE_XE50Z4O4MijqA
-  env_id: 47
+  auth_id: PvVHYhH8SvtYf_faEjvFXQ
+  env_id: 51
