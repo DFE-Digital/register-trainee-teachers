@@ -13,6 +13,8 @@ module Dttp
     let(:timeout_date) { configured_poll_timeout_days.days.from_now }
 
     before do
+      enable_features(:persist_to_dttp)
+
       allow(RetrieveTrn).to receive(:call).with(trainee: trainee).and_return(trn)
       allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
       allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)
