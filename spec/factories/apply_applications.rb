@@ -8,7 +8,11 @@ FactoryBot.define do
     provider
 
     trait :with_invalid_data do
-      invalid_data { { "degrees" => { "BUpwce1Qe9RDM3A9AmgsmaNT" => { "subject" => "Master's Degree" } } } }
+      invalid_data { { "degrees" => { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => { institution: "University of Warwick" } } } }
+    end
+
+    trait :with_multiple_invalid_data do
+      invalid_data { { "degrees" => { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => { institution: "University of Warwick", subject: "History1" } } } }
     end
   end
 end

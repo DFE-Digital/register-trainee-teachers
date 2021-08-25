@@ -21,7 +21,7 @@ module InformationSummary
   private
 
     def missing_data_item_content
-      "<li><a class='govuk-notification-banner__link' href='#subject'>Subject is not recognised</a></li>".html_safe
+      "<li><a class='govuk-notification-banner__link' href='#degree-subject-label'>Subject is not recognised</a></li>".html_safe
     end
   end
 end

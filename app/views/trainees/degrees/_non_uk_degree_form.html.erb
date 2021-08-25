@@ -1,27 +1,44 @@
 <%= register_form_with model: [@trainee, @degree_form], local: true do |f| %>
   <%= f.hidden_field :locale_code, value: "non_uk" %>
-  <%= f.govuk_error_summary %>
+
+  <% if f.govuk_error_summary.present? %>
+    <%= f.govuk_error_summary %>
+  <% else %>
+    <%= render ReviewSummary::View.new(form: @degree_form, invalid_data_view: ApplyInvalidDataView.new(@trainee.apply_application, degree: @degree_form.degree, on_form_page: true)) %>
+  <% end %>
 
   <h1 class="govuk-heading-l">Non-UK degree details</h1>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
-    form_field: f.govuk_collection_select(:country, countries_options, :value,
-                                          :text, label: { text: "In which country is the degree institution based?", size: "s" }),
+    attribute_name: :country,
+    form_field: f.govuk_collection_select(:country, 
+                                          countries_options,
+                                          :value,
+                                          :text,
+                                          form_group: { class: invalid_data_class(form: @degree_form, field: "country") },
+                                          label: { text: "In which country is the degree institution based?", size: "s" }) do
+      render InvalidDataText::View.new(form_section: :country, degree_form: @degree_form)
+    end,
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :subject,
     form_field: f.govuk_select(
-      :subject,
+      :subject, 
       options_for_select(subjects_options, @degree_form.degree.subject),
+      form_group: { 
+        class: invalid_data_class(form: @degree_form, field: "subject")
+      },
       label: { text: "Degree subject", size: "s" },
-      hint: { text: "Search for the closest matching subject. You can start typing to narrow down your search." },
-    ),
+      hint: -> { render InvalidDataText::View.new(form_section: :subject, hint: 'Search for the closest matching subject', degree_form: @degree_form) }),
   ) %>
 
-  <div class="govuk-form-group">
-    <%= f.govuk_radio_buttons_fieldset :non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" } do %>
+  <div class="govuk-form-group" id="non_uk_degree">
+    <%= f.govuk_radio_buttons_fieldset(:non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" },
+        form_group: { class: invalid_data_class(form: @degree_form, field: "non_uk_degree") },
+        hint: -> {  render InvalidDataText::View.new(form_section: :non_uk_degree, degree_form: @degree_form) },
+        ) do %>
       <% ENIC_NON_UK.each do |name| %>
         <%= f.govuk_radio_button :non_uk_degree, name, label: { text: name }, link_errors: true %>
       <% end %>
@@ -31,9 +48,12 @@
   </div>
 
   <%= f.govuk_text_field :graduation_year,
-                         label: { text: "Graduation year", size: "s" },
+                         form_group: { class: invalid_data_class(form: @degree_form, field: "graduation_year"), id: :graduation_year },
                          width: "one-quarter",
-                         autocomplete: :disabled %>
+                         autocomplete: :disabled, 
+                         label: { text: "Graduation year", size: "s" } do
+                            render InvalidDataText::View.new(form_section: :graduation_year, degree_form: @degree_form)
+                          end %>
 
   <%= f.govuk_submit %>
 <% end %>

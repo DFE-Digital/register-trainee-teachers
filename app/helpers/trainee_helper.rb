@@ -52,4 +52,26 @@ module TraineeHelper
   def label_for(attribute, value)
     I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
   end
+
+  def invalid_data_message(form_section, degree)
+    data = degree&.trainee&.apply_application&.invalid_data
+
+    return if data&.dig("degrees", degree.slug, form_section).blank?
+
+    t("components.invalid_data_text.static_text", query: data["degrees"][degree.slug][form_section])
+  end
+
+  def invalid_data_class(form:, field:)
+    return form_error_class(form, field) if form.errors.any?
+
+    if invalid_data_message(field, form.degree)
+      "govuk-form-group govuk-inset-text app-inset-text--narrow-border app-inset-text--important app-inset-text--no_padding"
+    else
+      "govuk-form-group"
+    end
+  end
+
+  def form_error_class(form, field)
+    form.errors.messages.keys.include?(field.to_sym) ? "govuk-form-group govuk-form-group--error" : "govuk-form-group"
+  end
 end

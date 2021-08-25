@@ -18,9 +18,11 @@ module Degrees
 
     def degree_title(degree)
       if degree.uk?
-        "#{degree.uk_degree}: #{degree.subject&.downcase}"
-      else
+        degree.subject ? "#{degree.uk_degree}: #{degree.subject&.downcase}" : degree.uk_degree
+      elsif degree.subject
         "Non-UK #{degree.non_uk_degree_non_enic? ? 'degree' : degree.non_uk_degree}: #{degree.subject&.downcase}"
+      else
+        "Non-UK #{degree.non_uk_degree_non_enic? ? 'degree' : degree.non_uk_degree}"
       end
     end
 

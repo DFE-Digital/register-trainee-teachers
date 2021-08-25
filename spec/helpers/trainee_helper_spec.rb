@@ -49,6 +49,23 @@ describe TraineeHelper do
     end
   end
 
+  describe "#invalid_data_message" do
+    let(:trainee) { create(:trainee, :with_invalid_apply_application) }
+    let(:degree) { trainee.degrees.first }
+
+    context "with invalid data" do
+      it "return the invalid data message" do
+        expect(invalid_data_message("institution", degree)).to eq("The trainee entered ‘University of Warwick’, which was not recognised. You need to search for the closest match.")
+      end
+    end
+
+    context "without invalid data" do
+      it "returns nil as no invalid data found" do
+        expect(invalid_data_message("subject", degree)).to eq(nil)
+      end
+    end
+  end
+
   describe "#trainees_page_title" do
     let(:page_size) { 25 }
     # Using an `object_double` here to stub ActiveRecord::Relation passed into

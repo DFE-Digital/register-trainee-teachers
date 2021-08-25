@@ -4,8 +4,10 @@ module Trainees
   class DegreesController < ApplicationController
     before_action :authorize_trainee
     before_action :set_degrees_form
+    before_action :set_degree_form, only: %i[edit update destroy]
 
     def new
+      @trainee = trainee
       @degree_form = @degrees_form.build_degree(locale_code: params[:locale_code])
     end
 
@@ -19,12 +21,9 @@ module Trainees
       end
     end
 
-    def edit
-      @degree_form = @degrees_form.find_degree_from_param(params[:id])
-    end
+    def edit; end
 
     def update
-      @degree_form = @degrees_form.find_degree_from_param(params[:id])
       @degree_form.attributes = degree_params
       @degree_form.assign_attributes(autocomplete_params)
 
@@ -36,8 +35,6 @@ module Trainees
     end
 
     def destroy
-      @degree_form = @degrees_form.find_degree_from_param(params[:id])
-
       @degree_form.destroy!
 
       flash[:success] = "Trainee degree deleted"
@@ -73,6 +70,10 @@ module Trainees
 
     def set_degrees_form
       @degrees_form = DegreesForm.new(trainee)
+    end
+
+    def set_degree_form
+      @degree_form = @degrees_form.find_degree_from_param(params[:id])
     end
 
     def relevant_redirect_path

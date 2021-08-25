@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe DegreeForm, type: :model do
   let(:trainee) { build(:trainee) }
-  let(:form_store) { class_double(FormStore) }
+  let(:form_store) { class_double(FormStore, get: nil, set: nil) }
   let(:degrees_form) { DegreesForm.new(trainee, form_store) }
   let(:degree) { build(:degree, :uk_degree_with_details, trainee: trainee) }
 
@@ -107,6 +107,15 @@ describe DegreeForm, type: :model do
 
       it "stashes" do
         expect(subject.save_or_stash).to be_truthy
+      end
+    end
+
+    context "when the degree exists in apply_application.invalid_data" do
+      let(:trainee) { build(:trainee, :with_invalid_apply_application) }
+      let(:degree) { trainee.degrees.first }
+
+      it "deletes the invalid degree" do
+        expect { subject.save_or_stash }.to (change { trainee.apply_application.invalid_data["degrees"].length }).from(1).to 0
       end
     end
   end

@@ -34,6 +34,18 @@ module ApplyApplications
           expect(component).to have_text("Degree details not provided")
         end
       end
+
+      context "apply trainee without invalid data" do
+        let(:apply_application) { create(:apply_application) }
+        let(:trainee) do
+          create(:trainee, nationalities: [build(:nationality)], degrees: [], apply_application: apply_application)
+        end
+
+        it "does not render the information summary component" do
+          expect(component).not_to have_text("is not recognised")
+          expect(component).not_to have_text("This application contains")
+        end
+      end
     end
   end
 end

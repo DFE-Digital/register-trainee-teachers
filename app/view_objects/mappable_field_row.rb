@@ -40,10 +40,10 @@ private
   def unmapped_value
     <<~HTML
       <div class="govuk-inset-text app-inset-text--narrow-border app-inset-text--#{has_errors ? 'error' : 'important'} app-inset-text--no_padding">
-        <p class="app-inset-text__title govuk-!-margin-bottom-2">#{error_message_prefix}#{field_label} is #{text}</p>
+        <p class="app-inset-text__title govuk-!-margin-bottom-2">#{error_message_prefix}#{field_label} is #{original_value ? 'not recognised' : text}</p>
         #{original_value_html}
         <div>
-          <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" href="#{action_url}">
+          <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" name="#{field_label.downcase}" href="#{action_url}">
             #{field_hint_text(field_label)}
           </a>
         </div>

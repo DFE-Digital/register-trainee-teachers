@@ -179,6 +179,15 @@ en:
     incomplete_section:
       degree_details_not_provided: Degree details not provided
       add_degree_details: Add degree details
+    invalid_data_text:
+      static_text: The trainee entered ‘%{query}’, which was not recognised. You need to search for the closest match.
+    record_details:
+      progress_date_prefix:
+        recommended_for_award: "Recommended: "
+        awarded: "Awarded: "
+      status_date_prefix:
+        deferred: "Deferral date: "
+        withdrawn: "Withdrawal date: "
     itt_start_date:
       hint: The start date of the Initial Teacher Training part of their course.
     page_titles:
@@ -681,6 +690,10 @@ en:
       heading_1_name: "Draft record for %{name}"
       heading_1_no_name: "Draft record"
       heading_2: "Trainee Data"
+  invalid_data_summary:
+    view:
+      invalid_answers_summary: "This application contains %{total_invalid_fields} answer that you need to amend. This is because they were entered in a free text format."
+      invalid_answer_text: "%{invalid_field} is not recognised"
   route_indicator:
     view:
       display_text: "Trainee on the %{training_route_link} route."

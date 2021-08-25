@@ -41,4 +41,5 @@ $govuk-border-width-narrow: 5px;
 .app-inset-text__title {
   @include govuk-font($size: 19, $weight: "bold");
   margin-bottom: govuk-spacing(0);
+  color: govuk-colour("blue");
 }
