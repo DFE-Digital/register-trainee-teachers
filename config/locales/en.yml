@@ -584,6 +584,7 @@ en:
           hint: This is the date the trainee starts on the course. This can be different from the course start date.
       publish_course_details:
         route_message: "Your %{route} courses in the Publish service"
+        all_courses_message: Your courses in the Publish service
         route_titles:
           provider_led_postgrad: provider-led postgrad
           school_direct_salaried: school direct salaried
