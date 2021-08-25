@@ -377,10 +377,9 @@ module Dttp
               let(:trainee) do
                 create(
                   :trainee,
-                  :provider_led_postgrad,
                   :with_course_details,
                   :with_start_date,
-                  :with_bursary,
+                  :with_provider_led_bursary,
                   dttp_id: dttp_contact_id,
                 )
               end
