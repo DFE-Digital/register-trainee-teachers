@@ -221,7 +221,7 @@ FactoryBot.define do
 
     trait :trn_received do
       submitted_for_trn
-      trn { SecureRandom.uuid }
+      trn { Faker::Number.number(digits: 7) }
       state { "trn_received" }
     end
 
