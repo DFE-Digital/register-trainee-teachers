@@ -2,6 +2,7 @@ import './style.scss'
 import accessibleAutocomplete from 'accessible-autocomplete'
 import { nodeListForEach } from 'govuk-frontend/govuk/common'
 import sort from './sort.js'
+import tracker from '../tracker.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
@@ -40,11 +41,17 @@ const setupAutoComplete = (component) => {
     selectElement: selectEl,
     minLength: 2,
     source: (query, populateResults) => {
+      tracker.trackSearch(query)
       populateResults(sort(query, options))
     },
     autoselect: true,
     templates: { suggestion: (value) => suggestion(value, options) },
-    name: rawFieldName
+    name: rawFieldName,
+    onConfirm: (val) => {
+      tracker.sendTrackingEvent(val, selectEl.name)
+      const selectedOption = [].filter.call(selectOptions, option => (option.textContent || option.innerText) === val)[0]
+      if (selectedOption) selectedOption.selected = true
+    }
   })
 
   if (inError) {
