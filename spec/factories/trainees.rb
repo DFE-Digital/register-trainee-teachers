@@ -341,11 +341,11 @@ FactoryBot.define do
       applying_for_bursary { Faker::Boolean.boolean }
     end
 
-    trait :with_bursary do
+    trait :with_provider_led_bursary do
       applying_for_bursary { true }
 
       after(:create) do |trainee, _|
-        bursary = create(:bursary, :with_bursary_subjects)
+        bursary = create(:bursary, :with_bursary_subjects, training_route: :provider_led_postgrad)
         trainee.course_subject_one = bursary.allocation_subjects.first.name
         trainee.training_route = bursary.training_route
       end
