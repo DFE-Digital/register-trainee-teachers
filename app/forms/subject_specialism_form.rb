@@ -6,9 +6,6 @@ class SubjectSpecialismForm < TraineeForm
   include ActiveModel::Validations::Callbacks
 
   FIELDS = %i[
-    specialism1
-    specialism2
-    specialism3
     course_subject_one
     course_subject_two
     course_subject_three
@@ -28,7 +25,11 @@ class SubjectSpecialismForm < TraineeForm
   end
 
   def specialisms
-    [specialism1, specialism2, specialism3].compact
+    @specialisms ||= [
+      course_subject_one,
+      course_subject_two,
+      course_subject_three,
+    ].compact
   end
 
 private
@@ -39,10 +40,6 @@ private
 
   def subject_attribute(position = @position)
     "course_subject_#{to_word(position)}"
-  end
-
-  def specialism_attribute
-    @_specialism_attribute ||= "specialism#{@position}"
   end
 
   def to_word(number)
@@ -57,8 +54,8 @@ private
   end
 
   def specialism_is_present
-    if @position && send(specialism_attribute).blank?
-      errors.add(specialism_attribute, I18n.t(ERROR_TRANSLATION_KEY))
+    if @position && send(subject_attribute).blank?
+      errors.add(subject_attribute, I18n.t(ERROR_TRANSLATION_KEY))
     end
   end
 end

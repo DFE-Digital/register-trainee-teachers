@@ -14,11 +14,11 @@ describe PublishCourseDetailsForm, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:code) }
+    it { is_expected.to validate_presence_of(:course_code) }
   end
 
-  context "valid code" do
-    let(:params) { { code: "c0de" } }
+  context "valid course_code" do
+    let(:params) { { course_code: "c0de" } }
     let(:trainee) { create(:trainee) }
 
     describe "#stash" do
@@ -30,28 +30,28 @@ describe PublishCourseDetailsForm, type: :model do
     end
   end
 
-  context "missing code" do
+  context "missing course_code" do
     describe "#stash" do
       it "returns false and adds an error to the form" do
         expect(subject.stash).to eq false
-        expect(subject.errors.messages).to eq({ code: ["Select a course"] })
+        expect(subject.errors.messages).to eq({ course_code: ["Select a course"] })
       end
     end
   end
 
   describe "manual entry chosen?" do
-    context "when code is NOT_LISTED" do
+    context "when course_code is NOT_LISTED" do
       it { be_true }
     end
 
-    context "when code is nil" do
-      let(:params) { { code: "not_listed" } }
+    context "when course_code is nil" do
+      let(:params) { { course_code: "not_listed" } }
 
       it { be_false }
     end
 
-    context "when code is something else" do
-      let(:params) { { code: "c0de" } }
+    context "when course_code is something else" do
+      let(:params) { { course_code: "c0de" } }
 
       it { be_false }
     end

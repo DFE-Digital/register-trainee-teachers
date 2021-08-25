@@ -13,7 +13,7 @@
       <%= f.govuk_error_summary %>
 
     <div class="govuk-form-group">
-      <%= f.govuk_radio_buttons_fieldset :"specialism#{position}",
+      <%= f.govuk_radio_buttons_fieldset :"course_subject_#{position_in_words}",
                                         legend: { text: t(".heading", subject: @subject.downcase), tag: "h1", size: "l" } do %>
 
           <div class="govuk-hint">
@@ -22,7 +22,7 @@
 
         <% sort_specialisms(@subject, @specialisms).each_with_index do |specialism, index| %>
           <%= f.govuk_radio_button(
-              :"specialism#{position}",
+              :"course_subject_#{position_in_words}",
               specialism,
               multiple: true,
               link_errors: index.zero?,

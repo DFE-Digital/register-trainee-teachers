@@ -13,7 +13,9 @@ module Trainees
     def update
       @itt_start_date_form = IttStartDateForm.new(trainee, params: trainee_params, user: current_user)
 
-      if @itt_start_date_form.stash
+      save_strategy = trainee.draft? ? :save! : :stash
+
+      if @itt_start_date_form.public_send(save_strategy)
         redirect_to study_mode_or_confirmation_path
       else
         render :edit

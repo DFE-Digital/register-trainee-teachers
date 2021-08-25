@@ -47,7 +47,7 @@ module Trainees
       end
 
       def set_specialisms
-        @specialisms = if trainee.course_subjects.any? && publish_course_details_form.code.nil?
+        @specialisms = if trainee.course_subjects.any? && publish_course_details_form.course_code.nil?
                          trainee.course_subjects
                        else
                          selected_or_calculated_specialisms
@@ -64,7 +64,7 @@ module Trainees
       end
 
       def course_code
-        publish_course_details_form.code || trainee.course_code
+        publish_course_details_form.course_code || trainee.course_code
       end
 
       def publish_course_details_form

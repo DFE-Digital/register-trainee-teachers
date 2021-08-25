@@ -12,7 +12,10 @@ module Trainees
 
     def update
       @study_mode_form = StudyModesForm.new(trainee, params: trainee_params, user: current_user)
-      if @study_mode_form.stash
+
+      save_strategy = trainee.draft? ? :save! : :stash
+
+      if @study_mode_form.public_send(save_strategy)
         redirect_to course_confirmation_path
       else
         render :edit

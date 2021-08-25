@@ -150,7 +150,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       end
 
       scenario do
-        then_i_see_the_confirm_publish_course_page
+        then_i_see_the_confirm_course_details_page
       end
 
       context "trainee is on the pg teaching apprenticeship training route", "feature_routes.pg_teaching_apprenticeship": true do
@@ -160,7 +160,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
           then_i_see_the_itt_start_date_edit_page
           and_i_set_itt_start_date("1/01/2020")
           and_i_continue
-          then_i_see_the_confirm_publish_course_page
+          then_i_see_the_confirm_course_details_page
         end
 
         context "course study_mode is full_time_or_part_time" do
@@ -172,7 +172,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
               then_i_see_the_itt_start_date_edit_page
               and_i_set_itt_start_date("1/01/2020")
               and_i_continue
-              then_i_see_the_confirm_publish_course_page
+              then_i_see_the_confirm_course_details_page
             end
           end
 
@@ -195,6 +195,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
         scenario "without itt start date" do
           then_i_see_the_itt_start_date_edit_page
+          and_i_set_itt_start_date(nil)
 
           and_i_continue
           then_i_see_the_error_message_for("invalid")
@@ -246,6 +247,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def given_a_trainee_exists_with_some_courses(with_subjects: [], with_training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+    # given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: with_training_route, study_mode: study_mode, course_subject_one: nil, course_subject_two: nil, course_subject_three: nil)
     given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: with_training_route, study_mode: study_mode)
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
@@ -305,7 +307,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def and_i_confirm_the_course
-    confirm_publish_course_page.submit_button.click
+    confirm_course_details_page.confirm.click
+    confirm_course_details_page.continue_button.click
   end
 
   def and_i_select_another_course_not_listed
@@ -327,7 +330,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     translation_key_prefix = "activemodel.errors.models.publish_course_details_form.attributes"
 
     expect(publish_course_details_page).to have_content(
-      I18n.t("#{translation_key_prefix}.code.blank"),
+      I18n.t("#{translation_key_prefix}.course_code.blank"),
     )
   end
 
@@ -375,8 +378,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
     expect(publish_course_details_page.route_message.text).to eq(expected_message)
   end
 
-  def then_i_see_the_confirm_publish_course_page
-    expect(confirm_publish_course_page).to be_displayed(trainee_id: trainee.slug)
+  def then_i_see_the_confirm_course_details_page
+    expect(confirm_course_details_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def then_i_see_the_study_mode_edit_page
@@ -396,6 +399,6 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def then_i_should_see_the_subject_described_as(description)
-    expect(confirm_publish_course_page.subject_description).to eq(description)
+    expect(confirm_course_details_page.subject_description).to eq(description)
   end
 end

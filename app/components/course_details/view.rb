@@ -94,11 +94,23 @@ module CourseDetails
       "#{course.name} (#{course.code})"
     end
 
+<<<<<<< HEAD
     def subject_names
       if trainee.course_subject_one.present?
         return subjects_for_summary_view(trainee.course_subject_one,
                                          trainee.course_subject_two,
                                          trainee.course_subject_three)
+=======
+    def subject
+      if data_model.course_subject_one.present?
+        subjects_for_summary_view(
+          *[
+            data_model.course_subject_one,
+            data_model.course_subject_two,
+            data_model.course_subject_three,
+          ].map { |s| format_language(s) },
+        )
+>>>>>>> 54e1776c ([2537] Update confirm page for publish courses.)
       end
 
       return apply_subject_names if trainee.apply_application?

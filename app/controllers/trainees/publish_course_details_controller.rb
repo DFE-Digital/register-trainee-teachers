@@ -13,6 +13,7 @@ module Trainees
 
     def update
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
+
       if course_chosen?
         trainee.update!(course_code: nil) if @publish_course_details_form.manual_entry_chosen?
         redirect_to next_step_path
@@ -25,11 +26,15 @@ module Trainees
   private
 
     def course_chosen?
-      @publish_course_details_form.valid? && set_specialism_form_type && @publish_course_details_form.stash
+      save_strategy = trainee.draft? ? :save! : :stash
+
+      @publish_course_details_form.valid? &&
+        set_specialism_form_type &&
+        @publish_course_details_form.public_send(save_strategy)
     end
 
     def course_code
-      @publish_course_details_form.code
+      @publish_course_details_form.course_code
     end
 
     def set_specialism_form_type
@@ -78,11 +83,11 @@ module Trainees
     end
 
     def course_subjects
-      @course_subjects ||= trainee.available_courses.find_by(code: @publish_course_details_form.code).subjects.map(&:name)
+      @course_subjects ||= trainee.available_courses.find_by(code: @publish_course_details_form.course_code).subjects.map(&:name)
     end
 
     def course_params
-      params.fetch(:publish_course_details_form, {}).permit(:code)
+      params.fetch(:publish_course_details_form, {}).permit(:course_code)
     end
 
     def authorize_trainee

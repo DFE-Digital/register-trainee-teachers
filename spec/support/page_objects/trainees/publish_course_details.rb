@@ -15,7 +15,7 @@ module PageObjects
 
       element :submit_button, "button[type='submit']"
 
-      element :route_message, "#publish-course-details-form-code-hint"
+      element :route_message, "#publish-course-details-form-course-code-hint"
     end
   end
 end
