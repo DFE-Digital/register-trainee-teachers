@@ -40,9 +40,9 @@ module TraineeHelper
   end
 
   def trainee_draft_title(trainee)
-    draft_or_apply_draft_caption = t("views.trainees.show.#{trainee.apply_application? ? 'apply_draft' : 'draft'}")
+    draft_caption = t("views.trainees.show.draft")
 
-    tag.span(draft_or_apply_draft_caption, class: "govuk-caption-l") + tag.h1(trainee_name(trainee).presence || t("components.page_titles.trainees.show.#{trainee.apply_application? ? 'apply_draft' : 'draft'}"), class: "govuk-heading-l")
+    tag.span(draft_caption, class: "govuk-caption-l") + tag.h1(trainee_name(trainee).presence || t("components.page_titles.trainees.show.#{trainee.apply_application? ? 'apply_draft' : 'draft'}"), class: "govuk-heading-l govuk-!-margin-bottom-8")
   end
 
   def checked?(filters, filter, value)

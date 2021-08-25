@@ -38,7 +38,7 @@ describe "trainees/review_draft/show.html.erb" do
     let(:trainee_name) { "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}" }
 
     it "renders Apply draft text" do
-      expect(rendered).to have_text("Apply draft")
+      expect(rendered).to have_text("Draft")
       expect(rendered).to have_text(trainee_name)
     end
   end
@@ -56,7 +56,7 @@ describe "trainees/review_draft/show.html.erb" do
     let(:trainee_name) { "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}" }
 
     it "renders draft record text" do
-      expect(rendered).to have_text("Draft record")
+      expect(rendered).to have_text("Draft")
       expect(rendered).to have_text(trainee_name)
     end
   end

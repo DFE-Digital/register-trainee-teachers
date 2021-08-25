@@ -495,8 +495,7 @@ en:
           submitted_for_trn: This record is pending a TRN
           deferred: This record is deferred
       show:
-        draft: "Draft record"
-        apply_draft: "Apply draft"
+        draft: "Draft"
     trainee_summary:
       contact_details:
         heading: Contact Details
@@ -697,7 +696,7 @@ en:
   route_indicator:
     view:
       display_text: "Trainee on the %{training_route_link} route."
-      apply_display_text: "Trainee enrolled on %{course_with_code}, %{training_route}."
+      apply_display_text: "All conditions met and trainee recruited to %{course_with_code}, %{training_route}."
   error_summary:
     view:
       heading: There is a problem
