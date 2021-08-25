@@ -29,6 +29,7 @@ class ApplyInvalidDataView
     @summary_items_content ||= safe_join(
       invalid_fields.map.with_index(1) do |fieldset, index|
         fieldset.map do |field|
+          field = get_field_name(field)
           tag.li(
             link_to(
               I18n.t("views.apply_invalid_data_view.unrecognised_field_text", invalid_field: field.to_s.humanize.upcase_first),
@@ -81,6 +82,15 @@ private
 
     degree_fields.map do |_k, field_and_values|
       field_and_values.keys
+    end
+  end
+
+  def get_field_name(field)
+    case field
+    when "uk_degree" || "non_uk_degree"
+      I18n.t("views.missing_data_view.missing_fields_mapping.uk_degree")
+    else
+      field
     end
   end
 end
