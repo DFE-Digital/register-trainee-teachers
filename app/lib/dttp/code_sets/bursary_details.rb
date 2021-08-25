@@ -12,6 +12,12 @@ module Dttp
         TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => { entity_id: "96756cc6-6041-e811-80f2-005056ac45bb" },
         # EYITT-GEB
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => { entity_id: "6292647b-91e2-e811-8136-5065f38bc341" },
+        # Tier one
+        BURSARY_TIER_ENUMS[:tier_one] => { entity_id: "001bf834-33ff-eb11-94ef-00224899ca99" },
+        # Tier two
+        BURSARY_TIER_ENUMS[:tier_two] => { entity_id: "66671547-33ff-eb11-94ef-00224899ca99" },
+        # Tier three
+        BURSARY_TIER_ENUMS[:tier_three] => { entity_id: "c5521159-33ff-eb11-94ef-00224899ca99" },
       }.freeze
     end
   end

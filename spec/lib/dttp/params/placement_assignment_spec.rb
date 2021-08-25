@@ -323,22 +323,20 @@ module Dttp
 
         context "bursary details", feature_show_funding: true do
           let(:dttp_bursary_details_entity_id) { SecureRandom.uuid }
-          let(:dttp_funding_band_entity_id) { SecureRandom.uuid }
+          let(:dttp_tiered_bursary_entity_id) { SecureRandom.uuid }
 
           before do
             stub_const(
               "Dttp::CodeSets::BursaryDetails::MAPPING",
-              { trainee.training_route => { entity_id: dttp_bursary_details_entity_id } },
-            )
-            stub_const(
-              "Dttp::CodeSets::FundingBands::MAPPING",
-              { trainee.bursary_tier => { entity_id: dttp_funding_band_entity_id } },
+              {
+                trainee.training_route => { entity_id: dttp_bursary_details_entity_id },
+                trainee.bursary_tier => { entity_id: dttp_tiered_bursary_entity_id },
+              },
             )
           end
 
           context "when the send_funding_to_dttp feature flag is off" do
             it "doesn't send bursary details" do
-              expect(subject.keys).not_to include("dfe_ITTFundingBandId@odata.bind")
               expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
               expect(subject.keys).not_to include("dfe_allocatedplace")
             end
@@ -348,7 +346,6 @@ module Dttp
             context "and the trainee is not applying for a bursary" do
               it "sends the correct params" do
                 expect(subject).to include({ "dfe_allocatedplace" => 2 })
-                expect(subject.keys).not_to include("dfe_ITTFundingBandId@odata.bind")
                 expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
               end
             end
@@ -367,9 +364,8 @@ module Dttp
               it "sends the correct params" do
                 expect(subject).to include({ "dfe_allocatedplace" => 1 })
                 expect(subject).to include({
-                  "dfe_ITTFundingBandId@odata.bind" => "/dfe_ittfundingbands(#{dttp_funding_band_entity_id})",
+                  "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{dttp_tiered_bursary_entity_id})",
                 })
-                expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
               end
             end
 
@@ -386,7 +382,6 @@ module Dttp
 
               it "sends the correct params" do
                 expect(subject).to include({ "dfe_allocatedplace" => 1 })
-                expect(subject.keys).not_to include("dfe_ITTFundingBandId@odata.bind")
                 expect(subject).to include({
                   "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{dttp_bursary_details_entity_id})",
                 })

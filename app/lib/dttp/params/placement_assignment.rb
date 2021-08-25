@@ -127,19 +127,14 @@ module Dttp
         return {} unless send_funding_to_dttp?
         return { "dfe_allocatedplace" => NO_ALLOCATED_PLACE } unless trainee.applying_for_bursary
 
-        { "dfe_allocatedplace" => ALLOCATED_PLACE }.merge(bursary_details_params)
+        {
+          "dfe_allocatedplace" => ALLOCATED_PLACE,
+          "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{bursary_details_id(bursary_type)})",
+        }
       end
 
-      def bursary_details_params
-        if trainee.bursary_tier.present?
-          {
-            "dfe_ITTFundingBandId@odata.bind" => "/dfe_ittfundingbands(#{funding_bands_id(trainee.bursary_tier)})",
-          }
-        else
-          {
-            "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{bursary_details_id(trainee.training_route)})",
-          }
-        end
+      def bursary_type
+        trainee.bursary_tier.presence || trainee.training_route
       end
 
       def study_mode_params
