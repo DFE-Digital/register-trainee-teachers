@@ -214,6 +214,8 @@ class Trainee < ApplicationRecord
   end
 
   def available_courses
+    return provider.courses if apply_application?
+
     provider.courses.where(route: training_route) if TRAINING_ROUTES_FOR_COURSE.keys.include?(training_route)
   end
 

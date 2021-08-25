@@ -18,7 +18,7 @@
       <% @courses.each do |course| %>
         <%= f.govuk_radio_button :code, course.code,
           label: { text: "#{course.name} (#{course.code})" },
-          hint: { text: course.summary },
+          hint: { text: course_summary_text_for(@trainee, course) },
           link_errors: true %>
       <% end %>
 

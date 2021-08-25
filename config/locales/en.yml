@@ -742,6 +742,8 @@ en:
       edit:
         heading: What course are they doing?
         course_not_listed: Another course not listed
+        enter_course_details: Enter course details
+        summary_with_route: "%{summary}, %{route}"
     language_specialisms:
       edit:
         heading: Which language specialisms has the trainee chosen to study?
