@@ -2,8 +2,8 @@
 
 module Dttp
   module Mappable
-    def bursary_details_id(bursary_amount)
-      CodeSets::BursaryDetails::MAPPING.dig(bursary_amount, :entity_id)
+    def bursary_details_id(bursary_type)
+      CodeSets::BursaryDetails::MAPPING.dig(bursary_type, :entity_id)
     end
 
     def course_subject_id(subject)
@@ -68,10 +68,6 @@ module Dttp
 
     def dttp_school_id(urn)
       Dttp::School.active.find_by!(urn: urn)&.dttp_id
-    end
-
-    def funding_bands_id(bursary_tier)
-      CodeSets::FundingBands::MAPPING.dig(bursary_tier, :entity_id)
     end
 
     def training_initiative_id(training_initiative)
