@@ -23,7 +23,26 @@ module Funding
       @applying_for_bursary = ActiveModel::Type::Boolean.new.cast(value)
     end
 
+    def save!
+      if valid?
+        update_trainee_attributes
+        trainee.save!
+        clear_stash
+      else
+        false
+      end
+    end
+
   private
+
+    def update_trainee_attributes
+      # Need to save the applying_for_bursary attribute
+      trainee.assign_attributes(
+        fields
+          .merge(applying_for_bursary: applying_for_bursary)
+          .except(*fields_to_ignore_before_stash_or_save),
+      )
+    end
 
     def set_applying_for_bursary
       self.applying_for_bursary = true if bursary_tier.present?

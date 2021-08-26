@@ -28,6 +28,8 @@ module Funding
       end
 
       context "when bursary_tier is set" do
+        let(:trainee) { create(:trainee, applying_for_bursary: nil) }
+
         let(:params) do
           {
             "bursary_tier" => "tier_one",
@@ -35,11 +37,14 @@ module Funding
           }
         end
 
+        before do
+          allow(form_store).to receive(:set).with(trainee.id, :bursary, nil)
+        end
+
         it { is_expected.to validate_inclusion_of(:bursary_tier).in_array(Trainee.bursary_tiers.keys) }
 
         it "sets applying_for_bursary to true" do
-          subject.valid?
-          expect(subject.applying_for_bursary).to eq(true)
+          expect { subject.save! }.to change(trainee, :applying_for_bursary).to true
         end
       end
     end
