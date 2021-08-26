@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include Discard::Model
+  include AuthenticatedUsingMagicLinks
 
   has_many :provider_users, inverse_of: :user
   has_many :providers, through: :provider_users

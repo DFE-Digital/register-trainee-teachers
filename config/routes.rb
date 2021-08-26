@@ -22,6 +22,12 @@ Rails.application.routes.draw do
   get "/sign-in" => "sign_in#index"
   get "/sign-out" => "sign_out#index"
 
+  get "/sign-in/fallback" => "magic#index"
+  post "/request-sign-in-by-email" => "magic#sign_in_by_email"
+
+  get "/sign-in/check-email" => "magic#check_your_email"
+  get "/sign-in-by-email" => "magic#authenticate_with_token", as: :authenticate_with_token
+
   get "/sign-in/user-not-found", to: "sign_in#new"
 
   get "request-an-account", to: "request_an_account#index"

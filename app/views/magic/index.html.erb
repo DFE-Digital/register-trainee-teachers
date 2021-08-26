@@ -1,0 +1,40 @@
+<%= render PageTitle::View.new(i18n_key: "sign_in.index") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(
+    text: t("back"),
+    href: root_path,
+    ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_notification_banner(title: t("notification_banner.info")) do |notification_banner| %>
+      <%= notification_banner.slot(:heading, text: "Temporary login") %>
+      <p class="govuk-body">DfE Sign-in is experiencing problems. You need to sign in using your email address.</p>
+    <% end %>
+
+    <p class="govuk-body-l">You must sign in to your account to access Register teacher training.</p>
+
+    <%= form_with(
+          model: User.new,
+          url: request_sign_in_by_email_path,
+          builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+          ) do |f| %>
+      <%= f.govuk_text_field :email, label: { text: "Email address", size: "m" } %>
+      <%= f.govuk_submit "Continue" %>
+    <% end %>
+
+    <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
+    <h2 class="govuk-heading-m">Ask for an account</h2>
+    <p class="govuk-body">Do not have an account? You can get one by emailing
+      <%=
+        govuk_mail_to(Settings.support_email,
+                      Settings.support_email,
+                      subject: t("pages.request_an_account.email_subject"))
+      %>.
+
+      Please include the full names and email addresses of anyone who needs access.</p>
+  </div>
+</div>
