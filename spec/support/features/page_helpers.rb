@@ -90,6 +90,10 @@ module Features
       @sign_in_page ||= PageObjects::SignIn.new
     end
 
+    def sign_in_fallback_page
+      @sign_in_fallback_page ||= PageObjects::SignInFallback.new
+    end
+
     def degree_type_page
       @degree_type_page ||= PageObjects::Trainees::DegreeType.new
     end

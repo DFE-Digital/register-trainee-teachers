@@ -48,4 +48,12 @@ Rails.application.configure do
   # Raises error for missing translations.
   config.i18n.raise_on_missing_translations = true
   config.active_job.queue_adapter = :test
+
+  # Tell Action Mailer not to deliver emails to the real world.
+  # The :test delivery method accumulates sent emails in the
+  # ActionMailer::Base.deliveries array.
+  config.action_mailer.default_options = {
+    from: "mail@example.com",
+  }
+  config.action_mailer.default_url_options = { host: "localhost", port: "4000" }
 end
