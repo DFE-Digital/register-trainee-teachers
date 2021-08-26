@@ -25,8 +25,8 @@ module InvalidDataText
       let(:trainee) { create(:trainee, :with_apply_application) }
       let(:form_section) { :subject }
 
-      it "renders the correct css" do
-        expect(rendered_component).to have_css(".govuk-hint")
+      it "does not render the inset css" do
+        expect(rendered_component).not_to have_css(".app-inset-text__title")
         expect(rendered_component).to have_text(nil)
       end
     end
