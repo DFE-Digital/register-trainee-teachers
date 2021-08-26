@@ -29,6 +29,8 @@ en:
     items:
       sign_out: Sign out
       system_admin: System admin
+  notification_banner:
+    info: Information
   contact_details:
     view:
       address: &address Address
@@ -208,6 +210,7 @@ en:
         not_found: Page not found
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
+      check_your_email: Check your email
       sign_in:
         index: Sign in
       trn_submissions:

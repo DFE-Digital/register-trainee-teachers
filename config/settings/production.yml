@@ -30,6 +30,7 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   show_funding: true
+  dfe_sign_in_fallback: false
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true

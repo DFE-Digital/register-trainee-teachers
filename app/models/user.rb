@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include Discard::Model
+  include AuthenticatedUsingMagicLinks
 
   belongs_to :provider, optional: true
 

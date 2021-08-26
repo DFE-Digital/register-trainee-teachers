@@ -79,4 +79,8 @@ private
   def clear_form_stash(trainee)
     FormStore.clear_all(trainee.id)
   end
+
+  def render_not_found
+    render "errors/not_found", status: :not_found
+  end
 end
