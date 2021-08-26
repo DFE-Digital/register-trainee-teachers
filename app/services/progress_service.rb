@@ -38,7 +38,7 @@ class ProgressService
   end
 
   def review?
-    (in_progress_valid? || in_progress_invalid?) && is_apply_application?
+    (in_progress_valid? || in_progress_invalid? || not_started?) && is_apply_application?
   end
 
   def completed?
