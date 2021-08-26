@@ -8,11 +8,15 @@ module Trainees
 
       def edit
         page_tracker.save_as_origin!
-        @trainee_data_form = ::ApplyApplications::TraineeDataForm.new(trainee)
+        @trainee = trainee
+        @trainee_data_form = trainee_data_form
+        @invalid_data_view = invalid_data_view
       end
 
       def update
-        @trainee_data_form = ::ApplyApplications::TraineeDataForm.new(trainee)
+        @trainee = trainee
+        @trainee_data_form = trainee_data_form
+        @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
 
         if @trainee_data_form.save
           redirect_to trainee_path(trainee)
@@ -25,6 +29,14 @@ module Trainees
 
       def trainee
         @trainee ||= Trainee.from_param(params[:trainee_id])
+      end
+
+      def trainee_data_form
+        @trainee_data_form ||= ::ApplyApplications::TraineeDataForm.new(trainee)
+      end
+
+      def invalid_data_view
+        @invalid_data_view ||= ApplyInvalidDataView.new(trainee.apply_application)
       end
 
       def authorize_trainee

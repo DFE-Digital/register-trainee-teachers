@@ -66,7 +66,7 @@ module Sections
         training_details: TrainingDetails::View,
         schools: Schools::View,
         funding: Funding::View,
-        trainee_data: ReviewDraft::ApplyDraft::View,
+        trainee_data: ApplyApplications::TraineeData::View,
       }[section]
     end
 
