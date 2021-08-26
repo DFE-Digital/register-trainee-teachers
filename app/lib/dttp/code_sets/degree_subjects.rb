@@ -223,7 +223,10 @@ module Dttp
         "Cognitive Psychology" => { entity_id: "c18470f0-5dce-e911-a985-000d3ab79618" },
         "Colonial And Post-Colonial Literature" => { entity_id: "618570f0-5dce-e911-a985-000d3ab79618" },
         "Colour Chemistry" => { entity_id: "018570f0-5dce-e911-a985-000d3ab79618" },
-        "Combined Studies" => { entity_id: "298670f0-5dce-e911-a985-000d3ab79618" },
+        "Combined Studies" => {
+          entity_id: "298670f0-5dce-e911-a985-000d3ab79618",
+          synonyms: ["open degree", "multiple subjects", "several subjects"],
+        },
         "Community Dance" => { entity_id: "478770f0-5dce-e911-a985-000d3ab79618" },
         "Community Ecology" => { entity_id: "4b8770f0-5dce-e911-a985-000d3ab79618" },
         "Community Forestry" => { entity_id: "d38470f0-5dce-e911-a985-000d3ab79618" },
