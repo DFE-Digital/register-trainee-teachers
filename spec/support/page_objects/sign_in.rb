@@ -8,4 +8,8 @@ module PageObjects
 
     element :sign_in_button, ".qa-sign_in_button"
   end
+
+  class SignInFallback < PageObjects::Base
+    set_url "/sign-in/fallback"
+  end
 end

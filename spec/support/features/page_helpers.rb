@@ -142,6 +142,10 @@ module Features
       @not_found_page ||= PageObjects::NotFound.new
     end
 
+    def sign_in_fallback_page
+      @sign_in_fallback_page ||= PageObjects::SignInFallback.new
+    end
+
     def degree_type_page
       @degree_type_page ||= PageObjects::Trainees::DegreeType.new
     end

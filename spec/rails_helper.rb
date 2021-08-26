@@ -14,6 +14,7 @@ require "rspec/rails"
 require "webmock/rspec"
 require "pundit/rspec"
 require "audited-rspec"
+require "capybara/email/rspec"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
@@ -48,6 +49,8 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by(:rack_test)
   end
+
+  config.before { ActionMailer::Base.deliveries.clear }
 
   Faker::Config.locale = "en-GB"
 end
