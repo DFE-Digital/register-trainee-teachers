@@ -22,12 +22,10 @@
           link_errors: true %>
       <% end %>
 
-      <% unless @trainee.apply_application? %>
-        <div class="govuk-radios__divider">or</div>
+      <div class="govuk-radios__divider">or</div>
 
-        <%= f.govuk_radio_button :code, PublishCourseDetailsForm::NOT_LISTED,
-          label: { text: t(".course_not_listed") } %>
-      <% end %>
+      <%= f.govuk_radio_button :code, PublishCourseDetailsForm::NOT_LISTED,
+        label: { text: t(".course_not_listed") } %>
     <% end %>
   </div>
 

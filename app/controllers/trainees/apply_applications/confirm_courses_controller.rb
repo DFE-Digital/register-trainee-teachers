@@ -4,6 +4,7 @@ module Trainees
   module ApplyApplications
     class ConfirmCoursesController < ApplicationController
       before_action :authorize_trainee
+      before_action :redirect_to_manual_confirm_page, if: -> { publish_course_details_form.manual_entry_chosen? }
       before_action :set_course
       before_action :set_specialisms
       helper_method :course_code
@@ -29,6 +30,10 @@ module Trainees
 
       def trainee
         @trainee ||= Trainee.from_param(params[:trainee_id])
+      end
+
+      def redirect_to_manual_confirm_page
+        redirect_to trainee_course_details_confirm_path(trainee)
       end
 
       def set_course
