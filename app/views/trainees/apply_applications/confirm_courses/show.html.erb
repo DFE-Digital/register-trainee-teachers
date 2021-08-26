@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render ApplyApplications::ConfirmCourse::View.new(trainee: @trainee, course: @course, specialisms: @specialisms, itt_start_date: @itt_start_date) %>
+    <%= render CourseDetails::View.new(data_model: @confirm_course_form) %>
 
     <%= register_form_with(model: @confirm_course_form,
                            url: trainee_apply_applications_confirm_courses_path(@trainee),
