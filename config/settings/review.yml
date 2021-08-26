@@ -21,9 +21,3 @@ pagination:
 
 environment:
   name: review
-
-# Temporary for testing
-google_tag_manager:
-  tracking_id: GTM-PD8MFNL
-  auth_id: PvVHYhH8SvtYf_faEjvFXQ
-  env_id: 51

@@ -9,17 +9,13 @@ function Tracker () {
 
   // Push an 'autocomplete-search' event to the dataLayer with the searches and
   // the final choice (if present).
-  this.sendTrackingEvent = (val, fieldName) => {
+  this.sendTrackingEvent = (match, fieldName) => {
     let successfulSearch
-    let timeTaken
     const filteredSearches = this.searches.filter(s => !this._containsStringStartingWith(s))
 
-    // Record the time taken from first search to selection (or giving up).
-    if (this.startTime) { timeTaken = Date.now() - this.startTime }
-
-    // If the user selected something i.e. val !== nil, then the last tracked
+    // If the user selected something i.e. match !== nil, then the last tracked
     // search counts as successful. Remove this.
-    if (val) { successfulSearch = filteredSearches.pop() }
+    if (match) { successfulSearch = filteredSearches.pop() }
 
     if (filteredSearches.length > 0) {
       window.dataLayer.push({
@@ -27,8 +23,8 @@ function Tracker () {
         fieldName: fieldName,
         failedSearches: filteredSearches,
         successfulSearch: successfulSearch,
-        match: val,
-        timeTaken: timeTaken
+        match: this._match(fieldName, match),
+        timeTaken: this._timeTaken()
       })
     }
     // Empty out the searches array.
@@ -42,6 +38,25 @@ function Tracker () {
     const newArray = [...this.searches]
     newArray.splice(this.searches.indexOf(item), 1)
     return newArray.some(a => a.search(item) === 0)
+  }
+
+  this._isObject = (o) => {
+    return !!o && o.constructor === Object
+  }
+
+  // Our school matches are objects - turn them into a more analysable string.
+  this._match = (fieldName, match) => {
+    if (fieldName.indexOf('school') !== -1 && this._isObject(match)) {
+      return `${match.name} ${match.urn}`
+    }
+    return match
+  }
+
+  // Record the time taken from first search to selection (or giving up).
+  this._timeTaken = () => {
+    if (this.startTime) {
+      return Date.now() - this.startTime
+    }
   }
 }
 
