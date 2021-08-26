@@ -85,6 +85,18 @@ ActiveRecord::Schema.define(version: 2022_02_08_155419) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
+  create_table "authentication_tokens", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "user_type", null: false
+    t.string "hashed_token", null: false
+    t.string "path"
+    t.datetime "used_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hashed_token"], name: "index_authentication_tokens_on_hashed_token", unique: true
+    t.index ["user_id", "user_type"], name: "index_authentication_tokens_on_id_and_type"
+  end
+
   create_table "blazer_audits", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "query_id"
@@ -519,6 +531,8 @@ ActiveRecord::Schema.define(version: 2022_02_08_155419) do
     t.boolean "system_admin", default: false
     t.datetime "welcome_email_sent_at"
     t.datetime "discarded_at"
+    t.string "magic_link_token"
+    t.datetime "magic_link_token_sent_at"
     t.index ["dfe_sign_in_uid"], name: "index_users_on_dfe_sign_in_uid", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["dttp_id"], name: "index_unique_active_users", unique: true, where: "(discarded_at IS NULL)"
