@@ -49,5 +49,8 @@ module RegisterTraineeTeachers
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
 
     config.autoload_paths << Rails.root.join("config/routes")
+
+    config.action_mailer.preview_path = Rails.root.join("spec/mailers/previews")
+    config.action_mailer.show_previews = !Rails.env.production?
   end
 end

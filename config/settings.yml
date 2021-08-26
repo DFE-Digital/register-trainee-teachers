@@ -1,6 +1,6 @@
 port: 5000
 
-# The url for this app, also used by `dfe_sign_in`
+# The url for this app, also used by `dfe_sign_in` and email
 base_url: https://localhost:5000
 
 # The url for the google doc feedback link (non-live version)
