@@ -34,6 +34,7 @@ module ApplyApplications
       trainee.progress.contact_details = true
       trainee.progress.diversity = true
       trainee.progress.degrees = true
+      trainee.progress.trainee_data = true
       trainee.save!
     end
 

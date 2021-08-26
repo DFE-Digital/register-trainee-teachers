@@ -49,6 +49,8 @@ module Sections
         Schools::FormValidator
       when :funding
         Funding::FormValidator
+      when :trainee_data
+        ApplyApplications::TraineeDataForm
       else
         "#{section.to_s.camelcase}Form".constantize
       end
