@@ -51,6 +51,9 @@ gem "request_store", "~> 1.5"
 gem "govuk-components", "~> 2.1"
 gem "govuk_design_system_formbuilder"
 
+# ActionMailer support for the GOV.UK Notify API
+gem "mail-notify"
+
 # Background job processor
 gem "sidekiq", "~> 6.4"
 gem "sidekiq-cron", "~> 1.1"
@@ -71,6 +74,9 @@ gem "pundit"
 gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
+
+# Magic gem
+gem "devise"
 
 # Full text search
 gem "pg_search", "~> 2.3"
@@ -126,6 +132,9 @@ group :development, :test do
 
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", "~> 3.36"
+
+  # Test emails
+  gem "capybara-email"
 
   gem "dotenv-rails"
 
