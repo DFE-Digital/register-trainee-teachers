@@ -23,6 +23,11 @@ en:
   not_applicable: Not applicable
   draft: draft
   record: record
+  authentication:
+    check_your_email: Check your email
+    sign_in:
+      email:
+        subject: Sign in to Register trainee teachers
   header:
     items:
       sign_out: Sign out

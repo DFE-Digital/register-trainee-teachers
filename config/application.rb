@@ -48,5 +48,8 @@ module RegisterTraineeTeachers
 
     config.autoload_paths << Rails.root.join("config/routes")
     config.analytics = config_for(:analytics)
+
+    config.action_mailer.preview_path = Rails.root.join("spec/mailers/previews")
+    config.action_mailer.show_previews = !Rails.env.production?
   end
 end

@@ -55,4 +55,9 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = Settings.features.use_ssl
+
+  config.action_mailer.delivery_method = :notify
+  config.action_mailer.notify_settings = {
+    api_key: Settings.govuk_notify.api_key,
+  }
 end
