@@ -10,8 +10,8 @@ module Dttp
         # Undergraduate bursary
         TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => { entity_id: "96756cc6-6041-e811-80f2-005056ac45bb" },
         TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => { entity_id: "96756cc6-6041-e811-80f2-005056ac45bb" },
-        # EYITT-GEB
-        TRAINING_ROUTE_ENUMS[:early_years_salaried] => { entity_id: "6292647b-91e2-e811-8136-5065f38bc341" },
+        # EYITT-GEB this is actually a salary but is stored in the bursary section in DTTP
+        TRAINING_ROUTE_ENUMS[:early_years_salaried] => { entity_id: "fd403c13-3e07-ec11-94ef-000d3adda801" },
         # Tier one
         BURSARY_TIER_ENUMS[:tier_one] => { entity_id: "001bf834-33ff-eb11-94ef-00224899ca99" },
         # Tier two
