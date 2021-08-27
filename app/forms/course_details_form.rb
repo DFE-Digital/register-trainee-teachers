@@ -41,18 +41,20 @@ class CourseDetailsForm < TraineeForm
   before_validation :sanitise_subjects
 
   validates :course_subject_one, autocomplete: true, presence: true, if: :require_subject?
+
+  validate :course_subject_two_valid, if: :require_subject?
   validates :course_subject_two, autocomplete: true, if: :require_subject?
+
+  validate :course_subject_three_valid, if: :require_subject?
   validates :course_subject_three, autocomplete: true, if: :require_subject?
+
+  validate :age_range_valid, if: :require_age_range?
   validates :additional_age_range, autocomplete: true, if: -> { other_age_range? && require_age_range? }
 
   validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODES.keys }, if: :requires_study_mode?
 
   validate :course_start_date_valid
   validate :course_end_date_valid
-
-  validate :age_range_valid, if: :require_age_range?
-  validate :course_subject_two_valid, if: :require_subject?
-  validate :course_subject_three_valid, if: :require_subject?
 
   delegate :apply_application?, :requires_study_mode?, to: :trainee
 
