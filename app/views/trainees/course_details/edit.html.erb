@@ -31,7 +31,10 @@
       <% end %>
 
       <% if f.object.require_age_range? %>
-        <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
+        <%= f.govuk_radio_buttons_fieldset(:main_age_range,
+                                           legend: { text: "Age range", size: "s" },
+                                           classes: "age_range") do %>
+
           <% main_age_ranges_options.each_with_index do |age_range, index| %>
             <%= f.govuk_radio_button(:main_age_range, age_range,
                                      label: { text: age_range },
@@ -43,14 +46,12 @@
           <%= f.govuk_radio_button(:main_age_range,
                                    :other,
                                    label: { text: "Other age range" }) do %>
-            <%= render FormComponents::Autocomplete::View.new(
-              f,
-              attribute_name: :additional_age_range,
-              form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
-                                                    :value,
-                                                    :text,
-                                                    label: { text: "Other age range", size: "s" }),
-            ) %>
+
+            <%= f.govuk_collection_select(:additional_age_range,
+                                          additional_age_ranges_options,
+                                          :value,
+                                          :text,
+                                          label: { text: "Select the age range" }) %>
 
           <% end %>
         <% end %>
