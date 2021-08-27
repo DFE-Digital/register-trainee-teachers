@@ -584,6 +584,7 @@ en:
           hint: This is the date the trainee starts on the course. This can be different from the course start date.
       publish_course_details:
         route_message: "Your %{route} courses in the Publish service"
+        all_courses_message: Your courses in the Publish service
         route_titles:
           provider_led_postgrad: provider-led postgrad
           school_direct_salaried: school direct salaried
@@ -742,6 +743,8 @@ en:
       edit:
         heading: What course are they doing?
         course_not_listed: Another course not listed
+        enter_course_details: Enter course details
+        summary_with_route: "%{summary}, %{route}"
     language_specialisms:
       edit:
         heading: Which language specialisms has the trainee chosen to study?
