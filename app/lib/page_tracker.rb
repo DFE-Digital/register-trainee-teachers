@@ -34,7 +34,12 @@ class PageTracker
   end
 
   def last_origin_page_path
-    on_confirm_page? ? origin_pages[-2] : origin_pages.last
+    # Edge case scenario of multiple confirm pages
+    # If we have two confirm page paths return to first origin page
+    return origin_pages.first if on_confirm_page? && another_confirm_page_in_history?
+    return origin_pages[-2] if on_confirm_page?
+
+    origin_pages.last
   end
 
   def last_non_confirm_origin_page_path
@@ -85,5 +90,10 @@ private
     edit_page_paths = history.select { |path| path.include?("edit") }
 
     confirm_path.nil? && edit_page_paths.size == 1
+  end
+
+  def another_confirm_page_in_history?
+    confirm_paths = history.select { |path| path.include?("confirm") }
+    confirm_paths.size > 1
   end
 end
