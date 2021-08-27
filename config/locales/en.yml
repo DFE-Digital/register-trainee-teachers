@@ -749,6 +749,11 @@ en:
         additional_hint: Choose up to three.
     course_details:
       edit:
+        additional_age_range_label: Select the age range
+        age_range_label: Age range
+        heading: Course details
+        other_age_range_label: Other age range
+        subject_label: Subject
         subject_hint: &subject_hint Search for the closest matching subject
         study_mode_label: Full time or part time?
         study_mode_full_time: Full time
@@ -888,7 +893,6 @@ en:
           course_subject_one: *subject
           course_subject_two: *subject
           course_subject_three: *subject
-          additional_age_range: Select an age range from the list - your entry is not recognised
           institution: Select an institution from the list - your entry is not recognised
           other_nationality1: &nationality Select a nationality from the list - your entry is not recognised
           other_nationality2: *nationality
