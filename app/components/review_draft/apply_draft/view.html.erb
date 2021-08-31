@@ -1,9 +1,8 @@
-<%= trainee_draft_title(trainee) %>
-
-<%= render RouteIndicator::View.new(trainee: @trainee) %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= trainee_draft_title(trainee) %>
+
+    <%= render RouteIndicator::View.new(trainee: @trainee) %>
 
     <h2 class="govuk-heading-m"><%= t("components.heading.apply_draft.registration_data_from_apply") %></h2>
 
