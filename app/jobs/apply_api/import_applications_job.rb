@@ -9,7 +9,7 @@ module ApplyApi
 
       new_applications.each do |application_data|
         application_record = ImportApplication.call(application_data: application_data)
-        Trainees::CreateFromApply.call(application: application_record) if application_record.present?
+        Trainees::CreateFromApply.call(application: application_record) if application_record&.importable?
       rescue ApplyApi::ImportApplication::ApplyApiMissingDataError => e
         Sentry.capture_exception(e)
       end

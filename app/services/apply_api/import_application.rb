@@ -12,9 +12,8 @@ module ApplyApi
 
     def call
       return unless provider
-      return if provider_a_hei?
 
-      application.update!(application: application_data.to_json, provider: provider)
+      application.update!(application: application_data.to_json, provider: provider, state: state)
 
       application
     end
@@ -25,6 +24,13 @@ module ApplyApi
 
     def provider
       @provider ||= Provider.find_by(code: provider_code)
+    end
+
+    def state
+      return :provider_a_hei if provider_a_hei?
+      return :duplicate if trainee_already_exists?
+
+      :importable
     end
 
     # This is `ApplyApplication.find` rather than `provider.apply_applications.find`
@@ -45,10 +51,20 @@ module ApplyApi
       course_attributes("training_provider_type") == "university"
     end
 
+    def trainee_already_exists?
+      Trainee.exists?(first_names: candidate_attribute("first_name"),
+                      last_name: candidate_attribute("last_name"),
+                      date_of_birth: candidate_attribute("date_of_birth"))
+    end
+
     def course_attributes(attribute_name)
       application_data["attributes"]["course"][attribute_name]
     rescue NoMethodError
       raise ApplyApiMissingDataError, "Apply application_id #{apply_id} could not be imported"
+    end
+
+    def candidate_attribute(attribute_name)
+      application_data.dig("attributes", "candidate", attribute_name)
     end
   end
 end

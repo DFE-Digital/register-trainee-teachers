@@ -5,6 +5,12 @@ class ApplyApplication < ApplicationRecord
 
   validates :application, presence: true
 
+  enum state: {
+    importable: 0,
+    provider_a_hei: 1,
+    duplicate: 2,
+  }
+
   store_accessor :invalid_data, :degrees, suffix: true
 
   def degrees_invalid_data

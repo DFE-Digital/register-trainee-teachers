@@ -7,7 +7,7 @@ module ApplyApi
     include ActiveJob::TestHelper
 
     let(:application_data) { double("application_data") }
-    let(:application_record) { double("application_record") }
+    let(:application_record) { double("application_record", importable?: true) }
 
     before do
       allow(RetrieveApplications).to receive(:call).and_return([application_data])
@@ -21,6 +21,18 @@ module ApplyApi
           expect(Trainees::CreateFromApply).to receive(:call).with(application: application_record)
 
           described_class.perform_now
+        end
+
+        context "apply application not importable" do
+          let(:application_record) { double("application_record", importable?: false) }
+
+          it "doesn't try to create a trainee record" do
+            expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+
+            expect(Trainees::CreateFromApply).not_to receive(:call)
+
+            described_class.perform_now
+          end
         end
       end
 
