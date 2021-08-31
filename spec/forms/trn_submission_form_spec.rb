@@ -3,7 +3,13 @@
 require "rails_helper"
 
 describe TrnSubmissionForm, type: :model do
-  let(:trainee) { create(:trainee, :completed, progress: progress) }
+  let(:trainee) do
+    create(
+      :trainee,
+      :completed,
+      progress: progress,
+    )
+  end
 
   shared_examples "error" do
     it "is invalid and returns an error message" do
@@ -24,6 +30,7 @@ describe TrnSubmissionForm, type: :model do
           personal_details: true,
           course_details: true,
           training_details: true,
+          funding: true,
         }
       end
 
@@ -33,22 +40,14 @@ describe TrnSubmissionForm, type: :model do
       end
 
       context "requires school" do
-        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, :with_employing_school, :completed, progress: progress.merge(schools: true)) }
-
-        it "is valid" do
-          expect(subject.valid?).to be true
-          expect(subject.errors).to be_empty
-        end
-      end
-
-      context "when the funding flag is on", feature_show_funding: true do
         let(:trainee) do
           create(
             :trainee,
+            :school_direct_salaried,
+            :with_lead_school,
+            :with_employing_school,
             :completed,
-            training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
-            applying_for_bursary: false,
-            progress: progress.merge(funding: true),
+            progress: progress.merge(schools: true),
           )
         end
 
@@ -77,12 +76,6 @@ describe TrnSubmissionForm, type: :model do
 
       context "requires school but incomplete" do
         let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, progress: progress.merge(schools: false)) }
-
-        include_examples "error"
-      end
-
-      context "when the funding flag is on but it's incomplete", feature_show_funding: true do
-        let(:trainee) { create(:trainee, progress: progress.merge(funding: true)) }
 
         include_examples "error"
       end
