@@ -63,7 +63,7 @@ module Dttp
       end
 
       def course_level
-        if trainee.training_route == "early_years_undergrad"
+        if %w[early_years_undergrad opt_in_undergrad].include? trainee.training_route
           COURSE_LEVEL_UG
         else
           COURSE_LEVEL_PG

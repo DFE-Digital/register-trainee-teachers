@@ -18,6 +18,7 @@ describe Trainee do
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
         TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
+        TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
         TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
       )
     end
