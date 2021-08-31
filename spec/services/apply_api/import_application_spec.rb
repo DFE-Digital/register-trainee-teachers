@@ -25,8 +25,8 @@ module ApplyApi
           expect(subject).to be_instance_of(ApplyApplication)
         end
 
-        it "creates the apply_application and associates it with that provider" do
-          expect { subject }.to change { provider.apply_applications.count }.by(1)
+        it "creates the apply_application with state 'importable' and associates it with that provider " do
+          expect { subject }.to change { provider.apply_applications.importable.count }.by(1)
           expect(provider.apply_applications.first.application).to eq(application_data.to_json)
         end
 
@@ -39,15 +39,28 @@ module ApplyApi
             expect { subject }.not_to(change { ApplyApplication.count })
           end
         end
-      end
 
-      context "when the provider type is an HEI" do
-        before do
-          application_data["attributes"]["course"]["training_provider_type"] = "university"
+        context "when the provider type is an HEI" do
+          before do
+            application_data["attributes"]["course"]["training_provider_type"] = "university"
+          end
+
+          it "creates an apply_application with the state 'provider_a_hei'" do
+            expect { subject }.to change { provider.apply_applications.provider_a_hei.count }.by(1)
+          end
         end
 
-        it "will not create apply application " do
-          expect { subject }.not_to(change { ApplyApplication.count })
+        context "trainee already exists" do
+          before do
+            create(:trainee,
+                   first_names: application_data["attributes"]["candidate"]["first_name"],
+                   last_name: application_data["attributes"]["candidate"]["last_name"],
+                   date_of_birth: application_data["attributes"]["candidate"]["date_of_birth"])
+          end
+
+          it "creates an apply_application with the state 'duplicate'" do
+            expect { subject }.to change { provider.apply_applications.duplicate.count }.by(1)
+          end
         end
       end
 
