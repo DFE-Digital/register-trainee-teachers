@@ -258,6 +258,21 @@ module Dttp
           end
         end
 
+        context "Opt in undergrad" do
+          let(:trainee) do
+            create(:trainee, :opt_in_undergrad, :with_course_details, :with_start_date,
+                   dttp_id: dttp_contact_id, provider: provider)
+          end
+
+          subject { described_class.new(trainee).params }
+
+          it "returns a hash including the undergrad course level" do
+            expect(subject).to include(
+              { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
+            )
+          end
+        end
+
         context "school direct (tuition fee)" do
           let(:trainee) do
             create(:trainee,

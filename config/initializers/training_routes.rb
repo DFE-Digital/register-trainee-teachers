@@ -47,7 +47,8 @@ ROUTE_INITIATIVES = {
 }.freeze
 
 TRAINING_ROUTES_FOR_TRAINEE = TRAINING_ROUTES.select { |training_route|
-  TRAINING_ROUTE_ENUMS.values_at(:opt_in_undergrad).exclude? training_route
+  TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :provider_led_postgrad, :early_years_undergrad, :school_direct_tuition_fee, :school_direct_salaried, :early_years_assessment_only,
+                                 :early_years_salaried, :early_years_postgrad, :pg_teaching_apprenticeship, :hpitt_postgrad, :opt_in_undergrad, :provider_led_undergrad).include? training_route
 }.freeze
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|

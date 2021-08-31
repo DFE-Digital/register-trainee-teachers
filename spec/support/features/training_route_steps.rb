@@ -38,6 +38,10 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship])
     end
 
+    def given_i_have_created_an_opt_in_undergrad_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:opt_in_undergrad])
+    end
+
   private
 
     def choose_training_route_for(route)
