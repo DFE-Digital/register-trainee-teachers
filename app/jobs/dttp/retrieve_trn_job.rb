@@ -9,6 +9,8 @@ module Dttp
     class TraineeAttributeError < StandardError; end
 
     def perform(trainee, timeout_after = nil)
+      return unless FeatureService.enabled?(:sync_from_dttp)
+
       @timeout_after = timeout_after
       @trainee = trainee
 
