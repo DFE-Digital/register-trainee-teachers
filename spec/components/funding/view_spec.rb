@@ -17,6 +17,21 @@ module Funding
       end
     end
 
+    # context "on opt-in (undergrad) route" do
+    #   let(:state) { :draft }
+    #   let(:training_initiative) { TRAINING_ROUTE_INITIATIVES["opt_in_undergrad"].first }
+    #   let(:degree) { AllocationSubjects::MATHEMATICS }
+    #   let(:trainee) { build(:trainee, state, training_initiative: training_initiative, training_route: "opt_in_undergrad", degree: degree) }
+
+    #   it "renders if the trainee selects mathematics" do
+    #     expect(rendered_component).to have_text("£24,000 estimated bursary")
+    #   end
+
+    #   it "doesnt render if the trainee selects drama" do
+    #     expect(rendered_component).to have_text("No bursaries available for this course")
+    #   end
+    # end
+
     context "assessment only route" do
       let(:state) { :draft }
       let(:trainee) { build(:trainee, state, training_initiative: training_initiative) }

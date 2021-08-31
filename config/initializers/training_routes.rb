@@ -137,6 +137,16 @@ SEED_BURSARIES = [
     amount: 14_000,
     allocation_subjects: [AllocationSubjects::EARLY_YEARS_ITT],
   ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    amount: 9_000,
+    allocation_subjects: [
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MODERN_LANGUAGES,
+    ],
+  ),
 ].freeze
 
 TRAINING_ROUTE_INITIATIVES = {
