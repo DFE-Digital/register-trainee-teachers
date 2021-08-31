@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(i18n_key: "trainees.apply_applications.confirm_course.show") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(text: t(:back), href: trainee_apply_applications_course_details_path(@trainee)) %>
+  <%= render DynamicBackLink::View.new(@trainee) %>
 <% end %>
 
 <div class="govuk-grid-row">
