@@ -7,7 +7,7 @@ module PageObjects
 
       element :page_heading, ".govuk-heading-xl"
 
-      element :add_trainee_link, "a", text: "Add a trainee"
+      element :add_trainee_link, "a", text: "Create a trainee record"
 
       element :draft_trainee_data, ".app-draft-records"
 
