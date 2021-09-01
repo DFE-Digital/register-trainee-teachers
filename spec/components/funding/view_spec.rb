@@ -17,20 +17,41 @@ module Funding
       end
     end
 
-    # context "on opt-in (undergrad) route" do
-    #   let(:state) { :draft }
-    #   let(:training_initiative) { TRAINING_ROUTE_INITIATIVES["opt_in_undergrad"].first }
-    #   let(:degree) { AllocationSubjects::MATHEMATICS }
-    #   let(:trainee) { build(:trainee, state, training_initiative: training_initiative, training_route: "opt_in_undergrad", degree: degree) }
+    context "on opt-in (undergrad) route" do
+      let(:state) { :draft }
+      let(:training_initiative) { TRAINING_ROUTE_INITIATIVES["opt_in_undergrad"].first }
+      let(:degree) { create(:degree, subject: AllocationSubjects::MATHEMATICS) }
+      let(:trainee) { build(:trainee, state, training_initiative: training_initiative, training_route: "opt_in_undergrad", degrees: [degree]) }
 
-    #   it "renders if the trainee selects mathematics" do
-    #     expect(rendered_component).to have_text("£24,000 estimated bursary")
-    #   end
+      context "when there is a bursary available" do
+        before do
+          allow(CalculateBursary).to receive(:for_route_and_subject).with(
+            trainee.training_route.to_sym,
+            trainee.course_subject_one,
+          ).and_return(9_000)
+          allow(trainee).to receive(:applying_for_bursary).and_return(true)
+          render_inline(View.new(data_model: trainee))
+        end
 
-    #   it "doesnt render if the trainee selects drama" do
-    #     expect(rendered_component).to have_text("No bursaries available for this course")
-    #   end
-    # end
+        it "renders if the trainee selects mathematics" do
+          expect(rendered_component).to have_text("£9,000 estimated bursary")
+        end
+      end
+
+      context "when there is no bursary available" do
+        before do
+          allow(CalculateBursary).to receive(:for_route_and_subject).with(
+            trainee.training_route.to_sym,
+            trainee.course_subject_one,
+          ).and_return(nil)
+          render_inline(View.new(data_model: trainee))
+        end
+
+        it "doesnt render if the trainee selects drama" do
+          expect(rendered_component).not_to have_text("Bursary applied for")
+        end
+      end
+    end
 
     context "assessment only route" do
       let(:state) { :draft }
