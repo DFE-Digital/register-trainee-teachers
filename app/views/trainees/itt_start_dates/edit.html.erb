@@ -3,7 +3,7 @@
 <%= render PageTitle::View.new(text: text, has_errors: @itt_start_date_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: "Back",
     href: trainee_path(@trainee),
   ) %>

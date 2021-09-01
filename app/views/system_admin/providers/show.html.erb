@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(text: @provider.name, has_errors: @provider.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: t("back"),
     href: providers_path,
   ) %>

@@ -1,6 +1,6 @@
 <%= render PageTitle::View.new(i18n_key: "users.new", has_errors: @user.errors.present?) %>
 
-<%= render GovukComponent::BackLink.new(
+<%= render GovukComponent::BackLinkComponent.new(
       text: "Back",
       href: provider_path(@provider),
     ) %>
