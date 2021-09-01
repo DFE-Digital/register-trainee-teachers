@@ -36,7 +36,7 @@ class Trainee < ApplicationRecord
   validates :training_route, inclusion: { in: [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] }, if: :hpitt_provider?
   validates :training_route, exclusion: { in: [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] }, unless: :hpitt_provider?
 
-  enum training_route: TRAINING_ROUTES_FOR_TRAINEE
+  enum training_route: TRAINING_ROUTES
 
   enum training_initiative: ROUTE_INITIATIVES
 
