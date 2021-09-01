@@ -18,7 +18,7 @@
 
       <% if @trainee.deferred? %>
         <h3 class="govuk-heading-s">Withdrawal date</h3>
-        <%= render GovukComponent::InsetText.new(classes: "deferral-notice") do %>
+        <%= render GovukComponent::InsetTextComponent.new(classes: "deferral-notice") do %>
           <p class="govuk-body deferral-notice_text">
             <%= t("views.forms.withdrawal_date.deferral_notice_html", date: date_for_summary_view(@trainee.defer_date)) %>
           </p>
