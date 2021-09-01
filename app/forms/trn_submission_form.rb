@@ -14,7 +14,7 @@ class TrnSubmissionForm
   trn_validator :personal_details, form: "PersonalDetailsForm", unless: :apply_application?
   trn_validator :contact_details, form: "ContactDetailsForm", unless: :apply_application?
   trn_validator :diversity, form: "Diversities::FormValidator", unless: :apply_application?
-  trn_validator :degrees, form: "DegreesForm", if: :should_validate_degree?
+  trn_validator :degrees, form: "DegreesForm", if: :validate_degree?
   trn_validator :course_details, form: "CourseDetailsForm"
   trn_validator :training_details, form: "TrainingDetailsForm"
   trn_validator :trainee_data, form: "ApplyApplications::TraineeDataForm", if: :apply_application?
@@ -48,7 +48,7 @@ class TrnSubmissionForm
     FeatureService.enabled?(:show_funding)
   end
 
-  def should_validate_degree?
+  def validate_degree?
     !apply_application? && requires_degree?
   end
 
