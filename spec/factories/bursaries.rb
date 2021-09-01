@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :bursary do
-    training_route { TRAINING_ROUTES_FOR_TRAINEE.keys.sample }
+    training_route { TRAINING_ROUTES.keys.sample }
     amount { Faker::Number.number(digits: 5) }
 
     trait :with_bursary_subjects do
