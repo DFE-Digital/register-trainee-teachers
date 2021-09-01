@@ -2,7 +2,7 @@
 
 class StatusTag::View < GovukComponent::Base
   def initialize(trainee:, classes: "")
-    super(classes: classes)
+    super(classes: classes, html_attributes: {})
     @trainee = trainee
   end
 
