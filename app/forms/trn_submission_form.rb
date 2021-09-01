@@ -14,15 +14,14 @@ class TrnSubmissionForm
   trn_validator :personal_details, form: "PersonalDetailsForm", unless: :apply_application?
   trn_validator :contact_details, form: "ContactDetailsForm", unless: :apply_application?
   trn_validator :diversity, form: "Diversities::FormValidator", unless: :apply_application?
-  trn_validator :degrees, form: "DegreesForm", unless: :apply_application?
+  trn_validator :degrees, form: "DegreesForm", if: :should_validate_degree?
   trn_validator :course_details, form: "CourseDetailsForm"
   trn_validator :training_details, form: "TrainingDetailsForm"
   trn_validator :trainee_data, form: "ApplyApplications::TraineeDataForm", if: :apply_application?
   trn_validator :schools, form: "Schools::FormValidator", if: :requires_schools?
   trn_validator :funding, form: "Funding::FormValidator", if: :funding_details_collected?
 
-  delegate :requires_schools?, to: :trainee
-  delegate :apply_application?, to: :trainee
+  delegate :requires_schools?, :requires_degree?, :apply_application?, to: :trainee
 
   validate :submission_ready
 
@@ -47,6 +46,10 @@ class TrnSubmissionForm
 
   def funding_details_collected?
     FeatureService.enabled?(:show_funding)
+  end
+
+  def should_validate_degree?
+    !apply_application? && requires_degree?
   end
 
 private

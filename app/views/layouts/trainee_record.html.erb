@@ -12,7 +12,7 @@
 
   <%= render TabNavigation::View.new(items: [
     { name: "About their teacher training", url: trainee_path(@trainee) },
-    { name: "Personal details and education", url: trainee_personal_details_path(@trainee) },
+    { name: @trainee.requires_degree? ? "Personal details and education" : "Personal details", url: trainee_personal_details_path(@trainee) },
     { name: "Timeline", url: trainee_timeline_path(@trainee) },
   ]) %>
 

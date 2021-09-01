@@ -9,6 +9,7 @@ module PageObjects
 
       element :assessment_only, "#trainee-training-route-assessment-only-field"
       element :provider_led_postgrad, "#trainee-training-route-provider-led-postgrad-field"
+      element :provider_led_undergrad, "#trainee-training-route-provider-led-undergrad-field"
       element :early_years_undergrad, "#trainee-training-route-early-years-undergrad-field"
 
       element :early_years_assessment_only, "#trainee-training-route-early-years-assessment-only-field"
