@@ -7,13 +7,17 @@ class TaskList::View < GovukComponent::Base
     rows.any? { |r| r.status.present? }
   end
 
+  def initialize(classes: [], html_attributes: {})
+    super
+  end
+
 private
 
   def default_classes
     %w[app-task-list]
   end
 
-  class Row < GovukComponent::Slot
+  class Row < GovukComponent::Base
     attr_accessor :task_name, :status, :hint_text, :active
 
     def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, active: true, classes: [], html_attributes: {})
