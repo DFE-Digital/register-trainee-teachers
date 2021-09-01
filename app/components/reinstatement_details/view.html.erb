@@ -6,7 +6,8 @@
     {
       key: t("components.confirmation.reinstatement_details.reinstate_date_label"),
       value: reinstate_date,
-      action: govuk_link_to(t(:change), trainee_reinstatement_path(data_model.trainee)),
+      action_href: trainee_reinstatement_path(data_model.trainee),
+      action_text: t(:change),
     },
   ],
 ) %>

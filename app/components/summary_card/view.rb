@@ -13,8 +13,8 @@ class SummaryCard::View < ViewComponent::Base
     @id_suffix = id_suffix
   end
 
-  def rows
-    @rows.map do |row|
+  def summary_rows
+    @summary_rows ||= @rows.map do |row|
       row.tap do |r|
         r.delete(:action) if prevent_action?
       end

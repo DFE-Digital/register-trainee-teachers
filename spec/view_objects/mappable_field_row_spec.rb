@@ -47,8 +47,8 @@ describe MappableFieldRow do
         expect(subject[:value]).to eq(expected_html)
       end
 
-      it "doesn't set the action key" do
-        expect(subject).not_to have_key(:action)
+      it "doesn't set the action_href key" do
+        expect(subject).not_to have_key(:action_href)
       end
 
       context "when has_errors is set to true" do
@@ -72,10 +72,15 @@ describe MappableFieldRow do
         expect(subject[:value]).to eq(field_value)
       end
 
-      it "sets the action key" do
-        expect(subject[:action]).to eq(
-          %(<a class="govuk-link" href="/abc">Change <span class="govuk-visually-hidden">#{field_label.downcase}</span></a>),
-        )
+      it "sets the action_href key" do
+        expect(subject[:action_href]).to eq(action_url)
+      end
+
+      it "sets the action_text key" do
+        expect(subject[:action_text]).to eq("Change")
+      end
+      it "sets the action_visually_hidden_text key to the field_name" do
+        expect(subject[:action_visually_hidden_text]).to eq(field_label.downcase)
       end
     end
 

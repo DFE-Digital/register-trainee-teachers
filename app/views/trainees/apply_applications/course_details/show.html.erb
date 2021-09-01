@@ -12,8 +12,9 @@
                                      {
                                        key: "Course name",
                                        value: "#{@course.name} (#{@course.code})".strip,
-                                       action: govuk_link_to('Change<span class="govuk-visually-hidden"> course</span>'.html_safe,
-                                                             edit_trainee_publish_course_details_path(@trainee)),
+                                       action_href: edit_trainee_publish_course_details_path(@trainee),
+                                       action_text: t(:change),
+                                       action_visually_hidden_text: 'course',
                                      },
                                      {
                                        key: "Route",

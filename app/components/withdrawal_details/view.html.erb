@@ -6,12 +6,14 @@
     {
       key: t("components.confirmation.withdrawal_details.withdraw_date_label"),
       value: withdraw_date,
-      action: deferred ? nil : govuk_link_to(t(:change), trainee_withdrawal_path(data_model.trainee)),
+      action_href: deferred ? nil : trainee_withdrawal_path(data_model.trainee),
+      action_text: deferred ? nil : t(:change),
     },
     {
       key: t("components.confirmation.withdrawal_details.withdraw_reason_label"),
       value: withdraw_reason,
-      action: govuk_link_to(t(:change), trainee_withdrawal_path(data_model.trainee)),
+      action_href: trainee_withdrawal_path(data_model.trainee),
+      action_text: t(:change),
     },
   ],
 ) %>

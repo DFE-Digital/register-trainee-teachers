@@ -1,7 +1,7 @@
 <h1 class="govuk-heading-l"><%= heading %></h1>
 <p class="govuk-body"><%= heading_text %></p>
 
-<%= render GovukComponent::Details.new(summary: t(".incorrect_details_title")) do %>
+<%= render GovukComponent::DetailsComponent.new(summary_text: t(".incorrect_details_title")) do %>
   <%= simple_format t(".incorrect_details_text"), class: "govuk-body" %>
 <% end %>
 
@@ -12,15 +12,13 @@
     </h2>
   </header>
   <div class="app-summary-card__body">
-    <%= render GovukComponent::SummaryList.new do |component| %>
-      <% rows.each do |row| %>
-        <% component.slot(
-          :row,
-          key: row[:key],
-          value: row[:value],
-          action: row[:action],
-          classes: row[:key].to_s.downcase.gsub(/ /, "-"),
-        ) %>
+    <%= render GovukComponent::SummaryListComponent.new do |summary_list| %>
+      <% summary_rows.each do |summary_row| %>
+        <% summary_list.row(classes: summary_row[:key].to_s.downcase.gsub(/ /, "-")) do |row|
+          row.key(text: summary_row[:key])
+          row.value(text: summary_row[:value])
+          row.action(text: t(".change_course"), href: summary_row[:action])
+        end %>
       <% end %>
     <% end %>
   </div>
