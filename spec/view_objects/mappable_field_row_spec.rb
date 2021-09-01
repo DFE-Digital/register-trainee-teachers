@@ -79,6 +79,7 @@ describe MappableFieldRow do
       it "sets the action_text key" do
         expect(subject[:action_text]).to eq("Change")
       end
+
       it "sets the action_visually_hidden_text key to the field_name" do
         expect(subject[:action_visually_hidden_text]).to eq(field_label.downcase)
       end
