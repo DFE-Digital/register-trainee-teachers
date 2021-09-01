@@ -12,10 +12,7 @@ module Trainees
 
     def update
       @itt_start_date_form = IttStartDateForm.new(trainee, params: trainee_params, user: current_user)
-
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @itt_start_date_form.public_send(save_strategy)
+      if @itt_start_date_form.stash_or_save!
         redirect_to study_mode_or_confirmation_path
       else
         render :edit
@@ -33,7 +30,7 @@ module Trainees
     end
 
     def course_code
-      publish_course_details_form.code
+      publish_course_details_form.course_code
     end
 
     def authorize_trainee

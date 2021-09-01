@@ -5,7 +5,7 @@ RSpec.shared_examples "rendering course confirmation" do
   let(:itt_start_date) { nil }
 
   let(:args) do
-    if described_class == ConfirmPublishCourse::View
+    if described_class == PublishCourseDetails::View
       {
         trainee: trainee,
         course: course,
@@ -59,7 +59,7 @@ RSpec.shared_examples "rendering course confirmation" do
       expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
     end
 
-    if described_class == ConfirmPublishCourse::View
+    if described_class == PublishCourseDetails::View
       it "renders 7 rows on the confirmation page" do
         expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
       end
@@ -80,7 +80,7 @@ RSpec.shared_examples "rendering course confirmation" do
         expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
       end
 
-      if described_class == ConfirmPublishCourse::View
+      if described_class == PublishCourseDetails::View
         it "renders 6 rows on the confirmation page" do
           expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
         end
@@ -117,7 +117,7 @@ RSpec.shared_examples "rendering course confirmation" do
       end
 
       it "displays the correct subject summary label" do
-        expect(rendered_component).to have_text(I18n.t("confirm_publish_course.view.subject"))
+        expect(rendered_component).to have_text(I18n.t("publish_course_details.view.subject"))
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.shared_examples "rendering course confirmation" do
       end
 
       it "displays the correct subject summary label" do
-        expect(rendered_component).to have_text(I18n.t("confirm_publish_course.view.multiple_subjects"))
+        expect(rendered_component).to have_text(I18n.t("publish_course_details.view.multiple_subjects"))
       end
     end
 

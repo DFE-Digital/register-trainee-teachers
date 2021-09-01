@@ -138,6 +138,10 @@ module Features
       @confirm_course_details_page ||= PageObjects::Trainees::ConfirmCourseDetails.new
     end
 
+    def confirm_publish_course_details_page
+      @confirm_publish_course_details_page ||= PageObjects::Trainees::ConfirmPublishCourseDetails.new
+    end
+
     def apply_registrations_course_details_page
       @apply_registrations_course_details_page ||= PageObjects::Trainees::ApplyRegistrations::CourseDetails.new
     end

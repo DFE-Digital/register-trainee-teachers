@@ -12,9 +12,7 @@ class LanguageSpecialismsForm < TraineeForm
     course_subject_three
   ].freeze
 
-  attr_accessor(*FIELDS, :trainee)
-
-  delegate :id, :persisted?, to: :trainee
+  attr_accessor(*FIELDS)
 
   validate :language_specialism_count
 
@@ -43,6 +41,8 @@ private
 
   def course_subjects(subjects)
     subjects = (subjects || []).reject(&:blank?)
+    return {} if subjects.blank?
+
     {
       course_subject_one: subjects[0],
       course_subject_two: subjects[1],

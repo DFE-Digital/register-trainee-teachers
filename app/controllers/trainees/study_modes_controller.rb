@@ -7,15 +7,12 @@ module Trainees
     before_action :authorize_trainee
 
     def edit
-      @study_mode_form = StudyModesForm.new(trainee, params: { study_mode: nil })
+      @study_mode_form = StudyModesForm.new(trainee)
     end
 
     def update
       @study_mode_form = StudyModesForm.new(trainee, params: trainee_params, user: current_user)
-
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @study_mode_form.public_send(save_strategy)
+      if @study_mode_form.stash_or_save!
         redirect_to course_confirmation_path
       else
         render :edit

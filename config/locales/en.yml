@@ -701,7 +701,7 @@ en:
   error_summary:
     view:
       heading: There is a problem
-  confirm_publish_course:
+  publish_course_details:
     view:
       change: Change
       change_course: Change course

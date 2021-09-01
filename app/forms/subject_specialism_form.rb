@@ -20,8 +20,7 @@ class SubjectSpecialismForm < TraineeForm
 
   def initialize(trainee, position = nil, params: {}, user: nil, store: FormStore)
     @position = position
-    @trainee = trainee
-    super(trainee, params: params, user: user, store: store)
+    super(trainee, params: course_subjects(params), user: user, store: store)
   end
 
   def specialisms
@@ -57,5 +56,29 @@ private
     if @position && send(subject_attribute).blank?
       errors.add(subject_attribute, I18n.t(ERROR_TRANSLATION_KEY))
     end
+  end
+
+  def course_subjects(params)
+    subjects = params.slice(
+      :course_subject_one,
+      :course_subject_two,
+      :course_subject_three,
+    ).reject { |_k, v| v.blank? }
+
+    return {} if subjects.blank?
+
+    case @position
+    when 1
+      subjects[:course_subject_two] = nil
+      subjects[:course_subject_three] = nil
+    when 2
+      subjects.delete(:course_subject_one)
+      subjects[:course_subject_three] = nil
+    when 3
+      subjects.delete(:course_subject_one)
+      subjects.delete(:course_subject_two)
+    end
+
+    subjects
   end
 end
