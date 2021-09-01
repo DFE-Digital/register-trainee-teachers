@@ -69,7 +69,7 @@ dfe_sign_in:
   secret: secret required value
 
 apply_api:
-  base_url: "base-url-from-env"
+  base_url: "https://www.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: "auth-token-from-env"
 
 current_recruitment_cycle_year: 2021
