@@ -11,9 +11,10 @@ module ApplyApi
     end
 
     def call
-      return unless provider
-
-      application.update!(application: application_data.to_json, provider: provider, state: state)
+      ApplyApplication.transaction do
+        application.update!(application: application_data.to_json, provider_code: provider_code)
+        hei_provider? ? application.non_importable_hei! : application.importable!
+      end
 
       application
     end
@@ -22,17 +23,6 @@ module ApplyApi
 
     attr_reader :application_data
 
-    def provider
-      @provider ||= Provider.find_by(code: provider_code)
-    end
-
-    def state
-      return :provider_a_hei if provider_a_hei?
-      return :duplicate if trainee_already_exists?
-
-      :importable
-    end
-
     # This is `ApplyApplication.find` rather than `provider.apply_applications.find`
     # to cover the possibility of an application's provider being updated.
     def application
@@ -40,21 +30,15 @@ module ApplyApi
     end
 
     def provider_code
-      @provider_code ||= course_attributes("training_provider_code")
+      course_attributes("training_provider_code")
     end
 
     def apply_id
-      @apply_id ||= application_data["id"]
+      application_data["id"]
     end
 
-    def provider_a_hei?
+    def hei_provider?
       course_attributes("training_provider_type") == "university"
-    end
-
-    def trainee_already_exists?
-      Trainee.exists?(first_names: candidate_attribute("first_name"),
-                      last_name: candidate_attribute("last_name"),
-                      date_of_birth: candidate_attribute("date_of_birth"))
     end
 
     def course_attributes(attribute_name)

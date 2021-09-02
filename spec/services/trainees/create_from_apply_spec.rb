@@ -17,7 +17,7 @@ module Trainees
       create(
         :course_with_subjects,
         code: course_info["course_code"],
-        accredited_body_code: apply_application.provider.code,
+        accredited_body_code: apply_application.provider_code,
         route: :school_direct_tuition_fee,
         subject_names: subject_names,
       )
@@ -65,11 +65,27 @@ module Trainees
       }.to change(Trainee.draft, :count).by(1)
     end
 
+    it "marks the application as imported" do
+      expect {
+        create_trainee_from_apply
+      }.to change(apply_application, :state).to("imported")
+    end
+
+    context "trainee already exists" do
+      before { create(:trainee, trainee_attributes) }
+
+      it "marks the application as a duplicate" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("non_importable_duplicate")
+      end
+    end
+
     it { is_expected.to have_attributes(trainee_attributes) }
 
     it "associates the created trainee against the apply_application and provider" do
       expect(trainee.apply_application).to eq(apply_application)
-      expect(trainee.provider).to eq(apply_application.provider)
+      expect(trainee.provider.code).to eq(apply_application.provider_code)
     end
 
     it "calls the Degrees::CreateFromApply service" do

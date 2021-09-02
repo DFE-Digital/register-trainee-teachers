@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_31_124234) do
+ActiveRecord::Schema.define(version: 2021_09_01_154843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,13 +32,13 @@ ActiveRecord::Schema.define(version: 2021_08_31_124234) do
   create_table "apply_applications", force: :cascade do |t|
     t.integer "apply_id", null: false
     t.jsonb "application"
-    t.bigint "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "invalid_data"
     t.integer "state"
+    t.string "provider_code"
     t.index ["apply_id"], name: "index_apply_applications_on_apply_id", unique: true
-    t.index ["provider_id"], name: "index_apply_applications_on_provider_id"
+    t.index ["provider_code"], name: "index_apply_applications_on_provider_code"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -413,7 +413,6 @@ ActiveRecord::Schema.define(version: 2021_08_31_124234) do
     t.index ["user_id"], name: "index_validation_errors_on_user_id"
   end
 
-  add_foreign_key "apply_applications", "providers"
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"

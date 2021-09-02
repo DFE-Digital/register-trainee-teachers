@@ -32,7 +32,6 @@ describe Provider do
 
   describe "associations" do
     it { is_expected.to have_many(:users) }
-    it { is_expected.to have_many(:apply_applications) }
   end
 
   describe "auditing" do

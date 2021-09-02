@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 class ApplyApplication < ApplicationRecord
-  belongs_to :provider
+  belongs_to :provider, foreign_key: :provider_code, primary_key: :code, inverse_of: :apply_applications
 
   validates :application, presence: true
 
   enum state: {
     importable: 0,
-    provider_a_hei: 1,
-    duplicate: 2,
+    non_importable_hei: 1,
+    non_importable_duplicate: 2,
+    imported: 3,
   }
 
   store_accessor :invalid_data, :degrees, suffix: true

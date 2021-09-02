@@ -7,7 +7,7 @@ module ApplyApi
     include ActiveJob::TestHelper
 
     let(:application_data) { double("application_data") }
-    let(:application_record) { double("application_record", importable?: true) }
+    let(:application_record) { double("application_record") }
 
     before do
       allow(RetrieveApplications).to receive(:call).and_return([application_data])
@@ -18,21 +18,8 @@ module ApplyApi
         it "imports application data from Apply and creates a trainee record" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: nil)
           expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
-          expect(Trainees::CreateFromApply).to receive(:call).with(application: application_record)
 
           described_class.perform_now
-        end
-
-        context "apply application not importable" do
-          let(:application_record) { double("application_record", importable?: false) }
-
-          it "doesn't try to create a trainee record" do
-            expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
-
-            expect(Trainees::CreateFromApply).not_to receive(:call)
-
-            described_class.perform_now
-          end
         end
       end
 
@@ -44,7 +31,6 @@ module ApplyApi
         it "imports just the new applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: last_sync)
           expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
-          expect(Trainees::CreateFromApply).to receive(:call).with(application: application_record)
 
           described_class.perform_now
         end
@@ -62,7 +48,6 @@ module ApplyApi
         it "imports just the new applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: last_successful_sync)
           expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
-          expect(Trainees::CreateFromApply).to receive(:call).with(application: application_record)
 
           described_class.perform_now
         end
@@ -84,7 +69,6 @@ module ApplyApi
       it "does nothing" do
         expect(RetrieveApplications).not_to receive(:call).with(changed_since: nil)
         expect(ImportApplication).not_to receive(:call).with(application_data: application_data)
-        expect(Trainees::CreateFromApply).not_to receive(:call).with(application: application_record)
 
         described_class.perform_now
       end

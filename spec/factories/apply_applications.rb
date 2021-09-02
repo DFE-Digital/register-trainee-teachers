@@ -5,14 +5,33 @@ FactoryBot.define do
     sequence(:apply_id)
     application { ApiStubs::ApplyApi.application }
     invalid_data { {} }
-    provider
+    provider_code { create(:provider).code }
+
+    trait :importable do
+      state { "importable" }
+    end
 
     trait :with_invalid_data do
-      invalid_data { { "degrees" => { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => { institution: "University of Warwick" } } } }
+      invalid_data do
+        {
+          "degrees" => {
+            SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => {
+              institution: "University of Warwick",
+            },
+          },
+        }
+      end
     end
 
     trait :with_multiple_invalid_data do
-      invalid_data { { "degrees" => { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => { institution: "University of Warwick", subject: "History1" } } } }
+      invalid_data do
+        { "degrees" => {
+          SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => {
+            institution: "University of Warwick",
+            subject: "History1",
+          },
+        } }
+      end
     end
   end
 end
