@@ -19,7 +19,6 @@ class CourseDetailsForm < TraineeForm
     end_year
     main_age_range
     additional_age_range
-    additional_age_range_raw
     study_mode
   ].freeze
 
@@ -49,7 +48,7 @@ class CourseDetailsForm < TraineeForm
   validates :course_subject_three, autocomplete: true, if: :require_subject?
 
   validate :age_range_valid, if: :require_age_range?
-  validates :additional_age_range, autocomplete: true, if: -> { other_age_range? && require_age_range? }
+  validates :additional_age_range, presence: true, if: -> { other_age_range? && require_age_range? }
 
   validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODES.keys }, if: :requires_study_mode?
 

@@ -11,7 +11,7 @@
 
       <%= f.govuk_error_summary %>
 
-      <h1 class="govuk-heading-l">Course details</h1>
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
       <% if f.object.require_subject? %>
         <%= render FormComponents::Autocomplete::View.new(
@@ -22,7 +22,7 @@
             course_subjects_options,
             :value,
             :text,
-            label: { text: "Subject", size: "s" },
+            label: { text: t(".subject_label"), size: "s" },
             hint: { text: t(".subject_hint") },
           ),
         ) %>
@@ -31,7 +31,10 @@
       <% end %>
 
       <% if f.object.require_age_range? %>
-        <%= f.govuk_radio_buttons_fieldset(:main_age_range, legend: { text: "Age range", size: "s" }, classes: "age_range") do %>
+        <%= f.govuk_radio_buttons_fieldset(:main_age_range,
+                                           legend: { text: t(".age_range_label"), size: "s" },
+                                           classes: "age_range") do %>
+
           <% main_age_ranges_options.each_with_index do |age_range, index| %>
             <%= f.govuk_radio_button(:main_age_range, age_range,
                                      label: { text: age_range },
@@ -42,15 +45,13 @@
 
           <%= f.govuk_radio_button(:main_age_range,
                                    :other,
-                                   label: { text: "Other age range" }) do %>
-            <%= render FormComponents::Autocomplete::View.new(
-              f,
-              attribute_name: :additional_age_range,
-              form_field: f.govuk_collection_select(:additional_age_range, additional_age_ranges_options,
-                                                    :value,
-                                                    :text,
-                                                    label: { text: "Other age range", size: "s" }),
-            ) %>
+                                   label: { text: t(".other_age_range_label") }) do %>
+
+            <%= f.govuk_collection_select(:additional_age_range,
+                                          additional_age_ranges_options,
+                                          :value,
+                                          :text,
+                                          label: { text: t(".additional_age_range_label") }) %>
 
           <% end %>
         <% end %>

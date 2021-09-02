@@ -49,10 +49,8 @@ feature "course details", type: :feature do
       scenario "submitting with a partial subject/age range", js: true do
         when_i_visit_the_course_details_page
         and_i_fill_in_subject_without_selecting_a_value(with: "moose")
-        and_i_fill_in_additional_age_range_without_selecting_a_value(with: "goose")
         and_i_submit_the_form
         then_subject_is_populated(with: "moose")
-        then_additional_age_range_is_populated(with: "goose")
         then_i_see_error_messages_for_partially_submitted_fields
       end
 
@@ -129,15 +127,6 @@ private
     course_details_page.subject_raw.native.send_key(:backspace)
   end
 
-  def and_i_fill_in_additional_age_range_without_selecting_a_value(with:)
-    choose "Other age range", allow_label_click: true
-    course_details_page.additional_age_range.fill_in with: with
-  end
-
-  def then_additional_age_range_is_populated(with:)
-    expect(course_details_page.additional_age_range_raw.value).to eq(with)
-  end
-
   def then_subject_is_populated(with:)
     expect(course_details_page.subject_raw.value).to eq(with)
   end
@@ -163,9 +152,6 @@ private
   def then_i_see_error_messages_for_partially_submitted_fields
     expect(course_details_page).to have_content(
       I18n.t("activemodel.errors.validators.autocomplete.course_subject_one"),
-    )
-    expect(course_details_page).to have_content(
-      I18n.t("activemodel.errors.validators.autocomplete.additional_age_range"),
     )
   end
 
