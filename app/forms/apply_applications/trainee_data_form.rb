@@ -21,7 +21,7 @@ module ApplyApplications
 
     validate :submission_ready
 
-    attr_accessor :mark_as_reviewed
+    attr_accessor :mark_as_reviewed, :trainee
 
     def initialize(trainee)
       @trainee = trainee
@@ -34,6 +34,7 @@ module ApplyApplications
       trainee.progress.contact_details = true
       trainee.progress.diversity = true
       trainee.progress.degrees = true
+      trainee.progress.trainee_data = true
       trainee.save!
     end
 
@@ -82,7 +83,5 @@ module ApplyApplications
     def validator(section)
       form_validators[section][:form].constantize
     end
-
-    attr_reader :trainee
   end
 end

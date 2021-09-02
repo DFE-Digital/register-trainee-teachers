@@ -6,12 +6,16 @@ module ApplyApplications
       include ApplicationHelper
       include TraineeHelper
 
-      attr_reader :trainee, :form, :invalid_data_view
+      attr_reader :data_model, :form, :invalid_data_view
 
-      def initialize(trainee, form)
-        @trainee = trainee
-        @form = form
+      def initialize(data_model)
+        @data_model = data_model[:data_model] || data_model
+        @form = TraineeDataForm.new(trainee)
         @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
+      end
+
+      def trainee
+        data_model.is_a?(Trainee) ? data_model : data_model.trainee
       end
     end
   end

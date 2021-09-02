@@ -6,11 +6,11 @@ module ApplyApplications
   module TraineeData
     class ViewPreview < ViewComponent::Preview
       def default
-        render(View.new(trainee([degree]), form))
+        render(View.new(trainee([degree])))
       end
 
       def with_no_degrees
-        render(View.new(trainee, form))
+        render(View.new(trainee))
       end
 
     private
