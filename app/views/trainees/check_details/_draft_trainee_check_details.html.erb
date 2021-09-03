@@ -1,5 +1,5 @@
 <h2 class="govuk-heading-m">
-  Personal details and education
+  <%= t("components.heading.draft.#{@trainee.requires_degree? ? "personal_details_and_education" : "personal_details"}") %>
 </h2>
 
 <%= render Sections::View.new(trainee: @trainee, form: @form, section: :personal_details) %>
@@ -8,7 +8,9 @@
 
 <%= render Sections::View.new(trainee: @trainee, form: @form, section: :diversity) %>
 
-<%= render Sections::View.new(trainee: @trainee, form: @form, section: :degrees) %>
+<% if @trainee.requires_degree? %>
+  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :degrees) %>
+<% end %>
 
 <h2 class="govuk-heading-m">
   About their teacher training

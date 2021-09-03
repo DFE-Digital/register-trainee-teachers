@@ -9,6 +9,10 @@ class TrainingRouteManager
     FeatureService.enabled?("placements") && enabled?(:provider_led_postgrad)
   end
 
+  def requires_degree?
+    !undergrad_route?
+  end
+
   def requires_schools?
     %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship].any? { |training_route_enums_key| enabled?(training_route_enums_key) }
   end
@@ -49,6 +53,10 @@ private
   attr_reader :trainee
 
   delegate :training_route, to: :trainee
+
+  def undergrad_route?
+    %w[early_years_undergrad provider_led_undergrad opt_in_undergrad].include?(training_route)
+  end
 
   def enabled?(training_route_enums_key)
     FeatureService.enabled?("routes.#{training_route_enums_key}") && training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym]
