@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(text: @provider.name, has_errors: @provider.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: t("back"),
     href: providers_path,
   ) %>
@@ -14,7 +14,7 @@
 <%= render "system_admin/menu" %>
 
 <p class="govuk-body">
-  <%= render GovukComponent::StartNowButton.new(
+  <%= render GovukComponent::StartButtonComponent.new(
   text: "Add a user",
   href: new_provider_user_path(@provider),
 ) %>

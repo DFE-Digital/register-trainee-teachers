@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(i18n_key: "pages.guidance") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: t("back"),
     href: root_path,
   ) %>

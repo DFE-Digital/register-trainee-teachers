@@ -215,10 +215,10 @@ GEM
       raabro (~> 1.4)
     globalid (0.5.2)
       activesupport (>= 5.0)
-    govuk-components (1.2.0)
+    govuk-components (2.0.1)
       activemodel (>= 6.0)
       railties (>= 6.0)
-      view_component (~> 2.20)
+      view_component (~> 2.36.0)
     govuk_design_system_formbuilder (2.7.3)
       actionview (>= 6.0)
       activemodel (>= 6.0)
@@ -507,8 +507,9 @@ GEM
     validate_url (1.0.13)
       activemodel (>= 3.0.0)
       public_suffix
-    view_component (2.31.1)
-      activesupport (>= 5.0.0, < 7.0)
+    view_component (2.36.0)
+      activesupport (>= 5.0.0, < 8.0)
+      method_source (~> 1.0)
     web-console (4.1.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -558,7 +559,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   foreman
-  govuk-components (~> 1.2)
+  govuk-components (~> 2.0)
   govuk_design_system_formbuilder
   govuk_notify_rails
   httparty (~> 0.18)

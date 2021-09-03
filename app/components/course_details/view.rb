@@ -30,7 +30,9 @@ module CourseDetails
           collection.unshift({
             key: t("components.course_detail.course_details"),
             value: course_details,
-            action: action_link("course details", path: edit_trainee_publish_course_details_path(trainee)),
+            action_href: edit_trainee_publish_course_details_path(trainee),
+            action_text: t(:change),
+            action_visually_hidden_text: "course details",
           })
         end
       end
@@ -84,10 +86,6 @@ module CourseDetails
       return true unless trainee.early_years_route?
 
       !trainee.draft?
-    end
-
-    def action_link(text, path: edit_trainee_course_details_path(trainee))
-      govuk_link_to("#{t(:change)}<span class='govuk-visually-hidden'> #{text}</span>".html_safe, path)
     end
 
     def course_details

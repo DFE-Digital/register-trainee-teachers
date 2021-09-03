@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(i18n_key: "check_details.show", has_errors: @trainee_data_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: t("back_to_draft"),
     href: review_draft_trainee_path(@trainee),
     html_attributes: {

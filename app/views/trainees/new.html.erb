@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(i18n_key: "trainees.training_routes.edit", has_errors: @trainee.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: "Back",
     href: trainees_path,
   ) %>

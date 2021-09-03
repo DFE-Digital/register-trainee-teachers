@@ -27,12 +27,12 @@ module ConfirmPublishCourse
       t(".summary_title")
     end
 
-    def rows
+    def summary_rows
       [
         {
           key: t(".summary_title"),
           value: course_details,
-          action: govuk_link_to(t(".change_course"), edit_trainee_publish_course_details_path(@trainee)),
+          action: edit_trainee_publish_course_details_path(@trainee),
         },
         { key: subject_key, value: subject_names },
         { key: t(".level"), value: level },

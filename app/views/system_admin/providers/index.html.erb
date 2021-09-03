@@ -5,7 +5,7 @@
 <%= render "system_admin/menu" %>
 
 <p class="govuk-body">
-  <%= render GovukComponent::StartNowButton.new(
+  <%= render GovukComponent::StartButtonComponent.new(
   text: "Add a provider",
   href: new_provider_path,
 ) %>

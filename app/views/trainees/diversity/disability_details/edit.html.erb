@@ -2,7 +2,7 @@
                                has_errors: @disability_detail_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: "Back",
     href: edit_trainee_diversity_disability_disclosure_path(@trainee),
   ) %>

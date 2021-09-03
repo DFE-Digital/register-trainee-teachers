@@ -6,7 +6,9 @@
     {
       key: t("components.confirmation.deferral_details.defer_date_label"),
       value: defer_date,
-      action: govuk_link_to('Change<span class="govuk-visually-hidden"> date of deferral</span>'.html_safe, trainee_deferral_path(data_model.trainee)),
+      action_href: trainee_deferral_path(data_model.trainee),
+      action_text: t(:change),
+      action_visually_hidden_text: 'date of deferral',
     },
   ],
 ) %>

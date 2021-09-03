@@ -4,7 +4,8 @@
       {
         key: t("components.confirmation.start_date.title"),
         value: start_date,
-        action: govuk_link_to('Change<span class="govuk-visually-hidden"> start date</span>'.html_safe,
-                              edit_trainee_start_date_path(trainee)),
+        action_href: edit_trainee_start_date_path(trainee),
+        action_text: t(:change),
+        action_visually_hidden_text: 'start date',
       },
     ]) %>

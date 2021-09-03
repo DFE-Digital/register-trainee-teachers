@@ -2,7 +2,7 @@
                                has_errors: @employing_school_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLink.new(
+  <%= render GovukComponent::BackLinkComponent.new(
     text: "Back",
     href: edit_trainee_employing_schools_path,
   ) %>

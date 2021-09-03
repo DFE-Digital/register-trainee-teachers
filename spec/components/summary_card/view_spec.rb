@@ -8,7 +8,7 @@ RSpec.describe SummaryCard::View do
     [
       { key: "Character", value: "Lando Calrissian" },
       { key: "Location", value: "In a galaxy" },
-      { key: "Transport", value: "Falcon", action: '<a href="#mike" class="govuk-link">Change</a>'.html_safe },
+      { key: "Transport", value: "Falcon", action_href: "#mike", action_text: "Change" },
     ]
   end
 

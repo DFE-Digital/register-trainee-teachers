@@ -1,6 +1,6 @@
 <%= render PageTitle::View.new(text: @provider.name, has_errors: @provider.errors.present?) %>
 
-<%= render GovukComponent::BackLink.new(
+<%= render GovukComponent::BackLinkComponent.new(
   text: "Back",
   href: providers_path,
 ) %>
@@ -8,7 +8,7 @@
 <h1 class="govuk-heading-xl"><%= @provider.name %></h1>
 
 <p class="govuk-body">
-  <%= render GovukComponent::StartNowButton.new(
+  <%= render GovukComponent::StartButtonComponent.new(
   text: "Add a user",
   href: new_provider_user_path(@provider),
 ) %>

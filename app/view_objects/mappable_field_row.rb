@@ -17,7 +17,7 @@ class MappableFieldRow
   end
 
   def to_h
-    { key: field_label }.merge(value_attribute).merge(action_attribute)
+    { key: field_label }.merge(value_attribute).merge(action_attributes)
   end
 
 private
@@ -30,11 +30,10 @@ private
     { value: field_value }
   end
 
-  def action_attribute
+  def action_attributes
     return {} if field_value.nil? || action_url.nil?
 
-    html = %(Change <span class="govuk-visually-hidden">#{field_label.downcase}</span>).html_safe
-    { action: govuk_link_to(html, action_url) }
+    { action_href: action_url, action_text: I18n.t(:change), action_visually_hidden_text: field_label.downcase }
   end
 
   def unmapped_value
