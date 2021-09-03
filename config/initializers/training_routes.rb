@@ -79,6 +79,14 @@ EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == "EYTS" }.key
 
 SEED_BURSARIES = [
   OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    amount: 9_000,
+    allocation_subjects: [
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 24_000,
     allocation_subjects: [
