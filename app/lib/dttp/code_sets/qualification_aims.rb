@@ -11,6 +11,7 @@ module Dttp
       MAPPING = {
         TRAINING_ROUTE_ENUMS[:assessment_only] => { entity_id: QTS },
         TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => { entity_id: QTS },
+        TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => { entity_id: QTS },
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => { entity_id: EYTS },
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => { entity_id: QTS },
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: QTS },
