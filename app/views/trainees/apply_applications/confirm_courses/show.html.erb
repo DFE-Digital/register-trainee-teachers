@@ -15,7 +15,7 @@
                            local: true) do |f| %>
       <%= f.hidden_field :code, value: course_code %>
 
-      <%= f.govuk_check_boxes_fieldset :mark_as_reviewed, multiple: false, legend: { text: "" } do %>
+      <%= f.govuk_check_boxes_fieldset :mark_as_reviewed, multiple: false, legend: nil do %>
         <%= f.govuk_check_box :mark_as_reviewed, 1, 0, multiple: false, link_errors: true, label: { text: t(".mark_as_reviewed") } %>
       <% end %>
 
