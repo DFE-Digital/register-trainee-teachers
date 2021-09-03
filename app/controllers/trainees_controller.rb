@@ -16,7 +16,11 @@ class TraineesController < ApplicationController
     # clause, removing Kaminari's pagination. Hence the use of `#select`.
     @draft_trainees = paginated_trainees.select(&:draft?)
     @completed_trainees = paginated_trainees.reject(&:draft?)
-    @training_routes = policy_scope(Trainee).group(:training_route).count.keys
+
+    # sort_by is to enable alphabetization in line with translations, which is named different to the hash.
+    @training_routes = policy_scope(Trainee)
+                         .group(:training_route)
+                         .count.keys.sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
 
     respond_to do |format|
       format.html
