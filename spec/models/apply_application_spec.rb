@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe ApplyApplication do
   describe "associations" do
-    it { is_expected.to belong_to(:provider) }
+    it { is_expected.to belong_to(:provider).optional }
   end
 
   describe "validations" do

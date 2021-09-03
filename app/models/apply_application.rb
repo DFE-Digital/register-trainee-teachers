@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplyApplication < ApplicationRecord
-  belongs_to :provider, foreign_key: :provider_code, primary_key: :code, inverse_of: :apply_applications
+  belongs_to :provider, foreign_key: :provider_code, primary_key: :code, inverse_of: :apply_applications, optional: true
 
   validates :application, presence: true
 
