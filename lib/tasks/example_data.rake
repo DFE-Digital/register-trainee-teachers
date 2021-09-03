@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "faker"
-require "factory_bot"
 require Rails.root.join("spec/support/api_stubs/apply_api")
 
 # Course names are not all that important here because it's for marketing
@@ -56,6 +54,10 @@ namespace :example_data do
       puts "Noop as DB already contains data"
       exit
     end
+
+    # Running `bundle exec rails db:migrate db:seed example_data:generate` can sometimes use cached column information.
+    # This forces rails to reload column information before attempting to generate factories
+    Trainee.reset_column_information
 
     Faker::Config.locale = "en-GB"
 
