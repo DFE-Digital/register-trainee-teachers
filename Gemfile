@@ -45,7 +45,7 @@ gem "rails_semantic_logger", "4.6.1"
 gem "request_store", "~> 1.5"
 
 # Used to build our forms and style them using govuk-frontend class names
-gem "govuk-components", "~> 2.0"
+gem "govuk-components", "~> 2.1"
 gem "govuk_design_system_formbuilder"
 
 # Background job processor
