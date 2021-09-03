@@ -65,6 +65,7 @@ en:
       apply_draft:
         registration_data_from_apply: Registration data from Apply
       draft:
+        personal_details: Personal details
         personal_details_and_education: Personal details and education
         about_their_teaching_training: About their teacher training
     application_record_card:

@@ -8,8 +8,10 @@
 
 <%= render Sections::View.new(trainee: trainee, form: form, section: :diversity) %>
 
-<h2 class="govuk-heading-m">
-  <%= t("education") %>
-</h2>
+<% if trainee.requires_degree? %>
+  <h2 class="govuk-heading-m">
+    <%= t("education") %>
+  </h2>
 
-<%= render Sections::View.new(trainee: trainee, form: form, section: :degrees) %>
+  <%= render Sections::View.new(trainee: trainee, form: form, section: :degrees) %>
+<% end %>

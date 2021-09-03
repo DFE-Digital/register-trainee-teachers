@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "provider-led end-to-end journey", feature_show_funding: true, type: :feature do
+feature "provider-led (postgrad) end-to-end journey", feature_show_funding: true, type: :feature do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.provider_led_postgrad": true, feature_publish_course_details: true do

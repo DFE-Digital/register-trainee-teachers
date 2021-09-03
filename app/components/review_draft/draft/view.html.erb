@@ -4,38 +4,43 @@
 
     <%= render RouteIndicator::View.new(trainee: @trainee) %>
 
-    <h2 class="govuk-heading-m"><%= t("components.heading.draft.personal_details_and_education") %></h2>
+    <h2 class="govuk-heading-m">
+      <%= t("components.heading.draft.#{@trainee.requires_degree? ? "personal_details_and_education" : "personal_details"}") %>
+    </h2>
 
-      <%= render TaskList::View.new do |component|
-            component.row(**row_helper(@trainee, :personal_details))
-            component.row(**row_helper(@trainee, :contact_details))
-            component.row(**row_helper(@trainee, :diversity_information))
-            component.row(**row_helper(@trainee, :degree))
-          end %>
+    <%= render TaskList::View.new do |component|
+      component.row(**row_helper(@trainee, :personal_details))
+      component.row(**row_helper(@trainee, :contact_details))
+      component.row(**row_helper(@trainee, :diversity_information))
+
+      if @trainee.requires_degree?
+        component.row(**row_helper(@trainee, :degree))
+      end
+    end %>
 
     <h2 class="govuk-heading-m"><%= t("components.heading.draft.about_their_teaching_training") %></h2>
 
     <%= render TaskList::View.new(classes: "record-setup") do |component|
-          if show_publish_courses?(@trainee)
-            component.row(**row_helper(@trainee, :publish_course_details))
-          else
-            component.row(**row_helper(@trainee, :course_details))
-          end
+      if show_publish_courses?(@trainee)
+        component.row(**row_helper(@trainee, :publish_course_details))
+      else
+        component.row(**row_helper(@trainee, :course_details))
+      end
 
-          component.row(**row_helper(@trainee, :training_details).except(:hint_text))
+      component.row(**row_helper(@trainee, :training_details).except(:hint_text))
 
-          if @trainee.requires_schools?
-            component.row(**row_helper(@trainee, :school_details))
-          end
+      if @trainee.requires_schools?
+        component.row(**row_helper(@trainee, :school_details))
+      end
 
-          if FeatureService.enabled?(:show_funding)
-            component.row(**row_helper(@trainee, funding_options(@trainee)))
-          end
+      if FeatureService.enabled?(:show_funding)
+        component.row(**row_helper(@trainee, funding_options(@trainee)))
+      end
 
-          # This will be uncommented once the form is built
-          # if @trainee.requires_placement_details?
-          #   component.row(**row_helper(@trainee, :placement_details))
-          # end
-        end %>
+      # This will be uncommented once the form is built
+      # if @trainee.requires_placement_details?
+      #   component.row(**row_helper(@trainee, :placement_details))
+      # end
+    end %>
   </div>
 </div>
