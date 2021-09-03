@@ -13,6 +13,7 @@ class FindEmptyTrainees
     training_route
     id
     provider_id
+    ebacc
   ].freeze
 
   class FieldsDoNotExistError < StandardError; end
