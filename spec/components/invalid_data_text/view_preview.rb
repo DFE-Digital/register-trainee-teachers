@@ -37,7 +37,6 @@ module InvalidDataText
         id: 1,
         application: { bob: "bob" },
         invalid_data: { "degrees" => { "XXLbvaRY42wP52hWiP78r94m" => { institution: "University of Warwick" } } },
-        provider: Provider.last,
       )
     end
   end

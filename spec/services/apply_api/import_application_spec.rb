@@ -9,14 +9,6 @@ module ApplyApi
 
       subject { described_class.call(application_data: application_data) }
 
-      context "when the provider does not exist in register" do
-        let(:provider) { create(:provider) }
-
-        it "returns nil" do
-          expect(subject).to be_nil
-        end
-      end
-
       context "when the provider exists in register" do
         let(:provider_code) { application_data["attributes"]["course"]["training_provider_code"] }
         let!(:provider) { create(:provider, code: provider_code) }
@@ -45,21 +37,8 @@ module ApplyApi
             application_data["attributes"]["course"]["training_provider_type"] = "university"
           end
 
-          it "creates an apply_application with the state 'provider_a_hei'" do
-            expect { subject }.to change { provider.apply_applications.provider_a_hei.count }.by(1)
-          end
-        end
-
-        context "trainee already exists" do
-          before do
-            create(:trainee,
-                   first_names: application_data["attributes"]["candidate"]["first_name"],
-                   last_name: application_data["attributes"]["candidate"]["last_name"],
-                   date_of_birth: application_data["attributes"]["candidate"]["date_of_birth"])
-          end
-
-          it "creates an apply_application with the state 'duplicate'" do
-            expect { subject }.to change { provider.apply_applications.duplicate.count }.by(1)
+          it "creates an apply_application with the state 'non_importable_hei'" do
+            expect { subject }.to change { provider.apply_applications.non_importable_hei.count }.by(1)
           end
         end
       end

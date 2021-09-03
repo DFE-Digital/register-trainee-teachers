@@ -125,7 +125,7 @@ namespace :example_data do
             # Make *roughly* half of draft trainees apply drafts
             if state == :draft && sample_index < sample_size / 2 && enabled_course_routes.include?(route)
               attrs.merge!(course_code: provider.courses.where(route: route).pluck(:code).sample,
-                           apply_application: FactoryBot.create(:apply_application, provider: provider))
+                           apply_application: FactoryBot.create(:apply_application, provider_code: provider.code))
             end
 
             if route.to_s.include?("early_years")

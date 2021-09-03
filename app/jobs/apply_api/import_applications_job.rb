@@ -8,8 +8,7 @@ module ApplyApi
       return unless FeatureService.enabled?("import_applications_from_apply")
 
       new_applications.each do |application_data|
-        application_record = ImportApplication.call(application_data: application_data)
-        Trainees::CreateFromApply.call(application: application_record) if application_record&.importable?
+        ImportApplication.call(application_data: application_data)
       rescue ApplyApi::ImportApplication::ApplyApiMissingDataError => e
         Sentry.capture_exception(e)
       end

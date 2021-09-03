@@ -6,27 +6,45 @@ module Trainees
 
     def initialize(application:)
       @application = application
+      @raw_course = application.application_attributes["course"]
+      @course = application.provider.courses.find_by(code: @raw_course["course_code"])
+      @raw_trainee = application.application_attributes["candidate"]
+      @raw_contact_details = application.application_attributes["contact_details"]
+      @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
+      @disabilities = Disability.where(name: disability_names)
+      @trainee = Trainee.new(mapped_attributes)
+      @personal_details_form = PersonalDetailsForm.new(trainee, params: { nationality_names: nationality_names })
     end
 
     def call
+      if trainee_already_exists?
+        application.non_importable_duplicate!
+        return
+      end
+
       trainee.save!
       save_personal_details!
       create_degrees!
+      application.imported!
+
       trainee
     end
 
   private
 
-    attr_reader :application
-
-    def trainee
-      @trainee ||= Trainee.new(mapped_attributes)
-    end
+    attr_reader :application,
+                :trainee,
+                :course,
+                :raw_trainee,
+                :raw_contact_details,
+                :study_mode,
+                :disabilities,
+                :personal_details_form
 
     def mapped_attributes
       {
         apply_application: application,
-        provider: provider,
+        provider: application.provider,
         first_names: raw_trainee["first_name"],
         last_name: raw_trainee["last_name"],
         date_of_birth: raw_trainee["date_of_birth"],
@@ -42,18 +60,8 @@ module Trainees
       }.merge(address)
     end
 
-    def personal_details_params
-      {
-        nationality_names: nationality_names,
-      }
-    end
-
     def create_degrees!
       ::Degrees::CreateFromApply.call(trainee: trainee)
-    end
-
-    def personal_details_form
-      @personal_details_form ||= PersonalDetailsForm.new(trainee, params: personal_details_params)
     end
 
     def save_personal_details!
@@ -108,40 +116,20 @@ module Trainees
       raw_trainee.slice("disabilities", "ethnic_group", "ethnic_background").values.any?(&:present?)
     end
 
-    def disabilities
-      @disabilities ||= Disability.where(name: disability_names)
-    end
-
     def disability_names
       raw_trainee["disabilities"].map { |disability| ApplyApi::CodeSets::Disabilities::MAPPING[disability] }
     end
 
     def nationality_names
-      @nationality_names ||= raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
+      raw_trainee["nationality"].map do |nationality|
+        ApplyApi::CodeSets::Nationalities::MAPPING[nationality]
+      end
     end
 
-    def course
-      @course ||= provider.courses.find_by(code: raw_course["course_code"])
-    end
-
-    def provider
-      @provider ||= application.provider
-    end
-
-    def raw_trainee
-      @raw_trainee ||= application.application_attributes["candidate"]
-    end
-
-    def raw_contact_details
-      @raw_contact_details ||= application.application_attributes["contact_details"]
-    end
-
-    def raw_course
-      @raw_course ||= application.application_attributes["course"]
-    end
-
-    def study_mode
-      @study_mode ||= TRAINEE_STUDY_MODE_ENUMS[raw_course["study_mode"]]
+    def trainee_already_exists?
+      Trainee.exists?(first_names: raw_trainee["first_name"],
+                      last_name: raw_trainee["last_name"],
+                      date_of_birth: raw_trainee["date_of_birth"])
     end
   end
 end
