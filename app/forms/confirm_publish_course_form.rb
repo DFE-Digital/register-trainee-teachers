@@ -42,13 +42,13 @@ private
   end
 
   def update_trainee_attributes
-    specialism1, specialism2, specialism3 = *specialisms
+    course_subject_one, course_subject_two, course_subject_three = *specialisms
     trainee.progress.course_details = true
 
     trainee.assign_attributes({
-      course_subject_one: specialism1,
-      course_subject_two: specialism2,
-      course_subject_three: specialism3,
+      course_subject_one: course_subject_one,
+      course_subject_two: course_subject_two,
+      course_subject_three: course_subject_three,
       course_code: course.code,
       course_age_range: course.age_range,
       course_start_date: itt_start_date || course.start_date,

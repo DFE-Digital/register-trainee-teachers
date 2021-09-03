@@ -8,12 +8,9 @@ module CourseDetails
 
     def initialize(data_model:, has_errors: false)
       @data_model = data_model
+      @trainee = data_model.is_a?(Trainee) ? data_model : data_model.trainee
       @has_errors = has_errors
       @not_provided_copy = t("components.confirmation.not_provided")
-    end
-
-    def trainee
-      data_model.is_a?(Trainee) ? data_model : data_model.trainee
     end
 
     def summary_title
@@ -41,7 +38,7 @@ module CourseDetails
 
   private
 
-    attr_accessor :data_model, :has_errors
+    attr_accessor :data_model, :trainee, :has_errors
 
     def type_of_course
       if require_course_type?
@@ -51,7 +48,7 @@ module CourseDetails
 
     def subject_row
       if require_subject?
-        mappable_field(subject, t("components.course_detail.subject"))
+        mappable_field(subject_names, t("components.course_detail.subject"))
       end
     end
 
@@ -94,21 +91,25 @@ module CourseDetails
     end
 
     def course_details
-      return t("components.course_detail.details_not_on_publish") if data_model.course_code.blank?
+      return t("components.course_detail.details_not_on_publish") if trainee.course_code.blank?
 
       "#{course.name} (#{course.code})"
     end
 
-    def subject
-      if data_model.course_subject_one.present?
-        subjects_for_summary_view(data_model.course_subject_one,
-                                  data_model.course_subject_two,
-                                  data_model.course_subject_three)
+    def subject_names
+      if trainee.course_subject_one.present?
+        return subjects_for_summary_view(trainee.course_subject_one,
+                                         trainee.course_subject_two,
+                                         trainee.course_subject_three)
       end
+
+      return apply_subject_names if trainee.apply_application?
     end
 
     def course_age_range
-      age_range_for_summary_view(data_model.course_age_range) if data_model.course_age_range.present?
+      return age_range_for_summary_view(trainee.course_age_range) if trainee.course_age_range.present?
+
+      return age_range_for_summary_view(course.age_range) if trainee.apply_application?
     end
 
     def study_mode
@@ -122,15 +123,19 @@ module CourseDetails
     end
 
     def course_start_date
-      date_for_summary_view(data_model.course_start_date) if data_model.course_start_date.present?
+      return date_for_summary_view(trainee.course_start_date) if trainee.course_start_date.present?
+
+      apply_trainee_course_start_date if trainee.apply_application?
     end
 
     def course_end_date
-      date_for_summary_view(data_model.course_end_date) if data_model.course_end_date.present?
+      return date_for_summary_view(trainee.course_end_date) if trainee.course_end_date.present?
+
+      apply_trainee_course_end_date if trainee.apply_application?
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(code: data_model.course_code)
+      @course ||= trainee.available_courses.find_by(code: trainee.course_code)
     end
 
     def mappable_field(field_value, field_label)
@@ -141,6 +146,23 @@ module CourseDetails
         action_url: edit_trainee_course_details_path(trainee),
         has_errors: has_errors,
       ).to_h
+    end
+
+    def apply_subject_names
+      specialism1, specialism2, specialism3 = *data_model.specialisms
+      subjects_for_summary_view(
+        specialism1,
+        specialism2,
+        specialism3,
+      )
+    end
+
+    def apply_trainee_course_start_date
+      date_for_summary_view(data_model.itt_start_date || course.start_date)
+    end
+
+    def apply_trainee_course_end_date
+      date_for_summary_view(course.end_date)
     end
   end
 end

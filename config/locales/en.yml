@@ -409,7 +409,6 @@ en:
       view:
         change: Change
         change_course: Change course
-        heading: Confirm trainee’s course details
         summary_title: Course details
         route: Route
         type_of_course: Subject
@@ -786,6 +785,7 @@ en:
     apply_applications:
       confirm_courses:
         show:
+          heading: Confirm trainee’s course details
           confirm_course: Confirm course
           mark_as_reviewed: I have reviewed this section
       course_details:

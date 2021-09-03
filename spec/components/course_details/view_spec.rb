@@ -46,6 +46,58 @@ module CourseDetails
       end
     end
 
+    context "with an apply draft, and missing data" do
+      let(:trainee) do
+        create(:trainee,
+               :provider_led_postgrad,
+               :with_course_details,
+               :with_apply_application,
+               course_subject_one: nil,
+               course_min_age: nil,
+               course_max_age: nil,
+               course_start_date: nil,
+               course_end_date: nil)
+      end
+      let(:specialisms) { ["Spanish language", "public services"] }
+      let(:itt_start_date) { nil }
+
+      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, itt_start_date) }
+
+      let!(:course) { create(:course_with_subjects, code: trainee.course_code, accredited_body_code: trainee.provider.code, route: trainee.training_route) }
+
+      before do
+        render_inline(View.new(data_model: data_model))
+      end
+
+      it "calculated/applicable specialisms for subject" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Spanish language with public services")
+      end
+
+      it "renders the course age range" do
+        expect(rendered_component)
+          .to have_text(age_range_for_summary_view(course.age_range))
+      end
+
+      it "renders the course start date" do
+        expect(rendered_component)
+          .to have_text(date_for_summary_view(course.start_date))
+      end
+
+      context "when itt_start_date is available" do
+        let(:itt_start_date) { Time.zone.today }
+
+        it "renders the course start date" do
+          expect(rendered_component)
+            .to have_text(date_for_summary_view(itt_start_date))
+        end
+      end
+
+      it "renders the course end date" do
+        expect(rendered_component)
+          .to have_text(date_for_summary_view(course.end_date))
+      end
+    end
+
     context "when data has been provided" do
       context "with a publish course", feature_publish_course_details: true do
         let(:trainee) { create(:trainee, :with_course_details, training_route: training_route) }
