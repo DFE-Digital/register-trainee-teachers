@@ -318,7 +318,7 @@ en:
     filter:
       title: Filters
       selected_title: Selected filters
-      level: Course level
+      level: Education phase
       training_route: Training route
       record_source: Record source
       state: Status
@@ -478,7 +478,7 @@ en:
         no_records: Your trainee records will appear here. You do not have any records yet.
         export: Export these records
         filters:
-          level: Course level
+          level: Education phase
           search: Search records
           status: Status
           subject: Subject
