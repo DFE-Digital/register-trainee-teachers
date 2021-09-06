@@ -11,11 +11,6 @@ TRAINEE_STUDY_MODE_ENUMS = {
   COURSE_STUDY_MODES[:full_time] => 1,
 }.freeze
 
-TRAINEE_STUDY_MODES = {
-  COURSE_STUDY_MODES[:part_time] => 0,
-  COURSE_STUDY_MODES[:full_time] => 1,
-}.freeze
-
 COURSE_STUDY_MODE_ENUMS = {
   COURSE_STUDY_MODES[:part_time] => 0,
   COURSE_STUDY_MODES[:full_time] => 1,

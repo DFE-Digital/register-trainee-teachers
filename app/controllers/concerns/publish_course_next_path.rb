@@ -21,7 +21,7 @@ module PublishCourseNextPath
     if trainee.apply_application?
       trainee_apply_applications_confirm_courses_path(trainee)
     else
-      edit_trainee_confirm_publish_course_path(trainee)
+      trainee_publish_course_details_confirm_path(trainee)
     end
   end
 
@@ -39,7 +39,7 @@ module PublishCourseNextPath
 
   def requires_study_mode?
     return false unless trainee.requires_study_mode?
-    return false if course.blank?
+    return false unless course
 
     course.study_mode == "full_time_or_part_time"
   end

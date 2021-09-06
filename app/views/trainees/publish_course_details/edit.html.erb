@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-  
+
     <%= register_form_with(model: @publish_course_details_form,
                           url: trainee_publish_course_details_path(@trainee),
                           method: :put,
@@ -14,12 +14,12 @@
       <%= f.govuk_error_summary %>
 
       <div class="govuk-form-group">
-        <%= f.govuk_radio_buttons_fieldset :code,
-                                          legend: { text: t(".heading"), tag: "h1", size: "l" },
-                                          hint: { text: courses_fieldset_text_for(@trainee) },
-                                          classes: "published-courses" do %>
+        <%= f.govuk_radio_buttons_fieldset :course_code,
+          legend: { text: t(".heading"), tag: "h1", size: "l" },
+          hint: { text: courses_fieldset_text_for(@trainee) },
+          classes: "published-courses" do %>
           <% @courses.each do |course| %>
-            <%= f.govuk_radio_button :code, course.code,
+            <%= f.govuk_radio_button :course_code, course.code,
               label: { text: "#{course.name} (#{course.code})" },
               hint: { text: course_summary_text_for(@trainee, course) },
               link_errors: true %>
@@ -27,7 +27,7 @@
 
           <div class="govuk-radios__divider">or</div>
 
-          <%= f.govuk_radio_button :code, PublishCourseDetailsForm::NOT_LISTED,
+          <%= f.govuk_radio_button :course_code, PublishCourseDetailsForm::NOT_LISTED,
             label: { text: t(".course_not_listed") } %>
         <% end %>
       </div>
@@ -36,4 +36,3 @@
     <% end %>
   </div>
 </div>
-

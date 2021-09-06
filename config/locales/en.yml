@@ -701,7 +701,7 @@ en:
   error_summary:
     view:
       heading: There is a problem
-  confirm_publish_course:
+  publish_course_details:
     view:
       change: Change
       change_course: Change course
@@ -1061,7 +1061,7 @@ en:
                <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
         publish_course_details_form:
           attributes:
-            code:
+            course_code:
               blank: Select a course
         reinstatement_form:
           attributes:

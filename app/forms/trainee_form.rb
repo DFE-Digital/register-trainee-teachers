@@ -20,6 +20,11 @@ class TraineeForm
     assign_attributes(fields)
   end
 
+  def stash_or_save!
+    save_strategy = trainee.draft? ? :save! : :stash
+    public_send(save_strategy)
+  end
+
   def save!
     if valid?
       trainee.assign_attributes(fields.except(*fields_to_ignore_before_stash_or_save))

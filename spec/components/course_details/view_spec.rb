@@ -61,7 +61,7 @@ module CourseDetails
       let(:specialisms) { ["Spanish language", "public services"] }
       let(:itt_start_date) { nil }
 
-      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, itt_start_date) }
+      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, itt_start_date, { code: course.code }) }
 
       let!(:course) { create(:course_with_subjects, code: trainee.course_code, accredited_body_code: trainee.provider.code, route: trainee.training_route) }
 
@@ -70,7 +70,7 @@ module CourseDetails
       end
 
       it "calculated/applicable specialisms for subject" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Spanish language with public services")
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Spanish with public services")
       end
 
       it "renders the course age range" do

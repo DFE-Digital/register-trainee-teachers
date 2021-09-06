@@ -30,19 +30,46 @@ module ApplyApplications
       trainee.save!
     end
 
+    def course_subject_one
+      specialisms[0]
+    end
+
+    def course_subject_two
+      specialisms[1]
+    end
+
+    def course_subject_three
+      specialisms[2]
+    end
+
+    def course_age_range
+      course&.age_range
+    end
+
+    def course_code
+      code
+    end
+
+    def course_start_date
+      itt_start_date || course&.start_date
+    end
+
+    def course_end_date
+      course&.end_date
+    end
+
   private
 
     def update_trainee_attributes
-      course_subject_one, course_subject_two, course_subject_three = *specialisms
       trainee.assign_attributes({
         course_subject_one: course_subject_one,
         course_subject_two: course_subject_two,
         course_subject_three: course_subject_three,
         training_route: course&.route,
         course_code: course.code,
-        course_age_range: course.age_range,
-        course_start_date: itt_start_date || course.start_date,
-        course_end_date: course.end_date,
+        course_age_range: course_age_range,
+        course_start_date: course_start_date,
+        course_end_date: course_end_date,
       })
       trainee.progress.course_details = mark_as_reviewed
     end

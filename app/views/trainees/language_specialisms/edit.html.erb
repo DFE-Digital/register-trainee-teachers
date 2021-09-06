@@ -27,6 +27,7 @@
                 language,
                 multiple: true,
                 link_errors: index.zero?,
+                checked: f.object.languages.include?(language),
                 label: { text: format_language(language).upcase_first },
               ) %>
           <% end %>

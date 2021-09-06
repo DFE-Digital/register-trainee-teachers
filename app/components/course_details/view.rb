@@ -89,29 +89,31 @@ module CourseDetails
     end
 
     def course_details
-      return t("components.course_detail.details_not_on_publish") if trainee.course_code.blank?
+      return t("components.course_detail.details_not_on_publish") if data_model.course_code.blank?
 
       "#{course.name} (#{course.code})"
     end
 
     def subject_names
-      if trainee.course_subject_one.present?
-        return subjects_for_summary_view(trainee.course_subject_one,
-                                         trainee.course_subject_two,
-                                         trainee.course_subject_three)
+      if data_model.course_subject_one.present?
+        subjects_for_summary_view(
+          *[
+            data_model.course_subject_one,
+            data_model.course_subject_two,
+            data_model.course_subject_three,
+          ].map { |s| format_language(s) },
+        )
       end
-
-      return apply_subject_names if trainee.apply_application?
     end
 
     def course_age_range
-      return age_range_for_summary_view(trainee.course_age_range) if trainee.course_age_range.present?
-
-      return age_range_for_summary_view(course.age_range) if trainee.apply_application?
+      if data_model.course_age_range.present?
+        age_range_for_summary_view(data_model.course_age_range)
+      end
     end
 
     def study_mode
-      t("components.course_detail.study_mode_values.#{trainee.study_mode}") if trainee.study_mode.present?
+      t("components.course_detail.study_mode_values.#{data_model.study_mode}") if data_model.study_mode.present?
     end
 
     def course_type
@@ -121,19 +123,19 @@ module CourseDetails
     end
 
     def course_start_date
-      return date_for_summary_view(trainee.course_start_date) if trainee.course_start_date.present?
-
-      apply_trainee_course_start_date if trainee.apply_application?
+      if data_model.course_start_date.present?
+        date_for_summary_view(data_model.course_start_date)
+      end
     end
 
     def course_end_date
-      return date_for_summary_view(trainee.course_end_date) if trainee.course_end_date.present?
-
-      apply_trainee_course_end_date if trainee.apply_application?
+      if data_model.course_end_date.present?
+        date_for_summary_view(data_model.course_end_date)
+      end
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(code: trainee.course_code)
+      @course ||= trainee.available_courses.find_by(code: data_model.course_code)
     end
 
     def mappable_field(field_value, field_label)
@@ -144,23 +146,6 @@ module CourseDetails
         action_url: edit_trainee_course_details_path(trainee),
         has_errors: has_errors,
       ).to_h
-    end
-
-    def apply_subject_names
-      specialism1, specialism2, specialism3 = *data_model.specialisms
-      subjects_for_summary_view(
-        specialism1,
-        specialism2,
-        specialism3,
-      )
-    end
-
-    def apply_trainee_course_start_date
-      date_for_summary_view(data_model.itt_start_date || course.start_date)
-    end
-
-    def apply_trainee_course_end_date
-      date_for_summary_view(course.end_date)
     end
   end
 end

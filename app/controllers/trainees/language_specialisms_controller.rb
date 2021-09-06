@@ -13,8 +13,7 @@ module Trainees
 
     def update
       @language_specialisms_form = LanguageSpecialismsForm.new(trainee, params: language_specialism_params, user: current_user)
-
-      if @language_specialisms_form.stash
+      if @language_specialisms_form.stash_or_save!
         redirect_to next_step_path
       else
         render :edit
@@ -40,7 +39,7 @@ module Trainees
     end
 
     def course_code
-      publish_course_details_form.code || trainee.course_code
+      publish_course_details_form.course_code || trainee.course_code
     end
   end
 end

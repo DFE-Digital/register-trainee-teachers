@@ -16,7 +16,7 @@ module Trainees
       page_tracker.save_as_origin!
 
       if trainee.draft?
-        @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
+        @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_progress_key))
       end
 
       @confirmation_component = view_component.new(data_model: data_model)
@@ -61,6 +61,14 @@ module Trainees
       end
     end
 
+    def trainee_progress_key
+      if trainee_section_key == "publish_course_details"
+        "course_details"
+      else
+        trainee_section_key
+      end
+    end
+
     # Returns the route that the confirm path is nested under for each confirm path
     # eg /trainees/<slug>/funding/confirm returns 'funding'
     def trainee_section_key
@@ -72,6 +80,7 @@ module Trainees
         training_details: "start date and ID",
         degrees: "degree details",
         funding: "funding details",
+        publish_course_details: "course details",
       }[trainee_section_key.to_sym] || trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
     end
 
@@ -83,7 +92,7 @@ module Trainees
     end
 
     def toggle_trainee_progress_field
-      trainee.progress.public_send("#{trainee_section_key}=", mark_as_completed_params)
+      trainee.progress.public_send("#{trainee_progress_key}=", mark_as_completed_params)
       trainee.save!
     end
 

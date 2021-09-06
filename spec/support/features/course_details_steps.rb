@@ -8,7 +8,7 @@ module Features
       review_draft_page.course_details.link.click
       publish_course_details_page.course_options.first.choose
       publish_course_details_page.submit_button.click
-      confirm_publish_course_page.confirm_course_button.click
+      and_i_confirm_my_details
       and_the_course_details_is_marked_completed
     end
 

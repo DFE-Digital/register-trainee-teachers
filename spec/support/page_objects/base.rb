@@ -3,7 +3,12 @@
 module PageObjects
   module Helpers
     def set_date_fields(field_prefix, date_string)
-      day, month, year = date_string.split("/")
+      if date_string.present?
+        day, month, year = date_string.split("/")
+      else
+        #  Allows us to set date fields to blank
+        day = month = year = ""
+      end
       public_send("#{field_prefix}_day").set(day)
       public_send("#{field_prefix}_month").set(month)
       public_send("#{field_prefix}_year").set(year)

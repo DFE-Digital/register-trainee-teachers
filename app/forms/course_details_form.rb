@@ -50,7 +50,7 @@ class CourseDetailsForm < TraineeForm
   validate :age_range_valid, if: :require_age_range?
   validates :additional_age_range, presence: true, if: -> { other_age_range? && require_age_range? }
 
-  validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODES.keys }, if: :requires_study_mode?
+  validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, if: :requires_study_mode?
 
   validate :course_start_date_valid
   validate :course_end_date_valid
