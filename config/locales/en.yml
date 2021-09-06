@@ -982,6 +982,7 @@ en:
               blank: Choose an outcome date
             date:
               blank: Enter an outcome date
+              future: Enter an outcome date in the past
               invalid: Enter a valid outcome date
               not_before_course_start_date: *not_before_course_start_date
         personal_details_form:

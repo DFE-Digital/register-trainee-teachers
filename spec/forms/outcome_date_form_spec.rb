@@ -53,6 +53,22 @@ describe OutcomeDateForm, type: :model do
         end
       end
 
+      context "future date" do
+        before do
+          subject.year = Time.zone.today.year + 1
+
+          subject.validate
+        end
+
+        it "is invalid" do
+          expect(subject.errors[:date]).to include(
+            I18n.t(
+              "activemodel.errors.models.outcome_date_form.attributes.date.future",
+            ),
+          )
+        end
+      end
+
       include_examples "date is not before course start date", :outcome_date_form
     end
   end

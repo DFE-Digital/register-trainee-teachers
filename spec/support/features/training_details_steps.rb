@@ -18,7 +18,7 @@ module Features
     end
 
     def valid_date_after_course_start_date
-      Faker::Date.between(from: trainee.course_start_date, to: trainee.course_start_date + 1.year)
+      Faker::Date.between(from: trainee.course_start_date, to: Time.zone.today)
     end
   end
 end
