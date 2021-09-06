@@ -22,6 +22,8 @@ module Trainees
         return
       end
 
+      return if course.nil? # Courses can be missing in non-prod environments
+
       trainee.save!
       save_personal_details!
       create_degrees!
