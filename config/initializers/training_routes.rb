@@ -6,13 +6,13 @@ TRAINING_ROUTE_ENUMS = {
   early_years_postgrad: "early_years_postgrad",
   early_years_salaried: "early_years_salaried",
   early_years_undergrad: "early_years_undergrad",
+  opt_in_undergrad: "opt_in_undergrad",
   provider_led_postgrad: "provider_led_postgrad",
   provider_led_undergrad: "provider_led_undergrad",
   school_direct_salaried: "school_direct_salaried",
   school_direct_tuition_fee: "school_direct_tuition_fee",
-  opt_in_undergrad: "opt_in_undergrad",
-  hpitt_postgrad: "hpitt_postgrad",
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
+  hpitt_postgrad: "hpitt_postgrad",
 }.freeze
 
 ROUTE_INITIATIVES_ENUMS = {
