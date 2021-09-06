@@ -12,11 +12,12 @@ module Trainees
     let(:course_info) { ApiStubs::ApplyApi.course.as_json }
     let(:trainee) { create_trainee_from_apply }
     let(:subject_names) { [] }
+    let(:course_code) { course_info["course_code"] }
 
     let!(:course) do
       create(
         :course_with_subjects,
-        code: course_info["course_code"],
+        code: course_code,
         accredited_body_code: apply_application.provider_code,
         route: :school_direct_tuition_fee,
         subject_names: subject_names,
@@ -78,6 +79,16 @@ module Trainees
         expect {
           create_trainee_from_apply
         }.to change(apply_application, :state).to("non_importable_duplicate")
+      end
+    end
+
+    context "course doesn't exist" do
+      let(:course_code) { "ABC" }
+
+      it "doesn't change the state" do
+        expect {
+          create_trainee_from_apply
+        }.not_to change(apply_application, :state)
       end
     end
 
