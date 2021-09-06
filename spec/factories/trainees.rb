@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
-      potential_course_start_date { course_start_date || Faker::Date.between(from: 10.years.ago, to: Time.zone.today) }
+      potential_course_start_date { course_start_date || Faker::Date.between(from: 1.year.ago, to: Time.zone.today) }
     end
 
     sequence :trainee_id do |n|
@@ -115,7 +115,7 @@ FactoryBot.define do
       course_subject_one { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
       course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.reject { |_k, v| v[:option] == :main }.keys.sample }
-      course_start_date { Faker::Date.between(from: 10.years.ago, to: 2.days.ago) }
+      course_start_date { Faker::Date.between(from: 1.year.ago, to: 2.days.ago) }
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
     end
 
