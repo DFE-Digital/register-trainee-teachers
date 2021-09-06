@@ -109,8 +109,10 @@ RSpec.feature "Adding a degree" do
     scenario "the user submits partially entered autocompletes", js: true do
       given_i_have_selected_the_non_uk_route
       and_i_am_on_the_degree_details_page
+      and_i_fill_in_country_without_selecting_a_value(with: "mongoose")
       and_i_fill_in_subject_without_selecting_a_value(with: "moose")
       and_i_click_continue
+      then_country_is_populated(with: "mongoose")
       then_subject_is_populated(with: "moose")
       then_i_see_error_messages_for_partially_submitted_fields(:subject)
     end
@@ -213,8 +215,16 @@ private
     degree_details_page.subject_raw.fill_in with: with
   end
 
+  def and_i_fill_in_country_without_selecting_a_value(with:)
+    degree_details_page.country_raw.fill_in with: with
+  end
+
   def then_subject_is_populated(with:)
     expect(degree_details_page.subject_raw.value).to eq(with)
+  end
+
+  def then_country_is_populated(with:)
+    expect(degree_details_page.country_raw.value).to eq(with)
   end
 
   def and_i_fill_in_degree_without_selecting_a_value(with:)

@@ -894,6 +894,7 @@ en:
         email:
           invalid: Enter an email address in the correct format, like name@example.com
         autocomplete:
+          country: Select a country from the list - your entry is not recognised
           subject: &subject Select a subject from the list - your entry is not recognised
           course_subject_one: *subject
           course_subject_two: *subject

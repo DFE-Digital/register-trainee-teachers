@@ -10,6 +10,7 @@
   <h1 class="govuk-heading-l">Non-UK degree details</h1>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
+    f,
     attribute_name: :country,
     form_field: f.govuk_collection_select(:country, 
                                           countries_options,
