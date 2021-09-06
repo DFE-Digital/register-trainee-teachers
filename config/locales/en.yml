@@ -811,6 +811,7 @@ en:
           school_direct_tuition_fee: School direct (tuition fee)
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
           hpitt_postgrad: Teach First
+          opt_in_undergrad: Opt-in (undergrad)
         states:
           draft: Draft
           apply_draft: Apply Draft

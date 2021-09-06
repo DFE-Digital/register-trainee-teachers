@@ -46,10 +46,6 @@ ROUTE_INITIATIVES = {
   ROUTE_INITIATIVES_ENUMS[:no_initiative] => 4,
 }.freeze
 
-TRAINING_ROUTES_FOR_TRAINEE = TRAINING_ROUTES.select { |training_route|
-  TRAINING_ROUTE_ENUMS.values_at(:opt_in_undergrad).exclude? training_route
-}.freeze
-
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:provider_led_postgrad, :school_direct_tuition_fee, :school_direct_salaried, :pg_teaching_apprenticeship).include? training_route
 }.freeze
@@ -140,6 +136,16 @@ SEED_BURSARIES = [
     training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
     amount: 14_000,
     allocation_subjects: [AllocationSubjects::EARLY_YEARS_ITT],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    amount: 9_000,
+    allocation_subjects: [
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MODERN_LANGUAGES,
+    ],
   ),
 ].freeze
 

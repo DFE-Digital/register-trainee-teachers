@@ -209,6 +209,10 @@ FactoryBot.define do
       study_mode { COURSE_STUDY_MODES[:full_time] }
     end
 
+    trait :opt_in_undergrad do
+      training_route { TRAINING_ROUTE_ENUMS[:opt_in_undergrad] }
+    end
+
     trait :draft do
       state { "draft" }
     end

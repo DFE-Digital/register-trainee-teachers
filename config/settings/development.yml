@@ -16,6 +16,7 @@ features:
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
     provider_led_undergrad: true
+    opt_in_undergrad: true
 
 pagination:
   records_per_page: 30
