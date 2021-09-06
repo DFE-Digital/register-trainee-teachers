@@ -13,6 +13,7 @@ class InvalidDataText::View < GovukComponent::Base
   def content
     return hint if data_text.blank?
     return hint if form_section_valid?
+    return tag.div(data_text, class: text_class) if hint.nil?
 
     hint << tag.div(data_text, class: text_class)
   end
@@ -22,6 +23,8 @@ private
   attr_reader :hint_text, :data_text, :degree_form, :form_section
 
   def hint
+    return nil if hint_text.blank?
+
     tag.div(hint_text, class: "govuk-hint")
   end
 
