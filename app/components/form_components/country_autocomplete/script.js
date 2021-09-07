@@ -6,6 +6,7 @@ const defaultValueOption = component => component.getAttribute('data-default-val
 
 nodeListForEach($allCountryAutoCompleteElements, (component) => {
   const selectEl = component.querySelector('select')
+  const inError = component.querySelector('div.govuk-form-group').className.includes('error')
   const inputValue = defaultValueOption(component)
 
   // We add a name which we base off the name for the select element and add "raw" to it, eg
@@ -15,9 +16,13 @@ nodeListForEach($allCountryAutoCompleteElements, (component) => {
   const rawFieldName = `${matches[1]}[${matches[2]}_raw]`
 
   openregisterLocationPicker({
-    defaultValue: inputValue,
-    selectElement: component.querySelector('select'),
+    defaultValue: inError ? '' : inputValue,
+    selectElement: selectEl,
     name: rawFieldName,
     url: '/location-autocomplete-graph.json'
   })
+
+  if (inError) {
+    component.querySelector('input').value = inputValue
+  }
 })
