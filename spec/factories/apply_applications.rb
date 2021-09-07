@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:apply_id)
     application { ApiStubs::ApplyApi.application }
     invalid_data { {} }
-    provider_code { create(:provider).code }
+    accredited_body_code { create(:provider).code }
 
     trait :importable do
       state { "importable" }
