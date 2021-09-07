@@ -77,18 +77,16 @@ namespace :example_data do
     # For each persona...
     PERSONAS.each do |persona_attributes|
       # Create the persona
-      persona = Persona.find_or_create_by!(first_name: persona_attributes[:first_name],
-                                           last_name: persona_attributes[:last_name],
-                                           email: persona_attributes[:email],
-                                           dttp_id: SecureRandom.uuid,
-                                           system_admin: persona_attributes[:system_admin])
+      persona = Persona.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(first_name: persona_attributes[:first_name],
+                                                                                   last_name: persona_attributes[:last_name],
+                                                                                   email: persona_attributes[:email],
+                                                                                   system_admin: persona_attributes[:system_admin])
 
       next unless persona_attributes[:provider]
 
       # Create the provider for that persona
-      provider = Provider.find_or_create_by!(
+      provider = Provider.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(
         name: persona_attributes[:provider],
-        dttp_id: SecureRandom.uuid,
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       )
 
