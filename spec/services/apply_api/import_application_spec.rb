@@ -50,6 +50,22 @@ module ApplyApi
           expect { subject }.to raise_error ApplyApi::ImportApplication::ApplyApiMissingDataError
         end
       end
+
+      context "the course accredited_provider_code is present" do
+        let(:provider_a) { create(:provider) }
+        let(:provider_b) { create(:provider) }
+
+        let(:application_data) do
+          JSON.parse(ApiStubs::ApplyApi.application(course_attributes: {
+            accredited_provider_code: provider_a.code,
+            training_provider_code: provider_b.code,
+          }))
+        end
+
+        it "creates the apply_application and associates it with the provider matching accredited_body_code" do
+          expect { subject }.to change { provider_a.apply_applications.importable.count }.by(1)
+        end
+      end
     end
   end
 end

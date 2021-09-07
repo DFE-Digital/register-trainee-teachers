@@ -18,7 +18,7 @@ module Trainees
       create(
         :course_with_subjects,
         code: course_code,
-        accredited_body_code: apply_application.provider_code,
+        accredited_body_code: apply_application.accredited_body_code,
         route: :school_direct_tuition_fee,
         subject_names: subject_names,
       )
@@ -96,7 +96,7 @@ module Trainees
 
     it "associates the created trainee against the apply_application and provider" do
       expect(trainee.apply_application).to eq(apply_application)
-      expect(trainee.provider.code).to eq(apply_application.provider_code)
+      expect(trainee.provider.code).to eq(apply_application.accredited_body_code)
     end
 
     it "calls the Degrees::CreateFromApply service" do

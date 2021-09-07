@@ -9,7 +9,7 @@ class Provider < ApplicationRecord
   validates :code, format: { with: /\A[A-Z0-9]+\z/i }, allow_blank: true
 
   has_many :courses, ->(provider) { unscope(:where).where(accredited_body_code: provider.code) }
-  has_many :apply_applications, ->(provider) { unscope(:where).where(provider_code: provider.code) }
+  has_many :apply_applications, ->(provider) { unscope(:where).where(accredited_body_code: provider.code) }
 
   audited
 

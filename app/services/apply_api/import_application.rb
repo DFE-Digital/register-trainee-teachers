@@ -12,7 +12,7 @@ module ApplyApi
 
     def call
       ApplyApplication.transaction do
-        application.update!(application: application_data.to_json, provider_code: provider_code)
+        application.update!(application: application_data.to_json, accredited_body_code: accredited_body_code)
         hei_provider? ? application.non_importable_hei! : application.importable!
       end
 
@@ -29,8 +29,13 @@ module ApplyApi
       @application ||= ApplyApplication.find_or_initialize_by(apply_id: apply_id)
     end
 
-    def provider_code
-      course_attributes("training_provider_code")
+    def accredited_body_code
+      # It's possible for accredited_provider_code to be nil because Apply Register API has this quirk
+      # whereby if a course has a provider that does both the training and the accreditation, the API
+      # just uses training_provider_code. If on the otherhand a course has one provider doing the
+      # training and another doing the accreditation, the API will have different values for the
+      # training_provider_code and accredited_provider_code.
+      course_attributes("accredited_provider_code") || course_attributes("training_provider_code")
     end
 
     def apply_id
