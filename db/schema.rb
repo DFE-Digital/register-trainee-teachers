@@ -173,6 +173,9 @@ ActiveRecord::Schema.define(version: 2021_09_03_085057) do
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code", unique: true
   end
 
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
   create_table "degrees", force: :cascade do |t|
     t.integer "locale_code", null: false
     t.string "uk_degree"
