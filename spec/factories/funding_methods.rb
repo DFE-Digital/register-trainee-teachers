@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :bursary do
+  factory :funding_method do
     training_route { TRAINING_ROUTES.keys.sample }
     amount { Faker::Number.number(digits: 5) }
 
     trait :with_bursary_subjects do
-      after(:create) do |bursary, _|
-        create_list(:bursary_subject, 2, bursary: bursary)
+      after(:create) do |funding_method, _|
+        create_list(:funding_method_subject, 2, funding_method: funding_method)
       end
     end
   end

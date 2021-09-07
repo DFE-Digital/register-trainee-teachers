@@ -12,7 +12,7 @@ class CalculateBursary
     def available_for_route?(route)
       raise_if_route_not_recognised!(route)
 
-      Bursary.find_by(training_route: route)&.bursary_subjects.present?
+      FundingMethod.find_by(training_route: route)&.funding_method_subjects.present?
     end
 
     def for_tier(tier)
@@ -26,7 +26,7 @@ class CalculateBursary
       # Bursaries are awarded based on the allocation subject for a given
       # subject specialism.
       if (allocation_subject = SubjectSpecialism.find_by(name: subject)&.allocation_subject)
-        allocation_subject.bursaries.find_by(training_route: route)&.amount
+        allocation_subject.funding_methods.find_by(training_route: route)&.amount
       end
     end
 
