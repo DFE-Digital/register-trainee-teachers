@@ -15,6 +15,7 @@ features:
   course_study_mode: true
   routes:
     provider_led_postgrad: true
+    provider_led_undergrad: true
     early_years_assessment_only: true
     early_years_postgrad: true
     early_years_salaried: true
