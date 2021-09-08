@@ -112,7 +112,7 @@ FactoryBot.define do
     end
 
     trait :with_course_details do
-      course_subject_one { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
+      course_subject_one { ::CourseSubjects::MATHEMATICS }
       course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.reject { |_k, v| v[:option] == :main }.keys.sample }
       course_start_date { Faker::Date.between(from: 1.year.ago, to: 2.days.ago) }
@@ -248,13 +248,13 @@ FactoryBot.define do
 
     trait :deferred do
       trn_received
-      defer_date { Faker::Date.in_date_period }
+      defer_date { potential_course_start_date }
       state { "deferred" }
     end
 
     trait :reinstated do
       completed
-      defer_date { Faker::Date.in_date_period }
+      defer_date { potential_course_start_date }
       reinstate_date { Faker::Date.in_date_period }
       state { "trn_received" }
     end

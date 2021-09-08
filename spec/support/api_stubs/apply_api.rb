@@ -6,11 +6,11 @@ module ApiStubs
       { data: [application] }.to_json
     end
 
-    def self.application
-      uk_application.to_json
+    def self.application(course_attributes: {})
+      uk_application(course_attributes: course_attributes).to_json
     end
 
-    def self.uk_application
+    def self.uk_application(course_attributes: {})
       {
         id: "3772",
         type: "application",
@@ -22,7 +22,7 @@ module ApiStubs
           recruited_at: "2020-06-17T09:05:53.165+01:00",
           candidate: candidate_info,
           contact_details: contact_details,
-          course: course,
+          course: course(course_attributes),
           qualifications: qualifications,
           hesa_itt_data: {},
         },
@@ -169,16 +169,17 @@ module ApiStubs
       }
     end
 
-    def self.course
+    def self.course(course_attributes = {})
       {
         recruitment_cycle_year: 2021,
         course_code: "V6X1",
         training_provider_code: "E84",
         training_provider_type: "scitt",
         accredited_provider_type: nil,
+        accredited_provider_code: nil,
         site_code: "-",
         study_mode: "full_time",
-      }
+      }.merge(course_attributes)
     end
   end
 end

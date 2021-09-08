@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_03_085057) do
+ActiveRecord::Schema.define(version: 2021_09_08_132221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(version: 2021_09_03_085057) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "invalid_data"
     t.integer "state"
-    t.string "provider_code"
+    t.string "accredited_body_code"
+    t.index ["accredited_body_code"], name: "index_apply_applications_on_accredited_body_code"
     t.index ["apply_id"], name: "index_apply_applications_on_apply_id", unique: true
-    t.index ["provider_code"], name: "index_apply_applications_on_provider_code"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -372,6 +372,7 @@ ActiveRecord::Schema.define(version: 2021_09_03_085057) do
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
+    t.string "region"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"

@@ -15,12 +15,15 @@ features:
   course_study_mode: true
   routes:
     provider_led_postgrad: true
+    provider_led_undergrad: true
     early_years_assessment_only: true
     early_years_postgrad: true
     early_years_salaried: true
+    early_years_undergrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
+    opt_in_undergrad: true
 
 pagination:
   records_per_page: 30

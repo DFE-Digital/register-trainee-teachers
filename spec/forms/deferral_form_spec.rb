@@ -72,6 +72,15 @@ describe DeferralForm, type: :model do
   end
 
   describe "#save!" do
+    let(:params) do
+      {
+        year: trainee.course_start_date.year + 1,
+        month: trainee.course_start_date.month,
+        day: trainee.course_start_date.day,
+        date_string: "other",
+      }
+    end
+
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
 
