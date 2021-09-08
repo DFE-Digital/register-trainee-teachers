@@ -3,7 +3,7 @@
     <div class="govuk-!-margin-bottom-8 app-draft-records">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-          <h2 class="govuk-heading-m">Draft records</h2>
+          <h2 class="govuk-heading-m">Draft trainees</h2>
         </div>
       </div>
       <%= render ApplicationRecordCard::View.with_collection(draft_trainees) %>
@@ -14,7 +14,7 @@
     <div class="govuk-!-margin-bottom-8 app-non-draft-records">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-          <h2 class="govuk-heading-m">Records</h2>
+          <h2 class="govuk-heading-m">Registered trainees</h2>
         </div>
       </div>
       <%= render ApplicationRecordCard::View.with_collection(completed_trainees) %>
