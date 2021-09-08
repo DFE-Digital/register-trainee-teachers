@@ -21,6 +21,25 @@ FactoryBot.define do
       [qualifications, study_mode].join(" ")
     end
 
+    factory :course_with_unmappable_subject do
+      transient do
+        subjects_count { 1 }
+        subject_names { ["Crosby, Stills & Nash studies"] }
+        study_mode { "full_time" }
+      end
+
+      before(:create) do |course, evaluator|
+        course.name = "Unmappable subject course"
+        course.study_mode = evaluator.study_mode
+      end
+
+      after(:create) do |course, evaluator|
+        evaluator.subject_names.each do |subject_name|
+          course.subjects << create(:subject, name: subject_name)
+        end
+      end
+    end
+
     factory :course_with_subjects do
       transient do
         subjects_count { 1 }

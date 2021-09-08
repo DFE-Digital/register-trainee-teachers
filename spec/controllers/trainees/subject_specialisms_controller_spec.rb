@@ -15,8 +15,7 @@ describe Trainees::SubjectSpecialismsController do
     context "with empty form params" do
       let!(:course) do
         create(
-          :course_with_subjects,
-          subjects_count: 1,
+          :course_with_unmappable_subject,
           accredited_body_code: trainee.provider.code,
           route: trainee.training_route,
         )
