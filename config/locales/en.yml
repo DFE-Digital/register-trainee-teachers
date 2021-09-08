@@ -472,6 +472,7 @@ en:
         lead_school_id: *lead_school
         employing_school_id: *employing_school
         commencement_date: *commencement_date
+        commencement_date_radio_option: *commencement_date
         trainee_id: *trainee_id
         study_mode: Select if the trainee is full time or part time
     trainees:
