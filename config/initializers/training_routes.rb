@@ -60,6 +60,10 @@ ITT_TRAINING_ROUTES = TRAINING_ROUTES.select { |training_route|
                                  :opt_in_undergrad).include?(training_route)
 }.freeze
 
+UNDERGRAD_ROUTES = TRAINING_ROUTES.select { |training_route|
+  TRAINING_ROUTE_ENUMS.values_at(:early_years_undergrad, :provider_led_undergrad, :opt_in_undergrad).include? training_route
+}.freeze
+
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only].include?(training_route)
 }.freeze

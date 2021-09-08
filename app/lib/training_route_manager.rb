@@ -34,7 +34,7 @@ class TrainingRouteManager
   end
 
   def itt_route?
-    ITT_TRAINING_ROUTES.keys.any? { |training_route_enums_key| training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym] }
+    ITT_TRAINING_ROUTES.keys.include?(training_route)
   end
 
   def requires_study_mode?
@@ -48,15 +48,15 @@ class TrainingRouteManager
     ].exclude?(training_route)
   end
 
+  def undergrad_route?
+    UNDERGRAD_ROUTES.keys.include?(training_route)
+  end
+
 private
 
   attr_reader :trainee
 
   delegate :training_route, to: :trainee
-
-  def undergrad_route?
-    %w[early_years_undergrad provider_led_undergrad opt_in_undergrad].include?(training_route)
-  end
 
   def enabled?(training_route_enums_key)
     FeatureService.enabled?("routes.#{training_route_enums_key}") && training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym]

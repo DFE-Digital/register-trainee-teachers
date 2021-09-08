@@ -238,22 +238,34 @@ module Dttp
           end
         end
 
-        context "Early years undergrad" do
+        UNDERGRAD_ROUTES.each_key do |route|
+          context "with an undergrad route (#{route})" do
+            let(:trainee) do
+              create(:trainee, route, :with_course_details, :with_start_date,
+                     dttp_id: dttp_contact_id, provider: provider)
+            end
+
+            subject { described_class.new(trainee).params }
+
+            it "returns a hash including the undergrad course level" do
+              expect(subject).to include(
+                { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
+              )
+            end
+          end
+        end
+
+        context "with an non-undergrad route" do
           let(:trainee) do
-            create(:trainee, :early_years_undergrad, :with_course_details, :with_start_date,
+            create(:trainee, :early_years_postgrad, :with_course_details, :with_start_date,
                    dttp_id: dttp_contact_id, provider: provider)
           end
 
           subject { described_class.new(trainee).params }
 
-          before do
-            stub_const("Dttp::CodeSets::AgeRanges::MAPPING", { AgeRange::ZERO_TO_FIVE => { entity_id: dttp_ey_age_range_entity_id } })
-            trainee.set_early_years_course_details
-          end
-
-          it "returns a hash including the undergrad course level" do
+          it "returns a hash including the postgrad course level" do
             expect(subject).to include(
-              { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
+              { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG },
             )
           end
         end

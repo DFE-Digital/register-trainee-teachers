@@ -143,6 +143,26 @@ describe TrainingRouteManager do
     end
   end
 
+  describe "#undergrad_route?" do
+    context "non undergrad route" do
+      let(:trainee) { build(:trainee, :school_direct_salaried) }
+
+      it "returns false" do
+        expect(subject.undergrad_route?).to be false
+      end
+    end
+
+    %i[early_years_undergrad provider_led_undergrad opt_in_undergrad].each do |route|
+      context "undergrad route" do
+        let(:trainee) { build(:trainee, route) }
+
+        it "returns true" do
+          expect(subject.undergrad_route?).to be true
+        end
+      end
+    end
+  end
+
   describe "#itt_route?" do
     %i[early_years_undergrad pg_teaching_apprenticeship].each do |route|
       context "with an itt trainee" do

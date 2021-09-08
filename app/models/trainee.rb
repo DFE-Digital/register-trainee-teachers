@@ -21,6 +21,7 @@ class Trainee < ApplicationRecord
            :requires_schools?,
            :requires_employing_school?,
            :early_years_route?,
+           :undergrad_route?,
            :requires_itt_start_date?,
            :itt_route?,
            :requires_study_mode?,
