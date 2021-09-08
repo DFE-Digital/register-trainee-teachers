@@ -9,7 +9,19 @@ jobs:
   backup:
     name: Backup PaaS Database (production)
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11.10
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
+    - uses: actions/checkout@v2
+      name: Checkout
 
     - name: Setup cf cli
       uses: DFE-Digital/github-actions/setup-cf-cli@master
@@ -35,3 +47,32 @@ jobs:
         az storage blob upload --container-name prod-db-backup \
         --file ${BACKUP_FILE_NAME}.tar.gz --name ${BACKUP_FILE_NAME}.tar.gz \
         --connection-string '${{ secrets.AZURE_PROD_DB_BACKUP_STORAGE_CONNECTION_STRING }}'
+
+    - name: Sanitise the Database backup
+      run: |
+        echo "::group::Restore backup to intermediate database"
+        createdb ${DATABASE_NAME} && psql -f ${{ env.BACKUP_FILE_NAME }}.sql -d ${DATABASE_NAME}
+        echo "::endgroup::"
+
+        echo "::group::Sanitise user data"
+        psql -d ${DATABASE_NAME} -f db/scripts/sanitise.sql
+        echo "::endgroup::"
+
+        rm ${{ env.BACKUP_FILE_NAME }}.sql
+
+        echo "::group::Backup Sanitised Database"
+        pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f backup_sanitised.sql
+        echo "::endgroup::"
+      env:
+        DATABASE_NAME: register_trainee_teachers
+        PGUSER:  postgres
+        PGPASSWORD: postgres
+        PGHOST: localhost
+        PGPORT: 5432
+
+    - name: Upload Sanitised Backup
+      uses: actions/upload-artifact@v2
+      with:
+        name: backup_sanitised
+        path: backup_sanitised.sql
+        retention-days: 3
