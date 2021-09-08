@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_07_102227) do
+ActiveRecord::Schema.define(version: 2021_09_08_132221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -372,6 +372,7 @@ ActiveRecord::Schema.define(version: 2021_09_07_102227) do
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
+    t.string "region"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
