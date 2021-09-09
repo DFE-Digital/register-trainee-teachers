@@ -30,32 +30,21 @@ class PublishCourseDetailsForm < TraineeForm
         course_end_date: nil,
         study_mode: nil,
       )
-    else
-      clear_stash
-      clear_form_stashes
     end
   end
 
   def save!
-    clear_form_stashes
     return true if manual_entry_chosen?
+    return false unless valid?
 
-    if valid?
-      reset_course_subject_fields
-      update_trainee_attributes
-      clear_bursary_information if course_subjects_changed?
-      trainee.save!
-      clear_stash
-    else
-      false
-    end
+    update_trainee_attributes
+    clear_bursary_information if course_subjects_changed?
+    trainee.save!
   end
 
   def stash
-    clear_form_stashes
     return true if manual_entry_chosen?
 
-    reset_course_subject_fields
     super
   end
 
@@ -80,10 +69,6 @@ class PublishCourseDetailsForm < TraineeForm
       end || course_study_mode_if_valid
   end
 
-  def course_has_one_specialism?
-    CalculateSubjectSpecialisms.call(subjects: course_subjects).all? { |_, v| v.count < 2 }
-  end
-
   def language_specialism?
     specialism_type == :language
   end
@@ -95,7 +80,7 @@ class PublishCourseDetailsForm < TraineeForm
 private
 
   def course_subjects
-    @course_subjects ||= course.subjects.map(&:name)
+    @course_subjects ||= course.subjects.pluck(:name)
   end
 
   def specialism_type
@@ -109,32 +94,6 @@ private
       else
         SubjectSpecialismForm.new(trainee)
       end
-  end
-
-  def clear_form_stashes
-    FormStore.set(trainee.id, :subject_specialism, nil)
-    FormStore.set(trainee.id, :language_specialisms, nil)
-    FormStore.set(trainee.id, :itt_start_date, nil)
-  end
-
-  def reset_course_subject_fields
-    return unless course
-
-    subjects = {
-      course_subject_one: nil,
-      course_subject_two: nil,
-      course_subject_three: nil,
-    }
-
-    if course_has_one_specialism?
-      subjects[:course_subject_one] = CalculateSubjectSpecialisms.call(
-        subjects: course.subjects.pluck(:name),
-      ).values.map(&:first).compact.first
-    end
-
-    specialism_form.fields.merge!(subjects)
-    specialism_form.stash_or_save!
-    @specialism_form = nil #  reload
   end
 
   def update_trainee_attributes

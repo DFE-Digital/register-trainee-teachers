@@ -13,10 +13,13 @@ module Trainees
 
     def update
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
+
       if @publish_course_details_form.stash_or_save!
         if @publish_course_details_form.manual_entry_chosen?
           @publish_course_details_form.process_manual_entry!
         end
+
+        clear_form_stash(trainee)
 
         redirect_to next_step_path
       else
@@ -34,8 +37,6 @@ module Trainees
     def next_step_path
       if @publish_course_details_form.manual_entry_chosen?
         edit_trainee_course_details_path(trainee)
-      elsif @publish_course_details_form.course_has_one_specialism?
-        publish_course_next_path
       elsif @publish_course_details_form.language_specialism?
         edit_trainee_language_specialisms_path(trainee)
       else
