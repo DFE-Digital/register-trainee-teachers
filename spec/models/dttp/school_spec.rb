@@ -9,18 +9,30 @@ module Dttp
     it { is_expected.to have_db_index(:dttp_id) }
 
     describe ".active" do
-      let(:active_dttp_school) { create(:dttp_school, :active) }
-
       subject { described_class.active }
 
-      before do
-        active_dttp_school
-        create(:dttp_school)
+      context "when a school is active" do
+        let(:school) { create(:dttp_school, :active) }
+
+        it "is returned" do
+          expect(subject).to include(school)
+        end
       end
 
-      it "returns only active schools" do
-        expect(subject.count).to eq(1)
-        expect(subject).to include(active_dttp_school)
+      context "when a school is new" do
+        let(:school) { create(:dttp_school, :new) }
+
+        it "is returned" do
+          expect(subject).to include(school)
+        end
+      end
+
+      context "when a school is neither" do
+        let(:school) { create(:dttp_school, :inactive) }
+
+        it "is not returned" do
+          expect(subject).not_to include(school)
+        end
       end
     end
   end

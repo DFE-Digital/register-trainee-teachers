@@ -11,5 +11,13 @@ FactoryBot.define do
     trait :active do
       status_code { Dttp::School::STATUS_CODES[:active] }
     end
+
+    trait :new do
+      status_code { Dttp::School::STATUS_CODES[:new] }
+    end
+
+    trait :inactive do
+      status_code { Dttp::School::STATUS_CODES[:inactive] }
+    end
   end
 end

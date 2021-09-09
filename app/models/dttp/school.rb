@@ -15,6 +15,8 @@ module Dttp
       proposed_to_open: 300000008,
     }.freeze
 
-    scope :active, -> { where(status_code: STATUS_CODES[:active]) }
+    ACTIVE_STATUS_CODES = [STATUS_CODES[:active], STATUS_CODES[:new]].freeze
+
+    scope :active, -> { where(status_code: ACTIVE_STATUS_CODES) }
   end
 end
