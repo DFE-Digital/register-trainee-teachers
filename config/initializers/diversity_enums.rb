@@ -75,7 +75,7 @@ module Diversities
     OpenStruct.new(name: LEARNING_DIFFICULTY, description: "(for example, dyslexia, dyspraxia or ADHD)"),
     OpenStruct.new(name: LONG_STANDING_ILLNESS, description: "(for example, cancer, HIV, diabetes, chronic heart disease or epilepsy)"),
     OpenStruct.new(name: MENTAL_HEALTH_CONDITION, description: "(for example, depression, schizophrenia or anxiety disorder)"),
-    OpenStruct.new(name: PHYSICAL_DISABILITY, description: "(for example,impaired use of arms or legs, use of a wheelchair or crutches)"),
+    OpenStruct.new(name: PHYSICAL_DISABILITY, description: "(for example, impaired use of arms or legs, use of a wheelchair or crutches)"),
     OpenStruct.new(name: SOCIAL_IMPAIRMENT, description: "(for example Asperger’s, or another autistic spectrum disorder)"),
     OpenStruct.new(name: OTHER, description: nil),
   ].freeze
