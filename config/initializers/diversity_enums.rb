@@ -70,13 +70,13 @@ module Diversities
   MULTIPLE_DISABILITIES = "Multiple disabilities"
 
   SEED_DISABILITIES = [
-    OpenStruct.new(name: BLIND, description: "(or a serious visual impairment which is not corrected by glasses)"),
-    OpenStruct.new(name: DEAF, description: "(or a serious hearing impairment)"),
-    OpenStruct.new(name: LEARNING_DIFFICULTY, description: "(for example, dyslexia, dyspraxia or ADHD)"),
-    OpenStruct.new(name: LONG_STANDING_ILLNESS, description: "(for example, cancer, HIV, diabetes, chronic heart disease or epilepsy)"),
-    OpenStruct.new(name: MENTAL_HEALTH_CONDITION, description: "(for example, depression, schizophrenia or anxiety disorder)"),
-    OpenStruct.new(name: PHYSICAL_DISABILITY, description: "(for example, impaired use of arms or legs, use of a wheelchair or crutches)"),
-    OpenStruct.new(name: SOCIAL_IMPAIRMENT, description: "(for example Asperger’s, or another autistic spectrum disorder)"),
-    OpenStruct.new(name: OTHER, description: nil),
+    { name: BLIND, description: "(or a serious visual impairment which is not corrected by glasses)" },
+    { name: DEAF, description: "(or a serious hearing impairment)" },
+    { name: LEARNING_DIFFICULTY, description: "(for example, dyslexia, dyspraxia or ADHD)" },
+    { name: LONG_STANDING_ILLNESS, description: "(for example, cancer, HIV, diabetes, chronic heart disease or epilepsy)" },
+    { name: MENTAL_HEALTH_CONDITION, description: "(for example, depression, schizophrenia or anxiety disorder)" },
+    { name: PHYSICAL_DISABILITY, description: "(for example, impaired use of arms or legs, use of a wheelchair or crutches)" },
+    { name: SOCIAL_IMPAIRMENT, description: "(for example Asperger’s, or another autistic spectrum disorder)" },
+    { name: OTHER, description: nil },
   ].freeze
 end

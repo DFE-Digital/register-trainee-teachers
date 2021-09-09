@@ -29,7 +29,7 @@ module HPITT
         degree.grade = to_degree_grade(row["Degree grade"])
         degree.graduation_year = row["Graduation year"]
         degree.institution = row["Institution"]
-        degree.subject = validate_degree_subject(row["Subject of UG. degree"])
+        degree.subject = validate_degree_subject(row["Degree subject"])
       end
     end
 
@@ -39,13 +39,12 @@ module HPITT
         degree.country = row["Country (Non UK) degree"]
         degree.non_uk_degree = validate_enic_non_uk_degree(row["UK ENIC equivalent (Non UK)"])
         degree.subject = validate_degree_subject(row["Subject of UG. Degree (Non UK)"])
-        degree.graduation_year = Date.parse(row["Undergrad degree date obtained (Non UK)"]).year
+        degree.graduation_year = Date.new(row["Undergrad degree date obtained (Non UK)"].to_i).year if row["Undergrad degree date obtained (Non UK)"].present?
       end
     end
 
     def find_course(trainee, csv_row)
       potential_courses = trainee.provider.courses.where(
-        duration_in_years: csv_row["Duration"].scan(/\d+/).first.to_i,
         start_date: Date.parse(csv_row["Course start date"]),
         name: csv_row["ITT Subject 1"],
       )
@@ -61,10 +60,12 @@ module HPITT
     end
 
     def build_trainee(csv_row)
-      trainee = Trainee.find_or_initialize_by(trainee_id: csv_row["Trainee ID"])
-
       # TODO: Temporary, the provider code will need to be added to this csv
-      trainee.provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
+      provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
+
+      trainee = provider.trainees.find_or_initialize_by(trainee_id: csv_row["Trainee ID"])
+
+      trainee.training_route = TRAINING_ROUTE_ENUMS[:hpitt_postgrad]
 
       assign_field = lambda do |field_name|
         lambda do |field_value|
@@ -78,22 +79,22 @@ module HPITT
         "Building" => assign_field[:address_line_one],
         "Course end date" => Date.method(:parse) >> assign_field[:course_end_date],
         "Course start date" => Date.method(:parse) >> assign_field[:course_start_date],
-        "Date left" => Date.method(:parse) >> assign_field[:withdraw_date],
-        "Date of birth" => Date.method(:parse) >> assign_field[:date_of_birth],
-        "Date of deferral" => Date.method(:parse) >> assign_field[:defer_date],
+        "Date left" => method(:parse_date) >> assign_field[:withdraw_date],
+        "Date of birth" => method(:parse_date) >> assign_field[:date_of_birth],
+        "Date of deferral" => method(:parse_date) >> assign_field[:defer_date],
         "Disability" => method(:to_disability_ids) >> assign_field[:disability_ids],
         "Email address" => assign_field[:email],
         "Employing school URN" => method(:to_school_id) >> assign_field[:employing_school_id],
-        "Ethnicity" => assign_field[:ethnic_background] >> method(:to_ethnic_group) >> assign_field[:ethnic_group],
+        "Ethnicity" => method(:to_ethnic_group) >> assign_field[:ethnic_group],
         "First names" => assign_field[:first_names],
         "Gender" => method(:to_gender) >> assign_field[:gender],
         "Last names" => assign_field[:last_name],
         "Middle names" => assign_field[:middle_names],
         "Nationality" => method(:to_nationality_ids) >> assign_field[:nationality_ids],
         "Postal code" => assign_field[:postcode],
-        "Route" => method(:to_training_route) >> assign_field[:training_route],
         "Street" => assign_field[:address_line_two],
         "Town or city" => assign_field[:town_city],
+        "Region" => assign_field[:region],
         "TRN" => assign_field[:trn],
       }
       column_mapper.default = proc {}
@@ -130,35 +131,55 @@ module HPITT
     end
 
     def validate_degree_subject(raw_string)
-      raise Error, "Degree subject not recognised" if !Dttp::CodeSets::DegreeSubjects::MAPPING.keys.include? raw_string
+      potential_subjects = Dttp::CodeSets::DegreeSubjects::MAPPING.select do |subjects|
+        subjects&.casecmp?(raw_string.squish)
+      end
 
-      raw_string
+      case potential_subjects.count
+      when 0
+        raise Error, "Degree subject not recognised: #{raw_string}"
+      when 1
+        potential_subjects.keys.first
+      else
+        raise Error, "Degree subject ambiguous, multiple found: #{raw_string}"
+      end
     end
 
     def validate_uk_degree(raw_string)
-      raw_string.tap do
-        raise Error, "Degree type not recognised" if !Dttp::CodeSets::DegreeTypes::MAPPING.include? raw_string
+      potential_degree_types = Dttp::CodeSets::DegreeTypes::MAPPING.select do |degree_name, attributes|
+        degree_name&.casecmp?(raw_string.squish) || attributes[:abbreviation]&.casecmp?(raw_string.squish)
+      end
+
+      case potential_degree_types.count
+      when 0
+        raise Error, "Degree type not recognised: #{raw_string}"
+      when 1
+        potential_degree_types.keys.first
+      else
+        raise Error, "Degree type ambiguous, multiple found: #{raw_string}"
       end
     end
 
     def validate_enic_non_uk_degree(raw_string)
+      return if raw_string.blank?
+
       raw_string.tap do
         raise Error, "ENIC equivalent not recognised" if !ENIC_NON_UK.include? raw_string
       end
     end
 
     def to_disability_ids(raw_string)
-      Disability.where(name: raw_string.split(",").map(&:strip)).map(&:id)
+      Disability.where(name: raw_string&.split(",")&.map(&:strip)).map(&:id)
     end
 
     def to_school_id(urn)
       School.find_by_urn!(urn).id
     end
 
-    def to_ethnic_group(ethnic_background)
-      Diversities::BACKGROUNDS.find do |_, backgrounds|
-        backgrounds.any? { |background| background.casecmp? ethnic_background }
-      end.first
+    def to_ethnic_group(raw_string)
+      HPITT::CodeSets::Ethnicities::MAPPING[raw_string].tap do |ethnic_group|
+        raise Error, "Ethnic group not recognised: #{raw_string}" if ethnic_group.nil?
+      end
     end
 
     def to_gender(raw_string)
@@ -170,13 +191,13 @@ module HPITT
     end
 
     def to_nationality_ids(raw_string)
-      Nationality.find_by_name!(raw_string.downcase).id
+      Nationality.where(name: raw_string&.downcase).ids
     end
 
-    def to_training_route(raw_string)
-      raw_string.parameterize.underscore.tap do |training_route|
-        raise Error, "Training route not recognised" if !TRAINING_ROUTE_ENUMS.values.include? training_route
-      end
+    def parse_date(raw_date)
+      return if raw_date.blank?
+
+      Date.parse(raw_date)
     end
   end
 end

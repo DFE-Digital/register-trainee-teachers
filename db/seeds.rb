@@ -9,14 +9,20 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Load Nationalities
-Dttp::CodeSets::Nationalities::MAPPING.each_key do |nationality|
-  Nationality.find_or_create_by(name: nationality)
-end
+Nationality.upsert_all(
+  Dttp::CodeSets::Nationalities::MAPPING.keys.map do |nationality|
+    { name: nationality }.merge(created_at: Time.zone.now, updated_at: Time.zone.now)
+  end,
+  unique_by: :name,
+)
 
 # Load Disabilities
-Diversities::SEED_DISABILITIES.each do |disability|
-  Disability.find_or_create_by!(name: disability.name).update(description: disability.description)
-end
+Disability.upsert_all(
+  Diversities::SEED_DISABILITIES.map do |disability|
+    disability.merge(created_at: Time.zone.now, updated_at: Time.zone.now)
+  end,
+  unique_by: :name,
+)
 
 ALLOCATION_SUBJECT_SPECIALISM_MAPPING.each do |allocation_subject, subject_specialisms|
   allocation_subject = AllocationSubject.find_or_create_by!(name: allocation_subject)
