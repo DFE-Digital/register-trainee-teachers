@@ -4,6 +4,7 @@ module AgeRange
   THREE_TO_ELEVEN = [3, 11].freeze
   FIVE_TO_ELEVEN = [5, 11].freeze
   ELEVEN_TO_SIXTEEN = [11, 16].freeze
+  ELEVEN_TO_NINETEEN = [11, 18].freeze # there isn't currently an 11-18 in DTTP. Update when there is
   ELEVEN_TO_NINETEEN = [11, 19].freeze
   ZERO_TO_FIVE = [0, 5].freeze
   THREE_TO_SEVEN = [3, 7].freeze
