@@ -17,27 +17,11 @@ module Dttp
             end
           end
 
-          describe "dfe_datestandardsassessmentpassed" do
-            before do
-              trainee.outcome_date = "1/1/2021"
-            end
-
-            it "is set to the trainee outcome_date if it exists" do
-              expect(subject["dfe_datestandardsassessmentpassed"]).to eq(trainee.outcome_date.in_time_zone.iso8601)
-            end
-          end
-
           describe "dfe_ReasonforLeavingId" do
             let(:dttp_reason_for_leaving_id) { Dttp::CodeSets::ReasonsForLeavingCourse::MAPPING[trainee.withdraw_reason][:entity_id] }
 
             it "is set as the trainee's withdrawl reason" do
               expect(subject["dfe_ReasonforLeavingId@odata.bind"]).to eq("/dfe_reasonforleavings(#{dttp_reason_for_leaving_id})")
-            end
-          end
-
-          describe "dfe_ITTQualificationAimId" do
-            it "is set as NO_QUALIFICATION_OBTAINED_ON_EXIT" do
-              expect(subject["dfe_ITTQualificationAimId@odata.bind"]).to eq("/dfe_ittqualificationaims(#{described_class::NO_QUALIFICATION_OBTAINED_ON_EXIT})")
             end
           end
         end
