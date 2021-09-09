@@ -36,7 +36,7 @@ module Exports
           "register_id" => trainee.slug,
           "trainee_url" => "#{Settings.base_url}/trainees/#{trainee.slug}",
           "apply_id" => trainee.apply_application&.apply_id,
-          "provider_training_id" => trainee.trainee_id,
+          "provider_trainee_id" => trainee.trainee_id,
           "trn" => trainee.trn,
           "status" => status(trainee),
           "academic_year" => nil,
