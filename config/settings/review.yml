@@ -20,7 +20,7 @@ features:
     opt_in_undergrad: true
 
 pagination:
-  records_per_page: 30
+  records_per_page: 100
 
 environment:
   name: review
