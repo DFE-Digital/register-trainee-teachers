@@ -68,20 +68,24 @@ TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_rout
   %i[assessment_only].include?(training_route)
 }.freeze
 
+QTS_AWARD_TYPE = "QTS"
+EYTS_AWARD_TYPE = "EYTS"
+
 TRAINING_ROUTE_AWARD_TYPE = {
-  assessment_only: "QTS",
-  early_years_undergrad: "EYTS",
-  early_years_salaried: "EYTS",
-  early_years_postgrad: "EYTS",
-  early_years_assessment_only: "EYTS",
-  pg_teaching_apprenticeship: "QTS",
-  provider_led_postgrad: "QTS",
-  provider_led_undergrad: "QTS",
-  school_direct_salaried: "QTS",
-  school_direct_tuition_fee: "QTS",
+  assessment_only: QTS_AWARD_TYPE,
+  early_years_undergrad: EYTS_AWARD_TYPE,
+  early_years_salaried: EYTS_AWARD_TYPE,
+  early_years_postgrad: EYTS_AWARD_TYPE,
+  early_years_assessment_only: EYTS_AWARD_TYPE,
+  pg_teaching_apprenticeship: QTS_AWARD_TYPE,
+  provider_led_postgrad: QTS_AWARD_TYPE,
+  provider_led_undergrad: QTS_AWARD_TYPE,
+  school_direct_salaried: QTS_AWARD_TYPE,
+  school_direct_tuition_fee: QTS_AWARD_TYPE,
+  opt_in_undergrad: QTS_AWARD_TYPE,
 }.freeze
 
-EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == "EYTS" }.keys.freeze
+EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == EYTS_AWARD_TYPE }.keys.freeze
 
 SEED_BURSARIES = [
   OpenStruct.new(
