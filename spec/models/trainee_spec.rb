@@ -296,8 +296,7 @@ describe Trainee do
 
     describe "#bursary_amount" do
       it "returns the bursary amount for the trainee's route and subject" do
-        expect(CalculateBursary).to receive(:for_route_and_subject).once.with(subject.training_route.to_sym, subject.course_subject_one)
-
+        expect(subject.funding_manager).to receive(:bursary_amount)
         subject.bursary_amount
       end
     end

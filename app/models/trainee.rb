@@ -30,6 +30,8 @@ class Trainee < ApplicationRecord
 
   delegate :update_training_route!, to: :route_data_manager
 
+  delegate :bursary_amount, to: :funding_manager
+
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
@@ -263,10 +265,6 @@ class Trainee < ApplicationRecord
     Rails.cache.fetch([self, :timeline]) do
       Trainees::CreateTimeline.call(trainee: self)
     end
-  end
-
-  def bursary_amount
-    CalculateBursary.for_route_and_subject(training_route.to_sym, course_subject_one)
   end
 
   def set_early_years_course_details
