@@ -25,8 +25,11 @@ module Features
       and_the_course_details_is_marked_completed
     end
 
-    def and_the_ey_course_details_is_complete
+    def and_the_ey_course_details_is_complete(requires_study_mode: false)
       course_details_page.load(id: trainee_from_url.slug)
+      if requires_study_mode
+        and_the_course_study_mode_field_is_completed
+      end
       and_the_course_date_fields_are_completed
       and_the_course_details_are_submitted
       and_the_course_details_is_marked_completed

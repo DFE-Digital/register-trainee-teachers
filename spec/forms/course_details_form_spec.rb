@@ -302,7 +302,7 @@ describe CourseDetailsForm, type: :model do
       end
 
       context "not required route" do
-        let(:trainee) { create(:trainee, :early_years_undergrad, study_mode: nil) }
+        let(:trainee) { create(:trainee, :assessment_only, study_mode: nil) }
 
         before do
           subject.valid?

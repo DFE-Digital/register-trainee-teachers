@@ -119,6 +119,11 @@ FactoryBot.define do
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
     end
 
+    trait :with_course_details_and_study_mode do
+      with_course_details
+      study_mode { COURSE_STUDY_MODES[:full_time] }
+    end
+
     trait :with_start_date do
       commencement_date { Faker::Date.between(from: 6.months.from_now, to: Time.zone.today) }
     end

@@ -39,12 +39,10 @@ class TrainingRouteManager
 
   def requires_study_mode?
     return false unless FeatureService.enabled?("course_study_mode")
-    return false if early_years_route?
 
     [
       TRAINING_ROUTE_ENUMS[:assessment_only],
-      TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
-      TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+      TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
     ].exclude?(training_route)
   end
 
