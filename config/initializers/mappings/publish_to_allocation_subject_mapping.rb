@@ -13,7 +13,25 @@ module PublishSubjects
   MANDARIN = "Mandarin"
   RUSSIAN = "Russian"
   SPANISH = "Spanish"
+
+  PRIMARY = "Primary"
+  PRIMARY_WITH_ENGLISH = "Primary with English"
+  PRIMARY_WITH_GEOGRAPHY_AND_HISTORY = "Primary with geography and history"
+  PRIMARY_WITH_MATHEMATICS = "Primary with mathematics"
+  PRIMARY_WITH_MODERN_LANGUAGES = "Primary with modern languages"
+  PRIMARY_WITH_PHYSICAL_EDUCATION = "Primary with physical education"
+  PRIMARY_WITH_SCIENCE = "Primary with science"
 end
+
+PUBLISH_PRIMARY_SUBJECTS = [
+  PublishSubjects::PRIMARY,
+  PublishSubjects::PRIMARY_WITH_ENGLISH,
+  PublishSubjects::PRIMARY_WITH_GEOGRAPHY_AND_HISTORY,
+  PublishSubjects::PRIMARY_WITH_MATHEMATICS,
+  PublishSubjects::PRIMARY_WITH_MODERN_LANGUAGES,
+  PublishSubjects::PRIMARY_WITH_PHYSICAL_EDUCATION,
+  PublishSubjects::PRIMARY_WITH_SCIENCE,
+].freeze
 
 PUBLISH_MODERN_LANGUAGES = [
   PublishSubjects::ENGLISH_AS_SECOND_LANGUAGE,
@@ -27,6 +45,17 @@ PUBLISH_MODERN_LANGUAGES = [
   PublishSubjects::RUSSIAN,
   PublishSubjects::SPANISH,
 ].freeze
+
+PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING = {
+  # Primary subject and its derivatives
+  PublishSubjects::PRIMARY => [CourseSubjects::PRIMARY_TEACHING],
+  PublishSubjects::PRIMARY_WITH_ENGLISH => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::ENGLISH_STUDIES],
+  PublishSubjects::PRIMARY_WITH_GEOGRAPHY_AND_HISTORY => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::GEOGRAPHY, CourseSubjects::HISTORY],
+  PublishSubjects::PRIMARY_WITH_MATHEMATICS => [CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS],
+  PublishSubjects::PRIMARY_WITH_MODERN_LANGUAGES => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::MODERN_LANGUAGES],
+  PublishSubjects::PRIMARY_WITH_PHYSICAL_EDUCATION => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::PHYSICAL_EDUCATION],
+  PublishSubjects::PRIMARY_WITH_SCIENCE => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::SCIENCE],
+}.freeze
 
 PUBLISH_SUBJECT_SPECIALISM_MAPPING = {
   # Subjects with a simple 1-to-1 specialism mapping
@@ -68,13 +97,4 @@ PUBLISH_SUBJECT_SPECIALISM_MAPPING = {
   "Drama" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::DRAMA],
   "Mathematics" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::MATHEMATICS],
   "Physical education" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::PHYSICAL_EDUCATION],
-
-  # Primary subject and its derivatives
-  "Primary" => [CourseSubjects::PRIMARY_TEACHING],
-  "Primary with English" => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::ENGLISH_STUDIES],
-  "Primary with geography and history" => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::GEOGRAPHY, CourseSubjects::HISTORY],
-  "Primary with mathematics" => [CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS],
-  "Primary with modern languages" => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::MODERN_LANGUAGES],
-  "Primary with physical education" => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::PHYSICAL_EDUCATION],
-  "Primary with science" => [CourseSubjects::PRIMARY_TEACHING, CourseSubjects::SCIENCE],
-}.freeze
+}.merge(PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING).freeze
