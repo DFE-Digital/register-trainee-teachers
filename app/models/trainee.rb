@@ -280,6 +280,10 @@ class Trainee < ApplicationRecord
     apply_application&.invalid_data.present?
   end
 
+  def hpitt_provider?
+    @hpitt_provider ||= provider&.hpitt_postgrad?
+  end
+
 private
 
   def value_digest
@@ -296,9 +300,5 @@ private
         assoc.map(&:serializable_hash).flat_map(&:values).compact
       end
     ).join(",")
-  end
-
-  def hpitt_provider?
-    @hpitt_provider ||= provider&.hpitt_postgrad?
   end
 end

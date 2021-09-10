@@ -13,7 +13,7 @@ module RecordDetails
     let(:trainee_progress) { "trainee-progress" }
     let(:timeline_event) { double(date: Time.zone.today) }
 
-    context "when trainee_id data has not been provided" do
+    context "when any data has not been provided" do
       before do
         trainee.trainee_id = nil
         render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
@@ -24,7 +24,7 @@ module RecordDetails
       end
     end
 
-    context "when trainee_id data has been provided" do
+    context "when data has been provided" do
       before do
         render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
       end
@@ -46,6 +46,14 @@ module RecordDetails
 
         it "renders the trn submission date" do
           expect(rendered_component).to have_text(date_for_summary_view(trainee.submitted_for_trn_at))
+        end
+      end
+
+      context "when trainee has a hpitt_provider" do
+        let(:trainee) { build(:trainee, :with_hpitt_provider, :trn_received) }
+
+        it "renders the trainee's region" do
+          expect(rendered_component).to have_text(trainee.region)
         end
       end
 

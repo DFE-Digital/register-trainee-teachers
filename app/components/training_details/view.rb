@@ -15,14 +15,21 @@ module TrainingDetails
 
     def training_details_rows
       [
-        mappable_field_row(trainee_start_date, t("components.confirmation.training_details.start_date.title")),
+        region,
+        mappable_field_row(trainee_start_date, t(".start_date")),
         mappable_field_row(trainee.trainee_id, t("components.confirmation.trainee_id.title")),
-      ]
+      ].compact
     end
 
   private
 
-    attr_accessor :data_model, :not_provided_copy, :has_errors
+    attr_accessor :data_model, :not_provided_copy, :has_errors, :show_region
+
+    def region
+      return unless trainee&.provider&.hpitt_postgrad?
+
+      { key: t(".region"), value: trainee.region.presence }
+    end
 
     def trainee_start_date
       date_for_summary_view(trainee.commencement_date) if trainee.commencement_date.present?

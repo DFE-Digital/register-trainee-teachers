@@ -421,6 +421,24 @@ module Dttp
           end
         end
 
+        context "with region information" do
+          let(:provider) { create(:provider, :teach_first) }
+
+          let(:trainee) do
+            create(:trainee, :with_course_details, :with_start_date, :with_hpitt_provider, dttp_id: dttp_contact_id, provider: provider)
+          end
+
+          let(:expected_region_id) { CodeSets::Regions::MAPPING.dig(trainee.region, :entity_id) }
+
+          subject { described_class.new(trainee).params }
+
+          it "returns a hash including the region" do
+            expect(subject).to include({
+              "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_regions(#{expected_region_id})",
+            })
+          end
+        end
+
         context "training initiative", feature_show_funding: true do
           before do
             stub_const(

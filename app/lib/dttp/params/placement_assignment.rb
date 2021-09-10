@@ -59,6 +59,7 @@ module Dttp
         .merge(study_mode_params)
         .merge(training_initiative_params)
         .merge(bursary_params)
+        .merge(region_params)
       end
 
       def course_level
@@ -138,6 +139,14 @@ module Dttp
         {
           "dfe_allocatedplace" => ALLOCATED_PLACE,
           "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{bursary_details_id(bursary_type)})",
+        }
+      end
+
+      def region_params
+        return {} unless trainee.hpitt_provider?
+
+        {
+          "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_regions(#{region_id(trainee.region)})",
         }
       end
 
