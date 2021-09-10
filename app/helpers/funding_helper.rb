@@ -21,7 +21,7 @@ module FundingHelper
 private
 
   def cannot_start_funding?(trainee)
-    CalculateBursary.available_for_route?(trainee.training_route.to_sym) &&
+    trainee.funding_available? &&
       trainee.course_subject_one.blank?
   end
 end

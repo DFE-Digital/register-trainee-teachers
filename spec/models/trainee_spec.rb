@@ -300,7 +300,13 @@ describe Trainee do
         subject.bursary_amount
       end
     end
-  end
+
+    describe "#funding_available?" do
+      it "returns the funding availability" do
+        expect(subject.funding_manager).to receive(:funding_available?)
+        subject.funding_available?
+      end
+    end
 
   describe "#can_apply_for_bursary?" do
     let(:trainee) { create(:trainee) }

@@ -41,4 +41,28 @@ describe FundingManager do
       end
     end
   end
+
+  describe "#funding_available?" do
+    subject { funding_manager.funding_available? }
+
+    context "there is no specialism for training route" do
+      it "returns false" do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context "there is a specialism for training route" do
+      let(:route) { trainee.training_route }
+      let(:subject_specialism) { create(:subject_specialism) }
+      let(:bursary) { create(:bursary, training_route: route) }
+
+      before do
+        create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+      end
+
+      it "returns true" do
+        expect(subject).to be_truthy
+      end
+    end
+  end
 end
