@@ -223,7 +223,7 @@ module CourseDetails
       end
 
       context "route without study_mode" do
-        let(:trainee) { create(:trainee, :early_years_undergrad, study_mode: nil) }
+        let(:trainee) { create(:trainee, :assessment_only, study_mode: nil) }
 
         before do
           render_inline(View.new(data_model: trainee))

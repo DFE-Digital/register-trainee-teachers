@@ -11,9 +11,8 @@ module PageObjects
       element :provider_led_postgrad, "#trainee-training-route-provider-led-postgrad-field"
       element :provider_led_undergrad, "#trainee-training-route-provider-led-undergrad-field"
       element :early_years_undergrad, "#trainee-training-route-early-years-undergrad-field"
-
+      element :early_years_salaried, "#trainee-training-route-early-years-salaried-field"
       element :early_years_assessment_only, "#trainee-training-route-early-years-assessment-only-field"
-      element :early_years_salaried, "#trainee-training-route-early-years-graduate-placement-based-field"
       element :early_years_postgrad, "#trainee-training-route-early-years-postgrad-field"
       element :school_direct_salaried, "#trainee-training-route-school-direct-salaried-field"
       element :school_direct_tuition_fee, "#trainee-training-route-school-direct-tuition-fee-field"

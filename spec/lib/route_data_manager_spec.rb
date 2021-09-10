@@ -20,7 +20,7 @@ describe RouteDataManager do
       end
 
       context "when a trainee has course details" do
-        let(:trainee) { create(:trainee, :assessment_only, :with_course_details, progress: progress) }
+        let(:trainee) { create(:trainee, :assessment_only, :with_course_details_and_study_mode, progress: progress) }
 
         it "wipes the course details" do
           expect { subject }
@@ -34,6 +34,8 @@ describe RouteDataManager do
             .from(trainee.course_start_date).to(nil)
             .and change { trainee.course_end_date }
             .from(trainee.course_end_date).to(nil)
+            .and change { trainee.study_mode }
+            .from(trainee.study_mode).to(nil)
         end
 
         it "resets the course details progress" do

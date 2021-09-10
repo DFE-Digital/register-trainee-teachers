@@ -10,6 +10,7 @@ features:
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true
+    early_years_salaried: true
     early_years_postgrad: true
     early_years_undergrad: true
     early_years_salaried: true

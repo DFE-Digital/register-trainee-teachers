@@ -30,6 +30,7 @@ private
       course_age_range: nil,
       course_start_date: nil,
       course_end_date: nil,
+      study_mode: nil,
     }
   end
 

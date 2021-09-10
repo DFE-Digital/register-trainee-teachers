@@ -30,7 +30,7 @@ describe StudyModesForm, type: :model, feature_course_study_mode: true do
   end
 
   context "not required route" do
-    let(:trainee) { create(:trainee, :early_years_undergrad) }
+    let(:trainee) { create(:trainee, :assessment_only) }
 
     before do
       subject.valid?
