@@ -243,6 +243,12 @@ describe Trainee do
       end
     end
 
+    describe "#funding_manager" do
+      it "returns an instance of TrainingRouteManager" do
+        expect(subject.funding_manager).to be_an_instance_of(FundingManager)
+      end
+    end
+
     describe "#requires_placement_details?" do
       it "is delegated to TrainingRouteManager" do
         expect(subject.training_route_manager).to receive(:requires_placement_details?)

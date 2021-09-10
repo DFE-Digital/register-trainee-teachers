@@ -215,6 +215,10 @@ class Trainee < ApplicationRecord
     @training_route_manager ||= TrainingRouteManager.new(self)
   end
 
+  def funding_manager
+    @funding_manager ||= FundingManager.new(self)
+  end
+
   def available_courses
     return provider.courses.order(:name) if apply_application?
 
