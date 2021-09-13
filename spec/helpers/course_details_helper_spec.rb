@@ -19,7 +19,7 @@ describe CourseDetailsHelper do
 
   describe "#main_age_ranges_options" do
     before do
-      allow(self).to receive(:age_ranges).with(option: :main).and_return(%w[main_age_range])
+      allow(self).to receive(:age_ranges).with(option: :main, level: :primary).and_return(%w[main_age_range])
     end
 
     it "iterates over array and prints out correct main_age_ranges values" do
@@ -29,7 +29,7 @@ describe CourseDetailsHelper do
 
   describe "#additional_age_ranges_options" do
     before do
-      allow(self).to receive(:age_ranges).with(option: :additional).and_return(%w[additional_age_range])
+      allow(self).to receive(:age_ranges).with(option: :additional, level: :primary).and_return(%w[additional_age_range])
     end
 
     it "iterates over array and prints out correct additional_age_ranges values" do
