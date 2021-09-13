@@ -34,9 +34,24 @@ module Trainees
       let!(:primary_trainee) { create(:trainee, course_age_range: AgeRange::FIVE_TO_ELEVEN) }
       let!(:primary_and_secondary_trainee) { create(:trainee, course_age_range: AgeRange::SEVEN_TO_SIXTEEN) }
       let!(:secondary_trainee) { create(:trainee, course_age_range: AgeRange::FOURTEEN_TO_NINETEEN) }
-      let(:filters) { { level: %w[primary] } }
 
-      it { is_expected.to contain_exactly(primary_trainee, primary_and_secondary_trainee) }
+      context "early_years" do
+        let(:filters) { { level: %w[early_years] } }
+
+        it { is_expected.to contain_exactly(early_years_trainee) }
+      end
+
+      context "primary" do
+        let(:filters) { { level: %w[primary] } }
+
+        it { is_expected.to contain_exactly(primary_trainee) }
+      end
+
+      context "secondary" do
+        let(:filters) { { level: %w[secondary] } }
+
+        it { is_expected.to contain_exactly(primary_and_secondary_trainee, secondary_trainee) }
+      end
     end
 
     context "with state filter" do
