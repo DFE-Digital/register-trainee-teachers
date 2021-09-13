@@ -30,9 +30,9 @@
         <% unless @form.all_sections_complete? %>
           <div class="govuk-inset-text">
             <p class="govuk-body">
-              This record is not complete and cannot be submitted for TRN. If you do not
-              have all the required information now, you can
-              <%= govuk_link_to " return to this draft record later", trainees_path %>.
+             This trainee record is not complete and cannot be submitted for TRN. 
+             If you do not have all the required information now, you can
+             <%= govuk_link_to " return to this draft later", trainees_path %>.
             </p>
           </div>
         <% end %>

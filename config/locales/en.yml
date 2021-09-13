@@ -481,7 +481,7 @@ en:
         export: Export these records
         filters:
           level: Education phase
-          search: Search records
+          search: Search for a trainee
           status: Status
           subject: Subject
           type_of_training: Type of training
