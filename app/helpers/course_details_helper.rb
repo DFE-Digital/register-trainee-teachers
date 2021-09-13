@@ -50,7 +50,7 @@ private
   end
 
   def course_subjects
-    @course_subjects ||= SubjectSpecialism.order_by_name.pluck(:name)
+    @course_subjects ||= SubjectSpecialism.secondary.order_by_name.pluck(:name)
   end
 
   def all_subjects
