@@ -4,39 +4,56 @@ require "rails_helper"
 
 describe FundingManager do
   let(:course_subject_one) { nil }
+  let(:bursary_tier) { nil }
   let(:training_route) { :early_years_postgrad }
-  let(:trainee) { build(:trainee, course_subject_one: course_subject_one, training_route: training_route) }
+  let(:trainee) { build(:trainee, course_subject_one: course_subject_one, training_route: training_route, bursary_tier: bursary_tier) }
   let(:funding_manager) { described_class.new(trainee) }
 
   describe "#bursary_amount" do
     subject { funding_manager.bursary_amount }
 
-    context "there is no specialism for training route" do
-      it "returns nil" do
-        expect(subject).to be_nil
+    {
+      tier_one: 5000,
+      tier_two: 4000,
+      tier_three: 2000,
+    }.each do |tier, amount|
+      context "the trainee bursary tier is set to #{tier.to_s.humanize}" do
+        let(:bursary_tier) { tier }
+
+        it "returns amount" do
+          expect(subject).to be amount
+        end
       end
     end
 
-    context "there is a specialism for training route" do
-      let(:subject_specialism) { create(:subject_specialism) }
-      let(:amount) { 24_000 }
-      let(:bursary) { create(:bursary, training_route: training_route, amount: amount) }
-
-      before do
-        create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
-      end
-
-      context "without trainee course subject one" do
+    context "there is no trainee bursary tier" do
+      context "there is no specialism for training route" do
         it "returns nil" do
           expect(subject).to be_nil
         end
       end
 
-      context "with trainee course subject one" do
-        let(:course_subject_one) { subject_specialism.name }
+      context "there is a specialism for training route" do
+        let(:subject_specialism) { create(:subject_specialism) }
+        let(:amount) { 24_000 }
+        let(:bursary) { create(:bursary, training_route: training_route, amount: amount) }
 
-        it "returns amount" do
-          expect(subject).to be amount
+        before do
+          create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+        end
+
+        context "without trainee course subject one" do
+          it "returns nil" do
+            expect(subject).to be_nil
+          end
+        end
+
+        context "with trainee course subject one" do
+          let(:course_subject_one) { subject_specialism.name }
+
+          it "returns amount" do
+            expect(subject).to be amount
+          end
         end
       end
     end

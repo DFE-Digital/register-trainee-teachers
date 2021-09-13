@@ -52,11 +52,7 @@ module Funding
     end
 
     def bursary_amount
-      @bursary_amount ||= if trainee.bursary_tier.present?
-                            CalculateBursary.for_tier(trainee.bursary_tier)
-                          else
-                            trainee.bursary_amount
-                          end
+      @bursary_amount ||= trainee.bursary_amount
     end
 
     def training_initiative
