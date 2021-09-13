@@ -2,11 +2,14 @@
 
 module Dttp
   module CodeSets
+    YORKSHIRE_AND_HUMBER_DTTP_ID = "6a4b1c3c-f272-e711-80d3-005056ac45bb"
+
     module Regions
       MAPPING = {
         "North East" => { entity_id: "664b1c3c-f272-e711-80d3-005056ac45bb" },
         "North West" => { entity_id: "684b1c3c-f272-e711-80d3-005056ac45bb" },
-        "Yorkshire and the Humber" => { entity_id: "6a4b1c3c-f272-e711-80d3-005056ac45bb" },
+        "Yorkshire and the Humber" => { entity_id: YORKSHIRE_AND_HUMBER_DTTP_ID },
+        "Yorkshire and Humber" => { entity_id: YORKSHIRE_AND_HUMBER_DTTP_ID },
         "East Midlands" => { entity_id: "6c4b1c3c-f272-e711-80d3-005056ac45bb" },
         "West Midlands" => { entity_id: "6e4b1c3c-f272-e711-80d3-005056ac45bb" },
         "East of England" => { entity_id: "704b1c3c-f272-e711-80d3-005056ac45bb" },
