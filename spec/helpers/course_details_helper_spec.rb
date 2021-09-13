@@ -8,6 +8,7 @@ describe CourseDetailsHelper do
   describe "#course_subjects_options" do
     before do
       create(:subject_specialism, name: CourseSubjects::TRAVEL_AND_TOURISM)
+      create(:subject_specialism, name: CourseSubjects::EARLY_YEARS_TEACHING)
     end
 
     it "iterates over CourseSubjects and prints out correct course_subjects values" do
