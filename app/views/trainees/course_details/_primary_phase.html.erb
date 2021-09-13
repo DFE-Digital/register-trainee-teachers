@@ -1,0 +1,51 @@
+<% if f.object.require_subject? %>
+  <%= f.govuk_radio_buttons_fieldset(:primary_course_subjects,
+                                     legend: { text: t(".subject_label"), size: "s" },
+                                     classes: "age_range") do %>
+
+    <% PUBLISH_PRIMARY_SUBJECTS.each_with_index do |age_range, index| %>
+      <%= f.govuk_radio_button(:primary_course_subjects, age_range,
+                               label: { text: age_range },
+                               link_errors: index.zero?) %>
+    <% end %>
+
+    <%= f.govuk_radio_divider %>
+
+    <%= f.govuk_radio_button(:primary_course_subjects,
+                             :other,
+                             label: { text: t(".primary_with_another_label") }) do %>
+
+      <div class="govuk-!-margin-bottom-6 app-!-autocomplete--max-width-two-thirds ">
+
+        <%= render FormComponents::Autocomplete::View.new(
+          f,
+          attribute_name: :course_subject_two,
+          form_field: f.govuk_collection_select(
+            :course_subject_two,
+            course_subjects_options,
+            :value,
+            :text,
+            label: { text: t(".subject_two") },
+            hint: { text: t(".subject_hint") },
+          ),
+        ) %>
+      </div>
+
+      <div class="govuk-!-margin-bottom-6 app-!-autocomplete--max-width-two-thirds ">
+        <%= render FormComponents::Autocomplete::View.new(
+          f,
+          attribute_name: :course_subject_three,
+          form_field: f.govuk_collection_select(
+            :course_subject_three,
+            course_subjects_options,
+            :value,
+            :text,
+            label: { text: t(".subject_three") },
+            hint: { text: t(".subject_hint") },
+          ),
+        ) %>
+      </div>
+
+    <% end %>
+  <% end %>
+<% end %>
