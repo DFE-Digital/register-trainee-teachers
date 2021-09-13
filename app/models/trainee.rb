@@ -30,7 +30,7 @@ class Trainee < ApplicationRecord
 
   delegate :update_training_route!, to: :route_data_manager
 
-  delegate :bursary_amount, :funding_available?, to: :funding_manager
+  delegate :bursary_amount, :can_apply_for_bursary?, :funding_available?, to: :funding_manager
 
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
@@ -272,10 +272,6 @@ class Trainee < ApplicationRecord
       self.course_subject_one = CourseSubjects::EARLY_YEARS_TEACHING
       self.course_age_range = AgeRange::ZERO_TO_FIVE
     end
-  end
-
-  def can_apply_for_bursary?
-    training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || bursary_amount.present?
   end
 
   def invalid_apply_data?

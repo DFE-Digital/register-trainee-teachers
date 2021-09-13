@@ -6,6 +6,10 @@ class FundingManager
   def bursary_amount
     available_bursary_amount
 
+  def can_apply_for_bursary?
+    training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || available_bursary_amount.present?
+  end
+
   def funding_available?
     funding_method.includes(:bursary_subjects).where.not(bursary_subjects: { id: nil })
       .where(training_route: training_route).present?

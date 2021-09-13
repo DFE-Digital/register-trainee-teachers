@@ -308,8 +308,13 @@ describe Trainee do
       end
     end
 
-  describe "#can_apply_for_bursary?" do
-    let(:trainee) { create(:trainee) }
+    describe "#can_apply_for_bursary" do
+      it "returns can apply for bursary" do
+        expect(subject.funding_manager).to receive(:can_apply_for_bursary?)
+        subject.can_apply_for_bursary?
+      end
+    end
+  end
 
     subject { trainee.can_apply_for_bursary? }
 
