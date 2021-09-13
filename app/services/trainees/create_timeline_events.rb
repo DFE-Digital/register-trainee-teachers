@@ -26,19 +26,29 @@ module Trainees
       ethnic_background
       additional_ethnic_background
       disability_disclosure
-      subject
-      subject_two
-      subject_three
+      course_subject_one
       course_start_date
       course_end_date
       commencement_date
+      course_min_age
+      course_max_age
+      course_code
+      course_subject_two
+      course_subject_three
+      applying_for_bursary
+      training_initiative
+      bursary_tier
+      study_mode
       uk_degree
       non_uk_degree
+      subject
       institution
       graduation_year
       grade
       country
       other_grade
+      lead_school_id
+      employing_school_id
     ].freeze
 
     AGE_RANGE_FIELDS = %w[course_min_age course_max_age].freeze
