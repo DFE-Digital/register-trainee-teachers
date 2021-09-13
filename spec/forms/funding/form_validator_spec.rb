@@ -147,7 +147,7 @@ module Funding
 
       context "with invalid TrainingInitiativesForm and Bursary form" do
         before do
-          allow(trainee).to receive(:bursary_amount).and_return(1)
+          allow(trainee.funding_manager).to receive(:available_bursary_amount).and_return(1)
         end
 
         it { is_expected.to eq([%i[training_initiative applying_for_bursary]]) }
