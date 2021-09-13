@@ -24,7 +24,7 @@
                                            legend: { text: t(".age_range_label"), size: "s" },
                                            classes: "age_range") do %>
 
-          <% main_age_ranges_options.each_with_index do |age_range, index| %>
+          <% main_age_ranges_options(level: @trainee.course_education_phase).each_with_index do |age_range, index| %>
             <%= f.govuk_radio_button(:main_age_range, age_range,
                                      label: { text: age_range },
                                      link_errors: index.zero?) %>
@@ -37,7 +37,7 @@
                                    label: { text: t(".other_age_range_label") }) do %>
 
             <%= f.govuk_collection_select(:additional_age_range,
-                                          additional_age_ranges_options,
+                                          additional_age_ranges_options(level: @trainee.course_education_phase),
                                           :value,
                                           :text,
                                           label: { text: t(".additional_age_range_label") }) %>
