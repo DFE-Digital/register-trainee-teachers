@@ -27,6 +27,8 @@ class Course < ApplicationRecord
   enum route: TRAINING_ROUTES_FOR_COURSE
   enum study_mode: COURSE_STUDY_MODE_ENUMS
 
+  belongs_to :provider, foreign_key: :accredited_body_code, primary_key: :code, inverse_of: :courses, optional: true
+
   has_many :course_subjects
 
   # Order scope is critical - do not remove (see TeacherTrainingApi::ImportCourse#subjects)
