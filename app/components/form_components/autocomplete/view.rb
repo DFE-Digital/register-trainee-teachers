@@ -7,9 +7,8 @@ module FormComponents
         @raw_attribute_value = form.object.send("#{attribute_name}_raw")
         @attribute_value = form.object.send(attribute_name)
         @attribute_name = attribute_name
-        super(classes: classes, html_attributes: default_html_attributes.merge(html_attributes))
-
         @form_field = form_field
+        super(classes: classes, html_attributes: default_html_attributes.merge(html_attributes))
       end
 
     private

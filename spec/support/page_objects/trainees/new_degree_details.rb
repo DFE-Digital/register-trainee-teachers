@@ -24,6 +24,7 @@ module PageObjects
       element :other_grade, "#degree-other-grade-field"
 
       element :country, "#degree-country-field"
+      element :country_raw, "input[data-nameoriginal='degree[country_raw]']"
 
       element :error_summary, ".govuk-error-summary"
       element :continue, "button[type='submit']"

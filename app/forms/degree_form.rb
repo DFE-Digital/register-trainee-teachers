@@ -22,11 +22,13 @@ class DegreeForm
     uk_degree_raw
     subject_raw
     institution_raw
+    country_raw
   ].freeze
 
   attr_accessor(*FIELDS, *AUTOCOMPLETE_FIELDS, :degrees_form, :degree)
 
   validates :subject, :institution, autocomplete: true, allow_nil: true
+  validates :country, autocomplete: true, allow_nil: true
   validate :validate_with_degree_model
 
   validates :institution, inclusion: { in: Degree::INSTITUTIONS }, allow_nil: true
