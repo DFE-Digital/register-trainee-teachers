@@ -20,11 +20,21 @@ class FundingManager
   end
 
   def scholarship_amount
-    available_scholarship_amount
+    available_amount(:scholarship)
   end
 
   def can_apply_for_bursary?
-    training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || available_bursary_amount.present?
+    trainee.early_years_postgrad? ||
+      available_bursary_amount.present?
+  end
+
+  def can_apply_for_tiered_bursary?
+    trainee.early_years_postgrad?
+  end
+
+  def can_apply_for_scholarship?
+    FeatureService.enabled?("scholarship") &&
+      scholarship_amount.present?
   end
 
   def funding_available?
@@ -40,10 +50,6 @@ private
 
   def available_bursary_amount
     available_amount(:bursary)
-  end
-
-  def available_scholarship_amount
-    available_amount(:scholarship)
   end
 
   def available_amount(funding_type)

@@ -34,6 +34,7 @@ en:
       training_initiative: &training_initiative Training initiative
       funding_method: &funding_method Funding method
       bursary_applied_for: Bursary applied for
+      scholarship_applied_for: Scholarship applied for
       no_bursary_applied_for: Not funded
       no_funding_available: Not applicable
       tiered_bursary_applied_for:
@@ -292,7 +293,7 @@ en:
           training_initiatives:
             edit: Training initiatives
           bursaries:
-            edit: Bursary funding
+            edit: Funding
         language_specialisms:
           edit: Choose subject specialisms
         subject_specialisms:
@@ -464,6 +465,8 @@ en:
         itt_end_date: *itt_end_date
         training_initiative: *training_initiative
         applying_for_bursary: *funding_method
+        applying_for_scholarship: *funding_method
+        funding_type: *funding_method
         institution: *institution
         subject: *subject
         uk_degree: *degree_type
@@ -620,9 +623,15 @@ en:
           early_years_guidance_link_text: "Early years initial teacher training: 2021 to 2022 funding guidance (opens in new tab)"
           early_years_guidance_url: https://www.gov.uk/guidance/early-years-initial-teacher-training-2021-to-2022-funding-guidance
           title: Are you applying for a bursary for this trainee?
-          true: Yes, apply for a bursary
-          false: No, do not apply for a bursary
-          false_hint: For example, the trainee is not eligible or is self-funded.
+        funding_type:
+          bursary:
+            label: Yes, apply for a bursary
+          scholarship:
+            label: No, the trainee has applied for a scholarship
+            hint: "%{amount} estimated scholarship"
+          none:
+            label: No, do not apply for a bursary
+            hint: For example, the trainee is not eligible or is self-funded
   pages:
     request_an_account:
       inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,
@@ -981,6 +990,8 @@ en:
               inclusion: &bursary_selection_required Select if you are applying for a bursary for this trainee
             bursary_tier:
               inclusion: *bursary_selection_required
+            funding_type:
+              inclusion: *bursary_selection_required
         outcome_date_form:
           attributes:
             date_string:
@@ -1157,7 +1168,11 @@ en:
                 blank: Select if the trainee is on a training initiative
               applying_for_bursary:
                 inclusion: *bursary_selection_required
+              applying_for_scholarship:
+                inclusion: *bursary_selection_required
               bursary_tier:
+                inclusion: *bursary_selection_required
+              funding_type:
                 inclusion: *bursary_selection_required
   page_headings:
     start_page: Register trainee teachers

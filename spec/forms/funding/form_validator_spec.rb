@@ -150,7 +150,7 @@ module Funding
           allow(FundingManager).to receive(:new).with(trainee).and_return(double(can_apply_for_bursary?: true))
         end
 
-        it { is_expected.to eq([%i[training_initiative applying_for_bursary]]) }
+        it { is_expected.to eq([%i[training_initiative funding_type]]) }
       end
     end
   end

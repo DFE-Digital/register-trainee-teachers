@@ -13,6 +13,7 @@ features:
   publish_course_details: true
   imported_from_apply_filter: true
   course_study_mode: true
+  scholarship: true
   routes:
     provider_led_postgrad: true
     provider_led_undergrad: true

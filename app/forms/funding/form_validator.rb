@@ -12,7 +12,8 @@ module Funding
 
     validate :validate_training_initiative
 
-    delegate :applying_for_bursary, to: :bursary_form
+    delegate :applying_for_bursary, :applying_for_scholarship,
+             to: :bursary_form
     delegate :bursary_tier, to: :bursary_form
     delegate :training_initiative, to: :training_initiatives_form
 
