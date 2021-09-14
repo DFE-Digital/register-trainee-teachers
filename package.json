@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@ministryofjustice/frontend": "^0.2.5",
-    "@rails/webpacker": "^5.4.2",
+    "@rails/webpacker": "^5.4.3",
     "accessible-autocomplete": "^2.0.3",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.17.2",
