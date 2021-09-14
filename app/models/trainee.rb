@@ -93,6 +93,11 @@ class Trainee < ApplicationRecord
 
   enum study_mode: TRAINEE_STUDY_MODE_ENUMS
 
+  enum course_education_phase: {
+    COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,
+    COURSE_EDUCATION_PHASE_ENUMS[:secondary] => 1,
+  }
+
   enum state: {
     draft: 0,
     submitted_for_trn: 1,

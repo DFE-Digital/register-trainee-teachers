@@ -1,0 +1,25 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.course_education_phases.show",
+                               has_errors: @course_education_phase_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @course_education_phase_form, url: trainee_course_education_phase_path(@trainee),
+                           method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_collection_radio_buttons(:course_education_phase, COURSE_EDUCATION_PHASE_ENUMS.values,
+        ->(value) { value },
+        ->(label) { I18n.t("views.forms.course_education_phase.label_names.#{label}") },
+        ->(label) { label == COURSE_EDUCATION_PHASE_ENUMS[:secondary] ? I18n.t("views.forms.course_education_phase.label_names.#{label}_hint") : nil },
+        legend: { text: "Which phase of education will the trainee teach?", tag: "h1", size: "l" },
+        bold_labels: false
+      ) %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
