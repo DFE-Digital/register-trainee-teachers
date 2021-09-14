@@ -17,7 +17,7 @@ WHERE email NOT LIKE '%@digital.education.gov.uk'
 UPDATE "trainees"
 SET
   date_of_birth = '2000-01-01',
-  first_name = 'Trainee',
+  first_names = 'Trainee',
   middle_names = null,
   last_name = concat('TraineeUser', id),
   email = concat('trainee_', id, '@example.com'),
