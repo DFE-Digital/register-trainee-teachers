@@ -15,6 +15,7 @@ module RecordDetails
     def record_detail_rows
       [
         trainee_id_row,
+        region,
         trn_row,
         trainee_progress_row,
         trainee_status_row,
@@ -28,6 +29,12 @@ module RecordDetails
 
     def trainee_id_row
       mappable_field(trainee.trainee_id.presence, t(".trainee_id"), edit_trainee_trainee_id_path(trainee))
+    end
+
+    def region
+      return unless trainee&.provider&.hpitt_postgrad?
+
+      { key: t(".region"), value: trainee.region.presence }
     end
 
     def trn_row

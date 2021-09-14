@@ -365,5 +365,11 @@ FactoryBot.define do
       applying_for_bursary { true }
       bursary_tier { BURSARY_TIER_ENUMS[:tier_one] }
     end
+
+    trait :with_hpitt_provider do
+      training_route { TRAINING_ROUTE_ENUMS[:hpitt_postgrad] }
+      region { Dttp::CodeSets::Regions::MAPPING.keys.sample }
+      association :provider, factory: %i[provider teach_first]
+    end
   end
 end

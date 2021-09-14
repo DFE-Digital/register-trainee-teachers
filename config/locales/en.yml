@@ -48,6 +48,7 @@ en:
   record_details:
     view:
       trainee_id: Trainee ID
+      region: &region Region
       submitted_for_trn: Submitted for TRN
       trainee_status: Trainee status
       last_updated: Last updated
@@ -60,6 +61,11 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
+  training_details:
+    view: 
+      title: Trainee start date and ID
+      start_date: &commencement_date Trainee’s start date
+      region: *region
   components:
     heading:
       apply_draft:
@@ -85,10 +91,6 @@ en:
         title: &trainee_id Trainee ID
       start_date:
         title: Start date
-      training_details:
-        title: Trainee start date and ID
-        start_date:
-          title: &commencement_date Trainee’s start date
       funding:
         title: Funding
         training_initiative:
