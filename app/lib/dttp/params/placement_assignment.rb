@@ -40,7 +40,6 @@ module Dttp
       def build_params
         {
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.course_age_range)})",
-          "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
           "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
           "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
@@ -55,6 +54,7 @@ module Dttp
           "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{trainee.degrees.first.graduation_year}").to_datetime.iso8601,
         }
         .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
+        .merge(degree_subject_params)
         .merge(school_params)
         .merge(subject_params)
         .merge(study_mode_params)
@@ -74,6 +74,14 @@ module Dttp
         {
           "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{degree_institution_id(qualifying_degree.institution)})",
           "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{degree_class_id(qualifying_degree.grade)})",
+        }
+      end
+
+      def degree_subject_params
+        return {} unless trainee.requires_degree?
+
+        {
+          "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
         }
       end
 

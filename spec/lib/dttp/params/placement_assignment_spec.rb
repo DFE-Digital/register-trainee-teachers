@@ -252,6 +252,10 @@ module Dttp
                 { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
               )
             end
+
+            it "does not include the dfe_SubjectofUGDegreeId@odata.bind params" do
+              expect(subject.keys).not_to include("dfe_SubjectofUGDegreeId@odata.bind")
+            end
           end
         end
 
