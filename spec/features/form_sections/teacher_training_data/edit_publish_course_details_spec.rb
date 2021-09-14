@@ -120,7 +120,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     scenario "there aren't any courses for the trainee's provider and route" do
       given_there_arent_any_courses
       when_i_visit_the_review_draft_page
-      then_the_link_takes_me_to_the_course_details_edit_page
+      then_the_link_takes_me_to_the_course_education_phase_page
     end
 
     scenario "there are some courses for the trainee's provider and route" do
@@ -262,8 +262,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
     expect(review_draft_page.course_details.status.text).to eq(status)
   end
 
-  def then_the_link_takes_me_to_the_course_details_edit_page
-    expect(review_draft_page.course_details.link[:href]).to eq edit_trainee_course_details_path(trainee)
+  def then_the_link_takes_me_to_the_course_education_phase_page
+    expect(review_draft_page.course_details.link[:href]).to eq edit_trainee_course_education_phase_path(trainee)
   end
 
   def then_the_link_takes_me_to_the_publish_course_details_page

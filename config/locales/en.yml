@@ -153,6 +153,7 @@ en:
     course_detail:
       title: Course details
       type_of_course: Route
+      education_phase: Education phase
       subject: Subject
       age_range: Age range
       course_start_date: Course start date
@@ -259,6 +260,8 @@ en:
           edit: What type of training are they doing?
         course_details:
           edit: Course details
+        course_education_phases:
+          show: Which phase of education will the trainee teach?
         itt_start_date:
           edit: ITT start date
         study_mode:
@@ -524,6 +527,11 @@ en:
         for_example: For example
         continue: Continue
         cancel_and_return_to_record: Cancel and return to record
+      course_education_phase:
+        label_names:
+          primary: Primary
+          secondary: Secondary
+          secondary_hint: Select secondary if the course covers both phases of education.
       diversity_disclosures:
         label_names:
           diversity_disclosed: "Yes"
@@ -1159,6 +1167,10 @@ en:
                 inclusion: *bursary_selection_required
               bursary_tier:
                 inclusion: *bursary_selection_required
+        course_education_phase_form:
+          attributes:
+            course_education_phase:
+              blank: Select primary or secondary
   page_headings:
     start_page: Register trainee teachers
   system_admin:
