@@ -21,12 +21,16 @@ module CourseDetails
         render_inline(View.new(data_model: trainee))
       end
 
-      it "renders 6 rows" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
+      it "renders 7 rows" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
       end
 
       it "renders course details as no provided" do
         expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.not_provided"))
+      end
+
+      it "renders missing hint education phase" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Education phase is missing")
       end
 
       it "renders missing hint for subject" do

@@ -18,7 +18,7 @@ module TaskListHelper
       course_details:
         {
           task_name: "Course details",
-          path: (trainee.apply_application? ? edit_trainee_apply_applications_course_details_path(trainee) : edit_trainee_course_details_path(trainee)),
+          path: (trainee.apply_application? ? edit_trainee_apply_applications_course_details_path(trainee) : edit_trainee_course_education_phase_path(trainee)),
           confirm_path: (trainee.apply_application? ? edit_trainee_apply_applications_course_details_path(trainee) : trainee_course_details_confirm_path(trainee)),
           classes: "course-details",
           status: ProgressService.call(

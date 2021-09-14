@@ -20,6 +20,7 @@ module CourseDetails
     def rows
       [
         type_of_course,
+        education_phase,
         subject_row,
         age_range_row,
         study_mode_row,
@@ -46,6 +47,10 @@ module CourseDetails
       if require_course_type?
         { key: t("components.course_detail.type_of_course"), value: course_type }
       end
+    end
+
+    def education_phase
+      mappable_field(trainee.course_education_phase, t("components.course_detail.education_phase"))
     end
 
     def subject_row
@@ -91,7 +96,7 @@ module CourseDetails
     def course_details
       return t("components.course_detail.details_not_on_publish") if data_model.course_code.blank?
 
-      "#{course.name} (#{course.code})"
+      "#{course.name} (#{course.code})" if course
     end
 
     def subject_names
