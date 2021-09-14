@@ -4,7 +4,7 @@ module Trainees
   module ApplyApplications
     class ConfirmCoursesController < ApplicationController
       before_action :authorize_trainee
-      before_action :redirect_to_manual_confirm_page, if: -> { publish_course_details_form.manual_entry_chosen? }
+      before_action :redirect_to_manual_confirm_page, if: :manual_entry_chosen?
       before_action :set_course
       before_action :set_specialisms
       helper_method :course_code
@@ -37,7 +37,7 @@ module Trainees
       end
 
       def set_course
-        @course = trainee.available_courses.find_by!(code: course_code)
+        @course = trainee.available_courses.find_by(code: course_code)
       end
 
       def set_itt_start_date
@@ -84,6 +84,10 @@ module Trainees
 
       def selected_language_specialisms
         @selected_language_specialisms ||= LanguageSpecialismsForm.new(trainee).languages
+      end
+
+      def manual_entry_chosen?
+        publish_course_details_form.manual_entry_chosen? || trainee.course_code.blank?
       end
     end
   end
