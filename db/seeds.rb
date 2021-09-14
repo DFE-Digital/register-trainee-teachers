@@ -30,9 +30,11 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING.each do |allocation_subject, subject_speci
 end
 
 SEED_BURSARIES.each do |b|
-  funding_method = FundingMethod.find_or_create_by!(training_route: b.training_route, amount: b.amount)
+  bursary = FundingMethod.find_or_create_by!(training_route: b.training_route, amount: b.amount)
+  bursary.funding_type = :bursary
+  bursary.save!
   b.allocation_subjects.map do |subject|
     allocation_subject = AllocationSubject.find_by!(name: subject)
-    funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+    bursary.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
   end
 end

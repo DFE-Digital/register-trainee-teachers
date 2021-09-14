@@ -7,7 +7,7 @@ describe CalculateBursary do
     let(:route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
 
     context "when there is a bursary available for a given route" do
-      before { create(:funding_method, :with_bursary_subjects, training_route: route) }
+      before { create(:funding_method, :with_subjects, training_route: route) }
 
       it "returns true" do
         expect(described_class.available_for_route?(route.to_sym)).to be_truthy

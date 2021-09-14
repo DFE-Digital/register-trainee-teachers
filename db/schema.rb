@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(version: 2021_09_10_142540) do
     t.integer "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "funding_type"
+    t.integer "funding_type"
   end
 
   create_table "nationalisations", force: :cascade do |t|

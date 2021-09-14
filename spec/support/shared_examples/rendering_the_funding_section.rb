@@ -5,7 +5,7 @@ RSpec.shared_examples "rendering the funding section" do
     let(:route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
     let(:trainee) { create(:trainee, :draft, route) }
 
-    before { create(:funding_method, :with_bursary_subjects, training_route: route) }
+    before { create(:funding_method, :with_subjects, training_route: route) }
 
     context "and has not entered their course details" do
       it "renders the funding section as 'cannot start yet'" do
@@ -27,7 +27,7 @@ RSpec.shared_examples "rendering the funding section" do
   context "when a trainee on a route with no bursary" do
     let(:trainee) { create(:trainee, :draft, TRAINING_ROUTE_ENUMS[:assessment_only]) }
 
-    before { create(:funding_method, :with_bursary_subjects, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) }
+    before { create(:funding_method, :with_subjects, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) }
 
     it "renders the funding section as 'incomplete'" do
       render_inline(described_class.new(trainee: trainee))
