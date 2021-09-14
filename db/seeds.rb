@@ -15,7 +15,7 @@ end
 
 # Load Disabilities
 Diversities::SEED_DISABILITIES.each do |disability|
-  Disability.find_or_create_by!(name: disability.name, description: disability.description)
+  Disability.find_or_create_by!(name: disability.name).update(description: disability.description)
 end
 
 ALLOCATION_SUBJECT_SPECIALISM_MAPPING.each do |allocation_subject, subject_specialisms|
