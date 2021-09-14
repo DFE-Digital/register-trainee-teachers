@@ -13,7 +13,10 @@ const calculateWeight = (rawName, query, rawSynonyms = []) => {
   const synonyms = rawSynonyms.map(s => clean(s))
 
   const nameMatchPositions = matchPositions(name, regexes)
-  const synonymMatchPositions = synonyms.map(synonym => matchPositions(synonym, regexes)).flat()
+  const synonymMatchPositions = synonyms
+    .map(synonym => matchPositions(synonym, regexes))
+    // Flatten the array, but don't use flat() - breaks on Edge.
+    .reduce((acc, val) => acc.concat(val), [])
 
   // Require either all parts of a name to be matched, or all parts of a synonym
   const allNameMatches = nameMatchPositions.length === regexes.length
