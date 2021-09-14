@@ -21,7 +21,8 @@ module FundingHelper
 private
 
   def cannot_start_funding?(trainee)
-    trainee.funding_available? &&
+    funding_manager = FundingManager.new(trainee)
+    funding_manager.funding_available? &&
       trainee.course_subject_one.blank?
   end
 end

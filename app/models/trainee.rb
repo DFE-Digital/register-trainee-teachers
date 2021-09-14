@@ -30,8 +30,6 @@ class Trainee < ApplicationRecord
 
   delegate :update_training_route!, to: :route_data_manager
 
-  delegate :bursary_amount, :can_apply_for_bursary?, :funding_available?, to: :funding_manager
-
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
@@ -215,10 +213,6 @@ class Trainee < ApplicationRecord
 
   def training_route_manager
     @training_route_manager ||= TrainingRouteManager.new(self)
-  end
-
-  def funding_manager
-    @funding_manager ||= FundingManager.new(self)
   end
 
   def available_courses

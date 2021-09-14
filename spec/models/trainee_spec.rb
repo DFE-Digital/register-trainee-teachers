@@ -243,12 +243,6 @@ describe Trainee do
       end
     end
 
-    describe "#funding_manager" do
-      it "returns an instance of TrainingRouteManager" do
-        expect(subject.funding_manager).to be_an_instance_of(FundingManager)
-      end
-    end
-
     describe "#requires_placement_details?" do
       it "is delegated to TrainingRouteManager" do
         expect(subject.training_route_manager).to receive(:requires_placement_details?)
@@ -291,27 +285,6 @@ describe Trainee do
 
           subject.timeline
         end
-      end
-    end
-
-    describe "#bursary_amount" do
-      it "returns the bursary amount for the trainee's route and subject" do
-        expect(subject.funding_manager).to receive(:bursary_amount)
-        subject.bursary_amount
-      end
-    end
-
-    describe "#funding_available?" do
-      it "returns the funding availability" do
-        expect(subject.funding_manager).to receive(:funding_available?)
-        subject.funding_available?
-      end
-    end
-
-    describe "#can_apply_for_bursary" do
-      it "returns can apply for bursary" do
-        expect(subject.funding_manager).to receive(:can_apply_for_bursary?)
-        subject.can_apply_for_bursary?
       end
     end
   end
