@@ -53,8 +53,7 @@ module Dttp
           "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are course_year of course_length
           "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{trainee.degrees.first.graduation_year}").to_datetime.iso8601,
         }
-        .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
-        .merge(degree_subject_params)
+        .merge(degree_params)
         .merge(school_params)
         .merge(subject_params)
         .merge(study_mode_params)
@@ -77,12 +76,13 @@ module Dttp
         }
       end
 
-      def degree_subject_params
+      def degree_params
         return {} unless trainee.requires_degree?
 
         {
           "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
         }
+        .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
       end
 
       def non_uk_specific_params
