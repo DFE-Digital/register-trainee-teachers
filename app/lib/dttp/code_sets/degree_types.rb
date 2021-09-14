@@ -39,7 +39,7 @@ module Dttp
         "Bachelor of Medicine" => { entity_id: "0f6a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BM", hesa_code: "77" },
         "Bachelor of Metallurgy" => { entity_id: "116a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BMet", hesa_code: "78" },
         "Bachelor of Metallurgy and Engineering" => { entity_id: "136a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BMet/Eng", hesa_code: "79" },
-        "Bachelor of Music" => { entity_id: "156a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BMu", hesa_code: "80" },
+        "Bachelor of Music" => { entity_id: "156a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BMus", hesa_code: "80" },
         "Bachelor of Nursing" => { entity_id: "176a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BN", hesa_code: "81" },
         "Bachelor of Pharmacy" => { entity_id: "196a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BPharm", hesa_code: "82" },
         "Bachelor of Science" => { entity_id: "1b6a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BSc", hesa_code: "83" },
