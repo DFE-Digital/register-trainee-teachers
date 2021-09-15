@@ -9,7 +9,7 @@ feature "course details", type: :feature do
 
   context "trainee has no existing course details" do
     scenario "submitting with invalid parameters" do
-      given_a_trainee_exists
+      given_a_trainee_exists(:with_secondary_education)
       when_i_visit_the_course_details_page
       and_i_submit_the_form
       then_i_see_error_messages
@@ -85,7 +85,7 @@ private
       course_details_page.public_send("main_age_range_#{trainee.course_age_range.join('_to_')}").choose
     else
       course_details_page.main_age_range_other.choose
-      course_details_page.additional_age_range.select(trainee.course_age_range.join(" to "))
+      course_details_page.additional_age_range_option.select_option
     end
   end
 
@@ -165,7 +165,7 @@ private
   end
 
   def given_a_trainee_exists_with_course_details
-    given_a_trainee_exists(:with_course_details)
+    given_a_trainee_exists(:with_course_details, :with_secondary_education)
   end
 
   def given_a_subject_specialism_is_available_for_selection
