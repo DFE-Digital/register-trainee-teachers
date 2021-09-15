@@ -256,6 +256,10 @@ module Dttp
             it "does not include the dfe_SubjectofUGDegreeId@odata.bind params" do
               expect(subject.keys).not_to include("dfe_SubjectofUGDegreeId@odata.bind")
             end
+
+            it "does not include the dfe_undergraddegreedateobtained params" do
+              expect(subject.keys).not_to include("dfe_undergraddegreedateobtained")
+            end
           end
         end
 
