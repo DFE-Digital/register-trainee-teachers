@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :funding_method do
     training_route { TRAINING_ROUTES.keys.sample }
     amount { Faker::Number.number(digits: 5) }
-    funding_type { FUNDING_TYPES[:bursary] }
+    funding_type { FUNDING_TYPE_ENUMS[:bursary] }
 
     trait :with_subjects do
       after(:create) do |funding_method, _|
