@@ -85,7 +85,7 @@ module Funding
             let(:state) { :trn_received }
 
             it "renders bursary not available" do
-              expect(rendered_component).to have_text("No bursaries available for this course")
+              expect(rendered_component).to have_text("Not applicable")
             end
           end
         end
@@ -121,7 +121,7 @@ module Funding
             end
 
             it "renders" do
-              expect(rendered_component).to have_text("Not bursary funded")
+              expect(rendered_component).to have_text("Not funded")
               expect(rendered_component).not_to have_text("£24,000 estimated bursary")
             end
 

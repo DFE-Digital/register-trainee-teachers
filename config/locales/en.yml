@@ -32,10 +32,10 @@ en:
     view:
       title: Funding
       training_initiative: &training_initiative Training initiative
-      bursary_funding: &bursary_funding Bursary funding
+      funding_method: &funding_method Funding method
       bursary_applied_for: Bursary applied for
-      no_bursary_applied_for: Not bursary funded
-      no_bursary_available: No bursaries available for this course
+      no_bursary_applied_for: Not funded
+      no_funding_available: Not applicable
       tiered_bursary_applied_for:
         tier_one: Applied for Tier 1
         tier_two: Applied for Tier 2
@@ -377,8 +377,8 @@ en:
         lead_school: School details
         trainee_data: Trainee data
         schools: Schools
-        funding: Funding
-        funding_inactive: Funding cannot be started yet
+        funding: Funding details
+        funding_inactive: Funding details cannot be started yet
       statuses:
         not_provided: not provided
         incomplete: not started
@@ -391,7 +391,7 @@ en:
         in_progress_valid: Continue section
         in_progress_invalid: Continue section
         review: Review their data
-        funding_inactive:  Complete course details first
+        funding_inactive: Complete course details first
     school_result_notice:
       result_text: "1 more school matches your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
       multiple_result_text: "%{remaining_search_count} more schools match your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
@@ -463,7 +463,7 @@ en:
         itt_start_date: *itt_start_date
         itt_end_date: *itt_end_date
         training_initiative: *training_initiative
-        applying_for_bursary: *bursary_funding
+        applying_for_bursary: *funding_method
         institution: *institution
         subject: *subject
         uk_degree: *degree_type
@@ -622,7 +622,7 @@ en:
           title: Are you applying for a bursary for this trainee?
           true: Yes, apply for a bursary
           false: No, do not apply for a bursary
-          false_hint: For example, the trainee is not eligible or has applied for a scholarship
+          false_hint: For example, the trainee is not eligible or is self-funded.
   pages:
     request_an_account:
       inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,

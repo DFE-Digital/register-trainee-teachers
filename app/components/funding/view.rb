@@ -21,7 +21,7 @@ module Funding
     def funding_detail_rows
       [
         training_initiative_row,
-        bursary_funding_row,
+        funding_method_row,
       ].compact
     end
 
@@ -33,12 +33,12 @@ module Funding
       mappable_field(training_initiative, t(".training_initiative"), edit_trainee_funding_training_initiative_path(trainee))
     end
 
-    def bursary_funding_row
+    def funding_method_row
       return unless show_bursary_funding?
 
       mappable_field(
-        bursary_funding,
-        t(".bursary_funding"),
+        funding_method,
+        t(".funding_method"),
         (edit_trainee_funding_bursary_path(trainee) if trainee.can_apply_for_bursary?),
       )
     end
@@ -65,10 +65,10 @@ module Funding
       t("activerecord.attributes.trainee.training_initiatives.#{data_model.training_initiative}")
     end
 
-    def bursary_funding
+    def funding_method
       return if trainee.can_apply_for_bursary? && data_model.applying_for_bursary.nil?
 
-      return t(".no_bursary_available") if !trainee.can_apply_for_bursary?
+      return t(".no_funding_available") if !trainee.can_apply_for_bursary?
 
       return "#{t(".tiered_bursary_applied_for.#{data_model.bursary_tier}")}#{bursary_funding_hint}".html_safe if data_model.bursary_tier.present?
 
