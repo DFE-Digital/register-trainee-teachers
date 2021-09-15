@@ -24,7 +24,7 @@ class FundingManager
   end
 
   def funding_available?
-    funding_method.includes(:bursary_subjects).where.not(bursary_subjects: { id: nil })
+    FundingMethod.includes(:funding_method_subjects).where.not(funding_method_subjects: { id: nil })
       .where(training_route: training_route).present?
   end
 
@@ -38,14 +38,13 @@ private
     available_amount(:bursary)
   end
 
-  def available_amount(_funding_type)
-    if (allocation_subject = SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject)
-      # allocation_subject.bursaries.find_by(training_route: training_route, funding_type: funding_type)&.amount
-      allocation_subject.bursaries.find_by(training_route: training_route)&.amount
-    end
+  def available_scholarship_amount
+    available_amount(:scholarship)
   end
-
-  def funding_method
-    Bursary
+  
+  def available_amount(funding_type)
+    if (allocation_subject = SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject)
+      allocation_subject.funding_methods.find_by(training_route: training_route, funding_type: funding_type)&.amount
+    end
   end
 end

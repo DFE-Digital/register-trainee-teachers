@@ -27,11 +27,11 @@ module Funding
 
       let(:subject_specialism) { create(:subject_specialism, name: AllocationSubjects::MATHEMATICS) }
       let(:amount) { 9000 }
-      let(:bursary) { create(:bursary, training_route: route, amount: amount) }
+      let(:funding_method) { create(:funding_method, training_route: route, amount: amount) }
 
       context "when there is a bursary available" do
         before do
-          create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+          create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
           render_inline(View.new(data_model: trainee))
         end
 
@@ -95,12 +95,12 @@ module Funding
         describe "has bursary" do
           let(:subject_specialism) { create(:subject_specialism, name: AllocationSubjects::MUSIC) }
           let(:amount) { 24_000 }
-          let(:bursary) { create(:bursary, training_route: route, amount: amount) }
+          let(:funding_method) { create(:funding_method, training_route: route, amount: amount) }
 
           let(:course_subject_one) { subject_specialism.name }
 
           before do
-            create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+            create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
 
             render_inline(View.new(data_model: trainee))
           end

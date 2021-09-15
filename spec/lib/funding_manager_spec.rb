@@ -36,10 +36,10 @@ describe FundingManager do
       context "there is a specialism for training route" do
         let(:subject_specialism) { create(:subject_specialism) }
         let(:amount) { 24_000 }
-        let(:bursary) { create(:bursary, training_route: training_route, amount: amount) }
+        let(:funding_method) { create(:funding_method, training_route: training_route, amount: amount) }
 
         before do
-          create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+          create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
         end
 
         context "without trainee course subject one" do
@@ -71,10 +71,10 @@ describe FundingManager do
     context "there is a specialism for training route" do
       let(:route) { trainee.training_route }
       let(:subject_specialism) { create(:subject_specialism) }
-      let(:bursary) { create(:bursary, training_route: route) }
+      let(:funding_method) { create(:funding_method, training_route: route) }
 
       before do
-        create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
       end
 
       it "returns true" do
@@ -107,10 +107,10 @@ describe FundingManager do
 
           let(:subject_specialism) { create(:subject_specialism) }
           let(:amount) { 24_000 }
-          let(:bursary) { create(:bursary, training_route: training_route, amount: amount) }
+          let(:funding_method) { create(:funding_method, training_route: training_route, amount: amount) }
 
           before do
-            create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+            create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
           end
 
           it "returns true" do
