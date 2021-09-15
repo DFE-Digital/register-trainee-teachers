@@ -6,11 +6,11 @@ module ApiStubs
       { data: [application] }.to_json
     end
 
-    def self.application(course_attributes: {})
-      uk_application(course_attributes: course_attributes).to_json
+    def self.application(course_attributes: {}, candidate_attributes: {})
+      uk_application(course_attributes: course_attributes, candidate_attributes: candidate_attributes).to_json
     end
 
-    def self.uk_application(course_attributes: {})
+    def self.uk_application(course_attributes: {}, candidate_attributes: {})
       {
         id: "3772",
         type: "application",
@@ -20,7 +20,7 @@ module ApiStubs
           updated_at: "2020-06-17T09:05:53+01:00",
           submitted_at: "2020-06-11T15:54:15+01:00",
           recruited_at: "2020-06-17T09:05:53.165+01:00",
-          candidate: candidate_info,
+          candidate: candidate_info(candidate_attributes),
           contact_details: contact_details,
           course: course(course_attributes),
           qualifications: qualifications,
@@ -92,7 +92,7 @@ module ApiStubs
       }
     end
 
-    def self.candidate_info
+    def self.candidate_info(candidate_attributes = {})
       {
         id: "C3134",
         first_name: "Martin",
@@ -106,12 +106,12 @@ module ApiStubs
         english_main_language: true,
         english_language_qualifications: "",
         other_languages: "I have a GCSE in French and have a Italian aunt - or should I say zia!",
-        disability_disclosure: nil,
+        disability_disclosure: "I am dyslexic",
         gender: "female",
         disabilities: %w[blind long_standing],
         ethnic_group: "",
         ethnic_background: "Chinese",
-      }
+      }.merge(candidate_attributes)
     end
 
     def self.contact_details

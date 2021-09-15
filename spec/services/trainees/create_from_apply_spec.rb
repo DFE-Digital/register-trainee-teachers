@@ -4,7 +4,8 @@ require "rails_helper"
 
 module Trainees
   describe CreateFromApply do
-    let(:apply_application) { create(:apply_application) }
+    let(:application_data) { ApiStubs::ApplyApi.application }
+    let(:apply_application) { create(:apply_application, application: application_data) }
 
     let(:candidate_info) { ApiStubs::ApplyApi.candidate_info.as_json }
     let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }
@@ -119,13 +120,60 @@ module Trainees
       create_trainee_from_apply
     end
 
-    context "when disabilities exist" do
-      before do
-        Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h))
+    context "disabilities" do
+      context "when the application is diversity disclosed with disabilities" do
+        before do
+          Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h))
+        end
+
+        it "adds the trianee's disabilities" do
+          expect(trainee.disabilities.map(&:name)).to match_array(["Blind", "Long-standing illness"])
+        end
+
+        it "sets the diversity disclosure to disclosed" do
+          expect(trainee).to be_diversity_disclosed
+        end
+
+        it "sets the disability disclosure to provided" do
+          expect(trainee).to be_disabled
+        end
       end
 
-      it "adds the trianee's disabilities" do
-        expect(trainee.disabilities.map(&:name)).to match_array(["Blind", "Long-standing illness"])
+      context "when the application is diversity and disability disclosed with no disabilities" do
+        let(:application_data) do
+          ApiStubs::ApplyApi.application(
+            candidate_attributes: {
+              disabilities: [],
+            },
+          )
+        end
+
+        it "sets the diversity disclosure to disclosed" do
+          expect(trainee).to be_diversity_disclosed
+        end
+
+        it "sets the disability disclosure to not disabled" do
+          expect(trainee).to be_no_disability
+        end
+      end
+    end
+
+    context "when the application is diversity disclosed with no disability information" do
+      let(:application_data) do
+        ApiStubs::ApplyApi.application(
+          candidate_attributes: {
+            disability_disclosure: nil,
+            disabilities: [],
+          },
+        )
+      end
+
+      it "sets the diversity disclosure to disclosed" do
+        expect(trainee).to be_diversity_disclosed
+      end
+
+      it "sets the disability disclosure to not provided" do
+        expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
       end
     end
 
