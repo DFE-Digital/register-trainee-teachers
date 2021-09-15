@@ -51,8 +51,6 @@ module Trainees
       employing_school_id
     ].freeze
 
-    AGE_RANGE_FIELDS = %w[course_min_age course_max_age].freeze
-
     delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, to: :audit
 
     def initialize(audit:)
@@ -67,10 +65,11 @@ module Trainees
           username: username,
         )
       else
-        audited_changes.map do |field, _|
-          next unless FIELDS.include?(field) || AGE_RANGE_FIELDS.include?(field)
-
-          field = "course_age_range" if AGE_RANGE_FIELDS.include?(field)
+        audited_changes.map do |field, change|
+          next unless FIELDS.include?(field)
+          # If a user leaves an already-empty field blank, Rails saves this as
+          # an empty string. Ignore this.
+          next if change == [nil, ""]
 
           TimelineEvent.new(
             title: I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated"),
