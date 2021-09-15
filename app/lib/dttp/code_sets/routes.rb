@@ -16,6 +16,7 @@ module Dttp
         # DTTP recognise future_teaching_scholars as a route not an initiative, hence this 'odd' mapping.
         ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars] => { entity_id: "e7b6efbc-8d96-ea11-a811-000d3ab55801" },
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => { entity_id: "6989922e-acc2-e611-80be-00155d010316" },
+        TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => { entity_id: "51a5f96f-e122-e811-80ec-005056ac45bb" },
       }.freeze
     end
   end
