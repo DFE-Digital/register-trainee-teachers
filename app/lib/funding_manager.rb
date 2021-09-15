@@ -19,6 +19,10 @@ class FundingManager
     end
   end
 
+  def scholarship_amount
+    available_scholarship_amount
+  end
+
   def can_apply_for_bursary?
     training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || available_bursary_amount.present?
   end
@@ -41,7 +45,7 @@ private
   def available_scholarship_amount
     available_amount(:scholarship)
   end
-  
+
   def available_amount(funding_type)
     if (allocation_subject = SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject)
       allocation_subject.funding_methods.find_by(training_route: training_route, funding_type: funding_type)&.amount

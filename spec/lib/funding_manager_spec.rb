@@ -59,6 +59,40 @@ describe FundingManager do
     end
   end
 
+  describe "#scholarship_amount" do
+    subject { funding_manager.scholarship_amount }
+
+    context "there is no specialism for training route" do
+      it "returns nil" do
+        expect(subject).to be_nil
+      end
+    end
+
+    context "there is a specialism for training route" do
+      let(:subject_specialism) { create(:subject_specialism) }
+      let(:amount) { 9_000 }
+      let(:funding_method) { create(:funding_method, :scholarship, training_route: training_route, amount: amount) }
+
+      before do
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
+      end
+
+      context "without trainee course subject one" do
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
+
+      context "with trainee course subject one" do
+        let(:course_subject_one) { subject_specialism.name }
+
+        it "returns amount" do
+          expect(subject).to be amount
+        end
+      end
+    end
+  end
+
   describe "#funding_available?" do
     subject { funding_manager.funding_available? }
 
