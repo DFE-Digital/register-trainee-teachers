@@ -30,6 +30,7 @@ module Exports
 
     def format_trainees(trainees)
       trainees.map do |trainee|
+        funding_manager = FundingManager.new(trainee)
         degree = trainee.degrees.first
         course = Course.where(code: trainee.course_code).first
         {
@@ -98,7 +99,7 @@ module Exports
           "employing_school_urn" => trainee.employing_school&.urn,
           "training_initiative" => training_initiative(trainee),
           "applying_for_bursary" => trainee.applying_for_bursary.to_s.upcase,
-          "bursary_value" => (trainee.bursary_amount if trainee.applying_for_bursary),
+          "bursary_value" => (funding_manager.bursary_amount if trainee.applying_for_bursary),
           "bursary_tier" => bursary_tier(trainee),
           "award_standards_met_date" => trainee.outcome_date&.iso8601,
           "award_awarded_at" => trainee.awarded_at&.iso8601,

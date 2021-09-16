@@ -15,7 +15,7 @@ module Trainees
         save_strategy = trainee.draft? ? :save! : :stash
 
         if @training_initiatives_form.public_send(save_strategy)
-          if trainee.can_apply_for_bursary?
+          if funding_manager.can_apply_for_bursary?
             redirect_to edit_trainee_funding_bursary_path(trainee)
           else
             trainee.update!(applying_for_bursary: false)
@@ -40,6 +40,10 @@ module Trainees
 
       def authorize_trainee
         authorize(trainee)
+      end
+
+      def funding_manager
+        @funding_manager ||= FundingManager.new(trainee)
       end
     end
   end

@@ -39,7 +39,7 @@ module Funding
       mappable_field(
         funding_method,
         t(".funding_method"),
-        (edit_trainee_funding_bursary_path(trainee) if trainee.can_apply_for_bursary?),
+        (edit_trainee_funding_bursary_path(trainee) if funding_manager.can_apply_for_bursary?),
       )
     end
 
@@ -48,15 +48,11 @@ module Funding
     end
 
     def show_bursary_funding?
-      !trainee.draft? || trainee.can_apply_for_bursary?
+      !trainee.draft? || funding_manager.can_apply_for_bursary?
     end
 
     def bursary_amount
-      @bursary_amount ||= if trainee.bursary_tier.present?
-                            CalculateBursary.for_tier(trainee.bursary_tier)
-                          else
-                            trainee.bursary_amount
-                          end
+      @bursary_amount ||= funding_manager.bursary_amount
     end
 
     def training_initiative
@@ -66,9 +62,9 @@ module Funding
     end
 
     def funding_method
-      return if trainee.can_apply_for_bursary? && data_model.applying_for_bursary.nil?
+      return if funding_manager.can_apply_for_bursary? && data_model.applying_for_bursary.nil?
 
-      return t(".no_funding_available") if !trainee.can_apply_for_bursary?
+      return t(".no_funding_available") if !funding_manager.can_apply_for_bursary?
 
       return "#{t(".tiered_bursary_applied_for.#{data_model.bursary_tier}")}#{bursary_funding_hint}".html_safe if data_model.bursary_tier.present?
 
@@ -89,6 +85,10 @@ module Funding
         action_url: section_url,
         has_errors: has_errors,
       ).to_h
+    end
+
+    def funding_manager
+      @funding_manager ||= FundingManager.new(trainee)
     end
   end
 end

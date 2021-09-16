@@ -261,19 +261,11 @@ class Trainee < ApplicationRecord
     end
   end
 
-  def bursary_amount
-    CalculateBursary.for_route_and_subject(training_route.to_sym, course_subject_one)
-  end
-
   def set_early_years_course_details
     if early_years_route?
       self.course_subject_one = CourseSubjects::EARLY_YEARS_TEACHING
       self.course_age_range = AgeRange::ZERO_TO_FIVE
     end
-  end
-
-  def can_apply_for_bursary?
-    training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || bursary_amount.present?
   end
 
   def invalid_apply_data?

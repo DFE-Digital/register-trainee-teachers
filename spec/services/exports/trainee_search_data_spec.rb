@@ -28,6 +28,9 @@ module Exports
         international_address: "Test addr",
       )
     end
+    let(:funding_manager) do
+      FundingManager.new(trainee)
+    end
 
     subject { described_class.new([trainee]) }
 
@@ -101,7 +104,7 @@ module Exports
           "employing_school_urn" => trainee.employing_school&.urn,
           "training_initiative" => "Transition to teach",
           "applying_for_bursary" => trainee.applying_for_bursary.to_s.upcase,
-          "bursary_value" => (trainee.bursary_amount if trainee.applying_for_bursary),
+          "bursary_value" => (funding_manager.bursary_amount if trainee.applying_for_bursary),
           "bursary_tier" => ("Tier #{BURSARY_TIERS[trainee.bursary_tier] + 1}" if trainee.bursary_tier),
           "award_standards_met_date" => trainee.outcome_date&.iso8601,
           "award_awarded_at" => trainee.awarded_at&.iso8601,

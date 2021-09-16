@@ -40,8 +40,12 @@ module Trainees
       end
 
       def load_bursary_info!
-        @subject = @trainee.course_subject_one
-        @amount = @trainee.bursary_amount
+        @subject = trainee.course_subject_one
+        @amount = funding_manager.bursary_amount
+      end
+
+      def funding_manager
+        @funding_manager ||= FundingManager.new(trainee)
       end
     end
   end
