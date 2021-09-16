@@ -40,6 +40,14 @@ describe HPITT do
       expect(subject).to eq Diversities::ETHNIC_GROUP_ENUMS[:other]
     end
 
+    context "with a normalised form" do
+      let(:ethnicity) { "anotherethnicgroupincludesanyotherethnicgroupforexamplearab" }
+
+      it "returns the correct ethnic group" do
+        expect(subject).to eq Diversities::ETHNIC_GROUP_ENUMS[:other]
+      end
+    end
+
     context "when the ethnic group cannot be mapped" do
       let(:ethnicity) { "ethnic group" }
 

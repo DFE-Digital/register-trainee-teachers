@@ -177,7 +177,7 @@ module HPITT
     end
 
     def to_ethnic_group(raw_string)
-      HPITT::CodeSets::Ethnicities::MAPPING[raw_string].tap do |ethnic_group|
+      HPITT::CodeSets::Ethnicities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase].tap do |ethnic_group|
         raise Error, "Ethnic group not recognised: #{raw_string}" if ethnic_group.nil?
       end
     end
