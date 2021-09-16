@@ -24,6 +24,14 @@ describe CourseDetailsForm, type: :model do
     it "sets the primary_course_subjects from the course subject values" do
       expect(subject.primary_course_subjects).to eq(PublishSubjects::PRIMARY_WITH_ENGLISH)
     end
+
+    context "with no subjects selected yet" do
+      let(:trainee) { build(:trainee, :with_primary_education) }
+
+      it "sets the primary_course_subjects from the course subject values" do
+        expect(subject.primary_course_subjects).to be_nil
+      end
+    end
   end
 
   describe "before validation" do
