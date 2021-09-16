@@ -38,3 +38,11 @@ SEED_BURSARIES.each do |b|
     bursary.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
   end
 end
+
+SEED_SCHOLARSHIPS.each do |s|
+  funding_method = FundingMethod.find_or_create_by!(training_route: s.training_route, amount: s.amount, funding_type: FUNDING_TYPE_ENUMS[:scholarship])
+  s.allocation_subjects.map do |subject|
+    allocation_subject = AllocationSubject.find_by!(name: subject)
+    funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+  end
+end
