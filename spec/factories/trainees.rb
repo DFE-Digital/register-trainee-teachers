@@ -355,9 +355,9 @@ FactoryBot.define do
       applying_for_bursary { true }
 
       after(:create) do |trainee, _|
-        bursary = create(:bursary, :with_bursary_subjects, training_route: :provider_led_postgrad)
-        trainee.course_subject_one = bursary.allocation_subjects.first.name
-        trainee.training_route = bursary.training_route
+        funding_method = create(:funding_method, :with_subjects, training_route: :provider_led_postgrad)
+        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.training_route = funding_method.training_route
       end
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_08_132221) do
+ActiveRecord::Schema.define(version: 2021_09_10_142540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,23 +119,6 @@ ActiveRecord::Schema.define(version: 2021_09_08_132221) do
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
   end
 
-  create_table "bursaries", force: :cascade do |t|
-    t.string "training_route", null: false
-    t.integer "amount", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "bursary_subjects", force: :cascade do |t|
-    t.bigint "bursary_id"
-    t.bigint "allocation_subject_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["allocation_subject_id", "bursary_id"], name: "index_bursary_subjects_on_allocation_subject_id_and_bursary_id", unique: true
-    t.index ["allocation_subject_id"], name: "index_bursary_subjects_on_allocation_subject_id"
-    t.index ["bursary_id"], name: "index_bursary_subjects_on_bursary_id"
-  end
-
   create_table "consistency_checks", force: :cascade do |t|
     t.integer "trainee_id"
     t.datetime "contact_last_updated_at"
@@ -171,9 +154,6 @@ ActiveRecord::Schema.define(version: 2021_09_08_132221) do
     t.integer "max_age", null: false
     t.integer "study_mode"
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code", unique: true
-  end
-
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -233,6 +213,24 @@ ActiveRecord::Schema.define(version: 2021_09_08_132221) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["dttp_id"], name: "index_dttp_users_on_dttp_id", unique: true
+  end
+
+  create_table "funding_method_subjects", force: :cascade do |t|
+    t.bigint "funding_method_id"
+    t.bigint "allocation_subject_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["allocation_subject_id", "funding_method_id"], name: "index_funding_methods_subjects_on_ids", unique: true
+    t.index ["allocation_subject_id"], name: "index_funding_method_subjects_on_allocation_subject_id"
+    t.index ["funding_method_id"], name: "index_funding_method_subjects_on_funding_method_id"
+  end
+
+  create_table "funding_methods", force: :cascade do |t|
+    t.string "training_route", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "funding_type"
   end
 
   create_table "nationalisations", force: :cascade do |t|
@@ -373,6 +371,7 @@ ActiveRecord::Schema.define(version: 2021_09_08_132221) do
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
+    t.boolean "applying_for_scholarship"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"

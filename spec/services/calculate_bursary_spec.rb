@@ -7,7 +7,7 @@ describe CalculateBursary do
     let(:route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
 
     context "when there is a bursary available for a given route" do
-      before { create(:bursary, :with_bursary_subjects, training_route: route) }
+      before { create(:funding_method, :with_subjects, training_route: route) }
 
       it "returns true" do
         expect(described_class.available_for_route?(route.to_sym)).to be_truthy
@@ -15,7 +15,7 @@ describe CalculateBursary do
     end
 
     context "when there is a bursary available for a given route but it has no subjects" do
-      before { create(:bursary, training_route: route) }
+      before { create(:funding_method, training_route: route) }
 
       it "returns true" do
         expect(described_class.available_for_route?(route.to_sym)).to be_falsey
@@ -50,10 +50,10 @@ describe CalculateBursary do
     let(:amount) { 24_000 }
 
     context "when there is a bursary available for a given route and subject" do
-      let(:bursary) { create(:bursary, training_route: route, amount: amount) }
+      let(:funding_method) { create(:funding_method, training_route: route, amount: amount) }
 
       before do
-        create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
       end
 
       it "returns bursary amount" do
@@ -62,7 +62,7 @@ describe CalculateBursary do
     end
 
     context "when there is a bursary for the route but not the subject" do
-      let(:bursary) { create(:bursary, training_route: route) }
+      let(:funding_method) { create(:funding_method, training_route: route) }
 
       it "returns nil" do
         expect(described_class.for_route_and_subject(route.to_sym, subject_specialism.name)).to be_nil
@@ -70,10 +70,10 @@ describe CalculateBursary do
     end
 
     context "when there is a bursary for subject but not the route" do
-      let(:bursary) { create(:bursary, training_route: TRAINING_ROUTE_ENUMS[:assessment_only]) }
+      let(:funding_method) { create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:assessment_only]) }
 
       before do
-        create(:bursary_subject, bursary: bursary, allocation_subject: subject_specialism.allocation_subject)
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
       end
 
       it "returns nil" do

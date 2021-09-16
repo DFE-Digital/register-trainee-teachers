@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :bursary_subject do
-    bursary
+  factory :funding_method_subject do
+    funding_method
     allocation_subject
   end
 end
