@@ -11,6 +11,7 @@ describe PublishCourseDetailsForm, type: :model do
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
+    allow(form_store).to receive(:set).and_return(nil)
   end
 
   describe "validations" do
@@ -18,14 +19,40 @@ describe PublishCourseDetailsForm, type: :model do
   end
 
   context "valid course_code" do
+    let(:route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
     let(:params) { { course_code: "c0de" } }
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { create(:trainee, :submitted_for_trn, training_route: route, course_subject_one: nil) }
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
         expect(form_store).to receive(:set).with(trainee.id, :publish_course_details, params)
 
         subject.stash
+      end
+    end
+
+    describe "save!" do
+      context "valid form" do
+        let(:params) { { course_code: course_code } }
+        let(:course_code) { "ABC" }
+        let(:subject_name) { "Physical education" }
+        let(:subject_specialism_form) do
+          SubjectSpecialismForm.new(trainee, params: { course_subject_one: subject_name })
+        end
+
+        before do
+          create(:course_with_subjects,
+                 code: course_code,
+                 route: route,
+                 accredited_body_code: trainee.provider.code,
+                 subject_names: [subject_name])
+
+          subject_specialism_form.stash_or_save!
+        end
+
+        it "updates the trainee with the publish course details" do
+          expect { subject.save! }.to change { trainee.course_subject_one }.to(subject_name)
+        end
       end
     end
   end

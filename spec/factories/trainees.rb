@@ -113,10 +113,15 @@ FactoryBot.define do
 
     trait :with_course_details do
       course_subject_one { ::CourseSubjects::MATHEMATICS }
-      course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.reject { |_k, v| v[:option] == :main }.keys.sample }
       course_start_date { Faker::Date.between(from: 1.year.ago, to: 2.days.ago) }
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
+    end
+
+    trait :with_publish_course_details do
+      training_route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
+      with_course_details
+      course_code { create(:course_with_subjects, route: training_route, accredited_body_code: provider.code).code }
     end
 
     trait :with_course_details_and_study_mode do

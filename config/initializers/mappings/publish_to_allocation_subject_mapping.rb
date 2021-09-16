@@ -41,6 +41,7 @@ PUBLISH_SUBJECT_SPECIALISM_MAPPING = {
   "Physics" => [CourseSubjects::PHYSICS],
   "Psychology" => [CourseSubjects::PSYCHOLOGY],
   "Religious education" => [CourseSubjects::RELIGIOUS_STUDIES],
+  "Science" => [CourseSubjects::GENERAL_SCIENCES],
   "Social sciences" => [CourseSubjects::SOCIAL_SCIENCES],
 
   PublishSubjects::ENGLISH => [CourseSubjects::ENGLISH_STUDIES],

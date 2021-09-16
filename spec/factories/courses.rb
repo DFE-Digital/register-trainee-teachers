@@ -13,7 +13,7 @@ FactoryBot.define do
     qualification { %i[qts pgce_with_qts pgde_with_qts pgce pgde].sample }
     course_length { %w[OneYear TwoYears].sample }
     route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
-    study_mode { COURSE_STUDY_MODES.keys.sample }
+    study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
 
     summary do |builder|
       qualifications = builder.qualification.to_s.gsub("_", " ").upcase.gsub("WITH", "with")

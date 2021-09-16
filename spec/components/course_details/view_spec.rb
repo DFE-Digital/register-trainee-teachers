@@ -50,7 +50,7 @@ module CourseDetails
       let(:trainee) do
         create(:trainee,
                :provider_led_postgrad,
-               :with_course_details,
+               :with_publish_course_details,
                :with_apply_application,
                course_subject_one: nil,
                course_min_age: nil,
@@ -63,7 +63,7 @@ module CourseDetails
 
       let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, itt_start_date, { code: course.code }) }
 
-      let!(:course) { create(:course_with_subjects, code: trainee.course_code, accredited_body_code: trainee.provider.code, route: trainee.training_route) }
+      let(:course) { trainee.published_course }
 
       before do
         render_inline(View.new(data_model: data_model))
@@ -100,27 +100,15 @@ module CourseDetails
 
     context "when data has been provided" do
       context "with a publish course", feature_publish_course_details: true do
-        let(:trainee) { create(:trainee, :with_course_details, training_route: training_route) }
-        let(:training_route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
-
-        let(:course) { create(:course_with_subjects, code: trainee.course_code, accredited_body_code: trainee.provider.code, route: training_route) }
-
-        let(:unrelated_course) { create(:course_with_subjects, code: trainee.course_code) }
+        let(:trainee) { create(:trainee, :with_publish_course_details) }
 
         before do
-          unrelated_course
-          course
           render_inline(View.new(data_model: trainee))
-        end
-
-        it "doesn't render the incorrect course details" do
-          expect(rendered_component)
-          .not_to have_text("#{unrelated_course.name} (#{unrelated_course.code})")
         end
 
         it "renders the correct course details" do
           expect(rendered_component)
-            .to have_text("#{course.name} (#{course.code})")
+            .to have_text("#{trainee.published_course.name} (#{trainee.published_course.code})")
         end
 
         it "renders the course type" do
