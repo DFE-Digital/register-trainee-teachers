@@ -49,6 +49,25 @@ describe CourseDetailsHelper do
 
     it { is_expected.to eq("Biology") }
 
+    context "with primary education phase subjects" do
+      let(:subject_one) { CourseSubjects::PRIMARY_TEACHING }
+
+      it { is_expected.to eq(PublishSubjects::PRIMARY) }
+
+      context "with multiple subjects" do
+        let(:subject_two) { CourseSubjects::MODERN_LANGUAGES }
+
+        it { is_expected.to eq(PublishSubjects::PRIMARY_WITH_MODERN_LANGUAGES) }
+      end
+
+      context "when primary with other is chosen" do
+        let(:subject_two) { "Art and design" }
+        let(:subject_three) { "Mathematics" }
+
+        it { is_expected.to eq("Primary with Art and design and Mathematics") }
+      end
+    end
+
     context "with lowercased first subject" do
       let(:subject_one) { "applied biology" }
 
