@@ -19,8 +19,6 @@ module Trainees
           @publish_course_details_form.process_manual_entry!
         end
 
-        clear_form_stash(trainee)
-
         redirect_to next_step_path
       else
         @courses = trainee.available_courses
@@ -46,6 +44,10 @@ module Trainees
 
     def course_params
       params.fetch(:publish_course_details_form, {}).permit(:course_code)
+    end
+
+    def trainee
+      @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
     def authorize_trainee

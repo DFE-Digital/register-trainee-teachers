@@ -40,6 +40,7 @@ class PublishCourseDetailsForm < TraineeForm
     update_trainee_attributes
     clear_bursary_information if course_subjects_changed?
     trainee.save!
+    clear_stash
   end
 
   def stash

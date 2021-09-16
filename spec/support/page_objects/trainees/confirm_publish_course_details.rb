@@ -11,7 +11,7 @@ module PageObjects
       set_url "/trainees/{trainee_id}/publish-course-details/confirm"
 
       element :confirm, "input[name='confirm_detail_form[mark_as_completed]']"
-      element :continue_button, "button[type='submit']", text: "Continue"
+      element :continue_button, "button[type='submit']"
 
       sections :summary_list_rows, SummaryListRows, ".govuk-summary-list__row"
 

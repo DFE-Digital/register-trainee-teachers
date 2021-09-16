@@ -24,9 +24,7 @@ describe RouteDataManager do
 
         it "wipes the course details" do
           expect { subject }
-            .to change { trainee.course_code }
-            .from(trainee.course_code).to(nil)
-            .and change { trainee.course_subject_one }
+            .to change { trainee.course_subject_one }
             .from(trainee.course_subject_one).to(nil)
             .and change { trainee.course_age_range }
             .from(trainee.course_age_range).to([])
@@ -100,8 +98,8 @@ describe RouteDataManager do
         trainee.reload
       end
 
-      context "when a trainee has course details" do
-        let(:trainee) { create(:trainee, :provider_led_postgrad, :with_course_details) }
+      context "when a trainee has publish course details" do
+        let(:trainee) { create(:trainee, :with_publish_course_details, :provider_led_postgrad) }
 
         it "does not clear the course details section of the trainee" do
           expect(trainee.course_code).to be_present

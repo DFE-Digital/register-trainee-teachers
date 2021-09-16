@@ -29,6 +29,8 @@ class Course < ApplicationRecord
 
   belongs_to :provider, foreign_key: :accredited_body_code, primary_key: :code, inverse_of: :courses, optional: true
 
+  has_many :trainees, ->(course) { unscope(:where).where(course_code: course.code) }, inverse_of: :trainee
+
   has_many :course_subjects
 
   # Order scope is critical - do not remove (see TeacherTrainingApi::ImportCourse#subjects)

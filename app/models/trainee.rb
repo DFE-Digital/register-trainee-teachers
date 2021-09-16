@@ -13,6 +13,12 @@ class Trainee < ApplicationRecord
   has_many :disabilities, through: :trainee_disabilities
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
+  belongs_to :published_course,
+             class_name: "Course",
+             foreign_key: :course_code,
+             primary_key: :code,
+             inverse_of: :trainees,
+             optional: true
 
   attribute :progress, Progress.to_type
 
