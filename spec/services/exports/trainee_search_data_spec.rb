@@ -8,6 +8,7 @@ module Exports
       create(
         :trainee,
         :with_degree,
+        :with_primary_education,
         :with_course_details,
         :submitted_for_trn,
         :trn_received,
@@ -86,6 +87,7 @@ module Exports
           "course_qualification" => course&.qualification,
           "course_qualification_type" => nil,
           "course_level" => course&.level&.capitalize,
+          "course_education_phase" => trainee.course_education_phase.upcase_first,
           "course_allocation_subject" => nil,
           "course_itt_subject_1" => trainee.course_subject_one,
           "course_itt_subject_2" => trainee.course_subject_two,
