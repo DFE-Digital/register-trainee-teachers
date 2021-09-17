@@ -24,15 +24,15 @@ features:
   send_funding_to_dttp: true
   routes:
     early_years_assessment_only: true
-    early_years_salaried: true
     early_years_postgrad: true
+    early_years_salaried: true
     early_years_undergrad: true
-    provider_led_postgrad: true
-    school_direct_salaried: true
-    school_direct_tuition_fee: true
-    provider_led_undergrad: true
     opt_in_undergrad: true
     pg_teaching_apprenticeship: true
+    provider_led_postgrad: true
+    provider_led_undergrad: true
+    school_direct_salaried: true
+    school_direct_tuition_fee: true
 
 environment:
   name: staging
