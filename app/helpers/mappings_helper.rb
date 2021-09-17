@@ -21,7 +21,7 @@ module MappingsHelper
     return if code.blank?
 
     # The hesa code can sometimes be padded with some leading zeros
-    # So we need to sensibly convert the strings to their integer values for an equal comparrison
+    # So we need to sensibly convert the strings to their integer values for an equal comparison
     BigDecimal(code).to_i
   end
 end
