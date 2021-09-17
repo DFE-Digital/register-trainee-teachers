@@ -13,8 +13,8 @@
 
   <p class="govuk-body">
     <%= govuk_link_to(
-      t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_link_text' : 'guidance_link_text'}"),
-      t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_url' : 'guidance_url'}"),
+      t("views.forms.funding.bursaries.guidance_link_text"),
+      t("views.forms.funding.bursaries.guidance_url"),
       { target: "_blank", rel: "noreferrer noopener" }
     ) %>
   </p>
