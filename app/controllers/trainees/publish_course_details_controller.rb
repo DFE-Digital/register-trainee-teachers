@@ -34,7 +34,7 @@ module Trainees
 
     def next_step_path
       if @publish_course_details_form.manual_entry_chosen?
-        edit_trainee_course_details_path(trainee)
+        edit_trainee_course_education_phase_path(trainee)
       elsif @publish_course_details_form.language_specialism?
         edit_trainee_language_specialisms_path(trainee)
       else

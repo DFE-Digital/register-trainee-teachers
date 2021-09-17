@@ -104,7 +104,7 @@ module CourseDetails
 
     context "when data has been provided" do
       context "with a publish course", feature_publish_course_details: true do
-        let(:trainee) { create(:trainee, :with_publish_course_details) }
+        let(:trainee) { create(:trainee, :with_primary_education, :with_publish_course_details) }
 
         before do
           render_inline(View.new(data_model: trainee))
@@ -118,6 +118,16 @@ module CourseDetails
         it "renders the course type" do
           expect(rendered_component)
             .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+        end
+
+        it "renders the education phase" do
+          expect(rendered_component)
+            .to have_text(trainee.course_education_phase.upcase_first)
+        end
+
+        it "renders the education change phase link" do
+          expect(rendered_component)
+            .to have_link(t("change"), href: "/trainees/#{trainee.slug}/course-education-phase/edit")
         end
 
         it "renders the subject" do

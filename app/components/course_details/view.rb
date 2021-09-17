@@ -50,7 +50,7 @@ module CourseDetails
     end
 
     def education_phase
-      mappable_field(trainee.course_education_phase, t("components.course_detail.education_phase"))
+      mappable_field(trainee.course_education_phase&.upcase_first, t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee))
     end
 
     def subject_row
@@ -143,12 +143,12 @@ module CourseDetails
       @course ||= trainee.available_courses.find_by(code: data_model.course_code)
     end
 
-    def mappable_field(field_value, field_label)
+    def mappable_field(field_value, field_label, action_url: edit_trainee_course_details_path(trainee))
       MappableFieldRow.new(
         field_value: field_value,
         field_label: field_label,
         text: t("components.confirmation.missing"),
-        action_url: edit_trainee_course_details_path(trainee),
+        action_url: action_url,
         has_errors: has_errors,
       ).to_h
     end

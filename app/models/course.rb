@@ -12,8 +12,8 @@ class Course < ApplicationRecord
   validates :route, presence: true
 
   enum level: {
-    primary: 0,
-    secondary: 1,
+    COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,
+    COURSE_EDUCATION_PHASE_ENUMS[:secondary] => 1,
   }
 
   enum qualification: {

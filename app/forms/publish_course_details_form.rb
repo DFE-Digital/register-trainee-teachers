@@ -98,10 +98,10 @@ private
   def update_trainee_attributes
     trainee.assign_attributes({
       course_code: course_code,
+      course_education_phase: course&.level,
       course_subject_one: course_subject_one,
       course_subject_two: course_subject_two,
       course_subject_three: course_subject_three,
-
       course_age_range: course_age_range,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
