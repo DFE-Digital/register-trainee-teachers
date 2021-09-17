@@ -6,6 +6,7 @@ module CourseFormHelpers
 
     trainee.assign_attributes({
       applying_for_bursary: nil,
+      applying_for_scholarship: nil,
     })
   end
 
