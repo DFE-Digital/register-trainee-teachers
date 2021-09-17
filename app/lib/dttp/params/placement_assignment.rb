@@ -11,7 +11,10 @@ module Dttp
 
       COURSE_LEVEL_PG = 12
       COURSE_LEVEL_UG = 20
+
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
+
+      SCHOLARSHIP = "188375c2-7722-e711-80c8-0050568902d3"
 
       ALLOCATED_PLACE = 1
       NO_ALLOCATED_PLACE = 2
@@ -57,7 +60,7 @@ module Dttp
         .merge(subject_params)
         .merge(study_mode_params)
         .merge(training_initiative_params)
-        .merge(bursary_params)
+        .merge(funding_params)
         .merge(region_params)
       end
 
@@ -132,14 +135,22 @@ module Dttp
         }
       end
 
-      def bursary_params
+      def funding_params
         return {} unless send_funding_to_dttp?
-        return { "dfe_allocatedplace" => NO_ALLOCATED_PLACE } unless trainee.applying_for_bursary
 
-        {
-          "dfe_allocatedplace" => ALLOCATED_PLACE,
-          "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{bursary_details_id(bursary_type)})",
-        }
+        if trainee.applying_for_bursary || trainee.applying_for_scholarship
+          return {
+            "dfe_allocatedplace" => ALLOCATED_PLACE,
+            "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{funding_id})",
+          }
+        end
+
+        { "dfe_allocatedplace" => NO_ALLOCATED_PLACE }
+      end
+
+      def funding_id
+        return bursary_details_id(bursary_type) if trainee.applying_for_bursary
+        return SCHOLARSHIP if trainee.applying_for_scholarship
       end
 
       def region_params

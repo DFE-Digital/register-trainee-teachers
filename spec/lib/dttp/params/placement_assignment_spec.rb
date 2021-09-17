@@ -378,7 +378,7 @@ module Dttp
           end
 
           context "when the send_funding_to_dttp feature flag is on", feature_send_funding_to_dttp: true do
-            context "and the trainee is not applying for a bursary" do
+            context "and the trainee is not funded" do
               it "sends the correct params" do
                 expect(subject).to include({ "dfe_allocatedplace" => 2 })
                 expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
@@ -419,6 +419,27 @@ module Dttp
                 expect(subject).to include({ "dfe_allocatedplace" => 1 })
                 expect(subject).to include({
                   "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{dttp_bursary_details_entity_id})",
+                })
+              end
+            end
+
+            context "and the trainee is applying for a scholarship" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  :with_course_details,
+                  :with_start_date,
+                  :with_scholarship,
+                  dttp_id: dttp_contact_id,
+                )
+              end
+
+              let(:scholarship_id) { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
+
+              it "sends the correct params" do
+                expect(subject).to include({ "dfe_allocatedplace" => 1 })
+                expect(subject).to include({
+                  "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{scholarship_id})",
                 })
               end
             end
