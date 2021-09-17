@@ -3,6 +3,7 @@
 module Degrees
   class MapFromApply
     include ServicePattern
+    include MappingsHelper
 
     def initialize(attributes:)
       @attributes = attributes
@@ -23,7 +24,7 @@ module Degrees
     def common_params
       {
         is_apply_import: true,
-        subject: attributes["subject"],
+        subject: subject,
         graduation_year: attributes["award_year"],
       }
     end
@@ -31,9 +32,10 @@ module Degrees
     def uk_degree_params
       {
         locale_code: Trainee.locale_codes[:uk],
-        uk_degree: attributes["qualification_type"],
+        uk_degree: qualification_type,
         institution: institution,
-        grade: attributes["grade"],
+        grade: grade.presence || Dttp::CodeSets::Grades::OTHER,
+        other_grade: grade.present? ? nil : attributes["grade"],
       }
     end
 
@@ -49,8 +51,41 @@ module Degrees
       attributes["non_uk_qualification_type"].nil?
     end
 
+    def subject
+      course_subject = Dttp::CodeSets::DegreeSubjects::MAPPING.find do |k, _|
+        same_string?(k, attributes["subject"])
+      end
+
+      course_subject.presence&.first || attributes["subject"]
+    end
+
+    def qualification_type
+      attributes["qualification_type"]
+
+      degree_type = Dttp::CodeSets::DegreeTypes::MAPPING.find do |k, v|
+        same_hesa_code?(v[:hesa_code], attributes["hesa_degtype"]) ||
+        same_string?(v[:abbreviation], attributes["qualification_type"]) ||
+        same_string?(k, attributes["qualification_type"])
+      end
+
+      degree_type.presence&.first || attributes["qualification_type"]
+    end
+
     def institution
-      attributes["institution_details"].split(",").first
+      institution_details = attributes["institution_details"].split(",").first
+
+      institution_type = Dttp::CodeSets::Institutions::MAPPING.find do |k, v|
+        same_hesa_code?(v[:hesa_code], attributes["hesa_degest"]) ||
+        same_string?(k, institution_details)
+      end
+
+      institution_type.presence&.first || institution_details
+    end
+
+    def grade
+      @grade ||= Dttp::CodeSets::Grades::MAPPING.keys.find do |grade|
+        same_string?(grade, attributes["grade"])
+      end
     end
 
     def country

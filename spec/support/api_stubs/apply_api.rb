@@ -6,11 +6,15 @@ module ApiStubs
       { data: [application] }.to_json
     end
 
-    def self.application(course_attributes: {}, candidate_attributes: {})
-      uk_application(course_attributes: course_attributes, candidate_attributes: candidate_attributes).to_json
+    def self.application(course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
+      uk_application(
+        course_attributes: course_attributes,
+        candidate_attributes: candidate_attributes,
+        degree_attributes: degree_attributes,
+      ).to_json
     end
 
-    def self.uk_application(course_attributes: {}, candidate_attributes: {})
+    def self.uk_application(course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
       {
         id: "3772",
         type: "application",
@@ -23,7 +27,7 @@ module ApiStubs
           candidate: candidate_info(candidate_attributes),
           contact_details: contact_details,
           course: course(course_attributes),
-          qualifications: qualifications,
+          qualifications: qualifications(degree_attributes),
           hesa_itt_data: {},
         },
       }
@@ -48,7 +52,7 @@ module ApiStubs
       }
     end
 
-    def self.uk_degree
+    def self.uk_degree(degree_attributes = {})
       {
         id: 6242,
         qualification_type: "BA",
@@ -67,7 +71,7 @@ module ApiStubs
         hesa_degctry: nil,
         hesa_degstdt: "-01-01",
         hesa_degenddt: "2020-01-01",
-      }
+      }.merge(degree_attributes)
     end
 
     def self.non_uk_degree
@@ -140,7 +144,7 @@ module ApiStubs
       }
     end
 
-    def self.qualifications
+    def self.qualifications(degree_attributes = {})
       {
         gcses: [
           {
@@ -163,7 +167,7 @@ module ApiStubs
             hesa_degenddt: nil,
           },
         ],
-        degrees: [uk_degree],
+        degrees: [uk_degree(degree_attributes)],
         other_qualifications: [],
         missing_gcses_explanation: nil,
       }
