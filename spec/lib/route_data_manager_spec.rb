@@ -50,7 +50,7 @@ describe RouteDataManager do
       end
 
       context "when the trainee has funding" do
-        let(:trainee) { create(:trainee, :assessment_only, :with_funding, :with_tiered_bursary, progress: progress) }
+        let(:trainee) { create(:trainee, :assessment_only, :with_funding, :with_tiered_bursary, applying_for_scholarship: true, progress: progress) }
 
         it "wipes initiative details" do
           expect { subject }
@@ -64,6 +64,7 @@ describe RouteDataManager do
           expect { subject }
             .to change { trainee.applying_for_bursary }
             .from(trainee.applying_for_bursary).to(nil)
+            .and change { trainee.applying_for_scholarship }.to(nil)
             .and change { trainee.bursary_tier }
             .from(trainee.bursary_tier).to(nil)
         end
