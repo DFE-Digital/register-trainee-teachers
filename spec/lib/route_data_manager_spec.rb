@@ -24,7 +24,9 @@ describe RouteDataManager do
 
         it "wipes the course details" do
           expect { subject }
-            .to change { trainee.course_subject_one }
+            .to change { trainee.course_education_phase }
+            .from(trainee.course_education_phase).to(nil)
+            .and change { trainee.course_subject_one }
             .from(trainee.course_subject_one).to(nil)
             .and change { trainee.course_age_range }
             .from(trainee.course_age_range).to([])

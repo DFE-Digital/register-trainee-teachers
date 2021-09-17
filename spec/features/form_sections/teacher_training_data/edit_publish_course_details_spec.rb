@@ -220,7 +220,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       when_i_visit_the_publish_course_details_page
       and_i_select_another_course_not_listed
       and_i_submit_the_form
-      then_i_see_the_course_details_page
+      then_i_see_the_course_education_phase_page
       and_i_visit_the_review_draft_page
       then_the_link_takes_me_to_the_publish_course_details_page
     end
@@ -333,8 +333,8 @@ feature "publish course details", type: :feature, feature_publish_course_details
     )
   end
 
-  def then_i_see_the_course_details_page
-    expect(course_details_page).to be_displayed(id: trainee.slug)
+  def then_i_see_the_course_education_phase_page
+    expect(course_education_phase_page).to be_displayed(id: trainee.slug)
   end
 
   def given_there_arent_any_courses

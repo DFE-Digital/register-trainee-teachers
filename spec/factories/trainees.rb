@@ -112,6 +112,14 @@ FactoryBot.define do
       course_subject_one { create(:subject_specialism, subject_name: subject_name).name }
     end
 
+    trait :with_primary_education do
+      course_education_phase { COURSE_EDUCATION_PHASE_ENUMS[:primary] }
+    end
+
+    trait :with_secondary_education do
+      course_education_phase { COURSE_EDUCATION_PHASE_ENUMS[:secondary] }
+    end
+
     trait :with_course_details do
       course_subject_one { ::CourseSubjects::MATHEMATICS }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.reject { |_k, v| v[:option] == :main }.keys.sample }
@@ -126,6 +134,7 @@ FactoryBot.define do
     end
 
     trait :with_course_details_and_study_mode do
+      with_primary_education
       with_course_details
       study_mode { COURSE_STUDY_MODES[:full_time] }
     end
