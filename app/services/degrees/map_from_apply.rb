@@ -60,8 +60,6 @@ module Degrees
     end
 
     def qualification_type
-      attributes["qualification_type"]
-
       degree_type = Dttp::CodeSets::DegreeTypes::MAPPING.find do |k, v|
         same_hesa_code?(v[:hesa_code], attributes["hesa_degtype"]) ||
         same_string?(v[:abbreviation], attributes["qualification_type"]) ||
