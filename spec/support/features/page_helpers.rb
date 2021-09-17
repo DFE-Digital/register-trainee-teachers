@@ -130,6 +130,10 @@ module Features
       @personal_details_page ||= PageObjects::Trainees::PersonalDetails.new
     end
 
+    def course_education_phase_page
+      @course_education_phase_page ||= PageObjects::Trainees::CourseEducationPhase.new
+    end
+
     def course_details_page
       @course_details_page ||= PageObjects::Trainees::CourseDetails.new
     end
