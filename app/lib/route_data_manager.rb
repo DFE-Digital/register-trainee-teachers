@@ -24,6 +24,7 @@ private
   def course_details
     {
       course_code: nil,
+      course_education_phase: nil,
       course_subject_one: nil,
       course_subject_two: nil,
       course_subject_three: nil,
