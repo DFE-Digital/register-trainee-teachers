@@ -766,11 +766,18 @@ en:
         age_range_label: Age range
         heading: Course details
         other_age_range_label: Other age range
-        subject_label: Subject
-        subject_hint: &subject_hint Search for the closest matching subject
         study_mode_label: Full time or part time?
         study_mode_full_time: Full time
         study_mode_part_time: Part time
+      primary_phase:
+        subject_label: Subject
+        primary_with_another_label: Primary with another subject
+        subject_two: Second subject
+        subject_three: Third subject (optional)
+        subject_hint: &subject_hint Search for the closest matching subject
+      secondary_phase:
+        subject_label: Subject
+        subject_hint: *subject_hint
       additional_subjects:
         add_additional_subjects: Add additional subjects
         main_subject: The first subject is the main one. It represents the bursary or scholarship available if applicable.
@@ -1035,8 +1042,11 @@ en:
               blank: Select a subject
             course_subject_two:
               duplicate: Enter a different second subject
+              blank: Select a second subject
             course_subject_three:
               duplicate: Enter a different third subject
+            primary_course_subjects:
+              blank: Select a subject
             main_age_range:
               blank: Select an age range
             additional_age_range:

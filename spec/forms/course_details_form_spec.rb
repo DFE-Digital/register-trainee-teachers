@@ -13,6 +13,27 @@ describe CourseDetailsForm, type: :model do
     allow(form_store).to receive(:get).and_return(nil)
   end
 
+  context "with primary education phase" do
+    let(:trainee) do
+      build(:trainee,
+            :with_primary_education,
+            course_subject_one: CourseSubjects::PRIMARY_TEACHING,
+            course_subject_two: CourseSubjects::ENGLISH_STUDIES)
+    end
+
+    it "sets the primary_course_subjects from the course subject values" do
+      expect(subject.primary_course_subjects).to eq(PublishSubjects::PRIMARY_WITH_ENGLISH)
+    end
+
+    context "with no subjects selected yet" do
+      let(:trainee) { build(:trainee, :with_primary_education) }
+
+      it "sets the primary_course_subjects from the course subject values" do
+        expect(subject.primary_course_subjects).to be_nil
+      end
+    end
+  end
+
   describe "before validation" do
     describe "#sanitise_course_dates" do
       let(:params) do
@@ -36,6 +57,31 @@ describe CourseDetailsForm, type: :model do
   end
 
   describe "validations" do
+    context "with primary education phase" do
+      let(:trainee) { build(:trainee, :with_primary_education) }
+
+      it { is_expected.not_to validate_presence_of(:course_subject_one) }
+      it { is_expected.to validate_presence_of(:primary_course_subjects) }
+
+      it {
+        expect(subject).to validate_inclusion_of(:primary_course_subjects)
+        .in_array(PUBLISH_PRIMARY_SUBJECTS)
+      }
+
+      context 'when "Primary with another subject" is selected' do
+        let(:params) do
+          {
+            primary_course_subjects: :other,
+          }
+        end
+
+        it "returns an error against subject two" do
+          subject.valid?
+          expect(subject.errors[:course_subject_two]).not_to be_empty
+        end
+      end
+    end
+
     it { is_expected.to validate_presence_of(:course_subject_one) }
 
     context "when subjects are duplicated" do
@@ -328,6 +374,7 @@ describe CourseDetailsForm, type: :model do
 
     let(:min_age) { 11 }
     let(:max_age) { 19 }
+    let(:primary_course_subjects) { PublishSubjects::PRIMARY_WITH_GEOGRAPHY_AND_HISTORY }
 
     let(:params) do
       {
@@ -341,6 +388,7 @@ describe CourseDetailsForm, type: :model do
         course_subject_one: "Psychology",
         course_subject_two: "Chemistry",
         course_subject_three: "Art and design",
+        primary_course_subjects: primary_course_subjects,
       }
     end
 
@@ -363,6 +411,35 @@ describe CourseDetailsForm, type: :model do
           .from(nil).to(Date.parse(valid_start_date.to_s))
           .and change { trainee.course_end_date }
           .from(nil).to(Date.parse(valid_end_date.to_s))
+      end
+
+      context "with primary education phase" do
+        let(:trainee) { create(:trainee, :with_primary_education) }
+        let(:primary_course_subjects) { PublishSubjects::PRIMARY_WITH_GEOGRAPHY_AND_HISTORY }
+
+        it "adds the course_subjects from the primary_course_subjects" do
+          expect { subject.save! }
+            .to change { trainee.course_subject_one }
+            .from(nil).to(CourseSubjects::PRIMARY_TEACHING)
+            .and change { trainee.course_subject_two }
+            .from(nil).to(CourseSubjects::GEOGRAPHY)
+            .and change { trainee.course_subject_three }
+            .from(nil).to(CourseSubjects::HISTORY)
+        end
+
+        context 'when "Primary with another subject" is selected' do
+          let(:primary_course_subjects) { :other }
+
+          it "adds the course_subjects from the primary_course_subjects" do
+            expect { subject.save! }
+              .to change { trainee.course_subject_one }
+              .from(nil).to(CourseSubjects::PRIMARY_TEACHING)
+              .and change { trainee.course_subject_two }
+              .from(nil).to("Chemistry")
+              .and change { trainee.course_subject_three }
+              .from(nil).to("Art and design")
+          end
+        end
       end
 
       context "when a trainee has a course code" do
