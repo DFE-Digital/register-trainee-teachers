@@ -21,12 +21,8 @@ module CourseDetails
         render_inline(View.new(data_model: trainee))
       end
 
-      it "renders 7 rows" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
-      end
-
-      it "renders course details as no provided" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.not_provided"))
+      it "renders 6 rows" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
       end
 
       it "renders missing hint education phase" do
@@ -115,11 +111,6 @@ module CourseDetails
             .to have_text("#{trainee.published_course.name} (#{trainee.published_course.code})")
         end
 
-        it "renders the course type" do
-          expect(rendered_component)
-            .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
-        end
-
         it "renders the education phase" do
           expect(rendered_component)
             .to have_text(trainee.course_education_phase.upcase_first)
@@ -165,21 +156,21 @@ module CourseDetails
       end
 
       context "non draft" do
-        let(:trainee) { create(:trainee, :early_years_undergrad, :with_course_details, :submitted_for_trn) }
+        let(:trainee) { create(:trainee, :with_secondary_education, :early_years_undergrad, :with_course_details, :submitted_for_trn) }
 
-        it "renders route" do
-          expect(rendered_component).to have_text("Route")
+        it "renders education phase" do
+          expect(rendered_component).to have_text("Education phase")
           expect(rendered_component)
-            .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+            .to have_text("Secondary")
         end
       end
 
       context "draft" do
-        let(:trainee) { create(:trainee, :early_years_undergrad, :with_course_details, :draft) }
+        let(:trainee) { create(:trainee, :with_secondary_education, :early_years_undergrad, :with_course_details, :draft) }
 
-        it "does not render route" do
-          expect(rendered_component).not_to have_text("Route")
-          expect(rendered_component).not_to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+        it "does not render education phase" do
+          expect(rendered_component).not_to have_text("Education phase")
+          expect(rendered_component).not_to have_text("Secondary")
         end
       end
     end
@@ -190,22 +181,22 @@ module CourseDetails
       end
 
       context "draft" do
-        let(:trainee) { create(:trainee, :with_course_details, :draft) }
+        let(:trainee) { create(:trainee, :with_secondary_education, :with_course_details, :draft) }
 
         it "renders route" do
-          expect(rendered_component).to have_text("Route")
+          expect(rendered_component).to have_text("Education phase")
           expect(rendered_component)
-            .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+            .to have_text("Secondary")
         end
       end
 
       context "non draft" do
-        let(:trainee) { create(:trainee, :with_course_details, :submitted_for_trn) }
+        let(:trainee) { create(:trainee, :with_secondary_education, :with_course_details, :submitted_for_trn) }
 
         it "renders route" do
-          expect(rendered_component).to have_text("Route")
+          expect(rendered_component).to have_text("Education phase")
           expect(rendered_component)
-            .to have_text(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
+            .to have_text("Secondary")
         end
       end
     end
