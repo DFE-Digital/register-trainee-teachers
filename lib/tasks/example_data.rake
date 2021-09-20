@@ -12,6 +12,7 @@ REAL_PUBLISH_COURSES_WITH_SUBJECTS = {
   "Chemistry" => ["Chemistry"],
   "Citizenship with Religious education" => ["Citizenship", "Religious education"],
   "Computer Science" => ["Computing"],
+  "Dance" => ["Dance"],
   "Design and technology" => ["Design and technology"],
   "Drama (with English)" => %w[Drama English],
   "Drama" => ["Drama"],

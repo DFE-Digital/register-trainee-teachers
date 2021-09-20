@@ -32,6 +32,7 @@ PUBLISH_SUBJECT_SPECIALISM_MAPPING = {
   # Subjects with a simple 1-to-1 specialism mapping
   "Citizenship" => [CourseSubjects::CITIZENSHIP],
   "Communication and media studies" => [CourseSubjects::MEDIA_AND_COMMUNICATION_STUDIES],
+  "Dance" => [CourseSubjects::DANCE],
   "Economics" => [CourseSubjects::ECONOMICS],
   "Geography" => [CourseSubjects::GEOGRAPHY],
   "Health and social care" => [CourseSubjects::HEALTH_AND_SOCIAL_CARE],
