@@ -10,7 +10,6 @@ module CourseDetails
       @data_model = data_model
       @trainee = data_model.is_a?(Trainee) ? data_model : data_model.trainee
       @has_errors = has_errors
-      @not_provided_copy = t("components.confirmation.not_provided")
     end
 
     def summary_title
@@ -19,7 +18,6 @@ module CourseDetails
 
     def rows
       [
-        type_of_course,
         education_phase,
         subject_row,
         age_range_row,
@@ -43,14 +41,10 @@ module CourseDetails
 
     attr_accessor :data_model, :trainee, :has_errors
 
-    def type_of_course
-      if require_course_type?
-        { key: t("components.course_detail.type_of_course"), value: course_type }
-      end
-    end
-
     def education_phase
-      mappable_field(trainee.course_education_phase&.upcase_first, t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee))
+      if require_education_phase?
+        mappable_field(trainee.course_education_phase&.upcase_first, t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee))
+      end
     end
 
     def subject_row
@@ -87,7 +81,7 @@ module CourseDetails
       !trainee.early_years_route?
     end
 
-    def require_course_type?
+    def require_education_phase?
       return true unless trainee.early_years_route?
 
       !trainee.draft?
@@ -119,12 +113,6 @@ module CourseDetails
 
     def study_mode
       t("components.course_detail.study_mode_values.#{data_model.study_mode}") if data_model.study_mode.present?
-    end
-
-    def course_type
-      return @not_provided_copy if trainee.training_route.blank?
-
-      t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
     end
 
     def course_start_date

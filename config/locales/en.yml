@@ -153,7 +153,6 @@ en:
         trainee_start_date: start date
     course_detail:
       title: Course details
-      type_of_course: Route
       education_phase: Education phase
       subject: Subject
       age_range: Age range
