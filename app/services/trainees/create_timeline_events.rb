@@ -30,7 +30,6 @@ module Trainees
       course_start_date
       course_end_date
       commencement_date
-      course_min_age
       course_max_age
       course_code
       course_subject_two
