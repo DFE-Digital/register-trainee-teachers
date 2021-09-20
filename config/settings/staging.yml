@@ -23,6 +23,7 @@ features:
   show_funding: true
   send_funding_to_dttp: true
   scholarship: true
+  course_study_mode: true
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true
