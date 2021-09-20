@@ -13,6 +13,10 @@ class PublishCourseDetailsForm < TraineeForm
 
   validates :course_code, presence: true
 
+  delegate :age_range, :end_date, to: :course, prefix: true
+
+  delegate :course_subject_one, :course_subject_two, :course_subject_three, to: :specialism_form
+
   def manual_entry_chosen?
     course_code == NOT_LISTED
   end
@@ -24,7 +28,6 @@ class PublishCourseDetailsForm < TraineeForm
         course_subject_one: nil,
         course_subject_two: nil,
         course_subject_three: nil,
-
         course_age_range: nil,
         course_start_date: nil,
         course_end_date: nil,
@@ -49,25 +52,20 @@ class PublishCourseDetailsForm < TraineeForm
     super
   end
 
-  delegate :course_subject_one, :course_subject_two, :course_subject_three,
-           to: :specialism_form
-
-  delegate :age_range, to: :course, prefix: true
-
   def course_start_date
-    @course_start_date ||=
-      if trainee.requires_itt_start_date?
-        IttStartDateForm.new(trainee).date
-      end || course.start_date
+    return course.start_date if different_course_chosen?
+
+    if trainee.requires_itt_start_date?
+      IttStartDateForm.new(trainee).date
+    end || course.start_date
   end
 
-  delegate :end_date, to: :course, prefix: true
-
   def study_mode
-    @study_mode ||=
-      if trainee.requires_study_mode?
-        StudyModesForm.new(trainee).study_mode
-      end || course_study_mode_if_valid
+    return course_study_mode_if_valid if different_course_chosen?
+
+    if trainee.requires_study_mode?
+      StudyModesForm.new(trainee).study_mode
+    end || course_study_mode_if_valid
   end
 
   def language_specialism?
@@ -121,5 +119,9 @@ private
 
   def compute_fields
     trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
+  end
+
+  def different_course_chosen?
+    course_code != trainee.course_code
   end
 end
