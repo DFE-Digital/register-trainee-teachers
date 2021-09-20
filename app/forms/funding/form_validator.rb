@@ -8,10 +8,12 @@ module Funding
 
     delegate :id, :persisted?, to: :trainee
 
-    validate :validate_bursary, if: -> { trainee.bursary_amount.present? }
+    validate :validate_bursary, if: -> { funding_manager.bursary_amount.present? }
+
     validate :validate_training_initiative
 
-    delegate :applying_for_bursary, to: :bursary_form
+    delegate :applying_for_bursary, :applying_for_scholarship,
+             to: :bursary_form
     delegate :bursary_tier, to: :bursary_form
     delegate :training_initiative, to: :training_initiatives_form
 
@@ -40,7 +42,7 @@ module Funding
     def bursary_forms
       [
         training_initiatives_form,
-        (bursary_form if trainee.can_apply_for_bursary?),
+        (bursary_form if funding_manager.can_apply_for_bursary?),
       ].compact
     end
 
@@ -58,6 +60,10 @@ module Funding
 
     def training_initiatives_form_fields
       training_initiatives_form.fields || {}
+    end
+
+    def funding_manager
+      @funding_manager ||= FundingManager.new(trainee)
     end
   end
 end

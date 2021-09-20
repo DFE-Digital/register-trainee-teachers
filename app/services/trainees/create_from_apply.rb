@@ -54,6 +54,7 @@ module Trainees
         ethnic_group: ethnic_group,
         ethnic_background: raw_trainee["ethnic_background"],
         diversity_disclosure: diversity_disclosure,
+        disability_disclosure: disability_disclosure,
         email: raw_contact_details["email"],
         course_code: course&.code,
         training_route: course&.route,
@@ -101,7 +102,7 @@ module Trainees
     end
 
     def gender
-      ApplyApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]]
+      ApplyApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]] || Trainee.genders[:gender_not_provided]
     end
 
     def ethnic_group
@@ -114,8 +115,19 @@ module Trainees
       Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
     end
 
+    def disability_disclosure
+      return Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] if disability_disclosed? && disabilities.present?
+      return Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] if disability_disclosed? && disabilities.blank?
+
+      Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided]
+    end
+
     def diversity_disclosed?
       raw_trainee.slice("disabilities", "ethnic_group", "ethnic_background").values.any?(&:present?)
+    end
+
+    def disability_disclosed?
+      raw_trainee["disability_disclosure"].present?
     end
 
     def disability_names

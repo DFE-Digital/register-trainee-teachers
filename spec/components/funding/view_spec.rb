@@ -19,17 +19,19 @@ module Funding
 
     context "on opt-in (undergrad) route" do
       let(:state) { :draft }
-      let(:training_initiative) { TRAINING_ROUTE_INITIATIVES["opt_in_undergrad"].first }
-      let(:degree) { create(:degree, subject: AllocationSubjects::MATHEMATICS) }
-      let(:trainee) { build(:trainee, state, training_initiative: training_initiative, training_route: "opt_in_undergrad", degrees: [degree]) }
+      let(:route) { "opt_in_undergrad" }
+      let(:training_initiative) { TRAINING_ROUTE_INITIATIVES[route].first }
+      let(:trainee) do
+        build(:trainee, state, training_initiative: training_initiative, training_route: route, applying_for_bursary: true, course_subject_one: subject_specialism.name)
+      end
+
+      let(:subject_specialism) { create(:subject_specialism, name: AllocationSubjects::MATHEMATICS) }
+      let(:amount) { 9000 }
+      let(:funding_method) { create(:funding_method, training_route: route, amount: amount) }
 
       context "when there is a bursary available" do
         before do
-          allow(CalculateBursary).to receive(:for_route_and_subject).with(
-            trainee.training_route.to_sym,
-            trainee.course_subject_one,
-          ).and_return(9_000)
-          allow(trainee).to receive(:applying_for_bursary).and_return(true)
+          create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
           render_inline(View.new(data_model: trainee))
         end
 
@@ -40,10 +42,6 @@ module Funding
 
       context "when there is no bursary available" do
         before do
-          allow(CalculateBursary).to receive(:for_route_and_subject).with(
-            trainee.training_route.to_sym,
-            trainee.course_subject_one,
-          ).and_return(nil)
           render_inline(View.new(data_model: trainee))
         end
 
@@ -55,7 +53,15 @@ module Funding
 
     context "assessment only route" do
       let(:state) { :draft }
-      let(:trainee) { build(:trainee, state, training_initiative: training_initiative) }
+      let(:route) { "assessment_only" }
+      let(:training_initiative) { TRAINING_ROUTE_INITIATIVES[route].first }
+
+      let(:trainee) do
+        build(:trainee, state, training_initiative: training_initiative, training_route: route, applying_for_bursary: applying_for_bursary, course_subject_one: course_subject_one)
+      end
+
+      let(:course_subject_one) { nil }
+      let(:applying_for_bursary) { nil }
 
       describe "on training initiative" do
         let(:training_initiative) { ROUTE_INITIATIVES.keys.first }
@@ -70,10 +76,6 @@ module Funding
 
         describe "has no bursary" do
           before do
-            allow(CalculateBursary).to receive(:for_route_and_subject).with(
-              trainee.training_route.to_sym,
-              trainee.course_subject_one,
-            ).and_return(nil)
             render_inline(View.new(data_model: trainee))
           end
 
@@ -85,24 +87,26 @@ module Funding
             let(:state) { :trn_received }
 
             it "renders bursary not available" do
-              expect(rendered_component).to have_text("No bursaries available for this course")
+              expect(rendered_component).to have_text("Not applicable")
             end
           end
         end
 
         describe "has bursary" do
+          let(:subject_specialism) { create(:subject_specialism, name: AllocationSubjects::MUSIC) }
+          let(:amount) { 24_000 }
+          let(:funding_method) { create(:funding_method, training_route: route, amount: amount) }
+
+          let(:course_subject_one) { subject_specialism.name }
+
           before do
-            allow(CalculateBursary).to receive(:for_route_and_subject).with(
-              trainee.training_route.to_sym,
-              trainee.course_subject_one,
-            ).and_return(24_000)
+            create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
+
+            render_inline(View.new(data_model: trainee))
           end
 
           describe "bursary funded" do
-            before do
-              allow(trainee).to receive(:applying_for_bursary).and_return(true)
-              render_inline(View.new(data_model: trainee))
-            end
+            let(:applying_for_bursary) { true }
 
             it "renders" do
               expect(rendered_component).to have_text("Bursary applied for")
@@ -115,13 +119,10 @@ module Funding
           end
 
           describe "not bursary funded" do
-            before do
-              allow(trainee).to receive(:applying_for_bursary).and_return(false)
-              render_inline(View.new(data_model: trainee))
-            end
+            let(:applying_for_bursary) { false }
 
             it "renders" do
-              expect(rendered_component).to have_text("Not bursary funded")
+              expect(rendered_component).to have_text("Not funded")
               expect(rendered_component).not_to have_text("£24,000 estimated bursary")
             end
 

@@ -23,7 +23,7 @@ module ApplicationRecordCard
 
     def subject
       return I18n.t("components.application_record_card.subject.early_years") if record.early_years_route?
-      return I18n.t("components.application_record_card.subject.blank") if record.course_subject_one.blank?
+      return course_name if record.course_subject_one.blank?
 
       subjects_for_summary_view(record.course_subject_one, record.course_subject_two, record.course_subject_three)
     end
@@ -66,6 +66,10 @@ module ApplicationRecordCard
 
     def last_name_first
       [record.last_name, record.first_names].join(", ")
+    end
+
+    def course_name
+      record.published_course&.name
     end
   end
 end

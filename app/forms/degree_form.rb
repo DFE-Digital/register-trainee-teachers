@@ -33,6 +33,7 @@ class DegreeForm
 
   validates :institution, inclusion: { in: Degree::INSTITUTIONS }, allow_nil: true
   validates :subject, inclusion: { in: Degree::SUBJECTS }, allow_nil: true
+  validates :uk_degree, inclusion: { in: Degree::DEGREE_TYPES }, allow_nil: true
 
   delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?, to: :degree
 

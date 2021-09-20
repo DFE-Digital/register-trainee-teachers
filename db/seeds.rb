@@ -15,7 +15,7 @@ end
 
 # Load Disabilities
 Diversities::SEED_DISABILITIES.each do |disability|
-  Disability.find_or_create_by!(name: disability.name, description: disability.description)
+  Disability.find_or_create_by!(name: disability.name).update(description: disability.description)
 end
 
 ALLOCATION_SUBJECT_SPECIALISM_MAPPING.each do |allocation_subject, subject_specialisms|
@@ -30,9 +30,19 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING.each do |allocation_subject, subject_speci
 end
 
 SEED_BURSARIES.each do |b|
-  bursary = Bursary.find_or_create_by!(training_route: b.training_route, amount: b.amount)
+  bursary = FundingMethod.find_or_create_by!(training_route: b.training_route, amount: b.amount)
+  bursary.funding_type = :bursary
+  bursary.save!
   b.allocation_subjects.map do |subject|
     allocation_subject = AllocationSubject.find_by!(name: subject)
-    bursary.bursary_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+    bursary.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+  end
+end
+
+SEED_SCHOLARSHIPS.each do |s|
+  funding_method = FundingMethod.find_or_create_by!(training_route: s.training_route, amount: s.amount, funding_type: FUNDING_TYPE_ENUMS[:scholarship])
+  s.allocation_subjects.map do |subject|
+    allocation_subject = AllocationSubject.find_by!(name: subject)
+    funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
   end
 end

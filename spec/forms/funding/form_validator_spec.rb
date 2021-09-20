@@ -43,14 +43,14 @@ module Funding
       context "when a bursary is available" do
         let(:allocation_subject) { create(:allocation_subject) }
         let(:subject_specialism) { create(:subject_specialism, allocation_subject: allocation_subject) }
-        let(:bursary) { create(:bursary, training_route: :provider_led_postgrad) }
-        let(:trainee) { create(:trainee, training_route: bursary.training_route.to_sym, course_subject_one: subject_specialism.name) }
+        let(:funding_method) { create(:funding_method, training_route: :provider_led_postgrad) }
+        let(:trainee) { create(:trainee, training_route: funding_method.training_route.to_sym, course_subject_one: subject_specialism.name) }
 
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil) }
         let(:bursary_form) { instance_double(Funding::BursaryForm, fields: nil, applying_for_bursary: nil) }
 
         before do
-          create(:bursary_subject, allocation_subject: allocation_subject, bursary: bursary)
+          create(:funding_method_subject, allocation_subject: allocation_subject, funding_method: funding_method)
           allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
           allow(Funding::BursaryForm).to receive(:new).and_return(bursary_form)
         end
@@ -147,10 +147,10 @@ module Funding
 
       context "with invalid TrainingInitiativesForm and Bursary form" do
         before do
-          allow(trainee).to receive(:bursary_amount).and_return(1)
+          allow(FundingManager).to receive(:new).with(trainee).and_return(double(can_apply_for_bursary?: true))
         end
 
-        it { is_expected.to eq([%i[training_initiative applying_for_bursary]]) }
+        it { is_expected.to eq([%i[training_initiative funding_type]]) }
       end
     end
   end

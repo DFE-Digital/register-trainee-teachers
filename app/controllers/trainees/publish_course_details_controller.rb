@@ -13,6 +13,7 @@ module Trainees
 
     def update
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
+
       if @publish_course_details_form.stash_or_save!
         if @publish_course_details_form.manual_entry_chosen?
           @publish_course_details_form.process_manual_entry!
@@ -34,8 +35,6 @@ module Trainees
     def next_step_path
       if @publish_course_details_form.manual_entry_chosen?
         edit_trainee_course_details_path(trainee)
-      elsif @publish_course_details_form.course_has_one_specialism?
-        publish_course_next_path
       elsif @publish_course_details_form.language_specialism?
         edit_trainee_language_specialisms_path(trainee)
       else
@@ -45,6 +44,10 @@ module Trainees
 
     def course_params
       params.fetch(:publish_course_details_form, {}).permit(:course_code)
+    end
+
+    def trainee
+      @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
     def authorize_trainee

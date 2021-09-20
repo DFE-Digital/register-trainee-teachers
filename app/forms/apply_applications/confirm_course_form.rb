@@ -43,19 +43,23 @@ module ApplyApplications
     end
 
     def course_age_range
-      course&.age_range
+      course&.age_range || trainee.course_age_range
     end
 
     def course_code
-      code
+      code || trainee.course_code
     end
 
     def course_start_date
-      itt_start_date || course&.start_date
+      itt_start_date || course&.start_date || trainee.course_start_date
     end
 
     def course_end_date
-      course&.end_date
+      course&.end_date || trainee.course_end_date
+    end
+
+    def study_mode
+      course&.study_mode || trainee.study_mode
     end
 
   private
@@ -66,16 +70,21 @@ module ApplyApplications
         course_subject_two: course_subject_two,
         course_subject_three: course_subject_three,
         training_route: course&.route,
-        course_code: course.code,
+        course_code: course_code,
         course_age_range: course_age_range,
         course_start_date: course_start_date,
         course_end_date: course_end_date,
+        study_mode: study_mode,
       })
       trainee.progress.course_details = mark_as_reviewed
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(code: code)
+      @course ||= trainee.available_courses.find_by(code: code || trainee.course_code)
+    end
+
+    def training_route
+      course&.route || trainee.training_route
     end
   end
 end

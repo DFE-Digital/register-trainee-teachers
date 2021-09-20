@@ -11,7 +11,10 @@ module Dttp
 
       COURSE_LEVEL_PG = 12
       COURSE_LEVEL_UG = 20
+
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
+
+      SCHOLARSHIP = "188375c2-7722-e711-80c8-0050568902d3"
 
       ALLOCATED_PLACE = 1
       NO_ALLOCATED_PLACE = 2
@@ -40,7 +43,6 @@ module Dttp
       def build_params
         {
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.course_age_range)})",
-          "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
           "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
           "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
@@ -52,14 +54,14 @@ module Dttp
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id(trainee.training_route)})",
           "dfe_programmeyear" => 1, # TODO: this will need to be derived for other routes. It's n of x year course e.g. 1 of 2
           "dfe_programmelength" => 1, # TODO: this will change for other routes as above. So these two are course_year of course_length
-          "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{trainee.degrees.first.graduation_year}").to_datetime.iso8601,
         }
-        .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
+        .merge(degree_params)
         .merge(school_params)
         .merge(subject_params)
         .merge(study_mode_params)
         .merge(training_initiative_params)
-        .merge(bursary_params)
+        .merge(funding_params)
+        .merge(region_params)
       end
 
       def course_level
@@ -75,6 +77,16 @@ module Dttp
           "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{degree_institution_id(qualifying_degree.institution)})",
           "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{degree_class_id(qualifying_degree.grade)})",
         }
+      end
+
+      def degree_params
+        return {} unless trainee.requires_degree?
+
+        {
+          "dfe_SubjectofUGDegreeId@odata.bind" => "/dfe_jacses(#{degree_subject_id(qualifying_degree.subject)})",
+          "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{trainee.degrees.first.graduation_year}").to_datetime.iso8601,
+        }
+        .merge(qualifying_degree.uk? ? uk_specific_params : non_uk_specific_params)
       end
 
       def non_uk_specific_params
@@ -123,13 +135,29 @@ module Dttp
         }
       end
 
-      def bursary_params
+      def funding_params
         return {} unless send_funding_to_dttp?
-        return { "dfe_allocatedplace" => NO_ALLOCATED_PLACE } unless trainee.applying_for_bursary
+
+        if trainee.applying_for_bursary || trainee.applying_for_scholarship
+          return {
+            "dfe_allocatedplace" => ALLOCATED_PLACE,
+            "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{funding_id})",
+          }
+        end
+
+        { "dfe_allocatedplace" => NO_ALLOCATED_PLACE }
+      end
+
+      def funding_id
+        return bursary_details_id(bursary_type) if trainee.applying_for_bursary
+        return SCHOLARSHIP if trainee.applying_for_scholarship
+      end
+
+      def region_params
+        return {} unless trainee.hpitt_provider?
 
         {
-          "dfe_allocatedplace" => ALLOCATED_PLACE,
-          "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{bursary_details_id(bursary_type)})",
+          "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_regions(#{region_id(trainee.region)})",
         }
       end
 

@@ -252,6 +252,14 @@ module Dttp
                 { "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG },
               )
             end
+
+            it "does not include the dfe_SubjectofUGDegreeId@odata.bind params" do
+              expect(subject.keys).not_to include("dfe_SubjectofUGDegreeId@odata.bind")
+            end
+
+            it "does not include the dfe_undergraddegreedateobtained params" do
+              expect(subject.keys).not_to include("dfe_undergraddegreedateobtained")
+            end
           end
         end
 
@@ -370,7 +378,7 @@ module Dttp
           end
 
           context "when the send_funding_to_dttp feature flag is on", feature_send_funding_to_dttp: true do
-            context "and the trainee is not applying for a bursary" do
+            context "and the trainee is not funded" do
               it "sends the correct params" do
                 expect(subject).to include({ "dfe_allocatedplace" => 2 })
                 expect(subject.keys).not_to include("dfe_BursaryDetailsId@odata.bind")
@@ -414,6 +422,45 @@ module Dttp
                 })
               end
             end
+
+            context "and the trainee is applying for a scholarship" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  :with_course_details,
+                  :with_start_date,
+                  :with_scholarship,
+                  dttp_id: dttp_contact_id,
+                )
+              end
+
+              let(:scholarship_id) { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
+
+              it "sends the correct params" do
+                expect(subject).to include({ "dfe_allocatedplace" => 1 })
+                expect(subject).to include({
+                  "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{scholarship_id})",
+                })
+              end
+            end
+          end
+        end
+
+        context "with region information" do
+          let(:provider) { create(:provider, :teach_first) }
+
+          let(:trainee) do
+            create(:trainee, :with_course_details, :with_start_date, :with_hpitt_provider, dttp_id: dttp_contact_id, provider: provider)
+          end
+
+          let(:expected_region_id) { CodeSets::Regions::MAPPING.dig(trainee.region, :entity_id) }
+
+          subject { described_class.new(trainee).params }
+
+          it "returns a hash including the region" do
+            expect(subject).to include({
+              "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_regions(#{expected_region_id})",
+            })
           end
         end
 

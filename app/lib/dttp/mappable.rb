@@ -70,6 +70,10 @@ module Dttp
       Dttp::School.active.find_by!(urn: urn)&.dttp_id
     end
 
+    def region_id(region)
+      CodeSets::Regions::MAPPING.dig(region, :entity_id)
+    end
+
     def training_initiative_id(training_initiative)
       CodeSets::TrainingInitiatives::MAPPING.dig(training_initiative, :entity_id)
     end

@@ -11,7 +11,7 @@
 
 <h2 class="govuk-heading-m">Final check</h2>
   <%= render GovukButtonLinkTo::View.new(body: "Check this record", url: check_details_trainee_path(@trainee), id: "check-details") %>
-<p class="govuk-body"><%= govuk_link_to("Return to this draft record later", trainees_path) %></p>
+<p class="govuk-body"><%= govuk_link_to("Return to this draft later", trainees_path) %></p>
 
 <p class="govuk-body govuk-!-margin-top-8">
   <%= govuk_link_to "Delete this draft", trainee_confirm_delete_path(@trainee), class: "app-link--warning" %>

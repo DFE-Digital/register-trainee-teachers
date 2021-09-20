@@ -113,10 +113,15 @@ FactoryBot.define do
 
     trait :with_course_details do
       course_subject_one { ::CourseSubjects::MATHEMATICS }
-      course_code { Faker::Alphanumeric.alphanumeric(number: 4).upcase }
       course_age_range { Dttp::CodeSets::AgeRanges::MAPPING.reject { |_k, v| v[:option] == :main }.keys.sample }
       course_start_date { Faker::Date.between(from: 1.year.ago, to: 2.days.ago) }
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
+    end
+
+    trait :with_publish_course_details do
+      training_route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
+      with_course_details
+      course_code { create(:course_with_subjects, route: training_route, accredited_body_code: provider.code).code }
     end
 
     trait :with_course_details_and_study_mode do
@@ -355,15 +360,31 @@ FactoryBot.define do
       applying_for_bursary { true }
 
       after(:create) do |trainee, _|
-        bursary = create(:bursary, :with_bursary_subjects, training_route: :provider_led_postgrad)
-        trainee.course_subject_one = bursary.allocation_subjects.first.name
-        trainee.training_route = bursary.training_route
+        funding_method = create(:funding_method, :bursary, :with_subjects, training_route: :provider_led_postgrad)
+        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.training_route = funding_method.training_route
+      end
+    end
+
+    trait :with_scholarship do
+      applying_for_scholarship { true }
+
+      after(:create) do |trainee, _|
+        funding_method = create(:funding_method, :scholarship, :with_subjects, training_route: :provider_led_postgrad)
+        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.training_route = funding_method.training_route
       end
     end
 
     trait :with_tiered_bursary do
       applying_for_bursary { true }
       bursary_tier { BURSARY_TIER_ENUMS[:tier_one] }
+    end
+
+    trait :with_hpitt_provider do
+      training_route { TRAINING_ROUTE_ENUMS[:hpitt_postgrad] }
+      region { Dttp::CodeSets::Regions::MAPPING.keys.sample }
+      association :provider, factory: %i[provider teach_first]
     end
   end
 end

@@ -13,6 +13,12 @@ class Trainee < ApplicationRecord
   has_many :disabilities, through: :trainee_disabilities
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
+  belongs_to :published_course,
+             class_name: "Course",
+             foreign_key: :course_code,
+             primary_key: :code,
+             inverse_of: :trainees,
+             optional: true
 
   attribute :progress, Progress.to_type
 
@@ -216,7 +222,7 @@ class Trainee < ApplicationRecord
   end
 
   def available_courses
-    return provider.courses if apply_application?
+    return provider.courses.order(:name) if apply_application?
 
     provider.courses.where(route: training_route) if TRAINING_ROUTES_FOR_COURSE.keys.include?(training_route)
   end
@@ -261,10 +267,6 @@ class Trainee < ApplicationRecord
     end
   end
 
-  def bursary_amount
-    CalculateBursary.for_route_and_subject(training_route.to_sym, course_subject_one)
-  end
-
   def set_early_years_course_details
     if early_years_route?
       self.course_subject_one = CourseSubjects::EARLY_YEARS_TEACHING
@@ -272,12 +274,12 @@ class Trainee < ApplicationRecord
     end
   end
 
-  def can_apply_for_bursary?
-    training_route == TRAINING_ROUTE_ENUMS[:early_years_postgrad] || bursary_amount.present?
-  end
-
   def invalid_apply_data?
     apply_application&.invalid_data.present?
+  end
+
+  def hpitt_provider?
+    @hpitt_provider ||= provider&.hpitt_postgrad?
   end
 
 private
@@ -296,9 +298,5 @@ private
         assoc.map(&:serializable_hash).flat_map(&:values).compact
       end
     ).join(",")
-  end
-
-  def hpitt_provider?
-    @hpitt_provider ||= provider&.hpitt_postgrad?
   end
 end

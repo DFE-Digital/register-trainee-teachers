@@ -287,34 +287,6 @@ describe Trainee do
         end
       end
     end
-
-    describe "#bursary_amount" do
-      it "returns the bursary amount for the trainee's route and subject" do
-        expect(CalculateBursary).to receive(:for_route_and_subject).once.with(subject.training_route.to_sym, subject.course_subject_one)
-
-        subject.bursary_amount
-      end
-    end
-  end
-
-  describe "#can_apply_for_bursary?" do
-    let(:trainee) { create(:trainee) }
-
-    subject { trainee.can_apply_for_bursary? }
-
-    it { is_expected.to be_falsey }
-
-    context "when the trainee is on the early_years_postgrad route" do
-      let(:trainee) { create(:trainee, :early_years_postgrad) }
-
-      it { is_expected.to be_truthy }
-    end
-
-    context "when the bursary amount is calculated on the selected route and subject" do
-      before { allow(CalculateBursary).to receive(:for_route_and_subject).and_return(1000) }
-
-      it { is_expected.to be_truthy }
-    end
   end
 
   describe "#with_name_trainee_id_or_trn_like" do

@@ -20,7 +20,7 @@ module Dttp
         ::CourseSubjects::BUSINESS_STUDIES => { entity_id: "a68274df-181e-e711-80c8-0050568902d3" },
         ::CourseSubjects::CHEMISTRY => { entity_id: "688274df-181e-e711-80c8-0050568902d3" },
         ::CourseSubjects::CHILD_DEVELOPMENT => { entity_id: EARLY_YEARS_DTTP_ID },
-        ::CourseSubjects::CHINESE_LANGUAGES => { entity_id: "1e2ed06f-f303-eb11-a813-000d3ad82cac" },
+        ::CourseSubjects::CHINESE_LANGUAGES => { entity_id: "b5af6d41-f103-eb11-a813-000d3ab1d47c" },
         ::CourseSubjects::CITIZENSHIP => { entity_id: "3b1724c0-e5ee-eb11-bacb-000d3ab62638" },
         ::CourseSubjects::CLASSICAL_GREEK_STUDIES => { entity_id: "2aa12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::CLASSICAL_STUDIES => { entity_id: "2ca12838-b3cf-e911-a860-000d3ab1da01" },

@@ -1,4 +1,5 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.subject_specialisms.edit", has_errors: @subject_specialism_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.subject_specialisms.edit",
+                               has_errors: @subject_specialism_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -13,21 +14,19 @@
       <%= f.govuk_error_summary %>
 
     <div class="govuk-form-group">
-      <%= f.govuk_radio_buttons_fieldset :"course_subject_#{position_in_words}",
-                                        legend: { text: t(".heading", subject: @subject.downcase), tag: "h1", size: "l" } do %>
+      <%= f.govuk_radio_buttons_fieldset course_subject_attribute_name,
+                                        legend: { text: t(".heading", subject: @subject.downcase),
+                                                  tag: "h1", size: "l" } do %>
 
           <div class="govuk-hint">
             <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
           </div>
 
         <% sort_specialisms(@subject, @specialisms).each_with_index do |specialism, index| %>
-          <%= f.govuk_radio_button(
-              :"course_subject_#{position_in_words}",
-              specialism,
-              multiple: true,
-              link_errors: index.zero?,
-              label: { text: specialism.upcase_first },
-            ) %>
+          <%= f.govuk_radio_button(course_subject_attribute_name,
+                                   specialism, multiple: true,
+                                   link_errors: index.zero?,
+                                   label: { text: specialism.upcase_first },) %>
         <% end %>
       <% end %>
     </div>

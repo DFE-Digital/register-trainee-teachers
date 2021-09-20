@@ -19,6 +19,7 @@ module Dttp
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => { entity_id: EYTS },
         TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => { entity_id: "d4113eff-141e-e711-80c8-0050568902d3" },
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => { entity_id: EYTS },
+        TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => { entity_id: QTS },
       }.freeze
     end
   end

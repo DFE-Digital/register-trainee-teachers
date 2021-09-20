@@ -3,65 +3,82 @@
 module Funding
   class BursaryForm < TraineeForm
     FIELDS = %i[
+      applying_for_scholarship
       applying_for_bursary
       bursary_tier
-      tiered_bursary_form
+      funding_type
     ].freeze
 
     NON_TRAINEE_FIELDS = %i[
-      tiered_bursary_form
+      funding_type
     ].freeze
+
+    NONE_TYPE = "none"
+    FUNDING_TYPES = (Trainee.bursary_tiers.keys + FUNDING_TYPE_ENUMS.values + [NONE_TYPE]).freeze
 
     attr_accessor(*FIELDS)
 
-    before_validation :set_applying_for_bursary
+    validates :funding_type, inclusion: { in: FUNDING_TYPES }
 
-    validates :applying_for_bursary, inclusion: { in: [true, false] }
-    validates :bursary_tier, inclusion: { in: Trainee.bursary_tiers.keys }, if: :requires_bursary_tier?
+    delegate :can_apply_for_scholarship?, :can_apply_for_tiered_bursary?,
+             :scholarship_amount, to: :funding_manager
 
-    def applying_for_bursary=(value)
-      @applying_for_bursary = ActiveModel::Type::Boolean.new.cast(value)
-    end
-
-    def save!
-      if valid?
-        update_trainee_attributes
-        trainee.save!
-        clear_stash
-      else
-        false
-      end
+    def initialize(trainee, params: {}, user: nil, store: FormStore)
+      params = add_fields_from_params(params)
+      super(trainee, params: params, user: user, store: store)
     end
 
   private
 
-    def update_trainee_attributes
-      # Need to save the applying_for_bursary attribute
-      trainee.assign_attributes(
-        fields
-          .merge(applying_for_bursary: applying_for_bursary)
-          .except(*fields_to_ignore_before_stash_or_save),
-      )
-    end
-
-    def set_applying_for_bursary
-      self.applying_for_bursary = true if bursary_tier.present?
-    end
-
     def compute_fields
-      trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
+      opts = trainee.attributes.symbolize_keys.slice(*FIELDS)
+      opts = add_funding_type_from_db(opts)
+      opts.merge!(new_attributes)
+      opts
+    end
+
+    def funding_manager
+      @funding_manager ||= FundingManager.new(trainee)
+    end
+
+    def add_funding_type_from_db(opts)
+      opts[:funding_type] =
+        if trainee.bursary_tier.present?
+          trainee.bursary_tier
+        elsif trainee.applying_for_bursary
+          FUNDING_TYPE_ENUMS[:bursary]
+        elsif trainee.applying_for_scholarship
+          FUNDING_TYPE_ENUMS[:scholarship]
+        elsif (trainee.applying_for_bursary == false) || (trainee.applying_for_scholarship == false)
+          NONE_TYPE
+        end
+      opts
+    end
+
+    def add_fields_from_params(opts)
+      case opts[:funding_type]
+      when *Trainee.bursary_tiers.keys
+        opts[:bursary_tier] = opts[:funding_type]
+        opts[:applying_for_bursary] = true
+        opts[:applying_for_scholarship] = false
+      when FUNDING_TYPE_ENUMS[:bursary]
+        opts[:bursary_tier] = nil
+        opts[:applying_for_bursary] = true
+        opts[:applying_for_scholarship] = false
+      when FUNDING_TYPE_ENUMS[:scholarship]
+        opts[:bursary_tier] = nil
+        opts[:applying_for_bursary] = false
+        opts[:applying_for_scholarship] = true
+      when NONE_TYPE
+        opts[:bursary_tier] = nil
+        opts[:applying_for_bursary] = false
+        opts[:applying_for_scholarship] = false
+      end
+      opts
     end
 
     def form_store_key
       :bursary
-    end
-
-    def requires_bursary_tier?
-      bursary_tier.present? || tier_not_selected?
-    end
-
-    def tier_not_selected?
-      tiered_bursary_form.present? && bursary_tier.nil?
     end
 
     def fields_to_ignore_before_stash_or_save

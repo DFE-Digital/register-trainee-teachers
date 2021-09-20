@@ -5,6 +5,7 @@ class Degree < ApplicationRecord
 
   INSTITUTIONS = Dttp::CodeSets::Institutions::MAPPING.keys
   SUBJECTS = Dttp::CodeSets::DegreeSubjects::MAPPING.keys
+  DEGREE_TYPES = Dttp::CodeSets::DegreeTypes::MAPPING.keys
 
   attr_writer :is_apply_import
 

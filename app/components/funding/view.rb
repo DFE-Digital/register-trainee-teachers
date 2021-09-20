@@ -21,7 +21,7 @@ module Funding
     def funding_detail_rows
       [
         training_initiative_row,
-        bursary_funding_row,
+        funding_method_row,
       ].compact
     end
 
@@ -29,34 +29,49 @@ module Funding
 
     attr_accessor :data_model, :has_errors
 
+    delegate :can_apply_for_scholarship?, :scholarship_amount,
+             :can_apply_for_bursary?, :bursary_amount,
+             to: :funding_manager
+
     def training_initiative_row
-      mappable_field(training_initiative, t(".training_initiative"), edit_trainee_funding_training_initiative_path(trainee))
+      mappable_field(
+        training_initiative,
+        t(".training_initiative"),
+        edit_trainee_funding_training_initiative_path(trainee),
+      )
+    end
+
+    def funding_method_row
+      if data_model.applying_for_scholarship
+        scholarship_funding_row
+      else
+        bursary_funding_row
+      end
     end
 
     def bursary_funding_row
       return unless show_bursary_funding?
 
       mappable_field(
-        bursary_funding,
-        t(".bursary_funding"),
-        (edit_trainee_funding_bursary_path(trainee) if trainee.can_apply_for_bursary?),
+        funding_method,
+        t(".funding_method"),
+        (edit_trainee_funding_bursary_path(trainee) if can_apply_for_bursary?),
       )
     end
 
-    def course_subject_one
-      trainee.course_subject_one
-    end
-
     def show_bursary_funding?
-      !trainee.draft? || trainee.can_apply_for_bursary?
+      !trainee.draft? || can_apply_for_bursary?
     end
 
-    def bursary_amount
-      @bursary_amount ||= if trainee.bursary_tier.present?
-                            CalculateBursary.for_tier(trainee.bursary_tier)
-                          else
-                            trainee.bursary_amount
-                          end
+    def scholarship_funding_row
+      scholarship_text = t(".scholarship_applied_for") +
+        "<br>#{tag.span("#{format_currency(scholarship_amount)} estimated scholarship", class: 'govuk-hint')}"
+
+      mappable_field(
+        scholarship_text.html_safe,
+        t(".funding_method"),
+        edit_trainee_funding_bursary_path(trainee),
+      )
     end
 
     def training_initiative
@@ -65,10 +80,10 @@ module Funding
       t("activerecord.attributes.trainee.training_initiatives.#{data_model.training_initiative}")
     end
 
-    def bursary_funding
-      return if trainee.can_apply_for_bursary? && data_model.applying_for_bursary.nil?
+    def funding_method
+      return if can_apply_for_bursary? && data_model.applying_for_bursary.nil?
 
-      return t(".no_bursary_available") if !trainee.can_apply_for_bursary?
+      return t(".no_funding_available") if !can_apply_for_bursary?
 
       return "#{t(".tiered_bursary_applied_for.#{data_model.bursary_tier}")}#{bursary_funding_hint}".html_safe if data_model.bursary_tier.present?
 
@@ -89,6 +104,10 @@ module Funding
         action_url: section_url,
         has_errors: has_errors,
       ).to_h
+    end
+
+    def funding_manager
+      @funding_manager ||= FundingManager.new(trainee)
     end
   end
 end

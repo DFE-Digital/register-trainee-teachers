@@ -64,8 +64,8 @@ private
   end
 
   def and_a_bursary_exists_for_their_subject
-    bursary = create(:bursary, training_route: :provider_led_postgrad, amount: 100_000)
-    allocation_subject = create(:allocation_subject, name: "magic", bursaries: [bursary])
+    funding_method = create(:funding_method, training_route: :provider_led_postgrad, amount: 100_000)
+    allocation_subject = create(:allocation_subject, name: "magic", funding_methods: [funding_method])
     create(:subject_specialism, allocation_subject: allocation_subject, name: course_subject)
   end
 

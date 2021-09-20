@@ -14,7 +14,7 @@ module Trainees
     private
 
       def set_course
-        @course = trainee.available_courses.find_by(code: trainee.course_code)
+        @course = trainee.published_course
       end
 
       def trainee

@@ -32,10 +32,11 @@ en:
     view:
       title: Funding
       training_initiative: &training_initiative Training initiative
-      bursary_funding: &bursary_funding Bursary funding
+      funding_method: &funding_method Funding method
       bursary_applied_for: Bursary applied for
-      no_bursary_applied_for: Not bursary funded
-      no_bursary_available: No bursaries available for this course
+      scholarship_applied_for: Scholarship applied for
+      no_bursary_applied_for: Not funded
+      no_funding_available: Not applicable
       tiered_bursary_applied_for:
         tier_one: Applied for Tier 1
         tier_two: Applied for Tier 2
@@ -48,6 +49,7 @@ en:
   record_details:
     view:
       trainee_id: Trainee ID
+      region: &region Region
       submitted_for_trn: Submitted for TRN
       trainee_status: Trainee status
       last_updated: Last updated
@@ -60,6 +62,11 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
+  training_details:
+    view: 
+      title: Trainee start date and ID
+      start_date: &commencement_date Trainee’s start date
+      region: *region
   components:
     heading:
       apply_draft:
@@ -85,10 +92,6 @@ en:
         title: &trainee_id Trainee ID
       start_date:
         title: Start date
-      training_details:
-        title: Trainee start date and ID
-        start_date:
-          title: &commencement_date Trainee’s start date
       funding:
         title: Funding
         training_initiative:
@@ -290,7 +293,7 @@ en:
           training_initiatives:
             edit: Training initiatives
           bursaries:
-            edit: Bursary funding
+            edit: Funding
         language_specialisms:
           edit: Choose subject specialisms
         subject_specialisms:
@@ -374,8 +377,8 @@ en:
         lead_school: School details
         trainee_data: Trainee data
         schools: Schools
-        funding: Funding
-        funding_inactive: Funding cannot be started yet
+        funding: Funding details
+        funding_inactive: Funding details cannot be started yet
       statuses:
         not_provided: not provided
         incomplete: not started
@@ -388,7 +391,7 @@ en:
         in_progress_valid: Continue section
         in_progress_invalid: Continue section
         review: Review their data
-        funding_inactive:  Complete course details first
+        funding_inactive: Complete course details first
     school_result_notice:
       result_text: "1 more school matches your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
       multiple_result_text: "%{remaining_search_count} more schools match your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
@@ -460,7 +463,9 @@ en:
         itt_start_date: *itt_start_date
         itt_end_date: *itt_end_date
         training_initiative: *training_initiative
-        applying_for_bursary: *bursary_funding
+        applying_for_bursary: *funding_method
+        applying_for_scholarship: *funding_method
+        funding_type: *funding_method
         institution: *institution
         subject: *subject
         uk_degree: *degree_type
@@ -480,7 +485,7 @@ en:
         export: Export these records
         filters:
           level: Education phase
-          search: Search records
+          search: Search for a trainee
           status: Status
           subject: Subject
           type_of_training: Type of training
@@ -612,14 +617,18 @@ en:
             tier_three:
               label: Yes - Tier 3 (£2,000)
               hint: 2:2 honours degree
-          guidance_link_text: DfE bursary guidance for the academic year 2021 to 2022 (opens in new tab)
-          guidance_url: https://www.gov.uk/government/publications/initial-teacher-training-itt-bursary-funding-manual/initial-teacher-training-bursaries-funding-manual-2021-to-2022-academic-year#training-bursary-award-and-eligibility
-          early_years_guidance_link_text: "Early years initial teacher training: 2021 to 2022 funding guidance (opens in new tab)"
-          early_years_guidance_url: https://www.gov.uk/guidance/early-years-initial-teacher-training-2021-to-2022-funding-guidance
+          guidance_link_text: "Funding: initial teacher training (ITT), academic year 2021 to 2022 (opens in new tab)"
+          guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-2021-to-2022
           title: Are you applying for a bursary for this trainee?
-          true: Yes, apply for a bursary
-          false: No, do not apply for a bursary
-          false_hint: For example, the trainee is not eligible or has applied for a scholarship
+        funding_type:
+          bursary:
+            label: Yes, apply for a bursary
+          scholarship:
+            label: No, the trainee has applied for a scholarship
+            hint: "%{amount} estimated scholarship"
+          none:
+            label: No, do not apply for a bursary
+            hint: For example, the trainee is not eligible or is self-funded
   pages:
     request_an_account:
       inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,
@@ -978,6 +987,8 @@ en:
               inclusion: &bursary_selection_required Select if you are applying for a bursary for this trainee
             bursary_tier:
               inclusion: *bursary_selection_required
+            funding_type:
+              inclusion: *bursary_selection_required
         outcome_date_form:
           attributes:
             date_string:
@@ -1154,7 +1165,11 @@ en:
                 blank: Select if the trainee is on a training initiative
               applying_for_bursary:
                 inclusion: *bursary_selection_required
+              applying_for_scholarship:
+                inclusion: *bursary_selection_required
               bursary_tier:
+                inclusion: *bursary_selection_required
+              funding_type:
                 inclusion: *bursary_selection_required
   page_headings:
     start_page: Register trainee teachers

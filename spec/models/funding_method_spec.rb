@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-describe Bursary do
-  subject { create(:bursary) }
+describe FundingMethod do
+  subject { create(:funding_method) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:training_route) }
@@ -12,7 +12,7 @@ describe Bursary do
   end
 
   describe "associations" do
-    it { is_expected.to have_many(:bursary_subjects) }
-    it { is_expected.to have_many(:allocation_subjects).through(:bursary_subjects) }
+    it { is_expected.to have_many(:funding_method_subjects) }
+    it { is_expected.to have_many(:allocation_subjects).through(:funding_method_subjects) }
   end
 end

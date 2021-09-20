@@ -13,6 +13,10 @@ class PublishCourseDetailsForm < TraineeForm
 
   validates :course_code, presence: true
 
+  delegate :age_range, :end_date, to: :course, prefix: true
+
+  delegate :course_subject_one, :course_subject_two, :course_subject_three, to: :specialism_form
+
   def manual_entry_chosen?
     course_code == NOT_LISTED
   end
@@ -24,64 +28,44 @@ class PublishCourseDetailsForm < TraineeForm
         course_subject_one: nil,
         course_subject_two: nil,
         course_subject_three: nil,
-
         course_age_range: nil,
         course_start_date: nil,
         course_end_date: nil,
         study_mode: nil,
       )
-    else
-      clear_stash
-      clear_form_stashes
     end
   end
 
   def save!
-    clear_form_stashes
     return true if manual_entry_chosen?
+    return false unless valid?
 
-    if valid?
-      reset_course_subject_fields
-      update_trainee_attributes
-      clear_bursary_information if course_subjects_changed?
-      trainee.save!
-      clear_stash
-    else
-      false
-    end
+    update_trainee_attributes
+    clear_bursary_information if course_subjects_changed?
+    trainee.save!
+    clear_stash
   end
 
   def stash
-    clear_form_stashes
     return true if manual_entry_chosen?
 
-    reset_course_subject_fields
     super
   end
 
-  delegate :course_subject_one, :course_subject_two, :course_subject_three,
-           to: :specialism_form
-
-  delegate :age_range, to: :course, prefix: true
-
   def course_start_date
-    @course_start_date ||=
-      if trainee.requires_itt_start_date?
-        IttStartDateForm.new(trainee).date
-      end || course.start_date
-  end
+    return course.start_date if different_course_chosen?
 
-  delegate :end_date, to: :course, prefix: true
+    if trainee.requires_itt_start_date?
+      IttStartDateForm.new(trainee).date
+    end || course.start_date
+  end
 
   def study_mode
-    @study_mode ||=
-      if trainee.requires_study_mode?
-        StudyModesForm.new(trainee).study_mode
-      end || course_study_mode_if_valid
-  end
+    return course_study_mode_if_valid if different_course_chosen?
 
-  def course_has_one_specialism?
-    CalculateSubjectSpecialisms.call(subjects: course_subjects).all? { |_, v| v.count < 2 }
+    if trainee.requires_study_mode?
+      StudyModesForm.new(trainee).study_mode
+    end || course_study_mode_if_valid
   end
 
   def language_specialism?
@@ -95,7 +79,7 @@ class PublishCourseDetailsForm < TraineeForm
 private
 
   def course_subjects
-    @course_subjects ||= course.subjects.map(&:name)
+    @course_subjects ||= course.subjects.pluck(:name)
   end
 
   def specialism_type
@@ -109,32 +93,6 @@ private
       else
         SubjectSpecialismForm.new(trainee)
       end
-  end
-
-  def clear_form_stashes
-    FormStore.set(trainee.id, :subject_specialism, nil)
-    FormStore.set(trainee.id, :language_specialisms, nil)
-    FormStore.set(trainee.id, :itt_start_date, nil)
-  end
-
-  def reset_course_subject_fields
-    return unless course
-
-    subjects = {
-      course_subject_one: nil,
-      course_subject_two: nil,
-      course_subject_three: nil,
-    }
-
-    if course_has_one_specialism?
-      subjects[:course_subject_one] = CalculateSubjectSpecialisms.call(
-        subjects: course.subjects.pluck(:name),
-      ).values.map(&:first).compact.first
-    end
-
-    specialism_form.fields.merge!(subjects)
-    specialism_form.stash_or_save!
-    @specialism_form = nil #  reload
   end
 
   def update_trainee_attributes
@@ -161,5 +119,9 @@ private
 
   def compute_fields
     trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
+  end
+
+  def different_course_chosen?
+    course_code != trainee.course_code
   end
 end

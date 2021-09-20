@@ -6,20 +6,17 @@
 
   <p class="govuk-body">
     <%= govuk_link_to(
-      t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_link_text' : 'guidance_link_text'}"),
-      t("views.forms.funding.bursaries.#{@trainee.early_years_route? ? 'early_years_guidance_url' : 'guidance_url'}"),
+      t("views.forms.funding.bursaries.guidance_link_text"),
+      t("views.forms.funding.bursaries.guidance_url"),
       { target: "_blank", rel: "noreferrer noopener" }
     ) %>
   </p>
 
-  <%= f.govuk_radio_buttons_fieldset(:bursary_tier, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
+  <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
 
-    <%= f.hidden_field :applying_for_bursary, value: false %>
-    <%= f.hidden_field :tiered_bursary_form, value: true %>
-
-    <% BURSARY_TIERS.each do |tier_key, _tier_value| %>
+    <% Trainee.bursary_tiers.keys.each do |tier_key| %>
       <%= f.govuk_radio_button(
-        :bursary_tier,
+        :funding_type,
         tier_key,
         label: { text: t("views.forms.funding.bursaries.tiered.#{tier_key}.label") },
         hint: { text: t("views.forms.funding.bursaries.tiered.#{tier_key}.hint") },
@@ -30,13 +27,14 @@
     <%= f.govuk_radio_divider %>
 
     <%= f.govuk_radio_button(
-      :bursary_tier,
-      "",
+      :funding_type,
+      f.object.class::NONE_TYPE,
       {
-        hint: { text: t("views.forms.funding.bursaries.false_hint") },
-        label: { text: t("views.forms.funding.bursaries.false") },
+        hint: { text: t("views.forms.funding.funding_type.none.hint") },
+        label: { text: t("views.forms.funding.funding_type.none.label") },
       }.merge(@trainee.applying_for_bursary.nil? ? { checked: false } : {} )
     ) %>
   <% end %>
+
   <%= f.govuk_submit %>
 <% end %>
