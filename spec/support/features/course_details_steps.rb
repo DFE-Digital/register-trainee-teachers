@@ -41,7 +41,7 @@ module Features
       create(:course_with_subjects,
              accredited_body_code: trainee.provider.code,
              route: trainee.training_route,
-             subject_names: [AllocationSubjects::HISTORY])
+             subject_names: [AllocationSubjects::PRIMARY])
     end
 
     def given_subject_specialisms_are_available_for_selection
