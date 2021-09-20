@@ -3,13 +3,13 @@
 class ContactDetailsForm < TraineeForm
   MANDATORY_UK_ADDRESS_FIELDS = %i[
     address_line_one
-    town_city
     postcode
   ].freeze
 
   FIELDS = %i[
     locale_code
     address_line_two
+    town_city
     international_address
     email
   ].concat(MANDATORY_UK_ADDRESS_FIELDS).freeze
