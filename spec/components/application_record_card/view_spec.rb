@@ -4,7 +4,8 @@ require "rails_helper"
 
 module ApplicationRecordCard
   describe View do
-    let(:trainee) { Trainee.new(created_at: Time.zone.now) }
+    let(:course) { create(:course) }
+    let(:trainee) { Trainee.new(created_at: Time.zone.now, course_code: course.code) }
 
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
@@ -18,14 +19,14 @@ module ApplicationRecordCard
     end
 
     context "when the Trainee has no subject" do
-      it "renders 'No subject provided'" do
-        expect(rendered_component).to have_text("No subject provided")
+      it "renders the course name" do
+        expect(rendered_component).to have_text(course.name)
       end
 
       context "and is an Early Years trainee" do
         let(:trainee) { Trainee.new(created_at: Time.zone.now, training_route: TRAINING_ROUTE_ENUMS[:early_years_undergrad]) }
 
-        it "renders 'Early uears teaching'" do
+        it "renders 'Early years teaching'" do
           expect(rendered_component).to have_text("Early years teaching")
         end
       end
