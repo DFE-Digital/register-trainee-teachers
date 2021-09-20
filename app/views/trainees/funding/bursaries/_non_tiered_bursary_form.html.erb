@@ -19,20 +19,32 @@
     ) %>
   </p>
 
-  <%= f.govuk_radio_buttons_fieldset(:applying_for_bursary, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
+  <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
       <%= f.govuk_radio_button(
-        :applying_for_bursary,
-        "true",
-        label: { text: t("views.forms.funding.bursaries.true") },
+        :funding_type,
+        FUNDING_TYPE_ENUMS[:bursary],
+        label: { text: t("views.forms.funding.funding_type.bursary.label") },
         link_errors: true,
       ) %>
 
+      <% if @bursary_form.can_apply_for_scholarship? %>
+        <div class="govuk-radios__divider">or</div>
+
+        <%= f.govuk_radio_button(
+          :funding_type,
+          FUNDING_TYPE_ENUMS[:scholarship],
+          hint: { text: t("views.forms.funding.funding_type.scholarship.hint", amount: format_currency(@bursary_form.scholarship_amount)) },
+          label: { text: t("views.forms.funding.funding_type.scholarship.label") },
+        ) %>
+      <% end %>
+
       <%= f.govuk_radio_button(
-        :applying_for_bursary,
-        "false",
-        hint: { text: t("views.forms.funding.bursaries.false_hint") },
-        label: { text: t("views.forms.funding.bursaries.false") },
+        :funding_type,
+        f.object.class::NONE_TYPE,
+        hint: { text: t("views.forms.funding.funding_type.none.hint") },
+        label: { text: t("views.forms.funding.funding_type.none.label") },
       ) %>
   <% end %>
+
   <%= f.govuk_submit %>
 <% end %>

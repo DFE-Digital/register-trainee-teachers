@@ -12,10 +12,7 @@ module Trainees
 
       def update
         @bursary_form = ::Funding::BursaryForm.new(trainee, params: bursary_params)
-
-        save_strategy = trainee.draft? ? :save! : :stash
-
-        if @bursary_form.public_send(save_strategy)
+        if @bursary_form.stash_or_save!
           redirect_to(trainee_funding_confirm_path)
         else
           load_bursary_info!
@@ -32,7 +29,9 @@ module Trainees
       def bursary_params
         return { applying_for_bursary: nil } if params[:funding_bursary_form].blank?
 
-        params.require(:funding_bursary_form).permit(:applying_for_bursary, :bursary_tier, :tiered_bursary_form)
+        params.require(:funding_bursary_form).permit(
+          :funding_type,
+        )
       end
 
       def authorize_trainee

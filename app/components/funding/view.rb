@@ -29,30 +29,49 @@ module Funding
 
     attr_accessor :data_model, :has_errors
 
+    delegate :can_apply_for_scholarship?, :scholarship_amount,
+             :can_apply_for_bursary?, :bursary_amount,
+             to: :funding_manager
+
     def training_initiative_row
-      mappable_field(training_initiative, t(".training_initiative"), edit_trainee_funding_training_initiative_path(trainee))
+      mappable_field(
+        training_initiative,
+        t(".training_initiative"),
+        edit_trainee_funding_training_initiative_path(trainee),
+      )
     end
 
     def funding_method_row
+      if data_model.applying_for_scholarship
+        scholarship_funding_row
+      else
+        bursary_funding_row
+      end
+    end
+
+    def bursary_funding_row
       return unless show_bursary_funding?
 
       mappable_field(
         funding_method,
         t(".funding_method"),
-        (edit_trainee_funding_bursary_path(trainee) if funding_manager.can_apply_for_bursary?),
+        (edit_trainee_funding_bursary_path(trainee) if can_apply_for_bursary?),
       )
     end
 
-    def course_subject_one
-      trainee.course_subject_one
-    end
-
     def show_bursary_funding?
-      !trainee.draft? || funding_manager.can_apply_for_bursary?
+      !trainee.draft? || can_apply_for_bursary?
     end
 
-    def bursary_amount
-      @bursary_amount ||= funding_manager.bursary_amount
+    def scholarship_funding_row
+      scholarship_text = t(".scholarship_applied_for") +
+        "<br>#{tag.span("#{format_currency(scholarship_amount)} estimated scholarship", class: 'govuk-hint')}"
+
+      mappable_field(
+        scholarship_text.html_safe,
+        t(".funding_method"),
+        edit_trainee_funding_bursary_path(trainee),
+      )
     end
 
     def training_initiative
@@ -62,9 +81,9 @@ module Funding
     end
 
     def funding_method
-      return if funding_manager.can_apply_for_bursary? && data_model.applying_for_bursary.nil?
+      return if can_apply_for_bursary? && data_model.applying_for_bursary.nil?
 
-      return t(".no_funding_available") if !funding_manager.can_apply_for_bursary?
+      return t(".no_funding_available") if !can_apply_for_bursary?
 
       return "#{t(".tiered_bursary_applied_for.#{data_model.bursary_tier}")}#{bursary_funding_hint}".html_safe if data_model.bursary_tier.present?
 
