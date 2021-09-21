@@ -20,7 +20,7 @@ module Trainees
         save_strategy = trainee.draft? ? :save! : :stash
 
         if @disability_detail_form.public_send(save_strategy)
-          redirect_to trainee_diversity_confirm_path(trainee)
+          redirect_to relevant_path
         else
           render :edit
         end
@@ -44,6 +44,10 @@ module Trainees
 
       def authorize_trainee
         authorize(trainee)
+      end
+
+      def relevant_path
+        trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_diversity_confirm_path(trainee)
       end
     end
   end
