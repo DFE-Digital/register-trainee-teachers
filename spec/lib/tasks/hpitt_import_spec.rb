@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe "hpitt:import" do
+  include SeedHelper
+
   before do
     # Load Nationalities
     Dttp::CodeSets::Nationalities::MAPPING.each_key do |nationality|
@@ -10,9 +12,7 @@ describe "hpitt:import" do
     end
 
     # Load Disabilities
-    Diversities::SEED_DISABILITIES.each do |disability|
-      Disability.find_or_create_by!(name: disability.name, description: disability.description)
-    end
+    generate_seed_diversities
   end
 
   subject do
@@ -21,7 +21,7 @@ describe "hpitt:import" do
   end
 
   let!(:school) { create(:school, urn: 123) }
-  let!(:provider) { create(:provider, code: TEACH_FIRST_PROVIDER_CODE) }
+  let!(:provider) { create(:provider, :teach_first) }
   let!(:course) do
     create(
       :course,
@@ -53,6 +53,7 @@ describe "hpitt:import" do
     }
 
     it "gives an error including which row had the problem, and still creates the valid trainee" do
+      expect(Sentry).to receive(:capture_exception).with(StandardError)
       expect { subject }.to change { Trainee.count }.from(0).to(1)
       # TODO: error csv
     end
@@ -64,7 +65,7 @@ describe "hpitt:import" do
     }
 
     it "edits the existing trainee" do
-      trainee = create(:trainee, trainee_id: "L0V3LYiD")
+      trainee = create(:trainee, :with_hpitt_provider, provider: provider, trainee_id: "L0V3LYiD")
       expect { subject }.not_to(change { Trainee.count })
       expect_trainee_to_have_attributes_from_csv(trainee)
     end
@@ -94,6 +95,7 @@ describe "hpitt:import" do
     expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
     expect(trainee.employing_school).to eq school
     expect(trainee.provider).to eq provider
+    expect(trainee.region).to eq "West Midlands"
 
     expect(trainee.training_route).to eq "hpitt_postgrad"
     expect(trainee.trn).to eq "1234"
