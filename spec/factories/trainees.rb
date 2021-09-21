@@ -86,7 +86,7 @@ FactoryBot.define do
 
     trait :completed do
       in_progress
-      with_funding
+      training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
       nationalities { [build(:nationality)] }
       progress do
         Progress.new(
