@@ -41,7 +41,7 @@ class CourseDetailsForm < TraineeForm
   before_validation :sanitise_subjects
 
   validates :course_subject_one, autocomplete: true, presence: true, if: :requires_secondary_subjects?
-  validate :primary_courses_valid, if: :is_primary_phase?
+  validate :primary_courses_valid, if: :requires_primary_subjects?
 
   validate :course_subject_two_valid, if: :require_subject?
   validates :course_subject_two, autocomplete: true, if: :require_subject?
@@ -117,6 +117,10 @@ private
 
   def requires_secondary_subjects?
     !is_primary_phase? && require_subject?
+  end
+
+  def requires_primary_subjects?
+    is_primary_phase? && require_subject?
   end
 
   def compute_fields

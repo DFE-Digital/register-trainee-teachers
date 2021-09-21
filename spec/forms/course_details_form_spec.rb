@@ -80,6 +80,12 @@ describe CourseDetailsForm, type: :model do
           expect(subject.errors[:course_subject_two]).not_to be_empty
         end
       end
+
+      context "with an early_years trainee" do
+        let(:trainee) { build(:trainee, :with_primary_education, :early_years_undergrad) }
+
+        it { is_expected.not_to validate_presence_of(:primary_course_subjects) }
+      end
     end
 
     it { is_expected.to validate_presence_of(:course_subject_one) }
