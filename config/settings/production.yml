@@ -30,6 +30,8 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   send_funding_to_dttp: true
+  scholarship: true
+  course_study_mode: true
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true

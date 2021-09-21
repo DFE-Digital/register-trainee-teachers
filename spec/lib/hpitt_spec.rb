@@ -3,11 +3,64 @@
 require "rails_helper"
 
 describe HPITT do
+  include SeedHelper
+
+  describe "#import_row" do
+    let!(:provider) { create(:provider, :teach_first) }
+
+    let(:csv_row) do
+      {
+        "Course start date" => "13/04/1992",
+        "ITT Subject 1" => "English",
+        "Degree type" => "Bachelor of Arts",
+        "Degree subject" => "Cardiology",
+        "Degree grade" => "First-class Honours",
+        "Subject of UG. Degree (Non UK)" => "",
+      }
+    end
+
+    before do
+      allow(described_class).to receive(:find_course).and_return(instance_double(Course, code: "XYZ"))
+    end
+
+    subject { HPITT.import_row(csv_row) }
+
+    it "creates the trainee/degree" do
+      expect { subject }.to change { Trainee.count }.from(0).to(1)
+    end
+  end
+
+  describe "#to_ethnic_group" do
+    let(:trainee) { create(:trainee, :school_direct_salaried) }
+    let(:ethnicity) { "Another ethnic group\n(includes any other ethnic group, for example, Arab)" }
+
+    subject { HPITT.to_ethnic_group(ethnicity) }
+
+    it "returns the correct ethnic group" do
+      expect(subject).to eq Diversities::ETHNIC_GROUP_ENUMS[:other]
+    end
+
+    context "with a normalised form" do
+      let(:ethnicity) { "anotherethnicgroupincludesanyotherethnicgroupforexamplearab" }
+
+      it "returns the correct ethnic group" do
+        expect(subject).to eq Diversities::ETHNIC_GROUP_ENUMS[:other]
+      end
+    end
+
+    context "when the ethnic group cannot be mapped" do
+      let(:ethnicity) { "ethnic group" }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(having_attributes(message: "Ethnic group not recognised: ethnic group"))
+      end
+    end
+  end
+
   describe "find_course" do
     let(:trainee) { create(:trainee, :school_direct_salaried) }
     let(:csv_row) do
       {
-        "Duration" => "1 year",
         "Course start date" => "13/04/1992",
         "ITT Subject 1" => "English",
       }
@@ -26,7 +79,6 @@ describe HPITT do
         create(
           :course,
           accredited_body_code: trainee.provider.code,
-          duration_in_years: 1,
           start_date: Date.parse("13/04/1992"),
           name: "English",
           route: trainee.training_route,
@@ -44,7 +96,6 @@ describe HPITT do
           :course,
           2,
           accredited_body_code: trainee.provider.code,
-          duration_in_years: 1,
           start_date: Date.parse("13/04/1992"),
           name: "English",
           route: trainee.training_route,
@@ -69,7 +120,7 @@ describe HPITT do
           "Degree grade" => "Pass",
           "Graduation year" => 2021,
           "Institution" => "University of Central Lancashire",
-          "Subject of UG. degree" => "Volcanology",
+          "Degree subject" => "Volcanology",
         }
       end
 
@@ -89,7 +140,7 @@ describe HPITT do
         {
           "Country (Non UK) degree" => "France",
           "UK ENIC equivalent (Non UK)" => "Bachelor degree",
-          "Undergrad degree date obtained (Non UK)" => "13/04/2021",
+          "Undergrad degree date obtained (Non UK)" => "2021",
           "Subject of UG. Degree (Non UK)" => "Volcanology",
         }
       end
@@ -125,6 +176,52 @@ describe HPITT do
     end
   end
 
+  describe "to_disability_ids" do
+    subject { HPITT.to_disability_ids(disabilities) }
+
+    context "when disabilities exist" do
+      let(:disabilities) { "Blind, Deaf" }
+
+      before do
+        generate_seed_diversities
+      end
+
+      it "is returned" do
+        expect(subject).to match_array(Disability.where(name: %w[Blind Deaf]).ids)
+      end
+    end
+
+    context "when disabilities are not present" do
+      let(:disabilities) { nil }
+
+      it "returns a blank array" do
+        expect(subject).to eq([])
+      end
+    end
+  end
+
+  describe "#to_nationality_ids" do
+    subject { HPITT.to_nationality_ids(nationalities) }
+
+    context "when nationalities exist" do
+      let(:nationalities) { "albanian" }
+
+      before { generate_seed_nationalities }
+
+      it "is returned" do
+        expect(subject).to match_array(Nationality.where(name: %w[albanian]).ids)
+      end
+    end
+
+    context "when nationalities are not present" do
+      let(:nationalities) { nil }
+
+      it "returns a blank array" do
+        expect(subject).to eq([])
+      end
+    end
+  end
+
   describe "to_degree_grade" do
     subject { HPITT.to_degree_grade(degree_grade) }
 
@@ -145,26 +242,6 @@ describe HPITT do
     end
   end
 
-  describe "to_training_route" do
-    subject { HPITT.to_training_route(training_route) }
-
-    context "a training route can be found" do
-      let(:training_route) { "Early years (undergrad)" }
-
-      it "returns it" do
-        expect(subject).to eq("early_years_undergrad")
-      end
-    end
-
-    context "a training route can't be found" do
-      let(:training_route) { "Very Early years (undergrad)" }
-
-      it "raises an error" do
-        expect { subject }.to raise_error(having_attributes(message: "Training route not recognised"))
-      end
-    end
-  end
-
   describe "validate_uk_degree" do
     subject { HPITT.validate_uk_degree(degree_type) }
 
@@ -180,7 +257,23 @@ describe HPITT do
       let(:degree_type) { "Master of the universe" }
 
       it "raises an error" do
-        expect { subject }.to raise_error "Degree type not recognised"
+        expect { subject }.to raise_error "Degree type not recognised: Master of the universe"
+      end
+    end
+
+    context "with a degree_type abbreviation" do
+      let(:degree_type) { "DD" }
+
+      it "returns the degree type" do
+        expect(subject).to eq "Doctor of Divinity"
+      end
+    end
+
+    context "with extra whitespace" do
+      let(:degree_type) { " Doctor  of  Divinity  " }
+
+      it "returns the degree type" do
+        expect(subject).to eq "Doctor of Divinity"
       end
     end
   end
@@ -200,7 +293,15 @@ describe HPITT do
       let(:degree_subject) { "Astrology" }
 
       it "raises an error" do
-        expect { subject }.to raise_error "Degree subject not recognised"
+        expect { subject }.to raise_error "Degree subject not recognised: Astrology"
+      end
+    end
+
+    context "with extra whitespace" do
+      let(:degree_subject) { " Bob  Dylan  Studies  " }
+
+      it "returns the degree subject" do
+        expect(subject).to eq "Bob Dylan Studies"
       end
     end
   end
@@ -221,6 +322,14 @@ describe HPITT do
 
       it "raises an error" do
         expect { subject }.to raise_error "ENIC equivalent not recognised"
+      end
+    end
+
+    context "with a blank value" do
+      let(:enic) {  "" }
+
+      it "returns nil" do
+        expect(subject).to eq(nil)
       end
     end
   end
