@@ -35,6 +35,7 @@ module Trainees
       course_subject_two
       course_subject_three
       applying_for_bursary
+      applying_for_scholarship
       training_initiative
       bursary_tier
       study_mode

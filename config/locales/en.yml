@@ -350,6 +350,8 @@ en:
           diversity_disclosure: Diversity disclosures updated
           locale_code: Location updated
           town_city: Town/city updated
+          applying_for_scholarship: Funding method updated
+          applying_for_bursary: Funding method updated
         degree:
           create: Degree added
           destroy: Degree deleted
