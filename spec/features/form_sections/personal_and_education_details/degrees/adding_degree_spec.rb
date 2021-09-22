@@ -170,7 +170,7 @@ private
       degree_details_page.grade.choose("Other")
       degree_details_page.other_grade.fill_in(with: other_grade)
     else
-      degree_details_page.grade.choose(template.grade)
+      degree_details_page.grade.choose(template.grade.capitalize)
     end
 
     degree_details_page.graduation_year.fill_in(with: template.graduation_year)

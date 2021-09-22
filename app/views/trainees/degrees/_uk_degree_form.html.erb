@@ -12,7 +12,7 @@
   <%= render FormComponents::Autocomplete::View.new(
     f,
     attribute_name: :institution,
-    form_field: f.govuk_select(:institution, 
+    form_field: f.govuk_select(:institution,
                                 options_for_select(institutions_options, @degree_form.degree.institution),
                                 form_group: {
                                   class: invalid_data_class(form: @degree_form, field: "institution")
@@ -38,8 +38,8 @@
     f,
     attribute_name: :uk_degree,
     form_field: f.govuk_select(
-      :uk_degree, 
-      options_for_select(degree_type_options, @degree_form.degree.uk_degree), 
+      :uk_degree,
+      options_for_select(degree_type_options, @degree_form.degree.uk_degree),
       form_group: { class: invalid_data_class(form: @degree_form, field: "uk_degree") },
       label: { text: "Type of degree", size: "s" },
       hint: -> { render InvalidDataText::View.new(form_section: :uk_degree, degree_form: @degree_form, hint: 'For example, BA, BSc or other (please specify)') }),
@@ -53,7 +53,7 @@
 
     <% grades.each_with_index do |name, index| %>
       <% if name != "Other" %>
-        <%= f.govuk_radio_button :grade, name, label: { text: name }, link_errors: index.zero? %>
+        <%= f.govuk_radio_button :grade, name, label: { text: name.capitalize }, link_errors: index.zero? %>
       <% else %>
         <%= f.govuk_radio_button :grade, name, label: { text: name } do %>
           <%= f.govuk_text_field :other_grade, label: { text: "Enter the degree grade" }, width: "two-thirds" %>
