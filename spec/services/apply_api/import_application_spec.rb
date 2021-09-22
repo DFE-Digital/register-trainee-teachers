@@ -17,7 +17,7 @@ module ApplyApi
           expect(subject).to be_instance_of(ApplyApplication)
         end
 
-        it "creates the apply_application with state 'importable' and associates it with that provider " do
+        it "creates the apply_application with state 'importable' and associates it with that provider" do
           expect { subject }.to change { provider.apply_applications.importable.count }.by(1)
           expect(provider.apply_applications.first.application).to eq(application_data.to_json)
         end
@@ -46,7 +46,7 @@ module ApplyApi
       context "when there is missing data" do
         let(:application_data) { { "attributes" => { "course" => nil } } }
 
-        it "will not create apply application " do
+        it "will not create apply application" do
           expect { subject }.to raise_error ApplyApi::ImportApplication::ApplyApiMissingDataError
         end
       end

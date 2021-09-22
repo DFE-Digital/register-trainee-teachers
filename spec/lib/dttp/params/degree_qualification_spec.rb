@@ -34,7 +34,7 @@ module Dttp
           let(:degree) { build(:degree, :uk_degree_with_details) }
           let(:degree_type) { degree.uk_degree }
 
-          it "returns a hash with all the UK specific degree qualification fields " do
+          it "returns a hash with all the UK specific degree qualification fields" do
             expect(subject).to match({
               "dfe_name" => degree.uk_degree,
               "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",

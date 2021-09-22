@@ -73,7 +73,7 @@ describe PersonalDetailsForm, type: :model do
           }).permit!
         end
 
-        it "returns an error " do
+        it "returns an error" do
           expect(subject.errors[:nationality_names]).to include(
             I18n.t(
               "activemodel.errors.models.personal_details_form.attributes.nationality_names.empty_nationalities",

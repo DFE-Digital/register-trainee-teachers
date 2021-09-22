@@ -111,7 +111,7 @@ module ApplicationRecordCard
         expect(rendered_component).to have_text("Updated: #{Time.zone.now.strftime('%-d %B %Y')}")
       end
 
-      it "renders trainee name " do
+      it "renders trainee name" do
         expect(rendered_component).to have_text("Teddy Smith")
       end
 
