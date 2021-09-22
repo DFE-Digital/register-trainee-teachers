@@ -100,11 +100,37 @@ module Degrees
       end
 
       context "grade" do
+        let(:expected_grade) { Dttp::CodeSets::Grades::FIRST_CLASS_HONOURS }
+
+        context "with hesa code" do
+          let(:application_data) do
+            ApiStubs::ApplyApi.application(degree_attributes: { hesa_degclss: "01", grade: "First class honours" })
+          end
+
+          it "sets the value to the actual grade" do
+            expect(subject).to include(
+              expected_uk_degree_attributes.merge(other_grade: nil),
+            )
+          end
+        end
+
+        context "when the grade is predicted" do
+          let(:application_data) do
+            ApiStubs::ApplyApi.application(degree_attributes: { hesa_degclss: nil, grade: "First class honours (Predicted)" })
+          end
+
+          it "sets the value to the actual grade" do
+            expect(subject).to include(
+              expected_uk_degree_attributes.merge(other_grade: nil),
+            )
+          end
+        end
+
         context "when the grade can't be found" do
           let(:expected_grade) { Dttp::CodeSets::Grades::OTHER }
 
           let(:application_data) do
-            ApiStubs::ApplyApi.application(degree_attributes: { grade: "merit" })
+            ApiStubs::ApplyApi.application(degree_attributes: { hesa_degclss: nil, grade: "merit" })
           end
 
           it "sets the value to other" do

@@ -81,9 +81,13 @@ module Degrees
     end
 
     def grade
-      @grade ||= Dttp::CodeSets::Grades::MAPPING.keys.find do |grade|
-        same_string?(grade, attributes["grade"])
-      end
+      @grade ||= Dttp::CodeSets::Grades::MAPPING.find do |key, value|
+        same_hesa_code?(value[:hesa_code], attributes["hesa_degclss"]) || same_string?(key, normalised_grade)
+      end&.first
+    end
+
+    def normalised_grade
+      attributes["grade"]&.gsub(/predicted/i, "")
     end
 
     def country
