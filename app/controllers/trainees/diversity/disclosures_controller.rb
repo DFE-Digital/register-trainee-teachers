@@ -12,9 +12,7 @@ module Trainees
       def update
         @disclosure_form = Diversities::DisclosureForm.new(trainee, params: disclosure_params, user: current_user)
 
-        save_strategy = trainee.draft? ? :save! : :stash
-
-        if @disclosure_form.public_send(save_strategy)
+        if @disclosure_form.stash_or_save!
           redirect_to step_wizard.next_step
         else
           render :edit
@@ -33,10 +31,6 @@ module Trainees
         params.require(:diversities_disclosure_form).permit(*Diversities::DisclosureForm::FIELDS)
       end
 
-      def authorize_trainee
-        authorize(trainee)
-      end
-
       def step_wizard
         @step_wizard ||= Wizards::DiversitiesStepWizard.new(trainee: trainee, page_tracker: page_tracker)
       end
@@ -46,6 +40,10 @@ module Trainees
         return if user_came_from_backlink?
 
         redirect_to step_wizard.start_point if step_wizard.start_point.present?
+      end
+
+      def authorize_trainee
+        authorize(trainee)
       end
     end
   end

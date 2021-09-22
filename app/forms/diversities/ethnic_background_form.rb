@@ -19,20 +19,20 @@ module Diversities
       super(trainee, **kwargs)
     end
 
+    def requires_ethnic_background?
+      disclosure_form.diversity_disclosed? && ethnic_group_form.ethnic_group_disclosed?
+    end
+
   private
 
     attr_reader :disclosure_form, :ethnic_group_form
-
-    def requires_ethnic_background?
-      disclosure_form.diversity_disclosed? && !ethnic_group_form.not_provided_ethnic_group?
-    end
 
     def compute_fields
       trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
     end
 
     def new_attributes
-      if disclosure_form.diversity_disclosed?
+      if requires_ethnic_background?
         fields_from_store.merge(params).symbolize_keys
       else
         { ethnic_background: nil, additional_ethnic_background: nil }

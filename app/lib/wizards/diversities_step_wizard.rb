@@ -13,7 +13,7 @@ module Wizards
       if disclosure_form.diversity_disclosed?
         edit_trainee_diversity_ethnic_group_path(trainee)
       else
-        trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_diversity_confirm_path(trainee)
+        trainee_diversity_confirm_path(trainee)
       end
     end
 

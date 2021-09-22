@@ -10,8 +10,6 @@ module Diversities
         :trainee,
         :diversity_disclosed,
         ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:other],
-        ethnic_background: Diversities::ANOTHER_ETHNIC_BACKGROUND,
-        additional_ethnic_background: "Crab people",
       )
     end
     let(:form_store) { class_double(FormStore) }
@@ -45,24 +43,6 @@ module Diversities
 
       it "takes any data from the form store and saves it to the database" do
         expect { subject.save! }.to change(trainee, :ethnic_group).to(ethnic_group)
-      end
-
-      context "ethnic_group is set to not provided" do
-        let(:ethnic_background) { Diversities::ETHNIC_GROUP_ENUMS[:not_provided] }
-
-        before do
-          allow(form_store).to receive(:get).and_return(
-            {
-              "ethnic_group" => ethnic_group,
-              "ethnic_background" => Diversities::ANOTHER_ETHNIC_BACKGROUND,
-            },
-          )
-        end
-
-        it "clears any ethnic background info" do
-          expect { subject.save! }.to change(trainee, :ethnic_background).to(nil)
-            .and change(trainee, :additional_ethnic_background).to(nil)
-        end
       end
     end
   end
