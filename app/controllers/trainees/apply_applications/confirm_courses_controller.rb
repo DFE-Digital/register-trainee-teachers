@@ -72,18 +72,11 @@ module Trainees
       end
 
       def selected_or_calculated_specialisms
-        return selected_specialisms if publish_course_details_form.general_specialism? || selected_specialisms&.any?
-        return selected_language_specialisms if publish_course_details_form.language_specialism? || selected_language_specialisms&.any?
-
-        CalculateSubjectSpecialisms.call(subjects: @course.subjects.pluck(:name)).values.map(&:first).compact
-      end
-
-      def selected_specialisms
-        @selected_specialisms ||= SubjectSpecialismForm.new(trainee).specialisms
-      end
-
-      def selected_language_specialisms
-        @selected_language_specialisms ||= LanguageSpecialismsForm.new(trainee).languages
+        if publish_course_details_form.selected_specialisms.any?
+          publish_course_details_form.selected_specialisms
+        else
+          CalculateSubjectSpecialisms.call(subjects: @course.subjects.pluck(:name)).values.map(&:first).compact
+        end
       end
 
       def manual_entry_chosen?
