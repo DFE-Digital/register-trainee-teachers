@@ -25,6 +25,8 @@ module Diversities
     end
 
     describe "#stash" do
+      let(:params) { { "disability_disclosure" => Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] } }
+
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and disability_disclosure" do
         expect(form_store).to receive(:set).with(trainee.id, :disability_disclosure, subject.fields)
 
