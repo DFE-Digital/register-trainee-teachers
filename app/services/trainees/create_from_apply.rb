@@ -57,6 +57,8 @@ module Trainees
         disability_disclosure: disability_disclosure,
         email: raw_contact_details["email"],
         course_code: course&.code,
+        course_min_age: course&.min_age,
+        course_max_age: course&.max_age,
         training_route: course&.route,
         disabilities: disabilities,
         study_mode: study_mode,
