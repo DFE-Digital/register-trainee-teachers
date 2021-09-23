@@ -28,6 +28,17 @@ module Trainees
             described_class.perform_now
           end
         end
+
+        context "when CreateFromApply returns MissingCourseError" do
+          before do
+            allow(CreateFromApply).to receive(:call).with(application: apply_application).and_raise Trainees::CreateFromApply::MissingCourseError
+          end
+
+          it "is rescued and captured by Sentry" do
+            expect(Sentry).to receive(:capture_exception).with(Trainees::CreateFromApply::MissingCourseError)
+            described_class.perform_now
+          end
+        end
       end
 
       context "provider has opted out to import applications from Apply" do
