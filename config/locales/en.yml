@@ -1003,8 +1003,12 @@ en:
           attributes:
             first_names:
               blank: Enter a first name
+              too_long: First name must be 50 characters or fewer
             last_name:
               blank: Enter a last name
+              too_long: Last name must be 50 characters or fewer
+            middle_names:
+              too_long: Middle name must be 50 characters or fewer
             date_of_birth:
               blank: Enter a date of birth
               invalid: Enter a valid date

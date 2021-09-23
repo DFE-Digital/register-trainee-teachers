@@ -44,6 +44,9 @@ describe PersonalDetailsForm, type: :model do
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:gender) }
     it { is_expected.to validate_inclusion_of(:gender).in_array(Trainee.genders.keys) }
+    it { is_expected.to validate_length_of(:first_names).is_at_most(50).with_message("First name must be 50 characters or fewer") }
+    it { is_expected.to validate_length_of(:last_name).is_at_most(50).with_message("Last name must be 50 characters or fewer") }
+    it { is_expected.to validate_length_of(:middle_names).is_at_most(50).with_message("Middle name must be 50 characters or fewer") }
 
     context "nationalities" do
       let(:params) { {} }
