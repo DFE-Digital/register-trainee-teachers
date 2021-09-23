@@ -342,16 +342,16 @@ en:
           qts_awarded: QTS awarded
           eyts_awarded: EYTS awarded
           reinstated: Trainee reinstated
-          course_age_range: Course age range updated
-          subject: Course subject updated
-          subject_two: Course subject two updated
-          subject_three: Course subject three updated
+          course_max_age: Course age range updated
+          course_subject_one: Course subject updated
           commencement_date: Start date updated
           trainee_id: Trainee ID updated
           disability_disclosure: Disability disclosures updated
           diversity_disclosure: Diversity disclosures updated
           locale_code: Location updated
           town_city: Town/city updated
+          applying_for_scholarship: Funding method updated
+          applying_for_bursary: Funding method updated
         degree:
           create: Degree added
           destroy: Degree deleted

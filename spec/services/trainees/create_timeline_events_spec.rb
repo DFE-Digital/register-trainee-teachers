@@ -122,6 +122,17 @@ module Trainees
           expect(subject.title).to eq(t("components.timeline.titles.degree.destroy"))
         end
       end
+
+      context "with a no-change audit" do
+        before do
+          trainee.update!(middle_names: nil)
+          trainee.update!(middle_names: "")
+        end
+
+        it "returns empty timeline event" do
+          expect(subject).to eq [nil]
+        end
+      end
     end
   end
 end
