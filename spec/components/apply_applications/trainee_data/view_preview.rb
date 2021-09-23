@@ -6,11 +6,23 @@ module ApplyApplications
   module TraineeData
     class ViewPreview < ViewComponent::Preview
       def default
-        render(View.new(trainee([degree])))
+        render(View.new(trainee_data_form: ::ApplyApplications::TraineeDataForm.new(trainee([degree]))))
       end
 
       def with_no_degrees
-        render(View.new(trainee))
+        render(View.new(trainee_data_form: ::ApplyApplications::TraineeDataForm.new(trainee)))
+      end
+
+      def default_error
+        form = ::ApplyApplications::TraineeDataForm.new(trainee([degree]))
+        form.valid?
+        render(View.new(trainee_data_form: form))
+      end
+
+      def with_no_degrees_error
+        form = ::ApplyApplications::TraineeDataForm.new(trainee)
+        form.valid?
+        render(View.new(trainee_data_form: form))
       end
 
     private

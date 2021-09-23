@@ -27,7 +27,7 @@
         </h1>
       </div>
     </div>
-    <%= render ApplyApplications::TraineeData::View.new(@trainee) %>
+    <%= render ApplyApplications::TraineeData::View.new(trainee_data_form: @trainee_data_form) %>
 
     <%= register_form_with(model: @trainee_data_form, builder: GOVUKDesignSystemFormBuilder::FormBuilder,
                            url: trainee_apply_applications_trainee_data_path(@trainee),
