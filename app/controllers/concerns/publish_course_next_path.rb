@@ -18,7 +18,7 @@ module PublishCourseNextPath
   end
 
   def course_confirmation_path
-    if trainee.apply_application?
+    if trainee.apply_application? && trainee.draft?
       trainee_apply_applications_confirm_courses_path(trainee)
     else
       trainee_publish_course_details_confirm_path(trainee)
