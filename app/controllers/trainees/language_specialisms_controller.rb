@@ -5,6 +5,7 @@ module Trainees
     include PublishCourseNextPath
 
     before_action :authorize_trainee
+    before_action :skip_manual_selection, if: :course_has_one_language_specialism?
     before_action :load_language_specialisms
 
     def edit
@@ -12,9 +13,12 @@ module Trainees
     end
 
     def update
-      @language_specialisms_form = LanguageSpecialismsForm.new(trainee, params: language_specialism_params, user: current_user)
+      @language_specialisms_form = LanguageSpecialismsForm.new(trainee,
+                                                               params: language_specialism_params,
+                                                               user: current_user)
+
       if @language_specialisms_form.stash_or_save!
-        redirect_to next_step_path
+        redirect_to publish_course_next_path
       else
         render :edit
       end
@@ -22,8 +26,16 @@ module Trainees
 
   private
 
-    def next_step_path
-      publish_course_next_path
+    def skip_manual_selection
+      LanguageSpecialismsForm.new(trainee, params: {
+        course_subject_one: subject_specialisms.first,
+      }).stash_or_save!
+
+      redirect_to publish_course_next_path
+    end
+
+    def course_has_one_language_specialism?
+      subject_specialisms.all? { |_, v| v.count < 2 }
     end
 
     def load_language_specialisms
@@ -40,6 +52,18 @@ module Trainees
 
     def course_code
       publish_course_details_form.course_code || trainee.course_code
+    end
+
+    def subject_specialisms
+      @subject_specialisms ||= CalculateSubjectSpecialisms.call(subjects: course_subjects)
+    end
+
+    def course_subjects
+      @course_subjects ||= course.subjects.pluck(:name)
+    end
+
+    def course
+      @course ||= trainee.available_courses.find_by_code!(course_code)
     end
   end
 end

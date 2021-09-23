@@ -72,8 +72,8 @@ class PublishCourseDetailsForm < TraineeForm
     specialism_type == :language
   end
 
-  def general_specialism?
-    specialism_type == :general
+  def selected_specialisms
+    language_specialism? ? specialism_form.languages : specialism_form.specialisms
   end
 
 private
