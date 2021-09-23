@@ -17,7 +17,7 @@ module Features
       degree_details_page.uk_degree.select(template.uk_degree)
       degree_details_page.subject.select(template.subject)
       degree_details_page.institution.select(template.institution)
-      degree_details_page.grade.choose(template.grade)
+      degree_details_page.grade.choose(template.grade.capitalize)
       degree_details_page.graduation_year.fill_in(with: template.graduation_year)
     end
 

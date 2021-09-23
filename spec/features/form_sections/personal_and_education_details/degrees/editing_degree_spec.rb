@@ -99,7 +99,7 @@ private
 
     edit_degree_details_page.subject.select(template.subject)
     edit_degree_details_page.institution.select(template.institution)
-    edit_degree_details_page.grade.choose(template.grade)
+    edit_degree_details_page.grade.choose(template.grade.capitalize)
     edit_degree_details_page.graduation_year.fill_in(with: template.graduation_year)
   end
 
