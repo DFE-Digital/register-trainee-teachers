@@ -18,7 +18,7 @@ class ResetUpdateShaForFunding < ActiveRecord::Migration[6.1]
                                 .pluck(:auditable_id).uniq
 
     Trainee.where(id: trainee_ids).where.not(state: "draft").find_each do |trainee|
-      UpdateTraineeToDttpJob.perform_later(trainee)
+      Dttp::UpdateTraineeToDttpJob.perform_later(trainee)
     end
   end
 
