@@ -8,19 +8,17 @@ class ResetUpdateShaForFunding < ActiveRecord::Migration[6.1]
   # integration was switched on and re-set their dttp_update_sha. This means
   # they will be updated in DTTP overnight during the QueueTraineeUpdatesJob.
   def up
-    funding_fields = %w[applying_for_bursary bursary_tier training_initiative]
+    fields = %w[applying_for_bursary bursary_tier training_initiative]
 
-    funding_changed = funding_fields.map { |field| "(audited_changes->'#{field}' IS NOT NULL)" }
-                                    .join(" OR ")
+    funding_changed = fields.map { |field| "(audited_changes->'#{field}' IS NOT NULL)" }
+                            .join(" OR ")
 
-    trainee_ids = Audited::Audit.where(auditable_type: "Trainee", action: "update")
-                                .where("created_at < ?", 27.days.ago)
+    trainee_ids = Audited::Audit.where(auditable_type: "Trainee", action: "update", created_at: Date.new..28.days.ago)
                                 .where(funding_changed)
-                                .pluck(:auditable_id)
-                                .uniq
+                                .pluck(:auditable_id).uniq
 
-    Trainee.where(id: trainee_ids).each do |t|
-      t.update!(dttp_update_sha: nil)
+    Trainee.where(id: trainee_ids).where.not(state: "draft").find_each do |trainee|
+      UpdateTraineeToDttpJob.perform_later(trainee)
     end
   end
 
