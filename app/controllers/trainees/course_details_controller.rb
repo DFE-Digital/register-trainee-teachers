@@ -65,7 +65,14 @@ module Trainees
     end
 
     def relevant_redirect_path
-      trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_course_details_confirm_path(trainee)
+      apply_application_and_not_reviewing_course? ? page_tracker.last_origin_page_path : trainee_course_details_confirm_path(trainee)
+    end
+
+    def apply_application_and_not_reviewing_course?
+      # If there is an application and they are confirming their course for the first time
+      # the page_tracker.last_origin_page_path will be the review draft page so we don't want to redirect
+      # there in this instance, they need to go to the course details confirm page
+      trainee.apply_application? && !page_tracker.last_origin_page_path.include?("/review-draft")
     end
   end
 end

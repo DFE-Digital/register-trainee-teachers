@@ -16,6 +16,8 @@ feature "apply registrations", type: :feature do
     let(:subjects) { ["History"] }
 
     scenario "reviewing course" do
+      then_i_am_on_the_apply_applications_course_details_page
+      when_i_confirm_the_course_details
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("History")
       and_i_confirm_the_course
@@ -28,7 +30,7 @@ feature "apply registrations", type: :feature do
 
     scenario "selecting specialisms" do
       then_i_am_on_the_apply_applications_course_details_page
-      and_i_start_to_select_my_specialisms
+      when_i_confirm_the_course_details
       and_i_select_a_specialism("Graphic design")
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("Graphic design")
@@ -40,7 +42,7 @@ feature "apply registrations", type: :feature do
 
     scenario "selecting languages" do
       then_i_am_on_the_apply_applications_course_details_page
-      and_i_start_to_select_my_specialisms
+      when_i_confirm_the_course_details
       and_i_choose_my_languages
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("Modern languages")
@@ -74,8 +76,9 @@ private
     review_draft_page.course_details.link.click
   end
 
-  def and_i_start_to_select_my_specialisms
-    apply_registrations_course_details_page.select_specialisms_button.click
+  def when_i_confirm_the_course_details
+    apply_registrations_course_details_page.confirm_course.choose
+    apply_registrations_course_details_page.continue.click
   end
 
   def and_i_choose_my_languages

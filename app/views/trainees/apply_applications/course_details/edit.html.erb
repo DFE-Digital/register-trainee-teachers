@@ -1,0 +1,30 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.apply_applications.course_details.edit", has_errors: @review_course_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @review_course_form, url: trainee_apply_applications_course_details_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.hidden_field :code, value: @course.code %>
+
+      <h1 class="govuk-heading-l"><%= t(".summary_title") %></h1>
+
+      <p class="govuk-body">The trainee is being registered on <%= apply_course_and_route_summary(@course) %></p>
+
+      <%= f.govuk_collection_radio_buttons(:reviewed, ApplyApplications::ReviewCourseForm::REVIEWED_VALUES,
+        ->(value) { value },
+        ->(label) { I18n.t("views.forms.apply_applications.review_course_form.label_names.#{label}", course: apply_course_summary(@course)) },
+        ->(label) { label == ApplyApplications::ReviewCourseForm::CHANGE ? I18n.t("views.forms.apply_applications.review_course_form.label_names.#{label}_hint") : nil },
+        legend: { text: "Is this the correct course?", tag: "h2", size: "m" },
+        bold_labels: false
+      ) %>
+      <%= f.govuk_submit(t(:continue), class: "confirm-course")  %>
+    <% end %>
+  </div>
+</div>
+
+<%= render(CancelLink::View.new(@trainee)) %>

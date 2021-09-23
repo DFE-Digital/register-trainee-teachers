@@ -4,9 +4,12 @@ module PageObjects
   module Trainees
     module ApplyRegistrations
       class CourseDetails < PageObjects::Base
-        set_url "/trainees/{id}/apply-application/course-details"
+        set_url "/trainees/{id}/apply-application/course-details/edit"
 
-        element :select_specialisms_button, ".govuk-button.select-specialisms"
+        element :confirm_course, "#apply-applications-review-course-form-reviewed-register-field"
+        element :change_course, "#apply-applications-review-course-form-reviewed-change-field"
+
+        element :continue, ".govuk-button.confirm-course"
       end
     end
   end

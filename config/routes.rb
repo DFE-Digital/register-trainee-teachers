@@ -111,7 +111,7 @@ Rails.application.routes.draw do
 
       namespace :apply_applications, path: "/apply-application" do
         resource :trainee_data, only: %i[update edit], path: "/trainee-data"
-        resource :course_details, only: :show, path: "/course-details"
+        resource :course_details, only: %i[update edit], path: "/course-details"
         resource :confirm_courses, only: %i[show update], path: "/confirm-course"
       end
 
