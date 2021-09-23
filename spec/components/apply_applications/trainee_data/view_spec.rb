@@ -10,7 +10,7 @@ module ApplyApplications
       let(:apply_application) { create(:apply_application) }
 
       before do
-        render_inline(View.new(trainee))
+        render_inline(View.new(trainee_data_form: ::ApplyApplications::TraineeDataForm.new(trainee)))
       end
 
       context "trainee with degrees" do
