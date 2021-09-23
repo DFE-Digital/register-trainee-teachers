@@ -4,6 +4,8 @@ module Trainees
   class CreateFromApply
     include ServicePattern
 
+    class MissingCourseError < StandardError; end
+
     def initialize(application:)
       @application = application
       @raw_course = application.application_attributes["course"]
@@ -22,7 +24,7 @@ module Trainees
         return
       end
 
-      return if course.nil? # Courses can be missing in non-prod environments
+      raise MissingCourseError, "Cannot find course with code: #{@raw_course['course_code']}" if course.nil? # Courses can be missing in non-prod environments
 
       trainee.save!
       save_personal_details!

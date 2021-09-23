@@ -88,10 +88,10 @@ module Trainees
     context "course doesn't exist" do
       let(:course_code) { "ABC" }
 
-      it "doesn't change the state" do
+      it "raises a MissingCourseError" do
         expect {
           create_trainee_from_apply
-        }.not_to change(apply_application, :state)
+        }.to raise_error described_class::MissingCourseError
       end
     end
 

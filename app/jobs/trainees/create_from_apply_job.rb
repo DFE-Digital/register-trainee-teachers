@@ -9,6 +9,8 @@ module Trainees
 
       ApplyApplication.joins(:provider).where(providers: { apply_sync_enabled: true }).importable.each do |application|
         CreateFromApply.call(application: application)
+      rescue Trainees::CreateFromApply::MissingCourseError => e
+        Sentry.capture_exception(e)
       end
     end
   end
