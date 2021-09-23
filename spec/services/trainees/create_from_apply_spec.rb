@@ -38,6 +38,8 @@ module Trainees
         email: contact_details["email"],
         training_route: course.route,
         course_code: course.code,
+        course_min_age: course.min_age,
+        course_max_age: course.max_age,
         study_mode: "full_time",
       }
     end
