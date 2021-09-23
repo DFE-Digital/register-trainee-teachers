@@ -16,10 +16,8 @@ module Trainees
           user: current_user,
         )
 
-        save_strategy = trainee.draft? ? :save! : :stash
-
-        if @ethnic_background_form.public_send(save_strategy)
-          redirect_to(origin_page_or_next_step)
+        if @ethnic_background_form.stash_or_save!
+          redirect_to relevant_path
         else
           render :edit
         end
@@ -46,10 +44,12 @@ module Trainees
         trainee.ethnic_background.present? && trainee.ethnic_background != required_params[:ethnic_background]
       end
 
-      def origin_page_or_next_step
-        return page_tracker.last_origin_page_path if page_tracker.last_origin_page_path&.include?("diversity/confirm")
-
-        edit_trainee_diversity_disability_disclosure_path(trainee)
+      def relevant_path
+        if trainee.disability_disclosure.present?
+          trainee_diversity_confirm_path(trainee)
+        else
+          edit_trainee_diversity_disability_disclosure_path(trainee)
+        end
       end
 
       def authorize_trainee

@@ -16,10 +16,8 @@ module Trainees
           user: current_user,
         )
 
-        save_strategy = trainee.draft? ? :save! : :stash
-
-        if @disability_disclosure_form.public_send(save_strategy)
-          redirect_to_relevant_step
+        if @disability_disclosure_form.stash_or_save!
+          redirect_to relevant_path
         else
           render :edit
         end
@@ -37,11 +35,11 @@ module Trainees
         params.require(:diversities_disability_disclosure_form).permit(*Diversities::DisabilityDisclosureForm::FIELDS)
       end
 
-      def redirect_to_relevant_step
+      def relevant_path
         if @disability_disclosure_form.disability_not_provided? || @disability_disclosure_form.no_disability?
-          redirect_to(trainee_diversity_confirm_path(trainee))
+          trainee_diversity_confirm_path(trainee)
         else
-          redirect_to(edit_trainee_diversity_disability_detail_path(trainee))
+          edit_trainee_diversity_disability_detail_path(trainee)
         end
       end
 

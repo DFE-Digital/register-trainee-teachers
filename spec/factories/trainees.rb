@@ -26,7 +26,7 @@ FactoryBot.define do
     ethnic_group { nil }
     ethnic_background { nil }
     additional_ethnic_background { nil }
-    disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
+    disability_disclosure { nil }
 
     address_line_one { Faker::Address.street_address }
     address_line_two { Faker::Address.street_name }
@@ -139,6 +139,10 @@ FactoryBot.define do
 
     trait :diversity_not_disclosed do
       diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
+    end
+
+    trait :disability_not_provided do
+      disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] }
     end
 
     trait :with_ethnic_group do

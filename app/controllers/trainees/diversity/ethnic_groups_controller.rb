@@ -16,10 +16,8 @@ module Trainees
           user: current_user,
         )
 
-        save_strategy = trainee.draft? ? :save! : :stash
-
-        if @ethnic_group_form.public_send(save_strategy)
-          redirect_to_relevant_step
+        if @ethnic_group_form.stash_or_save!
+          redirect_to relevant_path
         else
           render :edit
         end
@@ -37,16 +35,20 @@ module Trainees
         params.require(:diversities_ethnic_group_form).permit(*Diversities::EthnicGroupForm::FIELDS)
       end
 
-      def redirect_to_relevant_step
+      def relevant_path
         if @ethnic_group_form.not_provided_ethnic_group?
           if trainee.disability_disclosure.present?
-            redirect_to(page_tracker.last_origin_page_path)
+            trainee_diversity_confirm_path(trainee)
           else
-            redirect_to(edit_trainee_diversity_disability_disclosure_path(trainee))
+            edit_trainee_diversity_disability_disclosure_path(trainee)
           end
         else
-          redirect_to(edit_trainee_diversity_ethnic_background_path(trainee))
+          edit_trainee_diversity_ethnic_background_path(trainee)
         end
+      end
+
+      def disclosure_form
+        @disclosure_form ||= Diversities::DisclosureForm.new(trainee)
       end
 
       def authorize_trainee

@@ -1,5 +1,6 @@
 <%= render PageTitle::View.new(
-  text: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")),
+  text: t("components.page_titles.trainees.diversity.ethnic_background.edit",
+          background: I18n.t("views.forms.ethnic_groups.labels.#{@ethnic_background_form.ethnic_group}")),
   has_errors: @ethnic_background_form.errors.present?,
 ) %>
 
@@ -12,13 +13,15 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @ethnic_background_form, url: trainee_diversity_ethnic_background_path(@trainee), method: :put, local: true) do |f| %>
+    <%= register_form_with(model: @ethnic_background_form,
+                           url: trainee_diversity_ethnic_background_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
         <%= f.govuk_radio_buttons_fieldset(
           :ethnic_background,
           legend: {
-            text: t("components.page_titles.trainees.diversity.ethnic_background.edit", background: I18n.t("views.forms.ethnic_groups.labels.#{@trainee.ethnic_group}")),
+            text: t("components.page_titles.trainees.diversity.ethnic_background.edit",
+                    background: I18n.t("views.forms.ethnic_groups.labels.#{@ethnic_background_form.ethnic_group}")),
             tag: "h1",
             size: "l",
 },
@@ -26,23 +29,25 @@
 
           <% Diversities::BACKGROUNDS[@ethnic_background_form.ethnic_group].each_with_index do |ethnic_background, index| %>
             <% if other_ethnic_background_option?(ethnic_background) %>
-              <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background }, link_errors: index.zero?) do %>
+              <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background },
+                                       link_errors: index.zero?) do %>
                 <%= f.govuk_text_field(
                   :additional_ethnic_background,
                   width: "two-thirds",
                   autocomplete: :disabled,
-                  label: { text: I18n.t("views.forms.ethnic_backgrounds.another_ethnic_background_labels.#{@trainee.ethnic_group}") },
+                  label: { text: I18n.t("views.forms.ethnic_backgrounds.another_ethnic_background_labels.#{@ethnic_background_form.ethnic_group}") },
                 ) %>
               <% end %>
             <% else %>
-              <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background }, link_errors: index.zero?) %>
+              <%= f.govuk_radio_button(:ethnic_background, ethnic_background, label: { text: ethnic_background },
+                                       link_errors: index.zero?) %>
             <% end %>
           <% end %>
 
           <%= f.govuk_radio_divider %>
+
           <%= f.govuk_radio_button :ethnic_background, Diversities::NOT_PROVIDED, label: { text: "Not provided" } %>
         <% end %>
-
       <%= f.govuk_submit %>
     <% end %>
   </div>
