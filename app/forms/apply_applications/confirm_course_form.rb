@@ -23,8 +23,8 @@ module ApplyApplications
     end
 
     def save
-      update_trainee_attributes
-
+      update_trainee_attributes unless trainee_confirmed?
+      trainee.progress.course_details = mark_as_reviewed
       clear_bursary_information if course_subjects_changed?
 
       trainee.save!
@@ -76,15 +76,23 @@ module ApplyApplications
         course_end_date: course_end_date,
         study_mode: study_mode,
       })
-      trainee.progress.course_details = mark_as_reviewed
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(code: code || trainee.course_code)
+      @course ||= trainee.available_courses.find_by(code: code)
     end
 
-    def training_route
-      course&.route || trainee.training_route
+    def trainee_confirmed?
+      code == trainee.course_code && values_provided?
+    end
+
+    def values_provided?
+      [
+        trainee.course_age_range,
+        trainee.course_start_date,
+        trainee.course_end_date,
+        trainee.study_mode,
+      ].all?(&:present?)
     end
   end
 end
