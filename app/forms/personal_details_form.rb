@@ -25,8 +25,9 @@ class PersonalDetailsForm < TraineeForm
 
   before_validation :set_nationalities_from_raw_values
 
-  validates :first_names, presence: true
-  validates :last_name, presence: true
+  validates :first_names, presence: true, length: { maximum: 50 }
+  validates :last_name, presence: true, length: { maximum: 50 }
+  validates :middle_names, length: { maximum: 50 }, allow_nil: true
   validates :date_of_birth, presence: true
   validate :date_of_birth_valid
   validate :date_of_birth_not_in_future
