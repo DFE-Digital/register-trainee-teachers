@@ -18,7 +18,7 @@ module Trainees
       @training_details_form = TrainingDetailsForm.new(trainee, params: trainee_params, user: current_user)
 
       if @training_details_form.save
-        redirect_to relevant_redirect_path
+        redirect_to trainee_training_details_confirm_path(trainee)
       else
         render :edit
       end
@@ -39,10 +39,6 @@ module Trainees
 
     def authorize_trainee
       authorize(trainee)
-    end
-
-    def relevant_redirect_path
-      trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_training_details_confirm_path(trainee)
     end
   end
 end
