@@ -53,6 +53,7 @@ module Sections
       include_examples renders_incomplete_section, :degrees, :incomplete
       include_examples renders_incomplete_section, :course_details, :incomplete
       include_examples renders_incomplete_section, :training_details, :incomplete
+      include_examples renders_incomplete_section, :trainee_data, :incomplete
 
       context "requires school" do
         include_examples renders_incomplete_section, :schools, :incomplete
@@ -73,6 +74,7 @@ module Sections
       include_examples renders_incomplete_section, :degrees, :in_progress_valid
       include_examples renders_incomplete_section, :course_details, :in_progress_valid
       include_examples renders_incomplete_section, :training_details, :in_progress_valid
+      include_examples renders_incomplete_section, :trainee_data, :in_progress_valid
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
@@ -98,6 +100,7 @@ module Sections
       include_examples renders_confirmation, :degrees
       include_examples renders_confirmation, :course_details
       include_examples renders_confirmation, :training_details
+      include_examples renders_confirmation, :trainee_data
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_school, :completed) }
@@ -159,6 +162,10 @@ module Sections
           incomplete: "edit_trainee_funding_training_initiative_path",
           in_progress_valid: "trainee_funding_confirm_path",
         },
+        trainee_data: {
+          incomplete: "edit_trainee_apply_applications_trainee_data_path",
+          in_progress_valid: "edit_trainee_apply_applications_trainee_data_path",
+        },
       }[section][status]
     end
 
@@ -172,6 +179,7 @@ module Sections
         training_details: TrainingDetails::View,
         schools: Schools::View,
         funding: Funding::View,
+        trainee_data: ApplyApplications::TraineeData::View,
       }[section]
     end
   end

@@ -11,7 +11,8 @@ module Sections
        course_details
        training_details
        schools
-       funding].each do |section|
+       funding
+       trainee_data].each do |section|
       define_method "continue_sections_#{section}" do
         trainee = continue_sections_trainee(section)
         form = TrnSubmissionForm.new(trainee: trainee)
