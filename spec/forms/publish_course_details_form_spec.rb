@@ -21,7 +21,7 @@ describe PublishCourseDetailsForm, type: :model do
   context "valid course_code" do
     let(:route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
     let(:params) { { course_code: "c0de" } }
-    let(:trainee) { create(:trainee, :submitted_for_trn, training_route: route, course_subject_one: nil) }
+    let(:trainee) { create(:trainee, :submitted_for_trn, route, course_subject_one: nil) }
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
@@ -52,6 +52,15 @@ describe PublishCourseDetailsForm, type: :model do
 
         it "updates the trainee with the publish course details" do
           expect { subject.save! }.to change { trainee.course_subject_one }.to(subject_name)
+        end
+
+        context "with a pg_teaching_apprenticeship trainee" do
+          let(:route) { :pg_teaching_apprenticeship }
+          let(:trainee) { build(:trainee, route) }
+
+          it "does not change the trainee's course start date" do
+            expect { subject.save! }.not_to(change { trainee.course_start_date })
+          end
         end
       end
     end
