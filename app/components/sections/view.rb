@@ -23,12 +23,16 @@ module Sections
     delegate :funding_options, to: :helpers
 
     def confirmation_view_args
-      confirmation_view_args = { data_model: form_klass.new(trainee), has_errors: form_has_errors? }
+      if section == :trainee_data
+        { trainee_data_form: form_klass.new(trainee) }
+      else
+        confirmation_view_args = { data_model: form_klass.new(trainee), has_errors: form_has_errors? }
 
-      if section == :degrees
-        confirmation_view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
+        if section == :degrees
+          confirmation_view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
+        end
+        confirmation_view_args
       end
-      confirmation_view_args
     end
 
     def collapsed_funding_inactive_section_args
