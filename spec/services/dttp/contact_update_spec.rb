@@ -25,8 +25,8 @@ module Dttp
       before do
         enable_features(:persist_to_dttp, "routes.school_direct_salaried", "routes.school_direct_tuition_fee", "routes.pg_teaching_apprenticeship", :show_funding, :send_funding_to_dttp)
         allow(AccessToken).to receive(:fetch).and_return("token")
-        stub_request(:post, contact_request_url).to_return(contact_response)
-        stub_request(:post, placement_request_url).to_return(placement_response)
+        stub_request(:patch, contact_request_url).to_return(contact_response)
+        stub_request(:patch, placement_request_url).to_return(placement_response)
         trainee.degrees << create(:degree)
       end
 
@@ -37,11 +37,11 @@ module Dttp
         let(:placement_response) { { status: 204 } }
 
         before do
-          expect(Client).to receive(:post).with(contact_path, body: contact_payload).and_call_original
-          expect(Client).to receive(:post).with(placement_path, body: placement_payload).and_call_original
+          expect(Client).to receive(:patch).with(contact_path, body: contact_payload).and_call_original
+          expect(Client).to receive(:patch).with(placement_path, body: placement_payload).and_call_original
         end
 
-        it "sends a POST request to update contact and placement assignment entities" do
+        it "sends a PATCH request to update contact and placement assignment entities" do
           allow(Dttp::CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
           subject
         end
