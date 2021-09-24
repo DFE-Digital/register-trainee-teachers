@@ -6,6 +6,7 @@ module Trainees
       before_action :authorize_trainee
       before_action :set_course
       before_action :redirect_to_confirm_page, if: :already_confirmed_course?
+      before_action :redirect_to_publish_course_details_path, if: :course_not_found?
 
       def edit
         @review_course_form = ::ApplyApplications::ReviewCourseForm.new
@@ -69,6 +70,10 @@ module Trainees
         redirect_to(trainee_apply_applications_confirm_courses_path(trainee))
       end
 
+      def redirect_to_publish_course_details_path
+        redirect_to(edit_trainee_publish_course_details_path(trainee))
+      end
+
       def save_course_and_continue
         save_course
         redirect_to_relevant_step
@@ -93,6 +98,10 @@ module Trainees
 
       def already_confirmed_course?
         trainee.course_subjects.any?
+      end
+
+      def course_not_found?
+        @course.blank?
       end
     end
   end
