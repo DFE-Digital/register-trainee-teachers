@@ -81,7 +81,7 @@ module Funding
       :bursary
     end
 
-    def fields_to_ignore_before_stash_or_save
+    def fields_to_ignore_before_save
       NON_TRAINEE_FIELDS
     end
   end

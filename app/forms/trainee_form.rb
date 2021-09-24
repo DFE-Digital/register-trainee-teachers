@@ -27,7 +27,7 @@ class TraineeForm
 
   def save!
     if valid?
-      trainee.assign_attributes(fields.except(*fields_to_ignore_before_stash_or_save))
+      trainee.assign_attributes(fields.except(*fields_to_ignore_before_save))
       trainee.save!
       clear_stash
     else
@@ -36,7 +36,7 @@ class TraineeForm
   end
 
   def stash
-    valid? && store.set(id, form_store_key, fields.except(*fields_to_ignore_before_stash_or_save))
+    valid? && store.set(id, form_store_key, fields.except(*fields_to_ignore_before_stash))
   end
 
   def course_start_date_attribute_name
@@ -67,7 +67,11 @@ private
     raise NotImplementedError
   end
 
-  def fields_to_ignore_before_stash_or_save
+  def fields_to_ignore_before_stash
+    []
+  end
+
+  def fields_to_ignore_before_save
     []
   end
 

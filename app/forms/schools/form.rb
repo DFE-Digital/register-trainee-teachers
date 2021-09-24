@@ -62,7 +62,11 @@ module Schools
       raise NotImplementedError
     end
 
-    def fields_to_ignore_before_stash_or_save
+    def fields_to_ignore_before_save
+      NON_TRAINEE_FIELDS
+    end
+
+    def fields_to_ignore_before_stash
       NON_TRAINEE_FIELDS
     end
 
