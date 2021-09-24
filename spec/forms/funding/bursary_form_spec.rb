@@ -24,7 +24,7 @@ module Funding
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and bursary" do
-        expect(form_store).to receive(:set).with(trainee.id, :bursary, subject.fields.except(:funding_type))
+        expect(form_store).to receive(:set).with(trainee.id, :bursary, subject.fields)
 
         subject.stash
       end

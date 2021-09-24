@@ -58,10 +58,12 @@ private
     end
   end
 
-  def fields_to_ignore_before_stash_or_save
-    %i[
-      language_specialisms
-    ]
+  def fields_to_ignore_before_save
+    %i[language_specialisms]
+  end
+
+  def fields_to_ignore_before_stash
+    %i[language_specialisms]
   end
 
   def languages_specialisms_from_trainee_record
