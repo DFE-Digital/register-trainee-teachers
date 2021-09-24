@@ -2,6 +2,8 @@
 
 module Trainees
   class PersonalDetailsController < ApplicationController
+    include Appliable
+
     before_action :authorize_trainee
     before_action :load_all_nationalities
     before_action :ensure_trainee_is_not_draft!, only: :show
@@ -72,7 +74,7 @@ module Trainees
     end
 
     def relevant_redirect_path
-      trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_personal_details_confirm_path(trainee)
+      draft_apply_application? ? page_tracker.last_origin_page_path : trainee_personal_details_confirm_path(trainee)
     end
   end
 end

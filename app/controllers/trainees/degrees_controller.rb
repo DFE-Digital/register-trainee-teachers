@@ -2,6 +2,8 @@
 
 module Trainees
   class DegreesController < ApplicationController
+    include Appliable
+
     before_action :authorize_trainee
     before_action :set_degrees_form
     before_action :set_degree_form, only: %i[edit update destroy]
@@ -45,7 +47,7 @@ module Trainees
   private
 
     def redirect_path
-      if trainee.apply_application?
+      if draft_apply_application?
         edit_trainee_apply_applications_trainee_data_path(trainee)
       else
         trainee_degrees_confirm_path(trainee)
@@ -77,7 +79,7 @@ module Trainees
     end
 
     def relevant_redirect_path
-      trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_degrees_confirm_path(trainee)
+      draft_apply_application? ? page_tracker.last_origin_page_path : trainee_degrees_confirm_path(trainee)
     end
   end
 end

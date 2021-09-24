@@ -18,7 +18,9 @@ module Degrees
 
     def degree_title(degree)
       if degree.uk?
-        degree.subject ? "#{degree.uk_degree}: #{degree.subject&.downcase}" : degree.uk_degree
+        return "#{degree.uk_degree}: #{degree.subject&.downcase}" if degree.uk_degree && degree.subject
+
+        degree.uk_degree.presence || degree.subject.presence
       elsif degree.subject
         "Non-UK #{degree.non_uk_degree_non_enic? ? 'degree' : degree.non_uk_degree}: #{degree.subject&.downcase}"
       else
