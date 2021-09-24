@@ -7,6 +7,7 @@ class CustomLogFormatter < SemanticLogger::Formatters::Raw
     format_exception
     format_json_message_context
     format_backtrace
+    remove_post_params
     hash.to_json
   end
 
@@ -42,6 +43,16 @@ private
         hash[:message] = "Exception occured: #{message_lines.first}"
       end
     end
+  end
+
+  def remove_post_params
+    if method_is_post_or_put? && hash.dig(:payload, :params).present?
+      hash[:payload][:params].clear
+    end
+  end
+
+  def method_is_post_or_put?
+    hash.dig(:payload, :method).in? %w[PUT POST]
   end
 end
 
