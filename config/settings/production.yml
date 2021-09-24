@@ -28,6 +28,7 @@ features:
   send_emails: true
   persist_to_dttp: true
   import_courses_from_ttapi: true
+  import_applications_from_apply: true
   publish_course_details: true
   send_funding_to_dttp: true
   scholarship: true
