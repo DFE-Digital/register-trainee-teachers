@@ -29,7 +29,7 @@ module Dttp
     attr_reader :trainee, :contact_payload, :placement_assignment_payload
 
     def dttp_update(path, body)
-      Client.patch(path, body: body.to_json)
+      Client.post(path, body: body.to_json)
     end
   end
 end
