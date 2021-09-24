@@ -2,6 +2,8 @@
 
 module Trainees
   class ContactDetailsController < ApplicationController
+    include Appliable
+
     before_action :authorize_trainee
 
     def edit
@@ -35,7 +37,7 @@ module Trainees
     end
 
     def relevant_redirect_path
-      trainee.apply_application? ? page_tracker.last_origin_page_path : trainee_contact_details_confirm_path(trainee)
+      draft_apply_application? ? page_tracker.last_origin_page_path : trainee_contact_details_confirm_path(trainee)
     end
   end
 end
