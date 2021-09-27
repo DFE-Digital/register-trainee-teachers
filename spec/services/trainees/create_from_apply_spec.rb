@@ -4,9 +4,9 @@ require "rails_helper"
 
 module Trainees
   describe CreateFromApply do
-    let(:application_data) { ApiStubs::ApplyApi.application }
+    let(:candidate_attributes) { {} }
+    let(:application_data) { ApiStubs::ApplyApi.application(candidate_attributes: candidate_attributes) }
     let(:apply_application) { create(:apply_application, application: application_data) }
-
     let(:candidate_info) { ApiStubs::ApplyApi.candidate_info.as_json }
     let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }
     let(:non_uk_contact_details) { ApiStubs::ApplyApi.non_uk_contact_details.as_json }
@@ -190,13 +190,30 @@ module Trainees
 
       context "when the trainee's nationalities is unrecognised" do
         before do
-          stub_const("ApplyApi::CodeSets::Nationalities::MAPPING", { "AL" => "albanian", "GB" => "british" })
+          stub_const("ApplyApi::CodeSets::Nationalities::MAPPING", {
+            "AL" => "albanian",
+            "GB" => "british",
+          })
         end
 
         it "captures a message to sentry" do
-          expect(Sentry).to receive(:capture_message).with(("Cannot map nationality from ApplyApplication id: #{apply_application.id}, code: SH"))
+          expect(Sentry).to receive(:capture_message).with("Cannot map nationality from ApplyApplication id: #{apply_application.id}, code: SH")
           create_trainee_from_apply
         end
+      end
+    end
+
+    context "ethnic background does not match any known ethnic backgrounds" do
+      let(:candidate_attributes) { { ethnic_background: "Mixed European" } }
+
+      before { create_trainee_from_apply }
+
+      it "sets ethnic_background attribute to 'Another ethnic background'" do
+        expect(trainee.reload.ethnic_background).to eq(Diversities::ANOTHER_ETHNIC_BACKGROUND)
+      end
+
+      it "uses the trainee's additional_ethnic_background attribute to store the value from Apply" do
+        expect(trainee.reload.additional_ethnic_background).to eq("Mixed European")
       end
     end
   end
