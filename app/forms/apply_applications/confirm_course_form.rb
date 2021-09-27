@@ -59,6 +59,8 @@ module ApplyApplications
     end
 
     def study_mode
+      return if requires_study_mode?
+
       course&.study_mode || trainee.study_mode
     end
 
@@ -93,6 +95,13 @@ module ApplyApplications
         trainee.course_end_date,
         trainee.study_mode,
       ].all?(&:present?)
+    end
+
+    def requires_study_mode?
+      return false unless trainee.requires_study_mode?
+      return false unless course
+
+      course.study_mode == COURSE_STUDY_MODES[:full_time_or_part_time]
     end
   end
 end
