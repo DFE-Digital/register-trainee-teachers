@@ -32,5 +32,17 @@ RSpec.describe RouteIndicator::View do
       expect(component).to have_content(trainee.course_subject_one)
       expect(component).to have_content(trainee.course_code)
     end
+
+    context "with course details not set" do
+      let(:trainee) do
+        create(:trainee, :with_apply_application, course_code: nil) do |trainee|
+          create(:course, name: "Citizenship", code: ApiStubs::ApplyApi.course[:course_code], provider: trainee.apply_application.provider)
+        end
+      end
+
+      it "renders the apply application's course code" do
+        expect(component).to have_content("Citizenship (V6X1)")
+      end
+    end
   end
 end

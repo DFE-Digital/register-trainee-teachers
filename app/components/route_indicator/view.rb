@@ -27,9 +27,23 @@ module RouteIndicator
     end
 
     def course_code
+      if trainee.apply_application?
+        apply_course_code
+      else
+        manual_course_code
+      end
+    end
+
+    def manual_course_code
       return if trainee.course_code.blank?
 
       "(#{trainee.course_code})"
+    end
+
+    def apply_course_code
+      return if trainee.apply_application.course.blank?
+
+      "(#{trainee.course_code || trainee.apply_application.course.code})"
     end
 
     def training_route
@@ -41,7 +55,7 @@ module RouteIndicator
     end
 
     def course_name
-      trainee.published_course&.name
+      trainee.published_course&.name || trainee.apply_application.course&.name
     end
   end
 end

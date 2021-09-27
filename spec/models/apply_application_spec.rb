@@ -25,4 +25,18 @@ describe ApplyApplication do
       it { is_expected.to eq({ "subject" => "Math" }) }
     end
   end
+
+  describe "#course" do
+    let(:apply_application) { create(:apply_application) }
+
+    subject { apply_application.course }
+
+    it { is_expected.to be_nil }
+
+    context "when the course exists" do
+      let!(:course) { create(:course, code: "V6X1", provider: apply_application.provider) }
+
+      it { is_expected.to eq(course) }
+    end
+  end
 end
