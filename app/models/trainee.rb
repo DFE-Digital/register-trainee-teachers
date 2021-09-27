@@ -174,6 +174,16 @@ class Trainee < ApplicationRecord
   scope :with_manual_application, -> { where(apply_application: nil) }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
 
+  scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
+
+  scope :with_education_phase, lambda { |*levels|
+    education_phases = levels.reject { |level| level == "early_years" }
+
+    where(course_education_phase: education_phases).or(
+      levels.include?("early_years") ? on_early_years_routes : none,
+    )
+  }
+
   audited associated_with: :provider
   has_associated_audits
 

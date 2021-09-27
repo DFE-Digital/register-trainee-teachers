@@ -26,11 +26,7 @@ module Trainees
     def level(trainees, levels)
       return trainees if levels.blank?
 
-      age_ranges = levels.flat_map { |level| COURSE_LEVELS[level.to_sym] }.uniq
-
-      query = Array.new(age_ranges.length, "(course_min_age = ? AND course_max_age = ?)").join("OR")
-
-      trainees.where(query, *age_ranges.flatten)
+      trainees.with_education_phase(*levels)
     end
 
     def record_source(trainees, record_source)
