@@ -135,14 +135,9 @@ module HPITT
         subjects&.casecmp?(raw_string.squish)
       end
 
-      case potential_subjects.count
-      when 0
-        raise Error, "Degree subject not recognised: #{raw_string}"
-      when 1
-        potential_subjects.keys.first
-      else
-        raise Error, "Degree subject ambiguous, multiple found: #{raw_string}"
-      end
+      return potential_subjects.keys.first if potential_subjects.present?
+
+      raw_string
     end
 
     def validate_uk_degree(raw_string)
@@ -150,14 +145,9 @@ module HPITT
         degree_name&.casecmp?(raw_string.squish) || attributes[:abbreviation]&.casecmp?(raw_string.squish)
       end
 
-      case potential_degree_types.count
-      when 0
-        raise Error, "Degree type not recognised: #{raw_string}"
-      when 1
-        potential_degree_types.keys.first
-      else
-        raise Error, "Degree type ambiguous, multiple found: #{raw_string}"
-      end
+      return potential_degree_types.keys.first if potential_degree_types.present?
+
+      raw_string
     end
 
     def validate_enic_non_uk_degree(raw_string)

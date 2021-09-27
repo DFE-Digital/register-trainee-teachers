@@ -256,8 +256,8 @@ describe HPITT do
     context "the degree type can't be found" do
       let(:degree_type) { "Master of the universe" }
 
-      it "raises an error" do
-        expect { subject }.to raise_error "Degree type not recognised: Master of the universe"
+      it "returns the raw string" do
+        expect(subject).to eq "Master of the universe"
       end
     end
 
@@ -292,8 +292,8 @@ describe HPITT do
     context "the degree subject can't be found" do
       let(:degree_subject) { "Astrology" }
 
-      it "raises an error" do
-        expect { subject }.to raise_error "Degree subject not recognised: Astrology"
+      it "returns the raw string" do
+        expect(subject).to eq "Astrology"
       end
     end
 
