@@ -54,7 +54,6 @@ module Trainees
         date_of_birth: raw_trainee["date_of_birth"],
         gender: gender,
         ethnic_group: ethnic_group,
-        ethnic_background: raw_trainee["ethnic_background"],
         diversity_disclosure: diversity_disclosure,
         disability_disclosure: disability_disclosure,
         email: raw_contact_details["email"],
@@ -64,7 +63,7 @@ module Trainees
         training_route: course&.route,
         disabilities: disabilities,
         study_mode: study_mode,
-      }.merge(address)
+      }.merge(address).merge(ethnicity_attributes)
     end
 
     def create_degrees!
@@ -148,6 +147,16 @@ module Trainees
       Trainee.exists?(first_names: raw_trainee["first_name"],
                       last_name: raw_trainee["last_name"],
                       date_of_birth: raw_trainee["date_of_birth"])
+    end
+
+    def ethnicity_attributes
+      ethnic_background = raw_trainee["ethnic_background"]
+
+      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
+        { ethnic_background: ethnic_background }
+      else
+        { ethnic_background: Diversities::ANOTHER_ETHNIC_BACKGROUND, additional_ethnic_background: ethnic_background }
+      end
     end
   end
 end
