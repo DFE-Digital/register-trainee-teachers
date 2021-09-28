@@ -3,8 +3,6 @@
 module Dttp
   module CodeSets
     module DegreeTypes
-      NON_UK = ["Degree equivalent", "Unknown"].freeze
-
       BACHELOR_OF_ARTS = "Bachelor of Arts"
 
       COMMON = [BACHELOR_OF_ARTS, "Bachelor of Science", "Master of Arts", "PhD"].freeze
