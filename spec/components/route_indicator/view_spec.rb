@@ -42,6 +42,7 @@ RSpec.describe RouteIndicator::View do
 
       it "renders the apply application's course code" do
         expect(component).to have_content("Citizenship (V6X1)")
+        expect(component).to have_content("assessment only.")
       end
     end
   end

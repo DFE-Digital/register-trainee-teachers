@@ -16,7 +16,7 @@ module RouteIndicator
 
     def display_text
       if trainee.apply_application?
-        t(".apply_display_text", course_with_code: course_with_code, training_route: training_route)
+        t(".apply_display_text", course_with_code: course_with_code, training_route: training_route.downcase)
       else
         t(".display_text", training_route_link: training_route_link).html_safe
       end
