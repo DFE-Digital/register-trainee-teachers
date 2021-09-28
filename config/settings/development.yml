@@ -6,7 +6,6 @@ features:
   basic_auth: false
   import_courses_from_ttapi: true
   publish_course_details: true
-  imported_from_apply_filter: true
   enable_teach_first_provider: true
   course_study_mode: true
   scholarship: true

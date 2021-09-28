@@ -17,7 +17,6 @@ features:
   sync_from_dttp: true
   import_courses_from_ttapi: true
   import_applications_from_apply: true
-  imported_from_apply_filter: true
   publish_course_details: true
   persist_to_dttp: true
   show_funding: true

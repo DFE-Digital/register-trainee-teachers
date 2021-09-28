@@ -4,7 +4,6 @@ features:
   enable_feedback_link: true
   publish_course_details: true
   persist_to_dttp: false
-  imported_from_apply_filter: true
   course_study_mode: true
   enable_teach_first_provider: true
   scholarship: true

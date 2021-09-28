@@ -11,7 +11,6 @@ features:
   use_dfe_sign_in: false
   import_courses_from_ttapi: true
   publish_course_details: true
-  imported_from_apply_filter: true
   course_study_mode: true
   scholarship: true
   routes:
