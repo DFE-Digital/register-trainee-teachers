@@ -113,7 +113,7 @@ module ApiStubs
         disability_disclosure: "I am dyslexic",
         gender: "female",
         disabilities: %w[blind long_standing],
-        ethnic_group: "",
+        ethnic_group: "Asian or Asian British",
         ethnic_background: "Chinese",
       }.merge(candidate_attributes)
     end

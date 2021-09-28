@@ -32,7 +32,7 @@ module Trainees
         last_name: candidate_info["last_name"],
         date_of_birth: candidate_info["date_of_birth"].to_date,
         gender: candidate_info["gender"],
-        ethnic_group: "not_provided_ethnic_group",
+        ethnic_group: "asian_ethnic_group",
         ethnic_background: candidate_info["ethnic_background"],
         diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
         email: contact_details["email"],
@@ -203,17 +203,43 @@ module Trainees
       end
     end
 
-    context "ethnic background does not match any known ethnic backgrounds" do
-      let(:candidate_attributes) { { ethnic_background: "Mixed European" } }
+    context "ethnicity" do
+      context "ethnic group is not specified" do
+        let(:candidate_attributes) { { ethnic_group: nil } }
 
-      before { create_trainee_from_apply }
+        it "sets the ethnic group to not provided" do
+          expect(trainee.reload.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+        end
 
-      it "sets ethnic_background attribute to 'Another ethnic background'" do
-        expect(trainee.reload.ethnic_background).to eq(Diversities::ANOTHER_ETHNIC_BACKGROUND)
+        it "doesn't set any background attributes" do
+          expect(trainee.reload.ethnic_background).to be_nil
+          expect(trainee.reload.additional_ethnic_background).to be_nil
+        end
       end
 
-      it "uses the trainee's additional_ethnic_background attribute to store the value from Apply" do
-        expect(trainee.reload.additional_ethnic_background).to eq("Mixed European")
+      context "ethnic group is not provided" do
+        let(:candidate_attributes) { { ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } }
+
+        it "doesn't set any background attributes" do
+          expect(trainee.reload.ethnic_background).to be_nil
+          expect(trainee.reload.additional_ethnic_background).to be_nil
+        end
+      end
+
+      context "ethnic background does not match any known ethnic backgrounds" do
+        let(:candidate_attributes) do
+          { ethnic_group: "White", ethnic_background: "Mixed European" }
+        end
+
+        before { create_trainee_from_apply }
+
+        it "sets ethnic_background attribute to a known generic background" do
+          expect(trainee.reload.ethnic_background).to eq(Diversities::ANOTHER_WHITE_BACKGROUND)
+        end
+
+        it "uses the trainee's additional_ethnic_background attribute to store the free text value from Apply" do
+          expect(trainee.reload.additional_ethnic_background).to eq("Mixed European")
+        end
       end
     end
   end

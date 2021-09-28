@@ -9,7 +9,6 @@ module ApplyApi
         "Mixed or multiple ethnic groups" => Diversities::ETHNIC_GROUP_ENUMS[:mixed],
         "White" => Diversities::ETHNIC_GROUP_ENUMS[:white],
         "Another ethnic group" => Diversities::ETHNIC_GROUP_ENUMS[:other],
-        "" => Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
       }.freeze
     end
   end

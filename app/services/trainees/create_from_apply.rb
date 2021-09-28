@@ -63,7 +63,7 @@ module Trainees
         training_route: course&.route,
         disabilities: disabilities,
         study_mode: study_mode,
-      }.merge(address).merge(ethnicity_attributes)
+      }.merge(address).merge(ethnic_background_attributes)
     end
 
     def create_degrees!
@@ -109,7 +109,8 @@ module Trainees
     end
 
     def ethnic_group
-      ApplyApi::CodeSets::Ethnicities::MAPPING[raw_trainee["ethnic_group"]]
+      ApplyApi::CodeSets::Ethnicities::MAPPING.fetch(raw_trainee["ethnic_group"],
+                                                     Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
     end
 
     def diversity_disclosure
@@ -149,13 +150,19 @@ module Trainees
                       date_of_birth: raw_trainee["date_of_birth"])
     end
 
-    def ethnicity_attributes
+    def ethnic_background_attributes
       ethnic_background = raw_trainee["ethnic_background"]
+
+      return {} unless ethnic_group && ethnic_group != Diversities::ETHNIC_GROUP_ENUMS[:not_provided]
+      return {} unless ethnic_background
 
       if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
         { ethnic_background: ethnic_background }
       else
-        { ethnic_background: Diversities::ANOTHER_ETHNIC_BACKGROUND, additional_ethnic_background: ethnic_background }
+        {
+          ethnic_background: Diversities::ANOTHER_BACKGROUND[ethnic_group],
+          additional_ethnic_background: ethnic_background,
+        }
       end
     end
   end
