@@ -27,7 +27,7 @@ describe WithdrawalDetails::View do
   context "withdrawn for a specific reason" do
     let(:withdraw_reason) { WithdrawalReasons::SPECIFIC.sample }
 
-    it "renders the reason for withdrawal " do
+    it "renders the reason for withdrawal" do
       expect(rendered_component).to have_text(I18n.t("components.confirmation.withdrawal_details.reasons.#{data_model.withdraw_reason}"))
     end
   end
@@ -36,7 +36,7 @@ describe WithdrawalDetails::View do
     let(:withdraw_reason) { WithdrawalReasons::FOR_ANOTHER_REASON }
     let(:additional_withdraw_reason) { "some other reason" }
 
-    it "renders the reason for withdrawal " do
+    it "renders the reason for withdrawal" do
       expect(rendered_component).to have_text(data_model.additional_withdraw_reason)
     end
   end

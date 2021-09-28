@@ -115,7 +115,7 @@ module Dttp
           end
 
           context "UK degree" do
-            it "returns a hash with all the UK specific placement assignment fields " do
+            it "returns a hash with all the UK specific placement assignment fields" do
               expect(subject).to eq({
                 "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
                 "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,

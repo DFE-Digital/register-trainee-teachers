@@ -19,7 +19,7 @@ RSpec.describe Trainees::Degrees::TypeController, type: :controller do
     context "uk" do
       let(:locale_code) { "uk" }
 
-      it "redirects " do
+      it "redirects" do
         expect(response).to redirect_to(new_trainee_degree_path(trainee_id: trainee, locale_code: locale_code))
       end
     end

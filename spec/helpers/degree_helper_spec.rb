@@ -56,19 +56,19 @@ describe DegreesHelper do
   end
 
   describe "#subjects_options" do
-    let(:subject) { "Mathematics" }
+    let(:degree_subject) { "Mathematics" }
     let(:synonym) { "maths" }
 
     before do
       stub_const("Dttp::CodeSets::DegreeSubjects::MAPPING", {
-        subject => { synonyms: [synonym] },
+        degree_subject => { synonyms: [synonym] },
       })
     end
 
     it "iterates over array and prints out correct subjects values" do
       expect(subjects_options).to match([
         [nil, nil, nil],
-        [subject, subject, { "data-synonyms" => [synonym] }],
+        [degree_subject, degree_subject, { "data-synonyms" => [synonym] }],
       ])
     end
   end

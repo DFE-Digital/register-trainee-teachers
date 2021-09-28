@@ -21,7 +21,7 @@ RSpec.describe Diversity::View do
       end
     end
 
-    context "when trainee has shared their diversity information " do
+    context "when trainee has shared their diversity information" do
       let(:trainee) { create(:trainee, :with_diversity_information) }
 
       it "renders with one line to say the trainee has shared data" do

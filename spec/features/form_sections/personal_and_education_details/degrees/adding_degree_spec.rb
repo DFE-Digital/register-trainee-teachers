@@ -24,7 +24,7 @@ RSpec.feature "Adding a degree" do
   end
 
   describe "UK Route" do
-    context "the user enters valid details " do
+    context "the user enters valid details" do
       background do
         given_i_have_selected_the_uk_route
         and_i_am_on_the_degree_details_page

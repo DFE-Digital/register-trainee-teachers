@@ -25,7 +25,7 @@ describe SignOutController, type: :controller do
     context "existing DfE user" do
       let(:provider) { "dfe" }
 
-      it "redirects to the session/end " do
+      it "redirects to the session/end" do
         request_index
         expect(response).to redirect_to(dfe_logout_url)
       end
