@@ -22,7 +22,15 @@ class ApplyApplication < ApplicationRecord
     @application_attributes ||= parsed_application["attributes"]
   end
 
+  def course
+    provider.courses.find_by(code: course_code) if course_code.present?
+  end
+
 private
+
+  def course_code
+    application_attributes.dig("course", "course_code")
+  end
 
   def parsed_application
     @parsed_application ||= JSON.parse(application)

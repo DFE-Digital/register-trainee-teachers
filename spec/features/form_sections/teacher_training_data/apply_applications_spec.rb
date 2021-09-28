@@ -9,13 +9,23 @@ feature "apply registrations", type: :feature do
     given_i_am_authenticated
     and_a_trainee_exists_created_from_apply
     given_i_am_on_the_review_draft_page
-    when_i_enter_the_course_details_page
+  end
+
+  describe "with a missing course code against the trainee" do
+    let(:subjects) { ["History"] }
+
+    scenario "reviewing course" do
+      given_the_trainee_does_not_have_a_course_code
+      when_i_enter_the_course_details_page
+      then_i_am_on_the_publish_course_details_page
+    end
   end
 
   describe "with a course that doesn't require selecting a specialism" do
     let(:subjects) { ["History"] }
 
     scenario "reviewing course" do
+      when_i_enter_the_course_details_page
       then_i_am_on_the_apply_applications_course_details_page
       when_i_confirm_the_course_details
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
@@ -29,6 +39,7 @@ feature "apply registrations", type: :feature do
     let(:subjects) { ["Art and design"] }
 
     scenario "selecting specialisms" do
+      when_i_enter_the_course_details_page
       then_i_am_on_the_apply_applications_course_details_page
       when_i_confirm_the_course_details
       and_i_select_a_specialism("Graphic design")
@@ -41,6 +52,7 @@ feature "apply registrations", type: :feature do
     let(:subjects) { ["Modern languages (other)"] }
 
     scenario "selecting languages" do
+      when_i_enter_the_course_details_page
       then_i_am_on_the_apply_applications_course_details_page
       when_i_confirm_the_course_details
       and_i_choose_my_languages
@@ -56,12 +68,20 @@ private
     trainee.update(course_code: Course.first.code)
   end
 
+  def given_the_trainee_does_not_have_a_course_code
+    trainee.update(course_code: nil)
+  end
+
   def then_the_section_should_be(status)
     expect(review_draft_page.course_details.status.text).to eq(status)
   end
 
   def then_i_am_on_the_apply_applications_course_details_page
     expect(apply_registrations_course_details_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_i_am_on_the_publish_course_details_page
+    expect(publish_course_details_page).to be_displayed(id: trainee.slug)
   end
 
   def when_i_visit_the_apply_applications_course_details_page
