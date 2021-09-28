@@ -131,6 +131,16 @@ describe Trainee do
     it { is_expected.to have_many(:disabilities).through(:trainee_disabilities) }
     it { is_expected.to belong_to(:lead_school).class_name("School").optional }
     it { is_expected.to belong_to(:employing_school).class_name("School").optional }
+
+    describe "#published_course" do
+      let(:same_code) { "1TX" }
+      let(:provider_a) { create(:provider, :with_courses, course_code: same_code) }
+      let!(:provider_b) { create(:provider, :with_courses, course_code: same_code) }
+
+      subject { create(:trainee, provider: provider_a, course_code: same_code).published_course.provider }
+
+      it { is_expected.to eq(provider_a) }
+    end
   end
 
   context "validations" do

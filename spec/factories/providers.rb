@@ -12,5 +12,16 @@ FactoryBot.define do
     trait :teach_first do
       code { TEACH_FIRST_PROVIDER_CODE }
     end
+
+    trait :with_courses do
+      transient do
+        courses_count { 1 }
+        course_code { Faker::Alphanumeric.unique.alphanumeric(number: 4, min_alpha: 1).upcase }
+      end
+
+      after(:create) do |provider, evaluator|
+        create_list(:course, evaluator.courses_count, code: evaluator.course_code, accredited_body_code: provider.code)
+      end
+    end
   end
 end
