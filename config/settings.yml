@@ -41,7 +41,6 @@ features:
   persist_to_dttp: false
   show_funding: true
   send_funding_to_dttp: false
-  imported_from_apply_filter: false
   placements: false
   course_study_mode: false
   enable_teach_first_provider: false

@@ -22,12 +22,12 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
-  scenario "can filter by apply_drafts", feature_imported_from_apply_filter: true do
+  scenario "can filter by apply_drafts" do
     when_i_filter_by_apply_draft_status
     then_only_the_apply_draft_trainee_is_visible
   end
 
-  scenario "when all trainees are from a single source", feature_imported_from_apply_filter: true do
+  scenario "when all trainees are from a single source" do
     given_all_trainees_are_from_a_single_source
     when_i_visit_the_trainee_index_page
     then_the_record_source_filter_is_not_visible
