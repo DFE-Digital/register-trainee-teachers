@@ -9,14 +9,10 @@ describe DegreesHelper do
     let(:degree_type) { "Bachelor of Arts" }
     let(:degree_abbreviation) { "BA" }
     let(:degree_synonym) { "Bachelors" }
-    let(:non_uk_degree_type) { "Unknown" }
-    let(:non_uk_degree_types) { %w[Unknown] }
 
     before do
-      stub_const("Dttp::CodeSets::DegreeTypes::NON_UK", [non_uk_degree_type])
       stub_const("Dttp::CodeSets::DegreeTypes::MAPPING", {
         degree_type => { abbreviation: degree_abbreviation, synonyms: [degree_synonym] },
-        non_uk_degree_type => { abbreviation: nil },
       })
       stub_const("Dttp::CodeSets::DegreeTypes::COMMON", [degree_type])
     end

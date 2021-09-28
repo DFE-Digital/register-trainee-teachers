@@ -5,8 +5,6 @@ module DegreesHelper
 
   def degree_type_options
     to_enhanced_options(degree_type_data) do |name, attributes|
-      next if Dttp::CodeSets::DegreeTypes::NON_UK.include?(name)
-
       data = {
         "data-synonyms" => (attributes[:synonyms] || []) << attributes[:abbreviation],
         "data-append" => attributes[:abbreviation] && tag.strong("(#{attributes[:abbreviation]})"),
