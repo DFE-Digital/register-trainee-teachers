@@ -207,7 +207,7 @@ module Exports
     end
 
     def course_education_phase(trainee)
-      return "Early years" if trainee.early_years_route?
+      return EARLY_YEARS_ROUTE_NAME_PREFIX.humanize if trainee.early_years_route?
 
       trainee.course_education_phase&.upcase_first
     end

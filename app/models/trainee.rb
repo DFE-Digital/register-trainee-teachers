@@ -177,10 +177,10 @@ class Trainee < ApplicationRecord
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
 
   scope :with_education_phase, lambda { |*levels|
-    education_phases = levels.reject { |level| level == "early_years" }
+    education_phases = levels.reject { |level| level == EARLY_YEARS_ROUTE_NAME_PREFIX }
 
     where(course_education_phase: education_phases).or(
-      levels.include?("early_years") ? on_early_years_routes : none,
+      levels.include?(EARLY_YEARS_ROUTE_NAME_PREFIX) ? on_early_years_routes : none,
     )
   }
 
