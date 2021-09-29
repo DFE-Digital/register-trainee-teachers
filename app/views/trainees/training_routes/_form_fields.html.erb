@@ -7,7 +7,12 @@
 
     <% TRAINING_ROUTE_FEATURE_FLAGS.each do |training_route| %>
       <% if FeatureService.enabled?("routes.#{training_route}") %>
-        <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[training_route], label: { text: t("activerecord.attributes.trainee.training_routes.#{training_route}") } %>
+        <%= f.govuk_radio_button(
+          :training_route,
+          TRAINING_ROUTE_ENUMS[training_route],
+          hint: { text: (TRAINING_ROUTE_ENUMS[training_route].starts_with?("provider_led") && t(".provider_led_hint")) },
+          label: { text: t("activerecord.attributes.trainee.training_routes.#{training_route}") }
+        ) %>
       <% end %>
     <% end %>
 

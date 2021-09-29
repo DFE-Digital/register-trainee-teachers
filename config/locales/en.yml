@@ -823,6 +823,9 @@ en:
         edit:
           summary_title: Confirm training course
           summary_with_route: *summary_with_route
+    training_routes:
+      form_fields:
+        provider_led_hint: Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
   activerecord:
     attributes:
       trainee:
