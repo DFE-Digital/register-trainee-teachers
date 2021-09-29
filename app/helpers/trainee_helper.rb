@@ -74,4 +74,9 @@ module TraineeHelper
   def form_error_class(form, field)
     form.errors.messages.keys.include?(field.to_sym) ? "govuk-form-group govuk-form-group--error" : "govuk-form-group"
   end
+
+  # Use this method if you're preloading courses in bulk as it won't make further database calls
+  def course_name_for(trainee)
+    trainee.provider&.courses&.find { |course| course.code == trainee.course_code }&.name
+  end
 end

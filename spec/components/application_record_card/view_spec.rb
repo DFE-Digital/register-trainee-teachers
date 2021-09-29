@@ -4,7 +4,8 @@ require "rails_helper"
 
 module ApplicationRecordCard
   describe View do
-    let(:course) { create(:course) }
+    let(:provider) { create(:provider, :with_courses) }
+    let(:course) { provider.courses.first }
     let(:trainee) { Trainee.new(created_at: Time.zone.now, course_code: course.code) }
 
     before do
@@ -19,6 +20,14 @@ module ApplicationRecordCard
     end
 
     context "when the Trainee has no subject" do
+      let(:trainee) do
+        create(:trainee, provider: provider, course_code: course.code)
+      end
+
+      before do
+        trainee
+      end
+
       it "renders the course name" do
         expect(rendered_component).to have_text(course.name)
       end
