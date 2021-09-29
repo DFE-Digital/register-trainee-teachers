@@ -7,7 +7,7 @@ describe Trainees::SubjectSpecialismsController do
   let(:trainee) { create(:trainee, :provider_led_postgrad, :submitted_for_trn, provider: user.provider, course_subject_one: nil, course_subject_two: nil, course_subject_three: nil) }
 
   before do
-    PublishCourseDetailsForm.new(trainee, params: { course_code: course.code }).stash
+    PublishCourseDetailsForm.new(trainee).assign_attributes_and_stash({ course_code: course.code })
     allow(controller).to receive(:current_user).and_return(user)
   end
 

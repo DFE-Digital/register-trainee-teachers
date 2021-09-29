@@ -5,6 +5,7 @@ class CourseDetailsForm < TraineeForm
   include DatesHelper
 
   FIELDS = %i[
+    course_code
     course_subject_one
     course_subject_one_raw
     course_subject_two
@@ -80,12 +81,6 @@ class CourseDetailsForm < TraineeForm
     new_date({ year: end_year, month: end_month, day: end_day })
   end
 
-  def course_code
-    return nil unless trainee.draft?
-
-    trainee.course_code
-  end
-
   def save!
     if valid?
       update_trainee_attributes
@@ -111,6 +106,26 @@ class CourseDetailsForm < TraineeForm
 
   def is_primary_phase?
     trainee.course_education_phase == COURSE_EDUCATION_PHASE_ENUMS[:primary]
+  end
+
+  def attrs_from_course_age_range(course_age_range)
+    age_range = Dttp::CodeSets::AgeRanges::MAPPING[course_age_range]
+
+    attrs = {}
+    if age_range.present? && !trainee.early_years_route?
+      attrs["#{age_range[:option]}_age_range".to_sym] = course_age_range.join(" to ")
+      attrs[:main_age_range] = :other if age_range[:option] == :additional
+    end
+
+    attrs
+  end
+
+  def nullify_and_stash!
+    opts = FIELDS.inject({}) { |sum, f|
+      sum[f] = nil
+      sum
+    }
+    assign_attributes_and_stash(opts)
   end
 
 private
@@ -178,6 +193,7 @@ private
 
   def compute_attributes_from_trainee
     attributes = {
+      course_code: trainee.course_code,
       start_day: trainee.course_start_date&.day,
       start_month: trainee.course_start_date&.month,
       start_year: trainee.course_start_date&.year,

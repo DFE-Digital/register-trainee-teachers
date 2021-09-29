@@ -12,6 +12,7 @@ module PageObjects
 
       element :confirm, "input[name='confirm_detail_form[mark_as_completed]']"
       element :continue_button, "button[type='submit']"
+      element :enter_an_answer_for_course_end_date_link, "a[name$=' end date']"
 
       sections :summary_list_rows, SummaryListRows, ".govuk-summary-list__row"
 

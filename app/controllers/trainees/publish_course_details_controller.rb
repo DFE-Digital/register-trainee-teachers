@@ -13,6 +13,7 @@ module Trainees
 
     def update
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee, params: course_params, user: current_user)
+      @publish_course_details_form.skip_course_end_date_validation!
 
       if @publish_course_details_form.stash_or_save!
         if @publish_course_details_form.manual_entry_chosen?

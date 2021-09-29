@@ -9,6 +9,15 @@ class StudyModesForm < TraineeForm
 
   validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, if: :requires_study_mode?
 
+  def stash
+    form = CourseDetailsForm.new(trainee)
+    form.assign_attributes_and_stash({
+      study_mode: study_mode,
+    })
+
+    super
+  end
+
 private
 
   def compute_fields
