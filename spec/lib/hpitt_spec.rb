@@ -229,7 +229,7 @@ describe HPITT do
       let(:degree_grade) { "First-class honours" }
 
       it "returns it" do
-        expect(subject).to eq("First-class Honours")
+        expect(subject).to eq("First-class honours")
       end
     end
 

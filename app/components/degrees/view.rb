@@ -62,7 +62,7 @@ module Degrees
     def grade_for(degree)
       return degree.grade += " (#{degree.other_grade})" if degree.other_grade.present?
 
-      degree.grade&.capitalize
+      degree.grade
     end
 
     def mappable_field_row(degree, field_name, field_label, field_value = nil)

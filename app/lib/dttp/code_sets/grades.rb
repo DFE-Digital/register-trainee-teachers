@@ -4,7 +4,7 @@ module Dttp
   module CodeSets
     module Grades
       # Do not make any changes to the keys. If necessary, change Degree#grade to enum type first
-      FIRST_CLASS_HONOURS = "First-class Honours"
+      FIRST_CLASS_HONOURS = "First-class honours"
       OTHER = "Other"
 
       MAPPING = {
