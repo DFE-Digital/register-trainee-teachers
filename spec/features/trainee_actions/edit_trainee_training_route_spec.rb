@@ -17,11 +17,19 @@ feature "editing a trainee training route", type: :feature do
       and_current_training_route_should_be_selected
     end
 
-    scenario "editing a draft-trainee's current training route", "feature_routes.provider_led_postgrad": true do
-      then_i_select_provider_led_postgrad
-      and_i_submit_the_new_route
-      and_i_visit_the_edit_training_route_page
-      and_provider_led_postgrad_should_be_selected
+    context "editing a draft trainee's current training route" do
+      scenario "selecting a valid training route", "feature_routes.provider_led_postgrad": true do
+        then_i_select_provider_led_postgrad
+        and_i_submit_the_new_route
+        and_i_visit_the_edit_training_route_page
+        and_provider_led_postgrad_should_be_selected
+      end
+
+      scenario "selecting a not supported route" do
+        then_i_select_other
+        and_i_submit_the_new_route
+        and_i_am_redirected_to_the_not_supported_page
+      end
     end
   end
 
@@ -57,5 +65,13 @@ private
 
   def and_provider_led_postgrad_should_be_selected
     expect(trainee_edit_training_route_page.provider_led_postgrad).to be_checked
+  end
+
+  def then_i_select_other
+    trainee_edit_training_route_page.other.click
+  end
+
+  def and_i_am_redirected_to_the_not_supported_page
+    expect(not_supported_route_page).to be_displayed
   end
 end

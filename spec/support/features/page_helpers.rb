@@ -111,7 +111,7 @@ module Features
     end
 
     def not_supported_route_page
-      @not_supported_route_page ||= PageObjects::Trainees::NotSupportedRoute.newx
+      @not_supported_route_page ||= PageObjects::Trainees::NotSupportedRoute.new
     end
 
     def deferral_page
