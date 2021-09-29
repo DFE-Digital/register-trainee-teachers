@@ -202,6 +202,7 @@ TRAINING_ROUTE_INITIATIVES = {
                                                                                         :now_teach,
                                                                                         :maths_physics_chairs_programme_researchers_in_schools),
   TRAINING_ROUTE_ENUMS[:school_direct_salaried] => ROUTE_INITIATIVES_ENUMS.values_at(:future_teaching_scholars,
+                                                                                     :transition_to_teach,
                                                                                      :maths_physics_chairs_programme_researchers_in_schools,
                                                                                      :now_teach),
   TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
