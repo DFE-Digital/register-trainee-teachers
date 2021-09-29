@@ -41,6 +41,16 @@ module ApplyApi
             expect { subject }.to change { provider.apply_applications.non_importable_hei.count }.by(1)
           end
         end
+
+        context "when the accredited provider type is an HEI" do
+          before do
+            application_data["attributes"]["course"]["accredited_provider_type"] = "university"
+          end
+
+          it "creates an apply_application with the state 'non_importable_hei'" do
+            expect { subject }.to change { provider.apply_applications.non_importable_hei.count }.by(1)
+          end
+        end
       end
 
       context "when there is missing data" do

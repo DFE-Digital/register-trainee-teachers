@@ -43,7 +43,8 @@ module ApplyApi
     end
 
     def hei_provider?
-      course_attributes("training_provider_type") == "university"
+      course_attributes("training_provider_type") == "university" ||
+        course_attributes("accredited_provider_type") == "university"
     end
 
     def course_attributes(attribute_name)
