@@ -10,7 +10,6 @@ module CourseDetails
       @data_model = data_model
       @trainee = data_model.is_a?(Trainee) ? data_model : data_model.trainee
       @has_errors = has_errors
-      @not_provided_copy = t("components.confirmation.not_provided")
     end
 
     def summary_title
@@ -19,7 +18,7 @@ module CourseDetails
 
     def rows
       [
-        type_of_course,
+        education_phase,
         subject_row,
         age_range_row,
         study_mode_row,
@@ -42,9 +41,9 @@ module CourseDetails
 
     attr_accessor :data_model, :trainee, :has_errors
 
-    def type_of_course
-      if require_course_type?
-        { key: t("components.course_detail.type_of_course"), value: course_type }
+    def education_phase
+      if require_education_phase?
+        mappable_field(trainee.course_education_phase&.upcase_first, t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee))
       end
     end
 
@@ -82,7 +81,7 @@ module CourseDetails
       !trainee.early_years_route?
     end
 
-    def require_course_type?
+    def require_education_phase?
       return true unless trainee.early_years_route?
 
       !trainee.draft?
@@ -91,7 +90,7 @@ module CourseDetails
     def course_details
       return t("components.course_detail.details_not_on_publish") if data_model.course_code.blank?
 
-      "#{course.name} (#{course.code})"
+      "#{course.name} (#{course.code})" if course
     end
 
     def subject_names
@@ -116,12 +115,6 @@ module CourseDetails
       t("components.course_detail.study_mode_values.#{data_model.study_mode}") if data_model.study_mode.present?
     end
 
-    def course_type
-      return @not_provided_copy if trainee.training_route.blank?
-
-      t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
-    end
-
     def course_start_date
       if data_model.course_start_date.present?
         date_for_summary_view(data_model.course_start_date)
@@ -138,12 +131,12 @@ module CourseDetails
       @course ||= trainee.available_courses.find_by(code: data_model.course_code)
     end
 
-    def mappable_field(field_value, field_label)
+    def mappable_field(field_value, field_label, action_url: edit_trainee_course_details_path(trainee))
       MappableFieldRow.new(
         field_value: field_value,
         field_label: field_label,
         text: t("components.confirmation.missing"),
-        action_url: edit_trainee_course_details_path(trainee),
+        action_url: action_url,
         has_errors: has_errors,
       ).to_h
     end

@@ -81,6 +81,7 @@ module Exports
           "course_qualification" => course&.qualification,
           "course_qualification_type" => nil,
           "course_level" => course&.level&.capitalize,
+          "course_education_phase" => course_education_phase(trainee),
           "course_allocation_subject" => course_allocation_subject(trainee.course_subject_one),
           "course_itt_subject_1" => trainee.course_subject_one,
           "course_itt_subject_2" => trainee.course_subject_two,
@@ -203,6 +204,12 @@ module Exports
 
     def course_allocation_subject(subject)
       SubjectSpecialism.find_by(name: subject)&.allocation_subject&.name
+    end
+
+    def course_education_phase(trainee)
+      return EARLY_YEARS_ROUTE_NAME_PREFIX.humanize if trainee.early_years_route?
+
+      trainee.course_education_phase&.upcase_first
     end
 
     def course_study_mode(trainee)

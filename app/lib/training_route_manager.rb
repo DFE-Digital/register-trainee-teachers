@@ -30,7 +30,7 @@ class TrainingRouteManager
   end
 
   def early_years_route?
-    training_route.to_s.starts_with?("early_years")
+    EARLY_YEARS_TRAINING_ROUTES.keys.include?(training_route.to_s)
   end
 
   def itt_route?

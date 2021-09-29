@@ -18,7 +18,7 @@ module TaskListHelper
       course_details:
         {
           task_name: "Course details",
-          path: (trainee.apply_application? ? edit_trainee_apply_applications_course_details_path(trainee) : edit_trainee_course_details_path(trainee)),
+          path: path_for_course_details(trainee),
           confirm_path: (trainee.apply_application? ? edit_trainee_apply_applications_course_details_path(trainee) : trainee_course_details_confirm_path(trainee)),
           classes: "course-details",
           status: ProgressService.call(
@@ -163,5 +163,13 @@ private
       school_direct_salaried: salaried_title,
       pg_teaching_apprenticeship: pg_teaching_apprenticeship_title,
     }[route.to_sym]
+  end
+
+  def path_for_course_details(trainee)
+    return edit_trainee_apply_applications_course_details_path(trainee) if trainee.apply_application?
+
+    return edit_trainee_course_details_path(trainee) if trainee.early_years_route?
+
+    edit_trainee_course_education_phase_path(trainee)
   end
 end

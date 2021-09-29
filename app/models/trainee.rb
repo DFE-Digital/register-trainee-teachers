@@ -93,6 +93,11 @@ class Trainee < ApplicationRecord
 
   enum study_mode: TRAINEE_STUDY_MODE_ENUMS
 
+  enum course_education_phase: {
+    COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,
+    COURSE_EDUCATION_PHASE_ENUMS[:secondary] => 1,
+  }
+
   enum state: {
     draft: 0,
     submitted_for_trn: 1,
@@ -147,27 +152,37 @@ class Trainee < ApplicationRecord
   scope :ordered_by_date, -> { order(updated_at: :desc) }
   scope :ordered_by_last_name, -> { order(last_name: :asc) }
 
-  scope :with_subject_or_allocation_subject, lambda { |subject|
+  scope :with_subject_or_allocation_subject, (lambda do |subject|
     select("trainees.*", ordered_by_drafts_clause)
       .joins(join_allocation_subjects_clause)
       .where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject OR LOWER(allocation_subjects.name) = :subject", subject: subject.downcase)
       .distinct
-  }
+  end)
 
   # Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
-  scope :with_award_states, lambda { |*award_states|
+  scope :with_award_states, (lambda do |*award_states|
     qts_states = award_states.select { |s| s.start_with? "qts" }.map { |s| genericize_state(s) }
     eyts_states = award_states.select { |s| s.start_with? "eyts" }.map { |s| genericize_state(s) }
 
     where(training_route: EARLY_YEARS_ROUTES, state: eyts_states).or(
       where(state: qts_states).where.not(training_route: EARLY_YEARS_ROUTES),
     )
-  }
+  end)
 
   scope :with_manual_application, -> { where(apply_application: nil) }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
+
+  scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
+
+  scope :with_education_phase, (lambda do |*levels|
+    education_phases = levels.reject { |level| level == EARLY_YEARS_ROUTE_NAME_PREFIX }
+
+    where(course_education_phase: education_phases).or(
+      levels.include?(EARLY_YEARS_ROUTE_NAME_PREFIX) ? on_early_years_routes : none,
+    )
+  end)
 
   audited associated_with: :provider
   has_associated_audits

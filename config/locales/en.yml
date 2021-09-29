@@ -153,7 +153,7 @@ en:
         trainee_start_date: start date
     course_detail:
       title: Course details
-      type_of_course: Route
+      education_phase: Education phase
       subject: Subject
       age_range: Age range
       course_start_date: Course start date
@@ -260,6 +260,8 @@ en:
           edit: What type of training are they doing?
         course_details:
           edit: Course details
+        course_education_phases:
+          show: Which phase of education will the trainee teach?
         itt_start_date:
           edit: ITT start date
         study_mode:
@@ -533,6 +535,11 @@ en:
         for_example: For example
         continue: Continue
         cancel_and_return_to_record: Cancel and return to record
+      course_education_phase:
+        label_names:
+          primary: Primary
+          secondary: Secondary
+          secondary_hint: Select secondary if the course covers both phases of education.
       diversity_disclosures:
         label_names:
           diversity_disclosed: "Yes"
@@ -771,11 +778,18 @@ en:
         age_range_label: Age range
         heading: Course details
         other_age_range_label: Other age range
-        subject_label: Subject
-        subject_hint: &subject_hint Search for the closest matching subject
         study_mode_label: Full time or part time?
         study_mode_full_time: Full time
         study_mode_part_time: Part time
+      primary_phase:
+        subject_label: Subject
+        primary_with_another_label: Primary with another subject
+        subject_two: Second subject
+        subject_three: Third subject (optional)
+        subject_hint: &subject_hint Search for the closest matching subject
+      secondary_phase:
+        subject_label: Subject
+        subject_hint: *subject_hint
       additional_subjects:
         add_additional_subjects: Add additional subjects
         main_subject: The first subject is the main one. It represents the bursary or scholarship available if applicable.
@@ -1051,8 +1065,11 @@ en:
               blank: Select a subject
             course_subject_two:
               duplicate: Enter a different second subject
+              blank: Select a second subject
             course_subject_three:
               duplicate: Enter a different third subject
+            primary_course_subjects:
+              blank: Select a subject
             main_age_range:
               blank: Select an age range
             additional_age_range:
@@ -1187,6 +1204,10 @@ en:
                 inclusion: *bursary_selection_required
               funding_type:
                 inclusion: *bursary_selection_required
+        course_education_phase_form:
+          attributes:
+            course_education_phase:
+              blank: Select primary or secondary
   page_headings:
     start_page: Register trainee teachers
   system_admin:

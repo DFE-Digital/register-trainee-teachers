@@ -20,6 +20,7 @@ class CourseDetailsForm < TraineeForm
     main_age_range
     additional_age_range
     study_mode
+    primary_course_subjects
   ].freeze
 
   COURSE_DATES = %i[
@@ -39,7 +40,8 @@ class CourseDetailsForm < TraineeForm
   before_validation :sanitise_course_dates
   before_validation :sanitise_subjects
 
-  validates :course_subject_one, autocomplete: true, presence: true, if: :require_subject?
+  validates :course_subject_one, autocomplete: true, presence: true, if: :requires_secondary_subjects?
+  validate :primary_courses_valid, if: :requires_primary_subjects?
 
   validate :course_subject_two_valid, if: :require_subject?
   validates :course_subject_two, autocomplete: true, if: :require_subject?
@@ -58,6 +60,11 @@ class CourseDetailsForm < TraineeForm
   delegate :apply_application?, :requires_study_mode?, to: :trainee
 
   MAX_END_YEARS = 4
+
+  def initialize(...)
+    super(...)
+    @primary_course_subjects ||= set_primary_phase_subjects if is_primary_phase?
+  end
 
   def course_age_range
     return unless require_age_range?
@@ -102,7 +109,19 @@ class CourseDetailsForm < TraineeForm
     !trainee.early_years_route?
   end
 
+  def is_primary_phase?
+    trainee.course_education_phase == COURSE_EDUCATION_PHASE_ENUMS[:primary]
+  end
+
 private
+
+  def requires_secondary_subjects?
+    !is_primary_phase? && require_subject?
+  end
+
+  def requires_primary_subjects?
+    is_primary_phase? && require_subject?
+  end
 
   def compute_fields
     compute_attributes_from_trainee.merge(new_attributes)
@@ -112,12 +131,32 @@ private
     main_age_range&.to_sym == :other
   end
 
+  def primary_with_other?
+    primary_course_subjects&.to_sym == :other
+  end
+
+  def set_primary_phase_subjects
+    return if course_subject_one.blank?
+
+    PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.key([course_subject_one, course_subject_two, course_subject_three].reject(&:blank?)) || :other
+  end
+
+  def set_course_subject_from_primary_phase
+    if PUBLISH_PRIMARY_SUBJECTS.include? primary_course_subjects
+      @course_subject_one, @course_subject_two, @course_subject_three = PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[primary_course_subjects]
+    end
+
+    @course_subject_one = CourseSubjects::PRIMARY_TEACHING if primary_with_other?
+  end
+
   def update_trainee_attributes
     attributes = {
       course_code: course_code,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     }
+
+    set_course_subject_from_primary_phase if is_primary_phase?
 
     unless trainee.early_years_route?
       attributes.merge!({
@@ -174,6 +213,18 @@ private
   def new_date(date_hash)
     date_args = date_hash.values.map(&:to_i)
     valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+  end
+
+  def primary_courses_valid
+    if primary_course_subjects.blank?
+      errors.add(:primary_course_subjects, :blank)
+    end
+
+    if primary_with_other?
+      errors.add(:course_subject_two, :blank) if course_subject_two.blank?
+    elsif PUBLISH_PRIMARY_SUBJECTS.exclude?(primary_course_subjects)
+      errors.add(:primary_course_subjects, :inclusion)
+    end
   end
 
   def age_range_valid

@@ -36,6 +36,7 @@ describe PublishCourseDetailsForm, type: :model do
         let(:params) { { course_code: course_code } }
         let(:course_code) { "ABC" }
         let(:subject_name) { "Physical education" }
+        let(:course_level) { "primary" }
         let(:subject_specialism_form) do
           SubjectSpecialismForm.new(trainee, params: { course_subject_one: subject_name })
         end
@@ -51,7 +52,9 @@ describe PublishCourseDetailsForm, type: :model do
         end
 
         it "updates the trainee with the publish course details" do
-          expect { subject.save! }.to change { trainee.course_subject_one }.to(subject_name)
+          expect { subject.save! }
+          .to change { trainee.course_subject_one }.to(subject_name)
+          .and change { trainee.course_education_phase }.to(course_level)
         end
       end
     end

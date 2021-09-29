@@ -129,7 +129,7 @@ namespace :example_data do
                            apply_application: FactoryBot.create(:apply_application, accredited_body_code: provider.code))
             end
 
-            if route.to_s.include?("early_years")
+            if route.to_s.include?(EARLY_YEARS_ROUTE_NAME_PREFIX)
               attrs.merge!(
                 course_subject_one: CourseSubjects::EARLY_YEARS_TEACHING,
                 course_age_range: AgeRange::ZERO_TO_FIVE,

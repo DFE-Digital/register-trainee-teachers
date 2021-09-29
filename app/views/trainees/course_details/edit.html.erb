@@ -13,21 +13,10 @@
 
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-      <% if f.object.require_subject? %>
-        <%= render FormComponents::Autocomplete::View.new(
-          f,
-          attribute_name: :course_subject_one,
-          form_field: f.govuk_collection_select(
-            :course_subject_one,
-            course_subjects_options,
-            :value,
-            :text,
-            label: { text: t(".subject_label"), size: "s" },
-            hint: { text: t(".subject_hint") },
-          ),
-        ) %>
-
-        <%= render "additional_subjects", f: f %>
+      <% if f.object.is_primary_phase? %>
+        <%= render "primary_phase", f: f %>
+      <% else %>
+        <%= render "secondary_phase", f: f %>
       <% end %>
 
       <% if f.object.require_age_range? %>
@@ -35,7 +24,7 @@
                                            legend: { text: t(".age_range_label"), size: "s" },
                                            classes: "age_range") do %>
 
-          <% main_age_ranges_options.each_with_index do |age_range, index| %>
+          <% main_age_ranges_options(level: @trainee.course_education_phase).each_with_index do |age_range, index| %>
             <%= f.govuk_radio_button(:main_age_range, age_range,
                                      label: { text: age_range },
                                      link_errors: index.zero?) %>
@@ -48,7 +37,7 @@
                                    label: { text: t(".other_age_range_label") }) do %>
 
             <%= f.govuk_collection_select(:additional_age_range,
-                                          additional_age_ranges_options,
+                                          additional_age_ranges_options(level: @trainee.course_education_phase),
                                           :value,
                                           :text,
                                           label: { text: t(".additional_age_range_label") }) %>

@@ -31,14 +31,19 @@ module Trainees
 
     context "with level filter" do
       let!(:early_years_trainee) { create(:trainee, :early_years_undergrad) }
-      let!(:primary_trainee) { create(:trainee, course_age_range: AgeRange::FIVE_TO_ELEVEN) }
-      let!(:primary_and_secondary_trainee) { create(:trainee, course_age_range: AgeRange::SEVEN_TO_SIXTEEN) }
-      let!(:secondary_trainee) { create(:trainee, course_age_range: AgeRange::FOURTEEN_TO_NINETEEN) }
+      let!(:primary_trainee) { create(:trainee, :with_primary_education) }
+      let!(:secondary_trainee) { create(:trainee, :with_secondary_education) }
 
       context "early_years" do
         let(:filters) { { level: %w[early_years] } }
 
         it { is_expected.to contain_exactly(early_years_trainee) }
+      end
+
+      context "early_years and primary" do
+        let(:filters) { { level: %w[early_years primary] } }
+
+        it { is_expected.to contain_exactly(early_years_trainee, primary_trainee) }
       end
 
       context "primary" do
@@ -50,7 +55,7 @@ module Trainees
       context "secondary" do
         let(:filters) { { level: %w[secondary] } }
 
-        it { is_expected.to contain_exactly(primary_and_secondary_trainee, secondary_trainee) }
+        it { is_expected.to contain_exactly(secondary_trainee) }
       end
     end
 

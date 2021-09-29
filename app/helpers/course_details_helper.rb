@@ -11,12 +11,12 @@ module CourseDetailsHelper
     to_options(all_subjects, first_value: "All subjects")
   end
 
-  def main_age_ranges_options
-    age_ranges(option: :main)
+  def main_age_ranges_options(level: :primary)
+    age_ranges(option: :main, level: level)
   end
 
-  def additional_age_ranges_options
-    to_options(age_ranges(option: :additional))
+  def additional_age_ranges_options(level: :primary)
+    to_options(age_ranges(option: :additional, level: level))
   end
 
   def route_title(route)
@@ -24,6 +24,12 @@ module CourseDetailsHelper
   end
 
   def subjects_for_summary_view(subject_one, subject_two, subject_three)
+    primary_subjects = PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.key([subject_one, subject_two, subject_three].reject(&:blank?))
+
+    return primary_subjects if primary_subjects.present?
+
+    subject_one = PublishSubjects::PRIMARY if subject_one.eql?(CourseSubjects::PRIMARY_TEACHING)
+
     additional_subjects = [subject_two, subject_three].reject(&:blank?).join(" and ")
 
     [subject_one&.upcase_first, additional_subjects].reject(&:blank?).join(" with ")
@@ -43,14 +49,14 @@ module CourseDetailsHelper
 
 private
 
-  def age_ranges(option:)
-    Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option }.keys.map do |age_range|
+  def age_ranges(option:, level:)
+    Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option && attributes[:levels]&.include?(level&.to_sym) }.keys.map do |age_range|
       age_range.join(" to ")
     end
   end
 
   def course_subjects
-    @course_subjects ||= SubjectSpecialism.order_by_name.pluck(:name)
+    @course_subjects ||= SubjectSpecialism.secondary.order_by_name.pluck(:name)
   end
 
   def all_subjects

@@ -87,6 +87,10 @@ TRAINING_ROUTE_AWARD_TYPE = {
 
 EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == EYTS_AWARD_TYPE }.keys.freeze
 
+EARLY_YEARS_ROUTE_NAME_PREFIX = "early_years"
+
+EARLY_YEARS_TRAINING_ROUTES = TRAINING_ROUTES.select { |t| t.starts_with?(EARLY_YEARS_ROUTE_NAME_PREFIX) }
+
 SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
