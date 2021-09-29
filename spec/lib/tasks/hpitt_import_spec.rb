@@ -46,7 +46,7 @@ describe "hpitt:import" do
   end
 
   context "with invalid data" do
-    # This csv has two rows, the second row has a school urn for a school that
+    # This csv has two rows, the second row has an invalid degree subject for a school that
     # doesn't exist
     let(:csv_path) {
       File.join(__dir__, "..", "..", "support", "fixtures", "hpitt_import_invalid.csv")
@@ -107,7 +107,5 @@ describe "hpitt:import" do
     expect(degree.non_uk_degree).to eq "Bachelor degree"
     expect(degree.subject).to eq "Toxicology"
     expect(degree.country).to eq "France"
-
-    expect(trainee.course_code).to eq course.code
   end
 end
