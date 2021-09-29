@@ -57,7 +57,7 @@ gem "uk_postcode"
 
 gem "config", "~> 3.1"
 
-gem "httparty", "~> 0.19"
+gem "httparty", "~> 0.20"
 
 # Wrap jsonb columns with activemodel-like classes
 gem "store_model", "~> 0.11"
