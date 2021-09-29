@@ -19,10 +19,6 @@ describe HPITT do
       }
     end
 
-    before do
-      allow(described_class).to receive(:find_course).and_return(instance_double(Course, code: "XYZ"))
-    end
-
     subject { HPITT.import_row(csv_row) }
 
     it "creates the trainee/degree" do
@@ -53,57 +49,6 @@ describe HPITT do
 
       it "raises an error" do
         expect { subject }.to raise_error(having_attributes(message: "Ethnic group not recognised: ethnic group"))
-      end
-    end
-  end
-
-  describe "find_course" do
-    let(:trainee) { create(:trainee, :school_direct_salaried) }
-    let(:csv_row) do
-      {
-        "Course start date" => "13/04/1992",
-        "ITT Subject 1" => "English",
-      }
-    end
-
-    subject { HPITT.find_course(trainee, csv_row) }
-
-    context "if a course can't be found" do
-      it "raises an error" do
-        expect { subject }.to raise_error(having_attributes(message: "No course found"))
-      end
-    end
-
-    context "if 1 course is found" do
-      let!(:course) do
-        create(
-          :course,
-          accredited_body_code: trainee.provider.code,
-          start_date: Date.parse("13/04/1992"),
-          name: "English",
-          route: trainee.training_route,
-        )
-      end
-
-      it "returns the course" do
-        expect(subject).to eq course
-      end
-    end
-
-    context "if multiple courses are found" do
-      let!(:courses) do
-        create_list(
-          :course,
-          2,
-          accredited_body_code: trainee.provider.code,
-          start_date: Date.parse("13/04/1992"),
-          name: "English",
-          route: trainee.training_route,
-        )
-      end
-
-      it "raises an error" do
-        expect { subject }.to raise_error(having_attributes(message: "Course ambiguous, multiple found"))
       end
     end
   end
@@ -196,6 +141,26 @@ describe HPITT do
 
       it "returns a blank array" do
         expect(subject).to eq([])
+      end
+    end
+  end
+
+  describe "to_school_id" do
+    subject { HPITT.to_school_id(urn) }
+
+    let(:urn) { "123" }
+
+    context "when the school exists" do
+      let!(:school) { create(:school, urn: 123) }
+
+      it "returns the school id" do
+        expect(subject).to eq(school.id)
+      end
+    end
+
+    context "when thes school is not present" do
+      it "returns nil" do
+        expect(subject).to eq(nil)
       end
     end
   end

@@ -8,8 +8,6 @@ module HPITT
       trainee = build_trainee(csv_row)
       degree = build_degree(trainee, csv_row)
 
-      trainee.course_code = find_course(trainee, csv_row).code
-
       trainee.save!
       degree.save!
     end
@@ -40,22 +38,6 @@ module HPITT
         degree.non_uk_degree = validate_enic_non_uk_degree(row["UK ENIC equivalent (Non UK)"])
         degree.subject = validate_degree_subject(row["Subject of UG. Degree (Non UK)"])
         degree.graduation_year = Date.new(row["Undergrad degree date obtained (Non UK)"].to_i).year if row["Undergrad degree date obtained (Non UK)"].present?
-      end
-    end
-
-    def find_course(trainee, csv_row)
-      potential_courses = trainee.provider.courses.where(
-        start_date: Date.parse(csv_row["Course start date"]),
-        name: csv_row["ITT Subject 1"],
-      )
-
-      case potential_courses.count
-      when 0
-        raise Error, "No course found"
-      when 1
-        potential_courses.take
-      else
-        raise Error, "Course ambiguous, multiple found"
       end
     end
 
@@ -173,7 +155,7 @@ module HPITT
     end
 
     def to_school_id(urn)
-      School.find_by_urn!(urn).id
+      School.find_by_urn(urn)&.id
     end
 
     def to_ethnic_group(raw_string)
