@@ -85,7 +85,7 @@ private
 
   def ordered_trainees
     sort_scope = filter_params[:sort_by] == "last_name" ? :ordered_by_last_name : :ordered_by_date
-    policy_scope(Trainee.includes(:published_course).ordered_by_drafts.public_send(sort_scope))
+    policy_scope(Trainee.includes(provider: [:courses]).ordered_by_drafts.public_send(sort_scope))
   end
 
   def filters
