@@ -193,6 +193,35 @@ SEED_SCHOLARSHIPS = [
   ),
 ].freeze
 
+SEED_GRANTS = [
+  EARLY_YEARS_GRANT,
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 24_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 10_000,
+    allocation_subjects: [
+      AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::CLASSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 7_000,
+    allocation_subjects: [
+      AllocationSubjects::BIOLOGY,
+    ],
+  ),
+].freeze
+
 TRAINING_ROUTE_INITIATIVES = {
   TRAINING_ROUTE_ENUMS[:assessment_only] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
                                                                               :now_teach),
