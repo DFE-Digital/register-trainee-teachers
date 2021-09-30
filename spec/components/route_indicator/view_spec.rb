@@ -29,7 +29,7 @@ RSpec.describe RouteIndicator::View do
     let(:trainee) { create(:trainee, :with_apply_application, :with_course_details) }
 
     it "renders" do
-      expect(component).to have_content(trainee.course_subject_one)
+      expect(component).to have_content(trainee.course_subject_one.upcase_first)
       expect(component).to have_content(trainee.course_code)
     end
 
