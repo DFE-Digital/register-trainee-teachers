@@ -4,16 +4,59 @@
 class FindEmptyTrainees
   include ServicePattern
 
-  EXCLUDED_FIELDS = %w[
-    created_at
-    updated_at
-    dttp_update_sha
-    progress
-    slug
-    training_route
-    id
-    provider_id
-    ebacc
+  FIELDS_TO_CHECK = %w[
+    first_names
+    last_name
+    date_of_birth
+    address_line_one
+    address_line_two
+    town_city
+    postcode
+    email
+    middle_names
+    international_address
+    trainees.locale_code
+    gender
+    diversity_disclosure
+    ethnic_group
+    ethnic_background
+    additional_ethnic_background
+    disability_disclosure
+    course_subject_one
+    course_start_date
+    outcome_date
+    course_end_date
+    trn
+    submitted_for_trn_at
+    withdraw_reason
+    withdraw_date
+    additional_withdraw_reason
+    defer_date
+    recommended_for_award_at
+    commencement_date
+    reinstate_date
+    lead_school_id
+    employing_school_id
+    apply_application_id
+    course_min_age
+    course_max_age
+    course_code
+    course_subject_two
+    course_subject_three
+    awarded_at
+    applying_for_bursary
+    training_initiative
+    bursary_tier
+    trainees.study_mode
+    region
+    course_education_phase
+    applying_for_scholarship
+  ].freeze
+
+  EARLY_YEARS_FIELDS_TO_EXCLUDE = %w[
+    course_subject_one
+    course_min_age
+    course_max_age
   ].freeze
 
   class FieldsDoNotExistError < StandardError; end
@@ -21,27 +64,15 @@ class FindEmptyTrainees
   attr_reader :trainees, :ids_only, :forms
 
   def initialize(trainees: Trainee.all, ids_only: false)
-    raise FieldsDoNotExistError unless exluded_fields_exist?
-
     @trainees = trainees
     @ids_only = ids_only
   end
 
   def call
-    draft_trainees.filter_map do |trainee|
-      if no_form_data_for?(trainee)
-        ids_only ? trainee.id : trainee
-      end
-    end
+    ids_only ? draft_trainees.pluck(:id) : draft_trainees
   end
 
 private
-
-  def exluded_fields_exist?
-    EXCLUDED_FIELDS.all? do |field|
-      Trainee.column_names.include?(field)
-    end
-  end
 
   def draft_trainees
     # Finds all the draft trainees that do not have any degrees, disabilities and nationalities.
@@ -49,27 +80,20 @@ private
       .draft
       .includes(:degrees, :disabilities, :nationalities)
       .where(degrees: { id: nil }, disabilities: { id: nil }, nationalities: { id: nil })
+      .where(trainee_data_query)
   end
 
-  def no_form_data_for?(trainee)
-    # Build a digest of the trainee's current form data, excluding non form related fields
-    trainee_values = trainee.serializable_hash.reject { |k, _v| EXCLUDED_FIELDS.include?(k) }.values.compact.join(",")
-
-    trainee.early_years_route? ? check_for_early_years_initial_data(trainee_values) : check_for_initial_draft_data(trainee_values)
-  end
-
-  def check_for_initial_draft_data(values)
-    # If the trainee has form related fields set, the value digest will be a long string containing all the current values
-    # otherwise we just expect it to match the state field, which would just be the value "draft"
-    values == "draft"
-  end
-
-  def check_for_early_years_initial_data(values)
-    # For an early years trainee, we expect the values to just match the initial data set when the route is selected otherwise
-    # it would have additional form data set.
-    min_age = AgeRange::ZERO_TO_FIVE.first
-    max_age = AgeRange::ZERO_TO_FIVE.last
-
-    values == "#{CourseSubjects::EARLY_YEARS_TEACHING},draft,#{min_age},#{max_age}"
+  def trainee_data_query
+    <<~SQL
+        (
+          course_subject_one = \'#{CourseSubjects::EARLY_YEARS_TEACHING}\'
+        AND
+          concat(#{(FIELDS_TO_CHECK - EARLY_YEARS_FIELDS_TO_EXCLUDE).join(',')}) = ''
+        )
+      OR
+        (
+          concat(#{FIELDS_TO_CHECK.join(',')}) = ''
+        )
+    SQL
   end
 end
