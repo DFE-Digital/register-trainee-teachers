@@ -35,3 +35,9 @@ SET
   last_name = concat('DttpUser', id)
 WHERE email NOT LIKE '%@digital.education.gov.uk'
       AND email NOT LIKE '%@education.gov.uk';
+
+-- Apply sync
+UPDATE "apply_applications"
+SET 
+  application = NULL
+
