@@ -91,7 +91,11 @@ module Dttp
         "St Mary's University College" => { entity_id: "9b407223-7042-e811-80ff-3863bb3640b8", hesa_code: "194" },
         "St Mary's University, Twickenham" => { entity_id: "f670f34a-2887-e711-80d8-005056ac45bb", hesa_code: "39" },
         "Staffordshire University" => { entity_id: "f870f34a-2887-e711-80d8-005056ac45bb", hesa_code: "77" },
-        "Swansea University" => { entity_id: "b3407223-7042-e811-80ff-3863bb3640b8", hesa_code: "180" },
+        "Swansea University" => {
+          entity_id: "b3407223-7042-e811-80ff-3863bb3640b8",
+          synonyms: ["University of Wales, Swansea"],
+          hesa_code: "180",
+        },
         "Teach First" => { entity_id: "5a3385b1-2506-ea11-a811-000d3ab4df6c" },
         "Teesside University" => { entity_id: "2a96fc9d-a141-e811-80ff-3863bb351d40", hesa_code: "79" },
         "The Arts University Bournemouth" => { entity_id: "c6407223-7042-e811-80ff-3863bb3640b8", hesa_code: "197" },
