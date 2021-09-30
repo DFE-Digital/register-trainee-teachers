@@ -25,7 +25,8 @@ SET
   address_line_two = CASE WHEN address_line_two IS NULL THEN NULL ELSE 'Great Smith Street' END,
   town_city = CASE WHEN town_city IS NULL THEN NULL ELSE 'London' END,
   postcode = CASE WHEN postcode IS NULL THEN NULL ELSE 'SW1P 3BT' END,
-  international_address = CASE WHEN international_address IS NULL THEN NULL ELSE 'International Address' END;
+  international_address = CASE WHEN international_address IS NULL THEN NULL ELSE 'International Address' END,
+  trainee_id = concat('trainee-', id);
 
 -- Dttp Users
 UPDATE "dttp_users"
@@ -35,3 +36,9 @@ SET
   last_name = concat('DttpUser', id)
 WHERE email NOT LIKE '%@digital.education.gov.uk'
       AND email NOT LIKE '%@education.gov.uk';
+
+-- Apply sync
+UPDATE "apply_applications"
+SET 
+  application = NULL
+
