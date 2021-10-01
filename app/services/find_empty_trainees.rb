@@ -4,7 +4,7 @@
 class FindEmptyTrainees
   include ServicePattern
 
-  FIELDS_TO_CHECK = %w[
+  TRAINEE_FIELDS = %w[
     first_names
     last_name
     date_of_birth
@@ -64,35 +64,43 @@ class FindEmptyTrainees
   attr_reader :trainees, :ids_only, :forms
 
   def initialize(trainees: Trainee.all, ids_only: false)
+    raise FieldsDoNotExistError unless trainee_fields_exist?
+
     @trainees = trainees
     @ids_only = ids_only
   end
 
   def call
-    ids_only ? draft_trainees.pluck(:id) : draft_trainees
+    ids_only ? empty_draft_trainees.pluck(:id) : empty_draft_trainees
   end
 
 private
 
-  def draft_trainees
+  def trainee_fields_exist?
+    TRAINEE_FIELDS.all? do |field|
+      Trainee.column_names.include?(field.gsub("trainees.", ""))
+    end
+  end
+
+  def empty_draft_trainees
     # Finds all the draft trainees that do not have any degrees, disabilities and nationalities.
     trainees
       .draft
       .includes(:degrees, :disabilities, :nationalities)
       .where(degrees: { id: nil }, disabilities: { id: nil }, nationalities: { id: nil })
-      .where(trainee_data_query)
+      .where(empty_fields_query)
   end
 
-  def trainee_data_query
+  def empty_fields_query
     <<~SQL
         (
           course_subject_one = \'#{CourseSubjects::EARLY_YEARS_TEACHING}\'
         AND
-          concat(#{(FIELDS_TO_CHECK - EARLY_YEARS_FIELDS_TO_EXCLUDE).join(',')}) = ''
+          concat(#{(TRAINEE_FIELDS - EARLY_YEARS_FIELDS_TO_EXCLUDE).join(',')}) = ''
         )
       OR
         (
-          concat(#{FIELDS_TO_CHECK.join(',')}) = ''
+          concat(#{TRAINEE_FIELDS.join(',')}) = ''
         )
     SQL
   end

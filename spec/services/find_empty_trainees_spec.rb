@@ -25,6 +25,16 @@ describe FindEmptyTrainees do
     it { is_expected.to match_array([draft_trainee_with_no_data.id]) }
   end
 
+  context "if trainee fields have changed" do
+    before do
+      allow(Trainee).to receive(:column_names).and_return(["random_field"])
+    end
+
+    it "raises an error" do
+      expect { described_class.call }.to raise_error(FindEmptyTrainees::FieldsDoNotExistError)
+    end
+  end
+
   context "for early year routes" do
     let!(:draft_trainee_with_no_data) do
       create(:trainee, :incomplete, :early_years_salaried)
