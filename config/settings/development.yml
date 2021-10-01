@@ -8,7 +8,6 @@ features:
   publish_course_details: true
   enable_teach_first_provider: true
   course_study_mode: true
-  scholarship: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true

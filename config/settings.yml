@@ -44,7 +44,6 @@ features:
   placements: false
   course_study_mode: false
   enable_teach_first_provider: false
-  scholarship: false
   grant: false
   routes:
     early_years_assessment_only: false

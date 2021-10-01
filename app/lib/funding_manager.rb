@@ -33,8 +33,7 @@ class FundingManager
   end
 
   def can_apply_for_scholarship?
-    FeatureService.enabled?("scholarship") &&
-      scholarship_amount.present?
+    scholarship_amount.present?
   end
 
   def funding_available?
