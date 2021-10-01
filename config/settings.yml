@@ -51,6 +51,8 @@ features:
     opt_in_undergrad: false
     hpitt_postgrad: false
     pg_teaching_apprenticeship: false
+  google:
+    send_data_to_big_query: false
 
 dfe_sign_in:
   # Our service name
@@ -110,3 +112,10 @@ google_tag_manager:
   env_id: 11
 
 blazer_database_url: <set from env>
+
+google:
+  big_query:
+    project_id: replaceme
+    dataset: replaceme
+    api_json_key: ""
+    table_name: events
