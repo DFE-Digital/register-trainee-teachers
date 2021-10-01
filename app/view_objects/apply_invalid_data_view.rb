@@ -57,7 +57,7 @@ private
   end
 
   def get_form_page_link_anchor(field)
-    "#degree-#{field.parameterize}-field"
+    field == "Degree type" ? "##{field.parameterize}" : "#degree-#{field.parameterize}-field"
   end
 
   def populate_invalid_fields
