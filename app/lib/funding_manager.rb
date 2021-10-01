@@ -38,7 +38,11 @@ class FundingManager
   end
 
   def funding_available?
-    FundingMethod.includes(:funding_method_subjects).where.not(funding_method_subjects: { id: nil })
+    scope = FundingMethod.includes(:funding_method_subjects)
+
+    scope = scope.where(funding_type: %i[bursary scholarship]) unless FeatureService.enabled?("grant")
+
+    scope.where.not(funding_method_subjects: { id: nil })
       .where(training_route: training_route).present?
   end
 
