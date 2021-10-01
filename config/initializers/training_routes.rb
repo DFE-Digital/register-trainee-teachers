@@ -91,6 +91,12 @@ EARLY_YEARS_ROUTE_NAME_PREFIX = "early_years"
 
 EARLY_YEARS_TRAINING_ROUTES = TRAINING_ROUTES.select { |t| t.starts_with?(EARLY_YEARS_ROUTE_NAME_PREFIX) }
 
+EARLY_YEARS_GRANT = OpenStruct.new(
+  training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
+  amount: 14_000,
+  allocation_subjects: [AllocationSubjects::EARLY_YEARS_ITT],
+).freeze
+
 SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
@@ -150,11 +156,8 @@ SEED_BURSARIES = [
       AllocationSubjects::BIOLOGY,
     ],
   ),
-  OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
-    amount: 14_000,
-    allocation_subjects: [AllocationSubjects::EARLY_YEARS_ITT],
-  ),
+  # NOTE: `EARLY_YEARS_GRANT` is incorrectly set as bursary
+  EARLY_YEARS_GRANT,
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
     amount: 9_000,
@@ -186,6 +189,35 @@ SEED_SCHOLARSHIPS = [
       AllocationSubjects::COMPUTING,
       AllocationSubjects::MATHEMATICS,
       AllocationSubjects::PHYSICS,
+    ],
+  ),
+].freeze
+
+SEED_GRANTS = [
+  EARLY_YEARS_GRANT,
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 24_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 10_000,
+    allocation_subjects: [
+      AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::CLASSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 7_000,
+    allocation_subjects: [
+      AllocationSubjects::BIOLOGY,
     ],
   ),
 ].freeze
