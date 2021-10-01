@@ -29,7 +29,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       then_the_section_should_be(incomplete)
     end
 
-    describe "with a course that doesn't require selecting a specialism" do
+    context "with a course that doesn't require selecting a specialism" do
       let(:subjects) { [AllocationSubjects::HISTORY] }
 
       scenario "renders a 'completed' status when details fully provided" do
@@ -43,7 +43,21 @@ feature "publish course details", type: :feature, feature_publish_course_details
       end
     end
 
-    describe "with a course that requires selecting a single specialism" do
+    context "with a language course that doesn't require selecting a specialism" do
+      let(:subjects) { [PublishSubjects::FRENCH] }
+
+      scenario "renders a 'completed' status when details fully provided" do
+        when_i_visit_the_publish_course_details_page
+        and_i_select_a_course
+        and_i_submit_the_form
+        then_i_should_see_the_subject_described_as("French")
+        and_i_confirm_the_course
+        and_i_visit_the_review_draft_page
+        then_the_section_should_be(completed)
+      end
+    end
+
+    context "with a course that requires selecting a single specialism" do
       let(:subjects) { [AllocationSubjects::COMPUTING] }
 
       scenario "renders a 'completed' status when details fully provided" do
@@ -59,7 +73,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       end
     end
 
-    describe "with a course that requires selecting multiple specialisms" do
+    context "with a course that requires selecting multiple specialisms" do
       let(:subjects) { [AllocationSubjects::COMPUTING, AllocationSubjects::MATHEMATICS] }
 
       scenario "renders a 'completed' status when details fully provided" do
@@ -77,7 +91,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       end
     end
 
-    describe "with a course that requires selecting language specialisms" do
+    context "with a course that requires selecting language specialisms" do
       let(:subjects) { ["Modern languages (other)"] }
 
       scenario "renders a 'completed' status when details fully provided" do
@@ -93,7 +107,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
       end
     end
 
-    describe "with a course that has a miture of multiple specalism subjects single specialism ones" do
+    context "with a course that has a mixture of multiple specalism subjects single specialism ones" do
       let(:subjects) do
         [
           AllocationSubjects::MUSIC,
