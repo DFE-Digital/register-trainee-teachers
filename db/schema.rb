@@ -376,6 +376,7 @@ ActiveRecord::Schema.define(version: 2021_10_06_112809) do
     t.string "region"
     t.integer "course_education_phase"
     t.boolean "applying_for_scholarship"
+    t.boolean "applying_for_grant"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"

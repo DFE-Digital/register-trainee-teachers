@@ -31,6 +31,8 @@ module Funding
 
     delegate :can_apply_for_scholarship?, :scholarship_amount,
              :can_apply_for_bursary?, :bursary_amount,
+             :can_apply_for_grant?, :grant_amount,
+             :can_apply_for_funding_type?,
              to: :funding_manager
 
     def training_initiative_row
@@ -42,7 +44,9 @@ module Funding
     end
 
     def funding_method_row
-      if data_model.applying_for_scholarship
+      if data_model.applying_for_grant
+        grant_funding_row
+      elsif data_model.applying_for_scholarship
         scholarship_funding_row
       else
         bursary_funding_row
@@ -60,7 +64,18 @@ module Funding
     end
 
     def show_bursary_funding?
-      !trainee.draft? || can_apply_for_bursary?
+      !trainee.draft? || can_apply_for_funding_type?
+    end
+
+    def grant_funding_row
+      grant_text = t(".grant_applied_for") +
+        "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
+
+      mappable_field(
+        grant_text.html_safe,
+        t(".funding_method"),
+        edit_trainee_funding_bursary_path(trainee),
+      )
     end
 
     def scholarship_funding_row

@@ -23,6 +23,16 @@ class FundingManager
     available_amount(:scholarship)
   end
 
+  def grant_amount
+    available_amount(:grant)
+  end
+
+  def can_apply_for_funding_type?
+    can_apply_for_bursary? ||
+      can_apply_for_scholarship? ||
+      can_apply_for_grant?
+  end
+
   def can_apply_for_bursary?
     trainee.early_years_postgrad? ||
       available_bursary_amount.present?
@@ -34,6 +44,11 @@ class FundingManager
 
   def can_apply_for_scholarship?
     scholarship_amount.present?
+  end
+
+  def can_apply_for_grant?
+    FeatureService.enabled?("grant") &&
+      grant_amount.present?
   end
 
   def funding_available?

@@ -145,5 +145,26 @@ module Funding
         end
       end
     end
+
+    context "with grant", feature_grant: true do
+      let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry") }
+
+      let!(:allocation_subject) { create(:allocation_subject, name: "Chemistry") }
+      let!(:subject_specialism) { create(:subject_specialism, name: trainee.course_subject_one, allocation_subject: allocation_subject) }
+
+      let(:amount) { 25_000 }
+      let!(:funding_method) { create(:funding_method, funding_type: "grant", training_route: trainee.training_route, amount: amount) }
+
+      let!(:funding_method_subject) { create(:funding_method_subject, funding_method: funding_method, allocation_subject: allocation_subject) }
+
+      before do
+        render_inline(View.new(data_model: trainee))
+      end
+
+      it "renders grant text" do
+        expect(rendered_component).to have_text("Grant applied for")
+        expect(rendered_component).to have_text("£25,000 estimated grant")
+      end
+    end
   end
 end
