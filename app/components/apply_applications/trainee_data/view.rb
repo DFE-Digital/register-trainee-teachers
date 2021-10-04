@@ -10,7 +10,7 @@ module ApplyApplications
 
       def initialize(trainee_data_form:)
         @form = trainee_data_form
-        @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
+        @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application, degrees_sort_order: trainee.degrees.pluck(:slug))
       end
 
       delegate :trainee, to: :form

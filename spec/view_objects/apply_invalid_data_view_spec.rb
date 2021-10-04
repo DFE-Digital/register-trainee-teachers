@@ -5,7 +5,7 @@ require "rails_helper"
 describe ApplyInvalidDataView do
   let(:application) { create(:apply_application, :with_invalid_data) }
 
-  subject { described_class.new(application) }
+  subject { described_class.new(application, degrees_sort_order: application.invalid_data["degrees"].keys) }
 
   describe "#summary_content" do
     context "when there is only one invalid data" do
@@ -28,7 +28,7 @@ describe ApplyInvalidDataView do
   end
 
   describe "#invalid_data?" do
-    subject { described_class.new(application, degree: degree).invalid_data? }
+    subject { described_class.new(application, degree: degree, degrees_sort_order: application.invalid_data["degrees"].keys).invalid_data? }
 
     let(:degree) { nil }
 

@@ -14,10 +14,11 @@ class ApplyInvalidDataView
     graduation_year
   ].freeze
 
-  def initialize(apply_application, degree: nil, on_form_page: false)
+  def initialize(apply_application, degree: nil, on_form_page: false, degrees_sort_order: [])
     @apply_application = apply_application
     @degree = degree
     @on_form_page = on_form_page
+    @degrees_sort_order = degrees_sort_order
     @invalid_fields = populate_invalid_fields
   end
 
@@ -47,7 +48,7 @@ class ApplyInvalidDataView
 
 private
 
-  attr_reader :apply_application, :invalid_fields, :degree, :on_form_page
+  attr_reader :apply_application, :invalid_fields, :degree, :on_form_page, :degrees_sort_order
 
   def get_link_anchor(field, index)
     return get_form_page_link_anchor(field) if on_form_page
@@ -75,9 +76,10 @@ private
 
   def populate_degree_fields(degree_fields)
     return [degree_fields[degree.to_param]&.keys].compact if degree.present?
+    return degree_fields.map { |_slug, field| field.keys } if degrees_sort_order.size <= 1
 
-    degree_fields.map do |_k, field_and_values|
-      field_and_values.keys
+    degrees_sort_order.map do |slug|
+      degree_fields[slug].keys
     end
   end
 

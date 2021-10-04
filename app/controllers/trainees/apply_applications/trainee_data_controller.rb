@@ -36,7 +36,7 @@ module Trainees
       end
 
       def invalid_data_view
-        @invalid_data_view ||= ApplyInvalidDataView.new(trainee.apply_application)
+        @invalid_data_view ||= ApplyInvalidDataView.new(trainee.apply_application, degrees_sort_order: trainee.degrees.pluck(:slug))
       end
 
       def authorize_trainee
