@@ -13,6 +13,7 @@ describe HPITT do
         "Course start date" => "13/04/1992",
         "ITT Subject 1" => "English",
         "Degree type" => "Bachelor of Arts",
+        "Institution" => "Durham University",
         "Degree subject" => "Cardiology",
         "Degree grade" => "First-class Honours",
         "Subject of UG. Degree (Non UK)" => "",
@@ -75,7 +76,7 @@ describe HPITT do
         expect(subject.uk_degree).to eq "Master of Music"
         expect(subject.grade).to eq "Pass"
         expect(subject.graduation_year).to eq 2021
-        expect(subject.institution).to eq "University of Central Lancashire"
+        expect(subject.institution).to eq "The University of Central Lancashire"
         expect(subject.subject).to eq "Volcanology"
       end
     end
@@ -239,6 +240,51 @@ describe HPITT do
 
       it "returns the degree type" do
         expect(subject).to eq "Doctor of Divinity"
+      end
+    end
+  end
+
+  describe "#validate_degree_institution" do
+    subject { HPITT.validate_degree_institution(degree_institution) }
+
+    context "when exact matches are found" do
+      let(:degree_institution) { "The University of Manchester" }
+
+      it "returns the degree institution" do
+        expect(subject).to eq "The University of Manchester"
+      end
+    end
+
+    context "when it can be found" do
+      let(:degree_institution) { "Bangor University" }
+
+      it "returns it" do
+        expect(subject).to eq "Bangor University"
+      end
+    end
+
+    context "when it can't be found" do
+      let(:degree_institution) { "University city" }
+
+      it "raises an error" do
+        expect { subject }.to raise_error "Degree institution not recognised: University city"
+      end
+    end
+
+
+    context "with a degree_institution synonym" do
+      let(:degree_institution) { "Durham University" }
+
+      it "returns the degree institution" do
+        expect(subject).to eq "University of Durham"
+      end
+    end
+
+    context "with extra text in parantheses" do
+      let(:degree_institution) { "University of Suffolk (Formerly University Campus Suffolk)" }
+
+      it "returns the degree institution" do
+        expect(subject).to eq "University Campus Suffolk"
       end
     end
   end

@@ -3,6 +3,8 @@
 module HPITT
   class Error < StandardError; end
 
+  REJECTED_WORD_LIST = ["the"].freeze
+
   class << self
     def import_row(csv_row)
       trainee = build_trainee(csv_row)
@@ -26,7 +28,7 @@ module HPITT
         degree.uk_degree = validate_uk_degree(row["Degree type"])
         degree.grade = to_degree_grade(row["Degree grade"])
         degree.graduation_year = row["Graduation year"]
-        degree.institution = row["Institution"]
+        degree.institution = validate_degree_institution(row["Institution"])
         degree.subject = validate_degree_subject(row["Degree subject"])
       end
     end
@@ -127,6 +129,24 @@ module HPITT
       end
     end
 
+    def validate_degree_institution(raw_string)
+      # prioritise direct matches
+      return raw_string if Dttp::CodeSets::Institutions::MAPPING.keys.include?(raw_string)
+
+      potential_institutions = Dttp::CodeSets::Institutions::MAPPING.select do |key, value|
+        normalise_string(key) == normalise_string(raw_string) || value[:synonyms]&.map { |synonym| normalise_string(synonym) }&.include?(normalise_string(raw_string))
+      end
+
+      case potential_institutions.count
+      when 0
+        raise Error, "Degree institution not recognised: #{raw_string}"
+      when 1
+        potential_institutions.keys.first
+      else
+        raise Error, "Degree institution ambiguous, multiple found: #{raw_string}"
+      end
+    end
+
     def validate_uk_degree(raw_string)
       potential_degree_types = Dttp::CodeSets::DegreeTypes::MAPPING.select do |degree_name, attributes|
         degree_name&.casecmp?(raw_string.squish) || attributes[:abbreviation]&.casecmp?(raw_string.squish)
@@ -180,6 +200,16 @@ module HPITT
       return if raw_date.blank?
 
       Date.parse(raw_date)
+    end
+
+    def normalise_string(raw_string)
+      raw_string
+      .downcase
+      .gsub(/\(.*\)/, "")
+      .split
+      .reject { |word| REJECTED_WORD_LIST.include? word }
+      .join(" ")
+      .gsub(/[^\w]/, "")
     end
   end
 end
