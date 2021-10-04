@@ -161,8 +161,8 @@ private
     unless trainee.early_years_route?
       attributes.merge!({
         course_subject_one: course_subject_one,
-        course_subject_two: course_subject_two,
-        course_subject_three: course_subject_three,
+        course_subject_two: course_subject_two.presence,
+        course_subject_three: course_subject_three.presence,
         course_age_range: course_age_range,
       })
     end
