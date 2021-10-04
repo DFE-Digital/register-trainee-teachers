@@ -5,6 +5,7 @@ module Dttp
     module Grades
       # Do not make any changes to the keys. If necessary, change Degree#grade to enum type first
       FIRST_CLASS_HONOURS = "First-class honours"
+      UPPER_SECOND_CLASS_HONOURS = "Upper second-class honours (2:1)"
       OTHER = "Other"
 
       MAPPING = {
@@ -12,7 +13,7 @@ module Dttp
           entity_id: "fe2fca5f-766d-e711-80d2-005056ac45bb",
           hesa_code: "01",
         },
-        "Upper second-class honours (2:1)" => {
+        UPPER_SECOND_CLASS_HONOURS => {
           entity_id: "0030ca5f-766d-e711-80d2-005056ac45bb",
           hesa_code: "02",
         },

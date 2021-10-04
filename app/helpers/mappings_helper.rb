@@ -11,6 +11,10 @@ module MappingsHelper
     sanitised_word(source_string) == sanitised_word(incoming_string)
   end
 
+  def almost_identical?(source_string, incoming_string)
+    sanitised_word(incoming_string).start_with?(sanitised_word(source_string))
+  end
+
   def sanitised_word(word)
     return if word.blank?
 

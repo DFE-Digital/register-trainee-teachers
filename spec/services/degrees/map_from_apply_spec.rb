@@ -116,13 +116,24 @@ module Degrees
 
         context "when the grade is predicted" do
           let(:application_data) do
-            ApiStubs::ApplyApi.application(degree_attributes: { hesa_degclss: nil, grade: "First class honours (Predicted)" })
+            ApiStubs::ApplyApi.application(degree_attributes: { hesa_degclss: nil, grade: grade })
           end
 
-          it "sets the value to the actual grade" do
-            expect(subject).to include(
-              expected_uk_degree_attributes.merge(other_grade: nil),
-            )
+          context "first-class honours" do
+            let(:grade) { "First class honours (Predicted)" }
+
+            it "sets the value to the actual grade" do
+              expect(subject).to include(expected_uk_degree_attributes.merge(other_grade: nil))
+            end
+          end
+
+          context "second-class honours" do
+            let(:expected_grade) { Dttp::CodeSets::Grades::UPPER_SECOND_CLASS_HONOURS }
+            let(:grade) { "Upper second-class honours (2:1)(2:1(predicted)" }
+
+            it "sets the value to the actual grade" do
+              expect(subject).to include(expected_uk_degree_attributes.merge(other_grade: nil))
+            end
           end
         end
 
