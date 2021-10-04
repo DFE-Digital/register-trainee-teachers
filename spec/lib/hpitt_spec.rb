@@ -25,6 +25,17 @@ describe HPITT do
     it "creates the trainee/degree" do
       expect { subject }.to change { Trainee.count }.from(0).to(1)
     end
+
+    context "when Outside UK address is provided" do
+      before do
+        csv_row.merge!("Outside UK address" => "Around the world")
+      end
+
+      it "sets the locale_code to non-uk" do
+        subject
+        expect(Trainee.last.locale_code).to eq("non_uk")
+      end
+    end
   end
 
   describe "#to_ethnic_group" do
@@ -126,14 +137,14 @@ describe HPITT do
     subject { HPITT.to_disability_ids(disabilities) }
 
     context "when disabilities exist" do
-      let(:disabilities) { "Blind, Deaf" }
+      let(:disabilities) { "Learning difficulty\n(for example, dyslexia, dyspraxia or ADHD)" }
 
       before do
         generate_seed_diversities
       end
 
       it "is returned" do
-        expect(subject).to match_array(Disability.where(name: %w[Blind Deaf]).ids)
+        expect(subject).to match_array(Disability.where(name: "Learning difficulty").ids)
       end
     end
 
@@ -184,6 +195,26 @@ describe HPITT do
 
       it "returns a blank array" do
         expect(subject).to eq([])
+      end
+    end
+  end
+
+  describe "to_course_subject" do
+    subject { HPITT.to_course_subject(itt_subject) }
+
+    context "a course subject can be found" do
+      let(:itt_subject) { "Design and Technology" }
+
+      it "returns it" do
+        expect(subject).to eq("Design and technology")
+      end
+    end
+
+    context "a course subject can't be found" do
+      let(:itt_subject) { "Design" }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(having_attributes(message: "Course subject not recognised: Design"))
       end
     end
   end
@@ -247,19 +278,11 @@ describe HPITT do
   describe "#validate_degree_institution" do
     subject { HPITT.validate_degree_institution(degree_institution) }
 
-    context "when exact matches are found" do
+    context "when an exact match is found" do
       let(:degree_institution) { "The University of Manchester" }
 
       it "returns the degree institution" do
         expect(subject).to eq "The University of Manchester"
-      end
-    end
-
-    context "when it can be found" do
-      let(:degree_institution) { "Bangor University" }
-
-      it "returns it" do
-        expect(subject).to eq "Bangor University"
       end
     end
 
@@ -270,7 +293,6 @@ describe HPITT do
         expect { subject }.to raise_error "Degree institution not recognised: University city"
       end
     end
-
 
     context "with a degree_institution synonym" do
       let(:degree_institution) { "Durham University" }

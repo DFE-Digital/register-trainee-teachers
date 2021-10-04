@@ -72,13 +72,17 @@ module HPITT
         "Ethnicity" => method(:to_ethnic_group) >> assign_field[:ethnic_group],
         "First names" => assign_field[:first_names],
         "Gender" => method(:to_gender) >> assign_field[:gender],
+        "ITT Subject 1" => method(:to_course_subject) >> assign_field[:course_subject_one],
         "Last names" => assign_field[:last_name],
         "Middle names" => assign_field[:middle_names],
         "Nationality" => method(:to_nationality_ids) >> assign_field[:nationality_ids],
+        "Outside UK address" => assign_field[:international_address],
         "Postal code" => assign_field[:postcode],
-        "Street" => assign_field[:address_line_two],
-        "Town or city" => assign_field[:town_city],
         "Region" => assign_field[:region],
+        "Street" => assign_field[:address_line_two],
+        "Study mode" => method(:to_study_mode) >> assign_field[:study_mode],
+        "Town or city" => assign_field[:town_city],
+        "Trainee start date" => assign_field[:commencement_date],
         "TRN" => assign_field[:trn],
       }
       column_mapper.default = proc {}
@@ -88,6 +92,36 @@ module HPITT
       csv_row.each do |key, value|
         column_mapper[key].call(value)
       end
+
+      if trainee.international_address.present?
+        trainee.locale_code = Trainee.locale_codes[:non_uk]
+      else
+        trainee.locale_code = Trainee.locale_codes[:uk]
+      end
+
+      trainee.diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      trainee.ethnic_background = Diversities::NOT_PROVIDED
+
+      if trainee.disabilities.present?
+        trainee.disability_disclosure = Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
+      else
+        trainee.disability_disclosure = Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability]
+      end
+
+      trainee.course_education_phase = Dttp::CodeSets::AgeRanges::MAPPING.dig(trainee.course_age_range, :levels)&.first
+
+      trainee.training_initiative = ROUTE_INITIATIVES_ENUMS[:no_initiative]
+
+      trainee.progress.personal_details = true
+      trainee.progress.contact_details = true
+      trainee.progress.degrees = true
+      trainee.progress.diversity = true
+      trainee.progress.funding = true
+      trainee.progress.course_details = true
+      trainee.progress.training_details = true
+      trainee.progress.trainee_data = true
+      trainee.progress.schools = true
+      trainee.progress.placement_details = true
 
       trainee
     end
@@ -106,6 +140,25 @@ module HPITT
       raw_string.scan(/\d+/).map(&:to_i).tap do |age_range|
         raise Error, "Course age range not recognised" if !ALL_AGE_RANGES.include? age_range
       end
+    end
+
+    def to_course_subject(raw_string)
+      potential_subjects = HPITT::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
+        values.include?(raw_string.squish)
+      end
+
+      case potential_subjects.count
+      when 0
+        raise Error, "Course subject not recognised: #{raw_string}"
+      when 1
+        potential_subjects.keys.first
+      else
+        raise Error, "Course subject ambiguous, multiple found: #{raw_string}"
+      end
+    end
+
+    def to_study_mode(raw_string)
+      COURSE_STUDY_MODES[raw_string.downcase.squish.parameterize(separator: "_").to_sym]
     end
 
     def to_degree_grade(raw_string)
@@ -171,7 +224,9 @@ module HPITT
     end
 
     def to_disability_ids(raw_string)
-      Disability.where(name: raw_string&.split(",")&.map(&:strip)).map(&:id)
+      return [] if raw_string.blank?
+
+      Disability.where(name: HPITT::CodeSets::Disabilities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase]).map(&:id)
     end
 
     def to_school_id(urn)
