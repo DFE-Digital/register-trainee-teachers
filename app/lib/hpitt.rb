@@ -216,7 +216,7 @@ module HPITT
     end
 
     def validate_enic_non_uk_degree(raw_string)
-      return if raw_string.blank?
+      return NON_ENIC if raw_string.blank?
 
       raw_string.tap do
         raise Error, "ENIC equivalent not recognised" if !ENIC_NON_UK.include? raw_string

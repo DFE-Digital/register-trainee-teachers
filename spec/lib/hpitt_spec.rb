@@ -361,8 +361,8 @@ describe HPITT do
     context "with a blank value" do
       let(:enic) {  "" }
 
-      it "returns nil" do
-        expect(subject).to eq(nil)
+      it "returns NON_ENIC" do
+        expect(subject).to eq(NON_ENIC)
       end
     end
   end
