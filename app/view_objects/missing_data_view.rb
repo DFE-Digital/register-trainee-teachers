@@ -31,7 +31,7 @@ class MissingDataView
   end
 
   def invalid_data?
-    missing_fields.flatten.size.positive?
+    false
   end
 
 private
