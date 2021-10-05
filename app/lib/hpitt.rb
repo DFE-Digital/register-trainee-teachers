@@ -3,6 +3,8 @@
 module HPITT
   class Error < StandardError; end
 
+  REJECTED_WORD_LIST = ["the"].freeze
+
   class << self
     def import_row(csv_row)
       trainee = build_trainee(csv_row)
@@ -26,7 +28,7 @@ module HPITT
         degree.uk_degree = validate_uk_degree(row["Degree type"])
         degree.grade = to_degree_grade(row["Degree grade"])
         degree.graduation_year = row["Graduation year"]
-        degree.institution = row["Institution"]
+        degree.institution = validate_degree_institution(row["Institution"])
         degree.subject = validate_degree_subject(row["Degree subject"])
       end
     end
@@ -70,13 +72,17 @@ module HPITT
         "Ethnicity" => method(:to_ethnic_group) >> assign_field[:ethnic_group],
         "First names" => assign_field[:first_names],
         "Gender" => method(:to_gender) >> assign_field[:gender],
+        "ITT Subject 1" => method(:to_course_subject) >> assign_field[:course_subject_one],
         "Last names" => assign_field[:last_name],
         "Middle names" => assign_field[:middle_names],
         "Nationality" => method(:to_nationality_ids) >> assign_field[:nationality_ids],
-        "Postal code" => assign_field[:postcode],
-        "Street" => assign_field[:address_line_two],
-        "Town or city" => assign_field[:town_city],
+        "Outside UK address" => assign_field[:international_address],
+        "Postal code" => method(:to_post_code) >> assign_field[:postcode],
         "Region" => assign_field[:region],
+        "Street" => assign_field[:address_line_two],
+        "Study mode" => method(:to_study_mode) >> assign_field[:study_mode],
+        "Town or city" => assign_field[:town_city],
+        "Trainee start date" => assign_field[:commencement_date],
         "TRN" => assign_field[:trn],
       }
       column_mapper.default = proc {}
@@ -86,6 +92,40 @@ module HPITT
       csv_row.each do |key, value|
         column_mapper[key].call(value)
       end
+
+      if trainee.international_address.present?
+        trainee.locale_code = Trainee.locale_codes[:non_uk]
+        trainee.address_line_one = nil
+        trainee.address_line_two = nil
+        trainee.town_city = nil
+        trainee.postcode = nil
+      else
+        trainee.locale_code = Trainee.locale_codes[:uk]
+      end
+
+      trainee.diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      trainee.ethnic_background = Diversities::NOT_PROVIDED
+
+      if trainee.disabilities.present?
+        trainee.disability_disclosure = Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
+      else
+        trainee.disability_disclosure = Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability]
+      end
+
+      trainee.course_education_phase = Dttp::CodeSets::AgeRanges::MAPPING.dig(trainee.course_age_range, :levels)&.first
+
+      trainee.training_initiative = ROUTE_INITIATIVES_ENUMS[:no_initiative]
+
+      trainee.progress.personal_details = true
+      trainee.progress.contact_details = true
+      trainee.progress.degrees = true
+      trainee.progress.diversity = true
+      trainee.progress.funding = true
+      trainee.progress.course_details = true
+      trainee.progress.training_details = true
+      trainee.progress.trainee_data = true
+      trainee.progress.schools = true
+      trainee.progress.placement_details = true
 
       trainee
     end
@@ -104,6 +144,25 @@ module HPITT
       raw_string.scan(/\d+/).map(&:to_i).tap do |age_range|
         raise Error, "Course age range not recognised" if !ALL_AGE_RANGES.include? age_range
       end
+    end
+
+    def to_course_subject(raw_string)
+      potential_subjects = HPITT::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
+        values.include?(raw_string.squish)
+      end
+
+      case potential_subjects.count
+      when 0
+        raise Error, "Course subject not recognised: #{raw_string}"
+      when 1
+        potential_subjects.keys.first
+      else
+        raise Error, "Course subject ambiguous, multiple found: #{raw_string}"
+      end
+    end
+
+    def to_study_mode(raw_string)
+      COURSE_STUDY_MODES[raw_string.downcase.squish.parameterize(separator: "_").to_sym]
     end
 
     def to_degree_grade(raw_string)
@@ -127,6 +186,24 @@ module HPITT
       end
     end
 
+    def validate_degree_institution(raw_string)
+      # prioritise direct matches
+      return raw_string if Dttp::CodeSets::Institutions::MAPPING.keys.include?(raw_string)
+
+      potential_institutions = potential_institutions_in_dttp_codeset(raw_string)
+
+      potential_institutions = potential_institutions_in_hpitt_codeset(raw_string) if potential_institutions.blank?
+
+      case potential_institutions.count
+      when 0
+        raise Error, "Degree institution not recognised: #{raw_string}"
+      when 1
+        potential_institutions.keys.first
+      else
+        raise Error, "Degree institution ambiguous, multiple found: #{raw_string}"
+      end
+    end
+
     def validate_uk_degree(raw_string)
       potential_degree_types = Dttp::CodeSets::DegreeTypes::MAPPING.select do |degree_name, attributes|
         degree_name&.casecmp?(raw_string.squish) || attributes[:abbreviation]&.casecmp?(raw_string.squish)
@@ -143,7 +220,7 @@ module HPITT
     end
 
     def validate_enic_non_uk_degree(raw_string)
-      return if raw_string.blank?
+      return NON_ENIC if raw_string.blank?
 
       raw_string.tap do
         raise Error, "ENIC equivalent not recognised" if !ENIC_NON_UK.include? raw_string
@@ -151,7 +228,9 @@ module HPITT
     end
 
     def to_disability_ids(raw_string)
-      Disability.where(name: raw_string&.split(",")&.map(&:strip)).map(&:id)
+      return [] if raw_string.blank?
+
+      Disability.where(name: HPITT::CodeSets::Disabilities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase]).map(&:id)
     end
 
     def to_school_id(urn)
@@ -176,10 +255,38 @@ module HPITT
       Nationality.where(name: raw_string&.downcase).ids
     end
 
+    def to_post_code(raw_string)
+      return if raw_string.blank?
+
+      UKPostcode.parse(raw_string.gsub(/\W/, "")).to_s
+    end
+
     def parse_date(raw_date)
       return if raw_date.blank?
 
       Date.parse(raw_date)
+    end
+
+    def normalise_string(raw_string)
+      raw_string
+      .downcase
+      .gsub(/\(.*\)/, "")
+      .split
+      .reject { |word| REJECTED_WORD_LIST.include? word }
+      .join(" ")
+      .gsub(/[^\w]/, "")
+    end
+
+    def potential_institutions_in_dttp_codeset(raw_string)
+      Dttp::CodeSets::Institutions::MAPPING.select do |key, _v|
+        normalise_string(key) == normalise_string(raw_string)
+      end
+    end
+
+    def potential_institutions_in_hpitt_codeset(raw_string)
+      HPITT::CodeSets::Institutions::MAPPING.select do |_k, value|
+        normalise_string(value) == normalise_string(raw_string)
+      end
     end
   end
 end

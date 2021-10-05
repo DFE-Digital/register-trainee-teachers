@@ -22,16 +22,6 @@ describe "hpitt:import" do
 
   let!(:school) { create(:school, urn: 123) }
   let!(:provider) { create(:provider, :teach_first) }
-  let!(:course) do
-    create(
-      :course,
-      accredited_body_code: provider.code,
-      duration_in_years: 1,
-      start_date: Date.parse("13/04/2018"),
-      name: "Toxicology",
-      route: "school_direct_salaried",
-    )
-  end
 
   context "with valid data" do
     let(:csv_path) {
@@ -72,8 +62,11 @@ describe "hpitt:import" do
   end
 
   def expect_trainee_to_have_attributes_from_csv(trainee)
-    expect(trainee.reload.course_age_range).to eq [0, 5]
+    expect(trainee.reload.course_age_range).to eq [11, 16]
     expect(trainee.course_start_date).to eq Date.parse("13/04/2018")
+    expect(trainee.course_subject_one).to eq "mathematics"
+    expect(trainee.study_mode).to eq "full_time"
+    expect(trainee.course_education_phase).to eq "secondary"
 
     expect(trainee.address_line_one).to eq "Buckingham Palace"
     expect(trainee.address_line_two).to eq "The mall"
@@ -92,14 +85,21 @@ describe "hpitt:import" do
 
     expect(trainee.nationalities.count).to eq 1
     expect(trainee.nationalities.first).to eq Nationality.find_by_name("luxembourger")
-    expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
+    expect(trainee.diversity_disclosure).to eq Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+    expect(trainee.ethnic_background).to eq Diversities::NOT_PROVIDED
+    expect(trainee.disabilities.map(&:name)).to contain_exactly("Learning difficulty")
+    expect(trainee.disability_disclosure).to eq Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
     expect(trainee.employing_school).to eq school
     expect(trainee.provider).to eq provider
     expect(trainee.region).to eq "West Midlands"
 
     expect(trainee.training_route).to eq "hpitt_postgrad"
+    expect(trainee.training_initiative).to eq "no_initiative"
     expect(trainee.trn).to eq "1234"
     expect(trainee.trainee_id).to eq "L0V3LYiD"
+    expect(trainee.commencement_date).to eq Date.parse("13/04/2021")
+
+    expect(trainee.progress.attributes.values).to all eq(true)
 
     expect(trainee.degrees.count).to eq 1
     degree = trainee.degrees.first

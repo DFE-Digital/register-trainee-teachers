@@ -13,6 +13,7 @@ describe HPITT do
         "Course start date" => "13/04/1992",
         "ITT Subject 1" => "English",
         "Degree type" => "Bachelor of Arts",
+        "Institution" => "Durham University",
         "Degree subject" => "Cardiology",
         "Degree grade" => "First-class Honours",
         "Subject of UG. Degree (Non UK)" => "",
@@ -23,6 +24,37 @@ describe HPITT do
 
     it "creates the trainee/degree" do
       expect { subject }.to change { Trainee.count }.from(0).to(1)
+    end
+
+    context "when Outside UK address is provided" do
+      before do
+        csv_row.merge!("Postal code" => "100100", "Outside UK address" => "Around the world")
+      end
+
+      it "sets the locale_code to non-uk" do
+        subject
+        trainee = Trainee.last
+        expect(trainee.locale_code).to eq("non_uk")
+        expect(trainee.postcode).to be_nil
+      end
+    end
+  end
+
+  describe "#to_post_code" do
+    let(:postcode) { "NE29 9LH" }
+
+    subject { HPITT.to_post_code(postcode) }
+
+    it "returns the post code" do
+      expect(subject).to eq "NE29 9LH"
+    end
+
+    context "with missing whitespace" do
+      let(:ethnicity) { "NE299LH." }
+
+      it "returns the normalised form" do
+        expect(subject).to eq "NE29 9LH"
+      end
     end
   end
 
@@ -75,7 +107,7 @@ describe HPITT do
         expect(subject.uk_degree).to eq "Master of Music"
         expect(subject.grade).to eq "Pass"
         expect(subject.graduation_year).to eq 2021
-        expect(subject.institution).to eq "University of Central Lancashire"
+        expect(subject.institution).to eq "The University of Central Lancashire"
         expect(subject.subject).to eq "Volcanology"
       end
     end
@@ -125,14 +157,14 @@ describe HPITT do
     subject { HPITT.to_disability_ids(disabilities) }
 
     context "when disabilities exist" do
-      let(:disabilities) { "Blind, Deaf" }
+      let(:disabilities) { "Learning difficulty\n(for example, dyslexia, dyspraxia or ADHD)" }
 
       before do
         generate_seed_diversities
       end
 
       it "is returned" do
-        expect(subject).to match_array(Disability.where(name: %w[Blind Deaf]).ids)
+        expect(subject).to match_array(Disability.where(name: "Learning difficulty").ids)
       end
     end
 
@@ -183,6 +215,26 @@ describe HPITT do
 
       it "returns a blank array" do
         expect(subject).to eq([])
+      end
+    end
+  end
+
+  describe "to_course_subject" do
+    subject { HPITT.to_course_subject(itt_subject) }
+
+    context "a course subject can be found" do
+      let(:itt_subject) { "Design and Technology" }
+
+      it "returns it" do
+        expect(subject).to eq("Design and technology")
+      end
+    end
+
+    context "a course subject can't be found" do
+      let(:itt_subject) { "Design" }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(having_attributes(message: "Course subject not recognised: Design"))
       end
     end
   end
@@ -243,6 +295,42 @@ describe HPITT do
     end
   end
 
+  describe "#validate_degree_institution" do
+    subject { HPITT.validate_degree_institution(degree_institution) }
+
+    context "when an exact match is found" do
+      let(:degree_institution) { "The University of Manchester" }
+
+      it "returns the degree institution" do
+        expect(subject).to eq "The University of Manchester"
+      end
+    end
+
+    context "when it can't be found" do
+      let(:degree_institution) { "University city" }
+
+      it "raises an error" do
+        expect { subject }.to raise_error "Degree institution not recognised: University city"
+      end
+    end
+
+    context "with a mapped degree institution" do
+      let(:degree_institution) { "Durham University" }
+
+      it "returns the degree institution" do
+        expect(subject).to eq "University of Durham"
+      end
+    end
+
+    context "with extra text in parantheses" do
+      let(:degree_institution) { "University of Suffolk (Formerly University Campus Suffolk)" }
+
+      it "returns the degree institution" do
+        expect(subject).to eq "University Campus Suffolk"
+      end
+    end
+  end
+
   describe "validate_degree_subject" do
     subject { HPITT.validate_degree_subject(degree_subject) }
 
@@ -293,8 +381,8 @@ describe HPITT do
     context "with a blank value" do
       let(:enic) {  "" }
 
-      it "returns nil" do
-        expect(subject).to eq(nil)
+      it "returns NON_ENIC" do
+        expect(subject).to eq(NON_ENIC)
       end
     end
   end
