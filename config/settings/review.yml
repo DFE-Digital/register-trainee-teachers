@@ -5,7 +5,6 @@ features:
   publish_course_details: true
   persist_to_dttp: false
   course_study_mode: true
-  enable_teach_first_provider: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true
