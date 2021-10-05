@@ -190,9 +190,9 @@ module HPITT
       # prioritise direct matches
       return raw_string if Dttp::CodeSets::Institutions::MAPPING.keys.include?(raw_string)
 
-      potential_institutions = Dttp::CodeSets::Institutions::MAPPING.select do |key, value|
-        normalise_string(key) == normalise_string(raw_string) || value[:synonyms]&.map { |synonym| normalise_string(synonym) }&.include?(normalise_string(raw_string))
-      end
+      potential_institutions = potential_institutions_in_dttp_codeset(raw_string)
+
+      potential_institutions = potential_institutions_in_hpitt_codeset(raw_string) if potential_institutions.blank?
 
       case potential_institutions.count
       when 0
@@ -275,6 +275,18 @@ module HPITT
       .reject { |word| REJECTED_WORD_LIST.include? word }
       .join(" ")
       .gsub(/[^\w]/, "")
+    end
+
+    def potential_institutions_in_dttp_codeset(raw_string)
+      Dttp::CodeSets::Institutions::MAPPING.select do |key, _v|
+        normalise_string(key) == normalise_string(raw_string)
+      end
+    end
+
+    def potential_institutions_in_hpitt_codeset(raw_string)
+      HPITT::CodeSets::Institutions::MAPPING.select do |_k, value|
+        normalise_string(value) == normalise_string(raw_string)
+      end
     end
   end
 end

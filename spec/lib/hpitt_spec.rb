@@ -314,7 +314,7 @@ describe HPITT do
       end
     end
 
-    context "with a degree_institution synonym" do
+    context "with a mapped degree institution" do
       let(:degree_institution) { "Durham University" }
 
       it "returns the degree institution" do
