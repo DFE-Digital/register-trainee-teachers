@@ -25,9 +25,9 @@ describe FindEmptyTrainees do
     it { is_expected.to match_array([draft_trainee_with_no_data.id]) }
   end
 
-  context "if excluded fields have changed" do
+  context "if trainee fields have changed" do
     before do
-      stub_const("FindEmptyTrainees::EXCLUDED_FIELDS", ["random_field"])
+      allow(Trainee).to receive(:column_names).and_return(["random_field"])
     end
 
     it "raises an error" do
