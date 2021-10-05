@@ -5,58 +5,58 @@ class FindEmptyTrainees
   include ServicePattern
 
   TRAINEE_FIELDS = %w[
-    first_names
-    last_name
-    date_of_birth
-    address_line_one
-    address_line_two
-    town_city
-    postcode
-    email
-    middle_names
-    international_address
+    trainees.first_names
+    trainees.last_name
+    trainees.date_of_birth
+    trainees.address_line_one
+    trainees.address_line_two
+    trainees.town_city
+    trainees.postcode
+    trainees.email
+    trainees.middle_names
+    trainees.international_address
     trainees.locale_code
-    gender
-    diversity_disclosure
-    ethnic_group
-    ethnic_background
-    additional_ethnic_background
-    disability_disclosure
-    course_subject_one
-    course_start_date
-    outcome_date
-    course_end_date
-    trn
-    submitted_for_trn_at
-    withdraw_reason
-    withdraw_date
-    additional_withdraw_reason
-    defer_date
-    recommended_for_award_at
-    commencement_date
-    reinstate_date
-    lead_school_id
-    employing_school_id
-    apply_application_id
-    course_min_age
-    course_max_age
-    course_code
-    course_subject_two
-    course_subject_three
-    awarded_at
-    applying_for_bursary
-    training_initiative
-    bursary_tier
+    trainees.gender
+    trainees.diversity_disclosure
+    trainees.ethnic_group
+    trainees.ethnic_background
+    trainees.additional_ethnic_background
+    trainees.disability_disclosure
+    trainees.course_subject_one
+    trainees.course_start_date
+    trainees.outcome_date
+    trainees.course_end_date
+    trainees.trn
+    trainees.submitted_for_trn_at
+    trainees.withdraw_reason
+    trainees.withdraw_date
+    trainees.additional_withdraw_reason
+    trainees.defer_date
+    trainees.recommended_for_award_at
+    trainees.commencement_date
+    trainees.reinstate_date
+    trainees.lead_school_id
+    trainees.employing_school_id
+    trainees.apply_application_id
+    trainees.course_min_age
+    trainees.course_max_age
+    trainees.course_code
+    trainees.course_subject_two
+    trainees.course_subject_three
+    trainees.awarded_at
+    trainees.applying_for_bursary
+    trainees.training_initiative
+    trainees.bursary_tier
     trainees.study_mode
-    region
-    course_education_phase
-    applying_for_scholarship
+    trainees.region
+    trainees.course_education_phase
+    trainees.applying_for_scholarship
   ].freeze
 
   EARLY_YEARS_FIELDS_TO_EXCLUDE = %w[
-    course_subject_one
-    course_min_age
-    course_max_age
+    trainees.course_subject_one
+    trainees.course_min_age
+    trainees.course_max_age
   ].freeze
 
   class FieldsDoNotExistError < StandardError; end
