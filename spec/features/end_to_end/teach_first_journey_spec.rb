@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "teach-first end-to-end journey", feature_enable_teach_first_provider: true, feature_show_funding: true, type: :feature do
+feature "teach-first end-to-end journey", feature_show_funding: true, type: :feature do
   let(:user) { create(:user, provider: create(:provider, code: TEACH_FIRST_PROVIDER_CODE)) }
 
   background { given_i_am_authenticated(user: user) }
