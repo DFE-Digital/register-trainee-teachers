@@ -102,7 +102,7 @@ module Sections
           review: "trainee_degrees_confirm_path",
         },
         course_details: {
-          incomplete: "edit_trainee_course_details_path",
+          incomplete: "edit_trainee_publish_course_details_path",
           in_progress_invalid: "edit_trainee_course_details_path",
           in_progress_valid: "trainee_course_details_confirm_path",
           review: "trainee_course_details_confirm_path",
