@@ -15,12 +15,6 @@ feature "static pages" do
     then_i_should_see_the_accessibility_statement
   end
 
-  scenario "navigate to cookies policy" do
-    given_i_am_on_the_start_page
-    and_i_click_on_the_cookies_link_in_the_footer
-    then_i_should_see_the_cookies_policy
-  end
-
   scenario "navigate to privacy policy" do
     given_i_am_on_the_start_page
     and_i_click_on_the_privacy_link_in_the_footer
@@ -80,9 +74,9 @@ private
     expect(accessibility_page.page_heading).to have_text("Accessibility statement for #{I18n.t('service_name')}")
   end
 
-  def then_i_should_see_the_cookies_policy
-    expect(cookies_page).to be_displayed
-    expect(cookies_page.page_heading).to have_text("Cookies")
+  def then_i_should_see_my_cookies_preferences
+    expect(edit_cookie_preferences_page).to be_displayed
+    expect(edit_cookie_preferences_page.page_heading).to have_text("Cookies")
   end
 
   def then_i_should_see_the_privacy_policy

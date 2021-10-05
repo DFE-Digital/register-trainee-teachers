@@ -81,8 +81,9 @@ pagination:
   records_per_page: 100
 
 cookies:
-  default_number_of_days: 182
-  cookie_banner_key: viewed_cookie_message
+  consent:
+    name: _consented_to_analytics_cookies
+    expire_after_days: 182
 
 session_store:
   expire_after_days: 30

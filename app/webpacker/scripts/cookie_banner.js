@@ -9,57 +9,57 @@ export default class CookieBanner {
   }
 
   constructor () {
-    this.$module = document.querySelector(
-      '[data-module="govuk-cookie-banner"]'
-    )
+    if (this.isConsentAnswerRequired()) {
+      this.$banner = document.querySelector('[data-module="govuk-cookie-banner"]')
 
-    if (!this.$module) return
+      if (!this.$banner) return
 
-    this.hideButton = this.$module.querySelector(
-      '[data-qa="govuk-cookie-banner__hide"]'
-    )
+      this.cookieName = this.$banner.attributes['data-cookie-consent-name'].value
+      this.expiryAfterDays = this.$banner.attributes['data-cookie-consent-expiry-after-days'].value
+      this.$afterConsentBanner = document.querySelector('[data-module="govuk-cookie-after-consent-banner"]')
 
-    this.cookieKey = this.$module.attributes['data-cookie-banner-key'].value
-    this.cookieLength = this.$module.attributes[
-      'data-cookie-banner-period'
-    ].value
+      this.$acceptButton = this.$banner.querySelector('[value="yes"]')
+      this.$rejectButton = this.$banner.querySelector('[value="no"]')
+      this.$hideButton = this.$afterConsentBanner.querySelector('button')
 
-    if (!this.cookieExists()) {
-      this._showCookieMessage()
-      this._bindEvents()
-    } else {
-      this._hideCookieMessage()
+      this.bindEvents()
     }
   }
 
-  viewedCookieBanner () {
-    this._hideCookieMessage()
-    this.setViewedCookie(true)
+  bindEvents () {
+    this.$acceptButton.addEventListener('click', () => this.accept())
+    this.$rejectButton.addEventListener('click', () => this.reject())
+    this.$hideButton.addEventListener('click', () => this.hideAfterConsentBanner())
   }
 
-  cookieExists () {
-    return getCookie(this.cookieKey) !== null
+  isConsentAnswerRequired () {
+    return getCookie(this.cookieName) === null
   }
 
-  setViewedCookie (value) {
-    if (typeof value === 'boolean') {
-      setCookie(this.cookieKey, value, { days: this.cookieLength })
-      return true
-    } else {
-      throw new Error('setViewedCookie: Only accepts boolean parameters')
-    }
+  saveAnswer (answer) {
+    setCookie(this.cookieName, answer, { days: this.expiryAfterDays })
+    this.hideBanner()
+    this.$afterConsentBanner.setAttribute('data-consented', answer)
+    this.showAfterConsentBanner()
   }
 
-  _bindEvents () {
-    this.hideButton.addEventListener('click', () => this.viewedCookieBanner())
+  accept () {
+    this.saveAnswer(this.$acceptButton.value)
   }
 
-  _showCookieMessage () {
-    this.$module.hidden = false
-    this.hideButton.classList.remove('govuk-cookie-banner__hide')
+  reject () {
+    this.saveAnswer(this.$rejectButton.value)
   }
 
-  _hideCookieMessage () {
-    this.$module.hidden = true
+  hideBanner () {
+    this.$banner.hidden = true
+  }
+
+  showAfterConsentBanner () {
+    this.$afterConsentBanner.hidden = false
+  }
+
+  hideAfterConsentBanner () {
+    this.$afterConsentBanner.hidden = true
   }
 }

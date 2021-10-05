@@ -270,8 +270,8 @@ module Features
       @apply_trainee_data_pate ||= PageObjects::Trainees::ApplyRegistrations::TraineeData.new
     end
 
-    def cookies_page
-      @cookies_page ||= PageObjects::Cookies.new
+    def edit_cookie_preferences_page
+      @edit_cookie_preferences_page ||= PageObjects::EditCookiePreferences.new
     end
 
     def privacy_policy_page

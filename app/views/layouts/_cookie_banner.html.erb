@@ -1,20 +1,33 @@
 <%= render GovukComponent::CookieBannerComponent.new(
   html_attributes: {
     "data-module" => "govuk-cookie-banner",
-    "data-cookie-banner-key" => Settings.cookies.cookie_banner_key,
-    "data-cookie-banner-period" => Settings.cookies.default_number_of_days,
+    "data-cookie-consent-name" => Settings.cookies.consent.name,
+    "data-cookie-consent-expiry-after-days" => Settings.cookies.consent.expire_after_days,
   },
 ) do |cookie_banner| %>
-
-  <%= cookie_banner.message(heading_text: "Cookies on Register trainee teachers", text: "We use some essential cookies to make this service work.") do |message| %>
-
-
+  <%= cookie_banner.message(heading_text: t('cookies.heading'),
+                            text: t('cookies.message_html')) do |message| %>
     <% message.action do %>
-      <%= govuk_link_to("View cookies", cookie_policy_path) %>
-
-      <button type="button" class="govuk-button govuk-cookie-banner__hide" data-qa="govuk-cookie-banner__hide">
-        Hide this message
+      <button value="yes" type="button" name="cookies" class="govuk-button app-js-only" data-module="govuk-button">
+        <%= t('cookies.accept') %>
       </button>
+      <button value="no" type="button" name="cookies" class="govuk-button app-js-only" data-module="govuk-button">
+        <%= t('cookies.reject') %>
+      </button>
+      <%= govuk_link_to(t("cookies.cookies_page_link"), cookie_preferences_path) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render GovukComponent::CookieBannerComponent.new(html_attributes: {
+  "hidden" => true,
+  "data-module" => "govuk-cookie-after-consent-banner",
+}) do |cookie_banner| %>
+  <% cookie_preferences_link = govuk_link_to(t("cookies.after_consent.page_link_text"), cookie_preferences_path) %>
+  <%= cookie_banner.message(text: t("cookies.after_consent.message",
+                                    cookie_preferences_link: cookie_preferences_link).html_safe) do |message| %>
+    <% message.action do %>
+      <button type="button" class="govuk-button"><%= t("cookies.after_consent.button_text")  %></button>
     <% end %>
   <% end %>
 <% end %>

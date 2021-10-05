@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   get :sha, controller: :heartbeat
 
   get "/accessibility", to: "pages#accessibility", as: :accessibility
-  get "/cookies", to: "pages#cookie_policy", as: :cookie_policy
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/guidance", to: "pages#guidance"
 
@@ -130,6 +129,7 @@ Rails.application.routes.draw do
   end
 
   resources :trn_submissions, only: %i[create show], param: :trainee_id, path: "trainee-registrations"
+  resource :cookie_preferences, only: %i[show update], path: "/cookies"
 
   root to: "pages#start"
 end
