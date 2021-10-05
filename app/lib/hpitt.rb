@@ -77,7 +77,7 @@ module HPITT
         "Middle names" => assign_field[:middle_names],
         "Nationality" => method(:to_nationality_ids) >> assign_field[:nationality_ids],
         "Outside UK address" => assign_field[:international_address],
-        "Postal code" => assign_field[:postcode],
+        "Postal code" => method(:to_post_code) >> assign_field[:postcode],
         "Region" => assign_field[:region],
         "Street" => assign_field[:address_line_two],
         "Study mode" => method(:to_study_mode) >> assign_field[:study_mode],
@@ -95,6 +95,10 @@ module HPITT
 
       if trainee.international_address.present?
         trainee.locale_code = Trainee.locale_codes[:non_uk]
+        trainee.address_line_one = nil
+        trainee.address_line_two = nil
+        trainee.town_city = nil
+        trainee.postcode = nil
       else
         trainee.locale_code = Trainee.locale_codes[:uk]
       end
@@ -249,6 +253,12 @@ module HPITT
 
     def to_nationality_ids(raw_string)
       Nationality.where(name: raw_string&.downcase).ids
+    end
+
+    def to_post_code(raw_string)
+      return if raw_string.blank?
+
+      UKPostcode.parse(raw_string.gsub(/\W/, "")).to_s
     end
 
     def parse_date(raw_date)

@@ -28,12 +28,32 @@ describe HPITT do
 
     context "when Outside UK address is provided" do
       before do
-        csv_row.merge!("Outside UK address" => "Around the world")
+        csv_row.merge!("Postal code" => "100100", "Outside UK address" => "Around the world")
       end
 
       it "sets the locale_code to non-uk" do
         subject
-        expect(Trainee.last.locale_code).to eq("non_uk")
+        trainee = Trainee.last
+        expect(trainee.locale_code).to eq("non_uk")
+        expect(trainee.postcode).to be_nil
+      end
+    end
+  end
+
+  describe "#to_post_code" do
+    let(:postcode) { "NE29 9LH" }
+
+    subject { HPITT.to_post_code(postcode) }
+
+    it "returns the post code" do
+      expect(subject).to eq "NE29 9LH"
+    end
+
+    context "with missing whitespace" do
+      let(:ethnicity) { "NE299LH." }
+
+      it "returns the normalised form" do
+        expect(subject).to eq "NE29 9LH"
       end
     end
   end

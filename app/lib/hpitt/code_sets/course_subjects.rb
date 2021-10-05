@@ -5,7 +5,7 @@ module HPITT
     module CourseSubjects
       MAPPING = {
         ::CourseSubjects::MATHEMATICS => ["Maths"],
-        ::CourseSubjects::PRIMARY_TEACHING => ["Primary"],
+        ::CourseSubjects::PRIMARY_TEACHING => ["Primary", "Early Years"],
         ::CourseSubjects::BUSINESS_STUDIES => ["Business Studies"],
         ::CourseSubjects::GEOGRAPHY => ["Geography"],
         ::CourseSubjects::GENERAL_SCIENCES => ["Science"],
@@ -15,7 +15,6 @@ module HPITT
         ::CourseSubjects::DESIGN_AND_TECHNOLOGY => ["Design and Technology"],
         ::CourseSubjects::MODERN_LANGUAGES => ["MFL"],
         ::CourseSubjects::RELIGIOUS_STUDIES => ["RE"],
-        ::CourseSubjects::EARLY_YEARS_TEACHING => ["Early Years"],
         ::CourseSubjects::MUSIC_EDUCATION_AND_TEACHING => ["Music"],
       }.freeze
     end
