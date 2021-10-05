@@ -104,7 +104,7 @@ module Exports
           "lead_school_urn" => trainee.lead_school&.urn,
           "employing_school_name" => trainee.employing_school&.name,
           "employing_school_urn" => trainee.employing_school&.urn,
-          "training_initiative" => "Transition to teach",
+          "training_initiative" => "Transition to Teach",
           "applying_for_bursary" => trainee.applying_for_bursary.to_s.upcase,
           "bursary_value" => (funding_manager.bursary_amount if trainee.applying_for_bursary),
           "bursary_tier" => ("Tier #{BURSARY_TIERS[trainee.bursary_tier] + 1}" if trainee.bursary_tier),

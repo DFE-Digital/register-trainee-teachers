@@ -860,10 +860,10 @@ en:
           eyts_recommended: EYTS recommended
           eyts_awarded: EYTS awarded
         training_initiatives:
-          transition_to_teach: Transition to teach
-          now_teach: Now teach
-          maths_physics_chairs_programme_researchers_in_schools: Maths and physics chairs programme / Researchers in schools
-          future_teaching_scholars: Future teaching scholars
+          transition_to_teach: Transition to Teach
+          now_teach: Now Teach
+          maths_physics_chairs_programme_researchers_in_schools: Maths and Physics Chairs programme / Researchers in Schools
+          future_teaching_scholars: Future Teaching Scholars
           no_initiative: Not on a training initiative
         levels:
           early_years: Early years
