@@ -5,7 +5,7 @@ require "rails_helper"
 module TeacherTrainingApi
   describe RetrieveCourses do
     describe "#call" do
-      let(:path) { "/courses?include=accredited_body,provider&sort=name,provider.provider_name" }
+      let(:path) { "/recruitment_cycles/2021/courses?include=accredited_body,provider&sort=name,provider.provider_name" }
       let(:request_url) { "#{Settings.teacher_training_api.base_url}#{path}" }
 
       before do
