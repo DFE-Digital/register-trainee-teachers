@@ -28,7 +28,7 @@ module Trainees
 
     def skip_manual_selection
       LanguageSpecialismsForm.new(trainee, params: {
-        course_subject_one: subject_specialisms.first,
+        language_specialisms: subject_specialisms[:course_subject_one],
       }).stash_or_save!
 
       redirect_to publish_course_next_path
