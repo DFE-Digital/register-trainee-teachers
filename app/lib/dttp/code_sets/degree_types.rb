@@ -162,8 +162,49 @@ module Dttp
         "Doctor of Philosophy" => { entity_id: "656a5652-c197-e711-80d8-005056ac45bb", abbreviation: "DPhil", hesa_code: "305" },
         "PhD" => { entity_id: "676a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "306" },
         "First Degree" => { entity_id: "696a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "400" },
-        "Higher Degree" => { entity_id: "6b6a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "401" },
-        "Degree equivalent" => { entity_id: "6d6a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "402" },
+        "Higher Degree" => {
+          entity_id: "6b6a5652-c197-e711-80d8-005056ac45bb",
+          abbreviation: nil,
+          synonyms: [
+            "Other",
+            # Level 7 qualifications
+            "Integrated master",
+            "Integrated masters",
+            "Integrated master's degree",
+            "Level 7 award",
+            "Level 7 certificate",
+            "Level 7 national diploma",
+            "Level 7 NVQ",
+            "Postgraduate certificate",
+            "Postgraduate certificate in education",
+            "PGCE",
+            "Postgraduate diploma",
+            "Master degree",
+            "Masters degree",
+            # Level 8 qualifications
+            "Level 8 award",
+            "Level 8 certificate",
+            "Level 8 diploma",
+          ],
+          hesa_code: "401",
+        },
+        "Degree equivalent" => {
+          entity_id: "6d6a5652-c197-e711-80d8-005056ac45bb",
+          abbreviation: nil,
+          synonyms: [
+            "Other",
+            # Level 6 qualifications
+            "Degree apprenticeship",
+            "Graduate certificate",
+            "Graduate diploma",
+            "Level 6 award",
+            "Level 6 certificate",
+            "Level 6 national diploma",
+            "Level 6 NVQ",
+            "Ordinary degree",
+          ],
+          hesa_code: "402",
+        },
         "Unknown" => { entity_id: "6f6a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil },
       }.freeze
     end
