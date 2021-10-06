@@ -13,6 +13,20 @@ module Sections
       render_inline(trainees_sections_component)
     end
 
+    context "apply draft trainee in review" do
+      let(:section) { :course_details }
+      let(:status) { :review }
+      let(:trainee) { create(:trainee, :in_progress, :with_apply_application) }
+
+      it "renders section text for apply draft course details" do
+        expect(rendered_component).to have_css(".app-inset-text__title", text: expected_title(section, status))
+      end
+
+      it "renders section link for apply draft course details section" do
+        expect(rendered_component).to have_link(expected_link_text(section, status), href: expected_href(section, status, trainee))
+      end
+    end
+
     renders_confirmation = "renders confirmation"
     shared_examples renders_confirmation do |trainee_section|
       context trainee_section.to_s do
@@ -58,6 +72,19 @@ module Sections
 
       context "requires school" do
         include_examples renders_incomplete_section, :schools, :incomplete
+      end
+
+      context "trainee on publish course" do
+        let(:provider) { create(:provider, :with_courses) }
+        let(:trainee) { create(:trainee, :incomplete, training_route: provider.courses.first.route, provider: provider) }
+
+        include_examples renders_incomplete_section, :course_details, :incomplete
+      end
+
+      context "trainee on early years route" do
+        let(:trainee) { create(:trainee, :incomplete, training_route: "early_years_undergrad") }
+
+        include_examples renders_incomplete_section, :course_details, :incomplete
       end
     end
 
@@ -140,8 +167,9 @@ module Sections
           in_progress_valid: "trainee_degrees_confirm_path",
         },
         course_details: {
-          incomplete: "edit_trainee_publish_course_details_path",
+          incomplete: expected_incomplete_course_details_path(trainee),
           in_progress_valid: "trainee_course_details_confirm_path",
+          review: "edit_trainee_apply_applications_course_details_path",
         },
         training_details: {
           incomplete: "edit_trainee_training_details_path",
@@ -174,6 +202,16 @@ module Sections
         funding: Funding::View,
         trainee_data: ApplyApplications::TraineeData::View,
       }[section]
+    end
+
+    def expected_incomplete_course_details_path(trainee)
+      if trainee.early_years_route?
+        "edit_trainee_course_details_path"
+      elsif trainee.available_courses.present?
+        "edit_trainee_publish_course_details_path"
+      else
+        "edit_trainee_course_education_phase_path"
+      end
     end
   end
 end
