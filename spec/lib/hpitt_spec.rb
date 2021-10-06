@@ -309,8 +309,8 @@ describe HPITT do
     context "when it can't be found" do
       let(:degree_institution) { "University city" }
 
-      it "raises an error" do
-        expect { subject }.to raise_error "Degree institution not recognised: University city"
+      it "returns other uk" do
+        expect(subject).to eq "Other UK"
       end
     end
 

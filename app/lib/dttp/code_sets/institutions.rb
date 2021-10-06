@@ -21,6 +21,7 @@ module Dttp
       ST_GEORGES_HOSPITAL_MEDICAL_SCHOOL = "St George's Hospital Medical School"
       PLYMOUTH_MARJON_UNIVERSITY = "Plymouth Marjon University"
       UNIVERSITY_CAMPUS_SUFFOLK = "University Campus Suffolk"
+      OTHER_UK = "Other UK"
 
       MAPPING = {
         "Aberystwyth University" => { entity_id: "443e2cff-6f42-e811-80ff-3863bb3640b8", hesa_code: "177" },
@@ -84,7 +85,7 @@ module Dttp
         "Other UK (Northern Ireland)" => { entity_id: "a47fcac0-4a37-e811-80ef-005056ac45bb" },
         "Other UK (Scotland)" => { entity_id: "a07fcac0-4a37-e811-80ef-005056ac45bb" },
         "Other UK (Wales)" => { entity_id: "a27fcac0-4a37-e811-80ef-005056ac45bb" },
-        "Other UK" => { entity_id: "5070f34a-2887-e711-80d8-005056ac45bb" },
+        OTHER_UK => { entity_id: "5070f34a-2887-e711-80d8-005056ac45bb" },
         "Oxford Brookes University" => { entity_id: "f070f34a-2887-e711-80d8-005056ac45bb", hesa_code: "72" },
         PLYMOUTH_MARJON_UNIVERSITY => { entity_id: "3a71f34a-2887-e711-80d8-005056ac45bb" },
         "Prestolee SCITT" => { entity_id: "027bf34a-2887-e711-80d8-005056ac45bb" },
