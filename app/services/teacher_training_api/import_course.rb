@@ -23,19 +23,22 @@ module TeacherTrainingApi
       return unless IMPORTABLE_STATES.include?(course_attributes[:state])
       return if further_education_level_course? || invalid_age_range?
 
-      course.update!(name: course_attributes[:name],
-                     start_date: start_date,
-                     level: course_attributes[:level],
-                     qualification: qualification,
-                     min_age: course_attributes[:age_minimum],
-                     max_age: course_attributes[:age_maximum],
-                     duration_in_years: duration_in_years,
-                     course_length: course_attributes[:course_length],
-                     subjects: subjects,
-                     route: route,
-                     summary: course_attributes[:summary],
-                     study_mode: course_attributes[:study_mode],
-                     accredited_body_code: accredited_body_code)
+      course.update!(
+        name: course_attributes[:name],
+        start_date: start_date,
+        level: course_attributes[:level],
+        qualification: qualification,
+        min_age: course_attributes[:age_minimum],
+        max_age: course_attributes[:age_maximum],
+        duration_in_years: duration_in_years,
+        course_length: course_attributes[:course_length],
+        subjects: subjects,
+        route: route,
+        summary: course_attributes[:summary],
+        study_mode: course_attributes[:study_mode],
+        uuid: course_attributes[:uuid],
+        accredited_body_code: accredited_body_code,
+      )
     end
 
   private
@@ -95,8 +98,10 @@ module TeacherTrainingApi
     end
 
     def course
-      @course ||= Course.find_or_initialize_by(code: course_attributes[:code],
-                                               accredited_body_code: accredited_body_code)
+      @course ||= Course.find_or_initialize_by(
+        code: course_attributes[:code],
+        accredited_body_code: accredited_body_code,
+      )
     end
   end
 end
