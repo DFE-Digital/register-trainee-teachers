@@ -51,13 +51,14 @@ private
 
   def get_link_anchor(field, index)
     return get_form_page_link_anchor(field) if on_form_page
+    return "##{field.downcase}" if invalid_fields.size == 1 && field == "Degree type"
     return "##{field.parameterize}" if invalid_fields.size == 1
 
     "##{field.parameterize}-#{index}"
   end
 
   def get_form_page_link_anchor(field)
-    "#degree-#{field.parameterize}-field"
+    field == "Degree type" ? "##{field.parameterize}" : "#degree-#{field.parameterize}-field"
   end
 
   def populate_invalid_fields

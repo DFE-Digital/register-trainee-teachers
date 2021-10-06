@@ -34,16 +34,18 @@
       hint: -> { render InvalidDataText::View.new(form_section: :subject, degree_form: @degree_form, hint: 'Search for the closest matching subject') }),
   ) %>
 
-  <%= render FormComponents::Autocomplete::View.new(
-    f,
-    attribute_name: :uk_degree,
-    form_field: f.govuk_select(
-      :uk_degree,
-      options_for_select(degree_type_options, @degree_form.degree.uk_degree),
-      form_group: { class: invalid_data_class(form: @degree_form, field: "uk_degree") },
-      label: { text: "Type of degree", size: "s" },
-      hint: -> { render InvalidDataText::View.new(form_section: :uk_degree, degree_form: @degree_form, hint: 'For example, BA, BSc or other (please specify)') }),
-    ) %>
+  <div class="govuk-form-group" id="degree-type">
+    <%= render FormComponents::Autocomplete::View.new(
+      f,
+      attribute_name: :uk_degree,
+      form_field: f.govuk_select(
+        :uk_degree,
+        options_for_select(degree_type_options, @degree_form.degree.uk_degree),
+        form_group: { class: invalid_data_class(form: @degree_form, field: "uk_degree") },
+        label: { text: "Type of degree", size: "s" },
+        hint: -> { render InvalidDataText::View.new(form_section: :uk_degree, degree_form: @degree_form, hint: 'For example, BA, BSc or other (please specify)') }),
+      ) %>
+  </div>
 
   <%= f.govuk_radio_buttons_fieldset(:grade,
         legend: { text: "Degree grade", size: "s" },

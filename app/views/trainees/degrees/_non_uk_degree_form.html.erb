@@ -12,7 +12,7 @@
   <%= render FormComponents::CountryAutocomplete::View.new(
     f,
     attribute_name: :country,
-    form_field: f.govuk_collection_select(:country, 
+    form_field: f.govuk_collection_select(:country,
                                           countries_options,
                                           :value,
                                           :text,
@@ -26,18 +26,18 @@
     f,
     attribute_name: :subject,
     form_field: f.govuk_select(
-      :subject, 
+      :subject,
       options_for_select(subjects_options, @degree_form.degree.subject),
-      form_group: { 
+      form_group: {
         class: invalid_data_class(form: @degree_form, field: "subject")
       },
       label: { text: "Degree subject", size: "s" },
       hint: -> { render InvalidDataText::View.new(form_section: :subject, hint: 'Search for the closest matching subject', degree_form: @degree_form) }),
   ) %>
 
-  <div class="govuk-form-group" id="non_uk_degree">
+  <div class="govuk-form-group" id="degree-type">
     <%= f.govuk_radio_buttons_fieldset(:non_uk_degree, legend: { text: "Select the UK ENIC comparable degree", size: "s" },
-        form_group: { class: invalid_data_class(form: @degree_form, field: "non_uk_degree") },
+        form_group: { class: invalid_data_class(form: @degree_form, field: "non_uk_degree"), id: "degree-non-uk-degree-field" },
         hint: -> {  render InvalidDataText::View.new(form_section: :non_uk_degree, degree_form: @degree_form) },
         ) do %>
       <% ENIC_NON_UK.each do |name| %>
@@ -51,7 +51,7 @@
   <%= f.govuk_text_field :graduation_year,
                          form_group: { class: invalid_data_class(form: @degree_form, field: "graduation_year"), id: :graduation_year },
                          width: "one-quarter",
-                         autocomplete: :disabled, 
+                         autocomplete: :disabled,
                          label: { text: "Graduation year", size: "s" } do
                             render InvalidDataText::View.new(form_section: :graduation_year, degree_form: @degree_form)
                           end %>
