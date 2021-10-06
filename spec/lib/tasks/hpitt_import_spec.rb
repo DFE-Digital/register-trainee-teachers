@@ -105,7 +105,7 @@ describe "hpitt:import" do
     degree = trainee.degrees.first
     expect(degree.locale_code).to eq "non_uk"
     expect(degree.non_uk_degree).to eq "Bachelor degree"
-    expect(degree.subject).to eq "Toxicology"
+    expect(degree.subject).to eq "Bob Dylan Studies"
     expect(degree.country).to eq "France"
   end
 end

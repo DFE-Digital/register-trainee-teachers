@@ -38,7 +38,7 @@ module HPITT
         degree.locale_code = :non_uk
         degree.country = row["Country (Non UK) degree"]
         degree.non_uk_degree = validate_enic_non_uk_degree(row["UK ENIC equivalent (Non UK)"])
-        degree.subject = validate_degree_subject(row["Subject of UG. Degree (Non UK)"])
+        degree.subject = validate_degree_subject(row["Degree subject"])
         degree.graduation_year = Date.new(row["Undergrad degree date obtained (Non UK)"].to_i).year if row["Undergrad degree date obtained (Non UK)"].present?
       end
     end

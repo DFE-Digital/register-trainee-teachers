@@ -118,6 +118,7 @@ describe HPITT do
           "Country (Non UK) degree" => "France",
           "UK ENIC equivalent (Non UK)" => "Bachelor degree",
           "Undergrad degree date obtained (Non UK)" => "2021",
+          "Degree subject" => "Combined Studies",
           "Subject of UG. Degree (Non UK)" => "Volcanology",
         }
       end
@@ -127,7 +128,7 @@ describe HPITT do
         expect(subject.trainee).to eq trainee
         expect(subject.non_uk_degree).to eq "Bachelor degree"
         expect(subject.graduation_year).to eq 2021
-        expect(subject.subject).to eq "Volcanology"
+        expect(subject.subject).to eq "Combined Studies"
         expect(subject.country).to eq "France"
       end
     end
