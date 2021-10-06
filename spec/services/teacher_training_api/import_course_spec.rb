@@ -54,6 +54,10 @@ module TeacherTrainingApi
           it "parses qualification" do
             expect(course.qualification).to eq("pgce_with_qts")
           end
+
+          it "stores the uuid" do
+            expect(course.uuid).to eq(course_data[:attributes][:uuid])
+          end
         end
 
         context "course has a further_education level" do
