@@ -10,6 +10,7 @@ resource cloudfoundry_service_instance postgres_instance {
   name         = local.postgres_service_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_service_plan]
+  json_params  = jsonencode(local.postgres_params)
   timeouts {
     create = "30m"
     delete = "30m"
