@@ -196,7 +196,7 @@ module HPITT
 
       case potential_institutions.count
       when 0
-        raise Error, "Degree institution not recognised: #{raw_string}"
+        Dttp::CodeSets::Institutions::OTHER_UK
       when 1
         potential_institutions.keys.first
       else
