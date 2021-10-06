@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_10_142540) do
+ActiveRecord::Schema.define(version: 2021_10_05_103228) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "allocation_subjects", force: :cascade do |t|
@@ -153,7 +154,9 @@ ActiveRecord::Schema.define(version: 2021_09_10_142540) do
     t.integer "min_age", null: false
     t.integer "max_age", null: false
     t.integer "study_mode"
+    t.uuid "uuid"
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code", unique: true
+    t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
   create_table "degrees", force: :cascade do |t|
