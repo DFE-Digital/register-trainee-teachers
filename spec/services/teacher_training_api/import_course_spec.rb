@@ -8,10 +8,11 @@ module TeacherTrainingApi
       let(:course_attributes) { { subject_codes: %w[C6 BW] } }
       let(:course_data) { ApiStubs::TeacherTrainingApi.course(course_attributes) }
       let(:course_code) { course_data[:attributes][:code] }
+      let(:course_uuid) { course_data[:attributes][:uuid] }
       let(:course_name) { course_data[:attributes][:name] }
       let(:accredited_body_code) { course_data[:attributes][:accredited_body_code] }
       let(:course_subject_codes) { course_data[:attributes][:subject_codes] }
-      let(:course) { Course.find_by(code: course_code, accredited_body_code: accredited_body_code) }
+      let(:course) { Course.find_by(uuid: course_uuid) }
 
       before do
         # Using reverse() to test ordering of course.subjects matches the order of course_subject_codes
@@ -56,7 +57,7 @@ module TeacherTrainingApi
           end
 
           it "stores the uuid" do
-            expect(course.uuid).to eq(course_data[:attributes][:uuid])
+            expect(course.uuid).to eq(course_uuid)
           end
         end
 
@@ -91,7 +92,7 @@ module TeacherTrainingApi
 
       context "when the course with subjects already exists for that provider" do
         before do
-          create(:course_with_subjects, code: course_code, accredited_body_code: accredited_body_code)
+          create(:course_with_subjects, uuid: course_uuid, code: course_code, accredited_body_code: accredited_body_code)
         end
 
         context "with a different name" do
