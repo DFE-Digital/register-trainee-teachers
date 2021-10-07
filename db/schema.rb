@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_103228) do
+ActiveRecord::Schema.define(version: 2021_10_06_112809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 2021_10_05_103228) do
     t.integer "max_age", null: false
     t.integer "study_mode"
     t.uuid "uuid"
-    t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code", unique: true
+    t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 

@@ -43,6 +43,7 @@ FactoryBot.define do
 
     factory :course_with_subjects do
       transient do
+        uuid { SecureRandom.uuid }
         subjects_count { 1 }
         subject_names { [] }
         study_mode { "full_time" }
@@ -56,6 +57,8 @@ FactoryBot.define do
         if evaluator.study_mode.present?
           course.study_mode = evaluator.study_mode
         end
+
+        course.uuid = evaluator.uuid
       end
 
       after(:create) do |course, evaluator|

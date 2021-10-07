@@ -25,6 +25,7 @@ module TeacherTrainingApi
 
       course.update!(
         name: course_attributes[:name],
+        code: course_attributes[:code],
         start_date: start_date,
         level: course_attributes[:level],
         qualification: qualification,
@@ -36,7 +37,6 @@ module TeacherTrainingApi
         route: route,
         summary: course_attributes[:summary],
         study_mode: course_attributes[:study_mode],
-        uuid: course_attributes[:uuid],
         accredited_body_code: accredited_body_code,
       )
     end
@@ -98,10 +98,7 @@ module TeacherTrainingApi
     end
 
     def course
-      @course ||= Course.find_or_initialize_by(
-        code: course_attributes[:code],
-        accredited_body_code: accredited_body_code,
-      )
+      @course ||= Course.find_or_initialize_by(uuid: course_attributes[:uuid])
     end
   end
 end
