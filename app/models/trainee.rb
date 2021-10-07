@@ -150,8 +150,15 @@ class Trainee < ApplicationRecord
                   against: %i[first_names middle_names last_name trainee_id trn],
                   using: { tsearch: { prefix: true } }
 
-  scope :ordered_by_date, -> { order(updated_at: :desc) }
+  scope :ordered_by_drafts_then_by, (lambda do |field|
+    ordered_by_drafts.public_send("ordered_by_#{field}")
+  end)
+
+  scope :ordered_by_updated_at, -> { order(updated_at: :desc) }
   scope :ordered_by_last_name, -> { order(last_name: :asc) }
+
+  # NOTE: Returns draft trainees first, then all trainees in any other state.
+  scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
   scope :with_subject_or_allocation_subject, (lambda do |subject|
     select("trainees.*", ordered_by_drafts_clause)
@@ -159,9 +166,6 @@ class Trainee < ApplicationRecord
       .where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject OR LOWER(allocation_subjects.name) = :subject", subject: subject.downcase)
       .distinct
   end)
-
-  # Returns draft trainees first, then all trainees in any other state.
-  scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
   scope :with_award_states, (lambda do |*award_states|
     qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }
