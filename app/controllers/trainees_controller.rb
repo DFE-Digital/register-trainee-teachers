@@ -10,7 +10,7 @@ class TraineesController < ApplicationController
   def index
     return redirect_to(trainees_path(filter_params)) if current_page_exceeds_total_pages?
 
-    @total_trainees_count = filtered_trainees.length
+    @total_trainees_count = filtered_trainees.count(:id)
 
     # We can't use `#draft` to find @draft_trainees since that applies a `WHERE`
     # clause, removing Kaminari's pagination. Hence the use of `#select`.
@@ -72,13 +72,9 @@ private
     paginated_trainees.total_pages.nonzero? && paginated_trainees.current_page > paginated_trainees.total_pages
   end
 
-  def paginated_trainees
-    @paginated_trainees ||= filtered_trainees.page(params[:page] || 1)
-  end
-
   def filtered_trainees
     @filtered_trainees ||= Trainees::Filter.call(
-      trainees: ordered_trainees,
+      trainees: policy_scope(Trainee.includes(provider: [:courses])),
       filters: filters,
     )
   end
@@ -89,6 +85,10 @@ private
 
   def ordered_trainees
     policy_scope(Trainee.includes(provider: [:courses]).ordered_by_drafts_then_by(field))
+  end
+
+  def paginated_trainees
+    @paginated_trainees ||= filtered_trainees.ordered_by_drafts_then_by(field).page(params[:page] || 1)
   end
 
   def filters

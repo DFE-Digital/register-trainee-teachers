@@ -160,11 +160,13 @@ class Trainee < ApplicationRecord
   # NOTE: Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
+  # NOTE: Enforce subquery to remove duplications and allow for chain-ability.
   scope :with_subject_or_allocation_subject, (lambda do |subject|
-    select("trainees.*", ordered_by_drafts_clause)
-      .joins(join_allocation_subjects_clause)
-      .where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject OR LOWER(allocation_subjects.name) = :subject", subject: subject.downcase)
-      .distinct
+    where(
+      id: distinct.select("trainees.id")
+        .joins(join_allocation_subjects_clause)
+        .where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject OR LOWER(allocation_subjects.name) = :subject", subject: subject.downcase),
+    )
   end)
 
   scope :with_award_states, (lambda do |*award_states|
