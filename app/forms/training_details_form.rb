@@ -62,6 +62,8 @@ private
 
     if [day, month, year].all?(&:blank?)
       errors.add(:commencement_date, :blank)
+    elsif commencement_date.year.to_i > next_year
+      errors.add(:commencement_date, :future)
     elsif !commencement_date.is_a?(Date)
       errors.add(:commencement_date, :invalid)
     elsif date_before_course_start_date?(commencement_date, trainee.course_start_date)
@@ -71,5 +73,9 @@ private
 
   def commencement_date_year_is_four_digits
     errors.add(:commencement_date, :invalid_year) if commencement_date.is_a?(Date) && commencement_date.year.digits.length != 4
+  end
+
+  def next_year
+    Time.zone.now.year.next
   end
 end
