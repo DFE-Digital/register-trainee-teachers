@@ -13,7 +13,9 @@ class PublishCourseDetailsForm < TraineeForm
 
   validates :course_code, presence: true
 
-  delegate :age_range, :end_date, to: :course, prefix: true
+  validates :course_end_date, presence: true, unless: :skip_course_end_date_validation?
+
+  delegate :age_range, to: :course, prefix: true
 
   delegate :course_subject_one, :course_subject_two, :course_subject_three, to: :specialism_form
 
@@ -33,6 +35,8 @@ class PublishCourseDetailsForm < TraineeForm
         course_end_date: nil,
         study_mode: nil,
       )
+    else
+      CourseDetailsForm.new(trainee).nullify_and_stash!
     end
   end
 
@@ -49,20 +53,18 @@ class PublishCourseDetailsForm < TraineeForm
   def stash
     return true if manual_entry_chosen?
 
+    update_stashed_attrs_to_new_course_attrs
+
     super
   end
 
   def course_start_date
-    return course.start_date if different_course_chosen?
-
     if trainee.requires_itt_start_date?
       IttStartDateForm.new(trainee).date
     end || course.start_date
   end
 
   def study_mode
-    return course_study_mode_if_valid if different_course_chosen?
-
     if trainee.requires_study_mode?
       StudyModesForm.new(trainee).study_mode
     end || course_study_mode_if_valid
@@ -76,7 +78,64 @@ class PublishCourseDetailsForm < TraineeForm
     language_specialism? ? specialism_form.languages : specialism_form.specialisms
   end
 
+  def skip_course_end_date_validation?
+    course_code.blank? || @skip_course_end_date_validation
+  end
+
+  def skip_course_end_date_validation!
+    @skip_course_end_date_validation = true
+  end
+
+  def course_end_date
+    nil
+  end
+
+  def clear_stash
+    [
+      LanguageSpecialismsForm,
+      SubjectSpecialismForm,
+      IttStartDateForm,
+      StudyModesForm,
+      CourseDetailsForm,
+    ].each do |klass|
+      klass.new(trainee).clear_stash
+    end
+
+    super
+  end
+
 private
+
+  def update_stashed_attrs_to_new_course_attrs
+    return unless course
+
+    itt_start_date_form = IttStartDateForm.new(trainee)
+    itt_start_date_form.add_date_fields(course.start_date)
+    itt_start_date_form.stash
+
+    study_modes_form = StudyModesForm.new(trainee, params: { study_mode: course_study_mode_if_valid })
+    study_modes_form.stash
+
+    course_details_form = CourseDetailsForm.new(trainee)
+    course_details_form.assign_attributes_and_stash({
+      course_code: course_code,
+      course_subject_one: course_subject_one,
+      course_subject_two: course_subject_two,
+      course_subject_three: course_subject_three,
+
+      start_day: course_start_date&.day,
+      start_month: course_start_date&.month,
+      start_year: course_start_date&.year,
+      end_day: course_end_date&.day,
+      end_month: course_end_date&.month,
+      end_year: course_end_date&.year,
+
+      study_mode: study_mode,
+    })
+    course_details_form.assign_attributes_and_stash(
+      course_details_form.attrs_from_course_age_range(course_age_range),
+    )
+  end
 
   def course_subjects
     @course_subjects ||= course.subjects.pluck(:name)
@@ -126,9 +185,5 @@ private
 
   def compute_fields
     trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
-  end
-
-  def different_course_chosen?
-    course_code != trainee.course_code
   end
 end

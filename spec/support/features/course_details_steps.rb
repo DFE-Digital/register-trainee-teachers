@@ -8,6 +8,10 @@ module Features
       review_draft_page.course_details.link.click
       publish_course_details_page.course_options.first.choose
       publish_course_details_page.submit_button.click
+      and_i_see_course_end_date_missing_error
+      and_i_click_enter_answer_for_course_end_date
+      and_i_enter_course_end_date
+      and_i_submit_the_course_details_form
       and_i_confirm_my_details
       and_the_course_details_is_marked_completed
     end
@@ -75,6 +79,25 @@ module Features
       course_details_page.submit_button.click
       confirm_details_page.confirm.click
       confirm_details_page.continue_button.click
+    end
+
+    def and_i_see_course_end_date_missing_error
+      expect(confirm_publish_course_details_page).to have_content("Course end date is missing")
+    end
+
+    def and_i_click_enter_answer_for_course_end_date
+      Trainee.last.course_subjects.each do |name|
+        create(:subject_specialism, name: name)
+      end
+      confirm_publish_course_details_page.enter_an_answer_for_course_end_date_link.click
+    end
+
+    def and_i_enter_course_end_date
+      course_details_page.set_date_fields("course_end_date", 1.year.from_now.strftime("%d/%m/%Y"))
+    end
+
+    def and_i_submit_the_course_details_form
+      course_details_page.submit_button.click
     end
 
   private

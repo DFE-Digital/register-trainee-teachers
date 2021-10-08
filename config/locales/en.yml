@@ -463,6 +463,8 @@ en:
         disability_disclosure: *disability
         disability_ids: *disability
         course_subject_one: *course_subject
+        course_subject_two: *course_subject
+        course_subject_three: *course_subject
         course_start_date: *course_start_date
         course_end_date: *course_end_date
         main_age_range: *course_age_range

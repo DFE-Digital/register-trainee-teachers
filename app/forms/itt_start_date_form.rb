@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 class IttStartDateForm < MultiDateForm
+  def stash
+    form = CourseDetailsForm.new(trainee)
+    form.assign_attributes_and_stash({
+      start_day: date&.day,
+      start_month: date&.month,
+      start_year: date&.year,
+    })
+
+    super
+  end
+
 private
 
   def date_field

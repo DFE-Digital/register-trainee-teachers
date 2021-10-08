@@ -8,6 +8,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   let(:subjects) { [] }
   let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
   let(:study_mode) { "full_time" }
+  let(:course_end_date) { 1.year.from_now.to_date }
 
   background do
     given_i_am_authenticated
@@ -31,12 +32,17 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
     context "with a course that doesn't require selecting a specialism" do
       let(:subjects) { [AllocationSubjects::HISTORY] }
+      let!(:subject_specialism) { create(:subject_specialism, name: subjects[0].downcase) }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
         and_i_select_a_course
         and_i_submit_the_form
         then_i_should_see_the_subject_described_as("History")
+        and_i_see_course_end_date_missing_error
+        and_i_click_enter_answer_for_course_end_date
+        and_i_enter_course_end_date(course_end_date)
+        and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -51,6 +57,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_course
         and_i_submit_the_form
         then_i_should_see_the_subject_described_as("French")
+        and_i_see_course_end_date_missing_error
+        and_i_click_enter_answer_for_course_end_date
+        and_i_enter_course_end_date(course_end_date)
+        and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -59,6 +69,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
     context "with a course that requires selecting a single specialism" do
       let(:subjects) { [AllocationSubjects::COMPUTING] }
+      let!(:subject_specialism) { create(:subject_specialism, name: "Computer science".downcase) }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
@@ -67,6 +78,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_specialism("Computer science")
         and_i_submit_the_specialism_form
         then_i_should_see_the_subject_described_as("Computer science")
+        and_i_see_course_end_date_missing_error
+        and_i_click_enter_answer_for_course_end_date
+        and_i_enter_course_end_date(course_end_date)
+        and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -75,6 +90,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
     context "with a course that requires selecting multiple specialisms" do
       let(:subjects) { [AllocationSubjects::COMPUTING, AllocationSubjects::MATHEMATICS] }
+      let!(:subject_specialism) { create(:subject_specialism, name: "Applied computing".downcase) }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
@@ -85,6 +101,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_specialism("Mathematics")
         and_i_submit_the_specialism_form
         then_i_should_see_the_subject_described_as("Applied computing with mathematics")
+        and_i_see_course_end_date_missing_error
+        and_i_click_enter_answer_for_course_end_date
+        and_i_enter_course_end_date(course_end_date)
+        and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -93,6 +113,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
     context "with a course that requires selecting language specialisms" do
       let(:subjects) { ["Modern languages (other)"] }
+      let!(:subject_specialism1) { create(:subject_specialism, name: "Arabic languages") }
+      let!(:subject_specialism2) { create(:subject_specialism, name: "Portuguese language") }
+      let!(:subject_specialism3) { create(:subject_specialism, name: "Welsh language") }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
@@ -101,6 +124,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_languages("Arabic languages", "Welsh", "Portuguese")
         and_i_submit_the_language_specialism_form
         then_i_should_see_the_subject_described_as("Arabic languages with Portuguese and Welsh")
+        and_i_see_course_end_date_missing_error
+        and_i_click_enter_answer_for_course_end_date
+        and_i_enter_course_end_date(course_end_date)
+        and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -115,6 +142,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
           AllocationSubjects::HISTORY,
         ]
       end
+      let!(:subject_specialism1) { create(:subject_specialism, name: "music education and teaching") }
+      let!(:subject_specialism2) { create(:subject_specialism, name: "applied computing") }
+      let!(:subject_specialism3) { create(:subject_specialism, name: "history") }
 
       scenario "renders a 'completed' status when details fully provided" do
         when_i_visit_the_publish_course_details_page
@@ -123,6 +153,10 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_specialism("Applied computing")
         and_i_submit_the_specialism_form
         then_i_should_see_the_subject_described_as("Music education and teaching with applied computing and history")
+        and_i_see_course_end_date_missing_error
+        and_i_click_enter_answer_for_course_end_date
+        and_i_enter_course_end_date(course_end_date)
+        and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
         then_the_section_should_be(completed)
@@ -250,7 +284,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def given_a_trainee_exists_with_some_courses(with_subjects: [], with_training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-    given_a_trainee_exists(:with_related_courses, subject_names: with_subjects, training_route: with_training_route, study_mode: study_mode)
+    given_a_trainee_exists(:with_related_courses, :with_secondary_education, subject_names: with_subjects, training_route: with_training_route, study_mode: study_mode)
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
 
@@ -402,5 +436,22 @@ feature "publish course details", type: :feature, feature_publish_course_details
 
   def then_i_should_see_the_subject_described_as(description)
     expect(confirm_publish_course_details_page.subject_description).to eq(description)
+  end
+
+  def and_i_see_course_end_date_missing_error
+    expect(confirm_publish_course_details_page).to have_content("Course end date is missing")
+  end
+
+  def and_i_click_enter_answer_for_course_end_date
+    confirm_publish_course_details_page.enter_an_answer_for_course_end_date_link.click
+  end
+
+  def and_i_enter_course_end_date(date)
+    course_details_page.subject_primary.click
+    course_details_page.set_date_fields("course_end_date", date.strftime("%d/%m/%Y"))
+  end
+
+  def and_i_submit_the_course_details_form
+    course_details_page.submit_button.click
   end
 end

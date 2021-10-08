@@ -33,6 +33,15 @@ class MultiDateForm < TraineeForm
     end
   end
 
+  def add_date_fields(new_d)
+    fields.merge!({
+      date_string: rehydrate_date_string(new_d),
+      day: new_d&.day,
+      month: new_d&.month,
+      year: new_d&.year,
+    })
+  end
+
 private
 
   def compute_fields
@@ -56,10 +65,10 @@ private
     {}
   end
 
-  def rehydrate_date_string
-    return unless trainee_attribute
+  def rehydrate_date_string(date = trainee_attribute)
+    return unless date
 
-    case trainee_attribute
+    case date
     when Time.zone.today
       "today"
     when Time.zone.yesterday

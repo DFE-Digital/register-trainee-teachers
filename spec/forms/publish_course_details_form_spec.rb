@@ -24,10 +24,20 @@ describe PublishCourseDetailsForm, type: :model do
     let(:trainee) { create(:trainee, :submitted_for_trn, route, course_subject_one: nil) }
 
     describe "#stash" do
-      it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
-        expect(form_store).to receive(:set).with(trainee.id, :publish_course_details, params)
+      describe "skip course_end_date validation" do
+        it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
+          expect(form_store).to receive(:set).with(trainee.id, :publish_course_details, params)
+          subject.skip_course_end_date_validation!
+          subject.stash
+        end
+      end
 
-        subject.stash
+      describe "validate course_end_date" do
+        it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
+          expect(form_store).not_to receive(:set).with(trainee.id, :publish_course_details, params)
+          subject.stash
+          expect(subject.errors.messages).to eq({ course_end_date: ["can't be blank"] })
+        end
       end
     end
 
@@ -49,6 +59,7 @@ describe PublishCourseDetailsForm, type: :model do
                  subject_names: [subject_name])
 
           subject_specialism_form.stash_or_save!
+          subject.skip_course_end_date_validation!
         end
 
         it "updates the trainee with the publish course details" do

@@ -31,6 +31,17 @@ class SubjectSpecialismForm < TraineeForm
     ].compact
   end
 
+  def stash
+    form = CourseDetailsForm.new(trainee)
+    form.assign_attributes_and_stash({
+      course_subject_one: course_subject_one,
+      course_subject_two: course_subject_two,
+      course_subject_three: course_subject_three,
+    })
+
+    super
+  end
+
 private
 
   def compute_fields

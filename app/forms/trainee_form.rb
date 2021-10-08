@@ -38,6 +38,12 @@ class TraineeForm
     end
   end
 
+  def assign_attributes_and_stash(attrs)
+    fields.merge!(attrs)
+    assign_attributes(fields)
+    store.set(id, form_store_key, fields.except(*fields_to_ignore_before_stash))
+  end
+
   def stash
     valid? && store.set(id, form_store_key, fields.except(*fields_to_ignore_before_stash))
   end
@@ -54,6 +60,10 @@ class TraineeForm
     return [] if valid?
 
     [errors.attribute_names]
+  end
+
+  def clear_stash
+    store.set(id, form_store_key, nil)
   end
 
 private
@@ -92,10 +102,6 @@ private
     errors.messages.map do |field, messages|
       [field, { messages: messages, value: public_send(field) }]
     end
-  end
-
-  def clear_stash
-    store.set(id, form_store_key, nil)
   end
 
   def fields_from_store

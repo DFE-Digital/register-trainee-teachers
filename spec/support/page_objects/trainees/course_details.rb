@@ -37,6 +37,8 @@ module PageObjects
       element :additional_age_range, "#course-details-form-additional-age-range-field"
       element :additional_age_range_option, "#course-details-form-additional-age-range-field option:last"
 
+      element :subject_primary, "#course-details-form-primary-course-subjects-primary-field"
+
       element :submit_button, "button[type='submit']"
     end
   end
