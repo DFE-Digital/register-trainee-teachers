@@ -12,13 +12,13 @@ module Features
       and_the_course_details_is_marked_completed
     end
 
-    def and_the_course_details_is_complete(requires_study_mode: false)
+    def and_the_course_details_is_complete(assessment_only: false)
       given_subject_specialisms_are_available_for_selection
       and_the_course_education_phase_is_completed
       course_details_page.load(id: trainee_from_url.slug)
       course_details_page.subject.select(subject_specialism_name)
       course_details_page.main_age_range_11_to_16.choose
-      if requires_study_mode
+      unless assessment_only
         and_the_course_study_mode_field_is_completed
       end
       and_the_course_date_fields_are_completed
@@ -26,9 +26,9 @@ module Features
       and_the_course_details_is_marked_completed
     end
 
-    def and_the_ey_course_details_is_complete(requires_study_mode: false)
+    def and_the_ey_course_details_is_complete(assessment_only: false)
       course_details_page.load(id: trainee_from_url.slug)
-      if requires_study_mode
+      unless assessment_only
         and_the_course_study_mode_field_is_completed
       end
       and_the_course_date_fields_are_completed

@@ -181,22 +181,11 @@ feature "publish course details", type: :feature, feature_publish_course_details
           let(:study_mode) { "full_time_or_part_time" }
           let(:with_valid_itt_start_date) { "with valid itt start date" }
 
-          context "with study_mode off", feature_course_study_mode: false do
-            scenario :with_valid_itt_start_date do
-              then_i_see_the_itt_start_date_edit_page
-              and_i_set_itt_start_date("1/01/2020")
-              and_i_continue
-              then_i_see_the_confirm_publish_course_details_page
-            end
-          end
-
-          context "with study_mode on", feature_course_study_mode: true do
-            scenario :with_valid_itt_start_date do
-              then_i_see_the_itt_start_date_edit_page
-              and_i_set_itt_start_date("9/09/2020")
-              and_i_continue
-              then_i_see_the_study_mode_edit_page
-            end
+          scenario :with_valid_itt_start_date do
+            then_i_see_the_itt_start_date_edit_page
+            and_i_set_itt_start_date("9/09/2020")
+            and_i_continue
+            then_i_see_the_study_mode_edit_page
           end
         end
 

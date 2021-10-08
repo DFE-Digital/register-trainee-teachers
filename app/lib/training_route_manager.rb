@@ -38,8 +38,6 @@ class TrainingRouteManager
   end
 
   def requires_study_mode?
-    return false unless FeatureService.enabled?("course_study_mode")
-
     [
       TRAINING_ROUTE_ENUMS[:assessment_only],
       TRAINING_ROUTE_ENUMS[:early_years_assessment_only],

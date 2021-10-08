@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe StudyModesForm, type: :model, feature_course_study_mode: true do
+describe StudyModesForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
   let(:form_store) { class_double(FormStore) }

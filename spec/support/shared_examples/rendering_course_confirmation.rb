@@ -23,7 +23,7 @@ RSpec.shared_examples "rendering course confirmation" do
     end
   end
 
-  context "default behaviour", feature_course_study_mode: true do
+  context "default behaviour" do
     let(:course) { build(:course, duration_in_years: 2) }
     let(:specialisms) { ["Specialism 1"] }
 

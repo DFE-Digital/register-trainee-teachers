@@ -6,7 +6,7 @@ module CourseDetails
   describe View do
     include SummaryHelper
 
-    context "when data has not been provided", feature_course_study_mode: true do
+    context "when data has not been provided" do
       let(:trainee) do
         build(:trainee, id: 1,
                         training_route: nil,
@@ -201,30 +201,28 @@ module CourseDetails
       end
     end
 
-    context "course_study_mode feature enabled", feature_course_study_mode: true do
-      context "route with study_mode" do
-        let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: "full_time") }
+    context "route with study_mode" do
+      let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: "full_time") }
 
-        before do
-          render_inline(View.new(data_model: trainee))
-        end
-
-        it "renders study_mode" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
-        end
+      before do
+        render_inline(View.new(data_model: trainee))
       end
 
-      context "route without study_mode" do
-        let(:trainee) { create(:trainee, :assessment_only, study_mode: nil) }
+      it "renders study_mode" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+      end
+    end
 
-        before do
-          render_inline(View.new(data_model: trainee))
-        end
+    context "route without study_mode" do
+      let(:trainee) { create(:trainee, :assessment_only, study_mode: nil) }
 
-        it "does not render study_mode" do
-          expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time")
-        end
+      before do
+        render_inline(View.new(data_model: trainee))
+      end
+
+      it "does not render study_mode" do
+        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time")
       end
     end
   end
