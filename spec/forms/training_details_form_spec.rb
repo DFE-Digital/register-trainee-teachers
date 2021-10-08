@@ -80,6 +80,14 @@ describe TrainingDetailsForm, type: :model do
         end
       end
 
+      context "commencement date too far in the future" do
+        let(:trainee) { build(:trainee, commencement_date: Date.parse("1/1/2099")) }
+
+        it "returns an invalid year error message" do
+          expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.commencement_date.future"))
+        end
+      end
+
       context "date is before the course start date" do
         let(:trainee) do
           build(:trainee, course_start_date: Time.zone.today, commencement_date: 1.day.ago)

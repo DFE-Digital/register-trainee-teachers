@@ -1152,6 +1152,7 @@ en:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
+              future: Enter a start date closer to today
               invalid_year: The year must include 4 numbers
               not_before_course_start_date: *not_before_course_start_date
             trainee_id:
