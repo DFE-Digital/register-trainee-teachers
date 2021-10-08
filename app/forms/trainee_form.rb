@@ -21,8 +21,11 @@ class TraineeForm
   end
 
   def stash_or_save!
-    save_strategy = trainee.draft? ? :save! : :stash
-    public_send(save_strategy)
+    if trainee.draft?
+      save!
+    else
+      stash
+    end
   end
 
   def save!

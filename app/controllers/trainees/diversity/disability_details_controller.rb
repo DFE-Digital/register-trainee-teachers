@@ -17,9 +17,7 @@ module Trainees
           user: current_user,
         )
 
-        save_strategy = trainee.draft? ? :save! : :stash
-
-        if @disability_detail_form.public_send(save_strategy)
+        if @disability_detail_form.stash_or_save!
           redirect_to(trainee_diversity_confirm_path(trainee))
         else
           render(:edit)

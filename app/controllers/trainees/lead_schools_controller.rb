@@ -22,9 +22,7 @@ module Trainees
         return redirect_to(trainee_lead_schools_path(@trainee, query: query))
       end
 
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @lead_school_form.public_send(save_strategy)
+      if @lead_school_form.stash_or_save!
         redirect_to(step_wizard.next_step)
       else
         @school_search = SchoolSearch.call(query: params[:query], lead_schools_only: true)

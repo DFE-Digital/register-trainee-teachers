@@ -12,9 +12,7 @@ module Trainees
       def update
         @training_initiatives_form = ::Funding::TrainingInitiativesForm.new(trainee, params: trainee_params, user: current_user)
 
-        save_strategy = trainee.draft? ? :save! : :stash
-
-        if @training_initiatives_form.public_send(save_strategy)
+        if @training_initiatives_form.stash_or_save!
           if funding_manager.can_apply_for_bursary?
             redirect_to(edit_trainee_funding_bursary_path(trainee))
           else

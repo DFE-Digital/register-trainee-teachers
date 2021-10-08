@@ -30,13 +30,11 @@ module Trainees
     end
 
     def update
-      personal_detail = PersonalDetailsForm.new(trainee, params: personal_details_params, user: current_user)
-      save_strategy = trainee.draft? ? :save! : :stash
+      @personal_detail_form = PersonalDetailsForm.new(trainee, params: personal_details_params, user: current_user)
 
-      if personal_detail.public_send(save_strategy)
+      if @personal_detail_form.stash_or_save!
         redirect_to(relevant_redirect_path)
       else
-        @personal_detail_form = personal_detail
         render(:edit)
       end
     end

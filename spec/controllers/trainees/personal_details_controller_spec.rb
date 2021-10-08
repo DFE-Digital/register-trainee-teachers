@@ -36,7 +36,7 @@ describe Trainees::PersonalDetailsController do
       let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.provider) }
 
       before do
-        allow(PersonalDetailsForm).to receive(:new).and_return(double(save!: true))
+        allow(PersonalDetailsForm).to receive(:new).and_return(double(stash_or_save!: true))
         allow(controller).to receive(:page_tracker).and_return(double(last_origin_page_path: "/trainees/#{trainee.slug}/relevant-redirect", save!: nil))
         allow(controller).to receive(:personal_details_params).and_return(nil)
       end
