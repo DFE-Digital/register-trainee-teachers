@@ -11,7 +11,7 @@ feature "early_years_assessment_only end-to-end journey", feature_show_funding: 
     and_the_contact_details_is_complete
     and_the_diversity_information_is_complete
     and_the_degree_details_is_complete
-    and_the_ey_course_details_is_complete
+    and_the_ey_course_details_is_complete(assessment_only: true)
     and_the_trainee_start_date_and_id_is_complete
     and_the_funding_details_is_complete
     and_the_draft_record_has_been_reviewed

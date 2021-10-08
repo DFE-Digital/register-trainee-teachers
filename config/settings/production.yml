@@ -31,7 +31,6 @@ features:
   import_applications_from_apply: true
   publish_course_details: true
   send_funding_to_dttp: true
-  course_study_mode: true
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "early_years_salaried end-to-end journey", feature_show_funding: true, feature_course_study_mode: true, type: :feature do
+feature "early_years_salaried end-to-end journey", feature_show_funding: true, type: :feature do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.early_years_salaried": true do
@@ -11,7 +11,7 @@ feature "early_years_salaried end-to-end journey", feature_show_funding: true, f
     and_the_contact_details_is_complete
     and_the_diversity_information_is_complete
     and_the_degree_details_is_complete
-    and_the_ey_course_details_is_complete(requires_study_mode: true)
+    and_the_ey_course_details_is_complete
     and_the_trainee_start_date_and_id_is_complete
     and_the_funding_details_is_complete
     and_the_draft_record_has_been_reviewed

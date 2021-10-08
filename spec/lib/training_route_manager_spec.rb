@@ -186,36 +186,22 @@ describe TrainingRouteManager do
   end
 
   describe "#requires_study_mode?" do
-    context "with the :course_study_mode feature flag enabled", feature_course_study_mode: true do
-      (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
-        context "for route #{route}" do
-          let(:trainee) { Struct.new(:training_route).new(route.to_s) }
+    (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
+      context "for route #{route}" do
+        let(:trainee) { Struct.new(:training_route).new(route.to_s) }
 
-          it "returns true" do
-            expect(subject.requires_study_mode?).to be true
-          end
-        end
-      end
-
-      %w[early_years_assessment_only assessment_only].each do |route|
-        context "for route #{route}" do
-          let(:trainee) { create(:trainee, route) }
-
-          it "returns false" do
-            expect(subject.requires_study_mode?).to be false
-          end
+        it "returns true" do
+          expect(subject.requires_study_mode?).to be true
         end
       end
     end
 
-    context "with the :course_study_mode feature flag disabled" do
-      TRAINING_ROUTES.each_key do |route|
-        context "for route #{route}" do
-          let(:trainee) { Struct.new(:training_route).new(route.to_s) }
+    %w[early_years_assessment_only assessment_only].each do |route|
+      context "for route #{route}" do
+        let(:trainee) { create(:trainee, route) }
 
-          it "returns false" do
-            expect(subject.requires_study_mode?).to be false
-          end
+        it "returns false" do
+          expect(subject.requires_study_mode?).to be false
         end
       end
     end

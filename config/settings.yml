@@ -42,7 +42,6 @@ features:
   show_funding: true
   send_funding_to_dttp: false
   placements: false
-  course_study_mode: false
   grant: false
   routes:
     early_years_assessment_only: false

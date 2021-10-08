@@ -4,7 +4,6 @@ features:
   enable_feedback_link: true
   publish_course_details: true
   persist_to_dttp: false
-  course_study_mode: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true
