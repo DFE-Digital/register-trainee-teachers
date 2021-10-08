@@ -2,9 +2,7 @@
 
 module Trainees
   module Diversity
-    class EthnicGroupsController < ApplicationController
-      before_action :authorize_trainee
-
+    class EthnicGroupsController < BaseController
       def edit
         @ethnic_group_form = Diversities::EthnicGroupForm.new(trainee)
       end
@@ -24,10 +22,6 @@ module Trainees
       end
 
     private
-
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
 
       def ethnic_group_param
         return { ethnic_group: nil } if params[:diversities_ethnic_group_form].blank?
@@ -49,10 +43,6 @@ module Trainees
 
       def disclosure_form
         @disclosure_form ||= Diversities::DisclosureForm.new(trainee)
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
     end
   end

@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class DeferralsController < ApplicationController
-    before_action :authorize_trainee
-
+  class DeferralsController < BaseController
     def show
       @deferral_form = DeferralForm.new(trainee)
     end
@@ -21,14 +19,6 @@ module Trainees
     end
 
   private
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
-    def authorize_trainee
-      authorize(trainee)
-    end
 
     def trainee_params
       params.require(:deferral_form)

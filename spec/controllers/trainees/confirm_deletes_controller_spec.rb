@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Trainees::ConfirmDeleteController do
+describe Trainees::ConfirmDeletesController do
   let(:user) { create(:user) }
 
   before do

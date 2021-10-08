@@ -10,7 +10,7 @@
 <%= render ReviewDraft::View.new(trainee: @trainee) %>
 
 <h2 class="govuk-heading-m">Final check</h2>
-  <%= render GovukButtonLinkTo::View.new(body: "Check this record", url: check_details_trainee_path(@trainee), id: "check-details") %>
+  <%= render GovukButtonLinkTo::View.new(body: "Check this record", url: trainee_check_details_path(@trainee), id: "check-details") %>
 <p class="govuk-body"><%= govuk_link_to("Return to this draft later", trainees_path) %></p>
 
 <p class="govuk-body govuk-!-margin-top-8">

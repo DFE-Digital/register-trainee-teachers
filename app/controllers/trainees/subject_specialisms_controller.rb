@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class SubjectSpecialismsController < ApplicationController
+  class SubjectSpecialismsController < BaseController
     include PublishCourseNextPath
-
-    before_action :authorize_trainee
 
     helper_method :position, :course_subject_attribute_name
 
@@ -87,10 +85,6 @@ module Trainees
 
     def course_subjects
       @course_subjects ||= course.subjects.pluck(:name)
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
   end
 end

@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class OutcomeDatesController < ApplicationController
-    before_action :authorize_trainee
-
+  class OutcomeDatesController < BaseController
     def edit
       @outcome_form = OutcomeDateForm.new(trainee)
     end
@@ -19,10 +17,6 @@ module Trainees
     end
 
   private
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
 
     def trainee_params
       params.require(:outcome_date_form)

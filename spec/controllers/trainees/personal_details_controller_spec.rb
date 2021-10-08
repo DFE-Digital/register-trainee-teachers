@@ -26,7 +26,7 @@ describe Trainees::PersonalDetailsController do
       let(:trainee) { create(:trainee, :draft, provider: user.provider) }
 
       it "redirects to /review-draft" do
-        expect(get(:show, params: { trainee_id: trainee })).to redirect_to(review_draft_trainee_path(trainee))
+        expect(get(:show, params: { trainee_id: trainee })).to redirect_to(trainee_review_drafts_path(trainee))
       end
     end
   end

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class IttStartDatesController < ApplicationController
+  class IttStartDatesController < BaseController
     include PublishCourseNextPath
-
-    before_action :authorize_trainee
 
     def edit
       @itt_start_date_form = IttStartDateForm.new(trainee)

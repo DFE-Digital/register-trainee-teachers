@@ -43,8 +43,8 @@ module TaskListHelper
       placement_details:
         {
           task_name: "Placement details",
-          path: review_draft_trainee_path(trainee),
-          confirm_path: review_draft_trainee_path(trainee),
+          path: trainee_review_drafts_path(trainee),
+          confirm_path: trainee_review_drafts_path(trainee),
           classes: "placement-details",
           status: ProgressService.call(
             validator: PlacementDetailForm.new(trainee),

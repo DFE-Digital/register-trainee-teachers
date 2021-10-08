@@ -3,7 +3,6 @@
 module Trainees
   module Diversity
     class ConfirmDetailsController < Trainees::ConfirmDetailsController
-      before_action :authorize_trainee
       before_action :save_data_and_bypass_confirmation_page, if: :draft_apply_application?
       before_action :load_missing_data_view
 
@@ -69,10 +68,6 @@ module Trainees
 
       def draft_apply_application?
         trainee.draft? && trainee.apply_application?
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
     end
   end

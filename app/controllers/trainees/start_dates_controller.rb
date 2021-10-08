@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class StartDatesController < ApplicationController
-    before_action :authorize_trainee
-
+  class StartDatesController < BaseController
     PARAM_CONVERSION = {
       "commencement_date(3i)" => "day",
       "commencement_date(2i)" => "month",
@@ -26,19 +24,11 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def trainee_params
       params.require(:trainee_start_date_form).permit(:commencement_date, *PARAM_CONVERSION.keys)
             .transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
   end
 end

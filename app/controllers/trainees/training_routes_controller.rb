@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class TrainingRoutesController < ApplicationController
-    before_action :ensure_trainee_is_draft!
-    before_action :authorize_trainee
+  class TrainingRoutesController < BaseController
+    prepend_before_action :ensure_trainee_is_draft!
 
     def edit; end
 
@@ -24,14 +23,6 @@ module Trainees
 
     def trainee_params
       params.require(:trainee).permit(:training_route)
-    end
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
 
     def training_route

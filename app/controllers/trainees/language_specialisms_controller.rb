@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 module Trainees
-  class LanguageSpecialismsController < ApplicationController
+  class LanguageSpecialismsController < BaseController
     include PublishCourseNextPath
 
-    before_action :authorize_trainee
     before_action :skip_manual_selection, if: :course_has_one_language_specialism?
     before_action :load_language_specialisms
 
@@ -44,10 +43,6 @@ module Trainees
 
     def language_specialism_params
       params.fetch(:language_specialisms_form, {}).permit(language_specialisms: [])
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
 
     def course_code

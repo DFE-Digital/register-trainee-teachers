@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module Trainees
-  class ConfirmDetailsController < ApplicationController
-    SCHOOLS_KEY = "schools"
-    FUNDING_KEY = "funding"
-
-    before_action :authorize_trainee
-    before_action :load_form
-    before_action :load_missing_data_view
+  class ConfirmDetailsController < BaseController
+    before_action :load_form, :load_missing_data_view
 
     helper_method :trainee_section_key
     helper_method :confirm_section_title
+
+    SCHOOLS_KEY = "schools"
+    FUNDING_KEY = "funding"
 
     def show
       page_tracker.save_as_origin!
@@ -40,10 +38,6 @@ module Trainees
 
     def data_model
       trainee.draft? ? trainee : @form
-    end
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
     def view_component
@@ -100,10 +94,6 @@ module Trainees
       mark_as_completed_attributes = params.require(:confirm_detail_form).permit(:mark_as_completed)[:mark_as_completed]
 
       ActiveModel::Type::Boolean.new.cast(mark_as_completed_attributes)
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
 
     def load_form

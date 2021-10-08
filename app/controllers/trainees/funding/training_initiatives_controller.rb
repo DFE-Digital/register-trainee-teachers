@@ -2,9 +2,7 @@
 
 module Trainees
   module Funding
-    class TrainingInitiativesController < ApplicationController
-      before_action :authorize_trainee
-
+    class TrainingInitiativesController < BaseController
       def edit
         @training_initiatives_form = ::Funding::TrainingInitiativesForm.new(trainee)
       end
@@ -26,18 +24,10 @@ module Trainees
 
     private
 
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
-
       def trainee_params
         return { training_initiative: nil } if params[:funding_training_initiatives_form].blank?
 
         params.require(:funding_training_initiatives_form).permit(*::Funding::TrainingInitiativesForm::FIELDS)
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
 
       def funding_manager

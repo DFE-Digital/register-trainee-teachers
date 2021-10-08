@@ -2,9 +2,7 @@
 
 module Trainees
   module Diversity
-    class DisabilityDisclosuresController < ApplicationController
-      before_action :authorize_trainee
-
+    class DisabilityDisclosuresController < BaseController
       def edit
         @disability_disclosure_form = Diversities::DisabilityDisclosureForm.new(trainee)
       end
@@ -25,10 +23,6 @@ module Trainees
 
     private
 
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
-
       def disability_disclosure_params
         return { disability_disclosure: nil } if params[:diversities_disability_disclosure_form].blank?
 
@@ -41,10 +35,6 @@ module Trainees
         else
           edit_trainee_diversity_disability_detail_path(trainee)
         end
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
     end
   end

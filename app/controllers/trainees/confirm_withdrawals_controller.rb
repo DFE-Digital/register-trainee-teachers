@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class ConfirmWithdrawalsController < ApplicationController
-    before_action :authorize_trainee
-
+  class ConfirmWithdrawalsController < BaseController
     def show
       page_tracker.save_as_origin!
       withdrawal
@@ -21,16 +19,8 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def withdrawal
       @withdrawal ||= WithdrawalForm.new(trainee)
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
   end
 end

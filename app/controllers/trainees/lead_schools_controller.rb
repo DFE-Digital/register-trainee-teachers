@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class LeadSchoolsController < ApplicationController
-    before_action :authorize_trainee, :validate_form_completeness
+  class LeadSchoolsController < BaseController
+    before_action :validate_form_completeness
 
     helper_method :query
 
@@ -31,10 +31,6 @@ module Trainees
     end
 
   private
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
 
     def trainee_params
       params.fetch(:schools_lead_school_form, {}).permit(:lead_school_id, *Schools::LeadSchoolForm::NON_TRAINEE_FIELDS)

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class ContactDetailsController < ApplicationController
+  class ContactDetailsController < BaseController
     include Appliable
-
-    before_action :authorize_trainee
 
     def edit
       @contact_details_form = ContactDetailsForm.new(trainee)
@@ -22,16 +20,8 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def contact_details_params
       params.require(:contact_details_form).permit(*ContactDetailsForm::FIELDS)
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
 
     def relevant_redirect_path
