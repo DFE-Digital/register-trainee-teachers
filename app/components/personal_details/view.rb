@@ -62,7 +62,7 @@ module PersonalDetails
       else
         sanitize(tag.ul(class: "govuk-list") do
           nationality_names.each do |nationality_name|
-            concat tag.li(nationality_name)
+            concat(tag.li(nationality_name))
           end
         end)
       end

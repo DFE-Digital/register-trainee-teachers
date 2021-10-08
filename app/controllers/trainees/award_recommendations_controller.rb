@@ -11,7 +11,7 @@ module Trainees
         Dttp::RecommendForAwardJob.perform_later(trainee)
         Dttp::RetrieveAwardJob.perform_with_default_delay(trainee)
 
-        redirect_to recommended_trainee_outcome_details_path(trainee)
+        redirect_to(recommended_trainee_outcome_details_path(trainee))
       end
     end
 

@@ -4,7 +4,7 @@ require "sidekiq/api"
 
 class HeartbeatController < ActionController::API
   def ping
-    render body: "PONG"
+    render(body: "PONG")
   end
 
   def healthcheck
@@ -16,14 +16,14 @@ class HeartbeatController < ActionController::API
 
     status = checks.values.all? ? :ok : :service_unavailable
 
-    render status: status,
+    render(status: status,
            json: {
              checks: checks,
-           }
+           })
   end
 
   def sha
-    render json: { sha: ENV["COMMIT_SHA"] }
+    render(json: { sha: ENV["COMMIT_SHA"] })
   end
 
 private
@@ -48,7 +48,7 @@ private
     # Iterate over each Sidekiq queue and ensure that there is a process
     # running for it.
     stats.queues.keys.all? do |queue|
-      processes.any? { |process| queue.in? process["queues"] }
+      processes.any? { |process| queue.in?(process["queues"]) }
     end
   rescue StandardError
     false

@@ -16,7 +16,7 @@ module Trainees
           course_subject_attribute_name => @specialisms.first,
         }).stash_or_save!
 
-        return redirect_to next_step_path
+        return redirect_to(next_step_path)
       end
 
       @subject = course_subjects[position - 1]
@@ -27,12 +27,12 @@ module Trainees
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position, params: specialism_params)
 
       if @subject_specialism_form.stash_or_save!
-        redirect_to next_step_path
+        redirect_to(next_step_path)
       else
         @subject = course_subjects[position - 1]
         @specialisms = subject_specialisms_for_position(position)
 
-        render :edit
+        render(:edit)
       end
     end
 

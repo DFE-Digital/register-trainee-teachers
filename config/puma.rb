@@ -50,7 +50,7 @@ if env == "development" && FeatureService.enabled?("use_ssl")
       root_ca = OpenSSL::X509::Certificate.new
       root_ca.version = 2 # cf. RFC 5280 - to make it a "v3" certificate
       root_ca.serial = rand(100_000) # randomized for local development to prevent SEC_ERROR_REUSED_ISSUER_AND_SERIAL errors in firefox after a git-clean
-      root_ca.subject = OpenSSL::X509::Name.parse "/C=GB/L=London/O=DfE/CN=localhost"
+      root_ca.subject = OpenSSL::X509::Name.parse("/C=GB/L=London/O=DfE/CN=localhost")
       root_ca.issuer = root_ca.subject # root CA's are "self-signed"
       root_ca.public_key = root_key.public_key
       root_ca.not_before = Time.zone.now

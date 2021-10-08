@@ -12,9 +12,9 @@ module Trainees
       def create
         @degree = trainee.degrees.build(locale_code_params)
         if @degree.valid?
-          redirect_to new_trainee_degree_path(trainee_id: params[:trainee_id], **locale_code_params)
+          redirect_to(new_trainee_degree_path(trainee_id: params[:trainee_id], **locale_code_params))
         else
-          render :new
+          render(:new)
         end
       end
 

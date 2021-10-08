@@ -4,8 +4,8 @@ module SystemAdmin
   module Imports
     class UsersController < ApplicationController
       def create
-        authorize provider.users.create!(user_params)
-        redirect_to provider_path(provider)
+        authorize(provider.users.create!(user_params))
+        redirect_to(provider_path(provider))
       end
 
     private

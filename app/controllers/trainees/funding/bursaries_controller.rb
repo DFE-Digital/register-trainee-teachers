@@ -16,7 +16,7 @@ module Trainees
           redirect_to(trainee_funding_confirm_path)
         else
           load_bursary_info!
-          render :edit
+          render(:edit)
         end
       end
 

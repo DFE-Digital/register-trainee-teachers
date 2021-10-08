@@ -40,7 +40,7 @@ class FormStore
     end
 
     def set(trainee_id, key, values)
-      raise InvalidKeyError unless FORM_SECTION_KEYS.include?(key)
+      raise(InvalidKeyError) unless FORM_SECTION_KEYS.include?(key)
 
       Redis.current.set("#{trainee_id}_#{key}", values.to_json)
 

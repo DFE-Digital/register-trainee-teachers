@@ -164,8 +164,8 @@ class Trainee < ApplicationRecord
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
   scope :with_award_states, (lambda do |*award_states|
-    qts_states = award_states.select { |s| s.start_with? "qts" }.map { |s| genericize_state(s) }
-    eyts_states = award_states.select { |s| s.start_with? "eyts" }.map { |s| genericize_state(s) }
+    qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }
+    eyts_states = award_states.select { |s| s.start_with?("eyts") }.map { |s| genericize_state(s) }
 
     where(training_route: EARLY_YEARS_ROUTES, state: eyts_states).or(
       where(state: qts_states).where.not(training_route: EARLY_YEARS_ROUTES),
@@ -193,7 +193,7 @@ class Trainee < ApplicationRecord
   end
 
   def trn_received!(new_trn = nil)
-    raise StateTransitionError, "Cannot transition to :trn_received without a trn" unless new_trn || trn
+    raise(StateTransitionError, "Cannot transition to :trn_received without a trn") unless new_trn || trn
 
     # Skip deferred and withdrawn to avoid state change
     # but to still register trn
@@ -208,7 +208,7 @@ class Trainee < ApplicationRecord
   end
 
   def dttp_id=(value)
-    raise LockedAttributeError, "dttp_id update failed for trainee ID: #{id}, with value: #{value}" if dttp_id.present?
+    raise(LockedAttributeError, "dttp_id update failed for trainee ID: #{id}, with value: #{value}") if dttp_id.present?
 
     super
   end
@@ -218,7 +218,7 @@ class Trainee < ApplicationRecord
   end
 
   def self.ordered_by_drafts_clause
-    Arel.sql <<~SQL
+    Arel.sql(<<~SQL)
       CASE trainees.state
       WHEN #{states.fetch('draft')} THEN 0
       ELSE 1
@@ -227,7 +227,7 @@ class Trainee < ApplicationRecord
   end
 
   def self.join_allocation_subjects_clause
-    Arel.sql <<~SQL
+    Arel.sql(<<~SQL)
       LEFT JOIN subject_specialisms AS specialism ON specialism.name = trainees.course_subject_one OR specialism.name = trainees.course_subject_two OR specialism.name = trainees.course_subject_three
       LEFT JOIN allocation_subjects ON specialism.allocation_subject_id = allocation_subjects.id
     SQL
@@ -268,9 +268,9 @@ class Trainee < ApplicationRecord
   end
 
   def self.genericize_state(state)
-    if state.end_with? "awarded"
+    if state.end_with?("awarded")
       "awarded"
-    elsif state.end_with? "recommended"
+    elsif state.end_with?("recommended")
       "recommended_for_award"
     else
       state

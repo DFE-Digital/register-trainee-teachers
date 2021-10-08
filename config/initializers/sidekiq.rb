@@ -12,7 +12,7 @@ if ENV.key?("VCAP_SERVICES")
     }
 
     if Settings.bg_jobs
-      Sidekiq::Cron::Job.load_from_hash Settings.bg_jobs
+      Sidekiq::Cron::Job.load_from_hash(Settings.bg_jobs)
     end
   end
 

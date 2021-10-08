@@ -51,7 +51,7 @@ module ApplyApplications
     def fields
       form_validators.keys.map do |section|
         validator(section).new(trainee).fields
-      end.inject :merge
+      end.inject(:merge)
     end
 
     def display_type(section_key)

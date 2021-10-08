@@ -42,7 +42,7 @@ module Dttp
     end
 
     def self.handle_response(response:, status:)
-      raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}" if response.code != status
+      raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}") if response.code != status
 
       response
     end

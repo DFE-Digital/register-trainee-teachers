@@ -9,25 +9,25 @@ class PagesController < ApplicationController
       @trainees = policy_scope(Trainee.all)
       @home_view = HomeView.new(@trainees)
       @registered_states_for_filter = HomeView::REGISTERED_STATES_FOR_FILTER
-      render :home
+      render(:home)
     else
-      render :start
+      render(:start)
     end
   end
 
   def accessibility
-    render :accessibility
+    render(:accessibility)
   end
 
   def cookie_policy
-    render :cookie_policy
+    render(:cookie_policy)
   end
 
   def privacy_policy
-    render :privacy_policy
+    render(:privacy_policy)
   end
 
   def guidance
-    render :guidance
+    render(:guidance)
   end
 end

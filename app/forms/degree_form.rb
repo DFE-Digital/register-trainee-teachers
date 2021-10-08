@@ -125,7 +125,7 @@ private
   def apply_invalid_data_includes_slug?
     return unless degrees_form.trainee.invalid_apply_data?
 
-    degrees_form.trainee.apply_application.invalid_data["degrees"].keys.include? slug
+    degrees_form.trainee.apply_application.invalid_data["degrees"].keys.include?(slug)
   end
 
   def clear_relevant_invalid_apply_data

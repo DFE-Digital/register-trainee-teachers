@@ -34,7 +34,7 @@ private
     def get_path
       return path unless @confirm_path
 
-      if Progress::STATUSES.slice(:incomplete, :in_progress_invalid).values.include? status
+      if Progress::STATUSES.slice(:incomplete, :in_progress_invalid).values.include?(status)
         path
       else
         confirm_path

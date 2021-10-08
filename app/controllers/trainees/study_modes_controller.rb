@@ -13,9 +13,9 @@ module Trainees
     def update
       @study_mode_form = StudyModesForm.new(trainee, params: trainee_params, user: current_user)
       if @study_mode_form.stash_or_save!
-        redirect_to course_confirmation_path
+        redirect_to(course_confirmation_path)
       else
-        render :edit
+        render(:edit)
       end
     end
 

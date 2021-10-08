@@ -35,15 +35,15 @@ module RecordActions
     end
 
     def defer_link
-      govuk_link_to t("views.trainees.edit.defer"), trainee_deferral_path(trainee), class: "defer"
+      govuk_link_to(t("views.trainees.edit.defer"), trainee_deferral_path(trainee), class: "defer")
     end
 
     def withdraw_link
-      govuk_link_to t("views.trainees.edit.withdraw"), trainee_withdrawal_path(trainee), class: "withdraw"
+      govuk_link_to(t("views.trainees.edit.withdraw"), trainee_withdrawal_path(trainee), class: "withdraw")
     end
 
     def reinstate_link
-      govuk_link_to t("views.trainees.edit.reinstate"), trainee_reinstatement_path(trainee), class: "reinstate"
+      govuk_link_to(t("views.trainees.edit.reinstate"), trainee_reinstatement_path(trainee), class: "reinstate")
     end
   end
 end

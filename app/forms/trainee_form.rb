@@ -64,7 +64,7 @@ private
   end
 
   def compute_fields
-    raise NotImplementedError
+    raise(NotImplementedError)
   end
 
   def fields_to_ignore_before_stash

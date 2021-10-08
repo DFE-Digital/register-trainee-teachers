@@ -12,7 +12,7 @@ module Degrees
     end
 
     def call
-      raise ApplyApplicationNotFound, "Apply application not found against this trainee" if application.blank?
+      raise(ApplyApplicationNotFound, "Apply application not found against this trainee") if application.blank?
 
       create_degrees!
     end

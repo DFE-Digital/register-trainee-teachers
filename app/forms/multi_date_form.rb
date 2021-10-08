@@ -45,7 +45,7 @@ private
   end
 
   def date_field
-    raise "Subclass of MultiDateForm must implement #date_field"
+    raise("Subclass of MultiDateForm must implement #date_field")
   end
 
   def trainee_attribute

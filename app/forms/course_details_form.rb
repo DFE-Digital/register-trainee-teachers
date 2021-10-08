@@ -142,7 +142,7 @@ private
   end
 
   def set_course_subject_from_primary_phase
-    if PUBLISH_PRIMARY_SUBJECTS.include? primary_course_subjects
+    if PUBLISH_PRIMARY_SUBJECTS.include?(primary_course_subjects)
       @course_subject_one, @course_subject_two, @course_subject_three = PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[primary_course_subjects]
     end
 

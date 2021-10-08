@@ -31,7 +31,7 @@ class DegreesForm
       # Unsaved stored degree
       form = build_degree(attrs)
     else
-      raise ActiveRecord::RecordNotFound, "Couldn't find Degree"
+      raise(ActiveRecord::RecordNotFound, "Couldn't find Degree")
     end
 
     form

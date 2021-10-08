@@ -28,11 +28,11 @@ module Trainees
 
         flash[:success] = "Trainee #{flash_message_title} updated"
 
-        redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
+        redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
       else
         @confirmation_component = view_component.new(data_model: data_model, has_errors: true)
 
-        render :show
+        render(:show)
       end
     end
 

@@ -50,7 +50,7 @@ private
 
   def save_requested_path_and_redirect
     save_requested_path
-    redirect_to sign_in_path
+    redirect_to(sign_in_path)
   end
 
   def authenticate
@@ -58,11 +58,11 @@ private
   end
 
   def ensure_trainee_is_draft!
-    redirect_to trainee_path(trainee) unless trainee.draft?
+    redirect_to(trainee_path(trainee)) unless trainee.draft?
   end
 
   def ensure_trainee_is_not_draft!
-    redirect_to review_draft_trainee_path(trainee) if trainee.draft?
+    redirect_to(review_draft_trainee_path(trainee)) if trainee.draft?
   end
 
   def track_page

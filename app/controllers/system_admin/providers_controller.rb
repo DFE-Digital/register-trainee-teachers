@@ -5,20 +5,20 @@ module SystemAdmin
     before_action :set_provider, only: %i[show edit update]
 
     def index
-      @providers = authorize Provider.all.order(:name)
+      @providers = authorize(Provider.all.order(:name))
     end
 
     def new
-      @provider = authorize Provider.new
+      @provider = authorize(Provider.new)
     end
 
     def create
-      @provider = authorize Provider.new(provider_params)
+      @provider = authorize(Provider.new(provider_params))
 
       if @provider.save
-        redirect_to providers_path
+        redirect_to(providers_path)
       else
-        render :new
+        render(:new)
       end
     end
 
@@ -30,9 +30,9 @@ module SystemAdmin
 
     def update
       if @provider.update(provider_params)
-        redirect_to providers_path
+        redirect_to(providers_path)
       else
-        render :edit
+        render(:edit)
       end
     end
 
@@ -43,7 +43,7 @@ module SystemAdmin
     end
 
     def set_provider
-      @provider = authorize Provider.find(params[:id])
+      @provider = authorize(Provider.find(params[:id]))
     end
   end
 end

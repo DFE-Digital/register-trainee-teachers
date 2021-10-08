@@ -18,9 +18,9 @@ module Trainees
       @training_details_form = TrainingDetailsForm.new(trainee, params: trainee_params, user: current_user)
 
       if @training_details_form.save
-        redirect_to trainee_training_details_confirm_path(trainee)
+        redirect_to(trainee_training_details_confirm_path(trainee))
       else
-        render :edit
+        render(:edit)
       end
     end
 

@@ -3,15 +3,15 @@
 module SystemAdmin
   class UsersController < ApplicationController
     def new
-      @user = authorize provider.users.build
+      @user = authorize(provider.users.build)
     end
 
     def create
-      @user = authorize provider.users.build(user_params)
+      @user = authorize(provider.users.build(user_params))
       if @user.save
-        redirect_to provider_path(provider)
+        redirect_to(provider_path(provider))
       else
-        render :new
+        render(:new)
       end
     end
 

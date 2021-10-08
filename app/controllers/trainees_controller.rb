@@ -8,7 +8,7 @@ class TraineesController < ApplicationController
   include TraineeHelper
 
   def index
-    return redirect_to trainees_path(filter_params) if current_page_exceeds_total_pages?
+    return redirect_to(trainees_path(filter_params)) if current_page_exceeds_total_pages?
 
     @total_trainees_count = filtered_trainees.length
 
@@ -24,16 +24,16 @@ class TraineesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render json: json_response }
-      format.csv { send_data data_export.data, filename: data_export.filename, disposition: :attachment }
+      format.js { render(json: json_response) }
+      format.csv { send_data(data_export.data, filename: data_export.filename, disposition: :attachment) }
     end
   end
 
   def show
-    authorize trainee
+    authorize(trainee)
     clear_form_stash(trainee)
     page_tracker.save_as_origin!
-    render layout: "trainee_record"
+    render(layout: "trainee_record")
   end
 
   def new
@@ -43,23 +43,23 @@ class TraineesController < ApplicationController
 
   def create
     if trainee_params[:training_route] == "other"
-      redirect_to trainees_not_supported_route_path
+      redirect_to(trainees_not_supported_route_path)
     else
-      authorize @trainee = Trainee.new(trainee_params.merge(provider_id: current_user.provider_id))
+      authorize(@trainee = Trainee.new(trainee_params.merge(provider_id: current_user.provider_id)))
       trainee.set_early_years_course_details
       if trainee.save
-        redirect_to review_draft_trainee_path(trainee)
+        redirect_to(review_draft_trainee_path(trainee))
       else
-        render :new
+        render(:new)
       end
     end
   end
 
   def destroy
-    authorize trainee
+    authorize(trainee)
     trainee.destroy!
     flash[:success] = "Draft deleted"
-    redirect_to trainees_path
+    redirect_to(trainees_path)
   end
 
 private

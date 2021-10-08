@@ -13,9 +13,9 @@ module Trainees
         @disclosure_form = Diversities::DisclosureForm.new(trainee, params: disclosure_params, user: current_user)
 
         if @disclosure_form.stash_or_save!
-          redirect_to step_wizard.next_step
+          redirect_to(step_wizard.next_step)
         else
-          render :edit
+          render(:edit)
         end
       end
 
@@ -39,7 +39,7 @@ module Trainees
         return unless trainee.diversity_disclosed?
         return if user_came_from_backlink?
 
-        redirect_to step_wizard.start_point if step_wizard.start_point.present?
+        redirect_to(step_wizard.start_point) if step_wizard.start_point.present?
       end
 
       def authorize_trainee

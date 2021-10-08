@@ -12,9 +12,9 @@ module Trainees
       @outcome_form = OutcomeDateForm.new(trainee, params: trainee_params, user: current_user)
 
       if @outcome_form.stash
-        redirect_to confirm_trainee_outcome_details_path(trainee)
+        redirect_to(confirm_trainee_outcome_details_path(trainee))
       else
-        render :edit
+        render(:edit)
       end
     end
 

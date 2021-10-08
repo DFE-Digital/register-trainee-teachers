@@ -18,9 +18,9 @@ module Trainees
                                                                user: current_user)
 
       if @language_specialisms_form.stash_or_save!
-        redirect_to publish_course_next_path
+        redirect_to(publish_course_next_path)
       else
-        render :edit
+        render(:edit)
       end
     end
 
@@ -31,7 +31,7 @@ module Trainees
         language_specialisms: subject_specialisms[:course_subject_one],
       }).stash_or_save!
 
-      redirect_to publish_course_next_path
+      redirect_to(publish_course_next_path)
     end
 
     def course_has_one_language_specialism?
