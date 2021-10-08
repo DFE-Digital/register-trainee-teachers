@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :hpitt do
-  desc "imports a csv of trainees from hoppit"
+  desc "imports a csv of trainees from hppit"
   task :import, %i[csv_path] => [:environment] do |_, args|
     csv = CSV.read(args.csv_path, headers: true, encoding: "ISO-8859-1")
     error_rows = []
