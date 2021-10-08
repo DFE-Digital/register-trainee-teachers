@@ -3,7 +3,6 @@
 class AddAndRemoveColumnsToCourses < ActiveRecord::Migration[6.1]
   def change
     # Rubocop didn't support the "type" option at time of writing, hence the need to disable it
-    # rubocop:disable Rails/ReversibleMigration
     change_table :courses, bulk: true do |t|
       t.remove :provider_id, type: :bigint
       t.remove :age_range, type: :integer
@@ -16,6 +15,5 @@ class AddAndRemoveColumnsToCourses < ActiveRecord::Migration[6.1]
 
       t.index :code, unique: true
     end
-    # rubocop:enable Rails/ReversibleMigration
   end
 end
