@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: Flesh out - this is just a placeholder
 class PlacementDetailForm
   include ActiveModel::Model
 

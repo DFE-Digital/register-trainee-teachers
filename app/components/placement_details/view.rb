@@ -15,7 +15,6 @@ module PlacementDetails
       I18n.t("components.placement_detail.title")
     end
 
-    # TODO: Render the names of the trainee's placements, if any.
     def placements
       @not_provided_copy
     end
