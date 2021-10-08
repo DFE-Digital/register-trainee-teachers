@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "opt-in-undergrad end-to-end journey", feature_show_funding: true, type: :feature do
+feature "opt-in-undergrad end-to-end journey", type: :feature do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.opt_in_undergrad": true do

@@ -128,7 +128,7 @@ module Dttp
       end
 
       def training_initiative_params
-        return {} unless send_funding_to_dttp? && dttp_recognised_initiative?
+        return {} unless dttp_recognised_initiative?
 
         {
           "dfe_Initiative1Id@odata.bind" => "/dfe_initiatives(#{training_initiative_id(trainee.training_initiative)})",
@@ -136,8 +136,6 @@ module Dttp
       end
 
       def funding_params
-        return {} unless send_funding_to_dttp?
-
         if trainee.applying_for_bursary || trainee.applying_for_scholarship
           return {
             "dfe_allocatedplace" => ALLOCATED_PLACE,
@@ -171,10 +169,6 @@ module Dttp
         {
           "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{course_study_mode_id(trainee.study_mode)})",
         }
-      end
-
-      def send_funding_to_dttp?
-        FeatureService.enabled?(:show_funding) && FeatureService.enabled?(:send_funding_to_dttp)
       end
 
       def academic_year

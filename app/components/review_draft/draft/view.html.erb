@@ -33,9 +33,7 @@
         component.row(**row_helper(@trainee, :school_details))
       end
 
-      if FeatureService.enabled?(:show_funding)
-        component.row(**row_helper(@trainee, funding_options(@trainee)))
-      end
+      component.row(**row_helper(@trainee, funding_options(@trainee)))
 
       # This will be uncommented once the form is built
       # if @trainee.requires_placement_details?
