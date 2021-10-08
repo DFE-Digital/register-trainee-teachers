@@ -12,7 +12,7 @@
     ) %>
   </p>
 
-  <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
+  <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.tiered.title"), size: "m" }) do %>
 
     <% Trainee.bursary_tiers.keys.each do |tier_key| %>
       <%= f.govuk_radio_button(
@@ -30,8 +30,8 @@
       :funding_type,
       f.object.class::NONE_TYPE,
       {
-        hint: { text: t("views.forms.funding.funding_type.none.hint") },
-        label: { text: t("views.forms.funding.funding_type.none.label") },
+        hint: { text: t("views.forms.funding.funding_type.bursary.none.hint") },
+        label: { text: t("views.forms.funding.funding_type.bursary.none.label") },
       }.merge(@trainee.applying_for_bursary.nil? ? { checked: false } : {} )
     ) %>
   <% end %>

@@ -1,0 +1,39 @@
+<%= register_form_with(model: @bursary_form, url: trainee_funding_bursary_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.grants.edit") %></h1>
+  <p class="govuk-body">
+    <%= t(
+      (@trainee.early_years_route? ? "views.forms.funding.bursaries.grant.early_years_description" : "views.forms.funding.bursaries.grant.description"),
+      amount: format_currency(@amount),
+      subject: @subject,
+      training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
+    ) %>
+  </p>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(
+      t("views.forms.funding.bursaries.guidance_link_text"),
+      t("views.forms.funding.bursaries.guidance_url"),
+      { target: "_blank", rel: "noreferrer noopener" }
+    ) %>
+  </p>
+
+  <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.grant.title"), size: "m" }) do %>
+      <%= f.govuk_radio_button(
+        :funding_type,
+        FUNDING_TYPE_ENUMS[:grant],
+        label: { text: t("views.forms.funding.funding_type.grant.label") },
+        link_errors: true,
+      ) %>
+
+      <%= f.govuk_radio_button(
+        :funding_type,
+        f.object.class::NONE_TYPE,
+        hint: { text: t("views.forms.funding.funding_type.grant.none.hint") },
+        label: { text: t("views.forms.funding.funding_type.grant.none.label") },
+      ) %>
+  <% end %>
+
+  <%= f.govuk_submit %>
+<% end %>

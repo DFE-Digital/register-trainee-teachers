@@ -35,6 +35,7 @@ en:
       funding_method: &funding_method Funding method
       bursary_applied_for: Bursary applied for
       scholarship_applied_for: Scholarship applied for
+      grant_applied_for: Grant applied for
       no_bursary_applied_for: Not funded
       no_funding_available: Not applicable
       tiered_bursary_applied_for:
@@ -296,6 +297,8 @@ en:
             edit: Training initiatives
           bursaries:
             edit: Funding
+          grants:
+            edit: Grant funding
         language_specialisms:
           edit: Choose subject specialisms
         subject_specialisms:
@@ -620,8 +623,14 @@ en:
           non_tiered:
             description: The course you have selected has a bursary available of %{amount} for %{subject}. You need to check if the trainee is eligible for this bursary.
             early_years_description: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary."
+            title: Are you applying for a bursary for this trainee?
+          grant:
+            description: The course you have selected has a grant available of %{amount} for %{subject}. You need to check if the trainee is eligible for this grant.
+            early_years_description: "%{training_route} has a grant available of %{amount}. You need to check if the trainee is eligible for this grant."
+            title: Are you applying for a grant for this trainee?
           tiered:
             description: Early years (postgrad) has a bursary available. You need to check if the trainee is eligible for this bursary.
+            title: Are you applying for a bursary for this trainee?
             tier_one:
               label: Yes - Tier 1 (£5,000)
               hint: First-class honours degree, doctoral degree, medical masters (distinction)
@@ -633,16 +642,20 @@ en:
               hint: 2:2 honours degree
           guidance_link_text: "Funding: initial teacher training (ITT), academic year 2021 to 2022 (opens in new tab)"
           guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-2021-to-2022
-          title: Are you applying for a bursary for this trainee?
         funding_type:
           bursary:
             label: Yes, apply for a bursary
+            none:
+              label: No, do not apply for a bursary
+              hint: For example, the trainee is not eligible or is self-funded
           scholarship:
             label: No, the trainee has applied for a scholarship
             hint: "%{amount} estimated scholarship"
-          none:
-            label: No, do not apply for a bursary
-            hint: For example, the trainee is not eligible or is self-funded
+          grant:
+            label: Yes, apply for a grant
+            none:
+              label: No, do not apply for a grant
+              hint: For example, the trainee is not eligible or is self-funded
   pages:
     request_an_account:
       inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,

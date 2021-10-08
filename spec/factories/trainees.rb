@@ -394,6 +394,16 @@ FactoryBot.define do
       end
     end
 
+    trait :with_grant do
+      applying_for_grant { true }
+
+      after(:create) do |trainee, _|
+        funding_method = create(:funding_method, :grant, :with_subjects, training_route: :provider_led_postgrad)
+        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.training_route = funding_method.training_route
+      end
+    end
+
     trait :with_tiered_bursary do
       applying_for_bursary { true }
       bursary_tier { BURSARY_TIER_ENUMS[:tier_one] }

@@ -3,10 +3,11 @@
 module Funding
   class BursaryForm < TraineeForm
     FIELDS = %i[
-      applying_for_scholarship
+      funding_type
       applying_for_bursary
       bursary_tier
-      funding_type
+      applying_for_scholarship
+      applying_for_grant
     ].freeze
 
     NON_TRAINEE_FIELDS = %i[
@@ -21,11 +22,22 @@ module Funding
     validates :funding_type, inclusion: { in: FUNDING_TYPES }
 
     delegate :can_apply_for_scholarship?, :can_apply_for_tiered_bursary?,
+             :can_apply_for_grant?, :grant_amount,
              :scholarship_amount, to: :funding_manager
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)
       params = add_fields_from_params(params)
       super(trainee, params: params, user: user, store: store)
+    end
+
+    def view_partial
+      if can_apply_for_grant?
+        "grant_form"
+      elsif can_apply_for_tiered_bursary?
+        "tiered_bursary_form"
+      else
+        "non_tiered_bursary_form"
+      end
     end
 
   private
@@ -45,11 +57,15 @@ module Funding
       opts[:funding_type] =
         if trainee.bursary_tier.present?
           trainee.bursary_tier
-        elsif trainee.applying_for_bursary
+        elsif trainee.applying_for_bursary?
           FUNDING_TYPE_ENUMS[:bursary]
-        elsif trainee.applying_for_scholarship
+        elsif trainee.applying_for_scholarship?
           FUNDING_TYPE_ENUMS[:scholarship]
-        elsif (trainee.applying_for_bursary == false) || (trainee.applying_for_scholarship == false)
+        elsif trainee.applying_for_grant?
+          FUNDING_TYPE_ENUMS[:grant]
+        elsif (trainee.applying_for_bursary == false) ||
+          (trainee.applying_for_scholarship == false) ||
+          (trainee.applying_for_grant == false)
           NONE_TYPE
         end
       opts
@@ -61,18 +77,27 @@ module Funding
         opts[:bursary_tier] = opts[:funding_type]
         opts[:applying_for_bursary] = true
         opts[:applying_for_scholarship] = false
+        opts[:applying_for_grant] = false
       when FUNDING_TYPE_ENUMS[:bursary]
         opts[:bursary_tier] = nil
         opts[:applying_for_bursary] = true
         opts[:applying_for_scholarship] = false
+        opts[:applying_for_grant] = false
       when FUNDING_TYPE_ENUMS[:scholarship]
         opts[:bursary_tier] = nil
         opts[:applying_for_bursary] = false
         opts[:applying_for_scholarship] = true
+        opts[:applying_for_grant] = false
+      when FUNDING_TYPE_ENUMS[:grant]
+        opts[:bursary_tier] = nil
+        opts[:applying_for_bursary] = false
+        opts[:applying_for_scholarship] = false
+        opts[:applying_for_grant] = true
       when NONE_TYPE
         opts[:bursary_tier] = nil
         opts[:applying_for_bursary] = false
         opts[:applying_for_scholarship] = false
+        opts[:applying_for_grant] = false
       end
       opts
     end

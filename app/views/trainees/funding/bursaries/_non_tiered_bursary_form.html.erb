@@ -19,7 +19,7 @@
     ) %>
   </p>
 
-  <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.title"), size: "m" }) do %>
+  <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.non_tiered.title"), size: "m" }) do %>
       <%= f.govuk_radio_button(
         :funding_type,
         FUNDING_TYPE_ENUMS[:bursary],
@@ -41,8 +41,8 @@
       <%= f.govuk_radio_button(
         :funding_type,
         f.object.class::NONE_TYPE,
-        hint: { text: t("views.forms.funding.funding_type.none.hint") },
-        label: { text: t("views.forms.funding.funding_type.none.label") },
+        hint: { text: t("views.forms.funding.funding_type.bursary.none.hint") },
+        label: { text: t("views.forms.funding.funding_type.bursary.none.label") },
       ) %>
   <% end %>
 
