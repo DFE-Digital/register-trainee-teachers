@@ -59,7 +59,7 @@ module Schools
     end
 
     def school_id
-      raise NotImplementedError
+      raise(NotImplementedError)
     end
 
     def fields_to_ignore_before_save

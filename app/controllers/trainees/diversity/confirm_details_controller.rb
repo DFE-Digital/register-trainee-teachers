@@ -27,11 +27,11 @@ module Trainees
 
           flash[:success] = "Trainee diversity updated"
 
-          redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
+          redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
         else
           @confirmation_component = ::Diversity::View.new(data_model: data_model, has_errors: true)
 
-          render :show
+          render(:show)
         end
       end
 
@@ -64,7 +64,7 @@ module Trainees
 
       def save_data_and_bypass_confirmation_page
         form.save!
-        redirect_to edit_trainee_apply_applications_trainee_data_path(trainee)
+        redirect_to(edit_trainee_apply_applications_trainee_data_path(trainee))
       end
 
       def draft_apply_application?

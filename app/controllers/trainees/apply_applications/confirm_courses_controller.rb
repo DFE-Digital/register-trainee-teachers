@@ -20,9 +20,9 @@ module Trainees
 
         if @confirm_course_form.save
           clear_form_stash(trainee)
-          redirect_to review_draft_trainee_path(trainee)
+          redirect_to(review_draft_trainee_path(trainee))
         else
-          render :show
+          render(:show)
         end
       end
 
@@ -33,7 +33,7 @@ module Trainees
       end
 
       def redirect_to_manual_confirm_page
-        redirect_to trainee_course_details_confirm_path(trainee)
+        redirect_to(trainee_course_details_confirm_path(trainee))
       end
 
       def set_course

@@ -6,7 +6,7 @@ module Trainees
 
     def show
       @timeline_events = trainee.timeline
-      render layout: "trainee_record"
+      render(layout: "trainee_record")
     end
 
   private

@@ -18,5 +18,5 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.acronym "DfE"
+  inflect.acronym("DfE")
 end

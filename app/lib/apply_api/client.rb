@@ -20,7 +20,7 @@ module ApplyApi
 
       log_request!(response)
 
-      raise HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}" if response.code != GET_SUCCESS
+      raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}") if response.code != GET_SUCCESS
 
       response
     end

@@ -4,7 +4,7 @@ module Trainees
   class NotSupportedRoutesController < ApplicationController
     def index
       find_trainee
-      render "trainees/not_supported_route"
+      render("trainees/not_supported_route")
     end
 
   private

@@ -20,7 +20,7 @@ module Trainees
 
           redirect_to(edit_trainee_publish_course_details_path(trainee))
         else
-          render :edit
+          render(:edit)
         end
       end
 

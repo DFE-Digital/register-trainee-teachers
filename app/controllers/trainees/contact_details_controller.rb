@@ -16,9 +16,9 @@ module Trainees
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @contact_details_form.public_send(save_strategy)
-        redirect_to relevant_redirect_path
+        redirect_to(relevant_redirect_path)
       else
-        render :edit
+        render(:edit)
       end
     end
 

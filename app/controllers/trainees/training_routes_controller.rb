@@ -9,7 +9,7 @@ module Trainees
 
     def update
       if training_route == "other"
-        redirect_to trainees_not_supported_route_path(trainee_id: trainee)
+        redirect_to(trainees_not_supported_route_path(trainee_id: trainee))
       else
         trainee.update_training_route!(training_route)
         redirect_url
@@ -19,7 +19,7 @@ module Trainees
   private
 
     def redirect_url
-      redirect_to page_tracker.last_origin_page_path || trainee_path(trainee)
+      redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
     end
 
     def trainee_params

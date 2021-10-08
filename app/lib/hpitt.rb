@@ -135,14 +135,14 @@ module HPITT
         constants = AgeRange.constants
         Set.new.tap do |set|
           constants.each do |constant|
-            set.add AgeRange.const_get(constant)
+            set.add(AgeRange.const_get(constant))
           end
         end
       end
 
     def to_age_range(raw_string)
       raw_string.scan(/\d+/).map(&:to_i).tap do |age_range|
-        raise Error, "Course age range not recognised" if !ALL_AGE_RANGES.include? age_range
+        raise(Error, "Course age range not recognised") if !ALL_AGE_RANGES.include?(age_range)
       end
     end
 
@@ -153,11 +153,11 @@ module HPITT
 
       case potential_subjects.count
       when 0
-        raise Error, "Course subject not recognised: #{raw_string}"
+        raise(Error, "Course subject not recognised: #{raw_string}")
       when 1
         potential_subjects.keys.first
       else
-        raise Error, "Course subject ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Course subject ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -166,8 +166,8 @@ module HPITT
     end
 
     def to_degree_grade(raw_string)
-      Dttp::CodeSets::Grades::MAPPING.keys.find { |mapping| mapping.casecmp? raw_string }.tap do |grade|
-        raise Error, "Degree grade not recognised" if grade.blank?
+      Dttp::CodeSets::Grades::MAPPING.keys.find { |mapping| mapping.casecmp?(raw_string) }.tap do |grade|
+        raise(Error, "Degree grade not recognised") if grade.blank?
       end
     end
 
@@ -178,11 +178,11 @@ module HPITT
 
       case potential_subjects.count
       when 0
-        raise Error, "Degree subject not recognised: #{raw_string}"
+        raise(Error, "Degree subject not recognised: #{raw_string}")
       when 1
         potential_subjects.keys.first
       else
-        raise Error, "Degree subject ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Degree subject ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -200,7 +200,7 @@ module HPITT
       when 1
         potential_institutions.keys.first
       else
-        raise Error, "Degree institution ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Degree institution ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -211,11 +211,11 @@ module HPITT
 
       case potential_degree_types.count
       when 0
-        raise Error, "Degree type not recognised: #{raw_string}"
+        raise(Error, "Degree type not recognised: #{raw_string}")
       when 1
         potential_degree_types.keys.first
       else
-        raise Error, "Degree type ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Degree type ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -223,7 +223,7 @@ module HPITT
       return NON_ENIC if raw_string.blank?
 
       raw_string.tap do
-        raise Error, "ENIC equivalent not recognised" if !ENIC_NON_UK.include? raw_string
+        raise(Error, "ENIC equivalent not recognised") if !ENIC_NON_UK.include?(raw_string)
       end
     end
 
@@ -239,7 +239,7 @@ module HPITT
 
     def to_ethnic_group(raw_string)
       HPITT::CodeSets::Ethnicities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase].tap do |ethnic_group|
-        raise Error, "Ethnic group not recognised: #{raw_string}" if ethnic_group.nil?
+        raise(Error, "Ethnic group not recognised: #{raw_string}") if ethnic_group.nil?
       end
     end
 
@@ -272,7 +272,7 @@ module HPITT
       .downcase
       .gsub(/\(.*\)/, "")
       .split
-      .reject { |word| REJECTED_WORD_LIST.include? word }
+      .reject { |word| REJECTED_WORD_LIST.include?(word) }
       .join(" ")
       .gsub(/[^\w]/, "")
     end

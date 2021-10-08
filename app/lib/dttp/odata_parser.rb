@@ -23,8 +23,8 @@ module Dttp
         entity_id = response.headers["odata-entityid"]
 
         if entity_id.blank?
-          raise DttpIdNotReturnedError,
-                "failed to retrieve the entity ID from #{response.headers} with #{response.body} for trainee: #{trainee_id}"
+          raise(DttpIdNotReturnedError,
+                "failed to retrieve the entity ID from #{response.headers} with #{response.body} for trainee: #{trainee_id}")
         end
 
         extract_uuid(entity_id)
@@ -33,7 +33,7 @@ module Dttp
       def extract_uuid(string_source)
         uuid = string_source.match(/#{UUID_PATTERN}/).to_s
 
-        raise DttpIdNotReturnedError, "failed to extract UUID from #{string_source} for trainee: #{trainee.id}" if uuid.blank?
+        raise(DttpIdNotReturnedError, "failed to extract UUID from #{string_source} for trainee: #{trainee.id}") if uuid.blank?
 
         uuid
       end

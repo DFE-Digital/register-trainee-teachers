@@ -19,9 +19,9 @@ module Trainees
         @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
 
         if @trainee_data_form.save
-          redirect_to trainee_path(trainee)
+          redirect_to(trainee_path(trainee))
         else
-          render :edit
+          render(:edit)
         end
       end
 
@@ -44,7 +44,7 @@ module Trainees
       end
 
       def require_review_acknowledgement
-        redirect_to review_draft_trainee_path(trainee) unless marked_as_reviewed?
+        redirect_to(review_draft_trainee_path(trainee)) unless marked_as_reviewed?
       end
 
       def marked_as_reviewed?

@@ -22,7 +22,7 @@ class TrainingRouteManager
   end
 
   def requires_itt_start_date?
-    enabled? :pg_teaching_apprenticeship
+    enabled?(:pg_teaching_apprenticeship)
   end
 
   def award_type

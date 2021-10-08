@@ -12,9 +12,9 @@ module Trainees
       @course_education_phase_form = ::CourseEducationPhaseForm.new(trainee, params: course_params, user: current_user)
 
       if @course_education_phase_form.stash_or_save!
-        redirect_to edit_trainee_course_details_path
+        redirect_to(edit_trainee_course_details_path)
       else
-        render :edit
+        render(:edit)
       end
     end
 

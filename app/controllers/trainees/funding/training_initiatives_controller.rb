@@ -16,13 +16,13 @@ module Trainees
 
         if @training_initiatives_form.public_send(save_strategy)
           if funding_manager.can_apply_for_bursary?
-            redirect_to edit_trainee_funding_bursary_path(trainee)
+            redirect_to(edit_trainee_funding_bursary_path(trainee))
           else
             trainee.update!(applying_for_bursary: false)
-            redirect_to trainee_funding_confirm_path(trainee)
+            redirect_to(trainee_funding_confirm_path(trainee))
           end
         else
-          render :edit
+          render(:edit)
         end
       end
 

@@ -24,7 +24,7 @@ module Trainees
         return
       end
 
-      raise MissingCourseError, "Cannot find course with code: #{@raw_course['course_code']}" if course.nil? # Courses can be missing in non-prod environments
+      raise(MissingCourseError, "Cannot find course with code: #{@raw_course['course_code']}") if course.nil? # Courses can be missing in non-prod environments
 
       trainee.save!
       save_personal_details!
@@ -80,7 +80,7 @@ module Trainees
 
       return if invalid_nationalities.blank?
 
-      Sentry.capture_message "Cannot map nationality from ApplyApplication id: #{application.id}, code: #{invalid_nationalities.join(', ')}"
+      Sentry.capture_message("Cannot map nationality from ApplyApplication id: #{application.id}, code: #{invalid_nationalities.join(', ')}")
     end
 
     def address

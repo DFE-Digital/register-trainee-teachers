@@ -19,15 +19,15 @@ module Trainees
       @employing_school_form = Schools::EmployingSchoolForm.new(trainee, params: trainee_params, user: current_user)
 
       if @employing_school_form.school_not_selected? && @employing_school_form.valid?
-        return redirect_to trainee_employing_schools_path(@trainee, query: query)
+        return redirect_to(trainee_employing_schools_path(@trainee, query: query))
       end
 
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @employing_school_form.public_send(save_strategy)
-        redirect_to trainee_schools_confirm_path(trainee)
+        redirect_to(trainee_schools_confirm_path(trainee))
       else
-        render index_or_edit_page
+        render(index_or_edit_page)
       end
     end
 

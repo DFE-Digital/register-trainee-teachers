@@ -17,9 +17,9 @@ module Trainees
         )
 
         if @ethnic_group_form.stash_or_save!
-          redirect_to relevant_path
+          redirect_to(relevant_path)
         else
-          render :edit
+          render(:edit)
         end
       end
 

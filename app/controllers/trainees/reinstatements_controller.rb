@@ -14,9 +14,9 @@ module Trainees
       @reinstatement_form = ReinstatementForm.new(trainee, params: trainee_params, user: current_user)
 
       if @reinstatement_form.stash
-        redirect_to trainee_confirm_reinstatement_path(@trainee)
+        redirect_to(trainee_confirm_reinstatement_path(@trainee))
       else
-        render :show
+        render(:show)
       end
     end
 

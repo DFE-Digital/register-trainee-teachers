@@ -7,7 +7,7 @@ module Api
 
       @school_search = SchoolSearch.call(args).schools
 
-      render json: { schools: @school_search.as_json(only: %i[id name urn town postcode]) }
+      render(json: { schools: @school_search.as_json(only: %i[id name urn town postcode]) })
     end
 
   private

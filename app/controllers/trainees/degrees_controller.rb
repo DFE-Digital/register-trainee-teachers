@@ -17,9 +17,9 @@ module Trainees
       @degree_form = @degrees_form.build_degree(degree_params, autocomplete_params)
 
       if @degree_form.save_or_stash
-        redirect_to redirect_path
+        redirect_to(redirect_path)
       else
-        render :new
+        render(:new)
       end
     end
 
@@ -30,9 +30,9 @@ module Trainees
       @degree_form.assign_attributes(autocomplete_params)
 
       if @degree_form.save_or_stash
-        redirect_to relevant_redirect_path
+        redirect_to(relevant_redirect_path)
       else
-        render :edit
+        render(:edit)
       end
     end
 
@@ -41,7 +41,7 @@ module Trainees
 
       flash[:success] = "Trainee degree deleted"
 
-      redirect_to page_tracker.last_origin_page_path
+      redirect_to(page_tracker.last_origin_page_path)
     end
 
   private

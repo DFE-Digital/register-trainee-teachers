@@ -49,7 +49,7 @@ module Dttp
 
     def continue_polling?
       if trainee.recommended_for_award_at.nil?
-        raise TraineeAttributeError, "Trainee#recommended_for_award_at is nil - it should be timestamped (id: #{trainee.id})"
+        raise(TraineeAttributeError, "Trainee#recommended_for_award_at is nil - it should be timestamped (id: #{trainee.id})")
       end
 
       Time.zone.now.utc < timeout_after

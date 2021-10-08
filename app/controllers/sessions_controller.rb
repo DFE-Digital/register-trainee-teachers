@@ -10,15 +10,15 @@ class SessionsController < ApplicationController
       DfESignInUsers::Update.call(user: current_user, dfe_sign_in_user: dfe_sign_in_user)
       SendWelcomeEmailService.call(current_user: current_user)
 
-      redirect_to session.delete(:requested_path) || root_path
+      redirect_to(session.delete(:requested_path) || root_path)
     else
       session.delete(:requested_path)
       DfESignInUser.end_session!(session)
-      redirect_to sign_in_user_not_found_path
+      redirect_to(sign_in_user_not_found_path)
     end
   end
 
   def signout
-    redirect_to root_path
+    redirect_to(root_path)
   end
 end

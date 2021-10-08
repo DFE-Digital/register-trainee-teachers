@@ -7,12 +7,12 @@ module SystemAdmin
     end
 
     def show
-      @provider = authorize Dttp::Provider.find(params[:id])
+      @provider = authorize(Dttp::Provider.find(params[:id]))
     end
 
     def create
-      @provider = authorize Provider.create!(provider_params)
-      redirect_to provider_path(@provider)
+      @provider = authorize(Provider.create!(provider_params))
+      redirect_to(provider_path(@provider))
     end
 
   private
@@ -22,7 +22,7 @@ module SystemAdmin
     end
 
     def find_providers
-      authorize ::Dttp::Provider.left_outer_joins(:provider).order(:name)
+      authorize(::Dttp::Provider.left_outer_joins(:provider).order(:name))
     end
 
     def filter_params

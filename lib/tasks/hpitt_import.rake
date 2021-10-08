@@ -7,12 +7,12 @@ namespace :hpitt do
     error_rows = []
 
     csv.each_with_index do |row, i|
-      error_row = HPITT.import_row row
+      error_row = HPITT.import_row(row)
       if error_row.present?
         error_rows << error_row
       end
     rescue StandardError => e
-      puts "error on row #{i + 1}: #{e.message}"
+      puts("error on row #{i + 1}: #{e.message}")
       Sentry.capture_exception(e)
     end
   end

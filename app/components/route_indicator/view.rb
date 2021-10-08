@@ -51,7 +51,7 @@ module RouteIndicator
     end
 
     def training_route_link
-      govuk_link_to training_route.downcase, edit_trainee_training_route_path(trainee)
+      govuk_link_to(training_route.downcase, edit_trainee_training_route_path(trainee))
     end
 
     def course_name

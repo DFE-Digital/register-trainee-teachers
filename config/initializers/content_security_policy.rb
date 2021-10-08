@@ -32,16 +32,16 @@
 # Rails.application.config.content_security_policy_report_only = true
 
 Rails.application.config.content_security_policy do |policy|
-  policy.default_src :self
-  policy.connect_src :self,
+  policy.default_src(:self)
+  policy.connect_src(:self,
                      "https://*.visualstudio.com",
-                     "https://www.google-analytics.com"
-  policy.img_src     :self,
-                     "https://www.google-analytics.com"
-  policy.object_src  :none
-  policy.script_src  :self,
-                     "'unsafe-inline'",
-                     "https://www.googletagmanager.com",
-                     "https://www.google-analytics.com",
-                     "https://az416426.vo.msecnd.net" # needed for App Insights
+                     "https://www.google-analytics.com")
+  policy.img_src(:self,
+                 "https://www.google-analytics.com")
+  policy.object_src(:none)
+  policy.script_src(:self,
+                    "'unsafe-inline'",
+                    "https://www.googletagmanager.com",
+                    "https://www.google-analytics.com",
+                    "https://az416426.vo.msecnd.net") # needed for App Insights
 end

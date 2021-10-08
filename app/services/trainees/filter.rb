@@ -32,7 +32,7 @@ module Trainees
     def record_source(trainees, record_source)
       return trainees if record_source.blank? || record_source.size > 1
 
-      return trainees.with_manual_application if record_source.include? "manual"
+      return trainees.with_manual_application if record_source.include?("manual")
 
       trainees.with_apply_application
     end
@@ -50,7 +50,7 @@ module Trainees
 
       award_states = []
       states.each do |state|
-        award_states << non_award_states.delete(state) if TraineeFilter::AWARD_STATES.include? state
+        award_states << non_award_states.delete(state) if TraineeFilter::AWARD_STATES.include?(state)
       end
 
       trainees.where(state: non_award_states).or(trainees.with_award_states(*award_states))

@@ -64,7 +64,7 @@ class FindEmptyTrainees
   attr_reader :trainees, :ids_only, :forms
 
   def initialize(trainees: Trainee.all, ids_only: false)
-    raise FieldsDoNotExistError unless trainee_fields_exist?
+    raise(FieldsDoNotExistError) unless trainee_fields_exist?
 
     @trainees = trainees
     @ids_only = ids_only

@@ -19,10 +19,10 @@ module Trainees
           @publish_course_details_form.process_manual_entry!
         end
 
-        redirect_to next_step_path
+        redirect_to(next_step_path)
       else
         @courses = trainee.available_courses
-        render :edit
+        render(:edit)
       end
     end
 

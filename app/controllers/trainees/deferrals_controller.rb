@@ -14,9 +14,9 @@ module Trainees
       @deferral_form = DeferralForm.new(trainee, params: trainee_params, user: current_user)
 
       if @deferral_form.stash
-        redirect_to trainee_confirm_deferral_path(trainee)
+        redirect_to(trainee_confirm_deferral_path(trainee))
       else
-        render :show
+        render(:show)
       end
     end
 

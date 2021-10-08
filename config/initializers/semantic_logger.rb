@@ -52,7 +52,7 @@ private
   end
 
   def method_is_post_or_put?
-    hash.dig(:payload, :method).in? %w[PUT POST]
+    hash.dig(:payload, :method).in?(%w[PUT POST])
   end
 end
 

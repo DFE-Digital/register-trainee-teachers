@@ -22,7 +22,7 @@ module Trainees
     def show
       page_tracker.save_as_origin!
       clear_form_stash(trainee)
-      render layout: "trainee_record"
+      render(layout: "trainee_record")
     end
 
     def edit
@@ -34,10 +34,10 @@ module Trainees
       save_strategy = trainee.draft? ? :save! : :stash
 
       if personal_detail.public_send(save_strategy)
-        redirect_to relevant_redirect_path
+        redirect_to(relevant_redirect_path)
       else
         @personal_detail_form = personal_detail
-        render :edit
+        render(:edit)
       end
     end
 

@@ -28,7 +28,7 @@ module Dttp
     attr_reader :request_uri
 
     def default_path
-      raise NotImplementedError("#default_path must be implemented")
+      raise(NotImplementedError("#default_path must be implemented"))
     end
 
     def response_body

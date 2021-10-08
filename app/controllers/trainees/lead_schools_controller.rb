@@ -19,16 +19,16 @@ module Trainees
       @lead_school_form = Schools::LeadSchoolForm.new(trainee, params: trainee_params, user: current_user)
 
       if @lead_school_form.school_not_selected? && @lead_school_form.valid?
-        return redirect_to trainee_lead_schools_path(@trainee, query: query)
+        return redirect_to(trainee_lead_schools_path(@trainee, query: query))
       end
 
       save_strategy = trainee.draft? ? :save! : :stash
 
       if @lead_school_form.public_send(save_strategy)
-        redirect_to step_wizard.next_step
+        redirect_to(step_wizard.next_step)
       else
         @school_search = SchoolSearch.call(query: params[:query], lead_schools_only: true)
-        render index_or_edit_page
+        render(index_or_edit_page)
       end
     end
 
@@ -66,7 +66,7 @@ module Trainees
       return if trainee.lead_school_id.blank?
       return if user_came_from_backlink?
 
-      redirect_to step_wizard.start_point if step_wizard.start_point.present?
+      redirect_to(step_wizard.start_point) if step_wizard.start_point.present?
     end
   end
 end
