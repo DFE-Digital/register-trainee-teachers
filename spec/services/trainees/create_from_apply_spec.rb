@@ -88,7 +88,7 @@ module Trainees
     end
 
     context "course doesn't exist" do
-      let(:course_uuid) { "some-uuid" }
+      let(:course_uuid) { "c6b9f9f0-f9f9-4f0f-b9e2-f9f9f9f9f9f9" }
 
       it "raises a MissingCourseError" do
         expect {
