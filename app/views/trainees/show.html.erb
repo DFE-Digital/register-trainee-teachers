@@ -22,8 +22,6 @@
   </div>
 <% end %>
 
-<% if FeatureService.enabled?(:show_funding) %>
-  <div class="funding">
-    <%= render Funding::View.new(data_model: @trainee) %>
-  </div>
-<% end %>
+<div class="funding">
+  <%= render Funding::View.new(data_model: @trainee) %>
+</div>

@@ -24,6 +24,4 @@
   <%= render Sections::View.new(trainee: @trainee, form: @form, section: :schools) %>
 <% end %>
 
-<% if FeatureService.enabled?(:show_funding) %>
-  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding) %>
-<% end %>
+<%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding) %>

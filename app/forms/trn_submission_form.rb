@@ -19,7 +19,7 @@ class TrnSubmissionForm
   trn_validator :training_details, form: "TrainingDetailsForm"
   trn_validator :trainee_data, form: "ApplyApplications::TraineeDataForm", if: :apply_application?
   trn_validator :schools, form: "Schools::FormValidator", if: :requires_schools?
-  trn_validator :funding, form: "Funding::FormValidator", if: :funding_details_collected?
+  trn_validator :funding, form: "Funding::FormValidator"
 
   delegate :requires_schools?, :requires_degree?, :apply_application?, to: :trainee
 
@@ -42,10 +42,6 @@ class TrnSubmissionForm
     progress_keys.all? do |progress_key|
       progress_is_completed?(progress_key)
     end
-  end
-
-  def funding_details_collected?
-    FeatureService.enabled?(:show_funding)
   end
 
   def validate_degree?

@@ -54,18 +54,15 @@ module Sections
       include_examples renders_incomplete_section, :course_details, :incomplete
       include_examples renders_incomplete_section, :training_details, :incomplete
       include_examples renders_incomplete_section, :trainee_data, :incomplete
+      include_examples renders_incomplete_section, :funding, :incomplete
 
       context "requires school" do
         include_examples renders_incomplete_section, :schools, :incomplete
       end
-
-      context "when the funding flag is on", feature_show_funding: true do
-        include_examples renders_incomplete_section, :funding, :incomplete
-      end
     end
 
     context "trainee in progress" do
-      let(:trainee) { create(:trainee, :in_progress) }
+      let(:trainee) { create(:trainee, :in_progress, applying_for_bursary: false, training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach]) }
 
       # Personal details is invalid due to nationalities being missing
       include_examples renders_incomplete_section, :personal_details, :in_progress_invalid
@@ -75,23 +72,24 @@ module Sections
       include_examples renders_incomplete_section, :course_details, :in_progress_valid
       include_examples renders_incomplete_section, :training_details, :in_progress_valid
       include_examples renders_incomplete_section, :trainee_data, :in_progress_valid
+      include_examples renders_incomplete_section, :funding, :in_progress_valid
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
 
         include_examples renders_incomplete_section, :schools, :in_progress_valid
       end
-
-      context "when the funding flag is on", feature_show_funding: true do
-        let(:trainee) { create(:trainee, :in_progress, applying_for_bursary: false, training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach]) }
-
-        include_examples renders_incomplete_section, :funding, :in_progress_valid
-      end
     end
 
     context "trainee completed" do
       let(:trainee) do
-        create(:trainee, :completed, course_code: nil)
+        create(
+          :trainee,
+          :completed,
+          course_code: nil,
+          applying_for_bursary: false,
+          training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+        )
       end
 
       include_examples renders_confirmation, :personal_details
@@ -101,17 +99,12 @@ module Sections
       include_examples renders_confirmation, :course_details
       include_examples renders_confirmation, :training_details
       include_examples renders_confirmation, :trainee_data
+      include_examples renders_confirmation, :funding
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_school, :completed) }
 
         include_examples renders_confirmation, :schools
-      end
-
-      context "when the funding flag is on", feature_show_funding: true do
-        let(:trainee) { create(:trainee, :completed, applying_for_bursary: false, training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach]) }
-
-        include_examples renders_confirmation, :funding
       end
     end
 
