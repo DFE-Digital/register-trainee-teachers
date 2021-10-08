@@ -17,9 +17,7 @@ module Trainees
     def update
       @trainee_start_date_form = TraineeStartDateForm.new(trainee, params: trainee_params, user: current_user)
 
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @trainee_start_date_form.public_send(save_strategy)
+      if @trainee_start_date_form.stash_or_save!
         redirect_to(trainee_start_date_confirm_path(trainee))
       else
         render(:edit)

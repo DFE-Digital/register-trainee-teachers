@@ -22,9 +22,7 @@ module Trainees
         return redirect_to(trainee_employing_schools_path(@trainee, query: query))
       end
 
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @employing_school_form.public_send(save_strategy)
+      if @employing_school_form.stash_or_save!
         redirect_to(trainee_schools_confirm_path(trainee))
       else
         render(index_or_edit_page)

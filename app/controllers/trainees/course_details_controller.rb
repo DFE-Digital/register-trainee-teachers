@@ -26,9 +26,7 @@ module Trainees
         params: course_details_params.merge(course_date_params),
       )
 
-      save_strategy = trainee.draft? ? :save! : :stash
-
-      if @course_details_form.public_send(save_strategy)
+      if @course_details_form.stash_or_save!
         redirect_to(relevant_redirect_path)
       else
         render(:edit)
