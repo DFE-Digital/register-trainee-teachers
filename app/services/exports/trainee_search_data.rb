@@ -213,8 +213,6 @@ module Exports
     end
 
     def course_study_mode(trainee)
-      return unless trainee.respond_to?(:study_mode) #  TODO remove after trello card 2326 is merged
-
       {
         "full_time" => "Full time",
         "part_time" => "Part time",

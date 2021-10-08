@@ -13,7 +13,6 @@ module Dttp
         describe "params" do
           describe "date left" do
             it "is set to outcome_date" do
-              # TODO: this will be different for non-assessment only routes
               expect(subject["dfe_dateleft"]).to eq(trainee.outcome_date.in_time_zone.iso8601)
             end
           end

@@ -28,8 +28,6 @@ module Dttp
         attr_reader :trainee
 
         def date_left
-          # TODO: this will be different for non-assessment only routes
-          # we don't currently collect a leaving date for assessment only
           date_standards_assessed
         end
 
