@@ -13,6 +13,13 @@ RSpec.feature "Adding a degree" do
       given_i_am_on_the_review_draft_page
       then_the_degree_status_should_be(incomplete)
     end
+
+    scenario "with incomplete or invalid degrees present" do
+      given_an_invalid_degree_exists
+      given_i_am_on_the_review_draft_page
+      and_i_click_the_degree_on_the_review_draft_page
+      then_i_am_redirected_to_the_trainee_degrees_confirmation_page
+    end
   end
 
   describe "Validation before route is picked" do
@@ -119,6 +126,10 @@ RSpec.feature "Adding a degree" do
   end
 
 private
+
+  def given_an_invalid_degree_exists
+    create(:degree, :uk_degree_with_details, trainee: trainee, subject: "gibberish")
+  end
 
   def and_i_click_the_degree_on_the_review_draft_page
     review_draft_page.degree_details.link.click

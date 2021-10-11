@@ -115,7 +115,7 @@ module TaskListHelper
       degree:
         {
           task_name: "Degree",
-          path: trainee_degrees_new_type_path(trainee),
+          path: path_for_degrees(trainee),
           confirm_path: trainee_degrees_confirm_path(trainee),
           status: ProgressService.call(
             validator: DegreesForm.new(trainee),
@@ -171,5 +171,11 @@ private
     return edit_trainee_course_details_path(trainee) if trainee.early_years_route?
 
     edit_trainee_course_education_phase_path(trainee)
+  end
+
+  def path_for_degrees(trainee)
+    return trainee_degrees_new_type_path(trainee) if trainee.degrees.empty?
+
+    trainee_degrees_confirm_path(trainee)
   end
 end
