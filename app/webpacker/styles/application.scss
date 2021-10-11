@@ -4,6 +4,7 @@
 @import "./govuk_overrides";
 @import "./filter_toggle_button";
 @import "./trainee_list";
+@import "./cookie_banner";
 
 .govuk-cookie-banner__hide {
   display: none;
@@ -82,4 +83,14 @@
 .app-link--warning {
   @include govuk-link-common;
   @include govuk-link-style-error;
+}
+
+// Display for js only
+body:not(.js-enabled) .app-js-only {
+  display: none;
+}
+
+// Display for no-js only
+.js-enabled .app-no-js-only {
+  display: none;
 }

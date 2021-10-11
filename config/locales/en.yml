@@ -64,7 +64,7 @@ en:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
   training_details:
-    view: 
+    view:
       title: Trainee start date and ID
       start_date: &commencement_date Trainee’s start date
       region: *region
@@ -529,7 +529,7 @@ en:
       apply_applications:
         review_course_form:
           label_names:
-            register: "Yes, register on %{course}" 
+            register: "Yes, register on %{course}"
             change: No, change the course
             change_hint: For trainees, who have changed courses since applying
       common:
@@ -953,6 +953,10 @@ en:
           other_nationality2: *nationality
           other_nationality3: *nationality
       models:
+        cookie_preferences_form:
+          attributes:
+            consent:
+              blank: Select yes if you want to accept Google Analytics cookies
         apply_applications/review_course_form:
           attributes:
             reviewed:

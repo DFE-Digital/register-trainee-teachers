@@ -32,7 +32,7 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
-    <% unless cookie_message_seen? %>
+    <% unless hide_cookie_banner? %>
       <%= render("layouts/cookie_banner") %>
     <% end %>
 
@@ -99,7 +99,7 @@
                 <%= govuk_link_to "Accessibility", accessibility_path, class: "govuk-footer__link" %>
               </li>
               <li class="govuk-footer__inline-list-item">
-                <%= govuk_link_to "Cookies", cookie_policy_path, class: "govuk-footer__link" %>
+                <%= govuk_link_to "Cookies", cookie_preferences_path, class: "govuk-footer__link" %>
               </li>
               <li class="govuk-footer__inline-list-item">
                 <%= govuk_link_to "Privacy policy", privacy_policy_path, class: "govuk-footer__link" %>
