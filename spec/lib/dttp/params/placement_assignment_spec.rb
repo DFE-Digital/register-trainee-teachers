@@ -430,6 +430,25 @@ module Dttp
               })
             end
           end
+
+          context "and the trainee is applying for a grant" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :with_course_details,
+                :with_start_date,
+                :with_early_years_grant,
+                dttp_id: dttp_contact_id,
+              )
+            end
+
+            it "sends the correct params" do
+              expect(subject).to include({ "dfe_allocatedplace" => 1 })
+              expect(subject).to include({
+                "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{dttp_bursary_details_entity_id})",
+              })
+            end
+          end
         end
 
         context "with region information" do

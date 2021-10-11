@@ -2,8 +2,8 @@
 
 module Dttp
   module Mappable
-    def bursary_details_id(bursary_type)
-      CodeSets::BursaryDetails::MAPPING.dig(bursary_type, :entity_id)
+    def bursary_details_id(key)
+      CodeSets::BursaryDetails::MAPPING.dig(key, :entity_id)
     end
 
     def course_subject_id(subject)
