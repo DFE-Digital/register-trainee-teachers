@@ -9,7 +9,7 @@ module Trainees
     def initialize(application:)
       @application = application
       @raw_course = application.application_attributes["course"]
-      @course = application.provider.courses.find_by(code: @raw_course["course_code"])
+      @course = application.provider.courses.find_by(uuid: @raw_course["course_uuid"])
       @raw_trainee = application.application_attributes["candidate"]
       @raw_contact_details = application.application_attributes["contact_details"]
       @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
@@ -24,7 +24,7 @@ module Trainees
         return
       end
 
-      raise(MissingCourseError, "Cannot find course with code: #{@raw_course['course_code']}") if course.nil? # Courses can be missing in non-prod environments
+      raise(MissingCourseError, "Cannot find course with uuid: #{@raw_course['course_uuid']}") if course.nil? # Courses can be missing in non-prod environments
 
       trainee.save!
       save_personal_details!

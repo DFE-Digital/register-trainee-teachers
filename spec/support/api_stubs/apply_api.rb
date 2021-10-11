@@ -177,6 +177,7 @@ module ApiStubs
       {
         recruitment_cycle_year: 2021,
         course_code: "V6X1",
+        course_uuid: "c6b9f8f0-f8f8-4f0f-b8e2-f8f8f8f8f8f8",
         training_provider_code: "E84",
         training_provider_type: "scitt",
         accredited_provider_type: nil,

@@ -14,11 +14,13 @@ module Trainees
     let(:trainee) { create_trainee_from_apply }
     let(:subject_names) { [] }
     let(:course_code) { course_info["course_code"] }
+    let(:course_uuid) { course_info["course_uuid"] }
 
     let!(:course) do
       create(
         :course_with_subjects,
         code: course_code,
+        uuid: course_uuid,
         accredited_body_code: apply_application.accredited_body_code,
         route: :school_direct_tuition_fee,
         subject_names: subject_names,
@@ -86,7 +88,7 @@ module Trainees
     end
 
     context "course doesn't exist" do
-      let(:course_code) { "ABC" }
+      let(:course_uuid) { "c6b9f9f0-f9f9-4f0f-b9e2-f9f9f9f9f9f9" }
 
       it "raises a MissingCourseError" do
         expect {
