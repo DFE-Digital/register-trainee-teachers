@@ -76,6 +76,8 @@ private
   end
 
   def populate_degree_fields(degree_fields)
+    return [] unless degree_sort_order_in(degree_fields)
+
     return [degree_fields[degree.to_param]&.keys].compact if degree.present?
     return degree_fields.map { |_slug, field| field.keys } if degrees_sort_order.size <= 1
 
@@ -86,5 +88,9 @@ private
 
   def get_field_name(field)
     I18n.t("views.missing_data_view.missing_fields_mapping.#{field}")
+  end
+
+  def degree_sort_order_in(degree_fields)
+    degrees_sort_order.all? { |slug| degree_fields.key?(slug) }
   end
 end
