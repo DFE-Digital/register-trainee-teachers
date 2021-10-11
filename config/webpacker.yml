@@ -82,6 +82,7 @@ test:
   <<: *default
   compile: false
   cache_manifest: true
+  public_output_path: packs-test
 
 production: &production
   <<: *default

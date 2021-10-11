@@ -77,6 +77,7 @@ jobs:
         docker-compose up --no-build -d
         docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
         docker-compose exec -T web /bin/sh -c "yarn add jest"
+        docker-compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
 
     - name: Install chromedriver
       run: docker-compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
