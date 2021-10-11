@@ -147,8 +147,6 @@ module Funding
     end
 
     context "with grant", feature_grant: true do
-      let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry") }
-
       let!(:allocation_subject) { create(:allocation_subject, name: "Chemistry") }
       let!(:subject_specialism) { create(:subject_specialism, name: trainee.course_subject_one, allocation_subject: allocation_subject) }
 
@@ -161,9 +159,37 @@ module Funding
         render_inline(View.new(data_model: trainee))
       end
 
-      it "renders grant text" do
-        expect(rendered_component).to have_text("Grant applied for")
-        expect(rendered_component).to have_text("£25,000 estimated grant")
+      context "when trainee applying_for_grant is true" do
+        let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry") }
+
+        it "renders grant text" do
+          expect(rendered_component).to have_text("Grant applied for")
+          expect(rendered_component).to have_text("£25,000 estimated grant")
+        end
+      end
+
+      context "when trainee applying_for_grant is false" do
+        let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry", applying_for_grant: false) }
+
+        it "renders grant text" do
+          expect(rendered_component).to have_text("Not grant funded")
+        end
+
+        it "has correct change link" do
+          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Change")
+        end
+      end
+
+      context "when trainee applying_for_grant is nil" do
+        let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry", applying_for_grant: nil) }
+
+        it "renders grant text" do
+          expect(rendered_component).to have_text("Funding method is missing")
+        end
+
+        it "has correct change link" do
+          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Enter an answer")
+        end
       end
     end
   end

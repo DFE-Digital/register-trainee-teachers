@@ -37,6 +37,7 @@ en:
       scholarship_applied_for: Scholarship applied for
       grant_applied_for: Grant applied for
       no_bursary_applied_for: Not funded
+      no_grant_applied_for: Not grant funded
       no_funding_available: Not applicable
       tiered_bursary_applied_for:
         tier_one: Applied for Tier 1
@@ -356,6 +357,7 @@ en:
           locale_code: Location updated
           town_city: Town/city updated
           applying_for_scholarship: Funding method updated
+          applying_for_grant: Funding method updated
           applying_for_bursary: Funding method updated
         degree:
           create: Degree added
@@ -472,6 +474,7 @@ en:
         itt_end_date: *itt_end_date
         training_initiative: *training_initiative
         applying_for_bursary: *funding_method
+        applying_for_grant: *funding_method
         applying_for_scholarship: *funding_method
         funding_type: *funding_method
         institution: *institution
@@ -1031,6 +1034,8 @@ en:
               blank: Select if the trainee is on a training initiative
         funding/bursary_form:
           attributes:
+            applying_for_grant:
+              inclusion: &grant_selection_required Select if you are applying for a grant for this trainee
             applying_for_bursary:
               inclusion: &bursary_selection_required Select if you are applying for a bursary for this trainee
             bursary_tier:
@@ -1219,6 +1224,8 @@ en:
             attributes:
               training_initiative:
                 blank: Select if the trainee is on a training initiative
+              applying_for_grant:
+                inclusion: *grant_selection_required
               applying_for_bursary:
                 inclusion: *bursary_selection_required
               applying_for_scholarship:
