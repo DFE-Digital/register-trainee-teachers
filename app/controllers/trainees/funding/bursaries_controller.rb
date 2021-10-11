@@ -40,7 +40,7 @@ module Trainees
 
       def load_bursary_info!
         @subject = trainee.course_subject_one
-        @amount = funding_manager.bursary_amount
+        @amount = funding_manager.bursary_amount || funding_manager.grant_amount
       end
 
       def funding_manager
