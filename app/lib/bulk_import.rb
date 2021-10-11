@@ -97,8 +97,8 @@ module BulkImport
         # "Age range" => method(:to_age_range) >> assign_field[:course_age_range],
         "Bursary funding" => method(:to_funding_boolean) >> assign_field[:applying_for_bursary],
         "Building" => assign_field[:address_line_one],
-        "Course end date" => Date.method(:parse) >> assign_field[:course_end_date],
-        "Course start date" => Date.method(:parse) >> assign_field[:course_start_date],
+        "Course end date" => method(:parse_date) >> assign_field[:course_end_date],
+        "Course start date" => method(:parse_date) >> assign_field[:course_start_date],
         # "Date left" => method(:parse_date) >> assign_field[:withdraw_date],
         "Date of birth" => method(:parse_date) >> assign_field[:date_of_birth],
         # "Date of deferral" => method(:parse_date) >> assign_field[:defer_date],
@@ -174,14 +174,14 @@ module BulkImport
         constants = AgeRange.constants
         Set.new.tap do |set|
           constants.each do |constant|
-            set.add AgeRange.const_get(constant)
+            set.add(AgeRange.const_get(constant))
           end
         end
       end
 
     def to_age_range(raw_string)
       raw_string.scan(/\d+/).map(&:to_i).tap do |age_range|
-        raise Error, "Course age range not recognised" if !ALL_AGE_RANGES.include? age_range
+        raise(Error, "Course age range not recognised") if !ALL_AGE_RANGES.include?(age_range)
       end
     end
 
@@ -189,7 +189,21 @@ module BulkImport
       course = provider.courses.find_by(code: csv_row["Course code"])
 
       trainee.course_code = course&.code
-      # TODO: Set subjects and friends
+
+      if trainee.course_subject_one.blank?
+        course_subject_one, course_subject_two, course_subject_three = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name)).values.map(&:first).compact
+
+        trainee.course_subject_one ||= course_subject_one
+        trainee.course_subject_two ||= course_subject_two
+        trainee.course_subject_three ||= course_subject_three
+      end
+
+      trainee.study_mode ||= course.study_mode
+      trainee.course_start_date ||= course.start_date
+      trainee.course_end_date ||= course.start_date + course.duration_in_years.years
+      trainee.course_min_age ||= course.min_age
+      trainee.course_max_age ||= course.max_age
+      trainee.course_education_phase ||= course.level
     end
 
     def to_course_subject(raw_string)
@@ -201,11 +215,11 @@ module BulkImport
 
       case potential_subjects.count
       when 0
-        raise Error, "Course subject not recognised: #{raw_string}"
+        raise(Error, "Course subject not recognised: #{raw_string}")
       when 1
         potential_subjects.keys.first
       else
-        raise Error, "Course subject ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Course subject ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -230,17 +244,17 @@ module BulkImport
         normalise_string(key) == normalise_string(raw_string)
       end
 
-      raise Error, "Training route not recognised: #{raw_string}" if routes.blank?
+      raise(Error, "Training route not recognised: #{raw_string}") if routes.blank?
 
       routes.values.first
     end
 
     def to_degree_grade(raw_string)
       grade = Dttp::CodeSets::Grades::MAPPING.keys.select do |mapping|
-        normalise_string(mapping).starts_with? normalise_string(raw_string)
+        normalise_string(mapping).starts_with?(normalise_string(raw_string))
       end
 
-      raise Error, "Degree grade not recognised: #{raw_string}" if grade.blank?
+      raise(Error, "Degree grade not recognised: #{raw_string}") if grade.blank?
 
       grade
     end
@@ -252,11 +266,11 @@ module BulkImport
 
       case potential_subjects.count
       when 0
-        raise Error, "Degree subject not recognised: #{raw_string}"
+        raise(Error, "Degree subject not recognised: #{raw_string}")
       when 1
         potential_subjects.keys.first
       else
-        raise Error, "Degree subject ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Degree subject ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -274,7 +288,7 @@ module BulkImport
       when 1
         potential_institutions.keys.first
       else
-        raise Error, "Degree institution ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Degree institution ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -285,11 +299,11 @@ module BulkImport
 
       case potential_degree_types.count
       when 0
-        raise Error, "Degree type not recognised: #{raw_string}"
+        raise(Error, "Degree type not recognised: #{raw_string}")
       when 1
         potential_degree_types.keys.first
       else
-        raise Error, "Degree type ambiguous, multiple found: #{raw_string}"
+        raise(Error, "Degree type ambiguous, multiple found: #{raw_string}")
       end
     end
 
@@ -297,7 +311,7 @@ module BulkImport
       return NON_ENIC if raw_string.blank?
 
       raw_string.tap do
-        raise Error, "ENIC equivalent not recognised: #{raw_string}" if !ENIC_NON_UK.include? raw_string
+        raise(Error, "ENIC equivalent not recognised: #{raw_string}") if !ENIC_NON_UK.include?(raw_string)
       end
     end
 
@@ -364,7 +378,7 @@ module BulkImport
       .downcase
       .gsub(/\(.*\)/, "")
       .split
-      .reject { |word| REJECTED_WORD_LIST.include? word }
+      .reject { |word| REJECTED_WORD_LIST.include?(word) }
       .join(" ")
       .gsub(/[^\w]/, "")
     end

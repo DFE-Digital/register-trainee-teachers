@@ -14,7 +14,7 @@ namespace :bulk_import do
         error_rows << error_row
       end
     rescue StandardError => e
-      puts "error on row #{i + 1}: #{e.message}"
+      puts("error on row #{i + 1}: #{e.message}")
       Sentry.capture_exception(e)
     end
   end
