@@ -61,7 +61,7 @@ module CourseDetails
       let(:specialisms) { ["Spanish language", "public services"] }
       let(:itt_start_date) { nil }
 
-      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, itt_start_date, { code: course.code }) }
+      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, itt_start_date, { uuid: course.uuid }) }
 
       let(:course) { trainee.published_course }
 

@@ -26,8 +26,7 @@ feature "apply registrations", type: :feature do
 
     scenario "reviewing course" do
       when_i_enter_the_course_details_page
-      then_i_am_on_the_apply_applications_course_details_page
-      when_i_confirm_the_course_details
+      and_i_confirm_the_course_details
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("History")
       and_i_confirm_the_course
@@ -40,8 +39,7 @@ feature "apply registrations", type: :feature do
 
     scenario "selecting specialisms" do
       when_i_enter_the_course_details_page
-      then_i_am_on_the_apply_applications_course_details_page
-      when_i_confirm_the_course_details
+      and_i_confirm_the_course_details
       and_i_select_a_specialism("Graphic design")
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("Graphic design")
@@ -53,8 +51,7 @@ feature "apply registrations", type: :feature do
 
     scenario "selecting languages" do
       when_i_enter_the_course_details_page
-      then_i_am_on_the_apply_applications_course_details_page
-      when_i_confirm_the_course_details
+      and_i_confirm_the_course_details
       and_i_choose_my_languages
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("Modern languages")
@@ -65,7 +62,7 @@ private
 
   def and_a_trainee_exists_created_from_apply
     given_a_trainee_exists(:with_apply_application, :with_related_courses, courses_count: 1, subject_names: subjects)
-    trainee.update(course_code: Course.first.code)
+    trainee.update(course_uuid: Course.first.uuid)
   end
 
   def given_the_trainee_does_not_have_a_course_code
@@ -74,10 +71,6 @@ private
 
   def then_the_section_should_be(status)
     expect(review_draft_page.course_details.status.text).to eq(status)
-  end
-
-  def then_i_am_on_the_apply_applications_course_details_page
-    expect(apply_registrations_course_details_page).to be_displayed(id: trainee.slug)
   end
 
   def then_i_am_on_the_publish_course_details_page
@@ -96,8 +89,8 @@ private
     review_draft_page.course_details.link.click
   end
 
-  def when_i_confirm_the_course_details
-    apply_registrations_course_details_page.confirm_course.choose
+  def and_i_confirm_the_course_details
+    apply_registrations_course_details_page.course_options.first.choose
     apply_registrations_course_details_page.continue.click
   end
 

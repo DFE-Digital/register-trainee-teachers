@@ -13,7 +13,7 @@
                            url: trainee_apply_applications_confirm_courses_path(@trainee),
                            method: :put,
                            local: true) do |f| %>
-      <%= f.hidden_field :code, value: course_code %>
+      <%= f.hidden_field :uuid, value: course_uuid %>
 
       <%= f.govuk_check_boxes_fieldset :mark_as_reviewed, multiple: false, legend: nil do %>
         <%= f.govuk_check_box :mark_as_reviewed, 1, 0, multiple: false, link_errors: true, label: { text: t(".mark_as_reviewed") } %>

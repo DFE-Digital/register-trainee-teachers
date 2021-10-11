@@ -12,7 +12,7 @@ module ApplyApplications
 
     FIELDS = %i[
       reviewed
-      code
+      uuid
     ].freeze
 
     attr_accessor(*FIELDS)

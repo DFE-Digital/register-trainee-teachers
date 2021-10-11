@@ -43,7 +43,9 @@ module CourseDetails
 
     def education_phase
       if require_education_phase?
-        mappable_field(trainee.course_education_phase&.upcase_first, t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee))
+        mappable_field(trainee.course_education_phase&.upcase_first,
+                       t("components.course_detail.education_phase"),
+                       action_url: edit_trainee_course_education_phase_path(trainee))
       end
     end
 
@@ -88,7 +90,7 @@ module CourseDetails
     end
 
     def course_details
-      return t("components.course_detail.details_not_on_publish") if data_model.course_code.blank?
+      return t("components.course_detail.details_not_on_publish") if data_model.course_uuid.blank?
 
       "#{course.name} (#{course.code})" if course
     end
@@ -128,7 +130,7 @@ module CourseDetails
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(code: data_model.course_code)
+      @course ||= trainee.available_courses.find_by(uuid: data_model.course_uuid)
     end
 
     def mappable_field(field_value, field_label, action_url: edit_trainee_course_details_path(trainee))

@@ -31,7 +31,7 @@ module Exports
     def format_trainees(trainees)
       trainees.map do |trainee|
         degree = trainee.degrees.first
-        course = Course.where(code: trainee.course_code).first
+        course = Course.where(uuid: trainee.course_uuid).first
         {
           "register_id" => trainee.slug,
           "trainee_url" => "#{Settings.base_url}/trainees/#{trainee.slug}",

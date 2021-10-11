@@ -59,8 +59,8 @@ module Trainees
       end
     end
 
-    def course_code
-      publish_course_details_form.course_code || trainee.course_code
+    def course_uuid
+      publish_course_details_form.course_uuid || trainee.course_uuid
     end
 
     def subject_specialisms_for_position(position)

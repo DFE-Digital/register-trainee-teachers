@@ -366,7 +366,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
     translation_key_prefix = "activemodel.errors.models.publish_course_details_form.attributes"
 
     expect(publish_course_details_page).to have_content(
-      I18n.t("#{translation_key_prefix}.course_code.blank"),
+      I18n.t("#{translation_key_prefix}.course_uuid.blank"),
     )
   end
 

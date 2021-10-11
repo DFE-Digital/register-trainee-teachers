@@ -27,8 +27,8 @@ module Trainees
         end.merge({ date_string: :other })
     end
 
-    def course_code
-      publish_course_details_form.course_code
+    def course_uuid
+      publish_course_details_form.course_uuid
     end
 
     def authorize_trainee

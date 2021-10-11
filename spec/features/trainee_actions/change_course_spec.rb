@@ -62,11 +62,11 @@ private
   end
 
   def then_the_trainee_course_has_changed
-    expect(trainee.reload.course_code).to eq(@different_course.code)
+    expect(trainee.reload.course_uuid).to eq(@different_course.uuid)
   end
 
   def and_i_see_course_end_date_missing_error
-    expect(confirm_publish_course_details_page).to have_content("Course end date is missing")
+    expect(confirm_publish_course_details_page).to have_content("end date is missing")
   end
 
   def and_i_click_enter_answer_for_course_end_date

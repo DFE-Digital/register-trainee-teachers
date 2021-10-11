@@ -19,7 +19,7 @@
           hint: { text: courses_fieldset_text_for(@trainee) },
           classes: "published-courses" do %>
           <% @courses.each do |course| %>
-            <%= f.govuk_radio_button :course_code, course.code,
+            <%= f.govuk_radio_button :course_uuid, course.uuid,
               label: { text: "#{course.name} (#{course.code})" },
               hint: { text: course_summary_text_for(@trainee, course) },
               link_errors: true %>
@@ -27,7 +27,7 @@
 
           <div class="govuk-radios__divider">or</div>
 
-          <%= f.govuk_radio_button :course_code, PublishCourseDetailsForm::NOT_LISTED,
+          <%= f.govuk_radio_button :course_uuid, PublishCourseDetailsForm::NOT_LISTED,
             label: { text: t(".course_not_listed") } %>
         <% end %>
       </div>

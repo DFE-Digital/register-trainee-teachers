@@ -9,7 +9,7 @@
     <%= register_form_with(model: @review_course_form, url: trainee_apply_applications_course_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <%= f.hidden_field :code, value: @course.code %>
+      <%= f.hidden_field :uuid, value: @course.uuid %>
 
       <h1 class="govuk-heading-l"><%= t(".summary_title") %></h1>
 

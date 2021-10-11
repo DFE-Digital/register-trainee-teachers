@@ -30,7 +30,7 @@ module PublishCourseNextPath
   end
 
   def course
-    @course ||= trainee.available_courses.find_by_code!(course_code)
+    @course ||= trainee.available_courses.find_by_uuid!(course_uuid)
   end
 
   def publish_course_details_form
