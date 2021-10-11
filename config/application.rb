@@ -35,8 +35,6 @@ module RegisterTraineeTeachers
 
     config.exceptions_app = routes
 
-    config.action_view.raise_on_missing_translations = true
-
     config.view_component.preview_paths = [Rails.root.join("spec/components")]
     config.view_component.preview_route = "/view_components"
     config.view_component.show_previews = !Rails.env.production?
