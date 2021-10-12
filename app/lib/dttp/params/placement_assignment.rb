@@ -136,19 +136,24 @@ module Dttp
       end
 
       def funding_params
-        if trainee.applying_for_bursary || trainee.applying_for_scholarship
+        if applying_for_funding?
           return {
             "dfe_allocatedplace" => ALLOCATED_PLACE,
-            "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{funding_id})",
+            "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{funding_details_id})",
           }
         end
 
         { "dfe_allocatedplace" => NO_ALLOCATED_PLACE }
       end
 
-      def funding_id
-        return bursary_details_id(bursary_type) if trainee.applying_for_bursary
+      def applying_for_funding?
+        trainee.applying_for_bursary || trainee.applying_for_grant || trainee.applying_for_scholarship
+      end
+
+      def funding_details_id
         return SCHOLARSHIP if trainee.applying_for_scholarship
+
+        bursary_details_id(trainee.bursary_tier.presence || trainee.training_route)
       end
 
       def region_params
@@ -157,10 +162,6 @@ module Dttp
         {
           "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_regions(#{region_id(trainee.region)})",
         }
-      end
-
-      def bursary_type
-        trainee.bursary_tier.presence || trainee.training_route
       end
 
       def study_mode_params

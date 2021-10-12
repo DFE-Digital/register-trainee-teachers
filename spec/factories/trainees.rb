@@ -384,6 +384,16 @@ FactoryBot.define do
       end
     end
 
+    trait :with_early_years_grant do
+      applying_for_grant { true }
+
+      after(:create) do |trainee, _|
+        funding_method = create(:funding_method, :grant, :with_subjects, training_route: :early_years_salaried)
+        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.training_route = funding_method.training_route
+      end
+    end
+
     trait :with_scholarship do
       applying_for_scholarship { true }
 
