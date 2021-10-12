@@ -44,7 +44,7 @@ module Funding
     end
 
     def funding_method_row
-      if data_model.applying_for_grant
+      if can_apply_for_grant?
         grant_funding_row
       elsif data_model.applying_for_scholarship
         scholarship_funding_row
@@ -68,11 +68,15 @@ module Funding
     end
 
     def grant_funding_row
-      grant_text = t(".grant_applied_for") +
-        "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
+      grant_text = if data_model.applying_for_grant
+                     t(".grant_applied_for") +
+                      "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
+                   elsif !data_model.applying_for_grant.nil?
+                     t(".no_grant_applied_for")
+                   end
 
       mappable_field(
-        grant_text.html_safe,
+        grant_text&.html_safe,
         t(".funding_method"),
         edit_trainee_funding_bursary_path(trainee),
       )
