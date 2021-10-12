@@ -2,177 +2,86 @@ en:
   pages:
     guidance:
       body_html: "
-      <h2 class='govuk-heading-l'>Contents</h2>
+      <p class='govuk-body'>Register trainee teachers is the service that will eventually replace the Database of Trainee Teachers &amp; Providers (DTTP) portal.</p>
 
-      <ul class='govuk-list govuk-list--dash govuk-!-margin-bottom-8'>
-        <li>
-          <a class='govuk-link' href='#section-about-register'>About Register trainee teachers</a>
-          </li>
-        <li>
-          <a class='govuk-link' href='#section-check-data'>Check what data you need</a>
-        </li>
-      </ul>
+      <p class='govuk-body'>Accredited Initial Teacher Training (ITT) providers use it to provide DfE with their trainee data.</p>
 
-      <hr class='govuk-section-break govuk-section-break--xl govuk-section-break--visible'>
+      <p class='govuk-body'>Training providers can also perform tasks on behalf of their trainees within Register.</p>
 
-      <section id='section-about-register'>
+      <p class='govuk-body'>Those tasks include withdrawing, deferring, getting teacher reference numbers (TRN) and recommending for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
 
-        <h2 class='govuk-heading-l'>About Register trainee teachers</h2>
+      <p class='govuk-body'>DfE also uses the data for funding, the ITT census and analysis to inform policy development.</p>
 
-        <p class='govuk-body'>Register trainee teachers is the service that will eventually replace the Database of Trainee Teachers &amp; Providers (DTTP) portal.</p>
+      <h3 class='govuk-heading-m'>Adding trainee records</h3>
 
-        <p class='govuk-body'>Accredited Initial Teacher Training Providers (ITT) use it to provide DfE with their trainee data.</p>
+      <p class='govuk-body'>You can add a trainee record manually, which means that you input all of the required data from your own records.</p>
 
-        <p class='govuk-body'>Training providers can also perform tasks on behalf of their trainees within Register.</p>
+      <p class='govuk-body'>Get prepared for adding a trainee record manually by <a class='govuk-link' href='/check-data'>checking what data you need to provide</a>.</p>
 
-        <p class='govuk-body'>Those tasks include withdrawing, deferring, getting Teacher Reference Numbers (TRN) and recommending for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS).
+      <p class='govuk-body'>Register is linked to the DfE's Apply for teacher training service, which means that all trainee records created in Apply will be imported into Register. This is called ‘Apply integration’.</p>
 
-        <p class='govuk-body'>DfE also uses the data for funding, the ITT census and analysis to inform policy development.</p>
+      <h4 class='govuk-heading-s'>Apply integration</h4>
 
-        <h3 class='govuk-heading-m'>Getting a Teacher Reference Number (TRN)</h3>
+      <p class='govuk-body'>Register imports all records from Apply that have met the conditions and have the status ‘Recruited’.</p>
 
-        <p class='govuk-body'>When you've added a trainee into Register the first action you can take is to request a TRN for the trainee. This is when the trainee becomes registered.</p>
+      <p class='govuk-body'>The records from Apply will be ‘drafts’ in Register. You'll need to check them before registering.</p>
 
-        <p class='govuk-body'>Every teacher has a TRN and it stays with them throughout their career. It appears on their payslips and pension statements.</p>
+      <p class='govuk-body'>You may need to amend some fields if they’re not right or things have changed - these will be highlighted in Register. For example, you may need to change the course.</p>
 
-        <p class='govuk-body'>They also use it to access the teacher self service portal where they can view their teacher record, view their qualifications and update personal details.</p>
+      <h4 class='govuk-heading-s'>PE with EBacc</h4>
 
-        <p class='govuk-body'>When you've requested a TRN, Register will usually be updated with the TRN number within 3 days.</p>
+      <p class='govuk-body'>Follow these steps to register a trainee doing PE with EBacc:</p>
 
-        <p class='govuk-body'>Assessment Only candidates will usually receive an email with their TRN. For all other routes, trainees will receive a letter. This means trainees may contact you to find out their TRN.</p>
+      <ol class='govuk-list govuk-list--number'>
+        <li>Add a first subject as PE, or a PE based subject.</li>
+        <li>Add a second subject as their EBacc subject.</li>
+        <li>Email us at <a class='govuk-notification-banner__link' href='mailto:becomingateacher@digital.education.gov.uk'>becomingateacher@digital.education.gov.uk</a> stating their trainee ID and that they are doing PE with EBacc.</li>
+      </ol>
 
-        <h3 class='govuk-heading-m'>Recommending a trainee for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)</h3>
+      <h3 class='govuk-heading-m'>Getting a teacher reference number (TRN)</h3>
 
-        <p class='govuk-body'>When a trainee has successfully completed their training (or completed their assessement for AO) and met the required standards, you can recommend them for QTS or EYTS in Register.</p>
+      <p class='govuk-body'>When you’ve added a trainee into Register the first action you can take is to request a TRN for the trainee. This is when the trainee becomes registered with the Department for Education.</p>
 
-        <p class='govuk-body'>DfE will usually award QTS or EYTS within 3 days.</p>
+      <p class='govuk-body'>Every teacher has a TRN and it stays with them throughout their career. It appears on their payslips and pension statements.</p>
 
-        <h3 class='govuk-heading-m'>Withdraw and defer</h3>
+      <p class='govuk-body'>They also use it to access the teacher self service portal where they can view their teacher record, view their qualifications and update personal details.</p>
 
-        <p class='govuk-body'>Once you've registered a trainee, you can withdraw or defer them.</p>
+      <p class='govuk-body'>When you’ve requested a TRN, Register will usually be updated with the TRN within 3 working days.</p>
 
-        <p class='govuk-body'>You can do this using the links on the trainee record.</p>
+      <p class='govuk-body'>Assessment only candidates will usually receive an email with their TRN. For all other routes, trainees will receive a letter. This means trainees may contact you to find out their TRN.</p>
 
-        <h3 class='govuk-heading-m'>Funding</h3>
+      <h3 class='govuk-heading-m'>Recommending a trainee for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)</h3>
 
-        <p class='govuk-body'>For the ITT routes where funding applies, the data supports bursaries and scholarships, for example, it's used to provide accurate funding to training providers.</p>
+      <p class='govuk-body'>When a trainee has successfully completed their training (or completed their assessement for AO) and met the required standards, you can recommend them for QTS or EYTS in Register.</p>
 
-        <p class='govuk-body'>It's used for the funding of salary grants on the school direct salaried route. It also provides evidence for DfE when its finances are audited.</p>
+      <p class='govuk-body'>DfE will usually award QTS or EYTS within 3 days.</p>
 
-        <h3 class='govuk-heading-m'>Census</h3>
+      <h3 class='govuk-heading-m'>Withdraw and defer</h3>
 
-        <p class='govuk-body'>DfE publishes an annual census of trainee teachers who are starting their training. This is so we have an indication of who will be entering the teaching workforce and can plan teacher recruitment activity.</p>
+      <p class='govuk-body'>Once you’ve registered a trainee, you can withdraw or defer them. You can do this using the links on the trainee record.</p>
 
-        <p class='govuk-body'>The census happens in September and October every year.</p>
+      <h3 class='govuk-heading-m'>Funding</h3>
 
-        <h3 class='govuk-heading-m'>Profiles (outcomes)</h3>
+      <p class='govuk-body'>For the ITT routes where funding applies, the data supports bursaries and scholarships, for example, it’s used to provide accurate funding to training providers.</p>
 
-        <p class='govuk-body'>DfE publishes data on how many people have successfully completed their training each year.</p>
-      </section>
+      <p class='govuk-body'>It’s used for the funding of grants on the School direct salaried route. It also provides evidence for DfE when its finances are audited.</p>
 
-      <hr class='govuk-section-break govuk-section-break--xl govuk-section-break--visible'>
+      <h3 class='govuk-heading-m'>Census</h3>
 
-      <section id='section-check-data'>
+      <p class='govuk-body'>DfE publishes an annual census of trainee teachers who are starting their training. This is so we have an indication of who will be entering the teaching workforce and can plan teacher recruitment activity.</p>
 
-        <h2 class='govuk-heading-l'>Check what data you need</h2>
+      <p class='govuk-body'>The census happens in September and October every year. We‘ll notify you about the exact dates each year, including the deadline when your data needs to be signed off by a responsible officer.</p>
 
-        <p class='govuk-body'>You'll need the following information about a trainee to complete their record.</p>
+      <p class='govuk-body'>To sign your organisation‘s data off, the responsible officer needs to email us at <a class='govuk-notification-banner__link' href='mailto:becomingateacher@digital.education.gov.uk'>becomingateacher@digital.education.gov.uk</a>.</p>
 
-        <h3 class='govuk-heading-m'>Personal details</h3>
+      <p class='govuk-body'>The subject line must state ‘Census 2021 to 2022’ and the name of your organisation.</p>
 
-        <ul class='govuk-list'>
-          <li>First names</li>
-          <li>Middle names</li>
-          <li>Last or family name</li>
-          <li>Date of birth</li>
-          <li>Gender</li>
-          <li>Nationality</li>
-        </ul>
+      <p class='govuk-body'>In the body of the email, state the following:</p>
 
-        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+      <p class='govuk-body'>‘I confirm that the Census data for the trainees who started their ITT in 2021 to 2022 is complete and accurate for my organisation as of the date of this email. The Census data is signed-off by (insert the responsible officer‘s name).’
+      </p>
 
-        <h3 class='govuk-heading-m'>Contact details</h3>
+      <h3 class='govuk-heading-m'>Profiles (outcomes)</h3>
 
-        <ul class='govuk-list'>
-          <li> Address </li>
-          <li> Email address</li>
-        </ul>
-
-        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
-
-        <h3 class='govuk-heading-m'>Diversity information (optional)</h3>
-
-        <div class='govuk-inset-text'>If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
-
-        <ul class='govuk-list'>
-          <li>Ethnicity</li>
-          <li>Disability</li>
-        </ul>
-
-        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
-
-        <h3 class='govuk-heading-m'>Degrees</h3>
-
-        <h3 class='govuk-heading-s'>If it's a UK degree</h3>
-
-        <ul class='govuk-list'>
-          <li>Type (for example, BA, BSc or other)</li>
-          <li>Subject</li>
-          <li>Institution</li>
-          <li>Graduation year</li>
-          <li>Grade</li>
-        </ul>
-
-        <h4 class='govuk-heading-s'>If it's not a UK degree</h4>
-
-        <ul class='govuk-list'>
-          <li>UK ENIC comparable degree (if provided)</li>
-          <li>Subject</li>
-          <li>Country where the degree was obtained</li>
-          <li>Graduation year</li>
-        </ul>
-
-        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
-
-        <h3 class='govuk-heading-m'>Course details</h3>
-
-
-        <ul class='govuk-list'>
-          <li>Subject</li>
-          <li>Age range</li>
-          <li>Start date</li>
-          <li>End date</li>
-        </ul>
-
-        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
-
-        <h3 class='govuk-heading-m'>Trainee start date and ID</h3>
-
-          <ul class='govuk-list'>
-          <li>Trainee start date</li>
-          <li>Trainee ID (assigned by you)</li>
-        </ul>
-
-        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
-
-        <h3 class='govuk-heading-m'>Schools</h3>
-
-        <p class='govuk-body'>This is only required for school direct and teaching apprenticeship routes</p>
-
-        <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
-
-        <h3 class='govuk-heading-m'>Funding details</h3>
-
-        <ul class='govuk-list'>
-          <li>Whether the trainee is on a training initiative</li>
-        </ul>
-
-        <h3 class='govuk-heading-s'>For courses with bursaries available</h3>
-
-
-        <ul class='govuk-list'>
-          <li>Whether a bursary has been awarded to the trainee</li>
-        </ul>
-
-      </section>
+      <p class='govuk-body'>DfE publishes data on how many people have successfully completed their training each year.</p>
 "
