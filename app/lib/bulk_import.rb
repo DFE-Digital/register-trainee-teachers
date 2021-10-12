@@ -7,8 +7,6 @@ module BulkImport
 
   class << self
     def import_row(provider, csv_row)
-      # Age range max
-      # Age range min
       trainee = build_trainee(provider, csv_row)
 
       set_course(provider, trainee, csv_row)
@@ -95,14 +93,11 @@ module BulkImport
       end
 
       column_mapper = {
-        # "Age range" => method(:to_age_range) >> assign_field[:course_age_range],
         "Bursary funding" => method(:to_funding_boolean) >> assign_field[:applying_for_bursary],
         "Building" => assign_field[:address_line_one],
         "Course end date" => method(:parse_date) >> assign_field[:course_end_date],
         "Course start date" => method(:parse_date) >> assign_field[:course_start_date],
-        # "Date left" => method(:parse_date) >> assign_field[:withdraw_date],
         "Date of birth" => method(:parse_date) >> assign_field[:date_of_birth],
-        # "Date of deferral" => method(:parse_date) >> assign_field[:defer_date],
         "Disability" => method(:to_disability_disclosure) >> assign_field[:disability_disclosure],
         "Disability specification" => method(:to_disability_ids) >> assign_field[:disability_ids],
         "Email address" => assign_field[:email],
@@ -126,7 +121,6 @@ module BulkImport
         "Town or city" => assign_field[:town_city],
         "Trainee start date" => assign_field[:commencement_date],
         "Training initiative" => method(:to_training_initiative) >> assign_field[:training_initiative],
-        # "TRN" => assign_field[:trn],
       }
       column_mapper.default = proc {}
 
@@ -153,8 +147,6 @@ module BulkImport
       trainee.diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
       trainee.ethnic_background = Diversities::NOT_PROVIDED
 
-      # trainee.course_education_phase = Dttp::CodeSets::AgeRanges::MAPPING.dig(trainee.course_age_range, :levels)&.first
-
       trainee.progress.personal_details = true
       trainee.progress.contact_details = true
       trainee.progress.degrees = true
@@ -167,22 +159,6 @@ module BulkImport
       trainee.progress.placement_details = true
 
       trainee
-    end
-
-    ALL_AGE_RANGES =
-      begin
-        constants = AgeRange.constants
-        Set.new.tap do |set|
-          constants.each do |constant|
-            set.add(AgeRange.const_get(constant))
-          end
-        end
-      end
-
-    def to_age_range(raw_string)
-      raw_string.scan(/\d+/).map(&:to_i).tap do |age_range|
-        raise(Error, "Course age range not recognised") if !ALL_AGE_RANGES.include?(age_range)
-      end
     end
 
     def set_course(provider, trainee, csv_row)
@@ -232,7 +208,7 @@ module BulkImport
     end
 
     def to_training_initiative(raw_string)
-      return if raw_string.blank?
+      return ROUTE_INITIATIVES_ENUMS[:no_initiative] if raw_string.blank?
 
       potential_initiative = ROUTE_INITIATIVES_ENUMS.select do |_key, initiative|
         normalise_string(initiative.gsub("_", "")).starts_with?(normalise_string(raw_string))
@@ -262,6 +238,8 @@ module BulkImport
     end
 
     def validate_degree_subject(raw_string)
+      return if raw_string.blank?
+
       potential_subjects = Dttp::CodeSets::DegreeSubjects::MAPPING.select do |subjects|
         subjects&.casecmp?(raw_string.squish)
       end
@@ -295,6 +273,8 @@ module BulkImport
     end
 
     def validate_uk_degree(raw_string)
+      return if raw_string.blank?
+
       potential_degree_types = Dttp::CodeSets::DegreeTypes::MAPPING.select do |degree_name, attributes|
         degree_name&.casecmp?(raw_string.squish) || attributes[:abbreviation]&.casecmp?(raw_string.squish)
       end
@@ -341,10 +321,6 @@ module BulkImport
       HPITT::CodeSets::Ethnicities::MAPPING.select do |key, _value|
         normalise_string(key).starts_with?(normalise_string(raw_string))
       end.values.first
-
-      # [raw_string.gsub(/[^a-z]/i, "").downcase].tap do |ethnic_group|
-      #   raise Error, "Ethnic group not recognised: #{raw_string}" if ethnic_group.nil?
-      # end
     end
 
     def to_funding_boolean(raw_string)
@@ -378,6 +354,8 @@ module BulkImport
     end
 
     def normalise_string(raw_string)
+      return "" if raw_string.blank?
+
       raw_string
       .downcase
       .gsub(/\(.*\)/, "")
