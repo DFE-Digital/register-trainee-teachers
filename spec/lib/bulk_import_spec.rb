@@ -6,10 +6,11 @@ describe BulkImport do
   include SeedHelper
 
   describe "#import_row" do
-    let!(:provider) { create(:provider, :teach_first) }
+    let!(:provider) { create(:provider) }
 
     let(:csv_row) do
       {
+        "Route" => "School Direct Salaried PG)",
         "Course start date" => "13/04/1992",
         "ITT Subject 1" => "English",
         "Degree type" => "Bachelor of Arts",
@@ -20,7 +21,7 @@ describe BulkImport do
       }
     end
 
-    subject { BulkImport.import_row(csv_row) }
+    subject { BulkImport.import_row(provider, csv_row) }
 
     it "creates the trainee/degree" do
       expect { subject }.to change { Trainee.count }.from(0).to(1)

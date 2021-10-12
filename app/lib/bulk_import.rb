@@ -12,6 +12,7 @@ module BulkImport
       trainee = build_trainee(provider, csv_row)
 
       set_course(provider, trainee, csv_row)
+      set_nationalities(trainee, csv_row)
 
       build_degrees(trainee, csv_row)
 
@@ -116,7 +117,6 @@ module BulkImport
         "Last names" => assign_field[:last_name],
         "Lead School" => method(:to_school_id) >> assign_field[:lead_school_id],
         "Middle names" => assign_field[:middle_names],
-        "Nationality" => method(:to_nationality_ids) >> assign_field[:nationality_ids],
         "Outside UK address" => assign_field[:international_address],
         "Postal code" => method(:to_post_code) >> assign_field[:postcode],
         "Route" => method(:to_route) >> assign_field[:training_route],
@@ -188,7 +188,9 @@ module BulkImport
     def set_course(provider, trainee, csv_row)
       course = provider.courses.find_by(code: csv_row["Course code"])
 
-      trainee.course_code = course&.code
+      return if course.blank?
+
+      trainee.course_code = course.code
 
       if trainee.course_subject_one.blank?
         course_subject_one, course_subject_two, course_subject_three = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name)).values.map(&:first).compact
@@ -232,11 +234,11 @@ module BulkImport
     def to_training_initiative(raw_string)
       return if raw_string.blank?
 
-      initiative = ROUTE_INITIATIVES_ENUMS.select do |_key, initiative|
+      potential_initiative = ROUTE_INITIATIVES_ENUMS.select do |_key, initiative|
         normalise_string(initiative.gsub("_", "")).starts_with?(normalise_string(raw_string))
       end
 
-      initiative.values.first || ROUTE_INITIATIVES_ENUMS[:no_initiative]
+      potential_initiative.values.first || ROUTE_INITIATIVES_ENUMS[:no_initiative]
     end
 
     def to_route(raw_string)
@@ -256,7 +258,7 @@ module BulkImport
 
       raise(Error, "Degree grade not recognised: #{raw_string}") if grade.blank?
 
-      grade
+      grade.first
     end
 
     def validate_degree_subject(raw_string)
@@ -311,7 +313,7 @@ module BulkImport
       return NON_ENIC if raw_string.blank?
 
       raw_string.tap do
-        raise(Error, "ENIC equivalent not recognised: #{raw_string}") if !ENIC_NON_UK.include?(raw_string)
+        return nil if !ENIC_NON_UK.include?(raw_string)
       end
     end
 
@@ -326,7 +328,7 @@ module BulkImport
     def to_disability_ids(raw_string)
       return [] if raw_string.blank?
 
-      Disability.where(name: raw_string).map(&:id)
+      Disability.where("LOWER(name) = ?", raw_string.downcase).map(&:id)
     end
 
     def to_school_id(raw_string)
@@ -357,8 +359,10 @@ module BulkImport
       end
     end
 
-    def to_nationality_ids(raw_string)
-      Nationality.where(name: raw_string&.downcase).ids
+    def set_nationalities(trainee, csv_row)
+      nationality_names = [csv_row["Nationality"], csv_row["Nationality (other)"]].compact.map(&:downcase)
+
+      trainee.nationality_ids = Nationality.where(name: nationality_names).ids
     end
 
     def to_post_code(raw_string)
