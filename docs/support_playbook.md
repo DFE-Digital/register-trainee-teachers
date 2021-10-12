@@ -6,7 +6,7 @@ Support Playbook
 Sometimes support will ask a dev to update the training route. Here is an example for updating a route to `school_direct_salaried`.
 
 ```
-trainee = Trainee.where(slug: "XXX").first
+trainee = Trainee.find_by(slug: "XXX")
 manager = RouteDataManager.new(trainee: trainee)
 m.update_training_route!("school_direct_salaried")
 ```
