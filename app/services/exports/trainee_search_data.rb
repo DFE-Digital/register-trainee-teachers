@@ -30,7 +30,6 @@ module Exports
 
     def format_trainees(trainees)
       trainees.map do |trainee|
-        funding_manager = FundingManager.new(trainee)
         degree = trainee.degrees.first
         course = Course.where(code: trainee.course_code).first
         {
@@ -99,8 +98,8 @@ module Exports
           "employing_school_name" => trainee.employing_school&.name,
           "employing_school_urn" => trainee.employing_school&.urn,
           "training_initiative" => training_initiative(trainee),
-          "applying_for_bursary" => trainee.applying_for_bursary.to_s.upcase,
-          "bursary_value" => (funding_manager.bursary_amount if trainee.applying_for_bursary),
+          "funding_method" => funding_method(trainee),
+          "funding_value" => funding_value(trainee),
           "bursary_tier" => bursary_tier(trainee),
           "award_standards_met_date" => trainee.outcome_date&.iso8601,
           "award_awarded_at" => trainee.awarded_at&.iso8601,
@@ -110,6 +109,28 @@ module Exports
           "withdraw_reason" => trainee.withdraw_reason,
           "additional_withdraw_reason" => trainee.additional_withdraw_reason,
         }
+      end
+    end
+
+    def funding_method(trainee)
+      if trainee.applying_for_bursary?
+        FUNDING_TYPE_ENUMS[:bursary]
+      elsif trainee.applying_for_scholarship?
+        FUNDING_TYPE_ENUMS[:scholarship]
+      elsif trainee.applying_for_grant?
+        FUNDING_TYPE_ENUMS[:grant]
+      end
+    end
+
+    def funding_value(trainee)
+      funding_manager = FundingManager.new(trainee)
+
+      if trainee.applying_for_bursary?
+        funding_manager.bursary_amount
+      elsif trainee.applying_for_scholarship?
+        funding_manager.scholarship_amount
+      elsif trainee.applying_for_grant?
+        funding_manager.grant_amount
       end
     end
 
