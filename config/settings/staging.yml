@@ -19,6 +19,7 @@ features:
   import_applications_from_apply: true
   publish_course_details: true
   persist_to_dttp: true
+  grant: true
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true
