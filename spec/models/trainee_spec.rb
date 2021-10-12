@@ -375,21 +375,109 @@ describe Trainee do
     end
   end
 
-  describe "#ordered_by_date" do
-    let(:trainee_one) { create(:trainee, updated_at: 1.day.ago) }
-    let(:trainee_two) { create(:trainee, updated_at: 1.hour.ago) }
+  context "ordering scope" do
+    let(:deferred_trainee_a) { create(:trainee, :deferred, updated_at: 1.day.ago, last_name: "Smith") }
+    let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, updated_at: 1.hour.ago, last_name: "Doe") }
+    let(:draft_trainee_c) { create(:trainee, :draft, updated_at: 1.week.ago, last_name: "Jones") }
+    let(:draft_trainee_d) { create(:trainee, :draft, updated_at: 1.month.ago, last_name: "Joker") }
 
-    it "orders the trainess by updated_at in descending order" do
-      expect(Trainee.ordered_by_date).to eq([trainee_two, trainee_one])
+    let(:save_trainees) do
+      [
+        deferred_trainee_a,
+        draft_trainee_c,
+        submitted_for_trn_trainee_b,
+        draft_trainee_d,
+      ]
     end
-  end
 
-  describe "#ordered_by_last_name" do
-    let(:trainee_one) { create(:trainee, last_name: "Smith") }
-    let(:trainee_two) { create(:trainee, last_name: "Jones") }
+    before do
+      save_trainees
+    end
 
-    it "orders the trainess by last name in ascending order" do
-      expect(Trainee.ordered_by_last_name).to eq([trainee_two, trainee_one])
+    describe "#ordered_by_updated_at" do
+      let(:expected_order) do
+        [
+          submitted_for_trn_trainee_b,
+          deferred_trainee_a,
+          draft_trainee_c,
+          draft_trainee_d,
+        ]
+      end
+
+      it "orders the trainees by updated_at in descending order" do
+        expect(save_trainees).not_to eq(expected_order)
+        expect(Trainee.ordered_by_updated_at).to eq(expected_order)
+      end
+    end
+
+    describe "#ordered_by_last_name" do
+      let(:expected_order) do
+        [
+          submitted_for_trn_trainee_b,
+          draft_trainee_d,
+          draft_trainee_c,
+          deferred_trainee_a,
+        ]
+      end
+
+      it "orders the trainees by last name in ascending order" do
+        expect(save_trainees).not_to eq(expected_order)
+
+        expect(Trainee.ordered_by_last_name).to eq(expected_order)
+      end
+    end
+
+    describe "#ordered_by_drafts" do
+      let(:expected_order) do
+        [
+          draft_trainee_c,
+          draft_trainee_d,
+          deferred_trainee_a,
+          submitted_for_trn_trainee_b,
+        ]
+      end
+
+      it "orders the trainees by drafts first, then any other state" do
+        expect(save_trainees).not_to eq(expected_order)
+
+        expect(Trainee.ordered_by_drafts).to eq(expected_order)
+      end
+    end
+
+    describe "#ordered_by_drafts_then_by" do
+      context "last_name field" do
+        let(:expected_order) do
+          [
+            draft_trainee_d,
+            draft_trainee_c,
+            submitted_for_trn_trainee_b,
+            deferred_trainee_a,
+          ]
+        end
+
+        it "orders the trainees by drafts first, then any other state, then by last_name" do
+          expect(save_trainees).not_to eq(expected_order)
+
+          expect(Trainee.ordered_by_drafts_then_by(:last_name)).to eq(expected_order)
+        end
+      end
+
+      context "updated_at field" do
+        let(:expected_order) do
+          [
+            draft_trainee_c,
+            draft_trainee_d,
+            submitted_for_trn_trainee_b,
+            deferred_trainee_a,
+          ]
+        end
+
+        it "orders the trainees by drafts first, then any other state, then by updated_at" do
+          expect(save_trainees).not_to eq(expected_order)
+
+          expect(Trainee.ordered_by_drafts_then_by(:updated_at)).to eq(expected_order)
+        end
+      end
     end
   end
 
@@ -431,23 +519,6 @@ describe Trainee do
       subject { described_class.with_subject_or_allocation_subject(subject_specialism.allocation_subject.name) }
 
       it { is_expected.to eq([trainee_with_subject]) }
-    end
-  end
-
-  describe "#ordered_by_drafts" do
-    let(:deferred_trainee_a) { create(:trainee, :deferred, id: 1) }
-    let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, id: 2) }
-    let(:draft_trainee_c) { create(:trainee, :draft, id: 3) }
-    let(:draft_trainee_d) { create(:trainee, :draft, id: 4) }
-
-    it "orders the trainees by drafts first, then any other state" do
-      expected_order = [
-        draft_trainee_c,
-        draft_trainee_d,
-        deferred_trainee_a,
-        submitted_for_trn_trainee_b,
-      ]
-      expect(Trainee.ordered_by_drafts.order(:id)).to eq(expected_order)
     end
   end
 

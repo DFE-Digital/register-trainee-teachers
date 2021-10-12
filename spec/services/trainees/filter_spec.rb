@@ -109,5 +109,18 @@ module Trainees
 
       it { is_expected.to contain_exactly(apply_draft_trainee, draft_trainee) }
     end
+
+    describe "error is not raised" do
+      let(:trigger) do
+        # NOTE: forcing the subject to deserialise
+        subject.count
+      end
+
+      let(:subject_name) { CourseSubjects::BIOLOGY }
+      let!(:trainee_with_subject) { create(:trainee, trainee_id: "bug", course_subject_one: subject_name) }
+      let(:filters) { { subject: subject_name, text_search: "bug" } }
+
+      it { expect { trigger } .not_to raise_error }
+    end
   end
 end

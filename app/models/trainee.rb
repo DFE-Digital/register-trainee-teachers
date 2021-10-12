@@ -150,18 +150,24 @@ class Trainee < ApplicationRecord
                   against: %i[first_names middle_names last_name trainee_id trn],
                   using: { tsearch: { prefix: true } }
 
-  scope :ordered_by_date, -> { order(updated_at: :desc) }
-  scope :ordered_by_last_name, -> { order(last_name: :asc) }
-
-  scope :with_subject_or_allocation_subject, (lambda do |subject|
-    select("trainees.*", ordered_by_drafts_clause)
-      .joins(join_allocation_subjects_clause)
-      .where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject OR LOWER(allocation_subjects.name) = :subject", subject: subject.downcase)
-      .distinct
+  scope :ordered_by_drafts_then_by, (lambda do |field|
+    ordered_by_drafts.public_send("ordered_by_#{field}")
   end)
 
-  # Returns draft trainees first, then all trainees in any other state.
+  scope :ordered_by_updated_at, -> { order(updated_at: :desc) }
+  scope :ordered_by_last_name, -> { order(last_name: :asc) }
+
+  # NOTE: Returns draft trainees first, then all trainees in any other state.
   scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
+
+  # NOTE: Enforce subquery to remove duplications and allow for chain-ability.
+  scope :with_subject_or_allocation_subject, (lambda do |subject|
+    where(
+      id: distinct.select("trainees.id")
+        .joins(join_allocation_subjects_clause)
+        .where("LOWER(course_subject_one) = :subject OR LOWER(course_subject_two) = :subject OR LOWER(course_subject_three) = :subject OR LOWER(allocation_subjects.name) = :subject", subject: subject.downcase),
+    )
+  end)
 
   scope :with_award_states, (lambda do |*award_states|
     qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }

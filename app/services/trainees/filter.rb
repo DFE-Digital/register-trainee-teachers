@@ -69,10 +69,9 @@ module Trainees
     end
 
     def filter_trainees
-      # Tech note: If you're adding a new filter to the top of this list, make
-      # sure that it acts on `trainees` and all other filters then act on
-      # `filtered_trainees`
-      filtered_trainees = training_route(trainees, filters[:training_route])
+      filtered_trainees = trainees
+
+      filtered_trainees = training_route(filtered_trainees, filters[:training_route])
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])

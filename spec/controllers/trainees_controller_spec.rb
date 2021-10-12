@@ -39,6 +39,14 @@ describe TraineesController do
         expect(session[tracker.scope]).to eq("/trainees?commit=Apply+filters&sort_by=&state%5B%5D=draft&subject=All+subjects&text_search=")
       end
     end
+
+    describe "error is not raised" do
+      let(:trigger) do
+        get(:index, params: { "commit" => "Apply filters", "sort_by" => "", "text_search" => "bug", "subject" => "chemistry" })
+      end
+
+      it { expect { trigger } .not_to raise_error }
+    end
   end
 
   describe "#show" do
