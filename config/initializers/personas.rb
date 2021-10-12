@@ -3,7 +3,7 @@
 PROVIDER_A = "Provider A"
 PROVIDER_B = "Provider B"
 PROVIDER_C = "Teach First"
-TEACH_FIRST_PROVIDER_CODE = "HPPIT"
+TEACH_FIRST_PROVIDER_CODE = "HPITT"
 
 PERSONAS = [
   { first_name: "Adam", last_name: "Baker", email: "adam_baker@example.org", system_admin: true },
