@@ -2,8 +2,7 @@
 
 module Trainees
   module Diversity
-    class DisabilityDetailsController < ApplicationController
-      before_action :authorize_trainee
+    class DisabilityDetailsController < BaseController
       before_action :load_disabilities
 
       def edit
@@ -26,10 +25,6 @@ module Trainees
 
     private
 
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
-
       def load_disabilities
         @disabilities = Disability.all
       end
@@ -38,10 +33,6 @@ module Trainees
         return { disability_ids: nil } if params[:diversities_disability_detail_form].blank?
 
         params.require(:diversities_disability_detail_form).permit(:additional_disability, disability_ids: [])
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
     end
   end

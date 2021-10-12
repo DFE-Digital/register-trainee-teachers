@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 module Trainees
-  class PersonalDetailsController < ApplicationController
+  class PersonalDetailsController < BaseController
     include Appliable
 
-    before_action :authorize_trainee
     before_action :load_all_nationalities
     before_action :ensure_trainee_is_not_draft!, only: :show
 
@@ -41,10 +40,6 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def load_all_nationalities
       @nationalities = Nationality.where(name: NATIONALITIES)
       @other_nationalities = Nationality.all
@@ -65,10 +60,6 @@ module Trainees
       ).transform_keys do |key|
         DOB_CONVERSION.keys.include?(key) ? DOB_CONVERSION[key] : key
       end
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
 
     def relevant_redirect_path

@@ -62,7 +62,7 @@ private
   end
 
   def ensure_trainee_is_not_draft!
-    redirect_to(review_draft_trainee_path(trainee)) if trainee.draft?
+    redirect_to(trainee_review_drafts_path(trainee)) if trainee.draft?
   end
 
   def track_page

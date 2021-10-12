@@ -34,7 +34,7 @@ describe TraineeHelper do
       let(:trainee) { create(:trainee) }
 
       it "returns the trainee_path" do
-        expect(subject).to eq(review_draft_trainee_path(trainee))
+        expect(subject).to eq(trainee_review_drafts_path(trainee))
       end
     end
 

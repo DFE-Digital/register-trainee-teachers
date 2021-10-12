@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class PublishCourseDetailsController < ApplicationController
+  class PublishCourseDetailsController < BaseController
     include PublishCourseNextPath
-
-    before_action :authorize_trainee
 
     def edit
       @courses = trainee.available_courses
@@ -45,14 +43,6 @@ module Trainees
 
     def course_params
       params.fetch(:publish_course_details_form, {}).permit(:course_code)
-    end
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
   end
 end

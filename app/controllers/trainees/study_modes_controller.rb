@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class StudyModesController < ApplicationController
+  class StudyModesController < BaseController
     include PublishCourseNextPath
-
-    before_action :authorize_trainee
 
     def edit
       @study_mode_form = StudyModesForm.new(trainee)
@@ -23,10 +21,6 @@ module Trainees
 
     def trainee_params
       params.fetch(:study_modes_form, {}).permit(:study_mode)
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
   end
 end

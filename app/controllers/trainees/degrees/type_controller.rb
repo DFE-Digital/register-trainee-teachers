@@ -2,9 +2,7 @@
 
 module Trainees
   module Degrees
-    class TypeController < ApplicationController
-      before_action :authorize_trainee
-
+    class TypeController < BaseController
       def new
         @degree = trainee.degrees.build
       end
@@ -22,14 +20,6 @@ module Trainees
 
       def locale_code_params
         params.require(:degree).permit(:locale_code) if params.dig(:degree, :locale_code).present?
-      end
-
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
     end
   end

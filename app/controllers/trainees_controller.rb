@@ -48,7 +48,7 @@ class TraineesController < ApplicationController
       authorize(@trainee = Trainee.new(trainee_params.merge(provider_id: current_user.provider_id)))
       trainee.set_early_years_course_details
       if trainee.save
-        redirect_to(review_draft_trainee_path(trainee))
+        redirect_to(trainee_review_drafts_path(trainee))
       else
         render(:new)
       end

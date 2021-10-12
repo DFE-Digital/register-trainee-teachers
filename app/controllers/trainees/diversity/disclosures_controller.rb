@@ -2,8 +2,8 @@
 
 module Trainees
   module Diversity
-    class DisclosuresController < ApplicationController
-      before_action :authorize_trainee, :validate_form_completeness
+    class DisclosuresController < BaseController
+      before_action :validate_form_completeness
 
       def edit
         @disclosure_form = Diversities::DisclosureForm.new(trainee)
@@ -21,10 +21,6 @@ module Trainees
 
     private
 
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
-
       def disclosure_params
         return { diversity_disclosure: nil } if params[:diversities_disclosure_form].blank?
 
@@ -40,10 +36,6 @@ module Trainees
         return if user_came_from_backlink?
 
         redirect_to(step_wizard.start_point) if step_wizard.start_point.present?
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
     end
   end

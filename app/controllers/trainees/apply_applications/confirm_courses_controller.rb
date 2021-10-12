@@ -2,13 +2,11 @@
 
 module Trainees
   module ApplyApplications
-    class ConfirmCoursesController < ApplicationController
-      before_action :authorize_trainee
+    class ConfirmCoursesController < BaseController
       before_action :redirect_to_manual_confirm_page, if: :manual_entry_chosen?
-      before_action :set_course
-      before_action :set_specialisms
+      before_action :set_course, :set_specialisms, :set_itt_start_date
+
       helper_method :course_code
-      before_action :set_itt_start_date
 
       def show
         page_tracker.save_as_origin!
@@ -20,17 +18,13 @@ module Trainees
 
         if @confirm_course_form.save
           clear_form_stash(trainee)
-          redirect_to(review_draft_trainee_path(trainee))
+          redirect_to(trainee_review_drafts_path(trainee))
         else
           render(:show)
         end
       end
 
     private
-
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
 
       def redirect_to_manual_confirm_page
         redirect_to(trainee_course_details_confirm_path(trainee))
@@ -52,10 +46,6 @@ module Trainees
                        else
                          selected_or_calculated_specialisms
                        end
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
 
       def course_params

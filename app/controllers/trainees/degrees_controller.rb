@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 module Trainees
-  class DegreesController < ApplicationController
+  class DegreesController < BaseController
     include Appliable
 
-    before_action :authorize_trainee
     before_action :set_degrees_form
     before_action :set_degree_form, only: %i[edit update destroy]
 
@@ -60,14 +59,6 @@ module Trainees
 
     def autocomplete_params
       params.require(:degree).permit(DegreeForm::AUTOCOMPLETE_FIELDS)
-    end
-
-    def authorize_trainee
-      authorize(trainee)
-    end
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
     def set_degrees_form

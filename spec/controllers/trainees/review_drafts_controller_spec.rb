@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Trainees::ReviewDraftController do
+describe Trainees::ReviewDraftsController do
   let(:user) { build(:user) }
 
   before do
@@ -10,7 +10,7 @@ describe Trainees::ReviewDraftController do
   end
 
   describe "#show" do
-    subject { get(:show, params: { id: trainee }) }
+    subject { get(:show, params: { trainee_id: trainee }) }
 
     context "with a non-draft trainee" do
       let(:trainee) { create(:trainee, :submitted_for_trn) }

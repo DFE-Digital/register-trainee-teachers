@@ -2,9 +2,7 @@
 
 module Trainees
   module Funding
-    class BursariesController < ApplicationController
-      before_action :authorize_trainee
-
+    class BursariesController < BaseController
       def edit
         load_bursary_info!
         @bursary_form = ::Funding::BursaryForm.new(trainee)
@@ -22,20 +20,12 @@ module Trainees
 
     private
 
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
-
       def bursary_params
         return { applying_for_bursary: nil } if params[:funding_bursary_form].blank?
 
         params.require(:funding_bursary_form).permit(
           :funding_type,
         )
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
 
       def load_bursary_info!

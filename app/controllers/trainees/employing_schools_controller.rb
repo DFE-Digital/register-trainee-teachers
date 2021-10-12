@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class EmployingSchoolsController < ApplicationController
-    before_action :authorize_trainee
+  class EmployingSchoolsController < BaseController
     before_action :load_schools
 
     helper_method :query
@@ -33,10 +32,6 @@ module Trainees
 
     def load_schools
       @school_search = SchoolSearch.call(query: query)
-    end
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
     def trainee_params

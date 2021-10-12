@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class ConfirmDeferralsController < ApplicationController
-    before_action :authorize_trainee
-
+  class ConfirmDeferralsController < BaseController
     def show
       page_tracker.save_as_origin!
       deferral_form
@@ -21,10 +19,6 @@ module Trainees
     end
 
   private
-
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
 
     def deferral_form
       @deferral_form ||= DeferralForm.new(trainee)

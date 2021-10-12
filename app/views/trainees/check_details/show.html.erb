@@ -3,7 +3,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: "Back to draft record",
-    href: review_draft_trainee_path(@trainee),
+    href: trainee_review_drafts_path(@trainee),
     html_attributes: {
       id: "back-to-draft-record",
     },
@@ -30,7 +30,7 @@
         <% unless @form.all_sections_complete? %>
           <div class="govuk-inset-text">
             <p class="govuk-body">
-             This trainee record is not complete and cannot be submitted for TRN. 
+             This trainee record is not complete and cannot be submitted for TRN.
              If you do not have all the required information now, you can
              <%= govuk_link_to " return to this draft later", trainees_path %>.
             </p>

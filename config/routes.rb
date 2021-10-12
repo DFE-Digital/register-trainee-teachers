@@ -51,14 +51,18 @@ Rails.application.routes.draw do
         resource :study_mode, only: %i[edit update], path: "/study-mode"
       end
 
+      resource :confirm_deletes, only: :show, path: "/confirm-delete", as: :confirm_delete
+      resource :check_details, only: :show, path: "/check-details"
+      resource :review_drafts, only: :show, path: "/review-draft"
+      resource :course_details, only: %i[edit update], path: "/course-details", path_names: { edit: "" }
+      resource :publish_course_details, only: %i[edit update], path: "/publish-course-details", path_names: { edit: "" }
+
       resource :schools, concerns: :confirmable, only: %i[edit update], path: "/schools"
       resource :contact_details, concerns: :confirmable, only: %i[edit update], path: "/contact-details"
       resource :trainee_id, concerns: :confirmable, only: %i[edit update], path: "/trainee-id"
       resource :start_date, concerns: :confirmable, only: %i[edit update], path: "/trainee-start-date"
       resource :training_route, only: %i[edit update], path: "/training-routes"
       resource :course_education_phase, only: %i[edit update], path: "/course-education-phase"
-
-      get "/confirm-delete", to: "confirm_delete#show"
 
       namespace :degrees do
         resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "confirm_details"
@@ -118,13 +122,6 @@ Rails.application.routes.draw do
       resource :timeline, only: :show
 
       resource :subject_specialism, only: %i[edit update], path: "/subject-specialism/:position"
-    end
-
-    member do
-      get "course-details", to: "trainees/course_details#edit"
-      get "publish-course-details", to: "trainees/publish_course_details#edit"
-      get "check-details", to: "trainees/check_details#show"
-      get "review-draft", to: "trainees/review_draft#show"
     end
   end
 

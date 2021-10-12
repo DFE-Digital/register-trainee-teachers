@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class TraineeIdsController < ApplicationController
-    before_action :authorize_trainee
-
+  class TraineeIdsController < BaseController
     def edit
       @trainee_id_form = TraineeIdForm.new(trainee)
     end
@@ -20,16 +18,8 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def trainee_params
       params.require(:trainee_id_form).permit(:trainee_id)
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
   end
 end

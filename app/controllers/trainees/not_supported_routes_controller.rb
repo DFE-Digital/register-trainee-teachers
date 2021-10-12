@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Trainees
-  class NotSupportedRoutesController < ApplicationController
+  class NotSupportedRoutesController < BaseController
+    skip_before_action :authorize_trainee
+
     def index
       find_trainee
       render("trainees/not_supported_route")

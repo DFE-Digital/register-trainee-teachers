@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class ConfirmDeleteController < ApplicationController
-    before_action :ensure_trainee_is_draft!
+  class BaseController < ApplicationController
     before_action :authorize_trainee
-
-    def show; end
 
   private
 

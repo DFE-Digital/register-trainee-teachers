@@ -2,8 +2,7 @@
 
 module Trainees
   module ApplyApplications
-    class CourseDetailsController < ApplicationController
-      before_action :authorize_trainee
+    class CourseDetailsController < BaseController
       before_action :set_course
       before_action :redirect_to_confirm_page, if: :already_confirmed_course?
       before_action :redirect_to_publish_course_details_path, if: :course_not_found?
@@ -34,14 +33,6 @@ module Trainees
 
       def set_course
         @course = trainee.published_course
-      end
-
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
 
       def subject_specialism_path

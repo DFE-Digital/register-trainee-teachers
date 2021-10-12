@@ -2,9 +2,7 @@
 
 module Trainees
   module Diversity
-    class EthnicBackgroundsController < ApplicationController
-      before_action :authorize_trainee
-
+    class EthnicBackgroundsController < BaseController
       def edit
         @ethnic_background_form = Diversities::EthnicBackgroundForm.new(trainee)
       end
@@ -24,10 +22,6 @@ module Trainees
       end
 
     private
-
-      def trainee
-        @trainee ||= Trainee.from_param(params[:trainee_id])
-      end
 
       def ethnic_background_params
         return { ethnic_background: nil } if params[:diversities_ethnic_background_form].blank?
@@ -50,10 +44,6 @@ module Trainees
         else
           edit_trainee_diversity_disability_disclosure_path(trainee)
         end
-      end
-
-      def authorize_trainee
-        authorize(trainee)
       end
     end
   end

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module Trainees
-  class CourseDetailsController < ApplicationController
+  class CourseDetailsController < BaseController
     include Appliable
-
-    before_action :authorize_trainee
 
     DATE_CONVERSION = {
       "_start_date(3i)" => "start_day",
@@ -35,10 +33,6 @@ module Trainees
 
   private
 
-    def trainee
-      @trainee ||= Trainee.from_param(params[:trainee_id])
-    end
-
     def date_conversion
       @date_conversion ||= DATE_CONVERSION.transform_keys do |key|
         "#{trainee.itt_route? ? 'itt' : 'course'}#{key}"
@@ -58,10 +52,6 @@ module Trainees
 
     def redirect_to_confirm
       redirect_to(trainee_course_details_confirm_path(trainee))
-    end
-
-    def authorize_trainee
-      authorize(trainee)
     end
 
     def relevant_redirect_path
