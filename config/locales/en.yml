@@ -169,9 +169,9 @@ en:
         full_time: Full time
         part_time: Part time
     school_details:
-        summary_title: Schools
-        lead_school_key: Lead school
-        employing_school_key: Employing school
+      summary_title: Schools
+      lead_school_key: Lead school
+      employing_school_key: Employing school
     placement_detail:
       title: Placement details
     degrees:
@@ -449,7 +449,7 @@ en:
       missing_fields_summary:
         one: "This section contains 1 question that you need to complete."
         other: "This section contains questions which you need to complete."
-      single_missing_field_text_html: '%{missing_field} is missing'
+      single_missing_field_text_html: "%{missing_field} is missing"
       multiple_missing_field_text_html: '%{missing_field} is missing<span class="govuk-visually-hidden"> for %{section_label}</span>'
       missing_fields_mapping:
         first_names: *full_name
@@ -663,8 +663,9 @@ en:
               hint: For example, the trainee is not eligible or is self-funded
   pages:
     request_an_account:
-      inviting_limited_itt: We are only inviting a limited amount of initial teacher training providers to use Register,
-                            to begin with. If your organisation has not received an invite from the DfE you cannot request an account yet.
+      inviting_limited_itt:
+        We are only inviting a limited amount of initial teacher training providers to use Register,
+        to begin with. If your organisation has not received an invite from the DfE you cannot request an account yet.
       to_get_setup: To get set up on Register trainee teachers you need a DfE Sign-in account.
       sign_in_account: DfE Sign-in account
       send_email: To request an account, send an email to
@@ -698,7 +699,7 @@ en:
     accessibility:
       heading: Accessibility statement for Register trainee teachers
     guidance:
-      heading: Guidance
+      heading: About Register trainee teachers
     privacy_policy:
       pre_heading: Privacy policy
       heading: How we use your personal data and trainee data in Register trainee teachers
@@ -1121,16 +1122,18 @@ en:
               future: Enter an ITT start date closer to today
               invalid: Enter a valid ITT start date
               too_old: Enter a valid ITT start date
-              hint_html: <p class="govuk-body govuk-hint">The start date of the Initial Teacher Training part of their course.</p>
-               <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
+              hint_html:
+                <p class="govuk-body govuk-hint">The start date of the Initial Teacher Training part of their course.</p>
+                <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
             itt_end_date:
               blank: Enter an ITT end date
               future: Enter an ITT end date closer to today
               invalid: Enter a valid ITT end date
               too_old: Enter a valid ITT end date
               before_or_same_as_start_date: The ITT end date must be after the start date
-              hint_html: <p class="govuk-body govuk-hint">The end date of the Initial Teacher Training part of their course.</p>
-               <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
+              hint_html:
+                <p class="govuk-body govuk-hint">The end date of the Initial Teacher Training part of their course.</p>
+                <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
         publish_course_details_form:
           attributes:
             course_code:
@@ -1163,14 +1166,14 @@ en:
         trainee_id_form:
           attributes:
             trainee_id:
-                blank: Enter a trainee ID
-                max_char_exceeded: Your entry must not exceed 100 characters
+              blank: Enter a trainee ID
+              max_char_exceeded: Your entry must not exceed 100 characters
         trainee_start_date_form:
           attributes:
             commencement_date:
-                blank: Enter a start date
-                invalid: Enter a valid start date
-                not_before_course_start_date: *not_before_course_start_date
+              blank: Enter a start date
+              invalid: Enter a valid start date
+              not_before_course_start_date: *not_before_course_start_date
         training_details_form:
           attributes:
             commencement_date:
@@ -1221,19 +1224,19 @@ en:
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
         funding/form_validator:
-            attributes:
-              training_initiative:
-                blank: Select if the trainee is on a training initiative
-              applying_for_grant:
-                inclusion: *grant_selection_required
-              applying_for_bursary:
-                inclusion: *bursary_selection_required
-              applying_for_scholarship:
-                inclusion: *bursary_selection_required
-              bursary_tier:
-                inclusion: *bursary_selection_required
-              funding_type:
-                inclusion: *bursary_selection_required
+          attributes:
+            training_initiative:
+              blank: Select if the trainee is on a training initiative
+            applying_for_grant:
+              inclusion: *grant_selection_required
+            applying_for_bursary:
+              inclusion: *bursary_selection_required
+            applying_for_scholarship:
+              inclusion: *bursary_selection_required
+            bursary_tier:
+              inclusion: *bursary_selection_required
+            funding_type:
+              inclusion: *bursary_selection_required
         course_education_phase_form:
           attributes:
             course_education_phase:
