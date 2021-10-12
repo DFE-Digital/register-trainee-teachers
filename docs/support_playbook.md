@@ -8,7 +8,7 @@ Sometimes support will ask a dev to update the training route. Here is an exampl
 ```
 trainee = Trainee.find_by(slug: "XXX")
 manager = RouteDataManager.new(trainee: trainee)
-m.update_training_route!("school_direct_salaried")
+manager.update_training_route!("school_direct_salaried")
 ```
 
 A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask support to communicate with the user to update the Trainee record for the missing information.
