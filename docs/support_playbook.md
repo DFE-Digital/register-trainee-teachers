@@ -3,8 +3,7 @@ Support Playbook
 
 ## Changing training route
 
-Support will ask dev to update training route. Run the following
-commands to update training route to for example `school_direct_salaried`.
+Sometimes support will ask a dev to update the training route. Here is an example for updating a route to `school_direct_salaried`.
 
 ```
 trainee = Trainee.where(slug: "XXX").first
@@ -12,8 +11,7 @@ manager = RouteDataManager.new(trainee: trainee)
 m.update_training_route!("school_direct_salaried")
 ```
 
-A bunch of fields will be set to `nil`, see `RouteDataManager` class.
-Ask support to communicate with user to update Trainee record for missing information.
+A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask support to communicate with the user to update the Trainee record for the missing information.
 
 ## Dttp::RetrieveTrnJob for Trainee id: <id> has timed out after 4 days.
 
@@ -53,3 +51,33 @@ We currently only match on active or new status codes. There are other status co
   * Get support to add the school to DTTP and provide the DTTP UUID
   * The school will sync overnight but we can run the `Dttp::SyncSchoolsJob` or manually create the `Dttp::School` if that is too long
 
+## Dttp::Client::HttpError 400
+
+If you have to deal with this error, where the message is something along the line of: `"message":"Cannot find record to be updated"`, then the trainee record on the DTTP side may have been deleted.
+
+You'll need to `nil` the `dttp_id` on the trainee record and possibly the `placement_assignment_dttp_id` if that is also missing in DTTP.
+
+Before you run the commands below, make a note of the `submitted_for_trn_at` timestamp on the trainee record. You can grab this value from the database via a prod dump. You'll also need to grab the `user.dttp_id` of the user who last submitted for trn. You can check the name on the trainee's timeline and query the `trainee.provider.users` or just check the `trainee.audits`.
+
+```ruby
+# Find the trainee
+trainee = Trainee.find(5913)
+
+# Use the without_auditing method to avoid adding to the audit trail. We need to use update_columns to avoid the LockedAttributeError when setting the dttp_id
+trainee.without_auditing do
+  trainee.update_columns(dttp_id: nil, placement_assignment_dttp_id: nil, state: "draft", submitted_for_trn_at: nil)
+end
+
+# Fire the job to register for trn and pass in the user's dttp_id
+Dttp::RegisterForTrnJob.perform_later(trainee, users_dttp_id)
+
+# Set the state back to submitted_for_trn and the submitted_for_trn_at timestamp to the one we grabbed earlier. The timestamp needs to be exact or the audit trail will be wrong.
+trainee.without_auditing do
+  trainee.update_columns(state: "submitted_for_trn", submitted_for_trn_at: Time.parse("05 Oct 2021 08:42:25.692295000 UTC +00:00"))
+end
+
+# Fire off job to retrieve trn
+Dttp::RetrieveTrnJob.perform_with_default_delay(trainee)
+```
+
+It's worth double checking that those two jobs have been called successfully via the Sidekiq dashboard and also the trainee's timeline looks exactly as before the changes.
