@@ -156,8 +156,6 @@ SEED_BURSARIES = [
       AllocationSubjects::BIOLOGY,
     ],
   ),
-  # NOTE: `EARLY_YEARS_GRANT` is incorrectly set as bursary
-  EARLY_YEARS_GRANT,
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
     amount: 9_000,
