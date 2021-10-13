@@ -10,7 +10,7 @@ module BulkImport
       trainee_ids = csv.map { |row| row["Trainee ID"] }
 
       raise(Error, "Duplicate trainee ids found in csv") if trainee_ids.uniq != trainee_ids
-      raise(Error, "Duplicate trainee ids found in database") if provider.trainees.where(trainee_id: trainee_ids).count.positive?
+      raise(Error, "Existing trainee ids found in database") if provider.trainees.where(trainee_id: trainee_ids).exists?
     end
 
     def import_row(provider, csv_row)
@@ -182,7 +182,7 @@ module BulkImport
         trainee.course_subject_three ||= course_subject_three
       end
 
-      trainee.study_mode ||= @study_mode = TRAINEE_STUDY_MODE_ENUMS[course.study_mode]
+      trainee.study_mode ||= TRAINEE_STUDY_MODE_ENUMS[course.study_mode]
       trainee.course_start_date ||= course.start_date
       trainee.course_end_date ||= course.end_date
       trainee.course_min_age ||= course.min_age
@@ -193,18 +193,11 @@ module BulkImport
     def to_course_subject(raw_string)
       return if raw_string.blank?
 
-      potential_subjects = HPITT::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
-        values.include?(raw_string.squish)
-      end
-
-      case potential_subjects.count
-      when 0
-        raise(Error, "Course subject not recognised: #{raw_string}")
-      when 1
-        potential_subjects.keys.first
-      else
-        raise(Error, "Course subject ambiguous, #{potential_subjects.count} found: #{raw_string}")
-      end
+    if HPITT::CodeSets::CourseSubjects::MAPPING.values.flatten.include?(raw_string.squish)
+      raw_string.squish
+    else
+      raise(Error, "Course subject not recognised: #{raw_string}")
+    end
     end
 
     def to_study_mode(raw_string)
@@ -298,9 +291,7 @@ module BulkImport
     def validate_enic_non_uk_degree(raw_string)
       return NON_ENIC if raw_string.blank?
 
-      raw_string.tap do
-        return nil if !ENIC_NON_UK.include?(raw_string)
-      end
+      ENIC_NON_UK.include?(raw_string) ? raw_string : nil
     end
 
     def to_disability_disclosure(raw_string)
@@ -312,9 +303,7 @@ module BulkImport
     end
 
     def to_disability_ids(raw_string)
-      return [] if raw_string.blank?
-
-      Disability.where("LOWER(name) = ?", raw_string.downcase).map(&:id)
+      Disability.where("LOWER(name) = ?", raw_string.downcase).ids
     end
 
     def to_school_id(raw_string)
