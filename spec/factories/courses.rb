@@ -2,11 +2,11 @@
 
 FactoryBot.define do
   factory :course do
-    name { PUBLISH_SUBJECT_SPECIALISM_MAPPING.keys.sample }
+    name { PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.keys.sample }
     code { Faker::Alphanumeric.unique.alphanumeric(number: 4, min_alpha: 1).upcase }
     accredited_body_code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     start_date { Time.zone.today }
-    level { :primary }
+    level { PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.keys.include?(name) ? :primary : :secondary }
     min_age { 7 }
     max_age { 11 }
     duration_in_years { 1 }
@@ -20,6 +20,10 @@ FactoryBot.define do
       qualifications = builder.qualification.to_s.gsub("_", " ").upcase.gsub("WITH", "with")
       study_mode = builder.study_mode.to_s.humanize(capitalize: false)
       [qualifications, study_mode].join(" ")
+    end
+
+    trait :secondary do
+      name { PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING.keys.sample }
     end
 
     factory :course_with_unmappable_subject do
