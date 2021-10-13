@@ -32,6 +32,7 @@ module ApplyApplications
         @trainee ||= Trainee.new(
           id: 0,
           degrees: degrees,
+          provider: Provider.new,
           apply_application: ApplyApplication.new(invalid_data: {}),
         ).tap do |t|
           t.degrees&.singleton_class&.class_eval do

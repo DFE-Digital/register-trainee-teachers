@@ -61,12 +61,13 @@ module Sections
         lead_school: School.new(id: 1),
         degrees: [Degree.new(id: 1, locale_code: :uk)],
         training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
-        applying_for_bursary: true
+        applying_for_bursary: true,
+        provider: Provider.new
       )
     end
 
     def start_sections_trainee(section)
-      @start_sections_trainee ||= Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[training_route(section)])
+      @start_sections_trainee ||= Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[training_route(section)], provider: Provider.new)
     end
 
     def training_route(section)

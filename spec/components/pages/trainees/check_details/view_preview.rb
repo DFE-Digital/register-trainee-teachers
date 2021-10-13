@@ -59,7 +59,7 @@ module Pages
         end
 
         def trainee_with_all_sections_incomplete(training_route_enums_key: :assessment_only)
-          Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key])
+          Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key], provider: Provider.new)
         end
 
         def trainee_with_all_sections_in_progress(training_route_enums_key: :assessment_only)
@@ -79,7 +79,8 @@ module Pages
                       course_subject_one: "subject",
                       degrees: [Degree.new(id: 1, locale_code: :uk)],
                       training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
-                      applying_for_bursary: true)
+                      applying_for_bursary: true,
+                      provider: Provider.new)
         end
 
         def trainee_with_all_sections_completed(training_route_enums_key: :assessment_only)

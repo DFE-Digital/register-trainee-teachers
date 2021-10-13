@@ -102,10 +102,10 @@ module Sections
           review: "trainee_degrees_confirm_path",
         },
         course_details: {
-          incomplete: "edit_trainee_course_details_path",
+          incomplete: path_for_incomplete_course_details(trainee),
           in_progress_invalid: "edit_trainee_course_details_path",
           in_progress_valid: "trainee_course_details_confirm_path",
-          review: "trainee_course_details_confirm_path",
+          review: "edit_trainee_apply_applications_course_details_path",
         },
         training_details: {
           incomplete: "edit_trainee_training_details_path",
@@ -165,6 +165,13 @@ module Sections
     def link_text
       link_text = I18n.t("components.sections.link_texts.#{progress_status}")
       "#{link_text}<span class=\"govuk-visually-hidden\"> #{section_title.downcase}</span>".html_safe
+    end
+
+    def path_for_incomplete_course_details(trainee)
+      return "edit_trainee_publish_course_details_path" if trainee.available_courses.present?
+      return "edit_trainee_course_details_path" if trainee.early_years_route?
+
+      "edit_trainee_course_education_phase_path"
     end
   end
 end
