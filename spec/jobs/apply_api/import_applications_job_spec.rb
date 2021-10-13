@@ -14,6 +14,17 @@ module ApplyApi
     end
 
     context "when the feature flag is turned on", feature_import_applications_from_apply: true do
+      context "when a from_date param is given" do
+        let(:from_date) { "2019-01-01" }
+
+        it "calls the RetrieveApplications service with the from_date param" do
+          expect(RetrieveApplications).to receive(:call).with(changed_since: from_date)
+          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+
+          described_class.perform_now(from_date: from_date)
+        end
+      end
+
       context "when there have been no previous syncs" do
         it "imports application data from Apply and creates a trainee record" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: nil)
