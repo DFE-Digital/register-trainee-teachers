@@ -45,7 +45,6 @@ describe "bulk_import:import" do
     it "gives an error including which row had the problem, and still creates the valid trainee" do
       expect(Sentry).to receive(:capture_exception).with(StandardError)
       expect { subject }.to change { Trainee.count }.from(0).to(1)
-      # TODO: error csv
     end
   end
 

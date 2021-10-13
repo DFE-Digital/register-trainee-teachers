@@ -79,7 +79,7 @@ describe BulkImport do
     end
   end
 
-  describe "#to_ethnic_group" do
+  describe ".to_ethnic_group" do
     let(:trainee) { create(:trainee, :school_direct_salaried) }
     let(:ethnicity) { "Another ethnic group\n(includes any other ethnic group, for example, Arab)" }
 
@@ -129,7 +129,7 @@ describe BulkImport do
     end
   end
 
-  describe "build_non_uk_degree" do
+  describe ".build_non_uk_degree" do
     let(:trainee) { build(:trainee) }
 
     subject do
@@ -150,7 +150,7 @@ describe BulkImport do
     end
   end
 
-  describe "to_disability_ids" do
+  describe ".to_disability_ids" do
     subject { described_class.to_disability_ids(disabilities) }
 
     context "when disabilities are provided" do
@@ -174,7 +174,7 @@ describe BulkImport do
     end
   end
 
-  describe "to_school_id" do
+  describe ".to_school_id" do
     subject { described_class.to_school_id(school_name) }
 
     let(:school_name) { "Primrose Hill School" }
@@ -194,7 +194,7 @@ describe BulkImport do
     end
   end
 
-  describe "#set_nationalities" do
+  describe ".set_nationalities" do
     let(:trainee) { build(:trainee) }
 
     subject { described_class.set_nationalities(trainee, csv_row) }
@@ -230,7 +230,7 @@ describe BulkImport do
     end
   end
 
-  describe "to_course_subject" do
+  describe ".to_course_subject" do
     subject { described_class.to_course_subject(itt_subject) }
 
     context "a course subject can be found" do
@@ -250,7 +250,7 @@ describe BulkImport do
     end
   end
 
-  describe "to_degree_grade" do
+  describe ".to_degree_grade" do
     subject { described_class.to_degree_grade(degree_grade) }
 
     context "a degree grade can be found" do
@@ -270,7 +270,7 @@ describe BulkImport do
     end
   end
 
-  describe "validate_uk_degree" do
+  describe ".validate_uk_degree" do
     subject { described_class.validate_uk_degree(degree_type) }
 
     context "the degree type can be found" do
@@ -306,7 +306,7 @@ describe BulkImport do
     end
   end
 
-  describe "#validate_degree_institution" do
+  describe ".validate_degree_institution" do
     subject { described_class.validate_degree_institution(degree_institution) }
 
     context "when an exact match is found" do
@@ -342,7 +342,7 @@ describe BulkImport do
     end
   end
 
-  describe "validate_degree_subject" do
+  describe ".validate_degree_subject" do
     subject { described_class.validate_degree_subject(degree_subject) }
 
     context "the degree subejct can be found" do
@@ -378,7 +378,7 @@ describe BulkImport do
     end
   end
 
-  describe "validate_enic_non_uk" do
+  describe ".validate_enic_non_uk" do
     subject { described_class.validate_enic_non_uk_degree(enic) }
 
     context "the enic value can be found" do
