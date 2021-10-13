@@ -5,9 +5,10 @@ require "rails_helper"
 describe BulkImport do
   include SeedHelper
 
-  describe ".import_row" do
-    let!(:provider) { create(:provider) }
+  let(:provider) { create(:provider) }
+  let(:trainee) { build(:trainee) }
 
+  describe ".import_row" do
     let(:csv_row) do
       {
         "Route" => "School Direct Salaried PG)",
@@ -107,8 +108,6 @@ describe BulkImport do
   end
 
   describe ".build_uk_degree" do
-    let(:trainee) { build(:trainee) }
-
     subject do
       described_class.build_uk_degree(trainee,
                                       degree_type: "Master of Music",
@@ -130,8 +129,6 @@ describe BulkImport do
   end
 
   describe ".build_non_uk_degree" do
-    let(:trainee) { build(:trainee) }
-
     subject do
       described_class.build_non_uk_degree(trainee,
                                           country: "France",
@@ -195,8 +192,6 @@ describe BulkImport do
   end
 
   describe ".set_nationalities" do
-    let(:trainee) { build(:trainee) }
-
     subject { described_class.set_nationalities(trainee, csv_row) }
 
     context "when nationalities exist" do
@@ -226,6 +221,43 @@ describe BulkImport do
       it "returns a blank array" do
         subject
         expect(trainee.nationality_ids).to be_empty
+      end
+    end
+  end
+
+  describe ".set_course" do
+    let(:csv_row) do
+      {
+        "Course code" => "1CS",
+      }
+    end
+
+    subject { described_class.set_course(provider, trainee, csv_row) }
+
+    context "a course can be found" do
+      let!(:course) { create(:course, provider: provider, code: "1CS", level: :secondary, study_mode: :full_time) }
+
+      it "sets the course code on the trainee" do
+        subject
+        expect(trainee.course_code).to eq("1CS")
+        expect(trainee.study_mode).to eq("full_time")
+      end
+    end
+
+    context "with a part/full time course" do
+      let!(:course) { create(:course, provider: provider, code: "1CS", study_mode: :full_time_or_part_time) }
+
+      it "does not set the study_mode on the trainee" do
+        subject
+        expect(trainee.course_code).to eq("1CS")
+        expect(trainee.study_mode).to be_nil
+      end
+    end
+
+    context "a course subject can't be found" do
+      it "does not set the course_code on the trainee" do
+        subject
+        expect(trainee.course_code).to be_nil
       end
     end
   end

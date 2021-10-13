@@ -175,7 +175,7 @@ module BulkImport
         trainee.course_subject_three ||= course_subject_three
       end
 
-      trainee.study_mode ||= course.study_mode
+      trainee.study_mode ||= @study_mode = TRAINEE_STUDY_MODE_ENUMS[course.study_mode]
       trainee.course_start_date ||= course.start_date
       trainee.course_end_date ||= course.end_date
       trainee.course_min_age ||= course.min_age
