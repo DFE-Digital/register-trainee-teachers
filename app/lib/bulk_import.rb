@@ -141,7 +141,6 @@ module BulkImport
         trainee.postcode = nil
       else
         trainee.locale_code = Trainee.locale_codes[:uk]
-
       end
 
       trainee.diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
@@ -178,7 +177,7 @@ module BulkImport
 
       trainee.study_mode ||= course.study_mode
       trainee.course_start_date ||= course.start_date
-      trainee.course_end_date ||= course.start_date + course.duration_in_years.years
+      trainee.course_end_date ||= course.end_date
       trainee.course_min_age ||= course.min_age
       trainee.course_max_age ||= course.max_age
       trainee.course_education_phase ||= course.level
