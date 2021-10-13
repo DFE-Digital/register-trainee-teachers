@@ -5,7 +5,7 @@ require "rails_helper"
 describe BulkImport do
   include SeedHelper
 
-  describe "#import_row" do
+  describe ".import_row" do
     let!(:provider) { create(:provider) }
 
     let(:csv_row) do
@@ -21,7 +21,7 @@ describe BulkImport do
       }
     end
 
-    subject { BulkImport.import_row(provider, csv_row) }
+    subject { described_class.import_row(provider, csv_row) }
 
     it "creates the trainee/degree" do
       expect { subject }.to change { Trainee.count }.from(0).to(1)
@@ -61,7 +61,7 @@ describe BulkImport do
     end
   end
 
-  describe "#to_post_code" do
+  describe ".to_post_code" do
     let(:postcode) { "NE29 9LH" }
 
     subject { described_class.to_post_code(postcode) }
@@ -106,7 +106,7 @@ describe BulkImport do
     end
   end
 
-  describe "build_uk_degree" do
+  describe ".build_uk_degree" do
     let(:trainee) { build(:trainee) }
 
     subject do

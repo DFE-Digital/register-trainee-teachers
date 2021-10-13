@@ -197,7 +197,7 @@ module BulkImport
       when 1
         potential_subjects.keys.first
       else
-        raise(Error, "Course subject ambiguous, multiple found: #{raw_string}")
+        raise(Error, "Course subject ambiguous, #{potential_subjects.count} found: #{raw_string}")
       end
     end
 
@@ -250,7 +250,7 @@ module BulkImport
       when 1
         potential_subjects.keys.first
       else
-        raise(Error, "Degree subject ambiguous, multiple found: #{raw_string}")
+        raise(Error, "Degree subject ambiguous, #{potential_subjects.count} found: #{raw_string}")
       end
     end
 
@@ -268,7 +268,7 @@ module BulkImport
       when 1
         potential_institutions.keys.first
       else
-        raise(Error, "Degree institution ambiguous, multiple found: #{raw_string}")
+        raise(Error, "Degree institution ambiguous, #{potential_institutions.count} found: #{raw_string}")
       end
     end
 
@@ -285,7 +285,7 @@ module BulkImport
       when 1
         potential_degree_types.keys.first
       else
-        raise(Error, "Degree type ambiguous, multiple found: #{raw_string}")
+        raise(Error, "Degree type ambiguous, #{potential_degree_types.count} found: #{raw_string}")
       end
     end
 
@@ -357,12 +357,12 @@ module BulkImport
       return "" if raw_string.blank?
 
       raw_string
-      .downcase
-      .gsub(/\(.*\)/, "")
-      .split
-      .reject { |word| REJECTED_WORD_LIST.include?(word) }
-      .join(" ")
-      .gsub(/[^\w]/, "")
+        .downcase
+        .gsub(/\(.*\)/, "")
+        .split
+        .reject { |word| REJECTED_WORD_LIST.include?(word) }
+        .join(" ")
+        .gsub(/[^\w]/, "")
     end
 
     def potential_institutions_in_dttp_codeset(raw_string)
