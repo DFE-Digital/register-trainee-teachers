@@ -6,12 +6,7 @@ describe "hpitt:import" do
   include SeedHelper
 
   before do
-    # Load Nationalities
-    Dttp::CodeSets::Nationalities::MAPPING.each_key do |nationality|
-      Nationality.find_or_create_by(name: nationality)
-    end
-
-    # Load Disabilities
+    generate_seed_nationalities
     generate_seed_disabilities
   end
 

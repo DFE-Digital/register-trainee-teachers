@@ -6,12 +6,7 @@ describe "bulk_import:import" do
   include SeedHelper
 
   before do
-    # Load Nationalities
-    Dttp::CodeSets::Nationalities::MAPPING.each_key do |nationality|
-      Nationality.find_or_create_by(name: nationality)
-    end
-
-    # Load Disabilities
+    generate_seed_nationalities
     generate_seed_disabilities
   end
 
@@ -55,7 +50,7 @@ describe "bulk_import:import" do
 
     it "raises an exception" do
       create(:trainee, provider: provider, trainee_id: "L0V3LYiD")
-      expect { subject }.to raise_error(StandardError, "Duplicate trainee ids found in database")
+      expect { subject }.to raise_error(StandardError, "Existing trainee ids found in database")
     end
   end
 

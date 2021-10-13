@@ -10,7 +10,7 @@ module BulkImport
       trainee_ids = csv.map { |row| row["Trainee ID"] }
 
       raise(Error, "Duplicate trainee ids found in csv") if trainee_ids.uniq != trainee_ids
-      raise(Error, "Existing trainee ids found in database") if provider.trainees.where(trainee_id: trainee_ids).exists?
+      raise(Error, "Existing trainee ids found in database") if provider.trainees.exists?(trainee_id: trainee_ids)
     end
 
     def import_row(provider, csv_row)
@@ -193,11 +193,13 @@ module BulkImport
     def to_course_subject(raw_string)
       return if raw_string.blank?
 
-    if HPITT::CodeSets::CourseSubjects::MAPPING.values.flatten.include?(raw_string.squish)
-      raw_string.squish
-    else
-      raise(Error, "Course subject not recognised: #{raw_string}")
-    end
+      potential_subjects = HPITT::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
+        values.include?(raw_string.squish)
+      end
+
+      raise(Error, "Course subject not recognised: #{raw_string}") if potential_subjects.blank?
+
+      potential_subjects.keys.first
     end
 
     def to_study_mode(raw_string)
@@ -243,14 +245,9 @@ module BulkImport
         subjects&.casecmp?(raw_string.squish)
       end
 
-      case potential_subjects.count
-      when 0
-        raise(Error, "Degree subject not recognised: #{raw_string}")
-      when 1
-        potential_subjects.keys.first
-      else
-        raise(Error, "Degree subject ambiguous, #{potential_subjects.count} found: #{raw_string}")
-      end
+      raise(Error, "Degree subject not recognised: #{raw_string}") if potential_subjects.blank?
+
+      potential_subjects.keys.first
     end
 
     def validate_degree_institution(raw_string)
@@ -261,14 +258,9 @@ module BulkImport
 
       potential_institutions = potential_institutions_in_hpitt_codeset(raw_string) if potential_institutions.blank?
 
-      case potential_institutions.count
-      when 0
-        Dttp::CodeSets::Institutions::OTHER_UK
-      when 1
-        potential_institutions.keys.first
-      else
-        raise(Error, "Degree institution ambiguous, #{potential_institutions.count} found: #{raw_string}")
-      end
+      return Dttp::CodeSets::Institutions::OTHER_UK if potential_institutions.blank?
+
+      potential_institutions.keys.first
     end
 
     def validate_uk_degree(raw_string)
@@ -303,7 +295,7 @@ module BulkImport
     end
 
     def to_disability_ids(raw_string)
-      Disability.where("LOWER(name) = ?", raw_string.downcase).ids
+      Disability.where("LOWER(name) = ?", raw_string&.downcase).ids
     end
 
     def to_school_id(raw_string)
