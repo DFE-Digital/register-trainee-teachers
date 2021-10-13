@@ -4,7 +4,9 @@ module ApplyApi
   class ImportApplicationsJob < ApplicationJob
     queue_as :default
 
-    def perform
+    def perform(from_date: nil)
+      @from_date = from_date
+
       return unless FeatureService.enabled?("import_applications_from_apply")
 
       new_applications.each do |application_data|
@@ -17,7 +19,7 @@ module ApplyApi
   private
 
     def new_applications
-      RetrieveApplications.call(changed_since: last_successful_sync)
+      RetrieveApplications.call(changed_since: @from_date || last_successful_sync)
     end
 
     def last_successful_sync

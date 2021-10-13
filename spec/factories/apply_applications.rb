@@ -11,6 +11,10 @@ FactoryBot.define do
       state { "importable" }
     end
 
+    trait :imported do
+      state { "imported" }
+    end
+
     trait :with_invalid_data do
       invalid_data do
         {

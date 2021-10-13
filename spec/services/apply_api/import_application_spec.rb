@@ -24,11 +24,15 @@ module ApplyApi
 
         context "and the apply application_data also exists in register" do
           before do
-            create(:apply_application, apply_id: application_data["id"])
+            create(:apply_application, :imported, apply_id: application_data["id"])
           end
 
           it "does not create a duplicate" do
             expect { subject }.not_to(change { ApplyApplication.count })
+          end
+
+          it "does not update old values" do
+            expect { subject }.not_to(change { ApplyApplication.last.state })
           end
         end
 
