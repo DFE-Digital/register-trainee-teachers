@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedHelper
-  def generate_seed_diversities
+  def generate_seed_disabilities
     Disability.upsert_all(disability_attributes, unique_by: :name)
   end
 

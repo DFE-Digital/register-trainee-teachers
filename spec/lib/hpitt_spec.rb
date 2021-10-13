@@ -161,7 +161,7 @@ describe HPITT do
       let(:disabilities) { "Learning difficulty\n(for example, dyslexia, dyspraxia or ADHD)" }
 
       before do
-        generate_seed_diversities
+        generate_seed_disabilities
       end
 
       it "is returned" do

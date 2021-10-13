@@ -12,7 +12,7 @@ describe "bulk_import:import" do
     end
 
     # Load Disabilities
-    generate_seed_diversities
+    generate_seed_disabilities
   end
 
   subject do

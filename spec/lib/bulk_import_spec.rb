@@ -154,7 +154,7 @@ describe BulkImport do
       let(:disabilities) { "learninG DifFiCulty" }
 
       before do
-        generate_seed_diversities
+        generate_seed_disabilities
       end
 
       it "is returned" do
