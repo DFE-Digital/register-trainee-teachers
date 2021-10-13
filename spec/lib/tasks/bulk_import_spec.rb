@@ -48,15 +48,14 @@ describe "bulk_import:import" do
     end
   end
 
-  context "with a preexisting trainee" do
+  context "with an existing trainee" do
     let(:csv_path) {
       File.join(__dir__, "..", "..", "support", "fixtures", "bulk_import.csv")
     }
 
-    it "edits the existing trainee" do
-      trainee = create(:trainee, provider: provider, trainee_id: "L0V3LYiD")
-      expect { subject }.not_to(change { Trainee.count })
-      expect_trainee_to_have_attributes_from_csv(trainee)
+    it "raises an exception" do
+      create(:trainee, provider: provider, trainee_id: "L0V3LYiD")
+      expect { subject }.to raise_error(StandardError, "Duplicate trainee ids found in database")
     end
   end
 

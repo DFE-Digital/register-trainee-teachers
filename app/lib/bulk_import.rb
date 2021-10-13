@@ -6,6 +6,13 @@ module BulkImport
   REJECTED_WORD_LIST = ["the"].freeze
 
   class << self
+    def run_pre_import_checks!(provider, csv)
+      trainee_ids = csv.map { |row| row["Trainee ID"] }
+
+      raise(Error, "Duplicate trainee ids found in csv") if trainee_ids.uniq != trainee_ids
+      raise(Error, "Duplicate trainee ids found in database") if provider.trainees.where(trainee_id: trainee_ids).count.positive?
+    end
+
     def import_row(provider, csv_row)
       trainee = build_trainee(provider, csv_row)
 
@@ -83,7 +90,7 @@ module BulkImport
     end
 
     def build_trainee(provider, csv_row)
-      trainee = provider.trainees.find_or_initialize_by(trainee_id: csv_row["Trainee ID"])
+      trainee = provider.trainees.build(trainee_id: csv_row["Trainee ID"])
 
       assign_field = lambda do |field_name|
         lambda do |field_value|

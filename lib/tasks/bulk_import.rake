@@ -7,6 +7,8 @@ namespace :bulk_import do
 
     provider = Provider.find_by!(code: args.provider_code)
 
+    BulkImport.run_pre_import_checks!(provider, csv)
+
     csv.each_with_index do |row, i|
       BulkImport.import_row(provider, row)
     rescue StandardError => e
