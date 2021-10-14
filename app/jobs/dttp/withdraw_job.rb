@@ -7,13 +7,13 @@ module Dttp
 
     def perform(trainee)
       UpdateTraineeStatus.call(
-        status: DttpStatuses::REJECTED,
+        status: DttpStatuses::LEFT_COURSE_BEFORE_END,
         trainee: trainee,
         entity_type: UpdateTraineeStatus::CONTACT_ENTITY_TYPE,
       )
 
       UpdateTraineeStatus.call(
-        status: DttpStatuses::REJECTED,
+        status: DttpStatuses::LEFT_COURSE_BEFORE_END,
         trainee: trainee,
         entity_type: UpdateTraineeStatus::PLACEMENT_ASSIGNMENT_ENTITY_TYPE,
       )
