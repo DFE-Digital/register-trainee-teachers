@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/accessibility", to: "pages#accessibility", as: :accessibility
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/guidance", to: "pages#guidance"
+  get "/check-data", to: "pages#check_data"
 
   get "/404", to: "errors#not_found", via: :all
   get "/422", to: "errors#unprocessable_entity", via: :all

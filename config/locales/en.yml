@@ -700,6 +700,8 @@ en:
       heading: Accessibility statement for Register trainee teachers
     guidance:
       heading: About Register trainee teachers
+    check_data:
+      heading: Check what data you need to provide
     privacy_policy:
       pre_heading: Privacy policy
       heading: How we use your personal data and trainee data in Register trainee teachers
