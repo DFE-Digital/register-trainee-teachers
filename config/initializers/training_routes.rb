@@ -9,8 +9,8 @@ TRAINING_ROUTE_ENUMS = {
   opt_in_undergrad: "opt_in_undergrad",
   provider_led_postgrad: "provider_led_postgrad",
   provider_led_undergrad: "provider_led_undergrad",
-  school_direct_salaried: "school_direct_salaried",
   school_direct_tuition_fee: "school_direct_tuition_fee",
+  school_direct_salaried: "school_direct_salaried",
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
   hpitt_postgrad: "hpitt_postgrad",
 }.freeze
