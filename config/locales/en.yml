@@ -774,6 +774,10 @@ en:
         one: Subject
         other: Subjects
   trainees:
+    contact_details:
+      edit: 
+        email:
+          hint: Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE.
     not_supported_route:
       heading: Other routes not supported
       body: You can only add trainees for the routes listed on the previous page. We’ll be adding more routes soon.
