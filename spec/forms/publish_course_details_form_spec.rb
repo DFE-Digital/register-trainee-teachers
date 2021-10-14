@@ -15,12 +15,12 @@ describe PublishCourseDetailsForm, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:course_code) }
+    it { is_expected.to validate_presence_of(:course_uuid) }
   end
 
-  context "valid course_code" do
+  context "valid course_uuid" do
     let(:route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
-    let(:params) { { course_code: "c0de" } }
+    let(:params) { { course_uuid: SecureRandom.uuid } }
     let(:trainee) { create(:trainee, :submitted_for_trn, route, course_subject_one: nil) }
 
     describe "#stash" do
@@ -43,8 +43,8 @@ describe PublishCourseDetailsForm, type: :model do
 
     describe "save!" do
       context "valid form" do
-        let(:params) { { course_code: course_code } }
-        let(:course_code) { "ABC" }
+        let(:params) { { course_uuid: course_uuid } }
+        let(:course_uuid) { SecureRandom.uuid }
         let(:subject_name) { "Physical education" }
         let(:course_level) { "primary" }
         let(:subject_specialism_form) do
@@ -53,7 +53,7 @@ describe PublishCourseDetailsForm, type: :model do
 
         before do
           create(:course_with_subjects,
-                 code: course_code,
+                 uuid: course_uuid,
                  route: route,
                  accredited_body_code: trainee.provider.code,
                  subject_names: [subject_name])
@@ -80,28 +80,28 @@ describe PublishCourseDetailsForm, type: :model do
     end
   end
 
-  context "missing course_code" do
+  context "missing course_uuid" do
     describe "#stash" do
       it "returns false and adds an error to the form" do
         expect(subject.stash).to eq false
-        expect(subject.errors.messages).to eq({ course_code: ["Select a course"] })
+        expect(subject.errors.messages).to eq({ course_uuid: ["Select a course"] })
       end
     end
   end
 
   describe "manual entry chosen?" do
-    context "when course_code is NOT_LISTED" do
+    context "when course_uuid is NOT_LISTED" do
       it { be_true }
     end
 
-    context "when course_code is nil" do
-      let(:params) { { course_code: "not_listed" } }
+    context "when course_uuid is nil" do
+      let(:params) { { course_uuid: "not_listed" } }
 
       it { be_false }
     end
 
-    context "when course_code is something else" do
-      let(:params) { { course_code: "c0de" } }
+    context "when course_uuid is something else" do
+      let(:params) { { course_uuid: SecureRandom.uuid } }
 
       it { be_false }
     end

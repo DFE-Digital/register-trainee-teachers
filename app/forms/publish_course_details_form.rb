@@ -6,12 +6,12 @@ class PublishCourseDetailsForm < TraineeForm
   NOT_LISTED = "not_listed"
 
   FIELDS = %i[
-    course_code
+    course_uuid
   ].freeze
 
   attr_accessor(*FIELDS)
 
-  validates :course_code, presence: true
+  validates :course_uuid, presence: true
 
   validates :course_end_date, presence: true, unless: :skip_course_end_date_validation?
 
@@ -20,13 +20,14 @@ class PublishCourseDetailsForm < TraineeForm
   delegate :course_subject_one, :course_subject_two, :course_subject_three, to: :specialism_form
 
   def manual_entry_chosen?
-    course_code == NOT_LISTED
+    course_uuid == NOT_LISTED
   end
 
   def process_manual_entry!
     if trainee.draft?
       trainee.update!(
         course_code: nil,
+        course_uuid: nil,
         course_subject_one: nil,
         course_subject_two: nil,
         course_subject_three: nil,
@@ -79,7 +80,7 @@ class PublishCourseDetailsForm < TraineeForm
   end
 
   def skip_course_end_date_validation?
-    course_code.blank? || @skip_course_end_date_validation
+    course_uuid.blank? || @skip_course_end_date_validation
   end
 
   def skip_course_end_date_validation!
@@ -118,11 +119,11 @@ private
 
     course_details_form = CourseDetailsForm.new(trainee)
     course_details_form.assign_attributes_and_stash({
-      course_code: course_code,
+      course_uuid: course_uuid,
+      course_code: course&.code,
       course_subject_one: course_subject_one,
       course_subject_two: course_subject_two,
       course_subject_three: course_subject_three,
-
       start_day: course_start_date&.day,
       start_month: course_start_date&.month,
       start_year: course_start_date&.year,
@@ -156,7 +157,8 @@ private
 
   def update_trainee_attributes
     attributes = {
-      course_code: course_code,
+      course_uuid: course_uuid,
+      course_code: course&.code,
       course_education_phase: course&.level,
       course_subject_one: course_subject_one,
       course_subject_two: course_subject_two,
@@ -180,7 +182,7 @@ private
   end
 
   def course
-    @course ||= trainee.available_courses&.find_by(code: course_code)
+    @course ||= trainee.available_courses&.find_by(uuid: course_uuid)
   end
 
   def compute_fields

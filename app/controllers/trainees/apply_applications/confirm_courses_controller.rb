@@ -6,7 +6,7 @@ module Trainees
       before_action :redirect_to_manual_confirm_page, if: :manual_entry_chosen?
       before_action :set_course, :set_specialisms, :set_itt_start_date
 
-      helper_method :course_code
+      helper_method :course_uuid
 
       def show
         page_tracker.save_as_origin!
@@ -31,7 +31,7 @@ module Trainees
       end
 
       def set_course
-        @course = trainee.available_courses.find_by(code: course_code)
+        @course = trainee.available_courses.find_by(code: course_uuid)
       end
 
       def set_itt_start_date
@@ -41,7 +41,7 @@ module Trainees
       end
 
       def set_specialisms
-        @specialisms = if trainee.course_subjects.any? && publish_course_details_form.course_code.nil?
+        @specialisms = if trainee.course_subjects.any? && publish_course_details_form.course_uuid.nil?
                          trainee.course_subjects
                        else
                          selected_or_calculated_specialisms
@@ -53,8 +53,8 @@ module Trainees
               .permit(*::ApplyApplications::ConfirmCourseForm::FIELDS)
       end
 
-      def course_code
-        publish_course_details_form.course_code || trainee.course_code
+      def course_uuid
+        publish_course_details_form.course_uuid || trainee.course_uuid
       end
 
       def publish_course_details_form
@@ -70,7 +70,7 @@ module Trainees
       end
 
       def manual_entry_chosen?
-        publish_course_details_form.manual_entry_chosen? || trainee.course_code.blank?
+        publish_course_details_form.manual_entry_chosen? || trainee.course_uuid.blank?
       end
     end
   end

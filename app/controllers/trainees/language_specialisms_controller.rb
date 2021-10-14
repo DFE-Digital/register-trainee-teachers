@@ -45,8 +45,8 @@ module Trainees
       params.fetch(:language_specialisms_form, {}).permit(language_specialisms: [])
     end
 
-    def course_code
-      publish_course_details_form.course_code || trainee.course_code
+    def course_uuid
+      publish_course_details_form.course_uuid || trainee.course_uuid
     end
 
     def subject_specialisms
@@ -58,7 +58,7 @@ module Trainees
     end
 
     def course
-      @course ||= trainee.available_courses.find_by_code!(course_code)
+      @course ||= trainee.available_courses.find_by_uuid!(course_uuid)
     end
   end
 end

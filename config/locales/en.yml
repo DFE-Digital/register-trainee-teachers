@@ -1136,7 +1136,7 @@ en:
                 <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
         publish_course_details_form:
           attributes:
-            course_code:
+            course_uuid:
               blank: Select a course
         reinstatement_form:
           attributes:

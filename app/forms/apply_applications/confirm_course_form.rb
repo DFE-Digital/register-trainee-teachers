@@ -6,7 +6,7 @@ module ApplyApplications
     include CourseFormHelpers
 
     FIELDS = %i[
-      code
+      uuid
       mark_as_reviewed
     ].freeze
 
@@ -46,8 +46,8 @@ module ApplyApplications
       course&.age_range || trainee.course_age_range
     end
 
-    def course_code
-      code || trainee.course_code
+    def course_uuid
+      uuid || trainee.course_uuid
     end
 
     def course_start_date
@@ -72,7 +72,8 @@ module ApplyApplications
         course_subject_two: course_subject_two,
         course_subject_three: course_subject_three,
         training_route: course&.route,
-        course_code: course_code,
+        course_code: course&.code,
+        course_uuid: course_uuid,
         course_age_range: course_age_range,
         course_start_date: course_start_date,
         course_end_date: course_end_date,
@@ -81,11 +82,11 @@ module ApplyApplications
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(code: code)
+      @course ||= trainee.available_courses.find_by(uuid: uuid)
     end
 
     def trainee_confirmed?
-      code == trainee.course_code && values_provided?
+      uuid == trainee.course_uuid && values_provided?
     end
 
     def values_provided?

@@ -96,13 +96,18 @@ namespace :example_data do
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
         REAL_PUBLISH_COURSES_WITH_SUBJECTS.each do |course_name, subject_names|
-          FactoryBot.build(:course, accredited_body_code: provider.code, route: route, name: course_name, study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample) { |course|
+          FactoryBot.build(:course,
+                           accredited_body_code: provider.code,
+                           route: route,
+                           name: course_name,
+                           level: course_name.include?("Primary") ? :primary : :secondary,
+                           study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample) { |course|
             course.subjects = Subject.where(name: subject_names)
           }.save!
         end
       end
 
-      provider_course_codes = provider.courses.pluck(:code)
+      provider_course_uuids = provider.courses.pluck(:uuid)
 
       # Hpitt provider can only have trainees on the hpitt_postgrad route
       enabled_routes = [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] if provider.hpitt_postgrad?
@@ -121,11 +126,11 @@ namespace :example_data do
             # Some route-specific logic, but could move into factories too
             attrs.merge!(lead_school: lead_schools.sample) if %i[school_direct_salaried school_direct_tuition_fee].include?(route)
             attrs.merge!(employing_school: employing_schools.sample) if route == :school_direct_salaried
-            attrs.merge!(course_code: provider_course_codes.sample) unless state == :draft
+            attrs.merge!(course_uuid: provider_course_uuids.sample) unless state == :draft
 
             # Make *roughly* half of draft trainees apply drafts
             if state == :draft && sample_index < sample_size / 2 && enabled_course_routes.include?(route)
-              attrs.merge!(course_code: provider.courses.where(route: route).pluck(:code).sample,
+              attrs.merge!(course_uuid: provider.courses.where(route: route).pluck(:uuid).sample,
                            apply_application: FactoryBot.create(:apply_application, accredited_body_code: provider.code))
             end
 

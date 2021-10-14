@@ -2,13 +2,14 @@
 
 module PageObjects
   module Trainees
-    class CourseOptions < SitePrism::Section
-      element :input, "input"
-      element :label, "label"
-    end
-
     class PublishCourseDetails < PageObjects::Base
       include PageObjects::Helpers
+
+      class CourseOptions < SitePrism::Section
+        element :input, "input"
+        element :label, "label"
+      end
+
       set_url "/trainees/{id}/publish-course-details/edit"
 
       sections :course_options, CourseOptions, ".govuk-radios__item"

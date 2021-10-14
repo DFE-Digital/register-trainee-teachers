@@ -134,7 +134,15 @@ FactoryBot.define do
     trait :with_publish_course_details do
       training_route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
       with_course_details
-      course_code { create(:course_with_subjects, route: training_route, accredited_body_code: provider.code).code }
+
+      before(:create) do |trainee|
+        create(:course_with_subjects,
+               route: trainee.training_route,
+               accredited_body_code: trainee.provider.code).tap do |course|
+          trainee.course_code = course.code
+          trainee.course_uuid = course.uuid
+        end
+      end
     end
 
     trait :with_course_details_and_study_mode do

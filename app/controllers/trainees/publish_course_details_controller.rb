@@ -42,7 +42,7 @@ module Trainees
     end
 
     def course_params
-      params.fetch(:publish_course_details_form, {}).permit(:course_code)
+      params.fetch(:publish_course_details_form, {}).permit(:course_uuid)
     end
   end
 end
