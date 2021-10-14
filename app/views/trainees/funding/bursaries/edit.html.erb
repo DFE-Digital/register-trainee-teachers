@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.funding.bursaries.edit",
+<%= render PageTitle::View.new(i18n_key: "trainees.funding.#{@bursary_form.can_apply_for_grant? ? "grants" :"bursaries"}.edit",
                                has_errors: @bursary_form.errors.present?) %>
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
