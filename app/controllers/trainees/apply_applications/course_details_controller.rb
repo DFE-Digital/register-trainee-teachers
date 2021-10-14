@@ -75,7 +75,7 @@ module Trainees
           trainee,
           course_has_one_specialism? ? specialisms : [],
           IttStartDateForm.new(@trainee).date,
-          { code: review_course_params[:code] },
+          { uuid: review_course_params[:uuid] },
         ).save
       end
 

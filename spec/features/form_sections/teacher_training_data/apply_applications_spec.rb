@@ -62,7 +62,9 @@ private
 
   def and_a_trainee_exists_created_from_apply
     given_a_trainee_exists(:with_apply_application, :with_related_courses, courses_count: 1, subject_names: subjects)
-    trainee.update(course_uuid: Course.first.uuid)
+    Course.first.tap do |course|
+      trainee.update(course_code: course.code, course_uuid: course.uuid)
+    end
   end
 
   def given_the_trainee_does_not_have_a_course_code
