@@ -1,0 +1,182 @@
+en:
+  pages:
+    check_data:
+      body_html: "
+      <p class='govuk-body'>You’ll need the following information about a trainee to complete their record.</p>
+
+      <h3 class='govuk-heading-m'>Personal details</h3>
+
+      <ul class='govuk-list'>
+        <li>
+          First names
+        </li>
+        <li>
+          Middle names
+        </li>
+        <li>
+          Last or family name
+        </li>
+        <li>
+          Date of birth
+        </li>
+        <li>
+          Gender
+        </li>
+        <li>
+          Nationality
+        </li>
+      </ul>
+
+      <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+      <h3 class='govuk-heading-m'>Contact details</h3>
+
+      <ul class='govuk-list'>
+        <li>
+          Address
+        </li>
+        <li>
+          Email address
+        </li>
+      </ul>
+
+      <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+      <h3 class='govuk-heading-m'>Diversity information (optional)</h3>
+
+      <div class='govuk-inset-text'>
+        If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.
+      </div>
+
+      <ul class='govuk-list'>
+        <li>
+          Ethnicity
+        </li>
+        <li>
+          Disability
+        </li>
+      </ul>
+
+      <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+      <h3 class='govuk-heading-m'>Degrees</h3>
+
+      <h3 class='govuk-heading-s'>If it’s a UK degree</h3>
+
+      <ul class='govuk-list'>
+        <li>
+          Type (for example, BA, BSc or other)
+        </li>
+        <li>
+          Institution
+        </li>
+        <li>
+          Subject
+        </li>
+        <li>
+          Grade
+        </li>
+        <li>
+          Graduation year
+        </li>
+      </ul>
+
+      <h4 class='govuk-heading-s'>If it’s not a UK degree</h4>
+
+      <ul class='govuk-list'>
+        <li>
+          Country where the degree was obtained
+        </li>
+        <li>
+          Subject
+        </li>
+        <li>
+          UK ENIC comparable degree (if provided)
+        </li>
+        <li>
+          Graduation year
+        </li>
+      </ul>
+
+      <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+      <h3 class='govuk-heading-m'>Course details</h3>
+
+      <h4 class='govuk-heading-s'>If it’s a course on Publish teacher training courses</h4>
+
+      <ul class='govuk-list'>
+        <li>
+          Which Publish course
+        </li>
+        <li>
+          Subject specialisms
+        </li>
+        <li>
+          Full or part time
+        </li>
+      </ul>
+
+      <h4 class='govuk-heading-s'>If it's not a course on Publish teacher training courses</h4>
+
+      <ul class='govuk-list'>
+        <li>
+          Primary or secondary
+        </li>
+        <li>
+          Subjects
+        </li>
+        <li>
+          Age range
+        </li>
+        <li>
+          Full or part time (not for assessment only)
+        </li>
+        <li>
+          ITT start date
+        </li>
+        <li>
+          ITT end date
+        </li>
+      </ul>
+
+      <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+      <h3 class='govuk-heading-m'>Trainee start date and ID</h3>
+
+      <ul class='govuk-list'>
+        <li>
+          Trainee start date
+        </li>
+        <li>
+          Trainee ID (assigned by you)
+        </li>
+      </ul>
+
+      <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+      <h3 class='govuk-heading-m'>Schools</h3>
+
+      <p class='govuk-body'>This is only required for School direct and Teaching apprenticeship routes.</p>
+
+      <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+
+      <h3 class='govuk-heading-m'>Funding details</h3>
+
+      <ul class='govuk-list'>
+        <li>
+          Whether the trainee is on a training initiative
+        </li>
+      </ul>
+      <h3 class='govuk-heading-s'>For courses with bursaries, scholarships or grants available</h3>
+      <ul class='govuk-list'>
+        <li>
+          Whether you're applying for a bursary for the trainee
+        </li>
+        <li>
+          Whether you're applying for a grant for the trainee
+        </li>
+        <li>
+          Whether the trainee is applying for a scholarship
+        </li>
+      </ul>
+"
