@@ -16,11 +16,11 @@ module Dttp
         trainees
       end
 
-      it "enqueues the UpdateTraineeToDttpJob" do
+      it "enqueues the UpdateTraineeJob" do
         described_class.perform_now
 
         Trainee.all.each do |trainee|
-          expect(UpdateTraineeToDttpJob).to have_been_enqueued.with(trainee)
+          expect(UpdateTraineeJob).to have_been_enqueued.with(trainee)
         end
       end
     end
@@ -36,11 +36,11 @@ module Dttp
         trainees
       end
 
-      it "does not enqueue the UpdateTraineeToDttpJob" do
+      it "does not enqueue the UpdateTraineeJob" do
         described_class.perform_now
 
         Trainee.all.each do |trainee|
-          expect(UpdateTraineeToDttpJob).not_to have_been_enqueued.with(trainee)
+          expect(UpdateTraineeJob).not_to have_been_enqueued.with(trainee)
         end
       end
     end
@@ -54,11 +54,11 @@ module Dttp
         trainee2.update!(dttp_update_sha: trainee2.sha)
       end
 
-      it "does not enqueue the UpdateTraineeToDttpJob" do
+      it "does not enqueue the UpdateTraineeJob" do
         described_class.perform_now
 
         Trainee.all.each do |trainee|
-          expect(UpdateTraineeToDttpJob).not_to have_been_enqueued.with(trainee)
+          expect(UpdateTraineeJob).not_to have_been_enqueued.with(trainee)
         end
       end
     end

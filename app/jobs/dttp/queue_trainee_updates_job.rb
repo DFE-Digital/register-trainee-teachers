@@ -20,7 +20,7 @@ module Dttp
       trainees.each do |trainee|
         next if trainee_already_synced?(trainee)
 
-        UpdateTraineeToDttpJob.perform_later(trainee)
+        UpdateTraineeJob.perform_later(trainee)
       end
     end
 
