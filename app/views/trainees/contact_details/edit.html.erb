@@ -42,6 +42,7 @@
       <% end %>
 
       <%= f.govuk_email_field :email,
+                              hint: { text: t(".email.hint")},
                               width: "two-thirds",
                               label: { text: "Email address", size: "s" },
                               autocomplete: :disabled %>
