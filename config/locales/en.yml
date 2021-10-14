@@ -1036,9 +1036,9 @@ en:
         funding/bursary_form:
           attributes:
             applying_for_grant:
-              inclusion: &grant_selection_required Select if you are applying for a grant for this trainee
+              inclusion: &grant_selection_required Select if you are applying for a funding for this trainee
             applying_for_bursary:
-              inclusion: &bursary_selection_required Select if you are applying for a bursary for this trainee
+              inclusion: &bursary_selection_required Select if you are applying for a funding for this trainee
             bursary_tier:
               inclusion: *bursary_selection_required
             funding_type:
