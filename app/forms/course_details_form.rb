@@ -5,7 +5,6 @@ class CourseDetailsForm < TraineeForm
   include DatesHelper
 
   FIELDS = %i[
-    course_code
     course_uuid
     course_subject_one
     course_subject_one_raw
@@ -168,7 +167,6 @@ private
   def update_trainee_attributes
     attributes = {
       course_uuid: course_uuid,
-      course_code: course_code,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
     }
@@ -196,7 +194,6 @@ private
   def compute_attributes_from_trainee
     attributes = {
       course_uuid: trainee.course_uuid,
-      course_code: trainee.course_code,
       start_day: trainee.course_start_date&.day,
       start_month: trainee.course_start_date&.month,
       start_year: trainee.course_start_date&.year,

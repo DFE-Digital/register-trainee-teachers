@@ -11,7 +11,7 @@ module CourseDetails
         build(:trainee, id: 1,
                         training_route: nil,
                         course_subject_one: nil,
-                        course_code: nil,
+                        course_uuid: nil,
                         course_min_age: nil,
                         course_max_age: nil,
                         course_start_date: nil)

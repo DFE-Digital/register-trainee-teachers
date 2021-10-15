@@ -26,7 +26,6 @@ class PublishCourseDetailsForm < TraineeForm
   def process_manual_entry!
     if trainee.draft?
       trainee.update!(
-        course_code: nil,
         course_uuid: nil,
         course_subject_one: nil,
         course_subject_two: nil,
@@ -120,7 +119,6 @@ private
     course_details_form = CourseDetailsForm.new(trainee)
     course_details_form.assign_attributes_and_stash({
       course_uuid: course_uuid,
-      course_code: course&.code,
       course_subject_one: course_subject_one,
       course_subject_two: course_subject_two,
       course_subject_three: course_subject_three,
@@ -158,7 +156,6 @@ private
   def update_trainee_attributes
     attributes = {
       course_uuid: course_uuid,
-      course_code: course&.code,
       course_education_phase: course&.level,
       course_subject_one: course_subject_one,
       course_subject_two: course_subject_two,

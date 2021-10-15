@@ -13,13 +13,11 @@ module Trainees
     let(:course_info) { ApiStubs::ApplyApi.course.as_json }
     let(:trainee) { create_trainee_from_apply }
     let(:subject_names) { [] }
-    let(:course_code) { course_info["course_code"] }
     let(:course_uuid) { course_info["course_uuid"] }
 
     let!(:course) do
       create(
         :course_with_subjects,
-        code: course_code,
         uuid: course_uuid,
         accredited_body_code: apply_application.accredited_body_code,
         route: :school_direct_tuition_fee,
@@ -39,7 +37,7 @@ module Trainees
         diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
         email: contact_details["email"],
         training_route: course.route,
-        course_code: course.code,
+        course_uuid: course.uuid,
         course_min_age: course.min_age,
         course_max_age: course.max_age,
         study_mode: "full_time",

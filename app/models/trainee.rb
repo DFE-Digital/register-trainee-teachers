@@ -16,8 +16,8 @@ class Trainee < ApplicationRecord
   belongs_to :published_course,
              ->(trainee) { where(accredited_body_code: trainee.provider.code) },
              class_name: "Course",
-             foreign_key: :course_code,
-             primary_key: :code,
+             foreign_key: :course_uuid,
+             primary_key: :uuid,
              inverse_of: :trainees,
              optional: true
 

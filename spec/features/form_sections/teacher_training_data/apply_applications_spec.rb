@@ -15,7 +15,7 @@ feature "apply registrations", type: :feature do
     let(:subjects) { ["History"] }
 
     scenario "reviewing course" do
-      given_the_trainee_does_not_have_a_course_code
+      given_the_trainee_does_not_have_a_course_uuid
       when_i_enter_the_course_details_page
       then_i_am_on_the_publish_course_details_page
     end
@@ -63,12 +63,12 @@ private
   def and_a_trainee_exists_created_from_apply
     given_a_trainee_exists(:with_apply_application, :with_related_courses, courses_count: 1, subject_names: subjects)
     Course.first.tap do |course|
-      trainee.update(course_code: course.code, course_uuid: course.uuid)
+      trainee.update(course_uuid: course.uuid)
     end
   end
 
-  def given_the_trainee_does_not_have_a_course_code
-    trainee.update(course_code: nil)
+  def given_the_trainee_does_not_have_a_course_uuid
+    trainee.update(course_uuid: nil)
   end
 
   def then_the_section_should_be(status)

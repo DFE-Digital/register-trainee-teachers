@@ -139,7 +139,6 @@ FactoryBot.define do
         create(:course_with_subjects,
                route: trainee.training_route,
                accredited_body_code: trainee.provider.code).tap do |course|
-          trainee.course_code = course.code
           trainee.course_uuid = course.uuid
         end
       end

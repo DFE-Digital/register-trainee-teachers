@@ -31,7 +31,7 @@ module Trainees
       course_end_date
       commencement_date
       course_max_age
-      course_code
+      course_uuid
       course_subject_two
       course_subject_three
       applying_for_bursary

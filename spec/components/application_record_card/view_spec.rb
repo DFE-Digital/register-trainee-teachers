@@ -6,7 +6,7 @@ module ApplicationRecordCard
   describe View do
     let(:provider) { create(:provider, :with_courses) }
     let(:course) { provider.courses.first }
-    let(:trainee) { Trainee.new(created_at: Time.zone.now, course_code: course.code) }
+    let(:trainee) { Trainee.new(created_at: Time.zone.now, course_uuid: course.uuid) }
 
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
@@ -21,7 +21,7 @@ module ApplicationRecordCard
 
     context "when the Trainee has no subject" do
       let(:trainee) do
-        create(:trainee, provider: provider, course_code: course.code)
+        create(:trainee, provider: provider, course_uuid: course.uuid)
       end
 
       before do

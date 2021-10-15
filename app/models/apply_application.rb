@@ -23,13 +23,13 @@ class ApplyApplication < ApplicationRecord
   end
 
   def course
-    provider.courses.find_by(code: course_code) if course_code.present?
+    provider.courses.find_by(uuid: course_uuid) if course_uuid.present?
   end
 
 private
 
-  def course_code
-    application_attributes.dig("course", "course_code")
+  def course_uuid
+    application_attributes.dig("course", "course_uuid")
   end
 
   def parsed_application

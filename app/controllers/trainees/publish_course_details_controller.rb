@@ -27,8 +27,8 @@ module Trainees
 
   private
 
-    def course_code
-      @publish_course_details_form.course_code
+    def course_uuid
+      @publish_course_details_form.course_uuid
     end
 
     def next_step_path

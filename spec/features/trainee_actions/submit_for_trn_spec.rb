@@ -12,7 +12,7 @@ feature "submit for TRN" do
 
   describe "submission" do
     context "when all sections are completed" do
-      let(:trainee) { create(:trainee, :completed, provider: current_user.provider, course_code: nil) }
+      let(:trainee) { create(:trainee, :completed, provider: current_user.provider, course_uuid: nil) }
 
       scenario "can submit the application" do
         when_i_am_viewing_the_review_draft_page

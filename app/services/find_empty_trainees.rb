@@ -40,7 +40,7 @@ class FindEmptyTrainees
     trainees.apply_application_id
     trainees.course_min_age
     trainees.course_max_age
-    trainees.course_code
+    trainees.course_uuid
     trainees.course_subject_two
     trainees.course_subject_three
     trainees.awarded_at

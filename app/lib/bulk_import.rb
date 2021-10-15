@@ -172,7 +172,7 @@ module BulkImport
 
       return if course.blank?
 
-      trainee.course_code = course.code
+      trainee.course_uuid = course.uuid
 
       if trainee.course_subject_one.blank?
         course_subject_one, course_subject_two, course_subject_three = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name)).values.map(&:first).compact
