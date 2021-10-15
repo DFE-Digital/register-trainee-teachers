@@ -364,7 +364,6 @@ ActiveRecord::Schema.define(version: 2021_10_15_140519) do
     t.bigint "apply_application_id"
     t.integer "course_min_age"
     t.integer "course_max_age"
-    t.string "course_code"
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at"
@@ -381,6 +380,7 @@ ActiveRecord::Schema.define(version: 2021_10_15_140519) do
     t.boolean "lead_school_not_applicable", default: false
     t.boolean "employing_school_not_applicable", default: false
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
+    t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
