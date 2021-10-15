@@ -163,7 +163,7 @@ en:
       course_end_date: Course end date
       itt_end_date: ITT end date
       course_details: Course details
-      details_not_on_publish: Details not on Publish
+      details_not_on_publish: Course details added manually
       study_mode: Full time or part time
       study_mode_values:
         full_time: Full time
