@@ -10,26 +10,28 @@ function Tracker () {
   // Push an 'autocomplete-search' event to the dataLayer with the searches and
   // the final choice (if present).
   this.sendTrackingEvent = (match, fieldName) => {
-    let successfulSearch
-    const filteredSearches = this.searches.filter(s => !this._containsStringStartingWith(s))
+    if (window.dataLayer) {
+      let successfulSearch
+      const filteredSearches = this.searches.filter(s => !this._containsStringStartingWith(s))
 
-    // If the user selected something i.e. match !== nil, then the last tracked
-    // search counts as successful. Remove this.
-    if (match) { successfulSearch = filteredSearches.pop() }
+      // If the user selected something i.e. match !== nil, then the last tracked
+      // search counts as successful. Remove this.
+      if (match) { successfulSearch = filteredSearches.pop() }
 
-    if (filteredSearches.length > 0) {
-      window.dataLayer.push({
-        event: 'autocomplete-search',
-        fieldName: fieldName,
-        failedSearches: filteredSearches,
-        successfulSearch: successfulSearch,
-        match: this._match(fieldName, match),
-        timeTaken: this._timeTaken()
-      })
+      if (filteredSearches.length > 0) {
+        window.dataLayer.push({
+          event: 'autocomplete-search',
+          fieldName: fieldName,
+          failedSearches: filteredSearches,
+          successfulSearch: successfulSearch,
+          match: this._match(fieldName, match),
+          timeTaken: this._timeTaken()
+        })
+      }
+      // Empty out the searches array.
+      this.searches.splice(0, this.searches.length)
+      this.startTime = false
     }
-    // Empty out the searches array.
-    this.searches.splice(0, this.searches.length)
-    this.startTime = false
   }
 
   // Returns true/false if any string in the array starts with the item (excluding)
