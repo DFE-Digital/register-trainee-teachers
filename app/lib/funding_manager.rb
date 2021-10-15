@@ -60,6 +60,10 @@ class FundingManager
       .where(training_route: training_route).present?
   end
 
+  def allocation_subject_name
+    allocation_subject&.name
+  end
+
 private
 
   attr_reader :trainee
@@ -70,9 +74,13 @@ private
     available_amount(:bursary)
   end
 
+  def allocation_subject
+    @allocation_subject ||= SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
+  end
+
   def available_amount(funding_type)
-    if (allocation_subject = SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject)
-      allocation_subject.funding_methods.find_by(training_route: training_route, funding_type: funding_type)&.amount
-    end
+    return unless allocation_subject
+
+    allocation_subject.funding_methods.find_by(training_route: training_route, funding_type: funding_type)&.amount
   end
 end

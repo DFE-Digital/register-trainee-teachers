@@ -5,8 +5,8 @@
   <p class="govuk-body">
     <%= t(
       (@trainee.early_years_route? ? "views.forms.funding.bursaries.grant.early_years_description" : "views.forms.funding.bursaries.grant.description"),
-      amount: format_currency(@amount),
-      subject: @subject,
+      amount: format_currency(@bursary_form.grant_amount),
+      subject: @bursary_form.allocation_subject_name,
       training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
     ) %>
   </p>
