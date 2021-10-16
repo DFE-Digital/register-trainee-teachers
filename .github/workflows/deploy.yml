@@ -71,19 +71,20 @@ jobs:
             PR_NUMBER=${{ github.event.inputs.pr }}
             echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
             echo "APP_NAME=$PR_NUMBER" >> $GITHUB_ENV
-            echo "DEPLOY_ENV=review" >> $GITHUB_ENV
             echo "DEPLOY_URL=https://register-pr-$PR_NUMBER.london.cloudapps.digital" >> $GITHUB_ENV
-            . terraform/workspace-variables/review.sh
+            DEPLOY_ENV=review
           else
-            echo "DEPLOY_ENV=$DEPLOY_ENV" >> $GITHUB_ENV
-            . terraform/workspace-variables/$DEPLOY_ENV.sh
-          fi;
+            DEPLOY_ENV=$MATRIX_ENV
+          fi
 
-          echo "TF_VAR_key_vault_name=$TF_VAR_key_vault_name" >> $GITHUB_ENV
-          echo "TF_VAR_key_vault_app_secret_name=$TF_VAR_key_vault_app_secret_name" >> $GITHUB_ENV
-          echo "TF_VAR_key_vault_infra_secret_name=$TF_VAR_key_vault_infra_secret_name" >> $GITHUB_ENV
+          echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
+
+          tf_vars_file=terraform/workspace-variables/${DEPLOY_ENV}.tfvars.json
+          echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         env:
-          DEPLOY_ENV: ${{ matrix.environment }}
+          MATRIX_ENV: ${{ matrix.environment }}
 
       - name: Start ${{ matrix.environment }} Deployment
         uses: bobheadxi/deployments@v0.4.2
@@ -100,10 +101,10 @@ jobs:
       - name: Validate Key Vault Secrets
         uses: DFE-Digital/github-actions/validate-key-vault-secrets@master
         with:
-         KEY_VAULT: ${{ env.TF_VAR_key_vault_name }}
+         KEY_VAULT: ${{ env.key_vault_name }}
          SECRETS: |
-          ${{ env.TF_VAR_key_vault_app_secret_name }}
-          ${{ env.TF_VAR_key_vault_infra_secret_name }}
+          ${{ env.key_vault_app_secret_name }}
+          ${{ env.key_vault_infra_secret_name }}
 
       - name: Pin Terraform version
         uses: hashicorp/setup-terraform@v1.2.1

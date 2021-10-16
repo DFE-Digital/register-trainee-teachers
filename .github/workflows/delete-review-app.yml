@@ -39,7 +39,6 @@ jobs:
           TF_STATE_FILE=pr-$PR_NUMBER.tfstate
           echo "APP_NAME=$PR_NUMBER" >> $GITHUB_ENV
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          echo "DEPLOY_ENV=review" >> $GITHUB_ENV
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
 
           pr_state_file=$(az storage blob list -c review-app-tfstate \
@@ -48,26 +47,26 @@ jobs:
 
           if [ ! -z "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
 
-          . terraform/workspace-variables/review.sh
-          echo "TF_VAR_key_vault_name=$TF_VAR_key_vault_name" >> $GITHUB_ENV
-          echo "TF_VAR_key_vault_app_secret_name=$TF_VAR_key_vault_app_secret_name" >> $GITHUB_ENV
-          echo "TF_VAR_key_vault_infra_secret_name=$TF_VAR_key_vault_infra_secret_name" >> $GITHUB_ENV
+          tf_vars_file=terraform/workspace-variables/review.tfvars.json
+          echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         env:
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING_REVIEW }}
 
       - uses: azure/login@v1
         if: env.TF_STATE_EXISTS == 'true'
         with:
-          creds: ${{ secrets[format('AZURE_CREDENTIALS_{0}', env.DEPLOY_ENV)] }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
       - name: Validate Azure Key Vault secrets
         if: env.TF_STATE_EXISTS == 'true'
         uses: DFE-Digital/github-actions/validate-key-vault-secrets@master
         with:
-          KEY_VAULT: ${{ env.TF_VAR_key_vault_name }}
+          KEY_VAULT: ${{ env.key_vault_name }}
           SECRETS: |
-            ${{ env.TF_VAR_key_vault_app_secret_name }}
-            ${{ env.TF_VAR_key_vault_infra_secret_name }}
+            ${{ env.key_vault_app_secret_name }}
+            ${{ env.key_vault_infra_secret_name }}
 
       - name: Terraform destroy
         if: env.TF_STATE_EXISTS == 'true'
