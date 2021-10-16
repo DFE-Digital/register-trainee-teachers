@@ -92,15 +92,15 @@ print-infra-secrets: install-fetch-config set-azure-account
 
 deploy-plan: terraform-init
 	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
-	terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars
+	terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json
 
 deploy: terraform-init
 	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
-	terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
+	terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
 
 destroy: terraform-init
 	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
-	terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars $(AUTO_APPROVE)
+	terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
 
 terraform-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
