@@ -10,9 +10,11 @@ module Funding
       context "when no bursary would be available" do
         let(:trainee) { build(:trainee) }
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil) }
+        let(:bursary_form) { instance_double(Funding::BursaryForm, fields: nil, valid?: true) }
 
         before do
           allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
+          allow(Funding::BursaryForm).to receive(:new).and_return(bursary_form)
         end
 
         context "when TrainingInitiativesForm is valid" do
@@ -37,6 +39,29 @@ module Funding
               ),
             )
           end
+        end
+      end
+
+      context "when tiered bursary is available" do
+        let(:trainee) { create(:trainee, :early_years_postgrad) }
+        let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil, valid?: true) }
+
+        before do
+          allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
+        end
+
+        it { is_expected.not_to be_valid }
+
+        context "and a tier has been selected" do
+          let(:trainee) { create(:trainee, :early_years_postgrad, :with_tiered_bursary) }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "and no bursary has been selected" do
+          let(:trainee) { create(:trainee, :early_years_postgrad, applying_for_bursary: false) }
+
+          it { is_expected.to be_valid }
         end
       end
 

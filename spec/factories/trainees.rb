@@ -87,6 +87,7 @@ FactoryBot.define do
     trait :completed do
       in_progress
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
+      applying_for_bursary { Faker::Boolean.boolean }
       nationalities { [build(:nationality)] }
       progress do
         Progress.new(
