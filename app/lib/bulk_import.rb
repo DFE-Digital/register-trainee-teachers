@@ -22,6 +22,7 @@ module BulkImport
       build_degrees(trainee, csv_row)
       validate_and_set_progress(trainee)
 
+      trainee.set_early_years_course_details
       trainee.save!
     end
 

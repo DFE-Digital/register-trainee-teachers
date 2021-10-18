@@ -28,6 +28,19 @@ describe BulkImport do
       expect { subject }.to change { Trainee.count }.from(0).to(1)
     end
 
+    context "with an early_years trainee" do
+      before do
+        csv_row.merge!("Route" => "EY Graduate Employment Based PG")
+      end
+
+      it "sets the subject to Early Years teaching and age range from 0 to 5" do
+        subject
+        trainee = Trainee.last
+        expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
+        expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
+      end
+    end
+
     context "with Institution 2 provided" do
       before do
         csv_row.merge!("Institution 2" => "University of Plymouth")
