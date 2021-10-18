@@ -26,7 +26,7 @@ module Trainees
         if @form.trainee_reset_degrees?
           update_degrees_for_non_draft_trainee
         else
-          update_degrees_for_trainee
+          super
         end
       end
 
@@ -38,20 +38,6 @@ module Trainees
 
       def build_form
         DegreesForm.new(trainee)
-      end
-
-      def update_degrees_for_trainee
-        if @form.valid?
-          trainee.draft? ? toggle_trainee_progress_field : @form.save!
-
-          flash[:success] = "Trainee #{flash_message_title} updated"
-
-          redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
-        else
-          @confirmation_component = view_component.new(data_model: data_model, has_errors: true)
-
-          render(:show)
-        end
       end
 
       def update_degrees_for_non_draft_trainee
