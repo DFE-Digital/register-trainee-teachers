@@ -103,7 +103,7 @@ module Sections
         },
         course_details: {
           incomplete: path_for_incomplete_course_details(trainee),
-          in_progress_invalid: "edit_trainee_course_details_path",
+          in_progress_invalid: "edit_trainee_course_education_phase_path",
           in_progress_valid: "trainee_course_details_confirm_path",
           review: "edit_trainee_apply_applications_course_details_path",
         },
