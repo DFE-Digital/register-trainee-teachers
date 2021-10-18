@@ -79,6 +79,10 @@ class DegreesForm
     end
   end
 
+  def trainee_reset_degrees?
+    !trainee.draft? && trainee.degrees.empty? && !degrees.all?(&:persisted?)
+  end
+
 private
 
   attr_reader :store
