@@ -17,10 +17,10 @@
       form_group: {
         class: invalid_data_class(form: @degree_form, field: "institution")
       },
-      label: { text: "Institution",
+      label: { text: "Awarding institution",
         size: "s",
       },
-      hint: -> { render InvalidDataText::View.new(form_section: :institution, degree_form: @degree_form, hint: 'This may be different than where the trainee studied') }),
+      hint: -> { render InvalidDataText::View.new(form_section: :institution, degree_form: @degree_form, hint: 'This may be different than where the trainee studied inst') }),
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(

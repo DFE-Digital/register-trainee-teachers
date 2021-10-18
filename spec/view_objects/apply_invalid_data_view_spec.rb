@@ -55,7 +55,7 @@ describe ApplyInvalidDataView do
 
   describe "#summary_items_content" do
     it "returns the invalid answer summary items" do
-      expected_markup = "<li><a class=\"govuk-notification-banner__link\" href=\"#institution\">Awarding institution is not recognised</a></li>"
+      expected_markup = "<li><a class=\"govuk-notification-banner__link\" href=\"#awarding-institution\">Awarding institution is not recognised</a></li>"
       expect(subject.summary_items_content).to include(expected_markup)
     end
   end
