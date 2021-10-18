@@ -448,16 +448,16 @@ describe CourseDetailsForm, type: :model do
         end
       end
 
-      context "when a trainee has a course code" do
-        let(:trainee) { create(:trainee, course_code: Faker::Alphanumeric.alphanumeric(number: 4).upcase) }
+      context "when a trainee has a course uuid" do
+        let(:trainee) { create(:trainee, course_uuid: SecureRandom.uuid) }
 
         before do
           subject.save!
           trainee.reload
         end
 
-        it "doesnt wipe course code" do
-          expect(trainee.course_code).not_to eq nil
+        it "doesnt wipe course uuid" do
+          expect(trainee.course_uuid).not_to eq nil
         end
       end
 
@@ -481,7 +481,7 @@ describe CourseDetailsForm, type: :model do
     end
 
     describe "#stash" do
-      let(:fields) { params.merge({ course_code: nil, course_uuid: nil }) }
+      let(:fields) { params.merge({ course_uuid: nil }) }
 
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
         expect(form_store).to receive(:set).with(trainee.id, :course_details, fields)

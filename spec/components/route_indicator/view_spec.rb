@@ -34,8 +34,8 @@ RSpec.describe RouteIndicator::View do
 
     context "with course details not set" do
       let(:trainee) do
-        create(:trainee, :with_apply_application, course_code: nil) do |trainee|
-          create(:course, name: "Citizenship", code: ApiStubs::ApplyApi.course[:course_code], provider: trainee.apply_application.provider)
+        create(:trainee, :with_apply_application, course_uuid: nil) do |trainee|
+          create(:course, name: "Citizenship", uuid: ApiStubs::ApplyApi.course[:course_uuid], code: ApiStubs::ApplyApi.course[:course_code], provider: trainee.apply_application.provider)
         end
       end
 

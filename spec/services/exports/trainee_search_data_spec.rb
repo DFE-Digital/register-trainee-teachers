@@ -38,7 +38,7 @@ module Exports
     describe "#data" do
       let(:expected_output) do
         degree = trainee.degrees.first
-        course = Course.where(code: trainee.course_code).first
+        course = Course.find_by(uuid: trainee.course_uuid)
         {
           "register_id" => trainee.slug,
           "trainee_url" => "#{Settings.base_url}/trainees/#{trainee.slug}",
@@ -81,7 +81,7 @@ module Exports
           "degree_1_other_grade" => degree&.other_grade,
           "degree_1_graduation_year" => degree&.graduation_year,
           "degrees" => "\"#{['UK', degree&.institution, degree&.country, degree&.subject, degree&.uk_degree, degree&.non_uk_degree, degree&.grade, degree&.other_grade, degree&.graduation_year].map { |d| "\"\"#{d}\"\"" }.join(', ')}\"",
-          "course_code" => trainee.course_code,
+          "course_code" => course&.code,
           "course_name" => course&.name,
           "course_route" => "Assessment only",
           "course_qualification" => course&.qualification,

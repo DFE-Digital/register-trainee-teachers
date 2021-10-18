@@ -72,7 +72,6 @@ module ApplyApplications
         course_subject_two: course_subject_two,
         course_subject_three: course_subject_three,
         training_route: course&.route,
-        course_code: course&.code,
         course_uuid: course_uuid,
         course_age_range: course_age_range,
         course_start_date: course_start_date,

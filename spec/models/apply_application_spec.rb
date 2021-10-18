@@ -34,7 +34,7 @@ describe ApplyApplication do
     it { is_expected.to be_nil }
 
     context "when the course exists" do
-      let!(:course) { create(:course, code: "V6X1", provider: apply_application.provider) }
+      let!(:course) { create(:course, uuid: ApiStubs::ApplyApi.course[:course_uuid], provider: apply_application.provider) }
 
       it { is_expected.to eq(course) }
     end

@@ -107,7 +107,7 @@ describe RouteDataManager do
         let(:trainee) { create(:trainee, :with_publish_course_details, :provider_led_postgrad) }
 
         it "does not clear the course details section of the trainee" do
-          expect(trainee.course_code).to be_present
+          expect(trainee.course_uuid).to be_present
           expect(trainee.course_subject_one).to be_present
           expect(trainee.course_age_range).to be_present
           expect(trainee.course_start_date).to be_present

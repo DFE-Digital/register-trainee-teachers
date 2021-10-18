@@ -74,7 +74,7 @@ module Exports
           "degree_1_other_grade" => degree&.other_grade,
           "degree_1_graduation_year" => degree&.graduation_year,
           "degrees" => degrees(trainee),
-          "course_code" => trainee.course_code,
+          "course_code" => trainee.published_course&.code,
           "course_name" => course&.name,
           "course_route" => course_route(trainee),
           "course_qualification" => course&.qualification,

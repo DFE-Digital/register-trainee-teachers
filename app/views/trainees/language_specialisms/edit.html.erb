@@ -7,7 +7,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @language_specialisms_form, url: trainee_language_specialisms_path(@trainee), method: :put, local: true) do |f| %>
-      <%= f.hidden_field :course_code, value: params[:course_code] %>
+      <%= f.hidden_field :course_uuid, value: params[:course_uuid] %>
 
       <%= f.govuk_error_summary %>
 

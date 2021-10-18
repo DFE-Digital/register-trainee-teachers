@@ -137,7 +137,7 @@ describe Trainee do
       let(:provider_a) { create(:provider, :with_courses, course_code: same_code) }
       let!(:provider_b) { create(:provider, :with_courses, course_code: same_code) }
 
-      subject { create(:trainee, provider: provider_a, course_code: same_code).published_course.provider }
+      subject { create(:trainee, provider: provider_a, course_uuid: provider_a.courses.first.uuid).published_course.provider }
 
       it { is_expected.to eq(provider_a) }
     end

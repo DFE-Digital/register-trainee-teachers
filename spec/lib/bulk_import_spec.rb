@@ -250,9 +250,9 @@ describe BulkImport do
     context "a course can be found" do
       let!(:course) { create(:course, provider: provider, code: "1CS", level: :secondary, study_mode: :full_time) }
 
-      it "sets the course code on the trainee" do
+      it "sets the course_uuid on the trainee" do
         subject
-        expect(trainee.course_code).to eq("1CS")
+        expect(trainee.course_uuid).to eq(course.uuid)
         expect(trainee.study_mode).to eq("full_time")
       end
     end
@@ -262,15 +262,15 @@ describe BulkImport do
 
       it "does not set the study_mode on the trainee" do
         subject
-        expect(trainee.course_code).to eq("1CS")
+        expect(trainee.course_uuid).to eq(course.uuid)
         expect(trainee.study_mode).to be_nil
       end
     end
 
     context "a course subject can't be found" do
-      it "does not set the course_code on the trainee" do
+      it "does not set the course_uuid on the trainee" do
         subject
-        expect(trainee.course_code).to be_nil
+        expect(trainee.course_uuid).to be_nil
       end
     end
   end

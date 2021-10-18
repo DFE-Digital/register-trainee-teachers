@@ -113,7 +113,7 @@ module Sections
         create(
           :trainee,
           :completed,
-          course_code: nil,
+          course_uuid: nil,
           applying_for_bursary: false,
           training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
         )

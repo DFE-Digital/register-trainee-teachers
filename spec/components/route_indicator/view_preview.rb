@@ -12,7 +12,7 @@ module RouteIndicator
           training_route: training_route,
           apply_application: ApplyApplication.new(application: { attributes: {} }.to_json),
           course_subject_one: "Ancient Hebrew",
-          course_code: Faker::Alphanumeric.alphanumeric(number: 4).upcase,
+          course_uuid: SecureRandom.uuid,
         )))
       end
     end

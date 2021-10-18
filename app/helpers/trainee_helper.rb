@@ -77,6 +77,6 @@ module TraineeHelper
 
   # Use this method if you're preloading courses in bulk as it won't make further database calls
   def course_name_for(trainee)
-    trainee.provider&.courses&.find { |course| course.code == trainee.course_code }&.name
+    trainee.provider&.courses&.find { |course| course.uuid == trainee.course_uuid }&.name
   end
 end
