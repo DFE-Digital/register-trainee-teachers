@@ -18,9 +18,11 @@ module BulkImport
 
       set_course(provider, trainee, csv_row)
       set_nationalities(trainee, csv_row)
-
+      sanitise_funding(trainee)
       build_degrees(trainee, csv_row)
+      validate_and_set_progress(trainee)
 
+      trainee.set_early_years_course_details
       trainee.save!
     end
 
@@ -152,17 +154,6 @@ module BulkImport
 
       trainee.diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
       trainee.ethnic_background = Diversities::NOT_PROVIDED
-
-      trainee.progress.personal_details = true
-      trainee.progress.contact_details = true
-      trainee.progress.degrees = true
-      trainee.progress.diversity = true
-      trainee.progress.funding = true
-      trainee.progress.course_details = true
-      trainee.progress.training_details = true
-      trainee.progress.trainee_data = true
-      trainee.progress.schools = true
-      trainee.progress.placement_details = true
 
       trainee
     end
@@ -361,6 +352,22 @@ module BulkImport
     def potential_institutions_in_hpitt_codeset(raw_string)
       HPITT::CodeSets::Institutions::MAPPING.select do |_k, value|
         normalise_string(value) == normalise_string(raw_string)
+      end
+    end
+
+    def sanitise_funding(trainee)
+      funding_manager = FundingManager.new(trainee)
+
+      trainee.applying_for_bursary = nil if funding_manager.can_apply_for_tiered_bursary?
+      trainee.applying_for_bursary = nil unless funding_manager.can_apply_for_bursary?
+      trainee.applying_for_grant = nil unless funding_manager.can_apply_for_grant?
+      trainee.applying_for_scholarship = nil unless funding_manager.can_apply_for_scholarship?
+    end
+
+    def validate_and_set_progress(trainee)
+      TrnSubmissionForm.new(trainee: trainee).form_validators.each do |section, validator|
+        section_valid = validator[:form].constantize.new(trainee).valid?
+        trainee.progress.public_send("#{section}=", section_valid)
       end
     end
   end
