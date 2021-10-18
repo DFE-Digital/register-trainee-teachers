@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dttp
-  class UpdateTraineeToDttpJob < ApplicationJob
+  class UpdateTraineeJob < ApplicationJob
     sidekiq_options retry: 0
     queue_as :dttp
 
