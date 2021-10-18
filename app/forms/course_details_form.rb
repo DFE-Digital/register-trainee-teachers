@@ -85,7 +85,7 @@ class CourseDetailsForm < TraineeForm
   def save!
     if valid?
       update_trainee_attributes
-      clear_bursary_information if course_subjects_changed?
+      clear_funding_information if course_subjects_changed?
       trainee.save!
       clear_stash
     else
