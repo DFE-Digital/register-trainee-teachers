@@ -5,9 +5,10 @@ module Funding
     include SanitizeHelper
     include FundingHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, system_admin: false)
       @data_model = data_model
       @has_errors = has_errors
+      @system_admin = system_admin
     end
 
     def trainee
@@ -27,7 +28,7 @@ module Funding
 
   private
 
-    attr_accessor :data_model, :has_errors
+    attr_accessor :data_model, :has_errors, :system_admin
 
     delegate :can_apply_for_scholarship?, :scholarship_amount,
              :can_apply_for_bursary?, :bursary_amount,
@@ -115,15 +116,9 @@ module Funding
       "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
     end
 
-    def mappable_field(field_value, field_label, section_url)
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: section_url,
-        has_errors: has_errors,
-      ).to_h
-    end
+    def mappable_field(field_value, field_label, action_url)
+      { field_value: field_value, field_label: field_label, action_url: action_url}
+    end 
 
     def funding_manager
       @funding_manager ||= FundingManager.new(trainee)

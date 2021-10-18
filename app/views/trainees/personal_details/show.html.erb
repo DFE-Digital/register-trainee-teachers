@@ -1,13 +1,13 @@
 <div class="personal-details">
-  <%= render PersonalDetails::View.new(data_model: @trainee) %>
+  <%= render PersonalDetails::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
 </div>
 
 <div class="contact-details">
-  <%= render ContactDetails::View.new(data_model: @trainee) %>
+  <%= render ContactDetails::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
 </div>
 
 <div class="diversity-details">
-  <%= render Diversity::View.new(data_model: @trainee) %>
+  <%= render Diversity::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
 </div>
 
 <% if @trainee.requires_degree? %>

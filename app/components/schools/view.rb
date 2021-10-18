@@ -25,7 +25,7 @@ module Schools
 
   private
 
-    attr_accessor :data_model, :lead_school, :employing_school, :has_errors
+    attr_accessor :data_model, :lead_school, :employing_school, :has_errors, :system_admin
 
     def lead_school_not_applicable?
       if data_model.is_a?(Schools::FormValidator)

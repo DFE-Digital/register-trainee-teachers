@@ -4,9 +4,10 @@ module Diversity
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, system_admin: false)
       @data_model = data_model
       @has_errors = has_errors
+      @system_admin = system_admin
     end
 
     def trainee
@@ -27,7 +28,7 @@ module Diversity
 
   private
 
-    attr_accessor :data_model, :has_errors
+    attr_accessor :data_model, :has_errors, :system_admin
 
     def diversity_disclosure_row
       field_value = data_model.diversity_disclosure ? t("components.confirmation.diversity.diversity_disclosure.#{data_model.diversity_disclosure}") : nil
@@ -130,13 +131,7 @@ module Diversity
     end
 
     def mappable_field(field_value, field_label, action_url)
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: action_url,
-        has_errors: has_errors,
-      ).to_h
-    end
+      { field_value: field_value, field_label: field_label, action_url: action_url}
+    end 
   end
 end

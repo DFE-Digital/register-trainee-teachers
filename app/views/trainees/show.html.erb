@@ -3,25 +3,25 @@
 </div>
 
 <div class="record-details">
-  <%= render RecordDetails::View.new(trainee: @trainee, last_updated_event: @trainee.timeline.first) %>
+  <%= render RecordDetails::View.new(trainee: @trainee, last_updated_event: @trainee.timeline.first, system_admin: current_user.system_admin?) %>
 </div>
 
 <div class="course-details">
-  <%= render CourseDetails::View.new(data_model: @trainee) %>
+  <%= render CourseDetails::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
 </div>
 
 <% if @trainee.requires_schools? %>
   <div class="school-details">
-    <%= render SchoolDetails::View.new(@trainee) %>
+    <%= render SchoolDetails::View.new(@trainee, system_admin: current_user.system_admin?)  %>
   </div>
 <% end %>
 
 <% if @trainee.requires_placement_details? %>
   <div class="placement-details">
-    <%= render PlacementDetails::View.new(trainee: @trainee) %>
+    <%= render PlacementDetails::View.new(trainee: @trainee, system_admin: current_user.system_admin?) %>
   </div>
 <% end %>
 
 <div class="funding">
-  <%= render Funding::View.new(data_model: @trainee) %>
+  <%= render Funding::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
 </div>

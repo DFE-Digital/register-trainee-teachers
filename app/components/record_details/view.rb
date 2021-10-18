@@ -5,11 +5,12 @@ module RecordDetails
     include SanitizeHelper
     include SummaryHelper
 
-    attr_reader :trainee, :last_updated_event, :not_provided_copy
+    attr_reader :trainee, :last_updated_event, :not_provided_copy, :system_admin
 
-    def initialize(trainee:, last_updated_event:)
+    def initialize(trainee:, last_updated_event:, system_admin: false)
       @trainee = trainee
       @last_updated_event = last_updated_event
+      @system_admin = system_admin
     end
 
     def record_detail_rows
@@ -34,19 +35,19 @@ module RecordDetails
     def region
       return unless trainee&.provider&.hpitt_postgrad?
 
-      { key: t(".region"), value: trainee.region.presence }
+      { field_label: t(".region"), field_value: trainee.region.presence }
     end
 
     def trn_row
       if trainee.trn.present?
         {
-          key: t(".trn"),
-          value: trainee.trn,
+          field_label: t(".trn"),
+          field_value: trainee.trn,
         }
       else
         {
-          key: t(".submitted_for_trn"),
-          value: submission_date,
+          field_label: t(".submitted_for_trn"),
+          field_value: submission_date,
         }
       end
     end
@@ -55,8 +56,8 @@ module RecordDetails
       return unless trainee.recommended_for_award? || trainee.awarded?
 
       {
-        key: trainee.award_type,
-        value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + progress_date,
+        field_label: trainee.award_type,
+        field_value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + progress_date,
       }
     end
 
@@ -64,22 +65,22 @@ module RecordDetails
       return unless trainee.deferred? || trainee.withdrawn?
 
       {
-        key: t(".trainee_status"),
-        value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + status_date,
+        field_label: t(".trainee_status"),
+        field_value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + status_date,
       }
     end
 
     def last_updated_row
       {
-        key: t(".last_updated"),
-        value: last_updated_date,
+        field_label: t(".last_updated"),
+        field_value: last_updated_date,
       }
     end
 
     def record_created_row
       {
-        key: t(".record_created"),
-        value: date_for_summary_view(trainee.created_at),
+        field_label: t(".record_created"),
+        field_value: date_for_summary_view(trainee.created_at),
       }
     end
 
@@ -130,14 +131,13 @@ module RecordDetails
         withdrawn: trainee.withdraw_date,
       }[trainee.state.to_sym]
     end
-
-    def mappable_field(field_value, field_label, section_url)
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: section_url,
-      ).to_h
+    
+    def has_errors
+      false
     end
+
+    def mappable_field(field_value, field_label, action_url)
+      { field_value: field_value, field_label: field_label, action_url: action_url}
+    end 
   end
 end

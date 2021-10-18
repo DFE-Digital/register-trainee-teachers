@@ -6,10 +6,11 @@ module CourseDetails
     include CourseDetailsHelper
     include TraineeHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, system_admin: false)
       @data_model = data_model
       @trainee = data_model.is_a?(Trainee) ? data_model : data_model.trainee
       @has_errors = has_errors
+      @system_admin = system_admin
     end
 
     def summary_title
@@ -33,6 +34,7 @@ module CourseDetails
             action_href: edit_trainee_publish_course_details_path(trainee),
             action_text: t(:change),
             action_visually_hidden_text: "course details",
+            raw_value: true
           })
         end
       end
@@ -40,19 +42,17 @@ module CourseDetails
 
   private
 
-    attr_accessor :data_model, :trainee, :has_errors
+    attr_accessor :data_model, :trainee, :has_errors, :system_admin
 
     def education_phase
       if non_early_year_route?
-        mappable_field(data_model.course_education_phase&.upcase_first,
-                       t("components.course_detail.education_phase"),
-                       action_url: edit_trainee_course_education_phase_path(trainee))
+        { field_value: data_model.course_education_phase&.upcase_first, field_label: t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee)}
       end
     end
 
     def subject_row
       if non_early_year_route?
-        mappable_field(subject_names, t("components.course_detail.subject"))
+        default_mappable_field(subject_names, t("components.course_detail.subject"))
       end
     end
 
@@ -65,18 +65,18 @@ module CourseDetails
 
     def age_range_row
       if non_early_year_route?
-        mappable_field(course_age_range, t("components.course_detail.age_range"))
+        default_mappable_field(course_age_range, t("components.course_detail.age_range"))
       end
     end
 
     def study_mode_row
       if trainee.requires_study_mode?
-        mappable_field(study_mode, t("components.course_detail.study_mode"))
+        default_mappable_field(study_mode, t("components.course_detail.study_mode"))
       end
     end
 
     def course_date_row(value, context)
-      mappable_field(value, t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_#{context}_date"))
+      default_mappable_field(value, t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_#{context}_date"))
     end
 
     def itt_route?
@@ -131,14 +131,8 @@ module CourseDetails
       @course ||= trainee.available_courses.find_by(uuid: data_model.course_uuid)
     end
 
-    def mappable_field(field_value, field_label, action_url: edit_trainee_course_details_path(trainee))
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: action_url,
-        has_errors: has_errors,
-      ).to_h
-    end
+    def default_mappable_field(field_value, field_label)
+      { field_value: field_value, field_label: field_label, action_url: edit_trainee_course_details_path(trainee)}
+    end 
   end
 end

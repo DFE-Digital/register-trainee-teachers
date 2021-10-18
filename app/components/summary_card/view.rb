@@ -14,20 +14,12 @@ class SummaryCard::View < ViewComponent::Base
   end
 
   def summary_rows
-    @summary_rows ||= @rows.map do |row|
-      row.tap do |r|
-        r.delete(:action) if prevent_action?
-      end
-    end
+    @rows
   end
 
 private
 
   attr_accessor :trainee, :title, :heading_level, :id_suffix
-
-  def prevent_action?
-    trainee.recommended_for_award? || trainee.awarded? || trainee.withdrawn?
-  end
 
   def row_title(key)
     return key.parameterize if id_suffix.nil?
