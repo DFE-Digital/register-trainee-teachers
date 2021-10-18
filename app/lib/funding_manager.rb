@@ -34,7 +34,7 @@ class FundingManager
   end
 
   def can_apply_for_bursary?
-    trainee.early_years_postgrad? ||
+    can_apply_for_tiered_bursary? ||
       available_bursary_amount.present?
   end
 

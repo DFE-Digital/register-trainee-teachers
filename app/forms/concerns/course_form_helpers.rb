@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 module CourseFormHelpers
-  def clear_bursary_information
+  def clear_funding_information
     trainee.progress.funding = false
 
     trainee.assign_attributes({
       applying_for_bursary: nil,
       applying_for_scholarship: nil,
+      applying_for_grant: nil,
+      bursary_tier: nil,
     })
   end
 
