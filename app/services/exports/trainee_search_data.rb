@@ -65,7 +65,7 @@ module Exports
           "disabilities" => disabilities(trainee),
           "number_of_degrees" => trainee.degrees.count,
           "degree_1_uk_or_non_uk" => uk_or_non_uk(degree),
-          "degree_1_institution" => degree&.institution,
+          "degree_1_awarding_institution" => degree&.institution,
           "degree_1_country" => degree&.country,
           "degree_1_subject" => degree&.subject,
           "degree_1_type_of_degree" => degree&.uk_degree,
@@ -77,11 +77,8 @@ module Exports
           "course_code" => trainee.course_code,
           "course_name" => course&.name,
           "course_route" => course_route(trainee),
-          "course_qualification" => course&.qualification,
-          "course_qualification_type" => nil,
-          "course_level" => course&.level&.capitalize,
-          "course_education_phase" => course_education_phase(trainee),
-          "course_allocation_subject" => course_allocation_subject(trainee.course_subject_one),
+          "course_education_phase" => trainee_education_phase(trainee) || course_education_phase(course),
+          "course_allocation_subject" => trainee_allocation_subject(trainee.course_subject_one) || course_allocation_subject(course),
           "course_itt_subject_1" => trainee.course_subject_one,
           "course_itt_subject_2" => trainee.course_subject_two,
           "course_itt_subject_3" => trainee.course_subject_three,
@@ -223,14 +220,27 @@ module Exports
       trainee.international_address.to_s.split(/[\r\n,]/).select(&:present?).join(", ")
     end
 
-    def course_allocation_subject(subject)
+    def trainee_allocation_subject(subject)
       SubjectSpecialism.find_by(name: subject)&.allocation_subject&.name
     end
 
-    def course_education_phase(trainee)
+    def course_allocation_subject(course)
+      return unless course
+
+      subject_specialism = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
+        .values.map(&:first).first
+
+      subject_specialism.allocation_subject
+    end
+
+    def trainee_education_phase(trainee)
       return EARLY_YEARS_ROUTE_NAME_PREFIX.humanize if trainee.early_years_route?
 
       trainee.course_education_phase&.upcase_first
+    end
+
+    def course_education_phase(course)
+      course&.level&.capitalize
     end
 
     def course_study_mode(trainee)
