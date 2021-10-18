@@ -130,7 +130,7 @@ module TaskListHelper
           path: edit_trainee_funding_training_initiative_path(trainee),
           confirm_path: trainee_funding_confirm_path(trainee),
           status: ProgressService.call(
-            validator: Funding::TrainingInitiativesForm.new(trainee),
+            validator: Funding::FormValidator.new(trainee),
             progress_value: trainee.progress.funding,
           ).status,
           classes: "funding",
