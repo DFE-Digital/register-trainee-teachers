@@ -17,17 +17,22 @@
     <%= favicon_link_tag asset_pack_path("media/images/govuk-apple-touch-icon-180x180.png"), rel: "apple-touch-icon", type: "image/png", size: "180x180" %>
     <%= stylesheet_pack_tag "application", media: "all" %>
     <%= javascript_pack_tag "application", defer: true %>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=<%= Settings.google_tag_manager.auth_id %>&gtm_preview=env-<%= Settings.google_tag_manager.env_id %>&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','<%= Settings.google_tag_manager.tracking_id %>');</script>
+    <% if google_analytics_allowed? %>
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=<%= Settings.google_tag_manager.auth_id %>&gtm_preview=env-<%= Settings.google_tag_manager.env_id %>&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','<%= Settings.google_tag_manager.tracking_id %>');</script>
+    <% end %>
   </head>
 
   <body class="govuk-template__body <%= yield :body_class %>">
-    <noscript>
-      <iframe title="Google Tag Manager" src="https://www.googletagmanager.com/ns.html?id=<%= Settings.google_tag_manager.tracking_id %>&<%= Settings.google_tag_manager.auth_id %>&gtm_preview=env-<%= Settings.google_tag_manager.env_id %>&gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
+    <% if google_analytics_allowed? %>
+      <noscript>
+        <iframe title="Google Tag Manager" src="https://www.googletagmanager.com/ns.html?id=<%= Settings.google_tag_manager.tracking_id %>&<%= Settings.google_tag_manager.auth_id %>&gtm_preview=env-<%= Settings.google_tag_manager.env_id %>&gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+      </noscript>
+    <% end %>
+
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
