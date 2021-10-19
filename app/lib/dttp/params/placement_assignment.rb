@@ -9,6 +9,8 @@ module Dttp
       ACADEMIC_YEAR_2021_2022 = "21196925-17b9-e911-a863-000d3ab0dc71"
       ACADEMIC_YEAR_2022_2023 = "ed0db9f4-eff5-eb11-94ef-000d3ab1e900"
 
+      SCHOOL_NOT_APPLICABLE = "9e7fcac0-4a37-e811-80ef-005056ac45bb"
+
       COURSE_LEVEL_PG = 12
       COURSE_LEVEL_UG = 20
 
@@ -98,13 +100,21 @@ module Dttp
       def school_params
         return {} unless trainee.requires_schools?
 
-        params = { "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_school_id(trainee.lead_school.urn)})" }
+        params = { "dfe_LeadSchoolId@odata.bind" => "/accounts(#{lead_school_id})" }
 
         if trainee.requires_employing_school?
-          params.merge!("dfe_EmployingSchoolId@odata.bind" => "/accounts(#{dttp_school_id(trainee.employing_school.urn)})")
+          params.merge!("dfe_EmployingSchoolId@odata.bind" => "/accounts(#{employing_school_id})")
         end
 
         params
+      end
+
+      def lead_school_id
+        trainee.lead_school_not_applicable? ? SCHOOL_NOT_APPLICABLE : dttp_school_id(trainee.lead_school.urn)
+      end
+
+      def employing_school_id
+        trainee.employing_school_not_applicable? ? SCHOOL_NOT_APPLICABLE : dttp_school_id(trainee.employing_school.urn)
       end
 
       def subject_params
