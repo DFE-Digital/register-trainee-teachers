@@ -131,13 +131,9 @@ module RecordDetails
         withdrawn: trainee.withdraw_date,
       }[trainee.state.to_sym]
     end
-    
-    def has_errors
-      false
-    end
 
     def mappable_field(field_value, field_label, action_url)
-      { field_value: field_value, field_label: field_label, action_url: action_url}
-    end 
+      { field_value: field_value, field_label: field_label, action_url: action_url }
+    end
   end
 end

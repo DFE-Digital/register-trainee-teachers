@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe SummaryCard::View do
-  let(:trainee) { build(:trainee) }
   let(:rows) do
     [
       { key: "Character", value: "Lando Calrissian" },
@@ -13,7 +12,7 @@ RSpec.describe SummaryCard::View do
   end
 
   subject do
-    render_inline(SummaryCard::View.new(trainee: trainee, title: "Lando Calrissian", heading_level: 6, rows: rows))
+    render_inline(SummaryCard::View.new(title: "Lando Calrissian", heading_level: 6, rows: rows))
   end
 
   it "renders a summary list component for rows" do
@@ -37,20 +36,4 @@ RSpec.describe SummaryCard::View do
   it "renders a link alongside rows with an action value" do
     expect(subject.css(".govuk-link").text).to include("Change")
   end
-
-  describe "when the trainee record is closed" do 
-    let(:trainee) { build(:trainee, :withdrawn) }
-
-    context "non-editable for non-admin users" do 
-      it "hides change link for non-admin" do 
-        expect(subject.css(".govuk-link").text).to_not include("Change")
-      end 
-    end 
-  
-    # context "editable for admin users" do
-    #   it "shows change link for admin users" do
-    #     expect(subject.css(".govuk-link").text).to include("Change")
-    #   end 
-    # end 
-  end 
 end

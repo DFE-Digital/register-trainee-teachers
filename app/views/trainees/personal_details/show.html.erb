@@ -1,19 +1,19 @@
 <div class="personal-details">
-  <%= render PersonalDetails::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
+  <%= render PersonalDetails::View.new(data_model: @trainee, system_admin: @current_user.system_admin?) %>
 </div>
 
 <div class="contact-details">
-  <%= render ContactDetails::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
+  <%= render ContactDetails::View.new(data_model: @trainee, system_admin: @current_user.system_admin?) %>
 </div>
 
 <div class="diversity-details">
-  <%= render Diversity::View.new(data_model: @trainee, system_admin: current_user.system_admin?) %>
+  <%= render Diversity::View.new(data_model: @trainee, system_admin: @current_user.system_admin?) %>
 </div>
 
 <% if @trainee.requires_degree? %>
   <% if @trainee.degrees.any? %>
     <div class="degree-details">
-      <%= render Degrees::View.new(data_model: @trainee, show_delete_button: true) %>
+      <%= render Degrees::View.new(data_model: @trainee, show_delete_button: true, system_admin: @current_user.system_admin?) %>
     </div>
   <% else %>
     <%= render CollapsedSection::View.new(title: t("components.incomplete_section.degree_details_not_provided"), link_text: t("components.incomplete_section.add_degree_details"), url: trainee_degrees_new_type_path(@trainee), has_errors: false) %>

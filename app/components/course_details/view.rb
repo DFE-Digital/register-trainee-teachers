@@ -20,33 +20,34 @@ module CourseDetails
     def rows
       [
         training_route_row,
-        education_phase,
+        publish_course_details_row,
+        education_phase_row,
         subject_row,
         age_range_row,
         study_mode_row,
         course_date_row(course_start_date, :start),
         course_date_row(course_end_date, :end),
-      ].compact.tap do |collection|
-        if show_publish_courses?(trainee)
-          collection.unshift({
-            key: t("components.course_detail.course_details"),
-            value: course_details,
-            action_href: edit_trainee_publish_course_details_path(trainee),
-            action_text: t(:change),
-            action_visually_hidden_text: "course details",
-            raw_value: true
-          })
-        end
-      end
+      ].compact
     end
 
   private
 
     attr_accessor :data_model, :trainee, :has_errors, :system_admin
 
-    def education_phase
+    def publish_course_details_row
+      if show_publish_courses?(trainee)
+        { key: t("components.course_detail.course_details"),
+          value: course_details,
+          action_href: edit_trainee_publish_course_details_path(trainee),
+          action_text: t(:change),
+          action_visually_hidden_text: "course details",
+          custom_value: true }
+      end
+    end
+
+    def education_phase_row
       if non_early_year_route?
-        { field_value: data_model.course_education_phase&.upcase_first, field_label: t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee)}
+        { field_value: data_model.course_education_phase&.upcase_first, field_label: t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee) }
       end
     end
 
@@ -58,7 +59,7 @@ module CourseDetails
 
     def training_route_row
       unless trainee.draft?
-        mappable_field(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), t("components.course_detail.route"),
+        default_mappable_field(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), t("components.course_detail.route"),
                        action_url: nil)
       end
     end
@@ -132,7 +133,7 @@ module CourseDetails
     end
 
     def default_mappable_field(field_value, field_label)
-      { field_value: field_value, field_label: field_label, action_url: edit_trainee_course_details_path(trainee)}
-    end 
+      { field_value: field_value, field_label: field_label, action_url: edit_trainee_course_details_path(trainee) }
+    end
   end
 end

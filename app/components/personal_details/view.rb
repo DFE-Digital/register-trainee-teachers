@@ -31,7 +31,7 @@ module PersonalDetails
     def full_name_row
       name = "#{data_model.first_names} #{data_model.middle_names} #{data_model.last_name}"
 
-     default_mappable_field(
+      default_mappable_field(
         [data_model.first_names, data_model.last_name].any?(&:nil?) ? nil : name,
         t("components.confirmation.personal_detail.full_name"),
       )
@@ -82,7 +82,7 @@ module PersonalDetails
     end
 
     def default_mappable_field(field_value, field_label)
-      { field_value: field_value, field_label: field_label, action_url: edit_trainee_personal_details_path(trainee)}
-    end 
+      { field_value: field_value, field_label: field_label, action_url: edit_trainee_personal_details_path(trainee) }
+    end
   end
 end

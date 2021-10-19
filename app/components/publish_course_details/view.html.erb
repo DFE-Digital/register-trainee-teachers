@@ -1,6 +1,7 @@
-<%= render SummaryCard::View.new(
+<%= render MappableSummary::View.new(
   trainee: trainee,
   title: summary_title,
-  heading_level: 2,
-  rows: rows
+  rows: rows,
+  has_errors: has_errors,
+  system_admin: system_admin
 ) %>

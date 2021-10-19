@@ -8,7 +8,7 @@ module PlacementDetails
       let(:trainee) { create(:trainee, :provider_led_postgrad) }
 
       before do
-        render_inline(View.new(trainee: trainee))
+        render_inline(View.new(trainee: trainee, system_admin: nil))
       end
 
       it "tells the user that no data has been entered for placements" do

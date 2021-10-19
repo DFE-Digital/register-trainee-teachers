@@ -1,5 +1,9 @@
 <%= render SummaryCard::View.new(
-  trainee: trainee, #remove
   title: title,
-  rows: mappable_rows
-) %>
+  rows: mappable_rows,
+  id_suffix: id_suffix,
+) do |component|
+  component.header_actions do %>
+    <%= header_actions %>
+  <% end
+end %>
