@@ -18,6 +18,7 @@ module CourseDetails
 
     def rows
       [
+        training_route_row,
         education_phase,
         subject_row,
         age_range_row,
@@ -42,7 +43,7 @@ module CourseDetails
     attr_accessor :data_model, :trainee, :has_errors
 
     def education_phase
-      if require_education_phase?
+      if non_early_year_route?
         mappable_field(trainee.course_education_phase&.upcase_first,
                        t("components.course_detail.education_phase"),
                        action_url: edit_trainee_course_education_phase_path(trainee))
@@ -50,13 +51,20 @@ module CourseDetails
     end
 
     def subject_row
-      if require_subject?
+      if non_early_year_route?
         mappable_field(subject_names, t("components.course_detail.subject"))
       end
     end
 
+    def training_route_row
+      unless trainee.draft?
+        mappable_field(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), t("components.course_detail.route"),
+                       action_url: nil)
+      end
+    end
+
     def age_range_row
-      if require_age_range?
+      if non_early_year_route?
         mappable_field(course_age_range, t("components.course_detail.age_range"))
       end
     end
@@ -75,18 +83,8 @@ module CourseDetails
       trainee.itt_route?
     end
 
-    def require_subject?
+    def non_early_year_route?
       !trainee.early_years_route?
-    end
-
-    def require_age_range?
-      !trainee.early_years_route?
-    end
-
-    def require_education_phase?
-      return true unless trainee.early_years_route?
-
-      !trainee.draft?
     end
 
     def course_details

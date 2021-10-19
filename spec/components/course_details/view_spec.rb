@@ -6,6 +6,10 @@ module CourseDetails
   describe View do
     include SummaryHelper
 
+    let(:training_route) { "Training route" }
+    let(:education_phase) { "Education phase" }
+    let(:age_range) { "Age range" }
+
     context "when data has not been provided" do
       let(:trainee) do
         build(:trainee, id: 1,
@@ -158,19 +162,28 @@ module CourseDetails
       context "non draft" do
         let(:trainee) { create(:trainee, :early_years_undergrad, :with_early_years_course_details, :submitted_for_trn) }
 
-        it "renders education phase" do
-          expect(rendered_component).to have_text("Education phase")
-          expect(rendered_component)
-            .to have_text("Secondary")
+        it "renders the training route" do
+          expect(rendered_component).to have_text(training_route)
+        end
+
+        it "does not render education phase" do
+          expect(rendered_component).not_to have_text(education_phase)
+        end
+
+        it "does not render course age range" do
+          expect(rendered_component).not_to have_text(age_range)
         end
       end
 
       context "draft" do
         let(:trainee) { create(:trainee, :early_years_undergrad, :with_early_years_course_details, :draft) }
 
+        it "does not render the training route" do
+          expect(rendered_component).not_to have_text(training_route)
+        end
+
         it "does not render education phase" do
-          expect(rendered_component).not_to have_text("Education phase")
-          expect(rendered_component).not_to have_text("Secondary")
+          expect(rendered_component).not_to have_text(education_phase)
         end
       end
     end
@@ -183,20 +196,36 @@ module CourseDetails
       context "draft" do
         let(:trainee) { create(:trainee, :with_secondary_course_details, :draft) }
 
+        it "does not render the training route" do
+          expect(rendered_component).not_to have_text(training_route)
+        end
+
         it "renders route" do
-          expect(rendered_component).to have_text("Education phase")
+          expect(rendered_component).to have_text(education_phase)
           expect(rendered_component)
             .to have_text("Secondary")
+        end
+
+        it "renders course age range" do
+          expect(rendered_component).to have_text(age_range)
         end
       end
 
       context "non draft" do
         let(:trainee) { create(:trainee, :with_secondary_course_details, :submitted_for_trn) }
 
+        it "renders the training route" do
+          expect(rendered_component).to have_text(training_route)
+        end
+
         it "renders route" do
-          expect(rendered_component).to have_text("Education phase")
+          expect(rendered_component).to have_text(education_phase)
           expect(rendered_component)
             .to have_text("Secondary")
+        end
+
+        it "renders course age range" do
+          expect(rendered_component).to have_text(age_range)
         end
       end
     end
