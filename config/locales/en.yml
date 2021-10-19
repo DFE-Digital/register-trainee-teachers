@@ -176,7 +176,7 @@ en:
       title: Placement details
     degrees:
       add_another_degree: Add another degree
-      institution: &institution Institution
+      institution: &institution Awarding institution
       subject: &subject Subject
       degree_type: &degree_type Degree type
       grade: &grade Grade
@@ -363,7 +363,7 @@ en:
           create: Degree added
           destroy: Degree deleted
           subject: Degree subject updated
-          institution: Degree institution updated
+          institution: Degree awarding institution updated
           uk_degree: Degree type updated
           non_uk_degree: Degree type updated
           grade: Degree grade updated
@@ -910,7 +910,7 @@ en:
             subject:
               blank: Select a degree subject
             institution:
-              blank: Select an institution
+              blank: Select an awarding institution
             grade:
               blank: Select a degree grade
             graduation_year:
@@ -958,7 +958,7 @@ en:
           course_subject_one: *subject
           course_subject_two: *subject
           course_subject_three: *subject
-          institution: Select an institution from the list - your entry is not recognised
+          institution: Select an awarding institution from the list - your entry is not recognised
           other_nationality1: &nationality Select a nationality from the list - your entry is not recognised
           other_nationality2: *nationality
           other_nationality3: *nationality

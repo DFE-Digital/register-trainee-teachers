@@ -13,14 +13,14 @@
     f,
     attribute_name: :institution,
     form_field: f.govuk_select(:institution,
-                                options_for_select(institutions_options, @degree_form.degree.institution),
-                                form_group: {
-                                  class: invalid_data_class(form: @degree_form, field: "institution")
-                                },
-                                label: { text: "Institution",
-                                  size: "s",
-                                },
-                                hint: -> { render InvalidDataText::View.new(form_section: :institution, degree_form: @degree_form) }),
+      options_for_select(institutions_options, @degree_form.degree.institution),
+      form_group: {
+        class: invalid_data_class(form: @degree_form, field: "institution")
+      },
+      label: { text: "Awarding institution",
+        size: "s",
+      },
+      hint: -> { render InvalidDataText::View.new(form_section: :institution, degree_form: @degree_form, hint: 'This may be different than where the trainee studied inst') }),
   ) %>
 
   <%= render FormComponents::Autocomplete::View.new(

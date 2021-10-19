@@ -36,7 +36,7 @@ RSpec.describe Degrees::View do
 
       it_behaves_like summary_list_row, :uk_degree, "degree type"
       it_behaves_like summary_list_row, :subject, "subject"
-      it_behaves_like summary_list_row, :institution, "institution"
+      it_behaves_like summary_list_row, :institution, "awarding institution"
       it_behaves_like summary_list_row, :graduation_year, "graduation year"
       it_behaves_like summary_list_row, :grade, "grade"
     end
