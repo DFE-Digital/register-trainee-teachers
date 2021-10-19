@@ -142,10 +142,13 @@ describe BulkImport do
   end
 
   describe ".build_non_uk_degree" do
+    let(:country_name) { "France" }
+    let(:non_uk_degree) { "Bachelor degree" }
+
     subject do
       described_class.build_non_uk_degree(trainee,
-                                          country: "France",
-                                          non_uk_degree: "Bachelor degree",
+                                          country: country_name,
+                                          non_uk_degree: non_uk_degree,
                                           subject: "Combined Studies",
                                           graduation_year: "2021")
     end
@@ -157,6 +160,22 @@ describe BulkImport do
       expect(subject.graduation_year).to eq 2021
       expect(subject.subject).to eq "Combined Studies"
       expect(subject.country).to eq "France"
+    end
+
+    context "with invalid country name" do
+      let(:country_name) { "american" }
+
+      it "does not set country name" do
+        expect(subject.country).to be_nil
+      end
+    end
+
+    context "with ENIC not provided" do
+      let(:non_uk_degree) { "ENIC not provided" }
+
+      it "does not set country name" do
+        expect(subject.non_uk_degree).to eq(NON_ENIC)
+      end
     end
   end
 

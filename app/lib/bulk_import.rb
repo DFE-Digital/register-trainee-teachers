@@ -84,7 +84,7 @@ module BulkImport
     def build_non_uk_degree(trainee, country:, non_uk_degree:, subject:, graduation_year:)
       trainee.degrees.build do |degree|
         degree.locale_code = :non_uk
-        degree.country = country
+        degree.country = validate_country(country)
         degree.non_uk_degree = validate_enic_non_uk_degree(non_uk_degree)
         degree.subject = validate_degree_subject(subject)
         degree.graduation_year = Date.new(graduation_year.to_i).year if graduation_year.present?
@@ -271,8 +271,16 @@ module BulkImport
       end
     end
 
+    def validate_country(raw_string)
+      Dttp::CodeSets::Countries::MAPPING.keys.select do |country|
+        normalise_string(country) == normalise_string(raw_string)
+      end&.first
+    end
+
     def validate_enic_non_uk_degree(raw_string)
       return NON_ENIC if raw_string.blank?
+
+      return NON_ENIC if normalise_string(raw_string).include?("notprovided")
 
       ENIC_NON_UK.include?(raw_string) ? raw_string : nil
     end
