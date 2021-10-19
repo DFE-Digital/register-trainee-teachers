@@ -119,6 +119,8 @@ module Exports
         FUNDING_TYPE_ENUMS[:scholarship]
       elsif trainee.applying_for_grant?
         FUNDING_TYPE_ENUMS[:grant]
+      elsif [trainee.applying_for_bursary, trainee.applying_for_scholarship, trainee.applying_for_grant].include?(false)
+        "not funded"
       end
     end
 

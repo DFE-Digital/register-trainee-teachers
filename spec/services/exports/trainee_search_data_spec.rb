@@ -152,5 +152,33 @@ module Exports
         expect(subject.filename).to eq(expected_filename)
       end
     end
+
+    describe "#funding_method" do
+      it "returns bursary" do
+        trainee = Trainee.new(applying_for_bursary: true)
+        expect(subject.send(:funding_method, trainee)).to eq("bursary")
+      end
+
+      it "returns scholarship" do
+        trainee = Trainee.new(applying_for_scholarship: true)
+        expect(subject.send(:funding_method, trainee)).to eq("scholarship")
+      end
+
+      it "returns grant" do
+        trainee = Trainee.new(applying_for_grant: true)
+        expect(subject.send(:funding_method, trainee)).to eq("grant")
+      end
+
+      it "returns not funded" do
+        trainee = Trainee.new(applying_for_bursary: false)
+        expect(subject.send(:funding_method, trainee)).to eq("not funded")
+
+        trainee = Trainee.new(applying_for_scholarship: false)
+        expect(subject.send(:funding_method, trainee)).to eq("not funded")
+
+        trainee = Trainee.new(applying_for_grant: false)
+        expect(subject.send(:funding_method, trainee)).to eq("not funded")
+      end
+    end
   end
 end
