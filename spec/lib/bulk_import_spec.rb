@@ -46,12 +46,12 @@ describe BulkImport do
         csv_row.merge!("Grant funding" => "yes", "Bursary funding" => "yes", "Scholarship" => "yes")
         allow(FundingManager).to receive(:new).and_return(funding_manager)
         allow(funding_manager).to receive(:can_apply_for_grant?).and_return(true)
+        subject
       end
 
       let(:funding_manager) { FundingManager.new(build(:trainee)) }
 
       it "unsets all three" do
-        subject
         trainee = Trainee.last
         expect(trainee.applying_for_bursary).to be_nil
         expect(trainee.applying_for_grant).to be_nil
