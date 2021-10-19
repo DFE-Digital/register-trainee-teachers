@@ -440,7 +440,7 @@ describe Trainee do
       it "orders the trainees by drafts first, then any other state" do
         expect(save_trainees).not_to eq(expected_order)
 
-        expect(Trainee.ordered_by_drafts).to eq(expected_order)
+        expect(Trainee.ordered_by_drafts.first(2)).to match_array([draft_trainee_d, draft_trainee_c])
       end
     end
 
