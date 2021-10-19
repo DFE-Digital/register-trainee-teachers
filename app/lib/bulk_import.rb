@@ -5,6 +5,8 @@ module BulkImport
 
   REJECTED_WORD_LIST = ["the"].freeze
 
+  FUNDING_TYPES = %i[applying_for_scholarship applying_for_grant applying_for_bursary].freeze
+
   class << self
     def run_pre_import_checks!(provider, csv)
       trainee_ids = csv.map { |row| row["Trainee ID"] }
@@ -18,11 +20,11 @@ module BulkImport
 
       set_course(provider, trainee, csv_row)
       set_nationalities(trainee, csv_row)
+      trainee.set_early_years_course_details
       sanitise_funding(trainee)
       build_degrees(trainee, csv_row)
       validate_and_set_progress(trainee)
 
-      trainee.set_early_years_course_details
       trainee.save!
     end
 
@@ -102,7 +104,7 @@ module BulkImport
       end
 
       column_mapper = {
-        "Bursary funding" => method(:to_funding_boolean) >> assign_field[:applying_for_bursary],
+        "Bursary funding" => method(:to_funding) >> assign_field[:applying_for_bursary],
         "Building" => assign_field[:address_line_one],
         "Course end date" => method(:parse_date) >> assign_field[:course_end_date],
         "Course start date" => method(:parse_date) >> assign_field[:course_start_date],
@@ -114,7 +116,7 @@ module BulkImport
         "Ethnicity" => method(:to_ethnic_group) >> assign_field[:ethnic_group],
         "First names" => assign_field[:first_names],
         "Gender" => method(:to_gender) >> assign_field[:gender],
-        "Grant funding" => method(:to_funding_boolean) >> assign_field[:applying_for_grant],
+        "Grant funding" => method(:to_funding) >> assign_field[:applying_for_grant],
         "ITT Subject 1" => method(:to_course_subject) >> assign_field[:course_subject_one],
         "ITT Subject 2" => method(:to_course_subject) >> assign_field[:course_subject_two],
         "ITT Subject 3" => method(:to_course_subject) >> assign_field[:course_subject_three],
@@ -124,7 +126,7 @@ module BulkImport
         "Outside UK address" => assign_field[:international_address],
         "Postal code" => method(:to_post_code) >> assign_field[:postcode],
         "Route" => method(:to_route) >> assign_field[:training_route],
-        "Scholarship" => method(:to_funding_boolean) >> assign_field[:applying_for_scholarship],
+        "Scholarship" => method(:to_funding) >> assign_field[:applying_for_scholarship],
         "Street" => assign_field[:address_line_two],
         "Study mode" => method(:to_study_mode) >> assign_field[:study_mode],
         "Town or city" => assign_field[:town_city],
@@ -309,8 +311,10 @@ module BulkImport
       end.values.first
     end
 
-    def to_funding_boolean(raw_string)
-      raw_string.downcase == "yes"
+    def to_funding(raw_string)
+      return true if raw_string.downcase == "yes"
+
+      return false if raw_string.downcase == "no"
     end
 
     def to_gender(raw_string)
@@ -365,6 +369,13 @@ module BulkImport
 
     def sanitise_funding(trainee)
       funding_manager = FundingManager.new(trainee)
+
+      # There are instances where the provider has set more than one of funding types to "yes"
+      # As we do not support that at the moment, we want to force them to make an explicit choice
+      # by setting this to `nil`
+      if trainee.slice(FUNDING_TYPES).values.count(true) > 1
+        trainee.assign_attributes(FUNDING_TYPES.index_with { nil })
+      end
 
       trainee.applying_for_bursary = nil if funding_manager.can_apply_for_tiered_bursary?
       trainee.applying_for_bursary = nil unless funding_manager.can_apply_for_bursary?
