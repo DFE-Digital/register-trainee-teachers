@@ -40,7 +40,7 @@ module Trainees
 
       flash[:success] = "Trainee degree deleted"
 
-      redirect_to(page_tracker.last_origin_page_path)
+      redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
     end
 
   private
