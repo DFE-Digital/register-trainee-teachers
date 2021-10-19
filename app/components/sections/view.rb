@@ -97,7 +97,7 @@ module Sections
         degrees: {
           not_provided: "trainee_degrees_new_type_path",
           incomplete: "trainee_degrees_new_type_path",
-          in_progress_invalid: "trainee_degrees_new_type_path",
+          in_progress_invalid: "trainee_degrees_confirm_path",
           in_progress_valid: "trainee_degrees_confirm_path",
           review: "trainee_degrees_confirm_path",
         },
