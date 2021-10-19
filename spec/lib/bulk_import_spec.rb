@@ -41,6 +41,24 @@ describe BulkImport do
       end
     end
 
+    context "with more than one of funding, grant and scholarships selected" do
+      before do
+        csv_row.merge!("Grant funding" => "yes", "Bursary funding" => "yes", "Scholarship" => "yes")
+        allow(FundingManager).to receive(:new).and_return(funding_manager)
+        allow(funding_manager).to receive(:can_apply_for_grant?).and_return(true)
+        subject
+      end
+
+      let(:funding_manager) { FundingManager.new(build(:trainee)) }
+
+      it "unsets all three" do
+        trainee = Trainee.last
+        expect(trainee.applying_for_bursary).to be_nil
+        expect(trainee.applying_for_grant).to be_nil
+        expect(trainee.applying_for_scholarship).to be_nil
+      end
+    end
+
     context "with Institution 2 provided" do
       before do
         csv_row.merge!("Institution 2" => "University of Plymouth")
@@ -467,6 +485,28 @@ describe BulkImport do
       it "returns NON_ENIC" do
         expect(subject).to eq(NON_ENIC)
       end
+    end
+  end
+
+  describe ".to_funding" do
+    subject { described_class.to_funding(funding_value) }
+
+    context "with yes" do
+      let(:funding_value) { "YeS" }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "with no" do
+      let(:funding_value) { "No" }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "with any other value" do
+      let(:funding_value) { "Non merci" }
+
+      it { is_expected.to be_nil }
     end
   end
 end
