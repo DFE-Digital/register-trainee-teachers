@@ -11,12 +11,7 @@ module Trainees
         @training_initiatives_form = ::Funding::TrainingInitiativesForm.new(trainee, params: trainee_params, user: current_user)
 
         if @training_initiatives_form.stash_or_save!
-          if funding_manager.can_apply_for_funding_type?
-            redirect_to(edit_trainee_funding_bursary_path(trainee))
-          else
-            trainee.update!(applying_for_bursary: false)
-            redirect_to(trainee_funding_confirm_path(trainee))
-          end
+          redirect_to(step_wizard.next_step)
         else
           render(:edit)
         end
@@ -32,6 +27,10 @@ module Trainees
 
       def funding_manager
         @funding_manager ||= FundingManager.new(trainee)
+      end
+
+      def step_wizard
+        @step_wizard ||= Wizards::FundingStepWizard.new(trainee: trainee, page_tracker: page_tracker)
       end
     end
   end
