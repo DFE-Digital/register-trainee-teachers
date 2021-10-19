@@ -91,9 +91,9 @@ module Exports
           "course_duration_in_years" => course&.duration_in_years,
           "course_summary" => course&.summary,
           "commencement_date" => trainee.commencement_date&.iso8601,
-          "lead_school_name" => trainee.lead_school&.name,
+          "lead_school_name" => lead_school_name(trainee),
           "lead_school_urn" => trainee.lead_school&.urn,
-          "employing_school_name" => trainee.employing_school&.name,
+          "employing_school_name" => employing_school_name(trainee),
           "employing_school_urn" => trainee.employing_school&.urn,
           "training_initiative" => training_initiative(trainee),
           "funding_method" => funding_method(trainee),
@@ -257,6 +257,14 @@ module Exports
       return value unless value.is_a?(String)
 
       value.start_with?(*VULNERABLE_CHARACTERS) ? value.prepend("'") : value
+    end
+
+    def lead_school_name(trainee)
+      trainee.lead_school_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_school&.name
+    end
+
+    def employing_school_name(trainee)
+      trainee.employing_school_not_applicable? ? I18n.t(:not_applicable) : trainee.employing_school&.name
     end
   end
 end

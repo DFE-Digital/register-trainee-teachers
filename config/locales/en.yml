@@ -20,6 +20,7 @@ en:
   in_progress_invalid: in progress
   review: review
   completed: completed
+  not_applicable: Not applicable
   header:
     items:
       sign_out: Sign out
@@ -831,10 +832,22 @@ en:
         heading: Lead school
         hint: Search for a school by its unique reference number (URN), name or postcode
         description: The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        not_applicable_details:
+          summary_text: Trainee is not at a state school or lead school is not listed
+          label_text: Lead school is not applicable
+          body:
+            <p> If the lead school is missing from the list, contact %{contact_link}</p>
+            <p>You only need to provide a lead school if the trainee is employed or funded by a state school</p>
     employing_schools:
       edit:
         heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
+        not_applicable_details:
+          summary_text: Trainee is not at a state school or employing school is not listed
+          label_text: Employing school is not applicable
+          body:
+            <p> If the employing school is missing from the list, contact %{contact_link}</p>
+            <p>You only need to provide an employing school if the trainee is employed or funded by a state school</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
@@ -1208,8 +1221,9 @@ en:
           attributes:
             query:
               blank: Enter a school unique reference number (URN), name or postcode
-            lead_school_id:
+            school_id:
               blank: Select a lead school or search again
+              both_fields_are_present: Select a lead school or select lead school not applicable
             results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
@@ -1218,8 +1232,9 @@ en:
           attributes:
             query:
               blank: Enter a school unique reference number (URN), name or postcode
-            employing_school_id:
+            school_id:
               blank: Select an employing school or search again
+              both_fields_are_present: Select an employing school or select employing school not applicable
             results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:

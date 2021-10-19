@@ -11,23 +11,19 @@ module SchoolHelper
     tag.p(school.name, class: "govuk-body") + tag.span(school_urn_and_location(school), class: "govuk-hint")
   end
 
-  def school_rows
-    [lead_school_row, employing_school_row].compact
-  end
-
-  def lead_school_row
+  def lead_school_row(not_applicable: false)
     mappable_field(
-      school_detail(lead_school),
+      not_applicable ? t(:not_applicable) : school_detail(lead_school),
       t("components.school_details.lead_school_key"),
       change_paths(:lead),
     )
   end
 
-  def employing_school_row
+  def employing_school_row(not_applicable: false)
     return unless trainee.requires_employing_school?
 
     mappable_field(
-      school_detail(employing_school),
+      not_applicable ? t(:not_applicable) : school_detail(employing_school),
       t("components.school_details.employing_school_key"),
       change_paths(:employing),
     )

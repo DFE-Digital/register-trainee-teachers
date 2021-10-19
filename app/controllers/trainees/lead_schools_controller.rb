@@ -33,7 +33,9 @@ module Trainees
   private
 
     def trainee_params
-      params.fetch(:schools_lead_school_form, {}).permit(:lead_school_id, *Schools::LeadSchoolForm::NON_TRAINEE_FIELDS)
+      params.fetch(:schools_lead_school_form, {})
+            .permit(*Schools::LeadSchoolForm::FIELDS,
+                    *Schools::LeadSchoolForm::NON_TRAINEE_FIELDS)
     end
 
     def query

@@ -21,6 +21,13 @@
       <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-schools=true
            data-default-value="<%= query %>" data-field-name="schools_lead_school_form[query]"></div>
 
+      <%= render GovukComponent::DetailsComponent.new(summary_text: t(".not_applicable_details.summary_text"),
+                                                      open: f.object.school_not_applicable? ) do %>
+        <%= t(".not_applicable_details.body", contact_link: govuk_mail_to(Settings.support_email)).html_safe %>
+        <%= f.govuk_check_box(:lead_school_not_applicable, "1", "0", multiple: false,
+                              label: { text: t(".not_applicable_details.label_text") }) %>
+      <% end  %>
+
       <%= f.hidden_field :lead_school_id, id: "school-id", value: nil %>
       <%= f.govuk_submit t("continue") %>
     <% end %>
