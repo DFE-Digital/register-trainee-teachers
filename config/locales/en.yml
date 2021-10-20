@@ -202,7 +202,7 @@ en:
         accessibility: Accessibility statement
         cookie_policy: Cookies on Register trainee teachers
         guidance: Data requirements
-        privacy_policy: How we use your personal data and trainee data in Register trainee teachers
+        privacy_policy: Privacy Notice for the Register trainee teachers service (Register)
         forbidden: You do not have access to view details for this trainee
         home: Home
         request_an_account: Request an account
@@ -704,8 +704,7 @@ en:
     check_data:
       heading: Check what data you need to provide
     privacy_policy:
-      pre_heading: Privacy policy
-      heading: How we use your personal data and trainee data in Register trainee teachers
+      heading: Privacy Notice for the Register trainee teachers service (Register)
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers
@@ -778,7 +777,7 @@ en:
         other: Subjects
   trainees:
     contact_details:
-      edit: 
+      edit:
         email:
           hint: Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE.
     not_supported_route:
