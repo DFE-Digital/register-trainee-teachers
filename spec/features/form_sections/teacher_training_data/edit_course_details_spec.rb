@@ -165,7 +165,7 @@ private
   end
 
   def given_a_trainee_exists_with_course_details
-    given_a_trainee_exists(:with_course_details, :with_secondary_education)
+    given_a_trainee_exists(:with_secondary_course_details)
   end
 
   def given_a_subject_specialism_is_available_for_selection

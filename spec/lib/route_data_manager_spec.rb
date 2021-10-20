@@ -20,7 +20,7 @@ describe RouteDataManager do
       end
 
       context "when a trainee has course details" do
-        let(:trainee) { create(:trainee, :assessment_only, :with_course_details_and_study_mode, progress: progress) }
+        let(:trainee) { create(:trainee, :assessment_only, :with_primary_course_details, progress: progress) }
 
         it "wipes the course details" do
           expect { subject }

@@ -8,8 +8,7 @@ module Exports
       create(
         :trainee,
         :with_degree,
-        :with_primary_education,
-        :with_course_details,
+        :with_primary_course_details,
         :submitted_for_trn,
         :trn_received,
         :recommended_for_award,
@@ -94,7 +93,7 @@ module Exports
           "course_itt_subject_3" => trainee.course_subject_three,
           "course_min_age" => trainee.course_min_age,
           "course_max_age" => trainee.course_max_age,
-          "course_study_mode" => nil,
+          "course_study_mode" => trainee.study_mode.humanize,
           "course_start_date" => trainee.course_start_date&.iso8601,
           "course_end_date" => trainee.course_end_date&.iso8601,
           "course_duration_in_years" => course&.duration_in_years,

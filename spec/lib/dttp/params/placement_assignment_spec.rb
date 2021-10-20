@@ -9,7 +9,7 @@ module Dttp
       let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:provider) { create(:provider, dttp_id: dttp_provider_id) }
       let(:trainee) do
-        create(:trainee, :with_course_details, :with_start_date, course_start_date: Date.parse("10/10/2020"), dttp_id: dttp_contact_id, provider: provider)
+        create(:trainee, :with_secondary_course_details, :with_start_date, course_start_date: Date.parse("10/10/2020"), dttp_id: dttp_contact_id, provider: provider)
       end
 
       let(:contact_change_set_id) { SecureRandom.uuid }
@@ -50,7 +50,7 @@ module Dttp
 
       describe "#params" do
         describe "academic year" do
-          let(:trainee) { create(:trainee, :with_course_details, :with_start_date, course_start_date: Date.parse(start_date)) }
+          let(:trainee) { create(:trainee, :with_secondary_course_details, :with_start_date, course_start_date: Date.parse(start_date)) }
           let(:expected_value) { "/dfe_academicyears(#{expected_year})" }
 
           subject do
@@ -135,6 +135,7 @@ module Dttp
                 "dfe_programmeyear" => 1,
                 "dfe_programmelength" => 1,
                 "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
+                "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{CodeSets::CourseStudyModes::MAPPING[COURSE_STUDY_MODES[trainee.study_mode.to_sym]][:entity_id]})",
                 "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{degree.graduation_year}").to_datetime.iso8601,
                 "dfe_allocatedplace" => 2,
               })
@@ -163,6 +164,7 @@ module Dttp
                 "dfe_programmeyear" => 1,
                 "dfe_programmelength" => 1,
                 "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})",
+                "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{CodeSets::CourseStudyModes::MAPPING[COURSE_STUDY_MODES[trainee.study_mode.to_sym]][:entity_id]})",
                 "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{degree.graduation_year}").to_datetime.iso8601,
                 "dfe_allocatedplace" => 2,
               })
@@ -188,7 +190,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 dttp_id: dttp_contact_id,
                 provider: provider,
@@ -206,7 +208,7 @@ module Dttp
           let(:trainee) do
             create(
               :trainee,
-              :with_course_details,
+              :with_secondary_course_details,
               :with_start_date,
               dttp_id: dttp_contact_id,
               provider: provider,
@@ -229,7 +231,7 @@ module Dttp
 
         context "trainee has no trainee_id" do
           let(:trainee) do
-            create(:trainee, :with_course_details, :with_start_date,
+            create(:trainee, :with_secondary_course_details, :with_start_date,
                    dttp_id: dttp_contact_id, provider: provider, trainee_id: nil)
           end
 
@@ -243,7 +245,7 @@ module Dttp
         UNDERGRAD_ROUTES.each_key do |route|
           context "with an undergrad route (#{route})" do
             let(:trainee) do
-              create(:trainee, route, :with_course_details, :with_start_date,
+              create(:trainee, route, :with_secondary_course_details, :with_start_date,
                      dttp_id: dttp_contact_id, provider: provider)
             end
 
@@ -267,7 +269,7 @@ module Dttp
 
         context "with an non-undergrad route" do
           let(:trainee) do
-            create(:trainee, :early_years_postgrad, :with_course_details, :with_start_date,
+            create(:trainee, :early_years_postgrad, :with_study_mode_and_course_dates, :with_start_date,
                    dttp_id: dttp_contact_id, provider: provider)
           end
 
@@ -282,7 +284,7 @@ module Dttp
 
         context "Opt in undergrad" do
           let(:trainee) do
-            create(:trainee, :opt_in_undergrad, :with_course_details, :with_start_date,
+            create(:trainee, :opt_in_undergrad, :with_secondary_course_details, :with_start_date,
                    dttp_id: dttp_contact_id, provider: provider)
           end
 
@@ -299,7 +301,7 @@ module Dttp
           let(:trainee) do
             create(:trainee,
                    :school_direct_tuition_fee,
-                   :with_course_details,
+                   :with_secondary_course_details,
                    :with_start_date,
                    :with_lead_school,
                    dttp_id: dttp_contact_id,
@@ -335,7 +337,7 @@ module Dttp
               create(
                 :trainee,
                 :school_direct_tuition_fee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 dttp_id: dttp_contact_id,
                 lead_school_not_applicable: true,
@@ -357,7 +359,7 @@ module Dttp
           let(:trainee) do
             create(:trainee,
                    :school_direct_salaried,
-                   :with_course_details,
+                   :with_secondary_course_details,
                    :with_start_date,
                    :with_lead_school,
                    :with_employing_school,
@@ -387,7 +389,7 @@ module Dttp
               create(
                 :trainee,
                 :school_direct_salaried,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 :with_lead_school,
                 employing_school_not_applicable: true,
@@ -413,7 +415,7 @@ module Dttp
               create(
                 :trainee,
                 :school_direct_salaried,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 lead_school_not_applicable: true,
                 employing_school_not_applicable: true,
@@ -454,7 +456,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 :with_tiered_bursary,
                 dttp_id: dttp_contact_id,
@@ -473,7 +475,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 :with_provider_led_bursary,
                 dttp_id: dttp_contact_id,
@@ -492,7 +494,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 :with_scholarship,
                 dttp_id: dttp_contact_id,
@@ -513,7 +515,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 :with_early_years_grant,
                 dttp_id: dttp_contact_id,
@@ -533,7 +535,7 @@ module Dttp
           let(:provider) { create(:provider, :teach_first) }
 
           let(:trainee) do
-            create(:trainee, :with_course_details, :with_start_date, :with_hpitt_provider, dttp_id: dttp_contact_id, provider: provider)
+            create(:trainee, :with_secondary_course_details, :with_start_date, :with_hpitt_provider, dttp_id: dttp_contact_id, provider: provider)
           end
 
           let(:expected_region_id) { CodeSets::Regions::MAPPING.dig(trainee.region, :entity_id) }
@@ -559,7 +561,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 dttp_id: dttp_contact_id,
                 training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
@@ -577,7 +579,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 dttp_id: dttp_contact_id,
                 training_initiative: ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars],
@@ -595,7 +597,7 @@ module Dttp
             let(:trainee) do
               create(
                 :trainee,
-                :with_course_details,
+                :with_secondary_course_details,
                 :with_start_date,
                 dttp_id: dttp_contact_id,
                 training_initiative: ROUTE_INITIATIVES_ENUMS[:now_teach],
@@ -610,34 +612,12 @@ module Dttp
           end
         end
 
-        context "has study_mode set" do
-          let(:trainee) do
-            create(
-              :trainee,
-              :provider_led_postgrad,
-              :with_course_details,
-              :with_start_date,
-              dttp_id: dttp_contact_id,
-              provider: provider,
-              study_mode: COURSE_STUDY_MODES[:full_time],
-            )
-          end
-
-          subject { described_class.new(trainee).params }
-
-          it "sets study_mode" do
-            expect(subject).to include({
-              "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{CodeSets::CourseStudyModes::MAPPING[COURSE_STUDY_MODES[:full_time]][:entity_id]})",
-            })
-          end
-        end
-
         context "study_mode is not set" do
           let(:trainee) do
             create(
               :trainee,
               :early_years_assessment_only,
-              :with_course_details,
+              :with_secondary_course_details,
               :with_start_date,
               dttp_id: dttp_contact_id,
               provider: provider,
