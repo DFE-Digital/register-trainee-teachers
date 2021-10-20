@@ -22,8 +22,9 @@ module Funding
     validates :funding_type, inclusion: { in: FUNDING_TYPES }
 
     delegate :can_apply_for_scholarship?, :can_apply_for_tiered_bursary?,
-             :can_apply_for_grant?, :grant_amount,
-             :scholarship_amount, to: :funding_manager
+             :can_apply_for_grant?, :grant_amount, :bursary_amount,
+             :scholarship_amount, :allocation_subject_name,
+             to: :funding_manager
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)
       params = add_fields_from_params(params)
