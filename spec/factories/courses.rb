@@ -2,13 +2,21 @@
 
 FactoryBot.define do
   factory :course do
+    transient do
+      age_range do
+        Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
+          v[:levels]&.include?(level)
+        end.keys.sample
+      end
+    end
+
     name { PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.keys.sample }
     code { Faker::Alphanumeric.unique.alphanumeric(number: 4, min_alpha: 1).upcase }
     accredited_body_code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     start_date { Time.zone.today }
     level { PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.keys.include?(name) ? :primary : :secondary }
-    min_age { 7 }
-    max_age { 11 }
+    min_age { age_range.first }
+    max_age { age_range.last }
     duration_in_years { 1 }
     qualification { %i[qts pgce_with_qts pgde_with_qts pgce pgde].sample }
     course_length { %w[OneYear TwoYears].sample }

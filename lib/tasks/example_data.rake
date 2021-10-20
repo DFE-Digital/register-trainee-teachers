@@ -118,7 +118,7 @@ namespace :example_data do
           sample_size = rand(4...8)
 
           sample_size.times do |sample_index|
-            attrs = { created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago) }
+            attrs = { randomise_subjects: true, created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago) }
             attrs.merge!(provider: provider) if provider
 
             # Some route-specific logic, but could move into factories too

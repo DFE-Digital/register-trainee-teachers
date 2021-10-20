@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
+      randomise_subjects { false }
       potential_course_start_date { course_start_date || Faker::Date.between(from: 1.year.ago, to: Time.zone.today) }
     end
 
@@ -139,7 +140,13 @@ FactoryBot.define do
 
     trait :with_secondary_course_details do
       with_secondary_education
-      course_subject_one { ::CourseSubjects::MATHEMATICS }
+      course_subject_one do
+        if randomise_subjects
+          Dttp::CodeSets::CourseSubjects::MAPPING.keys.reject { |subject| SubjectSpecialism::PRIMARY_SUBJECT_NAMES.include?(subject) }.sample
+        else
+          ::CourseSubjects::MATHEMATICS
+        end
+      end
       course_subject_two { nil }
       course_subject_three { nil }
       course_age_range do

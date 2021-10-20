@@ -17,7 +17,7 @@ describe "bulk_import:import" do
 
   let!(:school) { create(:school, urn: 123, name: "Penwortham Primary School") }
   let!(:provider) { create(:provider) }
-  let!(:course) { create(:course, provider: provider, code: "1CS", level: :secondary, study_mode: :full_time) }
+  let!(:course) { create(:course, provider: provider, code: "1CS", level: :secondary, study_mode: :full_time, age_range: [7, 11]) }
 
   context "with valid data" do
     let(:csv_path) {
