@@ -23,6 +23,7 @@ describe MappableFieldRow do
         action_url: action_url,
         has_errors: has_errors,
         apply_draft: true,
+        non_editable: false,
       ).to_h
     end
 
@@ -112,6 +113,26 @@ describe MappableFieldRow do
 
       it "returns HTML excluding information about error value since it's not available" do
         expect(subject[:value]).to eq(expected_html)
+      end
+    end
+
+    context "non editable" do
+      subject do
+        described_class.new(
+          field_value: "History",
+          field_label: field_label,
+          action_url: action_url,
+          apply_draft: false,
+          non_editable: non_editable,
+        ).to_h
+      end
+
+      let(:non_editable) { true }
+
+      it "does not render change link" do
+        expect(subject[:action_href]).to be_nil
+        expect(subject[:action_text]).to be_nil
+        expect(subject[:action_visually_hidden_text]).to be_nil
       end
     end
   end

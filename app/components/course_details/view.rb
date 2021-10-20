@@ -59,8 +59,7 @@ module CourseDetails
 
     def training_route_row
       unless trainee.draft?
-        default_mappable_field(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), t("components.course_detail.route"),
-                       action_url: nil)
+        { field_value: t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), field_label: t("components.course_detail.route"), action_url: nil }
       end
     end
 
