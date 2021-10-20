@@ -35,7 +35,7 @@ module Dttp
         AgeRange::FIVE_TO_NINE => { entity_id: "21215c74-8ec0-e611-80be-00155d010316", option: :additional, levels: [:primary] },
         AgeRange::FIVE_TO_FOURTEEN => { entity_id: FIVE_TO_FOURTEEN, option: :additional, levels: [:secondary] },
         AgeRange::FIVE_TO_EIGHTEEN => { entity_id: FIVE_TO_FOURTEEN, option: :additional, levels: [:secondary] }, # currently mapped to 5-14 in DTTP
-        AgeRange::SEVEN_TO_ELEVEN => { entity_id: "fad38a88-8ec0-e611-80be-00155d010316", option: :additional, levels: %i[primary secondary] },
+        AgeRange::SEVEN_TO_ELEVEN => { entity_id: "fad38a88-8ec0-e611-80be-00155d010316", option: :additional, levels: %i[primary] },
         AgeRange::SEVEN_TO_FOURTEEN => { entity_id: "fbd38a88-8ec0-e611-80be-00155d010316", option: :additional, levels: [:secondary] },
         AgeRange::SEVEN_TO_SIXTEEN => { entity_id: SEVEN_TO_SIXTEEN, option: :additional, levels: [:secondary] },
         AgeRange::SEVEN_TO_EIGHTEEN => { entity_id: SEVEN_TO_SIXTEEN, option: :additional, levels: [:secondary] }, # currently mapped to 7-16 in DTTP
