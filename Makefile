@@ -74,33 +74,33 @@ install-fetch-config:
 set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
 
-edit-app-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
-		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} -f yaml -c
+read-keyvault-config:
+	$(eval export key_vault_name=$(shell jq -r '.key_vault_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval key_vault_app_secret_name=$(shell jq -r '.key_vault_app_secret_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval key_vault_infra_secret_name=$(shell jq -r '.key_vault_infra_secret_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 
-edit-infra-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
-		-e -d azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} -f yaml -c
+edit-app-secrets: read-keyvault-config install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} \
+		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} -f yaml -c
 
-print-app-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_app_secret_name} \
-		-f yaml
+edit-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} \
+		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml -c
 
-print-infra-secrets: install-fetch-config set-azure-account
-	. terraform/workspace-variables/$(DEPLOY_ENV).sh && bin/fetch_config.rb -s azure-key-vault-secret:$${TF_VAR_key_vault_name}/$${TF_VAR_key_vault_infra_secret_name} \
-		-f yaml
+print-app-secrets: read-keyvault-config install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} -f yaml
+
+print-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
 
 deploy-plan: terraform-init
-	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
-	terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json
+	cd terraform && terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json
 
 deploy: terraform-init
-	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
-	terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
+	cd terraform && terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
 
 destroy: terraform-init
-	cd terraform && . workspace-variables/$(DEPLOY_ENV).sh && \
-	terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
+	cd terraform && terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
 
 terraform-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=master))
