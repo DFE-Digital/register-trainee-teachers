@@ -329,6 +329,28 @@ module Dttp
               expect { described_class.new(trainee).params }.to raise_error(ActiveRecord::RecordNotFound)
             end
           end
+
+          context "when lead school is not applicable" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :school_direct_tuition_fee,
+                :with_course_details,
+                :with_start_date,
+                dttp_id: dttp_contact_id,
+                lead_school_not_applicable: true,
+                provider: provider,
+              )
+            end
+
+            subject { described_class.new(trainee).params }
+
+            it "sets the not applicable DTTP id" do
+              expect(subject).to include({
+                "dfe_LeadSchoolId@odata.bind" => "/accounts(#{described_class::SCHOOL_NOT_APPLICABLE})",
+              })
+            end
+          end
         end
 
         context "school direct (salaried)" do
@@ -343,9 +365,12 @@ module Dttp
                    provider: provider)
           end
 
+          let(:lead_school_urn) { trainee.lead_school.urn }
+          let(:employing_school_urn) { trainee.employing_school.urn }
+
           before do
-            create(:dttp_school, :active, dttp_id: dttp_lead_school_id, urn: trainee.lead_school.urn)
-            create(:dttp_school, :active, dttp_id: dttp_employing_school_id, urn: trainee.employing_school.urn)
+            create(:dttp_school, :active, dttp_id: dttp_lead_school_id, urn: lead_school_urn)
+            create(:dttp_school, :active, dttp_id: dttp_employing_school_id, urn: employing_school_urn)
           end
 
           subject { described_class.new(trainee).params }
@@ -355,6 +380,59 @@ module Dttp
               "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_lead_school_id})",
               "dfe_EmployingSchoolId@odata.bind" => "/accounts(#{dttp_employing_school_id})",
             })
+          end
+
+          context "when employing school is not applicable" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :school_direct_salaried,
+                :with_course_details,
+                :with_start_date,
+                :with_lead_school,
+                employing_school_not_applicable: true,
+                dttp_id: dttp_contact_id,
+                provider: provider,
+              )
+            end
+
+            let(:employing_school_urn) { nil }
+
+            subject { described_class.new(trainee).params }
+
+            it "sets the not applicable DTTP id" do
+              expect(subject).to include({
+                "dfe_LeadSchoolId@odata.bind" => "/accounts(#{dttp_lead_school_id})",
+                "dfe_EmployingSchoolId@odata.bind" => "/accounts(#{described_class::SCHOOL_NOT_APPLICABLE})",
+              })
+            end
+          end
+
+          context "when both schools are not applicable" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :school_direct_salaried,
+                :with_course_details,
+                :with_start_date,
+                lead_school_not_applicable: true,
+                employing_school_not_applicable: true,
+                dttp_id: dttp_contact_id,
+                provider: provider,
+              )
+            end
+
+            let(:lead_school_urn) { nil }
+            let(:employing_school_urn) { nil }
+
+            subject { described_class.new(trainee).params }
+
+            it "sets the not applicable DTTP id to both school type params" do
+              expect(subject).to include({
+                "dfe_LeadSchoolId@odata.bind" => "/accounts(#{described_class::SCHOOL_NOT_APPLICABLE})",
+                "dfe_EmployingSchoolId@odata.bind" => "/accounts(#{described_class::SCHOOL_NOT_APPLICABLE})",
+              })
+            end
           end
         end
 
