@@ -77,6 +77,7 @@ module Exports
           "course_code" => trainee.course_code,
           "course_name" => course&.name,
           "course_route" => course_route(trainee),
+          "course_qualification" => trainee.award_type,
           "course_education_phase" => trainee_education_phase(trainee) || course_education_phase(course),
           "course_allocation_subject" => trainee_allocation_subject(trainee.course_subject_one) || course_allocation_subject(course),
           "course_itt_subject_1" => trainee.course_subject_one,

@@ -84,6 +84,7 @@ module Exports
           "course_code" => trainee.course_code,
           "course_name" => course&.name,
           "course_route" => "Assessment only",
+          "course_qualification" => trainee.award_type,
           "course_education_phase" => trainee.course_education_phase.upcase_first,
           "course_allocation_subject" => nil,
           "course_itt_subject_1" => trainee.course_subject_one,
