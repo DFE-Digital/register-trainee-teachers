@@ -38,6 +38,7 @@ module TeacherTrainingApi
         summary: course_attributes[:summary],
         study_mode: course_attributes[:study_mode],
         accredited_body_code: accredited_body_code,
+        recruitment_cycle_year: Settings.current_recruitment_cycle_year,
       )
     end
 
