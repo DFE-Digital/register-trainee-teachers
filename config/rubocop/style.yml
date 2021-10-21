@@ -46,6 +46,7 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+  SafeAutoCorrect: true
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
