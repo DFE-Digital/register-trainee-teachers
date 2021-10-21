@@ -2,8 +2,8 @@
 
 module Dttp
   class RegisterForTrnJob < ApplicationJob
+    sidekiq_options retry: 0
     queue_as :default
-    retry_on Client::HttpError
 
     def perform(trainee, created_by_dttp_id)
       return unless FeatureService.enabled?(:persist_to_dttp)
