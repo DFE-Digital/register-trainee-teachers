@@ -32,5 +32,5 @@ RUN bundle exec rake assets:precompile && \
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-CMD bundle exec rails db:migrate:with_data_migrations && \
+CMD bundle exec rails db:migrate && \
     bundle exec rails server -b 0.0.0.0
