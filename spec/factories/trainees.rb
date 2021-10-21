@@ -150,7 +150,9 @@ FactoryBot.define do
       course_subject_two { nil }
       course_subject_three { nil }
       course_age_range do
-        [11, 18]
+        Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
+          v[:levels]&.include?(course_education_phase.to_sym)
+        end.keys.sample
       end
       with_study_mode_and_course_dates
     end
