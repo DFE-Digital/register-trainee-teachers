@@ -107,8 +107,6 @@ namespace :example_data do
         end
       end
 
-      provider_course_uuids = provider.courses.pluck(:uuid)
-
       # Hpitt provider can only have trainees on the hpitt_postgrad route
       enabled_routes = [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] if provider.hpitt_postgrad?
 
@@ -120,13 +118,33 @@ namespace :example_data do
           sample_size = rand(4...8)
 
           sample_size.times do |sample_index|
-            attrs = { created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago) }
+            attrs = { randomise_subjects: true, created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago) }
             attrs.merge!(provider: provider) if provider
 
             # Some route-specific logic, but could move into factories too
             attrs.merge!(lead_school: lead_schools.sample) if %i[school_direct_salaried school_direct_tuition_fee].include?(route)
             attrs.merge!(employing_school: employing_schools.sample) if route == :school_direct_salaried
-            attrs.merge!(course_uuid: provider_course_uuids.sample) unless state == :draft
+
+            if state != :draft
+              course = provider.courses.where(route: TRAINING_ROUTES_FOR_COURSE[route.to_s]).sample
+
+              if course
+                course_subject_one, course_subject_two, course_subject_three = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name)).values.map(&:first).compact
+
+                attrs.merge!(
+                  course_uuid: course.uuid,
+                  course_education_phase: course.level,
+                  course_subject_one: course_subject_one,
+                  course_subject_two: course_subject_two,
+                  course_subject_three: course_subject_three,
+                  study_mode: TRAINEE_STUDY_MODE_ENUMS[course.study_mode],
+                  course_min_age: course.min_age,
+                  course_max_age: course.max_age,
+                  course_start_date: course.start_date,
+                  course_end_date: course.end_date,
+                )
+              end
+            end
 
             # Make *roughly* half of draft trainees apply drafts
             if state == :draft && sample_index < sample_size / 2 && enabled_course_routes.include?(route)

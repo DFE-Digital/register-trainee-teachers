@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
+      randomise_subjects { false }
       potential_course_start_date { course_start_date || Faker::Date.between(from: 1.year.ago, to: Time.zone.today) }
     end
 
@@ -75,7 +76,7 @@ FactoryBot.define do
     end
 
     trait :in_progress do
-      with_course_details
+      with_secondary_course_details
       with_start_date
       with_degree
     end
@@ -121,13 +122,43 @@ FactoryBot.define do
       course_education_phase { COURSE_EDUCATION_PHASE_ENUMS[:secondary] }
     end
 
-    trait :with_course_details do
-      course_subject_one { ::CourseSubjects::MATHEMATICS }
+    trait :with_primary_course_details do
+      transient do
+        primary_specialism_subjects { PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.values.sample }
+      end
+      with_primary_education
+      course_subject_one { primary_specialism_subjects.first }
+      course_subject_two { primary_specialism_subjects.second }
+      course_subject_three { primary_specialism_subjects.third }
       course_age_range do
-        Dttp::CodeSets::AgeRanges::MAPPING.reject do |_, v|
-          v[:option] == :main || v[:levels]&.exclude?(course_education_phase&.to_sym)
+        Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
+          v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
+      with_study_mode_and_course_dates
+    end
+
+    trait :with_secondary_course_details do
+      with_secondary_education
+      course_subject_one do
+        if randomise_subjects
+          Dttp::CodeSets::CourseSubjects::MAPPING.keys.reject { |subject| SubjectSpecialism::PRIMARY_SUBJECT_NAMES.include?(subject) }.sample
+        else
+          ::CourseSubjects::MATHEMATICS
+        end
+      end
+      course_subject_two { nil }
+      course_subject_three { nil }
+      course_age_range do
+        Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
+          v[:levels]&.include?(course_education_phase.to_sym)
+        end.keys.sample
+      end
+      with_study_mode_and_course_dates
+    end
+
+    trait :with_study_mode_and_course_dates do
+      study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
       course_start_date { Faker::Date.between(from: 1.year.ago, to: 2.days.ago) }
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
     end
@@ -135,13 +166,7 @@ FactoryBot.define do
     trait :with_publish_course_details do
       training_route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
       course_uuid { create(:course_with_subjects, route: training_route, accredited_body_code: provider.code).uuid }
-      with_course_details
-    end
-
-    trait :with_course_details_and_study_mode do
-      with_primary_education
-      with_course_details
-      study_mode { COURSE_STUDY_MODES[:full_time] }
+      with_secondary_course_details
     end
 
     trait :with_start_date do

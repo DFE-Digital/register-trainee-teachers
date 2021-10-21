@@ -24,6 +24,7 @@ private
 
   def and_trainee_related_courses_exist
     @different_course = create(:course_with_subjects,
+                               :secondary,
                                accredited_body_code: trainee.provider.code,
                                route: trainee.training_route)
     create(:subject_specialism, name: @different_course.name)

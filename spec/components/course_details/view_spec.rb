@@ -156,7 +156,7 @@ module CourseDetails
       end
 
       context "non draft" do
-        let(:trainee) { create(:trainee, :with_secondary_education, :early_years_undergrad, :with_course_details, :submitted_for_trn) }
+        let(:trainee) { create(:trainee, :early_years_undergrad, :with_early_years_course_details, :submitted_for_trn) }
 
         it "renders education phase" do
           expect(rendered_component).to have_text("Education phase")
@@ -166,7 +166,7 @@ module CourseDetails
       end
 
       context "draft" do
-        let(:trainee) { create(:trainee, :with_secondary_education, :early_years_undergrad, :with_course_details, :draft) }
+        let(:trainee) { create(:trainee, :early_years_undergrad, :with_early_years_course_details, :draft) }
 
         it "does not render education phase" do
           expect(rendered_component).not_to have_text("Education phase")
@@ -181,7 +181,7 @@ module CourseDetails
       end
 
       context "draft" do
-        let(:trainee) { create(:trainee, :with_secondary_education, :with_course_details, :draft) }
+        let(:trainee) { create(:trainee, :with_secondary_course_details, :draft) }
 
         it "renders route" do
           expect(rendered_component).to have_text("Education phase")
@@ -191,7 +191,7 @@ module CourseDetails
       end
 
       context "non draft" do
-        let(:trainee) { create(:trainee, :with_secondary_education, :with_course_details, :submitted_for_trn) }
+        let(:trainee) { create(:trainee, :with_secondary_course_details, :submitted_for_trn) }
 
         it "renders route" do
           expect(rendered_component).to have_text("Education phase")

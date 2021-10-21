@@ -23,7 +23,7 @@ describe CourseEducationPhaseForm, type: :model do
   end
 
   describe "#save!" do
-    let(:trainee) { create(:trainee, :with_course_details_and_study_mode) }
+    let(:trainee) { create(:trainee, :with_primary_course_details) }
 
     let(:params) do
       {
@@ -41,7 +41,7 @@ describe CourseEducationPhaseForm, type: :model do
     end
 
     context "when the education phase is not changed" do
-      let(:trainee) { create(:trainee, :with_course_details_and_study_mode, :with_secondary_education) }
+      let(:trainee) { create(:trainee, :with_secondary_course_details) }
 
       it "does not clear out the course subject" do
         subject.save!

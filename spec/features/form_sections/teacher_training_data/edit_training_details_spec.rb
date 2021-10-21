@@ -20,7 +20,7 @@ feature "edit training details" do
 
   context "edit with course details" do
     scenario "choose course start date" do
-      given_a_trainee_exists(:with_course_details)
+      given_a_trainee_exists(:with_secondary_course_details)
       when_i_visit_the_training_details_page
       and_i_choose_course_start_date
       then_i_am_redirected_to_the_confirm_training_details_page
@@ -28,7 +28,7 @@ feature "edit training details" do
     end
 
     scenario "choose custom date" do
-      given_a_trainee_exists(:with_course_details)
+      given_a_trainee_exists(:with_secondary_course_details)
       when_i_visit_the_training_details_page
       and_i_update_the_training_details
       and_i_choose_manual_start_date
