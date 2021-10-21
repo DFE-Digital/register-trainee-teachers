@@ -162,6 +162,7 @@ en:
       itt_start_date: ITT start date
       course_end_date: Course end date
       itt_end_date: ITT end date
+      route: Training route
       course_details: Course details
       details_not_on_publish: Course details added manually
       study_mode: Full time or part time
