@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_131636) do
+ActiveRecord::Schema.define(version: 2021_10_21_140442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -120,14 +120,6 @@ ActiveRecord::Schema.define(version: 2021_10_21_131636) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
-  end
-
-  create_table "consistency_checks", force: :cascade do |t|
-    t.integer "trainee_id"
-    t.datetime "contact_last_updated_at"
-    t.datetime "placement_assignment_last_updated_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "course_subjects", force: :cascade do |t|

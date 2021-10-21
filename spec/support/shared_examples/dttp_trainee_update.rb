@@ -25,25 +25,11 @@ RSpec.shared_examples "dttp trainee update" do |dttp_param_processor|
   context "success" do
     let(:http_response) { { status: 204 } }
 
-    it_behaves_like "CreateOrUpdateConsistencyCheckJob", described_class
-
     it "sends a PATCH request to set entity property 'dfe_datestandardsassessmentpassed'" do
       expect(Dttp::Client).to receive(:patch).with(path, body: expected_params).and_call_original
       subject
     end
   end
 
-  it_behaves_like "an http error handler" do
-    it "does not enqueue the Dttp::CreateOrUpdateConsistencyCheckJob" do
-      allow(Dttp::Client).to receive(:patch).with(path, body: expected_params).and_return(
-        instance_double("HTTParty::Response", success?: false),
-      )
-
-      ActiveJob::Base.queue_adapter = :test
-
-      subject
-
-      expect(Dttp::CreateOrUpdateConsistencyCheckJob).not_to have_been_enqueued
-    end
-  end
+  it_behaves_like "an http error handler"
 end

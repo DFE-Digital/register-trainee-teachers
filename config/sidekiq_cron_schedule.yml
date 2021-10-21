@@ -14,10 +14,6 @@ create_trainees_from_apply:
   cron: "0 4 * * *"
   class: "Trainees::CreateFromApplyJob"
   queue: default
-run_consistency_check_job:
-  cron: "0 2 * * *"
-  class: "Dttp::RunConsistencyChecksJob"
-  queue: dttp
 import_subjects_from_ttapi:
   cron: "0 2 * * *"
   class: "TeacherTrainingApi::ImportSubjectsJob"

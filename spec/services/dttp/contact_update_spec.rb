@@ -36,20 +36,10 @@ module Dttp
         let(:contact_response) { { status: 204 } }
         let(:placement_response) { { status: 204 } }
 
-        before do
+        it "sends a PATCH request to update contact and placement assignment entities" do
           expect(Client).to receive(:patch).with(contact_path, body: contact_payload).and_call_original
           expect(Client).to receive(:patch).with(placement_path, body: placement_payload).and_call_original
-        end
-
-        it "sends a PATCH request to update contact and placement assignment entities" do
-          allow(Dttp::CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
           subject
-        end
-
-        it "enqueues the CreateOrUpdateConsistencyJob" do
-          expect {
-            subject
-          }.to have_enqueued_job(Dttp::CreateOrUpdateConsistencyCheckJob).with(trainee)
         end
       end
 
