@@ -47,5 +47,6 @@ module RegisterTraineeTeachers
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
 
     config.autoload_paths << Rails.root.join("config/routes")
+    config.analytics = config_for(:analytics)
   end
 end
