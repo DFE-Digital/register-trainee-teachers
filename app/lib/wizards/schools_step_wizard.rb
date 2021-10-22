@@ -33,21 +33,17 @@ module Wizards
     end
 
     def origin_page_or_next_step
-      return trainee_schools_confirm_path(trainee) if user_come_from_confirm_or_trainee_page?
+      return trainee_schools_confirm_path(trainee) if user_came_from_confirm_or_trainee_page?
 
       redirect_url
     end
 
-    def user_come_from_confirm_or_trainee_page?
+    def user_came_from_confirm_or_trainee_page?
       page_tracker.last_origin_page_path&.include?("schools/confirm") || page_tracker.last_origin_page_path == "/trainees/#{trainee.slug}"
     end
 
     def lead_school_selected?
       ::Schools::LeadSchoolForm.new(trainee, params: { non_search_validation: true }).valid?
-    end
-
-    def employing_school_selected?
-      ::Schools::EmployingSchoolForm.new(trainee, params: { non_search_validation: true }).valid?
     end
 
     def progress_service
