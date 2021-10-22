@@ -230,10 +230,10 @@ module Exports
     def course_allocation_subject(course)
       return unless course
 
-      subject_specialism = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
+      subject = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
         .values.map(&:first).first
 
-      subject_specialism.allocation_subject
+      trainee_allocation_subject(subject)
     end
 
     def trainee_education_phase(trainee)
