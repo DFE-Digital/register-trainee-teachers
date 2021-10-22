@@ -535,4 +535,13 @@ describe Trainee do
       expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
     end
   end
+
+  context "first name and last name have inside and trailing spaces" do
+    let(:trainee) { create(:trainee, first_names: " Joe   Black ", last_name: " Bloggs   ") }
+
+    it "all inside and outside spaces are removed" do
+      expect(trainee.first_names).to eq("Joe Black")
+      expect(trainee.last_name).to eq("Bloggs")
+    end
+  end
 end

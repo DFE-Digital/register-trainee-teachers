@@ -194,6 +194,8 @@ class Trainee < ApplicationRecord
   audited associated_with: :provider
   has_associated_audits
 
+  auto_strip_attributes :first_names, :last_name, squish: true
+
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end

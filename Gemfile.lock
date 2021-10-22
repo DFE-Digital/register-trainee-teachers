@@ -74,6 +74,8 @@ GEM
     attr_required (1.0.1)
     audited (5.0.2)
       activerecord (>= 5.0, < 7.1)
+    auto_strip_attributes (2.6.0)
+      activerecord (>= 4.0)
     better_html (1.0.16)
       actionview (>= 4.0)
       activesupport (>= 4.0)
@@ -545,6 +547,7 @@ DEPENDENCIES
   activerecord-session_store
   amazing_print (~> 1.4)
   audited (~> 5.0)
+  auto_strip_attributes
   blazer
   bootsnap (>= 1.1.0)
   byebug
