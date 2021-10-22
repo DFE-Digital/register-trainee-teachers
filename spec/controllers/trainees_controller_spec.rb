@@ -47,6 +47,22 @@ describe TraineesController do
 
       it { expect { trigger } .not_to raise_error }
     end
+
+    context "csv export" do
+      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.provider) }
+
+      before do
+        trainee
+        get(:index, format: "csv")
+      end
+
+      it "tracks activity" do
+        activity = Activity.last
+        expect(activity.controller_name).to eql("trainees")
+        expect(activity.action_name).to eql("index")
+        expect(activity.metadata).to eql({ "action" => "index", "controller" => "trainees", "format" => "csv" })
+      end
+    end
   end
 
   describe "#show" do
