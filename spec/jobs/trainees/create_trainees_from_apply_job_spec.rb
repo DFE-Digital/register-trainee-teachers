@@ -19,6 +19,18 @@ module Trainees
           described_class.perform_now
         end
 
+        context "application is not for current cycle" do
+          let(:apply_application) do
+            create(:apply_application, accredited_body_code: provider_code.code, state: state, recruitment_cycle_year: Settings.current_recruitment_cycle_year + 1)
+          end
+
+          it "does not create a trainee" do
+            expect(CreateFromApply).not_to receive(:call).with(application: apply_application)
+
+            described_class.perform_now
+          end
+        end
+
         context "apply application is not importable" do
           let(:state) { :imported }
 
