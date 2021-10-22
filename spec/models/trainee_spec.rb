@@ -48,6 +48,7 @@ describe Trainee do
         ROUTE_INITIATIVES_ENUMS[:now_teach] => 2,
         ROUTE_INITIATIVES_ENUMS[:transition_to_teach] => 3,
         ROUTE_INITIATIVES_ENUMS[:no_initiative] => 4,
+        ROUTE_INITIATIVES_ENUMS[:troops_to_teachers] => 5,
       )
     end
 

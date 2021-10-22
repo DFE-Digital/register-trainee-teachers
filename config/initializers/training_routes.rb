@@ -17,6 +17,7 @@ TRAINING_ROUTE_ENUMS = {
 
 ROUTE_INITIATIVES_ENUMS = {
   transition_to_teach: "transition_to_teach",
+  troops_to_teachers: "troops_to_teachers",
   now_teach: "now_teach",
   maths_physics_chairs_programme_researchers_in_schools: "maths_physics_chairs_programme_researchers_in_schools",
   future_teaching_scholars: "future_teaching_scholars",
@@ -44,6 +45,7 @@ ROUTE_INITIATIVES = {
   ROUTE_INITIATIVES_ENUMS[:now_teach] => 2,
   ROUTE_INITIATIVES_ENUMS[:transition_to_teach] => 3,
   ROUTE_INITIATIVES_ENUMS[:no_initiative] => 4,
+  ROUTE_INITIATIVES_ENUMS[:troops_to_teachers] => 5,
 }.freeze
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
@@ -227,7 +229,8 @@ TRAINING_ROUTE_INITIATIVES = {
                                                                                     :now_teach,
                                                                                     :maths_physics_chairs_programme_researchers_in_schools),
   TRAINING_ROUTE_ENUMS[:early_years_undergrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
-                                                                                    :now_teach),
+                                                                                    :now_teach,
+                                                                                    :troops_to_teachers),
   TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
                                                                                         :now_teach,
                                                                                         :maths_physics_chairs_programme_researchers_in_schools),
@@ -244,9 +247,11 @@ TRAINING_ROUTE_INITIATIVES = {
   TRAINING_ROUTE_ENUMS[:early_years_postgrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
                                                                                    :now_teach),
   TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
-                                                                                     :now_teach),
+                                                                                     :now_teach,
+                                                                                     :troops_to_teachers),
   TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
-                                                                               :now_teach),
+                                                                               :now_teach,
+                                                                               :troops_to_teachers),
   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => ROUTE_INITIATIVES_ENUMS.values_at(:transition_to_teach,
                                                                              :now_teach),
 }.freeze
