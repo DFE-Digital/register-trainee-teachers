@@ -56,6 +56,7 @@ module Dttp
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id(trainee.training_route)})",
           "dfe_programmeyear" => 1,
           "dfe_programmelength" => 1,
+          "dfe_ebacc" => trainee.ebacc,
         }
         .merge(degree_params)
         .merge(school_params)
@@ -185,7 +186,8 @@ module Dttp
       def academic_year
         return ACADEMIC_YEAR_2020_2021 if trainee.course_start_date.between?(Date.parse("1/8/2020"), Date.parse("31/7/2021"))
         return ACADEMIC_YEAR_2021_2022 if trainee.course_start_date.between?(Date.parse("1/8/2021"), Date.parse("31/7/2022"))
-        return ACADEMIC_YEAR_2022_2023 if trainee.course_start_date.between?(Date.parse("1/8/2022"), Date.parse("31/7/2023"))
+
+        ACADEMIC_YEAR_2022_2023 if trainee.course_start_date.between?(Date.parse("1/8/2022"), Date.parse("31/7/2023"))
       end
 
       def training_route

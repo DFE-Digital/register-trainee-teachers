@@ -9,7 +9,13 @@ module Dttp
       let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:provider) { create(:provider, dttp_id: dttp_provider_id) }
       let(:trainee) do
-        create(:trainee, :with_secondary_course_details, :with_start_date, course_start_date: Date.parse("10/10/2020"), dttp_id: dttp_contact_id, provider: provider)
+        create(:trainee,
+               :with_secondary_course_details,
+               :with_start_date,
+               course_start_date: Date.parse("10/10/2020"),
+               dttp_id: dttp_contact_id,
+               provider: provider,
+               ebacc: true)
       end
 
       let(:contact_change_set_id) { SecureRandom.uuid }
@@ -138,6 +144,7 @@ module Dttp
                 "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{CodeSets::CourseStudyModes::MAPPING[COURSE_STUDY_MODES[trainee.study_mode.to_sym]][:entity_id]})",
                 "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{degree.graduation_year}").to_datetime.iso8601,
                 "dfe_allocatedplace" => 2,
+                "dfe_ebacc" => true,
               })
             end
           end
@@ -167,6 +174,7 @@ module Dttp
                 "dfe_StudyModeId@odata.bind" => "/dfe_studymodeses(#{CodeSets::CourseStudyModes::MAPPING[COURSE_STUDY_MODES[trainee.study_mode.to_sym]][:entity_id]})",
                 "dfe_undergraddegreedateobtained" => Date.parse("01-01-#{degree.graduation_year}").to_datetime.iso8601,
                 "dfe_allocatedplace" => 2,
+                "dfe_ebacc" => true,
               })
             end
           end
