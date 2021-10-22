@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_15_140519) do
+ActiveRecord::Schema.define(version: 2021_10_21_131636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,8 +38,10 @@ ActiveRecord::Schema.define(version: 2021_10_15_140519) do
     t.jsonb "invalid_data"
     t.integer "state"
     t.string "accredited_body_code"
+    t.integer "recruitment_cycle_year"
     t.index ["accredited_body_code"], name: "index_apply_applications_on_accredited_body_code"
     t.index ["apply_id"], name: "index_apply_applications_on_apply_id", unique: true
+    t.index ["recruitment_cycle_year"], name: "index_apply_applications_on_recruitment_cycle_year"
   end
 
   create_table "audits", force: :cascade do |t|

@@ -6,6 +6,7 @@ FactoryBot.define do
     application { ApiStubs::ApplyApi.application }
     invalid_data { {} }
     accredited_body_code { create(:provider).code }
+    recruitment_cycle_year { Settings.current_recruitment_cycle_year }
 
     trait :importable do
       state { "importable" }

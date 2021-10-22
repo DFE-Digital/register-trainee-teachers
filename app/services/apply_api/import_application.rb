@@ -14,7 +14,12 @@ module ApplyApi
       return unless application.new_record?
 
       ApplyApplication.transaction do
-        application.update!(application: application_data.to_json, accredited_body_code: accredited_body_code)
+        application.update!(
+          application: application_data.to_json,
+          accredited_body_code: accredited_body_code,
+          recruitment_cycle_year: course_attributes("recruitment_cycle_year"),
+        )
+
         hei_provider? ? application.non_importable_hei! : application.importable!
       end
 
