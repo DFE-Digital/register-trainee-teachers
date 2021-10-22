@@ -11,6 +11,16 @@
           <%= event.date.to_s(:govuk_date_and_time) %>
         </time>
       </p>
-    </div>
-  <% end %>
+        <% if event.items.present? %>
+        <div class="app-timeline__description">
+          <dl class="app-timeline__metadata-container">
+            <% event.items.each do |key, value| %>
+              <dt class="app-timeline__metadata-term"><%= key %></dt>
+              <dd class="app-timeline__metadata-definition"><%= value %></dd>
+            <% end %>
+          </dl>
+        </div>
+        <% end %>
+      </div>
+    <% end %>
 </div>

@@ -63,6 +63,7 @@ module Trainees
           title: single_event_title,
           date: created_at,
           username: username,
+          items: items,
         )
       else
         audited_changes.map do |field, change|
@@ -75,6 +76,7 @@ module Trainees
             title: I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated"),
             date: created_at,
             username: username,
+            items: nil,
           )
         end
       end
@@ -102,6 +104,15 @@ module Trainees
       return state_change_title if action == STATE_CHANGE
 
       I18n.t("components.timeline.titles.#{model}.#{action}")
+    end
+
+    def items
+      if action == STATE_CHANGE && state_change_action == "withdrawn"
+        [
+          ["#{I18n.t('components.timeline.withdrawal_date')}:", auditable.withdraw_date.strftime("%e %B %Y").to_s],
+          ["#{I18n.t('components.timeline.withdrawal_reason')}:", (auditable.additional_withdraw_reason&.upcase_first || auditable.withdraw_reason&.humanize).to_s],
+        ]
+      end
     end
 
     def state_change_title
