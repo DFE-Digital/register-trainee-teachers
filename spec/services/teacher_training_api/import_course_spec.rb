@@ -59,6 +59,10 @@ module TeacherTrainingApi
           it "stores the uuid" do
             expect(course.uuid).to eq(course_uuid)
           end
+
+          it "stores the recruitment cycle year" do
+            expect(course.recruitment_cycle_year).to eq(Settings.current_recruitment_cycle_year)
+          end
         end
 
         context "course has a further_education level" do

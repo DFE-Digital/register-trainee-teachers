@@ -149,7 +149,9 @@ ActiveRecord::Schema.define(version: 2021_10_21_140442) do
     t.integer "max_age", null: false
     t.integer "study_mode"
     t.uuid "uuid"
+    t.integer "recruitment_cycle_year"
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code"
+    t.index ["recruitment_cycle_year"], name: "index_courses_on_recruitment_cycle_year"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
