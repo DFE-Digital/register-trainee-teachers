@@ -11,7 +11,6 @@ module Dttp
     def call
       return unless FeatureService.enabled?(:persist_to_dttp)
 
-      CreateOrUpdateConsistencyCheckJob.perform_later(trainee) if response.success?
       response
     end
 

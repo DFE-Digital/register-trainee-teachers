@@ -23,16 +23,8 @@ module Dttp
       subject { described_class.call(status: status, trainee: trainee, entity_type: entity_type) }
 
       it "sends a PATCH request with status params" do
-        allow(CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
         expect(Client).to receive(:patch).with(expected_path, body: expected_body).and_call_original
         subject
-      end
-
-      it "enqueues the CreateOrUpdateConsistencyJob" do
-        allow(Client).to receive(:patch).with(expected_path, body: expected_body).and_call_original
-        expect {
-          subject
-        }.to have_enqueued_job(CreateOrUpdateConsistencyCheckJob).with(trainee)
       end
 
       context "when the entity_type is placement_assignment" do
@@ -41,22 +33,13 @@ module Dttp
         let(:trainee) { create(:trainee, placement_assignment_dttp_id: entity_id) }
 
         it "sends a PATCH request with status params" do
-          allow(CreateOrUpdateConsistencyCheckJob).to receive(:perform_later).and_return(true)
           expect(Client).to receive(:patch).with(expected_path, body: expected_body).and_call_original
 
           subject
         end
       end
 
-      it_behaves_like "an http error handler" do
-        it "does not enqueue the CreateOrUpdateConsistencyCheckJob" do
-          allow(Client).to receive(:patch).with(expected_path, body: expected_body).and_return(instance_double("HTTParty::Response", success?: false))
-          ActiveJob::Base.queue_adapter = :test
-
-          subject
-          expect(CreateOrUpdateConsistencyCheckJob).not_to have_been_enqueued
-        end
-      end
+      it_behaves_like "an http error handler"
     end
   end
 end
