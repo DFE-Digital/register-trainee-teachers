@@ -306,6 +306,12 @@ class Trainee < ApplicationRecord
     @hpitt_provider ||= provider&.hpitt_postgrad?
   end
 
+  def course_duration_in_years
+    return unless course_start_date && course_end_date
+
+    ((course_end_date - course_start_date) / 365).ceil
+  end
+
 private
 
   def value_digest

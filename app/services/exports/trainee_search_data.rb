@@ -88,7 +88,7 @@ module Exports
           "course_study_mode" => course_study_mode(trainee),
           "course_start_date" => trainee.course_start_date&.iso8601,
           "course_end_date" => trainee.course_end_date&.iso8601,
-          "course_duration_in_years" => course&.duration_in_years,
+          "course_duration_in_years" => trainee.course_duration_in_years,
           "course_summary" => course&.summary,
           "commencement_date" => trainee.commencement_date&.iso8601,
           "lead_school_name" => trainee.lead_school&.name,

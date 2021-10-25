@@ -544,4 +544,23 @@ describe Trainee do
       expect(trainee.last_name).to eq("Bloggs")
     end
   end
+
+  describe "#course_duration_in_years" do
+    it "returns nil if no course start/end dates set" do
+      trainee = Trainee.new(course_start_date: Time.zone.today, course_end_date: nil)
+      expect(trainee.course_duration_in_years).to be_nil
+      trainee = Trainee.new(course_start_date: nil, course_end_date: Time.zone.today)
+      expect(trainee.course_duration_in_years).to be_nil
+    end
+
+    it "returns 1 year" do
+      trainee = Trainee.new(course_start_date: "2021-09-10".to_date, course_end_date: "2022-07-01".to_date)
+      expect(trainee.course_duration_in_years).to eq(1)
+    end
+
+    it "returns 2 years" do
+      trainee = Trainee.new(course_start_date: "2021-09-10".to_date, course_end_date: "2023-07-01".to_date)
+      expect(trainee.course_duration_in_years).to eq(2)
+    end
+  end
 end
