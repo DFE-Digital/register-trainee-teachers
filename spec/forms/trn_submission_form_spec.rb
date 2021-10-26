@@ -56,6 +56,22 @@ describe TrnSubmissionForm, type: :model do
           expect(subject.errors).to be_empty
         end
       end
+
+      context "apply application" do
+        let(:trainee) do
+          create(
+            :trainee,
+            :completed,
+            :with_apply_application,
+            progress: progress.merge(trainee_data: true),
+          )
+        end
+
+        it "is valid" do
+          expect(subject.valid?).to be true
+          expect(subject.errors).to be_empty
+        end
+      end
     end
 
     context "when any section is invalid or incomplete" do
