@@ -7,11 +7,11 @@ module Trainees
     class MissingCourseError < StandardError; end
 
     def initialize(application:)
-      @application = application
-      @raw_course = application.application_attributes["course"]
-      @course = application.provider.courses.find_by(uuid: @raw_course["course_uuid"])
-      @raw_trainee = application.application_attributes["candidate"]
-      @raw_contact_details = application.application_attributes["contact_details"]
+      @application_record = application
+      @raw_course = application_record.application.dig("attributes", "course")
+      @course = application_record.provider.courses.find_by(uuid: @raw_course["course_uuid"])
+      @raw_trainee = application_record.application.dig("attributes", "candidate")
+      @raw_contact_details = application_record.application.dig("attributes", "contact_details")
       @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
       @disabilities = Disability.where(name: disability_names)
       @trainee = Trainee.new(mapped_attributes)
@@ -20,7 +20,7 @@ module Trainees
 
     def call
       if trainee_already_exists?
-        application.non_importable_duplicate!
+        application_record.non_importable_duplicate!
         return
       end
 
@@ -29,14 +29,14 @@ module Trainees
       trainee.save!
       save_personal_details!
       create_degrees!
-      application.imported!
+      application_record.imported!
 
       trainee
     end
 
   private
 
-    attr_reader :application,
+    attr_reader :application_record,
                 :trainee,
                 :course,
                 :raw_trainee,
@@ -47,8 +47,8 @@ module Trainees
 
     def mapped_attributes
       {
-        apply_application: application,
-        provider: application.provider,
+        apply_application: application_record,
+        provider: application_record.provider,
         first_names: raw_trainee["first_name"],
         last_name: raw_trainee["last_name"],
         date_of_birth: raw_trainee["date_of_birth"],
@@ -80,7 +80,7 @@ module Trainees
 
       return if invalid_nationalities.blank?
 
-      Sentry.capture_message("Cannot map nationality from ApplyApplication id: #{application.id}, code: #{invalid_nationalities.join(', ')}")
+      Sentry.capture_message("Cannot map nationality from ApplyApplication id: #{application_record.id}, code: #{invalid_nationalities.join(', ')}")
     end
 
     def address

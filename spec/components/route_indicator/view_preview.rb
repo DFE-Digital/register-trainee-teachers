@@ -10,7 +10,7 @@ module RouteIndicator
       define_method "apply_#{training_route}" do
         render(View.new(trainee: Trainee.new(
           training_route: training_route,
-          apply_application: ApplyApplication.new(application: { attributes: {} }.to_json),
+          apply_application: ApplyApplication.new(application: { attributes: {} }),
           course_subject_one: "Ancient Hebrew",
           course_uuid: SecureRandom.uuid,
         )))

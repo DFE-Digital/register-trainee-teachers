@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :apply_application do
     sequence(:apply_id)
-    application { ApiStubs::ApplyApi.application }
+    application { JSON.parse(ApiStubs::ApplyApi.application) }
     invalid_data { {} }
     accredited_body_code { create(:provider).code }
     recruitment_cycle_year { Settings.current_recruitment_cycle_year }

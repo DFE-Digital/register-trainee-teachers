@@ -15,7 +15,7 @@ module ApplyApi
 
       ApplyApplication.transaction do
         application.update!(
-          application: application_data.to_json,
+          application: application_data,
           accredited_body_code: accredited_body_code,
           recruitment_cycle_year: course_attributes("recruitment_cycle_year"),
         )

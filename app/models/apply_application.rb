@@ -19,7 +19,7 @@ class ApplyApplication < ApplicationRecord
   end
 
   def application_attributes
-    @application_attributes ||= parsed_application["attributes"]
+    @application_attributes ||= application["attributes"]
   end
 
   def course
@@ -30,9 +30,5 @@ private
 
   def course_uuid
     application_attributes.dig("course", "course_uuid")
-  end
-
-  def parsed_application
-    @parsed_application ||= JSON.parse(application)
   end
 end
