@@ -19,7 +19,7 @@ module ApplyApi
 
         it "creates the apply_application with state 'importable' and associates it with that provider" do
           expect { subject }.to change { provider.apply_applications.importable.count }.by(1)
-          expect(provider.apply_applications.first.application).to eq(application_data.to_json)
+          expect(provider.apply_applications.first.application).to eq(application_data)
         end
 
         context "and the apply application_data also exists in register" do

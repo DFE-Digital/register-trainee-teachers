@@ -5,7 +5,7 @@ require "rails_helper"
 module Trainees
   describe CreateFromApply do
     let(:candidate_attributes) { {} }
-    let(:application_data) { ApiStubs::ApplyApi.application(candidate_attributes: candidate_attributes) }
+    let(:application_data) { JSON.parse(ApiStubs::ApplyApi.application(candidate_attributes: candidate_attributes)) }
     let(:apply_application) { create(:apply_application, application: application_data) }
     let(:candidate_info) { ApiStubs::ApplyApi.candidate_info.as_json }
     let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }
@@ -112,7 +112,7 @@ module Trainees
     end
 
     context "with a non-uk address" do
-      let(:apply_application) { create(:apply_application, application: ApiStubs::ApplyApi.non_uk_application.to_json) }
+      let(:apply_application) { create(:apply_application, application: ApiStubs::ApplyApi.non_uk_application) }
 
       it { is_expected.to have_attributes(non_uk_address_attributes) }
     end
@@ -143,10 +143,12 @@ module Trainees
 
       context "when the application is diversity and disability disclosed with no disabilities" do
         let(:application_data) do
-          ApiStubs::ApplyApi.application(
-            candidate_attributes: {
-              disabilities: [],
-            },
+          JSON.parse(
+            ApiStubs::ApplyApi.application(
+              candidate_attributes: {
+                disabilities: [],
+              },
+            ),
           )
         end
 
@@ -162,11 +164,13 @@ module Trainees
 
     context "when the application is diversity disclosed with no disability information" do
       let(:application_data) do
-        ApiStubs::ApplyApi.application(
-          candidate_attributes: {
-            disability_disclosure: nil,
-            disabilities: [],
-          },
+        JSON.parse(
+          ApiStubs::ApplyApi.application(
+            candidate_attributes: {
+              disability_disclosure: nil,
+              disabilities: [],
+            },
+          ),
         )
       end
 
