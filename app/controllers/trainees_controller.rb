@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class TraineesController < ApplicationController
+  include TraineeHelper
+  include ActivityTracker
+
   before_action :ensure_trainee_is_not_draft!, only: :show
   before_action :ensure_trainee_is_draft!, only: :destroy
   before_action :save_filter, only: :index
   helper_method :filter_params, :multiple_record_sources?
-  include TraineeHelper
 
   def index
     return redirect_to(trainees_path(filter_params)) if current_page_exceeds_total_pages?
@@ -25,7 +27,10 @@ class TraineesController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render(json: json_response) }
-      format.csv { send_data(data_export.data, filename: data_export.filename, disposition: :attachment) }
+      format.csv do
+        track_activity
+        send_data(data_export.data, filename: data_export.filename, disposition: :attachment)
+      end
     end
   end
 
