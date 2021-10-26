@@ -119,7 +119,7 @@ group :development, :test do
   gem "rails-controller-testing"
 
   # Adds support for Capybara system testing and selenium driver
-  gem "capybara", "~> 3.35"
+  gem "capybara", "~> 3.36"
 
   gem "dotenv-rails"
 
