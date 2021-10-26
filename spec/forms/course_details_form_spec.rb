@@ -478,6 +478,24 @@ describe CourseDetailsForm, type: :model do
           .and change { trainee.progress.funding }.from(true).to(false)
         end
       end
+
+      context "with a non-draft updating the course details" do
+        let(:trainee) { create(:trainee, :with_secondary_course_details, :trn_received) }
+
+        let(:described_instance) { described_class.new(trainee, params: params, store: form_store) }
+
+        subject { described_instance.save! }
+
+        before do
+          allow(described_instance).to receive(:course_education_phase).and_return(COURSE_EDUCATION_PHASE_ENUMS[:primary])
+        end
+
+        it "updates the course education phase" do
+          expect { subject }
+            .to change { trainee.course_education_phase }
+            .from(trainee.course_education_phase).to(COURSE_EDUCATION_PHASE_ENUMS[:primary])
+        end
+      end
     end
 
     describe "#stash" do

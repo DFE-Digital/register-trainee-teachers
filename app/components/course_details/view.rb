@@ -44,7 +44,7 @@ module CourseDetails
 
     def education_phase
       if non_early_year_route?
-        mappable_field(trainee.course_education_phase&.upcase_first,
+        mappable_field(data_model.course_education_phase&.upcase_first,
                        t("components.course_detail.education_phase"),
                        action_url: edit_trainee_course_education_phase_path(trainee))
       end

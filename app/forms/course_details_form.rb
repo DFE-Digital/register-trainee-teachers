@@ -104,8 +104,12 @@ class CourseDetailsForm < TraineeForm
     !trainee.early_years_route?
   end
 
+  def course_education_phase
+    @course_education_phase ||= ::CourseEducationPhaseForm.new(trainee).course_education_phase
+  end
+
   def is_primary_phase?
-    trainee.course_education_phase == COURSE_EDUCATION_PHASE_ENUMS[:primary]
+    course_education_phase == COURSE_EDUCATION_PHASE_ENUMS[:primary]
   end
 
   def attrs_from_course_age_range(course_age_range)
@@ -169,6 +173,7 @@ private
       course_uuid: course_uuid,
       course_start_date: course_start_date,
       course_end_date: course_end_date,
+      course_education_phase: course_education_phase,
     }
 
     set_course_subject_from_primary_phase if is_primary_phase?
