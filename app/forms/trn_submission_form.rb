@@ -74,6 +74,7 @@ private
     keys = []
     form_validators.each do |validator, options|
       next if (condition = options[:if]) && !public_send(condition)
+      next if (condition = options[:unless]) && public_send(condition)
 
       keys << validator
     end
