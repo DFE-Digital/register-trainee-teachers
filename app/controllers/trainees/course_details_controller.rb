@@ -15,6 +15,7 @@ module Trainees
 
     def edit
       @course_details_form = CourseDetailsForm.new(trainee)
+      redirect_to(edit_trainee_course_education_phase_path(trainee)) if requires_education_phase?
     end
 
     def update
@@ -32,6 +33,10 @@ module Trainees
     end
 
   private
+
+    def requires_education_phase?
+      !@trainee.early_years_route? && @course_details_form.course_education_phase.blank?
+    end
 
     def date_conversion
       @date_conversion ||= DATE_CONVERSION.transform_keys do |key|

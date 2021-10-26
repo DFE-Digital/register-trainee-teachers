@@ -104,6 +104,10 @@ class PublishCourseDetailsForm < TraineeForm
     super
   end
 
+  def course_education_phase
+    @course_education_phase ||= ::CourseEducationPhaseForm.new(trainee).course_education_phase
+  end
+
 private
 
   def update_stashed_attrs_to_new_course_attrs

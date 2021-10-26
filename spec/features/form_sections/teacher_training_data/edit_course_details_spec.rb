@@ -14,6 +14,12 @@ feature "course details", type: :feature do
       and_i_submit_the_form
       then_i_see_error_messages
     end
+
+    scenario "when the education phase is not selected" do
+      given_a_trainee_exists
+      when_i_visit_the_course_details_page
+      then_i_am_redirected_to_the_edit_course_education_phase_page
+    end
   end
 
   context "trainee has existing course details" do
@@ -174,6 +180,10 @@ private
 
   def then_i_am_redirected_to_the_confirm_page
     expect(confirm_details_page).to be_displayed(id: trainee.slug, section: course_details_section)
+  end
+
+  def then_i_am_redirected_to_the_edit_course_education_phase_page
+    expect(course_education_phase_page).to be_displayed(id: trainee.slug)
   end
 
   def course_details_section

@@ -64,6 +64,10 @@ module ApplyApplications
       course&.study_mode || trainee.study_mode
     end
 
+    def course_education_phase
+      @course_education_phase ||= ::CourseEducationPhaseForm.new(trainee).course_education_phase
+    end
+
   private
 
     def update_trainee_attributes
