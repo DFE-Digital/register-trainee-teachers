@@ -8,7 +8,7 @@
     "test:ci": "jest --ci --runInBand --coverage"
   },
   "dependencies": {
-    "@ministryofjustice/frontend": "^0.2.6",
+    "@ministryofjustice/frontend": "^1.0.0",
     "@rails/webpacker": "^5.4.3",
     "accessible-autocomplete": "^2.0.3",
     "babel-polyfill": "^6.26.0",
