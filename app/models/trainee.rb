@@ -196,6 +196,9 @@ class Trainee < ApplicationRecord
 
   auto_strip_attributes :first_names, :last_name, squish: true
 
+  before_save :clear_employing_school_id, if: :employing_school_not_applicable?
+  before_save :clear_lead_school_id, if: :lead_school_not_applicable?
+
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
@@ -328,5 +331,13 @@ private
         assoc.map(&:serializable_hash).flat_map(&:values).compact
       end
     ).join(",")
+  end
+
+  def clear_employing_school_id
+    self.employing_school_id = nil
+  end
+
+  def clear_lead_school_id
+    self.lead_school_id = nil
   end
 end

@@ -16,9 +16,32 @@ module Schools
       data_model.is_a?(Trainee) ? data_model : data_model.trainee
     end
 
+    def school_rows
+      [
+        lead_school_row(not_applicable: lead_school_not_applicable?),
+        employing_school_row(not_applicable: employing_school_not_applicable?),
+      ].compact
+    end
+
   private
 
     attr_accessor :data_model, :lead_school, :employing_school, :has_errors
+
+    def lead_school_not_applicable?
+      if data_model.is_a?(Schools::FormValidator)
+        data_model.lead_school_form.school_not_applicable?
+      else
+        data_model.lead_school_not_applicable?
+      end
+    end
+
+    def employing_school_not_applicable?
+      if data_model.is_a?(Schools::FormValidator)
+        data_model.employing_school_form.school_not_applicable?
+      else
+        data_model.employing_school_not_applicable?
+      end
+    end
 
     def change_paths(school_type)
       {

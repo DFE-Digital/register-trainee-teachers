@@ -12,6 +12,13 @@ module SchoolDetails
       @employing_school = trainee.employing_school
     end
 
+    def school_rows
+      [
+        lead_school_row(not_applicable: trainee.lead_school_not_applicable?),
+        employing_school_row(not_applicable: trainee.employing_school_not_applicable?),
+      ].compact
+    end
+
   private
 
     def change_paths(school_type)

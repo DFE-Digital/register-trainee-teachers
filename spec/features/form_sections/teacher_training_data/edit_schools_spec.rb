@@ -21,6 +21,15 @@ RSpec.feature "edit schools spec", type: :feature do
       then_i_am_redirected_to_the_confirm_schools_page
     end
 
+    scenario "choosing not applicable for lead school" do
+      i_click_on_change_school(:lead_school)
+      and_i_am_on_the_edit_lead_school_page
+      and_i_check_lead_school_is_not_applicable
+      and_i_continue
+      then_i_am_redirected_to_the_confirm_schools_page
+      and_the_lead_school_displays_not_applicable
+    end
+
     scenario "changing the employing school", js: true do
       i_click_on_change_school(:employing_school)
       and_i_am_on_the_edit_employing_school_page
@@ -28,6 +37,15 @@ RSpec.feature "edit schools spec", type: :feature do
       and_i_click_the_first_item_in_the_list_employing_school
       and_i_continue
       then_i_am_redirected_to_the_confirm_schools_page
+    end
+
+    scenario "choosing not applicable for employing school" do
+      i_click_on_change_school(:employing_school)
+      and_i_am_on_the_edit_employing_school_page
+      and_i_check_employing_school_is_not_applicable
+      and_i_continue
+      then_i_am_redirected_to_the_confirm_schools_page
+      and_the_employing_school_displays_not_applicable
     end
   end
 
@@ -130,5 +148,21 @@ private
 
   def then_i_am_redirected_to_the_confirm_schools_page
     expect(confirm_schools_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_i_check_employing_school_is_not_applicable
+    edit_employing_school_page.not_applicable_checkbox.check
+  end
+
+  def and_i_check_lead_school_is_not_applicable
+    edit_lead_school_page.not_applicable_checkbox.check
+  end
+
+  def and_the_employing_school_displays_not_applicable
+    expect(confirm_schools_page.employing_school_row).to have_text(I18n.t(:not_applicable))
+  end
+
+  def and_the_lead_school_displays_not_applicable
+    expect(confirm_schools_page.lead_school_row).to have_text(I18n.t(:not_applicable))
   end
 end

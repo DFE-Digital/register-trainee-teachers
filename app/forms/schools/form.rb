@@ -12,13 +12,17 @@ module Schools
 
     attr_accessor(*NON_TRAINEE_FIELDS)
 
+    validates :school_id, presence: true, if: :school_validation_required?
+
+    validate :both_fields_are_not_selected
+
     validates :query,
               presence: true,
               length: {
                 minimum: SchoolSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
-              if: -> { initial_search? }
+              if: -> { school_applicable? && initial_search? }
 
     validates :results_search_again_query,
               presence: true,
@@ -41,11 +45,19 @@ module Schools
     end
 
     def school_not_selected?
-      school_id.to_i.zero?
+      school_applicable? && school_id.to_i.zero?
     end
 
     def no_results_searching_again?
       school_id == "no_results_search_again"
+    end
+
+    def school_applicable?
+      !school_not_applicable?
+    end
+
+    def school_not_applicable?
+      ActiveModel::Type::Boolean.new.cast(school_not_applicable)
     end
 
   private
@@ -62,6 +74,10 @@ module Schools
       raise(NotImplementedError)
     end
 
+    def school_not_applicable
+      raise(NotImplementedError)
+    end
+
     def fields_to_ignore_before_save
       NON_TRAINEE_FIELDS
     end
@@ -72,6 +88,16 @@ module Schools
 
     def non_search_validation?
       non_search_validation == true
+    end
+
+    def school_validation_required?
+      school_applicable? && (non_search_validation? || (search_results_found? && results_search_again_query.blank?))
+    end
+
+    def both_fields_are_not_selected
+      if school_id.present? && params[:query].present? && school_not_applicable?
+        errors.add(:school_id, :both_fields_are_present)
+      end
     end
   end
 end
