@@ -188,6 +188,12 @@ module Dttp
               { "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}" },
             )
           end
+
+          it "includes route" do
+            expect(subject).to include(
+              { "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id})" },
+            )
+          end
         end
 
         context "Future Teaching Scholars route" do

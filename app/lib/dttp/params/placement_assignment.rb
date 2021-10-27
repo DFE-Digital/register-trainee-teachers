@@ -31,7 +31,6 @@ module Dttp
         if contact_change_set_id
           @params.merge!({
             "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
-            "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id(training_route)})",
           })
         end
       end
@@ -44,6 +43,7 @@ module Dttp
 
       def build_params
         {
+          "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id(training_route)})",
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.course_age_range)})",
           "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
