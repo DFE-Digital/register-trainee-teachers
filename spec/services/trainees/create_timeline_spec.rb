@@ -47,6 +47,21 @@ module Trainees
           expect(subject.map(&:date)).to eq(expected_order)
         end
       end
+
+      context "when a trainee has been withdrawn" do
+        let(:trainee) { create(:trainee, :trn_received) }
+
+        before do
+          trainee.withdraw_date = "2021-09-21"
+          trainee.withdraw_reason = WithdrawalReasons::FOR_ANOTHER_REASON
+          trainee.additional_withdraw_reason = "lost interest"
+          trainee.withdraw!
+        end
+
+        it "returns the date of withdrawal in the correct format and reason" do
+          expect(subject.first.items).to eq([["Date of withdrawal:", "21 September 2021"], ["Reason for withdrawal:", "Lost interest"]])
+        end
+      end
     end
 
     def update_name

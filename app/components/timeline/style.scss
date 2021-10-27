@@ -67,3 +67,24 @@
   color: $govuk-secondary-text-colour;
   margin: 0;
 }
+
+.app-timeline__description {
+  margin-top: govuk-spacing(3);
+}
+
+.app-timeline__description :last-child {
+  margin-bottom: govuk-spacing(0);
+}
+
+.app-timeline__metadata-term {
+  box-sizing: border-box;
+  float: left;
+  clear: left;
+  padding-right: 5px;
+  margin-top: 0;
+}
+
+.app-timeline__metadata-container {
+  @include govuk-font($size: 19);
+  color: $govuk-text-colour;
+}

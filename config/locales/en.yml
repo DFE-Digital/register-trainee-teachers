@@ -337,6 +337,8 @@ en:
       subject: Subject
       text_search: Text search
     timeline:
+      withdrawal_date: Date of withdrawal
+      withdrawal_reason: Reason for withdrawal
       titles:
         trainee:
           create: Record created
