@@ -83,7 +83,7 @@ module Funding
         end
 
         %i[bursary grant].each do |funding_type|
-          context "when funding type #{funding_type} is available", feature_grant: true do
+          context "when funding type #{funding_type} is available" do
             let(:funding_method) { create(:funding_method, funding_type, training_route: :provider_led_postgrad) }
 
             context "when TrainingInitiativesForm is valid" do

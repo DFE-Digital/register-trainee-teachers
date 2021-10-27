@@ -146,7 +146,7 @@ module Funding
       end
     end
 
-    context "with grant", feature_grant: true do
+    context "with grant" do
       let!(:allocation_subject) { create(:allocation_subject, name: "Chemistry") }
       let!(:subject_specialism) { create(:subject_specialism, name: trainee.course_subject_one, allocation_subject: allocation_subject) }
 
