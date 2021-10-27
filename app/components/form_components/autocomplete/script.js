@@ -7,11 +7,14 @@ import tracker from '../tracker.js'
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
 
-const suggestion = (value, options) => {
-  const option = options.find(o => o.name === value)
-  if (option) {
-    return option.append ? `<span>${value}</span> ${option.append}` : `<span>${value}</span>`
+const suggestionTemplate = (value) => {
+  if (value) {
+    return value.append ? `<span>${value.name}</span> ${value.append}` : `<span>${value.name}</span>`
   }
+}
+
+const inputTemplate = (value) => {
+  return value && value.name
 }
 
 const enhanceOption = (option) => {
@@ -45,7 +48,10 @@ const setupAutoComplete = (component) => {
       populateResults(sort(query, options))
     },
     autoselect: true,
-    templates: { suggestion: (value) => suggestion(value, options) },
+    templates: {
+      inputValue: inputTemplate,
+      suggestion: suggestionTemplate
+    },
     name: rawFieldName,
     onConfirm: (val) => {
       tracker.sendTrackingEvent(val, selectEl.name)

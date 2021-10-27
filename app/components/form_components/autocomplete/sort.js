@@ -66,5 +66,4 @@ export default (query, options) => {
 
   return options.filter(o => o.weight > 0)
     .sort(byWeightThenAlphabetically)
-    .map(o => o.name)
 }
