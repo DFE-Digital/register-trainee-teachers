@@ -47,17 +47,13 @@ class FundingManager
   end
 
   def can_apply_for_grant?
-    FeatureService.enabled?("grant") &&
-      grant_amount.present?
+    grant_amount.present?
   end
 
   def funding_available?
-    scope = FundingMethod.includes(:funding_method_subjects)
-
-    scope = scope.where(funding_type: %i[bursary scholarship]) unless FeatureService.enabled?("grant")
-
-    scope.where.not(funding_method_subjects: { id: nil })
-      .where(training_route: training_route).present?
+    FundingMethod.includes(:funding_method_subjects)
+                 .where.not(funding_method_subjects: { id: nil })
+                 .where(training_route: training_route).present?
   end
 
   def allocation_subject_name

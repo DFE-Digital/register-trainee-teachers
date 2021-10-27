@@ -154,18 +154,8 @@ describe FundingManager do
           create(:funding_method, :grant, training_route: route)
         end
 
-        context "feature flag grant" do
-          context "is set to false", feature_grant: false do
-            it "returns false" do
-              expect(subject).to be_falsey
-            end
-          end
-
-          context "is set to true", feature_grant: true do
-            it "returns true" do
-              expect(subject).to be_truthy
-            end
-          end
+        it "returns true" do
+          expect(subject).to be_truthy
         end
       end
     end
