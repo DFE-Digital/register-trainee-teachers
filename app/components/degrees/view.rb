@@ -4,12 +4,13 @@ module Degrees
   class View < GovukComponent::Base
     include ApplicationHelper
 
-    def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true, has_errors: false)
+    def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true, has_errors: false, system_admin: false)
       @data_model = data_model
       @degrees = @data_model.degrees
-      @show_add_another_degree_button = show_add_another_degree_button
-      @show_delete_button = show_delete_button
       @has_errors = has_errors
+      @system_admin = system_admin
+      @show_add_another_degree_button = show_button(show_add_another_degree_button)
+      @show_delete_button = show_button(show_delete_button)
     end
 
     def trainee
@@ -51,9 +52,16 @@ module Degrees
       t("components.degrees.add_another_degree")
     end
 
+    def show_button(button)
+      return true if system_admin
+      return false if trainee.recommended_for_award? || trainee.awarded? || trainee.withdrawn?
+
+      button
+    end
+
   private
 
-    attr_accessor :degrees, :data_model, :show_add_another_degree_button, :show_delete_button, :has_errors
+    attr_accessor :degrees, :data_model, :show_add_another_degree_button, :show_delete_button, :has_errors, :system_admin
 
     def non_uk_degree_type(degree)
       degree.non_uk_degree == NON_ENIC ? "UK ENIC not provided" : degree.non_uk_degree
@@ -66,17 +74,7 @@ module Degrees
     end
 
     def mappable_field_row(degree, field_name, field_label, field_value = nil)
-      MappableFieldRow.new(
-        invalid_data: trainee.apply_application&.degrees_invalid_data,
-        record_id: degree.to_param,
-        field_name: field_name,
-        field_value: field_value || degree.public_send(field_name),
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: edit_trainee_degree_path(trainee, degree),
-        has_errors: has_errors,
-        apply_draft: trainee.apply_application?,
-      ).to_h
+      { degree: degree, field_name: field_name, field_label: field_label, field_value: field_value }
     end
   end
 end

@@ -4,10 +4,11 @@ module PersonalDetails
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, system_admin: false)
       @data_model = data_model
       @nationalities = Nationality.where(id: data_model.nationality_ids)
       @has_errors = has_errors
+      @system_admin = system_admin
     end
 
     def personal_detail_rows
@@ -21,7 +22,7 @@ module PersonalDetails
 
   private
 
-    attr_accessor :data_model, :nationalities, :has_errors
+    attr_accessor :data_model, :nationalities, :has_errors, :system_admin
 
     def trainee
       data_model.is_a?(Trainee) ? data_model : data_model.trainee
@@ -30,28 +31,28 @@ module PersonalDetails
     def full_name_row
       name = "#{data_model.first_names} #{data_model.middle_names} #{data_model.last_name}"
 
-      mappable_field(
+      default_mappable_field(
         [data_model.first_names, data_model.last_name].any?(&:nil?) ? nil : name,
         t("components.confirmation.personal_detail.full_name"),
       )
     end
 
     def date_of_birth_row
-      mappable_field(
+      default_mappable_field(
         data_model.date_of_birth.is_a?(Date) ? data_model.date_of_birth.strftime("%-d %B %Y") : nil,
         t("components.confirmation.personal_detail.date_of_birth"),
       )
     end
 
     def gender_row
-      mappable_field(
+      default_mappable_field(
         data_model.gender ? I18n.t("components.confirmation.personal_detail.genders.#{data_model.gender}") : nil,
         t("components.confirmation.personal_detail.gender"),
       )
     end
 
     def nationality_row
-      mappable_field(nationality, t("components.confirmation.personal_detail.nationality"))
+      default_mappable_field(nationality, t("components.confirmation.personal_detail.nationality"))
     end
 
     def nationality
@@ -80,15 +81,8 @@ module PersonalDetails
       array
     end
 
-    def mappable_field(field_value, field_label)
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: edit_trainee_personal_details_path(trainee),
-        has_errors: has_errors,
-        apply_draft: trainee.apply_application?,
-      ).to_h
+    def default_mappable_field(field_value, field_label)
+      { field_value: field_value, field_label: field_label, action_url: edit_trainee_personal_details_path(trainee) }
     end
   end
 end

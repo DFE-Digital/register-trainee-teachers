@@ -6,10 +6,11 @@ module CourseDetails
     include CourseDetailsHelper
     include TraineeHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, system_admin: false)
       @data_model = data_model
       @trainee = data_model.is_a?(Trainee) ? data_model : data_model.trainee
       @has_errors = has_errors
+      @system_admin = system_admin
     end
 
     def summary_title
@@ -19,64 +20,63 @@ module CourseDetails
     def rows
       [
         training_route_row,
-        education_phase,
+        publish_course_details_row,
+        education_phase_row,
         subject_row,
         age_range_row,
         study_mode_row,
         course_date_row(course_start_date, :start),
         course_date_row(course_end_date, :end),
-      ].compact.tap do |collection|
-        if show_publish_courses?(trainee)
-          collection.unshift({
-            key: t("components.course_detail.course_details"),
-            value: course_details,
-            action_href: edit_trainee_publish_course_details_path(trainee),
-            action_text: t(:change),
-            action_visually_hidden_text: "course details",
-          })
-        end
-      end
+      ].compact
     end
 
   private
 
-    attr_accessor :data_model, :trainee, :has_errors
+    attr_accessor :data_model, :trainee, :has_errors, :system_admin
 
-    def education_phase
+    def publish_course_details_row
+      if show_publish_courses?(trainee)
+        { key: t("components.course_detail.course_details"),
+          value: course_details,
+          action_href: edit_trainee_publish_course_details_path(trainee),
+          action_text: t(:change),
+          action_visually_hidden_text: "course details",
+          custom_value: true }
+      end
+    end
+
+    def education_phase_row
       if non_early_year_route?
-        mappable_field(data_model.course_education_phase&.upcase_first,
-                       t("components.course_detail.education_phase"),
-                       action_url: edit_trainee_course_education_phase_path(trainee))
+        { field_value: data_model.course_education_phase&.upcase_first, field_label: t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee) }
       end
     end
 
     def subject_row
       if non_early_year_route?
-        mappable_field(subject_names, t("components.course_detail.subject"))
+        default_mappable_field(subject_names, t("components.course_detail.subject"))
       end
     end
 
     def training_route_row
       unless trainee.draft?
-        mappable_field(t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), t("components.course_detail.route"),
-                       action_url: nil)
+        { field_value: t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), field_label: t("components.course_detail.route"), action_url: nil }
       end
     end
 
     def age_range_row
       if non_early_year_route?
-        mappable_field(course_age_range, t("components.course_detail.age_range"))
+        default_mappable_field(course_age_range, t("components.course_detail.age_range"))
       end
     end
 
     def study_mode_row
       if trainee.requires_study_mode?
-        mappable_field(study_mode, t("components.course_detail.study_mode"))
+        default_mappable_field(study_mode, t("components.course_detail.study_mode"))
       end
     end
 
     def course_date_row(value, context)
-      mappable_field(value, t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_#{context}_date"))
+      default_mappable_field(value, t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_#{context}_date"))
     end
 
     def itt_route?
@@ -131,14 +131,8 @@ module CourseDetails
       @course ||= trainee.available_courses.find_by(uuid: data_model.course_uuid)
     end
 
-    def mappable_field(field_value, field_label, action_url: edit_trainee_course_details_path(trainee))
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: action_url,
-        has_errors: has_errors,
-      ).to_h
+    def default_mappable_field(field_value, field_label)
+      { field_value: field_value, field_label: field_label, action_url: edit_trainee_course_details_path(trainee) }
     end
   end
 end

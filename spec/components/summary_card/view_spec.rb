@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe SummaryCard::View do
-  let(:trainee) { build(:trainee) }
   let(:rows) do
     [
       { key: "Character", value: "Lando Calrissian" },
@@ -13,7 +12,7 @@ RSpec.describe SummaryCard::View do
   end
 
   subject do
-    render_inline(SummaryCard::View.new(trainee: trainee, title: "Lando Calrissian", heading_level: 6, rows: rows))
+    render_inline(SummaryCard::View.new(title: "Lando Calrissian", heading_level: 6, rows: rows))
   end
 
   it "renders a summary list component for rows" do

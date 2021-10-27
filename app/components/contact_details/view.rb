@@ -4,9 +4,10 @@ module ContactDetails
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, system_admin: false)
       @data_model = data_model
       @has_errors = has_errors
+      @system_admin = system_admin
     end
 
     def contact_detail_rows
@@ -18,7 +19,7 @@ module ContactDetails
 
   private
 
-    attr_accessor :data_model, :has_errors
+    attr_accessor :data_model, :has_errors, :system_admin
 
     def trainee
       data_model.is_a?(Trainee) ? data_model : data_model.trainee
@@ -57,14 +58,7 @@ module ContactDetails
     end
 
     def mappable_field(field_value, field_label)
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: edit_trainee_contact_details_path(trainee),
-        has_errors: has_errors,
-        apply_draft: trainee.apply_application?,
-      ).to_h
+      { field_value: field_value, field_label: field_label, action_url: trainee_contact_details_path(trainee) }
     end
   end
 end

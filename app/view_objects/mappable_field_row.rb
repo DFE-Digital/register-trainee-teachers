@@ -14,6 +14,7 @@ class MappableFieldRow
     @has_errors = options[:has_errors]
     @text = options[:text]
     @apply_draft = options[:apply_draft] || false
+    @non_editable = options[:non_editable]
   end
 
   def to_h
@@ -22,7 +23,7 @@ class MappableFieldRow
 
 private
 
-  attr_accessor :invalid_data, :record_id, :field_name, :field_value, :field_label, :text, :action_url, :has_errors, :apply_draft
+  attr_accessor :invalid_data, :record_id, :field_name, :field_value, :field_label, :text, :action_url, :has_errors, :apply_draft, :non_editable
 
   def value_attribute
     return { value: unmapped_value.html_safe } if field_value.nil?
@@ -31,7 +32,7 @@ private
   end
 
   def action_attributes
-    return {} if field_value.nil? || action_url.nil?
+    return {} if field_value.nil? || action_url.nil? || non_editable
 
     { action_href: action_url, action_text: I18n.t(:change), action_visually_hidden_text: field_label.downcase }
   end
@@ -41,13 +42,19 @@ private
       <div class="govuk-inset-text app-inset-text--narrow-border app-inset-text--#{has_errors ? 'error' : 'important'} app-inset-text--no_padding">
         <p class="app-inset-text__title govuk-!-margin-bottom-2">#{error_message_prefix}#{field_label} is #{original_value ? 'not recognised' : text}</p>
         #{original_value_html}
-        <div>
-          <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" name="#{field_label.downcase}" href="#{action_url}">
-            #{field_hint_text(field_label)}
-          </a>
-        </div>
+        #{unmapped_value_anchor}
       </div>
     HTML
+  end
+
+  def unmapped_value_anchor
+    unless non_editable
+      %(<div>
+    <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" name="#{field_label.downcase}" href="#{action_url}">
+      #{field_hint_text(field_label)}
+    </a>
+  </div>)
+    end
   end
 
   def error_message_prefix

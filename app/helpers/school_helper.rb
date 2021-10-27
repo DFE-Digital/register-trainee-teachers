@@ -28,4 +28,8 @@ module SchoolHelper
       change_paths(:employing),
     )
   end
+
+  def mappable_field(field_value, field_label, action_url)
+    { field_value: field_value, field_label: field_label, action_url: action_url }
+  end
 end
