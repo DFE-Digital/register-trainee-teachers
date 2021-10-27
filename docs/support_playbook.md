@@ -63,6 +63,12 @@ Before you run the commands below, make a note of the `submitted_for_trn_at` tim
 # Find the trainee
 trainee = Trainee.find(5913)
 
+# Ensure you have noted `submitted_for_trn_at`
+submitted_for_trn_at = trainee.submitted_for_trn_at
+
+# Fetch the user's dttp id based on audit state change from draft to submitted_for_trn
+users_dttp_id = trainee.audits.find_by("audited_changes -> 'state' = '[0, 1]'").user.dttp_id
+
 # Use the without_auditing method to avoid adding to the audit trail. We need to use update_columns to avoid the LockedAttributeError when setting the dttp_id
 trainee.without_auditing do
   trainee.update_columns(dttp_id: nil, placement_assignment_dttp_id: nil, state: "draft", submitted_for_trn_at: nil)
@@ -73,7 +79,7 @@ Dttp::RegisterForTrnJob.perform_later(trainee, users_dttp_id)
 
 # Set the state back to submitted_for_trn and the submitted_for_trn_at timestamp to the one we grabbed earlier. The timestamp needs to be exact or the audit trail will be wrong.
 trainee.without_auditing do
-  trainee.update_columns(state: "submitted_for_trn", submitted_for_trn_at: Time.parse("05 Oct 2021 08:42:25.692295000 UTC +00:00"))
+  trainee.update_columns(state: "submitted_for_trn", submitted_for_trn_at: submitted_for_trn_at)
 end
 
 # Fire off job to retrieve trn
