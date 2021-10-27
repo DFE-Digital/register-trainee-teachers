@@ -54,15 +54,11 @@ class PersonalDetailsForm < TraineeForm
   end
 
   def nationality_names
-    return @_nationality_names if defined?(@_nationality_names)
-
-    @_nationality_names = nationality_ids.map { |id| Nationality.find(id).name.titleize }
+    @nationality_names ||= nationality_ids.map { |id| Nationality.find(id).name.titleize }
   end
 
   def nationality_ids
-    return @_nationality_ids if defined?(@_nationality_ids)
-
-    @_nationality_ids =
+    @nationality_ids ||=
       begin
         nationality_params = new_attributes.merge(blank_nationalities_params)
 
@@ -122,14 +118,17 @@ private
   end
 
   def other_nationalities_hash
-    # Re-hydrate the 'Other nationality' fields from the trainee model.
-    nationality1, nationality2, nationality3 = trainee.nationalities.where.not(name: %w[british irish]).pluck(:name).map(&:titleize)
+    @other_nationalities_hash ||=
+      begin
+        # Re-hydrate the 'Other nationality' fields from the trainee model.
+        nationality1, nationality2, nationality3 = trainee.nationalities.where.not(name: %w[british irish]).pluck(:name).map(&:titleize)
 
-    {
-      other_nationality1: nationality1,
-      other_nationality2: nationality2,
-      other_nationality3: nationality3,
-    }
+        {
+          other_nationality1: nationality1,
+          other_nationality2: nationality2,
+          other_nationality3: nationality3,
+        }
+      end
   end
 
   def date_of_birth_valid

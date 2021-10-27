@@ -50,7 +50,7 @@ module ApplyApplications
 
     def fields
       form_validators.keys.map do |section|
-        validator(section).new(trainee).fields
+        validator_obj(section).fields
       end.inject(:merge)
     end
 
@@ -66,8 +66,13 @@ module ApplyApplications
 
     def all_forms_valid?
       form_validators.keys.all? do |section|
-        validator(section).new(trainee).valid?
+        validator_obj(section).valid?
       end
+    end
+
+    def validator_obj(section)
+      @validator_obj ||= {}
+      @validator_obj[section] ||= validator(section).new(trainee)
     end
 
     def submission_ready
@@ -75,9 +80,11 @@ module ApplyApplications
     end
 
     def progress_service(progress_key)
-      validator = validator(progress_key).new(trainee)
       progress_value = trainee.progress.public_send(progress_key)
-      ProgressService.call(validator: validator, progress_value: progress_value)
+      ProgressService.call(
+        validator: validator_obj(progress_key),
+        progress_value: progress_value,
+      )
     end
 
     def validator(section)
