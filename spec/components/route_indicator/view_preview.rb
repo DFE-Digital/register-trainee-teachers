@@ -13,6 +13,7 @@ module RouteIndicator
           apply_application: ApplyApplication.new(application: { attributes: {} }),
           course_subject_one: "Ancient Hebrew",
           course_uuid: SecureRandom.uuid,
+          provider: Provider.new(name: "Provider A"),
         )))
       end
     end
