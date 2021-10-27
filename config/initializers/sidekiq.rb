@@ -10,10 +10,6 @@ if ENV.key?("VCAP_SERVICES")
     config.redis = {
       url: redis_credentials["uri"],
     }
-
-    if Settings.bg_jobs
-      Sidekiq::Cron::Job.load_from_hash(Settings.bg_jobs)
-    end
   end
 
   Sidekiq.configure_client do |config|
@@ -25,5 +21,5 @@ end
 
 # Sidekiq Cron
 if Settings.sidekiq.schedule_file && Sidekiq.server?
-  Sidekiq::Cron::Job.load_from_hash(YAML.load_file(Settings.sidekiq.schedule_file))
+  Sidekiq::Cron::Job.load_from_hash!(YAML.load_file(Settings.sidekiq.schedule_file))
 end
