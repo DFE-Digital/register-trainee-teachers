@@ -7,7 +7,6 @@ module Exports
     let(:trainee) do
       create(
         :trainee,
-        :with_degree,
         :with_primary_course_details,
         :submitted_for_trn,
         :trn_received,
@@ -26,8 +25,10 @@ module Exports
         training_initiative: "transition_to_teach",
         applying_for_bursary: true,
         international_address: "Test addr",
+        degrees: degrees,
       )
     end
+    let(:degrees) { [build(:degree, :uk_degree_with_details, institution: Dttp::CodeSets::Institutions::MAPPING.keys.first)] }
     let(:funding_manager) do
       FundingManager.new(trainee)
     end
