@@ -20,7 +20,7 @@ FactoryBot.define do
 
       subject { Dttp::CodeSets::DegreeSubjects::MAPPING.keys.sample }
 
-      institution { Dttp::CodeSets::Institutions::MAPPING.keys.sample }
+      institution { "The Surrey Institute of Art and Design, University College" }
       grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
     end
