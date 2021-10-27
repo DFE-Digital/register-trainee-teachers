@@ -22,7 +22,7 @@ asdf plugin add yarn
 asdf install
 ```
 
-When the versions are updated in master run `asdf install` again to update your
+When the versions are updated on the `main` branch run `asdf install` again to update your
 installation. Use `asdf plugin update --all` to update plugins and get access to
 newer versions of tools.
 

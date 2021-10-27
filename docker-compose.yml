@@ -17,8 +17,8 @@ services:
     build:
       context: .
       cache_from:
-        - dfedigital/register-trainee-teachers:${IMAGE_TAG:-master}
-    image: dfedigital/register-trainee-teachers:${IMAGE_TAG:-master}
+        - dfedigital/register-trainee-teachers:${IMAGE_TAG:-main}
+    image: dfedigital/register-trainee-teachers:${IMAGE_TAG:-main}
     command: ash -c "bundle exec rails server -p 3001 -b '0.0.0.0'"
     ports:
       - 3001:3001
@@ -31,7 +31,7 @@ services:
       - REDIS_URL=redis://redis:6379
 
   bg-jobs:
-    image: dfedigital/register-trainee-teachers:${IMAGE_TAG:-master}
+    image: dfedigital/register-trainee-teachers:${IMAGE_TAG:-main}
     command: bundle exec sidekiq -c 5 -C config/sidekiq.yml
     depends_on:
       - web
