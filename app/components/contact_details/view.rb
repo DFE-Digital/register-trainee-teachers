@@ -58,7 +58,7 @@ module ContactDetails
     end
 
     def mappable_field(field_value, field_label)
-      { field_value: field_value, field_label: field_label, action_url: trainee_contact_details_path(trainee) }
+      { field_value: field_value, field_label: field_label, action_url: edit_trainee_contact_details_path(trainee) }
     end
   end
 end
