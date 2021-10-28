@@ -29,6 +29,11 @@ RSpec.describe ContactDetails::View do
       expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
+    it "renders the contact details change link" do
+      expect(rendered_component)
+        .to have_link(t("change"), href: "/trainees/#{mock_trainee.slug}/contact-details/edit")
+    end
+
     it "renders the address" do
       expect(rendered_component)
         .to have_text([
