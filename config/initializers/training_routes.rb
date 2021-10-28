@@ -220,6 +220,24 @@ SEED_GRANTS = [
       AllocationSubjects::BIOLOGY,
     ],
   ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    amount: 15_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    amount: 1_000,
+    allocation_subjects: [
+      AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::CLASSICS,
+    ],
+  ),
 ].freeze
 
 TRAINING_ROUTE_INITIATIVES = {
