@@ -89,7 +89,7 @@ module Exports
           "course_start_date" => trainee.course_start_date&.iso8601,
           "course_end_date" => trainee.course_end_date&.iso8601,
           "course_duration_in_years" => trainee.course_duration_in_years,
-          "course_summary" => course&.summary,
+          "course_summary" => course_summary(trainee, course),
           "commencement_date" => trainee.commencement_date&.iso8601,
           "lead_school_name" => trainee.lead_school&.name,
           "lead_school_urn" => trainee.lead_school&.urn,
@@ -107,6 +107,17 @@ module Exports
           "withdraw_reason" => trainee.withdraw_reason,
           "additional_withdraw_reason" => trainee.additional_withdraw_reason,
         }
+      end
+    end
+
+    def course_summary(trainee, course)
+      return if course&.summary.blank?
+
+      case trainee.study_mode
+      when "part_time"
+        course.summary.gsub(/(full time)/i, "part time")
+      when "full_time"
+        course.summary.gsub(/(part time)/i, "full time")
       end
     end
 
