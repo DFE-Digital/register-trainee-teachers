@@ -171,7 +171,7 @@ module Dttp
         return {} unless trainee.hpitt_provider?
 
         {
-          "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_regions(#{region_id(trainee.region)})",
+          "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_goregions(#{region_id(trainee.region)})",
         }
       end
 
