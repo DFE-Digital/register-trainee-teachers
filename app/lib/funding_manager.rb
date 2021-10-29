@@ -51,9 +51,11 @@ class FundingManager
   end
 
   def funding_available?
-    FundingMethod.includes(:funding_method_subjects)
-                 .where.not(funding_method_subjects: { id: nil })
-                 .where(training_route: training_route).present?
+    Rails.cache.fetch("FundingManager.funding_available?/#{training_route}", expires_in: 1.day) do
+      FundingMethod.includes(:funding_method_subjects)
+                   .where.not(funding_method_subjects: { id: nil })
+                   .where(training_route: training_route).present?
+    end
   end
 
   def allocation_subject_name
