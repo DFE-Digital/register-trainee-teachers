@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module FundingHelper
-  def training_initiative_options(trainee)
-    TRAINING_ROUTE_INITIATIVES[trainee.training_route].sort
+  def training_initiative_options
+    (ROUTE_INITIATIVES_ENUMS.values - ["no_initiative"]).sort
   end
 
   def funding_options(trainee)

@@ -20,7 +20,7 @@ module Funding
     context "on opt-in (undergrad) route" do
       let(:state) { :draft }
       let(:route) { "opt_in_undergrad" }
-      let(:training_initiative) { TRAINING_ROUTE_INITIATIVES[route].first }
+      let(:training_initiative) { ROUTE_INITIATIVES_ENUMS.keys.first }
       let(:trainee) do
         build(:trainee, state, training_initiative: training_initiative, training_route: route, applying_for_bursary: true, course_subject_one: subject_specialism.name)
       end
@@ -45,7 +45,7 @@ module Funding
           render_inline(View.new(data_model: trainee))
         end
 
-        it "doesnt render if the trainee selects drama" do
+        it "doesn't render if the trainee selects drama" do
           expect(rendered_component).not_to have_text("Bursary applied for")
         end
       end
@@ -54,7 +54,7 @@ module Funding
     context "assessment only route" do
       let(:state) { :draft }
       let(:route) { "assessment_only" }
-      let(:training_initiative) { TRAINING_ROUTE_INITIATIVES[route].first }
+      let(:training_initiative) { ROUTE_INITIATIVES_ENUMS.keys.first }
 
       let(:trainee) do
         build(:trainee, state, training_initiative: training_initiative, training_route: route, applying_for_bursary: applying_for_bursary, course_subject_one: course_subject_one)
