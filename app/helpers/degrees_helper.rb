@@ -5,8 +5,9 @@ module DegreesHelper
 
   def degree_type_options
     to_enhanced_options(degree_type_data) do |name, attributes|
+      synonyms = (attributes[:synonyms] || []) << attributes[:abbreviation]
       data = {
-        "data-synonyms" => (attributes[:synonyms] || []) << attributes[:abbreviation],
+        "data-synonyms" => synonyms.join("|"),
         "data-append" => attributes[:abbreviation] && tag.strong("(#{attributes[:abbreviation]})"),
         "data-boost" => (Dttp::CodeSets::DegreeTypes::COMMON.include?(name) ? 1.5 : 1),
       }
@@ -16,13 +17,13 @@ module DegreesHelper
 
   def institutions_options
     to_enhanced_options(institution_data) do |name, attributes|
-      [name, name, { "data-synonyms" => attributes[:synonyms] }]
+      [name, name, { "data-synonyms" => (attributes[:synonyms] || []).join("|") }]
     end
   end
 
   def subjects_options
     to_enhanced_options(subject_data) do |name, attributes|
-      [name, name, { "data-synonyms" => attributes[:synonyms] }]
+      [name, name, { "data-synonyms" => (attributes[:synonyms] || []).join("|") }]
     end
   end
 
