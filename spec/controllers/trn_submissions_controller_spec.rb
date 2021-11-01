@@ -7,17 +7,13 @@ describe TrnSubmissionsController do
 
   describe "#create" do
     let(:current_user) { create(:user) }
-    let(:trainee) { create(:trainee, provider: current_user.provider) }
+    let(:trainee) { create(:trainee, :completed, provider: current_user.provider) }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
     end
 
     context "when all sections are completed" do
-      before do
-        expect(TrnSubmissionForm).to receive(:new).with(trainee: trainee).and_return(double(valid?: true))
-      end
-
       it "queues a background job to register trainee for TRN" do
         expect {
           post :create, params: { trainee_id: trainee }
