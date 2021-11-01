@@ -558,7 +558,7 @@ module Dttp
 
           it "returns a hash including the region" do
             expect(subject).to include({
-              "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_regions(#{expected_region_id})",
+              "dfe_GovernmentOfficeRegionId@odata.bind" => "/dfe_goregions(#{expected_region_id})",
             })
           end
         end
