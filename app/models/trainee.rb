@@ -323,7 +323,7 @@ private
     # we use this to determine if we need to update DTTP. We use values only and exclude nils to avoid
     # sending updates when we add a field to the schema.
 
-    exclude_list = %w[created_at updated_at dttp_update_sha progress]
+    exclude_list = %w[created_at updated_at dttp_update_sha progress submission_ready]
 
     trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
 
