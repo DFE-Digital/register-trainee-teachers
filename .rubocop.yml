@@ -34,6 +34,10 @@ Style/MethodCallWithArgsParentheses:
     - "db/migrate/*"
     - "config/routes/*"
 
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"
+
 # These can't be moved into their own config files. erb_lint won't find them unless the require is
 # in the same file with them. If we do that the path becomes ../../lib etc. Rubocop can resolve this fine
 # but erb_lint can't so one or other of them doesn't work.

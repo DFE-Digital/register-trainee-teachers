@@ -14,7 +14,7 @@ module Dttp
 
     before do
       enable_features(:persist_to_dttp)
-
+      allow(TrnSubmissionForm).to receive(:new).and_return(double(valid?: true))
       allow(RetrieveAward).to receive(:call).with(trainee: trainee).and_return(award_status)
       allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
       allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)

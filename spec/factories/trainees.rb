@@ -85,6 +85,14 @@ FactoryBot.define do
       degrees { [build(:degree, :uk_degree_with_details)] }
     end
 
+    trait :submission_ready do
+      submission_ready { true }
+    end
+
+    trait :not_submission_ready do
+      submission_ready { false }
+    end
+
     trait :completed do
       in_progress
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
@@ -104,6 +112,7 @@ FactoryBot.define do
           trainee_data: true,
         )
       end
+      submission_ready
     end
 
     trait :with_subject_specialism do
@@ -276,6 +285,7 @@ FactoryBot.define do
       dttp_id { SecureRandom.uuid }
       submitted_for_trn_at { Time.zone.now }
       state { "submitted_for_trn" }
+      submission_ready
     end
 
     trait :trn_received do

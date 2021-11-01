@@ -11,7 +11,7 @@ module Dttp
 
     before do
       enable_features(:persist_to_dttp)
-
+      allow(TrnSubmissionForm).to receive(:new).and_return(double(valid?: true))
       allow(RegisterForTrn).to receive(:call)
     end
 

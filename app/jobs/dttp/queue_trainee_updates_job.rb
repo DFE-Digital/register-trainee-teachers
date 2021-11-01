@@ -27,7 +27,7 @@ module Dttp
   private
 
     def fetch_trainees
-      Trainee.where.not(state: INVALID_STATES)
+      Trainee.where.not(state: INVALID_STATES, submission_ready: false)
     end
 
     def trainee_already_synced?(trainee)

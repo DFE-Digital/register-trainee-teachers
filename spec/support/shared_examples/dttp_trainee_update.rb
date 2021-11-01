@@ -2,7 +2,7 @@
 
 RSpec.shared_examples "dttp trainee update" do |dttp_param_processor|
   let(:trainee) do
-    create(:trainee, :trn_received, outcome_date: outcome_date, placement_assignment_dttp_id: placement_assignment_dttp_id)
+    build(:trainee, :trn_received, outcome_date: outcome_date, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
 
   let(:outcome_date) { Faker::Date.in_date_period }

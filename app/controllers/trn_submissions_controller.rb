@@ -4,8 +4,11 @@ class TrnSubmissionsController < ApplicationController
   before_action :authorize_trainee
 
   def create
-    @form = TrnSubmissionForm.new(trainee: trainee)
-    return render("trainees/check_details/show") unless @form.valid?
+    unless trainee.submission_ready?
+      @form = TrnSubmissionForm.new(trainee: trainee)
+      @form.validate
+      return render("trainees/check_details/show")
+    end
 
     trainee.submit_for_trn!
 

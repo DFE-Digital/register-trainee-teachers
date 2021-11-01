@@ -6,7 +6,7 @@ module Dttp
   describe RetrieveAward do
     describe "#call" do
       let(:placement_assignment_entity_id) { SecureRandom.uuid }
-      let(:trainee) { create(:trainee, :recommended_for_award, placement_assignment_dttp_id: placement_assignment_entity_id) }
+      let(:trainee) { build(:trainee, :recommended_for_award, placement_assignment_dttp_id: placement_assignment_entity_id) }
       let(:path) { "/dfe_placementassignments(#{placement_assignment_entity_id})?$select=dfe_qtsawardflag,dfe_qtseytsawarddate" }
       let(:request_url) { "#{Settings.dttp.api_base_url}#{path}" }
 

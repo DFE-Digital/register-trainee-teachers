@@ -28,7 +28,7 @@ module Dttp
     context "with invalid trainees" do
       let(:trainees) do
         QueueTraineeUpdatesJob::INVALID_STATES.each do |state|
-          create(:trainee, state.to_sym)
+          create(:trainee, state.to_sym).update_columns(submission_ready: false)
         end
       end
 
