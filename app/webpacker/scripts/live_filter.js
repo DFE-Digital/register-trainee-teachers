@@ -17,7 +17,7 @@ export default class LiveFilter {
     if (!(this.form && this.resultsDiv && this.selectedFiltersDiv)) return
 
     this.saveState()
-    this.addStateToHistory()
+    this.setInitialStateToHistory()
     this.hideButton()
     this.bindEvents()
   }
@@ -102,8 +102,8 @@ export default class LiveFilter {
     }
   }
 
-  addStateToHistory () {
-    window.history.pushState(this.state, '')
+  setInitialStateToHistory () {
+    window.history.replaceState(this.state, '')
   }
 
   formChange () {
