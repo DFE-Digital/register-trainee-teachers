@@ -52,8 +52,13 @@ private
 
   attr_reader :trainee
 
-  def validator(section)
-    form_validators[section][:form].constantize
+  def validator(progress_key)
+    validator = form_validators[progress_key][:form].constantize
+    if progress_key == :schools
+      validator.new(trainee, non_search_validation: true)
+    else
+      validator.new(trainee)
+    end
   end
 
   def submission_ready
@@ -61,9 +66,8 @@ private
   end
 
   def progress_service(progress_key)
-    validator = validator(progress_key).new(trainee)
     progress_value = trainee.progress.public_send(progress_key)
-    ProgressService.call(validator: validator, progress_value: progress_value)
+    ProgressService.call(validator: validator(progress_key), progress_value: progress_value)
   end
 
   def progress_is_completed?(progress_key)
