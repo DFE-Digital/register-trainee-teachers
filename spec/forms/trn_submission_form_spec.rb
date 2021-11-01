@@ -40,20 +40,143 @@ describe TrnSubmissionForm, type: :model do
       end
 
       context "requires school" do
-        let(:trainee) do
-          create(
-            :trainee,
-            :school_direct_salaried,
-            :with_lead_school,
-            :with_employing_school,
-            :completed,
-            progress: progress.merge(schools: true),
-          )
+        context "trainee is on the school_direct_tuition_fee route" do
+          context "with lead and employing schools" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :school_direct_tuition_fee,
+                :with_lead_school,
+                :with_employing_school,
+                :completed,
+                progress: progress.merge(schools: true),
+              )
+            end
+
+            it "is valid" do
+              expect(subject).to be_valid
+            end
+          end
+
+          context "with no lead and employing school" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :school_direct_tuition_fee,
+                :completed,
+                progress: progress.merge(schools: true),
+              )
+            end
+
+            it "is invalid" do
+              expect(subject.valid?).to be false
+              expect(subject.errors).not_to be_empty
+            end
+          end
+
+          context "with only employing school" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :school_direct_tuition_fee,
+                :with_employing_school,
+                :completed,
+                progress: progress.merge(schools: true),
+              )
+            end
+
+            it "is invalid" do
+              expect(subject.valid?).to be false
+              expect(subject.errors).not_to be_empty
+            end
+          end
+
+          context "with only lead school" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :school_direct_tuition_fee,
+                :with_lead_school,
+                :completed,
+                progress: progress.merge(schools: true),
+              )
+            end
+
+            it "is valid" do
+              expect(subject).to be_valid
+            end
+          end
         end
 
-        it "is valid" do
-          expect(subject.valid?).to be true
-          expect(subject.errors).to be_empty
+        %i[school_direct_salaried pg_teaching_apprenticeship].each do |route|
+          context "trainee is on the #{route} route" do
+            context "with lead and employing schools" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  route,
+                  :with_lead_school,
+                  :with_employing_school,
+                  :completed,
+                  progress: progress.merge(schools: true),
+                )
+              end
+
+              it "is valid" do
+                expect(subject).to be_valid
+              end
+            end
+
+            context "with no lead and employing school" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  route,
+                  :completed,
+                  progress: progress.merge(schools: true),
+                )
+              end
+
+              it "is invalid" do
+                expect(subject.valid?).to be false
+                expect(subject.errors).not_to be_empty
+              end
+            end
+
+            context "with only employing school" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  route,
+                  :with_employing_school,
+                  :completed,
+                  progress: progress.merge(schools: true),
+                )
+              end
+
+              it "is invalid" do
+                expect(subject.valid?).to be false
+                expect(subject.errors).not_to be_empty
+              end
+            end
+
+            context "with only lead school" do
+              let(:trainee) do
+                create(
+                  :trainee,
+                  route,
+                  :with_lead_school,
+                  :completed,
+                  progress: progress.merge(schools: true),
+                )
+              end
+
+              it "is invalid" do
+                expect(subject.valid?).to be false
+                expect(subject.errors).not_to be_empty
+              end
+            end
+          end
         end
       end
 
