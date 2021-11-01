@@ -13,14 +13,11 @@ const calculateWeight = (rawName, query, rawSynonyms = []) => {
   const synonyms = rawSynonyms.map(s => clean(s))
 
   const nameMatchPositions = matchPositions(name, regexes)
-  const synonymMatchPositions = synonyms
-    .map(synonym => matchPositions(synonym, regexes))
-    // Flatten the array, but don't use flat() - breaks on Edge.
-    .reduce((acc, val) => acc.concat(val), [])
+  const synonymMatchPositions = synonyms.map(synonym => matchPositions(synonym, regexes))
 
   // Require either all parts of a name to be matched, or all parts of a synonym
   const allNameMatches = nameMatchPositions.length === regexes.length
-  const allSynonymMatches = synonymMatchPositions.length >= regexes.length
+  const allSynonymMatches = synonymMatchPositions.some(x => x.length === regexes.length)
   if (!allNameMatches && !allSynonymMatches) return 0
 
   // Case insensitive exact matches:
@@ -29,9 +26,9 @@ const calculateWeight = (rawName, query, rawSynonyms = []) => {
 
   // Case insensitive 'starts with':
   const nameStartsWithQuery = nameMatchPositions.includes(0)
-  const synonymStartsWithQuery = synonymMatchPositions.includes(0)
+  const synonymStartsWithQuery = synonymMatchPositions.some(x => x.includes(0))
   const wordInNameStartsWithQuery = nameMatchPositions.length > 0
-  const wordInSynonymStartsWithQuery = synonymMatchPositions.length > 0
+  const wordInSynonymStartsWithQuery = synonymMatchPositions.some(x => x.length > 0)
 
   if (nameIsExactMatch) return 100
   if (synonymIsExactMatch) return 75

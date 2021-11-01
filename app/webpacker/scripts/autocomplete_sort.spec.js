@@ -74,11 +74,17 @@ describe('sort', () => {
     expect(sort('plant', options)).toEqual(['plant b', 'plant a'])
   })
 
-  it('can handle multiple synonyms', () => {
+  it('can handle multiple synonyms - must match all parts', () => {
     const options = [
-      { name: 'plant', synonyms: ['flower', 'leaf'] }
+      { name: 'plant a', synonyms: ['flower thing', 'leaf'] },
+      { name: 'plant b', synonyms: ['nice bear', 'rose plant'] }
     ]
-    expect(sort('leaf flower', options)).toEqual(['plant'])
+    // Doesn't search across synonyms
+    expect(sort('leaf flower', options)).toEqual([])
+    // Doesn't count partial matches in separate synonyms
+    expect(sort('rose bear', options)).toEqual([])
+    // Returns correct match
+    expect(sort('flower thi', options)).toEqual(['plant a'])
   })
 
   it('can handle query with extra punctuation', () => {
