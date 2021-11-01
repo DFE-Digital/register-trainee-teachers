@@ -7,17 +7,37 @@
 }
 
 
-.application-record-card_row {
+.application-record-card__row {
   min-width: 100%;
 }
 
-.application-record-card_row--header {
+.application-record-card__row--header {
   display: flex;
   justify-content: space-between;
 
   .application-record-card__tag-container {
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    align-items: end;
+
+    @include govuk-media-query($from: tablet) {
+      flex-direction: row;
+      align-items: center;
+    }
+
     .govuk-tag {
       margin-left: govuk-spacing(3);
+
+      &:first-child { 
+        margin-bottom: govuk-spacing(1);
+      }
+
+      @include govuk-media-query($from: tablet) {
+        &:first-child { 
+          margin-bottom: govuk-spacing(0);
+        }
+      }
     }
   }
 }
@@ -28,7 +48,7 @@
 }
 
 
-.application-record-card_row--body {
+.application-record-card__row--body {
   margin-top: govuk-spacing(2);
 
   @include govuk-media-query($from: 401px) {
@@ -38,7 +58,7 @@
 }
 
 // Trainee + Course details columns
-.application-record-card_col:nth-last-child(2) {
+.application-record-card__col:nth-last-child(2) {
  
   div:nth-child(1) {
     margin-bottom: govuk-spacing(2);
@@ -93,7 +113,7 @@
 }
 
 // Updated at column
-.application-record-card_col:nth-last-child(1) {
+.application-record-card__col:nth-last-child(1) {
   margin-top: govuk-spacing(2);
   
   @include govuk-media-query($from: 401px) {

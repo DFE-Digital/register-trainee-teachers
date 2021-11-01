@@ -1,16 +1,16 @@
 <div class="application-record-card">
-  <div class="application-record-card_row application-record-card_row--header">
+  <div class="application-record-card__row application-record-card__row--header">
     <h<%= heading_level %> class="application-record-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
       <%= govuk_link_to trainee_name, view_trainee(record) %>
     </h<%= heading_level %>>
 
-    <div class="application-record-card__tag-container">
+    <span class="application-record-card__tag-container">
       <%= render StatusTag::View.new(trainee: record) %>
-    </div>
+    </span>
   </div>
 
-  <div class="application-record-card_row application-record-card_row--body">
-    <div class="application-record-card_col">
+  <div class="application-record-card__row application-record-card__row--body">
+    <div class="application-record-card__col">
       <div>
         <%= trainee_id %>
         <%= trn %>      
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="application-record-card_col">
+    <div class="application-record-card__col">
       <%= updated_at %>
     </div>
   </div>
