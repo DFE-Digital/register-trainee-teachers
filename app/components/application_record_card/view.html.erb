@@ -1,25 +1,36 @@
 <div class="application-record-card">
-  <div class="application-record-card__col-trainee-course">
-    <div class="application-record-card__col-trainee">
-      <h<%= heading_level %> class="govuk-heading-m application-record-card__trainee-name">
-        <%= govuk_link_to trainee_name, view_trainee(record) %>
-      </h<%= heading_level %>>
-      <%= trainee_id %>
-      <%= trn %>
-    </div>
+  <div class="application-record-card_row application-record-card_row--header">
+    <h<%= heading_level %> class="application-record-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
+      <%= govuk_link_to trainee_name, view_trainee(record) %>
+    </h<%= heading_level %>>
 
-    <div class="application-record-card__col-course">
-      <p class="govuk-body application-record-card__subject">
-        <%= subject %>
-      </p>
-      <p class="govuk-body govuk-hint application-record-card__route">
-        <%= route %>
-      </p>
+    <div class="application-record-card__tag-container">
+      <%= render StatusTag::View.new(trainee: record) %>
     </div>
   </div>
 
-  <div class="application-record-card__col-status">
-    <%= render StatusTag::View.new(trainee: record) %>
-    <%= updated_at %>
+  <div class="application-record-card_row application-record-card_row--body">
+    <div class="application-record-card_col">
+      <div>
+        <%= trainee_id %>
+        <%= trn %>      
+      </div>
+
+      <div>
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-0 govuk-!-margin-bottom-1">
+          <span class='govuk-visually-hidden'>Course: </span>
+          <%= subject %>
+        </p>
+
+        <p class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+          <span class='govuk-visually-hidden'>Route: </span>
+          <%= route %>
+        </p>        
+      </div>
+    </div>
+
+    <div class="application-record-card_col">
+      <%= updated_at %>
+    </div>
   </div>
 </div>

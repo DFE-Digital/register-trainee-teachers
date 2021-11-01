@@ -1,1 +1,9 @@
-<%= render GovukComponent::TagComponent.new(text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + status, colour: status_colour, classes: classes) %>
+
+<% tags.each do |tag| %>
+  <%= render GovukComponent::TagComponent.new(
+    text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + tag[:status], 
+    colour: tag[:status_colour], 
+    classes: tag[:classes]
+  ) %>
+<% end %>
+

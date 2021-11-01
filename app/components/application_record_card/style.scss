@@ -4,77 +4,22 @@
   border-bottom: 1px solid govuk-colour("mid-grey");
   margin-bottom: govuk-spacing(3);
   padding-bottom: govuk-spacing(3);
+}
 
-  @include govuk-media-query($from: tablet) {
-    display: flex;
-    align-items: stretch;
-  }
 
-  @include govuk-media-query($from: $mobile-small-end) {
-    display: flex;
-    justify-content: space-between;
-  }
+.application-record-card_row {
+  min-width: 100%;
+}
 
-  .application-record-card__col-trainee-course {
-    @include govuk-media-query($from: $mobile-small-end) {
-      width: 60%;
-    }
+.application-record-card_row--header {
+  display: flex;
+  justify-content: space-between;
 
-    @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
-      width: 65%;
-      padding-right: govuk-spacing(3);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    @include govuk-media-query($from: $govuk-page-width) {
-      width: 65%;
-      padding-right: govuk-spacing(3);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .application-record-card__col-trainee {
-      margin-bottom: govuk-spacing(2);
-      width: 100%;
-      padding-right: govuk-spacing(3);
-
-      @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
-        width: 60%;
-      }
-
-      @include govuk-media-query($from: $govuk-page-width) {
-        width: 60%;
-      }
-    }
-
-    .application-record-card__col-course {
-      width: 100%;
-
-      @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
-        width: 40%;
-      }
-
-      @include govuk-media-query($from: $govuk-page-width) {
-        width: 40%;
-      }
+  .application-record-card__tag-container {
+    .govuk-tag {
+      margin-left: govuk-spacing(3);
     }
   }
-
-  .application-record-card__col-status {
-    margin-top: govuk-spacing(2);
-
-    @include govuk-media-query($from: $mobile-small-end) {
-      width: 35%;
-      margin-top: 0;
-      text-align: right;
-    }
-
-    @include govuk-media-query($from: $mobile-big-end, $until: desktop) {
-      width: 35%;
-    }
-  }
-
 }
 
 .application-record-card:first-of-type {
@@ -82,56 +27,102 @@
   padding-top: govuk-spacing(3);
 }
 
-.application-record-card__primary {
-  @include govuk-media-query($from: tablet) {
+
+.application-record-card_row--body {
+  margin-top: govuk-spacing(2);
+
+  @include govuk-media-query($from: 401px) {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+// Trainee + Course details columns
+.application-record-card_col:nth-last-child(2) {
+ 
+  div:nth-child(1) {
+    margin-bottom: govuk-spacing(2);
+  }
+
+  @include govuk-media-query($from: 401px) {
     width: 60%;
   }
 
-  p {
-    margin-bottom: 0;
+  @include govuk-media-query($until: 500px) {
+    div:nth-child(1),
+    div:nth-child(2) {
+      width: 100%;
+      padding-right: govuk-spacing(3);
+    }
+  }
+
+  @include govuk-media-query($from: 501px) {
+    width: 65%;
+    padding-right: govuk-spacing(3);
+  }
+
+  @include govuk-media-query($from: 501px, $until: desktop) {
+    display: flex;
+    justify-content: space-between;
+
+    div:nth-child(1) {
+      width: 60%;
+      padding-right: govuk-spacing(3);
+      margin-bottom: 0;
+    }
+    
+    div:nth-child(2) {
+      width: 40%;
+    }
+  }
+  
+  @include govuk-media-query($from: $govuk-page-width) {
+    display: flex;
+    justify-content: space-between;
+
+    div:nth-child(1) {
+      width: 60%;
+      padding-right: govuk-spacing(3);
+      margin-bottom: 0;
+    }
+    
+    div:nth-child(2) {
+      width: 40%;
+    }
   }
 }
 
-.application-record-card__secondary {
-  @include govuk-media-query($from: tablet) {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+// Updated at column
+.application-record-card_col:nth-last-child(1) {
+  margin-top: govuk-spacing(2);
+  
+  @include govuk-media-query($from: 401px) {
     width: 40%;
+    margin-top: 0;
     text-align: right;
   }
-}
-
-.application-record-card__status {
-  margin-bottom: govuk-spacing(2);
-  margin-top: govuk-spacing(3);
-  @include govuk-media-query($from: tablet) {
-    margin-top: 0;
-    margin-bottom: 0;
+  
+  @include govuk-media-query($from: 501px) {
+    width: 35%;
   }
 }
 
-.application-record-card__subject,
-.application-record-card__route {
-  @include govuk-font(16);
-  @include govuk-responsive-margin(0, "bottom");
+.application-record-card__trainee-name {
+  hyphens: auto;
+}
+
+.application-record-card__provider {
+  overflow-wrap: break-word;
 }
 
 .application-record-card__submitted {
-  overflow-wrap: break-word;
-
-  span {
-    @include govuk-media-query($from: $mobile-small-end) {
+  @include govuk-media-query($from: 401px) {
+    span {
       display: block;
     }
   }
 }
 
-.application-record-card__trainee-name {
-  margin-bottom: govuk-spacing(1);
-}
-
 .application-record-card__id {
   overflow-wrap: break-word;
-  margin-top: 0;
 }

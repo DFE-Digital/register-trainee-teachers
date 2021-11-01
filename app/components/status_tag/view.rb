@@ -6,6 +6,13 @@ class StatusTag::View < GovukComponent::Base
     @trainee = trainee
   end
 
+  def tags
+    [
+      record_progress_tag,
+      record_state_tag,
+    ].compact
+  end
+
   def status
     {
       submitted_for_trn: "pending trn",
@@ -32,5 +39,15 @@ private
 
   def default_classes
     %w[trainee-status]
+  end
+
+  def record_progress_tag
+    return if @trainee.submission_ready?
+
+    { status: "incomplete", status_colour: "grey", classes: classes.concat(%w[govuk-tag--white]) }
+  end
+
+  def record_state_tag
+    { status: status, status_colour: status_colour, classes: classes }
   end
 end
