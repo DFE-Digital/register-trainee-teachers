@@ -45,7 +45,7 @@ module ApplicationRecordCard
     def trainee_id
       return if record.trainee_id.blank?
 
-      tag.p("Trainee ID: #{record.trainee_id}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__id govuk-!-margin-bottom-0")
+      tag.p("Trainee ID: #{record.trainee_id}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__id govuk-!-margin-top-0 govuk-!-margin-bottom-1")
     end
 
     def trn
