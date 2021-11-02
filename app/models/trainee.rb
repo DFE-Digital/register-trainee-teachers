@@ -209,7 +209,7 @@ class Trainee < ApplicationRecord
 
     # Skip deferred and withdrawn to avoid state change
     # but to still register trn
-    receive_trn! unless deferred? || withdrawn?
+    receive_trn! unless deferred? || withdrawn? || trn_received?
     # A deferred trainee will probably already have a trn - don't overwrite that!
     update!(trn: new_trn) unless trn
   end
