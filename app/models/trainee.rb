@@ -118,7 +118,7 @@ class Trainee < ApplicationRecord
     end
 
     event :receive_trn do
-      transition %i[submitted_for_trn deferred] => :trn_received
+      transition %i[submitted_for_trn deferred trn_received] => :trn_received
     end
 
     event :recommend_for_award do
@@ -209,7 +209,7 @@ class Trainee < ApplicationRecord
 
     # Skip deferred and withdrawn to avoid state change
     # but to still register trn
-    receive_trn! unless deferred? || withdrawn? || trn_received?
+    receive_trn! unless deferred? || withdrawn?
     # A deferred trainee will probably already have a trn - don't overwrite that!
     update!(trn: new_trn) unless trn
   end

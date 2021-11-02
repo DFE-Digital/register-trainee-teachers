@@ -142,7 +142,7 @@ describe "Trainee state transitions" do
       end
     end
 
-    (Trainee.states.keys - %w[submitted_for_trn deferred]).each do |state|
+    (Trainee.states.keys - %w[submitted_for_trn deferred trn_received]).each do |state|
       context "with a :#{state} trainee" do
         let(:trainee) { create(:trainee, state) }
 
