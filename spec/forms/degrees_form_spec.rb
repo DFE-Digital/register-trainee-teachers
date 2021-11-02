@@ -106,8 +106,8 @@ describe DegreesForm, type: :model do
   end
 
   describe "#degrees" do
-    let(:degree1) { build(:degree, :uk_degree_with_details, trainee: trainee) }
-    let(:degree2) { build(:degree, :non_uk_degree_with_details, trainee: trainee) }
+    let(:degree1) { build(:degree, :uk_degree_with_details, trainee: trainee, graduation_year: 2020) }
+    let(:degree2) { build(:degree, :non_uk_degree_with_details, trainee: trainee, graduation_year: 2021) }
 
     before do
       allow(form_store).to receive(:get).and_return({
