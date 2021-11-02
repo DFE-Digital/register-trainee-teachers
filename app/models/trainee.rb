@@ -198,7 +198,7 @@ class Trainee < ApplicationRecord
 
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
-  before_save :set_submission_ready, if: :changed?
+  before_save :set_submission_ready, if: :completion_trackable?
 
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
@@ -316,6 +316,10 @@ class Trainee < ApplicationRecord
     ((course_end_date - course_start_date) / 365).ceil
   end
 
+  def awaiting_action?
+    !%w[recommended_for_award withdrawn awarded].include?(state)
+  end
+
 private
 
   def value_digest
@@ -340,6 +344,10 @@ private
 
   def clear_lead_school_id
     self.lead_school_id = nil
+  end
+
+  def completion_trackable?
+    changed? && awaiting_action?
   end
 
   def set_submission_ready

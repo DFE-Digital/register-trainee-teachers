@@ -193,22 +193,36 @@ describe Trainee do
 
   context "callbacks" do
     describe "submission_ready" do
-      subject { create(:trainee, :completed) }
+      context "when complection is trackable" do
+        subject { create(:trainee, :completed, :draft) }
 
-      context "when trainee has not changed" do
-        it "does not toggle the submission_ready field" do
-          expect { subject.save }.not_to change { subject.submission_ready }
+        context "when trainee has not changed" do
+          it "does not toggle the submission_ready field" do
+            expect { subject.save }.not_to change { subject.submission_ready }
+          end
+        end
+
+        context "when trainee has changed with invalid information" do
+          before do
+            subject.first_names = nil
+          end
+
+          it "toggles the submission_ready field" do
+            expect { subject.save }.to change { subject.submission_ready }
+            expect(subject).not_to(be_submission_ready)
+          end
         end
       end
 
-      context "when trainee has changed with invalid information" do
+      context "when completion is not trackable" do
+        subject { create(:trainee, :completed, :recommended_for_award) }
+
         before do
           subject.first_names = nil
         end
 
-        it "toggles the submission_ready field" do
-          expect { subject.save }.to change { subject.submission_ready }
-          expect(subject).not_to(be_submission_ready)
+        it "does not toggle the submission_ready field" do
+          expect { subject.save }.not_to change { subject.submission_ready }
         end
       end
     end

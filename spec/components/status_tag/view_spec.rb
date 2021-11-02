@@ -8,7 +8,7 @@ RSpec.describe StatusTag::View do
   end
 
   context "with a trainee recommended for EYTS" do
-    let(:trainee) { create(:trainee, :early_years_undergrad, :recommended_for_award) }
+    let(:trainee) { build(:trainee, :early_years_undergrad, :recommended_for_award) }
 
     it "renders the correct status" do
       expect(rendered_component).to have_text("EYTS recommended")
@@ -16,7 +16,7 @@ RSpec.describe StatusTag::View do
   end
 
   context "with a trainee awarded EYTS" do
-    let(:trainee) { create(:trainee, :early_years_undergrad, :awarded) }
+    let(:trainee) { build(:trainee, :early_years_undergrad, :awarded) }
 
     it "renders the correct status" do
       expect(rendered_component).to have_text("EYTS awarded")
@@ -24,7 +24,7 @@ RSpec.describe StatusTag::View do
   end
 
   context "with a trainee recommended for QTS" do
-    let(:trainee) { create(:trainee, :recommended_for_award) }
+    let(:trainee) { build(:trainee, :recommended_for_award) }
 
     it "renders the correct status" do
       expect(rendered_component).to have_text("QTS recommended")
@@ -32,7 +32,7 @@ RSpec.describe StatusTag::View do
   end
 
   context "with a trainee awarded QTS" do
-    let(:trainee) { create(:trainee, :awarded) }
+    let(:trainee) { build(:trainee, :awarded) }
 
     it "renders the correct status" do
       expect(rendered_component).to have_text("QTS awarded")
@@ -40,7 +40,7 @@ RSpec.describe StatusTag::View do
   end
 
   context "with a trainee that's not submission ready" do
-    let(:trainee) { create(:trainee, :not_submission_ready) }
+    let(:trainee) { build(:trainee, :trn_received, :not_submission_ready) }
 
     it "renders the correct status" do
       expect(rendered_component).to have_text("incomplete")
