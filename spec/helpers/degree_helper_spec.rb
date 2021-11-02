@@ -26,7 +26,7 @@ describe DegreesHelper do
           {
             "data-append" => "<strong>(#{degree_abbreviation})</strong>",
             "data-boost" => 1.5,
-            "data-synonyms" => [degree_synonym, degree_abbreviation],
+            "data-synonyms" => "#{degree_synonym}|#{degree_abbreviation}",
           },
         ],
       ])
@@ -46,7 +46,7 @@ describe DegreesHelper do
     it "iterates over array and prints out correct institutions options" do
       expect(institutions_options).to match([
         [nil, nil, nil],
-        [institution, institution, { "data-synonyms" => [synonym] }],
+        [institution, institution, { "data-synonyms" => synonym }],
       ])
     end
   end
@@ -64,7 +64,7 @@ describe DegreesHelper do
     it "iterates over array and prints out correct subjects values" do
       expect(subjects_options).to match([
         [nil, nil, nil],
-        [degree_subject, degree_subject, { "data-synonyms" => [synonym] }],
+        [degree_subject, degree_subject, { "data-synonyms" => synonym }],
       ])
     end
   end
