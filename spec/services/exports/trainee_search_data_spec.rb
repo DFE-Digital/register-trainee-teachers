@@ -178,5 +178,37 @@ module Exports
         expect(subject.send(:funding_method, trainee)).to eq("not funded")
       end
     end
+
+    describe "#course_summary" do
+      it "returns blank" do
+        trainee = Trainee.new(study_mode: "full_time")
+        course = Course.new(summary: nil)
+        expect(subject.send(:course_summary, trainee, course)).to be_nil
+
+        trainee = Trainee.new(study_mode: nil)
+        course = Course.new(summary: "PGCE full time")
+        expect(subject.send(:course_summary, trainee, course)).to be_nil
+      end
+
+      it "returns full time" do
+        trainee = Trainee.new(study_mode: "full_time")
+        course = Course.new(summary: "PGCE full time")
+        expect(subject.send(:course_summary, trainee, course)).to eq("PGCE full time")
+
+        trainee = Trainee.new(study_mode: "full_time")
+        course = Course.new(summary: "PGCE part time")
+        expect(subject.send(:course_summary, trainee, course)).to eq("PGCE full time")
+      end
+
+      it "returns part time" do
+        trainee = Trainee.new(study_mode: "part_time")
+        course = Course.new(summary: "PGCE with QTS part time")
+        expect(subject.send(:course_summary, trainee, course)).to eq("PGCE with QTS part time")
+
+        trainee = Trainee.new(study_mode: "part_time")
+        course = Course.new(summary: "PGCE with QTS full time")
+        expect(subject.send(:course_summary, trainee, course)).to eq("PGCE with QTS part time")
+      end
+    end
   end
 end
