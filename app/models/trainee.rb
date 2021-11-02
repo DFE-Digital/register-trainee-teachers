@@ -118,7 +118,7 @@ class Trainee < ApplicationRecord
     end
 
     event :receive_trn do
-      transition %i[submitted_for_trn deferred] => :trn_received
+      transition %i[submitted_for_trn deferred trn_received] => :trn_received
     end
 
     event :recommend_for_award do
