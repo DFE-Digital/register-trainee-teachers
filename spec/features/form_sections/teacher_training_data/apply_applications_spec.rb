@@ -60,8 +60,17 @@ feature "apply registrations", type: :feature do
 
 private
 
+  def training_route
+    # NOTE: `pg_teaching_apprenticeship` has a different journey covered by it's own spec
+
+    (TRAINING_ROUTES_FOR_COURSE.keys - [TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship]]).sample
+  end
+
   def and_a_trainee_exists_created_from_apply
-    given_a_trainee_exists(:with_apply_application, :with_related_courses, courses_count: 1, subject_names: subjects)
+    given_a_trainee_exists(
+      :with_apply_application, :with_related_courses, courses_count: 1, subject_names: subjects, training_route: training_route
+    )
+
     Course.first.tap do |course|
       trainee.update(course_uuid: course.uuid)
     end
