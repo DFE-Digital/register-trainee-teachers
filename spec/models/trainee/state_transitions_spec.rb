@@ -83,6 +83,33 @@ describe "Trainee state transitions" do
       end
     end
 
+    context "with a :trn_received trainee" do
+      context "with an existing trn" do
+        let(:trainee) { create(:trainee, :trn_received, trn: old_trn) }
+
+        it "updates the trn" do
+          trainee.trn_received!
+          expect(trainee.trn).to eq(old_trn)
+        end
+      end
+
+      context "without an existing trn" do
+        let(:trainee) { create(:trainee, :trn_received, trn: nil) }
+
+        it "raises an error if no trn is provided" do
+          expect {
+            trainee.trn_received!
+          }.to raise_error(StateTransitionError)
+        end
+
+        it "updates the trn but not the trainee state" do
+          trainee.trn_received!(new_trn)
+          expect(trainee.state).to eq("trn_received")
+          expect(trainee.trn).to eq(new_trn)
+        end
+      end
+    end
+
     context "with a :deferred trainee with an existing trn" do
       let(:trainee) { create(:trainee, :deferred, trn: old_trn) }
 
