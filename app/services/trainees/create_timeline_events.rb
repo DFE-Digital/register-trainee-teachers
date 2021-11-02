@@ -107,7 +107,7 @@ module Trainees
     end
 
     def items
-      if action == STATE_CHANGE && state_change_action == "withdrawn"
+      if action == STATE_CHANGE && state_change_action == "withdrawn" && auditable.withdraw_date
         [
           ["#{I18n.t('components.timeline.withdrawal_date')}:", auditable.withdraw_date.strftime("%e %B %Y").to_s],
           ["#{I18n.t('components.timeline.withdrawal_reason')}:", (auditable.additional_withdraw_reason&.upcase_first || auditable.withdraw_reason&.humanize).to_s],
