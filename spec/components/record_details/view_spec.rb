@@ -8,10 +8,31 @@ module RecordDetails
 
     let(:state) { :trn_received }
     let(:training_route) { TRAINING_ROUTE_ENUMS[:assessment_only] }
-    let(:trainee) { create(:trainee, state, training_route, trn: Faker::Number.number(digits: 10)) }
+    let(:provider) { create(:provider) }
+    let(:trainee) { create(:trainee, state, training_route, trn: Faker::Number.number(digits: 10), provider: provider) }
     let(:trainee_status) { "trainee-status" }
     let(:trainee_progress) { "trainee-progress" }
     let(:timeline_event) { double(date: Time.zone.today) }
+
+    context "when system admin is true" do
+      before do
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, system_admin: true))
+      end
+
+      it "renders the provider name and code" do
+        expect(rendered_component).to have_text(provider.name_and_code)
+      end
+    end
+
+    context "when system admin is false" do
+      before do
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, system_admin: false))
+      end
+
+      it "renders the provider name and code" do
+        expect(rendered_component).not_to have_text(provider.name_and_code)
+      end
+    end
 
     context "when any data has not been provided" do
       before do

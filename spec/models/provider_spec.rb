@@ -54,4 +54,12 @@ describe Provider do
       it { is_expected.to be_falsey }
     end
   end
+
+  describe "#name_and_code" do
+    subject { create(:provider, code: "B1T", name: "DfE University").name_and_code }
+
+    it "returns name and code" do
+      expect(subject).to eq("DfE University (B1T)")
+    end
+  end
 end
