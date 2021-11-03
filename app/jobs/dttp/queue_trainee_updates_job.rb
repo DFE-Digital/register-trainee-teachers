@@ -4,12 +4,9 @@ module Dttp
   class QueueTraineeUpdatesJob < ApplicationJob
     queue_as :dttp
 
-    INVALID_STATES = %w[
-      draft
-      recommended_for_award
-      withdrawn
-      deferred
-      awarded
+    VALID_STATES = %w[
+      submitted_for_trn
+      trn_received
     ].freeze
 
     def perform
@@ -27,7 +24,7 @@ module Dttp
   private
 
     def fetch_trainees
-      Trainee.where.not(state: INVALID_STATES, submission_ready: false)
+      Trainee.where(state: VALID_STATES, submission_ready: true)
     end
 
     def trainee_already_synced?(trainee)
