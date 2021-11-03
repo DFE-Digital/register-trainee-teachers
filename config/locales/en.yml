@@ -745,7 +745,8 @@ en:
   route_indicator:
     view:
       display_text: "Trainee on the %{training_route_link} route."
-      apply_display_text: "All conditions met and trainee recruited to %{course_with_code}, %{training_route}."
+      apply_display_text_with_course: "All conditions met and trainee recruited to %{course_with_code}, on the %{training_route} route."
+      apply_display_text_without_course: "All conditions met and trainee on the %{training_route} route."
   error_summary:
     view:
       heading: There is a problem
@@ -794,7 +795,7 @@ en:
       edit:
         heading: What course are they doing?
         course_not_listed: Another course not listed
-        enter_course_details: Enter course details
+        enter_course_details: Enter course details manually
         summary_with_route: &summary_with_route "%{summary}, %{route}"
     language_specialisms:
       edit:
