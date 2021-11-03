@@ -8,11 +8,12 @@ module ApplicationRecordCard
 
     with_collection_parameter :record
 
-    attr_reader :record, :heading_level
+    attr_reader :record, :heading_level, :system_admin
 
-    def initialize(heading_level = 3, record:)
+    def initialize(heading_level = 3, record:, system_admin:)
       @record = record
       @heading_level = heading_level
+      @system_admin = system_admin
     end
 
     def trainee_name
@@ -46,6 +47,12 @@ module ApplicationRecordCard
       return if record.trainee_id.blank?
 
       tag.p("Trainee ID: #{record.trainee_id}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__id govuk-!-margin-top-0 govuk-!-margin-bottom-1")
+    end
+
+    def provider_name
+      return unless system_admin
+
+      tag.p("Provider: #{record.provider.name}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-top-0 govuk-!-margin-bottom-1")
     end
 
     def trn

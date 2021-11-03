@@ -6,7 +6,7 @@
           <h2 class="govuk-heading-m">Draft trainees</h2>
         </div>
       </div>
-      <%= render ApplicationRecordCard::View.with_collection(draft_trainees) %>
+      <%= render ApplicationRecordCard::View.with_collection(draft_trainees, system_admin: @current_user.system_admin?) %>
     </div>
   <% end %>
 
@@ -17,7 +17,7 @@
           <h2 class="govuk-heading-m">Registered trainees</h2>
         </div>
       </div>
-      <%= render ApplicationRecordCard::View.with_collection(completed_trainees) %>
+      <%= render ApplicationRecordCard::View.with_collection(completed_trainees, system_admin: @current_user.system_admin?) %>
     </div>
   <% end %>
 
