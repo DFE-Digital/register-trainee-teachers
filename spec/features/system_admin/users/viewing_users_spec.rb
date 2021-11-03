@@ -16,17 +16,22 @@ feature "View users" do
 
     scenario "I can view the users" do
       then_i_see_the_registered_users
-      and_i_see_the_unregistered_users
+    end
+
+    scenario "I can view the DTTP users" do
+      and_i_click_on_dttp_users_tab
+      then_i_see_the_unregistered_users
     end
 
     scenario "I can register a dttp user to the provider" do
+      and_i_click_on_dttp_users_tab
       when_i_register_the_dttp_user
       then_the_dttp_user_is_registered
     end
   end
 
   def when_i_visit_the_provider_index_page
-    provider_index_page.load
+    providers_index_page.load
   end
 
   def and_there_is_a_dttp_user
@@ -34,7 +39,7 @@ feature "View users" do
   end
 
   def and_i_click_on_a_provider
-    provider_index_page.provider_card.name.click
+    providers_index_page.provider_card.name.click
   end
 
   def then_i_am_taken_to_the_provider_show_page
@@ -45,24 +50,19 @@ feature "View users" do
     expect(provider_show_page.registered_users.size).to eq(1)
   end
 
-  def and_i_see_the_unregistered_users
-    expect(provider_show_page.unregistered_users.size).to eq(1)
+  def then_i_see_the_unregistered_users
+    expect(provider_dttp_users_index_page.unregistered_users.size).to eq(1)
   end
 
   def when_i_register_the_dttp_user
     provider_show_page.register_user.click
   end
 
+  def and_i_click_on_dttp_users_tab
+    provider_dttp_users_index_page.dttp_users_tab.click
+  end
+
   def then_the_dttp_user_is_registered
-    expect(provider_show_page.registered_users.size).to eq(2)
-    expect(provider_show_page).not_to have_unregistered_user_data
-  end
-
-  def provider_show_page
-    @provider_show_page ||= PageObjects::Providers::Show.new
-  end
-
-  def provider_index_page
-    @provider_index_page ||= PageObjects::Providers::Index.new
+    expect(provider_dttp_users_index_page).not_to have_unregistered_user_data
   end
 end

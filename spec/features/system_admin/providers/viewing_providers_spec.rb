@@ -18,14 +18,14 @@ feature "View providers" do
   end
 
   def when_i_visit_the_provider_index_page
-    provider_index_page.load
+    providers_index_page.load
   end
 
   def then_i_see_the_provider
-    expect(provider_index_page).to have_provider_card
+    expect(providers_index_page).to have_provider_card
   end
 
   def when_i_click_on_provider_name
-    provider_index_page.provider_card.name.click
+    providers_index_page.provider_card.name.click
   end
 end

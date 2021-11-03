@@ -31,11 +31,11 @@ feature "List providers" do
   end
 
   def when_i_visit_the_dttp_provider_index_page
-    dttp_provider_index_page.load
+    dttp_providers_index_page.load
   end
 
   def then_i_see_the_dttp_provider
-    expect(dttp_provider_index_page).to have_text("Test 1")
+    expect(dttp_providers_index_page).to have_text("Test 1")
   end
 
   def and_i_click_on_create_provider_button

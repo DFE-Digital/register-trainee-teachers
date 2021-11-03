@@ -28,11 +28,11 @@ feature "Creating a new provider" do
 private
 
   def when_i_visit_the_provider_index_page
-    provider_index_page.load
+    providers_index_page.load
   end
 
   def and_i_click_on_add_provider_button
-    provider_index_page.add_provider_link.click
+    providers_index_page.add_provider_link.click
   end
 
   def and_i_fill_in_name
@@ -52,7 +52,7 @@ private
   end
 
   def then_i_should_see_the_provider_index_page
-    expect(provider_index_page).to be_displayed
+    expect(providers_index_page).to be_displayed
   end
 
   def then_i_see_error_messages

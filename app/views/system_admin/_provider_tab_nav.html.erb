@@ -1,0 +1,4 @@
+<%= render TabNavigation::View.new(items: [
+  { name: "Users", url: provider_path(@provider) },
+  { name: "Dttp users", url: provider_dttp_users_path(@provider) },
+]) %>

@@ -70,16 +70,24 @@ module Features
       @new_provider_page ||= PageObjects::Providers::New.new
     end
 
-    def provider_index_page
+    def providers_index_page
       @provider_index_page ||= PageObjects::Providers::Index.new
+    end
+
+    def dttp_providers_index_page
+      @provider_index_page ||= PageObjects::DttpProviders::Index.new
+    end
+
+    def new_user_page
+      @new_user_page ||= PageObjects::Users::New.new
     end
 
     def provider_show_page
       @provider_show_page ||= PageObjects::Providers::Show.new
     end
 
-    def dttp_provider_index_page
-      @provider_index_page ||= PageObjects::DttpProviders::Index.new
+    def provider_dttp_users_index_page
+      @provider_dttp_users_index_page ||= PageObjects::Provider::DttpUsers::Index.new
     end
 
     def validation_errors_index_page

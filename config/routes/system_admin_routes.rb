@@ -13,8 +13,9 @@ module SystemAdminRoutes
         mount Sidekiq::Web, at: "/sidekiq", constraints: SystemAdminConstraint.new
         get "/sidekiq", to: redirect("/sign-in"), status: 302
 
-        resources :providers, only: %i[index new create show edit update], shallow: true do
-          resources :users, only: %i[new create edit update]
+        resources :providers, except: %i[destroy], shallow: true do
+          resources :users, except: %i[destroy]
+          resources :dttp_users, only: %i[index], path: "/dttp-users"
 
           scope module: :imports do
             post "/users/import", to: "users#create", as: :import_user
