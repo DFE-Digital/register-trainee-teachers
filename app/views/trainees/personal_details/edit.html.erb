@@ -9,6 +9,7 @@
     <%= register_form_with(model: @personal_detail_form, url: trainee_personal_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l">Trainee personal details</h1>
 
       <%= f.govuk_text_field :first_names,

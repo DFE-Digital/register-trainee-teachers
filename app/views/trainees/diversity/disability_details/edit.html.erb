@@ -14,6 +14,7 @@
                            method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_check_boxes_fieldset :disability_ids,
           legend: { text: t("components.page_titles.trainees.diversity.disabilities.edit"), tag: "h1", size: "l" },
           hint: { text: "Select all that apply" },

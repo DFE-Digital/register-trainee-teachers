@@ -8,10 +8,12 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @study_mode_form, url: trainee_course_details_study_mode_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
-        <%= f.govuk_radio_buttons_fieldset(:study_mode, legend: { text: t("components.page_titles.trainees.study_mode.edit"), size: "l", tag: "h1" }) do %>
+      <%= render TraineeName::View.new(@trainee) %>
+
+      <%= f.govuk_radio_buttons_fieldset(:study_mode, legend: { text: t("components.page_titles.trainees.study_mode.edit"), size: "l", tag: "h1" }) do %>
         <%= f.govuk_radio_button :study_mode, COURSE_STUDY_MODES[:full_time], checked: (f.object.study_mode == COURSE_STUDY_MODES[:full_time]), label: { text: t("components.course_detail.study_mode_values.full_time") }, link_errors: true %>
         <%= f.govuk_radio_button :study_mode, COURSE_STUDY_MODES[:part_time], checked: (f.object.study_mode == COURSE_STUDY_MODES[:part_time]), label: { text: t("components.course_detail.study_mode_values.part_time") } %>
-    <% end %>
+      <% end %>
 
       <%= f.govuk_submit %>
     <% end %>

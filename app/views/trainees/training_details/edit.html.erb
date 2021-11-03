@@ -9,6 +9,7 @@
     <%= register_form_with(model: @training_details_form, url: trainee_training_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l"><%= t("views.forms.training_details.title") %></h1>
 
       <% if @training_details_form.course_start_date %>

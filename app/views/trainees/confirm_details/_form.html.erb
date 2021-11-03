@@ -1,11 +1,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
+    <%= render TraineeName::View.new(trainee) %>
     <h1 class="govuk-heading-l"><%= heading %></h1>
 
     <%= render(component) %>
 
     <%= register_form_with(model: confirm_detail_form, url: resource_confirm_update_path, method: :put, local: true) do |f| %>
-      <% if @trainee.draft? %>
+      <% if trainee.draft? %>
         <%= f.govuk_check_boxes_fieldset :mark_as_completed, multiple: false, legend: nil do %>
           <%= f.govuk_check_box :mark_as_completed, 1, 0, multiple: false, link_errors: true, label: { text: checkbox_text(trainee_section_key, trainee) } %>
         <% end %>

@@ -11,6 +11,7 @@
                            method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+        <%= render TraineeName::View.new(@trainee) %>
         <%= f.govuk_collection_radio_buttons(
           :diversity_disclosure,
           Diversities::DIVERSITY_DISCLOSURE_ENUMS.values,

@@ -17,6 +17,7 @@
                            url: trainee_diversity_ethnic_background_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+        <%= render TraineeName::View.new(@trainee) %>
         <%= f.govuk_radio_buttons_fieldset(
           :ethnic_background,
           legend: {

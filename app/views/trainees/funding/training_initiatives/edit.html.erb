@@ -10,6 +10,7 @@
     <%= register_form_with(model: @training_initiatives_form, url: trainee_funding_training_initiative_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.training_initiatives.edit") %><h1>
       <p class="govuk-body"><%= t("views.forms.funding.training_initiatives.description_html") %></p>
 

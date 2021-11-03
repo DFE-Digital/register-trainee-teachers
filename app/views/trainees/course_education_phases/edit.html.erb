@@ -11,6 +11,7 @@
                            method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_collection_radio_buttons(:course_education_phase, COURSE_EDUCATION_PHASE_ENUMS.values,
         ->(value) { value },
         ->(label) { I18n.t("views.forms.course_education_phase.label_names.#{label}") },

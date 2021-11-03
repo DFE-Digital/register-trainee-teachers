@@ -7,6 +7,7 @@
     <%= render ReviewSummary::View.new(form: @degree_form, invalid_data_view: ApplyInvalidDataView.new(@trainee.apply_application, degree: @degree_form.degree, on_form_page: true)) %>
   <% end %>
 
+  <%= render TraineeName::View.new(@trainee) %>
   <h1 class="govuk-heading-l">Non-UK degree details</h1>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
