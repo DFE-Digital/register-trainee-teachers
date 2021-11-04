@@ -71,6 +71,8 @@ en:
       start_date: &commencement_date Trainee’s start date
       region: *region
   components:
+    admin_feature:
+      title: Admin feature
     heading:
       apply_draft:
         registration_data_from_apply: Registration data from Apply
@@ -328,14 +330,15 @@ en:
         search_hint: Search for a school by it’s unique reference number (URN), name or postcode
         search_button: Search again
     filter:
-      title: Filters
-      selected_title: Selected filters
       level: Education phase
-      training_route: Training route
+      provider: Provider
       record_source: Record source
+      selected_title: Selected filters
       state: Status
       subject: Subject
       text_search: Text search
+      title: Filters
+      training_route: Training route
     timeline:
       withdrawal_date: Date of withdrawal
       withdrawal_reason: Reason for withdrawal
@@ -501,6 +504,7 @@ en:
         export: Export these records
         filters:
           level: Education phase
+          provider: Provider
           search: Search for a trainee
           status: Status
           subject: Subject
