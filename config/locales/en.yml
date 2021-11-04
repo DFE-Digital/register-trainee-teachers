@@ -327,6 +327,7 @@ en:
       users:
         new: Add a user
         edit: Edit user
+        delete: Remove a user
       validation_errors:
         page_title: Validation errors
       search_schools:

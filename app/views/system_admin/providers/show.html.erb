@@ -22,7 +22,7 @@
 
 <% if @users_view.registered.any? %>
   <div class="govuk-!-margin-bottom-8 registered-users">
-    <%= render UserCard::View.with_collection(@users_view.registered, show_register_button: false) %>
+    <%= render UserCard::View.with_collection(@users_view.registered, provider: @provider, show_register_button: false) %>
   </div>
 <% else %>
   <p class="govuk-body">There are no users yet.</p>
