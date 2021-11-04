@@ -12,6 +12,7 @@ FactoryBot.define do
     provider
 
     trait :system_admin do
+      provider { nil }
       system_admin { true }
     end
   end
