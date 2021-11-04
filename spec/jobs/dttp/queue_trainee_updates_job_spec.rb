@@ -26,14 +26,15 @@ module Dttp
     end
 
     context "with invalid trainees" do
-      let(:trainees) do
-        QueueTraineeUpdatesJob::INVALID_STATES.each do |state|
+      before do
+        create(:trainee, :draft)
+        create(:trainee, :recommended_for_award)
+        create(:trainee, :withdrawn)
+        create(:trainee, :deferred)
+        create(:trainee, :awarded)
+        described_class::VALID_STATES.each do |state|
           create(:trainee, state.to_sym).update_columns(submission_ready: false)
         end
-      end
-
-      before do
-        trainees
       end
 
       it "does not enqueue the UpdateTraineeJob" do
