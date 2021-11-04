@@ -8,6 +8,8 @@ module PageObjects
       element :add_a_user, "a", text: "Add a user"
       element :edit_this_provider, "a", text: "Edit this provider"
 
+      element :delete_a_user, ".govuk-button--warning", match: :first
+
       element :register_user, "#register-dttp-user"
 
       element :registered_user_data, ".registered-users"
