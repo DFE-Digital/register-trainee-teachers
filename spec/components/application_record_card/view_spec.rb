@@ -22,7 +22,7 @@ module ApplicationRecordCard
       let(:system_admin) { true }
 
       it "renders provider name" do
-        expect(rendered_component).to have_selector(".application-record-card__provider_name", text: "Provider: #{provider.name}")
+        expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
       end
     end
 
@@ -132,7 +132,7 @@ module ApplicationRecordCard
         let(:system_admin) { true }
 
         it "renders provider name" do
-          expect(rendered_component).to have_selector(".application-record-card__provider_name", text: "Provider: #{provider.name}")
+          expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
         end
       end
 

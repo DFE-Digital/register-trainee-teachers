@@ -8,6 +8,10 @@ module ApplicationRecordCard
         render(ApplicationRecordCard::View.new(record: mock_trainee, system_admin: system_admin))
       end
 
+      define_method "single_card_with_trn_and_trainee_id#{suffice}" do
+        render(ApplicationRecordCard::View.new(record: mock_trainee_with_trn_and_trainee_id, system_admin: system_admin))
+      end
+
       define_method "multiple_cards#{suffice}" do
         render(ApplicationRecordCard::View.with_collection(mock_multiple_trainees, system_admin: system_admin))
       end
@@ -36,6 +40,20 @@ module ApplicationRecordCard
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
         course_subject_one: "Primary",
         provider: mock_provider,
+      )
+    end
+
+    def mock_trainee_with_trn_and_trainee_id
+      Trainee.new(
+        id: 1,
+        created_at: Time.zone.now,
+        first_names: "Tom",
+        last_name: "Jones",
+        training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+        course_subject_one: "Primary",
+        provider: mock_provider,
+        trn: 1234567,
+        trainee_id: "xxxx - yy/zz",
       )
     end
 

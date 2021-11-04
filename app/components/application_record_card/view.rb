@@ -52,7 +52,7 @@ module ApplicationRecordCard
     def provider_name
       return unless system_admin
 
-      tag.p("Provider: #{record.provider.name}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-top-0 govuk-!-margin-bottom-1")
+      tag.p(record.provider.name.to_s, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-bottom-0 govuk-!-margin-top-2")
     end
 
     def trn
