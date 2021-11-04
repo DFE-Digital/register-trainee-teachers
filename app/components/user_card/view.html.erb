@@ -19,6 +19,10 @@
   <div class="govuk-caption-m govuk-!-font-size-16">
     <%= govuk_link_to('Edit', edit_user_path(user)) %>
   </div>
+  
+  <div class="govuk-body">
+    <%= govuk_button_to("Delete user", delete_provider_user_path(provider, user), method: :get, class: "govuk-button--warning") %>
+  </div>
 
   <% if show_register_button %>
     <%= govuk_button_to(

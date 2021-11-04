@@ -4,10 +4,11 @@ module UserCard
   class View < GovukComponent::Base
     with_collection_parameter :user
 
-    attr_reader :user
+    attr_reader :user, :provider
 
-    def initialize(user:, show_register_button: false, registration_form_path: nil)
+    def initialize(user:, provider:, show_register_button: false, registration_form_path: nil)
       @user = user
+      @provider = provider
       @show_register_button = show_register_button
       @registration_form_path = registration_form_path
     end
