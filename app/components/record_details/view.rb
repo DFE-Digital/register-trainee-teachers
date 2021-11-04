@@ -15,6 +15,7 @@ module RecordDetails
 
     def record_detail_rows
       [
+        provider_row,
         trainee_id_row,
         region,
         trn_row,
@@ -27,6 +28,13 @@ module RecordDetails
     end
 
   private
+
+    def provider_row
+      return unless system_admin
+
+      { field_label: t(".provider"),
+        field_value: trainee.provider.name_and_code }
+    end
 
     def trainee_id_row
       mappable_field(trainee.trainee_id.presence, t(".trainee_id"), edit_trainee_trainee_id_path(trainee))

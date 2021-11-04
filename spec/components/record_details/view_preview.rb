@@ -17,6 +17,10 @@ module RecordDetails
       render(View.new(trainee: trainee, last_updated_event: last_updated_event))
     end
 
+    def as_system_admin
+      render(View.new(trainee: mock_trainee(nil), last_updated_event: last_updated_event, system_admin: true))
+    end
+
     def with_no_trainee_id
       render(View.new(trainee: mock_trainee(nil), last_updated_event: last_updated_event))
     end
@@ -62,7 +66,12 @@ module RecordDetails
         withdraw_date: state == :withdrawn ? Time.zone.today : nil,
         recommended_for_award_at: state == :recommended_for_award ? Time.zone.now : nil,
         awarded_at: state == :awarded ? Time.zone.now : nil,
+        provider: mock_provider,
       )
+    end
+
+    def mock_provider
+      Provider.new(code: "B1T", name: "DfE University")
     end
 
     def last_updated_event

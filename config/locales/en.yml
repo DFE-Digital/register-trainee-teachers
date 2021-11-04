@@ -51,6 +51,7 @@ en:
       employing_school: &employing_school Employing school
   record_details:
     view:
+      provider: Accrediting provider
       trainee_id: Trainee ID
       region: &region Region
       submitted_for_trn: Submitted for TRN

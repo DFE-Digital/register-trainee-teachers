@@ -6,11 +6,24 @@ module ApplicationRecordCard
   describe View do
     let(:provider) { create(:provider, :with_courses) }
     let(:course) { provider.courses.first }
-    let(:trainee) { Trainee.new(created_at: Time.zone.now, course_uuid: course.uuid) }
+    let(:trainee) { Trainee.new(created_at: Time.zone.now, course_uuid: course.uuid, provider: provider) }
+    let(:system_admin) { false }
 
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
-      render_inline(described_class.new(record: trainee))
+      render_inline(described_class.new(record: trainee, system_admin: system_admin))
+    end
+
+    it "does not render provider name" do
+      expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
+    end
+
+    context "when system admin is true" do
+      let(:system_admin) { true }
+
+      it "renders provider name" do
+        expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+      end
     end
 
     context "when the Trainee has no names" do
@@ -100,12 +113,27 @@ module ApplicationRecordCard
             trainee_id: "132456",
             created_at: Time.zone.now,
             trn: "789456",
+            provider: provider,
           )
         end
       end
 
+      let(:system_admin) { false }
+
       before do
-        render_inline(described_class.new(record: trainee))
+        render_inline(described_class.new(record: trainee, system_admin: system_admin))
+      end
+
+      it "does not render provider name" do
+        expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
+      end
+
+      context "when system admin is true" do
+        let(:system_admin) { true }
+
+        it "renders provider name" do
+          expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+        end
       end
 
       it "renders trainee ID" do
