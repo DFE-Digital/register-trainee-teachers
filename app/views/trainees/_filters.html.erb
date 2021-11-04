@@ -24,6 +24,28 @@
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        <%= t("views.trainees.index.filters.record_completion") %>
+      </legend>
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% [:complete, :incomplete].map do |completion_status| %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag "record_completion[]",
+                              completion_status,
+                              checked?(filters, :record_completion, completion_status.to_s),
+                              id: "record_completion-#{completion_status}",
+                              class: "govuk-checkboxes__input" %>
+            <%= label_tag "record_completion-#{completion_status}",
+                          label_for("record_completion", completion_status),
+                          class: "govuk-label govuk-checkboxes__label" %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
         <%= t("views.trainees.index.filters.level") %>
       </legend>
       <div class="govuk-checkboxes govuk-checkboxes--small">

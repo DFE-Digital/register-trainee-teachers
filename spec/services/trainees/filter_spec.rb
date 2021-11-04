@@ -92,6 +92,22 @@ module Trainees
       it { is_expected.to eq([named_trainee]) }
     end
 
+    context "with record_completion filter" do
+      let!(:non_draft_trainee) { create(:trainee, :submitted_for_trn) }
+
+      context "complete" do
+        let(:filters) { { record_completion: ["complete"] } }
+
+        it { is_expected.to match_array([non_draft_trainee]) }
+      end
+
+      context "incomplete" do
+        let(:filters) { { record_completion: ["incomplete"] } }
+
+        it { is_expected.to match_array([draft_trainee, apply_draft_trainee]) }
+      end
+    end
+
     context "with record_source filter set to apply" do
       let(:filters) { { record_source: %w[apply] } }
 

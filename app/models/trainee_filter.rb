@@ -31,6 +31,7 @@ private
       **text_search,
       **record_source,
       **provider,
+      **record_completions,
     ).with_indifferent_access
   end
 
@@ -100,5 +101,17 @@ private
 
   def provider_option
     @provider_option ||= Provider.find_by(id: params[:provider])
+  end
+
+  def record_completions
+    return {} unless record_completion_options.any?
+
+    { "record_completion" => record_completion_options }
+  end
+
+  def record_completion_options
+    %w[complete incomplete].each_with_object([]) do |option, arr|
+      arr << option if params[:record_completion]&.include?(option)
+    end
   end
 end

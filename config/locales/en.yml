@@ -341,6 +341,7 @@ en:
       text_search: Text search
       title: Filters
       training_route: Training route
+      record_completion: Record completion
     timeline:
       withdrawal_date: Date of withdrawal
       withdrawal_reason: Reason for withdrawal
@@ -505,6 +506,9 @@ en:
         no_records: Your trainee records will appear here. You do not have any records yet.
         export: Export these records
         filters:
+          record_completion: Record completion
+          incomplete: Incomplete
+          complete: Complete
           level: Education phase
           provider: Provider
           search: Search for a trainee
@@ -918,6 +922,9 @@ en:
           early_years: Early years
           primary: Primary
           secondary: Secondary
+        record_completions:
+          complete: Complete
+          incomplete: Incomplete
     errors:
       models:
         trainee:
