@@ -6,6 +6,7 @@ class Degree < ApplicationRecord
   INSTITUTIONS = Dttp::CodeSets::Institutions::MAPPING.keys
   SUBJECTS = Dttp::CodeSets::DegreeSubjects::MAPPING.keys
   DEGREE_TYPES = Dttp::CodeSets::DegreeTypes::MAPPING.keys
+  MAX_GRAD_YEARS = 60
 
   attr_writer :is_apply_import
 
@@ -28,7 +29,7 @@ class Degree < ApplicationRecord
 
   audited associated_with: :trainee
 
-  MAX_GRAD_YEARS = 60
+  default_scope { order(graduation_year: :asc) }
 
   def graduation_year_valid
     errors.add(:graduation_year, :future) if graduation_year > next_year

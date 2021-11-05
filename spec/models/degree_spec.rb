@@ -11,6 +11,10 @@ RSpec.describe Degree, type: :model do
     it { is_expected.to belong_to(:trainee) }
   end
 
+  describe "default scope" do
+    it { expect(Degree.all.to_sql).to eq(Degree.all.order(graduation_year: :asc).to_sql) }
+  end
+
   describe "validation" do
     context "when locale code is present" do
       it "expect it to be valid" do
