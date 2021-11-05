@@ -3,6 +3,7 @@
 <%= f.hidden_field :employing_school_id, value: nil %>
 <%= f.hidden_field :search_results_found, value: "true" %>
 
+<%= render TraineeName::View.new(@trainee) %>
 <%= f.govuk_radio_buttons_fieldset :employing_school_id,
   legend: { text: t("components.page_titles.trainees.employing_schools.index"), tag: "h1", size: "l" },
   hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} ‘#{query}’" } do %>

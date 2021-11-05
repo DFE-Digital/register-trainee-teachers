@@ -1,6 +1,7 @@
 <%= register_form_with(model: @bursary_form, url: trainee_funding_bursary_path(@trainee), method: :put, local: true) do |f| %>
   <%= f.govuk_error_summary %>
 
+  <%= render TraineeName::View.new(@trainee) %>
   <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.bursaries.edit") %></h1>
   <p class="govuk-body">
     <%= t(

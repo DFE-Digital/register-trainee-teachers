@@ -8,6 +8,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with model: @trainee, url: trainee_training_route_path(@trainee), local: true do |f| %>
       <%= f.govuk_error_summary %>
+      <%= render TraineeName::View.new(@trainee) %>
       <%= render "form_fields", f: f %>
       <%= f.govuk_submit %>
     <% end %>

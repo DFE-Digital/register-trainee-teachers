@@ -13,6 +13,7 @@
                           local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <div class="govuk-form-group">
         <%= f.govuk_radio_buttons_fieldset :course_uuid,
           legend: { text: t(".heading"), tag: "h1", size: "l" },

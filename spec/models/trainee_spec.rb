@@ -601,4 +601,26 @@ describe Trainee do
       expect(trainee.course_duration_in_years).to eq(2)
     end
   end
+
+  describe "#short_name" do
+    it "returns short name" do
+      trainee = Trainee.new(first_names: "Joe", middle_names: nil, last_name: "Blogs")
+      expect(trainee.short_name).to eql("Joe Blogs")
+    end
+
+    it "returns name without middle names" do
+      trainee = Trainee.new(first_names: "Joe", middle_names: "Smith", last_name: "Blogs")
+      expect(trainee.short_name).to eql("Joe Blogs")
+    end
+  end
+
+  describe "#full_name" do
+    it "returns full name" do
+      trainee = Trainee.new(first_names: "Joe", middle_names: nil, last_name: "Blogs")
+      expect(trainee.full_name).to eql("Joe Blogs")
+
+      trainee = Trainee.new(first_names: "Joe", middle_names: "Smith", last_name: "Blogs")
+      expect(trainee.full_name).to eql("Joe Smith Blogs")
+    end
+  end
 end

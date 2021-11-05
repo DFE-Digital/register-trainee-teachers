@@ -9,6 +9,7 @@
     <%= register_form_with(model: @degree, url: trainee_degrees_new_type_path, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <% if @trainee.degrees.size > 1 %>
         <h1 class="govuk-heading-l">Add another degree</h1>
       <% else %>

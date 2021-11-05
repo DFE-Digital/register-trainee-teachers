@@ -11,6 +11,7 @@
 
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <div class="govuk-form-group">
         <%= f.govuk_check_boxes_fieldset :language_specialisms,
                                           legend: { text: t(".heading"), tag: "h1", size: "l" },

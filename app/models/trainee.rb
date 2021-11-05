@@ -320,6 +320,21 @@ class Trainee < ApplicationRecord
     !%w[recommended_for_award withdrawn awarded].include?(state)
   end
 
+  def short_name
+    [
+      first_names,
+      last_name,
+    ].select(&:present?).join(" ").presence
+  end
+
+  def full_name
+    [
+      first_names,
+      middle_names,
+      last_name,
+    ].select(&:present?).join(" ").presence
+  end
+
 private
 
   def value_digest

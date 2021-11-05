@@ -13,6 +13,7 @@
                            local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
     <div class="govuk-form-group">
       <%= f.govuk_radio_buttons_fieldset course_subject_attribute_name,
                                         legend: { text: t(".heading", subject: @subject.downcase),

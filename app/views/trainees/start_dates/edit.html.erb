@@ -9,6 +9,7 @@
     <%= register_form_with(model: @trainee_start_date_form, url: trainee_start_date_path, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_date_field :commencement_date, legend: {
         text: t("views.forms.start_dates.commencement_date.label"), size: "l", tag: "h1"
       }, hint: { text: t("views.forms.start_dates.commencement_date.hint") } %>

@@ -10,6 +10,7 @@
                            html: { data: { module: "app-schools-autocomplete" } } do |f| %>
       <%= f.govuk_error_summary %>
 
+      <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_text_field(
         :query,
         label: { text: t(".heading"), size: "l", tag: "h1" },
