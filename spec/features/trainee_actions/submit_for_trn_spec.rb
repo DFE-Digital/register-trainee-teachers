@@ -108,7 +108,7 @@ feature "submit for TRN" do
 
   def then_i_see_an_error_message
     expect(page).to have_content(
-      I18n.t("activemodel.errors.models.trn_submission_form.attributes.trainee.incomplete"),
+      I18n.t("activemodel.errors.models.submission_ready_form.attributes.trainee.incomplete"),
     )
   end
 

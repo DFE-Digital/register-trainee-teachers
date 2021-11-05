@@ -6,7 +6,7 @@ module Trainees
 
     def show
       page_tracker.save_as_origin!
-      @form = TrnSubmissionForm.new(trainee: trainee)
+      @form = SubmissionReadyForm.new(trainee: trainee)
     end
   end
 end

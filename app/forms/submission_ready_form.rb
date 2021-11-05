@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TrnSubmissionForm
+class SubmissionReadyForm
   include ActiveModel::Model
 
   class_attribute :form_validators, instance_writer: false, default: {}
@@ -29,6 +29,7 @@ class TrnSubmissionForm
     @trainee = trainee
   end
 
+  # Only used for draft workflows to track progress of record completion
   def progress_status(progress_key)
     progress_service(progress_key).status.parameterize(separator: "_").to_sym
   end
@@ -39,6 +40,8 @@ class TrnSubmissionForm
   end
 
   def all_sections_complete?
+    return true unless trainee.draft?
+
     progress_keys.all? do |progress_key|
       progress_is_completed?(progress_key)
     end

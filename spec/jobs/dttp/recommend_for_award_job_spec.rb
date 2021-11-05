@@ -26,7 +26,7 @@ module Dttp
 
     before do
       enable_features(:persist_to_dttp)
-      allow(TrnSubmissionForm).to receive(:new).and_return(double(valid?: true))
+      allow(SubmissionReadyForm).to receive(:new).and_return(double(valid?: true))
       allow(RecommendForAward).to receive(:call).with(trainee: trainee)
       allow(UpdateTraineeStatus).to receive(:call).with(expected_contact_params)
       allow(UpdateTraineeStatus).to receive(:call).with(expected_placement_assignment_params)

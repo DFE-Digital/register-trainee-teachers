@@ -1172,7 +1172,7 @@ en:
               invalid: Enter a valid date of return
               hint_html: For example, 15 6 %{year}
               not_before_course_start_date: *not_before_course_start_date
-        trn_submission_form:
+        submission_ready_form:
           attributes:
             trainee:
               incomplete: Complete all sections before submitting for TRN

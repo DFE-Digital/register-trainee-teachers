@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe TrnSubmissionForm, type: :model do
+describe SubmissionReadyForm, type: :model do
   let(:trainee) do
     create(
       :trainee,
@@ -14,7 +14,7 @@ describe TrnSubmissionForm, type: :model do
   shared_examples "error" do
     it "is invalid and returns an error message" do
       expect(subject.valid?).to be false
-      expect(subject.errors.messages[:trainee]).to include(I18n.t("activemodel.errors.models.trn_submission_form.attributes.trainee.incomplete"))
+      expect(subject.errors.messages[:trainee]).to include(I18n.t("activemodel.errors.models.submission_ready_form.attributes.trainee.incomplete"))
     end
   end
 
@@ -226,6 +226,26 @@ describe TrnSubmissionForm, type: :model do
       let(:progress) { {} }
 
       include_examples "error"
+    end
+  end
+
+  describe "#all_sections_complete?" do
+    subject { described_class.new(trainee: trainee) }
+
+    context "when trainee is non draft" do
+      let(:trainee) { build(:trainee, :completed, :trn_received) }
+
+      it "returns true" do
+        expect(subject.all_sections_complete?).to be(true)
+      end
+    end
+
+    context "when trainee is draft" do
+      let(:trainee) { build(:trainee, :draft) }
+
+      it "returns false" do
+        expect(subject.all_sections_complete?).to be(false)
+      end
     end
   end
 end

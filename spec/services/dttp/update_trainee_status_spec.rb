@@ -16,7 +16,7 @@ module Dttp
 
       before do
         enable_features(:persist_to_dttp)
-        allow(TrnSubmissionForm).to receive(:new).and_return(double(valid?: true))
+        allow(SubmissionReadyForm).to receive(:new).and_return(double(valid?: true))
         allow(AccessToken).to receive(:fetch).and_return("token")
         stub_request(:patch, request_url).to_return(http_response)
       end

@@ -16,7 +16,7 @@ namespace :hpitt do
       trainee_group.each do |trainee|
         next if trainees_to_exclude.include?(trainee.trainee_id)
 
-        next unless TrnSubmissionForm.new(trainee: trainee).valid?
+        next unless SubmissionReadyForm.new(trainee: trainee).valid?
 
         trainee.submit_for_trn!
 

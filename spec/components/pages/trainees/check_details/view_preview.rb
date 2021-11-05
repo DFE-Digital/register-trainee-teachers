@@ -14,14 +14,14 @@ module Pages
           define_method sections do
             @trainee = trainee(sections)
 
-            @form = TrnSubmissionForm.new(trainee: @trainee)
+            @form = SubmissionReadyForm.new(trainee: @trainee)
             render template: template, locals: { "@trainee": @trainee, "@form": @form }
           end
 
           define_method "#{sections}_validated" do
             @trainee = trainee(sections)
 
-            @form = TrnSubmissionForm.new(trainee: @trainee)
+            @form = SubmissionReadyForm.new(trainee: @trainee)
             @form.validate
             render template: template, locals: { "@trainee": @trainee, "@form": @form }
           end
@@ -29,14 +29,14 @@ module Pages
           define_method "#{sections}_itt" do
             @trainee = itt_trainee(sections)
 
-            @form = TrnSubmissionForm.new(trainee: @trainee)
+            @form = SubmissionReadyForm.new(trainee: @trainee)
             render template: template, locals: { "@trainee": @trainee, "@form": @form }
           end
 
           define_method "#{sections}_itt_validated" do
             @trainee = itt_trainee(sections)
 
-            @form = TrnSubmissionForm.new(trainee: @trainee)
+            @form = SubmissionReadyForm.new(trainee: @trainee)
             @form.validate
             render template: template, locals: { "@trainee": @trainee, "@form": @form }
           end
