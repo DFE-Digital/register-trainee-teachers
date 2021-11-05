@@ -1,4 +1,10 @@
-import sort from '../../../components/form_components/autocomplete/sort'
+import sort, {
+  addWeightWithBoost,
+  cleanseOption,
+  hasWeight,
+  byWeightThenAlphabetically,
+  optionName
+} from '../../../components/form_components/autocomplete/sort'
 
 describe('sort', () => {
   it('returns an empty array for no matches', () => {
@@ -107,5 +113,109 @@ describe('sort', () => {
     ]
     expect(sort('plants leaf', options)).toEqual(["plant's leaf", 'flower'])
     expect(sort('flower rose', options)).toEqual(['flower/rose'])
+  })
+})
+
+describe('addWeightWithBoost', () => {
+  it('returns options with weight', () => {
+    expect(addWeightWithBoost({
+      name: 'abc',
+      clean: {
+        name: 'abc',
+        synonyms: [],
+        boost: 1
+      }
+    }, 'abc')).toEqual({
+      name: 'abc',
+      clean: {
+        name: 'abc',
+        synonyms: [],
+        boost: 1
+      },
+      weight: 100
+    })
+  })
+
+  it('returns options with weight with boost', () => {
+    expect(addWeightWithBoost({
+      name: 'abc',
+      clean: {
+        name: 'abc',
+        synonyms: [],
+        boost: 10
+      }
+    }, 'abc')).toEqual({
+      name: 'abc',
+      clean: {
+        name: 'abc',
+        synonyms: [],
+        boost: 10
+      },
+      weight: 1000
+    })
+  })
+})
+
+describe('cleanseOption', () => {
+  it('returns default clean values', () => {
+    expect(cleanseOption({
+      name: 'abc'
+    })).toEqual({
+      name: 'abc',
+      clean: {
+        name: 'abc',
+        synonyms: [],
+        boost: 1
+      }
+    })
+  })
+
+  it('returns cleanse values', () => {
+    expect(cleanseOption({
+      name: 'aBc',
+      synonyms: ['xyZ'],
+      boost: 2
+    })).toEqual({
+      name: 'aBc',
+      synonyms: ['xyZ'],
+      boost: 2,
+      clean: {
+        name: 'abc',
+        synonyms: ['xyz'],
+        boost: 2
+      }
+    })
+  })
+})
+
+describe('hasWeight', () => {
+  it('returns false', () => {
+    expect(hasWeight({ weight: 0 })).toEqual(false)
+  })
+
+  it('returns true', () => {
+    expect(hasWeight({ weight: 1 })).toEqual(true)
+  })
+})
+
+describe('byWeightThenAlphabetically', () => {
+  it('returns -1', () => {
+    expect(byWeightThenAlphabetically({ weight: 1 }, { weight: 0 })).toEqual(-1)
+    expect(byWeightThenAlphabetically({ weight: 0, name: 'abc' }, { weight: 0, name: 'xzy' })).toEqual(-1)
+  })
+
+  it('returns 1', () => {
+    expect(byWeightThenAlphabetically({ weight: 0 }, { weight: 1 })).toEqual(1)
+    expect(byWeightThenAlphabetically({ weight: 0, name: 'xzy' }, { weight: 0, name: 'abc' })).toEqual(1)
+  })
+
+  it('returns 0', () => {
+    expect(byWeightThenAlphabetically({ weight: 0, name: 'abc' }, { weight: 0, name: 'abc' })).toEqual(0)
+  })
+})
+
+describe('optionName', () => {
+  it('returns name', () => {
+    expect(optionName({ name: 'abc' })).toEqual('abc')
   })
 })

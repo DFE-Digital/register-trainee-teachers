@@ -32,4 +32,14 @@ const calculateWeight = ({ name, synonyms }, query) => {
   return 0
 }
 
+export {
+  exactMatch,
+  startsWithReqExp,
+  startsWith,
+  wordsStartsWithQuery,
+  synonymsExactMatch,
+  synonymsStartsWith,
+  wordInSynonymStartsWithQuery
+}
+
 export default calculateWeight
