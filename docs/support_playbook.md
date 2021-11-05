@@ -13,6 +13,21 @@ manager.update_training_route!("school_direct_salaried")
 
 A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask support to communicate with the user to update the Trainee record for the missing information.
 
+## Unwithdrawing a withdrawn trainee
+
+Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. You can find the previous trainee state by running `trainee.audits` and comparing the numbers to the enum in `trainee.rb`.
+
+Here is an examole of unwithdrawing a trainee without leaving an audit trail.
+
+```ruby
+trainee = Trainee.find_by(slug: "XXX")
+
+trainee.without_auditing do
+  trainee.update_columns(state: "XXX", withdraw_reason: nil, additional_withdraw_reason: nil, withdraw_date: nil)
+end
+```
+
+
 ## Dttp::RetrieveTrnJob for Trainee id: <id> has timed out after 4 days.
 
 We have a timeout set for retries on this job. It defaults to 4 days from the date it was originally enqueued. Usually there has just been a delay at DQT. Check the trainee on DTTP or with the operations team and then usually the job can be requeued.
