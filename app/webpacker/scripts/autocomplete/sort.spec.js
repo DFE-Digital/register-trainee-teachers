@@ -1,4 +1,4 @@
-import sort from '../../components/form_components/autocomplete/sort.js'
+import sort from '../../../components/form_components/autocomplete/sort'
 
 describe('sort', () => {
   it('returns an empty array for no matches', () => {
@@ -49,10 +49,14 @@ describe('sort', () => {
 
   it('prioritises word in name starts with over word in synonym starts with', () => {
     const options = [
-      { name: 'pretty flower' },
-      { name: 'rose', synonyms: ['pretty flower'] }
+      { name: 'the pretty flower' },
+      { name: 'pretty the flower' },
+      { name: 'rose', synonyms: ['pretty the flower'] },
+      { name: 'lily', synonyms: ['the flower pretty'] }
     ]
-    expect(sort('flo', options)).toEqual(['pretty flower', 'rose'])
+    expect(sort('the pre', options)).toEqual(['the pretty flower', 'pretty the flower', 'lily', 'rose'])
+    expect(sort('the pretty', options)).toEqual(['the pretty flower', 'pretty the flower', 'lily', 'rose'])
+    expect(sort('the pretty flo', options)).toEqual(['the pretty flower', 'pretty the flower', 'lily', 'rose'])
   })
 
   it('requires all parts of the query to be matched in either name or synonym', () => {
