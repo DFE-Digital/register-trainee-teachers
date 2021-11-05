@@ -85,6 +85,7 @@ TRAINING_ROUTE_AWARD_TYPE = {
   school_direct_salaried: QTS_AWARD_TYPE,
   school_direct_tuition_fee: QTS_AWARD_TYPE,
   opt_in_undergrad: QTS_AWARD_TYPE,
+  hpitt_postgrad: QTS_AWARD_TYPE,
 }.freeze
 
 EARLY_YEARS_ROUTES = TRAINING_ROUTE_AWARD_TYPE.select { |_, v| v == EYTS_AWARD_TYPE }.keys.freeze
