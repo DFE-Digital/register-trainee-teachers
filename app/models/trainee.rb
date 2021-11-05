@@ -351,6 +351,6 @@ private
   end
 
   def set_submission_ready
-    self.submission_ready = TrnSubmissionForm.new(trainee: self).valid?
+    self.submission_ready = SubmissionReadyForm.new(trainee: self).valid?
   end
 end

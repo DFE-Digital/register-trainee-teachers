@@ -6,7 +6,7 @@ module Trainees
     queue_as :default
 
     def perform(trainee)
-      trainee.update(submission_ready: TrnSubmissionForm.new(trainee: trainee).valid?)
+      trainee.update(submission_ready: SubmissionReadyForm.new(trainee: trainee).valid?)
     end
   end
 end

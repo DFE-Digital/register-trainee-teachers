@@ -5,7 +5,7 @@ require "rails_helper"
 module Sections
   describe View do
     let(:trainees_sections_component) do
-      form = TrnSubmissionForm.new(trainee: trainee)
+      form = SubmissionReadyForm.new(trainee: trainee)
       described_class.new(trainee: trainee, section: section, form: form)
     end
 
