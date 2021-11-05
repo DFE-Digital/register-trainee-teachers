@@ -3,7 +3,7 @@
     "node": "12.x"
   },
   "scripts": {
-    "js:lint": "standard",
+    "js:lint": "standard --fix",
     "test": "jest",
     "test:ci": "jest --ci --runInBand --coverage"
   },

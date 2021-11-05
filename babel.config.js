@@ -22,7 +22,8 @@ module.exports = function (api) {
         {
           targets: {
             node: 'current'
-          }
+          },
+          loose: true
         }
       ],
       (isProductionEnv || isDevelopmentEnv) && [
