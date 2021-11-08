@@ -1,7 +1,7 @@
 const exactMatch = (word, query) => (word === query)
 
-const startsWithReqExp = (query) => new RegExp('\\b' + query, 'i')
-const startsWith = (word, query) => (word.search(startsWithReqExp(query)) === 0)
+const startsWithRegExp = (query) => new RegExp('\\b' + query, 'i')
+const startsWith = (word, query) => (word.search(startsWithRegExp(query)) === 0)
 
 const wordsStartsWithQuery = (word, regExps) => regExps.every(
   (regExp) => (word.search(regExp) >= 0)
@@ -24,17 +24,17 @@ const calculateWeight = ({ name, synonyms }, query) => {
   if (startsWith(name, query)) return 60
   if (synonymsStartsWith(synonyms, query)) return 50
 
-  const startsWithReqExps = query.split(/\s+/).map(startsWithReqExp)
+  const startsWithRegExps = query.split(/\s+/).map(startsWithRegExp)
 
-  if (wordsStartsWithQuery(name, startsWithReqExps)) return 25
-  if (wordInSynonymStartsWithQuery(synonyms, startsWithReqExps)) return 10
+  if (wordsStartsWithQuery(name, startsWithRegExps)) return 25
+  if (wordInSynonymStartsWithQuery(synonyms, startsWithRegExps)) return 10
 
   return 0
 }
 
 export {
   exactMatch,
-  startsWithReqExp,
+  startsWithRegExp,
   startsWith,
   wordsStartsWithQuery,
   synonymsExactMatch,

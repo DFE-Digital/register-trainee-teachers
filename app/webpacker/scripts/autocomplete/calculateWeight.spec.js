@@ -1,6 +1,6 @@
 import calculateWeight, {
   exactMatch,
-  startsWithReqExp,
+  startsWithRegExp,
   startsWith,
   wordsStartsWithQuery,
   synonymsExactMatch,
@@ -63,9 +63,9 @@ describe('exactMatch', () => {
   })
 })
 
-describe('startsWithReqExp', () => {
+describe('startsWithRegExp', () => {
   it('returns reg exp', () => {
-    expect(startsWithReqExp('xyz')).toEqual(/\bxyz/i)
+    expect(startsWithRegExp('xyz')).toEqual(/\bxyz/i)
   })
 })
 
