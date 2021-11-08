@@ -46,7 +46,7 @@ private
   end
 
   def when_i_click_delete_user
-    provider_show_page.delete_a_user.click
+    provider_show_page.delete_a_user.button.click
   end
 
   def i_am_taken_to_the_user_delete_page
