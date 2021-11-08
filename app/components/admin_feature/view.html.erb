@@ -1,8 +1,4 @@
 <%= tag.div(class: classes, **html_attributes) do %>
-  <p class="govuk-body">
-    <strong class="govuk-tag govuk-tag--purple">
-      <%= title %>
-    </strong>
-  </p>
+  <%= render GovukComponent::TagComponent.new(text: title, colour: "purple", classes: "govuk-tag--admin") %>
   <%= content %>
 <% end %>

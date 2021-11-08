@@ -20,6 +20,10 @@
 
 .app-status-box--admin {
   border-left: $govuk-border-width solid govuk-colour("purple");
+
+  .govuk-tag--admin {
+    margin-bottom: govuk-spacing(2);
+  }
 }
 
 // For use in filter box to outdent to the side margins
