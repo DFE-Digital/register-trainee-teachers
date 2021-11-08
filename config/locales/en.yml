@@ -322,6 +322,7 @@ en:
         index: Dttp Providers
       users:
         new: Add a user
+        edit: Edit user
       validation_errors:
         page_title: Validation errors
       search_schools:
@@ -1275,6 +1276,11 @@ en:
   page_headings:
     start_page: Register trainee teachers
   system_admin:
+    users:
+      create:
+        success: User has been successfully added.
+      update:
+        success: User details have been successfully updated.
     validation_errors:
       index:
         heading: Validation errors

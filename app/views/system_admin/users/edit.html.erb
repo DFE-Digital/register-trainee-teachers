@@ -1,0 +1,23 @@
+<%= render PageTitle::View.new(i18n_key: "users.edit", has_errors: @user.errors.present?) %>
+
+<%= render GovukComponent::BackLinkComponent.new(
+      text: "Back",
+      href: provider_path(@provider),
+    ) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with model: @user, local: true do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        Edit user <%= @user.name %>
+      </h1>
+
+      <%= f.govuk_text_field :email, label: { text: "Email address", size: "s" }, width: 20, autocomplete: :disabled %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

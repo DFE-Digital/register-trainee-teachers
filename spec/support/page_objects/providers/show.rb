@@ -3,7 +3,7 @@
 module PageObjects
   module Providers
     class Show < PageObjects::Base
-      set_url "system-admin/providers/{id}"
+      set_url "/system-admin/providers/{id}"
 
       element :add_a_user, "a", text: "Add a user"
       element :edit_this_provider, "a", text: "Edit this provider"
@@ -12,6 +12,7 @@ module PageObjects
 
       element :registered_user_data, ".registered-users"
       element :unregistered_user_data, ".unregistered-users"
+      element :edit_user_data, ".registered-users .user-card a"
 
       def registered_users
         user_cards(registered_user_data)

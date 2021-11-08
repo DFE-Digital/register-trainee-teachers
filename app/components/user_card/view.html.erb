@@ -16,6 +16,10 @@
     <%= email_address %>
   </div>
 
+  <div class="govuk-caption-m govuk-!-font-size-16">
+    <%= govuk_link_to('Edit', edit_user_path(user)) %>
+  </div>
+
   <% if show_register_button %>
     <%= govuk_button_to(
       "Register user to provider",
