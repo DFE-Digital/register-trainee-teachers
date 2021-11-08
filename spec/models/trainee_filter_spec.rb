@@ -5,7 +5,7 @@ require "rails_helper"
 describe TraineeFilter do
   let(:permitted_params) do
     ActionController::Parameters.new(params)
-    .permit(:subject, :text_search, training_route: [], state: [], record_source: [])
+    .permit(:provider, :subject, :text_search, training_route: [], state: [], record_source: [])
   end
 
   subject { TraineeFilter.new(params: permitted_params) }
@@ -31,6 +31,15 @@ describe TraineeFilter do
 
       it "returns the correct filter hash" do
         expect(subject.filters).to eq(permitted_params.to_h)
+      end
+    end
+
+    context "with provider" do
+      let(:provider) { create(:provider) }
+      let(:params) { { provider: provider.id } }
+
+      it "returns the provider from the DB" do
+        expect(subject.filters).to eq({ "provider" => provider })
       end
     end
 
@@ -63,6 +72,12 @@ describe TraineeFilter do
 
     context "with invalid state" do
       let(:params) { { state: %w[not_a_state] } }
+
+      include_examples returns_nil
+    end
+
+    context "with invalid provider id" do
+      let(:params) { { provider: "not an id" } }
 
       include_examples returns_nil
     end

@@ -6,14 +6,15 @@ module FilterHelper
   end
 
   def title_html(filter, value)
-    text = filter == "provider" ? Provider.find(value).name : value
-    tag.span("Remove ", class: "govuk-visually-hidden") + text + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")
+    tag.span("Remove ", class: "govuk-visually-hidden") + value + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")
   end
 
   def tags_for_filter(filters, filter, value)
     case value
     when String
       [{ title: title_html(filter, value), remove_link: remove_select_tag_link(filters, filter) }]
+    when Provider
+      [{ title: title_html(filter, value.name), remove_link: remove_select_tag_link(filters, filter) }]
     else
       value.each_with_object([]) do |v, arr|
         arr << {

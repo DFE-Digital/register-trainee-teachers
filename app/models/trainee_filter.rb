@@ -93,8 +93,12 @@ private
   end
 
   def provider
-    return {} if params[:provider].blank?
+    return {} unless provider_option
 
-    { "provider" => params[:provider] }
+    { "provider" => provider_option }
+  end
+
+  def provider_option
+    @provider_option ||= Provider.find_by(id: params[:provider])
   end
 end

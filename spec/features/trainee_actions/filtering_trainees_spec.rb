@@ -71,7 +71,7 @@ RSpec.feature "Filtering trainees" do
       when_i_visit_the_trainee_index_page
     end
 
-    scenario "cannot filter by provider" do
+    scenario "can filter by provider" do
       then_i_should_see_the_provider_filter
     end
   end

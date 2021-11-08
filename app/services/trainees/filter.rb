@@ -71,7 +71,7 @@ module Trainees
     def provider(trainees, provider)
       return trainees if provider.blank?
 
-      trainees.where(provider: Provider.find(provider))
+      trainees.where(provider: provider)
     end
 
     def filter_trainees
