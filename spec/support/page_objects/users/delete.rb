@@ -3,7 +3,7 @@
 module PageObjects
   module Users
     class Delete < PageObjects::Base
-      set_url "system-admin/providers/{provider_id}/users/{id}/delete"
+      set_url "system-admin/users/{id}/delete"
 
       element :delete_a_user, ".govuk-button--warning"
     end

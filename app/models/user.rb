@@ -30,7 +30,7 @@ class User < ApplicationRecord
   def active_user?
     User.exists?(dttp_id: dttp_id, discarded_at: nil)
   end
-  
+
 private
 
   def sanitise_email

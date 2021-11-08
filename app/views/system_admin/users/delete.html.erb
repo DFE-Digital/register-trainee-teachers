@@ -17,7 +17,7 @@
     ) %>
 
     <div class="govuk-body">
-      <%= govuk_button_to("Delete this user", provider_user_path(@provider, @user), method: :delete, class: "govuk-button--warning") %>
+      <%= govuk_button_to("Delete this user", user_path(@user), method: :delete, class: "govuk-button--warning") %>
     </div>
 
     <%= govuk_link_to("Cancel", provider_path(@provider)) %>

@@ -50,7 +50,7 @@ private
   end
 
   def i_am_taken_to_the_user_delete_page
-    user_delete_page.load(provider_id: user.provider.id, id: user.id)
+    user_delete_page.load(id: user.id)
   end
 
   def and_i_click_that_im_sure_i_want_to_delete_a_user

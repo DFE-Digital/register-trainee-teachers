@@ -23,19 +23,22 @@ module SystemAdmin
     def update
       user
       @provider = user.provider
-      if @user.update(permitted_attributes(@user))
+      if user.update(permitted_attributes(@user))
         redirect_to(provider_path(provider), flash: { success: t(".success") })
       else
         render(:edit)
       end
+    end
+
     def delete
       user
-      provider
+      @provider = user.provider
     end
 
     def destroy
       user.discard
-      redirect_to(provider_path(provider))
+      @provider = user.provider
+      redirect_to(provider_path(@provider))
     end
 
   private
@@ -46,10 +49,6 @@ module SystemAdmin
 
     def user
       @user ||= authorize(User.find(params[:id]))
-    end
-
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :dttp_id)
     end
   end
 end

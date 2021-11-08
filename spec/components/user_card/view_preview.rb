@@ -4,11 +4,11 @@ require "govuk/components"
 module UserCard
   class ViewPreview < ViewComponent::Preview
     def single_card
-      render(UserCard::View.new(user: mock_user, provider: mock_provider))
+      render(UserCard::View.new(user: mock_user))
     end
 
     def multiple_cards
-      render(UserCard::View.with_collection(mock_users, provider: mock_provider))
+      render(UserCard::View.with_collection(mock_users))
     end
 
   private
@@ -30,10 +30,6 @@ module UserCard
         mock_user,
         mock_user,
       ]
-    end
-
-    def mock_provider
-      Provider.new(id: 2, name: "Rebel Alliance")
     end
   end
 end
