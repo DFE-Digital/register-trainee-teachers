@@ -95,9 +95,10 @@ namespace :example_data do
 
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
-        REAL_PUBLISH_COURSES_WITH_SUBJECTS.each do |course_name, subject_names|
+        REAL_PUBLISH_COURSES_WITH_SUBJECTS.each_with_index do |(course_name, subject_names), index|
           FactoryBot.build(:course,
                            accredited_body_code: provider.code,
+                           start_date: index.even? ? Time.zone.now : 1.month.from_now,
                            route: route,
                            name: course_name,
                            level: course_name.include?("Primary") ? :primary : :secondary,
