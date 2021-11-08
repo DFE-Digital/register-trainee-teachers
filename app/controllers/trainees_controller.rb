@@ -23,6 +23,7 @@ class TraineesController < ApplicationController
     @training_routes = policy_scope(Trainee)
                          .group(:training_route)
                          .count.keys.sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
+    @providers = Provider.all.order(:name)
 
     respond_to do |format|
       format.html
@@ -105,7 +106,17 @@ private
   end
 
   def filter_params
-    params.permit(:subject, :text_search, :sort_by, level: [], training_route: [], state: [], record_source: [])
+    params.permit(permitted_params + permitted_admin_params)
+  end
+
+  def permitted_admin_params
+    return [] unless current_user.system_admin?
+
+    [:provider]
+  end
+
+  def permitted_params
+    [:subject, :text_search, :sort_by, { level: [], training_route: [], state: [], record_source: [] }]
   end
 
   def multiple_record_sources?

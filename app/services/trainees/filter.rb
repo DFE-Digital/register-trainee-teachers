@@ -68,6 +68,12 @@ module Trainees
       trainees.with_name_trainee_id_or_trn_like(text_search)
     end
 
+    def provider(trainees, provider)
+      return trainees if provider.blank?
+
+      trainees.where(provider: provider)
+    end
+
     def filter_trainees
       filtered_trainees = trainees
 
@@ -76,6 +82,7 @@ module Trainees
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
       filtered_trainees = level(filtered_trainees, filters[:level])
+      filtered_trainees = provider(filtered_trainees, filters[:provider])
 
       record_source(filtered_trainees, filters[:record_source])
     end

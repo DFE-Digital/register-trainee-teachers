@@ -61,6 +61,21 @@ RSpec.feature "Filtering trainees" do
     then_i_should_not_see_sort_links
   end
 
+  scenario "cannot filter by provider" do
+    then_i_should_not_see_the_provider_filter
+  end
+
+  context "as a system-admin" do
+    before do
+      given_i_am_authenticated_as_system_admin
+      when_i_visit_the_trainee_index_page
+    end
+
+    scenario "can filter by provider" do
+      then_i_should_see_the_provider_filter
+    end
+  end
+
   context "searching" do
     before { when_i_search_for(search_term) }
 
@@ -243,6 +258,14 @@ private
     values.each do |value|
       expect(trainee_index_page.filter_tags).to have_text(value)
     end
+  end
+
+  def then_i_should_not_see_the_provider_filter
+    expect(trainee_index_page).not_to have_provider_filter
+  end
+
+  def then_i_should_see_the_provider_filter
+    expect(trainee_index_page).to have_provider_filter
   end
 
   def full_name(trainee)

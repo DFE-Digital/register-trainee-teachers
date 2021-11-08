@@ -24,7 +24,13 @@ private
 
   def merged_filters
     @merged_filters ||= text_search.merge(
-      **level, **training_route, **state, **subject, **text_search, **record_source,
+      **level,
+      **training_route,
+      **state,
+      **subject,
+      **text_search,
+      **record_source,
+      **provider,
     ).with_indifferent_access
   end
 
@@ -84,5 +90,15 @@ private
     return {} if params[:text_search].blank?
 
     { "text_search" => params[:text_search] }
+  end
+
+  def provider
+    return {} unless provider_option
+
+    { "provider" => provider_option }
+  end
+
+  def provider_option
+    @provider_option ||= Provider.find_by(id: params[:provider])
   end
 end

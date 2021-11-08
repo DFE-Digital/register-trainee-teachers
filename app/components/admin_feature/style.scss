@@ -1,0 +1,34 @@
+@import "../base.scss";
+
+// Mostly copied from https://github.com/DFE-Digital/publish-teacher-training/blob/master/app/webpacker/stylesheets/_status-box.scss
+.app-status-box {
+  @include govuk-responsive-margin(6, "bottom");
+  background-color: govuk-colour("light-grey");
+  padding: govuk-spacing(4);
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .autocomplete__input,
+  .govuk-input,
+  .govuk-select {
+    background: govuk-colour("white");
+    width: 100%;
+  }
+}
+
+.app-status-box--admin {
+  border-left: $govuk-border-width solid govuk-colour("purple");
+
+  .govuk-tag--admin {
+    margin-bottom: govuk-spacing(2);
+  }
+}
+
+// For use in filter box to outdent to the side margins
+// .moj-filter__options has 20px padding - so this expands to that minus the 1px border
+.app-status-box--filter-outdent {
+  margin-left: -19px;
+  margin-right: -19px;
+}

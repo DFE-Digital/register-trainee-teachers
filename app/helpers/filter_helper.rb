@@ -13,6 +13,8 @@ module FilterHelper
     case value
     when String
       [{ title: title_html(filter, value), remove_link: remove_select_tag_link(filters, filter) }]
+    when Provider
+      [{ title: title_html(filter, value.name), remove_link: remove_select_tag_link(filters, filter) }]
     else
       value.each_with_object([]) do |v, arr|
         arr << {

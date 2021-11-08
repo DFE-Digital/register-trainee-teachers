@@ -26,6 +26,7 @@ module PageObjects
       element :imported_from_apply_checkbox, "#record_source-apply"
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
       element :subject, "#subject"
+      element :provider_filter, "#provider"
 
       element :export_link, ".app-trainee-export"
 
