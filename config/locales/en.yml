@@ -1230,7 +1230,7 @@ en:
               invalid: Enter a valid start date
               not_before_course_start_date: *not_before_course_start_date
             commencement_status:
-              blank: Select an option from the list
+              blank: Select if the trainee started on time
         training_details_form:
           attributes:
             commencement_date:
