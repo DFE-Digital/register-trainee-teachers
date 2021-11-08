@@ -131,7 +131,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def given_a_trainee_exists_to_be_deferred
-    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample)
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, commencement_date: 10.days.ago)
   end
 
   def then_the_defer_date_is_updated

@@ -460,5 +460,9 @@ FactoryBot.define do
       region { Dttp::CodeSets::Regions::MAPPING.keys.sample }
       association :provider, factory: %i[provider teach_first]
     end
+
+    trait :discarded do
+      discarded_at { Time.zone.now }
+    end
   end
 end

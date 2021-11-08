@@ -6,13 +6,24 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <span class="govuk-caption-l">
-      Draft record <%= "for #{trainee_name(@trainee)}" if trainee_name(@trainee).present? %>
-    </span>
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-8">Do you want to delete this draft?</h1>
+    <% if @trainee.draft? %>
+      <span class="govuk-caption-l">
+        <%= t("views.confirm_delete.caption") %> <%= trainee_name(@trainee) if trainee_name(@trainee).present? %>
+      </span>
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
+        <%= t("views.confirm_delete.heading", record_type: t(:draft)) %>
+      </h1>
+    <% else %>
+      <span class="govuk-caption-l"><%= trainee_name(@trainee) %></span>
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-8"><%= t("views.confirm_delete.heading", record_type: t(:record)) %></h1>
+      <%= render GovukComponent::WarningTextComponent.new(text: t("views.confirm_delete.warning")) %>
+    <% end %>
   </div>
 </div>
 
-<%= govuk_button_to "Delete this draft", trainee_path(@trainee), method: :delete, class: "govuk-button govuk-button--warning" %>
+<%= govuk_button_to t("views.confirm_delete.delete_button", record_type: @trainee.draft? ? t(:draft) : t(:record)),
+                    trainee_path(@trainee),
+                    method: :delete,
+                    class: "govuk-button govuk-button--warning" %>
 
 <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>

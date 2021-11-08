@@ -27,7 +27,7 @@ RSpec.describe RecordActions::View do
     context "submitted for TRN" do
       let(:trait) { :submitted_for_trn }
 
-      it { is_expected.to include("This record is pending a TRN", "Defer", "withdraw") }
+      it { is_expected.to include("This record is pending a TRN", "Defer", "Withdraw") }
 
       include_examples "no button"
     end
@@ -35,7 +35,7 @@ RSpec.describe RecordActions::View do
     context "TRN received" do
       let(:trait) { :trn_received }
 
-      it { is_expected.to include(button_text, "Defer", "withdraw") }
+      it { is_expected.to include(button_text, "Defer", "Withdraw") }
     end
 
     context "recommended for QTS" do
@@ -53,7 +53,7 @@ RSpec.describe RecordActions::View do
     context "deferred" do
       let(:trait) { :deferred }
 
-      it { is_expected.to include("This record is deferred", "Reinstate", "withdraw") }
+      it { is_expected.to include("This record is deferred", "Reinstate", "Withdraw") }
 
       include_examples "no button"
     end

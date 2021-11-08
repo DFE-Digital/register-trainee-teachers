@@ -5,7 +5,6 @@ class TraineesController < ApplicationController
   include ActivityTracker
 
   before_action :ensure_trainee_is_not_draft!, only: :show
-  before_action :ensure_trainee_is_draft!, only: :destroy
   before_action :save_filter, only: :index
   helper_method :filter_params, :multiple_record_sources?
 
@@ -65,8 +64,8 @@ class TraineesController < ApplicationController
 
   def destroy
     authorize(trainee)
-    trainee.destroy!
-    flash[:success] = "Draft deleted"
+    trainee.draft? ? trainee.destroy! : trainee.discard!
+    flash[:success] = t("views.trainees.delete.#{trainee.draft? ? :draft : :record}")
     redirect_to(trainees_path)
   end
 

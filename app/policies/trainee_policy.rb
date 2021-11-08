@@ -10,13 +10,16 @@ class TraineePolicy
     end
 
     def resolve
-      user.system_admin? ? scope.all : scope.where(provider_id: user.provider_id)
+      user.system_admin? ? scope.all : scope.where(provider_id: user.provider_id).kept
     end
   end
 
   attr_reader :user, :trainee, :training_router_manager
 
-  delegate :requires_schools?, :requires_employing_school?, :requires_itt_start_date?, to: :training_router_manager
+  delegate :requires_schools?,
+           :requires_employing_school?,
+           :requires_itt_start_date?,
+           to: :training_router_manager
 
   def initialize(user, trainee)
     @user = user
