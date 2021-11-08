@@ -10,6 +10,7 @@ class FormStore
     personal_details
     trainee_id
     trainee_start_date
+    trainee_start_status
     deferral
     reinstatement
     outcome_date

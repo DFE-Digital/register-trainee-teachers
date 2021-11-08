@@ -43,7 +43,7 @@ module Features
     end
 
     def confirm_details_page
-      @confirm_page ||= PageObjects::Trainees::ConfirmDetails.new
+      @confirm_details_page ||= PageObjects::Trainees::ConfirmDetails.new
     end
 
     def disability_disclosure_page
@@ -75,7 +75,7 @@ module Features
     end
 
     def dttp_providers_index_page
-      @provider_index_page ||= PageObjects::DttpProviders::Index.new
+      @dttp_providers_index_page ||= PageObjects::DttpProviders::Index.new
     end
 
     def new_user_page
@@ -123,7 +123,7 @@ module Features
     end
 
     def deferral_page
-      @defer_date_page ||= PageObjects::Trainees::Deferral.new
+      @deferral_page ||= PageObjects::Trainees::Deferral.new
     end
 
     def deferral_confirmation_page
@@ -175,7 +175,7 @@ module Features
     end
 
     def itt_start_date_edit_page
-      @itt_start_date_page ||= PageObjects::Trainees::EditIttStartDate.new
+      @itt_start_date_edit_page ||= PageObjects::Trainees::EditIttStartDate.new
     end
 
     def study_mode_edit_page
@@ -191,11 +191,15 @@ module Features
     end
 
     def trainee_start_date_edit_page
-      @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeStartDate.new
+      @trainee_start_date_edit_page ||= PageObjects::Trainees::EditTraineeStartDate.new
+    end
+
+    def trainee_start_status_edit_page
+      @trainee_start_status_edit_page ||= PageObjects::Trainees::EditTraineeStartStatus.new
     end
 
     def outcome_date_edit_page
-      @outcome_date_page ||= PageObjects::Trainees::EditOutcomeDate.new
+      @outcome_date_edit_page ||= PageObjects::Trainees::EditOutcomeDate.new
     end
 
     def confirm_outcome_details_page
@@ -275,7 +279,7 @@ module Features
     end
 
     def apply_trainee_data_page
-      @apply_trainee_data_pate ||= PageObjects::Trainees::ApplyRegistrations::TraineeData.new
+      @apply_trainee_data_page ||= PageObjects::Trainees::ApplyRegistrations::TraineeData.new
     end
 
     def edit_cookie_preferences_page

@@ -11,6 +11,7 @@ module ConfirmDetailsHelper
       "publish-course-details" => "trainee_publish_course_details_confirm_path",
       "trainee-id" => "trainee_trainee_id_confirm_path",
       "trainee-start-date" => "trainee_start_date_confirm_path",
+      "trainee-start-status" => "trainee_start_status_confirm_path",
       "training-details" => "trainee_training_details_confirm_path",
       "schools" => "trainee_schools_confirm_path",
       "funding" => "trainee_funding_confirm_path",

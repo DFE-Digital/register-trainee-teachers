@@ -58,7 +58,7 @@ en:
       trainee_status: Trainee status
       last_updated: Last updated
       record_created: Record created
-      trainee_start_date: Trainee start date
+      trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
       progress_date_prefix:
         recommended_for_award: "Recommended: "
@@ -66,6 +66,7 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
+      itt_not_yet_started: &itt_not_yet_started Trainee has not started yet
   training_details:
     view:
       title: Trainee start date and ID
@@ -98,6 +99,9 @@ en:
         title: &trainee_id Trainee ID
       start_date:
         title: Start date
+      start_status:
+        title: Start date
+        itt_not_yet_started: *itt_not_yet_started
       funding:
         title: Funding
         training_initiative:
@@ -612,7 +616,7 @@ en:
             This is the date the trainee starts on the course. This can be different from the course start date.<br>
             For example, 9 7 %{year}
         commencement_date_manual:
-          label: Trainee start date
+          label: *trainee_start_date
           hint: For example, 9 7 %{year}
         trainee_id:
           label: Assign a trainee ID
@@ -878,6 +882,14 @@ en:
     training_routes:
       form_fields:
         provider_led_hint: Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
+    start_statuses:
+      edit:
+        itt_not_yet_started: They have not started yet
+        label: Did the trainee start their ITT on time?
+        on_time: Yes, they started on time — %{course_start_date}
+        started_later: No, they started later
+        trainee_start_date: *trainee_start_date
+        trainee_start_date_hint: For example, 8 11 2021
   activerecord:
     attributes:
       trainee:
@@ -1211,6 +1223,14 @@ en:
               blank: Enter a start date
               invalid: Enter a valid start date
               not_before_course_start_date: *not_before_course_start_date
+        trainee_start_status_form:
+          attributes:
+            commencement_date:
+              blank: Enter a start date
+              invalid: Enter a valid start date
+              not_before_course_start_date: *not_before_course_start_date
+            commencement_status:
+              blank: Select an option from the list
         training_details_form:
           attributes:
             commencement_date:
