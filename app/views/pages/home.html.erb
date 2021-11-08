@@ -68,6 +68,13 @@
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to(
+          t(".service_updates_link"),
+          service_updates_path,
+          { class: "govuk-link--no-visited-state" }
+        )%>
+      </li>
+      <li>
+        <%= govuk_link_to(
           t(".guidance_about_link"),
           guidance_path,
           { class: "govuk-link--no-visited-state" }
