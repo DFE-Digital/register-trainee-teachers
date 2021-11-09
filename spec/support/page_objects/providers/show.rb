@@ -11,15 +11,10 @@ module PageObjects
 
       element :register_user, "#register-dttp-user"
 
-      element :registered_user_data, ".registered-users"
       element :unregistered_user_data, ".unregistered-users"
       element :edit_user_data, ".registered-users .user-card a"
 
-      section :delete_a_user, PageObjects::Sections::UserCard, ".user-card", match: :first
-
-      def registered_users
-        user_cards(registered_user_data)
-      end
+      sections :registered_user_cards, PageObjects::Sections::UserCard, ".registered-users .user-card"
 
     private
 

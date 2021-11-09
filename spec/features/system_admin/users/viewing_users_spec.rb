@@ -47,7 +47,7 @@ feature "View users" do
   end
 
   def then_i_see_the_registered_users
-    expect(provider_show_page.registered_users.size).to eq(1)
+    expect(provider_show_page.registered_user_cards.size).to eq(1)
   end
 
   def then_i_see_the_unregistered_users

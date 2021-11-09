@@ -42,11 +42,11 @@ private
   end
 
   def and_i_see_the_registered_users
-    expect(provider_show_page.registered_users.size).to eq(2)
+    expect(provider_show_page.registered_user_cards.size).to eq(2)
   end
 
   def when_i_click_delete_user
-    provider_show_page.delete_a_user.button.click
+    provider_show_page.registered_user_cards.first.button.click
   end
 
   def i_am_taken_to_the_user_delete_page
@@ -62,7 +62,7 @@ private
   end
 
   def and_the_user_has_been_deleted
-    expect(provider_show_page.registered_users.size).to eq(1)
+    expect(provider_show_page.registered_user_cards.size).to eq(1)
   end
 
   def provider_show_page
