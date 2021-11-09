@@ -1,7 +1,7 @@
 import './style.scss'
 import accessibleAutocomplete from 'accessible-autocomplete'
 import { nodeListForEach } from 'govuk-frontend/govuk/common'
-import sort from './sort.js'
+import sort from './sort'
 import tracker from '../tracker.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
