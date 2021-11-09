@@ -365,7 +365,7 @@ en:
           course_uuid: Course updated
           course_max_age: Course age range updated
           course_subject_one: Course subject updated
-          commencement_date: Start date updated
+          commencement_date: Trainee start date updated
           trainee_id: Trainee ID updated
           disability_disclosure: Disability disclosures updated
           diversity_disclosure: Diversity disclosures updated
