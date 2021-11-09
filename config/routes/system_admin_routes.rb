@@ -20,7 +20,6 @@ module SystemAdminRoutes
               get "delete"
             end
           end
-          
 
           scope module: :imports do
             post "/users/import", to: "users#create", as: :import_user

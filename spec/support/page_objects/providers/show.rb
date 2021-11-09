@@ -15,14 +15,6 @@ module PageObjects
       element :edit_user_data, ".registered-users .user-card a"
 
       sections :registered_user_cards, PageObjects::Sections::UserCard, ".registered-users .user-card"
-
-    private
-
-      def user_cards(element_node)
-        within(element_node) do
-          find_all(".user-card")
-        end
-      end
     end
   end
 end
