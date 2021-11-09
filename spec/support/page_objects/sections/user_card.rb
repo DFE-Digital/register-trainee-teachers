@@ -5,7 +5,7 @@ require_relative "base"
 module PageObjects
   module Sections
     class UserCard < PageObjects::Sections::Base
-      element :button, ".govuk-button--warning"
+      element :delete_user_button, ".govuk-button--warning"
     end
   end
 end
