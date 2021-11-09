@@ -21,11 +21,11 @@ feature "Edit providers" do
   end
 
   def when_i_visit_the_provider_index_page
-    provider_index_page.load
+    providers_index_page.load
   end
 
   def when_i_click_on_provider_name
-    provider_index_page.provider_card.name.click
+    providers_index_page.provider_card.name.click
   end
 
   def and_i_click_edit_this_provider

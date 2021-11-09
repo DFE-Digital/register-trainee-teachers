@@ -9,9 +9,9 @@
 
 <h1 class="govuk-heading-l"><%= @provider.name %></h1>
 
-<p> <%= govuk_link_to "Edit this provider", edit_provider_path, { class: "govuk-link govuk-link--no-visited-state" } %> </p>
+<p> <%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %> </p>
 
-<%= render "system_admin/menu" %>
+<%= render "system_admin/provider_tab_nav" %>
 
 <p class="govuk-body">
   <%= render GovukComponent::StartButtonComponent.new(
@@ -20,30 +20,10 @@
 ) %>
 </p>
 
-<h1 class="govuk-heading-m">Registered users</h1>
-
 <% if @users_view.registered.any? %>
   <div class="govuk-!-margin-bottom-8 registered-users">
     <%= render UserCard::View.with_collection(@users_view.registered, show_register_button: false) %>
   </div>
 <% else %>
   <p class="govuk-body">There are no users yet.</p>
-<% end %>
-
-<h1 class="govuk-heading-m">DTTP users</h1>
-
-<% if @users_view.not_registered.any? %>
-  <div class="govuk-!-margin-bottom-8 unregistered-users">
-    <div class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-3">
-      These users are not registered with the provider on this service.
-    </div>
-
-    <%= render UserCard::View.with_collection(
-      @users_view.not_registered,
-      show_register_button: true,
-      registration_form_path: provider_import_user_path(@provider.id),
-    ) %>
-  </div>
-<% else %>
-  <p class="govuk-body">All users with this provider are registered.</p>
 <% end %>

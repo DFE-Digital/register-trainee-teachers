@@ -37,11 +37,11 @@ feature "Creating a new user" do
 private
 
   def when_i_visit_the_provider_index_page
-    provider_index_page.load
+    providers_index_page.load
   end
 
   def and_i_click_on_a_provider
-    provider_index_page.provider_card.name.click
+    providers_index_page.provider_card.name.click
   end
 
   def then_i_am_taken_to_the_provider_show_page
@@ -50,10 +50,6 @@ private
 
   def and_i_click_on_add_a_user
     provider_show_page.add_a_user.click
-  end
-
-  def provider_show_page
-    @provider_show_page ||= PageObjects::Providers::Show.new
   end
 
   def and_i_fill_in_first_name
@@ -78,13 +74,5 @@ private
 
   def then_i_should_see_the_error_summary
     expect(new_user_page.error_summary).to be_visible
-  end
-
-  def provider_index_page
-    @provider_index_page ||= PageObjects::Providers::Index.new
-  end
-
-  def new_user_page
-    @new_user_page ||= PageObjects::Users::New.new
   end
 end

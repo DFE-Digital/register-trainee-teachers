@@ -18,10 +18,6 @@ module PageObjects
         user_cards(registered_user_data)
       end
 
-      def unregistered_users
-        user_cards(unregistered_user_data)
-      end
-
     private
 
       def user_cards(element_node)

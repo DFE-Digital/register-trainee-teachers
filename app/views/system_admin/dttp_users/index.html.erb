@@ -1,0 +1,30 @@
+<%= render PageTitle::View.new(text: @provider.name, has_errors: @provider.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: providers_path,
+    ) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= @provider.name %></h1>
+
+<p> <%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %> </p>
+
+<%= render "system_admin/provider_tab_nav" %>
+
+<% if @users_view.not_registered.any? %>
+  <div class="govuk-!-margin-bottom-8 unregistered-users">
+    <div class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-3">
+      These users are not registered with the provider on this service.
+    </div>
+
+    <%= render UserCard::View.with_collection(
+      @users_view.not_registered,
+      show_register_button: true,
+      registration_form_path: provider_import_user_path(@provider.id),
+      ) %>
+  </div>
+<% else %>
+  <p class="govuk-body">All users with this provider are registered.</p>
+<% end %>
