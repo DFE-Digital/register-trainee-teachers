@@ -9,6 +9,7 @@ module Trainees
     }.freeze
 
     def edit
+      redirect_to(edit_trainee_start_status_path(trainee)) if @trainee.commencement_date.blank?
       @trainee_start_date_form = TraineeStartDateForm.new(trainee)
     end
 

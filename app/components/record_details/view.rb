@@ -93,7 +93,13 @@ module RecordDetails
     end
 
     def trainee_start_date_row
-      mappable_field(trainee_start_date, t(".trainee_start_date"), edit_trainee_start_date_path(trainee))
+      return if @trainee.course_start_date.nil?
+
+      if @trainee.course_start_date <= Time.zone.now
+        mappable_field(trainee_start_date, t(".trainee_start_date"), edit_trainee_start_date_path(trainee))
+      else
+        mappable_field(trainee_start_date, t(".trainee_start_date"), nil)
+      end
     end
 
     def render_text_with_hint(date)
