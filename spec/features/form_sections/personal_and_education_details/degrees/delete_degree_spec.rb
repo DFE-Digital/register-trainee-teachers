@@ -36,7 +36,7 @@ private
   end
 
   def then_i_should_not_see_any_degree
-    expect(degrees_confirm_page.page_heading.text).to eql("Confirm trainee’s degree details")
+    expect(degrees_confirm_page.page_heading.text).to eql("Confirm degree details")
     expect(degrees_confirm_page.main_content.find_all(".govuk-summary-list__row")).to be_empty
   end
 

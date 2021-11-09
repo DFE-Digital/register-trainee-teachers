@@ -93,14 +93,14 @@ en:
     confirmation:
       missing: missing
       not_provided: Not provided
-      heading: "Confirm trainee’s %{section_title}"
+      heading: "Confirm %{section_title}"
       cancel_and_return: Cancel and return to record
       trainee_id:
         title: &trainee_id Trainee ID
       start_date:
-        title: Start date
+        title: Trainee start date
       start_status:
-        title: Start date
+        title: Trainee start date
         itt_not_yet_started: *itt_not_yet_started
       funding:
         title: Funding
