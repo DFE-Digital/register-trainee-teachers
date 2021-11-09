@@ -18,7 +18,7 @@ RSpec.describe ReviewDraft::ApplyDraft::View do
           expect(rendered_component).to have_text("Course details")
           expect(rendered_component).to have_text("Trainee data")
           expect(rendered_component).to have_text("Placement details")
-          expect(rendered_component).to have_text("Training details")
+          expect(rendered_component).to have_text("Trainee ID")
         end
 
         it "does not render non provider-led sections" do
@@ -32,7 +32,7 @@ RSpec.describe ReviewDraft::ApplyDraft::View do
         it "renders the correct provider-led sections" do
           expect(rendered_component).to have_text("Course details")
           expect(rendered_component).to have_text("Trainee data")
-          expect(rendered_component).to have_text("Training details")
+          expect(rendered_component).to have_text("Trainee ID")
         end
 
         it "does not render non provider-led sections" do
@@ -48,7 +48,7 @@ RSpec.describe ReviewDraft::ApplyDraft::View do
         it "renders the correct school direct sections" do
           expect(rendered_component).to have_text("Course details")
           expect(rendered_component).to have_text("Trainee data")
-          expect(rendered_component).to have_text("Training details")
+          expect(rendered_component).to have_text("Trainee ID")
           expect(rendered_component).to have_text(school_details_title(route))
         end
 

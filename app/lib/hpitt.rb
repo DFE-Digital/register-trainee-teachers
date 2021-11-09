@@ -124,6 +124,7 @@ module HPITT
       trainee.progress.course_details = true
       trainee.progress.training_details = true
       trainee.progress.trainee_data = true
+      trainee.progress.trainee_start_status = true
       trainee.progress.schools = true
       trainee.progress.placement_details = true
 

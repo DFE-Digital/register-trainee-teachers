@@ -28,7 +28,6 @@ module TrainingDetails
 
       {
         id: 1,
-        commencement_date: date,
         trainee_id: "#{date.year}/#{date.year + 1}-1",
       }
     end

@@ -9,7 +9,6 @@ module ConfirmDetailsHelper
       "degrees" => "trainee_degrees_confirm_path",
       "course-details" => "trainee_course_details_confirm_path",
       "publish-course-details" => "trainee_publish_course_details_confirm_path",
-      "trainee-id" => "trainee_trainee_id_confirm_path",
       "trainee-start-date" => "trainee_start_date_confirm_path",
       "trainee-start-status" => "trainee_start_status_confirm_path",
       "training-details" => "trainee_training_details_confirm_path",

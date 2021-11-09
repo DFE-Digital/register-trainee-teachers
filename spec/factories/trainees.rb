@@ -172,6 +172,12 @@ FactoryBot.define do
       course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
     end
 
+    trait :with_study_mode_and_future_course_dates do
+      study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
+      course_start_date { Faker::Date.between(from: Time.zone.tomorrow, to: 1.year.from_now) }
+      course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: 2.years.from_now + 1.day) }
+    end
+
     trait :with_publish_course_details do
       training_route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
       course_uuid { create(:course_with_subjects, route: training_route, accredited_body_code: provider.code).uuid }

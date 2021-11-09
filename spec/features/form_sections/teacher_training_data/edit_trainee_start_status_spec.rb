@@ -7,39 +7,55 @@ feature "edit Trainee start status" do
 
   let(:new_start_date) { Date.tomorrow }
 
-  background do
-    given_i_am_authenticated
-    given_a_trainee_exists(:submitted_for_trn)
-    when_i_visit_the_edit_trainee_start_status_page
+  context "for a non-draft trainee" do
+    background do
+      given_i_am_authenticated
+      given_a_trainee_exists(:submitted_for_trn)
+      when_i_visit_the_edit_trainee_start_status_page
+    end
+
+    scenario "when the trainee has started on time" do
+      when_i_choose_the_trainee_has_started_on_time
+      when_i_change_the_start_date
+      when_i_click_continue
+      then_i_am_taken_to_the_confirmation_page
+      when_i_confirm
+      then_i_am_redirected_to_the_record_page
+      then_the_trainee_start_date_is_updated_with_the_course_start_date
+    end
+
+    scenario "when the trainee has started later" do
+      when_i_choose_the_trainee_has_started_later
+      when_i_change_the_start_date
+      when_i_click_continue
+      then_i_am_taken_to_the_confirmation_page
+      when_i_confirm
+      then_i_am_redirected_to_the_record_page
+      then_the_trainee_start_date_is_updated
+    end
+
+    scenario "when the trainee has not yet started" do
+      when_i_choose_the_trainee_has_not_yet_started
+      when_i_click_continue
+      then_i_am_taken_to_the_confirmation_page
+      when_i_confirm
+      then_i_am_redirected_to_the_record_page
+      then_the_trainee_commencement_status_is_updated_to_not_yet_started
+    end
   end
 
-  scenario "when the trainee has started on time" do
-    when_i_choose_the_trainee_has_started_on_time
-    when_i_change_the_start_date
-    when_i_click_continue
-    then_i_am_taken_to_the_confirmation_page
-    when_i_confirm
-    then_i_am_redirected_to_the_record_page
-    then_the_trainee_start_date_is_updated_with_the_course_start_date
-  end
+  context "for a draft trainee" do
+    background do
+      given_i_am_authenticated
+      given_a_trainee_exists(:draft, :completed)
+      when_i_visit_the_edit_trainee_start_status_page
+    end
 
-  scenario "when the trainee has started later" do
-    when_i_choose_the_trainee_has_started_later
-    when_i_change_the_start_date
-    when_i_click_continue
-    then_i_am_taken_to_the_confirmation_page
-    when_i_confirm
-    then_i_am_redirected_to_the_record_page
-    then_the_trainee_start_date_is_updated
-  end
-
-  scenario "when the trainee has not yet started" do
-    when_i_choose_the_trainee_has_not_yet_started
-    when_i_click_continue
-    then_i_am_taken_to_the_confirmation_page
-    when_i_confirm
-    then_i_am_redirected_to_the_record_page
-    then_the_trainee_commencement_status_is_updated_to_not_yet_started
+    scenario "they are submitted for TRN" do
+      when_i_choose_the_trainee_has_not_yet_started
+      when_i_click_continue
+      then_i_am_redirected_to_the_trn_success_page
+    end
   end
 
   def when_i_visit_the_edit_trainee_start_status_page
@@ -63,7 +79,7 @@ feature "edit Trainee start status" do
   end
 
   def when_i_click_continue
-    trainee_id_edit_page.continue.click
+    training_details_page.continue.click
   end
 
   def then_i_am_taken_to_the_confirmation_page
@@ -71,7 +87,7 @@ feature "edit Trainee start status" do
   end
 
   def when_i_confirm
-    confirm_trainee_id_page.confirm.click
+    confirm_training_details_page.confirm.click
   end
 
   def then_the_trainee_start_date_is_updated
@@ -84,5 +100,9 @@ feature "edit Trainee start status" do
 
   def then_the_trainee_commencement_status_is_updated_to_not_yet_started
     expect(record_page.record_detail.start_date_row).to have_text(I18n.t("components.confirmation.start_status.itt_not_yet_started"))
+  end
+
+  def then_i_am_redirected_to_the_trn_success_page
+    expect(trn_success_page).to be_displayed
   end
 end

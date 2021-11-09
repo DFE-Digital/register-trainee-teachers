@@ -45,6 +45,7 @@ module Features
       create(:course_with_subjects,
              accredited_body_code: trainee.provider.code,
              route: trainee.training_route,
+             start_date: 1.month.from_now,
              subject_names: [AllocationSubjects::PRIMARY])
     end
 
@@ -65,8 +66,8 @@ module Features
     end
 
     def and_the_course_date_fields_are_completed
-      course_details_page.set_date_fields(start_date, "11/3/2021")
-      course_details_page.set_date_fields(end_date, "11/3/2022")
+      course_details_page.set_date_fields(start_date, 1.month.from_now.strftime("%d/%m/%Y"))
+      course_details_page.set_date_fields(end_date, 1.year.from_now.strftime("%d/%m/%Y"))
     end
 
     def and_the_course_education_phase_is_completed
@@ -98,6 +99,10 @@ module Features
 
     def and_i_submit_the_course_details_form
       course_details_page.submit_button.click
+    end
+
+    def valid_date_after_course_start_date
+      Faker::Date.between(from: trainee.course_start_date, to: Time.zone.today)
     end
 
   private
