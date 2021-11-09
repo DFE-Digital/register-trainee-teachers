@@ -21,6 +21,8 @@ module PageObjects
 
       element :text_search, "#text_search"
       element :early_years_checkbox, "#level-early_years"
+      element :complete_checkbox, "#record_completion-complete"
+      element :incomplete_checkbox, "#record_completion-incomplete"
       element :assessment_only_checkbox, "#training_route-assessment_only"
       element :draft_checkbox, "#state-draft"
       element :imported_from_apply_checkbox, "#record_source-apply"

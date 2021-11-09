@@ -11,6 +11,16 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
+  scenario "can filter by complete records" do
+    when_i_filter_by_complete
+    then_only_complete_records_are_visible
+  end
+
+  scenario "can filter by incomplete records" do
+    when_i_filter_by_incomplete
+    then_only_incomplete_records_are_visible
+  end
+
   scenario "can filter by subject" do
     when_i_filter_by_subject("Biology")
     then_only_biology_trainees_are_visible
@@ -127,6 +137,7 @@ private
     @history_trainee ||= create(:trainee, :with_subject_specialism, subject_name: CourseSubjects::HISTORY)
     @searchable_trainee ||= create(:trainee, trn: "123")
     @draft_trainee ||= create(:trainee, :draft)
+    @non_draft_trainee ||= create(:trainee, :submitted_for_trn)
     @withdrawn_trainee ||= create(:trainee, :withdrawn)
     @early_years_trainee ||= create(:trainee, :early_years_undergrad)
     @primary_trainee ||= create(:trainee, course_age_range: AgeRange::THREE_TO_EIGHT)
@@ -176,6 +187,16 @@ private
     trainee_index_page.apply_filters.click
   end
 
+  def when_i_filter_by_complete
+    trainee_index_page.complete_checkbox.check
+    trainee_index_page.apply_filters.click
+  end
+
+  def when_i_filter_by_incomplete
+    trainee_index_page.incomplete_checkbox.check
+    trainee_index_page.apply_filters.click
+  end
+
   def when_i_filter_by_early_years_level
     trainee_index_page.early_years_checkbox.click
     trainee_index_page.apply_filters.click
@@ -219,6 +240,14 @@ private
   def then_only_biology_trainees_are_visible
     expect(trainee_index_page).to have_text(full_name(@biology_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@history_trainee))
+  end
+
+  def then_only_complete_records_are_visible
+    expect(trainee_index_page).to have_text(full_name(@non_draft_trainee))
+  end
+
+  def then_only_incomplete_records_are_visible
+    expect(trainee_index_page).to have_text(full_name(@draft_trainee))
   end
 
   def then_only_the_searchable_trainee_is_visible

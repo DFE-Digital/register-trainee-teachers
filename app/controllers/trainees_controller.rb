@@ -20,9 +20,11 @@ class TraineesController < ApplicationController
     @completed_trainees = paginated_trainees.reject(&:draft?)
 
     # sort_by is to enable alphabetization in line with translations, which is named different to the hash.
-    @training_routes = policy_scope(Trainee)
-                         .group(:training_route)
-                         .count.keys.sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
+    @training_routes = policy_scope(Trainee).group(:training_route)
+                                            .count
+                                            .keys
+                                            .sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
+
     @providers = Provider.all.order(:name)
 
     respond_to do |format|
@@ -116,7 +118,17 @@ private
   end
 
   def permitted_params
-    [:subject, :text_search, :sort_by, { level: [], training_route: [], state: [], record_source: [] }]
+    [
+      :subject,
+      :text_search,
+      :sort_by, {
+        level: [],
+        training_route: [],
+        state: [],
+        record_source: [],
+        record_completion: [],
+      }
+    ]
   end
 
   def multiple_record_sources?
