@@ -45,6 +45,17 @@ module RecordDetails
       end
     end
 
+    context "when the trainee has not started their itt" do
+      before do
+        trainee.commencement_status = :itt_not_yet_started
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+      end
+
+      it "renders the itt not yet started text" do
+        expect(rendered_component).to have_text(t("record_details.view.itt_not_yet_started"))
+      end
+    end
+
     context "when data has been provided" do
       before do
         render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))

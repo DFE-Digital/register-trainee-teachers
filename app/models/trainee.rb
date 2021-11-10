@@ -59,6 +59,8 @@ class Trainee < ApplicationRecord
     gender_not_provided: 3,
   }
 
+  enum commencement_status: COMMENCEMENT_STATUSES
+
   enum diversity_disclosure: {
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] => 1,

@@ -58,7 +58,7 @@ en:
       trainee_status: Trainee status
       last_updated: Last updated
       record_created: Record created
-      trainee_start_date: Trainee start date
+      trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
       progress_date_prefix:
         recommended_for_award: "Recommended: "
@@ -66,6 +66,7 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
+      itt_not_yet_started: &itt_not_yet_started Trainee has not started yet
   training_details:
     view:
       title: Trainee start date and ID
@@ -92,12 +93,15 @@ en:
     confirmation:
       missing: missing
       not_provided: Not provided
-      heading: "Confirm trainee’s %{section_title}"
+      heading: "Confirm %{section_title}"
       cancel_and_return: Cancel and return to record
       trainee_id:
         title: &trainee_id Trainee ID
       start_date:
-        title: Start date
+        title: Trainee start date
+      start_status:
+        title: Trainee start date
+        itt_not_yet_started: *itt_not_yet_started
       funding:
         title: Funding
         training_initiative:
@@ -361,7 +365,7 @@ en:
           course_uuid: Course updated
           course_max_age: Course age range updated
           course_subject_one: Course subject updated
-          commencement_date: Start date updated
+          commencement_date: Trainee start date updated
           trainee_id: Trainee ID updated
           disability_disclosure: Disability disclosures updated
           diversity_disclosure: Diversity disclosures updated
@@ -612,7 +616,7 @@ en:
             This is the date the trainee starts on the course. This can be different from the course start date.<br>
             For example, 9 7 %{year}
         commencement_date_manual:
-          label: Trainee start date
+          label: *trainee_start_date
           hint: For example, 9 7 %{year}
         trainee_id:
           label: Assign a trainee ID
@@ -878,6 +882,14 @@ en:
     training_routes:
       form_fields:
         provider_led_hint: Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
+    start_statuses:
+      edit:
+        itt_not_yet_started: They have not started yet
+        label: Did the trainee start their ITT on time?
+        on_time: Yes, they started on time — %{course_start_date}
+        started_later: No, they started later
+        trainee_start_date: *trainee_start_date
+        trainee_start_date_hint: For example, 8 11 2021
   activerecord:
     attributes:
       trainee:
@@ -1211,6 +1223,14 @@ en:
               blank: Enter a start date
               invalid: Enter a valid start date
               not_before_course_start_date: *not_before_course_start_date
+        trainee_start_status_form:
+          attributes:
+            commencement_date:
+              blank: Enter a start date
+              invalid: Enter a valid start date
+              not_before_course_start_date: *not_before_course_start_date
+            commencement_status:
+              blank: Select if the trainee started on time
         training_details_form:
           attributes:
             commencement_date:

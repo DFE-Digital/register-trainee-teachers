@@ -103,6 +103,8 @@ module RecordDetails
     end
 
     def trainee_start_date
+      return t(".itt_not_yet_started") if trainee.itt_not_yet_started?
+
       trainee.commencement_date.present? ? date_for_summary_view(trainee.commencement_date) : nil
     end
 

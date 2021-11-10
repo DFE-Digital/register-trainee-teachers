@@ -51,9 +51,14 @@ module RecordDetails
       render(View.new(trainee: trainee, last_updated_event: last_updated_event))
     end
 
+    def with_itt_not_yet_started
+      trainee = mock_trainee("eyts_awarded", :awarded, TRAINING_ROUTE_ENUMS[:early_years_undergrad], :itt_not_yet_started)
+      render(View.new(trainee: trainee, last_updated_event: last_updated_event))
+    end
+
   private
 
-    def mock_trainee(trainee_id, state = :draft, training_route = TRAINING_ROUTE_ENUMS[:assessment_only])
+    def mock_trainee(trainee_id, state = :draft, training_route = TRAINING_ROUTE_ENUMS[:assessment_only], commencement_status = :itt_started_later)
       @mock_trainee ||= Trainee.new(
         id: 1,
         training_route: training_route,
@@ -65,6 +70,8 @@ module RecordDetails
         defer_date: state == :deferred ? Time.zone.today : nil,
         withdraw_date: state == :withdrawn ? Time.zone.today : nil,
         recommended_for_award_at: state == :recommended_for_award ? Time.zone.now : nil,
+        commencement_date: Time.zone.now,
+        commencement_status: commencement_status,
         awarded_at: state == :awarded ? Time.zone.now : nil,
         provider: mock_provider,
       )
