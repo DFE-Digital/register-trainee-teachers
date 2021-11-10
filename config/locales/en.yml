@@ -315,6 +315,10 @@ en:
             show: Confirm trainee’s course details
           course_details:
             edit: Review course
+        forbidden_deletes:
+          show: Delete forbidden
+        start_date_verification:
+          show: Did the trainee start their course?
       providers:
         index: Providers
         new: Add a provider
@@ -882,6 +886,20 @@ en:
         started_later: No, they started later
         trainee_start_date: *trainee_start_date
         trainee_start_date_hint: For example, 8 11 2021
+    start_date_verifications:
+      show:
+        legend: Did the trainee start their course?
+        yes_they_started: Yes, they started
+        no_they_did_not_start: No, they did not start
+    forbidden_deletes:
+      show:
+        title: Delete forbidden
+        heading: You cannot delete this record
+        reason: You can only delete a trainee record before the trainee starts their course, but you can defer or withdraw the trainee.
+        defer: Defer
+        withdraw: Withdraw
+        return_to_record: Return to trainee record
+        legend: Do you want to defer or withdraw this trainee?
   activerecord:
     attributes:
       trainee:
@@ -1227,8 +1245,8 @@ en:
           attributes:
             query:
               length:
-                one: "Enter at least one character"
-                other: "Enter at least %{count} characters"
+                one: Enter at least one character
+                other: Enter at least %{count} characters
         subject_specialism_form:
           attributes:
             specialism:
@@ -1279,6 +1297,14 @@ en:
           attributes:
             course_education_phase:
               blank: Select primary or secondary
+        start_date_verification_form:
+          attributes:
+            trainee_has_started_course:
+              blank: Choose yes or no
+        trainee_forbidden_delete_form:
+          attributes:
+            alternative_option:
+              blank: Choose defer, withdraw or return to trainee record
   page_headings:
     start_page: Register trainee teachers
   service_updates:

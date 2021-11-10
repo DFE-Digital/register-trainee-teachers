@@ -1,0 +1,44 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.forbidden_deletes.show",
+                               has_errors: @trainee_forbidden_deletes_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back),
+                                                   href: edit_trainee_start_status_path(@trainee, context: :delete)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @trainee_forbidden_deletes_form,
+                           url: trainee_forbidden_deletes_path(@trainee),
+                           local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= f.hidden_field :alternative_option %>
+
+      <%= render TraineeName::View.new(@trainee) %>
+
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+      <p class="govuk-body"><%= t(".reason") %></p>
+
+      <%= f.govuk_radio_buttons_fieldset(:alternative_option, legend: { text: t(".legend"), size: "m" }) do %>
+        <%= f.govuk_radio_button(:alternative_option,
+                                 :defer,
+                                 label: { text: t(".defer") },
+                                 link_errors: true) %>
+
+        <%= f.govuk_radio_button(:alternative_option,
+                                 :withdraw,
+                                 label: { text: t(".withdraw") }) %>
+
+        <div class="govuk-radios__divider">or</div>
+
+        <%= f.govuk_radio_button(:alternative_option,
+                                 :exit,
+                                 checked: false,
+                                 label: { text: t(".return_to_record") }) %>
+      <% end %>
+      <%= f.govuk_submit t(:continue) %>
+    <% end %>
+
+    <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+  </div>
+</div>

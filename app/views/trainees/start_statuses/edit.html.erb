@@ -1,13 +1,19 @@
 <%= render PageTitle::View.new(i18n_key: "trainees.trainee_start_date.edit", has_errors: @trainee_start_status_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+  <% if params[:context] == "delete" %>
+    <%= render GovukComponent::BackLinkComponent.new(text: t(:back),
+                                                     href: trainee_start_date_verification_path(@trainee)) %>
+  <% else  %>
+    <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+  <% end  %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @trainee_start_status_form, url: trainee_start_status_path, local: true) do |f| %>
       <%= f.govuk_error_summary %>
+      <%= hidden_field_tag :context, params[:context] %>
 
       <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_radio_buttons_fieldset(:commencement_status,
@@ -20,17 +26,20 @@
           <%= f.govuk_radio_button(:commencement_status, :itt_started_later,
                                    label: { text: t('.started_later') }) do %>
             <%= f.govuk_date_field :commencement_date, legend: {
-              text: t(".trainee_start_date"), size: "s", class: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular"
+              text: t(".trainee_start_date"),
+              size: "s",
+              class: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular"
             }, hint: { text: t(".trainee_start_date_hint") } %>
           <% end %>
 
+          <% unless params[:context] == "delete" %>
+            <%= f.govuk_radio_divider %>
 
-          <%= f.govuk_radio_divider %>
-
-          <%= f.govuk_radio_button(:commencement_status,
-                                   :itt_not_yet_started,
-                                   label: { text: t(".itt_not_yet_started") }) do %>
+            <%= f.govuk_radio_button(:commencement_status,
+                                     :itt_not_yet_started,
+                                     label: { text: t(".itt_not_yet_started") }) do %>
           <% end %>
+        <% end %>
       <% end %>
       <%= f.govuk_submit t(:continue) %>
     <% end %>

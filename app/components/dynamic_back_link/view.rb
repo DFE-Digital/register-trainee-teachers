@@ -2,12 +2,13 @@
 
 module DynamicBackLink
   class View < GovukComponent::Base
-    attr_reader :trainee, :text, :last_origin_page
+    attr_reader :trainee, :text, :last_origin_page, :consider_confirm_page
 
-    def initialize(trainee, text: nil, last_origin_page: false)
+    def initialize(trainee, text: nil, last_origin_page: false, consider_confirm_page: true)
       @trainee = trainee
       @text = text
       @last_origin_page = last_origin_page
+      @consider_confirm_page = consider_confirm_page
     end
 
     def link_text
@@ -16,7 +17,11 @@ module DynamicBackLink
 
     def path
       page_tracker = PageTracker.new(trainee_slug: trainee.slug, session: session, request: request)
-      page_tracker.public_send(last_origin_page ? :last_origin_page_path : :previous_page_path)
+      if last_origin_page
+        page_tracker.last_origin_page_path
+      else
+        page_tracker.previous_page_path(consider_confirm_page: consider_confirm_page)
+      end
     end
   end
 end
