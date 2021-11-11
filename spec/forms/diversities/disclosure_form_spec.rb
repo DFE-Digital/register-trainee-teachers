@@ -28,15 +28,39 @@ module Diversities
     end
 
     describe "#save!" do
-      let(:diversity_not_disclosed) { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
-
       before do
-        allow(form_store).to receive(:get).and_return({ "diversity_disclosure" => diversity_not_disclosed })
+        allow(form_store).to receive(:get).and_return({ "diversity_disclosure" => diversity_disclosure_value })
         allow(form_store).to receive(:set).with(trainee.id, :diversity_disclosure, nil)
       end
 
-      it "takes any data from the form store and saves it to the database" do
-        expect { subject.save! }.to change(trainee, :diversity_disclosure).to(diversity_not_disclosed)
+      context "diversity not disclosed" do
+        let(:diversity_disclosure_value) { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
+
+        it "saves the diversity disclosure value" do
+          expect { subject.save! }.to change(trainee, :diversity_disclosure).to(diversity_disclosure_value)
+        end
+
+        it "saves the disability disclosure as not provided" do
+          expect { subject.save! }.to change(trainee, :disability_disclosure).to(
+            Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
+          )
+        end
+      end
+
+      context "diversity changed to disclosed" do
+        let(:trainee) do
+          create(
+            :trainee,
+            :diversity_not_disclosed,
+            disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
+          )
+        end
+
+        let(:diversity_disclosure_value) { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] }
+
+        it "resets the disability disclosure" do
+          expect { subject.save! }.to change(trainee, :disability_disclosure).to(nil)
+        end
       end
     end
   end
