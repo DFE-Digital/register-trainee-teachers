@@ -188,6 +188,14 @@ FactoryBot.define do
       commencement_date { Faker::Date.between(from: 6.months.from_now, to: Time.zone.today) }
     end
 
+    trait :course_start_date_in_the_past do
+      with_study_mode_and_course_dates
+    end
+
+    trait :course_start_date_in_the_future do
+      with_study_mode_and_future_course_dates
+    end
+
     trait :diversity_disclosed do
       diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] }
     end

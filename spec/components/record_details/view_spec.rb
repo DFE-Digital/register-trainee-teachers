@@ -45,17 +45,6 @@ module RecordDetails
       end
     end
 
-    context "when the trainee has not started their itt" do
-      before do
-        trainee.commencement_status = :itt_not_yet_started
-        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
-      end
-
-      it "renders the itt not yet started text" do
-        expect(rendered_component).to have_text(t("record_details.view.itt_not_yet_started"))
-      end
-    end
-
     context "when data has been provided" do
       before do
         render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
@@ -153,6 +142,65 @@ module RecordDetails
 
         it "does not render the change link" do
           expect(rendered_component).not_to have_link(t("change"), href: "/trainees/#{trainee.slug}/trainee-start-date/edit")
+        end
+      end
+    end
+
+    context "Trainee start date row" do
+      context "when ITT start date in the future" do
+        before do
+          trainee.commencement_status = :itt_not_yet_started
+          trainee.course_start_date = 30.days.from_now.to_date
+          render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+        end
+
+        it "renders itt has not started text" do
+          expect(rendered_component).to have_text(t("record_details.view.itt_has_not_started"))
+        end
+
+        it "does not render link" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 0)
+        end
+      end
+
+      context "when ITT start date in the past" do
+        before do
+          trainee.commencement_status = :itt_started_on_time
+          trainee.course_start_date = 5.days.ago.to_date
+        end
+
+        context "commencement_date is set" do
+          let(:commencement_date) { 5.days.from_now.to_date }
+
+          before do
+            trainee.commencement_date = commencement_date
+            render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+          end
+
+          it "renders commencement_date" do
+            expect(rendered_component).to have_text(date_for_summary_view(commencement_date))
+          end
+
+          it "renders link to trainee start date form" do
+            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-date/edit")
+          end
+        end
+
+        context "commencement_date is not set" do
+          before do
+            trainee.commencement_date = nil
+            render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+          end
+
+          it "renders not provided" do
+            expect(rendered_component).to have_text(t("record_details.view.not_provided"))
+          end
+
+          it "renders link to trainee start status form" do
+            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-status/edit")
+          end
         end
       end
     end

@@ -68,7 +68,8 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
-      itt_not_yet_started: &itt_not_yet_started Trainee has not started yet
+      itt_has_not_started: ITT has not started
+      not_provided: Not provided
   training_details:
     view:
       title: *trainee_id
@@ -100,7 +101,7 @@ en:
         title: Trainee start date
       start_status:
         title: Trainee start date
-        itt_not_yet_started: *itt_not_yet_started
+        itt_not_yet_started: Trainee has not started yet
       funding:
         title: Funding
         training_initiative:

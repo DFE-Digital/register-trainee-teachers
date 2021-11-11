@@ -10,11 +10,11 @@ feature "edit Trainee start status" do
   context "for a non-draft trainee" do
     background do
       given_i_am_authenticated
-      given_a_trainee_exists(:submitted_for_trn)
-      when_i_visit_the_edit_trainee_start_status_page
     end
 
     scenario "when the trainee has started on time" do
+      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_past)
+      when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_started_on_time
       when_i_change_the_start_date
       when_i_click_continue
@@ -25,6 +25,8 @@ feature "edit Trainee start status" do
     end
 
     scenario "when the trainee has started later" do
+      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_past)
+      when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_started_later
       when_i_change_the_start_date
       when_i_click_continue
@@ -35,6 +37,8 @@ feature "edit Trainee start status" do
     end
 
     scenario "when the trainee has not yet started" do
+      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_future)
+      when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_not_yet_started
       when_i_click_continue
       then_i_am_taken_to_the_confirmation_page
@@ -99,7 +103,7 @@ feature "edit Trainee start status" do
   end
 
   def then_the_trainee_commencement_status_is_updated_to_not_yet_started
-    expect(record_page.record_detail.start_date_row).to have_text(I18n.t("components.confirmation.start_status.itt_not_yet_started"))
+    expect(record_page.record_detail.start_date_row).to have_text(I18n.t("record_details.view.itt_has_not_started"))
   end
 
   def then_i_am_redirected_to_the_trn_success_page
