@@ -15,7 +15,7 @@ module UserCard
 
     def mock_user
       User.new(
-        id: 123,
+        id: 1,
         first_name: "Luke",
         last_name: "Skywalker",
         email: "luke@email.com",

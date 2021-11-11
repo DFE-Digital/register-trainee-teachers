@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "../sections/user_card"
 module PageObjects
   module Providers
     class Show < PageObjects::Base
@@ -10,21 +11,10 @@ module PageObjects
 
       element :register_user, "#register-dttp-user"
 
-      element :registered_user_data, ".registered-users"
       element :unregistered_user_data, ".unregistered-users"
       element :edit_user_data, ".registered-users .user-card a"
 
-      def registered_users
-        user_cards(registered_user_data)
-      end
-
-    private
-
-      def user_cards(element_node)
-        within(element_node) do
-          find_all(".user-card")
-        end
-      end
+      sections :registered_user_cards, PageObjects::Sections::UserCard, ".registered-users .user-card"
     end
   end
 end

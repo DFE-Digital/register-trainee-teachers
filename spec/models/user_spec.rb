@@ -28,6 +28,35 @@ describe User do
     end
   end
 
+  describe "#active_user?" do
+    let(:first_user) { create(:user) }
+
+    subject { build(:user) }
+
+    context "user with same dttp_id as active user" do
+      before do
+        subject.dttp_id = first_user.dttp_id
+        subject.save
+      end
+
+      it "errors" do
+        expect(subject.errors[:dttp_id]).to include(I18n.t("activerecord.errors.models.user.attributes.dttp_id.taken"))
+      end
+    end
+
+    context "user with same dttp_id as inactive user" do
+      before do
+        subject.dttp_id = first_user.dttp_id
+        first_user.discard
+        subject.save
+      end
+
+      it "allows user to be saved" do
+        expect(subject.errors[:dttp_id]).not_to include(I18n.t("activerecord.errors.models.user.attributes.dttp_id.taken"))
+      end
+    end
+  end
+
   describe "associations" do
     it { is_expected.to belong_to(:provider).optional }
   end

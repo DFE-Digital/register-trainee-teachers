@@ -1,0 +1,25 @@
+<%= render PageTitle::View.new(i18n_key: "users.delete") %>
+
+<%= render GovukComponent::BackLinkComponent.new(
+      text: "Back",
+      href: provider_path(@provider),
+    ) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l govuk-!-margin-top-6"><%= @user.name %></span>
+
+    <h1 class="govuk-heading-l">Are you sure you want to remove this user?</h1>
+
+    <%= render GovukComponent::WarningTextComponent.new(
+      text: "This will delete the user permanently and cannot be undone",
+      icon_fallback_text: "Warning",
+    ) %>
+
+    <div class="govuk-body">
+      <%= govuk_button_to("Delete this user", user_path(@user), method: :delete, class: "govuk-button--warning") %>
+    </div>
+
+    <%= govuk_link_to("Cancel", provider_path(@provider)) %>
+  </div>
+</div>

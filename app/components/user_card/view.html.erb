@@ -20,6 +20,10 @@
     <%= govuk_link_to('Edit', edit_user_path(user)) %>
   </div>
 
+  <div class="govuk-body govuk-!-margin-top-2">
+    <%= govuk_button_to("Delete user", delete_user_path(user), method: :get, class: "govuk-button--warning") %>
+  </div>
+
   <% if show_register_button %>
     <%= govuk_button_to(
       "Register user to provider",

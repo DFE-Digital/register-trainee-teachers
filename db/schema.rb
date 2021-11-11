@@ -419,7 +419,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_135414) do
     t.datetime "discarded_at"
     t.index ["dfe_sign_in_uid"], name: "index_users_on_dfe_sign_in_uid", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
-    t.index ["dttp_id"], name: "index_users_on_dttp_id", unique: true
+    t.index ["dttp_id"], name: "index_unique_active_users", unique: true, where: "(discarded_at IS NULL)"
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider_id"], name: "index_users_on_provider_id"
   end

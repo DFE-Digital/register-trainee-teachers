@@ -14,7 +14,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
-  validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }, unless: :system_admin?
+  validates :dttp_id, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }, unless: :system_admin?
+  validates :dttp_id, uniqueness: true, if: :active_user?
 
   validate do |record|
     EmailFormatValidator.new(record).validate
@@ -24,6 +25,10 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def active_user?
+    User.exists?(dttp_id: dttp_id, discarded_at: nil)
   end
 
 private
