@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_135414) do
+ActiveRecord::Schema.define(version: 2021_11_10_151731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -387,9 +387,11 @@ ActiveRecord::Schema.define(version: 2021_11_08_135414) do
     t.boolean "employing_school_not_applicable", default: false
     t.boolean "submission_ready", default: false
     t.integer "commencement_status"
+    t.datetime "discarded_at"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
+    t.index ["discarded_at"], name: "index_trainees_on_discarded_at"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
     t.index ["employing_school_id"], name: "index_trainees_on_employing_school_id"

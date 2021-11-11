@@ -14,6 +14,7 @@ module PageObjects
       element :reinstate, ".govuk-link.reinstate"
       element :withdraw, ".govuk-link.withdraw"
       element :defer, ".govuk-link.defer"
+      element :delete, ".govuk-link.delete"
 
       section :record_detail, PageObjects::Sections::Summaries::RecordDetail, ".record-details"
       section :course_detail, PageObjects::Sections::Summaries::CourseDetail, ".course-details"

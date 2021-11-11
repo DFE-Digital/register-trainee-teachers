@@ -42,6 +42,10 @@ module Features
       @confirm_draft_deletions_page ||= PageObjects::Trainees::ConfirmDraftDeletions.new
     end
 
+    def confirm_trainee_delete_page
+      @confirm_page ||= PageObjects::Trainees::ConfirmDelete.new
+    end
+
     def confirm_details_page
       @confirm_details_page ||= PageObjects::Trainees::ConfirmDetails.new
     end

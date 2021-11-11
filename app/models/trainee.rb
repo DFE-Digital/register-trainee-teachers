@@ -3,6 +3,7 @@
 class Trainee < ApplicationRecord
   include Sluggable
   include PgSearch::Model
+  include Discard::Model
 
   belongs_to :provider
   belongs_to :apply_application, optional: true

@@ -91,8 +91,8 @@ describe TraineesController do
     context "with a non-draft trainee" do
       let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.provider) }
 
-      it "redirects to the trainee record page" do
-        expect(get(:destroy, params: { id: trainee })).to redirect_to(trainee_path(trainee))
+      it "redirects to the trainee index page" do
+        expect(get(:destroy, params: { id: trainee })).to redirect_to(trainees_path)
       end
     end
   end

@@ -223,7 +223,7 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def given_a_trainee_exists_to_be_withdrawn
-    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample)
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, commencement_date: 10.days.ago)
   end
 
   def given_a_deferred_trainee_exists

@@ -21,6 +21,8 @@ en:
   review: review
   completed: completed
   not_applicable: Not applicable
+  draft: draft
+  record: record
   header:
     items:
       sign_out: Sign out
@@ -521,8 +523,9 @@ en:
           subject: Subject
           type_of_training: Type of training
       edit:
+        delete: Delete
         defer: Defer
-        withdraw: withdraw
+        withdraw: Withdraw
         reinstate: Reinstate
         this_trainee: this trainee
         recommend_for_award: Recommend trainee for QTS
@@ -532,6 +535,9 @@ en:
           deferred: This record is deferred
       show:
         draft: "Draft"
+      delete:
+        draft: Draft deleted
+        record: Record deleted
     trainee_summary:
       contact_details:
         heading: Contact Details
@@ -548,6 +554,11 @@ en:
     confirm_reinstatement:
       heading: Check reinstatement details
       submit: Reinstate this trainee
+    confirm_delete:
+      caption: Draft record for
+      heading: Do you want to delete this %{record_type}?
+      warning: This will delete the record permanently and cannot be undone.
+      delete_button: Delete this %{record_type}
     forms:
       apply_applications:
         review_course_form:

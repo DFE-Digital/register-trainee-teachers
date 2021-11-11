@@ -19,9 +19,19 @@ module RecordActions
     end
 
     def action_links
-      return "#{reinstate_link} or #{withdraw_link}".html_safe if trainee.deferred?
+      links = [withdraw_link]
 
-      "#{defer_link} or #{withdraw_link}".html_safe
+      if trainee.deferred?
+        links.prepend(reinstate_link)
+      else
+        links.prepend(defer_link)
+      end
+
+      if delete_allowed?
+        links.prepend(delete_link)
+      end
+
+      links.join(" or ").html_safe
     end
 
   private
@@ -34,6 +44,10 @@ module RecordActions
       end
     end
 
+    def delete_link
+      govuk_link_to(t("views.trainees.edit.delete"), trainee_confirm_delete_path(trainee), class: "delete")
+    end
+
     def defer_link
       govuk_link_to(t("views.trainees.edit.defer"), trainee_deferral_path(trainee), class: "defer")
     end
@@ -44,6 +58,18 @@ module RecordActions
 
     def reinstate_link
       govuk_link_to(t("views.trainees.edit.reinstate"), trainee_reinstatement_path(trainee), class: "reinstate")
+    end
+
+    def delete_allowed?
+      course_starting_in_the_future? || course_started_but_trainee_has_not_specified_start_date?
+    end
+
+    def course_starting_in_the_future?
+      trainee.course_start_date && trainee.course_start_date > Time.zone.now
+    end
+
+    def course_started_but_trainee_has_not_specified_start_date?
+      !course_starting_in_the_future? && trainee.commencement_date.blank?
     end
   end
 end

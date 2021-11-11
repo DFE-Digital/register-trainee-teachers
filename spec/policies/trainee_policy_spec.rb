@@ -30,7 +30,7 @@ describe TraineePolicy do
     let(:user) { create(:user, provider: provider) }
     let(:provider) { create(:provider) }
 
-    subject { described_class.new(user, Trainee.all).resolve }
+    subject { described_class.new(user, Trainee).resolve }
 
     context "trainees belonging to the user's provider" do
       let(:trainee) { create(:trainee, provider: provider) }
@@ -44,9 +44,15 @@ describe TraineePolicy do
       it { is_expected.not_to contain_exactly(trainee) }
     end
 
+    context "trainees have been soft deleted" do
+      let(:trainee) { create(:trainee, :discarded, provider: provider) }
+
+      it { is_expected.not_to contain_exactly(trainee) }
+    end
+
     context "system_admin user" do
       let(:user) { system_admin_user }
-      let(:trainee) { create(:trainee) }
+      let(:trainee) { create(:trainee, :discarded) }
 
       it { is_expected.to contain_exactly(trainee) }
     end
