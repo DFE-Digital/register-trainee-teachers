@@ -24,7 +24,7 @@ module BigQuery
 
       it "inserts the json into the table" do
         expect(table).to receive(:insert).with([event_json])
-        described_class.new.perform(event_json, dataset_name, table_name)
+        described_class.new.perform(event_json: event_json, dataset: dataset_name, table: table_name)
       end
     end
 
@@ -35,7 +35,7 @@ module BigQuery
 
       it "noops" do
         expect(Google::Cloud::Bigquery).not_to receive(:new)
-        expect(described_class.new.perform(event_json, dataset_name, table_name)).to be_nil
+        expect(described_class.new.perform(event_json: event_json, dataset: dataset_name, table: table_name)).to be_nil
       end
     end
   end

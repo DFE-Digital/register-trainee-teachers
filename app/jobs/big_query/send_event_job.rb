@@ -6,7 +6,7 @@ module BigQuery
 
     self.logger = ActiveSupport::TaggedLogging.new(Logger.new(IO::NULL))
 
-    def perform(event_json, dataset = Settings.google.big_query.dataset, table = Settings.google.big_query.table_name)
+    def perform(event_json:, dataset: Settings.google.big_query.dataset, table: Settings.google.big_query.table_name)
       return unless FeatureService.enabled?("google.send_data_to_big_query")
 
       bq = Google::Cloud::Bigquery.new

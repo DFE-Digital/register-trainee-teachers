@@ -18,7 +18,7 @@ module EmitsRequestEvents
         end
       end
 
-      BigQuery::SendEventJob.perform_later(request_event.as_json)
+      BigQuery::SendEventJob.perform_later(event_json: request_event.as_json)
     end
   end
 end

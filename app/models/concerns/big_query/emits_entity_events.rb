@@ -42,7 +42,7 @@ module BigQuery
     def send_event(event)
       return unless big_query_enabled?
 
-      SendEventJob.perform_later(event.as_json)
+      SendEventJob.perform_later(event_json: event.as_json)
     end
 
     def entity_data(changeset)
