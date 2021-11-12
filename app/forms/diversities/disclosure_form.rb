@@ -18,7 +18,22 @@ module Diversities
       diversity_disclosure == Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
     end
 
+    def save!
+      if valid?
+        save_trainee!
+        clear_stash
+      else
+        false
+      end
+    end
+
   private
+
+    def save_trainee!
+      trainee.assign_attributes(fields.except(*fields_to_ignore_before_save))
+      trainee.disability_disclosure = diversity_not_disclosed? ? Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] : nil
+      trainee.save!
+    end
 
     def compute_fields
       trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
