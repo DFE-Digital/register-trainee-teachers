@@ -37,7 +37,7 @@ module ConfirmPublishCourse
         { key: subject_key, value: subject_names },
         { key: t(".level"), value: level },
         { key: t(".age_range"), value: age_range },
-        { key: t(".#{itt_route? ? 'itt' : 'course'}_start_date"), value: start_date },
+        { key: t(".itt_start_date"), value: start_date },
         { key: t(".duration"), value: duration },
         ({ key: t(".study_mode"), value: study_mode } if requires_study_mode?),
       ].compact
@@ -77,10 +77,6 @@ module ConfirmPublishCourse
     end
 
   private
-
-    def itt_route?
-      trainee.itt_route?
-    end
 
     def subject_key
       course.subjects.count > 1 ? t(".multiple_subjects") : t(".subject")

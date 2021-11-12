@@ -76,11 +76,7 @@ module CourseDetails
     end
 
     def course_date_row(value, context)
-      default_mappable_field(value, t("components.course_detail.#{itt_route? ? 'itt' : 'course'}_#{context}_date"))
-    end
-
-    def itt_route?
-      trainee.itt_route?
+      default_mappable_field(value, t("components.course_detail.itt_#{context}_date"))
     end
 
     def non_early_year_route?

@@ -69,11 +69,7 @@ class TraineeForm
 private
 
   def course_date_attribute_name_prefix
-    itt_route? ? :itt : :course
-  end
-
-  def itt_route?
-    trainee.itt_route?
+    :itt
   end
 
   def compute_fields

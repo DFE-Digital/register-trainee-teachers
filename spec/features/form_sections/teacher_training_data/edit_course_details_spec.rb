@@ -82,8 +82,8 @@ private
   end
 
   def and_i_enter_valid_parameters
-    course_details_page.set_date_fields("course_start_date", trainee.course_start_date.strftime("%d/%m/%Y"))
-    course_details_page.set_date_fields("course_end_date", trainee.course_end_date.strftime("%d/%m/%Y"))
+    course_details_page.set_date_fields("itt_start_date", trainee.course_start_date.strftime("%d/%m/%Y"))
+    course_details_page.set_date_fields("itt_end_date", trainee.course_end_date.strftime("%d/%m/%Y"))
 
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.course_age_range]
 
@@ -101,14 +101,15 @@ private
 
   def then_the_course_details_are_updated
     when_i_visit_the_course_details_page
+    # save_and_open_page
 
     expect(course_details_page.subject.value).to eq(trainee.reload.course_subject_one)
-    expect(course_details_page.course_start_date_day.value).to eq(trainee.course_start_date.day.to_s)
-    expect(course_details_page.course_start_date_month.value).to eq(trainee.course_start_date.month.to_s)
-    expect(course_details_page.course_start_date_year.value).to eq(trainee.course_start_date.year.to_s)
-    expect(course_details_page.course_end_date_day.value).to eq(trainee.course_end_date.day.to_s)
-    expect(course_details_page.course_end_date_month.value).to eq(trainee.course_end_date.month.to_s)
-    expect(course_details_page.course_end_date_year.value).to eq(trainee.course_end_date.year.to_s)
+    expect(course_details_page.itt_start_date_day.value).to eq(trainee.course_start_date.day.to_s)
+    expect(course_details_page.itt_start_date_month.value).to eq(trainee.course_start_date.month.to_s)
+    expect(course_details_page.itt_start_date_year.value).to eq(trainee.course_start_date.year.to_s)
+    expect(course_details_page.itt_end_date_day.value).to eq(trainee.course_end_date.day.to_s)
+    expect(course_details_page.itt_end_date_month.value).to eq(trainee.course_end_date.month.to_s)
+    expect(course_details_page.itt_end_date_year.value).to eq(trainee.course_end_date.year.to_s)
 
     age_range = Dttp::CodeSets::AgeRanges::MAPPING[trainee.course_age_range]
 
@@ -151,7 +152,7 @@ private
       I18n.t("#{translation_key_prefix}.main_age_range.blank"),
     )
     expect(course_details_page).to have_content(
-      I18n.t("#{translation_key_prefix}.course_start_date.blank"),
+      I18n.t("#{translation_key_prefix}.itt_start_date.blank"),
     )
   end
 

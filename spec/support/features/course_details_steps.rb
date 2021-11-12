@@ -83,7 +83,7 @@ module Features
     end
 
     def and_i_see_course_end_date_missing_error
-      expect(confirm_publish_course_details_page).to have_content("Course end date is missing")
+      expect(confirm_publish_course_details_page).to have_content("ITT end date is missing")
     end
 
     def and_i_click_enter_answer_for_course_end_date
@@ -94,7 +94,7 @@ module Features
     end
 
     def and_i_enter_course_end_date
-      course_details_page.set_date_fields("course_end_date", 1.year.from_now.strftime("%d/%m/%Y"))
+      course_details_page.set_date_fields("itt_end_date", 1.year.from_now.strftime("%d/%m/%Y"))
     end
 
     def and_i_submit_the_course_details_form
@@ -108,13 +108,11 @@ module Features
   private
 
     def start_date
-      trainee = trainee_from_url
-      trainee.itt_route? ? "itt_start_date" : "course_start_date"
+      "itt_start_date"
     end
 
     def end_date
-      trainee = trainee_from_url
-      trainee.itt_route? ? "itt_end_date" : "course_end_date"
+      "itt_end_date"
     end
   end
 end

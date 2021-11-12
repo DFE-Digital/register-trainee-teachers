@@ -163,28 +163,6 @@ describe TrainingRouteManager do
     end
   end
 
-  describe "#itt_route?" do
-    %i[early_years_undergrad pg_teaching_apprenticeship].each do |route|
-      context "with an itt trainee" do
-        let(:trainee) { build(:trainee, route) }
-
-        it "returns true" do
-          expect(subject.itt_route?).to be true
-        end
-      end
-
-      context "with the :routes_#{route} feature flag disabled", "feature_routes.#{route}": false do
-        context "with a non itt trainee" do
-          let(:trainee) { build(:trainee) }
-
-          it "returns false" do
-            expect(subject.itt_route?).to be false
-          end
-        end
-      end
-    end
-  end
-
   describe "#requires_study_mode?" do
     (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
       context "for route #{route}" do

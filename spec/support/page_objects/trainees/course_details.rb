@@ -12,14 +12,6 @@ module PageObjects
       element :study_mode_full_time, "input[name='course_details_form[study_mode]'][value='full_time']"
       element :study_mode_part_time, "input[name='course_details_form[study_mode]'][value='part_time']"
 
-      element :course_start_date_day, "#course_details_form_course_start_date_3i"
-      element :course_start_date_month, "#course_details_form_course_start_date_2i"
-      element :course_start_date_year, "#course_details_form_course_start_date_1i"
-
-      element :course_end_date_day, "#course_details_form_course_end_date_3i"
-      element :course_end_date_month, "#course_details_form_course_end_date_2i"
-      element :course_end_date_year, "#course_details_form_course_end_date_1i"
-
       element :itt_start_date_day, "#course_details_form_itt_start_date_3i"
       element :itt_start_date_month, "#course_details_form_itt_start_date_2i"
       element :itt_start_date_year, "#course_details_form_itt_start_date_1i"

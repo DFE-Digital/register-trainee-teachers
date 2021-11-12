@@ -12,7 +12,7 @@
       <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_date_field :commencement_date, legend: {
         text: t("views.forms.start_dates.commencement_date.label"), size: "l", tag: "h1"
-      }, hint: { text: t("views.forms.start_dates.commencement_date.hint") } %>
+      }, hint: { text: t("views.forms.start_dates.commencement_date.hint", course_start_date: @trainee.course_start_date.strftime("%d %m %Y")) } %>
       <%= f.govuk_submit "Continue" %>
     <% end %>
 
