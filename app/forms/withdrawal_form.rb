@@ -3,6 +3,7 @@
 class WithdrawalForm < MultiDateForm
   attr_accessor :withdraw_reason, :additional_withdraw_reason
 
+  validate :date_valid
   validate :withdraw_reason_valid
   validate :additional_withdraw_reason_valid
 
@@ -27,7 +28,7 @@ private
     withdraw_reason == WithdrawalReasons::FOR_ANOTHER_REASON
   end
 
-  def update_trainee
+  def assign_attributes_to_trainee
     trainee.assign_attributes({
       withdraw_date: date,
       withdraw_reason: withdraw_reason,

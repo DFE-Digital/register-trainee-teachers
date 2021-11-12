@@ -4,7 +4,7 @@ module PageObjects
   module Trainees
     class Deferral < PageObjects::Base
       include PageObjects::Helpers
-      set_url "/trainees/{trainee_id}/deferral-details/deferral-date/edit"
+      set_url "/trainees/{trainee_id}/defer"
 
       element :defer_date_radios, ".govuk-radios.deferral-date"
 

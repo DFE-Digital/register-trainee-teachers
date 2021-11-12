@@ -1,12 +1,4 @@
 <%= render SummaryCard::View.new(
-  title: t("components.confirmation.deferral_details.summary_title"),
-  rows: [
-    {
-      key: t("components.confirmation.deferral_details.defer_date_label"),
-      value: defer_date,
-      action_href: deferred_before_starting? ? nil: trainee_deferral_path(data_model.trainee),
-      action_text: t(:change),
-      action_visually_hidden_text: 'date of deferral',
-    },
-  ],
+  title: t(".summary_title"),
+  rows: rows,
 ) %>

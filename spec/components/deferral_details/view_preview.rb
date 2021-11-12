@@ -13,11 +13,11 @@ module DeferralDetails
   private
 
     def trainee
-      @trainee ||= Trainee.new(id: 1, defer_date: Time.zone.yesterday)
+      @trainee ||= Trainee.new(id: 1, defer_date: Time.zone.today)
     end
 
     def data_model
-      OpenStruct.new(trainee: trainee, date: trainee.defer_date)
+      OpenStruct.new(trainee: trainee, date: trainee.defer_date, itt_start_date: Time.zone.yesterday)
     end
   end
 end

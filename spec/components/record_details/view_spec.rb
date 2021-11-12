@@ -89,6 +89,14 @@ module RecordDetails
         it "renders the trainee status tag" do
           expect(rendered_component).to have_text("deferred")
         end
+
+        context "when trainee did not start ITT" do
+          let(:trainee) { create(:trainee, state, commencement_status: :itt_not_yet_started) }
+
+          it "renders text stating that the trainee deferred before starting" do
+            expect(rendered_component).to have_text("Trainee deferred before their ITT started")
+          end
+        end
       end
 
       context "when trainee state is withdrawn" do

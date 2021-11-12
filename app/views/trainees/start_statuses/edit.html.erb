@@ -1,9 +1,9 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.trainee_start_date.edit", has_errors: @trainee_start_status_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.trainee_start_status.edit", has_errors: @trainee_start_status_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <% if params[:context] == "delete" %>
+  <% if @trainee_start_status_form.next_step_context? %>
     <%= render GovukComponent::BackLinkComponent.new(text: t(:back),
-                                                     href: trainee_start_date_verification_path(@trainee)) %>
+                                                     href: trainee_start_date_verification_path(@trainee, context: @trainee_start_status_form.context)) %>
   <% else  %>
     <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>
   <% end  %>
@@ -12,9 +12,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @trainee_start_status_form,
-                           url: trainee_start_status_path(context: params[:context]),
+                           url: trainee_start_status_path,
                            local: true) do |f| %>
       <%= f.govuk_error_summary %>
+
+      <%= f.hidden_field :context %>
 
       <%= render TraineeName::View.new(@trainee) %>
 
@@ -34,7 +36,7 @@
             }, hint: { text: t(".trainee_start_date_hint") } %>
           <% end %>
 
-          <% unless %w[delete withdraw].include?(params[:context]) %>
+          <% unless @trainee_start_status_form.next_step_context? %>
             <%= f.govuk_radio_divider %>
 
             <%= f.govuk_radio_button(:commencement_status,

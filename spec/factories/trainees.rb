@@ -192,7 +192,7 @@ FactoryBot.define do
     end
 
     trait :with_start_date do
-      commencement_date { Faker::Date.between(from: course_start_date, to: course_end_date) }
+      commencement_date { Faker::Date.between(from: course_start_date, to: Time.zone.today) }
     end
 
     trait :course_start_date_in_the_past do

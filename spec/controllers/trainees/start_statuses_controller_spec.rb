@@ -13,12 +13,12 @@ describe Trainees::StartStatusesController, type: :controller do
       post(:update,
            params: {
              trainee_id: trainee,
-             context: page_context,
              trainee_start_status_form: {
                "commencement_status" => "itt_started_on_time",
                "commencement_date(3i)" => "",
                "commencement_date(2i)" => "",
                "commencement_date(1i)" => "",
+               context: page_context,
              },
            })
     end

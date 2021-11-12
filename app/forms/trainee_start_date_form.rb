@@ -36,7 +36,7 @@ private
   end
 
   def update_trainee_commencement_date
-    trainee.assign_attributes(commencement_date: commencement_date) if errors.empty?
+    trainee.assign_attributes(commencement_date: commencement_date)
   end
 
   def fields_from_store

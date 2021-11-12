@@ -30,6 +30,7 @@ class FormStore
     language_specialisms
     subject_specialism
     itt_start_date
+    start_date_verification
     study_modes
     course_education_phase
     training_details
