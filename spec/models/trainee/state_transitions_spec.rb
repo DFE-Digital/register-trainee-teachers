@@ -171,17 +171,20 @@ describe "Trainee state transitions" do
   end
 
   describe "#submit_for_trn" do
-    let(:time_now) { Time.zone.now }
-
     subject { create(:trainee, :draft) }
 
+    around do |example|
+      Timecop.freeze do
+        example.run
+      end
+    end
+
     before do
-      allow(Time).to receive(:now).and_return(time_now)
       subject.submit_for_trn!
     end
 
-    it "sets the #submitted_for_trn_at" do
-      expect(subject.submitted_for_trn_at).to eq(time_now)
+    it "sets the #submitted_for_trn_at to the time the record was submitted" do
+      expect(subject.submitted_for_trn_at).to eq(Time.zone.now)
     end
 
     context "with an apply application" do
