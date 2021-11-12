@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :track_page
   after_action :save_origin_path
   include Pundit
+  include EmitsRequestEvents
 
   rescue_from Pundit::NotAuthorizedError do
     render "errors/forbidden", status: :forbidden

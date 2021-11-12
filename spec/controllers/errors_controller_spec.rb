@@ -26,8 +26,8 @@ RSpec.describe ErrorsController, type: :controller do
 
   describe "flash messages" do
     it "will remove any flash messages" do
-      controller.action_methods.each do |action|
-        get action.to_sym, flash: { success: "Success" }
+      %i[not_found internal_server_error unprocessable_entity].each do |action|
+        get action, flash: { success: "Success" }
         expect(flash[:success]).not_to be_present
       end
     end
