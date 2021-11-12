@@ -144,6 +144,17 @@ module RecordDetails
           end
         end
       end
+
+      context "when trainee start date is in the future" do
+        let(:trainee) {
+          create(:trainee, state, training_route, trn: Faker::Number.number(digits: 10), provider: provider,
+                                                  course_start_date: Time.zone.tomorrow)
+        }
+
+        it "does not render the change link" do
+          expect(rendered_component).not_to have_link(t("change"), href: "/trainees/#{trainee.slug}/trainee-start-date/edit")
+        end
+      end
     end
   end
 end
