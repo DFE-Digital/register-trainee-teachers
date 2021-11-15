@@ -11,37 +11,66 @@ feature "submit for TRN" do
   end
 
   describe "submission" do
-    context "when all sections are completed" do
-      let(:trainee) { create(:trainee, :completed, provider: current_user.provider, course_uuid: nil) }
+    context "when course start date is in the past" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :completed,
+          provider: current_user.provider,
+          course_uuid: nil,
+        )
+      end
 
-      scenario "can submit the application" do
+      scenario "asks you for the trainee start date" do
         when_i_am_viewing_the_review_draft_page
         and_i_want_to_review_record_before_submitting_for_trn
         then_i_review_the_trainee_data
         and_i_click_the_submit_for_trn_button
-        and_i_am_redirected_to_the_success_page
-        with_the_correct_content
-      end
-
-      scenario "displays trainee name" do
-        when_i_am_viewing_the_review_draft_page
-        and_i_want_to_review_record_before_submitting_for_trn
-        then_i_review_the_trainee_data
-        expect(page).to have_content(trainee_name(trainee))
+        then_i_am_redirected_to_the_trainee_start_status_page
       end
     end
 
-    context "when all sections are not completed" do
-      before do
-        given_a_trainee_exists
+    context "when course start date is in the future" do
+      context "when all sections are completed" do
+        let(:trainee) do
+          create(
+            :trainee,
+            :completed,
+            :with_study_mode_and_future_course_dates,
+            provider: current_user.provider,
+            course_uuid: nil,
+          )
+        end
+
+        scenario "can submit the application" do
+          when_i_am_viewing_the_review_draft_page
+          and_i_want_to_review_record_before_submitting_for_trn
+          then_i_review_the_trainee_data
+          and_i_click_the_submit_for_trn_button
+          and_i_am_redirected_to_the_success_page
+          with_the_correct_content
+        end
+
+        scenario "displays trainee name" do
+          when_i_am_viewing_the_review_draft_page
+          and_i_want_to_review_record_before_submitting_for_trn
+          then_i_review_the_trainee_data
+          expect(page).to have_content(trainee_name(trainee))
+        end
       end
 
-      scenario "shows me an error if I try to submit" do
-        when_i_am_viewing_the_review_draft_page
-        and_i_want_to_review_record_before_submitting_for_trn
-        then_i_review_the_trainee_data
-        and_i_click_the_submit_for_trn_button
-        then_i_see_an_error_message
+      context "when all sections are not completed" do
+        before do
+          given_a_trainee_exists
+        end
+
+        scenario "shows me an error if I try to submit" do
+          when_i_am_viewing_the_review_draft_page
+          and_i_want_to_review_record_before_submitting_for_trn
+          then_i_review_the_trainee_data
+          and_i_click_the_submit_for_trn_button
+          then_i_see_an_error_message
+        end
       end
     end
   end
@@ -135,6 +164,10 @@ feature "submit for TRN" do
 
   def then_i_am_redirected_to_the_trainee_records_page
     expect(trainee_index_page).to be_displayed
+  end
+
+  def then_i_am_redirected_to_the_trainee_start_status_page
+    expect(trainee_start_status_edit_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def with_the_correct_content

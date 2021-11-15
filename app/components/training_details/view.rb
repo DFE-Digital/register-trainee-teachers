@@ -16,34 +16,25 @@ module TrainingDetails
     def training_details_rows
       [
         region,
-        mappable_field_row(trainee_start_date, t(".start_date")),
-        mappable_field_row(trainee.trainee_id, t("components.confirmation.trainee_id.title")),
+        MappableFieldRow.new(
+          field_value: trainee.trainee_id,
+          field_label: t(".title"),
+          text: t("components.confirmation.missing"),
+          action_url: edit_trainee_training_details_path(trainee),
+          has_errors: has_errors,
+          apply_draft: trainee.apply_application?,
+        ).to_h,
       ].compact
     end
 
   private
 
-    attr_accessor :data_model, :not_provided_copy, :has_errors, :show_region
+    attr_accessor :data_model, :has_errors
 
     def region
       return unless trainee&.provider&.hpitt_postgrad?
 
       { key: t(".region"), value: trainee.region.presence }
-    end
-
-    def trainee_start_date
-      date_for_summary_view(trainee.commencement_date) if trainee.commencement_date.present?
-    end
-
-    def mappable_field_row(field_value, field_label)
-      MappableFieldRow.new(
-        field_value: field_value,
-        field_label: field_label,
-        text: t("components.confirmation.missing"),
-        action_url: edit_trainee_training_details_path(trainee),
-        has_errors: has_errors,
-        apply_draft: trainee.apply_application?,
-      ).to_h
     end
   end
 end

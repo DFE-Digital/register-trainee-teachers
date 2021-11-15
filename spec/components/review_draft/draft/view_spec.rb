@@ -18,7 +18,7 @@ RSpec.describe ReviewDraft::Draft::View do
       expect(rendered_component).to have_text("Diversity information")
       expect(rendered_component).to have_text("Degree")
       expect(rendered_component).to have_text("Course details")
-      expect(rendered_component).to have_text("Trainee start date and ID")
+      expect(rendered_component).to have_text("Trainee ID")
     end
 
     it "does not render non assessment-only sections" do

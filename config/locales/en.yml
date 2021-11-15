@@ -54,7 +54,7 @@ en:
   record_details:
     view:
       provider: Accrediting provider
-      trainee_id: Trainee ID
+      trainee_id: &trainee_id Trainee ID
       region: &region Region
       submitted_for_trn: Submitted for TRN
       trainee_status: Trainee status
@@ -71,8 +71,7 @@ en:
       itt_not_yet_started: &itt_not_yet_started Trainee has not started yet
   training_details:
     view:
-      title: Trainee start date and ID
-      start_date: &commencement_date Trainee’s start date
+      title: *trainee_id
       region: *region
   components:
     admin_feature:
@@ -97,8 +96,6 @@ en:
       not_provided: Not provided
       heading: "Confirm %{section_title}"
       cancel_and_return: Cancel and return to record
-      trainee_id:
-        title: &trainee_id Trainee ID
       start_date:
         title: Trainee start date
       start_status:
@@ -263,10 +260,8 @@ en:
           recommended_eyts: Trainee recommended for EYTS
         personal_details:
           edit: Trainee personal details
-        trainee_ids:
-          edit: Trainee ID
         trainee_start_date:
-          edit: Trainee’s start date
+          edit: &commencement_date Trainee’s start date
         training_details:
           edit: Edit training details
         training_routes:
@@ -398,7 +393,7 @@ en:
         diversity: *diversity_information
         degrees: Degree details
         course_details: Course details
-        training_details: Training details
+        training_details: Trainee ID
         placement_details: Placement details
         lead_school: School details
         trainee_data: Trainee data
@@ -616,20 +611,7 @@ en:
           additional_reason: Enter the reason for withdrawal
           <<: *withdrawal_reasons
       training_details:
-        title: Trainee start date and ID
-        commencement_date_radio_option:
-          label: What is the trainee’s start date?
-          hint: This is the date the trainee starts on the course. This can be different from the course start date.
-          course: Use the course start date – %{date}
-          manual: Enter another date
-        commencement_date:
-          label: What is the trainee’s start date?
-          hint:
-            This is the date the trainee starts on the course. This can be different from the course start date.<br>
-            For example, 9 7 %{year}
-        commencement_date_manual:
-          label: *trainee_start_date
-          hint: For example, 9 7 %{year}
+        title: *trainee_id
         trainee_id:
           label: Assign a trainee ID
           hint:
@@ -908,7 +890,7 @@ en:
         record_sources:
           apply: Imported from Apply
           manual: Added manually
-        trainee_id: Trainee ID
+        trainee_id: *trainee_id
         training_routes:
           assessment_only: Assessment only
           early_years_assessment_only: Early years (assessment only)
@@ -1224,11 +1206,6 @@ en:
               blank: Enter a reason
             withdraw_reason:
               invalid: Choose a reason
-        trainee_id_form:
-          attributes:
-            trainee_id:
-              blank: Enter a trainee ID
-              max_char_exceeded: Your entry must not exceed 100 characters
         trainee_start_date_form:
           attributes:
             commencement_date:
@@ -1245,17 +1222,9 @@ en:
               blank: Select if the trainee started on time
         training_details_form:
           attributes:
-            commencement_date:
-              blank: Enter a start date
-              invalid: Enter a valid start date
-              future: Enter a start date closer to today
-              invalid_year: The year must include 4 numbers
-              not_before_course_start_date: *not_before_course_start_date
             trainee_id:
               blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
-            commencement_date_radio_option:
-              inclusion: Choose a start date
         schools_form:
           attributes:
             query:

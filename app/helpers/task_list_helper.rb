@@ -30,11 +30,10 @@ module TaskListHelper
 
     when :training_details
       {
-        task_name: (trainee.apply_application? ? "Training details" : "Trainee start date and ID"),
+        task_name: "Trainee ID",
         path: edit_trainee_training_details_path(trainee),
         confirm_path: trainee_training_details_confirm_path(trainee),
         classes: "training-details",
-        hint_text: "Start date and trainee ID",
         status: ProgressService.call(
           validator: TrainingDetailsForm.new(trainee),
           progress_value: trainee.progress.training_details,

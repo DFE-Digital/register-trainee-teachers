@@ -37,7 +37,7 @@ feature "edit Trainee start date" do
   end
 
   def when_i_click_continue
-    trainee_id_edit_page.continue.click
+    training_details_page.continue.click
   end
 
   def then_i_am_taken_to_the_confirmation_page
@@ -49,7 +49,7 @@ feature "edit Trainee start date" do
   end
 
   def when_i_confirm
-    confirm_trainee_id_page.confirm.click
+    confirm_training_details_page.confirm.click
   end
 
   def then_the_trainee_start_date_is_updated

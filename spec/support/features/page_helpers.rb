@@ -186,14 +186,6 @@ module Features
       @study_mode_edit_page ||= PageObjects::Trainees::EditStudyMode.new
     end
 
-    def trainee_id_edit_page
-      @trainee_id_edit_page ||= PageObjects::Trainees::EditTraineeId.new
-    end
-
-    def confirm_trainee_id_page
-      @confirm_trainee_id_page ||= PageObjects::Trainees::ConfirmTraineeId.new
-    end
-
     def trainee_start_date_edit_page
       @trainee_start_date_edit_page ||= PageObjects::Trainees::EditTraineeStartDate.new
     end

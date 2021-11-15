@@ -32,6 +32,7 @@ class FormStore
     itt_start_date
     study_modes
     course_education_phase
+    training_details
   ].freeze
 
   class << self

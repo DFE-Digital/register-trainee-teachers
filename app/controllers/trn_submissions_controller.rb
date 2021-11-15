@@ -10,11 +10,11 @@ class TrnSubmissionsController < ApplicationController
       return render("trainees/check_details/show")
     end
 
-    trainee.submit_for_trn!
+    unless trainee.starts_course_in_the_future?
+      return redirect_to(edit_trainee_start_status_path(trainee))
+    end
 
-    Dttp::RegisterForTrnJob.perform_later(trainee, current_user.dttp_id)
-    Dttp::RetrieveTrnJob.perform_with_default_delay(trainee)
-
+    Trainees::SubmitForTrn.call(trainee: trainee, dttp_id: current_user.dttp_id)
     redirect_to(trn_submission_path(trainee))
   end
 

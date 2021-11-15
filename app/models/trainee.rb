@@ -319,6 +319,10 @@ class Trainee < ApplicationRecord
     ((course_end_date - course_start_date) / 365).ceil
   end
 
+  def starts_course_in_the_future?
+    course_start_date && course_start_date > Time.zone.today
+  end
+
   def awaiting_action?
     !%w[recommended_for_award withdrawn awarded].include?(state)
   end

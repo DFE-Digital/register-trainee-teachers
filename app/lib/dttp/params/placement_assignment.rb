@@ -47,7 +47,6 @@ module Dttp
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.course_age_range)})",
           "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
           "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
-          "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{academic_year})",
           "dfe_courselevel" => course_level,
@@ -58,6 +57,7 @@ module Dttp
           "dfe_programmelength" => 1,
           "dfe_ebacc" => trainee.ebacc,
         }
+        .merge(commencement_date_params)
         .merge(degree_params)
         .merge(school_params)
         .merge(subject_params)
@@ -79,6 +79,14 @@ module Dttp
         {
           "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{degree_institution_id(qualifying_degree.institution)})",
           "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{degree_class_id(qualifying_degree.grade)})",
+        }
+      end
+
+      def commencement_date_params
+        return {} unless trainee.commencement_date
+
+        {
+          "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
         }
       end
 

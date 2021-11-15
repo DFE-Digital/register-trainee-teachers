@@ -71,7 +71,7 @@ module Trainees
 
     def confirm_section_title
       @confirm_section_title ||= {
-        training_details: "trainee start date and ID",
+        training_details: "trainee ID",
         degrees: "degree details",
         funding: "funding details",
         course_details: "trainee's course details",
