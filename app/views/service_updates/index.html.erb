@@ -1,0 +1,28 @@
+<%= render PageTitle::View.new(i18n_key: "service_updates") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: root_path,
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+
+    <h2 class="govuk-heading-m"><%= t(".contents") %></h2>
+    <ul class="govuk-list app-list--dash govuk-!-margin-bottom-8 govuk-!-margin-left-3">
+      <% @service_updates.each do |service_update| %>
+        <li><a class="govuk-link" href="#<%= service_update.id %>"><%= service_update.title %></a></li>
+      <% end %>
+    </ul>
+
+
+    <% @service_updates.each do |service_update| %>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <%= render ServiceUpdate::View.new(service_update: service_update) %>
+    <% end %>
+
+  </div>
+</div>

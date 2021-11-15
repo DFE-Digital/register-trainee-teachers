@@ -8,12 +8,8 @@
 
 <div class="govuk-grid-row govuk-main-wrapper--auto-spacing">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <p class="govuk-body"><%= t(".bullet_desc") %></p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= t(".bullets.1") %></li>
-      <li><%= t(".bullets.2") %></li>
-      <li><%= t(".bullets.3") %></li>
-      <li><%= t(".bullets.4") %></li>
-    </ul>
+    <h2 class="govuk-heading-l"><%= t(".service_updates_title") %></h2>
+    <%= render ServiceUpdate::View.new(service_update: ServiceUpdate.recent_update) %>
+    <%= govuk_link_to(t(".service_updates_link"), service_updates_path, { class: "govuk-body" }) %>
   </div>
 </div>

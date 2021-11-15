@@ -333,6 +333,7 @@ en:
         sub_text_no_results: No results for
         search_hint: Search for a school by it’s unique reference number (URN), name or postcode
         search_button: Search again
+      service_updates: News and updates
     filter:
       level: Education phase
       provider: Provider
@@ -696,17 +697,14 @@ en:
       new_trainee_link: Create a new trainee record
       registered_heading: Registered trainees
       registered_trainees_link: View all registered trainees (%{count})
-      guidance_heading: Guidance and feedback
+      guidance_heading: News, guidance and feedback
+      service_updates_link: View news and updates
       guidance_about_link: Find out about Register trainee teachers
       guidance_data_link: Check what data you need to provide
       give_feedback_link: Give feedback to help us improve Register trainee teachers
     start:
-      bullet_desc: "Use this service to:"
-      bullets:
-        1: register trainee data with the Department for Education, and keep it updated
-        2: get a teacher reference number (TRN) for your trainees
-        3: share information about a trainee’s progress, such as whether they withdraw or defer
-        4: recommend your trainees for qualified teacher status (QTS) or early years teacher status (EYTS)
+      service_updates_title: Latest news and updates
+      service_updates_link: View all news and updates
     cookie_policy:
       heading: Cookies on Register trainee teachers
     accessibility:
@@ -1283,6 +1281,10 @@ en:
               blank: Select primary or secondary
   page_headings:
     start_page: Register trainee teachers
+  service_updates:
+    index:
+      heading: News and updates
+      contents: Contents
   system_admin:
     users:
       create:

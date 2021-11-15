@@ -129,5 +129,7 @@ Rails.application.routes.draw do
   resources :trn_submissions, only: %i[create show], param: :trainee_id, path: "trainee-registrations"
   resource :cookie_preferences, only: %i[show update], path: "/cookies"
 
+  resources :service_updates, only: %i[index], path: "service-updates"
+
   root to: "pages#start"
 end
