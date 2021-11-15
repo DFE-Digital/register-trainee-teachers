@@ -10,11 +10,7 @@ module Trainees
       @start_date_verification_form = StartDateVerificationForm.new(verification_params)
 
       if @start_date_verification_form.valid?
-        if @start_date_verification_form.already_started?
-          redirect_to(edit_trainee_start_status_path(trainee, context: :delete))
-        else
-          redirect_to(trainee_confirm_delete_path(trainee))
-        end
+        redirect_to(relevant_redirect_path)
       else
         render(:show)
       end
@@ -23,7 +19,27 @@ module Trainees
   private
 
     def verification_params
-      params.require(:start_date_verification_form).permit(:trainee_has_started_course)
+      params.require(:start_date_verification_form).permit(:trainee_has_started_course, :context)
+    end
+
+    def relevant_redirect_path
+      if trainee_started_course? && withdrawing?
+        edit_trainee_start_status_path(trainee, context: :withdraw)
+      elsif !trainee_started_course? && withdrawing?
+        trainee_forbidden_withdrawal_path(trainee)
+      elsif trainee_started_course?
+        edit_trainee_start_status_path(trainee, context: :delete)
+      else
+        trainee_confirm_delete_path(trainee)
+      end
+    end
+
+    def trainee_started_course?
+      @start_date_verification_form.already_started?
+    end
+
+    def withdrawing?
+      @start_date_verification_form.withdrawing?
     end
   end
 end

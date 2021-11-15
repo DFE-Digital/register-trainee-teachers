@@ -222,6 +222,10 @@ module Features
       @withdrawal_confirmation_page ||= PageObjects::Trainees::ConfirmWithdrawal.new
     end
 
+    def withdrawal_forbidden_page
+      @withdrawal_forbidden_page ||= PageObjects::Trainees::WithdrawalForbidden.new
+    end
+
     def reinstatement_page
       @reinstatement_page ||= PageObjects::Trainees::Reinstatement.new
     end

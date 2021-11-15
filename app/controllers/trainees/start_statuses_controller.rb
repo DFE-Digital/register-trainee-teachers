@@ -20,6 +20,11 @@ module Trainees
         return redirect_to(trainee_forbidden_deletes_path(trainee))
       end
 
+      if withdraw_context?
+        @trainee_start_status_form.save!
+        return redirect_to(trainee_withdrawal_path(trainee))
+      end
+
       if @trainee_start_status_form.stash_or_save!
         if trainee.draft? && trainee.submission_ready?
           Trainees::SubmitForTrn.call(trainee: trainee, dttp_id: current_user.dttp_id)
@@ -44,7 +49,11 @@ module Trainees
     end
 
     def delete_context?
-      params[:context] == "delete"
+      params[:context] == StartDateVerificationForm::DELETE
+    end
+
+    def withdraw_context?
+      params[:context] == StartDateVerificationForm::WITHDRAW
     end
   end
 end

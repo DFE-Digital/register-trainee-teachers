@@ -45,7 +45,7 @@ module RecordActions
     end
 
     def delete_link
-      govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee), class: "delete")
+      govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee, context: :delete), class: "delete")
     end
 
     def defer_link
@@ -53,7 +53,7 @@ module RecordActions
     end
 
     def withdraw_link
-      govuk_link_to(t("views.trainees.edit.withdraw"), trainee_withdrawal_path(trainee), class: "withdraw")
+      govuk_link_to(t("views.trainees.edit.withdraw"), trainee_start_date_verification_path(trainee, context: :withdraw), class: "withdraw")
     end
 
     def reinstate_link
