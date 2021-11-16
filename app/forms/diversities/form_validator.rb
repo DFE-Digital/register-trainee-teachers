@@ -29,7 +29,13 @@ module Diversities
                        .symbolize_keys
                        .slice(*FIELDS.values.flatten)
                        .merge(disability_ids: trainee.disability_ids)
+      @missing_fields = []
+
       super(fields)
+    end
+
+    def missing_fields
+      @missing_fields.flatten
     end
 
   private
@@ -65,7 +71,11 @@ module Diversities
     end
 
     def validator_is_valid?(form_klass)
-      form_klass.new(trainee).valid?
+      form_instance = form_klass.new(trainee)
+      validity = form_instance.valid?
+      @missing_fields.push(form_instance.errors.attribute_names)
+
+      validity
     end
 
     def add_error_for(key)

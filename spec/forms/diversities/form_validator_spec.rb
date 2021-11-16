@@ -5,11 +5,12 @@ require "rails_helper"
 module Diversities
   describe FormValidator do
     let(:trainee) { create(:trainee, :with_diversity_information) }
-    let(:disclosure) { instance_double(DisclosureForm, valid?: true) }
-    let(:ethnic_group) { instance_double(EthnicGroupForm, valid?: true) }
-    let(:ethnic_background) { instance_double(EthnicBackgroundForm, valid?: true) }
-    let(:disability_disclosure) { instance_double(DisabilityDisclosureForm, valid?: true) }
-    let(:disability_detail_form) { instance_double(DisabilityDetailForm, valid?: true) }
+    let(:errors) { double(attribute_names: []) }
+    let(:disclosure) { instance_double(DisclosureForm, valid?: true, errors: errors) }
+    let(:ethnic_group) { instance_double(EthnicGroupForm, valid?: true, errors: errors) }
+    let(:ethnic_background) { instance_double(EthnicBackgroundForm, valid?: true, errors: errors) }
+    let(:disability_disclosure) { instance_double(DisabilityDisclosureForm, valid?: true, errors: errors) }
+    let(:disability_detail_form) { instance_double(DisabilityDetailForm, valid?: true, errors: errors) }
 
     subject { described_class.new(trainee) }
 

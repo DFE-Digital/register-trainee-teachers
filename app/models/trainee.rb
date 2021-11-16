@@ -373,6 +373,16 @@ private
   end
 
   def set_submission_ready
-    self.submission_ready = SubmissionReadyForm.new(trainee: self).valid?
+    # Use the TRN validator when dealing with drafts trainees and if they're also an apply draft.
+    # Before trn submission, when invalid_data on an apply application is cleared, the application is
+    # updated but not the trainee. The trainee will be set to submitted_for_trn by the transition
+    # callbacks but theoritically still a draft as it hasn't been saved so we need to check for this.
+    draft_or_just_changed_from_draft = draft? || (state_changed? && state_was == "draft")
+    draft_and_apply = draft_or_just_changed_from_draft && apply_application?
+
+    validate_trn = draft_and_apply || draft?
+
+    submission_klass = validate_trn ? Submissions::TrnValidator : Submissions::MissingDataValidator
+    self.submission_ready = submission_klass.new(trainee: self).valid?
   end
 end

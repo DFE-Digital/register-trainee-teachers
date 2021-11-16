@@ -18,7 +18,9 @@ private
 
   def reset_trainee_details
     trainee.assign_attributes(course_details.merge(funding_details))
-    reset_progress
+
+    # Only reset progress for draft trainees. DO NOT reset progress for submitted trainees.
+    reset_progress if trainee.draft?
   end
 
   def course_details

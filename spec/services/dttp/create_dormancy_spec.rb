@@ -16,7 +16,7 @@ module Dttp
 
       before do
         enable_features(:persist_to_dttp)
-        allow(SubmissionReadyForm).to receive(:new).and_return(double(valid?: true))
+        allow(Submissions::MissingDataValidator).to receive(:new).and_return(double(valid?: true))
         allow(AccessToken).to receive(:fetch).and_return("token")
         stub_request(:post, request_url).to_return(http_response)
         allow(Dttp::OdataParser).to receive(:entity_id).with(trainee.id, HTTParty::Response).and_return(expected_dormant_id)

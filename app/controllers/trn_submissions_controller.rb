@@ -5,7 +5,7 @@ class TrnSubmissionsController < ApplicationController
 
   def create
     unless trainee.submission_ready?
-      @form = SubmissionReadyForm.new(trainee: trainee)
+      @form = Submissions::TrnValidator.new(trainee: trainee)
       @form.validate
       return render("trainees/check_details/show")
     end
