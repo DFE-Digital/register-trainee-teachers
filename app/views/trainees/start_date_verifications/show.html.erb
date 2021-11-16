@@ -1,0 +1,34 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.start_date_verification.show",
+                               has_errors: @start_date_verification_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @start_date_verification_form,
+                           url: trainee_start_date_verification_path(@trainee),
+                           local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= f.hidden_field :trainee_has_started_course %>
+
+      <%= render TraineeName::View.new(@trainee) %>
+
+      <%= f.govuk_radio_buttons_fieldset(:trainee_has_started_course,
+                                         legend: { text: t(".legend"), size: "m" }) do %>
+        <%= f.govuk_radio_button(:trainee_has_started_course,
+                                 :yes,
+                                 label: { text: t(".yes_they_started") },
+                                 link_errors: true) %>
+
+        <%= f.govuk_radio_button(:trainee_has_started_course,
+                                 :no,
+                                 label: { text: t(".no_they_did_not_start") }) %>
+      <% end %>
+      <%= f.govuk_submit t(:continue) %>
+    <% end %>
+
+    <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+  </div>
+</div>

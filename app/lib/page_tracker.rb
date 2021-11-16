@@ -27,8 +27,8 @@ class PageTracker
     origin_pages << request.fullpath unless origin_pages.include?(request.fullpath)
   end
 
-  def previous_page_path
-    return last_origin_page_path if entered_an_edit_page_directly?
+  def previous_page_path(consider_confirm_page: true)
+    return last_origin_page_path if consider_confirm_page && entered_an_edit_page_directly?
 
     on_confirm_page? ? origin_pages[-2] : history[-2]
   end

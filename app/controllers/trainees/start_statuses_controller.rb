@@ -15,6 +15,11 @@ module Trainees
     def update
       @trainee_start_status_form = TraineeStartStatusForm.new(trainee, params: trainee_params, user: current_user)
 
+      if delete_context?
+        @trainee_start_status_form.save!
+        return redirect_to(trainee_forbidden_deletes_path(trainee))
+      end
+
       if @trainee_start_status_form.stash_or_save!
         if trainee.draft? && trainee.submission_ready?
           Trainees::SubmitForTrn.call(trainee: trainee, dttp_id: current_user.dttp_id)
@@ -36,6 +41,10 @@ module Trainees
       ).transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end
+    end
+
+    def delete_context?
+      params[:context] == "delete"
     end
   end
 end

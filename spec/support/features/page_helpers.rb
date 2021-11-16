@@ -286,6 +286,14 @@ module Features
       @privacy_policy_page ||= PageObjects::PrivacyPolicy.new
     end
 
+    def start_date_verification_page
+      @start_date_verification_page ||= PageObjects::Trainees::StartDateVerification.new
+    end
+
+    def delete_forbidden_page
+      @delete_forbidden_page ||= PageObjects::Trainees::DeleteForbidden.new
+    end
+
     def incomplete
       progress_with_prefix(I18n.t("incomplete"))
     end

@@ -45,7 +45,7 @@ module RecordActions
     end
 
     def delete_link
-      govuk_link_to(t("views.trainees.edit.delete"), trainee_confirm_delete_path(trainee), class: "delete")
+      govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee), class: "delete")
     end
 
     def defer_link
