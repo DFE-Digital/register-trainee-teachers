@@ -93,25 +93,26 @@ module RecordDetails
     end
 
     def trainee_start_date_row
-      return if @trainee.course_start_date.nil?
+      return if trainee.course_start_date.nil?
 
-      if @trainee.course_start_date <= Time.zone.now
-        mappable_field(trainee_start_date, t(".trainee_start_date"), edit_trainee_start_date_path(trainee))
+      if trainee.course_start_date.future?
+        text = t(".itt_has_not_started")
+        link = nil
+      elsif trainee.commencement_date.present?
+        text = date_for_summary_view(trainee.commencement_date)
+        link = edit_trainee_start_date_path(trainee)
       else
-        mappable_field(trainee_start_date, t(".trainee_start_date"), nil)
+        text = t(".not_provided")
+        link = edit_trainee_start_status_path(trainee)
       end
+
+      mappable_field(text, t(".trainee_start_date"), link)
     end
 
     def render_text_with_hint(date)
       hint_text = tag.span(time_ago_in_words(date).concat(" ago"), class: "govuk-hint")
 
       sanitize(tag.p(date_for_summary_view(date), class: "govuk-body") + hint_text)
-    end
-
-    def trainee_start_date
-      return t(".itt_not_yet_started") if trainee.itt_not_yet_started?
-
-      trainee.commencement_date.present? ? date_for_summary_view(trainee.commencement_date) : nil
     end
 
     def submission_date
