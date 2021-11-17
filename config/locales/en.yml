@@ -847,21 +847,21 @@ en:
         hint: Search for a school by its unique reference number (URN), name or postcode
         description: The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
         not_applicable_details:
-          summary_text: Lead school is not listed, or the trainee is employed or funded privately
+          summary_text: Lead school is not listed, or the trainee is funded or employed privately
           label_text: Lead school is not applicable
           body:
             <p> If the lead school is missing from the list, contact %{contact_link}</p>
-            <p>You do not need to provide a lead school if the trainee is employed or funded privately.</p>
+            <p>You do not need to provide a lead school if the trainee is funded or employed privately.</p>
     employing_schools:
       edit:
         heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
         not_applicable_details:
-          summary_text: Employing school is not listed, or the trainee is employed or funded privately
+          summary_text: Employing school is not listed, or the trainee is funded or employed privately
           label_text: Employing school is not applicable
           body:
             <p> If the employing school is missing from the list, contact %{contact_link}</p>
-            <p>You do not need to provide an employing school if the trainee is employed or funded privately.</p>
+            <p>You do not need to provide an employing school if the trainee is funded or employed privately.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
