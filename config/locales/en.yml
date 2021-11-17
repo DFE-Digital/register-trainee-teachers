@@ -860,7 +860,7 @@ en:
           label_text: Employing school is not applicable
           body:
             <p> If the employing school is missing from the list, contact %{contact_link}</p>
-            <p>You do not need to provide an employing school if the trainee is funded and employed privately.</p>
+            <p>You do not need to provide an employing school if the trainee is funded or employed privately.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
