@@ -212,6 +212,24 @@ describe Trainee do
             expect(subject).not_to(be_submission_ready)
           end
         end
+
+        context "when trainee is not a draft" do
+          subject { create(:trainee, :submitted_for_trn) }
+
+          before do
+            subject.first_names = nil
+          end
+
+          it "toggles the submission_ready field" do
+            expect { subject.save }.to change { subject.submission_ready }
+            expect(subject).not_to(be_submission_ready)
+          end
+
+          it "calls the Submissions::MissingDataValidator" do
+            expect(Submissions::MissingDataValidator).to receive(:new).with(trainee: subject).and_return(double(valid?: true))
+            subject.save
+          end
+        end
       end
 
       context "when completion is not trackable" do

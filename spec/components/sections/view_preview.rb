@@ -15,26 +15,26 @@ module Sections
        trainee_data].each do |section|
       define_method "continue_sections_#{section}" do
         trainee = continue_sections_trainee(section)
-        form = SubmissionReadyForm.new(trainee: trainee)
+        form = Submissions::TrnValidator.new(trainee: trainee)
         render(View.new(trainee: trainee, section: section, form: form))
       end
 
       define_method "continue_sections_#{section}_validated" do
         trainee = continue_sections_trainee(section)
-        form = SubmissionReadyForm.new(trainee: trainee)
+        form = Submissions::TrnValidator.new(trainee: trainee)
         form.validate
         render(View.new(trainee: trainee, section: section, form: form))
       end
 
       define_method "start_sections_#{section}" do
         trainee = start_sections_trainee(section)
-        form = SubmissionReadyForm.new(trainee: trainee)
+        form = Submissions::TrnValidator.new(trainee: trainee)
         render(View.new(trainee: trainee, section: section, form: form))
       end
 
       define_method "start_sections_#{section}_validated" do
         trainee = start_sections_trainee(section)
-        form = SubmissionReadyForm.new(trainee: trainee)
+        form = Submissions::TrnValidator.new(trainee: trainee)
         form.validate
         render(View.new(trainee: trainee, section: section, form: form))
       end

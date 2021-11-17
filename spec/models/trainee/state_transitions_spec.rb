@@ -173,7 +173,7 @@ describe "Trainee state transitions" do
   describe "#submit_for_trn" do
     let(:time_now) { Time.zone.now }
 
-    subject { create(:trainee) }
+    subject { create(:trainee, :draft) }
 
     before do
       allow(Time).to receive(:now).and_return(time_now)
@@ -185,9 +185,11 @@ describe "Trainee state transitions" do
     end
 
     context "with an apply application" do
-      let(:apply_application) { create(:apply_application, invalid_data: { "unmappable info": "unmappable value" }) }
+      let(:apply_application) do
+        create(:apply_application, invalid_data: { "unmappable info": "unmappable value" })
+      end
 
-      subject { create(:trainee, apply_application: apply_application) }
+      subject { create(:trainee, :draft, apply_application: apply_application) }
 
       it "wipes out the apply application's invalid_data" do
         expect(apply_application.invalid_data).to be_nil

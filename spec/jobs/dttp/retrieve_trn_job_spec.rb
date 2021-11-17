@@ -14,7 +14,7 @@ module Dttp
 
     before do
       enable_features(:sync_from_dttp)
-      allow(SubmissionReadyForm).to receive(:new).and_return(double(valid?: true))
+      allow(Submissions::MissingDataValidator).to receive(:new).and_return(double(valid?: true))
       allow(RetrieveTrn).to receive(:call).with(trainee: trainee).and_return(trn)
       allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
       allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)
@@ -68,7 +68,7 @@ module Dttp
     end
 
     context "the trainee attribute submitted_for_trn_at is nil" do
-      let(:trainee) { create(:trainee) }
+      let(:trainee) { create(:trainee, :submitted_for_trn, submitted_for_trn_at: nil) }
       let(:error_msg) { "Trainee#submitted_for_trn_at is nil - it should be timestamped (id: #{trainee.id})" }
 
       it "raises a TraineeAttributeError" do
