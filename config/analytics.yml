@@ -1,25 +1,23 @@
 shared:
+  activities:
+    - action_name
+    - controller_name
+    - created_at
+    - id
+    - metadata
+    - updated_at
+    - user_id
+  apply_applications:
+    - apply_id
+    - accredited_body_code
+    - recruitment_cycle_year
+    - state
+    - created_at
+    - updated_at
   allocation_subjects:
     - created_at
     - id
     - name
-    - updated_at
-  bursaries:
-    - amount
-    - created_at
-    - id
-    - training_route
-    - updated_at
-    - allocation_subject_id
-    - bursary_id
-    - created_at
-    - id
-    - updated_at
-  bursary_subjects:
-    - course_id
-    - created_at
-    - id
-    - subject_id
     - updated_at
   courses:
     - accredited_body_code
@@ -38,6 +36,8 @@ shared:
     - study_mode
     - summary
     - updated_at
+    - recruitment_cycle_year
+    - uuid
   degrees:
     - country
     - created_at
@@ -69,6 +69,23 @@ shared:
     - status_code
     - updated_at
     - urn
+  funding_methods:
+    - amount
+    - created_at
+    - id
+    - training_route
+    - updated_at
+    - allocation_subject_id
+    - bursary_id
+    - created_at
+    - id
+    - updated_at
+  funding_method_subjects:
+    - allocation_subject_id
+    - created_at
+    - funding_method_id
+    - id
+    - updated_at
   nationalisations:
     - created_at
     - id
@@ -158,6 +175,17 @@ shared:
     - updated_at
     - withdraw_date
     - withdraw_reason
+    - applying_for_grant
+    - applying_for_scholarship
+    - commencement_status
+    - course_education_phase
+    - course_uuid
+    - discarded_at
+    - ebacc
+    - employing_school_not_applicable
+    - lead_school_not_applicable
+    - region
+    - submission_ready
   users:
     - created_at
     - dfe_sign_in_uid
