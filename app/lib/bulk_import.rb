@@ -384,7 +384,7 @@ module BulkImport
     end
 
     def validate_and_set_progress(trainee)
-      Submissions::TrnValidator.new(trainee: trainee).form_validators.each do |section, validator|
+      Submissions::TrnValidator.new(trainee: trainee).validators.each do |section, validator|
         section_valid = validator[:form].constantize.new(trainee).valid?
         trainee.progress.public_send("#{section}=", section_valid)
       end

@@ -463,6 +463,49 @@ en:
     mappable_field_row:
       default_hint_text_html: 'Enter an answer <span class="govuk-visually-hidden"> for %{field_label}</span>'
       apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
+    missing_data_banner_view:
+      header: You need to provide additional details before recording an outcome
+      missing_field_text: Please provide a %{missing_field}
+      missing_field_link:
+        first_names: &personal_details_path edit_trainee_personal_details_path
+        last_name: *personal_details_path
+        date_of_birth: *personal_details_path
+        gender: *personal_details_path
+        nationality_names: *personal_details_path
+        locale_code: &contact_details_path edit_trainee_contact_details_path
+        email: *contact_details_path
+        ethnic_background: edit_trainee_diversity_ethnic_background_path
+        ethnic_group: edit_trainee_diversity_ethnic_group_path
+        diversity_disclosure: edit_trainee_diversity_disclosure_path
+        disability_disclosure: edit_trainee_diversity_disability_disclosure_path
+        disability_ids: edit_trainee_diversity_disability_detail_path
+        course_subject_one: &course_path course_path
+        course_subject_two: *course_path
+        course_subject_three: *course_path
+        course_start_date: *course_path
+        course_end_date: *course_path
+        main_age_range: *course_path
+        itt_start_date: *course_path
+        itt_end_date: *course_path
+        training_initiative: edit_trainee_funding_training_initiative_path
+        applying_for_bursary: &funding_method_path edit_trainee_funding_bursary_path
+        applying_for_grant: *funding_method_path
+        applying_for_scholarship: *funding_method_path
+        funding_type: *funding_method_path
+        institution: &degree_path degree_path
+        subject: *degree_path
+        uk_degree: *degree_path
+        non_uk_degree: *degree_path
+        grade: *degree_path
+        graduation_year: *degree_path
+        country: *degree_path
+        lead_school_id: &lead_school_path edit_trainee_lead_schools_path
+        employing_school_id: edit_trainee_employing_schools_path
+        school_id: *lead_school_path
+        commencement_date: &commencement_date_path edit_trainee_start_date_path
+        commencement_date_radio_option: *commencement_date_path
+        trainee_id: edit_trainee_training_details_path
+        study_mode: *course_path
     missing_data_view:
       degrees_form: degree
       missing_fields_summary:
@@ -505,7 +548,7 @@ en:
         country: *country
         lead_school_id: *lead_school
         employing_school_id: *employing_school
-        commencement_date: *commencement_date
+        commencement_date: *trainee_start_date
         commencement_date_radio_option: *commencement_date
         trainee_id: *trainee_id
         study_mode: Select if the trainee is full time or part time

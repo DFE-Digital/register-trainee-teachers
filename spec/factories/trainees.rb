@@ -290,10 +290,6 @@ FactoryBot.define do
       training_route { TRAINING_ROUTE_ENUMS[:opt_in_undergrad] }
     end
 
-    trait :draft do
-      state { "draft" }
-    end
-
     trait :submitted_for_trn do
       completed
       dttp_id { SecureRandom.uuid }

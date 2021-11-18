@@ -35,6 +35,12 @@ module DegreesHelper
     Dttp::CodeSets::Grades::MAPPING.keys
   end
 
+  def path_for_degrees(trainee)
+    return trainee_degrees_new_type_path(trainee) if trainee.degrees.empty?
+
+    trainee_degrees_confirm_path(trainee)
+  end
+
 private
 
   def institution_data
