@@ -5,7 +5,7 @@
     <%= render GovukComponent::BackLinkComponent.new(text: t(:back),
                                                      href: trainee_start_date_verification_path(@trainee)) %>
   <% else  %>
-    <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+    <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>
   <% end  %>
 <% end %>
 

@@ -5,14 +5,11 @@ require "rails_helper"
 feature "Deferring a trainee", type: :feature do
   include SummaryHelper
 
-  before do
-    given_i_am_authenticated
-    given_a_trainee_exists_to_be_deferred
-    and_i_am_on_the_trainee_record_page
-    and_i_click_on_defer
-  end
-
   context "trainee deferral date" do
+    before do
+      given_i_initiate_a_deferral
+    end
+
     scenario "submit empty form" do
       and_i_continue
       then_i_see_the_error_message_for_date_not_chosen
@@ -63,7 +60,16 @@ feature "Deferring a trainee", type: :feature do
     end
   end
 
+  scenario "course start date is in the future" do
+    given_i_initiate_a_deferral(commencement_date: nil, course_start_date: Time.zone.tomorrow)
+    then_i_am_redirected_to_deferral_confirmation_page
+    and_i_see_a_message_for_course_start_date_in_the_future
+    when_i_defer
+    then_the_trainee_is_deferred
+  end
+
   scenario "cancelling changes" do
+    given_i_initiate_a_deferral
     when_i_choose_today
     and_i_continue
     then_i_am_redirected_to_deferral_confirmation_page
@@ -71,6 +77,13 @@ feature "Deferring a trainee", type: :feature do
     when_i_cancel_my_changes
     then_i_am_redirected_to_the_record_page
     and_the_defer_date_i_chose_is_cleared
+  end
+
+  def given_i_initiate_a_deferral(trainee_attributes = {})
+    given_i_am_authenticated
+    given_a_trainee_exists_to_be_deferred(trainee_attributes)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_defer
   end
 
   def when_i_choose_today
@@ -108,6 +121,12 @@ feature "Deferring a trainee", type: :feature do
     deferral_page.continue.click
   end
 
+  def and_i_see_a_message_for_course_start_date_in_the_future
+    expect(deferral_confirmation_page).to have_content(
+      I18n.t("deferral_details.view.deferred_before_starting"),
+    )
+  end
+
   def then_i_see_the_error_message_for_invalid_date
     expect(deferral_page).to have_content(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date.invalid"),
@@ -130,12 +149,16 @@ feature "Deferring a trainee", type: :feature do
     expect(deferral_confirmation_page).to be_displayed(id: trainee.slug)
   end
 
-  def given_a_trainee_exists_to_be_deferred
-    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, commencement_date: 10.days.ago)
+  def given_a_trainee_exists_to_be_deferred(attributes = { commencement_date: 10.days.ago })
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, attributes)
   end
 
   def then_the_defer_date_is_updated
     expect(deferral_confirmation_page).to have_text(date_for_summary_view(trainee.reload.defer_date))
+  end
+
+  def then_the_trainee_is_deferred
+    expect(trainee.reload).to be_deferred
   end
 
   def when_i_cancel_my_changes

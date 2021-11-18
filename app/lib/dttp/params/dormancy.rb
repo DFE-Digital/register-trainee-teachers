@@ -22,7 +22,7 @@ module Dttp
       attr_reader :trainee
 
       def date_left
-        trainee.defer_date.in_time_zone.iso8601
+        trainee.defer_date&.in_time_zone&.iso8601
       end
 
       def date_returned

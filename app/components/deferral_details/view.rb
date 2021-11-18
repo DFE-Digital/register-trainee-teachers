@@ -11,7 +11,11 @@ module DeferralDetails
     end
 
     def defer_date
-      date_for_summary_view(data_model.date)
+      deferred_before_starting? ? t(".deferred_before_starting") : date_for_summary_view(data_model.date)
+    end
+
+    def deferred_before_starting?
+      data_model.date.nil?
     end
   end
 end

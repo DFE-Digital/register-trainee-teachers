@@ -2,6 +2,8 @@
 
 module Trainees
   class ReinstatementsController < BaseController
+    before_action :redirect_to_confirm_reinstatement, if: -> { trainee.starts_course_in_the_future? }
+
     def show
       @reinstatement_form = ReinstatementForm.new(trainee)
     end
@@ -12,7 +14,7 @@ module Trainees
       @reinstatement_form = ReinstatementForm.new(trainee, params: trainee_params, user: current_user)
 
       if @reinstatement_form.stash
-        redirect_to(trainee_confirm_reinstatement_path(@trainee))
+        redirect_to_confirm_reinstatement
       else
         render(:show)
       end
@@ -26,6 +28,10 @@ module Trainees
         .transform_keys do |key|
           MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end
+    end
+
+    def redirect_to_confirm_reinstatement
+      redirect_to(trainee_confirm_reinstatement_path(trainee))
     end
   end
 end

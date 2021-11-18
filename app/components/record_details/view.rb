@@ -95,9 +95,12 @@ module RecordDetails
     def trainee_start_date_row
       return if trainee.course_start_date.nil?
 
-      if trainee.course_start_date.future?
+      if trainee.starts_course_in_the_future?
         text = t(".itt_has_not_started")
         link = nil
+      elsif deferred_with_no_start_date?
+        text = t(".deferred_before_itt_started")
+        link = edit_trainee_start_date_path(trainee)
       elsif trainee.commencement_date.present?
         text = date_for_summary_view(trainee.commencement_date)
         link = edit_trainee_start_date_path(trainee)
@@ -151,6 +154,10 @@ module RecordDetails
 
     def mappable_field(field_value, field_label, action_url)
       { field_value: field_value, field_label: field_label, action_url: action_url }
+    end
+
+    def deferred_with_no_start_date?
+      trainee.deferred? && trainee.commencement_date.blank?
     end
   end
 end
