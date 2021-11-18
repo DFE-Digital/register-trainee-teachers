@@ -133,17 +133,6 @@ module RecordDetails
           end
         end
       end
-
-      context "when trainee start date is in the future" do
-        let(:trainee) {
-          create(:trainee, state, training_route, trn: Faker::Number.number(digits: 10), provider: provider,
-                                                  course_start_date: Time.zone.tomorrow)
-        }
-
-        it "does not render the change link" do
-          expect(rendered_component).not_to have_link(t("change"), href: "/trainees/#{trainee.slug}/trainee-start-date/edit")
-        end
-      end
     end
 
     context "Trainee start date row" do
@@ -200,6 +189,16 @@ module RecordDetails
           it "renders link to trainee start status form" do
             expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
             expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-status/edit")
+          end
+
+          context "when deferred" do
+            let(:trainee) do
+              create(:trainee, :deferred, course_start_date: Time.zone.today)
+            end
+
+            it "renders the trainee deferred before course started message" do
+              expect(rendered_component).to have_text(t("record_details.view.deferred_before_itt_started"))
+            end
           end
         end
       end

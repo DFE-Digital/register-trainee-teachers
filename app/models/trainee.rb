@@ -319,7 +319,7 @@ class Trainee < ApplicationRecord
   end
 
   def starts_course_in_the_future?
-    course_start_date && course_start_date > Time.zone.today
+    course_start_date&.future?
   end
 
   def awaiting_action?

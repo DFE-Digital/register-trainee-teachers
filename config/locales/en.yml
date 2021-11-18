@@ -70,10 +70,17 @@ en:
         withdrawn: "Withdrawal date: "
       itt_has_not_started: ITT has not started
       not_provided: Not provided
+      deferred_before_itt_started: Trainee deferred before starting their ITT
   training_details:
     view:
       title: *trainee_id
       region: *region
+  deferral_details:
+    view:
+      deferred_before_starting: Trainee deferred before their ITT started
+  reinstatement_details:
+    view:
+      reinstated_before_starting: Trainee returned before their ITT started
   components:
     admin_feature:
       title: Admin feature

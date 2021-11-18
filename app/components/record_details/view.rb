@@ -93,20 +93,11 @@ module RecordDetails
     end
 
     def trainee_start_date_row
-      return if trainee.course_start_date.nil?
+      start_date = RecordDetails::TraineeStartDate.new(trainee)
 
-      if trainee.course_start_date.future?
-        text = t(".itt_has_not_started")
-        link = nil
-      elsif trainee.commencement_date.present?
-        text = date_for_summary_view(trainee.commencement_date)
-        link = edit_trainee_start_date_path(trainee)
-      else
-        text = t(".not_provided")
-        link = edit_trainee_start_status_path(trainee)
-      end
+      return if start_date.course_empty?
 
-      mappable_field(text, t(".trainee_start_date"), link)
+      mappable_field(start_date.text, t(".trainee_start_date"), start_date.link)
     end
 
     def render_text_with_hint(date)

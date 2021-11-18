@@ -72,11 +72,26 @@ describe ReinstatementForm, type: :model do
   end
 
   describe "#save!" do
+    let(:expected_date_params) { params.except("date_string").values.map(&:to_i) }
+
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :reinstatement, nil)
 
-      date_params = params.except("date_string").values.map(&:to_i)
-      expect { subject.save! }.to change(trainee, :reinstate_date).to(Date.new(*date_params))
+      expect { subject.save! }.to change(trainee, :reinstate_date).to(Date.new(*expected_date_params))
+    end
+
+    context "course start date is in the future" do
+      let(:trainee) do
+        create(:trainee, :deferred, commencement_date: nil, course_start_date: Time.zone.today + 1.day)
+      end
+
+      before do
+        allow(form_store).to receive(:set).with(trainee.id, :reinstatement, nil)
+      end
+
+      it "saves the reinstatement date as the commencement date" do
+        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.new(*expected_date_params))
+      end
     end
   end
 end
