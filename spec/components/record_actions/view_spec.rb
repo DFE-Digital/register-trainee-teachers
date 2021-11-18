@@ -64,4 +64,20 @@ RSpec.describe RecordActions::View do
       include_examples "no actions"
     end
   end
+
+  context "when course date is in the future" do
+    let(:trainee) { build(:trainee, :submitted_for_trn, course_start_date: 1.day.from_now) }
+
+    it "withdraw link is hidden" do
+      expect(subject).not_to include("Withdraw")
+    end
+  end
+
+  context "when course date is in the past" do
+    let(:trainee) { build(:trainee, :submitted_for_trn, course_start_date: 1.day.ago) }
+
+    it "withdraw link is shown" do
+      expect(subject).to include("Withdraw")
+    end
+  end
 end

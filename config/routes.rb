@@ -125,6 +125,7 @@ Rails.application.routes.draw do
       resource :subject_specialism, only: %i[edit update], path: "/subject-specialism/:position"
       resource :start_date_verification, only: %i[show create], path: "/start-date-verification"
       resource :forbidden_deletes, only: %i[show create], path: "/delete-forbidden"
+      resource :forbidden_withdrawal, only: %i[show], path: "/withdrawal-forbidden"
     end
   end
 

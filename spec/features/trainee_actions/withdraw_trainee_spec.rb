@@ -85,6 +85,25 @@ feature "Withdrawing a trainee", type: :feature do
     end
   end
 
+  scenario "trainee has not started course" do
+    given_i_am_authenticated
+    given_a_trainee_exists_to_be_withdrawn_with_no_start_date
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_withdraw
+    and_i_choose_they_have_not_started
+    then_i_am_taken_to_the_forbidden_withdrawal_page
+  end
+
+  scenario "trainee is withdrawn but there is no existing start date" do
+    given_i_am_authenticated
+    given_a_trainee_exists_to_be_withdrawn_with_no_start_date
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_withdraw
+    and_i_choose_they_have_started
+    when_i_choose_they_started_on_time
+    then_i_should_be_on_the_withdrawal_page
+  end
+
   scenario "cancelling changes" do
     when_i_am_on_the_withdrawal_page
     and_i_choose_today
@@ -226,6 +245,10 @@ feature "Withdrawing a trainee", type: :feature do
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, commencement_date: 10.days.ago)
   end
 
+  def given_a_trainee_exists_to_be_withdrawn_with_no_start_date
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, commencement_date: nil)
+  end
+
   def given_a_deferred_trainee_exists
     given_a_trainee_exists(:deferred)
   end
@@ -257,5 +280,28 @@ feature "Withdrawing a trainee", type: :feature do
     expect(withdrawal_confirmation_page).to have_text(
       t("components.confirmation.withdrawal_details.withdrawal_date", date: date_for_summary_view(trainee.defer_date)),
     )
+  end
+
+  def and_i_choose_they_have_started
+    start_date_verification_page.started_option.choose
+    start_date_verification_page.continue.click
+  end
+
+  def when_i_choose_they_started_on_time
+    trainee_start_status_edit_page.commencement_status_started_on_time.choose
+    trainee_start_status_edit_page.continue.click
+  end
+
+  def then_i_should_be_on_the_withdrawal_page
+    expect(withdrawal_page).to be_displayed
+  end
+
+  def and_i_choose_they_have_not_started
+    start_date_verification_page.not_started_option.choose
+    start_date_verification_page.continue.click
+  end
+
+  def then_i_am_taken_to_the_forbidden_withdrawal_page
+    expect(withdrawal_forbidden_page).to be_displayed
   end
 end

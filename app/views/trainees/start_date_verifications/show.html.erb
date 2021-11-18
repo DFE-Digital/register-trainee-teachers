@@ -11,7 +11,8 @@
                            url: trainee_start_date_verification_path(@trainee),
                            local: true) do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.hidden_field :trainee_has_started_course %>
+
+      <%= f.hidden_field :context, value: params[:context] %>
 
       <%= render TraineeName::View.new(@trainee) %>
 

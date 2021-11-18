@@ -19,7 +19,11 @@ module RecordActions
     end
 
     def action_links
-      links = [withdraw_link]
+      links = []
+
+      if withdraw_allowed?
+        links.prepend(withdraw_link)
+      end
 
       if trainee.deferred?
         links.prepend(reinstate_link)
@@ -45,7 +49,7 @@ module RecordActions
     end
 
     def delete_link
-      govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee), class: "delete")
+      govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee, context: :delete), class: "delete")
     end
 
     def defer_link
@@ -53,7 +57,7 @@ module RecordActions
     end
 
     def withdraw_link
-      govuk_link_to(t("views.trainees.edit.withdraw"), trainee_withdrawal_path(trainee), class: "withdraw")
+      govuk_link_to(t("views.trainees.edit.withdraw"), relevant_redirect_path, class: "withdraw")
     end
 
     def reinstate_link
@@ -64,12 +68,24 @@ module RecordActions
       course_starting_in_the_future? || course_started_but_trainee_has_not_specified_start_date?
     end
 
+    def withdraw_allowed?
+      !course_starting_in_the_future?
+    end
+
     def course_starting_in_the_future?
       trainee.course_start_date && trainee.course_start_date > Time.zone.now
     end
 
     def course_started_but_trainee_has_not_specified_start_date?
       !course_starting_in_the_future? && trainee.commencement_date.blank?
+    end
+
+    def relevant_redirect_path
+      if trainee.commencement_date.present?
+        trainee_withdrawal_path(trainee)
+      else
+        trainee_start_date_verification_path(trainee, context: :withdraw)
+      end
     end
   end
 end

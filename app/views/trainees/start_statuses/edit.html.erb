@@ -32,7 +32,7 @@
             }, hint: { text: t(".trainee_start_date_hint") } %>
           <% end %>
 
-          <% unless params[:context] == "delete" %>
+          <% unless %w[delete withdraw].include?(params[:context]) %>
             <%= f.govuk_radio_divider %>
 
             <%= f.govuk_radio_button(:commencement_status,
