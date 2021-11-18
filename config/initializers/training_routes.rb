@@ -55,13 +55,6 @@ TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
                                  :pg_teaching_apprenticeship).include?(training_route)
 }.freeze
 
-ITT_TRAINING_ROUTES = TRAINING_ROUTES.select { |training_route|
-  TRAINING_ROUTE_ENUMS.values_at(:early_years_undergrad,
-                                 :pg_teaching_apprenticeship,
-                                 :provider_led_undergrad,
-                                 :opt_in_undergrad).include?(training_route)
-}.freeze
-
 UNDERGRAD_ROUTES = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:early_years_undergrad, :provider_led_undergrad, :opt_in_undergrad).include?(training_route)
 }.freeze

@@ -8,7 +8,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   let(:subjects) { [] }
   let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
   let(:study_mode) { "full_time" }
-  let(:course_end_date) { 1.year.from_now.to_date }
+  let(:itt_end_date) { 1.year.from_now.to_date }
 
   background do
     given_i_am_authenticated
@@ -39,9 +39,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_course
         and_i_submit_the_form
         then_i_should_see_the_subject_described_as("History")
-        and_i_see_course_end_date_missing_error
-        and_i_click_enter_answer_for_course_end_date
-        and_i_enter_course_end_date(course_end_date)
+        and_i_see_itt_end_date_missing_error
+        and_i_click_enter_answer_for_itt_end_date
+        and_i_enter_itt_end_date(itt_end_date)
         and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
@@ -57,9 +57,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_course
         and_i_submit_the_form
         then_i_should_see_the_subject_described_as("French")
-        and_i_see_course_end_date_missing_error
-        and_i_click_enter_answer_for_course_end_date
-        and_i_enter_course_end_date(course_end_date)
+        and_i_see_itt_end_date_missing_error
+        and_i_click_enter_answer_for_itt_end_date
+        and_i_enter_itt_end_date(itt_end_date)
         and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
@@ -78,9 +78,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_specialism("Computer science")
         and_i_submit_the_specialism_form
         then_i_should_see_the_subject_described_as("Computer science")
-        and_i_see_course_end_date_missing_error
-        and_i_click_enter_answer_for_course_end_date
-        and_i_enter_course_end_date(course_end_date)
+        and_i_see_itt_end_date_missing_error
+        and_i_click_enter_answer_for_itt_end_date
+        and_i_enter_itt_end_date(itt_end_date)
         and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
@@ -101,9 +101,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_specialism("Mathematics")
         and_i_submit_the_specialism_form
         then_i_should_see_the_subject_described_as("Applied computing with mathematics")
-        and_i_see_course_end_date_missing_error
-        and_i_click_enter_answer_for_course_end_date
-        and_i_enter_course_end_date(course_end_date)
+        and_i_see_itt_end_date_missing_error
+        and_i_click_enter_answer_for_itt_end_date
+        and_i_enter_itt_end_date(itt_end_date)
         and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
@@ -124,9 +124,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_languages("Arabic languages", "Welsh", "Portuguese")
         and_i_submit_the_language_specialism_form
         then_i_should_see_the_subject_described_as("Arabic languages with Portuguese and Welsh")
-        and_i_see_course_end_date_missing_error
-        and_i_click_enter_answer_for_course_end_date
-        and_i_enter_course_end_date(course_end_date)
+        and_i_see_itt_end_date_missing_error
+        and_i_click_enter_answer_for_itt_end_date
+        and_i_enter_itt_end_date(itt_end_date)
         and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
@@ -153,9 +153,9 @@ feature "publish course details", type: :feature, feature_publish_course_details
         and_i_select_a_specialism("Applied computing")
         and_i_submit_the_specialism_form
         then_i_should_see_the_subject_described_as("Music education and teaching with applied computing and history")
-        and_i_see_course_end_date_missing_error
-        and_i_click_enter_answer_for_course_end_date
-        and_i_enter_course_end_date(course_end_date)
+        and_i_see_itt_end_date_missing_error
+        and_i_click_enter_answer_for_itt_end_date
+        and_i_enter_itt_end_date(itt_end_date)
         and_i_submit_the_course_details_form
         and_i_confirm_the_course
         and_i_visit_the_review_draft_page
@@ -438,17 +438,17 @@ feature "publish course details", type: :feature, feature_publish_course_details
     expect(confirm_publish_course_details_page.subject_description).to eq(description)
   end
 
-  def and_i_see_course_end_date_missing_error
-    expect(confirm_publish_course_details_page).to have_content("Course end date is missing")
+  def and_i_see_itt_end_date_missing_error
+    expect(confirm_publish_course_details_page).to have_content("ITT end date is missing")
   end
 
-  def and_i_click_enter_answer_for_course_end_date
+  def and_i_click_enter_answer_for_itt_end_date
     confirm_publish_course_details_page.enter_an_answer_for_course_end_date_link.click
   end
 
-  def and_i_enter_course_end_date(date)
+  def and_i_enter_itt_end_date(date)
     course_details_page.subject_primary.click
-    course_details_page.set_date_fields("course_end_date", date.strftime("%d/%m/%Y"))
+    course_details_page.set_date_fields("itt_end_date", date.strftime("%d/%m/%Y"))
   end
 
   def and_i_submit_the_course_details_form

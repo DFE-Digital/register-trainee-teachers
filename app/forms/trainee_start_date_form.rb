@@ -2,6 +2,7 @@
 
 class TraineeStartDateForm < TraineeForm
   include DatesHelper
+  include CommencementDateHelpers
 
   attr_accessor :day, :month, :year
 
@@ -36,16 +37,6 @@ private
 
   def update_trainee_commencement_date
     trainee.assign_attributes(commencement_date: commencement_date) if errors.empty?
-  end
-
-  def commencement_date_valid
-    if [day, month, year].all?(&:blank?)
-      errors.add(:commencement_date, :blank)
-    elsif !commencement_date.is_a?(Date)
-      errors.add(:commencement_date, :invalid)
-    elsif date_before_course_start_date?(commencement_date, trainee.course_start_date)
-      errors.add(:commencement_date, :not_before_course_start_date)
-    end
   end
 
   def fields_from_store

@@ -50,8 +50,8 @@ describe CourseDetailsForm, type: :model do
       before { subject.valid? }
 
       it "does not return course date errors" do
-        expect(subject.errors[:course_start_date]).to be_empty
-        expect(subject.errors[:course_end_date]).to be_empty
+        expect(subject.errors[:itt_start_date]).to be_empty
+        expect(subject.errors[:itt_end_date]).to be_empty
       end
     end
   end
@@ -209,7 +209,7 @@ describe CourseDetailsForm, type: :model do
         date_error_message = "date error message"
 
         shared_examples date_error_message do |attribute_name, translation_key_suffix, day, month, year|
-          if attribute_name == :course_start_date
+          if attribute_name == :itt_start_date
             let(:start_date_attributes) do
               { start_day: day, start_month: month, start_year: year }
             end
@@ -239,17 +239,17 @@ describe CourseDetailsForm, type: :model do
             end
 
             it "does not return an error message for course start date" do
-              expect(subject.errors[:course_start_date]).to be_empty
+              expect(subject.errors[:itt_start_date]).to be_empty
             end
           end
 
-          include_examples date_error_message, :course_start_date, :blank,
+          include_examples date_error_message, :itt_start_date, :blank,
                            "", "", ""
-          include_examples date_error_message, :course_start_date, :invalid,
+          include_examples date_error_message, :itt_start_date, :invalid,
                            "foo", "foo", "foo"
 
           start_date = 10.years.ago
-          include_examples date_error_message, :course_start_date, :too_old,
+          include_examples date_error_message, :itt_start_date, :too_old,
                            start_date.day, start_date.month, start_date.year
 
           context "the start date fields are too far in future" do
@@ -258,7 +258,7 @@ describe CourseDetailsForm, type: :model do
             end
 
             it "returns an error message for course start date" do
-              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_start_date.future")
+              expect(subject.errors.messages[:itt_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_start_date.future")
             end
           end
 
@@ -268,7 +268,7 @@ describe CourseDetailsForm, type: :model do
             end
 
             it "returns an error message for course start date" do
-              expect(subject.errors.messages[:course_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_start_date.too_old")
+              expect(subject.errors.messages[:itt_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_start_date.too_old")
             end
           end
         end
@@ -294,17 +294,17 @@ describe CourseDetailsForm, type: :model do
             end
 
             it "does not return an error message for end date" do
-              expect(subject.errors[:course_end_date]).to be_empty
+              expect(subject.errors[:itt_end_date]).to be_empty
             end
           end
 
-          include_examples date_error_message, :course_end_date, :blank,
+          include_examples date_error_message, :itt_end_date, :blank,
                            "", "", ""
-          include_examples date_error_message, :course_end_date, :invalid,
+          include_examples date_error_message, :itt_end_date, :invalid,
                            "foo", "foo", "foo"
-          include_examples date_error_message, :course_end_date, :before_or_same_as_start_date,
+          include_examples date_error_message, :itt_end_date, :before_or_same_as_start_date,
                            start_date.day, start_date.month, start_date.year
-          include_examples date_error_message, :course_end_date, :before_or_same_as_start_date,
+          include_examples date_error_message, :itt_end_date, :before_or_same_as_start_date,
                            start_date.day, start_date.month, start_date.year - 1
 
           context "the end date fields are too far in future" do
@@ -313,7 +313,7 @@ describe CourseDetailsForm, type: :model do
             end
 
             it "returns an error message for course end date" do
-              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_end_date.future")
+              expect(subject.errors.messages[:itt_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_end_date.future")
             end
           end
 
@@ -323,7 +323,7 @@ describe CourseDetailsForm, type: :model do
             end
 
             it "returns an error message for course end date" do
-              expect(subject.errors.messages[:course_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.course_end_date.too_old")
+              expect(subject.errors.messages[:itt_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_end_date.too_old")
             end
           end
         end

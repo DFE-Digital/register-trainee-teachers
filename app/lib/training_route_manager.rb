@@ -33,10 +33,6 @@ class TrainingRouteManager
     EARLY_YEARS_TRAINING_ROUTES.keys.include?(training_route.to_s)
   end
 
-  def itt_route?
-    ITT_TRAINING_ROUTES.keys.include?(training_route)
-  end
-
   def requires_study_mode?
     [
       TRAINING_ROUTE_ENUMS[:assessment_only],

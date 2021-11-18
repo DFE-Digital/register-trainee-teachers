@@ -5,7 +5,7 @@ require "rails_helper"
 feature "edit Trainee start status" do
   include SummaryHelper
 
-  let(:new_start_date) { Date.tomorrow }
+  let(:new_start_date) { Date.parse("1/1/2021") }
 
   context "for a non-draft trainee" do
     background do
@@ -25,7 +25,7 @@ feature "edit Trainee start status" do
     end
 
     scenario "when the trainee has started later" do
-      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_past)
+      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_past, course_start_date: Date.parse("30/12/2020"))
       when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_started_later
       when_i_change_the_start_date

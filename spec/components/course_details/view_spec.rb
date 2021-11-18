@@ -42,11 +42,11 @@ module CourseDetails
       end
 
       it "renders missing hint for course start date" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Course start date is missing")
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "ITT start date is missing")
       end
 
       it "renders missing hint for course end date" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Course end date is missing")
+        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "ITT end date is missing")
       end
     end
 

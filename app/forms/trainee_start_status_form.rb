@@ -2,6 +2,7 @@
 
 class TraineeStartStatusForm < TraineeForm
   include DatesHelper
+  include CommencementDateHelpers
 
   FIELDS = %i[
     commencement_status
@@ -77,16 +78,6 @@ private
     return unless errors.empty?
 
     trainee.assign_attributes(commencement_date: formatted_commencement_date, commencement_status: commencement_status)
-  end
-
-  def commencement_date_valid
-    if [day, month, year].all?(&:blank?)
-      errors.add(:commencement_date, :blank)
-    elsif !commencement_date.is_a?(Date)
-      errors.add(:commencement_date, :invalid)
-    elsif date_before_course_start_date?(commencement_date, trainee.course_start_date)
-      errors.add(:commencement_date, :not_before_course_start_date)
-    end
   end
 
   def fields_from_store

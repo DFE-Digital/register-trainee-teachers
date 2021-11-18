@@ -40,7 +40,7 @@ module Trainees
 
     def date_conversion
       @date_conversion ||= DATE_CONVERSION.transform_keys do |key|
-        "#{trainee.itt_route? ? 'itt' : 'course'}#{key}"
+        "itt#{key}"
       end
     end
 

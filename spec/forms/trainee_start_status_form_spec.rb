@@ -68,13 +68,21 @@ describe TraineeStartStatusForm, type: :model do
       end
     end
 
-    context "date is before the course start date" do
+    context "date is after the course end date" do
       let(:trainee) do
-        build(:trainee, course_start_date: Time.zone.today, commencement_date: 1.day.ago)
+        build(:trainee, course_end_date: Date.parse("19/12/2020"))
       end
 
       it "is invalid" do
-        expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.not_before_course_start_date"))
+        expect(subject.errors[:commencement_date]).to include("Trainee start date must not be after the ITT has finished (19 December 2020)")
+      end
+    end
+
+    context "date is more than 10 years in the past" do
+      let(:params) { { year: "2009", month: "12", day: "20", commencement_status: "itt_started_later" } }
+
+      it "is invalid" do
+        expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.too_old"))
       end
     end
   end
