@@ -15,6 +15,7 @@ module PageObjects
 
       element :continue, "button[type='submit']"
 
+      section :duplicate_notice, PageObjects::Sections::DuplicateNotice, ".duplicate-notice"
       section :deferral_notice, PageObjects::Sections::DeferralNotice, ".deferral-notice"
     end
   end
