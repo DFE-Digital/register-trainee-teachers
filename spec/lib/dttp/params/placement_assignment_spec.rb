@@ -35,9 +35,13 @@ module Dttp
       let(:dttp_qualification_aim_id) { Dttp::CodeSets::QualificationAims::MAPPING[trainee.training_route][:entity_id] }
       let(:dttp_training_initiative_entity_id) { SecureRandom.uuid }
 
-      before do
-        allow(Time).to receive(:now).and_return(time_now_in_zone)
+      around do |example|
+        Timecop.freeze do
+          example.run
+        end
+      end
 
+      before do
         trainee.degrees << degree
 
         stub_const("Dttp::CodeSets::AgeRanges::MAPPING",

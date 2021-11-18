@@ -5,7 +5,12 @@ require "rails_helper"
 describe SendWelcomeEmailService do
   before do
     enable_features(:send_emails)
-    Timecop.freeze
+  end
+
+  around do |example|
+    Timecop.freeze do
+      example.run
+    end
   end
 
   after { Timecop.return }

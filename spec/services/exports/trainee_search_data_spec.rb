@@ -137,13 +137,14 @@ module Exports
 
     describe "#time" do
       let(:time_now_in_zone) { Time.zone.now }
-
       let(:expected_filename) do
         "#{time_now_in_zone.strftime('%Y-%m-%d_%H-%M_%S')}_Register-trainee-teachers_exported_records.csv"
       end
 
-      before do
-        allow(Time).to receive(:now).and_return(time_now_in_zone)
+      around do |example|
+        Timecop.freeze do
+          example.run
+        end
       end
 
       it "sets the correct filename" do

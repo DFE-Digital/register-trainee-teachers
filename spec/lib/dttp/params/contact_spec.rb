@@ -13,8 +13,10 @@ module Dttp
 
       subject { described_class.new(trainee, created_by_dttp_id).params }
 
-      before do
-        allow(Time).to receive(:now).and_return(time_now_in_zone)
+      around do |example|
+        Timecop.freeze do
+          example.run
+        end
       end
 
       describe "#params" do
