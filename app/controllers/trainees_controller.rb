@@ -4,7 +4,7 @@ class TraineesController < ApplicationController
   include TraineeHelper
   include ActivityTracker
 
-  before_action :ensure_trainee_is_not_draft!, only: :show
+  before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
   before_action :save_filter, only: :index
   helper_method :filter_params, :multiple_record_sources?
 
@@ -70,6 +70,12 @@ class TraineesController < ApplicationController
   end
 
 private
+
+  def load_missing_data_view
+    @missing_data_view = MissingDataBannerView.new(
+      Submissions::MissingDataValidator.new(trainee: trainee).missing_fields, trainee
+    )
+  end
 
   def trainee
     @trainee ||= Trainee.from_param(params[:id])

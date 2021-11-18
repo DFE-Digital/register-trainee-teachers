@@ -47,6 +47,14 @@ module CourseDetailsHelper
     languages.sort { |a, b| a.include?(AllocationSubjects::MODERN_LANGUAGES.downcase) ? -1 : a <=> b }
   end
 
+  def path_for_course_details(trainee)
+    return edit_trainee_apply_applications_course_details_path(trainee) if trainee.apply_application?
+
+    return edit_trainee_course_details_path(trainee) if trainee.early_years_route?
+
+    edit_trainee_course_education_phase_path(trainee)
+  end
+
 private
 
   def age_ranges(option:, level:)
