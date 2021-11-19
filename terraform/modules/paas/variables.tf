@@ -54,6 +54,6 @@ locals {
     maxmemory_policy = "allkeys-lru"
   }
   postgres_params = {
-    enable_extensions = ["pgcrypto"]
+    enable_extensions = ["pgcrypto", "btree_gist"]
   }
 }

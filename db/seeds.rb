@@ -60,3 +60,7 @@ SEED_GRANTS.each do |s|
     funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
   end
 end
+
+ACADEMIC_CYCLES.each do |academic_cycle|
+  AcademicCycle.find_or_create_by!(start_date: academic_cycle[:start_date], end_date: academic_cycle[:end_date])
+end

@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_151731) do
+ActiveRecord::Schema.define(version: 2021_11_19_131642) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "btree_gist"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "academic_cycles", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)", name: "academic_cycles_date_range", using: :gist
+  end
 
   create_table "activities", force: :cascade do |t|
     t.bigint "user_id", null: false
