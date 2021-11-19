@@ -30,6 +30,8 @@ features:
     provider_led_undergrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
+  google:
+    send_data_to_big_query: true
 
 environment:
   name: staging
