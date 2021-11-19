@@ -23,6 +23,8 @@ features:
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
     opt_in_undergrad: true
+  google:
+    send_data_to_big_query: true
 
 pagination:
   records_per_page: 30
