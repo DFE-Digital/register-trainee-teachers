@@ -70,6 +70,14 @@ apply_api:
 
 current_recruitment_cycle_year: 2022
 
+apply_applications:
+  import:
+    recruitment_cycle_years:
+      - 2021
+      - 2022
+  create:
+    recruitment_cycle_year: 2021
+
 jobs:
   poll_delay_hours: 1
   max_poll_duration_days: 4

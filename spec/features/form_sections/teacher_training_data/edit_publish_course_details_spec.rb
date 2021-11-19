@@ -283,8 +283,13 @@ feature "publish course details", type: :feature, feature_publish_course_details
     end
   end
 
-  def given_a_trainee_exists_with_some_courses(with_subjects: [], with_training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-    given_a_trainee_exists(:with_related_courses, :with_secondary_education, subject_names: with_subjects, training_route: with_training_route, study_mode: study_mode)
+  def given_a_trainee_exists_with_some_courses(with_subjects: [],
+                                               with_training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+    given_a_trainee_exists(:with_related_courses,
+                           :with_secondary_education,
+                           subject_names: with_subjects,
+                           training_route: with_training_route,
+                           study_mode: study_mode)
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
   end
 

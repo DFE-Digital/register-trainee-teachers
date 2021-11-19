@@ -9,7 +9,7 @@ module Trainees
 
       ApplyApplication.joins(:provider).where(
         providers: { apply_sync_enabled: true },
-        recruitment_cycle_year: Settings.current_recruitment_cycle_year,
+        recruitment_cycle_year: Settings.apply_applications.create.recruitment_cycle_year,
       ).importable.each do |application|
         CreateFromApply.call(application: application)
       rescue Trainees::CreateFromApply::MissingCourseError => e

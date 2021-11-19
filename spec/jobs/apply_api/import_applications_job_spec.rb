@@ -6,11 +6,13 @@ module ApplyApi
   describe ImportApplicationsJob do
     include ActiveJob::TestHelper
 
+    let(:recruitment_cycle_year) { Time.zone.today.year }
     let(:application_data) { double("application_data") }
     let(:application_record) { double("application_record") }
 
     before do
       allow(RetrieveApplications).to receive(:call).and_return([application_data])
+      allow(Settings.apply_applications.import).to receive(:recruitment_cycle_years).and_return([recruitment_cycle_year])
     end
 
     context "when the feature flag is turned on", feature_import_applications_from_apply: true do
@@ -18,7 +20,7 @@ module ApplyApi
         let(:from_date) { "2019-01-01" }
 
         it "calls the RetrieveApplications service with the from_date param" do
-          expect(RetrieveApplications).to receive(:call).with(changed_since: from_date)
+          expect(RetrieveApplications).to receive(:call).with(changed_since: from_date, recruitment_cycle_year: recruitment_cycle_year)
           expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
 
           described_class.perform_now(from_date: from_date)
@@ -27,7 +29,7 @@ module ApplyApi
 
       context "when there have been no previous syncs" do
         it "imports application data from Apply and creates a trainee record" do
-          expect(RetrieveApplications).to receive(:call).with(changed_since: nil)
+          expect(RetrieveApplications).to receive(:call).with(changed_since: nil, recruitment_cycle_year: recruitment_cycle_year)
           expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
 
           described_class.perform_now
@@ -40,7 +42,7 @@ module ApplyApi
         before { create(:apply_application_sync_request, :successful, created_at: last_sync) }
 
         it "imports just the new applications from Apply" do
-          expect(RetrieveApplications).to receive(:call).with(changed_since: last_sync)
+          expect(RetrieveApplications).to receive(:call).with(changed_since: last_sync, recruitment_cycle_year: recruitment_cycle_year)
           expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
 
           described_class.perform_now
@@ -57,7 +59,7 @@ module ApplyApi
         end
 
         it "imports just the new applications from Apply" do
-          expect(RetrieveApplications).to receive(:call).with(changed_since: last_successful_sync)
+          expect(RetrieveApplications).to receive(:call).with(changed_since: last_successful_sync, recruitment_cycle_year: recruitment_cycle_year)
           expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
 
           described_class.perform_now
