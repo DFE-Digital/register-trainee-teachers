@@ -25,4 +25,20 @@ describe AcademicCycle, type: :model do
       end
     end
   end
+
+  describe "#trainees" do
+    context "when there are trainees across different year periods" do
+      let(:trainee) { create(:trainee, commencement_date: subject.start_date) }
+      let(:trainee2) { create(:trainee, course_start_date: subject.start_date + 1.day) }
+
+      before do
+        incorrect_day = subject.start_date - 1.day
+        create(:trainee, commencement_date: incorrect_day, course_start_date: incorrect_day)
+      end
+
+      it "returns the trainees based on the start and end date of the cycle" do
+        expect(subject.trainees_starting).to eq([trainee, trainee2])
+      end
+    end
+  end
 end
