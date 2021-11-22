@@ -17,7 +17,7 @@ module Submissions
     end
 
     def course_already_started?
-      !trainee.course_start_date&.future?
+      !trainee.starts_course_in_the_future?
     end
 
   private

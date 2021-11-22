@@ -5,21 +5,21 @@ require "rails_helper"
 describe MissingDataBannerView do
   include Rails.application.routes.url_helpers
 
+  let(:missing_fields) { Submissions::MissingDataValidator.new(trainee: trainee).missing_fields }
+
   subject { described_class.new(missing_fields, trainee).content }
 
   describe "#content" do
     context "when there is no missing data" do
       let(:trainee) { create(:trainee, :completed) }
-      let(:missing_fields) { Submissions::MissingDataValidator.new(trainee: trainee).missing_fields }
 
       it "returns nothing" do
         expect(subject).to be_falsey
       end
     end
 
-    context "when the trainee is missing data -" do
+    context "when the trainee is missing data" do
       let(:trainee) { create(:trainee, :completed, :course_start_date_in_the_past, field => nil) }
-      let(:missing_fields) { Submissions::MissingDataValidator.new(trainee: trainee).missing_fields }
 
       let(:expected_display_name) { I18n.t("views.missing_data_view.missing_fields_mapping.#{field}").downcase }
       let(:expected_html) do
