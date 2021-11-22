@@ -8,7 +8,7 @@ module Submissions
       subject { described_class.new(trainee: trainee) }
 
       context "when all sections are valid" do
-        let(:trainee) { build(:trainee, :completed) }
+        let(:trainee) { build(:trainee, :submitted_with_start_date) }
 
         it "is valid" do
           expect(subject.valid?).to be true
@@ -17,7 +17,7 @@ module Submissions
       end
 
       context "when a section is invalid" do
-        let(:trainee) { build(:trainee, :completed, first_names: nil) }
+        let(:trainee) { build(:trainee, :submitted_with_start_date, first_names: nil) }
 
         it "is invalid and returns an error message" do
           expect(subject.valid?).to be false
@@ -31,7 +31,7 @@ module Submissions
       subject { described_class.new(trainee: trainee) }
 
       context "when trainee has no missing data" do
-        let(:trainee) { build(:trainee, :completed) }
+        let(:trainee) { build(:trainee, :submitted_with_start_date) }
 
         it "returns an empty array" do
           expect(subject.missing_fields).to be_empty
@@ -39,7 +39,7 @@ module Submissions
       end
 
       context "when trainee has missing data" do
-        let(:trainee) { build(:trainee, :completed, first_names: nil) }
+        let(:trainee) { build(:trainee, :submitted_with_start_date, first_names: nil) }
 
         it "returns the correct attributes from the invalid form" do
           expect(subject.missing_fields).to contain_exactly(:first_names)
@@ -48,7 +48,7 @@ module Submissions
 
       context "when trainee start date is missing" do
         context "and the course has not started" do
-          let(:trainee) { build(:trainee, :completed, :course_start_date_in_the_future, commencement_date: nil) }
+          let(:trainee) { build(:trainee, :submitted_for_trn, :course_start_date_in_the_future, commencement_date: nil) }
 
           it "returns an empty array" do
             expect(subject.missing_fields).to be_empty
@@ -56,7 +56,7 @@ module Submissions
         end
 
         context "and the course has already started" do
-          let(:trainee) { build(:trainee, :completed, :course_start_date_in_the_past, commencement_date: nil) }
+          let(:trainee) { build(:trainee, :submitted_for_trn, :course_start_date_in_the_past, commencement_date: nil) }
 
           it "returns the correct attributes from the invalid form" do
             expect(subject.missing_fields).to contain_exactly(:commencement_date)
