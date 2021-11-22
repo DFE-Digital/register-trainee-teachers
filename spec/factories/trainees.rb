@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
       randomise_subjects { false }
-      potential_course_start_date { course_start_date || Faker::Date.between(from: 1.year.ago, to: Time.zone.today) }
+      potential_course_start_date { course_start_date || Faker::Date.in_date_period(month: 9) }
     end
 
     sequence :trainee_id do |n|
@@ -115,6 +115,11 @@ FactoryBot.define do
       submission_ready
     end
 
+    trait :submitted_with_start_date do
+      submitted_for_trn
+      with_start_date
+    end
+
     trait :with_subject_specialism do
       transient do
         subject_name { nil }
@@ -168,14 +173,14 @@ FactoryBot.define do
 
     trait :with_study_mode_and_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      course_start_date { Faker::Date.between(from: 1.year.ago, to: 2.days.ago) }
-      course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: Time.zone.today) }
+      course_start_date { Faker::Date.in_date_period(month: 9) }
+      course_end_date { Faker::Date.in_date_period(month: 8, year: Faker::Date.in_date_period.year + 1) }
     end
 
     trait :with_study_mode_and_future_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      course_start_date { Faker::Date.between(from: Time.zone.tomorrow, to: 1.year.from_now) }
-      course_end_date { Faker::Date.between(from: course_start_date + 1.day, to: 2.years.from_now + 1.day) }
+      course_start_date { Faker::Date.in_date_period(month: 9, year: Faker::Date.in_date_period.year + 1) }
+      course_end_date { Faker::Date.in_date_period(month: 8, year: course_start_date.year + 1) }
     end
 
     trait :with_publish_course_details do
@@ -185,7 +190,7 @@ FactoryBot.define do
     end
 
     trait :with_start_date do
-      commencement_date { Faker::Date.between(from: 6.months.from_now, to: Time.zone.today) }
+      commencement_date { Faker::Date.in_date_period(month: 10) }
     end
 
     trait :course_start_date_in_the_past do
