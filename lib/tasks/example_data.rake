@@ -96,13 +96,48 @@ namespace :example_data do
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
         REAL_PUBLISH_COURSES_WITH_SUBJECTS.each_with_index do |(course_name, subject_names), index|
-          FactoryBot.build(:course,
-                           accredited_body_code: provider.code,
-                           start_date: index.even? ? Time.zone.now : 1.month.from_now,
-                           route: route,
-                           name: course_name,
-                           level: course_name.include?("Primary") ? :primary : :secondary,
-                           study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample) { |course|
+          FactoryBot.build(
+            :course,
+            accredited_body_code: provider.code,
+            start_date: index.even? ? Time.zone.now : 1.month.from_now,
+            route: route,
+            name: course_name,
+            level: course_name.include?("Primary") ? :primary : :secondary,
+            study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample,
+            recruitment_cycle_year: Time.zone.today.year,
+          ) { |course|
+            course.subjects = Subject.where(name: subject_names)
+          }.save!
+
+          # Last cycle year
+          if SecureRandom.random_number(100) > 50
+            FactoryBot.build(
+              :course,
+              accredited_body_code: provider.code,
+              start_date: index.even? ? Time.zone.now : 1.month.from_now,
+              route: route,
+              name: course_name,
+              level: course_name.include?("Primary") ? :primary : :secondary,
+              study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample,
+              recruitment_cycle_year: 1.year.ago.year,
+            ) { |course|
+              course.subjects = Subject.where(name: subject_names)
+            }.save!
+          end
+
+          # Next cycle year
+          next unless SecureRandom.random_number(100) > 50
+
+          FactoryBot.build(
+            :course,
+            accredited_body_code: provider.code,
+            start_date: index.even? ? Time.zone.now : 1.month.from_now,
+            route: route,
+            name: course_name,
+            level: course_name.include?("Primary") ? :primary : :secondary,
+            study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample,
+            recruitment_cycle_year: 1.year.from_now.year,
+          ) { |course|
             course.subjects = Subject.where(name: subject_names)
           }.save!
         end

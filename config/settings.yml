@@ -69,6 +69,7 @@ apply_api:
   auth_token: "auth-token-from-env"
 
 current_recruitment_cycle_year: 2022
+current_default_course_year: 2021
 
 apply_applications:
   import:

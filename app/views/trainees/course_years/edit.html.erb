@@ -1,0 +1,31 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.course_years.edit", has_errors: @course_years_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= register_form_with(model: @course_years_form,
+                          url: trainee_course_years_path(@trainee),
+                          method: :put,
+                          local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= render TraineeName::View.new(@trainee) %>
+      <div class="govuk-form-group">
+        <%= f.govuk_radio_buttons_fieldset :course_year, legend: { text: t(".heading"), tag: "h1", size: "l" } do %>
+          <% f.object.course_years_options.each do |val, name| %>
+            <%= f.govuk_radio_button :course_year, val,
+              checked: (val == params[:year].to_i),
+              label: { text: name },
+              link_errors: false %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
