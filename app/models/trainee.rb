@@ -341,6 +341,10 @@ class Trainee < ApplicationRecord
     ].select(&:present?).join(" ").presence
   end
 
+  def duplicate?
+    Trainee.where(first_names: first_names, last_name: last_name, date_of_birth: date_of_birth, email: email).count > 1
+  end
+
 private
 
   def value_digest

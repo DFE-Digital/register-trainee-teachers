@@ -128,6 +128,15 @@ feature "Withdrawing a trainee", type: :feature do
     and_the_deferral_date_is_used
   end
 
+  scenario "when the trainee is a duplicate" do
+    given_i_am_authenticated
+    given_a_trainee_exists_to_be_withdrawn
+    and_the_trainee_has_a_duplicate
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_withdraw
+    then_the_duplicate_record_text_should_be_shown
+  end
+
   def when_i_am_on_the_withdrawal_page
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn
@@ -253,6 +262,10 @@ feature "Withdrawing a trainee", type: :feature do
     given_a_trainee_exists(:deferred)
   end
 
+  def and_the_trainee_has_a_duplicate
+    @trainee.dup.tap { |t| t.slug = t.generate_slug }.save
+  end
+
   def additional_withdraw_reason
     @additional_withdraw_reason ||= Faker::Lorem.paragraph
   end
@@ -274,6 +287,10 @@ feature "Withdrawing a trainee", type: :feature do
 
   def then_the_deferral_text_should_be_shown
     expect(withdrawal_page).to have_deferral_notice
+  end
+
+  def then_the_duplicate_record_text_should_be_shown
+    expect(withdrawal_page).to have_duplicate_notice
   end
 
   def and_the_deferral_date_is_used

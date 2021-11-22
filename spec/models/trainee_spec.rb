@@ -641,4 +641,14 @@ describe Trainee do
       expect(trainee.full_name).to eql("Joe Smith Blogs")
     end
   end
+
+  describe "#duplicate?" do
+    let(:trainee) { create(:trainee) }
+
+    before { trainee.dup.tap { |t| t.slug = t.generate_slug }.save }
+
+    it "returns true if another trainee has the same nam, date of birth and email address" do
+      expect(trainee.duplicate?).to eq(true)
+    end
+  end
 end

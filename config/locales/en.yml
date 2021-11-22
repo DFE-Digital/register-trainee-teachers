@@ -610,6 +610,8 @@ en:
       reinstatement:
         heading: When did the trainee return?
       withdrawal_date:
+        duplicate_record_notice: Do not withdraw duplicate records. If you need to remove a duplicate record, contact us at %{contact_link}.
+        deferral_notice_heading: Withdrawal date
         deferral_notice_html: We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">%{date}</span> as their withdrawal date.
         deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
       withdrawal_reasons:
