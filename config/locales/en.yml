@@ -1275,6 +1275,7 @@ en:
               blank: Enter a start date
               invalid: Enter a valid start date
               not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
+              future: Trainee start date must be in the past
               too_old: Trainee start date cannot be more than 10 years in the past
         trainee_start_status_form:
           attributes:
@@ -1282,6 +1283,7 @@ en:
               blank: Enter a start date
               invalid: Enter a valid start date
               not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
+              future: Trainee start date must be in the past
               too_old: Trainee start date cannot be more than 10 years in the past
             commencement_status:
               blank: Select if the trainee started on time

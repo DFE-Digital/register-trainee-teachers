@@ -8,6 +8,8 @@ module CommencementDateHelpers
       errors.add(:commencement_date, :invalid)
     elsif commencement_date < 10.years.ago
       errors.add(:commencement_date, :too_old)
+    elsif commencement_date.future?
+      errors.add(:commencement_date, :future)
     elsif trainee.course_end_date.present? && commencement_date > trainee.course_end_date
       errors.add(
         :commencement_date,

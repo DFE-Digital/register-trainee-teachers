@@ -83,6 +83,19 @@ describe TraineeStartStatusForm, type: :model do
       end
     end
 
+    context "date is in the future" do
+      let(:trainee) do
+        build(:trainee, course_start_date: Time.zone.today, course_end_date: 1.year.from_now)
+      end
+      let(:future_date) { 1.month.from_now }
+
+      let(:params) { { day: future_date.day, month: future_date.month, year: future_date.year, commencement_status: "itt_started_later" } }
+
+      it "is invalid" do
+        expect(subject.errors[:commencement_date]).to include("Trainee start date must be in the past")
+      end
+    end
+
     context "date is more than 10 years in the past" do
       let(:params) { { year: "2009", month: "12", day: "20", commencement_status: "itt_started_later" } }
 
