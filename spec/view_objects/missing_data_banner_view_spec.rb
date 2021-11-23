@@ -21,9 +21,9 @@ describe MissingDataBannerView do
     context "when the trainee is missing data" do
       let(:trainee) { create(:trainee, :completed, :course_start_date_in_the_past, field => nil) }
 
-      let(:expected_display_name) { I18n.t("views.missing_data_view.missing_fields_mapping.#{field}").downcase }
+      let(:expected_display_name) { I18n.t("views.missing_data_view.missing_fields_mapping.#{field}") }
       let(:expected_html) do
-        "<ul class=\"govuk-list app-notice-banner__list\"><li><a class=\"govuk-notification-banner__link\" href=\"#{expected_path}\">Please provide a #{expected_display_name}</a></li></ul>"
+        "<ul class=\"govuk-list app-notice-banner__list\"><li><a class=\"govuk-notification-banner__link\" href=\"#{expected_path}\">#{expected_display_name} is missing</a></li></ul>"
       end
 
       context "first_names" do

@@ -470,7 +470,7 @@ en:
       apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
     missing_data_banner_view:
       header: You need to provide additional details before recording an outcome
-      missing_field_text: Please provide a %{missing_field}
+      missing_field_text: "%{missing_field} is missing"
       missing_field_link:
         first_names: &personal_details_path edit_trainee_personal_details_path
         last_name: *personal_details_path
@@ -551,7 +551,7 @@ en:
         country: *country
         lead_school_id: *lead_school
         employing_school_id: *employing_school
-        school_id: school
+        school_id: *lead_school
         commencement_date: *trainee_start_date
         commencement_date_radio_option: *commencement_date
         trainee_id: *trainee_id

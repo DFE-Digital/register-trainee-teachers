@@ -61,6 +61,6 @@ private
   end
 
   def display_name(field)
-    I18n.t("views.missing_data_view.missing_fields_mapping.#{field}").downcase
+    I18n.t("views.missing_data_view.missing_fields_mapping.#{field}")
   end
 end
