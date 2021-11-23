@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module TaskListHelper
+  include CourseDetailsHelper
+  include DegreesHelper
+
   def row_helper(trainee, task)
     case task
 
@@ -163,19 +166,5 @@ private
       school_direct_salaried: salaried_title,
       pg_teaching_apprenticeship: pg_teaching_apprenticeship_title,
     }[route.to_sym]
-  end
-
-  def path_for_course_details(trainee)
-    return edit_trainee_apply_applications_course_details_path(trainee) if trainee.apply_application?
-
-    return edit_trainee_course_details_path(trainee) if trainee.early_years_route?
-
-    edit_trainee_course_education_phase_path(trainee)
-  end
-
-  def path_for_degrees(trainee)
-    return trainee_degrees_new_type_path(trainee) if trainee.degrees.empty?
-
-    trainee_degrees_confirm_path(trainee)
   end
 end

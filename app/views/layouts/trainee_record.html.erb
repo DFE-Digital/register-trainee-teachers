@@ -10,6 +10,13 @@
 
   <%= render RecordHeader::View.new(trainee: @trainee) %>
 
+  <% if @missing_data_view %>
+    <%= render NoticeBanner::View.new do |component| %>
+      <% component.header { @missing_data_view.header } %>
+      <%= @missing_data_view.content %>
+    <% end %>
+  <% end %>
+
   <%= render TabNavigation::View.new(items: [
     { name: "About their teacher training", url: trainee_path(@trainee) },
     { name: @trainee.requires_degree? ? "Personal details and education" : "Personal details", url: trainee_personal_details_path(@trainee) },

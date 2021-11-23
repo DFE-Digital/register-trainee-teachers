@@ -5,7 +5,7 @@ module Trainees
     include Appliable
 
     before_action :load_all_nationalities
-    before_action :ensure_trainee_is_not_draft!, only: :show
+    before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
 
     DOB_CONVERSION = {
       "date_of_birth(3i)" => "day",
@@ -39,6 +39,12 @@ module Trainees
     end
 
   private
+
+    def load_missing_data_view
+      @missing_data_view = MissingDataBannerView.new(
+        Submissions::MissingDataValidator.new(trainee: trainee).missing_fields, trainee
+      )
+    end
 
     def load_all_nationalities
       @nationalities = Nationality.where(name: NATIONALITIES)
