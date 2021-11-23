@@ -1,0 +1,41 @@
+@import "../base.scss";
+
+.app-notice-banner {
+  @include govuk-text-colour;
+  @include govuk-responsive-padding(4);
+  @include govuk-responsive-margin(8, "bottom");
+
+  border: $govuk-border-width solid $govuk-brand-colour;
+
+  &:focus {
+    outline: $govuk-focus-width solid $govuk-focus-colour;
+  }
+}
+
+.app-notice-banner__title {
+  @include govuk-font($size: 24, $weight: bold);
+
+  margin-top: 0;
+  @include govuk-responsive-margin(4, "bottom");
+}
+
+.app-notice-banner__body {
+  @include govuk-font($size: 19);
+
+  p {
+    margin-top: 0;
+    @include govuk-responsive-margin(4, "bottom");
+  }
+}
+
+// Cross-component class - adjusts styling of list component
+.app-notice-banner__list {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.app-notice-banner__list a {
+  @include govuk-typography-weight-bold;
+  @include govuk-link-common;
+  @include govuk-link-style-no-visited-state;
+}
