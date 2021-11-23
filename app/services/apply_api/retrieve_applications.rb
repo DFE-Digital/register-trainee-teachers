@@ -4,8 +4,9 @@ module ApplyApi
   class RetrieveApplications
     include ServicePattern
 
-    def initialize(changed_since:)
+    def initialize(changed_since:, recruitment_cycle_year:)
       @changed_since = changed_since
+      @recruitment_cycle_year = recruitment_cycle_year
     end
 
     def call
@@ -14,7 +15,7 @@ module ApplyApi
 
   private
 
-    attr_reader :changed_since
+    attr_reader :changed_since, :recruitment_cycle_year
 
     def applications
       JSON(response.body)["data"]
@@ -26,7 +27,7 @@ module ApplyApi
 
     def query
       {
-        recruitment_cycle_year: Settings.current_recruitment_cycle_year,
+        recruitment_cycle_year: recruitment_cycle_year,
         changed_since: changed_since&.utc&.iso8601,
       }.compact.to_query
     end

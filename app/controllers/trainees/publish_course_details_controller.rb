@@ -6,6 +6,7 @@ module Trainees
 
     def edit
       @courses = trainee.available_courses
+      @courses = @courses.where(recruitment_cycle_year: 2021) # TODO: remove when start year filter is implemented
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee)
     end
 

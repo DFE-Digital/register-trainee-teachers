@@ -5,11 +5,12 @@ require "rails_helper"
 module ApplyApi
   describe RetrieveApplications do
     let(:changed_since) { nil }
-    let(:expected_path) { "/applications?recruitment_cycle_year=2021" }
+    let(:recruitment_cycle_year) { Settings.current_recruitment_cycle_year }
+    let(:expected_path) { "/applications?recruitment_cycle_year=#{recruitment_cycle_year}" }
     let(:http_response) { { status: status, body: ApiStubs::ApplyApi.applications } }
     let(:request_url) { "#{Settings.apply_api.base_url}#{expected_path}" }
 
-    subject { described_class.call(changed_since: changed_since) }
+    subject { described_class.call(changed_since: changed_since, recruitment_cycle_year: recruitment_cycle_year) }
 
     before do
       stub_request(:get, request_url).to_return(http_response)
@@ -42,7 +43,7 @@ module ApplyApi
 
         context "when a 'changed_at' is provided" do
           let(:changed_since) { Time.zone.now }
-          let(:expected_query) { { recruitment_cycle_year: 2021, changed_since: changed_since.utc.iso8601 }.to_query }
+          let(:expected_query) { { recruitment_cycle_year: recruitment_cycle_year, changed_since: changed_since.utc.iso8601 }.to_query }
           let(:expected_path) { "/applications?#{expected_query}" }
 
           it "includes the changed_at param in the request" do

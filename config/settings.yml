@@ -68,7 +68,15 @@ apply_api:
   base_url: "https://www.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: "auth-token-from-env"
 
-current_recruitment_cycle_year: 2021
+current_recruitment_cycle_year: 2022
+
+apply_applications:
+  import:
+    recruitment_cycle_years:
+      - 2021
+      - 2022
+  create:
+    recruitment_cycle_year: 2021
 
 jobs:
   poll_delay_hours: 1
