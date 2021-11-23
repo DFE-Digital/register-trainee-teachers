@@ -41,8 +41,13 @@ brew install graphviz
 1. Run `bundle install` to install the gem dependencies
 2. Run `yarn` to install node dependencies
 3. Run `bin/rails db:setup` to set up the database development and test schemas, and seed with test data
-4. Run `bundle exec rails server` to launch the app on http://localhost:3000
-5. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
+4. Add a file to config/settings called development.local.yml containing the following:
+   ```
+       features:
+         use_ssl: false
+   ```
+5. Run `bundle exec rails server` to launch the app on http://localhost:5000
+6. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
 ### Setting up seed records
 
@@ -56,7 +61,11 @@ our ADRs, see the link for how to install (hint: `brew install adr-tools` or use
 ASDF).
 
 ## Running specs, linter(without auto correct) and annotate models and serializers
-
+To ensure webpacker works for you when tests run: 
+```
+RAILS_ENV=test bundle exec rails assets:precompile 
+```
+Then you can run the full test suite with: 
 ```
 bundle exec rake
 ```
