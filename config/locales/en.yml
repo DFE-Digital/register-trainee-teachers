@@ -951,9 +951,9 @@ en:
     forbidden_withdrawals:
       show:
         heading: You cannot withdraw this trainee
-        reason: Trainees can only be withdrawn after they have started their course.
+        reason: You can only withdraw a trainee after they have started their ITT.
         delete: delete this trainee record
-        support: If you need more help, email the Register trainee teachers team at
+        support: If you need more help, email us at
   activerecord:
     attributes:
       trainee:
