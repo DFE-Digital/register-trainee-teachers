@@ -943,7 +943,7 @@ en:
       show:
         title: Delete forbidden
         heading: You cannot delete this record
-        reason: You can only delete a trainee record before the trainee starts their ITT, but you can defer or withdraw the trainee.
+        reason: You can only delete a trainee record before the trainee starts their ITT. You can defer or withdraw the trainee.
         defer: Defer
         withdraw: Withdraw
         return_to_record: Return to trainee record
