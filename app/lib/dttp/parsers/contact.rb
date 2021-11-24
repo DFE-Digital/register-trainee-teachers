@@ -15,6 +15,15 @@ module Dttp
             }
           end
         end
+
+        def to_trainee_attributes(contacts:)
+          contacts.map do |contact|
+            {
+              dttp_id: contact["contactid"],
+              response: contact,
+            }
+          end
+        end
       end
     end
   end
