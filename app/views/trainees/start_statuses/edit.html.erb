@@ -11,11 +11,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @trainee_start_status_form, url: trainee_start_status_path, local: true) do |f| %>
+    <%= register_form_with(model: @trainee_start_status_form,
+                           url: trainee_start_status_path(context: params[:context]),
+                           local: true) do |f| %>
       <%= f.govuk_error_summary %>
-      <%= hidden_field_tag :context, params[:context] %>
 
       <%= render TraineeName::View.new(@trainee) %>
+
       <%= f.govuk_radio_buttons_fieldset(:commencement_status,
                                            legend: { text: t(".label"), size: "l", tag: "h1" },
                                            classes: "age_range") do %>
