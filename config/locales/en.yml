@@ -1351,7 +1351,7 @@ en:
         start_date_verification_form:
           attributes:
             trainee_has_started_course:
-              blank: Select yes or no
+              blank: Select if the trainee started their ITT
         trainee_forbidden_delete_form:
           attributes:
             alternative_option:

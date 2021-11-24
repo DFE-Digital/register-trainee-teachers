@@ -54,7 +54,7 @@ module DeferralDetails
     end
 
     def trainee_started_itt?
-      data_model.itt_start_date.present?
+      data_model.itt_start_date.is_a?(Date)
     end
   end
 end
