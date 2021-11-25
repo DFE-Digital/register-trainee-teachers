@@ -77,9 +77,11 @@ private
   end
 
   def load_missing_data_view
-    @missing_data_view = MissingDataBannerView.new(
-      Submissions::MissingDataValidator.new(trainee: trainee).missing_fields, trainee
-    )
+    @missing_data_view = MissingDataBannerView.new(missing_fields, trainee)
+  end
+
+  def missing_fields
+    @missing_fields ||= Submissions::MissingDataValidator.new(trainee: trainee).missing_fields
   end
 
   def trainee

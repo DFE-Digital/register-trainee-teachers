@@ -1,5 +1,5 @@
 <div class="record-outcome-action-bar">
-  <%= render RecordActions::View.new(@trainee) %>
+  <%= render RecordActions::View.new(@trainee, has_missing_fields: @missing_fields.present?) %>
 </div>
 
 <div class="record-details">

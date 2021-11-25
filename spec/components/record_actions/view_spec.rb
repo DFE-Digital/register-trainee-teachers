@@ -3,21 +3,23 @@
 require "rails_helper"
 
 RSpec.describe RecordActions::View do
+  include SummaryHelper
+
   let(:trainee) { build(:trainee, trait, id: 1) }
   let(:button_text) { "Recommend trainee for QTS" }
 
   subject { render_inline(described_class.new(trainee)).text }
 
+  shared_examples "no actions" do
+    it { is_expected.not_to include("Defer", "withdraw") }
+    it { is_expected.not_to include(button_text) }
+  end
+
+  shared_examples "no button" do
+    it { is_expected.not_to include(button_text) }
+  end
+
   context "trainee state" do
-    shared_examples "no actions" do
-      it { is_expected.not_to include("Defer", "withdraw") }
-      it { is_expected.not_to include(button_text) }
-    end
-
-    shared_examples "no button" do
-      it { is_expected.not_to include(button_text) }
-    end
-
     context "draft" do
       let(:trait) { :draft }
 
@@ -68,6 +70,12 @@ RSpec.describe RecordActions::View do
   context "when course date is in the future" do
     let(:trainee) { build(:trainee, :submitted_for_trn, course_start_date: 1.day.from_now) }
 
+    include_examples "no button"
+
+    it "renders the ITT starts in the future text" do
+      expect(subject).to include("The trainee’s ITT starts on #{date_for_summary_view(trainee.course_start_date)}")
+    end
+
     it "withdraw link is hidden" do
       expect(subject).not_to include("Withdraw")
     end
@@ -78,6 +86,18 @@ RSpec.describe RecordActions::View do
 
     it "withdraw link is shown" do
       expect(subject).to include("Withdraw")
+    end
+  end
+
+  context "when the trainee has missing fields" do
+    let(:trainee) { build(:trainee, :submitted_for_trn, :course_start_date_in_the_past, commencement_date: nil) }
+
+    subject { render_inline(described_class.new(trainee, has_missing_fields: true)).text }
+
+    include_examples "no button"
+
+    it "renders the missing fields text" do
+      expect(subject).to include("This trainee record requires additional details")
     end
   end
 end

@@ -14,6 +14,17 @@ module RecordActions
       render View.new(trainee)
     end
 
+    def missing_fields
+      trainee.state = :submitted_for_trn
+      render View.new(trainee, has_missing_fields: true)
+    end
+
+    def itt_starts_in_future
+      trainee.state = :submitted_for_trn
+      trainee.course_start_date = Time.zone.tomorrow
+      render View.new(trainee)
+    end
+
   private
 
     def trainee
