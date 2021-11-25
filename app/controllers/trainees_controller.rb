@@ -4,6 +4,7 @@ class TraineesController < ApplicationController
   include TraineeHelper
   include ActivityTracker
 
+  before_action :redirect_to_not_found, if: -> { trainee.discarded? }, only: :show
   before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
   before_action :save_filter, only: :index
   helper_method :filter_params, :multiple_record_sources?
@@ -70,6 +71,10 @@ class TraineesController < ApplicationController
   end
 
 private
+
+  def redirect_to_not_found
+    redirect_to(not_found_path)
+  end
 
   def load_missing_data_view
     @missing_data_view = MissingDataBannerView.new(

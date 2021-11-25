@@ -23,7 +23,6 @@ feature "Deleting a trainee" do
       given_a_trainee_starting_a_course_in_the_future
       and_i_am_on_the_trainee_record_page
       and_i_click_the_delete_link
-      and_i_choose_they_have_not_started
       and_i_confirm_delete
       and_i_see_a_success_flash_message
       and_the_trainee_is_soft_deleted
@@ -39,6 +38,12 @@ feature "Deleting a trainee" do
     end
   end
 
+  scenario "viewing a trainee that's deleted" do
+    given_a_trainee_thats_deleted
+    when_i_attempt_to_view_the_deleted_trainee
+    then_i_should_see_the_not_found_page
+  end
+
 private
 
   def given_a_trainee_starting_a_course_in_the_future
@@ -52,6 +57,14 @@ private
                            :with_publish_course_details,
                            course_start_date: 10.days.ago,
                            commencement_date: nil)
+  end
+
+  def given_a_trainee_thats_deleted
+    given_a_trainee_starting_a_course_in_the_future
+    and_i_am_on_the_trainee_record_page
+    and_i_click_the_delete_link
+    and_i_confirm_delete
+    and_i_see_a_success_flash_message
   end
 
   def and_i_save_the_form
@@ -115,5 +128,13 @@ private
 
   def and_the_trainee_is_soft_deleted
     expect(trainee.reload.discarded_at).to be_present
+  end
+
+  def when_i_attempt_to_view_the_deleted_trainee
+    record_page.load(id: trainee.slug)
+  end
+
+  def then_i_should_see_the_not_found_page
+    expect(not_found_page).to be_displayed
   end
 end

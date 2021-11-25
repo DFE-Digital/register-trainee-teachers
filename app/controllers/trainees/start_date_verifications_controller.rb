@@ -2,6 +2,8 @@
 
 module Trainees
   class StartDateVerificationsController < BaseController
+    before_action :redirect_to_confirm_delete, if: :deleting_course_and_not_started?
+
     def show
       @start_date_verification_form = StartDateVerificationForm.new
     end
@@ -30,7 +32,7 @@ module Trainees
       elsif trainee_started_course?
         edit_trainee_start_status_path(trainee, context: :delete)
       else
-        trainee_confirm_delete_path(trainee)
+        confirm_delete_path
       end
     end
 
@@ -40,6 +42,18 @@ module Trainees
 
     def withdrawing?
       @start_date_verification_form.withdrawing?
+    end
+
+    def redirect_to_confirm_delete
+      redirect_to(confirm_delete_path)
+    end
+
+    def confirm_delete_path
+      trainee_confirm_delete_path(trainee)
+    end
+
+    def deleting_course_and_not_started?
+      trainee.starts_course_in_the_future? && params[:context] == StartDateVerificationForm::DELETE
     end
   end
 end
