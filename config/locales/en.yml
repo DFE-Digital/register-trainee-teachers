@@ -1101,7 +1101,7 @@ en:
         deferral_form:
           attributes:
             date_string:
-              blank: Choose a deferral date
+              blank: Select a deferral date
             date:
               blank: Enter a deferral date
               invalid: Enter a valid deferral date
@@ -1241,7 +1241,7 @@ en:
         reinstatement_form:
           attributes:
             date_string:
-              blank: Choose a date of return
+              blank: Select a date of return
             date:
               blank: Enter a date of return
               invalid: Enter a valid date of return
@@ -1258,7 +1258,7 @@ en:
         withdrawal_form:
           attributes:
             date_string:
-              blank: Choose a withdrawal date
+              blank: Select a withdrawal date
             date:
               blank: Enter a withdrawal date
               invalid: Enter a valid withdrawal date
@@ -1266,7 +1266,7 @@ en:
             additional_withdraw_reason:
               blank: Enter a reason
             withdraw_reason:
-              invalid: Choose a reason
+              invalid: Select a withdrawal reason
         trainee_start_date_form:
           attributes:
             commencement_date:
@@ -1347,11 +1347,11 @@ en:
         start_date_verification_form:
           attributes:
             trainee_has_started_course:
-              blank: Choose yes or no
+              blank: Select yes or no
         trainee_forbidden_delete_form:
           attributes:
             alternative_option:
-              blank: Choose defer, withdraw or return to trainee record
+              blank: Select defer, withdraw or return to trainee record
   page_headings:
     start_page: Register trainee teachers
   service_updates:
