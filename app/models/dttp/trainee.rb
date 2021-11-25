@@ -9,5 +9,24 @@ module Dttp
     enum state: {
       unprocessed: 0,
     }
+
+    def provider_dttp_id
+      # TODO should we expose the provider record here or the ID
+      response["_parentcustomerid_value"]
+    end
+
+    def first_name
+      response["firstname"]
+    end
+
+    def last_name
+      response["lastname"]
+    end
+
+    def date_of_birth
+      return unless response["birthdate"].present?
+
+      Date.parse(response["birthdate"])
+    end
   end
 end
