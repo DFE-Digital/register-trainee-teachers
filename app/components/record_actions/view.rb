@@ -3,11 +3,13 @@
 module RecordActions
   class View < GovukComponent::Base
     include ApplicationHelper
+    include SummaryHelper
 
     attr_reader :trainee
 
-    def initialize(trainee)
+    def initialize(trainee, has_missing_fields: false)
       @trainee = trainee
+      @has_missing_fields = has_missing_fields
     end
 
     def display_actions?
@@ -15,7 +17,7 @@ module RecordActions
     end
 
     def can_recommend_for_award?
-      trainee.trn_received?
+      trainee.trn_received? && !has_missing_fields && !course_starting_in_the_future?
     end
 
     def action_links
@@ -38,7 +40,15 @@ module RecordActions
       links.join(" or ").html_safe
     end
 
-  private
+    def inset_text
+      if has_missing_fields
+        t("views.trainees.edit.status_summary.missing_fields")
+      elsif course_starting_in_the_future?
+        t("views.trainees.edit.status_summary.itt_not_started", itt_start_date: date_for_summary_view(trainee.course_start_date))
+      else
+        t("views.trainees.edit.status_summary.#{trainee.state}")
+      end
+    end
 
     def button_text
       if trainee.early_years_route?
@@ -47,6 +57,10 @@ module RecordActions
         t("views.trainees.edit.recommend_for_award")
       end
     end
+
+  private
+
+    attr_reader :has_missing_fields
 
     def delete_link
       govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee, context: :delete), class: "delete")
@@ -65,7 +79,7 @@ module RecordActions
     end
 
     def delete_allowed?
-      course_starting_in_the_future? || course_started_but_trainee_has_not_specified_start_date?
+      course_starting_in_the_future? || course_started_but_no_specified_start_date?
     end
 
     def withdraw_allowed?
@@ -73,10 +87,10 @@ module RecordActions
     end
 
     def course_starting_in_the_future?
-      trainee.course_start_date && trainee.course_start_date > Time.zone.now
+      trainee.starts_course_in_the_future?
     end
 
-    def course_started_but_trainee_has_not_specified_start_date?
+    def course_started_but_no_specified_start_date?
       !course_starting_in_the_future? && trainee.commencement_date.blank?
     end
 
