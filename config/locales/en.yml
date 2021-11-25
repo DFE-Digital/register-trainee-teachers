@@ -571,10 +571,10 @@ en:
           subject: Subject
           type_of_training: Type of training
       edit:
-        delete: Delete
-        defer: Defer
-        withdraw: Withdraw
-        reinstate: Reinstate
+        delete: delete
+        defer: defer
+        withdraw: withdraw
+        reinstate: reinstate
         this_trainee: this trainee
         recommend_for_award: Recommend trainee for QTS
         recommend_for_eyts: Recommend trainee for EYTS

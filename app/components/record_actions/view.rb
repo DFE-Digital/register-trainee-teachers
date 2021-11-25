@@ -24,20 +24,22 @@ module RecordActions
       links = []
 
       if withdraw_allowed?
-        links.prepend(withdraw_link)
+        links.prepend(:withdraw_link)
       end
 
       if trainee.deferred?
-        links.prepend(reinstate_link)
+        links.prepend(:reinstate_link)
       else
-        links.prepend(defer_link)
+        links.prepend(:defer_link)
       end
 
       if delete_allowed?
-        links.prepend(delete_link)
+        links.prepend(:delete_link)
       end
 
-      links.join(" or ").html_safe
+      links.map.with_index { |method, i| send(method, i.zero?) }
+        .join(" or ")
+        .html_safe
     end
 
     def inset_text
@@ -62,20 +64,24 @@ module RecordActions
 
     attr_reader :has_missing_fields
 
-    def delete_link
-      govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee, context: :delete), class: "delete")
+    def delete_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.delete"), capitalise)
+      govuk_link_to(text, trainee_start_date_verification_path(trainee, context: :delete), class: "delete")
     end
 
-    def defer_link
-      govuk_link_to(t("views.trainees.edit.defer"), trainee_deferral_path(trainee), class: "defer")
+    def defer_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.defer"), capitalise)
+      govuk_link_to(text, trainee_deferral_path(trainee), class: "defer")
     end
 
-    def withdraw_link
-      govuk_link_to(t("views.trainees.edit.withdraw"), relevant_redirect_path, class: "withdraw")
+    def withdraw_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.withdraw"), capitalise)
+      govuk_link_to(text, relevant_redirect_path, class: "withdraw")
     end
 
-    def reinstate_link
-      govuk_link_to(t("views.trainees.edit.reinstate"), trainee_reinstatement_path(trainee), class: "reinstate")
+    def reinstate_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.reinstate"), capitalise)
+      govuk_link_to(text, trainee_reinstatement_path(trainee), class: "reinstate")
     end
 
     def delete_allowed?
@@ -92,6 +98,11 @@ module RecordActions
 
     def course_started_but_no_specified_start_date?
       !course_starting_in_the_future? && trainee.commencement_date.blank?
+    end
+
+    def maybe_capitalise(text, condition)
+      text.capitalize! if condition
+      text
     end
 
     def relevant_redirect_path
