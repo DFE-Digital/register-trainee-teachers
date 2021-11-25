@@ -121,7 +121,7 @@ module RecordDetails
     end
 
     def status_date
-      return I18n.t("deferral_details.view.deferred_before_starting") if trainee.itt_not_yet_started?
+      return I18n.t("deferral_details.view.deferred_before_starting").html_safe if trainee.itt_not_yet_started?
 
       return unless trainee_status_date
 

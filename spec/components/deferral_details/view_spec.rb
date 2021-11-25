@@ -30,9 +30,7 @@ module DeferralDetails
         let(:trainee_stub) { Trainee.new }
 
         it "renders the deferred before starting" do
-          expect(component).to have_text(
-            t("deferral_details.view.deferred_before_starting"),
-          )
+          expect(component).to have_text(strip_tags(t("deferral_details.view.deferred_before_starting")))
         end
       end
     end
