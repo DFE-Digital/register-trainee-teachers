@@ -93,16 +93,16 @@ en:
         about_their_teaching_training: About their teacher training
     application_record_card:
       subject:
-        early_years: "Early years teaching"
-        blank: "No subject provided"
+        early_years: Early years teaching
+        blank: No subject provided
       route:
-        blank: "No route provided"
+        blank: No route provided
       trainee_name:
-        blank: "Draft record"
+        blank: Draft record
     confirmation:
       missing: missing
       not_provided: Not provided
-      heading: "Confirm %{section_title}"
+      heading: Confirm %{section_title}
       cancel_and_return: Cancel and return to record
       start_date:
         title: Trainee start date
@@ -439,9 +439,9 @@ en:
   apply_applications:
     trainee_data:
       view:
-        heading_1_name: "Draft record for %{name}"
-        heading_1_no_name: "Draft record"
-        heading_2: "Trainee Data"
+        heading_1_name: Draft record for %{name}
+        heading_1_no_name: Draft record
+        heading_2: Trainee Data
     confirm_course:
       view:
         change: Change
@@ -462,8 +462,8 @@ en:
     all_records: All records
     apply_invalid_data_view:
       invalid_answers_summary:
-        one: "This application contains 1 answer that you need to amend. This is because it was entered in a free text format."
-        other: "This application contains %{count} answers that you need to amend. This is because they were entered in a free text format."
+        one: This application contains 1 answer that you need to amend. This is because it was entered in a free text format.
+        other: This application contains %{count} answers that you need to amend. This is because they were entered in a free text format.
       unrecognised_field_text: "%{invalid_field} is not recognised"
     mappable_field_row:
       default_hint_text_html: 'Enter an answer <span class="govuk-visually-hidden"> for %{field_label}</span>'
@@ -514,8 +514,8 @@ en:
     missing_data_view:
       degrees_form: degree
       missing_fields_summary:
-        one: "This section contains 1 question that you need to complete."
-        other: "This section contains questions which you need to complete."
+        one: This section contains 1 question that you need to complete.
+        other: This section contains questions which you need to complete.
       single_missing_field_text_html: "%{missing_field} is missing"
       multiple_missing_field_text_html: '%{missing_field} is missing<span class="govuk-visually-hidden"> for %{section_label}</span>'
       missing_fields_mapping:
@@ -579,10 +579,10 @@ en:
         recommend_for_award: Recommend trainee for QTS
         recommend_for_eyts: Recommend trainee for EYTS
         status_summary:
-          submitted_for_trn: This record is pending a TRN
-          deferred: This record is deferred
+          submitted_for_trn: This trainee is pending a TRN
+          deferred: This trainee is deferred
       show:
-        draft: "Draft"
+        draft: Draft
       delete:
         draft: Draft deleted
         record: Record deleted
@@ -611,7 +611,7 @@ en:
       apply_applications:
         review_course_form:
           label_names:
-            register: "Yes, register on %{course}"
+            register: Yes, register on %{course}
             change: No, change the course
             change_hint: For trainees, who have changed courses since applying
       common:
@@ -677,7 +677,7 @@ en:
           label: When did the trainee start their ITT?
           hint: Their ITT started on %{course_start_date}
       publish_course_details:
-        route_message: "Your %{route} courses in the Publish service"
+        route_message: Your %{route} courses in the Publish service
         all_courses_message: Your courses in the Publish service
         route_titles:
           provider_led_postgrad: provider-led postgrad
@@ -795,18 +795,18 @@ en:
       support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
   apply_trainee_data:
     view:
-      heading_1_name: "Draft record for %{name}"
-      heading_1_no_name: "Draft record"
-      heading_2: "Trainee Data"
+      heading_1_name: Draft record for %{name}
+      heading_1_no_name: Draft record
+      heading_2: Trainee Data
   invalid_data_summary:
     view:
-      invalid_answers_summary: "This application contains %{total_invalid_fields} answer that you need to amend. This is because they were entered in a free text format."
+      invalid_answers_summary: This application contains %{total_invalid_fields} answer that you need to amend. This is because they were entered in a free text format.
       invalid_answer_text: "%{invalid_field} is not recognised"
   route_indicator:
     view:
-      display_text: "Trainee on the %{training_route_link} route."
-      apply_display_text_with_course: "All conditions met and trainee recruited to %{course_with_code}, on the %{training_route} route."
-      apply_display_text_without_course: "All conditions met and trainee on the %{training_route} route."
+      display_text: Trainee on the %{training_route_link} route.
+      apply_display_text_with_course: All conditions met and trainee recruited to %{course_with_code}, on the %{training_route} route.
+      apply_display_text_without_course: All conditions met and trainee on the %{training_route} route.
   error_summary:
     view:
       heading: There is a problem
@@ -943,7 +943,7 @@ en:
       show:
         title: Delete forbidden
         heading: You cannot delete this record
-        reason: You can only delete a trainee record before the trainee starts their ITT, but you can defer or withdraw the trainee.
+        reason: You can only delete a trainee record before the trainee starts their ITT. You can defer or withdraw the trainee.
         defer: Defer
         withdraw: Withdraw
         return_to_record: Return to trainee record
@@ -951,9 +951,9 @@ en:
     forbidden_withdrawals:
       show:
         heading: You cannot withdraw this trainee
-        reason: Trainees can only be withdrawn after they have started their course.
+        reason: You can only withdraw a trainee after they have started their ITT.
         delete: delete this trainee record
-        support: If you need more help, email the Register trainee teachers team at
+        support: If you need more help, email us at
   activerecord:
     attributes:
       trainee:
@@ -1252,7 +1252,7 @@ en:
         submissions/missing_data_validator:
           attributes:
             trainee:
-              incomplete: "This trainee record has missing fields. Check Submissions::MissingDataValidator#missing_fields"
+              incomplete: This trainee record has missing fields. Check Submissions::MissingDataValidator#missing_fields
         withdrawal_form:
           attributes:
             date_string:
