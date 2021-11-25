@@ -16,7 +16,7 @@
                            local: true) do |f| %>
       <%= f.govuk_error_summary %>
       <%= render TraineeName::View.new(@trainee) %>
-      <%= f.govuk_date_field :date, legend: { text: text, tag: "h1", size: "l" }, hint: -> do %>
+      <%= f.govuk_date_field :date, legend: { text: text.html_safe, tag: "h1", size: "l" }, hint: -> do %>
         <p class="govuk-body govuk-hint"><%= t("components.itt_start_date.hint") %></p>
         <p class="govuk-body govuk-hint"><%= "#{t('views.forms.common.for_example')}, 26 7 2021" %></p>
       <% end %>

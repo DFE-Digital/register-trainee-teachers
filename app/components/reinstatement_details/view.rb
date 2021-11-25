@@ -11,7 +11,7 @@ module ReinstatementDetails
     end
 
     def reinstate_date
-      deferred_before_starting? ? t(".reinstated_before_starting") : date_for_summary_view(data_model.date)
+      deferred_before_starting? ? t(".reinstated_before_starting").html_safe : date_for_summary_view(data_model.date)
     end
 
     def deferred_before_starting?

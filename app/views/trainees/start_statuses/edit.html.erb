@@ -19,7 +19,7 @@
       <%= render TraineeName::View.new(@trainee) %>
 
       <%= f.govuk_radio_buttons_fieldset(:commencement_status,
-                                           legend: { text: t(".label"), size: "l", tag: "h1" },
+                                           legend: { text: t(".label").html_safe, size: "l", tag: "h1" },
                                            classes: "age_range") do %>
 
           <%= f.govuk_radio_button(:commencement_status, :itt_started_on_time,

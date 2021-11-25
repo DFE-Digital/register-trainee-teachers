@@ -4,6 +4,7 @@ require "rails_helper"
 
 feature "Deferring a trainee", type: :feature do
   include SummaryHelper
+  include ActionView::Helpers::SanitizeHelper
 
   context "trainee deferral date" do
     before do
@@ -123,7 +124,7 @@ feature "Deferring a trainee", type: :feature do
 
   def and_i_see_a_message_for_course_start_date_in_the_future
     expect(deferral_confirmation_page).to have_content(
-      I18n.t("deferral_details.view.deferred_before_starting"),
+      strip_tags(I18n.t("deferral_details.view.deferred_before_starting")),
     )
   end
 

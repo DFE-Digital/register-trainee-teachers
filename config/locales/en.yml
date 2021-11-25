@@ -68,19 +68,19 @@ en:
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
-      itt_has_not_started: ITT has not started
+      itt_has_not_started: <abbr title="Initial teacher training">ITT</abbr> has not started
       not_provided: Not provided
-      deferred_before_itt_started: Trainee deferred before starting their ITT
+      deferred_before_itt_started: Trainee deferred before starting their <abbr title="initial teacher training">ITT</abbr>
   training_details:
     view:
       title: *trainee_id
       region: *region
   deferral_details:
     view:
-      deferred_before_starting: Trainee deferred before their ITT started
+      deferred_before_starting: Trainee deferred before their <abbr title="initial teacher training">ITT</abbr> started
   reinstatement_details:
     view:
-      reinstated_before_starting: Trainee returned before their ITT started
+      reinstated_before_starting: Trainee returned before their <abbr title="initial teacher training">ITT</abbr> started
   components:
     admin_feature:
       title: Admin feature
@@ -173,8 +173,8 @@ en:
       education_phase: Education phase
       subject: Subject
       age_range: Age range
-      itt_start_date: ITT start date
-      itt_end_date: ITT end date
+      itt_start_date: <abbr title='Initial teacher training'>ITT</abbr> start date
+      itt_end_date: <abbr title='Initial teacher training'>ITT</abbr> end date
       route: Training route
       course_details: Course details
       details_not_on_publish: Course details added manually
@@ -453,8 +453,8 @@ en:
         multiple_subjects: Subjects
         level: Level
         age_range: &course_age_range Age range
-        itt_start_date: &itt_start_date ITT start date
-        itt_end_date: &itt_end_date ITT end date
+        itt_start_date: &itt_start_date <abbr title="Initial teacher training">ITT</abbr> start date
+        itt_end_date: &itt_end_date <abbr title="Initial teacher training">ITT</abbr> end date
         duration: Duration
         course_details: Course details
         study_mode: Full time or part time
@@ -676,8 +676,8 @@ en:
             We may also use it if we need to get in touch with you about this trainee.
       start_dates:
         commencement_date:
-          label: When did the trainee start their ITT?
-          hint: Their ITT started on %{course_start_date}
+          label: When did the trainee start their <abbr title="initial teacher training">ITT</abbr>?
+          hint: Their <abbr title="initial teacher training">ITT</abbr> started on %{course_start_date}
       publish_course_details:
         route_message: Your %{route} courses in the Publish service
         all_courses_message: Your courses in the Publish service
@@ -824,8 +824,8 @@ en:
       multiple_subjects: Subjects
       level: Level
       age_range: Age range
-      itt_start_date: ITT start date
-      itt_end_date: ITT end date
+      itt_start_date: <abbr title="Initial teacher training">ITT</abbr> start date
+      itt_end_date: <abbr title="Initial teacher training">ITT</abbr> end date
       duration: Duration
       study_mode: Full time or part time
       course_details: Course details
@@ -931,21 +931,21 @@ en:
     start_statuses:
       edit:
         itt_not_yet_started: They have not started yet
-        label: Did the trainee start their ITT on time?
+        label: Did the trainee start their <abbr title="initial teacher training">ITT</abbr> on time?
         on_time: Yes, they started on time — %{course_start_date}
         started_later: No, they started later
         trainee_start_date: *trainee_start_date
         trainee_start_date_hint: For example, 8 11 2021
     start_date_verifications:
       show:
-        legend: Did the trainee start their ITT?
+        legend: Did the trainee start their <abbr title="initial teacher training">ITT</abbr>?
         yes_they_started: Yes, they started
         no_they_did_not_start: No, they did not start
     forbidden_deletes:
       show:
         title: Delete forbidden
         heading: You cannot delete this record
-        reason: You can only delete a trainee record before the trainee starts their ITT. You can defer or withdraw the trainee.
+        reason: You can only delete a trainee record before the trainee starts their <abbr title="initial teacher training">ITT</abbr>. You can defer or withdraw the trainee.
         defer: Defer
         withdraw: Withdraw
         return_to_record: Return to trainee record
@@ -1105,7 +1105,7 @@ en:
             date:
               blank: Enter a deferral date
               invalid: Enter a valid deferral date
-              not_before_course_start_date: &not_before_course_start_date The date must not be before the ITT start date
+              not_before_course_start_date: &not_before_course_start_date The date must not be before the <abbr title="initial teacher training">ITT</abbr> start date
         degrees_form:
           attributes:
             degree_ids:
