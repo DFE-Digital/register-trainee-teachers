@@ -29,7 +29,7 @@ RSpec.describe RecordActions::View do
     context "submitted for TRN" do
       let(:trait) { :submitted_for_trn }
 
-      it { is_expected.to include("This trainee is pending a TRN", "Defer", "Withdraw") }
+      it { is_expected.to include("This trainee is pending a TRN", "Defer", "withdraw") }
 
       include_examples "no button"
     end
@@ -37,7 +37,7 @@ RSpec.describe RecordActions::View do
     context "TRN received" do
       let(:trait) { :trn_received }
 
-      it { is_expected.to include(button_text, "Defer", "Withdraw") }
+      it { is_expected.to include(button_text, "Defer", "withdraw") }
     end
 
     context "recommended for QTS" do
@@ -55,7 +55,7 @@ RSpec.describe RecordActions::View do
     context "deferred" do
       let(:trait) { :deferred }
 
-      it { is_expected.to include("This trainee is deferred", "Reinstate", "Withdraw") }
+      it { is_expected.to include("This trainee is deferred", "Reinstate", "withdraw") }
 
       include_examples "no button"
     end
@@ -77,7 +77,7 @@ RSpec.describe RecordActions::View do
     end
 
     it "withdraw link is hidden" do
-      expect(subject).not_to include("Withdraw")
+      expect(subject).not_to include("withdraw")
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.describe RecordActions::View do
     let(:trainee) { build(:trainee, :submitted_for_trn, course_start_date: 1.day.ago) }
 
     it "withdraw link is shown" do
-      expect(subject).to include("Withdraw")
+      expect(subject).to include("withdraw")
     end
   end
 

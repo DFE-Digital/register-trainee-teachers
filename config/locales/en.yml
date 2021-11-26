@@ -571,7 +571,7 @@ en:
           subject: Subject
           type_of_training: Type of training
       edit:
-        delete: delete
+        delete: delete this record,
         defer: defer
         withdraw: withdraw
         reinstate: reinstate
