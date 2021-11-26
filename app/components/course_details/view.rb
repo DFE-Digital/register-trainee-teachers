@@ -76,7 +76,7 @@ module CourseDetails
     end
 
     def course_date_row(value, context)
-      default_mappable_field(value, t("components.course_detail.itt_#{context}_date"))
+      default_mappable_field(value, t("components.course_detail.itt_#{context}_date").html_safe)
     end
 
     def non_early_year_route?

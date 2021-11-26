@@ -17,7 +17,7 @@
       <%= render TraineeName::View.new(@trainee) %>
 
       <%= f.govuk_radio_buttons_fieldset(:trainee_has_started_course,
-                                         legend: { text: t(".legend"), size: "l" }) do %>
+                                         legend: { text: t(".legend").html_safe, size: "l" }) do %>
         <%= f.govuk_radio_button(:trainee_has_started_course,
                                  :yes,
                                  label: { text: t(".yes_they_started") },

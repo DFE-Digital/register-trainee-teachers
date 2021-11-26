@@ -5,6 +5,7 @@ require "rails_helper"
 module RecordDetails
   describe View do
     include SummaryHelper
+    include ActionView::Helpers::SanitizeHelper
 
     let(:state) { :trn_received }
     let(:training_route) { TRAINING_ROUTE_ENUMS[:assessment_only] }
@@ -144,7 +145,7 @@ module RecordDetails
         end
 
         it "renders itt has not started text" do
-          expect(rendered_component).to have_text(t("record_details.view.itt_has_not_started"))
+          expect(rendered_component).to have_text(strip_tags(t("record_details.view.itt_has_not_started")))
         end
 
         it "does not render link" do
@@ -197,7 +198,7 @@ module RecordDetails
             end
 
             it "renders the trainee deferred before course started message" do
-              expect(rendered_component).to have_text(t("record_details.view.deferred_before_itt_started"))
+              expect(rendered_component).to have_text(strip_tags(t("record_details.view.deferred_before_itt_started")))
             end
           end
         end

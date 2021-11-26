@@ -4,6 +4,7 @@ require "rails_helper"
 
 feature "edit Trainee start status" do
   include SummaryHelper
+  include ActionView::Helpers::SanitizeHelper
 
   let(:new_start_date) { Date.parse("1/1/2021") }
 
@@ -103,7 +104,7 @@ feature "edit Trainee start status" do
   end
 
   def then_the_trainee_commencement_status_is_updated_to_not_yet_started
-    expect(record_page.record_detail.start_date_row).to have_text(I18n.t("record_details.view.itt_has_not_started"))
+    expect(record_page.record_detail.start_date_row).to have_text(strip_tags(I18n.t("record_details.view.itt_has_not_started")))
   end
 
   def then_i_am_redirected_to_the_trn_success_page

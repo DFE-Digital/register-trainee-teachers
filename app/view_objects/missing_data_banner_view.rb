@@ -34,7 +34,7 @@ private
       missing_fields.map do |field|
         tag.li(
           link_to(
-            link_text(field),
+            link_text(field).html_safe,
             link_path(field),
             class: "govuk-notification-banner__link",
           ),

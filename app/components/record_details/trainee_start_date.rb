@@ -10,8 +10,8 @@ module RecordDetails
     end
 
     def text
-      return I18n.t("record_details.view.itt_has_not_started") if trainee.starts_course_in_the_future?
-      return I18n.t("record_details.view.deferred_before_itt_started") if deferred_with_no_start_date?
+      return I18n.t("record_details.view.itt_has_not_started").html_safe if trainee.starts_course_in_the_future?
+      return I18n.t("record_details.view.deferred_before_itt_started").html_safe if deferred_with_no_start_date?
       return date_for_summary_view(trainee.commencement_date) if commencement_date_present?
 
       I18n.t("record_details.view.not_provided")

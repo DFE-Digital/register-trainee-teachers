@@ -15,17 +15,10 @@ module Trainees
     def update
       @trainee_start_status_form = TraineeStartStatusForm.new(trainee, params: trainee_params, user: current_user)
 
-      if delete_context?
-        @trainee_start_status_form.save!
-        return redirect_to(trainee_forbidden_deletes_path(trainee))
-      end
+      if @trainee_start_status_form.public_send(context_present? ? :save! : :stash_or_save!)
+        return redirect_to(trainee_forbidden_deletes_path(trainee)) if delete_context?
+        return redirect_to(trainee_withdrawal_path(trainee)) if withdraw_context?
 
-      if withdraw_context?
-        @trainee_start_status_form.save!
-        return redirect_to(trainee_withdrawal_path(trainee))
-      end
-
-      if @trainee_start_status_form.stash_or_save!
         if trainee.draft? && trainee.submission_ready?
           Trainees::SubmitForTrn.call(trainee: trainee, dttp_id: current_user.dttp_id)
           return redirect_to(trn_submission_path(trainee))
@@ -54,6 +47,10 @@ module Trainees
 
     def withdraw_context?
       params[:context] == StartDateVerificationForm::WITHDRAW
+    end
+
+    def context_present?
+      params[:context].present?
     end
   end
 end
