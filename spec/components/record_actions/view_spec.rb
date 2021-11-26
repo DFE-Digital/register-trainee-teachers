@@ -81,6 +81,14 @@ RSpec.describe RecordActions::View do
     end
   end
 
+  context "when a deffered trainee has not started their ITT" do
+    let(:trainee) { build(:trainee, :deferred, commencement_status: :itt_not_yet_started) }
+
+    it "hides the withdraw link" do
+      expect(subject).not_to include("Withdraw")
+    end
+  end
+
   context "when course date is in the past" do
     let(:trainee) { build(:trainee, :submitted_for_trn, course_start_date: 1.day.ago) }
 

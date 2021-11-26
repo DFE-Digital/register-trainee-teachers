@@ -83,7 +83,7 @@ module RecordActions
     end
 
     def withdraw_allowed?
-      !course_starting_in_the_future?
+      !course_starting_in_the_future? && !trainee.itt_not_yet_started?
     end
 
     def course_starting_in_the_future?
