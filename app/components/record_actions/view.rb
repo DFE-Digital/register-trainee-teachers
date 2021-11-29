@@ -20,24 +20,10 @@ module RecordActions
       trainee.trn_received? && !has_missing_fields && !course_starting_in_the_future?
     end
 
-    def action_links
-      links = []
-
-      if withdraw_allowed?
-        links.prepend(withdraw_link)
-      end
-
-      if trainee.deferred?
-        links.prepend(reinstate_link)
-      else
-        links.prepend(defer_link)
-      end
-
-      if delete_allowed?
-        links.prepend(delete_link)
-      end
-
-      links.join(" or ").html_safe
+    def action_links_sentence
+      links = action_links.join(" or ")
+      links.concat(this_trainee_text) unless delete_allowed_but_not_withdraw?
+      links.html_safe
     end
 
     def inset_text
@@ -62,20 +48,50 @@ module RecordActions
 
     attr_reader :has_missing_fields
 
-    def delete_link
-      govuk_link_to(t("views.trainees.edit.delete"), trainee_start_date_verification_path(trainee, context: :delete), class: "delete")
+    def action_links
+      links = []
+
+      if delete_allowed?
+        links.append(:delete_link)
+      end
+
+      if trainee.deferred?
+        links.append(:reinstate_link)
+      else
+        links.append(:defer_link)
+      end
+
+      if withdraw_allowed?
+        links.append(:withdraw_link)
+      end
+
+      links.map.with_index { |link_method, i| send(link_method, i.zero?) }
     end
 
-    def defer_link
-      govuk_link_to(t("views.trainees.edit.defer"), trainee_deferral_path(trainee), class: "defer")
+    def delete_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.delete"), capitalise)
+      govuk_link_to(text, trainee_start_date_verification_path(trainee, context: :delete), class: "delete")
     end
 
-    def withdraw_link
-      govuk_link_to(t("views.trainees.edit.withdraw"), relevant_redirect_path, class: "withdraw")
+    def defer_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.defer"), capitalise)
+      text += this_trainee_text if delete_allowed_but_not_withdraw?
+      govuk_link_to(text, trainee_deferral_path(trainee), class: "defer")
     end
 
-    def reinstate_link
-      govuk_link_to(t("views.trainees.edit.reinstate"), trainee_reinstatement_path(trainee), class: "reinstate")
+    def reinstate_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.reinstate"), capitalise)
+      text += this_trainee_text if delete_allowed_but_not_withdraw?
+      govuk_link_to(text, trainee_reinstatement_path(trainee), class: "reinstate")
+    end
+
+    def withdraw_link(capitalise)
+      text = maybe_capitalise(t("views.trainees.edit.withdraw"), capitalise)
+      govuk_link_to(text, relevant_redirect_path, class: "withdraw")
+    end
+
+    def this_trainee_text
+      " #{t('views.trainees.edit.this_trainee')}"
     end
 
     def delete_allowed?
@@ -84,6 +100,10 @@ module RecordActions
 
     def withdraw_allowed?
       !course_starting_in_the_future? && !trainee.itt_not_yet_started?
+    end
+
+    def delete_allowed_but_not_withdraw?
+      delete_allowed? && !withdraw_allowed?
     end
 
     def course_starting_in_the_future?
@@ -100,6 +120,11 @@ module RecordActions
       else
         trainee_start_date_verification_path(trainee, context: :withdraw)
       end
+    end
+
+    def maybe_capitalise(text, condition)
+      text.capitalize! if condition
+      text
     end
   end
 end
