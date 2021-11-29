@@ -117,6 +117,16 @@ describe DeferralForm, type: :model do
       allow(FormStore).to receive(:get)
     end
 
+    shared_examples "deferral form to database save" do
+      it "takes any data from the form store and saves it to the database and clears the store data" do
+        expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
+        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_date, nil)
+        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_status, nil)
+
+        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.parse("21-9-2021"))
+      end
+    end
+
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
 
@@ -153,13 +163,7 @@ describe DeferralForm, type: :model do
         })
       end
 
-      it "takes any data from the form store and saves it to the database and clears the store data" do
-        expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
-        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_date, nil)
-        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_status, nil)
-
-        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.parse("21-9-2021"))
-      end
+      it_behaves_like "deferral form to database save"
     end
   end
 end
