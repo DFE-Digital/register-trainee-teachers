@@ -50,7 +50,12 @@ module TraineeHelper
   end
 
   def label_for(attribute, value)
-    I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
+    case attribute
+    when "trainee_start_year"
+      "#{value.to_i} to #{value.to_i + 1}"
+    else
+      I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")
+    end
   end
 
   def invalid_data_message(form_section, degree)

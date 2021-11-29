@@ -80,6 +80,22 @@ module Trainees
       trainees.where(submission_ready: record_completion.include?("complete"))
     end
 
+    def trainee_start_year(trainees, start_years)
+      return trainees if start_years.blank?
+
+      scoped = nil
+      start_years.each do |start_year|
+        academic_cycle = AcademicCycle.for_year(start_year)
+        if scoped
+          scoped = scoped.or(academic_cycle.trainees_starting)
+        else
+          scoped = academic_cycle.trainees_starting
+        end
+      end
+
+      trainees.merge(scoped)
+    end
+
     def filter_trainees
       filtered_trainees = trainees
 
@@ -90,6 +106,7 @@ module Trainees
       filtered_trainees = level(filtered_trainees, filters[:level])
       filtered_trainees = provider(filtered_trainees, filters[:provider])
       filtered_trainees = submission_ready(filtered_trainees, filters[:record_completion])
+      filtered_trainees = trainee_start_year(filtered_trainees, filters[:trainee_start_year])
 
       record_source(filtered_trainees, filters[:record_source])
     end
