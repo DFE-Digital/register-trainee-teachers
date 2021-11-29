@@ -39,11 +39,19 @@ class StartDateVerificationForm < TraineeForm
 private
 
   def update_trainee_commencement_status
-    trainee.assign_attributes(commencement_status: commencement_status)
+    attributes = { commencement_status: commencement_status }
+
+    attributes.merge!(commencement_date: nil) if not_yet_started?
+
+    trainee.assign_attributes(attributes)
   end
 
   def commencement_status
-    trainee_has_started_course == "no" ? :itt_not_yet_started : nil
+    not_yet_started? ? :itt_not_yet_started : nil
+  end
+
+  def not_yet_started?
+    trainee_has_started_course == "no"
   end
 
   def compute_fields

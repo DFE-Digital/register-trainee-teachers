@@ -106,10 +106,13 @@ feature "Deferring a trainee", type: :feature do
   end
 
   scenario "changing start date from deferral confirmation page" do
-    given_a_trainee_exists_to_be_deferred
+    given_a_trainee_exists_with_a_deferral_date
     given_i_am_on_the_deferral_confirmation_page
     and_i_click_on_the_change_link_for_start_date
-    then_i_am_redirected_to_trainee_start_date_page
+    then_i_am_redirected_to_start_date_verification_page
+    and_i_choose_they_have_started
+    then_i_am_redirected_to_trainee_start_status_page
+    when_i_choose_they_started_on_time
     and_i_continue
     then_i_am_redirected_to_deferral_confirmation_page
   end
@@ -118,7 +121,11 @@ feature "Deferring a trainee", type: :feature do
     given_a_trainee_exists_with_a_deferral_date
     given_i_am_on_the_deferral_confirmation_page
     and_i_click_on_the_change_link_for_start_date
-    then_i_am_redirected_to_trainee_start_date_page
+
+    then_i_am_redirected_to_start_date_verification_page
+    and_i_choose_they_have_started
+    then_i_am_redirected_to_trainee_start_status_page
+    when_i_choose_the_trainee_has_started_later
     and_i_enter_a_start_date_after_the_deferral_date
     and_i_continue
     then_i_am_redirected_to_the_deferral_page
@@ -231,9 +238,13 @@ feature "Deferring a trainee", type: :feature do
     expect(trainee_start_date_edit_page).to be_displayed(trainee_id: trainee.slug)
   end
 
+  def when_i_choose_the_trainee_has_started_later
+    trainee_start_status_edit_page.commencement_status_started_later.choose
+  end
+
   def and_i_enter_a_start_date_after_the_deferral_date
     new_start_date = trainee.defer_date + 1.day
-    trainee_start_date_edit_page.set_date_fields(:commencement_date, new_start_date.strftime("%d/%m/%Y"))
+    trainee_start_status_edit_page.set_date_fields(:commencement_date, new_start_date.strftime("%d/%m/%Y"))
   end
 
   def given_a_trainee_exists_to_be_deferred

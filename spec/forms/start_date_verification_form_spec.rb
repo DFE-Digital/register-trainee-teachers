@@ -36,7 +36,10 @@ describe StartDateVerificationForm, type: :model do
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :start_date_verification, nil)
 
-      expect { subject.save! }.to change(trainee, :commencement_status).to("itt_not_yet_started")
+      expect {
+        subject.save!
+      }.to change(trainee, :commencement_status).to("itt_not_yet_started")
+      .and change(trainee, :commencement_date).to(nil)
     end
   end
 end

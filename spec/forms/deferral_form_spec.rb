@@ -117,16 +117,6 @@ describe DeferralForm, type: :model do
       allow(FormStore).to receive(:get)
     end
 
-    shared_examples "deferral form to database save" do
-      it "takes any data from the form store and saves it to the database and clears the store data" do
-        expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
-        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_date, nil)
-        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_status, nil)
-
-        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.parse("21-9-2021"))
-      end
-    end
-
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
 
@@ -135,24 +125,6 @@ describe DeferralForm, type: :model do
     end
 
     context "when start date is changed" do
-      before do
-        allow(FormStore).to receive(:get).with(trainee.id, :trainee_start_date).and_return({
-          "day" => "21",
-          "month" => "9",
-          "year" => "2021",
-        })
-      end
-
-      it "takes any data from the form store and saves it to the database and clears the store data" do
-        expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
-        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_date, nil)
-        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_status, nil)
-
-        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.parse("21-9-2021"))
-      end
-    end
-
-    context "when start date is added for the first time" do
       let(:trainee) { create(:trainee, :deferred, commencement_date: nil) }
 
       before do
@@ -163,7 +135,13 @@ describe DeferralForm, type: :model do
         })
       end
 
-      it_behaves_like "deferral form to database save"
+      it "takes any data from the form store and saves it to the database and clears the store data" do
+        expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
+        expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_status, nil)
+        expect(FormStore).to receive(:set).with(trainee.id, :start_date_verification, nil)
+
+        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.parse("21-9-2021"))
+      end
     end
   end
 end

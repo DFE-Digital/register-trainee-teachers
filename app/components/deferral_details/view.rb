@@ -23,7 +23,7 @@ module DeferralDetails
       {
         key: t(".start_date_label"),
         value: trainee_start_date,
-        action_href: edit_trainee_start_date_path(data_model.trainee, context: :defer),
+        action_href: trainee_start_date_verification_path(data_model.trainee, context: :defer),
         action_text: t(:change),
         action_visually_hidden_text: "itt start date",
       }
@@ -46,7 +46,7 @@ module DeferralDetails
     end
 
     def deferred_before_starting?
-      data_model.date.nil?
+      data_model.itt_not_yet_started? || data_model.date.nil?
     end
 
     def trainee_start_date
