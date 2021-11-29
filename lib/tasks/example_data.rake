@@ -123,8 +123,8 @@ namespace :example_data do
             attrs.merge!(provider: provider) if provider
 
             # Some route-specific logic, but could move into factories too
-            attrs.merge!(lead_school: lead_schools.sample) if %i[school_direct_salaried school_direct_tuition_fee].include?(route)
-            attrs.merge!(employing_school: employing_schools.sample) if route == :school_direct_salaried
+            attrs.merge!(lead_school: lead_schools.sample) if LEAD_SCHOOL_ROUTES.include?(route)
+            attrs.merge!(employing_school: employing_schools.sample) if EMPLOYING_SCHOOL_ROUTES.include?(route)
 
             if state != :draft
               course = provider.courses.where(route: TRAINING_ROUTES_FOR_COURSE[route.to_s]).sample
