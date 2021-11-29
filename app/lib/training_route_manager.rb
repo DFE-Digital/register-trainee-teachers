@@ -14,11 +14,11 @@ class TrainingRouteManager
   end
 
   def requires_schools?
-    %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship].any? { |training_route_enums_key| enabled?(training_route_enums_key) }
+    LEAD_SCHOOL_ROUTES.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
   end
 
   def requires_employing_school?
-    %i[school_direct_salaried pg_teaching_apprenticeship].any? { |training_route_enums_key| enabled?(training_route_enums_key) }
+    EMPLOYING_SCHOOL_ROUTES.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
   end
 
   def requires_itt_start_date?
