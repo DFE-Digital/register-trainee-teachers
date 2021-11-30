@@ -70,7 +70,7 @@ feature "Deferring a trainee", type: :feature do
     given_a_trainee_with_course_starting_in_the_future_exists
     given_i_initiate_a_deferral
     then_i_am_redirected_to_deferral_confirmation_page
-    and_i_see_a_message_for_trainee_deferred_before_starting
+    and_i_see_a_message_for_trainee_deferred_before_itt_started
     when_i_defer
     then_the_trainee_is_deferred
   end
@@ -84,7 +84,7 @@ feature "Deferring a trainee", type: :feature do
     scenario "and the trainee did not start" do
       then_i_am_redirected_to_start_date_verification_page
       and_i_choose_they_have_not_started
-      and_i_see_a_message_for_trainee_deferred_before_starting
+      and_i_see_a_message_for_itt_started_but_trainee_deferred_before_starting
       when_i_defer
       then_the_trainee_is_deferred
     end
@@ -113,7 +113,6 @@ feature "Deferring a trainee", type: :feature do
     and_i_choose_they_have_started
     then_i_am_redirected_to_trainee_start_status_page
     when_i_choose_they_started_on_time
-    and_i_continue
     then_i_am_redirected_to_deferral_confirmation_page
   end
 
@@ -121,7 +120,6 @@ feature "Deferring a trainee", type: :feature do
     given_a_trainee_exists_with_a_deferral_date
     given_i_am_on_the_deferral_confirmation_page
     and_i_click_on_the_change_link_for_start_date
-
     then_i_am_redirected_to_start_date_verification_page
     and_i_choose_they_have_started
     then_i_am_redirected_to_trainee_start_status_page
@@ -194,9 +192,15 @@ feature "Deferring a trainee", type: :feature do
     deferral_page.continue.click
   end
 
-  def and_i_see_a_message_for_trainee_deferred_before_starting
+  def and_i_see_a_message_for_trainee_deferred_before_itt_started
     expect(deferral_confirmation_page).to have_content(
-      strip_tags(I18n.t("deferral_details.view.deferred_before_starting")),
+      strip_tags(I18n.t("deferral_details.view.deferred_before_itt_started")),
+    )
+  end
+
+  def and_i_see_a_message_for_itt_started_but_trainee_deferred_before_starting
+    expect(deferral_confirmation_page).to have_content(
+      strip_tags(I18n.t("deferral_details.view.itt_started_but_trainee_did_not_start")),
     )
   end
 

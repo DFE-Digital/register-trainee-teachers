@@ -30,16 +30,16 @@ module DeferralDetails
         let(:trainee_stub) { Trainee.new }
 
         it "renders the deferred before starting" do
-          expect(component).to have_text(strip_tags(t("deferral_details.view.deferred_before_starting")))
+          expect(component).to have_text(strip_tags(t("deferral_details.view.itt_started_but_trainee_did_not_start")))
         end
       end
     end
 
     context "course start date is in the future" do
-      let(:trainee_stub) { Trainee.new }
+      let(:trainee_stub) { Trainee.new(course_start_date: 1.year.from_now) }
 
       it "renders the deferred before course start date message" do
-        expect(component).to have_text(strip_tags(t("deferral_details.view.deferred_before_starting")))
+        expect(component).to have_text(strip_tags(t("deferral_details.view.deferred_before_itt_started")))
       end
     end
   end

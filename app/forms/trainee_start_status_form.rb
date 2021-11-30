@@ -72,7 +72,19 @@ class TraineeStartStatusForm < TraineeForm
     context == DEFER
   end
 
+  def needs_deferral_date?
+    itt_start_date_is_after_deferral_date? || deferral_date.blank?
+  end
+
 private
+
+  def itt_start_date_is_after_deferral_date?
+    deferral_date.is_a?(Date) && commencement_date.after?(deferral_date)
+  end
+
+  def deferral_date
+    @deferral_date ||= ::DeferralForm.new(trainee).date
+  end
 
   def set_on_time_itt_start_date
     self.day = trainee.course_start_date.day

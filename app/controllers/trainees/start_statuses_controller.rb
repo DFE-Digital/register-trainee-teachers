@@ -43,7 +43,11 @@ module Trainees
 
       return trainee_withdrawal_path(trainee) if @trainee_start_status_form.withdrawing?
 
-      return trainee_deferral_path(trainee) if @trainee_start_status_form.deferring?
+      if @trainee_start_status_form.deferring?
+        return trainee_deferral_path(trainee) if @trainee_start_status_form.needs_deferral_date?
+
+        return trainee_confirm_deferral_path(trainee)
+      end
 
       trainee_start_status_confirm_path(trainee)
     end

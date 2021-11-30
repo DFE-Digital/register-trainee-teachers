@@ -94,7 +94,7 @@ module RecordDetails
           let(:trainee) { create(:trainee, state, commencement_status: :itt_not_yet_started) }
 
           it "renders text stating that the trainee deferred before starting" do
-            expect(rendered_component).to have_text("Trainee deferred before their ITT started")
+            expect(rendered_component).to have_text(strip_tags(t("deferral_details.view.itt_started_but_trainee_did_not_start")))
           end
         end
       end

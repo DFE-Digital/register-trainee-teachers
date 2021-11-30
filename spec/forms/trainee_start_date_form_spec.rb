@@ -70,7 +70,7 @@ describe TraineeStartDateForm, type: :model do
   end
 
   describe "#save!" do
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { create(:trainee, course_start_date: Time.zone.today) }
 
     before do
       allow(form_store).to receive(:set).with(trainee.id, :trainee_start_date, nil)

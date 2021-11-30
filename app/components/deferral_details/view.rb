@@ -33,7 +33,7 @@ module DeferralDetails
       {
         key: t(".defer_date_label"),
         value: defer_date,
-        action_href: deferred_before_starting? ? nil : trainee_deferral_path(data_model.trainee),
+        action_href: deferred_before_itt_started? ? nil : trainee_deferral_path(data_model.trainee),
         action_text: t(:change),
         action_visually_hidden_text: "date of deferral",
       }
@@ -42,11 +42,23 @@ module DeferralDetails
   private
 
     def defer_date
-      deferred_before_starting? ? t(".deferred_before_starting").html_safe : date_for_summary_view(data_model.date)
+      return t(".deferred_before_itt_started").html_safe if deferred_before_itt_started?
+
+      return t(".itt_started_but_trainee_did_not_start").html_safe if itt_not_yet_started?
+
+      date_for_summary_view(data_model.date)
     end
 
-    def deferred_before_starting?
+    def deferred_before_itt_started?
+      starts_course_in_the_future? && itt_not_yet_started?
+    end
+
+    def itt_not_yet_started?
       data_model.itt_not_yet_started? || data_model.date.nil?
+    end
+
+    def starts_course_in_the_future?
+      data_model.trainee.starts_course_in_the_future?
     end
 
     def trainee_start_date
