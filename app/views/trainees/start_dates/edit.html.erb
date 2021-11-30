@@ -8,6 +8,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @trainee_start_date_form, url: trainee_start_date_path, local: true) do |f| %>
       <%= f.govuk_error_summary %>
+      <%= f.hidden_field :context, value: params[:context] %>
 
       <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_date_field :commencement_date, legend: {

@@ -4,9 +4,14 @@ class TraineeStartStatusForm < TraineeForm
   include DatesHelper
   include CommencementDateHelpers
 
+  WITHDRAW = "withdraw"
+  DEFER = "defer"
+  DELETE = "delete"
+
   FIELDS = %i[
     commencement_status
     commencement_date
+    context
     day
     month
     year
@@ -51,7 +56,35 @@ class TraineeStartStatusForm < TraineeForm
     commencement_status&.to_sym == :itt_started_later
   end
 
+  def next_step_context?
+    [WITHDRAW, DEFER, DELETE].include?(context)
+  end
+
+  def deleting?
+    context == DELETE
+  end
+
+  def withdrawing?
+    context == WITHDRAW
+  end
+
+  def deferring?
+    context == DEFER
+  end
+
+  def needs_deferral_date?
+    itt_start_date_is_after_deferral_date? || deferral_date.blank?
+  end
+
 private
+
+  def itt_start_date_is_after_deferral_date?
+    deferral_date.is_a?(Date) && commencement_date.after?(deferral_date)
+  end
+
+  def deferral_date
+    @deferral_date ||= ::DeferralForm.new(trainee).date
+  end
 
   def set_on_time_itt_start_date
     self.day = trainee.course_start_date.day
@@ -71,7 +104,7 @@ private
       day: trainee.commencement_date&.day,
       month: trainee.commencement_date&.month,
       year: trainee.commencement_date&.year,
-    }.merge(new_attributes.slice(:day, :month, :year, :commencement_status))
+    }.merge(new_attributes.slice(:day, :month, :year, :commencement_status, :context))
   end
 
   def update_trainee_commencement_date

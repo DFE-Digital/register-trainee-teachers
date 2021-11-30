@@ -8,7 +8,7 @@ module Trainees
     end
 
     def update
-      if deferral_form.save! || trainee.starts_course_in_the_future?
+      if deferral_form.save!
         trainee.defer!
 
         Dttp::DeferJob.perform_later(trainee)

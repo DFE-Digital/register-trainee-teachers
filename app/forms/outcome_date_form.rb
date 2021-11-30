@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class OutcomeDateForm < MultiDateForm
+  validate :date_valid
   validate :date_is_not_in_future
 
 private

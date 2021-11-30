@@ -9,22 +9,19 @@ module Trainees
     }.freeze
 
     def edit
-      @trainee_start_status_form = TraineeStartStatusForm.new(trainee)
+      @trainee_start_status_form = TraineeStartStatusForm.new(trainee, params: params.slice(:context).permit!)
     end
 
     def update
       @trainee_start_status_form = TraineeStartStatusForm.new(trainee, params: trainee_params, user: current_user)
 
-      if @trainee_start_status_form.public_send(context_present? ? :save! : :stash_or_save!)
-        return redirect_to(trainee_forbidden_deletes_path(trainee)) if delete_context?
-        return redirect_to(trainee_withdrawal_path(trainee)) if withdraw_context?
-
+      if @trainee_start_status_form.stash_or_save!
         if trainee.draft? && trainee.submission_ready?
           Trainees::SubmitForTrn.call(trainee: trainee, dttp_id: current_user.dttp_id)
           return redirect_to(trn_submission_path(trainee))
         end
 
-        redirect_to(trainee_start_status_confirm_path(trainee))
+        redirect_to(relevant_redirect_path)
       else
         render(:edit)
       end
@@ -41,16 +38,18 @@ module Trainees
       end
     end
 
-    def delete_context?
-      params[:context] == StartDateVerificationForm::DELETE
-    end
+    def relevant_redirect_path
+      return trainee_forbidden_deletes_path(trainee) if @trainee_start_status_form.deleting?
 
-    def withdraw_context?
-      params[:context] == StartDateVerificationForm::WITHDRAW
-    end
+      return trainee_withdrawal_path(trainee) if @trainee_start_status_form.withdrawing?
 
-    def context_present?
-      params[:context].present?
+      if @trainee_start_status_form.deferring?
+        return trainee_deferral_path(trainee) if @trainee_start_status_form.needs_deferral_date?
+
+        return trainee_confirm_deferral_path(trainee)
+      end
+
+      trainee_start_status_confirm_path(trainee)
     end
   end
 end
