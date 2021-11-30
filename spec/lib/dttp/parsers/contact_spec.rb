@@ -5,7 +5,7 @@ require "rails_helper"
 module Dttp
   module Parsers
     describe Contact do
-      describe ".to_user_attributes" do
+      describe "#to_user_attributes" do
         let(:contact) { ApiStubs::Dttp::Contact.attributes }
 
         let(:expected_attributes) do
@@ -21,6 +21,23 @@ module Dttp
         subject { described_class.to_user_attributes(contacts: [contact]) }
 
         it "returns an array of Dttp::User attributes" do
+          expect(subject).to eq([expected_attributes])
+        end
+      end
+
+      describe "#to_trainee_attributes" do
+        let(:contact) { create(:api_trainee) }
+
+        let(:expected_attributes) do
+          {
+            dttp_id: contact["contactid"],
+            response: contact,
+          }
+        end
+
+        subject { described_class.to_trainee_attributes(contacts: [contact]) }
+
+        it "returns an array of Dttp::Trainee attributes" do
           expect(subject).to eq([expected_attributes])
         end
       end
