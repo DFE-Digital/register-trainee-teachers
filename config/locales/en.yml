@@ -932,7 +932,7 @@ en:
       edit:
         itt_not_yet_started: They have not started yet
         label: Did the trainee start their <abbr title="initial teacher training">ITT</abbr> on time?
-        on_time: Yes, they started on time — %{course_start_date}
+        on_time_html: Yes, they started on time — <span class="no-wrap">%{course_start_date}</span>
         started_later: No, they started later
         trainee_start_date: *trainee_start_date
         trainee_start_date_hint: For example, 8 11 2021
@@ -1272,14 +1272,14 @@ en:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
-              not_after_course_end_date: Trainee start date must not be after the ITT has finished (%{course_end_date})
+              not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
               too_old: Trainee start date cannot be more than 10 years in the past
         trainee_start_status_form:
           attributes:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
-              not_after_course_end_date: Trainee start date must not be after the ITT has finished (%{course_end_date})
+              not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
               too_old: Trainee start date cannot be more than 10 years in the past
             commencement_status:
               blank: Select if the trainee started on time

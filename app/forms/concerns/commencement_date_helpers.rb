@@ -9,7 +9,13 @@ module CommencementDateHelpers
     elsif commencement_date < 10.years.ago
       errors.add(:commencement_date, :too_old)
     elsif trainee.course_end_date.present? && commencement_date > trainee.course_end_date
-      errors.add(:commencement_date, I18n.t("activemodel.errors.models.trainee_start_status_form.attributes.commencement_date.not_after_course_end_date", course_end_date: trainee.course_end_date.strftime("%-d %B %Y")))
+      errors.add(
+        :commencement_date,
+        I18n.t(
+          "activemodel.errors.models.trainee_start_status_form.attributes.commencement_date.not_after_course_end_date_html",
+          course_end_date: trainee.course_end_date.strftime("%-d %B %Y"),
+        ).html_safe,
+      )
     end
   end
 end
