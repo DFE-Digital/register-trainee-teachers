@@ -6,6 +6,7 @@ class CreateDttpTrainees < ActiveRecord::Migration[6.1]
       t.jsonb :response
       t.integer :state, default: 0
       t.uuid :dttp_id, null: false
+      t.uuid :provider_dttp_id, null: false
       t.timestamps default: -> { "CURRENT_TIMESTAMP" }
     end
 

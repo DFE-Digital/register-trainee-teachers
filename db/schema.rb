@@ -236,6 +236,7 @@ ActiveRecord::Schema.define(version: 2021_11_30_152523) do
     t.jsonb "response"
     t.integer "state", default: 0
     t.uuid "dttp_id", null: false
+    t.uuid "provider_dttp_id", null: false
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["dttp_id"], name: "index_dttp_trainees_on_dttp_id", unique: true
