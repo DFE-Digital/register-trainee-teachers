@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FundingMethod < ApplicationRecord
+  belongs_to :academic_cycle
+
   has_many :funding_method_subjects, inverse_of: :funding_method, dependent: :destroy
   has_many :allocation_subjects, through: :funding_method_subjects, inverse_of: :funding_methods
 

@@ -6,7 +6,14 @@ describe FundingManager do
   let(:course_subject_one) { nil }
   let(:bursary_tier) { nil }
   let(:training_route) { :early_years_postgrad }
-  let(:trainee) { build(:trainee, course_subject_one: course_subject_one, training_route: training_route, bursary_tier: bursary_tier) }
+  let(:trainee) do
+    build(:trainee,
+          :with_start_date,
+          :with_study_mode_and_course_dates,
+          course_subject_one: course_subject_one,
+          training_route: training_route,
+          bursary_tier: bursary_tier)
+  end
   let(:funding_manager) { described_class.new(trainee) }
 
   describe "#bursary_amount" do
@@ -121,7 +128,7 @@ describe FundingManager do
         let(:course_subject_one) { subject_specialism.name }
 
         it "returns amount" do
-          expect(subject).to be amount
+          expect(subject).to be(amount)
         end
       end
     end

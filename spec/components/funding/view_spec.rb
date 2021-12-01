@@ -4,12 +4,15 @@ require "rails_helper"
 
 module Funding
   describe View do
-    before do
-      render_inline(View.new(data_model: trainee))
-    end
+    before { render_inline(View.new(data_model: trainee)) }
 
     context "with tieried bursary" do
-      let(:trainee) { build(:trainee, :early_years_postgrad, applying_for_bursary: true, bursary_tier: BURSARY_TIERS.keys.first) }
+      let(:trainee) do
+        build(:trainee,
+              :early_years_postgrad,
+              applying_for_bursary: true,
+              bursary_tier: BURSARY_TIERS.keys.first)
+      end
 
       it "renders tiered bursary text" do
         expect(rendered_component).to have_text("Applied for Tier 1")
@@ -22,7 +25,14 @@ module Funding
       let(:route) { "opt_in_undergrad" }
       let(:training_initiative) { ROUTE_INITIATIVES_ENUMS.keys.first }
       let(:trainee) do
-        build(:trainee, state, training_initiative: training_initiative, training_route: route, applying_for_bursary: true, course_subject_one: subject_specialism.name)
+        build(:trainee,
+              state,
+              :with_start_date,
+              :with_study_mode_and_course_dates,
+              training_initiative: training_initiative,
+              training_route: route,
+              applying_for_bursary: true,
+              course_subject_one: subject_specialism.name)
       end
 
       let(:subject_specialism) { create(:subject_specialism, name: AllocationSubjects::MATHEMATICS) }
@@ -31,7 +41,9 @@ module Funding
 
       context "when there is a bursary available" do
         before do
-          create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
+          create(:funding_method_subject,
+                 funding_method: funding_method,
+                 allocation_subject: subject_specialism.allocation_subject)
           render_inline(View.new(data_model: trainee))
         end
 
@@ -57,7 +69,14 @@ module Funding
       let(:training_initiative) { ROUTE_INITIATIVES_ENUMS.keys.first }
 
       let(:trainee) do
-        build(:trainee, state, training_initiative: training_initiative, training_route: route, applying_for_bursary: applying_for_bursary, course_subject_one: course_subject_one)
+        build(:trainee,
+              state,
+              :with_start_date,
+              :with_study_mode_and_course_dates,
+              training_initiative: training_initiative,
+              training_route: route,
+              applying_for_bursary: applying_for_bursary,
+              course_subject_one: course_subject_one)
       end
 
       let(:course_subject_one) { nil }
@@ -100,7 +119,9 @@ module Funding
           let(:course_subject_one) { subject_specialism.name }
 
           before do
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
+            create(:funding_method_subject,
+                   funding_method: funding_method,
+                   allocation_subject: subject_specialism.allocation_subject)
 
             render_inline(View.new(data_model: trainee))
           end
@@ -148,19 +169,32 @@ module Funding
 
     context "with grant" do
       let!(:allocation_subject) { create(:allocation_subject, name: "Chemistry") }
-      let!(:subject_specialism) { create(:subject_specialism, name: trainee.course_subject_one, allocation_subject: allocation_subject) }
+      let!(:subject_specialism) do
+        create(:subject_specialism, name: trainee.course_subject_one, allocation_subject: allocation_subject)
+      end
 
       let(:amount) { 25_000 }
-      let!(:funding_method) { create(:funding_method, funding_type: "grant", training_route: trainee.training_route, amount: amount) }
+      let!(:funding_method) do
+        create(:funding_method, funding_type: "grant", training_route: trainee.training_route, amount: amount)
+      end
 
-      let!(:funding_method_subject) { create(:funding_method_subject, funding_method: funding_method, allocation_subject: allocation_subject) }
+      let!(:funding_method_subject) do
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: allocation_subject)
+      end
 
       before do
         render_inline(View.new(data_model: trainee))
       end
 
       context "when trainee applying_for_grant is true" do
-        let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry") }
+        let!(:trainee) do
+          create(:trainee,
+                 :with_start_date,
+                 :with_study_mode_and_course_dates,
+                 :school_direct_salaried,
+                 :with_grant,
+                 course_subject_one: "chemistry")
+        end
 
         it "renders grant text" do
           expect(rendered_component).to have_text("Grant applied for")
@@ -169,7 +203,15 @@ module Funding
       end
 
       context "when trainee applying_for_grant is false" do
-        let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry", applying_for_grant: false) }
+        let!(:trainee) do
+          create(:trainee,
+                 :with_start_date,
+                 :with_study_mode_and_course_dates,
+                 :school_direct_salaried,
+                 :with_grant,
+                 course_subject_one: "chemistry",
+                 applying_for_grant: false)
+        end
 
         it "renders grant text" do
           expect(rendered_component).to have_text("Not grant funded")
@@ -181,7 +223,15 @@ module Funding
       end
 
       context "when trainee applying_for_grant is nil" do
-        let!(:trainee) { create(:trainee, :school_direct_salaried, :with_grant, course_subject_one: "chemistry", applying_for_grant: nil) }
+        let!(:trainee) do
+          create(:trainee,
+                 :with_start_date,
+                 :with_study_mode_and_course_dates,
+                 :school_direct_salaried,
+                 :with_grant,
+                 course_subject_one: "chemistry",
+                 applying_for_grant: nil)
+        end
 
         it "renders grant text" do
           expect(rendered_component).to have_text("Funding method is missing")
