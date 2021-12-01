@@ -5,8 +5,8 @@ class CreateDttpPlacementAssignments < ActiveRecord::Migration[6.1]
     create_table :dttp_placement_assignments do |t|
       t.jsonb :response
       t.integer :state, default: 0
-      t.string :dttp_id, null: false
-      t.string :contact_dttp_id, null: false
+      t.uuid :dttp_id, null: false
+      t.uuid :contact_dttp_id, null: false
       t.timestamps default: -> { "CURRENT_TIMESTAMP" }
     end
 
