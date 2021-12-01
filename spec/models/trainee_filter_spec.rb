@@ -5,7 +5,7 @@ require "rails_helper"
 describe TraineeFilter do
   let(:permitted_params) do
     ActionController::Parameters.new(params)
-    .permit(:provider, :subject, :text_search, training_route: [], state: [], record_source: [])
+    .permit(:provider, :subject, :text_search, training_route: [], state: [], record_source: [], study_mode: [])
   end
 
   subject { TraineeFilter.new(params: permitted_params) }

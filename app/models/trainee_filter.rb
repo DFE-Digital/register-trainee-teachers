@@ -33,6 +33,7 @@ private
       **provider,
       **record_completions,
       **trainee_start_years,
+      **study_modes,
     ).with_indifferent_access
   end
 
@@ -120,5 +121,17 @@ private
     return {} if params[:trainee_start_year].blank?
 
     { "trainee_start_year" => params[:trainee_start_year] }
+  end
+
+  def study_modes
+    return {} unless study_mode_options.any?
+
+    { "study_mode" => study_mode_options }
+  end
+
+  def study_mode_options
+    %w[full_time part_time].each_with_object([]) do |option, arr|
+      arr << option if params[:study_mode]&.include?(option)
+    end
   end
 end

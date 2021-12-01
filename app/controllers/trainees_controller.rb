@@ -76,6 +76,21 @@ private
     redirect_to(not_found_path)
   end
 
+  def permitted_params
+    [
+      :subject,
+      :text_search,
+      :sort_by, {
+        level: [],
+        training_route: [],
+        state: [],
+        record_source: [],
+        record_completion: [],
+        study_mode: [],
+      }
+    ]
+  end
+
   def load_missing_data_view
     @missing_data_view = MissingDataBannerView.new(missing_fields, trainee)
   end

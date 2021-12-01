@@ -138,6 +138,37 @@ module Trainees
       it { is_expected.to contain_exactly(apply_draft_trainee, draft_trainee) }
     end
 
+    context "with study_mode filter set to full time" do
+      let!(:full_time_trainee) { create(:trainee, study_mode: "full_time", training_route: "early_years_salaried") }
+      let(:filters) { { study_mode: %w[full_time] } }
+
+      it { is_expected.to contain_exactly(full_time_trainee) }
+    end
+
+    context "with study_mode filter set to part time" do
+      let!(:full_time_trainee) { create(:trainee, study_mode: "full_time", training_route: "early_years_salaried") }
+      let!(:part_time_trainee) { create(:trainee, study_mode: "part_time", training_route: "early_years_salaried") }
+      let(:filters) { { study_mode: %w[part_time] } }
+
+      it { is_expected.to contain_exactly(part_time_trainee) }
+    end
+
+    context "with study_mode filter set to full time and part time" do
+      let!(:full_time_trainee) { create(:trainee, study_mode: "full_time", training_route: "early_years_salaried") }
+      let!(:part_time_trainee) { create(:trainee, study_mode: "part_time", training_route: "early_years_salaried") }
+      let(:filters) { { study_mode: %w[full_time part_time] } }
+
+      it { is_expected.to contain_exactly(draft_trainee, apply_draft_trainee, full_time_trainee, part_time_trainee) }
+    end
+
+    context "when courses are assesment only and study mode filter is part time" do
+      let!(:full_time_trainee) { create(:trainee, study_mode: "full_time", training_route: "assessment_only") }
+      let!(:part_time_trainee) { create(:trainee, study_mode: "part_time", training_route: "assessment_only") }
+      let(:filters) { { study_mode: %w[part_time] } }
+
+      it { is_expected.to be_empty }
+    end
+
     describe "error is not raised" do
       let(:trigger) do
         # NOTE: forcing the subject to deserialise
