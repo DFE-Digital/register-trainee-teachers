@@ -24,7 +24,7 @@ module Dttp
   private
 
     def fetch_trainees
-      Trainee.where(state: VALID_STATES, submission_ready: true)
+      ::Trainee.where(state: VALID_STATES, submission_ready: true)
     end
 
     def trainee_already_synced?(trainee)

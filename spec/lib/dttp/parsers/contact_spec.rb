@@ -5,7 +5,7 @@ require "rails_helper"
 module Dttp
   module Parsers
     describe Contact do
-      describe "#to_user_attributes" do
+      describe ".to_user_attributes" do
         let(:contact) { ApiStubs::Dttp::Contact.attributes }
 
         let(:expected_attributes) do
@@ -25,7 +25,7 @@ module Dttp
         end
       end
 
-      describe "#to_trainee_attributes" do
+      describe ".to_trainee_attributes" do
         let(:contact) { create(:api_trainee) }
 
         let(:expected_attributes) do
