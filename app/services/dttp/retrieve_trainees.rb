@@ -8,7 +8,7 @@ module Dttp
     MAX_PAGE_SIZE = 50
 
     FILTER = {
-      "$filter" => "_dfe_contacttypeid_value eq #{Trainee::CONTACT_TYPE_ID}",
+      "$filter" => "_dfe_contacttypeid_value eq #{Dttp::Trainee::CONTACT_TYPE_ID}",
     }.freeze
 
     QUERY = FILTER.to_query
