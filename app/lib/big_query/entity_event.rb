@@ -4,8 +4,14 @@ module BigQuery
   class EntityEvent
     CREATE_ENTITY_EVENT_TYPE = "create_entity"
     UPDATE_ENTITY_EVENT_TYPE = "update_entity"
+    DELETE_ENTITY_EVENT_TYPE = "delete_entity"
     IMPORT_EVENT_TYPE = "import_entity"
-    EVENT_TYPES = [CREATE_ENTITY_EVENT_TYPE, UPDATE_ENTITY_EVENT_TYPE, IMPORT_EVENT_TYPE].freeze
+    EVENT_TYPES = [
+      CREATE_ENTITY_EVENT_TYPE,
+      UPDATE_ENTITY_EVENT_TYPE,
+      IMPORT_EVENT_TYPE,
+      DELETE_ENTITY_EVENT_TYPE,
+    ].freeze
 
     def initialize
       @event_hash = {
