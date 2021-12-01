@@ -10,6 +10,10 @@ FactoryBot.define do
         _parentcustomerid_value: provider_dttp_id,
       }
     }
-    state { "unprocessed" }
+    state { "importable" }
+
+    trait :with_placement_assignment do
+      placement_assignments { [build(:dttp_placement_assignment, contact_dttp_id: dttp_id)] }
+    end
   end
 end
