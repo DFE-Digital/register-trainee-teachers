@@ -46,6 +46,7 @@ module Trainees
         trainee_id: trainee_id,
         nationalities: nationalities,
         training_route: training_route,
+        trn: dttp_trainee.response["dfe_trn"],
       }.merge(ethnicity_and_disability_attributes)
     end
 
