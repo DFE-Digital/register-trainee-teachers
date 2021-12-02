@@ -29,6 +29,17 @@ module BigQuery
           end
         end
       end
+
+      after_destroy do
+        if big_query_enabled?
+          data = entity_data(attributes)
+          if data.any?
+            send_event(
+              build_event(BigQuery::EntityEvent::DELETE_ENTITY_EVENT_TYPE, data),
+            )
+          end
+        end
+      end
     end
 
     def send_import_event
