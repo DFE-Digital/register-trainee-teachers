@@ -46,7 +46,9 @@ module Trainees
         nationalities: nationalities,
         training_route: training_route,
         trn: dttp_trainee.response["dfe_trn"],
+        dttp_id: dttp_trainee.dttp_id,
       }.merge(ethnicity_and_disability_attributes)
+       .merge(course_attributes)
     end
 
     def provider
@@ -62,7 +64,7 @@ module Trainees
     end
 
     def training_route
-      Dttp::CodeSets::Routes::MAPPING.select { |_key, value| value[:entity_id] == placement_assignment.route_dttp_id }.keys.first
+      find_by_entity_id(placement_assignment.route_dttp_id, Dttp::CodeSets::Routes::MAPPING)
     end
 
     def trainee_gender
@@ -78,24 +80,18 @@ module Trainees
     end
 
     def nationalities
-      # TODO: We have a few different names for british and some other citizenshipss
+      # TODO: We have a few different names for british and some other citizenships
       # ["american", "british", "cook islander", "cymraes", "cymro", "french", "israeli", "martiniquais", "mosotho", "new zealander", "puerto rican", "st helenian", "turkish"]
       Nationality.where(name: nationality_names)
     end
 
     def nationality_names
       [
-        Dttp::CodeSets::Nationalities::MAPPING.select do |_key, value|
-          value[:entity_id] == dttp_trainee.response["_dfe_nationality_value"]
-        end.keys&.first,
+        find_by_entity_id(dttp_trainee.response["_dfe_nationality_value"], Dttp::CodeSets::Nationalities::MAPPING),
       ]
     end
 
     def disability_attributes
-      disability = Dttp::CodeSets::Disabilities::MAPPING.select do |_key, value|
-        value[:entity_id] == dttp_trainee.response["_dfe_disibilityid_value"]
-      end.keys&.first
-
       if disability.blank?
         return {
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
@@ -125,11 +121,11 @@ module Trainees
       }
     end
 
-    def ethnicity_attributes
-      ethnic_background = Dttp::CodeSets::Ethnicities::MAPPING.select do |_key, value|
-        value[:entity_id] == dttp_trainee.response["_dfe_ethnicityid_value"]
-      end.keys&.first
+    def disability
+      @disability ||= find_by_entity_id(dttp_trainee.response["_dfe_disibilityid_value"], Dttp::CodeSets::Disabilities::MAPPING)
+    end
 
+    def ethnicity_attributes
       ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
 
       diversity_disclosure = ethnic_background.present? && ethnic_background != Diversities::NOT_PROVIDED
@@ -145,8 +141,42 @@ module Trainees
       {}
     end
 
+    def ethnic_background
+      @ethnic_background ||= find_by_entity_id(dttp_trainee.response["_dfe_ethnicityid_value"], Dttp::CodeSets::Ethnicities::MAPPING)
+    end
+
     def ethnicity_and_disability_attributes
       ethnicity_attributes.merge(disability_attributes)
+    end
+
+    def course_attributes
+      {
+        course_subject_one: course(placement_assignment.response["_dfe_ittsubject1id_value"]),
+        course_subject_two: course(placement_assignment.response["_dfe_ittsubject2id_value"]),
+        course_subject_three: course(placement_assignment.response["_dfe_ittsubject3id_value"]),
+        course_min_age: age_range && age_range[0],
+        course_max_age: age_range && age_range[1],
+        study_mode: study_mode,
+        commencement_date: placement_assignment.response["dfe_commencementdate"],
+        course_start_date: placement_assignment.response["dfe_programmestartdate"],
+        course_end_date: placement_assignment.response["dfe_programmeeenddate"],
+      }
+    end
+
+    def course(dttp_course_uuid)
+      find_by_entity_id(dttp_course_uuid, Dttp::CodeSets::CourseSubjects::MAPPING)
+    end
+
+    def age_range
+      @age_range ||= find_by_entity_id(placement_assignment.response["_dfe_coursephaseid_value"], Dttp::CodeSets::AgeRanges::MAPPING)
+    end
+
+    def study_mode
+      find_by_entity_id(placement_assignment.response["_dfe_studymodeid_value"], Dttp::CodeSets::CourseStudyModes::MAPPING)
+    end
+
+    def find_by_entity_id(id, mapping)
+      mapping.select { |_key, value| value[:entity_id] == id }.keys&.first
     end
   end
 end
