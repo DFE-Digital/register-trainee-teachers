@@ -103,7 +103,7 @@ module Trainees
 
       if disability == Diversities::NO_KNOWN_DISABILITY
         return {
-          diversity_disclosure: true,
+          diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
         }
       end
@@ -111,14 +111,14 @@ module Trainees
       # TODO: This needs a decision, since DTTP may have 'multiple disabilities'
       if disability == Diversities::MULTIPLE_DISABILITIES
         return {
-          diversity_disclosure: true,
+          diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
           disabilities: Disability.where(name: ::Diversities::OTHER),
         }
       end
 
       {
-        diversity_disclosure: true,
+        diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
         disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
         disabilities: Disability.where(name: disability),
       }
