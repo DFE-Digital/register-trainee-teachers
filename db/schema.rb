@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_131642) do
+ActiveRecord::Schema.define(version: 2021_11_30_152523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -203,6 +203,16 @@ ActiveRecord::Schema.define(version: 2021_11_19_131642) do
     t.index ["name"], name: "index_disabilities_on_name", unique: true
   end
 
+  create_table "dttp_placement_assignments", force: :cascade do |t|
+    t.jsonb "response"
+    t.integer "state", default: 0
+    t.uuid "dttp_id", null: false
+    t.uuid "contact_dttp_id", null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["dttp_id"], name: "index_dttp_placement_assignments_on_dttp_id", unique: true
+  end
+
   create_table "dttp_providers", force: :cascade do |t|
     t.string "name"
     t.uuid "dttp_id"
@@ -220,6 +230,16 @@ ActiveRecord::Schema.define(version: 2021_11_19_131642) do
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "status_code"
     t.index ["dttp_id"], name: "index_dttp_schools_on_dttp_id", unique: true
+  end
+
+  create_table "dttp_trainees", force: :cascade do |t|
+    t.jsonb "response"
+    t.integer "state", default: 0
+    t.uuid "dttp_id", null: false
+    t.uuid "provider_dttp_id", null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["dttp_id"], name: "index_dttp_trainees_on_dttp_id", unique: true
   end
 
   create_table "dttp_users", force: :cascade do |t|

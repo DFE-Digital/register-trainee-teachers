@@ -24,6 +24,24 @@ module Dttp
           expect(subject).to eq([expected_attributes])
         end
       end
+
+      describe ".to_trainee_attributes" do
+        let(:contact) { create(:api_trainee) }
+
+        let(:expected_attributes) do
+          {
+            dttp_id: contact["contactid"],
+            provider_dttp_id: contact["_parentcustomerid_value"],
+            response: contact,
+          }
+        end
+
+        subject { described_class.to_trainee_attributes(contacts: [contact]) }
+
+        it "returns an array of Dttp::Trainee attributes" do
+          expect(subject).to eq([expected_attributes])
+        end
+      end
     end
   end
 end
