@@ -60,8 +60,8 @@ describe('sort', () => {
       { name: 'rose', synonyms: ['pretty the flower'] },
       { name: 'lily', synonyms: ['the flower pretty'] }
     ]
-    expect(sort('the pre', options)).toEqual(['the pretty flower', 'pretty the flower', 'lily', 'rose'])
-    expect(sort('the pretty', options)).toEqual(['the pretty flower', 'pretty the flower', 'lily', 'rose'])
+    expect(sort('the pre', options)).toEqual(['the pretty flower', 'pretty the flower', 'rose', 'lily'])
+    expect(sort('the pretty', options)).toEqual(['the pretty flower', 'pretty the flower', 'rose', 'lily'])
     expect(sort('the pretty flo', options)).toEqual(['the pretty flower', 'pretty the flower', 'lily', 'rose'])
   })
 
@@ -164,7 +164,9 @@ describe('cleanseOption', () => {
       name: 'abc',
       clean: {
         name: 'abc',
+        nameWithoutStopWords: 'abc',
         synonyms: [],
+        synonymsWithoutStopWords: [],
         boost: 1
       }
     })
@@ -181,6 +183,8 @@ describe('cleanseOption', () => {
       boost: 2,
       clean: {
         name: 'abc',
+        nameWithoutStopWords: 'aBc',
+        synonymsWithoutStopWords: ['xyz'],
         synonyms: ['xyz'],
         boost: 2
       }

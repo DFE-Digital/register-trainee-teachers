@@ -1,4 +1,4 @@
-const clean = (word) => word.trim()
+const clean = (text) => text.trim()
   .replace(/['’]/g, '')
   .replace(/[.,"/#!$%^&*;:{}=\-_`~()]/g, ' ')
   .toLowerCase()
