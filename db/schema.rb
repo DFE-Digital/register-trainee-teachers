@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_134119) do
+ActiveRecord::Schema.define(version: 2021_12_02_131013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -246,7 +246,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_134119) do
     t.jsonb "response"
     t.integer "state", default: 0
     t.uuid "dttp_id", null: false
-    t.uuid "provider_dttp_id", null: false
+    t.uuid "provider_dttp_id"
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["dttp_id"], name: "index_dttp_trainees_on_dttp_id", unique: true

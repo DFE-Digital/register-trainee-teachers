@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDttpDegreeQualifications < ActiveRecord::Migration[6.1]
   def change
     create_table :dttp_degree_qualifications do |t|
