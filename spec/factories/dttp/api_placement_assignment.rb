@@ -12,6 +12,7 @@ FactoryBot.define do
     dfe_commencementdate { Faker::Date.between(from: dfe_programmestartdate, to: dfe_programmeeenddate) }
     _dfe_coursephaseid_value { Dttp::CodeSets::AgeRanges::MAPPING.to_a.sample[1][:entity_id] }
     _dfe_studymodeid_value { Dttp::CodeSets::CourseStudyModes::MAPPING.to_a.sample[1][:entity_id] }
+    dfe_trnassessmentdate { dfe_programmestartdate }
 
     initialize_with { attributes.stringify_keys }
     to_create { |instance| instance }
