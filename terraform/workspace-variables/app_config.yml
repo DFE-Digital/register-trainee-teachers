@@ -25,3 +25,8 @@ review:
   <<: *default
   RAILS_ENV: review
   RACK_ENV: review
+
+dttpimport:
+  <<: *default
+  RAILS_ENV: dttpimport
+  RACK_ENV: dttpimport
