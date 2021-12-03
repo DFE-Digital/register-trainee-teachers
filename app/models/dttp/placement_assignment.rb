@@ -15,5 +15,13 @@ module Dttp
     def route_dttp_id
       response["_dfe_routeid_value"]
     end
+
+    def lead_school_id
+      response["_dfe_leadschoolid_value"]
+    end
+
+    def employing_school_id
+      response["_dfe_employingschoolid_value"]
+    end
   end
 end
