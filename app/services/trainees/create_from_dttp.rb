@@ -46,7 +46,9 @@ module Trainees
         nationalities: nationalities,
         training_route: training_route,
         trn: dttp_trainee.response["dfe_trn"],
+        submitted_for_trn_at: placement_assignment.response["dfe_trnassessmentdate"],
         dttp_id: dttp_trainee.dttp_id,
+        placement_assignment_dttp_id: placement_assignment.dttp_id,
       }.merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
     end
@@ -64,7 +66,10 @@ module Trainees
     end
 
     def training_route
-      find_by_entity_id(placement_assignment.route_dttp_id, Dttp::CodeSets::Routes::MAPPING)
+      find_by_entity_id(
+        placement_assignment.route_dttp_id,
+        Dttp::CodeSets::Routes::MAPPING,
+      )
     end
 
     def trainee_gender
@@ -87,7 +92,10 @@ module Trainees
 
     def nationality_names
       [
-        find_by_entity_id(dttp_trainee.response["_dfe_nationality_value"], Dttp::CodeSets::Nationalities::MAPPING),
+        find_by_entity_id(
+          dttp_trainee.response["_dfe_nationality_value"],
+          Dttp::CodeSets::Nationalities::MAPPING,
+        ),
       ]
     end
 
@@ -122,7 +130,10 @@ module Trainees
     end
 
     def disability
-      @disability ||= find_by_entity_id(dttp_trainee.response["_dfe_disibilityid_value"], Dttp::CodeSets::Disabilities::MAPPING)
+      @disability ||= find_by_entity_id(
+        dttp_trainee.response["_dfe_disibilityid_value"],
+        Dttp::CodeSets::Disabilities::MAPPING,
+      )
     end
 
     def ethnicity_attributes
@@ -142,7 +153,10 @@ module Trainees
     end
 
     def ethnic_background
-      @ethnic_background ||= find_by_entity_id(dttp_trainee.response["_dfe_ethnicityid_value"], Dttp::CodeSets::Ethnicities::MAPPING)
+      @ethnic_background ||= find_by_entity_id(
+        dttp_trainee.response["_dfe_ethnicityid_value"],
+        Dttp::CodeSets::Ethnicities::MAPPING,
+      )
     end
 
     def ethnicity_and_disability_attributes
