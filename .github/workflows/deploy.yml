@@ -19,6 +19,10 @@ on:
         description: Deploy to sandbox?
         default: 'false'
         required: true
+      dttpimport:
+        description: Deploy to dttpimport?
+        default: 'false'
+        required: true
       pr:
         description: PR number for the review app
         required: false
@@ -36,6 +40,8 @@ jobs:
       - id:   select-environments
         if:  github.event.inputs.pr == ''
         uses: DFE-Digital/bat-infrastructure/actions/prepare-environment-matrix@main
+        with:
+          available-environments: qa,staging,production,sandbox,research,dttpimport
 
       - id:  set-pr-environment
         if:  github.event.inputs.pr != ''
