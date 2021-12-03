@@ -33,6 +33,7 @@ module Trainees
 
     def mapped_attributes
       {
+        state: trainee_status,
         provider: provider,
         first_names: dttp_trainee.response["firstname"],
         last_name: dttp_trainee.response["lastname"],
@@ -223,6 +224,27 @@ module Trainees
 
     def employing_school_urn
       Dttp::School.find_by(dttp_id: placement_assignment.employing_school_id)&.urn
+    end
+
+    def trainee_status
+      case dttp_trainee_status
+      when DttpStatuses::DRAFT_RECORD then "draft"
+      when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "trn_requested"
+      when DttpStatuses::DEFERRED then "deferred"
+      when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
+      else
+        false
+        # Raise if it's something else? Are we expecting other statuses?
+        # What if it's AWAITING_QTS or PROSPECTIVE_TRAINEE_TRN_REQUESTED? Should
+        # we import and kick off respective jobs?
+      end
+    end
+
+    def dttp_trainee_status
+      find_by_entity_id(
+        placement_assignment.response["_dfe_traineestatusid_value"],
+        Dttp::CodeSets::Statuses::MAPPING,
+      )
     end
 
     def find_by_entity_id(id, mapping)
