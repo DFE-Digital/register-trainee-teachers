@@ -203,6 +203,16 @@ ActiveRecord::Schema.define(version: 2021_12_02_142506) do
     t.index ["name"], name: "index_disabilities_on_name", unique: true
   end
 
+  create_table "dttp_degree_qualifications", force: :cascade do |t|
+    t.jsonb "response"
+    t.integer "state", default: 0
+    t.uuid "dttp_id", null: false
+    t.uuid "contact_dttp_id"
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["dttp_id"], name: "index_dttp_degree_qualifications_on_dttp_id", unique: true
+  end
+
   create_table "dttp_placement_assignments", force: :cascade do |t|
     t.jsonb "response"
     t.integer "state", default: 0
@@ -236,7 +246,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_142506) do
     t.jsonb "response"
     t.integer "state", default: 0
     t.uuid "dttp_id", null: false
-    t.uuid "provider_dttp_id", null: false
+    t.uuid "provider_dttp_id"
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["dttp_id"], name: "index_dttp_trainees_on_dttp_id", unique: true
