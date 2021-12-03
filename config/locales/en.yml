@@ -277,6 +277,8 @@ en:
           edit: What type of training are they doing?
         course_details:
           edit: Course details
+        course_years:
+          edit: Course year
         course_education_phases:
           show: Which phase of education will the trainee teach?
         itt_start_date:
@@ -854,9 +856,15 @@ en:
       bullet_desc: "You can:"
       go_back: go back and change your answer
       use_dttp: use DTTP to register a different route
+    course_years:
+      edit:
+        heading: Which year’s courses do you want to choose from?
+        summary_with_route: &summary_with_route "%{summary}, %{route}"
     publish_course_details:
       edit:
-        heading: What course are they doing?
+        heading: "Your courses starting in %{from_year} to %{to_year}"
+        change_year_link_text: Choose from courses starting in a different year
+        course_code_label: What course are they doing?
         course_not_listed: Another course not listed
         enter_course_details: Enter course details manually
         summary_with_route: &summary_with_route "%{summary}, %{route}"
@@ -1241,6 +1249,10 @@ en:
           attributes:
             course_uuid:
               blank: Select a course
+        course_years_form:
+          attributes:
+            course_year:
+              inclusion: Select a course year
         reinstatement_form:
           attributes:
             date_string:

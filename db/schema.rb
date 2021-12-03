@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_02_131013) do
+ActiveRecord::Schema.define(version: 2021_12_02_142506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -279,6 +279,8 @@ ActiveRecord::Schema.define(version: 2021_12_02_131013) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "funding_type"
+    t.bigint "academic_cycle_id"
+    t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
   end
 
   create_table "nationalisations", force: :cascade do |t|
@@ -478,6 +480,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_131013) do
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"
+  add_foreign_key "funding_methods", "academic_cycles"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
   add_foreign_key "subject_specialisms", "allocation_subjects"

@@ -20,6 +20,14 @@ class CourseEducationPhaseForm < TraineeForm
     end
   end
 
+  def nullify_and_stash!
+    opts = FIELDS.inject({}) { |sum, f|
+      sum[f] = nil
+      sum
+    }
+    assign_attributes_and_stash(opts)
+  end
+
 private
 
   def compute_fields

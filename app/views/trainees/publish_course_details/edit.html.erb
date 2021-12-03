@@ -8,15 +8,21 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
     <%= register_form_with(model: @publish_course_details_form,
-                          url: trainee_publish_course_details_path(@trainee),
+                          url: trainee_publish_course_details_path(@trainee, year: @course_year),
                           method: :put,
                           local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= render TraineeName::View.new(@trainee) %>
+
+      <h1 class="govuk-heading-l"><%= t(".heading", from_year: @course_year, to_year: (@course_year + 1)) %></h1>
+      <div class="govuk-inset-text">
+        <%= link_to t(".change_year_link_text"), edit_trainee_course_years_path(@trainee, year: @course_year), class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+
       <div class="govuk-form-group">
         <%= f.govuk_radio_buttons_fieldset :course_uuid,
-          legend: { text: t(".heading"), tag: "h1", size: "l" },
+          legend: { text: t(".course_code_label"), tag: "h1", size: "m" },
           hint: { text: courses_fieldset_text_for(@trainee) },
           classes: "published-courses" do %>
           <% @courses.each do |course| %>
