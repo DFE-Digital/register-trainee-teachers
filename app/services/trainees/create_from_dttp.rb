@@ -52,6 +52,7 @@ module Trainees
         placement_assignment_dttp_id: placement_assignment.dttp_id,
       }.merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
+       .merge(school_attributes)
     end
 
     def provider
@@ -179,15 +180,49 @@ module Trainees
     end
 
     def course(dttp_course_uuid)
-      find_by_entity_id(dttp_course_uuid, Dttp::CodeSets::CourseSubjects::MAPPING)
+      find_by_entity_id(
+        dttp_course_uuid,
+        Dttp::CodeSets::CourseSubjects::MAPPING,
+      )
     end
 
     def age_range
-      @age_range ||= find_by_entity_id(placement_assignment.response["_dfe_coursephaseid_value"], Dttp::CodeSets::AgeRanges::MAPPING)
+      @age_range ||= find_by_entity_id(
+        placement_assignment.response["_dfe_coursephaseid_value"],
+        Dttp::CodeSets::AgeRanges::MAPPING,
+      )
     end
 
     def study_mode
-      find_by_entity_id(placement_assignment.response["_dfe_studymodeid_value"], Dttp::CodeSets::CourseStudyModes::MAPPING)
+      find_by_entity_id(
+        placement_assignment.response["_dfe_studymodeid_value"],
+        Dttp::CodeSets::CourseStudyModes::MAPPING,
+      )
+    end
+
+    def school_attributes
+      return {} if placement_assignment.lead_school_id.blank?
+
+      # Should we raise when schools are not found so that we can add them?
+      attrs = {
+        lead_school: School.find_by(urn: lead_school_urn),
+      }
+
+      if placement_assignment.employing_school_id.present?
+        attrs.merge!({
+          employing_school: School.find_by(urn: employing_school_urn),
+        })
+      end
+
+      attrs
+    end
+
+    def lead_school_urn
+      Dttp::School.find_by(dttp_id: placement_assignment.lead_school_id)&.urn
+    end
+
+    def employing_school_urn
+      Dttp::School.find_by(dttp_id: placement_assignment.employing_school_id)&.urn
     end
 
     def find_by_entity_id(id, mapping)
