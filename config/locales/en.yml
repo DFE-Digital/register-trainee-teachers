@@ -858,7 +858,7 @@ en:
       use_dttp: use DTTP to register a different route
     course_years:
       edit:
-        heading: Which year’s course do you want to choose from?
+        heading: Which year’s courses do you want to choose from?
         summary_with_route: &summary_with_route "%{summary}, %{route}"
     publish_course_details:
       edit:
