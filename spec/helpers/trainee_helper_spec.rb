@@ -107,4 +107,18 @@ describe TraineeHelper do
       end
     end
   end
+
+  describe "#label_for" do
+    context "translated label" do
+      it "returns translation of attribute and value" do
+        expect(label_for("record_completion", "complete")).to eq("Complete")
+      end
+    end
+
+    context "trainee_start_year label" do
+      it "returns value itself, not translation" do
+        expect(label_for("trainee_start_year", "2020")).to eq("2020 to 2021")
+      end
+    end
+  end
 end

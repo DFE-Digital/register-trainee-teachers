@@ -5,8 +5,6 @@ class MultiDateForm < TraineeForm
 
   attr_accessor :day, :month, :year, :date_string
 
-  validate :date_valid
-
   PARAM_CONVERSION = {
     "date(3i)" => "day",
     "date(2i)" => "month",
@@ -21,16 +19,6 @@ class MultiDateForm < TraineeForm
       yesterday: Time.zone.yesterday,
       other: other_date,
     }[date_string.to_sym]
-  end
-
-  def save!
-    if valid?
-      update_trainee
-      trainee.save!
-      clear_stash
-    else
-      false
-    end
   end
 
   def add_date_fields(new_d)
@@ -78,7 +66,7 @@ private
     end
   end
 
-  def update_trainee
+  def assign_attributes_to_trainee
     trainee[date_field] = date
   end
 
@@ -97,7 +85,7 @@ private
     elsif !date.is_a?(Date)
       errors.add(:date, :invalid)
     elsif date_before_course_start_date?(date, trainee.course_start_date)
-      errors.add(:date, :not_before_course_start_date)
+      errors.add(:date, I18n.t("activemodel.errors.models.deferral_form.attributes.date.not_before_course_start_date").html_safe)
     end
   end
 end

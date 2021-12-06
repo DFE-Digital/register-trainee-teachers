@@ -34,9 +34,11 @@ class PublishCourseDetailsForm < TraineeForm
         course_start_date: nil,
         course_end_date: nil,
         study_mode: nil,
+        course_education_phase: nil,
       )
     else
       CourseDetailsForm.new(trainee).nullify_and_stash!
+      CourseEducationPhaseForm.new(trainee).nullify_and_stash!
     end
   end
 

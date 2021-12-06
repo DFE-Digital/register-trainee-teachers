@@ -41,4 +41,24 @@ describe AcademicCycle, type: :model do
       end
     end
   end
+
+  describe "#for_year" do
+    let!(:academic_cycle1) { create(:academic_cycle, start_date: "01/9/2019", end_date: "31/8/2020") }
+    let!(:academic_cycle2) { create(:academic_cycle, start_date: "01/9/2020", end_date: "31/8/2021") }
+    let!(:academic_cycle3) { create(:academic_cycle, start_date: "01/9/2021", end_date: "31/8/2022") }
+
+    it "returns correct academic_cycle" do
+      expect(AcademicCycle.for_year(2019)).to eql(academic_cycle1)
+      expect(AcademicCycle.for_year(2020)).to eql(academic_cycle2)
+      expect(AcademicCycle.for_year(2021)).to eql(academic_cycle3)
+    end
+  end
+
+  describe "#start_year" do
+    it "returns start year" do
+      expect(build(:academic_cycle, start_date: "01/9/2019", end_date: "31/8/2020").start_year).to be(2019)
+      expect(build(:academic_cycle, start_date: "01/9/2020", end_date: "31/8/2021").start_year).to be(2020)
+      expect(build(:academic_cycle, start_date: "01/9/2021", end_date: "31/8/2022").start_year).to be(2021)
+    end
+  end
 end

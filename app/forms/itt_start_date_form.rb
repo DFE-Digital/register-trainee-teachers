@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class IttStartDateForm < MultiDateForm
+  validate :date_valid
+
   def stash
     form = CourseDetailsForm.new(trainee)
     form.assign_attributes_and_stash({

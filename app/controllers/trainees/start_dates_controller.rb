@@ -10,14 +10,14 @@ module Trainees
 
     def edit
       redirect_to(edit_trainee_start_status_path(trainee)) if @trainee.commencement_date.blank?
-      @trainee_start_date_form = TraineeStartDateForm.new(trainee)
+      @trainee_start_date_form = TraineeStartDateForm.new(trainee, params: params.slice(:context).permit!)
     end
 
     def update
       @trainee_start_date_form = TraineeStartDateForm.new(trainee, params: trainee_params, user: current_user)
 
       if @trainee_start_date_form.stash_or_save!
-        redirect_to(trainee_start_date_confirm_path(trainee))
+        redirect_to(relevant_redirect_path)
       else
         render(:edit)
       end
@@ -26,10 +26,20 @@ module Trainees
   private
 
     def trainee_params
-      params.require(:trainee_start_date_form).permit(:commencement_date, *PARAM_CONVERSION.keys)
+      params.require(:trainee_start_date_form).permit(:commencement_date, :context, *PARAM_CONVERSION.keys)
             .transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end
+    end
+
+    def relevant_redirect_path
+      if @trainee_start_date_form.deferring?
+        return trainee_deferral_path(trainee) if @trainee_start_date_form.itt_start_date_is_after_deferral_date?
+
+        return trainee_confirm_deferral_path(trainee)
+      end
+
+      trainee_start_date_confirm_path(trainee)
     end
   end
 end

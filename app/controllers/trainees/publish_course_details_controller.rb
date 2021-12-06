@@ -4,10 +4,22 @@ module Trainees
   class PublishCourseDetailsController < BaseController
     include PublishCourseNextPath
 
+    before_action :set_course_year
+
     def edit
-      @courses = trainee.available_courses
-      @courses = @courses.where(recruitment_cycle_year: 2021) # TODO: remove when start year filter is implemented
+      @courses = course_year_available_courses
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee)
+      @publish_course_details_form.skip_course_end_date_validation!
+
+      if @courses.empty?
+        page_tracker.remove_last_page
+        if params[:year].present?
+          @publish_course_details_form.process_manual_entry!
+          redirect_to(edit_trainee_course_education_phase_path(trainee))
+        else
+          redirect_to(edit_trainee_course_years_path(trainee))
+        end
+      end
     end
 
     def update
@@ -21,12 +33,25 @@ module Trainees
 
         redirect_to(next_step_path)
       else
-        @courses = trainee.available_courses
+        @courses = course_year_available_courses
         render(:edit)
       end
     end
 
   private
+
+    def set_course_year
+      year = params[:year].presence
+      year ||= @trainee.published_course&.recruitment_cycle_year
+      year ||= Settings.current_default_course_year
+
+      course_years_form = CourseYearsForm.new(course_year: year)
+      if course_years_form.valid?
+        @course_year = course_years_form.course_year
+      else
+        redirect_to(edit_trainee_course_years_path(@trainee))
+      end
+    end
 
     def course_uuid
       @publish_course_details_form.course_uuid
@@ -40,6 +65,10 @@ module Trainees
       else
         edit_trainee_subject_specialism_path(trainee, 1)
       end
+    end
+
+    def course_year_available_courses
+      trainee.available_courses.where(recruitment_cycle_year: @course_year)
     end
 
     def course_params

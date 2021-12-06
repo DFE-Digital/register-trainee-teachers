@@ -38,6 +38,11 @@ shared:
     - updated_at
     - recruitment_cycle_year
     - uuid
+  course_subjects:
+    - course_id
+    - subject_id
+    - created_at
+    - updated_at
   degrees:
     - country
     - created_at
@@ -80,6 +85,7 @@ shared:
     - created_at
     - id
     - updated_at
+    - funding_type
   funding_method_subjects:
     - allocation_subject_id
     - created_at

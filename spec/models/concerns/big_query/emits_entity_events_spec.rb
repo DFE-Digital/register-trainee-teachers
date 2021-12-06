@@ -60,6 +60,28 @@ module BigQuery
       end
     end
 
+    describe "destroy" do
+      before do
+        provider = create(:provider)
+        clear_enqueued_jobs
+        provider.destroy
+      end
+
+      context "when an entity has configured fields to include" do
+        let(:include_fields) { %w[name code] }
+
+        it "sends the event" do
+          expect(SendEventJob).to have_been_enqueued
+        end
+      end
+
+      context "when an entity does not have configured fields to include" do
+        it "doesn't send an event" do
+          expect(SendEventJob).not_to have_been_enqueued
+        end
+      end
+    end
+
     describe "send_import_event" do
       let(:provider) { create(:provider) }
 
