@@ -1,0 +1,22 @@
+<div class="govuk-error-summary" tabindex="-1" role="alert" data-module="govuk-error-summary" aria-labelledby="error-summary-title">
+  <h2 id="error-summary-title" class="govuk-error-summary__title">
+    <%= GOVUKDesignSystemFormBuilder.default_error_summary_title %>
+  </h2>
+  <div class="govuk-error-summary__body">
+    <ul class="govuk-list govuk-error-summary__list">
+      <li>
+        <a data-turbolinks="false" href="#training-details-form-trainee-id-field-error">
+          <%= I18n.t("activemodel.errors.models.training_details_form.attributes.trainee_id.uniqueness") %>
+        </a>
+        <div class="govuk-error-summary__item-description">
+          <%= I18n.t(
+            "activemodel.errors.models.training_details_form.attributes.trainee_id.uniqueness_explanation",
+            trainee_id: form.object.trainee_id.strip,
+            short_name: form.object.existing_short_name,
+            created: form.object.existing_created,
+          ).html_safe %>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
