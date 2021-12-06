@@ -7,6 +7,14 @@ class Trainee < ApplicationRecord
 
   belongs_to :provider
   belongs_to :apply_application, optional: true
+
+  belongs_to :dttp_trainee,
+             foreign_key: :dttp_id,
+             primary_key: :dttp_id,
+             inverse_of: :trainee,
+             optional: true,
+             class_name: "Dttp::Trainee"
+
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
   belongs_to :published_course,

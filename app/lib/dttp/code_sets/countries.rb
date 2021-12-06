@@ -3,6 +3,8 @@
 module Dttp
   module CodeSets
     module Countries
+      UNITED_KINGDOM = "United Kingdom"
+
       # country_code is used to regenerate public/location-autocomplete-graph.json - see rake task
       MAPPING = {
         "Afghanistan" => { entity_id: "717a4b74-ea28-e711-80c8-0050568902d3", country_code: "AF" },
@@ -189,7 +191,7 @@ module Dttp
         "Uganda" => { entity_id: "397c4b74-ea28-e711-80c8-0050568902d3", country_code: "UG" },
         "Ukraine" => { entity_id: "377c4b74-ea28-e711-80c8-0050568902d3", country_code: "UA" },
         "United Arab Emirates" => { entity_id: "6f7a4b74-ea28-e711-80c8-0050568902d3", country_code: "AE" },
-        "United Kingdom" => { entity_id: "037b4b74-ea28-e711-80c8-0050568902d3", country_code: "GB" },
+        UNITED_KINGDOM => { entity_id: "037b4b74-ea28-e711-80c8-0050568902d3", country_code: "GB" },
         "United States" => { entity_id: "3b7c4b74-ea28-e711-80c8-0050568902d3", country_code: "US" },
         "Uruguay" => { entity_id: "3d7c4b74-ea28-e711-80c8-0050568902d3", country_code: "UY" },
         "Uzbekistan" => { entity_id: "3f7c4b74-ea28-e711-80c8-0050568902d3", country_code: "UZ" },

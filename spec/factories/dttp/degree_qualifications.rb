@@ -4,12 +4,7 @@ FactoryBot.define do
   factory :dttp_degree_qualification, class: "Dttp::DegreeQualification" do
     dttp_id { SecureRandom.uuid }
     contact_dttp_id { SecureRandom.uuid }
-    response {
-      {
-        dfe_degreequalificationid: dttp_id,
-        _dfe_contactid_value: contact_dttp_id,
-      }
-    }
+    response { create(:api_degree_qualification) }
     state { "unprocessed" }
   end
 end

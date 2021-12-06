@@ -6,6 +6,7 @@ module Trainees
 
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
+      @trainee = Trainee.new(mapped_attributes)
     end
 
     def call
@@ -17,9 +18,8 @@ module Trainees
         return
       end
 
-      trainee = Trainee.new(mapped_attributes)
-
       trainee.save!
+      create_degrees!
 
       dttp_trainee.imported!
 
@@ -31,6 +31,8 @@ module Trainees
     attr_reader :dttp_trainee, :trainee
 
     def mapped_attributes
+      return if placement_assignment.blank?
+
       {
         state: trainee_status,
         provider: provider,
@@ -53,6 +55,10 @@ module Trainees
       }.merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(school_attributes)
+    end
+
+    def create_degrees!
+      ::Degrees::CreateFromDttp.call(trainee: trainee)
     end
 
     def provider
