@@ -5,13 +5,13 @@ module Trainees
     before_action :redirect_to_confirm_delete, if: :deleting_course_and_not_started?
 
     def show
-      @start_date_verification_form = StartDateVerificationForm.new
+      @start_date_verification_form = StartDateVerificationForm.new(trainee, params: params.slice(:context).permit!)
     end
 
-    def create
-      @start_date_verification_form = StartDateVerificationForm.new(verification_params)
+    def update
+      @start_date_verification_form = StartDateVerificationForm.new(trainee, params: verification_params, user: current_user)
 
-      if @start_date_verification_form.valid?
+      if @start_date_verification_form.save!
         redirect_to(relevant_redirect_path)
       else
         render(:show)
@@ -25,12 +25,12 @@ module Trainees
     end
 
     def relevant_redirect_path
-      if trainee_started_course? && withdrawing?
-        edit_trainee_start_status_path(trainee, context: :withdraw)
-      elsif !trainee_started_course? && withdrawing?
+      if trainee_started_course?
+        edit_trainee_start_status_path(trainee, context: context)
+      elsif withdrawing?
         trainee_forbidden_withdrawal_path(trainee)
-      elsif trainee_started_course?
-        edit_trainee_start_status_path(trainee, context: :delete)
+      elsif deferring?
+        trainee_confirm_deferral_path(trainee)
       else
         confirm_delete_path
       end
@@ -54,6 +54,14 @@ module Trainees
 
     def deleting_course_and_not_started?
       trainee.starts_course_in_the_future? && params[:context] == StartDateVerificationForm::DELETE
+    end
+
+    def deferring?
+      @start_date_verification_form.deferring?
+    end
+
+    def context
+      @start_date_verification_form.context
     end
   end
 end

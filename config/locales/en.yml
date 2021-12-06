@@ -77,7 +77,11 @@ en:
       region: *region
   deferral_details:
     view:
-      deferred_before_starting: Trainee deferred before their <abbr title="initial teacher training">ITT</abbr> started
+      defer_date_label: Date of deferral
+      deferred_before_itt_started: Trainee deferred before their <abbr title="initial teacher training">ITT</abbr> started
+      itt_started_but_trainee_did_not_start: The trainee deferred before starting their <abbr title="initial teacher training">ITT</abbr>
+      summary_title: Deferral details
+      start_date_label: *trainee_start_date
   reinstatement_details:
     view:
       reinstated_before_starting: Trainee returned before their <abbr title="initial teacher training">ITT</abbr> started
@@ -160,9 +164,6 @@ en:
           transferred_to_another_provider: Transferred to another provider
           unknown: Unknown
           written_off_after_lapse_of_time: Written off after lapse of time
-      deferral_details:
-        summary_title: Deferral details
-        defer_date_label: Date of deferral
       flash:
         diversity: disclosure
         disclosure: diversity information
@@ -268,12 +269,16 @@ en:
           edit: Trainee personal details
         trainee_start_date:
           edit: &commencement_date Trainee’s start date
+        trainee_start_status:
+          edit: Did the trainee start their ITT on time?
         training_details:
           edit: Edit training details
         training_routes:
           edit: What type of training are they doing?
         course_details:
           edit: Course details
+        course_years:
+          edit: Course year
         course_education_phases:
           show: Which phase of education will the trainee teach?
         itt_start_date:
@@ -357,6 +362,7 @@ en:
       title: Filters
       training_route: Training route
       record_completion: Record completion
+      trainee_start_year: &trainee_start_year Start year
     timeline:
       withdrawal_date: Date of withdrawal
       withdrawal_reason: Reason for withdrawal
@@ -562,6 +568,7 @@ en:
         export: Export these records
         filters:
           record_completion: Record completion
+          trainee_start_year: *trainee_start_year
           incomplete: Incomplete
           complete: Complete
           level: Education phase
@@ -851,9 +858,15 @@ en:
       bullet_desc: "You can:"
       go_back: go back and change your answer
       use_dttp: use DTTP to register a different route
+    course_years:
+      edit:
+        heading: Which year’s courses do you want to choose from?
+        summary_with_route: &summary_with_route "%{summary}, %{route}"
     publish_course_details:
       edit:
-        heading: What course are they doing?
+        heading: "Your courses starting in %{from_year} to %{to_year}"
+        change_year_link_text: Choose from courses starting in a different year
+        course_code_label: What course are they doing?
         course_not_listed: Another course not listed
         enter_course_details: Enter course details manually
         summary_with_route: &summary_with_route "%{summary}, %{route}"
@@ -932,7 +945,7 @@ en:
       edit:
         itt_not_yet_started: They have not started yet
         label: Did the trainee start their <abbr title="initial teacher training">ITT</abbr> on time?
-        on_time: Yes, they started on time — %{course_start_date}
+        on_time_html: Yes, they started on time — <span class="no-wrap">%{course_start_date}</span>
         started_later: No, they started later
         trainee_start_date: *trainee_start_date
         trainee_start_date_hint: For example, 8 11 2021
@@ -1238,6 +1251,10 @@ en:
           attributes:
             course_uuid:
               blank: Select a course
+        course_years_form:
+          attributes:
+            course_year:
+              inclusion: Select a course year
         reinstatement_form:
           attributes:
             date_string:
@@ -1272,14 +1289,16 @@ en:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
-              not_after_course_end_date: Trainee start date must not be after the ITT has finished (%{course_end_date})
+              not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
+              future: Trainee start date must be in the past
               too_old: Trainee start date cannot be more than 10 years in the past
         trainee_start_status_form:
           attributes:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
-              not_after_course_end_date: Trainee start date must not be after the ITT has finished (%{course_end_date})
+              not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
+              future: Trainee start date must be in the past
               too_old: Trainee start date cannot be more than 10 years in the past
             commencement_status:
               blank: Select if the trainee started on time
@@ -1347,7 +1366,7 @@ en:
         start_date_verification_form:
           attributes:
             trainee_has_started_course:
-              blank: Select yes or no
+              blank: Select yes if the trainee started their ITT
         trainee_forbidden_delete_form:
           attributes:
             alternative_option:

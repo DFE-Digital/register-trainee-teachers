@@ -6,6 +6,7 @@ module Trainees
 
     def show
       @deferral_form = DeferralForm.new(trainee)
+      redirect_to_start_date_selection unless @deferral_form.itt_start_date.is_a?(Date)
     end
 
     def update
@@ -32,6 +33,10 @@ module Trainees
 
     def redirect_to_confirm_deferral
       redirect_to(trainee_confirm_deferral_path(trainee))
+    end
+
+    def redirect_to_start_date_selection
+      redirect_to(trainee_start_date_verification_path(trainee, context: :defer))
     end
   end
 end

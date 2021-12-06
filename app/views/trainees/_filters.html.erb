@@ -46,6 +46,28 @@
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        <%= t("views.trainees.index.filters.trainee_start_year") %>
+      </legend>
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% AcademicCycle.trainees_filter.map do |academic_cycle| %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag "trainee_start_year[]",
+                              academic_cycle.start_year,
+                              checked?(filters, :trainee_start_year, academic_cycle.start_year.to_s),
+                              id: "trainee_start_year-#{academic_cycle.start_year}",
+                              class: "govuk-checkboxes__input" %>
+            <%= label_tag "trainee_start_year-#{academic_cycle.start_year}",
+                          academic_cycle.label,
+                          class: "govuk-label govuk-checkboxes__label" %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
         <%= t("views.trainees.index.filters.level") %>
       </legend>
       <div class="govuk-checkboxes govuk-checkboxes--small">

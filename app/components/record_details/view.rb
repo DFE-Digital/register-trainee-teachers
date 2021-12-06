@@ -121,6 +121,12 @@ module RecordDetails
     end
 
     def status_date
+      if trainee.itt_not_yet_started?
+        return I18n.t("deferral_details.view.deferred_before_itt_started").html_safe if trainee.starts_course_in_the_future?
+
+        return I18n.t("deferral_details.view.itt_started_but_trainee_did_not_start").html_safe
+      end
+
       return unless trainee_status_date
 
       I18n.t("record_details.view.status_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_status_date)

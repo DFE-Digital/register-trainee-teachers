@@ -39,9 +39,16 @@ describe TraineeStartDateForm, type: :model do
       end
 
       it "is invalid" do
-        expect(subject.errors[:commencement_date]).to include("Trainee start date must not be after the ITT has finished (19 December 2020)")
+        expect(subject.errors[:commencement_date]).to include(
+          I18n.t(
+            "#{error_attr}.not_after_course_end_date_html",
+            course_end_date: trainee.course_end_date.strftime("%-d %B %Y"),
+          ),
+        )
       end
     end
+
+    include_examples "start date validations"
 
     context "date is more than 10 years in the past" do
       let(:params) { { year: "2009", month: "12", day: "20" } }
@@ -63,7 +70,7 @@ describe TraineeStartDateForm, type: :model do
   end
 
   describe "#save!" do
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { create(:trainee, course_start_date: Time.zone.today) }
 
     before do
       allow(form_store).to receive(:set).with(trainee.id, :trainee_start_date, nil)

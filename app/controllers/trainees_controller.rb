@@ -133,13 +133,15 @@ private
     [
       :subject,
       :text_search,
-      :sort_by, {
+      :sort_by,
+      {
         level: [],
         training_route: [],
         state: [],
         record_source: [],
         record_completion: [],
-      }
+        trainee_start_year: [],
+      },
     ]
   end
 

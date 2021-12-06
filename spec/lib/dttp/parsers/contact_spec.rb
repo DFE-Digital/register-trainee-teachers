@@ -31,6 +31,7 @@ module Dttp
         let(:expected_attributes) do
           {
             dttp_id: contact["contactid"],
+            provider_dttp_id: contact["_parentcustomerid_value"],
             response: contact,
           }
         end

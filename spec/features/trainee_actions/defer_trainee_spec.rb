@@ -6,8 +6,13 @@ feature "Deferring a trainee", type: :feature do
   include SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 
+  background do
+    given_i_am_authenticated
+  end
+
   context "trainee deferral date" do
     before do
+      given_a_trainee_exists_to_be_deferred
       given_i_initiate_a_deferral
     end
 
@@ -62,14 +67,73 @@ feature "Deferring a trainee", type: :feature do
   end
 
   scenario "course start date is in the future" do
-    given_i_initiate_a_deferral(commencement_date: nil, course_start_date: Time.zone.tomorrow)
+    given_a_trainee_with_course_starting_in_the_future_exists
+    given_i_initiate_a_deferral
     then_i_am_redirected_to_deferral_confirmation_page
-    and_i_see_a_message_for_course_start_date_in_the_future
+    and_i_see_a_message_for_trainee_deferred_before_itt_started
     when_i_defer
     then_the_trainee_is_deferred
   end
 
+  describe "course start date is in the past" do
+    background do
+      given_a_trainee_with_course_started_in_the_past_exists
+      given_i_initiate_a_deferral
+    end
+
+    scenario "and the trainee did not start" do
+      then_i_am_redirected_to_start_date_verification_page
+      and_i_choose_they_have_not_started
+      and_i_see_a_message_for_itt_started_but_trainee_deferred_before_starting
+      when_i_defer
+      then_the_trainee_is_deferred
+    end
+
+    scenario "and the trainee started" do
+      then_i_am_redirected_to_start_date_verification_page
+      and_i_choose_they_have_started
+      then_i_am_redirected_to_trainee_start_status_page
+      when_i_choose_they_started_on_time
+      then_i_am_redirected_to_the_deferral_page
+      when_i_choose_today
+      and_i_continue
+      then_i_am_redirected_to_deferral_confirmation_page
+      and_i_see_my_date(Time.zone.today)
+      and_i_see_my_itt_start_date
+      when_i_defer
+      then_the_trainee_is_deferred
+    end
+  end
+
+  scenario "changing start date from deferral confirmation page" do
+    given_a_trainee_exists_with_a_deferral_date
+    given_i_am_on_the_deferral_confirmation_page
+    and_i_click_on_the_change_link_for_start_date
+    then_i_am_redirected_to_start_date_verification_page
+    and_i_choose_they_have_started
+    then_i_am_redirected_to_trainee_start_status_page
+    when_i_choose_they_started_on_time
+    then_i_am_redirected_to_deferral_confirmation_page
+  end
+
+  scenario "changing start date to be after the deferral date" do
+    given_a_trainee_exists_with_a_deferral_date
+    given_i_am_on_the_deferral_confirmation_page
+    and_i_click_on_the_change_link_for_start_date
+    then_i_am_redirected_to_start_date_verification_page
+    and_i_choose_they_have_started
+    then_i_am_redirected_to_trainee_start_status_page
+    when_i_choose_the_trainee_has_started_later
+    and_i_enter_a_start_date_after_the_deferral_date
+    and_i_continue
+    then_i_am_redirected_to_the_deferral_page
+    when_i_choose_today
+    and_i_continue
+    then_i_am_redirected_to_deferral_confirmation_page
+  end
+
   scenario "cancelling changes" do
+    given_a_trainee_exists_to_be_deferred
     given_i_initiate_a_deferral
     when_i_choose_today
     and_i_continue
@@ -80,11 +144,17 @@ feature "Deferring a trainee", type: :feature do
     and_the_defer_date_i_chose_is_cleared
   end
 
-  def given_i_initiate_a_deferral(trainee_attributes = {})
-    given_i_am_authenticated
-    given_a_trainee_exists_to_be_deferred(trainee_attributes)
+  def given_i_initiate_a_deferral
     and_i_am_on_the_trainee_record_page
     and_i_click_on_defer
+  end
+
+  def given_i_am_on_the_deferral_confirmation_page
+    deferral_confirmation_page.load(id: trainee.slug)
+  end
+
+  def and_i_click_on_the_change_link_for_start_date
+    deferral_confirmation_page.start_date_change_link.click
   end
 
   def when_i_choose_today
@@ -122,10 +192,20 @@ feature "Deferring a trainee", type: :feature do
     deferral_page.continue.click
   end
 
-  def and_i_see_a_message_for_course_start_date_in_the_future
+  def and_i_see_a_message_for_trainee_deferred_before_itt_started
     expect(deferral_confirmation_page).to have_content(
-      strip_tags(I18n.t("deferral_details.view.deferred_before_starting")),
+      strip_tags(I18n.t("deferral_details.view.deferred_before_itt_started")),
     )
+  end
+
+  def and_i_see_a_message_for_itt_started_but_trainee_deferred_before_starting
+    expect(deferral_confirmation_page).to have_content(
+      strip_tags(I18n.t("deferral_details.view.itt_started_but_trainee_did_not_start")),
+    )
+  end
+
+  def and_i_see_my_itt_start_date
+    and_i_see_my_date(trainee.course_start_date)
   end
 
   def then_i_see_the_error_message_for_invalid_date
@@ -150,8 +230,64 @@ feature "Deferring a trainee", type: :feature do
     expect(deferral_confirmation_page).to be_displayed(id: trainee.slug)
   end
 
-  def given_a_trainee_exists_to_be_deferred(attributes = { commencement_date: 10.days.ago })
-    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, attributes)
+  def then_i_am_redirected_to_start_date_verification_page
+    expect(start_date_verification_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_i_am_redirected_to_trainee_start_status_page
+    expect(trainee_start_status_edit_page).to be_displayed(trainee_id: trainee.slug)
+  end
+
+  def then_i_am_redirected_to_trainee_start_date_page
+    expect(trainee_start_date_edit_page).to be_displayed(trainee_id: trainee.slug)
+  end
+
+  def when_i_choose_the_trainee_has_started_later
+    trainee_start_status_edit_page.commencement_status_started_later.choose
+  end
+
+  def and_i_enter_a_start_date_after_the_deferral_date
+    new_start_date = trainee.defer_date + 1.day
+    trainee_start_status_edit_page.set_date_fields(:commencement_date, new_start_date.strftime("%d/%m/%Y"))
+  end
+
+  def given_a_trainee_exists_to_be_deferred
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, :with_start_date)
+  end
+
+  def given_a_trainee_exists_with_a_deferral_date
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
+                           commencement_date: 1.month.ago,
+                           course_start_date: 1.year.ago,
+                           course_end_date: 1.year.from_now,
+                           defer_date: 1.week.ago)
+  end
+
+  def given_a_trainee_with_course_starting_in_the_future_exists
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
+                           commencement_date: nil,
+                           course_start_date: Time.zone.today + 1.day)
+  end
+
+  def given_a_trainee_with_course_started_in_the_past_exists
+    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
+                           commencement_date: nil,
+                           course_start_date: Time.zone.today - 1.day)
+  end
+
+  def and_i_choose_they_have_not_started
+    start_date_verification_page.not_started_option.choose
+    start_date_verification_page.continue.click
+  end
+
+  def and_i_choose_they_have_started
+    start_date_verification_page.started_option.choose
+    start_date_verification_page.continue.click
+  end
+
+  def when_i_choose_they_started_on_time
+    trainee_start_status_edit_page.commencement_status_started_on_time.choose
+    trainee_start_status_edit_page.continue.click
   end
 
   def then_the_defer_date_is_updated
@@ -168,6 +304,10 @@ feature "Deferring a trainee", type: :feature do
 
   def then_i_am_redirected_to_the_record_page
     expect(record_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_i_am_redirected_to_the_deferral_page
+    expect(deferral_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def and_the_defer_date_i_chose_is_cleared

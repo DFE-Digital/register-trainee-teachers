@@ -30,7 +30,7 @@ class TraineeForm
 
   def save!
     if valid?
-      trainee.assign_attributes(fields.except(*fields_to_ignore_before_save))
+      assign_attributes_to_trainee
       trainee.save!
       clear_stash
     else
@@ -67,6 +67,10 @@ class TraineeForm
   end
 
 private
+
+  def assign_attributes_to_trainee
+    trainee.assign_attributes(fields.except(*fields_to_ignore_before_save))
+  end
 
   def course_date_attribute_name_prefix
     :itt

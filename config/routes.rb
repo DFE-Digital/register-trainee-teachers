@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   resources :trainees, except: :edit do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
+      resource :course_years, only: %i[edit update], path: "/course-years"
       resource :publish_course_details, only: %i[edit update], path: "/publish-course-details" do
         concerns :confirmable
       end
@@ -123,7 +124,7 @@ Rails.application.routes.draw do
       resource :timeline, only: :show
 
       resource :subject_specialism, only: %i[edit update], path: "/subject-specialism/:position"
-      resource :start_date_verification, only: %i[show create], path: "/start-date-verification"
+      resource :start_date_verification, only: %i[show update], path: "/start-date-verification"
       resource :forbidden_deletes, only: %i[show create], path: "/delete-forbidden"
       resource :forbidden_withdrawal, only: %i[show], path: "/withdrawal-forbidden"
     end

@@ -87,5 +87,15 @@ describe TraineeFilter do
 
       include_examples returns_nil
     end
+
+    context "with trainee start year" do
+      let(:params) { { trainee_start_year: ["2020"] } }
+
+      subject { TraineeFilter.new(params: params) }
+
+      it "returns trainee_start_year in hash" do
+        expect(subject.filters).to eq({ "trainee_start_year" => ["2020"] })
+      end
+    end
   end
 end

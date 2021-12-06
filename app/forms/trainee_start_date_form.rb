@@ -4,7 +4,11 @@ class TraineeStartDateForm < TraineeForm
   include DatesHelper
   include CommencementDateHelpers
 
-  attr_accessor :day, :month, :year
+  attr_accessor :day, :month, :year, :context
+
+  WITHDRAW = "withdraw"
+  DEFER = "defer"
+  DELETE = "delete"
 
   validate :commencement_date_valid
 
@@ -25,18 +29,38 @@ class TraineeStartDateForm < TraineeForm
     valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
   end
 
+  def deferring?
+    context == DEFER
+  end
+
+  def itt_start_date_is_after_deferral_date?
+    deferral_date.is_a?(Date) && commencement_date.after?(deferral_date)
+  end
+
 private
+
+  def deferral_date
+    @deferral_date ||= ::DeferralForm.new(trainee).date
+  end
 
   def compute_fields
     {
       day: trainee.commencement_date&.day,
       month: trainee.commencement_date&.month,
       year: trainee.commencement_date&.year,
-    }.merge(new_attributes.slice(:day, :month, :year))
+    }.merge(new_attributes.slice(:day, :month, :year, :context))
   end
 
   def update_trainee_commencement_date
-    trainee.assign_attributes(commencement_date: commencement_date) if errors.empty?
+    trainee.assign_attributes(commencement_date: commencement_date, commencement_status: commencement_status)
+  end
+
+  def commencement_status
+    if commencement_date.after?(trainee.course_start_date)
+      COMMENCEMENT_STATUS_ENUMS[:itt_started_later]
+    else
+      COMMENCEMENT_STATUS_ENUMS[:itt_started_on_time]
+    end
   end
 
   def fields_from_store
