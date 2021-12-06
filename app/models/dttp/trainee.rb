@@ -4,7 +4,22 @@ module Dttp
   class Trainee < ApplicationRecord
     self.table_name = "dttp_trainees"
 
-    has_many :placement_assignments, foreign_key: :contact_dttp_id, primary_key: :dttp_id, inverse_of: :trainee
+    has_many :placement_assignments,
+             foreign_key: :contact_dttp_id,
+             primary_key: :dttp_id,
+             inverse_of: :trainee
+
+    has_many :degree_qualifications,
+             foreign_key: :contact_dttp_id,
+             primary_key: :dttp_id,
+             inverse_of: :trainee
+
+    belongs_to :trainee,
+               foreign_key: :dttp_id,
+               primary_key: :dttp_id,
+               inverse_of: :dttp_trainee,
+               optional: true,
+               class_name: "Trainee"
 
     validates :response, presence: true
 
