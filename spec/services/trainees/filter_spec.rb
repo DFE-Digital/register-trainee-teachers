@@ -108,6 +108,18 @@ module Trainees
       end
     end
 
+    context "with trainee_start_year filter" do
+      let!(:future_trainee) { create(:trainee, :with_study_mode_and_future_course_dates) }
+      let(:year) { future_trainee.course_start_date.year }
+      let!(:academic_cycle) { create(:academic_cycle, start_date: "01/09/#{year}", end_date: "31/8/#{year + 1}") }
+
+      context "complete" do
+        let(:filters) { { trainee_start_year: [future_trainee.course_start_date.year] } }
+
+        it { is_expected.to match_array([future_trainee]) }
+      end
+    end
+
     context "with record_source filter set to apply" do
       let(:filters) { { record_source: %w[apply] } }
 

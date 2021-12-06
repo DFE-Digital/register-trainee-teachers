@@ -362,6 +362,7 @@ en:
       title: Filters
       training_route: Training route
       record_completion: Record completion
+      trainee_start_year: &trainee_start_year Start year
     timeline:
       withdrawal_date: Date of withdrawal
       withdrawal_reason: Reason for withdrawal
@@ -567,6 +568,7 @@ en:
         export: Export these records
         filters:
           record_completion: Record completion
+          trainee_start_year: *trainee_start_year
           incomplete: Incomplete
           complete: Complete
           level: Education phase

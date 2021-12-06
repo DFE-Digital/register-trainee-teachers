@@ -32,6 +32,7 @@ private
       **record_source,
       **provider,
       **record_completions,
+      **trainee_start_years,
     ).with_indifferent_access
   end
 
@@ -113,5 +114,11 @@ private
     %w[complete incomplete].each_with_object([]) do |option, arr|
       arr << option if params[:record_completion]&.include?(option)
     end
+  end
+
+  def trainee_start_years
+    return {} if params[:trainee_start_year].blank?
+
+    { "trainee_start_year" => params[:trainee_start_year] }
   end
 end
