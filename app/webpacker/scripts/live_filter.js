@@ -8,6 +8,7 @@ export default class LiveFilter {
   constructor () {
     this.form = document.querySelector('#js-live-filter')
     this.resultsDiv = document.querySelector('#js-results')
+    this.endpoint = this.form.attributes['data-search-endpoint'].value
     this.selectedFiltersDiv = document.querySelector('#js-selected-filters')
     this.traineeCount = document.querySelector('#js-trainee-count')
     this.actionBar = document.querySelector('#js-action-bar')
@@ -37,7 +38,7 @@ export default class LiveFilter {
 
   fetchResults (shouldUpdateUrl = true) {
     return $.ajax({
-      url: '/trainees',
+      url: this.endpoint,
       dataType: 'json',
       data: this.state
     }).done((response) => {

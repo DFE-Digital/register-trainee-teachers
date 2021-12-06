@@ -3,7 +3,7 @@
     <div class="app-export--link">
       <%= govuk_link_to(
         I18n.t("views.trainees.index.export"),
-        trainees_path(filter_params.merge(format: "csv")),
+        export_results_path,
         class: "app-trainee-export",
       ) %>
     </div>

@@ -7,7 +7,7 @@
 <% end %>
 
 <h1 class="govuk-heading-xl" aria-live="polite">
-  Trainee records (<span id="js-trainee-count"><%= total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(total_trainees_count) %></span>)
+  Draft trainees (<span id="js-trainee-count"><%= total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(total_trainees_count) %></span>)
 </h1>
 
 <% unless current_user.system_admin? %>
@@ -25,7 +25,7 @@
   search_primary_result_set: search_primary_result_set,
   search_secondary_result_title: search_secondary_result_title,
   search_secondary_result_set: search_secondary_result_set,
-  search_path: trainees_path,
+  search_path: drafts_path,
   filters: filters,
   training_routes: training_routes,
   export_results_path: export_results_path
