@@ -6,6 +6,7 @@ module Trainees
 
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
+      @trainee = Trainee.new(mapped_attributes)
     end
 
     def call
@@ -17,9 +18,8 @@ module Trainees
         return
       end
 
-      trainee = Trainee.new(mapped_attributes)
-
       trainee.save!
+      create_degrees!
 
       # TODO: TBC what states are we going to use
       dttp_trainee.processed!
@@ -54,6 +54,10 @@ module Trainees
       }.merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(school_attributes)
+    end
+
+    def create_degrees!
+      ::Degrees::CreateFromDttp.call(trainee: trainee)
     end
 
     def provider

@@ -414,6 +414,10 @@ FactoryBot.define do
       apply_application
     end
 
+    trait :with_dttp_trainee do
+      dttp_trainee
+    end
+
     trait :with_invalid_apply_application do
       degrees { [build(:degree, :uk_degree_with_details)] }
       association :apply_application, :with_invalid_data
