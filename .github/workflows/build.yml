@@ -121,7 +121,7 @@ jobs:
       with:
         workflow: 'Deploy to PaaS'
         token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
-        inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "sha": "${{ env.IMAGE_TAG }}"}'
+        inputs: '{"qa": "true", "staging": "true", "production": "true", "sandbox": "true", "dttpimport": "true", "sha": "${{ env.IMAGE_TAG }}"}'
 
     - name: Check for Failure
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
