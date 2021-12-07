@@ -22,8 +22,11 @@ module Degrees
     attr_reader :dttp_trainee, :degrees_form
 
     def create_degrees!
-      dttp_trainee.degree_qualifications.each do |degree|
-        degrees_form.build_degree(::Degrees::MapFromDttp.call(dttp_degree: degree)).save!
+      dttp_trainee.degree_qualifications.each do |dttp_degree|
+        degree = degrees_form.build_degree(
+          ::Degrees::MapFromDttp.call(dttp_degree: dttp_degree),
+        )
+        dttp_degree.processed! if degree.save!
       end
     end
   end

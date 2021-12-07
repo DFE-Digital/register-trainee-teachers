@@ -15,6 +15,7 @@ module Dttp
 
     enum state: {
       unprocessed: 0,
+      processed: 1,
     }
 
     def country_id
