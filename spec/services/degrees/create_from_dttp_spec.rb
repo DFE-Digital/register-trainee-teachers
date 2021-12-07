@@ -16,6 +16,14 @@ module Degrees
       }.to change(trainee.degrees, :count).by(1)
     end
 
+    it "changes the state to processed" do
+      expect {
+        create_from_dttp
+      }.to change {
+        dttp_degree_qualification.reload.state
+      }.from("unprocessed").to("processed")
+    end
+
     context "when the trainee does not have a corresponding dttp_trainee" do
       let(:trainee) { create(:trainee) }
 
@@ -23,6 +31,26 @@ module Degrees
         expect {
           create_from_dttp
         }.to raise_error(described_class::DttpTraineeNotFound)
+      end
+    end
+
+    context "when the degree fails to save" do
+      let(:invalid_subject) { "Creative accounting" }
+      let(:api_degree_qualification) { create(:api_degree_qualification, _dfe_degreesubjectid_value: invalid_subject) }
+      let!(:dttp_degree_qualification) do
+        create(
+          :dttp_degree_qualification,
+          dttp_trainee: dttp_trainee,
+          response: api_degree_qualification,
+        )
+      end
+
+      it "does not change the state to processed" do
+        expect {
+          create_from_dttp
+        }.not_to change {
+          dttp_degree_qualification.reload.state
+        }
       end
     end
   end
