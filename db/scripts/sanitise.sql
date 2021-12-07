@@ -40,5 +40,17 @@ WHERE email NOT LIKE '%@digital.education.gov.uk'
 -- Apply sync
 UPDATE "apply_applications"
 SET 
-  application = NULL
+  application = NULL;
 
+-- DTTP sync
+UPDATE "dttp_trainees"
+SET
+  response = NULL;
+
+UPDATE "dttp_placement_assignments"
+SET
+  response = NULL;
+
+UPDATE "dttp_degree_qualifications"
+SET
+  response = NULL;
