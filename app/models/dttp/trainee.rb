@@ -6,6 +6,8 @@ module Dttp
 
     has_many :placement_assignments, foreign_key: :contact_dttp_id, primary_key: :dttp_id, inverse_of: :trainee
 
+    belongs_to :provider, class_name: "::Provider", foreign_key: :provider_dttp_id, primary_key: :dttp_id, inverse_of: :dttp_trainees, optional: true
+
     validates :response, presence: true
 
     enum state: {
@@ -13,11 +15,6 @@ module Dttp
       non_processable_duplicate: 1,
       processed: 2,
     }
-
-    def provider_dttp_id
-      # TODO: should we expose the provider record here or the ID
-      response["_parentcustomerid_value"]
-    end
 
     def date_of_birth
       return if response["birthdate"].blank?

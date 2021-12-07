@@ -2,8 +2,12 @@
 
 FactoryBot.define do
   factory :api_trainee, class: Hash do
-    contactid { SecureRandom.uuid }
-    _parentcustomerid_value { SecureRandom.uuid }
+    transient do
+      dttp_id { SecureRandom.uuid }
+      provider_dttp_id { SecureRandom.uuid }
+    end
+    contactid { dttp_id }
+    _parentcustomerid_value { provider_dttp_id }
     firstname { Faker::Name.first_name }
     lastname { Faker::Name.last_name }
     emailaddress1 { "#{firstname}.#{lastname}@example.com" }
