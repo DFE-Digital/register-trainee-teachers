@@ -4,13 +4,15 @@ module Trainees
   class CreateFromDttp
     include ServicePattern
 
+    class UnrecognisedStatusError < StandardError; end
+
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
       @trainee = Trainee.new(mapped_attributes)
     end
 
     def call
-      return if provider.blank?
+      return if dttp_trainee.provider.blank?
       return if placement_assignment.blank?
 
       if trainee_already_exists?
@@ -35,8 +37,9 @@ module Trainees
 
       {
         state: trainee_status,
-        provider: provider,
+        provider: dttp_trainee.provider,
         first_names: dttp_trainee.response["firstname"],
+        middle_names: dttp_trainee.response["middlename"],
         last_name: dttp_trainee.response["lastname"],
         address_line_one: dttp_trainee.response["address1_line1"],
         address_line_two: dttp_trainee.response["address1_line2"],
@@ -59,10 +62,6 @@ module Trainees
 
     def create_degrees!
       ::Degrees::CreateFromDttp.call(trainee: trainee)
-    end
-
-    def provider
-      @provider ||= Provider.find_by(dttp_id: dttp_trainee.provider_dttp_id)
     end
 
     def placement_assignment
@@ -147,7 +146,11 @@ module Trainees
     def ethnicity_attributes
       ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
 
-      diversity_disclosure = ethnic_background.present? && ethnic_background != Diversities::NOT_PROVIDED
+      if ethnic_background.present? && ethnic_background != Diversities::NOT_PROVIDED
+        diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      else
+        diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+      end
 
       if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
         return {
@@ -234,14 +237,17 @@ module Trainees
     def trainee_status
       case dttp_trainee_status
       when DttpStatuses::DRAFT_RECORD then "draft"
-      when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "trn_requested"
+      when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "submitted_for_trn"
       when DttpStatuses::DEFERRED then "deferred"
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
+      when DttpStatuses::AWARDED_EYTS then "awarded"
+      when DttpStatuses::AWARDED_QTS then "awarded"
+      when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
       else
-        false
         # Raise if it's something else? Are we expecting other statuses?
         # What if it's AWAITING_QTS or PROSPECTIVE_TRAINEE_TRN_REQUESTED? Should
         # we import and kick off respective jobs?
+        raise(UnrecognisedStatusError, "Trainee status with dttp status id #{placement_assignment.response['_dfe_traineestatusid_value']} is not yet mapped")
       end
     end
 
