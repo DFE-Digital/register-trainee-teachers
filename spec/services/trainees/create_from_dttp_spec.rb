@@ -7,7 +7,7 @@ module Trainees
     include SeedHelper
 
     let(:api_trainee) { create(:api_trainee) }
-    let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, response: api_trainee) }
+    let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, api_trainee_hash: api_trainee) }
 
     subject(:create_trainee_from_dttp) { described_class.call(dttp_trainee: dttp_trainee) }
 
@@ -30,7 +30,7 @@ module Trainees
     end
 
     context "when a provider exists" do
-      before { create(:provider, dttp_id: dttp_trainee.provider_dttp_id) }
+      let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, :with_provider, api_trainee_hash: api_trainee) }
 
       it "creates a trainee" do
         expect {
