@@ -26,5 +26,16 @@ FactoryBot.define do
 
     initialize_with { attributes.stringify_keys }
     to_create { |instance| instance }
+
+    trait :with_provider_led_bursary do
+      enabled_training_routes { ["provider_led_undergrad"] }
+      dfe_allocatedplace { 1 }
+      _dfe_bursarydetailsid_value { "96756cc6-6041-e811-80f2-005056ac45bb" }
+    end
+
+    trait :with_scholarship do
+      dfe_allocatedplace { 1 }
+      _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
+    end
   end
 end

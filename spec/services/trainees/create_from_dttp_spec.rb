@@ -49,6 +49,7 @@ module Trainees
         trainee = Trainee.last
         expect(trainee.first_names).to eq(api_trainee["firstname"])
         expect(trainee.last_name).to eq(api_trainee["lastname"])
+        expect(trainee.locale_code).to eq("uk")
         expect(trainee.address_line_one).to eq(api_trainee["address1_line1"])
         expect(trainee.address_line_two).to eq(api_trainee["address1_line2"])
         expect(trainee.town_city).to eq(api_trainee["address1_line3"])
@@ -59,6 +60,45 @@ module Trainees
         expect(trainee.trainee_id).to eq(api_trainee["dfe_traineeid"])
         expect(trainee.nationalities).to be_empty
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
+      end
+
+      context "with funding information available" do
+        let(:api_placement_assignment) do
+          create(:dttp_placement_assignment, response: create(:api_placement_assignment, :with_provider_led_bursary))
+        end
+        let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [api_placement_assignment]) }
+
+        context "when scholarship" do
+          let(:api_placement_assignment) do
+            create(:dttp_placement_assignment, response: create(:api_placement_assignment, :with_scholarship))
+          end
+
+          it "sets scholarship" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.applying_for_scholarship).to eq(true)
+          end
+        end
+
+        context "when funding method exists" do
+          before do
+            create(:funding_method, training_route: :provider_led_undergrad)
+          end
+
+          it "sets funding" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.applying_for_bursary).to eq(true)
+          end
+        end
+
+        context "when funding method does not exist" do
+          it "does not set funding" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.applying_for_bursary).to be_nil
+          end
+        end
       end
 
       context "when nationalities exist" do
@@ -112,6 +152,18 @@ module Trainees
           }.to change(Trainee, :count).by(0)
           .and change(dttp_trainee, :state).to("non_importable_duplicate")
         end
+      end
+    end
+
+    context "when training route is missing" do
+      let(:api_placement_assignment) { create(:dttp_placement_assignment, response: create(:api_placement_assignment, _dfe_routeid_value: nil)) }
+      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [api_placement_assignment]) }
+
+      it "marks the application as non importable" do
+        expect {
+          create_trainee_from_dttp
+        }.to change(Trainee, :count).by(0)
+        .and change(dttp_trainee, :state).to("non_importable_missing_route")
       end
     end
   end
