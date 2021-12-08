@@ -93,6 +93,7 @@ EARLY_YEARS_TRAINING_ROUTES = TRAINING_ROUTES.select { |t| t.starts_with?(EARLY_
 EARLY_YEARS_GRANT = OpenStruct.new(
   training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
   amount: 14_000,
+  academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
   allocation_subjects: [AllocationSubjects::EARLY_YEARS_ITT],
 ).freeze
 
@@ -100,6 +101,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
     amount: 9_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::MATHEMATICS,
       AllocationSubjects::PHYSICS,
@@ -108,6 +110,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 24_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
@@ -118,6 +121,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 10_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::CLASSICS,
@@ -126,6 +130,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 7_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
     ],
@@ -133,6 +138,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     amount: 24_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
@@ -143,6 +149,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     amount: 10_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::CLASSICS,
@@ -151,6 +158,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     amount: 7_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
     ],
@@ -158,6 +166,7 @@ SEED_BURSARIES = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
     amount: 9_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::MATHEMATICS,
       AllocationSubjects::PHYSICS,
@@ -171,6 +180,7 @@ SEED_SCHOLARSHIPS = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 26_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
@@ -181,6 +191,7 @@ SEED_SCHOLARSHIPS = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     amount: 26_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
@@ -195,6 +206,7 @@ SEED_GRANTS = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
     amount: 24_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
@@ -205,6 +217,7 @@ SEED_GRANTS = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
     amount: 10_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::CLASSICS,
@@ -213,6 +226,7 @@ SEED_GRANTS = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
     amount: 7_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
     ],
@@ -220,6 +234,7 @@ SEED_GRANTS = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     amount: 15_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
@@ -230,6 +245,7 @@ SEED_GRANTS = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     amount: 1_000,
+    academic_cycle_id: CURRENT_ACADEMIC_CYCLE_ID,
     allocation_subjects: [
       AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::CLASSICS,
