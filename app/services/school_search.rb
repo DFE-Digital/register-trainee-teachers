@@ -7,7 +7,7 @@ class SchoolSearch
   DEFAULT_LIMIT = 15
 
   def initialize(query: nil, limit: DEFAULT_LIMIT, lead_schools_only: false)
-    @query = StripPunctuation.call(string: query)
+    @query = ReplaceAbbreviation.call(string: StripPunctuation.call(string: query))
     @limit = limit
     @lead_schools_only = lead_schools_only
   end

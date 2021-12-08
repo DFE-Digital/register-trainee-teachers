@@ -49,7 +49,14 @@ private
   #   "'100000':1 '5de':6 'aldgate':3 'ec3a':5 'ec3a5de':7 'london':8 'school':4 'the':2"
   #
   def update_searchable
-    ts_vector_value = [urn, name, name_without_punctuation, postcode, postcode.delete(" "), town].join(" ")
+    ts_vector_value = [
+      urn,
+      name,
+      name_normalised,
+      postcode,
+      postcode.delete(" "),
+      town,
+    ].join(" ")
 
     to_tsvector = Arel::Nodes::NamedFunction.new(
       "TO_TSVECTOR", [
@@ -67,7 +74,7 @@ private
         .first
   end
 
-  def name_without_punctuation
-    StripPunctuation.call(string: name)
+  def name_normalised
+    ReplaceAbbreviation.call(string: StripPunctuation.call(string: name))
   end
 end
