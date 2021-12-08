@@ -13,7 +13,8 @@ module Dttp
     enum state: {
       unprocessed: 0,
       non_processable_duplicate: 1,
-      processed: 2,
+      non_processable_missing_route: 2,
+      processed: 3,
     }
 
     def date_of_birth
