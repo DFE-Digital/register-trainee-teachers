@@ -45,8 +45,8 @@ module Dttp
         {
           "dfe_RouteId@odata.bind" => "/dfe_routes(#{dttp_route_id(training_route)})",
           "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{course_phase_id(trainee.course_age_range)})",
-          "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
-          "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
+          "dfe_programmestartdate" => trainee.itt_start_date.in_time_zone.iso8601,
+          "dfe_programmeenddate" => trainee.itt_end_date.in_time_zone.iso8601,
           "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
           "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{academic_year})",
           "dfe_courselevel" => course_level,
@@ -192,8 +192,8 @@ module Dttp
       end
 
       def academic_year
-        return ACADEMIC_YEAR_2020_2021 if course_start_date_between?("1/8/2020", "31/7/2021")
-        return ACADEMIC_YEAR_2021_2022 if course_start_date_between?("1/8/2021", "31/7/2022")
+        return ACADEMIC_YEAR_2020_2021 if itt_start_date_between?("1/8/2020", "31/7/2021")
+        return ACADEMIC_YEAR_2021_2022 if itt_start_date_between?("1/8/2021", "31/7/2022")
 
         ACADEMIC_YEAR_2022_2023 if course_starting_in_2022?
       end
@@ -214,11 +214,11 @@ module Dttp
       end
 
       def course_starting_in_2022?
-        course_start_date_between?("1/8/2022", "31/7/2023")
+        itt_start_date_between?("1/8/2022", "31/7/2023")
       end
 
-      def course_start_date_between?(min, max)
-        trainee.course_start_date.between?(Date.parse(min), Date.parse(max))
+      def itt_start_date_between?(min, max)
+        trainee.itt_start_date.between?(Date.parse(min), Date.parse(max))
       end
     end
   end

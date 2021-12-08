@@ -15,7 +15,7 @@
         text: t("views.forms.start_dates.commencement_date.label").html_safe, size: "l", tag: "h1"
       }, hint: {
         text: t("views.forms.start_dates.commencement_date.hint",
-                course_start_date: @trainee.course_start_date.strftime("%d %m %Y")).html_safe } %>
+                itt_start_date: @trainee.itt_start_date.strftime("%d %m %Y")).html_safe } %>
       <%= f.govuk_submit "Continue" %>
     <% end %>
 

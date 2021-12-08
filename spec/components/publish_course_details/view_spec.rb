@@ -19,7 +19,7 @@ module PublishCourseDetails
         expect(rendered_component).to have_text("Secondary")
         expect(rendered_component).to have_text(trainee.course_subject_one.upcase_first)
         expect(rendered_component).to have_text(age_range_for_summary_view(trainee.course_age_range))
-        expect(rendered_component).to have_text(date_for_summary_view(trainee.course_start_date))
+        expect(rendered_component).to have_text(date_for_summary_view(trainee.itt_start_date))
       end
     end
   end

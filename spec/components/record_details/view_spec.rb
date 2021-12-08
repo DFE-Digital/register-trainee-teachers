@@ -148,7 +148,7 @@ module RecordDetails
       context "when ITT start date in the future" do
         before do
           trainee.commencement_status = :itt_not_yet_started
-          trainee.course_start_date = 30.days.from_now.to_date
+          trainee.itt_start_date = 30.days.from_now.to_date
           render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
         end
 
@@ -164,7 +164,7 @@ module RecordDetails
       context "when ITT start date in the past" do
         before do
           trainee.commencement_status = :itt_started_on_time
-          trainee.course_start_date = 5.days.ago.to_date
+          trainee.itt_start_date = 5.days.ago.to_date
         end
 
         context "commencement_date is set" do
@@ -202,7 +202,7 @@ module RecordDetails
 
           context "when deferred" do
             let(:trainee) do
-              create(:trainee, :deferred, course_start_date: Time.zone.today)
+              create(:trainee, :deferred, itt_start_date: Time.zone.today)
             end
 
             it "renders the trainee deferred before course started message" do

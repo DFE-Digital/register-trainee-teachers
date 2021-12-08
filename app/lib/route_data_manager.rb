@@ -31,8 +31,8 @@ private
       course_subject_two: nil,
       course_subject_three: nil,
       course_age_range: nil,
-      course_start_date: nil,
-      course_end_date: nil,
+      itt_start_date: nil,
+      itt_end_date: nil,
       study_mode: nil,
     }
   end

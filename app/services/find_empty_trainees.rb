@@ -23,9 +23,9 @@ class FindEmptyTrainees
     trainees.additional_ethnic_background
     trainees.disability_disclosure
     trainees.course_subject_one
-    trainees.course_start_date
+    trainees.itt_start_date
     trainees.outcome_date
-    trainees.course_end_date
+    trainees.itt_end_date
     trainees.trn
     trainees.submitted_for_trn_at
     trainees.withdraw_reason

@@ -3,7 +3,7 @@
 RSpec.shared_examples "start date validations" do
   context "when date is in the future" do
     let(:trainee) do
-      build(:trainee, course_start_date: Time.zone.today, course_end_date: 1.year.from_now)
+      build(:trainee, itt_start_date: Time.zone.today, itt_end_date: 1.year.from_now)
     end
     let(:future_date) { 1.month.from_now }
 

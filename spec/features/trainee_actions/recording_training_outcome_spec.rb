@@ -106,7 +106,7 @@ feature "Recording a training outcome", type: :feature do
   end
 
   def and_i_enter_a_valid_date
-    @outcome_date = valid_date_after_course_start_date
+    @outcome_date = valid_date_after_itt_start_date
     stub_dttp_placement_assignment_request(outcome_date: @outcome_date, status: 204)
     outcome_date_edit_page.set_date_fields("outcome_date", @outcome_date.strftime("%d/%m/%Y"))
   end

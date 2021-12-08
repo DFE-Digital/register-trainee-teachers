@@ -105,8 +105,8 @@ module Pages
                       course_min_age: 0,
                       course_max_age: 5,
                       course_subject_one: "subject",
-                      course_start_date: 6.months.ago,
-                      course_end_date: Time.zone.now,
+                      itt_start_date: 6.months.ago,
+                      itt_end_date: Time.zone.now,
                       nationalities: nationalities,
                       progress: Progress.new(
                         personal_details: true,

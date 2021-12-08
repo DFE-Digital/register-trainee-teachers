@@ -176,8 +176,8 @@ namespace :example_data do
                   study_mode: TRAINEE_STUDY_MODE_ENUMS[course.study_mode],
                   course_min_age: course.min_age,
                   course_max_age: course.max_age,
-                  course_start_date: course.start_date,
-                  course_end_date: course.end_date,
+                  itt_start_date: course.start_date,
+                  itt_end_date: course.end_date,
                 )
               end
             end

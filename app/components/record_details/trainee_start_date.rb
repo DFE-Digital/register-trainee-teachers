@@ -25,7 +25,7 @@ module RecordDetails
     end
 
     def course_empty?
-      trainee.course_start_date.nil?
+      trainee.itt_start_date.nil?
     end
 
   private

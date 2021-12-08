@@ -10,14 +10,14 @@ module ApplyApplications
       mark_as_reviewed
     ].freeze
 
-    attr_accessor(*FIELDS, :trainee, :specialisms, :itt_start_date, :params)
+    attr_accessor(*FIELDS, :trainee, :specialisms, :start_date, :params)
 
     delegate :id, :persisted?, to: :trainee
 
-    def initialize(trainee, specialisms, itt_start_date, params = {})
+    def initialize(trainee, specialisms, start_date, params = {})
       @trainee = trainee
       @specialisms = specialisms
-      @itt_start_date = itt_start_date
+      @start_date = start_date
 
       assign_attributes({ mark_as_reviewed: trainee.progress.course_details }.merge(params))
     end
@@ -50,12 +50,12 @@ module ApplyApplications
       uuid || trainee.course_uuid
     end
 
-    def course_start_date
-      itt_start_date || course&.start_date || trainee.course_start_date
+    def itt_start_date
+      start_date || course&.start_date || trainee.itt_start_date
     end
 
-    def course_end_date
-      course&.end_date || trainee.course_end_date
+    def itt_end_date
+      course&.end_date || trainee.itt_end_date
     end
 
     def study_mode
@@ -78,8 +78,8 @@ module ApplyApplications
         training_route: course&.route,
         course_uuid: course_uuid,
         course_age_range: course_age_range,
-        course_start_date: course_start_date,
-        course_end_date: course_end_date,
+        itt_start_date: itt_start_date,
+        itt_end_date: itt_end_date,
         study_mode: study_mode,
       })
     end
@@ -95,8 +95,8 @@ module ApplyApplications
     def values_provided?
       [
         trainee.course_age_range,
-        trainee.course_start_date,
-        trainee.course_end_date,
+        trainee.itt_start_date,
+        trainee.itt_end_date,
         trainee.study_mode,
       ].all?(&:present?)
     end

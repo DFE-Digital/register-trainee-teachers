@@ -10,7 +10,7 @@ describe HPITT do
 
     let(:csv_row) do
       {
-        "Course start date" => "13/04/1992",
+        "ITT start date" => "13/04/1992",
         "ITT Subject 1" => "English",
         "Degree type" => "Bachelor of Arts",
         "Institution" => "Durham University",

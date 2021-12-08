@@ -61,8 +61,8 @@ module HPITT
       column_mapper = {
         "Age range" => method(:to_age_range) >> assign_field[:course_age_range],
         "Building" => assign_field[:address_line_one],
-        "Course end date" => Date.method(:parse) >> assign_field[:course_end_date],
-        "Course start date" => Date.method(:parse) >> assign_field[:course_start_date],
+        "ITT end date" => Date.method(:parse) >> assign_field[:itt_end_date],
+        "ITT start date" => Date.method(:parse) >> assign_field[:itt_start_date],
         "Date left" => method(:parse_date) >> assign_field[:withdraw_date],
         "Date of birth" => method(:parse_date) >> assign_field[:date_of_birth],
         "Date of deferral" => method(:parse_date) >> assign_field[:defer_date],

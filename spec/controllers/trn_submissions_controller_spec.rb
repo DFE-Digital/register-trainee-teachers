@@ -13,7 +13,7 @@ describe TrnSubmissionsController do
     end
 
     context "when all sections are completed" do
-      context "and the course start date is in the future" do
+      context "and the itt start date is in the future" do
         let(:trainee) do
           create(
             :trainee,
@@ -29,7 +29,7 @@ describe TrnSubmissionsController do
         end
       end
 
-      context "and the course start date is in the past" do
+      context "and the itt start date is in the past" do
         let(:trainee) { create(:trainee, :completed, provider: current_user.provider) }
 
         it "redirects to the trainee start status page" do

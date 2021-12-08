@@ -66,7 +66,7 @@ feature "Deferring a trainee", type: :feature do
     end
   end
 
-  scenario "course start date is in the future" do
+  scenario "itt start date is in the future" do
     given_a_trainee_with_course_starting_in_the_future_exists
     given_i_initiate_a_deferral
     then_i_am_redirected_to_deferral_confirmation_page
@@ -75,7 +75,7 @@ feature "Deferring a trainee", type: :feature do
     then_the_trainee_is_deferred
   end
 
-  describe "course start date is in the past" do
+  describe "itt start date is in the past" do
     background do
       given_a_trainee_with_course_started_in_the_past_exists
       given_i_initiate_a_deferral
@@ -170,7 +170,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def and_i_enter_a_valid_date
-    @chosen_date = valid_date_after_course_start_date
+    @chosen_date = valid_date_after_itt_start_date
     @chosen_date.tap do |defer_date|
       deferral_page.set_date_fields(:defer_date, defer_date.strftime("%d/%m/%Y"))
     end
@@ -205,7 +205,7 @@ feature "Deferring a trainee", type: :feature do
   end
 
   def and_i_see_my_itt_start_date
-    and_i_see_my_date(trainee.course_start_date)
+    and_i_see_my_date(trainee.itt_start_date)
   end
 
   def then_i_see_the_error_message_for_invalid_date
@@ -258,21 +258,21 @@ feature "Deferring a trainee", type: :feature do
   def given_a_trainee_exists_with_a_deferral_date
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
                            commencement_date: 1.month.ago,
-                           course_start_date: 1.year.ago,
-                           course_end_date: 1.year.from_now,
+                           itt_start_date: 1.year.ago,
+                           itt_end_date: 1.year.from_now,
                            defer_date: 1.week.ago)
   end
 
   def given_a_trainee_with_course_starting_in_the_future_exists
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
                            commencement_date: nil,
-                           course_start_date: Time.zone.today + 1.day)
+                           itt_start_date: Time.zone.today + 1.day)
   end
 
   def given_a_trainee_with_course_started_in_the_past_exists
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
                            commencement_date: nil,
-                           course_start_date: Time.zone.today - 1.day)
+                           itt_start_date: Time.zone.today - 1.day)
   end
 
   def and_i_choose_they_have_not_started

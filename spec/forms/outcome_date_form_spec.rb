@@ -8,9 +8,9 @@ describe OutcomeDateForm, type: :model do
 
   let(:params) do
     {
-      year: trainee.course_start_date.year,
-      month: trainee.course_start_date.month,
-      day: trainee.course_start_date.day,
+      year: trainee.itt_start_date.year,
+      month: trainee.itt_start_date.month,
+      day: trainee.itt_start_date.day,
       date_string: "other",
     }
   end
@@ -69,7 +69,7 @@ describe OutcomeDateForm, type: :model do
         end
       end
 
-      include_examples "date is not before course start date", :outcome_date_form
+      include_examples "date is not before itt start date", :outcome_date_form
     end
   end
 

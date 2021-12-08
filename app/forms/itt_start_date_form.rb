@@ -17,7 +17,7 @@ class IttStartDateForm < MultiDateForm
 private
 
   def date_field
-    @date_field ||= :course_start_date
+    @date_field ||= :itt_start_date
   end
 
   def date_valid

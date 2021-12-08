@@ -87,9 +87,9 @@ private
   end
 
   def set_on_time_itt_start_date
-    self.day = trainee.course_start_date.day
-    self.month = trainee.course_start_date.month
-    self.year = trainee.course_start_date.year
+    self.day = trainee.itt_start_date.day
+    self.month = trainee.itt_start_date.month
+    self.year = trainee.itt_start_date.year
   end
 
   def unset_itt_start_date

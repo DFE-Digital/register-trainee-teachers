@@ -493,8 +493,8 @@ en:
         course_subject_one: &course_path course_path
         course_subject_two: *course_path
         course_subject_three: *course_path
-        course_start_date: *course_path
-        course_end_date: *course_path
+        itt_start_date: *course_path
+        itt_end_date: *course_path
         main_age_range: *course_path
         itt_start_date: *course_path
         itt_end_date: *course_path
@@ -684,7 +684,7 @@ en:
       start_dates:
         commencement_date:
           label: When did the trainee start their <abbr title="initial teacher training">ITT</abbr>?
-          hint: Their <abbr title="initial teacher training">ITT</abbr> started on %{course_start_date}
+          hint: Their <abbr title="initial teacher training">ITT</abbr> started on %{itt_start_date}
       publish_course_details:
         route_message: Your %{route} courses in the Publish service
         all_courses_message: Your courses in the Publish service
@@ -945,7 +945,7 @@ en:
       edit:
         itt_not_yet_started: They have not started yet
         label: Did the trainee start their <abbr title="initial teacher training">ITT</abbr> on time?
-        on_time_html: Yes, they started on time — <span class="no-wrap">%{course_start_date}</span>
+        on_time_html: Yes, they started on time — <span class="no-wrap">%{itt_start_date}</span>
         started_later: No, they started later
         trainee_start_date: *trainee_start_date
         trainee_start_date_hint: For example, 8 11 2021
@@ -1118,7 +1118,7 @@ en:
             date:
               blank: Enter a deferral date
               invalid: Enter a valid deferral date
-              not_before_course_start_date: &not_before_course_start_date The date must not be before the <abbr title="initial teacher training">ITT</abbr> start date
+              not_before_itt_start_date: &not_before_itt_start_date The date must not be before the <abbr title="initial teacher training">ITT</abbr> start date
         degrees_form:
           attributes:
             degree_ids:
@@ -1177,7 +1177,7 @@ en:
               blank: Enter an outcome date
               future: Outcome date must be in the past
               invalid: Enter a valid outcome date
-              not_before_course_start_date: *not_before_course_start_date
+              not_before_itt_start_date: *not_before_itt_start_date
         personal_details_form:
           attributes:
             first_names:
@@ -1263,7 +1263,7 @@ en:
               blank: Enter a date of return
               invalid: Enter a valid date of return
               hint_html: For example, 15 6 %{year}
-              not_before_course_start_date: *not_before_course_start_date
+              not_before_itt_start_date: *not_before_itt_start_date
         submissions/trn_validator:
           attributes:
             trainee:
@@ -1279,7 +1279,7 @@ en:
             date:
               blank: Enter a withdrawal date
               invalid: Enter a valid withdrawal date
-              not_before_course_start_date: *not_before_course_start_date
+              not_before_itt_start_date: *not_before_itt_start_date
             additional_withdraw_reason:
               blank: Enter a reason
             withdraw_reason:
@@ -1289,7 +1289,7 @@ en:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
-              not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
+              not_after_itt_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{itt_end_date})</span>
               future: Trainee start date must be in the past
               too_old: Trainee start date cannot be more than 10 years in the past
         trainee_start_status_form:
@@ -1297,7 +1297,7 @@ en:
             commencement_date:
               blank: Enter a start date
               invalid: Enter a valid start date
-              not_after_course_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{course_end_date})</span>
+              not_after_itt_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{itt_end_date})</span>
               future: Trainee start date must be in the past
               too_old: Trainee start date cannot be more than 10 years in the past
             commencement_status:

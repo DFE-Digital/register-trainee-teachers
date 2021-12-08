@@ -4,8 +4,8 @@ class ValidatePublishCourseForm < TraineeForm
   FIELDS = %i[
     course_subject_one
     course_age_range
-    course_start_date
-    course_end_date
+    itt_start_date
+    itt_end_date
   ].freeze
 
   attr_accessor(*FIELDS)
@@ -20,8 +20,8 @@ private
     {
       course_subject_one: trainee.course_subject_one,
       course_age_range: trainee.course_age_range,
-      course_start_date: trainee.course_start_date,
-      course_end_date: trainee.course_end_date,
+      itt_start_date: trainee.itt_start_date,
+      itt_end_date: trainee.itt_end_date,
     }
   end
 end

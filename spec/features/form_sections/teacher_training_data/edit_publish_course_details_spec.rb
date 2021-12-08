@@ -448,7 +448,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   end
 
   def and_i_click_enter_answer_for_itt_end_date
-    confirm_publish_course_details_page.enter_an_answer_for_course_end_date_link.click
+    confirm_publish_course_details_page.enter_an_answer_for_itt_end_date_link.click
   end
 
   def and_i_enter_itt_end_date(date)

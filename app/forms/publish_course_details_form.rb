@@ -13,7 +13,7 @@ class PublishCourseDetailsForm < TraineeForm
 
   validates :course_uuid, presence: true
 
-  validates :course_end_date, presence: true, unless: :skip_course_end_date_validation?
+  validates :itt_end_date, presence: true, unless: :skip_itt_end_date_validation?
 
   delegate :age_range, to: :course, prefix: true
 
@@ -31,8 +31,8 @@ class PublishCourseDetailsForm < TraineeForm
         course_subject_two: nil,
         course_subject_three: nil,
         course_age_range: nil,
-        course_start_date: nil,
-        course_end_date: nil,
+        itt_start_date: nil,
+        itt_end_date: nil,
         study_mode: nil,
         course_education_phase: nil,
       )
@@ -60,7 +60,7 @@ class PublishCourseDetailsForm < TraineeForm
     super
   end
 
-  def course_start_date
+  def itt_start_date
     if trainee.requires_itt_start_date?
       IttStartDateForm.new(trainee).date
     end || course.start_date
@@ -80,15 +80,15 @@ class PublishCourseDetailsForm < TraineeForm
     language_specialism? ? specialism_form.languages : specialism_form.specialisms
   end
 
-  def skip_course_end_date_validation?
-    course_uuid.blank? || @skip_course_end_date_validation
+  def skip_itt_end_date_validation?
+    course_uuid.blank? || @skip_itt_end_date_validation
   end
 
-  def skip_course_end_date_validation!
-    @skip_course_end_date_validation = true
+  def skip_itt_end_date_validation!
+    @skip_itt_end_date_validation = true
   end
 
-  def course_end_date
+  def itt_end_date
     nil
   end
 
@@ -128,12 +128,12 @@ private
       course_subject_one: course_subject_one,
       course_subject_two: course_subject_two,
       course_subject_three: course_subject_three,
-      start_day: course_start_date&.day,
-      start_month: course_start_date&.month,
-      start_year: course_start_date&.year,
-      end_day: course_end_date&.day,
-      end_month: course_end_date&.month,
-      end_year: course_end_date&.year,
+      start_day: itt_start_date&.day,
+      start_month: itt_start_date&.month,
+      start_year: itt_start_date&.year,
+      end_day: itt_end_date&.day,
+      end_month: itt_end_date&.month,
+      end_year: itt_end_date&.year,
 
       study_mode: study_mode,
     })
@@ -167,13 +167,13 @@ private
       course_subject_two: course_subject_two,
       course_subject_three: course_subject_three,
       course_age_range: course_age_range,
-      course_end_date: course_end_date,
+      itt_end_date: itt_end_date,
       study_mode: study_mode,
     }
 
     unless trainee.pg_teaching_apprenticeship?
       attributes.merge!({
-        course_start_date: course_start_date,
+        itt_start_date: itt_start_date,
       })
     end
 

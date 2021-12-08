@@ -25,8 +25,8 @@ module CourseDetails
         subject_row,
         age_range_row,
         study_mode_row,
-        course_date_row(course_start_date, :start),
-        course_date_row(course_end_date, :end),
+        course_date_row(itt_start_date, :start),
+        course_date_row(itt_end_date, :end),
       ].compact
     end
 
@@ -111,15 +111,15 @@ module CourseDetails
       t("components.course_detail.study_mode_values.#{data_model.study_mode}") if data_model.study_mode.present?
     end
 
-    def course_start_date
-      if data_model.course_start_date.present?
-        date_for_summary_view(data_model.course_start_date)
+    def itt_start_date
+      if data_model.itt_start_date.present?
+        date_for_summary_view(data_model.itt_start_date)
       end
     end
 
-    def course_end_date
-      if data_model.course_end_date.present?
-        date_for_summary_view(data_model.course_end_date)
+    def itt_end_date
+      if data_model.itt_end_date.present?
+        date_for_summary_view(data_model.itt_end_date)
       end
     end
 

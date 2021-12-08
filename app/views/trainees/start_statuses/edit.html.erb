@@ -25,7 +25,7 @@
                                            classes: "age_range") do %>
 
           <%= f.govuk_radio_button(:commencement_status, :itt_started_on_time,
-                                   label: { text: t('.on_time_html', course_start_date: @trainee.course_start_date.strftime("%-d %B %Y")) }) %>
+                                   label: { text: t('.on_time_html', itt_start_date: @trainee.itt_start_date.strftime("%-d %B %Y")) }) %>
 
           <%= f.govuk_radio_button(:commencement_status, :itt_started_later,
                                    label: { text: t('.started_later') }) do %>

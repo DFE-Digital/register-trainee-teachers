@@ -8,9 +8,9 @@ describe DeferralForm, type: :model do
 
   let(:params) do
     {
-      year: trainee.course_start_date.year,
-      month: trainee.course_start_date.month,
-      day: trainee.course_start_date.day,
+      year: trainee.itt_start_date.year,
+      month: trainee.itt_start_date.month,
+      day: trainee.itt_start_date.day,
       date_string: "other",
     }
   end
@@ -53,8 +53,8 @@ describe DeferralForm, type: :model do
         end
       end
 
-      context "when course start date is in the future" do
-        let(:trainee) { create(:trainee, course_start_date: 10.days.from_now) }
+      context "when itt start date is in the future" do
+        let(:trainee) { create(:trainee, itt_start_date: 10.days.from_now) }
 
         let(:params) do
           {}
@@ -69,8 +69,8 @@ describe DeferralForm, type: :model do
         end
       end
 
-      context "when course start date is in the past, but the trainee has not started" do
-        let(:trainee) { create(:trainee, course_start_date: 1.day.ago, commencement_status: :itt_not_yet_started) }
+      context "when itt start date is in the past, but the trainee has not started" do
+        let(:trainee) { create(:trainee, itt_start_date: 1.day.ago, commencement_status: :itt_not_yet_started) }
 
         let(:params) do
           {}
@@ -85,7 +85,7 @@ describe DeferralForm, type: :model do
         end
       end
 
-      include_examples "date is not before course start date", :deferral_form
+      include_examples "date is not before itt start date", :deferral_form
     end
   end
 
@@ -106,9 +106,9 @@ describe DeferralForm, type: :model do
   describe "#save!" do
     let(:params) do
       {
-        year: trainee.course_start_date.year + 1,
-        month: trainee.course_start_date.month,
-        day: trainee.course_start_date.day,
+        year: trainee.itt_start_date.year + 1,
+        month: trainee.itt_start_date.month,
+        day: trainee.itt_start_date.day,
         date_string: "other",
       }
     end

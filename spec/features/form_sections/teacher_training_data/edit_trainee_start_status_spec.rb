@@ -14,7 +14,7 @@ feature "edit Trainee start status" do
     end
 
     scenario "when the trainee has started on time" do
-      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_past)
+      given_a_trainee_exists(:submitted_for_trn, :itt_start_date_in_the_past)
       when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_started_on_time
       when_i_change_the_start_date
@@ -22,11 +22,11 @@ feature "edit Trainee start status" do
       then_i_am_taken_to_the_confirmation_page
       when_i_confirm
       then_i_am_redirected_to_the_record_page
-      then_the_trainee_start_date_is_updated_with_the_course_start_date
+      then_the_trainee_start_date_is_updated_with_the_itt_start_date
     end
 
     scenario "when the trainee has started later" do
-      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_past, course_start_date: Date.parse("30/12/2020"))
+      given_a_trainee_exists(:submitted_for_trn, :itt_start_date_in_the_past, itt_start_date: Date.parse("30/12/2020"))
       when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_started_later
       when_i_change_the_start_date
@@ -38,7 +38,7 @@ feature "edit Trainee start status" do
     end
 
     scenario "when the trainee has not yet started" do
-      given_a_trainee_exists(:submitted_for_trn, :course_start_date_in_the_future)
+      given_a_trainee_exists(:submitted_for_trn, :itt_start_date_in_the_future)
       when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_not_yet_started
       when_i_click_continue
@@ -99,8 +99,8 @@ feature "edit Trainee start status" do
     expect(record_page.record_detail.start_date_row).to have_text(date_for_summary_view(new_start_date))
   end
 
-  def then_the_trainee_start_date_is_updated_with_the_course_start_date
-    expect(record_page.record_detail.start_date_row).to have_text(date_for_summary_view(trainee.course_start_date))
+  def then_the_trainee_start_date_is_updated_with_the_itt_start_date
+    expect(record_page.record_detail.start_date_row).to have_text(date_for_summary_view(trainee.itt_start_date))
   end
 
   def then_the_trainee_commencement_status_is_updated_to_not_yet_started

@@ -230,7 +230,7 @@ describe CourseDetailsForm, type: :model do
           end
         end
 
-        describe "#course_start_date_valid" do
+        describe "#itt_start_date_valid" do
           let(:end_date_attributes) { {} }
 
           context "the start date fields are 12/11/2020" do
@@ -238,7 +238,7 @@ describe CourseDetailsForm, type: :model do
               { start_day: "12", start_month: "11", start_year: "2020" }
             end
 
-            it "does not return an error message for course start date" do
+            it "does not return an error message for itt start date" do
               expect(subject.errors[:itt_start_date]).to be_empty
             end
           end
@@ -257,7 +257,7 @@ describe CourseDetailsForm, type: :model do
               { start_day: "12", start_month: "11", start_year: "2099" }
             end
 
-            it "returns an error message for course start date" do
+            it "returns an error message for itt start date" do
               expect(subject.errors.messages[:itt_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_start_date.future")
             end
           end
@@ -267,13 +267,13 @@ describe CourseDetailsForm, type: :model do
               { start_day: "12", start_month: "11", start_year: "2000" }
             end
 
-            it "returns an error message for course start date" do
+            it "returns an error message for itt start date" do
               expect(subject.errors.messages[:itt_start_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_start_date.too_old")
             end
           end
         end
 
-        describe "#course_end_date_valid" do
+        describe "#itt_end_date_valid" do
           start_date = 1.month.ago
 
           let(:start_date_attributes) do
@@ -312,7 +312,7 @@ describe CourseDetailsForm, type: :model do
               { end_day: "12", end_month: "11", end_year: "3000" }
             end
 
-            it "returns an error message for course end date" do
+            it "returns an error message for itt end date" do
               expect(subject.errors.messages[:itt_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_end_date.future")
             end
           end
@@ -322,7 +322,7 @@ describe CourseDetailsForm, type: :model do
               { end_day: "12", end_month: "11", end_year: "2001" }
             end
 
-            it "returns an error message for course end date" do
+            it "returns an error message for itt end date" do
               expect(subject.errors.messages[:itt_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_end_date.too_old")
             end
           end
@@ -413,9 +413,9 @@ describe CourseDetailsForm, type: :model do
           .from(nil).to(min_age)
           .and change { trainee.course_max_age }
           .from(nil).to(max_age)
-          .and change { trainee.course_start_date }
+          .and change { trainee.itt_start_date }
           .from(nil).to(Date.parse(valid_start_date.to_s))
-          .and change { trainee.course_end_date }
+          .and change { trainee.itt_end_date }
           .from(nil).to(Date.parse(valid_end_date.to_s))
       end
 

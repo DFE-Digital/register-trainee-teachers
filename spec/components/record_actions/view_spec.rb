@@ -68,12 +68,12 @@ RSpec.describe RecordActions::View do
   end
 
   context "when course date is in the future" do
-    let(:trainee) { build(:trainee, :submitted_for_trn, course_start_date: 1.day.from_now) }
+    let(:trainee) { build(:trainee, :submitted_for_trn, itt_start_date: 1.day.from_now) }
 
     include_examples "no button"
 
     it "renders the ITT starts in the future text" do
-      expect(subject).to include("The trainee’s ITT starts on #{date_for_summary_view(trainee.course_start_date)}")
+      expect(subject).to include("The trainee’s ITT starts on #{date_for_summary_view(trainee.itt_start_date)}")
     end
 
     it "withdraw link is hidden" do
@@ -90,7 +90,7 @@ RSpec.describe RecordActions::View do
   end
 
   context "when course date is in the past" do
-    let(:trainee) { build(:trainee, :submitted_for_trn, course_start_date: 1.day.ago) }
+    let(:trainee) { build(:trainee, :submitted_for_trn, itt_start_date: 1.day.ago) }
 
     it "withdraw link is shown" do
       expect(subject).to include("withdraw")
@@ -98,7 +98,7 @@ RSpec.describe RecordActions::View do
   end
 
   context "when the trainee has missing fields" do
-    let(:trainee) { build(:trainee, :submitted_for_trn, :course_start_date_in_the_past, commencement_date: nil) }
+    let(:trainee) { build(:trainee, :submitted_for_trn, :itt_start_date_in_the_past, commencement_date: nil) }
 
     subject { render_inline(described_class.new(trainee, has_missing_fields: true)).text }
 
