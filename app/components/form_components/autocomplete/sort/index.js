@@ -1,4 +1,5 @@
 import clean from './clean'
+import removeStopWords from './stop_words'
 import calculateWeight from './calculateWeight'
 
 const addWeightWithBoost = (option, query) => {
@@ -8,9 +9,13 @@ const addWeightWithBoost = (option, query) => {
 }
 
 const cleanseOption = (option) => {
+  const synonyms = (option.synonyms || []).map(clean)
+
   option.clean = {
     name: clean(option.name),
-    synonyms: (option.synonyms || []).map(clean),
+    nameWithoutStopWords: removeStopWords(option.name),
+    synonyms: synonyms,
+    synonymsWithoutStopWords: synonyms.map(removeStopWords),
     boost: (option.boost || 1)
   }
 
