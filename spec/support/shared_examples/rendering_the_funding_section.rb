@@ -3,7 +3,7 @@
 RSpec.shared_examples "rendering the funding section" do
   context "when a trainee on a route with a bursary" do
     let(:route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
-    let(:trainee) { create(:trainee, :draft, route) }
+    let(:trainee) { create(:trainee, :with_start_date, :with_study_mode_and_course_dates, :draft, route) }
 
     before { create(:funding_method, :with_subjects, training_route: route) }
 

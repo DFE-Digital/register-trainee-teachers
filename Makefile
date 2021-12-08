@@ -60,6 +60,12 @@ production:
 	$(eval SPACE=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
+dttpimport:
+	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+	$(eval DEPLOY_ENV=dttpimport)
+	$(eval SPACE=bat-prod)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
+
 sandbox:
 	$(eval DEPLOY_ENV=sandbox)
 	$(eval SPACE=bat-prod)

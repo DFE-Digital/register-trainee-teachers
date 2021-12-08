@@ -9,13 +9,27 @@ import calculateWeight, {
 } from '../../../components/form_components/autocomplete/sort/calculateWeight'
 
 describe('calculateWeight', () => {
-  const option = { name: 'ab cd', synonyms: ['abc ghi'] }
+  const option = {
+    name: 'ab cd',
+    synonyms: ['abc ghi'],
+    nameWithoutStopWords: 'ab cd',
+    synonymsWithoutStopWords: ['abc ghi']
+  }
+
   it('returns 100', () => {
     expect(calculateWeight(option, 'ab cd')).toEqual(100)
   })
 
+  it('returns 95', () => {
+    expect(calculateWeight(option, 'ab cd in')).toEqual(95)
+  })
+
   it('returns 75', () => {
     expect(calculateWeight(option, 'abc ghi')).toEqual(75)
+  })
+
+  it('returns 70', () => {
+    expect(calculateWeight(option, 'abc ghi and')).toEqual(70)
   })
 
   it('returns 60', () => {

@@ -8,7 +8,7 @@ feature "edit training initiative", type: :feature do
   let(:course_subject) { CourseSubjects::LAW }
 
   scenario "edit with valid parameters with bursary" do
-    given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject)
+    given_a_provider_led_postgrad_trainee_exists
     and_a_bursary_exists_for_their_subject
     when_i_visit_the_training_initiative_page
     and_i_update_the_training_initiative
@@ -40,6 +40,13 @@ feature "edit training initiative", type: :feature do
   end
 
 private
+
+  def given_a_provider_led_postgrad_trainee_exists
+    given_a_trainee_exists(:provider_led_postgrad,
+                           :with_start_date,
+                           :with_study_mode_and_course_dates,
+                           course_subject_one: course_subject)
+  end
 
   def when_i_visit_the_training_initiative_page
     training_initiative_page.load(id: trainee.slug)

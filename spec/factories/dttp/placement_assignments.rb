@@ -8,13 +8,7 @@ FactoryBot.define do
 
     dttp_id { SecureRandom.uuid }
     contact_dttp_id { SecureRandom.uuid }
-    response {
-      {
-        dfe_placementassignmentid: dttp_id,
-        _dfe_contactid_value: contact_dttp_id,
-        _dfe_routeid_value: Dttp::CodeSets::Routes::MAPPING.select { |key, _values| enabled_training_routes.include?(key) }.values.sample[:entity_id],
-      }
-    }
+    response { create(:api_placement_assignment, dttp_id: dttp_id, contact_dttp_id: contact_dttp_id) }
     state { "unprocessed" }
   end
 end

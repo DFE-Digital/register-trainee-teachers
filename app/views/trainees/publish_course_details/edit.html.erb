@@ -25,11 +25,12 @@
           legend: { text: t(".course_code_label"), tag: "h1", size: "m" },
           hint: { text: courses_fieldset_text_for(@trainee) },
           classes: "published-courses" do %>
-          <% @courses.each do |course| %>
+          <% @courses.each_with_index do |course, i| %>
             <%= f.govuk_radio_button :course_uuid, course.uuid,
               label: { text: "#{course.name} (#{course.code})" },
-              hint: { text: course_summary_text_for(@trainee, course) },
-              link_errors: true %>
+              hint: { text: course_summary_text_for(@trainee, course) }, 
+              link_errors: i == 0
+            %>
           <% end %>
 
           <div class="govuk-radios__divider">or</div>

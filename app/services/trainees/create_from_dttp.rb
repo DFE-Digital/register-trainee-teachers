@@ -4,14 +4,21 @@ module Trainees
   class CreateFromDttp
     include ServicePattern
 
+    class UnrecognisedStatusError < StandardError; end
+
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
       @trainee = Trainee.new(mapped_attributes)
     end
 
     def call
-      return if provider.blank?
+      return if dttp_trainee.provider.blank?
       return if placement_assignment.blank?
+
+      if training_route.blank?
+        dttp_trainee.non_processable_missing_route!
+        return
+      end
 
       if trainee_already_exists?
         dttp_trainee.non_processable_duplicate!
@@ -34,34 +41,23 @@ module Trainees
     def mapped_attributes
       {
         state: trainee_status,
-        provider: provider,
-        first_names: dttp_trainee.response["firstname"],
-        last_name: dttp_trainee.response["lastname"],
-        address_line_one: dttp_trainee.response["address1_line1"],
-        address_line_two: dttp_trainee.response["address1_line2"],
-        town_city: dttp_trainee.response["address1_line3"],
-        postcode: dttp_trainee.response["address1_postalcode"],
-        date_of_birth: dttp_trainee.date_of_birth,
-        email: dttp_trainee.response["emailaddress1"],
-        gender: trainee_gender,
+        provider: dttp_trainee.provider,
         trainee_id: trainee_id,
-        nationalities: nationalities,
         training_route: training_route,
         trn: dttp_trainee.response["dfe_trn"],
         submitted_for_trn_at: placement_assignment.response["dfe_trnassessmentdate"],
         dttp_id: dttp_trainee.dttp_id,
         placement_assignment_dttp_id: placement_assignment.dttp_id,
-      }.merge(ethnicity_and_disability_attributes)
+      }.merge(personal_details_attributes)
+       .merge(contact_attributes)
+       .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(school_attributes)
+       .merge(funding_attributes)
     end
 
     def create_degrees!
       ::Degrees::CreateFromDttp.call(trainee: trainee)
-    end
-
-    def provider
-      @provider ||= Provider.find_by(dttp_id: dttp_trainee.provider_dttp_id)
     end
 
     def placement_assignment
@@ -73,7 +69,7 @@ module Trainees
     end
 
     def training_route
-      find_by_entity_id(
+      @training_route ||= find_by_entity_id(
         placement_assignment.route_dttp_id,
         Dttp::CodeSets::Routes::MAPPING,
       )
@@ -146,7 +142,11 @@ module Trainees
     def ethnicity_attributes
       ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
 
-      diversity_disclosure = ethnic_background.present? && ethnic_background != Diversities::NOT_PROVIDED
+      if ethnic_background.present? && ethnic_background != Diversities::NOT_PROVIDED
+        diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      else
+        diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+      end
 
       if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
         return {
@@ -168,6 +168,33 @@ module Trainees
 
     def ethnicity_and_disability_attributes
       ethnicity_attributes.merge(disability_attributes)
+    end
+
+    def personal_details_attributes
+      {
+        first_names: dttp_trainee.response["firstname"],
+        middle_names: dttp_trainee.response["middlename"],
+        last_name: dttp_trainee.response["lastname"],
+        date_of_birth: dttp_trainee.date_of_birth,
+        gender: trainee_gender,
+        nationalities: nationalities,
+      }
+    end
+
+    def locale_code
+      return {} if dttp_trainee.response["address1_line1"].blank?
+
+      { locale_code: Trainee.locale_codes[:uk] }
+    end
+
+    def contact_attributes
+      {
+        address_line_one: dttp_trainee.response["address1_line1"],
+        address_line_two: dttp_trainee.response["address1_line2"],
+        town_city: dttp_trainee.response["address1_line3"],
+        postcode: dttp_trainee.response["address1_postalcode"],
+        email: dttp_trainee.response["emailaddress1"],
+      }.merge(locale_code)
     end
 
     def course_attributes
@@ -230,17 +257,42 @@ module Trainees
       Dttp::School.find_by(dttp_id: placement_assignment.employing_school_id)&.urn
     end
 
+    def funding_attributes
+      return {} unless placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::ALLOCATED_PLACE
+
+      if placement_assignment.response["_dfe_bursarydetailsid_value"] == Dttp::Params::PlacementAssignment::SCHOLARSHIP
+        return { applying_for_scholarship: true }
+      end
+
+      funding_method = FundingMethod.find_by(training_route: training_route_for_funding)
+
+      {
+        applying_for_grant: funding_method&.grant?,
+        applying_for_scholarship: funding_method&.scholarship?,
+        applying_for_bursary: funding_method&.bursary?,
+      }
+    end
+
+    def training_route_for_funding
+      find_by_entity_id(
+        placement_assignment.response["_dfe_bursarydetailsid_value"],
+        Dttp::CodeSets::BursaryDetails::MAPPING,
+      )
+    end
+
     def trainee_status
       case dttp_trainee_status
       when DttpStatuses::DRAFT_RECORD then "draft"
-      when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "trn_requested"
+      when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "submitted_for_trn"
       when DttpStatuses::DEFERRED then "deferred"
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
+      when (DttpStatuses::AWARDED_EYTS || DttpStatuses::AWARDED_QTS) then "awarded"
+      when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
       else
-        false
         # Raise if it's something else? Are we expecting other statuses?
         # What if it's AWAITING_QTS or PROSPECTIVE_TRAINEE_TRN_REQUESTED? Should
         # we import and kick off respective jobs?
+        raise(UnrecognisedStatusError, "Trainee status with dttp status id #{placement_assignment.response['_dfe_traineestatusid_value']} is not yet mapped")
       end
     end
 

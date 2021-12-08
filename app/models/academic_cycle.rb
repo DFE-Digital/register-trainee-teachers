@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AcademicCycle < ApplicationRecord
+  has_many :funding_methods
+
   validates :start_date, :end_date, presence: true
   validate :start_date_before_end_date
 
@@ -10,6 +12,10 @@ class AcademicCycle < ApplicationRecord
     from_date = Date.new(year.to_i, 1, 1)
     to_date = from_date.end_of_year
     where(start_date: from_date..to_date).first
+  end
+
+  def self.for_date(date)
+    where("end_date >= :date AND start_date <= :date", date: date).first
   end
 
   def trainees_starting

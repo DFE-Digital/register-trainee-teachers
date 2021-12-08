@@ -1,0 +1,40 @@
+# The url for this app, also used by `dfe_sign_in`
+base_url: https://register-dttpimport.london.cloudapps.digital
+
+dttp:
+  back_office_url: https://dttp.crm4.dynamics.com/
+  scope: https://dttp.crm4.dynamics.com/.default
+  api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
+
+dfe_sign_in:
+  # URL that the users are redirected to for signing in
+  issuer: https://oidc.signin.education.gov.uk
+  # URL of the users profile
+  profile: https://profile.signin.education.gov.uk
+
+features:
+  basic_auth: true
+  enable_feedback_link: false
+  sync_from_dttp: true
+  send_emails: false
+  persist_to_dttp: false
+  import_courses_from_ttapi: true
+  import_applications_from_apply: false
+  publish_course_details: true
+  sync_trainees_from_dttp: true
+  routes:
+    early_years_assessment_only: true
+    early_years_postgrad: true
+    early_years_salaried: true
+    early_years_undergrad: true
+    opt_in_undergrad: true
+    pg_teaching_apprenticeship: true
+    provider_led_postgrad: true
+    provider_led_undergrad: true
+    school_direct_salaried: true
+    school_direct_tuition_fee: true
+  google:
+    send_data_to_big_query: false
+
+environment:
+  name: dttpimport

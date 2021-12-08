@@ -12,6 +12,7 @@ describe FundingMethod do
   end
 
   describe "associations" do
+    it { is_expected.to belong_to(:academic_cycle) }
     it { is_expected.to have_many(:funding_method_subjects) }
     it { is_expected.to have_many(:allocation_subjects).through(:funding_method_subjects) }
   end

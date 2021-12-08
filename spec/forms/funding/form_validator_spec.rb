@@ -69,7 +69,13 @@ module Funding
         let(:allocation_subject) { create(:allocation_subject) }
         let(:subject_specialism) { create(:subject_specialism, allocation_subject: allocation_subject) }
 
-        let(:trainee) { create(:trainee, training_route: funding_method.training_route.to_sym, course_subject_one: subject_specialism.name) }
+        let(:trainee) do
+          create(:trainee,
+                 :with_start_date,
+                 :with_study_mode_and_course_dates,
+                 training_route: funding_method.training_route.to_sym,
+                 course_subject_one: subject_specialism.name)
+        end
 
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil) }
         let(:bursary_form) do
