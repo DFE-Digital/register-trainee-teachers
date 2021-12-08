@@ -547,6 +547,23 @@ module Dttp
               })
             end
           end
+
+          context "and course starts in 2022" do
+            let(:trainee) do
+              create(
+                :trainee,
+                :with_secondary_course_details,
+                :with_start_date,
+                :with_early_years_grant,
+                dttp_id: dttp_contact_id,
+                course_start_date: Date.parse("1/8/2022"),
+              )
+            end
+
+            it "sends the correct params" do
+              expect(subject).to include({ "dfe_allocatedplace" => 2 })
+            end
+          end
         end
 
         context "with region information" do

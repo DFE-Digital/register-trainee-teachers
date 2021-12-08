@@ -155,7 +155,7 @@ module Dttp
       end
 
       def funding_params
-        if applying_for_funding?
+        if applying_for_funding? && !course_starting_in_2022? # 2022 rules don't exist yet
           return {
             "dfe_allocatedplace" => ALLOCATED_PLACE,
             "dfe_BursaryDetailsId@odata.bind" => "/dfe_bursarydetails(#{funding_details_id})",
@@ -192,10 +192,10 @@ module Dttp
       end
 
       def academic_year
-        return ACADEMIC_YEAR_2020_2021 if trainee.course_start_date.between?(Date.parse("1/8/2020"), Date.parse("31/7/2021"))
-        return ACADEMIC_YEAR_2021_2022 if trainee.course_start_date.between?(Date.parse("1/8/2021"), Date.parse("31/7/2022"))
+        return ACADEMIC_YEAR_2020_2021 if course_start_date_between?("1/8/2020", "31/7/2021")
+        return ACADEMIC_YEAR_2021_2022 if course_start_date_between?("1/8/2021", "31/7/2022")
 
-        ACADEMIC_YEAR_2022_2023 if trainee.course_start_date.between?(Date.parse("1/8/2022"), Date.parse("31/7/2023"))
+        ACADEMIC_YEAR_2022_2023 if course_starting_in_2022?
       end
 
       def training_route
@@ -211,6 +211,14 @@ module Dttp
           ROUTE_INITIATIVES_ENUMS[:now_teach],
           ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
         ].include?(trainee.training_initiative)
+      end
+
+      def course_starting_in_2022?
+        course_start_date_between?("1/8/2022", "31/7/2023")
+      end
+
+      def course_start_date_between?(min, max)
+        trainee.course_start_date.between?(Date.parse(min), Date.parse(max))
       end
     end
   end

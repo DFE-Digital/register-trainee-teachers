@@ -7,11 +7,6 @@ class Trainee < ApplicationRecord
 
   belongs_to :provider
   belongs_to :apply_application, optional: true
-  has_many :degrees, dependent: :destroy
-  has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
-  has_many :nationalities, through: :nationalisations
-  has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
-  has_many :disabilities, through: :trainee_disabilities
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
   belongs_to :published_course,
@@ -21,6 +16,12 @@ class Trainee < ApplicationRecord
              primary_key: :uuid,
              inverse_of: :trainees,
              optional: true
+
+  has_many :degrees, dependent: :destroy
+  has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
+  has_many :nationalities, through: :nationalisations
+  has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
+  has_many :disabilities, through: :trainee_disabilities
 
   attribute :progress, Progress.to_type
 
