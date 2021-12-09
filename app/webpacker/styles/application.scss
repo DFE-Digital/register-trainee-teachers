@@ -78,6 +78,12 @@
 .govuk-error-summary__list {
   color: $govuk-error-colour;
   font-weight: 700;
+
+  .govuk-error-summary__item-description {
+    font-weight: 400;
+    color: $govuk-error-colour;
+    margin-top: govuk-spacing(1);
+  }
 }
 
 .app-link--warning {

@@ -7,7 +7,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @training_details_form, url: trainee_training_details_path(@trainee), method: :put, local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+      <% if f.object.duplicate_error? %>
+        <%= render "duplicate_error", form: f %>
+      <% else %>
+        <%= f.govuk_error_summary %>
+      <% end %>
 
       <%= render TraineeName::View.new(@trainee) %>
 

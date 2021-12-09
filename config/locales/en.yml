@@ -1307,6 +1307,8 @@ en:
             trainee_id:
               blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
+              uniqueness: The trainee ID has already been used for another trainee
+              uniqueness_explanation: The ID ‘<span class="no-wrap">%{trainee_id}</span>’ has already been used for <span class="no-wrap">%{short_name}</span> (created <span class="no-wrap">%{created}</span>). Choose a new one or check if this is a duplicate trainee record.
         schools_form:
           attributes:
             query:
