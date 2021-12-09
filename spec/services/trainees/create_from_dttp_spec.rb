@@ -73,6 +73,36 @@ module Trainees
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
       end
 
+      context "with multiple placement_assignments" do
+        let(:placement_assignment_one) do
+          create(:dttp_placement_assignment,
+                 response: create(:api_placement_assignment,
+                                  dfe_programmestartdate: Faker::Date.in_date_period(year: Time.zone.now.year - 1, month: 9).strftime("%Y-%m-%d"),
+                                  _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::RELIGIOUS_EDUCATION_DTTP_ID))
+        end
+
+        let(:placement_assignment_two) do
+          create(:dttp_placement_assignment,
+                 response: create(:api_placement_assignment,
+                                  dfe_programmestartdate: Faker::Date.in_date_period(year: Time.zone.now.year, month: 9).strftime("%Y-%m-%d"),
+                                  _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [placement_assignment_one, placement_assignment_two]) }
+
+        it "sets the course details from the latest placement assignment" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.course_subject_one).to eq(CourseSubjects::MODERN_LANGUAGES)
+        end
+
+        it "sets the trainee start date from the first placement assignment" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.commencement_date).to eq(placement_assignment_one.response["dfe_commencementdate"].to_date)
+        end
+      end
+
       context "with funding information available" do
         let(:api_placement_assignment) do
           create(:dttp_placement_assignment, response: create(:api_placement_assignment, :with_provider_led_bursary))

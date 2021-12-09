@@ -13,7 +13,7 @@ module Trainees
 
     def call
       return if dttp_trainee.provider.blank?
-      return if placement_assignment.blank?
+      return if latest_placement_assignment.blank?
 
       if training_route.blank?
         dttp_trainee.non_importable_missing_route!
@@ -43,7 +43,7 @@ module Trainees
     attr_reader :dttp_trainee, :trainee
 
     def mapped_attributes
-      return if placement_assignment.blank?
+      return if latest_placement_assignment.blank?
 
       {
         state: trainee_status,
@@ -51,9 +51,9 @@ module Trainees
         trainee_id: trainee_id,
         training_route: training_route,
         trn: dttp_trainee.response["dfe_trn"],
-        submitted_for_trn_at: placement_assignment.response["dfe_trnassessmentdate"],
+        submitted_for_trn_at: latest_placement_assignment.response["dfe_trnassessmentdate"],
         dttp_id: dttp_trainee.dttp_id,
-        placement_assignment_dttp_id: placement_assignment.dttp_id,
+        placement_assignment_dttp_id: latest_placement_assignment.dttp_id,
       }.merge(personal_details_attributes)
        .merge(contact_attributes)
        .merge(ethnicity_and_disability_attributes)
@@ -66,8 +66,24 @@ module Trainees
       ::Degrees::CreateFromDttp.call(trainee: trainee)
     end
 
-    def placement_assignment
-      @placement_assignment ||= dttp_trainee.placement_assignments.first
+    def earliest_placement_assignment
+      @earliest_placement_assignment ||= sorted_placement_assignments.first
+    end
+
+    def latest_placement_assignment
+      @latest_placement_assignment ||= sorted_placement_assignments.last
+    end
+
+    def sorted_placement_assignments
+      @sorted_placement_assignments ||= processable_placement_assignments.sort_by do |placement_assignment|
+        placement_assignment.response["dfe_programmestartdate"]
+      end
+    end
+
+    def processable_placement_assignments
+      dttp_trainee.placement_assignments.reject do |placement_assignment|
+        placement_assignment.response["dfe_programmestartdate"].blank?
+      end
     end
 
     def trainee_already_exists?
@@ -76,7 +92,7 @@ module Trainees
 
     def training_route
       @training_route ||= find_by_entity_id(
-        placement_assignment.route_dttp_id,
+        latest_placement_assignment.route_dttp_id,
         Dttp::CodeSets::Routes::MAPPING,
       )
     end
@@ -205,15 +221,15 @@ module Trainees
 
     def course_attributes
       {
-        course_subject_one: course(placement_assignment.response["_dfe_ittsubject1id_value"]),
-        course_subject_two: course(placement_assignment.response["_dfe_ittsubject2id_value"]),
-        course_subject_three: course(placement_assignment.response["_dfe_ittsubject3id_value"]),
+        course_subject_one: course(latest_placement_assignment.response["_dfe_ittsubject1id_value"]),
+        course_subject_two: course(latest_placement_assignment.response["_dfe_ittsubject2id_value"]),
+        course_subject_three: course(latest_placement_assignment.response["_dfe_ittsubject3id_value"]),
         course_min_age: age_range && age_range[0],
         course_max_age: age_range && age_range[1],
         study_mode: study_mode,
-        commencement_date: placement_assignment.response["dfe_commencementdate"],
-        course_start_date: placement_assignment.response["dfe_programmestartdate"],
-        course_end_date: placement_assignment.response["dfe_programmeeenddate"],
+        commencement_date: earliest_placement_assignment.response["dfe_commencementdate"],
+        course_start_date: latest_placement_assignment.response["dfe_programmestartdate"],
+        course_end_date: latest_placement_assignment.response["dfe_programmeeenddate"],
       }
     end
 
@@ -226,27 +242,27 @@ module Trainees
 
     def age_range
       @age_range ||= find_by_entity_id(
-        placement_assignment.response["_dfe_coursephaseid_value"],
+        latest_placement_assignment.response["_dfe_coursephaseid_value"],
         Dttp::CodeSets::AgeRanges::MAPPING,
       )
     end
 
     def study_mode
       find_by_entity_id(
-        placement_assignment.response["_dfe_studymodeid_value"],
+        latest_placement_assignment.response["_dfe_studymodeid_value"],
         Dttp::CodeSets::CourseStudyModes::MAPPING,
       )
     end
 
     def school_attributes
-      return {} if placement_assignment.lead_school_id.blank?
+      return {} if latest_placement_assignment.lead_school_id.blank?
 
       # Should we raise when schools are not found so that we can add them?
       attrs = {
         lead_school: School.find_by(urn: lead_school_urn),
       }
 
-      if placement_assignment.employing_school_id.present?
+      if latest_placement_assignment.employing_school_id.present?
         attrs.merge!({
           employing_school: School.find_by(urn: employing_school_urn),
         })
@@ -256,17 +272,17 @@ module Trainees
     end
 
     def lead_school_urn
-      Dttp::School.find_by(dttp_id: placement_assignment.lead_school_id)&.urn
+      Dttp::School.find_by(dttp_id: latest_placement_assignment.lead_school_id)&.urn
     end
 
     def employing_school_urn
-      Dttp::School.find_by(dttp_id: placement_assignment.employing_school_id)&.urn
+      Dttp::School.find_by(dttp_id: latest_placement_assignment.employing_school_id)&.urn
     end
 
     def funding_attributes
-      return {} unless placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::ALLOCATED_PLACE
+      return {} unless latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::ALLOCATED_PLACE
 
-      if placement_assignment.response["_dfe_bursarydetailsid_value"] == Dttp::Params::PlacementAssignment::SCHOLARSHIP
+      if latest_placement_assignment.response["_dfe_bursarydetailsid_value"] == Dttp::Params::PlacementAssignment::SCHOLARSHIP
         return { applying_for_scholarship: true }
       end
 
@@ -281,7 +297,7 @@ module Trainees
 
     def training_route_for_funding
       find_by_entity_id(
-        placement_assignment.response["_dfe_bursarydetailsid_value"],
+        latest_placement_assignment.response["_dfe_bursarydetailsid_value"],
         Dttp::CodeSets::BursaryDetails::MAPPING,
       )
     end
@@ -298,13 +314,13 @@ module Trainees
         # Raise if it's something else? Are we expecting other statuses?
         # What if it's AWAITING_QTS or PROSPECTIVE_TRAINEE_TRN_REQUESTED? Should
         # we import and kick off respective jobs?
-        raise(UnrecognisedStatusError, "Trainee status with dttp status id #{placement_assignment.response['_dfe_traineestatusid_value']} is not yet mapped")
+        raise(UnrecognisedStatusError, "Trainee status with dttp status id #{latest_placement_assignment.response['_dfe_traineestatusid_value']} is not yet mapped")
       end
     end
 
     def dttp_trainee_status
       find_by_entity_id(
-        placement_assignment.response["_dfe_traineestatusid_value"],
+        latest_placement_assignment.response["_dfe_traineestatusid_value"],
         Dttp::CodeSets::Statuses::MAPPING,
       )
     end
