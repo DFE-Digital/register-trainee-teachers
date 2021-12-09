@@ -20,6 +20,11 @@ module Trainees
         return
       end
 
+      if training_route == TRAINING_ROUTE_ENUMS[:hpitt_postgrad]
+        dttp_trainee.non_importable_hpitt!
+        return
+      end
+
       if trainee_already_exists?
         dttp_trainee.non_importable_duplicate!
         return

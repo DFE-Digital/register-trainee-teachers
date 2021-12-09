@@ -14,6 +14,10 @@ FactoryBot.define do
       placement_assignments { [build(:dttp_placement_assignment, contact_dttp_id: dttp_id)] }
     end
 
+    trait :with_hpitt_placement_assignment do
+      placement_assignments { [build(:dttp_placement_assignment, response: create(:api_placement_assignment, enabled_training_routes: ["hpitt_postgrad"]), contact_dttp_id: dttp_id)] }
+    end
+
     trait :with_provider do
       provider
     end

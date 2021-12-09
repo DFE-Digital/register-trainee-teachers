@@ -28,9 +28,10 @@ module Dttp
 
     enum state: {
       importable: 0,
-      non_importable_duplicate: 1,
-      non_importable_missing_route: 2,
-      imported: 3,
+      imported: 1,
+      non_importable_duplicate: 2,
+      non_importable_missing_route: 3,
+      non_importable_hpitt: 4,
     }
 
     def date_of_birth

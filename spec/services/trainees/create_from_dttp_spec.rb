@@ -29,6 +29,17 @@ module Trainees
       end
     end
 
+    context "when the trainee is hpitt" do
+      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_hpitt_placement_assignment) }
+
+      it "marks the application as non importable" do
+        expect {
+          create_trainee_from_dttp
+        }.to change(Trainee, :count).by(0)
+        .and change(dttp_trainee, :state).to("non_importable_hpitt")
+      end
+    end
+
     context "when a provider exists" do
       let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, :with_provider, api_trainee_hash: api_trainee) }
 
