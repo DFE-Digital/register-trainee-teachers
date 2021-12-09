@@ -7,7 +7,7 @@ module Trainees
     def perform
       return unless FeatureService.enabled?("import_trainees_from_dttp")
 
-      Dttp::Trainee.joins(:provider).unprocessed.each do |dttp_trainee|
+      Dttp::Trainee.joins(:provider).includes(:placement_assignments).unprocessed.each do |dttp_trainee|
         CreateFromDttp.call(dttp_trainee: dttp_trainee)
       rescue Trainees::CreateFromDttp::UnrecognisedStatusError => e
         Sentry.capture_exception(e)
