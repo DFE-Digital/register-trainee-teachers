@@ -22,6 +22,7 @@ features:
   import_applications_from_apply: false
   publish_course_details: true
   sync_trainees_from_dttp: true
+  import_trainees_from_dttp: true
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true
