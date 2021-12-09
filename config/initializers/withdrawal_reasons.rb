@@ -2,6 +2,8 @@
 
 module WithdrawalReasons
   DEATH = "death"
+  DID_NOT_PASS_ASSESSMENT = "did_not_pass_assessment"
+  DID_NOT_PASS_EXAMS = "did_not_pass_exams"
   EXCLUSION = "exclusion"
   FINANCIAL_REASONS = "financial_reasons"
   FOR_ANOTHER_REASON = "for_another_reason"
@@ -14,6 +16,8 @@ module WithdrawalReasons
 
   SPECIFIC = [
     DEATH,
+    DID_NOT_PASS_ASSESSMENT,
+    DID_NOT_PASS_EXAMS,
     EXCLUSION,
     FINANCIAL_REASONS,
     GONE_INTO_EMPLOYMENT,

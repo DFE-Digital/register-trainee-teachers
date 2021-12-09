@@ -93,6 +93,8 @@ class Trainee < ApplicationRecord
     WithdrawalReasons::PERSONAL_REASONS => 7,
     WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER => 8,
     WithdrawalReasons::WRITTEN_OFF_AFTER_LAPSE_OF_TIME => 9,
+    WithdrawalReasons::DID_NOT_PASS_ASSESSMENT => 10,
+    WithdrawalReasons::DID_NOT_PASS_EXAMS => 11,
   }
 
   enum study_mode: TRAINEE_STUDY_MODE_ENUMS
