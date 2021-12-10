@@ -56,12 +56,12 @@ module Dttp
         "Bachelor of Veterinary Science" => { entity_id: "356a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BVsc", hesa_code: "96" },
         "Bachelor of Education Scotland and Northern Ireland" => { entity_id: "376a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BEd", hesa_code: "97" },
         "Bachelor of Philosophy" => { entity_id: "396a5652-c197-e711-80d8-005056ac45bb", abbreviation: "BPhil", hesa_code: "98" },
-        "BEd" => { entity_id: "c1695652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "1" },
-        "BSc/Education" => { entity_id: "c5695652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "3" },
-        "BTech/Education" => { entity_id: "c9695652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "5" },
-        "BA/Education" => { entity_id: "c9695652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "7" },
-        "BA Combined Studies/Education of the Deaf" => { entity_id: "d1695652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "9" },
-        "BA with intercalated PGCE" => { entity_id: "d5695652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "12" },
+        "BEd" => { entity_id: "c1695652-c197-e711-80d8-005056ac45bb", hesa_code: "1" },
+        "BSc/Education" => { entity_id: "c5695652-c197-e711-80d8-005056ac45bb", hesa_code: "3" },
+        "BTech/Education" => { entity_id: "c9695652-c197-e711-80d8-005056ac45bb", hesa_code: "5" },
+        "BA/Education" => { entity_id: "c9695652-c197-e711-80d8-005056ac45bb", hesa_code: "7" },
+        "BA Combined Studies/Education of the Deaf" => { entity_id: "d1695652-c197-e711-80d8-005056ac45bb", hesa_code: "9" },
+        "BA with intercalated PGCE" => { entity_id: "d5695652-c197-e711-80d8-005056ac45bb", hesa_code: "12" },
         "Master of Arts" => {
           entity_id: "3b6a5652-c197-e711-80d8-005056ac45bb",
           abbreviation: "MA",
@@ -104,7 +104,7 @@ module Dttp
           synonyms: ["masters of theology"],
           hesa_code: "206",
         },
-        "Certificate of Membership of Cranfield Institute of Technology" => { entity_id: "496a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "207" },
+        "Certificate of Membership of Cranfield Institute of Technology" => { entity_id: "496a5652-c197-e711-80d8-005056ac45bb", hesa_code: "207" },
         "Master of Education" =>
         {
           entity_id: "4b6a5652-c197-e711-80d8-005056ac45bb",
@@ -160,11 +160,11 @@ module Dttp
         "Doctor of Music" => { entity_id: "616a5652-c197-e711-80d8-005056ac45bb", abbreviation: "DMu", hesa_code: "303" },
         "Doctor of Science" => { entity_id: "636a5652-c197-e711-80d8-005056ac45bb", abbreviation: "DSc", hesa_code: "304" },
         "Doctor of Philosophy" => { entity_id: "656a5652-c197-e711-80d8-005056ac45bb", abbreviation: "DPhil", hesa_code: "305" },
-        "PhD" => { entity_id: "676a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "306" },
-        "First Degree" => { entity_id: "696a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil, hesa_code: "400" },
-        "Higher Degree" => {
+        "PhD" => { entity_id: "676a5652-c197-e711-80d8-005056ac45bb", hesa_code: "306" },
+        "First Degree" => { entity_id: "696a5652-c197-e711-80d8-005056ac45bb", hesa_code: "400" },
+        "Higher degree or equivalent" => {
           entity_id: "6b6a5652-c197-e711-80d8-005056ac45bb",
-          abbreviation: nil,
+          hint: "Including level 7, level 8, masters, postgraduate certificates and diplomas",
           synonyms: [
             "Other",
             # Level 7 qualifications
@@ -190,7 +190,6 @@ module Dttp
         },
         "Degree equivalent" => {
           entity_id: "6d6a5652-c197-e711-80d8-005056ac45bb",
-          abbreviation: nil,
           synonyms: [
             "Other",
             # Level 6 qualifications

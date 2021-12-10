@@ -10,7 +10,8 @@ module DegreesHelper
         "data-synonyms" => synonyms.join("|"),
         "data-append" => attributes[:abbreviation] && tag.strong("(#{attributes[:abbreviation]})"),
         "data-boost" => (Dttp::CodeSets::DegreeTypes::COMMON.include?(name) ? 1.5 : 1),
-      }
+        "data-hint" => attributes[:hint],
+      }.compact
       [name, name, data]
     end
   end
