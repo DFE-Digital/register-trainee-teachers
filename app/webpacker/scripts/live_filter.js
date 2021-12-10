@@ -16,6 +16,8 @@ export default class LiveFilter {
 
     if (!(this.form && this.resultsDiv && this.selectedFiltersDiv)) return
 
+    this.endpoint = this.form.attributes["data-search-endpoint"].value
+
     this.saveState()
     this.setInitialStateToHistory()
     this.hideButton()
@@ -37,7 +39,7 @@ export default class LiveFilter {
 
   fetchResults (shouldUpdateUrl = true) {
     return $.ajax({
-      url: '/trainees',
+      url: this.endpoint,
       dataType: 'json',
       data: this.state
     }).done((response) => {

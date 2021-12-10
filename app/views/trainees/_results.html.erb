@@ -1,23 +1,23 @@
 <% if paginated_trainees.any? %>
-  <% if draft_trainees.any? %>
+  <% if search_primary_result_set.any? %>
     <div class="govuk-!-margin-bottom-8 app-draft-records">
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-          <h2 class="govuk-heading-m">Draft trainees</h2>
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-m"><%= search_primary_result_title %></h2>
         </div>
       </div>
-      <%= render ApplicationRecordCard::View.with_collection(draft_trainees, system_admin: @current_user.system_admin?) %>
+      <%= render ApplicationRecordCard::View.with_collection(search_primary_result_set, system_admin: @current_user.system_admin?) %>
     </div>
   <% end %>
 
-  <% if completed_trainees.any? %>
+  <% if search_secondary_result_set.any? %>
     <div class="govuk-!-margin-bottom-8 app-non-draft-records">
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-          <h2 class="govuk-heading-m">Registered trainees</h2>
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-m"><%= search_secondary_result_title %></h2>
         </div>
       </div>
-      <%= render ApplicationRecordCard::View.with_collection(completed_trainees, system_admin: @current_user.system_admin?) %>
+      <%= render ApplicationRecordCard::View.with_collection(search_secondary_result_set, system_admin: @current_user.system_admin?) %>
     </div>
   <% end %>
 
@@ -25,7 +25,7 @@
   <h2 class="govuk-heading-m">No records found</h2>
   <p class="govuk-body">
     Try
-    <%= govuk_link_to "clearing your search and filters", trainees_path %>.
+    <%= govuk_link_to "clearing your search and filters", search_path %>.
   </p>
 
 <% else %>

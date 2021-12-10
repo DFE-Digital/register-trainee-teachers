@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "/trainees/confirm_details"
   end
 
+  resources :drafts, only: :index
+
   resources :trainees, except: :edit do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"

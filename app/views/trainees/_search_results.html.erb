@@ -1,0 +1,52 @@
+<div class='moj-filter-layout'>
+  <div class="moj-filter-layout__filter-wrapper app-filter">
+    <div class="moj-filter-layout__filter">
+      <div class="moj-filter">
+        <div class="moj-filter__header">
+          <div class="moj-filter__header-title">
+            <h2 class="govuk-heading-m"><%= t("components.filter.title")%></h2>
+          </div>
+          <div class="moj-filter__header-action">
+          </div>
+        </div>
+
+        <!-- Div made focusable to 'catch' focus from filters. see https://github.com/DFE-Digital/apply-for-teacher-training/pull/2640 -->
+        <div class="moj-filter__content" tabindex="-1">
+          <div id='js-selected-filters'>
+            <%= render "trainees/selected_filters", filters: filters, search_path: search_path %>
+          </div>
+          <div class="moj-filter__options">
+            <%= render "trainees/filters",
+              filters: filters,
+              training_routes: training_routes,
+              search_path: search_path
+            %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='moj-filter-layout__content'>
+    <div class="app-records-actions">
+      <div class="app-records-actions-text-links" id="js-action-bar">
+        <%= render "trainees/action_bar", paginated_trainees: paginated_trainees, export_results_path: export_results_path %>
+      </div>
+      <div class="moj-action-bar">
+        <div class="moj-action-bar__filter"></div>
+      </div>
+    </div>
+
+    <div id='js-results'>
+      <%= render "trainees/results",
+        paginated_trainees: paginated_trainees,
+        search_primary_result_title: search_primary_result_title,
+        search_primary_result_set: search_primary_result_set,
+        search_secondary_result_title: search_secondary_result_title,
+        search_secondary_result_set: search_secondary_result_set,
+        search_path: search_path,
+        filters: filters
+      %>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,8 @@ import LiveFilter from './live_filter'
 
 describe('LiveFilter', () => {
   beforeEach(() => {
-    const $form = $(`<form method="get" id="js-live-filter">
+    const $form =
+      $(`<form method="get" id="js-live-filter" data-search-endpoint="/endpoint">
     <input type="submit" name="commit" value="Apply filters" id="js-submit">
     <input type="checkbox" name="level[]" id="level-early_years" value="early_years">
     <input type="checkbox" name="level[]" id="level-primary" value="primary">
@@ -12,7 +13,7 @@ describe('LiveFilter', () => {
       <option value="applied biology">Applied biology</option>
       <option value="applied chemistry">Applied chemistry</option>
     </select>
-    </form>`)
+    </form>`);
 
     const $results = $('<div id="js-results"></div>')
     const $selectedFilters = $('<div id="js-selected-filters"></div>')

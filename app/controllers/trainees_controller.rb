@@ -1,41 +1,11 @@
 # frozen_string_literal: true
 
-class TraineesController < ApplicationController
+class TraineesController < BaseTraineeController
   include TraineeHelper
   include ActivityTracker
 
   before_action :redirect_to_not_found, if: -> { trainee.discarded? }, only: :show
   before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
-  before_action :save_filter, only: :index
-  helper_method :filter_params, :multiple_record_sources?
-
-  def index
-    return redirect_to(trainees_path(filter_params)) if current_page_exceeds_total_pages?
-
-    @total_trainees_count = filtered_trainees.count(:id)
-
-    # We can't use `#draft` to find @draft_trainees since that applies a `WHERE`
-    # clause, removing Kaminari's pagination. Hence the use of `#select`.
-    @draft_trainees = paginated_trainees.select(&:draft?)
-    @completed_trainees = paginated_trainees.reject(&:draft?)
-
-    # sort_by is to enable alphabetization in line with translations, which is named different to the hash.
-    @training_routes = policy_scope(Trainee).group(:training_route)
-                                            .count
-                                            .keys
-                                            .sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
-
-    @providers = Provider.all.order(:name)
-
-    respond_to do |format|
-      format.html
-      format.js { render(json: json_response) }
-      format.csv do
-        track_activity
-        send_data(data_export.data, filename: data_export.filename, disposition: :attachment)
-      end
-    end
-  end
 
   def show
     authorize(trainee)
@@ -72,6 +42,36 @@ class TraineesController < ApplicationController
 
 private
 
+  def search_path(filter_params = nil)
+    trainees_path(filter_params)
+  end
+
+  def search_primary_result_title
+    @search_primary_result_title ||= t("views.trainees.index.results.above_the_fold_title")
+  end
+
+  def search_primary_result_set
+    # We can't use `#draft` to find @draft_trainees since that applies a `WHERE`
+    # clause, removing Kaminari's pagination. Hence the use of `#select`.
+    paginated_trainees.select(&:draft?)
+  end
+
+  def search_secondary_result_title
+    @search_secondary_result_title ||= t("views.trainees.index.results.below_the_fold_title")
+  end
+
+  def search_secondary_result_set
+    paginated_trainees.reject(&:draft?)
+  end
+
+  def trainee_search_scope
+    Trainee.includes(provider: [:courses])
+  end
+
+  def export_results_path
+    trainees_path(filter_params.merge(format: "csv"))
+  end
+
   def redirect_to_not_found
     redirect_to(not_found_path)
   end
@@ -88,101 +88,11 @@ private
     @trainee ||= Trainee.from_param(params[:id])
   end
 
-  def current_page_exceeds_total_pages?
-    paginated_trainees.total_pages.nonzero? && paginated_trainees.current_page > paginated_trainees.total_pages
-  end
-
-  def filtered_trainees
-    @filtered_trainees ||= Trainees::Filter.call(
-      trainees: policy_scope(Trainee.includes(provider: [:courses])),
-      filters: filters,
-    )
-  end
-
-  def field
-    @field ||= filter_params[:sort_by] == "last_name" ? :last_name : :updated_at
-  end
-
   def ordered_trainees
     policy_scope(Trainee.includes(provider: [:courses]).ordered_by_drafts_then_by(field))
   end
 
-  def paginated_trainees
-    @paginated_trainees ||= filtered_trainees.ordered_by_drafts_then_by(field).page(params[:page] || 1)
-  end
-
-  def filters
-    @filters ||= TraineeFilter.new(params: filter_params).filters
-  end
-
   def trainee_params
     params.fetch(:trainee, {}).permit(:training_route)
-  end
-
-  def filter_params
-    params.permit(permitted_params + permitted_admin_params)
-  end
-
-  def permitted_admin_params
-    return [] unless current_user.system_admin?
-
-    [:provider]
-  end
-
-  def permitted_params
-    [
-      :subject,
-      :text_search,
-      :sort_by,
-      {
-        level: [],
-        training_route: [],
-        state: [],
-        record_source: [],
-        record_completion: [],
-        trainee_start_year: [],
-      },
-    ]
-  end
-
-  def multiple_record_sources?
-    @multiple_record_sources ||= begin
-      apply_count = policy_scope(Trainee).with_apply_application.count
-      manual_count = policy_scope(Trainee).with_manual_application.count
-      apply_count.positive? && manual_count.positive?
-    end
-  end
-
-  def save_filter
-    return if request.format.csv?
-
-    FilteredBackLink::Tracker.new(session: session, href: trainees_path).save_path(request.fullpath)
-  end
-
-  def data_export
-    @data_export ||= Exports::TraineeSearchData.new(filtered_trainees)
-  end
-
-  def json_response
-    {
-      results: render_partial("trainees/results", {
-        paginated_trainees: @paginated_trainees,
-        draft_trainees: @draft_trainees,
-        completed_trainees: @completed_trainees,
-        filters: @filters,
-      }),
-      selected_filters: render_partial("trainees/selected_filters", {
-        filters: @filters,
-      }),
-      action_bar: render_partial("trainees/action_bar", {
-        paginated_trainees: @paginated_trainees,
-      }),
-      trainee_count: @total_trainees_count,
-      page_title: trainees_page_title(@paginated_trainees, @total_trainees_count),
-    }
-  end
-
-  def render_partial(partial, locals)
-    (render_to_string(formats: %w[html], partial: partial, locals: locals) || "").squish
   end
 end

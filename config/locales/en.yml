@@ -562,10 +562,20 @@ en:
         commencement_date_radio_option: *commencement_date
         trainee_id: *trainee_id
         study_mode: Select if the trainee is full time or part time
+    drafts:
+      index:
+        results:
+          above_the_fold_title: Complete drafts - ready to register
+          below_the_fold_title: Incomplete drafts
+        filters:
+          record_completion: Draft completion
     trainees:
       index:
         no_records: Your trainee records will appear here. You do not have any records yet.
         export: Export these records
+        results:
+          above_the_fold_title: Draft trainees
+          below_the_fold_title: Registered trainees
         filters:
           record_completion: Record completion
           trainee_start_year: *trainee_start_year

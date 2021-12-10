@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module NavigationHelper
-  def trainee_link_is_current?
+  def active_link_for(segment)
     url = request.path_info
-    url.include?("/trainees")
+    url.include?("/#{segment}")
   end
 end
