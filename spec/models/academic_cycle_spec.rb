@@ -37,7 +37,7 @@ describe AcademicCycle, type: :model do
       end
 
       it "returns the trainees based on the start and end date of the cycle" do
-        expect(subject.trainees_starting).to eq([trainee, trainee2])
+        expect(subject.trainees_starting).to match_array([trainee, trainee2])
       end
     end
   end
