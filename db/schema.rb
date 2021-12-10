@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_09_144401) do
+ActiveRecord::Schema.define(version: 2021_12_10_154009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -169,6 +169,10 @@ ActiveRecord::Schema.define(version: 2021_12_09_144401) do
     t.integer "study_mode"
     t.uuid "uuid"
     t.integer "recruitment_cycle_year"
+    t.date "full_time_start_date"
+    t.date "full_time_end_date"
+    t.date "part_time_start_date"
+    t.date "part_time_end_date"
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code"
     t.index ["recruitment_cycle_year"], name: "index_courses_on_recruitment_cycle_year"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
