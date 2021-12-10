@@ -9,7 +9,7 @@ module Dttp
 
       @trainee_list = RetrieveTrainees.call(request_uri: request_uri)
 
-      Trainee.upsert_all(trainee_attributes, unique_by: :dttp_id)
+      Dttp::Trainee.upsert_all(trainee_attributes, unique_by: :dttp_id)
 
       Dttp::SyncTraineesJob.perform_later(next_page_url) if next_page?
     end

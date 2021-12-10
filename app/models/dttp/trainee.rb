@@ -15,7 +15,7 @@ module Dttp
                primary_key: :dttp_id,
                inverse_of: :dttp_trainee,
                optional: true,
-               class_name: "Trainee"
+               class_name: "::Trainee"
 
     belongs_to :provider,
                class_name: "::Provider",
