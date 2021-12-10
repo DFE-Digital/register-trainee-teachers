@@ -51,9 +51,7 @@ private
   end
 
   def search_primary_result_set
-    # We can't use `#draft` to find @draft_trainees since that applies a `WHERE`
-    # clause, removing Kaminari's pagination. Hence the use of `#select`.
-    paginated_trainees.select(&:draft?)
+    []
   end
 
   def search_secondary_result_title
@@ -65,7 +63,7 @@ private
   end
 
   def trainee_search_scope
-    Trainee.includes(provider: [:courses])
+    Trainee.includes(provider: [:courses]).where.not(state: "draft")
   end
 
   def export_results_path

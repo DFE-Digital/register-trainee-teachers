@@ -1,6 +1,6 @@
 <% if paginated_trainees.any? %>
   <% if search_primary_result_set.any? %>
-    <div class="govuk-!-margin-bottom-8 app-draft-records">
+    <div class="govuk-!-margin-bottom-8">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-m"><%= search_primary_result_title %></h2>
@@ -11,7 +11,7 @@
   <% end %>
 
   <% if search_secondary_result_set.any? %>
-    <div class="govuk-!-margin-bottom-8 app-non-draft-records">
+    <div class="govuk-!-margin-bottom-8">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <h2 class="govuk-heading-m"><%= search_secondary_result_title %></h2>

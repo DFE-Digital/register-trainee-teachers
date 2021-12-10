@@ -51,7 +51,8 @@
     <%= render NavigationBar::View.new(
       items: [
         { name: "Home", url: root_path },
-        { name: "Trainee records", url: trainees_path, current: active_link_for("trainees") },
+        { name: "Draft records", url: drafts_path, current: active_link_for("drafts", @trainee) },
+        { name: "Trainee records", url: trainees_path, current: active_link_for("trainees", @trainee) },
       ],
       current_path: request.path,
       current_user: @current_user,
