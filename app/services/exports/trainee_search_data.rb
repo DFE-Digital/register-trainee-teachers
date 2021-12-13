@@ -121,6 +121,10 @@ module Exports
       end
     end
 
+    def funding_manager(trainee)
+      FundingManager.new(trainee)
+    end
+
     def funding_method(trainee)
       if trainee.applying_for_bursary?
         FUNDING_TYPE_ENUMS[:bursary]
@@ -130,11 +134,13 @@ module Exports
         FUNDING_TYPE_ENUMS[:grant]
       elsif [trainee.applying_for_bursary, trainee.applying_for_scholarship, trainee.applying_for_grant].include?(false)
         "not funded"
+      elsif !funding_manager(trainee).funding_available?
+        "not available"
       end
     end
 
     def funding_value(trainee)
-      funding_manager = FundingManager.new(trainee)
+      funding_manager = funding_manager(trainee)
 
       if trainee.applying_for_bursary?
         funding_manager.bursary_amount

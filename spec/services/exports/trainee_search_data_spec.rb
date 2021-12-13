@@ -178,6 +178,11 @@ module Exports
         trainee = Trainee.new(applying_for_grant: false)
         expect(subject.send(:funding_method, trainee)).to eq("not funded")
       end
+
+      it "returns not available" do
+        trainee = Trainee.new(training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
+        expect(subject.send(:funding_method, trainee)).to eq("not available")
+      end
     end
 
     describe "#course_summary" do
