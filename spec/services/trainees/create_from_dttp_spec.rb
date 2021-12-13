@@ -7,6 +7,7 @@ module Trainees
     include SeedHelper
 
     let(:api_trainee) { create(:api_trainee) }
+    let(:provider) { create(:provider) }
     let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, api_trainee_hash: api_trainee) }
 
     subject(:create_trainee_from_dttp) { described_class.call(dttp_trainee: dttp_trainee) }
@@ -76,6 +77,7 @@ module Trainees
       context "with multiple placement_assignments" do
         let(:placement_assignment_one) do
           create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
                  response: create(:api_placement_assignment,
                                   dfe_programmestartdate: Faker::Date.in_date_period(year: Time.zone.now.year - 1, month: 9).strftime("%Y-%m-%d"),
                                   _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::RELIGIOUS_EDUCATION_DTTP_ID))
@@ -83,12 +85,13 @@ module Trainees
 
         let(:placement_assignment_two) do
           create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
                  response: create(:api_placement_assignment,
                                   dfe_programmestartdate: Faker::Date.in_date_period(year: Time.zone.now.year, month: 9).strftime("%Y-%m-%d"),
                                   _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
         end
 
-        let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [placement_assignment_one, placement_assignment_two]) }
+        let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [placement_assignment_one, placement_assignment_two]) }
 
         it "sets the course details from the latest placement assignment" do
           create_trainee_from_dttp
@@ -105,13 +108,13 @@ module Trainees
 
       context "with funding information available" do
         let(:api_placement_assignment) do
-          create(:dttp_placement_assignment, response: create(:api_placement_assignment, :with_provider_led_bursary))
+          create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_provider_led_bursary))
         end
-        let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [api_placement_assignment]) }
+        let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
 
         context "when scholarship" do
           let(:api_placement_assignment) do
-            create(:dttp_placement_assignment, response: create(:api_placement_assignment, :with_scholarship))
+            create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_scholarship))
           end
 
           it "sets scholarship" do
@@ -197,8 +200,8 @@ module Trainees
     end
 
     context "when training route is missing" do
-      let(:api_placement_assignment) { create(:dttp_placement_assignment, response: create(:api_placement_assignment, _dfe_routeid_value: nil)) }
-      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [api_placement_assignment]) }
+      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_routeid_value: nil)) }
+      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
 
       it "marks the application as non importable" do
         expect {
@@ -209,14 +212,25 @@ module Trainees
     end
 
     context "when training state is not mapped" do
-      let(:api_placement_assignment) { create(:dttp_placement_assignment, response: create(:api_placement_assignment, _dfe_traineestatusid_value: nil)) }
-      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [api_placement_assignment]) }
+      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_traineestatusid_value: nil)) }
+      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
 
       it "marks the application as non importable" do
         expect {
           create_trainee_from_dttp
         }.to change(Trainee, :count).by(0)
         .and change(dttp_trainee, :state).to("non_importable_missing_state")
+      end
+    end
+
+    context "when placement assignments are from multiple providers" do
+      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: create_list(:dttp_placement_assignment, 2)) }
+
+      it "marks the application as non importable" do
+        expect {
+          create_trainee_from_dttp
+        }.to change(Trainee, :count).by(0)
+        .and change(dttp_trainee, :state).to("non_importable_multi_provider")
       end
     end
   end

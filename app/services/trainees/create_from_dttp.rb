@@ -15,6 +15,11 @@ module Trainees
       return if dttp_trainee.provider.blank?
       return if latest_placement_assignment.blank?
 
+      if multiple_providers?
+        dttp_trainee.non_importable_multi_provider!
+        return
+      end
+
       if training_route.blank?
         dttp_trainee.non_importable_missing_route!
         return
@@ -86,9 +91,13 @@ module Trainees
     end
 
     def processable_placement_assignments
-      dttp_trainee.placement_assignments.reject do |placement_assignment|
+      @processable_placement_assignments ||= dttp_trainee.placement_assignments.reject do |placement_assignment|
         placement_assignment.response["dfe_programmestartdate"].blank?
       end
+    end
+
+    def multiple_providers?
+      dttp_trainee.placement_assignments.map(&:provider_dttp_id).uniq != [dttp_trainee.provider_dttp_id]
     end
 
     def trainee_already_exists?
