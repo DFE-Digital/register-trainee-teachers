@@ -20,6 +20,11 @@ module Trainees
         return
       end
 
+      if trainee_status.blank?
+        dttp_trainee.non_importable_missing_state!
+        return
+      end
+
       if training_route == TRAINING_ROUTE_ENUMS[:hpitt_postgrad]
         dttp_trainee.non_importable_hpitt!
         return
@@ -304,17 +309,15 @@ module Trainees
 
     def trainee_status
       case dttp_trainee_status
+      # Raise if it's something else? Are we expecting other statuses?
+      # What if it's AWAITING_QTS or PROSPECTIVE_TRAINEE_TRN_REQUESTED? Should
+      # we import and kick off respective jobs?
       when DttpStatuses::DRAFT_RECORD then "draft"
       when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "submitted_for_trn"
       when DttpStatuses::DEFERRED then "deferred"
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
       when (DttpStatuses::AWARDED_EYTS || DttpStatuses::AWARDED_QTS) then "awarded"
       when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
-      else
-        # Raise if it's something else? Are we expecting other statuses?
-        # What if it's AWAITING_QTS or PROSPECTIVE_TRAINEE_TRN_REQUESTED? Should
-        # we import and kick off respective jobs?
-        raise(UnrecognisedStatusError, "Trainee status with dttp status id #{latest_placement_assignment.response['_dfe_traineestatusid_value']} is not yet mapped")
       end
     end
 

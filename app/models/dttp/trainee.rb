@@ -32,6 +32,7 @@ module Dttp
       non_importable_duplicate: 2,
       non_importable_missing_route: 3,
       non_importable_hpitt: 4,
+      non_importable_missing_state: 5,
     }
 
     def date_of_birth

@@ -207,5 +207,17 @@ module Trainees
         .and change(dttp_trainee, :state).to("non_importable_missing_route")
       end
     end
+
+    context "when training state is not mapped" do
+      let(:api_placement_assignment) { create(:dttp_placement_assignment, response: create(:api_placement_assignment, _dfe_traineestatusid_value: nil)) }
+      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: [api_placement_assignment]) }
+
+      it "marks the application as non importable" do
+        expect {
+          create_trainee_from_dttp
+        }.to change(Trainee, :count).by(0)
+        .and change(dttp_trainee, :state).to("non_importable_missing_state")
+      end
+    end
   end
 end
