@@ -3,6 +3,7 @@
 module Trainees
   class Filter
     include ServicePattern
+    ALL_SCIENCES_FILTER = "Sciences - biology, chemistry, physics"
 
     def initialize(trainees:, filters:)
       @trainees = remove_empty_trainees(trainees)
@@ -59,7 +60,15 @@ module Trainees
     def subject(trainees, subject)
       return trainees if subject.blank?
 
+      if subject == ALL_SCIENCES_FILTER
+        return trainees_on_science_courses(trainees)
+      end
+
       trainees.with_subject_or_allocation_subject(subject)
+    end
+
+    def trainees_on_science_courses(trainees)
+      trainees.with_subject_or_allocation_subject("physics").or(trainees.with_subject_or_allocation_subject("chemistry").or(trainees.with_subject_or_allocation_subject("biology")))
     end
 
     def text_search(trainees, text_search)
