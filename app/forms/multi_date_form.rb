@@ -84,8 +84,8 @@ private
       errors.add(:date, :blank)
     elsif !date.is_a?(Date)
       errors.add(:date, :invalid)
-    elsif date_before_course_start_date?(date, trainee.course_start_date)
-      errors.add(:date, I18n.t("activemodel.errors.models.deferral_form.attributes.date.not_before_course_start_date").html_safe)
+    elsif date_before_itt_start_date?(date, trainee.itt_start_date)
+      errors.add(:date, I18n.t("activemodel.errors.models.deferral_form.attributes.date.not_before_itt_start_date").html_safe)
     end
   end
 end

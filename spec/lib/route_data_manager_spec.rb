@@ -30,10 +30,10 @@ describe RouteDataManager do
             .from(trainee.course_subject_one).to(nil)
             .and change { trainee.course_age_range }
             .from(trainee.course_age_range).to([])
-            .and change { trainee.course_start_date }
-            .from(trainee.course_start_date).to(nil)
-            .and change { trainee.course_end_date }
-            .from(trainee.course_end_date).to(nil)
+            .and change { trainee.itt_start_date }
+            .from(trainee.itt_start_date).to(nil)
+            .and change { trainee.itt_end_date }
+            .from(trainee.itt_end_date).to(nil)
             .and change { trainee.study_mode }
             .from(trainee.study_mode).to(nil)
         end
@@ -110,8 +110,8 @@ describe RouteDataManager do
           expect(trainee.course_uuid).to be_present
           expect(trainee.course_subject_one).to be_present
           expect(trainee.course_age_range).to be_present
-          expect(trainee.course_start_date).to be_present
-          expect(trainee.course_end_date).to be_present
+          expect(trainee.itt_start_date).to be_present
+          expect(trainee.itt_end_date).to be_present
         end
       end
 

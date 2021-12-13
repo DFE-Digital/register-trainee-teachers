@@ -147,10 +147,10 @@ shared:
     - bursary_tier
     - commencement_date
     - course_code
-    - course_end_date
+    - itt_end_date
     - course_max_age
     - course_min_age
-    - course_start_date
+    - itt_start_date
     - course_subject_one
     - course_subject_three
     - course_subject_two

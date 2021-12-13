@@ -56,7 +56,7 @@ describe "bulk_import:import" do
 
   def expect_trainee_to_have_attributes_from_csv(trainee)
     expect(trainee.reload.course_age_range).to eq [7, 11]
-    expect(trainee.course_start_date).to eq Date.parse("01/09/2021")
+    expect(trainee.itt_start_date).to eq Date.parse("01/09/2021")
     expect(trainee.study_mode).to eq "full_time"
     expect(trainee.course_education_phase).to eq "secondary"
 

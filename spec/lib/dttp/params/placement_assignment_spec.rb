@@ -12,7 +12,7 @@ module Dttp
         create(:trainee,
                :with_secondary_course_details,
                :with_start_date,
-               course_start_date: Date.parse("10/10/2020"),
+               itt_start_date: Date.parse("10/10/2020"),
                dttp_id: dttp_contact_id,
                provider: provider,
                ebacc: true)
@@ -60,7 +60,7 @@ module Dttp
 
       describe "#params" do
         describe "academic year" do
-          let(:trainee) { create(:trainee, :with_secondary_course_details, :with_start_date, course_start_date: Date.parse(start_date)) }
+          let(:trainee) { create(:trainee, :with_secondary_course_details, :with_start_date, itt_start_date: Date.parse(start_date)) }
           let(:expected_value) { "/dfe_academicyears(#{expected_year})" }
 
           subject do
@@ -127,8 +127,8 @@ module Dttp
           context "UK degree" do
             it "returns a hash with all the UK specific placement assignment fields" do
               expect(subject).to eq({
-                "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
-                "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
+                "dfe_programmestartdate" => trainee.itt_start_date.in_time_zone.iso8601,
+                "dfe_programmeenddate" => trainee.itt_end_date.in_time_zone.iso8601,
                 "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
                 "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
                 "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_course_subject_entity_id})",
@@ -158,8 +158,8 @@ module Dttp
 
             it "returns a hash with all the Non-UK specific placement assignment fields" do
               expect(subject).to eq({
-                "dfe_programmestartdate" => trainee.course_start_date.in_time_zone.iso8601,
-                "dfe_programmeenddate" => trainee.course_end_date.in_time_zone.iso8601,
+                "dfe_programmestartdate" => trainee.itt_start_date.in_time_zone.iso8601,
+                "dfe_programmeenddate" => trainee.itt_end_date.in_time_zone.iso8601,
                 "dfe_ContactId@odata.bind" => "$#{contact_change_set_id}",
                 "dfe_CoursePhaseId@odata.bind" => "/dfe_coursephases(#{dttp_age_range_entity_id})",
                 "dfe_ITTSubject1Id@odata.bind" => "/dfe_subjects(#{dttp_course_subject_entity_id})",
@@ -556,7 +556,7 @@ module Dttp
                 :with_start_date,
                 :with_early_years_grant,
                 dttp_id: dttp_contact_id,
-                course_start_date: Date.parse("1/8/2022"),
+                itt_start_date: Date.parse("1/8/2022"),
               )
             end
 

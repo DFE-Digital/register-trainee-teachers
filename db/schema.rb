@@ -392,11 +392,11 @@ ActiveRecord::Schema.define(version: 2021_12_09_144401) do
     t.text "additional_ethnic_background"
     t.integer "disability_disclosure"
     t.text "course_subject_one"
-    t.date "course_start_date"
+    t.date "itt_start_date"
     t.jsonb "progress", default: {}
     t.bigint "provider_id", null: false
     t.date "outcome_date"
-    t.date "course_end_date"
+    t.date "itt_end_date"
     t.uuid "placement_assignment_dttp_id"
     t.string "trn"
     t.datetime "submitted_for_trn_at"

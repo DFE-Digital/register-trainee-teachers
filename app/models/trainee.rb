@@ -314,13 +314,13 @@ class Trainee < ApplicationRecord
   end
 
   def course_duration_in_years
-    return unless course_start_date && course_end_date
+    return unless itt_start_date && itt_end_date
 
-    ((course_end_date - course_start_date) / 365).ceil
+    ((itt_end_date - itt_start_date) / 365).ceil
   end
 
   def starts_course_in_the_future?
-    course_start_date&.future?
+    itt_start_date&.future?
   end
 
   def awaiting_action?

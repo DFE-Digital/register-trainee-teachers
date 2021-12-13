@@ -33,16 +33,16 @@ describe TraineeStartDateForm, type: :model do
       end
     end
 
-    context "date is after the course end date" do
+    context "date is after the itt end date" do
       let(:trainee) do
-        build(:trainee, course_end_date: Date.parse("19/12/2020"))
+        build(:trainee, itt_end_date: Date.parse("19/12/2020"))
       end
 
       it "is invalid" do
         expect(subject.errors[:commencement_date]).to include(
           I18n.t(
-            "#{error_attr}.not_after_course_end_date_html",
-            course_end_date: trainee.course_end_date.strftime("%-d %B %Y"),
+            "#{error_attr}.not_after_itt_end_date_html",
+            itt_end_date: trainee.itt_end_date.strftime("%-d %B %Y"),
           ),
         )
       end
@@ -70,7 +70,7 @@ describe TraineeStartDateForm, type: :model do
   end
 
   describe "#save!" do
-    let(:trainee) { create(:trainee, course_start_date: Time.zone.today) }
+    let(:trainee) { create(:trainee, itt_start_date: Time.zone.today) }
 
     before do
       allow(form_store).to receive(:set).with(trainee.id, :trainee_start_date, nil)

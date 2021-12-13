@@ -45,7 +45,7 @@ describe WithdrawalForm, type: :model do
         end
       end
 
-      include_examples "date is not before course start date", :withdrawal_form
+      include_examples "date is not before itt start date", :withdrawal_form
     end
   end
 
@@ -53,9 +53,9 @@ describe WithdrawalForm, type: :model do
     context "with params" do
       let(:params) do
         {
-          year: trainee.course_start_date.year,
-          month: trainee.course_start_date.month,
-          day: trainee.course_start_date.day,
+          year: trainee.itt_start_date.year,
+          month: trainee.itt_start_date.month,
+          day: trainee.itt_start_date.day,
           date_string: "other",
           withdraw_reason: WithdrawalReasons::HEALTH_REASONS,
           additional_withdraw_reason: "",

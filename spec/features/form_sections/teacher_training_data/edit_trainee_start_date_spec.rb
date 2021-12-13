@@ -12,7 +12,7 @@ feature "edit Trainee start date" do
   end
 
   scenario "updates the start date" do
-    given_a_trainee_exists(:submitted_for_trn, course_start_date: Date.parse("14/09/2021"))
+    given_a_trainee_exists(:submitted_for_trn, itt_start_date: Date.parse("14/09/2021"))
     when_i_visit_the_edit_trainee_start_date_page
     when_i_change_the_start_date
     when_i_click_continue

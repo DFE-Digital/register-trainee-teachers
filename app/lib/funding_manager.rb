@@ -85,6 +85,6 @@ private
   end
 
   def find_academic_cycle
-    AcademicCycle.for_date(trainee.commencement_date || trainee.course_start_date)
+    AcademicCycle.for_date(trainee.commencement_date || trainee.itt_start_date)
   end
 end

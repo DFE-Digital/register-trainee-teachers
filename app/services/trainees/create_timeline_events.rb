@@ -27,8 +27,8 @@ module Trainees
       additional_ethnic_background
       disability_disclosure
       course_subject_one
-      course_start_date
-      course_end_date
+      itt_start_date
+      itt_end_date
       commencement_date
       course_max_age
       course_uuid

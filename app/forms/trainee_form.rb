@@ -48,14 +48,6 @@ class TraineeForm
     valid? && store.set(id, form_store_key, fields.except(*fields_to_ignore_before_stash))
   end
 
-  def course_start_date_attribute_name
-    "#{course_date_attribute_name_prefix}_start_date".to_sym
-  end
-
-  def course_end_date_attribute_name
-    "#{course_date_attribute_name_prefix}_end_date".to_sym
-  end
-
   def missing_fields
     return [] if valid?
 
@@ -70,10 +62,6 @@ private
 
   def assign_attributes_to_trainee
     trainee.assign_attributes(fields.except(*fields_to_ignore_before_save))
-  end
-
-  def course_date_attribute_name_prefix
-    :itt
   end
 
   def compute_fields

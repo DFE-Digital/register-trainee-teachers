@@ -35,8 +35,8 @@ class CourseDetailsForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
-  alias_attribute :itt_start_date, :course_start_date
-  alias_attribute :itt_end_date, :course_end_date
+  alias_attribute :itt_start_date, :itt_start_date
+  alias_attribute :itt_end_date, :itt_end_date
 
   before_validation :sanitise_course_dates
   before_validation :sanitise_subjects
@@ -55,8 +55,8 @@ class CourseDetailsForm < TraineeForm
 
   validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, if: :requires_study_mode?
 
-  validate :course_start_date_valid
-  validate :course_end_date_valid
+  validate :itt_start_date_valid
+  validate :itt_end_date_valid
 
   delegate :apply_application?, :requires_study_mode?, to: :trainee
 
@@ -73,11 +73,11 @@ class CourseDetailsForm < TraineeForm
     (other_age_range? ? additional_age_range : main_age_range).split(" to ")
   end
 
-  def course_start_date
+  def itt_start_date
     new_date({ year: start_year, month: start_month, day: start_day })
   end
 
-  def course_end_date
+  def itt_end_date
     new_date({ year: end_year, month: end_month, day: end_day })
   end
 
@@ -171,8 +171,8 @@ private
   def update_trainee_attributes
     attributes = {
       course_uuid: course_uuid,
-      course_start_date: course_start_date,
-      course_end_date: course_end_date,
+      itt_start_date: itt_start_date,
+      itt_end_date: itt_end_date,
       course_education_phase: course_education_phase,
     }
 
@@ -199,12 +199,12 @@ private
   def compute_attributes_from_trainee
     attributes = {
       course_uuid: trainee.course_uuid,
-      start_day: trainee.course_start_date&.day,
-      start_month: trainee.course_start_date&.month,
-      start_year: trainee.course_start_date&.year,
-      end_day: trainee.course_end_date&.day,
-      end_month: trainee.course_end_date&.month,
-      end_year: trainee.course_end_date&.year,
+      start_day: trainee.itt_start_date&.day,
+      start_month: trainee.itt_start_date&.month,
+      start_year: trainee.itt_start_date&.year,
+      end_day: trainee.itt_end_date&.day,
+      end_month: trainee.itt_end_date&.month,
+      end_year: trainee.itt_end_date&.year,
     }
 
     unless trainee.early_years_route?
@@ -256,35 +256,35 @@ private
     end
   end
 
-  def course_start_date_valid
+  def itt_start_date_valid
     if [start_day, start_month, start_year].all?(&:blank?)
-      errors.add(course_start_date_attribute_name, :blank)
+      errors.add(:itt_start_date, :blank)
     elsif start_year.to_i > next_year
-      errors.add(course_start_date_attribute_name, :future)
-    elsif !course_start_date.is_a?(Date)
-      errors.add(course_start_date_attribute_name, :invalid)
-    elsif course_start_date < earliest_valid_start_date
-      errors.add(course_start_date_attribute_name, :too_old)
+      errors.add(:itt_start_date, :future)
+    elsif !itt_start_date.is_a?(Date)
+      errors.add(:itt_start_date, :invalid)
+    elsif itt_start_date < earliest_valid_start_date
+      errors.add(:itt_start_date, :too_old)
     end
   end
 
-  def course_end_date_valid
+  def itt_end_date_valid
     if [end_day, end_month, end_year].all?(&:blank?)
-      errors.add(course_end_date_attribute_name, :blank)
+      errors.add(:itt_end_date, :blank)
     elsif end_year.to_i > max_years
-      errors.add(course_end_date_attribute_name, :future)
-    elsif !course_end_date.is_a?(Date)
-      errors.add(course_end_date_attribute_name, :invalid)
-    elsif course_end_date < 10.years.ago
-      errors.add(course_end_date_attribute_name, :too_old)
+      errors.add(:itt_end_date, :future)
+    elsif !itt_end_date.is_a?(Date)
+      errors.add(:itt_end_date, :invalid)
+    elsif itt_end_date < 10.years.ago
+      errors.add(:itt_end_date, :too_old)
     end
 
     additional_validation = errors.attribute_names.none? do |attribute_name|
-      [course_start_date_attribute_name, course_end_date_attribute_name].include?(attribute_name)
+      %i[itt_start_date itt_end_date].include?(attribute_name)
     end
 
-    if additional_validation && course_start_date >= course_end_date
-      errors.add(course_end_date_attribute_name, :before_or_same_as_start_date)
+    if additional_validation && itt_start_date >= itt_end_date
+      errors.add(:itt_end_date, :before_or_same_as_start_date)
     end
   end
 

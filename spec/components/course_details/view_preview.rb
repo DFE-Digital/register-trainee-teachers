@@ -33,7 +33,7 @@ module CourseDetails
         provider: Provider.new,
         course_subject_one: "Primary",
         course_age_range: [3, 11],
-        course_start_date: Date.new(2020, 1, 28),
+        itt_start_date: Date.new(2020, 1, 28),
         training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key],
       )
     end
@@ -45,7 +45,7 @@ module CourseDetails
         course_subject_one: "Primary",
         course_subject_two: "Science",
         course_age_range: [3, 11],
-        course_start_date: Date.new(2020, 1, 28),
+        itt_start_date: Date.new(2020, 1, 28),
         training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key],
       )
     end

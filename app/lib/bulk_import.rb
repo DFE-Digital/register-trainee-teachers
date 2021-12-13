@@ -106,8 +106,8 @@ module BulkImport
       column_mapper = {
         "Bursary funding" => method(:to_funding) >> assign_field[:applying_for_bursary],
         "Building" => assign_field[:address_line_one],
-        "Course end date" => method(:parse_date) >> assign_field[:course_end_date],
-        "Course start date" => method(:parse_date) >> assign_field[:course_start_date],
+        "ITT end date" => method(:parse_date) >> assign_field[:itt_end_date],
+        "ITT start date" => method(:parse_date) >> assign_field[:itt_start_date],
         "Date of birth" => method(:parse_date) >> assign_field[:date_of_birth],
         "Disability" => method(:to_disability_disclosure) >> assign_field[:disability_disclosure],
         "Disability specification" => method(:to_disability_ids) >> assign_field[:disability_ids],
@@ -176,8 +176,8 @@ module BulkImport
       end
 
       trainee.study_mode ||= TRAINEE_STUDY_MODE_ENUMS[course.study_mode]
-      trainee.course_start_date ||= course.start_date
-      trainee.course_end_date ||= course.end_date
+      trainee.itt_start_date ||= course.start_date
+      trainee.itt_end_date ||= course.end_date
       trainee.course_min_age ||= course.min_age
       trainee.course_max_age ||= course.max_age
       trainee.course_education_phase ||= course.level

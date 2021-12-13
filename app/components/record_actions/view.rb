@@ -30,7 +30,7 @@ module RecordActions
       if has_missing_fields
         t("views.trainees.edit.status_summary.missing_fields")
       elsif course_starting_in_the_future?
-        t("views.trainees.edit.status_summary.itt_not_started", itt_start_date: date_for_summary_view(trainee.course_start_date))
+        t("views.trainees.edit.status_summary.itt_not_started", itt_start_date: date_for_summary_view(trainee.itt_start_date))
       else
         t("views.trainees.edit.status_summary.#{trainee.state}")
       end

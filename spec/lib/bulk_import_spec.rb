@@ -12,7 +12,7 @@ describe BulkImport do
     let(:csv_row) do
       {
         "Route" => "School Direct Salaried PG)",
-        "Course start date" => "13/04/1992",
+        "ITT start date" => "13/04/1992",
         "ITT Subject 1" => "English",
         "Degree type" => "Bachelor of Arts",
         "Institution" => "Durham University",

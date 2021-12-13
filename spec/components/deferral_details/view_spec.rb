@@ -15,7 +15,7 @@ module DeferralDetails
       render_inline(View.new(data_model))
     end
 
-    context "course start date is in the past" do
+    context "itt start date is in the past" do
       let(:trainee_stub) { Trainee.new(defer_date: Time.zone.yesterday) }
 
       it "renders the deferral date" do
@@ -35,10 +35,10 @@ module DeferralDetails
       end
     end
 
-    context "course start date is in the future" do
-      let(:trainee_stub) { Trainee.new(course_start_date: 1.year.from_now) }
+    context "itt start date is in the future" do
+      let(:trainee_stub) { Trainee.new(itt_start_date: 1.year.from_now) }
 
-      it "renders the deferred before course start date message" do
+      it "renders the deferred before itt start date message" do
         expect(component).to have_text(strip_tags(t("deferral_details.view.deferred_before_itt_started")))
       end
     end

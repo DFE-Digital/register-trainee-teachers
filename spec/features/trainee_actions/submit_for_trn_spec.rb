@@ -11,7 +11,7 @@ feature "submit for TRN" do
   end
 
   describe "submission" do
-    context "when course start date is in the past" do
+    context "when itt start date is in the past" do
       let(:trainee) do
         create(
           :trainee,
@@ -30,7 +30,7 @@ feature "submit for TRN" do
       end
     end
 
-    context "when course start date is in the future" do
+    context "when itt start date is in the future" do
       context "when all sections are completed" do
         let(:trainee) do
           create(

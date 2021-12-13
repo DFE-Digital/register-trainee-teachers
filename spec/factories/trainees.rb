@@ -4,11 +4,11 @@ FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
       randomise_subjects { false }
-      potential_course_start_date { course_start_date || Faker::Date.in_date_period(month: 9) }
+      potential_itt_start_date { itt_start_date || Faker::Date.in_date_period(month: 9) }
     end
 
     sequence :trainee_id do |n|
-      year = potential_course_start_date.strftime("%y").to_i
+      year = potential_itt_start_date.strftime("%y").to_i
 
       "#{year}/#{year + 1}-#{n}"
     end
@@ -175,14 +175,14 @@ FactoryBot.define do
 
     trait :with_study_mode_and_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      course_start_date { Faker::Date.in_date_period(month: 9) }
-      course_end_date { Faker::Date.in_date_period(month: 8, year: Faker::Date.in_date_period.year + 1) }
+      itt_start_date { Faker::Date.in_date_period(month: 9) }
+      itt_end_date { Faker::Date.in_date_period(month: 8, year: Faker::Date.in_date_period.year + 1) }
     end
 
     trait :with_study_mode_and_future_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      course_start_date { Faker::Date.in_date_period(month: 9, year: Faker::Date.in_date_period.year + 1) }
-      course_end_date { Faker::Date.in_date_period(month: 8, year: course_start_date.year + 1) }
+      itt_start_date { Faker::Date.in_date_period(month: 9, year: Faker::Date.in_date_period.year + 1) }
+      itt_end_date { Faker::Date.in_date_period(month: 8, year: itt_start_date.year + 1) }
     end
 
     trait :with_publish_course_details do
@@ -192,14 +192,14 @@ FactoryBot.define do
     end
 
     trait :with_start_date do
-      commencement_date { Faker::Date.between(from: course_start_date, to: Time.zone.today) }
+      commencement_date { Faker::Date.between(from: itt_start_date, to: Time.zone.today) }
     end
 
-    trait :course_start_date_in_the_past do
+    trait :itt_start_date_in_the_past do
       with_study_mode_and_course_dates
     end
 
-    trait :course_start_date_in_the_future do
+    trait :itt_start_date_in_the_future do
       with_study_mode_and_future_course_dates
     end
 
@@ -318,7 +318,7 @@ FactoryBot.define do
     end
 
     trait :with_withdrawal_date do
-      withdraw_date { Faker::Date.between(from: potential_course_start_date, to: potential_course_start_date + 1.year) }
+      withdraw_date { Faker::Date.between(from: potential_itt_start_date, to: potential_itt_start_date + 1.year) }
     end
 
     trait :withdrawn do
@@ -329,13 +329,13 @@ FactoryBot.define do
 
     trait :deferred do
       trn_received
-      defer_date { potential_course_start_date }
+      defer_date { potential_itt_start_date }
       state { "deferred" }
     end
 
     trait :reinstated do
       completed
-      defer_date { potential_course_start_date }
+      defer_date { potential_itt_start_date }
       reinstate_date { Faker::Date.in_date_period }
       state { "trn_received" }
     end

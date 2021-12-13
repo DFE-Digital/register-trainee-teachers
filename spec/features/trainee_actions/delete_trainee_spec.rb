@@ -19,7 +19,7 @@ feature "Deleting a trainee" do
   end
 
   describe "deleting a non-draft trainee" do
-    scenario "course start date is in the future" do
+    scenario "itt start date is in the future" do
       given_a_trainee_starting_a_course_in_the_future
       and_i_am_on_the_trainee_record_page
       and_i_click_the_delete_link
@@ -49,13 +49,13 @@ private
   def given_a_trainee_starting_a_course_in_the_future
     given_a_trainee_exists(:trn_received,
                            :with_publish_course_details,
-                           course_start_date: 10.days.from_now)
+                           itt_start_date: 10.days.from_now)
   end
 
   def given_a_trainee_with_no_start_date_for_a_course_already_started
     given_a_trainee_exists(:trn_received,
                            :with_publish_course_details,
-                           course_start_date: 10.days.ago,
+                           itt_start_date: 10.days.ago,
                            commencement_date: nil)
   end
 

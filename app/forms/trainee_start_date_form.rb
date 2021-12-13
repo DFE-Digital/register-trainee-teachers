@@ -56,7 +56,7 @@ private
   end
 
   def commencement_status
-    if commencement_date.after?(trainee.course_start_date)
+    if commencement_date.after?(trainee.itt_start_date)
       COMMENCEMENT_STATUS_ENUMS[:itt_started_later]
     else
       COMMENCEMENT_STATUS_ENUMS[:itt_started_on_time]

@@ -8,9 +8,9 @@ describe ReinstatementForm, type: :model do
 
   let(:params) do
     {
-      year: trainee.course_start_date.year,
-      month: trainee.course_start_date.month,
-      day: trainee.course_start_date.day,
+      year: trainee.itt_start_date.year,
+      month: trainee.itt_start_date.month,
+      day: trainee.itt_start_date.day,
       date_string: "other",
     }
   end
@@ -53,7 +53,7 @@ describe ReinstatementForm, type: :model do
         end
       end
 
-      include_examples "date is not before course start date", :reinstatement_form
+      include_examples "date is not before itt start date", :reinstatement_form
     end
   end
 
@@ -80,9 +80,9 @@ describe ReinstatementForm, type: :model do
       expect { subject.save! }.to change(trainee, :reinstate_date).to(Date.new(*expected_date_params))
     end
 
-    context "course start date is in the future" do
+    context "itt start date is in the future" do
       let(:trainee) do
-        create(:trainee, :deferred, commencement_date: nil, course_start_date: Time.zone.today + 1.day)
+        create(:trainee, :deferred, commencement_date: nil, itt_start_date: Time.zone.today + 1.day)
       end
 
       before do

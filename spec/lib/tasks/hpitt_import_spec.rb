@@ -58,7 +58,7 @@ describe "hpitt:import" do
 
   def expect_trainee_to_have_attributes_from_csv(trainee)
     expect(trainee.reload.course_age_range).to eq [11, 16]
-    expect(trainee.course_start_date).to eq Date.parse("13/04/2018")
+    expect(trainee.itt_start_date).to eq Date.parse("13/04/2018")
     expect(trainee.course_subject_one).to eq "mathematics"
     expect(trainee.study_mode).to eq "full_time"
     expect(trainee.course_education_phase).to eq "secondary"

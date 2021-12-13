@@ -44,10 +44,10 @@ describe TraineeStartStatusForm, type: :model do
       context "when trainee started on time" do
         let(:params) { { day: "", month: "", year: "", commencement_status: "itt_started_on_time" } }
 
-        let(:trainee) { build(:trainee, course_start_date: Time.zone.today) }
+        let(:trainee) { build(:trainee, itt_start_date: Time.zone.today) }
 
-        it "uses the trainee's course_start_date" do
-          expect(subject.commencement_date).to eq(trainee.course_start_date)
+        it "uses the trainee's itt_start_date" do
+          expect(subject.commencement_date).to eq(trainee.itt_start_date)
         end
 
         it "is valid" do
@@ -68,16 +68,16 @@ describe TraineeStartStatusForm, type: :model do
       end
     end
 
-    context "date is after the course end date" do
+    context "date is after the itt end date" do
       let(:trainee) do
-        build(:trainee, course_end_date: Date.parse("19/12/2020"))
+        build(:trainee, itt_end_date: Date.parse("19/12/2020"))
       end
 
       it "is invalid" do
         expect(subject.errors[:commencement_date]).to include(
           I18n.t(
-            "#{error_attr}.not_after_course_end_date_html",
-            course_end_date: trainee.course_end_date.strftime("%-d %B %Y"),
+            "#{error_attr}.not_after_itt_end_date_html",
+            itt_end_date: trainee.itt_end_date.strftime("%-d %B %Y"),
           ),
         )
       end

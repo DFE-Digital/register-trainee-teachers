@@ -21,7 +21,7 @@ module RecordActions
 
     def itt_starts_in_future
       trainee.state = :submitted_for_trn
-      trainee.course_start_date = Time.zone.tomorrow
+      trainee.itt_start_date = Time.zone.tomorrow
       render View.new(trainee)
     end
 
