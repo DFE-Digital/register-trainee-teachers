@@ -38,7 +38,7 @@ describe Course do
     it "validates presence" do
       expect(subject).to validate_presence_of(:code)
       expect(subject).to validate_presence_of(:name)
-      expect(subject).to validate_presence_of(:start_date)
+      expect(subject).to validate_presence_of(:published_start_date)
       expect(subject).to validate_presence_of(:level)
       expect(subject).to validate_presence_of(:min_age)
       expect(subject).to validate_presence_of(:max_age)
@@ -52,25 +52,25 @@ describe Course do
     it { is_expected.to have_many(:subjects) }
   end
 
-  describe ".end_date" do
-    it "returns nil if start_date not set" do
-      course = build(:course, start_date: nil)
+  describe "start/end dates" do
+    let(:date_today) { Time.zone.today }
+    let(:date_tomorrow) { date_today + 1.day }
+    let(:course) { build(:course, study_mode: nil) }
+
+    it "returns nil if study_mode not set" do
+      expect(course.start_date).to be_nil
       expect(course.end_date).to be_nil
     end
 
-    it "returns nil if duration_in_years not set" do
-      course = build(:course, start_date: Time.zone.today, duration_in_years: nil)
-      expect(course.end_date).to be_nil
-    end
+    context "study_mode is part_time and course has part time dates" do
+      let(:course) do
+        build(:course, study_mode: :part_time, part_time_start_date: date_today, part_time_end_date: date_tomorrow)
+      end
 
-    it "duration 1 year" do
-      course = build(:course, start_date: Time.zone.today, duration_in_years: 1)
-      expect(course.end_date).to eql(1.year.from_now.to_date.prev_day)
-    end
-
-    it "duration 2 years" do
-      course = build(:course, start_date: Time.zone.today, duration_in_years: 2)
-      expect(course.end_date).to eql(2.years.from_now.to_date.prev_day)
+      it "can compute part time start and end dates" do
+        expect(course.start_date).to eq(date_today)
+        expect(course.end_date).to eq(date_tomorrow)
+      end
     end
   end
 end

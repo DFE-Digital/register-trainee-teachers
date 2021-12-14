@@ -64,11 +64,10 @@ describe Trainees::SubjectSpecialismsController do
         )
       end
 
-      it "redirects to the confirm page" do
+      it "redirects to the study mode page" do
         put(:update, params: { trainee_id: trainee, position: 1, subject_specialism_form: { course_subject_one: "moose" } })
-        expect(response).to redirect_to(
-          trainee_publish_course_details_confirm_path(trainee_id: trainee.slug),
-        )
+
+        expect(response).to redirect_to(edit_trainee_course_details_study_mode_path(trainee_id: trainee.slug))
       end
     end
   end

@@ -190,8 +190,8 @@ module Features
       @language_specialism_page ||= PageObjects::Trainees::LanguageSpecialism.new
     end
 
-    def itt_start_date_edit_page
-      @itt_start_date_edit_page ||= PageObjects::Trainees::EditIttStartDate.new
+    def itt_dates_edit_page
+      @itt_start_date_edit_page ||= PageObjects::Trainees::EditIttDates.new
     end
 
     def study_mode_edit_page

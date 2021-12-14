@@ -35,9 +35,6 @@ class CourseDetailsForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
-  alias_attribute :itt_start_date, :itt_start_date
-  alias_attribute :itt_end_date, :itt_end_date
-
   before_validation :sanitise_course_dates
   before_validation :sanitise_subjects
 

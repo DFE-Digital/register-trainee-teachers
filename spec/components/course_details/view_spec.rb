@@ -41,11 +41,11 @@ module CourseDetails
         expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Age range is missing")
       end
 
-      it "renders missing hint for itt start date" do
+      it "renders missing hint for ITT start date" do
         expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "ITT start date is missing")
       end
 
-      it "renders missing hint for itt end date" do
+      it "renders missing hint for ITT end date" do
         expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "ITT end date is missing")
       end
     end
@@ -63,9 +63,8 @@ module CourseDetails
                itt_end_date: nil)
       end
       let(:specialisms) { ["Spanish language", "public services"] }
-      let(:itt_start_date) { nil }
 
-      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, itt_start_date, { uuid: course.uuid }) }
+      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, { uuid: course.uuid }) }
 
       let(:course) { trainee.published_course }
 
@@ -80,25 +79,6 @@ module CourseDetails
       it "renders the course age range" do
         expect(rendered_component)
           .to have_text(age_range_for_summary_view(course.age_range))
-      end
-
-      it "renders the itt start date" do
-        expect(rendered_component)
-          .to have_text(date_for_summary_view(course.start_date))
-      end
-
-      context "when itt_start_date is available" do
-        let(:itt_start_date) { Time.zone.today }
-
-        it "renders the itt start date" do
-          expect(rendered_component)
-            .to have_text(date_for_summary_view(itt_start_date))
-        end
-      end
-
-      it "renders the itt end date" do
-        expect(rendered_component)
-          .to have_text(date_for_summary_view(course.end_date))
       end
     end
 
@@ -126,18 +106,19 @@ module CourseDetails
         end
 
         it "renders the subject" do
-          expect(rendered_component)
-            .to have_text(trainee.course_subject_one.upcase_first)
+          expect(rendered_component).to have_text(trainee.course_subject_one.upcase_first)
         end
 
         it "renders the course age range" do
-          expect(rendered_component)
-            .to have_text(age_range_for_summary_view(trainee.course_age_range))
+          expect(rendered_component).to have_text(age_range_for_summary_view(trainee.course_age_range))
         end
 
-        it "renders the itt start date" do
-          expect(rendered_component)
-            .to have_text(date_for_summary_view(trainee.itt_start_date))
+        it "renders the ITT start date" do
+          expect(rendered_component).to have_text(date_for_summary_view(trainee.itt_start_date))
+        end
+
+        it "renders the ITT end date" do
+          expect(rendered_component).to have_text(date_for_summary_view(trainee.itt_end_date))
         end
       end
 

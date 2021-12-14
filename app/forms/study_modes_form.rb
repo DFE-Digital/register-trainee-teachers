@@ -14,7 +14,6 @@ class StudyModesForm < TraineeForm
     form.assign_attributes_and_stash({
       study_mode: study_mode,
     })
-
     super
   end
 

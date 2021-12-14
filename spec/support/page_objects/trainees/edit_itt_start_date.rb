@@ -2,15 +2,17 @@
 
 module PageObjects
   module Trainees
-    class EditIttStartDate < PageObjects::Base
+    class EditIttDates < PageObjects::Base
       include PageObjects::Helpers
-      set_url "/trainees/{trainee_id}/course-details/start-date/edit"
+      set_url "/trainees/{trainee_id}/course-details/itt-dates/edit"
 
-      element :itt_start_date_radios, ".govuk-radios.itt_start-date"
+      element :start_date_day, "#itt_dates_form_start_date_3i"
+      element :start_date_month, "#itt_dates_form_start_date_2i"
+      element :start_date_year, "#itt_dates_form_start_date_1i"
 
-      element :itt_start_date_day, "#itt_start_date_form_date_3i"
-      element :itt_start_date_month, "#itt_start_date_form_date_2i"
-      element :itt_start_date_year, "#itt_start_date_form_date_1i"
+      element :end_date_day, "#itt_dates_form_end_date_3i"
+      element :end_date_month, "#itt_dates_form_end_date_2i"
+      element :end_date_year, "#itt_dates_form_end_date_1i"
 
       element :continue, "button[type='submit']"
     end

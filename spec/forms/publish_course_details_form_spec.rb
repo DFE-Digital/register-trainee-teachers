@@ -27,16 +27,7 @@ describe PublishCourseDetailsForm, type: :model do
       describe "skip itt_end_date validation" do
         it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
           expect(form_store).to receive(:set).with(trainee.id, :publish_course_details, params)
-          subject.skip_itt_end_date_validation!
           subject.stash
-        end
-      end
-
-      describe "validate itt_end_date" do
-        it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
-          expect(form_store).not_to receive(:set).with(trainee.id, :publish_course_details, params)
-          subject.stash
-          expect(subject.errors.messages).to eq({ itt_end_date: ["can't be blank"] })
         end
       end
     end
@@ -59,7 +50,6 @@ describe PublishCourseDetailsForm, type: :model do
                  subject_names: [subject_name])
 
           subject_specialism_form.stash_or_save!
-          subject.skip_itt_end_date_validation!
         end
 
         it "updates the trainee with the publish course details" do

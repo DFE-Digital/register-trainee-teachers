@@ -44,7 +44,7 @@ module TeacherTrainingApi
           end
 
           it "parses the start date" do
-            expect(course.start_date).to be_instance_of(Date)
+            expect(course.published_start_date).to be_instance_of(Date)
           end
 
           it "parses the min and max age" do

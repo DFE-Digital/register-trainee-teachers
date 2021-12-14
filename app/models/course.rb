@@ -3,7 +3,7 @@
 class Course < ApplicationRecord
   validates :code, presence: true
   validates :name, presence: true
-  validates :start_date, presence: true
+  validates :published_start_date, presence: true
   validates :level, presence: true
   validates :min_age, presence: true
   validates :max_age, presence: true
@@ -36,11 +36,12 @@ class Course < ApplicationRecord
   # Order scope is critical - do not remove (see TeacherTrainingApi::ImportCourse#subjects)
   has_many :subjects, -> { order("course_subjects.id") }, through: :course_subjects
 
-  def end_date
-    return unless start_date
-    return if duration_in_years.to_i.zero?
+  def start_date
+    public_send("#{study_mode}_start_date") if study_mode && study_mode != COURSE_STUDY_MODES[:full_time_or_part_time]
+  end
 
-    (start_date + duration_in_years.years).prev_day
+  def end_date
+    public_send("#{study_mode}_end_date") if study_mode && study_mode != COURSE_STUDY_MODES[:full_time_or_part_time]
   end
 
   def age_range
@@ -61,5 +62,9 @@ class Course < ApplicationRecord
 
   def subject_three
     subjects&.third
+  end
+
+  def single_study_mode?
+    study_mode != COURSE_STUDY_MODES[:full_time_or_part_time]
   end
 end

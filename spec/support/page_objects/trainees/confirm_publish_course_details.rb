@@ -17,8 +17,7 @@ module PageObjects
       sections :summary_list_rows, SummaryListRows, ".govuk-summary-list__row"
 
       def subject_description
-        subject_row = summary_list_rows.find { |row| row.key.text =~ /Subject/ }
-        subject_row.value.text
+        summary_list_rows.find { |row| row.key.text =~ /Subject/ }&.value&.text
       end
     end
   end

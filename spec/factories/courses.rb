@@ -13,7 +13,7 @@ FactoryBot.define do
     name { PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.keys.sample }
     code { Faker::Alphanumeric.unique.alphanumeric(number: 4, min_alpha: 1).upcase }
     accredited_body_code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
-    start_date { Time.zone.today }
+    published_start_date { Time.zone.today }
     level { PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.keys.include?(name) ? :primary : :secondary }
     min_age { age_range.first }
     max_age { age_range.last }

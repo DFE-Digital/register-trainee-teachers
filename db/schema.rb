@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_16_145323) do
+ActiveRecord::Schema.define(version: 2021_12_16_171101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 2021_12_16_145323) do
     t.string "code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.date "start_date", null: false
+    t.date "published_start_date", null: false
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
@@ -176,6 +176,9 @@ ActiveRecord::Schema.define(version: 2021_12_16_145323) do
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code"
     t.index ["recruitment_cycle_year"], name: "index_courses_on_recruitment_cycle_year"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "degrees", force: :cascade do |t|

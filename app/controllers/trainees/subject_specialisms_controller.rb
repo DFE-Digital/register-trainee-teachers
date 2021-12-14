@@ -2,7 +2,7 @@
 
 module Trainees
   class SubjectSpecialismsController < BaseController
-    include PublishCourseNextPath
+    include Publishable
 
     helper_method :position, :course_subject_attribute_name
 
@@ -55,7 +55,7 @@ module Trainees
       if subject_specialisms_for_position(next_position).present?
         edit_trainee_subject_specialism_path(trainee, next_position)
       else
-        publish_course_next_path
+        edit_trainee_course_details_study_mode_path(trainee)
       end
     end
 

@@ -29,7 +29,7 @@ class FormStore
     bursary
     language_specialisms
     subject_specialism
-    itt_start_date
+    itt_dates
     start_date_verification
     study_modes
     course_education_phase

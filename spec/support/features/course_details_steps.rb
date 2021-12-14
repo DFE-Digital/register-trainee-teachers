@@ -8,10 +8,7 @@ module Features
       review_draft_page.course_details.link.click
       publish_course_details_page.course_options.first.choose
       publish_course_details_page.submit_button.click
-      and_i_see_itt_end_date_missing_error
-      and_i_click_enter_answer_for_itt_end_date
-      and_i_enter_itt_end_date
-      and_i_submit_the_course_details_form
+      and_i_enter_itt_dates
       and_i_confirm_my_details
       and_the_course_details_is_marked_completed
     end
@@ -22,9 +19,7 @@ module Features
       course_details_page.load(id: trainee_from_url.slug)
       course_details_page.subject.select(subject_specialism_name)
       course_details_page.main_age_range_11_to_16.choose
-      unless assessment_only
-        and_the_course_study_mode_field_is_completed
-      end
+      and_the_course_study_mode_field_is_completed unless assessment_only
       and_the_course_date_fields_are_completed
       and_the_course_details_are_submitted
       and_the_course_details_is_marked_completed
@@ -32,9 +27,7 @@ module Features
 
     def and_the_ey_course_details_is_complete(assessment_only: false)
       course_details_page.load(id: trainee_from_url.slug)
-      unless assessment_only
-        and_the_course_study_mode_field_is_completed
-      end
+      and_the_course_study_mode_field_is_completed unless assessment_only
       and_the_course_date_fields_are_completed
       and_the_course_details_are_submitted
       and_the_course_details_is_marked_completed
@@ -45,7 +38,7 @@ module Features
       create(:course_with_subjects,
              accredited_body_code: trainee.provider.code,
              route: trainee.training_route,
-             start_date: 1.month.from_now,
+             published_start_date: 1.month.from_now,
              subject_names: [AllocationSubjects::PRIMARY])
     end
 
@@ -93,16 +86,18 @@ module Features
       confirm_publish_course_details_page.enter_an_answer_for_itt_end_date_link.click
     end
 
-    def and_i_enter_itt_end_date
-      course_details_page.set_date_fields("itt_end_date", 1.year.from_now.strftime("%d/%m/%Y"))
-    end
-
     def and_i_submit_the_course_details_form
       course_details_page.submit_button.click
     end
 
     def valid_date_after_itt_start_date
       Faker::Date.between(from: trainee.itt_start_date, to: Time.zone.today)
+    end
+
+    def and_i_enter_itt_dates
+      itt_dates_edit_page.set_date_fields(:start_date, 1.week.from_now.strftime("%d/%m/%Y"))
+      itt_dates_edit_page.set_date_fields(:end_date, 1.year.from_now.strftime("%d/%m/%Y"))
+      itt_dates_edit_page.continue.click
     end
 
   private
