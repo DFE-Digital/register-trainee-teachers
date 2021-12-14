@@ -78,16 +78,16 @@ module Trainees
         let(:placement_assignment_one) do
           create(:dttp_placement_assignment,
                  provider_dttp_id: provider.dttp_id,
+                 programme_start_date: Faker::Date.in_date_period(year: Time.zone.now.year - 1, month: 9).strftime("%Y-%m-%d"),
                  response: create(:api_placement_assignment,
-                                  dfe_programmestartdate: Faker::Date.in_date_period(year: Time.zone.now.year - 1, month: 9).strftime("%Y-%m-%d"),
                                   _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::RELIGIOUS_EDUCATION_DTTP_ID))
         end
 
         let(:placement_assignment_two) do
           create(:dttp_placement_assignment,
                  provider_dttp_id: provider.dttp_id,
+                 programme_start_date: Faker::Date.in_date_period(year: Time.zone.now.year, month: 9).strftime("%Y-%m-%d"),
                  response: create(:api_placement_assignment,
-                                  dfe_programmestartdate: Faker::Date.in_date_period(year: Time.zone.now.year, month: 9).strftime("%Y-%m-%d"),
                                   _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
         end
 

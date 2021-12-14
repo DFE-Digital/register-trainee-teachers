@@ -85,15 +85,7 @@ module Trainees
     end
 
     def sorted_placement_assignments
-      @sorted_placement_assignments ||= processable_placement_assignments.sort_by do |placement_assignment|
-        placement_assignment.response["dfe_programmestartdate"]
-      end
-    end
-
-    def processable_placement_assignments
-      @processable_placement_assignments ||= dttp_trainee.placement_assignments.reject do |placement_assignment|
-        placement_assignment.response["dfe_programmestartdate"].blank?
-      end
+      @sorted_placement_assignments ||= dttp_trainee.placement_assignments.where.not(programme_start_date: nil).order(:programme_start_date)
     end
 
     def multiple_providers?
@@ -242,8 +234,8 @@ module Trainees
         course_max_age: age_range && age_range[1],
         study_mode: study_mode,
         commencement_date: earliest_placement_assignment.response["dfe_commencementdate"],
-        course_start_date: latest_placement_assignment.response["dfe_programmestartdate"],
-        course_end_date: latest_placement_assignment.response["dfe_programmeeenddate"],
+        itt_start_date: latest_placement_assignment.programme_start_date,
+        itt_end_date: latest_placement_assignment.programme_end_date,
       }
     end
 
