@@ -66,7 +66,7 @@ module Trainees
         trainee_id: trainee_id,
         training_route: training_route,
         trn: dttp_trainee.response["dfe_trn"],
-        submitted_for_trn_at: latest_placement_assignment.response["dfe_trnassessmentdate"],
+        submitted_for_trn_at: earliest_placement_assignment.response["dfe_trnassessmentdate"],
         dttp_id: dttp_trainee.dttp_id,
         placement_assignment_dttp_id: latest_placement_assignment.dttp_id,
       }.merge(personal_details_attributes)
