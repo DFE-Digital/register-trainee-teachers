@@ -30,8 +30,6 @@ class PersonalDetailsForm < TraineeForm
   validates :middle_names, length: { maximum: 50 }, allow_nil: true
   validates :date_of_birth, presence: true
   validate :date_of_birth_valid
-  validate :date_of_birth_not_in_future
-  validate :date_of_birth_year_is_four_digits
   validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
   validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true, if: :other_is_selected?
   validate :nationalities_cannot_be_empty
@@ -132,15 +130,15 @@ private
   end
 
   def date_of_birth_valid
-    errors.add(:date_of_birth, :invalid) unless date_of_birth.is_a?(Date)
-  end
-
-  def date_of_birth_not_in_future
-    errors.add(:date_of_birth, :future) if date_of_birth.is_a?(Date) && date_of_birth > Time.zone.today
-  end
-
-  def date_of_birth_year_is_four_digits
-    errors.add(:date_of_birth, :invalid_year) if date_of_birth.is_a?(Date) && date_of_birth.year.digits.length != 4
+    if !date_of_birth.is_a?(Date)
+      errors.add(:date_of_birth, :invalid)
+    elsif date_of_birth > Time.zone.today
+      errors.add(:date_of_birth, :future)
+    elsif date_of_birth.year.digits.length != 4
+      errors.add(:date_of_birth, :invalid_year)
+    elsif date_of_birth < 100.years.ago
+      errors.add(:date_of_birth, :past)
+    end
   end
 
   def calculate_other

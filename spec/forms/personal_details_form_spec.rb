@@ -135,6 +135,22 @@ describe PersonalDetailsForm, type: :model do
           )
         end
       end
+
+      context "past date" do
+        let(:params) { { day: 1, month: 2, year: 1066 } }
+
+        before do
+          subject.validate
+        end
+
+        it "is invalid" do
+          expect(subject.errors[:date_of_birth]).to include(
+            I18n.t(
+              "activemodel.errors.models.personal_details_form.attributes.date_of_birth.past",
+            ),
+          )
+        end
+      end
     end
   end
 

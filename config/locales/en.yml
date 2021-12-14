@@ -1200,10 +1200,11 @@ en:
               too_long: Middle name must be 50 characters or fewer
             date_of_birth:
               blank: Enter a date of birth
-              invalid: Enter a valid date
-              invalid_year: The year must include 4 numbers
               future: Enter a date of birth that is in the past, for example 31 3 1980
               hint_html: For example, 31 3 %{year}
+              invalid: Enter a valid date
+              invalid_year: The year must include 4 numbers
+              past: Enter a valid date of birth
             gender:
               blank: Select a gender
             nationality_names:
