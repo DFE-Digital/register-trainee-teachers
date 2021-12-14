@@ -232,8 +232,11 @@ module Trainees
     end
 
     def course_attributes
+      course_subject_one_name = course(latest_placement_assignment.response["_dfe_ittsubject1id_value"])
+
       {
-        course_subject_one: course(latest_placement_assignment.response["_dfe_ittsubject1id_value"]),
+        course_education_phase: course_education_phase(course_subject_one_name),
+        course_subject_one: course_subject_one_name,
         course_subject_two: course(latest_placement_assignment.response["_dfe_ittsubject2id_value"]),
         course_subject_three: course(latest_placement_assignment.response["_dfe_ittsubject3id_value"]),
         course_min_age: age_range && age_range[0],
@@ -250,6 +253,17 @@ module Trainees
         dttp_course_uuid,
         Dttp::CodeSets::CourseSubjects::MAPPING,
       )
+    end
+
+    def course_education_phase(subject_name)
+      return if subject_name.blank?
+
+      return COURSE_EDUCATION_PHASE_ENUMS[:primary] if [
+        CourseSubjects::PRIMARY_TEACHING,
+        CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS,
+      ].include?(subject_name)
+
+      COURSE_EDUCATION_PHASE_ENUMS[:secondary]
     end
 
     def age_range

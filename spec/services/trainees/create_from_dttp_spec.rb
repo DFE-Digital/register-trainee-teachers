@@ -84,6 +84,24 @@ module Trainees
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
       end
 
+      context "with primary subjects" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  _dfe_ittsubject1id_value: "8ca12838-b3cf-e911-a860-000d3ab1da01"))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+        it "sets the course education phase" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.course_education_phase).to eq("primary")
+          expect(trainee.course_subject_one).to eq(CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
+        end
+      end
+
       context "with multiple placement_assignments" do
         let(:placement_assignment_one) do
           create(:dttp_placement_assignment,
