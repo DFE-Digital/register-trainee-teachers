@@ -137,11 +137,26 @@ module Trainees
         end
 
         context "when funding method does not exist" do
-          it "does not set funding" do
-            create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.applying_for_bursary).to be_nil
+          it "marks the application as non importable" do
+            expect {
+              create_trainee_from_dttp
+            }.to change(Trainee, :count).by(0)
+            .and change(dttp_trainee, :state).to("non_importable_missing_funding")
           end
+        end
+      end
+
+      context "with tiered bursary funding" do
+        let(:api_placement_assignment) do
+          create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_tiered_bursary))
+        end
+        let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+
+        it "sets bursary tier" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.applying_for_bursary).to eq(true)
+          expect(trainee.bursary_tier).to eq(BURSARY_TIER_ENUMS[:tier_two])
         end
       end
 

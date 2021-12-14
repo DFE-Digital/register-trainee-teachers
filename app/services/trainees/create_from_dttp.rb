@@ -35,6 +35,11 @@ module Trainees
         return
       end
 
+      if funding_not_yet_mapped?
+        dttp_trainee.non_importable_missing_funding!
+        return
+      end
+
       if trainee_already_exists?
         dttp_trainee.non_importable_duplicate!
         return
@@ -286,13 +291,17 @@ module Trainees
     end
 
     def funding_attributes
-      return {} unless latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::ALLOCATED_PLACE
+      return {} if latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE
 
-      if latest_placement_assignment.response["_dfe_bursarydetailsid_value"] == Dttp::Params::PlacementAssignment::SCHOLARSHIP
+      if funding_entity_id == Dttp::Params::PlacementAssignment::SCHOLARSHIP
         return { applying_for_scholarship: true }
       end
 
-      funding_method = FundingMethod.find_by(training_route: training_route_for_funding)
+      if BURSARY_TIER_ENUMS.values.include?(route_or_tier_for_funding)
+        return { applying_for_bursary: true, bursary_tier: route_or_tier_for_funding }
+      end
+
+      funding_method = FundingMethod.find_by(training_route: route_or_tier_for_funding)
 
       {
         applying_for_grant: funding_method&.grant?,
@@ -301,11 +310,19 @@ module Trainees
       }
     end
 
-    def training_route_for_funding
+    def route_or_tier_for_funding
       find_by_entity_id(
-        latest_placement_assignment.response["_dfe_bursarydetailsid_value"],
+        funding_entity_id,
         Dttp::CodeSets::BursaryDetails::MAPPING,
       )
+    end
+
+    def funding_entity_id
+      latest_placement_assignment.response["_dfe_bursarydetailsid_value"]
+    end
+
+    def funding_not_yet_mapped?
+      funding_entity_id.present? && funding_attributes.compact.blank?
     end
 
     def trainee_status

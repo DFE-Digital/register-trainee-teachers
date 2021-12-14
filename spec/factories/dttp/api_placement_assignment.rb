@@ -33,6 +33,12 @@ FactoryBot.define do
       _dfe_bursarydetailsid_value { "96756cc6-6041-e811-80f2-005056ac45bb" }
     end
 
+    trait :with_tiered_bursary do
+      enabled_training_routes { ["early_years_postgrad"] }
+      dfe_allocatedplace { 1 }
+      _dfe_bursarydetailsid_value { "66671547-33ff-eb11-94ef-00224899ca99" }
+    end
+
     trait :with_scholarship do
       dfe_allocatedplace { 1 }
       _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
