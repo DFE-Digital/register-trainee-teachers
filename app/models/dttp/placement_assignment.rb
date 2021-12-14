@@ -8,10 +8,6 @@ module Dttp
 
     validates :response, presence: true
 
-    enum state: {
-      unprocessed: 0,
-    }
-
     def route_dttp_id
       response["_dfe_routeid_value"]
     end
