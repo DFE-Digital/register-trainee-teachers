@@ -20,6 +20,16 @@ module Trainees
       end
     end
 
+    context "when dttp_trainee is already imported" do
+      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_placement_assignment, state: :imported) }
+
+      it "does not create a trainee" do
+        expect {
+          create_trainee_from_dttp
+        }.not_to change(Trainee, :count)
+      end
+    end
+
     context "when placement assignment does not exist" do
       let(:dttp_trainee) { create(:dttp_trainee) }
 

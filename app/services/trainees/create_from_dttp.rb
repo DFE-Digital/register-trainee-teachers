@@ -12,6 +12,7 @@ module Trainees
     end
 
     def call
+      return if dttp_trainee.imported?
       return if dttp_trainee.provider.blank?
       return if latest_placement_assignment.blank?
 
