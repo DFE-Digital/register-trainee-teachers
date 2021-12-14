@@ -47,6 +47,8 @@ module Trainees
       end
 
       trainee.save!
+      enqueue_background_jobs!
+
       create_degrees!
 
       dttp_trainee.imported!
@@ -342,16 +344,20 @@ module Trainees
 
     def trainee_status
       case dttp_trainee_status
-      # Raise if it's something else? Are we expecting other statuses?
-      # What if it's AWAITING_QTS or PROSPECTIVE_TRAINEE_TRN_REQUESTED? Should
-      # we import and kick off respective jobs?
       when DttpStatuses::DRAFT_RECORD then "draft"
       when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "submitted_for_trn"
+      when DttpStatuses::STANDARDS_MET then "recommended_for_award"
       when DttpStatuses::DEFERRED then "deferred"
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
       when (DttpStatuses::AWARDED_EYTS || DttpStatuses::AWARDED_QTS) then "awarded"
       when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
+      when (DttpStatuses::AWAITING_QTS || DttpStatuses::EYTS_REVOKED || DttpStatuses::QTS_REVOKED || DttpStatuses::STANDARDS_NOT_MET || DttpStatuses::DID_NOT_START || DttpStatuses::REJECTED) then nil
       end
+    end
+
+    def enqueue_background_jobs!
+      Dttp::RetrieveTrnJob.perform_with_default_delay(trainee) if trainee.submitted_for_trn?
+      Dttp::RetrieveAwardJob.perform_with_default_delay(trainee) if trainee.recommended_for_award?
     end
 
     def dttp_trainee_status

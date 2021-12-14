@@ -84,6 +84,46 @@ module Trainees
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
       end
 
+      context "when the trainee is in a submitted_for_trn state" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  _dfe_traineestatusid_value: "275af972-9e1b-e711-80c7-0050568902d3"))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+        before do
+          allow(Dttp::RetrieveTrnJob).to receive(:perform_with_default_delay)
+        end
+
+        it "enqueues Dttp::RetrieveTrnJob job" do
+          create_trainee_from_dttp
+          expect(Dttp::RetrieveTrnJob).to have_received(:perform_with_default_delay).with(Trainee.last)
+        end
+      end
+
+      context "when the trainee is in a recommended_for_award state" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  _dfe_traineestatusid_value: "1f5af972-9e1b-e711-80c7-0050568902d3"))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+        before do
+          allow(Dttp::RetrieveAwardJob).to receive(:perform_with_default_delay)
+        end
+
+        it "enqueues Dttp::RetrieveAwardJob job" do
+          create_trainee_from_dttp
+          expect(Dttp::RetrieveAwardJob).to have_received(:perform_with_default_delay).with(Trainee.last)
+        end
+      end
+
       context "with primary subjects" do
         let(:placement_assignment) do
           create(:dttp_placement_assignment,
