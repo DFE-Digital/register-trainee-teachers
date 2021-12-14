@@ -96,6 +96,14 @@ module Trainees
       trainees.merge(scoped)
     end
 
+    def study_mode(trainees, study_mode)
+      return trainees if study_mode.blank? || (study_mode.count == 2)
+
+      if study_mode.count == 1
+        trainees.where(study_mode: study_mode).where.not(training_route: "assessment_only").where.not(training_route: "early_years_assessment_only")
+      end
+    end
+
     def filter_trainees
       filtered_trainees = trainees
 
@@ -107,6 +115,7 @@ module Trainees
       filtered_trainees = provider(filtered_trainees, filters[:provider])
       filtered_trainees = submission_ready(filtered_trainees, filters[:record_completion])
       filtered_trainees = trainee_start_year(filtered_trainees, filters[:trainee_start_year])
+      filtered_trainees = study_mode(filtered_trainees, filters[:study_mode])
 
       record_source(filtered_trainees, filters[:record_source])
     end

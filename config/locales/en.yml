@@ -363,6 +363,7 @@ en:
       training_route: Training route
       record_completion: Record completion
       trainee_start_year: &trainee_start_year Start year
+      study_mode: Study mode
     timeline:
       withdrawal_date: Date of withdrawal
       withdrawal_reason: Reason for withdrawal
@@ -585,6 +586,7 @@ en:
           provider: Provider
           search: Search for a trainee
           status: Status
+          study_mode: Full time or part time
           subject: Subject
           type_of_training: Type of training
       edit:
@@ -1026,6 +1028,9 @@ en:
         record_completions:
           complete: Complete
           incomplete: Incomplete
+        study_modes:
+          full_time: Full time
+          part_time: Part time
     errors:
       models:
         trainee:

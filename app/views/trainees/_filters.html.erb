@@ -69,6 +69,28 @@
     </fieldset>
   </div>
 
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        <%= t("views.trainees.index.filters.study_mode") %>
+      </legend>
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% [:full_time, :part_time].map do |study_mode| %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag "study_mode[]",
+                              study_mode,
+                              checked?(filters, :study_mode, study_mode.to_s),
+                              id: "study_mode-#{study_mode}",
+                              class: "govuk-checkboxes__input" %>
+            <%= label_tag "study_mode-#{study_mode}",
+                          label_for("study_mode", study_mode),
+                          class: "govuk-label govuk-checkboxes__label" %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+
   <% if multiple_record_sources? %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
