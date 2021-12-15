@@ -10,7 +10,8 @@ const defaultValueOption = component => component.getAttribute('data-default-val
 const suggestion = (value, options) => {
   const option = options.find(o => o.name === value)
   if (option) {
-    return option.append ? `<span>${value}</span> ${option.append}` : `<span>${value}</span>`
+    const html = option.append ? `<span>${value}</span> ${option.append}` : `<span>${value}</span>`
+    return option.hint ? `${html}<br>${option.hint}` : html
   }
 }
 
@@ -19,6 +20,7 @@ const enhanceOption = (option) => {
     name: option.label,
     synonyms: (option.getAttribute('data-synonyms') ? option.getAttribute('data-synonyms').split('|') : []),
     append: option.getAttribute('data-append'),
+    hint: option.getAttribute('data-hint'),
     boost: (parseFloat(option.getAttribute('data-boost')) || 1)
   }
 }
