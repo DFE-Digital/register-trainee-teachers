@@ -36,6 +36,7 @@ module Dttp
       non_importable_multi_provider: 6,
       non_importable_multi_course: 7,
       non_importable_missing_funding: 8,
+      non_importable_missing_initiative: 9,
     }
 
     def date_of_birth

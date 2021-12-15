@@ -20,6 +20,7 @@ FactoryBot.define do
     dfe_commencementdate { Faker::Date.between(from: dfe_programmestartdate, to: dfe_programmeeenddate).strftime("%Y-%m-%d") }
     _dfe_coursephaseid_value { Dttp::CodeSets::AgeRanges::MAPPING.to_a.sample[1][:entity_id] }
     _dfe_studymodeid_value { Dttp::CodeSets::CourseStudyModes::MAPPING.to_a.sample[1][:entity_id] }
+    _dfe_initiative1id_value { Dttp::CodeSets::TrainingInitiatives::MAPPING[ROUTE_INITIATIVES_ENUMS[:now_teach]][:entity_id] }
     dfe_trnassessmentdate { dfe_programmestartdate }
     _dfe_traineestatusid_value { "295af972-9e1b-e711-80c7-0050568902d3" }
     _dfe_academicyearid_value { SecureRandom.uuid }

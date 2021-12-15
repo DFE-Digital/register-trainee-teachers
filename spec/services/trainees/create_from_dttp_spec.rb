@@ -82,6 +82,7 @@ module Trainees
         expect(trainee.trainee_id).to eq(api_trainee["dfe_traineeid"])
         expect(trainee.nationalities).to be_empty
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
+        expect(trainee.training_initiative).to eq("now_teach")
       end
 
       context "when the trainee is provider_led_postgrad" do
@@ -376,6 +377,18 @@ module Trainees
           create_trainee_from_dttp
         }.to change(Trainee, :count).by(0)
         .and change(dttp_trainee, :state).to("non_importable_multi_course")
+      end
+    end
+
+    context "when training_initiative is not mapped" do
+      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_initiative1id_value: SecureRandom.uuid)) }
+      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+
+      it "marks the application as non importable" do
+        expect {
+          create_trainee_from_dttp
+        }.to change(Trainee, :count).by(0)
+        .and change(dttp_trainee, :state).to("non_importable_missing_initiative")
       end
     end
   end

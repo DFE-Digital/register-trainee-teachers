@@ -31,6 +31,11 @@ module Trainees
         return
       end
 
+      if unmapped_training_initiative?
+        dttp_trainee.non_importable_missing_initiative!
+        return
+      end
+
       if trainee_status.blank?
         dttp_trainee.non_importable_missing_state!
         return
@@ -85,6 +90,7 @@ module Trainees
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(school_attributes)
+       .merge(training_initiative_attributes)
     end
 
     def create_degrees!
@@ -320,6 +326,23 @@ module Trainees
       end
 
       attrs
+    end
+
+    def training_initiative_attributes
+      {
+        training_initiative: training_initiative,
+      }
+    end
+
+    def training_initiative
+      find_by_entity_id(
+        latest_placement_assignment.response["_dfe_initiative1id_value"],
+        Dttp::CodeSets::TrainingInitiatives::MAPPING,
+      )
+    end
+
+    def unmapped_training_initiative?
+      latest_placement_assignment.response["_dfe_initiative1id_value"].present? && training_initiative.blank?
     end
 
     def lead_school_urn
