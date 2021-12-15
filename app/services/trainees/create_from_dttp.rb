@@ -116,10 +116,22 @@ module Trainees
     end
 
     def training_route
-      @training_route ||= find_by_entity_id(
-        latest_placement_assignment.route_dttp_id,
-        Dttp::CodeSets::Routes::MAPPING,
-      )
+      @training_route ||= begin
+        route = find_by_entity_id(
+          latest_placement_assignment.route_dttp_id,
+          Dttp::CodeSets::Routes::MAPPING,
+        )
+
+        if route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad] && undergrad_level?
+          route = TRAINING_ROUTE_ENUMS[:provider_led_undergrad]
+        end
+
+        route
+      end
+    end
+
+    def undergrad_level?
+      latest_placement_assignment.response["dfe_courselevel"] == Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG
     end
 
     def trainee_gender

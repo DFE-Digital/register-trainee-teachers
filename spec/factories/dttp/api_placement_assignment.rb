@@ -40,6 +40,10 @@ FactoryBot.define do
       _dfe_bursarydetailsid_value { "66671547-33ff-eb11-94ef-00224899ca99" }
     end
 
+    trait :with_provider_led_undergrad do
+      enabled_training_routes { ["provider_led_undergrad"] }
+    end
+
     trait :with_scholarship do
       enabled_training_routes { ["provider_led_postgrad"] }
       dfe_allocatedplace { 1 }

@@ -84,6 +84,42 @@ module Trainees
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
       end
 
+      context "when the trainee is provider_led_postgrad" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  :with_provider_led_undergrad,
+                                  dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+        it "creates a trainee with provider_led_postgrad route" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+        end
+      end
+
+      context "when the trainee is provider_led_undergrad" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  :with_provider_led_undergrad,
+                                  dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+        it "creates a trainee with provider_led_undergrad route" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
+        end
+      end
+
       context "when the trainee is in a submitted_for_trn state" do
         let(:placement_assignment) do
           create(:dttp_placement_assignment,
