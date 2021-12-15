@@ -148,7 +148,7 @@ module Trainees
                  provider_dttp_id: provider.dttp_id,
                  programme_start_date: Faker::Date.in_date_period(year: Time.zone.now.year - 1, month: 9).strftime("%Y-%m-%d"),
                  response: create(:api_placement_assignment,
-                                  _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::RELIGIOUS_EDUCATION_DTTP_ID))
+                                  _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
         end
 
         let(:placement_assignment_two) do
@@ -314,6 +314,23 @@ module Trainees
           create_trainee_from_dttp
         }.to change(Trainee, :count).by(0)
         .and change(dttp_trainee, :state).to("non_importable_multi_provider")
+      end
+    end
+
+    context "when placement assignments are having different courses" do
+      let(:dttp_trainee) {
+        create(:dttp_trainee,
+               placement_assignments: create_list(:dttp_placement_assignment,
+                                                  2,
+                                                  provider_dttp_id: provider.dttp_id),
+               provider_dttp_id: provider.dttp_id)
+      }
+
+      it "marks the application as non importable" do
+        expect {
+          create_trainee_from_dttp
+        }.to change(Trainee, :count).by(0)
+        .and change(dttp_trainee, :state).to("non_importable_multi_course")
       end
     end
   end

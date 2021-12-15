@@ -21,6 +21,11 @@ module Trainees
         return
       end
 
+      if multiple_courses?
+        dttp_trainee.non_importable_multi_course!
+        return
+      end
+
       if training_route.blank?
         dttp_trainee.non_importable_missing_route!
         return
@@ -98,6 +103,10 @@ module Trainees
 
     def multiple_providers?
       dttp_trainee.placement_assignments.map(&:provider_dttp_id).uniq != [dttp_trainee.provider_dttp_id]
+    end
+
+    def multiple_courses?
+      dttp_trainee.placement_assignments.map { |placement_assignment| placement_assignment.response["_dfe_ittsubject1id_value"] }.uniq.count > 1
     end
 
     def trainee_already_exists?
