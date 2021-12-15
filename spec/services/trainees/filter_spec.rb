@@ -85,6 +85,16 @@ module Trainees
       it { is_expected.to eq([trainee_with_subject]) }
     end
 
+    context "with subject filter set to Sciences - biology, chemistry, physics" do
+      let(:subject_name) { Filter::ALL_SCIENCES_FILTER }
+      let!(:trainee_with_biology) { create(:trainee, course_subject_one: "Biology") }
+      let!(:trainee_with_chemistry) { create(:trainee, course_subject_one: "Chemistry") }
+      let!(:trainee_with_physics) { create(:trainee, course_subject_one: "Physics") }
+      let(:filters) { { subject: subject_name } }
+
+      it { is_expected.to eq([trainee_with_biology, trainee_with_chemistry, trainee_with_physics]) }
+    end
+
     context "with text_search filter" do
       let!(:named_trainee) { create(:trainee, first_names: "Boaty McBoatface") }
       let(:filters) { { text_search: "Boaty" } }
