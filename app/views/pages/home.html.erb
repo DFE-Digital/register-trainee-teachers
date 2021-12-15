@@ -49,7 +49,7 @@
         <li>
           <%= govuk_link_to(
             t(".registered_trainees_link", count: @home_view.registered_trainees_count),
-            trainees_path({ "state": @registered_states_for_filter }),
+            trainees_path,
             { class: "govuk-link--no-visited-state" }
           )%>
         </li>
