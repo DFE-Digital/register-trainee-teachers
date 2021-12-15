@@ -239,8 +239,8 @@ en:
         paginated_index: Draft records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
       trainees:
         delete: Delete this draft record
-        index: Trainee records (%{total_trainees_count_text})
-        paginated_index: Trainee records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
+        index: Registered trainees (%{total_trainees_count_text})
+        paginated_index: Registered trainees (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
         not_supported_route: Other routes not supported
         show:
           overview: Trainee record overview
