@@ -52,6 +52,9 @@ module Trainees
       end
 
       trainee.save!
+
+      calculate_funding!
+
       enqueue_background_jobs!
 
       create_degrees!
@@ -82,7 +85,6 @@ module Trainees
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(school_attributes)
-       .merge(funding_attributes)
     end
 
     def create_degrees!
@@ -323,17 +325,15 @@ module Trainees
         return { applying_for_scholarship: true }
       end
 
-      if BURSARY_TIER_ENUMS.values.include?(route_or_tier_for_funding)
+      if funding_manager.can_apply_for_tiered_bursary?
         return { applying_for_bursary: true, bursary_tier: route_or_tier_for_funding }
       end
 
-      funding_method = FundingMethod.find_by(training_route: route_or_tier_for_funding)
-
       {
-        applying_for_grant: funding_method&.grant?,
-        applying_for_scholarship: funding_method&.scholarship?,
-        applying_for_bursary: funding_method&.bursary?,
-      }
+        applying_for_grant: funding_manager.can_apply_for_grant?,
+        applying_for_scholarship: funding_manager.can_apply_for_scholarship?,
+        applying_for_bursary: funding_manager.can_apply_for_bursary?,
+      }.reject { |_key, value| value == false }
     end
 
     def route_or_tier_for_funding
@@ -367,6 +367,14 @@ module Trainees
     def enqueue_background_jobs!
       Dttp::RetrieveTrnJob.perform_with_default_delay(trainee) if trainee.submitted_for_trn?
       Dttp::RetrieveAwardJob.perform_with_default_delay(trainee) if trainee.recommended_for_award?
+    end
+
+    def calculate_funding!
+      trainee.update!(funding_attributes) if funding_manager.can_apply_for_funding_type?
+    end
+
+    def funding_manager
+      @funding_manager ||= FundingManager.new(trainee)
     end
 
     def dttp_trainee_status

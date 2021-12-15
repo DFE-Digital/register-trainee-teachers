@@ -184,6 +184,12 @@ module Trainees
           let(:api_placement_assignment) do
             create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_scholarship))
           end
+          let(:funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
+          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
+
+          before do
+            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
+          end
 
           it "sets scholarship" do
             create_trainee_from_dttp
@@ -192,9 +198,12 @@ module Trainees
           end
         end
 
-        context "when funding method exists" do
+        context "when bursary" do
+          let(:funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:bursary]) }
+          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
+
           before do
-            create(:funding_method, training_route: :provider_led_undergrad)
+            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
           end
 
           it "sets funding" do

@@ -28,8 +28,9 @@ FactoryBot.define do
     to_create { |instance| instance }
 
     trait :with_provider_led_bursary do
-      enabled_training_routes { ["provider_led_undergrad"] }
+      enabled_training_routes { ["provider_led_postgrad"] }
       dfe_allocatedplace { 1 }
+      _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
       _dfe_bursarydetailsid_value { "96756cc6-6041-e811-80f2-005056ac45bb" }
     end
 
@@ -40,7 +41,9 @@ FactoryBot.define do
     end
 
     trait :with_scholarship do
+      enabled_training_routes { ["provider_led_postgrad"] }
       dfe_allocatedplace { 1 }
+      _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
       _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
     end
   end
