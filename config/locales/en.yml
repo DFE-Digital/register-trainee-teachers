@@ -478,6 +478,7 @@ en:
         study_mode: Full time or part time
   views:
     all_records: All records
+    draft_records: All drafts
     apply_invalid_data_view:
       invalid_answers_summary:
         one: This application contains 1 answer that you need to amend. This is because it was entered in a free text format.
