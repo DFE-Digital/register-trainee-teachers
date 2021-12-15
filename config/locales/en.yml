@@ -234,6 +234,9 @@ en:
         show: Successfully submitted
       check_details:
         show: Check trainee record
+      draft_trainees:
+        index: Draft records (%{total_trainees_count_text})
+        paginated_index: Draft records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
       trainees:
         delete: Delete this draft record
         index: Trainee records (%{total_trainees_count_text})

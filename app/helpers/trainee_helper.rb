@@ -16,19 +16,21 @@ module TraineeHelper
     end
   end
 
-  def trainees_page_title(trainees, total_trainees_count)
+  def trainees_page_title(trainees, total_trainees_count, draft: false)
     total_pages = trainees.total_pages
     total_trainees_count_text = "#{total_trainees_count} #{'record'.pluralize(total_trainees_count)}"
 
+    i18n_prefix = draft ? "components.page_titles.draft_trainees" : "components.page_titles.trainees"
+
     if total_pages <= 1
       return I18n.t(
-        "components.page_titles.trainees.index",
+        "#{i18n_prefix}.index",
         total_trainees_count_text: total_trainees_count_text,
       )
     end
 
     I18n.t(
-      "components.page_titles.trainees.paginated_index",
+      "#{i18n_prefix}.paginated_index",
       current_page: trainees.current_page,
       total_pages: total_pages,
       total_trainees_count_text: total_trainees_count_text,
