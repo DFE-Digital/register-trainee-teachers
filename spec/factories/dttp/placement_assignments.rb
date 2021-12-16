@@ -20,6 +20,5 @@ FactoryBot.define do
         dfe_programmeenddate: programme_end_date.strftime("%Y-%m-%d"),
       )
     }
-    state { "unprocessed" }
   end
 end

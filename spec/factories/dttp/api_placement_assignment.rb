@@ -20,11 +20,41 @@ FactoryBot.define do
     dfe_commencementdate { Faker::Date.between(from: dfe_programmestartdate, to: dfe_programmeeenddate).strftime("%Y-%m-%d") }
     _dfe_coursephaseid_value { Dttp::CodeSets::AgeRanges::MAPPING.to_a.sample[1][:entity_id] }
     _dfe_studymodeid_value { Dttp::CodeSets::CourseStudyModes::MAPPING.to_a.sample[1][:entity_id] }
+    _dfe_initiative1id_value { Dttp::CodeSets::TrainingInitiatives::MAPPING[ROUTE_INITIATIVES_ENUMS[:now_teach]][:entity_id] }
     dfe_trnassessmentdate { dfe_programmestartdate }
     _dfe_traineestatusid_value { "295af972-9e1b-e711-80c7-0050568902d3" }
     _dfe_academicyearid_value { SecureRandom.uuid }
 
     initialize_with { attributes.stringify_keys }
     to_create { |instance| instance }
+
+    trait :with_provider_led_bursary do
+      enabled_training_routes { ["provider_led_postgrad"] }
+      dfe_allocatedplace { 1 }
+      _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
+      _dfe_bursarydetailsid_value { "96756cc6-6041-e811-80f2-005056ac45bb" }
+    end
+
+    trait :with_tiered_bursary do
+      enabled_training_routes { ["early_years_postgrad"] }
+      dfe_allocatedplace { 1 }
+      _dfe_bursarydetailsid_value { "66671547-33ff-eb11-94ef-00224899ca99" }
+    end
+
+    trait :with_provider_led_undergrad do
+      enabled_training_routes { ["provider_led_undergrad"] }
+    end
+
+    trait :with_future_teaching_scholars_initiative do
+      enabled_training_routes { nil }
+      _dfe_routeid_value { Dttp::CodeSets::Routes::MAPPING[ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]][:entity_id] }
+    end
+
+    trait :with_scholarship do
+      enabled_training_routes { ["provider_led_postgrad"] }
+      dfe_allocatedplace { 1 }
+      _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
+      _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
+    end
   end
 end

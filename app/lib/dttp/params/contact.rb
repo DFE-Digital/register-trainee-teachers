@@ -7,6 +7,8 @@ module Dttp
 
       OTHER_GENDER_CODE = 389_040_000
 
+      NOT_PROVIDED = "NOTPROVIDED"
+
       GENDER_CODES = {
         male: 1,
         female: 2,
@@ -43,7 +45,7 @@ module Dttp
           "birthdate" => trainee.date_of_birth.to_s,
           "emailaddress1" => trainee.email,
           "gendercode" => GENDER_CODES[trainee.gender.to_sym],
-          "dfe_traineeid" => trainee.trainee_id || "NOTPROVIDED",
+          "dfe_traineeid" => trainee.trainee_id || NOT_PROVIDED,
           "dfe_Nationality@odata.bind" => "/dfe_nations(#{contact_dttp_nationality_id})",
           "dfe_EthnicityId@odata.bind" => "/dfe_ethnicities(#{contact_dttp_ethnicity_id})",
           "dfe_DisibilityId@odata.bind" => "/dfe_disabilities(#{contact_dttp_disability_id})",
