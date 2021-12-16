@@ -85,6 +85,24 @@ module Trainees
         expect(trainee.training_initiative).to eq("now_teach")
       end
 
+      context "when the trainee is on future_teaching_scholars" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  :with_future_teaching_scholars_initiative))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+        it "creates a trainee with school_direct_salaried route" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:school_direct_salaried])
+          expect(trainee.training_initiative).to eq("future_teaching_scholars")
+        end
+      end
+
       context "when the trainee is provider_led_postgrad" do
         let(:placement_assignment) do
           create(:dttp_placement_assignment,

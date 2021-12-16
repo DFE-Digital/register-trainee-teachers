@@ -122,18 +122,20 @@ module Trainees
     end
 
     def training_route
-      @training_route ||= begin
-        route = find_by_entity_id(
-          latest_placement_assignment.route_dttp_id,
-          Dttp::CodeSets::Routes::MAPPING,
-        )
+      @training_route ||= if dttp_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad] && undergrad_level?
+                            TRAINING_ROUTE_ENUMS[:provider_led_undergrad]
+                          elsif dttp_route == ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]
+                            TRAINING_ROUTE_ENUMS[:school_direct_salaried]
+                          else
+                            dttp_route
+                          end
+    end
 
-        if route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad] && undergrad_level?
-          route = TRAINING_ROUTE_ENUMS[:provider_led_undergrad]
-        end
-
-        route
-      end
+    def dttp_route
+      @dttp_route ||= find_by_entity_id(
+        latest_placement_assignment.route_dttp_id,
+        Dttp::CodeSets::Routes::MAPPING,
+      )
     end
 
     def undergrad_level?
@@ -335,6 +337,10 @@ module Trainees
     end
 
     def training_initiative
+      if dttp_route == ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]
+        return ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]
+      end
+
       find_by_entity_id(
         latest_placement_assignment.response["_dfe_initiative1id_value"],
         Dttp::CodeSets::TrainingInitiatives::MAPPING,

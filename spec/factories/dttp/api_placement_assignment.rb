@@ -45,6 +45,11 @@ FactoryBot.define do
       enabled_training_routes { ["provider_led_undergrad"] }
     end
 
+    trait :with_future_teaching_scholars_initiative do
+      enabled_training_routes { nil }
+      _dfe_routeid_value { Dttp::CodeSets::Routes::MAPPING[ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]][:entity_id] }
+    end
+
     trait :with_scholarship do
       enabled_training_routes { ["provider_led_postgrad"] }
       dfe_allocatedplace { 1 }
