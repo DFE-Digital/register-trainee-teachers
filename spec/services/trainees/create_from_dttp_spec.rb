@@ -69,6 +69,7 @@ module Trainees
       it "creates a trainee with the dttp_trainee attributes" do
         create_trainee_from_dttp
         trainee = Trainee.last
+        expect(trainee.created_from_dttp).to be true
         expect(trainee.first_names).to eq(api_trainee["firstname"])
         expect(trainee.last_name).to eq(api_trainee["lastname"])
         expect(trainee.locale_code).to eq("uk")
