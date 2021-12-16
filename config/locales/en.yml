@@ -155,6 +155,8 @@ en:
         withdraw_reason_label: Reason for withdrawal
         reasons: &withdrawal_reasons
           death: Death
+          did_not_pass_assessment: Did not pass the assessment
+          did_not_pass_exams: Did not pass the exams
           exclusion: Exclusion
           financial_reasons: Financial reasons
           for_another_reason: For another reason
