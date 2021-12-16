@@ -26,7 +26,11 @@ module Degrees
         degree = degrees_form.build_degree(
           ::Degrees::MapFromDttp.call(dttp_degree: dttp_degree),
         )
-        dttp_degree.processed! if degree.save!
+        if degree.save!
+          dttp_degree.imported!
+        else
+          dttp_degree.non_importable_invalid_data!
+        end
       end
     end
   end

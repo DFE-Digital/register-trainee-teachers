@@ -5,6 +5,6 @@ FactoryBot.define do
     dttp_id { SecureRandom.uuid }
     contact_dttp_id { SecureRandom.uuid }
     response { create(:api_degree_qualification) }
-    state { "unprocessed" }
+    state { "importable" }
   end
 end

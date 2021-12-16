@@ -14,8 +14,9 @@ module Dttp
     validates :response, presence: true
 
     enum state: {
-      unprocessed: 0,
-      processed: 1,
+      importable: 0,
+      imported: 1,
+      non_importable_invalid_data: 2,
     }
 
     def country_id

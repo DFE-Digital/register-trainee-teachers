@@ -16,12 +16,12 @@ module Degrees
       }.to change(trainee.degrees, :count).by(1)
     end
 
-    it "changes the state to processed" do
+    it "changes the state to imported" do
       expect {
         create_from_dttp
       }.to change {
         dttp_degree_qualification.reload.state
-      }.from("unprocessed").to("processed")
+      }.from("importable").to("imported")
     end
 
     context "when the trainee does not have a corresponding dttp_trainee" do
@@ -45,12 +45,12 @@ module Degrees
         )
       end
 
-      it "does not change the state to processed" do
+      it "changes the state to non_importable_invalid_data" do
         expect {
           create_from_dttp
-        }.not_to change {
+        }.to change {
           dttp_degree_qualification.reload.state
-        }
+        }.from("importable").to("non_importable_invalid_data")
       end
     end
   end
