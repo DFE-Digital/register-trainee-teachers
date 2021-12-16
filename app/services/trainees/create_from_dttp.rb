@@ -77,6 +77,7 @@ module Trainees
       return if latest_placement_assignment.blank?
 
       {
+        created_from_dttp: true,
         state: trainee_status,
         provider: dttp_trainee.provider,
         trainee_id: trainee_id,
