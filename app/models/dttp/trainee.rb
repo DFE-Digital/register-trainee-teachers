@@ -48,5 +48,17 @@ module Dttp
     def trn
       response["dfe_trn"]
     end
+
+    def earliest_placement_assignment
+      @earliest_placement_assignment ||= sorted_placement_assignments.first
+    end
+
+    def latest_placement_assignment
+      @latest_placement_assignment ||= sorted_placement_assignments.last
+    end
+
+    def sorted_placement_assignments
+      @sorted_placement_assignments ||= placement_assignments.where.not(programme_start_date: nil).order(:programme_start_date)
+    end
   end
 end
