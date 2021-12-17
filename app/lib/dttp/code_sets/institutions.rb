@@ -194,7 +194,7 @@ module Dttp
         "Point Blank Music School" => { entity_id: "b73e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "309" },
         "Prestolee SCITT" => { entity_id: "027bf34a-2887-e711-80d8-005056ac45bb" },
         "Queen Margaret University, Edinburgh" => { entity_id: "40f3791d-7042-e811-80ff-3863bb3640b8", hesa_code: "100" },
-        "Queen Mary University of London" => { entity_id: "47f3791d-7042-e811-80ff-3863bb3640b8", hesa_code: "139" },
+        "Queen Mary University of London" => { entity_id: "b93e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "139" },
         "Raindance Educational Services Limited" => { entity_id: "bb3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "429" },
         "Ravensbourne" => { entity_id: "4ff3791d-7042-e811-80ff-3863bb3640b8", hesa_code: "30" },
         "Regent College" => { entity_id: "bd3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "278" },
@@ -357,6 +357,10 @@ module Dttp
         "Winchester School of Art" => { entity_id: "d123a753-7042-e811-80ff-3863bb3640b8", hesa_code: "45" },
         "Writtle College" => { entity_id: "d723a753-7042-e811-80ff-3863bb3640b8", hesa_code: "189" },
         "York St John University" => { entity_id: "4c71f34a-2887-e711-80d8-005056ac45bb", hesa_code: "13" },
+      }.freeze
+
+      INACTIVE_MAPPING = {
+        "Queen Mary University of London" => { entity_id: "47f3791d-7042-e811-80ff-3863bb3640b8" },
       }.freeze
     end
   end

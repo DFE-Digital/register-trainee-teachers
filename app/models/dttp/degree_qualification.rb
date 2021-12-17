@@ -28,5 +28,9 @@ module Dttp
 
       Date.parse(response["dfe_degreeenddate"]).year
     end
+
+    def institution
+      response["_dfe_awardinginstitutionid_value"]
+    end
   end
 end

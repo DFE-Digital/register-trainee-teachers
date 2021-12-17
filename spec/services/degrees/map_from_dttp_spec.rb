@@ -51,6 +51,20 @@ module Degrees
       end
 
       it { is_expected.to include(uk_degree_attributes) }
+
+      context "with an inactive institution" do
+        let(:institution) { "Queen Mary University of London" }
+        let(:api_degree_qualification) do
+          create(
+            :api_degree_qualification,
+            _dfe_awardinginstitutionid_value: Dttp::CodeSets::Institutions::INACTIVE_MAPPING[institution][:entity_id],
+            _dfe_degreetypeid_value: Dttp::CodeSets::DegreeTypes::MAPPING[degree_type][:entity_id],
+            _dfe_classofdegreeid_value: Dttp::CodeSets::Grades::MAPPING[grade][:entity_id],
+          )
+        end
+
+        it { is_expected.to include(uk_degree_attributes) }
+      end
     end
 
     context "with a non-uk degree" do
