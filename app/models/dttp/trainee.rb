@@ -44,5 +44,9 @@ module Dttp
 
       Date.parse(response["birthdate"])
     end
+
+    def trn
+      response["dfe_trn"]
+    end
   end
 end

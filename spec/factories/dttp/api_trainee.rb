@@ -20,6 +20,7 @@ FactoryBot.define do
     dfe_traineeid { "#{firstname}.#{lastname}.#{birthdate}" }
     _dfe_nationality_value { "d17d640e-5c62-e711-80d1-005056ac45bb" }
     dfe_trn { Faker::Number.number(digits: 7) }
+    merged { false }
 
     initialize_with { attributes.stringify_keys }
     to_create { |instance| instance }

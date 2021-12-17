@@ -40,6 +40,17 @@ module Trainees
       end
     end
 
+    context "when the trainee is merged" do
+      let(:api_trainee) { create(:api_trainee, merged: true) }
+      let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, :with_provider, api_trainee_hash: api_trainee) }
+
+      it "does not create a trainee" do
+        expect {
+          create_trainee_from_dttp
+        }.not_to change(Trainee, :count)
+      end
+    end
+
     context "when the trainee is hpitt" do
       let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_hpitt_placement_assignment) }
 
@@ -177,6 +188,16 @@ module Trainees
         it "enqueues Dttp::RetrieveAwardJob job" do
           create_trainee_from_dttp
           expect(Dttp::RetrieveAwardJob).to have_received(:perform_with_default_delay).with(Trainee.last)
+        end
+      end
+
+      context "when the trainee has an invalid TRN" do
+        let(:api_trainee) { create(:api_trainee, dfe_trn: "999999999") }
+
+        it "does not save the TRN" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.trn).to be nil
         end
       end
 
