@@ -49,6 +49,14 @@ module Dttp
       response["dfe_trn"]
     end
 
+    def country
+      response["address1_country"]
+    end
+
+    def postcode
+      response["address1_postalcode"]
+    end
+
     def earliest_placement_assignment
       @earliest_placement_assignment ||= sorted_placement_assignments.first
     end

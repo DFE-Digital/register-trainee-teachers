@@ -97,6 +97,37 @@ module Trainees
         expect(trainee.training_initiative).to eq("now_teach")
       end
 
+      context "when the country is something other than England and has a non-uk postcode" do
+        let(:api_trainee) { create(:api_trainee, address1_postalcode: nil, address1_country: "France") }
+
+        it "sets the locale to non_uk" do
+          create_trainee_from_dttp
+          expect(Trainee.last.locale_code).to eq("non_uk")
+        end
+      end
+
+      context "when neither address line one or postcode is present" do
+        let(:api_trainee) { create(:api_trainee, address1_line1: nil, address1_postalcode: nil) }
+
+        before do
+          create_trainee_from_dttp
+        end
+
+        it "does not set the local to UK" do
+          expect(Trainee.last.locale_code).to be nil
+        end
+
+        context "but the country is set to England" do
+          let(:api_trainee) do
+            create(:api_trainee, address1_line1: nil, address1_postalcode: nil, address1_country: "England")
+          end
+
+          it "sets the local to UK" do
+            expect(Trainee.last.locale_code).to eq("uk")
+          end
+        end
+      end
+
       context "when the trainee is on future_teaching_scholars" do
         let(:placement_assignment) do
           create(:dttp_placement_assignment,
