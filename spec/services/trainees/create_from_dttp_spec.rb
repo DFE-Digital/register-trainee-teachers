@@ -104,6 +104,23 @@ module Trainees
         end
       end
 
+      context "when the trainee is not on any initiative" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  _dfe_initiative1id_value: nil))
+        end
+
+        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+        it "creates a trainee with no training_initiative" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+        end
+      end
+
       context "when the trainee is provider_led_postgrad" do
         let(:placement_assignment) do
           create(:dttp_placement_assignment,

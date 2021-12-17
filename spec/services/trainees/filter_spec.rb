@@ -92,7 +92,7 @@ module Trainees
       let!(:trainee_with_physics) { create(:trainee, course_subject_one: "Physics") }
       let(:filters) { { subject: subject_name } }
 
-      it { is_expected.to eq([trainee_with_biology, trainee_with_chemistry, trainee_with_physics]) }
+      it { is_expected.to match_array([trainee_with_biology, trainee_with_chemistry, trainee_with_physics]) }
     end
 
     context "with text_search filter" do
