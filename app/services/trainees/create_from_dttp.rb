@@ -6,6 +6,8 @@ module Trainees
 
     class UnrecognisedStatusError < StandardError; end
 
+    INVALID_TRN = "999999999"
+
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
       @trainee = Trainee.new(mapped_attributes)
@@ -15,6 +17,7 @@ module Trainees
       return if dttp_trainee.imported?
       return if dttp_trainee.provider.blank?
       return if latest_placement_assignment.blank?
+      return if dttp_trainee.response["merged"]
 
       if multiple_providers?
         dttp_trainee.non_importable_multi_provider!
@@ -82,7 +85,7 @@ module Trainees
         provider: dttp_trainee.provider,
         trainee_id: trainee_id,
         training_route: training_route,
-        trn: dttp_trainee.response["dfe_trn"],
+        trn: trn,
         submitted_for_trn_at: earliest_placement_assignment.response["dfe_trnassessmentdate"],
         dttp_id: dttp_trainee.dttp_id,
         placement_assignment_dttp_id: latest_placement_assignment.dttp_id,
@@ -141,6 +144,10 @@ module Trainees
 
     def undergrad_level?
       latest_placement_assignment.response["dfe_courselevel"] == Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG
+    end
+
+    def trn
+      dttp_trainee.trn == INVALID_TRN ? nil : dttp_trainee.trn
     end
 
     def trainee_gender
