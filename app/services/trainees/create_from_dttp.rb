@@ -333,7 +333,7 @@ module Trainees
 
     def training_initiative_attributes
       {
-        training_initiative: training_initiative,
+        training_initiative: training_initiative.presence || ROUTE_INITIATIVES_ENUMS[:no_initiative],
       }
     end
 
