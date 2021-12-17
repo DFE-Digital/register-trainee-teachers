@@ -48,5 +48,13 @@ module Dttp
     def trn
       response["dfe_trn"]
     end
+
+    def country
+      response["address1_country"]
+    end
+
+    def postcode
+      response["address1_postalcode"]
+    end
   end
 end

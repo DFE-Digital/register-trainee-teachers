@@ -7,6 +7,9 @@ module Trainees
     class UnrecognisedStatusError < StandardError; end
 
     INVALID_TRN = "999999999"
+    UK_COUNTRIES = ["England", "United Kingdom", "Scotland", "Northern Ireland",
+                    "Wales", "Isle of Man",
+                    "United Kingdom, not otherwise specified"].freeze
 
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
@@ -256,20 +259,35 @@ module Trainees
       }
     end
 
-    def locale_code
-      return {} if dttp_trainee.response["address1_line1"].blank?
+    def address_attributes
+      if UK_COUNTRIES.include?(dttp_trainee.country) || valid_postcode?
+        return {
+          locale_code: Trainee.locale_codes[:uk],
+          address_line_one: dttp_trainee.response["address1_line1"],
+          address_line_two: dttp_trainee.response["address1_line2"],
+          town_city: dttp_trainee.response["address1_line3"],
+          postcode: dttp_trainee.response["address1_postalcode"],
+        }
+      end
 
-      { locale_code: Trainee.locale_codes[:uk] }
+      if dttp_trainee.country.present? && !UK_COUNTRIES.include?(dttp_trainee.country)
+        return {
+          locale_code: Trainee.locale_codes[:non_uk],
+          international_address: dttp_trainee.response["address1_composite"],
+        }
+      end
+
+      {}
+    end
+
+    def valid_postcode?
+      dttp_trainee.postcode && UKPostcode.parse(dttp_trainee.postcode).valid?
     end
 
     def contact_attributes
-      {
-        address_line_one: dttp_trainee.response["address1_line1"],
-        address_line_two: dttp_trainee.response["address1_line2"],
-        town_city: dttp_trainee.response["address1_line3"],
-        postcode: dttp_trainee.response["address1_postalcode"],
+      address_attributes.merge({
         email: dttp_trainee.response["emailaddress1"],
-      }.merge(locale_code)
+      })
     end
 
     def course_attributes
