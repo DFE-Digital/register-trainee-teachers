@@ -413,9 +413,9 @@ module Trainees
       when DttpStatuses::STANDARDS_MET then "recommended_for_award"
       when DttpStatuses::DEFERRED then "deferred"
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
-      when (DttpStatuses::AWARDED_EYTS || DttpStatuses::AWARDED_QTS) then "awarded"
+      when DttpStatuses::AWARDED_EYTS, DttpStatuses::AWARDED_QTS then "awarded"
       when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
-      when (DttpStatuses::AWAITING_QTS || DttpStatuses::EYTS_REVOKED || DttpStatuses::QTS_REVOKED || DttpStatuses::STANDARDS_NOT_MET || DttpStatuses::DID_NOT_START || DttpStatuses::REJECTED) then nil
+      when DttpStatuses::AWAITING_QTS, DttpStatuses::EYTS_REVOKED, DttpStatuses::QTS_REVOKED, DttpStatuses::STANDARDS_NOT_MET, DttpStatuses::DID_NOT_START, DttpStatuses::REJECTED then nil
       end
     end
 
