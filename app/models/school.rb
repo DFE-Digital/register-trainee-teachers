@@ -16,6 +16,7 @@ class School < ApplicationRecord
 
   scope :open, -> { where(close_date: nil) }
   scope :lead_only, -> { where(lead_school: true) }
+  scope :order_by_name, -> { order(:name) }
 
   validates :urn, presence: true, uniqueness: true
   validates :name, presence: true

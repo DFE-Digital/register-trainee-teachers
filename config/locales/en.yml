@@ -346,6 +346,8 @@ en:
         delete: Remove a user
       validation_errors:
         page_title: Validation errors
+      schools:
+        index: Schools
       search_schools:
         page_title_no_results: No results
         sub_text_results: Results for
