@@ -31,10 +31,8 @@ module Degrees
       {
         locale_code: Trainee.locale_codes[:uk],
         uk_degree: qualification_type,
-        institution: institution || inactive_institution,
+        institution: institution,
         grade: grade.presence || Dttp::CodeSets::Grades::OTHER,
-        # Maybe?
-        # other_grade: dttp_degree.response["dfe_name"]
       }
     end
 
@@ -63,18 +61,13 @@ module Degrees
     end
 
     def qualification_type
-      find_by_entity_id(
-        dttp_degree.response["_dfe_degreetypeid_value"],
-        Dttp::CodeSets::DegreeTypes::MAPPING,
-      )
+      find_by_entity_id(dttp_degree.degree_type, Dttp::CodeSets::DegreeTypes::MAPPING) ||
+        find_by_entity_id(dttp_degree.degree_type, Dttp::CodeSets::DegreeTypes::INACTIVE_MAPPING)
     end
 
     def institution
-      find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::MAPPING)
-    end
-
-    def inactive_institution
-      find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::INACTIVE_MAPPING)
+      find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::MAPPING) ||
+        find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::INACTIVE_MAPPING)
     end
 
     def grade

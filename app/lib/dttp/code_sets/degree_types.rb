@@ -206,6 +206,11 @@ module Dttp
         },
         "Unknown" => { entity_id: "6f6a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil },
       }.freeze
+
+      INACTIVE_MAPPING = {
+        "BA (Hons) education" => { entity_id: "cf695652-c197-e711-80d8-005056ac45bb" },
+        "BSc (Hons) with intercalated PGCE" => { entity_id: "d7695652-c197-e711-80d8-005056ac45bb" },
+      }.freeze
     end
   end
 end

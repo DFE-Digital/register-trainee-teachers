@@ -32,5 +32,9 @@ module Dttp
     def institution
       response["_dfe_awardinginstitutionid_value"]
     end
+
+    def degree_type
+      response["_dfe_degreetypeid_value"]
+    end
   end
 end

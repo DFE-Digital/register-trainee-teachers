@@ -65,6 +65,20 @@ module Degrees
 
         it { is_expected.to include(uk_degree_attributes) }
       end
+
+      context "with an inactive degree type" do
+        let(:degree_type) { "BA (Hons) education" }
+        let(:api_degree_qualification) do
+          create(
+            :api_degree_qualification,
+            _dfe_awardinginstitutionid_value: Dttp::CodeSets::Institutions::MAPPING[institution][:entity_id],
+            _dfe_degreetypeid_value: Dttp::CodeSets::DegreeTypes::INACTIVE_MAPPING[degree_type][:entity_id],
+            _dfe_classofdegreeid_value: Dttp::CodeSets::Grades::MAPPING[grade][:entity_id],
+          )
+        end
+
+        it { is_expected.to include(uk_degree_attributes) }
+      end
     end
 
     context "with a non-uk degree" do
