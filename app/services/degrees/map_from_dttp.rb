@@ -33,22 +33,24 @@ module Degrees
         uk_degree: qualification_type,
         institution: institution,
         grade: grade.presence || Dttp::CodeSets::Grades::OTHER,
-        # Maybe?
-        # other_grade: dttp_degree.response["dfe_name"]
       }
     end
 
     def non_uk_degree_params
       {
         locale_code: Trainee.locale_codes[:non_uk],
-        # For non-uk degrees, this has more detail than dfe_degreetypeid_value
-        non_uk_degree: dttp_degree.response["dfe_name"],
+        non_uk_degree: non_uk_degree,
         country: country,
       }
     end
 
     def non_uk_degree?
       country && country != Dttp::CodeSets::Countries::UNITED_KINGDOM
+    end
+
+    def non_uk_degree
+      # For non-uk degrees, dfe_name has more detail than dfe_degreetypeid_value
+      dttp_degree.response["dfe_name"] || qualification_type
     end
 
     def subject
@@ -59,17 +61,13 @@ module Degrees
     end
 
     def qualification_type
-      find_by_entity_id(
-        dttp_degree.response["_dfe_degreetypeid_value"],
-        Dttp::CodeSets::DegreeTypes::MAPPING,
-      )
+      find_by_entity_id(dttp_degree.degree_type, Dttp::CodeSets::DegreeTypes::MAPPING) ||
+        find_by_entity_id(dttp_degree.degree_type, Dttp::CodeSets::DegreeTypes::INACTIVE_MAPPING)
     end
 
     def institution
-      find_by_entity_id(
-        dttp_degree.response["_dfe_awardinginstitutionid_value"],
-        Dttp::CodeSets::Institutions::MAPPING,
-      )
+      find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::MAPPING) ||
+        find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::INACTIVE_MAPPING)
     end
 
     def grade
