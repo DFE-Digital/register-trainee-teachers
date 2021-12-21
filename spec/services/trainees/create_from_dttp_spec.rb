@@ -146,6 +146,17 @@ module Trainees
         end
       end
 
+      context "when the trainee is on an early_years route" do
+        let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_early_years_route) }
+
+        it "sets the course subject one to early years and age range zero to five" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
+          expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
+        end
+      end
+
       context "when the trainee is not on any initiative" do
         let(:placement_assignment) do
           create(:dttp_placement_assignment,

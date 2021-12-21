@@ -62,6 +62,7 @@ module Trainees
         return
       end
 
+      trainee.set_early_years_course_details
       trainee.save!
 
       calculate_funding!
