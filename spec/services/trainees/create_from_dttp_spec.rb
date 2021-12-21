@@ -290,12 +290,13 @@ module Trainees
           create_trainee_from_dttp
           trainee = Trainee.last
           expect(trainee.course_subject_one).to eq(CourseSubjects::MODERN_LANGUAGES)
+          expect(trainee.commencement_date).to eq(placement_assignment_two.response["dfe_commencementdate"].to_date)
         end
 
-        it "sets the trainee start date from the first placement assignment" do
+        it "sets the trainee submitted_for_trn_at date from the first placement assignment" do
           create_trainee_from_dttp
           trainee = Trainee.last
-          expect(trainee.commencement_date).to eq(placement_assignment_one.response["dfe_commencementdate"].to_date)
+          expect(trainee.submitted_for_trn_at).to eq(placement_assignment_one.response["dfe_trnassessmentdate"].to_date)
         end
       end
 

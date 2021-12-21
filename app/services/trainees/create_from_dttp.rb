@@ -289,7 +289,7 @@ module Trainees
         course_min_age: age_range && age_range[0],
         course_max_age: age_range && age_range[1],
         study_mode: study_mode,
-        commencement_date: dttp_trainee.earliest_placement_assignment.response["dfe_commencementdate"],
+        commencement_date: dttp_trainee.latest_placement_assignment.response["dfe_commencementdate"],
         itt_start_date: dttp_trainee.latest_placement_assignment.programme_start_date,
         itt_end_date: dttp_trainee.latest_placement_assignment.programme_end_date,
       }
