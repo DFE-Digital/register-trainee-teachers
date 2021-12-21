@@ -93,6 +93,7 @@ module Exports
           "course_min_age" => trainee.course_min_age,
           "course_max_age" => trainee.course_max_age,
           "course_study_mode" => trainee.study_mode.humanize,
+          "course_level" => "postgrad",
           "itt_start_date" => trainee.itt_start_date&.iso8601,
           "itt_end_date" => trainee.itt_end_date&.iso8601,
           "course_duration_in_years" => trainee.course_duration_in_years,
