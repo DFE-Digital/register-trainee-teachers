@@ -127,7 +127,7 @@ jobs:
           CONFIRM_PRODUCTION:       yes
 
       - uses: DFE-Digital/github-actions/keyvault-yaml-secret@master
-        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'production'
+        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
         id: cf-username-secret
         with:
           keyvault: ${{ env.key_vault_name }}
@@ -135,7 +135,7 @@ jobs:
           secret: CF_USER
 
       - uses: DFE-Digital/github-actions/keyvault-yaml-secret@master
-        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'production'
+        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
         id: cf-password-secret
         with:
           keyvault: ${{ env.key_vault_name }}
@@ -143,7 +143,7 @@ jobs:
           secret: CF_PASSWORD
 
       - name: Setup cf cli
-        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'production'
+        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
         uses: DFE-Digital/github-actions/setup-cf-cli@master
         with:
           CF_USERNAME:   ${{ steps.cf-username-secret.outputs.secret-value }}
@@ -151,7 +151,7 @@ jobs:
           CF_SPACE_NAME: ${{ env.paas_space_name }}
 
       - name: Run data migrations
-        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'production'
+        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
         run: cf run-task "register-${DEPLOY_ENV}" --command "cd /app && bundle exec rails data:migrate" --wait
 
       - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
