@@ -155,6 +155,30 @@ module Trainees
           expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
           expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
         end
+
+        context "when the trainee has a grant" do
+          let(:placement_assignment) do
+            create(:dttp_placement_assignment,
+                   provider_dttp_id: provider.dttp_id,
+                   response: create(:api_placement_assignment,
+                                    :with_early_years_salaried_bursary))
+          end
+
+          let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+          let(:funding_method) { create(:funding_method, training_route: :early_years_salaried, funding_type: FUNDING_TYPE_ENUMS[:grant]) }
+          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::EARLY_YEARS_TEACHING) }
+
+          before do
+            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
+          end
+
+          it "sets funding" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.applying_for_grant).to eq(true)
+          end
+        end
       end
 
       context "when the trainee is not on any initiative" do

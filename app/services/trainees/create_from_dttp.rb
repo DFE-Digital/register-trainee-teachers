@@ -52,6 +52,8 @@ module Trainees
         return
       end
 
+      trainee.set_early_years_course_details
+
       if funding_not_yet_mapped?
         dttp_trainee.non_importable_missing_funding!
         return
@@ -62,7 +64,6 @@ module Trainees
         return
       end
 
-      trainee.set_early_years_course_details
       trainee.save!
 
       calculate_funding!

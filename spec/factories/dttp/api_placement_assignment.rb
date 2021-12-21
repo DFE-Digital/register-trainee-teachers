@@ -35,6 +35,13 @@ FactoryBot.define do
       _dfe_bursarydetailsid_value { "96756cc6-6041-e811-80f2-005056ac45bb" }
     end
 
+    trait :with_early_years_salaried_bursary do
+      enabled_training_routes { ["early_years_salaried"] }
+      dfe_allocatedplace { 1 }
+      _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_DTTP_ID }
+      _dfe_bursarydetailsid_value { "fd403c13-3e07-ec11-94ef-000d3adda801" }
+    end
+
     trait :with_tiered_bursary do
       enabled_training_routes { ["early_years_postgrad"] }
       dfe_allocatedplace { 1 }
