@@ -22,6 +22,11 @@ module Trainees
       return if dttp_trainee.latest_placement_assignment.blank?
       return if dttp_trainee.response["merged"]
 
+      if trainee_already_exists?
+        dttp_trainee.non_importable_duplicate!
+        return
+      end
+
       if multiple_providers?
         dttp_trainee.non_importable_multi_provider!
         return
@@ -56,11 +61,6 @@ module Trainees
 
       if funding_not_yet_mapped?
         dttp_trainee.non_importable_missing_funding!
-        return
-      end
-
-      if trainee_already_exists?
-        dttp_trainee.non_importable_duplicate!
         return
       end
 
