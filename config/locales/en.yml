@@ -348,6 +348,8 @@ en:
         page_title: Validation errors
       schools:
         index: Schools
+      lead_schools:
+        index: Lead schools
       search_schools:
         page_title_no_results: No results
         sub_text_results: Results for

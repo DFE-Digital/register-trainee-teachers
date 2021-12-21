@@ -86,6 +86,10 @@ module Features
       @schools_index_page ||= PageObjects::Schools::Index.new
     end
 
+    def lead_schools_index_page
+      @lead_schools_index_page ||= PageObjects::LeadSchools::Index.new
+    end
+
     def new_user_page
       @new_user_page ||= PageObjects::Users::New.new
     end
