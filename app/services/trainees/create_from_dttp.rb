@@ -382,12 +382,10 @@ module Trainees
     end
 
     def funding_attributes
+      return {} if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE && funding_entity_id.blank?
+
       if funding_entity_id == Dttp::Params::PlacementAssignment::NO_BURSARY_AWARDED
         return { applying_for_bursary: false }
-      end
-
-      if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE
-        return {}
       end
 
       if funding_entity_id == Dttp::Params::PlacementAssignment::SCHOLARSHIP
