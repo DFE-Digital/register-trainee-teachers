@@ -536,7 +536,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    stateful_enum (0.6.0)
+    stateful_enum (0.7.0)
     store_model (0.12.0)
       activerecord (>= 5.2)
     swd (1.2.0)
