@@ -382,14 +382,16 @@ module Trainees
     end
 
     def funding_attributes
-      return {} if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE
+      if funding_entity_id == Dttp::Params::PlacementAssignment::NO_BURSARY_AWARDED
+        return { applying_for_bursary: false }
+      end
+
+      if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE
+        return {}
+      end
 
       if funding_entity_id == Dttp::Params::PlacementAssignment::SCHOLARSHIP
         return { applying_for_scholarship: true }
-      end
-
-      if funding_entity_id == Dttp::Params::PlacementAssignment::NO_BURSARY_AWARDED
-        return { applying_for_bursary: false }
       end
 
       if funding_manager.can_apply_for_tiered_bursary?

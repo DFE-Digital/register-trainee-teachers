@@ -66,7 +66,7 @@ FactoryBot.define do
 
     trait :with_no_bursary_awarded do
       enabled_training_routes { ["pg_teaching_apprenticeship"] }
-      dfe_allocatedplace { 1 }
+      dfe_allocatedplace { [Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE, Dttp::Params::PlacementAssignment::ALLOCATED_PLACE].sample }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
       _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::NO_BURSARY_AWARDED }
     end
