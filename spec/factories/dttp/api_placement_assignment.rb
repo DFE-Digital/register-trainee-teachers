@@ -32,13 +32,13 @@ FactoryBot.define do
     trait :with_provider_led_bursary do
       enabled_training_routes { ["provider_led_postgrad"] }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
-      _dfe_bursarydetailsid_value { "96756cc6-6041-e811-80f2-005056ac45bb" }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY }
     end
 
     trait :with_early_years_salaried_bursary do
       enabled_training_routes { ["early_years_salaried"] }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_DTTP_ID }
-      _dfe_bursarydetailsid_value { "fd403c13-3e07-ec11-94ef-000d3adda801" }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::EARLY_YEARS_SALARIED }
     end
 
     trait :with_tiered_bursary do

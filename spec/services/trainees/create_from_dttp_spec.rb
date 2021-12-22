@@ -393,6 +393,25 @@ module Trainees
           end
         end
 
+        context "when multiple funding methods are available" do
+          let(:bursary_funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:bursary]) }
+          let(:scholarship_funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
+          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
+
+          before do
+            create(:funding_method_subject, funding_method: bursary_funding_method, allocation_subject: specialism.allocation_subject)
+            create(:funding_method_subject, funding_method: scholarship_funding_method, allocation_subject: specialism.allocation_subject)
+          end
+
+          it "sets the correct funding" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.applying_for_grant).to eq(nil)
+            expect(trainee.applying_for_bursary).to eq(true)
+            expect(trainee.applying_for_scholarship).to eq(nil)
+          end
+        end
+
         context "when funding method does not exist" do
           it "marks the application as non importable" do
             expect {

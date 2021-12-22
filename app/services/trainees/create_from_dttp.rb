@@ -388,19 +388,35 @@ module Trainees
         return { applying_for_bursary: false }
       end
 
-      if funding_entity_id == Dttp::Params::PlacementAssignment::SCHOLARSHIP
-        return { applying_for_scholarship: true }
-      end
-
       if funding_manager.can_apply_for_tiered_bursary?
         return { applying_for_bursary: true, bursary_tier: route_or_tier_for_funding }
       end
 
       {
-        applying_for_grant: funding_manager.can_apply_for_grant?,
-        applying_for_scholarship: funding_manager.can_apply_for_scholarship?,
-        applying_for_bursary: funding_manager.can_apply_for_bursary?,
+        applying_for_grant: applying_for_grant,
+        applying_for_scholarship: applying_for_scholarship,
+        applying_for_bursary: applying_for_bursary,
       }.reject { |_key, value| value == false }
+    end
+
+    def applying_for_grant
+      funding_manager.can_apply_for_grant? &&
+      [
+        Dttp::CodeSets::BursaryDetails::SCHOOL_DIRECT_SALARIED,
+        Dttp::CodeSets::BursaryDetails::EARLY_YEARS_SALARIED,
+      ].include?(funding_entity_id)
+    end
+
+    def applying_for_scholarship
+      funding_manager.can_apply_for_scholarship? &&
+      funding_entity_id == Dttp::Params::PlacementAssignment::SCHOLARSHIP
+    end
+
+    def applying_for_bursary
+      funding_manager.can_apply_for_bursary? && [
+        Dttp::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY,
+        Dttp::CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY,
+      ].include?(funding_entity_id)
     end
 
     def route_or_tier_for_funding
