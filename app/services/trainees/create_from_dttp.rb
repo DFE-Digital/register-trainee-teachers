@@ -388,6 +388,10 @@ module Trainees
         return { applying_for_scholarship: true }
       end
 
+      if funding_entity_id == Dttp::Params::PlacementAssignment::NO_BURSARY_AWARDED
+        return { applying_for_bursary: false }
+      end
+
       if funding_manager.can_apply_for_tiered_bursary?
         return { applying_for_bursary: true, bursary_tier: route_or_tier_for_funding }
       end

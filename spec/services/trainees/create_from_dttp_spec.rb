@@ -341,6 +341,25 @@ module Trainees
         end
         let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
 
+        context "when bursary is NO_BURSARY_AWARDED" do
+          let(:api_placement_assignment) do
+            create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_no_bursary_awarded))
+          end
+
+          let(:funding_method) { create(:funding_method, training_route: :pg_teaching_apprenticeship, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
+          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
+
+          before do
+            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
+          end
+
+          it "sets bursary to false" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.applying_for_bursary).to eq(false)
+          end
+        end
+
         context "when scholarship" do
           let(:api_placement_assignment) do
             create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_scholarship))
