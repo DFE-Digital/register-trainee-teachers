@@ -16,8 +16,6 @@ module Dttp
 
       ITT_QUALIFICATION_AIM_QTS = "68cbae32-7389-e711-80d8-005056ac45bb"
 
-      SCHOLARSHIP = "188375c2-7722-e711-80c8-0050568902d3"
-
       ALLOCATED_PLACE = 1
       NO_ALLOCATED_PLACE = 2
 
@@ -170,7 +168,7 @@ module Dttp
       end
 
       def funding_details_id
-        return SCHOLARSHIP if trainee.applying_for_scholarship
+        return CodeSets::BursaryDetails::SCHOLARSHIP if trainee.applying_for_scholarship
 
         bursary_details_id(trainee.bursary_tier.presence || trainee.training_route)
       end

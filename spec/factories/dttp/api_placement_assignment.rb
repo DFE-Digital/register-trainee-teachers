@@ -6,7 +6,7 @@ FactoryBot.define do
       dttp_id { SecureRandom.uuid }
       contact_dttp_id { SecureRandom.uuid }
       provider_dttp_id { SecureRandom.uuid }
-      enabled_training_routes { TRAINING_ROUTE_ENUMS.values - ["hpitt_postgrad"] }
+      enabled_training_routes { TRAINING_ROUTE_ENUMS.values - EARLY_YEARS_TRAINING_ROUTES.keys - ["hpitt_postgrad"] }
     end
     dfe_placementassignmentid { dttp_id }
     _dfe_contactid_value { contact_dttp_id }
@@ -24,20 +24,25 @@ FactoryBot.define do
     dfe_trnassessmentdate { dfe_programmestartdate }
     _dfe_traineestatusid_value { "295af972-9e1b-e711-80c7-0050568902d3" }
     _dfe_academicyearid_value { SecureRandom.uuid }
+    dfe_allocatedplace { [Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE, Dttp::Params::PlacementAssignment::ALLOCATED_PLACE].sample }
 
     initialize_with { attributes.stringify_keys }
     to_create { |instance| instance }
 
     trait :with_provider_led_bursary do
       enabled_training_routes { ["provider_led_postgrad"] }
-      dfe_allocatedplace { 1 }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
-      _dfe_bursarydetailsid_value { "96756cc6-6041-e811-80f2-005056ac45bb" }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY }
+    end
+
+    trait :with_early_years_salaried_bursary do
+      enabled_training_routes { ["early_years_salaried"] }
+      _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_DTTP_ID }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::EARLY_YEARS_SALARIED }
     end
 
     trait :with_tiered_bursary do
       enabled_training_routes { ["early_years_postgrad"] }
-      dfe_allocatedplace { 1 }
       _dfe_bursarydetailsid_value { "66671547-33ff-eb11-94ef-00224899ca99" }
     end
 
@@ -52,9 +57,14 @@ FactoryBot.define do
 
     trait :with_scholarship do
       enabled_training_routes { ["provider_led_postgrad"] }
-      dfe_allocatedplace { 1 }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
-      _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::SCHOLARSHIP }
+    end
+
+    trait :with_no_bursary_awarded do
+      enabled_training_routes { ["pg_teaching_apprenticeship"] }
+      _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED }
     end
   end
 end
