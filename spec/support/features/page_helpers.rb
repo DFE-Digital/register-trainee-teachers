@@ -90,6 +90,10 @@ module Features
       @lead_schools_index_page ||= PageObjects::LeadSchools::Index.new
     end
 
+    def lead_school_show_page
+      @lead_school_show_page ||= PageObjects::LeadSchools::Show.new
+    end
+
     def new_user_page
       @new_user_page ||= PageObjects::Users::New.new
     end
