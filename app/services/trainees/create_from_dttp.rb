@@ -347,6 +347,7 @@ module Trainees
     def training_initiative_attributes
       {
         training_initiative: training_initiative.presence || ROUTE_INITIATIVES_ENUMS[:no_initiative],
+        ebacc: ebacc?,
       }
     end
 
@@ -355,14 +356,19 @@ module Trainees
         return ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]
       end
 
-      find_by_entity_id(
-        dttp_trainee.latest_placement_assignment.response["_dfe_initiative1id_value"],
-        Dttp::CodeSets::TrainingInitiatives::MAPPING,
-      )
+      find_by_entity_id(dttp_initiative_id, Dttp::CodeSets::TrainingInitiatives::MAPPING)
     end
 
     def unmapped_training_initiative?
-      dttp_trainee.latest_placement_assignment.response["_dfe_initiative1id_value"].present? && training_initiative.blank?
+      dttp_initiative_id.present? && !ebacc? && training_initiative.blank?
+    end
+
+    def ebacc?
+      dttp_initiative_id == Dttp::CodeSets::TrainingInitiatives::EBACC
+    end
+
+    def dttp_initiative_id
+      @dttp_initiative_id ||= dttp_trainee.latest_placement_assignment.response["_dfe_initiative1id_value"]
     end
 
     def lead_school_urn

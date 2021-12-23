@@ -468,6 +468,23 @@ module Trainees
       end
     end
 
+    context "when training_initiative is EBACC" do
+      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_initiative1id_value: Dttp::CodeSets::TrainingInitiatives::EBACC)) }
+      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+
+      before do
+        create_trainee_from_dttp
+      end
+
+      it "sets ebaac to true" do
+        expect(Trainee.last.ebacc).to be true
+      end
+
+      it "sets no initiative" do
+        expect(Trainee.last.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+      end
+    end
+
     context "when training_initiative is not mapped" do
       let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_initiative1id_value: SecureRandom.uuid)) }
       let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
