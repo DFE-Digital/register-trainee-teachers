@@ -58,13 +58,13 @@ FactoryBot.define do
     trait :with_scholarship do
       enabled_training_routes { ["provider_led_postgrad"] }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
-      _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::SCHOLARSHIP }
     end
 
     trait :with_no_bursary_awarded do
       enabled_training_routes { ["pg_teaching_apprenticeship"] }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
-      _dfe_bursarydetailsid_value { Dttp::Params::PlacementAssignment::NO_BURSARY_AWARDED }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED }
     end
   end
 end

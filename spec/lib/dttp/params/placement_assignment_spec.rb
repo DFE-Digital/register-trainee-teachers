@@ -518,8 +518,11 @@ module Dttp
                 dttp_id: dttp_contact_id,
               )
             end
+            let(:scholarship_id) { SecureRandom.uuid }
 
-            let(:scholarship_id) { Dttp::Params::PlacementAssignment::SCHOLARSHIP }
+            before do
+              stub_const("Dttp::CodeSets::BursaryDetails::SCHOLARSHIP", scholarship_id)
+            end
 
             it "sends the correct params" do
               expect(subject).to include({ "dfe_allocatedplace" => 1 })

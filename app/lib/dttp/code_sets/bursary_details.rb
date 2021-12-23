@@ -8,6 +8,10 @@ module Dttp
       SCHOOL_DIRECT_SALARIED = "3036b79f-9fc7-eb11-bacc-000d3ab7dcfe"
       EARLY_YEARS_SALARIED = "fd403c13-3e07-ec11-94ef-000d3adda801"
 
+      SCHOLARSHIP = "188375c2-7722-e711-80c8-0050568902d3"
+
+      NO_BURSARY_AWARDED = "1c8375c2-7722-e711-80c8-0050568902d3"
+
       MAPPING = {
         # Postgraduate bursary
         TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => { entity_id: POSTGRADUATE_BURSARY },

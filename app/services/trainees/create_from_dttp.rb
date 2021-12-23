@@ -384,7 +384,7 @@ module Trainees
     def funding_attributes
       return {} if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE && funding_entity_id.blank?
 
-      if funding_entity_id == Dttp::Params::PlacementAssignment::NO_BURSARY_AWARDED
+      if funding_entity_id == Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED
         return { applying_for_bursary: false }
       end
 
@@ -409,7 +409,7 @@ module Trainees
 
     def applying_for_scholarship
       funding_manager.can_apply_for_scholarship? &&
-      funding_entity_id == Dttp::Params::PlacementAssignment::SCHOLARSHIP
+      funding_entity_id == Dttp::CodeSets::BursaryDetails::SCHOLARSHIP
     end
 
     def applying_for_bursary
