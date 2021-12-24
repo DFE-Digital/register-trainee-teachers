@@ -1,65 +1,58 @@
-<%= render PageTitle::View.new(i18n_key: "schools.index") %>
+<%= render PageTitle::View.new(i18n_key: "lead_schools.index") %>
 
-<h1 class="govuk-heading-l">Schools</h1>
+<h1 class="govuk-heading-l">Lead schools</h1>
 
 <%= render "system_admin/tab_nav" %>
 
-<table class="govuk-table" summary="Schools list">
+<table class="govuk-table" summary="Lead schools list">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">School name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Lead school name</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">URN</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Town</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Postcode</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Open date</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Closed date</th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Lead school</th>
     </tr>
   </thead>
 
   <tbody class="govuk-table__body">
-    <% @schools.each do |school| %>
-      <tr class="govuk-table__row qa-school_row">
+    <% @lead_schools.each do |lead_school| %>
+      <tr class="govuk-table__row qa-lead_school_row">
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= school.name %>
+            <%= lead_school.name %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= school.urn %>
+            <%= lead_school.urn %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= school.town %>
+            <%= lead_school.town %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= school.postcode %>
+            <%= lead_school.postcode %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1 no-wrap">
-            <%= school.open_date&.strftime("%d %B %Y") %>
+            <%= lead_school.open_date&.strftime("%d %B %Y") %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1 no-wrap">
-            <%= school.close_date&.strftime("%d %B %Y") %>
-          </span>
-        </td>
-
-        <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= school.lead_school %>
+            <%= lead_school.close_date&.strftime("%d %B %Y") %>
           </span>
         </td>
 
@@ -68,4 +61,4 @@
   </tbody>
 </table>
 
-<%= render Paginator::View.new(scope: @schools) %>
+<%= render Paginator::View.new(scope: @lead_schools) %>
