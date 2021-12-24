@@ -1,0 +1,71 @@
+<%= render PageTitle::View.new(i18n_key: "schools.index") %>
+
+<h1 class="govuk-heading-l">Schools</h1>
+
+<%= render "system_admin/tab_nav" %>
+
+<table class="govuk-table" summary="Schools list">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">URN</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">School name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Town</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Postcode</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Open date</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Closed date</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Lead school</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @schools.each do |school| %>
+      <tr class="govuk-table__row qa-school_row">
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= school.urn %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= school.name %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= school.town %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= school.postcode %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1 no-wrap">
+            <%= school.open_date&.strftime("%d %B %Y") %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1 no-wrap">
+            <%= school.close_date&.strftime("%d %B %Y") %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= school.lead_school %>
+          </span>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render Paginator::View.new(scope: @schools) %>
