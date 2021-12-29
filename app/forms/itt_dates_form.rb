@@ -100,6 +100,8 @@ private
       errors.add(:start_date, :invalid)
     elsif start_date < earliest_valid_start_date
       errors.add(:start_date, :too_old)
+    elsif outside_academic_cycle?(start_date)
+      errors.add(:start_date, :not_within_academic_cycle)
     end
   end
 
@@ -121,6 +123,16 @@ private
     if additional_validation && start_date >= end_date
       errors.add(:end_date, :before_or_same_as_start_date)
     end
+  end
+
+  def outside_academic_cycle?(date)
+    return false unless date && academic_cycle
+
+    !date.between?(academic_cycle.start_date, academic_cycle.end_date)
+  end
+
+  def academic_cycle
+    @academic_cycle ||= AcademicCycle.for_year(course.recruitment_cycle_year)
   end
 
   def next_year

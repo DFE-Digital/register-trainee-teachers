@@ -95,8 +95,8 @@ module Features
     end
 
     def and_i_enter_itt_dates
-      itt_dates_edit_page.set_date_fields(:start_date, 1.week.from_now.strftime("%d/%m/%Y"))
-      itt_dates_edit_page.set_date_fields(:end_date, 1.year.from_now.strftime("%d/%m/%Y"))
+      itt_dates_edit_page.set_date_fields(:start_date, itt_start_date.strftime("%d/%m/%Y"))
+      itt_dates_edit_page.set_date_fields(:end_date, itt_end_date.strftime("%d/%m/%Y"))
       itt_dates_edit_page.continue.click
     end
 

@@ -8,7 +8,7 @@ feature "publish course details", type: :feature, feature_publish_course_details
   let(:subjects) { [] }
   let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
   let(:study_mode) { "full_time" }
-  let(:itt_start_date) { Time.zone.now }
+  let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
   let(:itt_end_date) { itt_start_date + 1.year }
 
   background do

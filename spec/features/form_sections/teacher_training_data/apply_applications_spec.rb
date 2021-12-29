@@ -5,6 +5,9 @@ require "rails_helper"
 feature "apply registrations", type: :feature do
   include CourseDetailsHelper
 
+  let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
+  let(:itt_end_date) { itt_start_date + 1.year }
+
   background do
     given_i_am_authenticated
     and_a_trainee_exists_created_from_apply

@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "Change course", type: :feature, feature_publish_course_details: true do
+  let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
+  let(:itt_end_date) { itt_start_date + 1.year }
+
   scenario "TRN received" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
