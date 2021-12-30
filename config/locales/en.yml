@@ -1244,7 +1244,8 @@ en:
               future: Enter an ITT start date closer to today
               invalid: Enter a valid ITT start date
               too_old: Enter a valid ITT start date
-              not_within_academic_cycle: The ITT start date is for a different academic year than the selected course. Enter a valid start date or choose a different year.
+              not_within_academic_cycle: Enter a valid start date
+              not_within_academic_cycle_description: The ITT start date is for a different academic year than the selected course. Enter a valid start date or <a class="govuk-link" href="%{url}">choose a different year</a>.
               hint_html: For example, 11 9 %{year}
             end_date:
               blank: Enter an ITT end date

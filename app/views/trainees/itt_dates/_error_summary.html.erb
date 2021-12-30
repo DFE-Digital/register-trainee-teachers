@@ -1,0 +1,26 @@
+<% if form.object.errors.any? %>
+  <div class="govuk-error-summary" tabindex="-1" role="alert" data-module="govuk-error-summary" aria-labelledby="error-summary-title">
+    <h2 id="error-summary-title" class="govuk-error-summary__title">
+      <%= GOVUKDesignSystemFormBuilder.default_error_summary_title %>
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <% form.object.errors.each do |error| %>
+          <li>
+            <a data-turbolinks="false" href="#itt-dates-form-<%= error.attribute.to_s.parameterize.gsub("_", "-") %>-field-error">
+              <%= error.message %>
+            </a>
+            <% if error.type == :not_within_academic_cycle %>
+              <div class="govuk-error-summary__item-description">
+                <%= t(
+                  "activemodel.errors.models.itt_dates_form.attributes.start_date.not_within_academic_cycle_description",
+                  url: edit_trainee_course_years_path(form.object.trainee)
+                ).html_safe %>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
