@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "Change course", type: :feature, feature_publish_course_details: true do
+  let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
+  let(:itt_end_date) { itt_start_date + 1.year }
+
   scenario "TRN received" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
@@ -12,10 +15,7 @@ feature "Change course", type: :feature, feature_publish_course_details: true do
     and_i_choose_a_different_course
     and_i_click_continue
     and_select_a_specialism_if_necessary
-    and_i_see_itt_end_date_missing_error
-    and_i_click_enter_answer_for_itt_end_date
-    and_i_enter_itt_end_date
-    and_i_submit_the_course_details_form
+    and_i_enter_itt_dates
     and_i_click_update_record
     then_the_trainee_course_has_changed
   end
@@ -64,22 +64,6 @@ private
 
   def then_the_trainee_course_has_changed
     expect(trainee.reload.course_uuid).to eq(@different_course.uuid)
-  end
-
-  def and_i_see_itt_end_date_missing_error
-    expect(confirm_publish_course_details_page).to have_content("end date is missing")
-  end
-
-  def and_i_click_enter_answer_for_itt_end_date
-    form = CourseDetailsForm.new(trainee)
-    [form.course_subject_one, form.course_subject_two, form.course_subject_three].flatten.select(&:present?).each do |name|
-      create(:subject_specialism, name: name)
-    end
-    confirm_publish_course_details_page.enter_an_answer_for_itt_end_date_link.click
-  end
-
-  def and_i_enter_itt_end_date
-    course_details_page.set_date_fields("itt_end_date", 1.year.from_now.strftime("%d/%m/%Y"))
   end
 
   def and_i_submit_the_course_details_form

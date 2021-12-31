@@ -213,6 +213,8 @@ en:
         withdrawn: "Withdrawal date: "
     itt_start_date:
       hint: The start date of the Initial Teacher Training part of their course.
+    itt_end_date:
+      hint: The end date of the Initial Teacher Training part of their course.
     page_titles:
       personas: Personas
       pages:
@@ -283,8 +285,8 @@ en:
           edit: Course year
         course_education_phases:
           show: Which phase of education will the trainee teach?
-        itt_start_date:
-          edit: ITT start date
+        itt_dates:
+          edit: ITT dates
         study_mode:
           edit: Is the trainee full time or part time?
         withdrawal:
@@ -987,6 +989,12 @@ en:
         reason: You can only withdraw a trainee after they have started their ITT.
         delete: delete this trainee record
         support: If you need more help, email us at
+    itt_dates:
+      edit:
+        intro_html:
+          <p class="govuk-body">%{course_name} (%{course_code}) is recorded in Publish as starting in September
+          %{cycle_year} – but we do not have complete start and end dates for it.<p>
+        is_for_all_courses: Use these dates for all %{study_mode} trainees on %{course_name} (%{course_code}) for the %{cycle_year} to %{next_cycle_year} cycle
   activerecord:
     attributes:
       trainee:
@@ -1085,8 +1093,11 @@ en:
   activemodel:
     attributes:
       course_details_form:
-        itt_start_date: ITT start date
-        itt_end_date: ITT end date
+        itt_start_date: &itt_start_date ITT start date
+        itt_end_date: &itt_end_date ITT end date
+      itt_dates_form:
+        itt_start_date: *itt_start_date
+        itt_end_date: *itt_end_date
     errors:
       validators:
         postcode:
@@ -1226,15 +1237,23 @@ en:
           attributes:
             study_mode:
               inclusion: Select if the trainee is full time or part time
-        itt_start_date_form:
+        itt_dates_form:
           attributes:
-            date_string:
-              blank: Enter an ITT start date
-            date:
+            start_date:
               blank: Enter an ITT start date
               future: Enter an ITT start date closer to today
               invalid: Enter a valid ITT start date
               too_old: Enter a valid ITT start date
+              not_within_academic_cycle: Enter a valid start date
+              not_within_academic_cycle_description: The ITT start date is for a different academic year than the selected course. Enter a valid start date or <a class="govuk-link" href="%{url}">choose a different year</a>.
+              hint_html: For example, 11 9 %{year}
+            end_date:
+              blank: Enter an ITT end date
+              future: Enter an ITT end date closer to today
+              invalid: Enter a valid ITT end date
+              too_old: Enter a valid ITT end date
+              before_or_same_as_start_date: The ITT end date must be after the start date
+              hint_html: For example, 11 6 %{year}
         course_details_form:
           attributes:
             course_subject_one:

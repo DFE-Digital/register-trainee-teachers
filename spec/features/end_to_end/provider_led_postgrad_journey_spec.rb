@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "provider-led (postgrad) end-to-end journey", type: :feature do
+  let(:itt_start_date) { 1.week.from_now }
+  let(:itt_end_date) { itt_start_date + 1.year }
+
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.provider_led_postgrad": true, feature_publish_course_details: true do

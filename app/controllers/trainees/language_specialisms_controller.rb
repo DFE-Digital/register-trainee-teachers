@@ -2,7 +2,7 @@
 
 module Trainees
   class LanguageSpecialismsController < BaseController
-    include PublishCourseNextPath
+    include Publishable
 
     before_action :skip_manual_selection, if: :course_has_one_language_specialism?
     before_action :load_language_specialisms
@@ -17,7 +17,7 @@ module Trainees
                                                                user: current_user)
 
       if @language_specialisms_form.stash_or_save!
-        redirect_to(publish_course_next_path)
+        redirect_to(edit_trainee_course_details_study_mode_path(trainee))
       else
         render(:edit)
       end
@@ -30,7 +30,7 @@ module Trainees
         language_specialisms: subject_specialisms[:course_subject_one],
       }).stash_or_save!
 
-      redirect_to(publish_course_next_path)
+      redirect_to(edit_trainee_course_details_study_mode_path(trainee))
     end
 
     def course_has_one_language_specialism?
@@ -55,10 +55,6 @@ module Trainees
 
     def course_subjects
       @course_subjects ||= course.subjects.pluck(:name)
-    end
-
-    def course
-      @course ||= trainee.available_courses.find_by_uuid!(course_uuid)
     end
   end
 end

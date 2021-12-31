@@ -32,12 +32,16 @@ shared:
     - name
     - qualification
     - route
-    - start_date
+    - published_start_date
     - study_mode
     - summary
     - updated_at
     - recruitment_cycle_year
     - uuid
+    - full_time_start_date
+    - full_time_end_date
+    - part_time_start_date
+    - part_time_end_date
   course_subjects:
     - course_id
     - subject_id

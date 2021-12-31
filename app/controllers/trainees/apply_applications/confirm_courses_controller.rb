@@ -4,17 +4,17 @@ module Trainees
   module ApplyApplications
     class ConfirmCoursesController < BaseController
       before_action :redirect_to_manual_confirm_page, if: :manual_entry_chosen?
-      before_action :set_course, :set_specialisms, :set_itt_start_date
+      before_action :set_course, :set_specialisms
 
       helper_method :course_uuid
 
       def show
         page_tracker.save_as_origin!
-        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms, @itt_start_date)
+        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms)
       end
 
       def update
-        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms, @itt_start_date, course_params)
+        @confirm_course_form = ::ApplyApplications::ConfirmCourseForm.new(trainee, @specialisms, course_params)
 
         if @confirm_course_form.save
           clear_form_stash(trainee)
@@ -32,12 +32,6 @@ module Trainees
 
       def set_course
         @course = trainee.available_courses.find_by(code: course_uuid)
-      end
-
-      def set_itt_start_date
-        @itt_start_date = if @trainee.requires_itt_start_date?
-                            IttStartDateForm.new(@trainee).date
-                          end
       end
 
       def set_specialisms

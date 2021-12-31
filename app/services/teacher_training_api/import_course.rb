@@ -26,7 +26,7 @@ module TeacherTrainingApi
       course.update!(
         name: course_attributes[:name],
         code: course_attributes[:code],
-        start_date: start_date,
+        published_start_date: published_start_date,
         level: course_attributes[:level],
         qualification: qualification,
         min_age: course_attributes[:age_minimum],
@@ -65,7 +65,7 @@ module TeacherTrainingApi
       Subject.where(code: codes).sort_by { |subject| codes.index(subject.code) }
     end
 
-    def start_date
+    def published_start_date
       Time.strptime(course_attributes[:start_date], "%B %Y")
     end
 

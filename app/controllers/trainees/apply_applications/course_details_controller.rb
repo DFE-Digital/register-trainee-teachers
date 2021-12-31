@@ -74,7 +74,6 @@ module Trainees
         ::ApplyApplications::ConfirmCourseForm.new(
           trainee,
           course_has_one_specialism? ? specialisms : [],
-          IttStartDateForm.new(@trainee).date,
           { uuid: review_course_params[:uuid] },
         ).save
       end

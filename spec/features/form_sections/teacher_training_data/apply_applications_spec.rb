@@ -5,6 +5,9 @@ require "rails_helper"
 feature "apply registrations", type: :feature do
   include CourseDetailsHelper
 
+  let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
+  let(:itt_end_date) { itt_start_date + 1.year }
+
   background do
     given_i_am_authenticated
     and_a_trainee_exists_created_from_apply
@@ -27,6 +30,7 @@ feature "apply registrations", type: :feature do
     scenario "reviewing course" do
       when_i_enter_the_course_details_page
       and_i_confirm_the_course_details
+      and_i_enter_itt_dates
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("History")
       and_i_confirm_the_course
@@ -41,6 +45,7 @@ feature "apply registrations", type: :feature do
       when_i_enter_the_course_details_page
       and_i_confirm_the_course_details
       and_i_select_a_specialism("Graphic design")
+      and_i_enter_itt_dates
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("Graphic design")
     end
@@ -53,6 +58,7 @@ feature "apply registrations", type: :feature do
       when_i_enter_the_course_details_page
       and_i_confirm_the_course_details
       and_i_choose_my_languages
+      and_i_enter_itt_dates
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
       and_i_should_see_the_subject_specialism("Modern languages")
     end

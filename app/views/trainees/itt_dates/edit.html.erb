@@ -1,0 +1,46 @@
+<%= render PageTitle::View.new(text: I18n.t("components.page_titles.trainees.itt_dates.edit"),
+                               has_errors: @itt_dates_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: trainee_path(@trainee)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @itt_dates_form,
+                           url: trainee_course_details_itt_dates_path(@trainee),
+                           local: true) do |f| %>
+      <%= render "error_summary", form: f %>
+      <%= render TraineeName::View.new(@trainee) %>
+      <h1 class="govuk-heading-l"><%= I18n.t("components.page_titles.trainees.itt_dates.edit") %></h1>
+      <%= t(".intro_html",
+            course_name: @itt_dates_form.course.name,
+            course_code: @itt_dates_form.course.code,
+            cycle_year: @itt_dates_form.course.recruitment_cycle_year) %>
+      <div class="govuk-form-group">
+        <%= f.govuk_date_field(:start_date,
+                               date_of_birth: false,
+                               legend: { text: t("publish_course_details.view.itt_start_date").html_safe, size: "s" },
+                               hint: {
+                                 text: t("activemodel.errors.models.course_details_form.attributes.itt_start_date.hint_html",
+                                         year: Time.zone.now.year)
+                               }) %>
+        <%= f.govuk_date_field(:end_date,
+                               date_of_birth: false,
+                               legend: { text: t("publish_course_details.view.itt_end_date").html_safe, size: "s" },
+                               hint: {
+                                 text: t("activemodel.errors.models.course_details_form.attributes.itt_end_date.hint_html",
+                                         year: Time.zone.now.next_year.year)
+                               }) %>
+        <%= f.govuk_check_box(:is_for_all_trainees, "1", "0", multiple: false,
+                              label: { text: t(".is_for_all_courses",
+                                               course_name: @itt_dates_form.course.name,
+                                               course_code: @itt_dates_form.course.code,
+                                               study_mode: t("activerecord.attributes.trainee.study_modes.#{@itt_dates_form.study_mode}").downcase,
+                                               cycle_year: @itt_dates_form.course.recruitment_cycle_year,
+                                               next_cycle_year: @itt_dates_form.course.recruitment_cycle_year + 1) }) %>
+      </div>
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

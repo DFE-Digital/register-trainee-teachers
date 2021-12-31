@@ -99,7 +99,7 @@ namespace :example_data do
           FactoryBot.build(
             :course,
             accredited_body_code: provider.code,
-            start_date: index.even? ? Time.zone.now : 1.month.from_now,
+            published_start_date: index.even? ? Time.zone.now : 1.month.from_now,
             route: route,
             name: course_name,
             level: course_name.include?("Primary") ? :primary : :secondary,
@@ -114,7 +114,7 @@ namespace :example_data do
             FactoryBot.build(
               :course,
               accredited_body_code: provider.code,
-              start_date: index.even? ? Time.zone.now : 1.month.from_now,
+              published_start_date: index.even? ? Time.zone.now : 1.month.from_now,
               route: route,
               name: course_name,
               level: course_name.include?("Primary") ? :primary : :secondary,
@@ -131,7 +131,7 @@ namespace :example_data do
           FactoryBot.build(
             :course,
             accredited_body_code: provider.code,
-            start_date: index.even? ? Time.zone.now : 1.month.from_now,
+            published_start_date: index.even? ? Time.zone.now : 1.month.from_now,
             route: route,
             name: course_name,
             level: course_name.include?("Primary") ? :primary : :secondary,
@@ -176,7 +176,7 @@ namespace :example_data do
                   study_mode: TRAINEE_STUDY_MODE_ENUMS[course.study_mode],
                   course_min_age: course.min_age,
                   course_max_age: course.max_age,
-                  itt_start_date: course.start_date,
+                  itt_start_date: course.published_start_date,
                   itt_end_date: course.end_date,
                 )
               end

@@ -10,14 +10,14 @@ module ApplyApplications
       mark_as_reviewed
     ].freeze
 
-    attr_accessor(*FIELDS, :trainee, :specialisms, :start_date, :params)
+    attr_accessor(*FIELDS, :trainee, :specialisms, :params)
 
     delegate :id, :persisted?, to: :trainee
 
-    def initialize(trainee, specialisms, start_date, params = {})
+    def initialize(trainee, specialisms, params = {})
       @trainee = trainee
       @specialisms = specialisms
-      @start_date = start_date
+      @itt_dates_form = IttDatesForm.new(trainee)
 
       assign_attributes({ mark_as_reviewed: trainee.progress.course_details }.merge(params))
     end
@@ -51,11 +51,11 @@ module ApplyApplications
     end
 
     def itt_start_date
-      start_date || course&.start_date || trainee.itt_start_date
+      itt_dates_form.start_date || course&.start_date || trainee.itt_start_date
     end
 
     def itt_end_date
-      course&.end_date || trainee.itt_end_date
+      itt_dates_form.end_date || course&.end_date || trainee.itt_end_date
     end
 
     def study_mode
@@ -69,6 +69,8 @@ module ApplyApplications
     end
 
   private
+
+    attr_accessor :itt_dates_form
 
     def update_trainee_attributes
       trainee.assign_attributes({
