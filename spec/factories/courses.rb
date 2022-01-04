@@ -23,7 +23,7 @@ FactoryBot.define do
     route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
     study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
     uuid { SecureRandom.uuid }
-    recruitment_cycle_year { Time.zone.today.year }
+    recruitment_cycle_year { current_recruitment_cycle_year }
 
     summary do |builder|
       qualifications = builder.qualification.to_s.gsub("_", " ").upcase.gsub("WITH", "with")

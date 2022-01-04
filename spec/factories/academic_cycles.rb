@@ -8,20 +8,20 @@ FactoryBot.define do
 
       cycle_year do
         cycles = [
-          -> { Settings.current_recruitment_cycle_year.to_i + 1 if next_cycle },
-          -> { Settings.current_recruitment_cycle_year.to_i - 1 if previous_cycle },
+          -> { current_recruitment_cycle_year + 1 if next_cycle },
+          -> { current_recruitment_cycle_year - 1 if previous_cycle },
         ].map(&:call).compact
 
-        cycles.any? ? cycles.first : Settings.current_recruitment_cycle_year.to_i
+        cycles.any? ? cycles.first : current_recruitment_cycle_year
       end
     end
 
     start_date do
-      Date.new(cycle_year - 1, 9, 1)
+      Date.new(cycle_year, 9, 1)
     end
 
     end_date do
-      Date.new(cycle_year, 8, 31)
+      Date.new(cycle_year + 1, 8, 31)
     end
   end
 end
