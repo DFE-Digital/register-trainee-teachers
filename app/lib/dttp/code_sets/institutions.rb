@@ -7,14 +7,20 @@ module Dttp
       BISHOP_GROSSETESTE_UNIVERSITY = "Bishop Grosseteste University"
       BRUNEL_UNIVERSITY_LONDON = "Brunel University London"
       GOLDSMITHS_COLLEGE = "Goldsmiths College"
+      GUILDHALL_SCHOOL_OF_MUSIC_AND_DRAMA = "Guildhall School of Music and Drama"
       HARPER_ADAMS_UNIVERSITY = "Harper Adams University"
       HERIOT_WATT_UNIVERSITY = "Heriot-Watt University"
+      HEYTHROP_COLLEGE = "Heythrop College"
       IMPERIAL_COLLEGE_OF_SCIENCE_TECHNOLOGY_AND_MEDICINE = "Imperial College of Science, Technology and Medicine"
       NEWMAN_UNIVERSITY = "Newman University"
       OTHER_UK = "Other UK"
       PLYMOUTH_MARJON_UNIVERSITY = "Plymouth Marjon University"
+      QUEEN_MARY_UNIVERSITY_OF_LONDON = "Queen Mary University of London"
+      ROSE_BRUFORD_COLLEGE = "Rose Bruford College"
       ROYAL_HOLLOWAY_AND_BEDFORD_NEW_COLLEGE = "Royal Holloway and Bedford New College"
+      ROYAL_NORTHERN_COLLEGE_OF_MUSIC = "Royal Northern College of Music"
       ST_GEORGES_HOSPITAL_MEDICAL_SCHOOL = "St George's Hospital Medical School"
+      THE_ARTS_UNIVERSITY_BOURNEMOUTH = "The Arts University Bournemouth"
       THE_QUEENS_UNIVERSITY_OF_BELFAST = "The Queen's University of Belfast"
       THE_UNIVERSITY_OF_KEELE = "The University of Keele"
       UNIVERSITY_CAMPUS_SUFFOLK = "University Campus Suffolk"
@@ -24,7 +30,7 @@ module Dttp
       UNIVERSITY_OF_NORTHUMBRIA_AT_NEWCASTLE = "University of Northumbria at Newcastle"
 
       MAPPING = {
-        BIRKBECK_COLLEGE => { entity_id: "9fc53e05-7042-e811-80ff-3863bb3640b8", hesa_code: "127" },
+        BIRKBECK_COLLEGE => { entity_id: "d6d0c9d6-e897-e711-80d8-005056ac45bb", hesa_code: "127" },
         BISHOP_GROSSETESTE_UNIVERSITY => { entity_id: "ca70f34a-2887-e711-80d8-005056ac45bb", hesa_code: "7" },
         BRUNEL_UNIVERSITY_LONDON => { entity_id: "cc70f34a-2887-e711-80d8-005056ac45bb", hesa_code: "113" },
         GOLDSMITHS_COLLEGE => { entity_id: "d270f34a-2887-e711-80d8-005056ac45bb", hesa_code: "131" },
@@ -38,7 +44,7 @@ module Dttp
         ST_GEORGES_HOSPITAL_MEDICAL_SCHOOL => { entity_id: "94407223-7042-e811-80ff-3863bb3640b8", hesa_code: "145" },
         THE_QUEENS_UNIVERSITY_OF_BELFAST => { entity_id: "a7db7129-7042-e811-80ff-3863bb3640b8", hesa_code: "184" },
         THE_UNIVERSITY_OF_KEELE => { entity_id: "3a7af34a-2887-e711-80d8-005056ac45bb", hesa_code: "121" },
-        UNIVERSITY_CAMPUS_SUFFOLK => { entity_id: "154b9247-7042-e811-80ff-3863bb3640b8", hesa_code: "210" },
+        UNIVERSITY_CAMPUS_SUFFOLK => { entity_id: "e93522b4-49a2-e811-812b-5065f38ba241", hesa_code: "210" },
         UNIVERSITY_OF_DURHAM => { entity_id: "1071f34a-2887-e711-80d8-005056ac45bb", hesa_code: "116" },
         UNIVERSITY_OF_LANCASTER => { entity_id: "a4eb7735-7042-e811-80ff-3863bb3640b8", hesa_code: "123" },
         UNIVERSITY_OF_NEWCASTLE_UPON_TYNE => { entity_id: "ea70f34a-2887-e711-80d8-005056ac45bb", hesa_code: "154" },
@@ -110,9 +116,9 @@ module Dttp
         "Gower College Swansea" => { entity_id: "4b3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "336" },
         "Grŵp Llandrillo Menai" => { entity_id: "4d3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "334" },
         "Grŵp NPTC Group" => { entity_id: "4f3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "335" },
-        "Guildhall School of Music and Drama" => { entity_id: "076e5e11-7042-e811-80ff-3863bb3640b8", hesa_code: "208" },
+        GUILDHALL_SCHOOL_OF_MUSIC_AND_DRAMA => { entity_id: "513e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "208" },
         "Hartpury University" => { entity_id: "533e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "352" },
-        "Heythrop College" => { entity_id: "1b6e5e11-7042-e811-80ff-3863bb3640b8", hesa_code: "205" },
+        HEYTHROP_COLLEGE => { entity_id: "56bfbf8a-eb97-e711-80d8-005056ac45bb", hesa_code: "205" },
         "Hult International Business School Ltd" => { entity_id: "553e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "406" },
         "ICOM" => { entity_id: "573e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "297" },
         "ICON College of Technology and Management" => { entity_id: "593e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "236" },
@@ -194,7 +200,7 @@ module Dttp
         "Point Blank Music School" => { entity_id: "b73e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "309" },
         "Prestolee SCITT" => { entity_id: "027bf34a-2887-e711-80d8-005056ac45bb" },
         "Queen Margaret University, Edinburgh" => { entity_id: "40f3791d-7042-e811-80ff-3863bb3640b8", hesa_code: "100" },
-        "Queen Mary University of London" => { entity_id: "b93e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "139" },
+        QUEEN_MARY_UNIVERSITY_OF_LONDON => { entity_id: "b93e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "139" },
         "Raindance Educational Services Limited" => { entity_id: "bb3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "429" },
         "Ravensbourne" => { entity_id: "4ff3791d-7042-e811-80ff-3863bb3640b8", hesa_code: "30" },
         "Regent College" => { entity_id: "bd3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "278" },
@@ -204,13 +210,13 @@ module Dttp
         "Richmond, The American International University in London" => { entity_id: "c73e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "219" },
         "Robert Gordon University" => { entity_id: "c93e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "104" },
         "Roehampton University" => { entity_id: "f270f34a-2887-e711-80d8-005056ac45bb", hesa_code: "31" },
-        "Rose Bruford College" => { entity_id: "5af3791d-7042-e811-80ff-3863bb3640b8", hesa_code: "32" },
+        ROSE_BRUFORD_COLLEGE => { entity_id: "1882cdd0-e897-e711-80d8-005056ac45bb", hesa_code: "32" },
         "Royal Academy of Dance" => { entity_id: "cb3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "263" },
         "Royal Academy of Dramatic Art" => { entity_id: "cd3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "402" },
         "Royal Academy of Music" => { entity_id: "61f3791d-7042-e811-80ff-3863bb3640b8", hesa_code: "33" },
         "Royal College of Art" => { entity_id: "64407223-7042-e811-80ff-3863bb3640b8", synonyms: ["RCA"], hesa_code: "3" },
         "Royal College of Music" => { entity_id: "49e01caa-a141-e811-80ff-3863bb351d40", hesa_code: "34" },
-        "Royal Northern College of Music" => { entity_id: "74407223-7042-e811-80ff-3863bb3640b8", hesa_code: "35" },
+        ROYAL_NORTHERN_COLLEGE_OF_MUSIC => { entity_id: "cf3e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "35" },
         "Royal School of Needlework (The)" => { entity_id: "d13e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "404" },
         "Royal Welsh College of Music and Drama" => { entity_id: "7b407223-7042-e811-80ff-3863bb3640b8", hesa_code: "182" },
         "SAE Education Limited" => { entity_id: "d33e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "265" },
@@ -232,7 +238,7 @@ module Dttp
         "Tavistock and Portman NHS Foundation Trust" => { entity_id: "e33e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "433" },
         "Teach First" => { entity_id: "5a3385b1-2506-ea11-a811-000d3ab4df6c" },
         "Teesside University" => { entity_id: "2a96fc9d-a141-e811-80ff-3863bb351d40", hesa_code: "79" },
-        "The Arts University Bournemouth" => { entity_id: "c6407223-7042-e811-80ff-3863bb3640b8", hesa_code: "197" },
+        THE_ARTS_UNIVERSITY_BOURNEMOUTH => { entity_id: "91ea2521-3fa2-e811-812b-5065f38ba241", hesa_code: "197" },
         "The Cambridge Theological Federation" => { entity_id: "e73e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "288" },
         "The City College" => { entity_id: "e93e182c-1425-ec11-b6e6-000d3adf095a", hesa_code: "271" },
         "The City University" => { entity_id: "7bdb7129-7042-e811-80ff-3863bb3640b8", hesa_code: "115" },
@@ -332,8 +338,8 @@ module Dttp
         "University of Huddersfield" => { entity_id: "1e71f34a-2887-e711-80d8-005056ac45bb", hesa_code: "61" },
         "University of Kent" => { entity_id: "99eb7735-7042-e811-80ff-3863bb3640b8", hesa_code: "122" },
         "University of London" => { entity_id: "0d791c39-3fa2-e811-812b-5065f38ba241" },
-        "University of Manchester" => { entity_id: "5b43a44d-7042-e811-80ff-3863bb3640b8", hesa_code: "204" },
         "University of Nottingham" => { entity_id: "2c71f34a-2887-e711-80d8-005056ac45bb", hesa_code: "155" },
+        "University of Manchester" => { entity_id: "5b43a44d-7042-e811-80ff-3863bb3640b8", hesa_code: "204" },
         "University of Plymouth" => { entity_id: "3071f34a-2887-e711-80d8-005056ac45bb", hesa_code: "73" },
         "University of South Wales" => { entity_id: "8723a753-7042-e811-80ff-3863bb3640b8", hesa_code: "90" },
         "University of Southampton" => { entity_id: "4f5b7f3b-7042-e811-80ff-3863bb3640b8", hesa_code: "160" },
@@ -360,7 +366,14 @@ module Dttp
       }.freeze
 
       INACTIVE_MAPPING = {
-        "Queen Mary University of London" => { entity_id: "47f3791d-7042-e811-80ff-3863bb3640b8" },
+        QUEEN_MARY_UNIVERSITY_OF_LONDON => { entity_id: "47f3791d-7042-e811-80ff-3863bb3640b8" },
+        BIRKBECK_COLLEGE => { entity_id: "9fc53e05-7042-e811-80ff-3863bb3640b8" },
+        UNIVERSITY_CAMPUS_SUFFOLK => { entity_id: "154b9247-7042-e811-80ff-3863bb3640b8" },
+        GUILDHALL_SCHOOL_OF_MUSIC_AND_DRAMA => { entity_id: "076e5e11-7042-e811-80ff-3863bb3640b8" },
+        HEYTHROP_COLLEGE => { entity_id: "1b6e5e11-7042-e811-80ff-3863bb3640b8" },
+        ROSE_BRUFORD_COLLEGE => { entity_id: "5af3791d-7042-e811-80ff-3863bb3640b8" },
+        ROYAL_NORTHERN_COLLEGE_OF_MUSIC => { entity_id: "74407223-7042-e811-80ff-3863bb3640b8" },
+        THE_ARTS_UNIVERSITY_BOURNEMOUTH => { entity_id: "c6407223-7042-e811-80ff-3863bb3640b8" },
       }.freeze
     end
   end
