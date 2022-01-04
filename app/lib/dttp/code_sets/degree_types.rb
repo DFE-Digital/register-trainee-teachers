@@ -208,8 +208,13 @@ module Dttp
       }.freeze
 
       INACTIVE_MAPPING = {
-        "BA (Hons) education" => { entity_id: "cf695652-c197-e711-80d8-005056ac45bb" },
+        "BA (Hons) /Education" => { entity_id: "cf695652-c197-e711-80d8-005056ac45bb" },
+        "BEd (Hons)" => { entity_id: "c3695652-c197-e711-80d8-005056ac45bb" },
+        "BSc (Hons) /Education" => { entity_id: "c7695652-c197-e711-80d8-005056ac45bb" },
+        "BTech (Hons) /Education" => { entity_id: "cb695652-c197-e711-80d8-005056ac45bb" },
+        "BA (Hons) with intercalated PGCE" => { entity_id: "d9695652-c197-e711-80d8-005056ac45bb" },
         "BSc (Hons) with intercalated PGCE" => { entity_id: "d7695652-c197-e711-80d8-005056ac45bb" },
+        "BA (Hons) Combined Studies/Education of the Deaf" => { entity_id: "d3695652-c197-e711-80d8-005056ac45bb" },
       }.freeze
     end
   end
