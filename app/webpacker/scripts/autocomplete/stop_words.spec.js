@@ -20,7 +20,7 @@ describe('removeStopWords', () => {
   })
 
   describe('last character has the potential to be a stop word', () => {
-    it("is kept in the text", () => {
+    it('is kept in the text', () => {
       expect(removeStopWords('bachelor o')).toEqual('bachelor o')
     })
   })

@@ -13,7 +13,7 @@ describe('LiveFilter', () => {
       <option value="applied biology">Applied biology</option>
       <option value="applied chemistry">Applied chemistry</option>
     </select>
-    </form>`);
+    </form>`)
 
     const $results = $('<div id="js-results"></div>')
     const $selectedFilters = $('<div id="js-selected-filters"></div>')
