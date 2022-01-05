@@ -19,6 +19,10 @@ describe WithdrawalDetails::View do
   end
 
   context "withdrawn on another day" do
+    it "renders commencement date" do
+      expect(rendered_component).to have_text(date_for_summary_view(trainee.commencement_date))
+    end
+
     it "renders the date of withdrawal" do
       expect(rendered_component).to have_text(date_for_summary_view(data_model.date))
     end

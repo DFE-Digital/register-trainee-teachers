@@ -1,17 +1,4 @@
 <%= render SummaryCard::View.new(
   title: t("components.confirmation.withdrawal_details.summary_title"),
-  rows: [
-    {
-      key: t("components.confirmation.withdrawal_details.withdraw_date_label"),
-      value: withdraw_date,
-      action_href: deferred ? nil : trainee_withdrawal_path(data_model.trainee),
-      action_text: deferred ? nil : t(:change),
-    },
-    {
-      key: t("components.confirmation.withdrawal_details.withdraw_reason_label"),
-      value: withdraw_reason,
-      action_href: trainee_withdrawal_path(data_model.trainee),
-      action_text: t(:change),
-    },
-  ],
+  rows: rows
 ) %>
