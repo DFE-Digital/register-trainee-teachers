@@ -9,6 +9,26 @@ module Degrees
     end
 
     def call
+      if unmapped_subject?
+        dttp_degree.non_importable_missing_subject!
+        return
+      end
+
+      if unmapped_degree_type?
+        dttp_degree.non_importable_missing_type!
+        return
+      end
+
+      if unmapped_institution?
+        dttp_degree.non_importable_missing_institution!
+        return
+      end
+
+      if unmapped_country?
+        dttp_degree.non_importable_missing_country!
+        return
+      end
+
       common_params.merge(degree_params)
     end
 
@@ -30,7 +50,7 @@ module Degrees
     def uk_degree_params
       {
         locale_code: Trainee.locale_codes[:uk],
-        uk_degree: qualification_type,
+        uk_degree: degree_type,
         institution: institution,
         grade: grade.presence || Dttp::CodeSets::Grades::OTHER,
       }
@@ -50,19 +70,24 @@ module Degrees
 
     def non_uk_degree
       # For non-uk degrees, dfe_name has more detail than dfe_degreetypeid_value
-      dttp_degree.response["dfe_name"] || qualification_type
+      dttp_degree.response["dfe_name"] || degree_type
     end
 
     def subject
-      find_by_entity_id(
-        dttp_degree.response["_dfe_degreesubjectid_value"],
-        Dttp::CodeSets::DegreeSubjects::MAPPING,
-      )
+      find_by_entity_id(dttp_degree.subject, Dttp::CodeSets::DegreeSubjects::MAPPING)
     end
 
-    def qualification_type
+    def unmapped_subject?
+      dttp_degree.subject.present? && subject.blank?
+    end
+
+    def degree_type
       find_by_entity_id(dttp_degree.degree_type, Dttp::CodeSets::DegreeTypes::MAPPING) ||
         find_by_entity_id(dttp_degree.degree_type, Dttp::CodeSets::DegreeTypes::INACTIVE_MAPPING)
+    end
+
+    def unmapped_degree_type?
+      dttp_degree.degree_type.present? && degree_type.blank?
     end
 
     def institution
@@ -70,18 +95,20 @@ module Degrees
         find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::INACTIVE_MAPPING)
     end
 
+    def unmapped_institution?
+      dttp_degree.institution.present? && institution.blank?
+    end
+
     def grade
-      find_by_entity_id(
-        dttp_degree.response["_dfe_classofdegreeid_value"],
-        Dttp::CodeSets::Grades::MAPPING,
-      )
+      find_by_entity_id(dttp_degree.grade, Dttp::CodeSets::Grades::MAPPING)
     end
 
     def country
-      @country ||= find_by_entity_id(
-        dttp_degree.country_id,
-        Dttp::CodeSets::Countries::MAPPING,
-      )
+      @country ||= find_by_entity_id(dttp_degree.country, Dttp::CodeSets::Countries::MAPPING)
+    end
+
+    def unmapped_country?
+      dttp_degree.country.present? && country.blank?
     end
 
     def find_by_entity_id(id, mapping)

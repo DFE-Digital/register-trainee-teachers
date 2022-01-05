@@ -67,7 +67,7 @@ module Degrees
       end
 
       context "with an inactive degree type" do
-        let(:degree_type) { "BA (Hons) education" }
+        let(:degree_type) { "BA (Hons) /Education" }
         let(:api_degree_qualification) do
           create(
             :api_degree_qualification,

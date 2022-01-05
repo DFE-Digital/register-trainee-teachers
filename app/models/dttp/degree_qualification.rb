@@ -17,10 +17,18 @@ module Dttp
       importable: 0,
       imported: 1,
       non_importable_invalid_data: 2,
+      non_importable_missing_country: 3,
+      non_importable_missing_institution: 4,
+      non_importable_missing_subject: 5,
+      non_importable_missing_type: 6,
     }
 
-    def country_id
+    def country
       response["_dfe_degreecountryid_value"]
+    end
+
+    def degree_type
+      response["_dfe_degreetypeid_value"]
     end
 
     def end_year
@@ -29,12 +37,16 @@ module Dttp
       Date.parse(response["dfe_degreeenddate"]).year
     end
 
+    def grade
+      response["_dfe_classofdegreeid_value"]
+    end
+
     def institution
       response["_dfe_awardinginstitutionid_value"]
     end
 
-    def degree_type
-      response["_dfe_degreetypeid_value"]
+    def subject
+      response["_dfe_degreesubjectid_value"]
     end
   end
 end

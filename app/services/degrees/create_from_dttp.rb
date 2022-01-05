@@ -7,7 +7,7 @@ module Degrees
     class DttpTraineeNotFound < StandardError; end
 
     def initialize(trainee:)
-      @degrees_form = DegreesForm.new(trainee)
+      @trainee = trainee
       @dttp_trainee = trainee.dttp_trainee
     end
 
@@ -19,14 +19,16 @@ module Degrees
 
   private
 
-    attr_reader :dttp_trainee, :degrees_form
+    attr_reader :dttp_trainee, :trainee
 
     def create_degrees!
       dttp_trainee.degree_qualifications.each do |dttp_degree|
-        degree = degrees_form.build_degree(
-          ::Degrees::MapFromDttp.call(dttp_degree: dttp_degree),
-        )
-        if degree.save!
+        attrs = ::Degrees::MapFromDttp.call(dttp_degree: dttp_degree)
+        next unless attrs
+
+        trainee.degrees.build(attrs)
+
+        if trainee.save
           dttp_degree.imported!
         else
           dttp_degree.non_importable_invalid_data!
