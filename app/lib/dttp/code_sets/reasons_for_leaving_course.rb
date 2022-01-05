@@ -5,6 +5,8 @@ module Dttp
     module ReasonsForLeavingCourse
       MAPPING = {
         WithdrawalReasons::DEATH => { entity_id: "4d6a46ad-11c2-e611-80be-00155d010316" },
+        WithdrawalReasons::DID_NOT_PASS_ASSESSMENT => { entity_id: "c156c51b-2a6e-ec11-8943-000d3adec332" },
+        WithdrawalReasons::DID_NOT_PASS_EXAMS => { entity_id: "9c980428-2a6e-ec11-8943-000d3adec332" },
         WithdrawalReasons::EXCLUSION => { entity_id: "556a46ad-11c2-e611-80be-00155d010316" },
         WithdrawalReasons::FINANCIAL_REASONS => { entity_id: "4f6a46ad-11c2-e611-80be-00155d010316" },
         WithdrawalReasons::FOR_ANOTHER_REASON => { entity_id: "436a46ad-11c2-e611-80be-00155d010316" },
