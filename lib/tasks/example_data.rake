@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require Rails.root.join("spec/support/api_stubs/apply_api")
+require Rails.root.join("spec/support/date_helpers")
 
 # Course names are not all that important here because it's for marketing
 # purposes (can be anything). What's important are the subjects associated
