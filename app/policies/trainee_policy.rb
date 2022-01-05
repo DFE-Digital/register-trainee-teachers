@@ -2,19 +2,33 @@
 
 class TraineePolicy
   class Scope
-    attr_reader :user, :scope
-
     def initialize(user, scope)
       @user = user
       @scope = scope
     end
 
     def resolve
-      user.system_admin? ? scope.all : scope.where(provider_id: user.provider_id).kept
+      user.system_admin? ? scope.all : user_scope
+    end
+
+  private
+
+    attr_reader :user, :scope
+
+    def user_scope
+      return lead_school_scope if user.lead_school?
+
+      provider_scope
+    end
+
+    def provider_scope
+      scope.where(provider_id: user.organisation.id).kept
+    end
+
+    def lead_school_scope
+      scope.where(lead_school_id: user.organisation.id).kept
     end
   end
-
-  attr_reader :user, :trainee, :training_router_manager
 
   delegate :requires_schools?,
            :requires_employing_school?,
@@ -61,8 +75,10 @@ class TraineePolicy
   alias_method :recommended?, :show?
 
 private
+  attr_reader :user, :trainee, :training_router_manager
 
   def allowed_user?
     user&.system_admin? || user&.provider == trainee.provider
   end
+
 end
