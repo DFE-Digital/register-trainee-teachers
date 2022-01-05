@@ -94,6 +94,7 @@ module Trainees
         submitted_for_trn_at: dttp_trainee.earliest_placement_assignment.response["dfe_trnassessmentdate"],
         dttp_id: dttp_trainee.dttp_id,
         placement_assignment_dttp_id: dttp_trainee.latest_placement_assignment.dttp_id,
+        hesa_id: dttp_trainee.hesa_id,
       }.merge(personal_details_attributes)
        .merge(contact_attributes)
        .merge(ethnicity_and_disability_attributes)

@@ -196,6 +196,7 @@ shared:
     - lead_school_not_applicable
     - region
     - submission_ready
+    - hesa_id
   users:
     - created_at
     - dfe_sign_in_uid
