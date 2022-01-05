@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_10_154009) do
+ActiveRecord::Schema.define(version: 2021_12_11_154009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -292,6 +292,15 @@ ActiveRecord::Schema.define(version: 2021_12_10_154009) do
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
   end
 
+  create_table "lead_school_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "lead_school_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lead_school_id"], name: "index_lead_school_users_on_lead_school_id"
+    t.index ["user_id"], name: "index_lead_school_users_on_user_id"
+  end
+
   create_table "nationalisations", force: :cascade do |t|
     t.bigint "trainee_id", null: false
     t.bigint "nationality_id", null: false
@@ -306,6 +315,15 @@ ActiveRecord::Schema.define(version: 2021_12_10_154009) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_nationalities_on_name", unique: true
+  end
+
+  create_table "provider_users", force: :cascade do |t|
+    t.integer "provider_id"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider_id"], name: "index_provider_users_on_provider_id"
+    t.index ["user_id"], name: "index_provider_users_on_user_id"
   end
 
   create_table "providers", force: :cascade do |t|

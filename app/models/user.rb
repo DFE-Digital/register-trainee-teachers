@@ -7,6 +7,12 @@ class User < ApplicationRecord
 
   has_many :trainees, through: :provider
 
+  has_many :lead_school_users
+  has_many :lead_schools, through: :lead_school_users, class_name: "School"
+
+  has_many :provider_users
+  has_many :providers, through: :provider_users
+
   scope :system_admins, -> { where(system_admin: true) }
 
   before_validation :sanitise_email
