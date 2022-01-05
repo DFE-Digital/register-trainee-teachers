@@ -79,10 +79,12 @@ namespace :example_data do
     # For each persona...
     PERSONAS.each do |persona_attributes|
       # Create the persona
-      persona = Persona.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(first_name: persona_attributes[:first_name],
-                                                                                   last_name: persona_attributes[:last_name],
-                                                                                   email: persona_attributes[:email],
-                                                                                   system_admin: persona_attributes[:system_admin])
+      persona = Persona.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(
+        first_name: persona_attributes[:first_name],
+        last_name: persona_attributes[:last_name],
+        email: persona_attributes[:email],
+        system_admin: persona_attributes[:system_admin],
+      )
 
       next unless persona_attributes[:provider]
 
@@ -92,7 +94,7 @@ namespace :example_data do
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       )
 
-      persona.update!(provider: provider)
+      ProviderUser.find_or_create_by!(user: persona, provider: provider)
 
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|

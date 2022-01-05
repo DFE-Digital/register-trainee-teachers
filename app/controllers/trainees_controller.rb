@@ -23,7 +23,7 @@ class TraineesController < BaseTraineeController
     if trainee_params[:training_route] == "other"
       redirect_to(trainees_not_supported_route_path)
     else
-      authorize(@trainee = Trainee.new(trainee_params.merge(provider_id: current_user.provider_id)))
+      authorize(@trainee = Trainee.new(trainee_params.merge(provider_id: current_user.primary_provider.id)))
       trainee.set_early_years_course_details
       if trainee.save
         redirect_to(trainee_review_drafts_path(trainee))

@@ -3,10 +3,10 @@
 require "rails_helper"
 
 describe TraineePolicy do
-  let(:system_admin_user) { build(:user, :system_admin) }
+  let(:system_admin_user) { create(:user, :system_admin) }
   let(:provider) { create(:provider) }
-  let(:provider_user) { build(:user, provider: provider) }
-  let(:other_provider_user) { build(:user) }
+  let(:provider_user) { create(:user, providers: [provider]) }
+  let(:other_provider_user) { create(:user) }
   let(:trainee) { create(:trainee, provider: provider) }
   let(:deferred_trainee) { create(:trainee, :deferred, provider: provider) }
 
@@ -27,7 +27,7 @@ describe TraineePolicy do
   end
 
   describe TraineePolicy::Scope do
-    let(:user) { create(:user, provider: provider) }
+    let(:user) { create(:user, providers: [provider]) }
     let(:provider) { create(:provider) }
 
     subject { described_class.new(user, Trainee).resolve }

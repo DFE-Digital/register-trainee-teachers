@@ -143,7 +143,7 @@ private
     @early_years_trainee ||= create(:trainee, :submitted_for_trn, :early_years_undergrad)
     @primary_trainee ||= create(:trainee, :submitted_for_trn, course_age_range: AgeRange::THREE_TO_EIGHT)
     @apply_non_draft_trainee ||= create(:trainee, :submitted_for_trn, :with_apply_application)
-    Trainee.update_all(provider_id: @current_user.provider.id)
+    Trainee.update_all(provider_id: @current_user.primary_provider.id)
   end
 
   def given_all_trainees_are_from_a_single_source

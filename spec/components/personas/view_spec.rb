@@ -7,7 +7,7 @@ module Personas
     alias_method :component, :page
 
     let(:persona_id) { 1 }
-    let(:persona) { build(:user, id: persona_id, provider: build(:provider)) }
+    let(:persona) { create(:user, id: persona_id, providers: [create(:provider)]) }
 
     before do
       render_inline(described_class.new(persona: persona))
@@ -18,7 +18,7 @@ module Personas
     end
 
     it "renders the persona's provider name" do
-      expect(component).to have_text(persona.provider.name)
+      expect(component).to have_text(persona.primary_provider.name)
     end
 
     it "renders a sign-in button to login as the persona" do

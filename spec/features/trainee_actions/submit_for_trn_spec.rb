@@ -16,7 +16,7 @@ feature "submit for TRN" do
         create(
           :trainee,
           :completed,
-          provider: current_user.provider,
+          provider: current_user.primary_provider,
           course_uuid: nil,
         )
       end
@@ -37,7 +37,7 @@ feature "submit for TRN" do
             :trainee,
             :completed,
             :with_study_mode_and_future_course_dates,
-            provider: current_user.provider,
+            provider: current_user.primary_provider,
             course_uuid: nil,
           )
         end
@@ -76,7 +76,7 @@ feature "submit for TRN" do
   end
 
   describe "content" do
-    let(:trainee) { create(:trainee, :with_apply_application, provider: current_user.provider) }
+    let(:trainee) { create(:trainee, :with_apply_application, provider: current_user.primary_provider) }
 
     context "with an apply-draft-trainee" do
       scenario "has a trainee data section" do

@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe ProviderUser, type: :model do
+  subject { create(:provider_user) }
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:provider) }
+    it { is_expected.to validate_presence_of(:user) }
+
+    it { is_expected.to validate_uniqueness_of(:user).scoped_to(:provider_id) }
+  end
+
+  describe "associations" do
+    it { is_expected.to belong_to(:provider) }
+    it { is_expected.to belong_to(:user) }
+  end
+end

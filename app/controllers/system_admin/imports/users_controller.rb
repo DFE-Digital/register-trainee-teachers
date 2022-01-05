@@ -4,7 +4,8 @@ module SystemAdmin
   module Imports
     class UsersController < ApplicationController
       def create
-        authorize(provider.users.create!(user_params))
+        user = authorize(provider.users.create!(user_params))
+        ProviderUser.find_or_create_by!(provider: provider, user: user)
         redirect_to(provider_path(provider))
       end
 

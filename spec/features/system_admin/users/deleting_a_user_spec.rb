@@ -3,8 +3,9 @@
 require "rails_helper"
 
 feature "Creating a new user" do
-  let(:user) { create(:user, provider: system_admin.provider) }
-  let(:system_admin) { create(:user, system_admin: true) }
+  let(:provider) { create(:provider) }
+  let(:user) { create(:user, providers: [provider]) }
+  let(:system_admin) { create(:user, system_admin: true, providers: [provider]) }
 
   before do
     given_there_is_a_user(user)
@@ -38,7 +39,7 @@ private
   end
 
   def then_i_am_taken_to_the_provider_show_page
-    provider_show_page.load(id: system_admin.provider.id)
+    provider_show_page.load(id: system_admin.primary_provider.id)
   end
 
   def and_i_see_the_registered_users
@@ -58,7 +59,7 @@ private
   end
 
   def then_i_am_redirected_to_the_provider_show_page
-    provider_show_page.load(id: system_admin.provider.id)
+    provider_show_page.load(id: system_admin.primary_provider.id)
   end
 
   def and_the_user_has_been_deleted

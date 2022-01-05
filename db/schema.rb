@@ -320,6 +320,16 @@ ActiveRecord::Schema.define(version: 2022_01_05_173543) do
     t.index ["name"], name: "index_nationalities_on_name", unique: true
   end
 
+  create_table "provider_users", force: :cascade do |t|
+    t.bigint "provider_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider_id", "user_id"], name: "index_provider_users_on_provider_id_and_user_id", unique: true
+    t.index ["provider_id"], name: "index_provider_users_on_provider_id"
+    t.index ["user_id"], name: "index_provider_users_on_user_id"
+  end
+
   create_table "providers", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -508,6 +518,8 @@ ActiveRecord::Schema.define(version: 2022_01_05_173543) do
   add_foreign_key "lead_school_users", "users"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
+  add_foreign_key "provider_users", "providers"
+  add_foreign_key "provider_users", "users"
   add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"

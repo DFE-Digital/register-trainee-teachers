@@ -2,6 +2,16 @@
 
 FactoryBot.define do
   factory :user, class: "User" do
+    transient do
+      providers { [build(:provider)] }
+    end
+
+    after(:create) do |user, evaluator|
+      evaluator.providers.each do |provider|
+        create(:provider_user, provider: provider, user: user)
+      end
+    end
+
     dfe_sign_in_uid { SecureRandom.uuid }
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
@@ -9,10 +19,8 @@ FactoryBot.define do
     dttp_id { SecureRandom.uuid }
     welcome_email_sent_at { Faker::Time.backward(days: 1).utc }
 
-    provider
-
     trait :system_admin do
-      provider { nil }
+      providers { [] }
       system_admin { true }
     end
   end

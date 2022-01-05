@@ -35,7 +35,7 @@ feature "View users" do
   end
 
   def and_there_is_a_dttp_user
-    create(:dttp_user, provider_dttp_id: user.provider.dttp_id)
+    create(:dttp_user, provider_dttp_id: user.primary_provider.dttp_id)
   end
 
   def and_i_click_on_a_provider
@@ -43,7 +43,7 @@ feature "View users" do
   end
 
   def then_i_am_taken_to_the_provider_show_page
-    expect(provider_show_page).to be_displayed(id: user.provider.id)
+    expect(provider_show_page).to be_displayed(id: user.primary_provider.id)
   end
 
   def then_i_see_the_registered_users

@@ -14,7 +14,7 @@ RSpec.describe Trainees::LeadSchoolsController, type: :controller do
 
     context "when school direct salaried trainee" do
       let(:trainee) { create(:trainee, :school_direct_salaried) }
-      let(:user) { create(:user, provider: trainee.provider) }
+      let(:user) { create(:user, providers: [trainee.provider]) }
 
       before do
         allow(controller).to receive(:current_user).and_return(user)
@@ -28,7 +28,7 @@ RSpec.describe Trainees::LeadSchoolsController, type: :controller do
 
     context "when school direct tuition fee trainee" do
       let(:trainee) { create(:trainee, :school_direct_tuition_fee) }
-      let(:user) { create(:user, provider: trainee.provider) }
+      let(:user) { create(:user, providers: [trainee.provider]) }
 
       before do
         allow(controller).to receive(:current_user).and_return(user)

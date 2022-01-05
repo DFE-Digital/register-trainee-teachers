@@ -54,13 +54,13 @@ private
   end
 
   def uk_trainee
-    @uk_trainee ||= create(:trainee, provider: current_user.provider).tap do |t|
+    @uk_trainee ||= create(:trainee, provider: current_user.primary_provider).tap do |t|
       t.degrees << build(:degree, :uk_degree_with_details)
     end
   end
 
   def non_uk_trainee
-    @non_uk_trainee ||= create(:trainee, provider: current_user.provider).tap do |t|
+    @non_uk_trainee ||= create(:trainee, provider: current_user.primary_provider).tap do |t|
       t.degrees << build(:degree, :non_uk_degree_with_details)
     end
   end

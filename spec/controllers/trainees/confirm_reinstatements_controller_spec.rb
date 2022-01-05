@@ -6,7 +6,7 @@ describe Trainees::ConfirmReinstatementsController do
   include ActiveJob::TestHelper
 
   let(:current_user) { create(:user) }
-  let(:trainee) { create(:trainee, :deferred, trn: trn, provider: current_user.provider) }
+  let(:trainee) { create(:trainee, :deferred, trn: trn, provider: current_user.primary_provider) }
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)
