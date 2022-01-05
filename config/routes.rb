@@ -136,6 +136,7 @@ Rails.application.routes.draw do
   resource :cookie_preferences, only: %i[show update], path: "/cookies"
 
   resources :service_updates, only: %i[index], path: "service-updates"
+  resources :organisation_contexts, only: %i[index show]
 
   root to: "pages#start"
 end

@@ -1,0 +1,17 @@
+<h2>Providers</h2>
+<ul>
+<%- @providers.each do |provider| -%>
+  <li>
+    <%= link_to provider.name, organisation_context_path(id: provider.id, type: "Provider") %>
+  </li>
+<%- end -%>
+</ul>
+
+<h2>Schools</h2>
+<ul>
+<%- @lead_schools.each do |lead_school| -%>
+  <li>
+    <%= link_to lead_school.name, organisation_context_path(id: lead_school.id, type: "School") %>
+  </li>
+<%- end -%>
+</ul>
