@@ -234,10 +234,13 @@ en:
         show: Successfully submitted
       check_details:
         show: Check trainee record
+      draft_trainees:
+        index: Draft records (%{total_trainees_count_text})
+        paginated_index: Draft records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
       trainees:
         delete: Delete this draft record
-        index: Trainee records (%{total_trainees_count_text})
-        paginated_index: Trainee records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
+        index: Registered trainees (%{total_trainees_count_text})
+        paginated_index: Registered trainees (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
         not_supported_route: Other routes not supported
         show:
           overview: Trainee record overview
@@ -475,6 +478,7 @@ en:
         study_mode: Full time or part time
   views:
     all_records: All records
+    draft_records: All drafts
     apply_invalid_data_view:
       invalid_answers_summary:
         one: This application contains 1 answer that you need to amend. This is because it was entered in a free text format.

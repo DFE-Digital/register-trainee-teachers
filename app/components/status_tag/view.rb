@@ -42,7 +42,7 @@ private
   end
 
   def record_progress_tag
-    return if @trainee.submission_ready? || !@trainee.awaiting_action?
+    return if @trainee.draft? || @trainee.submission_ready? || !@trainee.awaiting_action?
 
     { status: "incomplete", status_colour: "grey", classes: classes.concat(%w[govuk-tag--white]) }
   end

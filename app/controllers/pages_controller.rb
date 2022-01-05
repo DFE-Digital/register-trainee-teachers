@@ -8,7 +8,6 @@ class PagesController < ApplicationController
     if authenticated?
       @trainees = policy_scope(Trainee.all)
       @home_view = HomeView.new(@trainees)
-      @registered_states_for_filter = HomeView::REGISTERED_STATES_FOR_FILTER
       render(:home)
     else
       render(:start)

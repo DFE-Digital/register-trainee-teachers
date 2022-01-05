@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 module NavigationHelper
-  def active_link_for(segment)
+  def active_link_for(segment, trainee = nil)
     url = request.path_info
-    url.include?("/#{segment}")
+
+    {
+      drafts: -> { trainee&.draft? && segment == "drafts" },
+      trainees: -> { url.include?("/#{segment}") && !trainee&.draft? },
+    }[segment.to_sym].call
   end
 end

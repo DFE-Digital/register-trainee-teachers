@@ -163,6 +163,7 @@
         </legend>
         <div class="govuk-checkboxes govuk-checkboxes--small">
           <% TraineeFilter::STATES.each do |state, _| %>
+            <% next if state == "draft" %>
             <div class="govuk-checkboxes__item">
               <%= check_box_tag "state[]", state, checked?(filters, :state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
               <%= label_tag "state-#{state}", label_for("state", state), class: "govuk-label govuk-checkboxes__label" %>

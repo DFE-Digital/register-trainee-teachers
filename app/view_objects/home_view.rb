@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class HomeView
-  REGISTERED_STATES_FOR_FILTER = %w[submitted_for_trn trn_received qts_recommended
-                                    eyts_recommended withdrawn deferred qts_awarded
-                                    eyts_awarded].freeze
-
   def initialize(trainees)
     @trainees = Trainees::Filter.call(trainees: trainees, filters: {})
     populate_state_counts!

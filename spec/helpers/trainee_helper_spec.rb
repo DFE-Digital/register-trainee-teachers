@@ -87,7 +87,7 @@ describe TraineeHelper do
       let(:total_count) { page_size }
 
       it "returns the title containing the total count" do
-        expect(subject).to eq "Trainee records (25 records)"
+        expect(subject).to eq "Registered trainees (25 records)"
       end
     end
 
@@ -95,7 +95,7 @@ describe TraineeHelper do
       let(:total_count) { page_size + 1 }
 
       it "returns the title containing the total count and which page you're on" do
-        expect(subject).to eq "Trainee records (26 records) - page 1 of 2"
+        expect(subject).to eq "Registered trainees (26 records) - page 1 of 2"
       end
     end
 
@@ -103,7 +103,7 @@ describe TraineeHelper do
       let(:total_count) { 0 }
 
       it "returns the title containing the 0 count" do
-        expect(subject).to eq "Trainee records (0 records)"
+        expect(subject).to eq "Registered trainees (0 records)"
       end
     end
   end

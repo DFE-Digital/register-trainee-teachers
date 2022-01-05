@@ -7,7 +7,7 @@
 <% end %>
 
 <h1 class="govuk-heading-xl" aria-live="polite">
-  Trainee records (<span id="js-trainee-count"><%= total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(total_trainees_count) %></span>)
+  Registered trainees (<span id="js-trainee-count"><%= total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(total_trainees_count) %></span>)
 </h1>
 
 <% unless current_user.system_admin? %>
