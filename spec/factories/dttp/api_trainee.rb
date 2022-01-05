@@ -22,6 +22,7 @@ FactoryBot.define do
     dfe_trn { Faker::Number.number(digits: 7) }
     merged { false }
     _dfe_traineestatusid_value { Dttp::CodeSets::Statuses::MAPPING[DttpStatuses::AWARDED_QTS][:entity_id] }
+    dfe_husid { "1811499435078" }
 
     initialize_with { attributes.stringify_keys }
     to_create { |instance| instance }

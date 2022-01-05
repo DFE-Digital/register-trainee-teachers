@@ -95,6 +95,7 @@ module Trainees
         expect(trainee.nationalities).to be_empty
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
         expect(trainee.training_initiative).to eq("now_teach")
+        expect(trainee.hesa_id).to eq(api_trainee["dfe_husid"])
       end
 
       context "when the country is something other than England and has a non-uk postcode" do

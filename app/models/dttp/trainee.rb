@@ -39,6 +39,10 @@ module Dttp
       non_importable_missing_initiative: 9,
     }
 
+    def hesa_id
+      response["dfe_husid"]
+    end
+
     def date_of_birth
       return if response["birthdate"].blank?
 
