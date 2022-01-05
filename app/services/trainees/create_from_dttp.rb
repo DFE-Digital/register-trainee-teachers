@@ -19,7 +19,7 @@ module Trainees
     def call
       return if dttp_trainee.imported?
       return if dttp_trainee.provider.blank?
-      return if dttp_trainee.latest_placement_assignment.blank?
+      return if dttp_trainee.placement_assignments.blank?
       return if dttp_trainee.response["merged"]
 
       if trainee_already_exists?
@@ -82,7 +82,7 @@ module Trainees
     attr_reader :dttp_trainee, :trainee
 
     def mapped_attributes
-      return if dttp_trainee.latest_placement_assignment.blank?
+      return if dttp_trainee.placement_assignments.blank?
 
       {
         created_from_dttp: true,

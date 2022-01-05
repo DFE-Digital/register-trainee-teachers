@@ -4,7 +4,15 @@ module Dttp
   class Trainee < ApplicationRecord
     self.table_name = "dttp_trainees"
 
-    has_many :placement_assignments, foreign_key: :contact_dttp_id, primary_key: :dttp_id, inverse_of: :trainee
+    ACADEMIC_YEAR_ENTITY_IDS = Dttp::CodeSets::AcademicYears::MAPPING.values.map { |x| x[:entity_id] }
+
+    PLACEMENT_ASSIGNMENTS_ORDER_SQL = sanitize_sql_array(["array_position(ARRAY[?]::uuid[], academic_year::uuid)", ACADEMIC_YEAR_ENTITY_IDS])
+
+    has_many :placement_assignments, -> { order(Arel.sql(PLACEMENT_ASSIGNMENTS_ORDER_SQL)) },
+             foreign_key: :contact_dttp_id,
+             primary_key: :dttp_id,
+             inverse_of: :trainee
+
     has_many :degree_qualifications,
              foreign_key: :contact_dttp_id,
              primary_key: :dttp_id,
@@ -62,15 +70,11 @@ module Dttp
     end
 
     def earliest_placement_assignment
-      @earliest_placement_assignment ||= sorted_placement_assignments.first
+      @earliest_placement_assignment ||= placement_assignments.first
     end
 
     def latest_placement_assignment
-      @latest_placement_assignment ||= sorted_placement_assignments.last
-    end
-
-    def sorted_placement_assignments
-      @sorted_placement_assignments ||= placement_assignments.where.not(programme_start_date: nil).order(:programme_start_date)
+      @latest_placement_assignment ||= placement_assignments.last
     end
   end
 end
