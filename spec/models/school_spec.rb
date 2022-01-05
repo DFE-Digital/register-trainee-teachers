@@ -3,6 +3,11 @@
 require "rails_helper"
 
 describe School do
+  describe "associations" do
+    it { is_expected.to have_many(:lead_school_users) }
+    it { is_expected.to have_many(:users).through(:lead_school_users) }
+  end
+
   context "callbacks" do
     it "updates the tsvector column with relevant info when the school is updated" do
       school = create(:school)

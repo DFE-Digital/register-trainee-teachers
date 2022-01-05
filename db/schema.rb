@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_04_113614) do
+ActiveRecord::Schema.define(version: 2022_01_05_113142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -294,6 +294,15 @@ ActiveRecord::Schema.define(version: 2022_01_04_113614) do
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
   end
 
+  create_table "lead_school_users", force: :cascade do |t|
+    t.bigint "lead_school_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lead_school_id"], name: "index_lead_school_users_on_lead_school_id"
+    t.index ["user_id"], name: "index_lead_school_users_on_user_id"
+  end
+
   create_table "nationalisations", force: :cascade do |t|
     t.bigint "trainee_id", null: false
     t.bigint "nationality_id", null: false
@@ -494,6 +503,8 @@ ActiveRecord::Schema.define(version: 2022_01_04_113614) do
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
+  add_foreign_key "lead_school_users", "schools", column: "lead_school_id"
+  add_foreign_key "lead_school_users", "users"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
   add_foreign_key "subject_specialisms", "allocation_subjects"
