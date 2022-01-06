@@ -21,13 +21,13 @@
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= user.first_name %>
+            <%= govuk_link_to(user.first_name, user_path(user), class: "govuk-!-display-block") %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= user.last_name %>
+           <%= govuk_link_to(user.last_name, user_path(user), class: "govuk-!-display-block") %>
           </span>
         </td>
 
