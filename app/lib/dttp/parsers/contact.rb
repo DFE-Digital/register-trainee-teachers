@@ -21,6 +21,7 @@ module Dttp
             {
               dttp_id: contact["contactid"],
               provider_dttp_id: contact["_parentcustomerid_value"],
+              status: contact["_dfe_traineestatusid_value"],
               response: contact,
             }
           end
