@@ -43,8 +43,10 @@ const setupAutoComplete = (component) => {
     selectElement: selectEl,
     minLength: 2,
     source: (query, populateResults) => {
-      tracker.trackSearch(query)
-      populateResults(sort(query, options))
+      if (/\S/.test(query)) {
+        tracker.trackSearch(query)
+        populateResults(sort(query, options))
+      }
     },
     autoselect: true,
     templates: { suggestion: (value) => suggestion(value, options) },

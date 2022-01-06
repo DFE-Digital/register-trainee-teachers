@@ -16,7 +16,7 @@ export default class LiveFilter {
 
     if (!(this.form && this.resultsDiv && this.selectedFiltersDiv)) return
 
-    this.endpoint = this.form.attributes["data-search-endpoint"].value
+    this.endpoint = this.form.attributes['data-search-endpoint'].value
 
     this.saveState()
     this.setInitialStateToHistory()
