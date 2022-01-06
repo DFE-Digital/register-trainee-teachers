@@ -68,7 +68,7 @@ module Dttp
           end
 
           context "trainee with course in 20/21" do
-            let(:expected_year) { Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021 }
+            let(:expected_year) { Dttp::CodeSets::AcademicYears::ACADEMIC_YEAR_2020_2021 }
 
             context "1/8/2020" do
               let(:start_date) { "1/8/2020" }
@@ -84,7 +84,7 @@ module Dttp
           end
 
           context "trainee with course in 21/22" do
-            let(:expected_year) { Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2021_2022 }
+            let(:expected_year) { Dttp::CodeSets::AcademicYears::ACADEMIC_YEAR_2021_2022 }
 
             context "1/8/2021" do
               let(:start_date) { "1/8/2021" }
@@ -100,7 +100,7 @@ module Dttp
           end
 
           context "trainee with course in 22/23" do
-            let(:expected_year) { Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2022_2023 }
+            let(:expected_year) { Dttp::CodeSets::AcademicYears::ACADEMIC_YEAR_2022_2023 }
 
             context "1/8/2022" do
               let(:start_date) { "1/8/2022" }
@@ -137,7 +137,7 @@ module Dttp
                 "dfe_AwardingInstitutionId@odata.bind" => "/accounts(#{dttp_degree_institution_entity_id})",
                 "dfe_ClassofUGDegreeId@odata.bind" => "/dfe_classofdegrees(#{dttp_degree_grade_entity_id})",
                 "dfe_traineeid" => trainee.trainee_id,
-                "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
+                "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::CodeSets::AcademicYears::ACADEMIC_YEAR_2020_2021})",
                 "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
                 "dfe_sendforregistration" => true,
                 "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",
@@ -167,7 +167,7 @@ module Dttp
                 "dfe_commencementdate" => trainee.commencement_date.in_time_zone.iso8601,
                 "dfe_CountryofStudyId@odata.bind" => "/dfe_countries(#{dttp_country_entity_id})",
                 "dfe_traineeid" => trainee.trainee_id,
-                "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::Params::PlacementAssignment::ACADEMIC_YEAR_2020_2021})",
+                "dfe_AcademicYearId@odata.bind" => "/dfe_academicyears(#{Dttp::CodeSets::AcademicYears::ACADEMIC_YEAR_2020_2021})",
                 "dfe_courselevel" => Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG,
                 "dfe_sendforregistration" => true,
                 "dfe_ProviderId@odata.bind" => "/accounts(#{dttp_provider_id})",

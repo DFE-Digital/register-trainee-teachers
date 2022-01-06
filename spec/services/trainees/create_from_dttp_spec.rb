@@ -306,21 +306,23 @@ module Trainees
       context "with multiple placement_assignments" do
         let(:placement_assignment_one) do
           create(:dttp_placement_assignment,
+                 :with_academic_year_twenty_twenty_one,
                  provider_dttp_id: provider.dttp_id,
-                 programme_start_date: Faker::Date.in_date_period(year: Time.zone.now.year - 1, month: 9).strftime("%Y-%m-%d"),
                  response: create(:api_placement_assignment,
                                   _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
         end
 
         let(:placement_assignment_two) do
           create(:dttp_placement_assignment,
+                 :with_academic_year_twenty_one_twenty_two,
                  provider_dttp_id: provider.dttp_id,
-                 programme_start_date: Faker::Date.in_date_period(year: Time.zone.now.year, month: 9).strftime("%Y-%m-%d"),
                  response: create(:api_placement_assignment,
                                   _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
         end
 
         let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [placement_assignment_one, placement_assignment_two]) }
+
+        before { dttp_trainee.reload }
 
         it "sets the course details from the latest placement assignment" do
           create_trainee_from_dttp

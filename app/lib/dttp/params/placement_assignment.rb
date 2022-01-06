@@ -5,10 +5,6 @@ module Dttp
     class PlacementAssignment
       include Mappable
 
-      ACADEMIC_YEAR_2020_2021 = "76bcaeca-2bd1-e711-80df-005056ac45bb"
-      ACADEMIC_YEAR_2021_2022 = "21196925-17b9-e911-a863-000d3ab0dc71"
-      ACADEMIC_YEAR_2022_2023 = "ed0db9f4-eff5-eb11-94ef-000d3ab1e900"
-
       SCHOOL_NOT_APPLICABLE = "9e7fcac0-4a37-e811-80ef-005056ac45bb"
 
       COURSE_LEVEL_PG = 12
@@ -190,10 +186,10 @@ module Dttp
       end
 
       def academic_year
-        return ACADEMIC_YEAR_2020_2021 if itt_start_date_between?("1/8/2020", "31/7/2021")
-        return ACADEMIC_YEAR_2021_2022 if itt_start_date_between?("1/8/2021", "31/7/2022")
+        return CodeSets::AcademicYears::ACADEMIC_YEAR_2020_2021 if itt_start_date_between?("1/8/2020", "31/7/2021")
+        return CodeSets::AcademicYears::ACADEMIC_YEAR_2021_2022 if itt_start_date_between?("1/8/2021", "31/7/2022")
 
-        ACADEMIC_YEAR_2022_2023 if course_starting_in_2022?
+        CodeSets::AcademicYears::ACADEMIC_YEAR_2022_2023 if course_starting_in_2022?
       end
 
       def training_route
