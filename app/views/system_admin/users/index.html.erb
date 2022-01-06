@@ -1,0 +1,60 @@
+<%= render PageTitle::View.new(i18n_key: "users.index") %>
+
+<h1 class="govuk-heading-l">Users</h1>
+
+<%= render "system_admin/tab_nav" %>
+
+<table class="govuk-table" summary="Users list">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">First name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Last name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Email</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Lead Schools</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Providers</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @users.each do |user| %>
+      <tr class="govuk-table__row qa-user_row">
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= user.first_name %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= user.last_name %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= user.email %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <% user.lead_schools.each do |lead_school| %>
+              <%= govuk_link_to(lead_school.name, lead_school_path(lead_school), class: "govuk-!-display-block") %>
+            <% end %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <% user.providers.each do |provider| %>
+              <%= govuk_link_to provider.name, provider_path(provider), class: "govuk-!-display-block" %>
+            <% end %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render Paginator::View.new(scope: @users) %>

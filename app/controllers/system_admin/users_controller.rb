@@ -2,6 +2,10 @@
 
 module SystemAdmin
   class UsersController < ApplicationController
+    def index
+      @users = policy_scope(User, policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1)
+    end
+
     def new
       @user = authorize(provider.users.build)
     end

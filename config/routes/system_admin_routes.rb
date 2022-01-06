@@ -26,6 +26,7 @@ module SystemAdminRoutes
           end
         end
 
+        resources :users, only: %i[index]
         resources :dttp_providers, only: %i[index show create]
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]
