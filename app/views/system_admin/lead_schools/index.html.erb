@@ -12,7 +12,7 @@
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Town</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Postcode</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Open date</th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Closed date</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Close date</th>
     </tr>
   </thead>
 
@@ -22,7 +22,7 @@
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= lead_school.name %>
+            <%= govuk_link_to(lead_school.name, lead_school_path(lead_school)) %>
           </span>
         </td>
 
@@ -39,7 +39,7 @@
         </td>
 
         <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1 no-wrap">
             <%= lead_school.postcode %>
           </span>
         </td>
