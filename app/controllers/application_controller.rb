@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
 
-  helper_method :current_user, :authenticated?
+  helper_method :current_user, :authenticated?, :audit_user
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
@@ -44,6 +44,10 @@ private
       user = User.kept.find_by("LOWER(email) = ?", dfe_sign_in_user.email)
       UserWithOrganisationContext.new(user: user, session: session) if user.present?
     end
+  end
+
+  def audit_user
+    current_user&.user
   end
 
   def authenticated?
