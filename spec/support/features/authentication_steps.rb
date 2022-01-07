@@ -5,7 +5,7 @@ module Features
     attr_reader :current_user
 
     def given_i_am_authenticated(user: nil)
-      @current_user = user || create(:user)
+      @current_user = UserWithOrganisationContext.new(user: (user || create(:user)), session: {})
       user_exists_in_dfe_sign_in(user: @current_user)
 
       visit_sign_in_page

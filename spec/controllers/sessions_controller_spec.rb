@@ -13,7 +13,7 @@ describe SessionsController, type: :controller do
   describe "#callback" do
     context "existing database user" do
       it "calls send welcome email service" do
-        expect(SendWelcomeEmailService).to receive(:call).with(current_user: user).once
+        expect(SendWelcomeEmailService).to receive(:call).once
         request_callback
       end
 

@@ -38,7 +38,12 @@ private
   end
 
   def current_user
-    @current_user ||= User.kept.find_by("LOWER(email) = ?", dfe_sign_in_user&.email)
+    return if dfe_sign_in_user.blank?
+
+    @current_user ||= begin
+      user = User.kept.find_by("LOWER(email) = ?", dfe_sign_in_user.email)
+      UserWithOrganisationContext.new(user: user, session: session) if user.present?
+    end
   end
 
   def authenticated?

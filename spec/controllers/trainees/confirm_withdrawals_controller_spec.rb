@@ -5,7 +5,7 @@ require "rails_helper"
 describe Trainees::ConfirmWithdrawalsController do
   include ActiveJob::TestHelper
 
-  let(:current_user) { create(:user) }
+  let(:current_user) { build_current_user }
   let(:trainee) { create(:trainee, :trn_received, provider: current_user.primary_provider) }
 
   before do

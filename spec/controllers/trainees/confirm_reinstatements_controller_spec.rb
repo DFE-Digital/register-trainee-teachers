@@ -5,7 +5,7 @@ require "rails_helper"
 describe Trainees::ConfirmReinstatementsController do
   include ActiveJob::TestHelper
 
-  let(:current_user) { create(:user) }
+  let(:current_user) { build_current_user }
   let(:trainee) { create(:trainee, :deferred, trn: trn, provider: current_user.primary_provider) }
 
   before do
