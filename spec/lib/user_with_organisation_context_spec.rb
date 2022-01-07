@@ -32,4 +32,22 @@ describe UserWithOrganisationContext do
 
     it { is_expected.to eq(user) }
   end
+
+  describe "#is_a?" do
+    it "pretends to be a user" do
+      expect(subject.is_a?(User)).to eq(true)
+    end
+  end
+
+  describe "#class_name" do
+    it "pretends to be a user" do
+      expect(subject.class_name).to eq("User")
+    end
+  end
+
+  describe ".primary_key" do
+    it "returns 'id'" do
+      expect(described_class.primary_key).to eq("id")
+    end
+  end
 end
