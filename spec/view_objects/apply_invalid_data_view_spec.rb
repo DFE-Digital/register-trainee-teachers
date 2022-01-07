@@ -28,7 +28,11 @@ describe ApplyInvalidDataView do
   end
 
   describe "#invalid_data?" do
-    subject { described_class.new(application, degree: degree, degrees_sort_order: application.invalid_data["degrees"].keys).invalid_data? }
+    subject do
+      described_class.new(application,
+                          degree: degree,
+                          degrees_sort_order: application.invalid_data["degrees"].keys).invalid_data?
+    end
 
     let(:degree) { nil }
 
@@ -57,6 +61,15 @@ describe ApplyInvalidDataView do
     it "returns the invalid answer summary items" do
       expected_markup = "<li><a class=\"govuk-notification-banner__link\" href=\"#awarding-institution\">Awarding institution is not recognised</a></li>"
       expect(subject.summary_items_content).to include(expected_markup)
+    end
+
+    context "no errors but no degrees" do
+      subject { described_class.new(application, degrees_sort_order: []) }
+
+      it "returns a link anchored to the degrees section" do
+        expected_markup = "<li><a class=\"govuk-notification-banner__link\" href=\"#degrees\">Degree details not provided</a></li>"
+        expect(subject.summary_items_content).to include(expected_markup)
+      end
     end
   end
 end

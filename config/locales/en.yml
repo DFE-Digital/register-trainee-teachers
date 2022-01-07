@@ -483,6 +483,7 @@ en:
       invalid_answers_summary:
         one: This application contains 1 answer that you need to amend. This is because it was entered in a free text format.
         other: This application contains %{count} answers that you need to amend. This is because they were entered in a free text format.
+        degree_missing: Degree details not provided
       unrecognised_field_text: "%{invalid_field} is not recognised"
     mappable_field_row:
       default_hint_text_html: 'Enter an answer <span class="govuk-visually-hidden"> for %{field_label}</span>'

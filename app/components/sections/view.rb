@@ -43,7 +43,7 @@ module Sections
       if section == :funding && funding_options(trainee) == :funding_inactive
         collapsed_funding_inactive_section_args
       else
-        { title: title, link_text: link_text, url: url, has_errors: form_has_errors? }
+        { title: title, link_text: link_text, url: url, has_errors: form_has_errors?, name: section }
       end
     end
 
