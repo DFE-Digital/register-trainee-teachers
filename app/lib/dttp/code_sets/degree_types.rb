@@ -59,7 +59,7 @@ module Dttp
         "BEd" => { entity_id: "c1695652-c197-e711-80d8-005056ac45bb", hesa_code: "1" },
         "BSc/Education" => { entity_id: "c5695652-c197-e711-80d8-005056ac45bb", hesa_code: "3" },
         "BTech/Education" => { entity_id: "c9695652-c197-e711-80d8-005056ac45bb", hesa_code: "5" },
-        "BA/Education" => { entity_id: "c9695652-c197-e711-80d8-005056ac45bb", hesa_code: "7" },
+        "BA/Education" => { entity_id: "cd695652-c197-e711-80d8-005056ac45bb", hesa_code: "7" },
         "BA Combined Studies/Education of the Deaf" => { entity_id: "d1695652-c197-e711-80d8-005056ac45bb", hesa_code: "9" },
         "BA with intercalated PGCE" => { entity_id: "d5695652-c197-e711-80d8-005056ac45bb", hesa_code: "12" },
         "Master of Arts" => {
