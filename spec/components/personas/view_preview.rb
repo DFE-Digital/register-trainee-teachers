@@ -9,7 +9,8 @@ module Personas
   private
 
     def mock_persona
-      User.new(id: 1, first_name: "Tom", last_name: "Jones", provider: Provider.new(name: "Provider A"))
+      provider = FactoryBot.create(:provider, name: "Provider A")
+      FactoryBot.create(:user, first_name: "Tom", last_name: "Jones", providers: [provider])
     end
   end
 end

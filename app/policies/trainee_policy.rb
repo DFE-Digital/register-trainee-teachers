@@ -10,7 +10,7 @@ class TraineePolicy
     end
 
     def resolve
-      user.system_admin? ? scope.all : scope.where(provider_id: user.provider_id).kept
+      user.system_admin? ? scope.all : scope.where(provider_id: user.primary_provider.id).kept
     end
   end
 
@@ -63,6 +63,6 @@ class TraineePolicy
 private
 
   def allowed_user?
-    user&.system_admin? || user&.provider == trainee.provider
+    user&.system_admin? || user&.primary_provider == trainee.provider
   end
 end

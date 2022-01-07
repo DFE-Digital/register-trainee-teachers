@@ -49,7 +49,7 @@ describe TraineesController do
     end
 
     context "csv export" do
-      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.provider) }
+      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.primary_provider) }
 
       before do
         trainee
@@ -67,7 +67,7 @@ describe TraineesController do
 
   describe "#show" do
     context "with a non-draft trainee" do
-      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.provider) }
+      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.primary_provider) }
 
       before do
         get(:show, params: { id: trainee })
@@ -89,7 +89,7 @@ describe TraineesController do
 
   describe "#destroy" do
     context "with a non-draft trainee" do
-      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.provider) }
+      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.primary_provider) }
 
       it "redirects to the trainee index page" do
         expect(get(:destroy, params: { id: trainee })).to redirect_to(trainees_path)

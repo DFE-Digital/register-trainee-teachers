@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Provider < ApplicationRecord
-  has_many :users
+  has_many :provider_users, inverse_of: :provider
+  has_many :users, through: :provider_users
   has_many :trainees
 
   validates :name, presence: true

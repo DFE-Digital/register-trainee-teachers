@@ -8,7 +8,7 @@ describe Trainees::SubjectSpecialismsController do
     create(:trainee,
            :provider_led_postgrad,
            :submitted_for_trn,
-           provider: user.provider,
+           provider: user.primary_provider,
            course_subject_one: nil,
            course_subject_two: nil,
            course_subject_three: nil)

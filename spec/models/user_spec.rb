@@ -58,7 +58,7 @@ describe User do
   end
 
   describe "associations" do
-    it { is_expected.to belong_to(:provider).optional }
+    it { is_expected.to have_many(:providers) }
   end
 
   describe "indexes" do
@@ -67,7 +67,7 @@ describe User do
   end
 
   describe "auditing" do
-    it { is_expected.to be_audited.associated_with(:provider) }
+    it { is_expected.to be_audited.associated_with(:primary_provider) }
   end
 
   describe "#discard" do
@@ -117,6 +117,14 @@ describe User do
       it "is not returned" do
         expect(User.system_admins).to be_empty
       end
+    end
+  end
+
+  describe ".primary_provider" do
+    subject { create(:user) }
+
+    context "returns first provider" do
+      it { expect(subject.primary_provider).to eq(subject.providers.first) }
     end
   end
 end

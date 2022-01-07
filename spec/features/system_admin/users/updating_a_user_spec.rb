@@ -35,7 +35,7 @@ feature "Creating a new user" do
 private
 
   def when_i_visit_the_provider_show_page
-    provider_show_page.load(id: user.provider.id)
+    provider_show_page.load(id: user.primary_provider.id)
   end
 
   def and_i_click_on_edit_user_link
@@ -67,7 +67,7 @@ private
   end
 
   def then_i_am_taken_to_the_provider_show_page
-    expect(provider_show_page).to be_displayed(id: user.provider.id)
+    expect(provider_show_page).to be_displayed(id: user.primary_provider.id)
   end
 
   def edit_user_page

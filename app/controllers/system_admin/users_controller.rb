@@ -9,6 +9,7 @@ module SystemAdmin
     def create
       @user = authorize(provider.users.build(permitted_attributes(User)))
       if @user.save
+        ProviderUser.find_or_create_by!(provider: provider, user: @user)
         redirect_to(provider_path(provider), flash: { success: t(".success") })
       else
         render(:new)
@@ -17,12 +18,12 @@ module SystemAdmin
 
     def edit
       user
-      @provider = user.provider
+      @provider = user.primary_provider
     end
 
     def update
       user
-      @provider = user.provider
+      @provider = user.primary_provider
       if user.update(permitted_attributes(@user))
         redirect_to(provider_path(provider), flash: { success: t(".success") })
       else
@@ -32,12 +33,12 @@ module SystemAdmin
 
     def delete
       user
-      @provider = user.provider
+      @provider = user.primary_provider
     end
 
     def destroy
       user.discard
-      @provider = user.provider
+      @provider = user.primary_provider
       redirect_to(provider_path(@provider))
     end
 

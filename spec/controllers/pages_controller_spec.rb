@@ -21,7 +21,7 @@ describe PagesController, type: :controller do
   end
 
   context "when signed in and navigate to start page" do
-    let(:current_user) { build(:user) }
+    let(:current_user) { create(:user) }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)

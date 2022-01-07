@@ -19,7 +19,7 @@ describe TrnSubmissionsController do
             :trainee,
             :completed,
             :with_study_mode_and_future_course_dates,
-            provider: current_user.provider,
+            provider: current_user.primary_provider,
           )
         end
 
@@ -30,7 +30,7 @@ describe TrnSubmissionsController do
       end
 
       context "and the itt start date is in the past" do
-        let(:trainee) { create(:trainee, :completed, provider: current_user.provider) }
+        let(:trainee) { create(:trainee, :completed, provider: current_user.primary_provider) }
 
         it "redirects to the trainee start status page" do
           expect(post(:create, params: { trainee_id: trainee }))

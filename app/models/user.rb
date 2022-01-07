@@ -3,9 +3,8 @@
 class User < ApplicationRecord
   include Discard::Model
 
-  belongs_to :provider, optional: true
-
-  has_many :trainees, through: :provider
+  has_many :provider_users, inverse_of: :user
+  has_many :providers, through: :provider_users
 
   has_many :lead_school_users
   has_many :lead_schools, through: :lead_school_users
@@ -24,7 +23,11 @@ class User < ApplicationRecord
     EmailFormatValidator.new(record).validate
   end
 
-  audited associated_with: :provider
+  audited associated_with: :primary_provider
+
+  def primary_provider
+    providers.first
+  end
 
   def name
     "#{first_name} #{last_name}"
