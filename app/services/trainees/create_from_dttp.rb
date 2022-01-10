@@ -172,7 +172,7 @@ module Trainees
     end
 
     def disability_attributes
-      if disability.blank?
+      if disability.blank? || disability == Diversities::NOT_PROVIDED
         return {
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
         }
@@ -180,7 +180,6 @@ module Trainees
 
       if disability == Diversities::NO_KNOWN_DISABILITY
         return {
-          diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
         }
       end
@@ -188,14 +187,12 @@ module Trainees
       # TODO: This needs a decision, since DTTP may have 'multiple disabilities'
       if disability == Diversities::MULTIPLE_DISABILITIES
         return {
-          diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
           disabilities: Disability.where(name: ::Diversities::OTHER),
         }
       end
 
       {
-        diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
         disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
         disabilities: Disability.where(name: disability),
       }
@@ -209,19 +206,18 @@ module Trainees
     end
 
     def ethnicity_attributes
-      ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
-
-      if ethnic_background.present? && ethnic_background != Diversities::NOT_PROVIDED
-        diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
-      else
-        diversity_disclosure = Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+      if ethnic_background.present? && ethnic_background == Diversities::NOT_PROVIDED
+        return {
+          ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+        }
       end
+
+      ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
 
       if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
         return {
-          ethnic_background: ethnic_background,
           ethnic_group: ethnic_group,
-          diversity_disclosure: diversity_disclosure,
+          ethnic_background: ethnic_background,
         }
       end
 
@@ -235,8 +231,17 @@ module Trainees
       )
     end
 
+    def diversity_disclosure
+      if ethnic_background.present? || disability.present?
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      else
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+      end
+    end
+
     def ethnicity_and_disability_attributes
       ethnicity_attributes.merge(disability_attributes)
+                          .merge({ diversity_disclosure: diversity_disclosure })
     end
 
     def personal_details_attributes
