@@ -4,11 +4,16 @@ FactoryBot.define do
   factory :user, class: "User" do
     transient do
       providers { [build(:provider)] }
+      lead_schools { [] }
     end
 
     after(:create) do |user, evaluator|
       evaluator.providers.each do |provider|
         create(:provider_user, provider: provider, user: user)
+      end
+
+      evaluator.lead_schools.each do |lead_school|
+        create(:lead_school_user, lead_school: lead_school, user: user)
       end
     end
 

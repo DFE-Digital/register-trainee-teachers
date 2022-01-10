@@ -51,3 +51,25 @@
     </dd>
   </div>
 </dl>
+
+<%= render TabNavigation::View.new(items: [
+  { name: "Users", url: lead_school_path(@lead_school) },
+]) %>
+
+<p class="govuk-body">
+  <%= render GovukComponent::StartButtonComponent.new(
+  text: "Add a user",
+  href: new_lead_school_user_path(@lead_school),
+) %>
+</p>
+
+<% if @lead_school.users.any? %>
+  <% @lead_school.users.each do |user| %>
+    <%= render UserCard::View.new(
+      user: user,
+      edit_path: edit_lead_school_user_path(@lead_school, user),
+    ) %>
+  <% end %>
+<% else %>
+  <p class="govuk-body">There are no users yet.</p>
+<% end %>

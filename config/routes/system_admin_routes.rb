@@ -29,7 +29,9 @@ module SystemAdminRoutes
         resources :dttp_providers, only: %i[index show create]
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]
-        resources :lead_schools, path: "lead-schools", only: %i[index show]
+        resources :lead_schools, path: "lead-schools", only: %i[index show] do
+          resources :users, controller: "lead_schools/users", only: %i[new create edit update]
+        end
       end
     end
   end

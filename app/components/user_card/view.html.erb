@@ -16,15 +16,19 @@
     <%= email_address %>
   </div>
 
-  <div class="govuk-caption-m govuk-!-font-size-16">
-    <%= govuk_link_to('Edit', edit_user_path(user)) %>
-  </div>
+  <% if edit_path.present? %>
+    <div class="govuk-caption-m govuk-!-font-size-16">
+      <%= govuk_link_to('Edit', edit_path) %>
+    </div>
+  <% end %>
 
-  <div class="govuk-body govuk-!-margin-top-2">
-    <%= govuk_button_to("Delete user", delete_user_path(user), method: :get, class: "govuk-button--warning") %>
-  </div>
+  <% if delete_path.present? %>
+    <div class="govuk-body govuk-!-margin-top-2">
+      <%= govuk_button_to("Delete user", delete_path, method: :get, class: "govuk-button--warning") %>
+    </div>
+  <% end %>
 
-  <% if show_register_button %>
+  <% if registration_form_path.present? %>
     <%= govuk_button_to(
       "Register user to provider",
       registration_form_path,

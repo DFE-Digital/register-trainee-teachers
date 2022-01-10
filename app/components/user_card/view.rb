@@ -6,10 +6,11 @@ module UserCard
 
     attr_reader :user
 
-    def initialize(user:, show_register_button: false, registration_form_path: nil)
+    def initialize(user:, registration_form_path: nil, delete_path: nil, edit_path: nil)
       @user = user
-      @show_register_button = show_register_button
       @registration_form_path = registration_form_path
+      @delete_path = delete_path
+      @edit_path = edit_path
     end
 
     def updated_at
@@ -28,6 +29,6 @@ module UserCard
 
   private
 
-    attr_reader :show_register_button, :registration_form_path
+    attr_reader :registration_form_path, :delete_path, :edit_path
   end
 end
