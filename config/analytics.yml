@@ -8,6 +8,7 @@ shared:
     - updated_at
     - user_id
   apply_applications:
+    - id
     - apply_id
     - accredited_body_code
     - recruitment_cycle_year
@@ -43,6 +44,7 @@ shared:
     - part_time_start_date
     - part_time_end_date
   course_subjects:
+    - id
     - course_id
     - subject_id
     - created_at
@@ -87,9 +89,9 @@ shared:
     - allocation_subject_id
     - bursary_id
     - created_at
-    - id
     - updated_at
     - funding_type
+    - academic_cycle_id
   funding_method_subjects:
     - allocation_subject_id
     - created_at
