@@ -52,11 +52,6 @@ module Trainees
         return
       end
 
-      if training_route == TRAINING_ROUTE_ENUMS[:hpitt_postgrad]
-        dttp_trainee.non_importable_hpitt!
-        return
-      end
-
       trainee.set_early_years_course_details
 
       if funding_not_yet_mapped?
