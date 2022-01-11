@@ -11,17 +11,17 @@ function disableBrowserAutofill () {
 
     let inputs = []
 
-    if (form.dataset['js-disable-browser-autofill'] == 'on'){
+    if (form.dataset.jsDisableBrowserAutofill === 'on'){
       inputs = [...form.querySelectorAll('input')]
       .filter(input => inputTypes.includes(input.type))
-      .filter(input => input.dataset['js-disable-browser-autofill'] !=== 'off')
+      .filter(input => input.dataset.jsDisableBrowserAutofill !== 'off')
     }
 
-    else inputs = [...form.querySelectorAll('input')]
+    else {
+      inputs = [...form.querySelectorAll('input')]
       .filter(input => inputTypes.includes(input.type))
-      .filter(input => input.dataset['js-disable-browser-autofill'] === 'on')
-
-    console.log({inputs})
+      .filter(input => input.dataset.jsDisableBrowserAutofill === 'on')
+    }
 
     if (inputs.length) {
 
