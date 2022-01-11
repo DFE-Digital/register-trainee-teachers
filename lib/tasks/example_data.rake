@@ -181,7 +181,7 @@ namespace :example_data do
                   course_min_age: course.min_age,
                   course_max_age: course.max_age,
                   itt_start_date: course.published_start_date,
-                  itt_end_date: course.end_date,
+                  itt_end_date: course.published_start_date + 9.months,
                 )
               end
             end
