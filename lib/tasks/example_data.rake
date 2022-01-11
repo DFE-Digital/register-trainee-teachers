@@ -183,6 +183,10 @@ namespace :example_data do
                   itt_start_date: course.published_start_date,
                   itt_end_date: course.published_start_date + 9.months,
                 )
+
+                if rand(10) < 2 and state == :submitted_for_trn
+                  attrs.merge!(commencement_date: nil)
+                end
               end
             end
 
