@@ -8,10 +8,15 @@ function disableBrowserAutofill () {
   }
 
   document.querySelectorAll('form').forEach(form => {
-    if (form.getAttribute('autocomplete') === 'off') {
-      const inputs = [...form.querySelectorAll('input[autocomplete]')].filter(input => inputTypes.includes(input.type))
+
+    const inputs = [...form.querySelectorAll('input')]
+      .filter(input => inputTypes.includes(input.type))
+      .filter(input => input.dataset['js-disable-browser-autofill'] == 'true')
+
+    if (inputs.length) {
 
       inputs.forEach(input => {
+        input.setAttribute('autocomplete', 'disabled')
         input.setAttribute(dataAttributeName, input.name)
         input.name = Math.random().toString(36).substring(7) // NOSONAR
       })
@@ -21,6 +26,7 @@ function disableBrowserAutofill () {
           input.name = input.getAttribute(dataAttributeName)
         })
       })
+
     }
   })
 }
