@@ -192,7 +192,10 @@ namespace :example_data do
 
             # Make *roughly* half of draft trainees apply drafts
             if state == :draft && sample_index < sample_size / 2 && enabled_course_routes.include?(route)
-              attrs.merge!(course_uuid: provider.courses.where(route: route).pluck(:uuid).sample,
+              courses = provider.courses.where(route: route)
+              sample_course = courses.offset(rand(courses.count)).first
+              attrs.merge!(course_uuid: sample_course.uuid,
+                           course_education_phase: sample_course.level,
                            apply_application: FactoryBot.create(:apply_application, accredited_body_code: provider.code))
             end
 
