@@ -22,7 +22,13 @@
 
 <% if @users_view.registered.any? %>
   <div class="govuk-!-margin-bottom-8 registered-users">
-    <%= render UserCard::View.with_collection(@users_view.registered, show_register_button: false) %>
+    <% @users_view.registered.each do |user| %>
+      <%= render UserCard::View.new(
+        user: user,
+        edit_path: edit_user_path(user),
+        delete_path: delete_user_path(user),
+      ) %>
+    <% end %>
   </div>
 <% else %>
   <p class="govuk-body">There are no users yet.</p>

@@ -19,11 +19,14 @@
       These users are not registered with the provider on this service.
     </div>
 
-    <%= render UserCard::View.with_collection(
-      @users_view.not_registered,
-      show_register_button: true,
-      registration_form_path: provider_import_user_path(@provider.id),
+    <% @users_view.not_registered.each do |user| %>
+      <%= render UserCard::View.new(
+        user: user,
+        edit_path: edit_user_path(user),
+        delete_path: delete_user_path(user),
+        registration_form_path: provider_import_user_path(@provider.id),
       ) %>
+    <% end %>
   </div>
 <% else %>
   <p class="govuk-body">All users with this provider are registered.</p>

@@ -21,7 +21,13 @@
         <h2 class="govuk-heading-m"><%= pluralize(@provider.users.kept.count, "user") %> </h2>
       </div>
     </div>
-    <%= render UserCard::View.with_collection(@users) %>
+    <% @users.each do |user| %>
+      <%= render UserCard::View.new(
+        user: user,
+        edit_path: edit_user_path(user),
+        delete_path: delete_user_path(user),
+      ) %>
+    <% end %>
   </div>
 <% else %>
   <h2 class="govuk-heading-m">There are no users yet.</h2>

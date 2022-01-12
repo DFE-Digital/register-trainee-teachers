@@ -1433,6 +1433,12 @@ en:
         success: User has been successfully added.
       update:
         success: User details have been successfully updated.
+    lead_schools:
+      users:
+        create:
+          success: User has been successfully added.
+        update:
+          success: User details have been successfully updated.
     validation_errors:
       index:
         heading: Validation errors
