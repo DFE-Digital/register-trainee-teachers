@@ -206,15 +206,28 @@ module Trainees
     end
 
     def ethnicity_attributes
-      if ethnic_background.present? && ethnic_background == Diversities::NOT_PROVIDED
+      if [
+        Diversities::NOT_PROVIDED,
+        Dttp::CodeSets::Ethnicities::INFORMATION_NOT_YET_SOUGHT,
+        Dttp::CodeSets::Ethnicities::INFORMATION_REFUSED,
+      ].include?(ethnic_background)
         return {
           ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
         }
       end
 
-      ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+      if [
+        Dttp::CodeSets::Ethnicities::WHITE,
+        Dttp::CodeSets::Ethnicities::SCOTTISH,
+      ].include?(ethnic_background)
+        return {
+          ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:white],
+        }
+      end
 
       if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
+        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+
         return {
           ethnic_group: ethnic_group,
           ethnic_background: ethnic_background,
@@ -225,18 +238,21 @@ module Trainees
     end
 
     def ethnic_background
-      @ethnic_background ||= find_by_entity_id(
-        dttp_trainee.response["_dfe_ethnicityid_value"],
-        Dttp::CodeSets::Ethnicities::MAPPING,
-      )
+      find_by_entity_id(dttp_trainee.ethnicity, Dttp::CodeSets::Ethnicities::MAPPING) ||
+        find_by_entity_id(dttp_trainee.ethnicity, Dttp::CodeSets::Ethnicities::INACTIVE_MAPPING)
     end
 
     def diversity_disclosure
-      if ethnic_background.present? || disability.present?
+      if disability.present? || ethnicity_disclosed?
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
       else
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
       end
+    end
+
+    def ethnicity_disclosed?
+      ethnic_background.present? &&
+        ethnic_background != Dttp::CodeSets::Ethnicities::INFORMATION_REFUSED
     end
 
     def ethnicity_and_disability_attributes
