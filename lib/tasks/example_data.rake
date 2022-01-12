@@ -76,6 +76,12 @@ namespace :example_data do
     # Create some subjects
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name: name) }
 
+    recruitment_cycle_years = [
+      Settings.current_default_course_year - 1,
+      Settings.current_default_course_year,
+      Settings.current_default_course_year + 1,
+    ]
+
     # For each persona...
     PERSONAS.each do |persona_attributes|
       # Create the persona
@@ -99,51 +105,21 @@ namespace :example_data do
 
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
-        REAL_PUBLISH_COURSES_WITH_SUBJECTS.each_with_index do |(course_name, subject_names), index|
-          FactoryBot.build(
-            :course,
-            accredited_body_code: provider.code,
-            published_start_date: index.even? ? Time.zone.now : 1.month.from_now,
-            route: route,
-            name: course_name,
-            level: course_name.include?("Primary") ? :primary : :secondary,
-            study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample,
-            recruitment_cycle_year: Time.zone.today.year,
-          ) { |course|
-            course.subjects = Subject.where(name: subject_names)
-          }.save!
-
-          # Last cycle year
-          if SecureRandom.random_number(100) > 50
+        REAL_PUBLISH_COURSES_WITH_SUBJECTS.each do |course_name, subject_names|
+          recruitment_cycle_years.each do |recruitment_cycle_year|
             FactoryBot.build(
               :course,
               accredited_body_code: provider.code,
-              published_start_date: index.even? ? Time.zone.now : 1.month.from_now,
+              published_start_date: Date.new(recruitment_cycle_year, 9, 1),
               route: route,
               name: course_name,
               level: course_name.include?("Primary") ? :primary : :secondary,
-              study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample,
-              recruitment_cycle_year: 1.year.ago.year,
+              study_mode: COURSE_STUDY_MODE_ENUMS.keys.sample,
+              recruitment_cycle_year: recruitment_cycle_year,
             ) { |course|
               course.subjects = Subject.where(name: subject_names)
             }.save!
           end
-
-          # Next cycle year
-          next unless SecureRandom.random_number(100) > 50
-
-          FactoryBot.build(
-            :course,
-            accredited_body_code: provider.code,
-            published_start_date: index.even? ? Time.zone.now : 1.month.from_now,
-            route: route,
-            name: course_name,
-            level: course_name.include?("Primary") ? :primary : :secondary,
-            study_mode: TRAINEE_STUDY_MODE_ENUMS.keys.sample,
-            recruitment_cycle_year: 1.year.from_now.year,
-          ) { |course|
-            course.subjects = Subject.where(name: subject_names)
-          }.save!
         end
       end
 
@@ -184,7 +160,7 @@ namespace :example_data do
                   itt_end_date: course.published_start_date + 9.months,
                 )
 
-                if rand(10) < 2 and state == :submitted_for_trn
+                if (rand(10) < 2) && (state == :submitted_for_trn)
                   attrs.merge!(commencement_date: nil)
                 end
               end
