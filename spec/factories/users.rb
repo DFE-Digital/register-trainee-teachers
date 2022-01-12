@@ -2,21 +2,7 @@
 
 FactoryBot.define do
   factory :user, class: "User" do
-    transient do
-      providers { [build(:provider)] }
-      lead_schools { [] }
-    end
-
-    after(:create) do |user, evaluator|
-      evaluator.providers.each do |provider|
-        create(:provider_user, provider: provider, user: user)
-      end
-
-      evaluator.lead_schools.each do |lead_school|
-        create(:lead_school_user, lead_school: lead_school, user: user)
-      end
-    end
-
+    providers { [build(:provider)] }
     dfe_sign_in_uid { SecureRandom.uuid }
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
@@ -27,6 +13,11 @@ FactoryBot.define do
     trait :system_admin do
       providers { [] }
       system_admin { true }
+    end
+
+    trait :with_multiple_organisations do
+      providers { [build(:provider), build(:provider)] }
+      lead_schools { [build(:school, :lead), build(:school, :lead)] }
     end
   end
 end
