@@ -21,8 +21,7 @@ module ApplicationHelper
     defaults = { html: { novalidate: true,
                          autocomplete: :off,
                          "data-js-disable-browser-autofill": :on,
-                         spellcheck: false,
-                       } }
+                         spellcheck: false, } }
     form_with(*args << defaults.deep_merge(options), &block)
   end
 
