@@ -144,49 +144,22 @@ describe Trainee do
     end
   end
 
-  context "validations" do
-    context "training route" do
-      let(:provider) { build(:provider, code: TEACH_FIRST_PROVIDER_CODE) }
-      let(:training_route) { TRAINING_ROUTE_ENUMS[:hpitt_postgrad] }
+  context "slug" do
+    subject { create(:trainee) }
 
-      subject { build(:trainee, provider: provider, training_route: training_route) }
+    it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
 
-      it "can only have trainees on the hpitt_postgrad route" do
-        expect(subject).to be_valid
+    context "immutability" do
+      let(:original_slug) { subject.slug.dup }
+
+      before do
+        original_slug
+        subject.regenerate_slug
+        subject.reload
       end
 
-      context "with trainees on any other route" do
-        let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
-
-        it { is_expected.not_to be_valid }
-      end
-
-      context "when the provider is not an hpitt provider" do
-        let(:provider) { build(:provider) }
-
-        it "cannot have trainees on the hpitt_postgrad route" do
-          expect(subject).not_to be_valid
-        end
-      end
-    end
-
-    context "slug" do
-      subject { create(:trainee) }
-
-      it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
-
-      context "immutability" do
-        let(:original_slug) { subject.slug.dup }
-
-        before do
-          original_slug
-          subject.regenerate_slug
-          subject.reload
-        end
-
-        it "is immutable once created" do
-          expect(subject.slug).to eq(original_slug)
-        end
+      it "is immutable once created" do
+        expect(subject.slug).to eq(original_slug)
       end
     end
   end
