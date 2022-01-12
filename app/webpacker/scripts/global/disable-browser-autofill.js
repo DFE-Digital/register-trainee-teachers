@@ -1,3 +1,18 @@
+// Disable browser autofill
+
+// This code is used to force the disabling of browser autofill. It’s needed
+// for browsers that ignore the `autocomplete="off"` attribute.
+
+// To use, add `data-js-disable-browser-autofill='on'` either on a form
+// element or on individual inputs where autofill should be disabled.
+
+// ## Accessibility
+// The solution relies on setting the `autocomplete` attribute to a
+// non-standard attribute. This may be considered a fail for WCAG 1.3.5 -
+// Identify Input Purpose. However, we accept this is a necessary and
+// worthwhile tradeoff for the benefits of preventing browser autofill on
+// inputs where it shouldn’t appear.
+
 function disableBrowserAutofill () {
   const dataAttributeName = 'data-nameoriginal'
   const inputTypes = ['text', 'tel', 'email', 'number']
