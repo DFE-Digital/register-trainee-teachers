@@ -196,6 +196,8 @@ namespace :example_data do
               sample_course = courses.offset(rand(courses.count)).first
               attrs.merge!(course_uuid: sample_course.uuid,
                            course_education_phase: sample_course.level,
+                           itt_start_date: nil,
+                           itt_end_date: nil,
                            apply_application: FactoryBot.create(:apply_application, accredited_body_code: provider.code))
             end
 
