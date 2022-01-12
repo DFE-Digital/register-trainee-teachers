@@ -74,6 +74,8 @@ module Trainees
 
       dttp_trainee.imported!
 
+      trainee.update!(dttp_update_sha: trainee.sha)
+
       trainee
     end
 
