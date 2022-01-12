@@ -192,7 +192,13 @@ FactoryBot.define do
     end
 
     trait :with_start_date do
-      commencement_date { Time.zone.today }
+      commencement_date do
+        if itt_start_date.present?
+          Faker::Date.between(from: itt_start_date, to: itt_start_date + rand(20).days)
+        else
+          Time.zone.today
+        end
+      end
     end
 
     trait :itt_start_date_in_the_past do
