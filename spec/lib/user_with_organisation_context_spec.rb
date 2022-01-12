@@ -17,14 +17,26 @@ describe UserWithOrganisationContext do
 
   describe "#organisation" do
     subject { super().organisation }
-    # TODO: this is placeholder behaviour until we
-    # start setting the current organisation context in the
-    # session
 
-    it { is_expected.to eq(user.providers.first) }
+    context "feature is not enabled" do
+      # TODO: this is placeholder behaviour until we
+      # start setting the current organisation context in the
+      # session
+      before do
+        disable_features(:user_can_have_multiple_organisations)
+      end
 
-    # The correct behaviour. Return the provider or lead school
-    it "returns the current organisation as set in the session"
+      it { is_expected.to eq(user.providers.first) }
+    end
+
+    context "multi organisation feature is enabled" do
+      before do
+        enable_features(:user_can_have_multiple_organisations)
+      end
+
+      # The correct behaviour. Return the provider or lead school
+      it "returns the current organisation as set in the session"
+    end
   end
 
   describe "#user" do

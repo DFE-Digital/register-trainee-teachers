@@ -24,6 +24,8 @@ class UserWithOrganisationContext < SimpleDelegator
   end
 
   def organisation
+    return user.providers.first unless FeatureService.enabled?(:user_can_have_multiple_organisations)
+
     # TODO: placeholder behaviour. Should return the lead school or
     # provider set in the session
     user.providers.first
