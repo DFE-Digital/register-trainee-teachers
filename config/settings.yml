@@ -57,6 +57,7 @@ features:
     send_data_to_big_query: false
   filters:
     show_start_year_filter: false
+  user_can_have_multiple_organisations: false
 
 dfe_sign_in:
   # Our service name
