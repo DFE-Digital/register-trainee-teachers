@@ -24,18 +24,13 @@ function disableBrowserAutofill () {
 
   document.querySelectorAll('form').forEach(form => {
 
-    let inputs = []
+    let inputs = [...form.querySelectorAll('input')]
+      .filter(input => inputTypes.includes(input.type))
 
     if (form.dataset.jsDisableBrowserAutofill === 'on'){
-      inputs = [...form.querySelectorAll('input')]
-      .filter(input => inputTypes.includes(input.type))
-      .filter(input => input.dataset.jsDisableBrowserAutofill !== 'off')
-    }
-
-    else {
-      inputs = [...form.querySelectorAll('input')]
-      .filter(input => inputTypes.includes(input.type))
-      .filter(input => input.dataset.jsDisableBrowserAutofill === 'on')
+      inputs = inputs.filter(input => input.dataset.jsDisableBrowserAutofill !== 'off')
+    } else {
+      inputs = inputs.filter(input => input.dataset.jsDisableBrowserAutofill === 'on')
     }
 
     if (inputs.length) {
