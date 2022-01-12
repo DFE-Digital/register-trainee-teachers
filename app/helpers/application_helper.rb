@@ -24,7 +24,7 @@ module ApplicationHelper
         autocomplete: :off,
         "data-js-disable-browser-autofill": :on,
         spellcheck: false,
-      }
+      },
     }
     form_with(*args << defaults.deep_merge(options), &block)
   end
