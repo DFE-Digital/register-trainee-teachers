@@ -18,7 +18,14 @@ module ApplicationHelper
 
   def register_form_with(*args, &block)
     options = args.extract_options!
-    defaults = { html: { novalidate: true, autocomplete: :off, spellcheck: false } }
+    defaults = {
+      html: {
+        novalidate: true,
+        autocomplete: :off,
+        "data-js-disable-browser-autofill": :on,
+        spellcheck: false,
+      },
+    }
     form_with(*args << defaults.deep_merge(options), &block)
   end
 

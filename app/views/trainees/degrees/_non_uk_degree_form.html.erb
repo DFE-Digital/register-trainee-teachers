@@ -52,7 +52,7 @@
   <%= f.govuk_text_field :graduation_year,
                          form_group: { class: invalid_data_class(form: @degree_form, field: "graduation_year"), id: :graduation_year },
                          width: "one-quarter",
-                         autocomplete: :disabled,
+                         autocomplete: :off,
                          label: { text: "Graduation year", size: "s" } do
                             render InvalidDataText::View.new(form_section: :graduation_year, degree_form: @degree_form)
                           end %>
