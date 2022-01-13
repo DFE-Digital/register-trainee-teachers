@@ -102,8 +102,20 @@ module Features
       @users_index_page ||= PageObjects::Users::Index.new
     end
 
+    def users_show_page
+      @users_show_page ||= PageObjects::Users::Show.new
+    end
+
     def new_user_page
       @new_user_page ||= PageObjects::Users::New.new
+    end
+
+    def show_user_page
+      @new_user_page ||= PageObjects::Users::Show.new
+    end
+
+    def add_provider_to_user_page
+      @add_provider_to_user_page ||= PageObjects::Users::AddProvider.new
     end
 
     def provider_show_page

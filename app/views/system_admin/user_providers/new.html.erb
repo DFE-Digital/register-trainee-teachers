@@ -1,0 +1,22 @@
+<div class="govuk-form-group">
+  <label class="govuk-label" for="sort">
+    <%= "Select provider to add to #{@user.name}" %>
+  </label>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= register_form_with model: [@user, Provider.new], url: user_providers_path(@user), local: true do |f| %>
+
+        <%= f.govuk_error_summary %>
+
+        <h1 class="govuk-heading-l">
+          Add a provider for <%= @user.name %>
+        </h1>
+
+        <p><%= f.govuk_select(:provider, @providers.map(&:name), label: { text: "Add provider", size: "s" }, width: 20, autocomplete: :enabled, class: 'provider-select') %></p>
+
+        <%= f.govuk_submit %>
+      <% end %>
+    </div>
+  </div>
+</div>
