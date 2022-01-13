@@ -441,6 +441,78 @@ module Trainees
         end
       end
 
+      %w[white scottish].each do |name|
+        context "when ethnicity is #{name}" do
+          let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::INACTIVE_MAPPING[name][:entity_id]) }
+
+          it "sets the ethnic_group to white" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:white])
+          end
+        end
+      end
+
+      %w[information_not_yet_sought information_refused].each do |name|
+        context "when ethnicity is #{name}" do
+          let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::INACTIVE_MAPPING[name][:entity_id]) }
+
+          it "sets the ethnic_group to 'Not provided'" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+          end
+        end
+      end
+
+      context "when ethnicity is 'not provided'" do
+        let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::MAPPING[Diversities::NOT_PROVIDED][:entity_id]) }
+
+        it "sets the ethnic_group to 'Not provided'" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+        end
+      end
+
+      context "when neither ethnicity nor disabilities are disclosed" do
+        let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::INACTIVE_MAPPING["information_refused"][:entity_id]) }
+
+        it "sets the diversity disclosure to 'diversity_not_disclosed'" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
+        end
+      end
+
+      context "when just disability is disclosed" do
+        let(:api_trainee) do
+          create(
+            :api_trainee,
+            _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::INACTIVE_MAPPING["information_refused"][:entity_id],
+            _dfe_disibilityid_value: "e798eae7-4ba5-e711-80da-005056ac45bb",
+          )
+        end
+
+        it "sets the diversity disclosure to 'diversity_disclosed'" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+        end
+      end
+
+      context "when just ethnicity is disclosed" do
+        let(:api_trainee) do
+          create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::MAPPING[Diversities::AFRICAN][:entity_id])
+        end
+
+        it "sets the diversity disclosure to 'diversity_disclosed'" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+        end
+      end
+
       context "when date of birth is blank" do
         let(:api_trainee) { create(:api_trainee, birthdate: "") }
 

@@ -57,6 +57,10 @@ module Dttp
       Date.parse(response["birthdate"])
     end
 
+    def ethnicity
+      response["_dfe_ethnicityid_value"]
+    end
+
     def trn
       response["dfe_trn"]
     end
