@@ -1,0 +1,7 @@
+<%- @providers.each do |provider| -%>
+  <%= govuk_link_to provider.name, organisation_path(id: provider.id, type: "Provider"), class: "provider-link" %>
+<%- end -%>
+
+<%- @lead_schools.each do |lead_school| -%>
+  <%= govuk_link_to lead_school.name, organisation_path(id: lead_school.id, type: "School"), class: "lead-school-link" %>
+<%- end -%>
