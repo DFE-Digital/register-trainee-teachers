@@ -350,6 +350,10 @@ module Features
       progress_with_prefix(I18n.t("completed"))
     end
 
+    def organisations_index_page
+      @organisations_index_page ||= PageObjects::Organisations::Index.new
+    end
+
   private
 
     def progress_with_prefix(status)
