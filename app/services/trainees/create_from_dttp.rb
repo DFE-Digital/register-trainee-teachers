@@ -89,6 +89,8 @@ module Trainees
         training_route: training_route,
         trn: trn,
         submitted_for_trn_at: dttp_trainee.earliest_placement_assignment.response["dfe_trnassessmentdate"],
+        outcome_date: dttp_trainee.latest_placement_assignment.response["dfe_datestandardsassessmentpassed"],
+        awarded_at: dttp_trainee.latest_placement_assignment.response["dfe_qtseytsawarddate"],
         dttp_id: dttp_trainee.dttp_id,
         placement_assignment_dttp_id: dttp_trainee.latest_placement_assignment.dttp_id,
         hesa_id: dttp_trainee.hesa_id,
@@ -98,6 +100,7 @@ module Trainees
        .merge(course_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
+       .merge(withdrawal_attributes)
     end
 
     def create_degrees!
@@ -464,6 +467,22 @@ module Trainees
       when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
       when DttpStatuses::AWAITING_QTS, DttpStatuses::EYTS_REVOKED, DttpStatuses::QTS_REVOKED, DttpStatuses::STANDARDS_NOT_MET, DttpStatuses::DID_NOT_START, DttpStatuses::REJECTED then nil
       end
+    end
+
+    def withdrawal_attributes
+      return {} unless trainee_status == "withdrawn"
+
+      {
+        withdraw_date: dttp_trainee.latest_placement_assignment.response["dfe_dateleft"],
+        withdraw_reason: withdraw_reason || WithdrawalReasons::FOR_ANOTHER_REASON,
+      }
+    end
+
+    def withdraw_reason
+      find_by_entity_id(
+        dttp_trainee.latest_placement_assignment.response["_dfe_reasonforleavingid_value"],
+        Dttp::CodeSets::ReasonsForLeavingCourse::MAPPING,
+      )
     end
 
     def enqueue_background_jobs!

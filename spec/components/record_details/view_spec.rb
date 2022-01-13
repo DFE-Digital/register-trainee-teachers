@@ -63,6 +63,14 @@ module RecordDetails
         expect(rendered_component).to have_text(date_for_summary_view(trainee.created_at))
       end
 
+      context "but the trainee has no trn or submitted_for_trn_at" do
+        let(:trainee) { create(:trainee, :withdrawn, trn: nil, submitted_for_trn_at: nil) }
+
+        it "renders the page" do
+          expect(rendered_component).to have_text("withdrawn")
+        end
+      end
+
       context "when trainee state is submitted_for_trn" do
         let(:trainee) { create(:trainee, :submitted_for_trn) }
 

@@ -47,6 +47,8 @@ module RecordDetails
     end
 
     def trn_row
+      return nil unless [trainee.trn, trainee.submitted_for_trn_at].any?(&:present?)
+
       if trainee.trn.present?
         {
           field_label: t(".trn"),
