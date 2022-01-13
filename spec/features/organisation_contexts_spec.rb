@@ -2,20 +2,27 @@
 
 require "rails_helper"
 
-feature "setting organisation context" do
+feature "setting a provider organisation context" do
   context "a user with multiple organistions" do
     background { given_i_am_authenticated(user: user) }
 
-    scenario "navigating to the index and setting a context" do # TODO: this should happen automatically for multi org users
-      given_i_visit_the_organisations_context_page
+    before do
+      given_i_visit_the_organisations_page
       then_i_should_see_a_list_of_my_providers
       then_i_should_see_a_list_of_my_lead_schools
+    end
+
+    scenario "setting a provider context" do
+      when_i_click_on_a_provider_link
+      then_i_should_be_redirected_to_the_start_page
     end
   end
 
 private
 
-  def given_i_visit_the_organisations_context_page
+  attr_reader :provider
+
+  def given_i_visit_the_organisations_page
     organisations_index_page.load
   end
 
@@ -25,6 +32,15 @@ private
 
   def then_i_should_see_a_list_of_my_lead_schools
     expect(organisations_index_page.lead_school_links.map(&:text)).to match_array(user.lead_schools.map(&:name))
+  end
+
+  def when_i_click_on_a_provider_link
+    @provider = multi_organisation_user.providers.first
+    organisations_index_page.provider_links.find { |link| link.text == provider.name }.click
+  end
+
+  def then_i_should_be_redirected_to_the_start_page
+    expect(start_page).to be_displayed
   end
 
   def user
