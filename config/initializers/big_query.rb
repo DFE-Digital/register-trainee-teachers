@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "google/cloud/bigquery"
+require_relative "../../app/services/feature_service"
 
 if FeatureService.enabled?("google.send_data_to_big_query")
   Google::Cloud::Bigquery.configure do |config|
