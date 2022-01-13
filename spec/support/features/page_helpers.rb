@@ -98,6 +98,10 @@ module Features
       @lead_school_show_page ||= PageObjects::LeadSchools::Show.new
     end
 
+    def users_index_page
+      @users_index_page ||= PageObjects::Users::Index.new
+    end
+
     def new_user_page
       @new_user_page ||= PageObjects::Users::New.new
     end

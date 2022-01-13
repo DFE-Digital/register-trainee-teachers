@@ -347,6 +347,7 @@ en:
       dttp_providers:
         index: Dttp Providers
       users:
+        index: Users
         new: Add a user
         edit: Edit user
         delete: Remove a user

@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class ProviderPolicy
-  attr_reader :user
+  attr_reader :user, :scope
 
-  def initialize(user, provider)
+  def initialize(user, scope)
     @user = user
-    @provider = provider
+    @scope = scope
+  end
+
+  def resolve
+    scope
   end
 
   def show?
