@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe TraineesController do
-  let(:user) { create(:user) }
+  let(:user) { build_current_user }
 
   before do
     allow(controller).to receive(:current_user).and_return(user)

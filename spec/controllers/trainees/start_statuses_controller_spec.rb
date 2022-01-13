@@ -6,7 +6,7 @@ describe Trainees::StartStatusesController, type: :controller do
   include ActiveJob::TestHelper
 
   describe "#update" do
-    let(:current_user) { create(:user) }
+    let(:current_user) { build_current_user }
     let(:page_context) { nil }
 
     let(:send_request) do

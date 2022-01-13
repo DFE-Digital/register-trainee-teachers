@@ -12,12 +12,15 @@ RSpec.describe Trainees::LeadSchoolsController, type: :controller do
       }
     end
 
+    before do
+      allow(controller).to receive(:current_user).and_return(user)
+    end
+
     context "when school direct salaried trainee" do
       let(:trainee) { create(:trainee, :school_direct_salaried) }
-      let(:user) { create(:user, providers: [trainee.provider]) }
+      let(:user) { build_current_user(user: create(:user, providers: [trainee.provider])) }
 
       before do
-        allow(controller).to receive(:current_user).and_return(user)
         post(:update, params: { trainee_id: trainee, schools_lead_school_form: params })
       end
 
@@ -28,10 +31,9 @@ RSpec.describe Trainees::LeadSchoolsController, type: :controller do
 
     context "when school direct tuition fee trainee" do
       let(:trainee) { create(:trainee, :school_direct_tuition_fee) }
-      let(:user) { create(:user, providers: [trainee.provider]) }
+      let(:user) { build_current_user(user: create(:user, providers: [trainee.provider])) }
 
       before do
-        allow(controller).to receive(:current_user).and_return(user)
         post(:update, params: { trainee_id: trainee, schools_lead_school_form: params })
       end
 
