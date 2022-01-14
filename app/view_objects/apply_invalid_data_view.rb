@@ -23,23 +23,13 @@ class ApplyInvalidDataView
   end
 
   def summary_content
-    I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: invalid_fields.flatten.size)
+    if invalid_data?
+      I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: invalid_fields.flatten.size)
+    end
   end
 
   def summary_items_content
-    @summary_items_content ||= safe_join(
-      invalid_fields.map.with_index(1) do |fieldset, index|
-        fieldset.map do |field|
-          tag.li(
-            link_to(
-              I18n.t("views.apply_invalid_data_view.unrecognised_field_text", invalid_field: get_field_name(field).humanize.upcase_first),
-              get_link_anchor(get_field_name(field), index),
-              class: "govuk-notification-banner__link",
-            ),
-          )
-        end
-      end,
-    )
+    @summary_items_content ||= safe_join(invalid_fields_list)
   end
 
   def invalid_data?
@@ -49,6 +39,28 @@ class ApplyInvalidDataView
 private
 
   attr_reader :apply_application, :invalid_fields, :degree, :on_form_page, :degrees_sort_order
+
+  def invalid_fields_list
+    items = invalid_fields.map.with_index(1) do |fieldset, index|
+      fieldset.map do |field|
+        tag.li(
+          link_to(
+            I18n.t("views.apply_invalid_data_view.unrecognised_field_text",
+                   invalid_field: get_field_name(field).humanize.upcase_first),
+            get_link_anchor(get_field_name(field), index),
+            class: "govuk-notification-banner__link",
+          ),
+        )
+      end
+    end
+
+    if degrees_sort_order.empty?
+      link_text = I18n.t("views.apply_invalid_data_view.invalid_answers_summary.degree_missing")
+      items << tag.li(link_to(link_text, "#degrees", class: "govuk-notification-banner__link"))
+    end
+
+    items
+  end
 
   def get_link_anchor(field, index)
     return get_form_page_link_anchor(field) if on_form_page

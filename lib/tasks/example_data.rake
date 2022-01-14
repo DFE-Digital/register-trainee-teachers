@@ -201,8 +201,16 @@ namespace :example_data do
 
             trainee = FactoryBot.create(:trainee, route, state, attrs)
 
-            # Add an extra nationality 20% of the time
-            trainee.nationalities << Nationality.all.sample if rand(10) < 2
+            trainee.nationalities << Nationality.all.sample
+
+            if rand(10) < 2 # Give 20% of trainees an extra nationality and a non-uk degree
+              trainee.nationalities << Nationality.all.sample
+              degree_type = :non_uk_degree_with_details
+            else
+              degree_type = :uk_degree_with_details
+            end
+
+            FactoryBot.create(:degree, degree_type, trainee: trainee)
           end
         end
       end
