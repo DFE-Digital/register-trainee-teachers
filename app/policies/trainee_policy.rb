@@ -14,17 +14,17 @@ class TraineePolicy
     end
   end
 
-  attr_reader :user, :trainee, :training_router_manager
+  attr_reader :user, :trainee, :training_route_manager
 
   delegate :requires_schools?,
            :requires_employing_school?,
            :requires_itt_start_date?,
-           to: :training_router_manager
+           to: :training_route_manager
 
   def initialize(user, trainee)
     @user = user
     @trainee = trainee
-    @training_router_manager = TrainingRouteManager.new(trainee)
+    @training_route_manager = TrainingRouteManager.new(trainee)
   end
 
   def show?
