@@ -635,5 +635,26 @@ module Trainees
         .and change(dttp_trainee, :state).to("non_importable_missing_initiative")
       end
     end
+
+    context "when the trainee is withdrawn" do
+      let(:date) { Time.zone.today }
+      let(:placement_assignment) do
+        create(:dttp_placement_assignment,
+               provider_dttp_id: provider.dttp_id,
+               response: create(:api_placement_assignment,
+                                _dfe_traineestatusid_value: "235af972-9e1b-e711-80c7-0050568902d3",
+                                dfe_dateleft: date,
+                                _dfe_reasonforleavingid_value: "436a46ad-11c2-e611-80be-00155d010316"))
+      end
+
+      let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+      it "saves the withdraw date and reason" do
+        create_trainee_from_dttp
+        trainee = Trainee.last
+        expect(trainee.withdraw_date).to eq date
+        expect(trainee.withdraw_reason).to eq WithdrawalReasons::FOR_ANOTHER_REASON
+      end
+    end
   end
 end
