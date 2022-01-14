@@ -12,7 +12,7 @@ namespace :bulk_import do
     csv.each_with_index do |row, i|
       BulkImport.import_row(provider, row)
     rescue StandardError => e
-      puts("error on row #{i + 1}: #{e.message}")
+      Rails.logger.error("error on row #{i + 1}: #{e.message}")
       Sentry.capture_exception(e)
     end
   end
