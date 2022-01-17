@@ -1,0 +1,57 @@
+<%= render PageTitle::View.new(text: @user.name) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: users_path,
+    ) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= @user.name %></h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      First name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @user.first_name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Last name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @user.last_name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Email
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @user.email %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Lead schools
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <% @user.lead_schools.each do |lead_school| %>
+        <%= govuk_link_to(lead_school.name, lead_school_path(lead_school), class: "govuk-!-display-block") %>
+      <% end %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Providers
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <% @user.providers.each do |provider| %>
+        <%= govuk_link_to provider.name, provider_path(provider), class: "govuk-!-display-block" %>
+      <% end %>
+    </dd>
+  </div>
+</dl>

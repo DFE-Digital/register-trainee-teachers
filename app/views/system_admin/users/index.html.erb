@@ -7,8 +7,7 @@
 <table class="govuk-table" summary="Users list">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">First name</th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Last name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Name</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Email</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Lead Schools</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Providers</th>
@@ -21,13 +20,7 @@
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= user.first_name %>
-          </span>
-        </td>
-
-        <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= user.last_name %>
+            <%= govuk_link_to(user.name, user_path(user), class: "govuk-!-display-block") %>
           </span>
         </td>
 

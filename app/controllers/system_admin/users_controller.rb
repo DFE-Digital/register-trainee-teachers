@@ -25,6 +25,11 @@ module SystemAdmin
       @provider = user.primary_provider
     end
 
+    def show
+      @user = user
+      @provider = user.primary_provider
+    end
+
     def update
       user
       @provider = user.primary_provider
