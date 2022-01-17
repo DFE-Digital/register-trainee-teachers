@@ -599,11 +599,11 @@ module Trainees
                provider_dttp_id: provider.dttp_id)
       }
 
-      it "marks the application as non importable" do
+      it "imports the application" do
         expect {
           create_trainee_from_dttp
-        }.to change(Trainee, :count).by(0)
-        .and change(dttp_trainee, :state).to("non_importable_multi_course")
+        }.to change(Trainee, :count).by(1)
+        .and change(dttp_trainee, :state).to("imported")
       end
     end
 
