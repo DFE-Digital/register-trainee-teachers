@@ -65,7 +65,18 @@ module Degrees
     end
 
     def non_uk_degree?
-      country && country != Dttp::CodeSets::Countries::UNITED_KINGDOM
+      country && united_kingdom_countries.exclude?(country)
+    end
+
+    def united_kingdom_countries
+      [
+        Dttp::CodeSets::Countries::UNITED_KINGDOM,
+        Dttp::CodeSets::Countries::ENGLAND,
+        Dttp::CodeSets::Countries::NORTHERN_IRELAND,
+        Dttp::CodeSets::Countries::SCOTLAND,
+        Dttp::CodeSets::Countries::UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED,
+        Dttp::CodeSets::Countries::WALES,
+      ]
     end
 
     def non_uk_degree
@@ -104,7 +115,8 @@ module Degrees
     end
 
     def country
-      @country ||= find_by_entity_id(dttp_degree.country, Dttp::CodeSets::Countries::MAPPING)
+      find_by_entity_id(dttp_degree.country, Dttp::CodeSets::Countries::MAPPING) ||
+        find_by_entity_id(dttp_degree.country, Dttp::CodeSets::Countries::INACTIVE_MAPPING)
     end
 
     def unmapped_country?
