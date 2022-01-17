@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_05_173543) do
+ActiveRecord::Schema.define(version: 2022_01_06_101133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -484,7 +484,6 @@ ActiveRecord::Schema.define(version: 2022_01_05_173543) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
-    t.bigint "provider_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "dfe_sign_in_uid"
@@ -497,7 +496,6 @@ ActiveRecord::Schema.define(version: 2022_01_05_173543) do
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["dttp_id"], name: "index_unique_active_users", unique: true, where: "(discarded_at IS NULL)"
     t.index ["email"], name: "index_users_on_email"
-    t.index ["provider_id"], name: "index_users_on_provider_id"
   end
 
   create_table "validation_errors", force: :cascade do |t|
@@ -527,5 +525,4 @@ ActiveRecord::Schema.define(version: 2022_01_05_173543) do
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"
-  add_foreign_key "users", "providers"
 end

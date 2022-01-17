@@ -14,14 +14,20 @@ module UserCard
   private
 
     def mock_user
-      User.new(
-        id: 1,
+      provider = FactoryBot.create(
+        :provider,
+        name: "Provider A",
+        dttp_id: SecureRandom.uuid,
+      )
+
+      FactoryBot.create(
+        :user,
         first_name: "Luke",
         last_name: "Skywalker",
         email: "luke@email.com",
         created_at: Time.zone.now,
-        provider_id: Provider.new(name: "Provider A", dttp_id: SecureRandom.uuid),
         dttp_id: SecureRandom.uuid,
+        providers: [provider],
       )
     end
 
