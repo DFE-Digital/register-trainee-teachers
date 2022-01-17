@@ -4,19 +4,13 @@ module Trainees
   module ApplyApplications
     class TraineeDataController < BaseController
       before_action :require_review_acknowledgement, only: :update
+      before_action :load_invalid_data_view
 
       def edit
         page_tracker.save_as_origin!
-        @trainee = trainee
-        @trainee_data_form = trainee_data_form
-        @invalid_data_view = invalid_data_view
       end
 
       def update
-        @trainee = trainee
-        @trainee_data_form = trainee_data_form
-        @invalid_data_view = ApplyInvalidDataView.new(trainee.apply_application)
-
         if @trainee_data_form.save
           redirect_to(trainee_path(trainee))
         else
@@ -26,12 +20,12 @@ module Trainees
 
     private
 
-      def trainee_data_form
-        @trainee_data_form ||= ::ApplyApplications::TraineeDataForm.new(trainee)
+      def load_invalid_data_view
+        @invalid_data_view = ::ApplyApplications::InvalidTraineeDataView.new(trainee, trainee_data_form)
       end
 
-      def invalid_data_view
-        @invalid_data_view ||= ApplyInvalidDataView.new(trainee.apply_application, degrees_sort_order: trainee.degrees.pluck(:slug))
+      def trainee_data_form
+        @trainee_data_form ||= ::ApplyApplications::TraineeDataForm.new(trainee, include_degree_id: true)
       end
 
       def require_review_acknowledgement

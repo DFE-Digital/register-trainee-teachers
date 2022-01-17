@@ -21,10 +21,11 @@ module ApplyApplications
 
     validate :submission_ready
 
-    attr_accessor :mark_as_reviewed, :trainee
+    attr_accessor :mark_as_reviewed, :trainee, :include_degree_id
 
-    def initialize(trainee)
+    def initialize(trainee, include_degree_id: false)
       @trainee = trainee
+      @include_degree_id = include_degree_id
     end
 
     def save
@@ -52,6 +53,16 @@ module ApplyApplications
       form_validators.keys.map do |section|
         validator_obj(section).fields
       end.inject(:merge)
+    end
+
+    def missing_fields
+      form_validators.keys.map do |section|
+        if section == :degrees
+          validator_obj(section).missing_fields(include_degree_id: include_degree_id)
+        else
+          validator_obj(section).missing_fields
+        end
+      end
     end
 
     def display_type(section_key)

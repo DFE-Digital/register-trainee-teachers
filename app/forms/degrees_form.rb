@@ -70,12 +70,16 @@ class DegreesForm
     degrees.each(&:save!)
   end
 
-  def missing_fields
+  def missing_fields(include_degree_id: false)
     return [] if valid?
 
     degree_forms.map do |degree_form|
       degree_form.valid?
-      degree_form.errors.attribute_names
+      if include_degree_id
+        { degree_form.slug => degree_form.errors.attribute_names }
+      else
+        degree_form.errors.attribute_names
+      end
     end
   end
 

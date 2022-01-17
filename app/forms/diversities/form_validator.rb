@@ -35,6 +35,8 @@ module Diversities
     end
 
     def missing_fields
+      return [] if valid?
+
       @missing_fields.flatten
     end
 
