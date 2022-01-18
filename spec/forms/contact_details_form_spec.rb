@@ -82,6 +82,39 @@ describe ContactDetailsForm, type: :model do
         expect(subject.errors[:address_line_two]).to be_empty
       end
     end
+
+    context "HESA trainee record" do
+      let(:trainee) { build(:trainee, locale_code: nil, hesa_id: "XXX") }
+      let(:params) do
+        {
+          "locale_code" => "uk",
+          "address_line_one" => "test",
+          "address_line_two" => "test",
+          "international_address" => "test",
+          "town_city" => "test",
+          "postcode" => "E1 5DJ",
+        }
+      end
+
+      before do
+        subject.valid?
+      end
+
+      it "does not show address validation errors" do
+        expect(subject.errors[:international_address]).to be_empty
+        expect(subject.errors[:address_line_two]).to be_empty
+        ContactDetailsForm::MANDATORY_UK_ADDRESS_FIELDS.each do |field|
+          expect(subject.errors[field]).to be_empty
+        end
+      end
+
+      it "nullifies all the address fields" do
+        subject.send(:nullify_unused_address_fields!)
+        params.each do |k, _v|
+          expect(subject.fields[k.to_sym]).to be_nil
+        end
+      end
+    end
   end
 
   describe "#stash" do
