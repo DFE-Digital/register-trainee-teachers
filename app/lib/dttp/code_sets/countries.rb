@@ -4,6 +4,11 @@ module Dttp
   module CodeSets
     module Countries
       UNITED_KINGDOM = "United Kingdom"
+      ENGLAND = "England"
+      NORTHERN_IRELAND = "Northern Ireland"
+      SCOTLAND = "Scotland"
+      UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED = "United Kingdom, not otherwise specified"
+      WALES = "Wales"
 
       # country_code is used to regenerate public/location-autocomplete-graph.json - see rake task
       MAPPING = {
@@ -202,6 +207,30 @@ module Dttp
         "Yemen" => { entity_id: "7d7c4b74-ea28-e711-80c8-0050568902d3", country_code: "YE" },
         "Zambia" => { entity_id: "837c4b74-ea28-e711-80c8-0050568902d3", country_code: "ZM" },
         "Zimbabwe" => { entity_id: "857c4b74-ea28-e711-80c8-0050568902d3", country_code: "ZW" },
+      }.freeze
+
+      INACTIVE_MAPPING = {
+        "Not known" => { entity_id: "877c4b74-ea28-e711-80c8-0050568902d3" },
+        ENGLAND => { entity_id: "597c4b74-ea28-e711-80c8-0050568902d3" },
+        NORTHERN_IRELAND => { entity_id: "5b7c4b74-ea28-e711-80c8-0050568902d3" },
+        SCOTLAND => { entity_id: "5d7c4b74-ea28-e711-80c8-0050568902d3" },
+        UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED => { entity_id: "617c4b74-ea28-e711-80c8-0050568902d3" },
+        WALES => { entity_id: "5f7c4b74-ea28-e711-80c8-0050568902d3" },
+        "French Guiana" => { entity_id: "097b4b74-ea28-e711-80c8-0050568902d3" },
+        "Guadeloupe" => { entity_id: "177b4b74-ea28-e711-80c8-0050568902d3" },
+        "Hong Kong" => { entity_id: "277b4b74-ea28-e711-80c8-0050568902d3" },
+        "Isle of Man" => { entity_id: "397b4b74-ea28-e711-80c8-0050568902d3" },
+        "Jersey" => { entity_id: "477b4b74-ea28-e711-80c8-0050568902d3" },
+        "Martinique" => { entity_id: "957b4b74-ea28-e711-80c8-0050568902d3" },
+        "Occupied Palestinian Territories" => { entity_id: "d77b4b74-ea28-e711-80c8-0050568902d3" },
+        "Réunion" => { entity_id: "957b4b74-ea28-e711-80c8-0050568902d3" },
+        "Taiwan" => { entity_id: "337c4b74-ea28-e711-80c8-0050568902d3" },
+        "Africa not otherwise specified" => { entity_id: "6d7c4b74-ea28-e711-80c8-0050568902d3" },
+        "Asia (Except Middle East) not otherwise specified" => { entity_id: "717c4b74-ea28-e711-80c8-0050568902d3" },
+        "Caribbean not otherwise specified" => { entity_id: "797c4b74-ea28-e711-80c8-0050568902d3" },
+        "Europe not otherwise specified" => { entity_id: "6b7c4b74-ea28-e711-80c8-0050568902d3" },
+        "European Union not otherwise specified" => { entity_id: "f37a4b74-ea28-e711-80c8-0050568902d3" },
+        "North America not otherwise specified" => { entity_id: "737c4b74-ea28-e711-80c8-0050568902d3" },
       }.freeze
     end
   end

@@ -79,6 +79,21 @@ module Degrees
 
         it { is_expected.to include(uk_degree_attributes) }
       end
+
+      context "with a country that is part of the UK" do
+        let(:country) { "Wales" }
+        let(:api_degree_qualification) do
+          create(
+            :api_degree_qualification,
+            _dfe_degreecountryid_value: Dttp::CodeSets::Countries::INACTIVE_MAPPING[country][:entity_id],
+            _dfe_awardinginstitutionid_value: Dttp::CodeSets::Institutions::MAPPING[institution][:entity_id],
+            _dfe_degreetypeid_value: Dttp::CodeSets::DegreeTypes::MAPPING[degree_type][:entity_id],
+            _dfe_classofdegreeid_value: Dttp::CodeSets::Grades::MAPPING[grade][:entity_id],
+          )
+        end
+
+        it { is_expected.to include(uk_degree_attributes) }
+      end
     end
 
     context "with a non-uk degree" do
@@ -99,6 +114,18 @@ module Degrees
       end
 
       it { is_expected.to include(non_uk_degree_attributes) }
+
+      context "with an country not included in our dropdown" do
+        let(:country) { "Guadeloupe" }
+        let(:api_degree_qualification) do
+          create(
+            :api_degree_qualification,
+            _dfe_degreecountryid_value: Dttp::CodeSets::Countries::INACTIVE_MAPPING[country][:entity_id],
+          )
+        end
+
+        it { is_expected.to include(non_uk_degree_attributes) }
+      end
     end
   end
 end
