@@ -656,5 +656,41 @@ module Trainees
         expect(trainee.withdraw_reason).to eq WithdrawalReasons::FOR_ANOTHER_REASON
       end
     end
+
+    context "when the trainee is 'Standards not met'" do
+      let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+
+      context "and they have a 'dateleft'" do
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  dfe_dateleft: Time.zone.today,
+                                  _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3"))
+        end
+
+        it "creates the trainee as withdrawn" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.state).to eq("withdrawn")
+        end
+      end
+
+      context "and they don't have a dateleft" do
+        let(:date) { Time.zone.today }
+        let(:placement_assignment) do
+          create(:dttp_placement_assignment,
+                 provider_dttp_id: provider.dttp_id,
+                 response: create(:api_placement_assignment,
+                                  _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3"))
+        end
+
+        it "creates the trainee as trn_received" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.state).to eq("trn_received")
+        end
+      end
+    end
   end
 end
