@@ -8,11 +8,15 @@ module Trainees
 
     let(:api_trainee) { create(:api_trainee) }
     let(:provider) { create(:provider) }
-    let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, api_trainee_hash: api_trainee) }
+    let(:api_placement_assignment) { create(:api_placement_assignment) }
+    let(:placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
+    let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], api_trainee_hash: api_trainee, provider: provider) }
 
     subject(:create_trainee_from_dttp) { described_class.call(dttp_trainee: dttp_trainee) }
 
     context "when provider does not exist" do
+      let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], api_trainee_hash: api_trainee, provider_dttp_id: nil) }
+
       it "does not create a trainee" do
         expect {
           create_trainee_from_dttp
@@ -52,8 +56,6 @@ module Trainees
     end
 
     context "when a provider exists" do
-      let(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, :with_provider, api_trainee_hash: api_trainee) }
-
       it "creates a trainee" do
         expect {
           create_trainee_from_dttp
@@ -120,13 +122,8 @@ module Trainees
       end
 
       context "when the trainee is on future_teaching_scholars" do
-        let(:placement_assignment) do
-          create(:dttp_placement_assignment,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  :with_future_teaching_scholars_initiative))
-        end
-
+        let(:api_placement_assignment) { create(:api_placement_assignment, :with_future_teaching_scholars_initiative) }
+        let(:placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
         let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
 
         it "creates a trainee with school_direct_salaried route" do
@@ -138,25 +135,19 @@ module Trainees
       end
 
       context "when the trainee is on an early_years route" do
-        let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_early_years_route) }
+        context "with no funding" do
+          let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_early_years_route) }
 
-        it "sets the course subject one to early years and age range zero to five" do
-          create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
-          expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
+          it "sets the course subject one to early years and age range zero to five" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
+            expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
+          end
         end
 
         context "when the trainee has a grant" do
-          let(:placement_assignment) do
-            create(:dttp_placement_assignment,
-                   provider_dttp_id: provider.dttp_id,
-                   response: create(:api_placement_assignment,
-                                    :with_early_years_salaried_bursary))
-          end
-
-          let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
-
+          let(:api_placement_assignment) { create(:api_placement_assignment, :with_early_years_salaried_bursary) }
           let(:funding_method) { create(:funding_method, training_route: :early_years_salaried, funding_type: FUNDING_TYPE_ENUMS[:grant]) }
           let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::EARLY_YEARS_TEACHING) }
 
@@ -166,74 +157,40 @@ module Trainees
 
           it "sets funding" do
             create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.applying_for_grant).to eq(true)
+            expect(Trainee.last.applying_for_grant).to eq(true)
           end
         end
       end
 
       context "when the trainee is not on any initiative" do
-        let(:placement_assignment) do
-          create(:dttp_placement_assignment,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  _dfe_initiative1id_value: nil))
-        end
-
-        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_initiative1id_value: nil) }
 
         it "creates a trainee with no training_initiative" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+          expect(Trainee.last.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
         end
       end
 
       context "when the trainee is provider_led_postgrad" do
-        let(:placement_assignment) do
-          create(:dttp_placement_assignment,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  :with_provider_led_undergrad,
-                                  dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG))
-        end
-
-        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+        let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_undergrad, dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG) }
 
         it "creates a trainee with provider_led_postgrad route" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+          expect(Trainee.last.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
         end
       end
 
       context "when the trainee is provider_led_undergrad" do
-        let(:placement_assignment) do
-          create(:dttp_placement_assignment,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  :with_provider_led_undergrad,
-                                  dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG))
-        end
-
-        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+        let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_undergrad, dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG) }
 
         it "creates a trainee with provider_led_undergrad route" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
+          expect(Trainee.last.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
         end
       end
 
       context "when the trainee is in a submitted_for_trn state" do
-        let(:placement_assignment) do
-          create(:dttp_placement_assignment,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  _dfe_traineestatusid_value: "275af972-9e1b-e711-80c7-0050568902d3"))
-        end
-
-        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: "275af972-9e1b-e711-80c7-0050568902d3") }
 
         before do
           allow(Dttp::RetrieveTrnJob).to receive(:perform_with_default_delay)
@@ -246,14 +203,7 @@ module Trainees
       end
 
       context "when the trainee is in a recommended_for_award state" do
-        let(:placement_assignment) do
-          create(:dttp_placement_assignment,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  _dfe_traineestatusid_value: "1f5af972-9e1b-e711-80c7-0050568902d3"))
-        end
-
-        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: "1f5af972-9e1b-e711-80c7-0050568902d3") }
 
         before do
           allow(Dttp::RetrieveAwardJob).to receive(:perform_with_default_delay)
@@ -270,20 +220,12 @@ module Trainees
 
         it "does not save the TRN" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.trn).to be nil
+          expect(Trainee.last.trn).to be nil
         end
       end
 
       context "with primary subjects" do
-        let(:placement_assignment) do
-          create(:dttp_placement_assignment,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  _dfe_ittsubject1id_value: "8ca12838-b3cf-e911-a860-000d3ab1da01"))
-        end
-
-        let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_ittsubject1id_value: "8ca12838-b3cf-e911-a860-000d3ab1da01") }
 
         it "sets the course education phase" do
           create_trainee_from_dttp
@@ -294,22 +236,9 @@ module Trainees
       end
 
       context "with multiple placement_assignments" do
-        let(:placement_assignment_one) do
-          create(:dttp_placement_assignment,
-                 :with_academic_year_twenty_twenty_one,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
-        end
-
-        let(:placement_assignment_two) do
-          create(:dttp_placement_assignment,
-                 :with_academic_year_twenty_one_twenty_two,
-                 provider_dttp_id: provider.dttp_id,
-                 response: create(:api_placement_assignment,
-                                  _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID))
-        end
-
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID) }
+        let(:placement_assignment_one) { create(:dttp_placement_assignment, :with_academic_year_twenty_twenty_one, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
+        let(:placement_assignment_two) { create(:dttp_placement_assignment, :with_academic_year_twenty_one_twenty_two, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
         let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [placement_assignment_one, placement_assignment_two]) }
 
         before { dttp_trainee.reload }
@@ -323,22 +252,13 @@ module Trainees
 
         it "sets the trainee submitted_for_trn_at date from the first placement assignment" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.submitted_for_trn_at).to eq(placement_assignment_one.response["dfe_trnassessmentdate"].to_date)
+          expect(Trainee.last.submitted_for_trn_at).to eq(placement_assignment_one.response["dfe_trnassessmentdate"].to_date)
         end
       end
 
       context "with funding information available" do
-        let(:api_placement_assignment) do
-          create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_provider_led_bursary))
-        end
-        let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
-
         context "when bursary is NO_BURSARY_AWARDED" do
-          let(:api_placement_assignment) do
-            create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_no_bursary_awarded))
-          end
-
+          let(:api_placement_assignment) { create(:api_placement_assignment, :with_no_bursary_awarded) }
           let(:funding_method) { create(:funding_method, training_route: :pg_teaching_apprenticeship, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
           let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
 
@@ -348,15 +268,12 @@ module Trainees
 
           it "sets bursary to false" do
             create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.applying_for_bursary).to eq(false)
+            expect(Trainee.last.applying_for_bursary).to eq(false)
           end
         end
 
         context "when scholarship" do
-          let(:api_placement_assignment) do
-            create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_scholarship))
-          end
+          let(:api_placement_assignment) { create(:api_placement_assignment, :with_scholarship) }
           let(:funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
           let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
 
@@ -366,12 +283,12 @@ module Trainees
 
           it "sets scholarship" do
             create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.applying_for_scholarship).to eq(true)
+            expect(Trainee.last.applying_for_scholarship).to eq(true)
           end
         end
 
         context "when bursary" do
+          let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_bursary) }
           let(:funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:bursary]) }
           let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
 
@@ -381,12 +298,12 @@ module Trainees
 
           it "sets funding" do
             create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.applying_for_bursary).to eq(true)
+            expect(Trainee.last.applying_for_bursary).to eq(true)
           end
         end
 
         context "when multiple funding methods are available" do
+          let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_bursary) }
           let(:bursary_funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:bursary]) }
           let(:scholarship_funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
           let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
@@ -406,6 +323,8 @@ module Trainees
         end
 
         context "when funding method does not exist" do
+          let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_bursary) }
+
           it "marks the application as non importable" do
             expect {
               create_trainee_from_dttp
@@ -416,10 +335,9 @@ module Trainees
       end
 
       context "with tiered bursary funding" do
-        let(:api_placement_assignment) do
-          create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, :with_tiered_bursary))
-        end
-        let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+        let(:api_placement_assignment) { create(:api_placement_assignment, :with_tiered_bursary) }
+        let(:placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
+        let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [placement_assignment]) }
 
         it "sets bursary tier" do
           create_trainee_from_dttp
@@ -436,8 +354,7 @@ module Trainees
 
         it "adds the trainee's nationality" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.nationalities.map(&:name)).to match_array(["british"])
+          expect(Trainee.last.nationalities.map(&:name)).to match_array(["british"])
         end
       end
 
@@ -447,8 +364,7 @@ module Trainees
 
           it "sets the ethnic_group to white" do
             create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:white])
+            expect(Trainee.last.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:white])
           end
         end
       end
@@ -459,8 +375,7 @@ module Trainees
 
           it "sets the ethnic_group to 'Not provided'" do
             create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+            expect(Trainee.last.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
           end
         end
       end
@@ -470,8 +385,7 @@ module Trainees
 
         it "sets the ethnic_group to 'Not provided'" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+          expect(Trainee.last.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
         end
       end
 
@@ -480,8 +394,7 @@ module Trainees
 
         it "sets the diversity disclosure to 'diversity_not_disclosed'" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
+          expect(Trainee.last.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
         end
       end
 
@@ -496,8 +409,7 @@ module Trainees
 
         it "sets the diversity disclosure to 'diversity_disclosed'" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(Trainee.last.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
         end
       end
 
@@ -508,8 +420,7 @@ module Trainees
 
         it "sets the diversity disclosure to 'diversity_disclosed'" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(Trainee.last.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
         end
       end
 
@@ -518,8 +429,7 @@ module Trainees
 
         it "does not set date_of_birth" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.date_of_birth).to be_nil
+          expect(Trainee.last.date_of_birth).to be_nil
         end
       end
 
@@ -528,8 +438,7 @@ module Trainees
 
         it "maps gender to not provided" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.gender).to eq("gender_not_provided")
+          expect(Trainee.last.gender).to eq("gender_not_provided")
         end
       end
 
@@ -538,8 +447,7 @@ module Trainees
 
         it "sets the trainee id to blank" do
           create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.trainee_id).to be_nil
+          expect(Trainee.last.trainee_id).to be_nil
         end
       end
 
@@ -556,8 +464,7 @@ module Trainees
     end
 
     context "when training route is missing" do
-      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_routeid_value: nil)) }
-      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_routeid_value: nil) }
 
       it "marks the application as non importable" do
         expect {
@@ -568,8 +475,7 @@ module Trainees
     end
 
     context "when training state is not mapped" do
-      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_traineestatusid_value: nil)) }
-      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: nil) }
 
       it "marks the application as non importable" do
         expect {
@@ -608,8 +514,7 @@ module Trainees
     end
 
     context "when training_initiative is EBACC" do
-      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_initiative1id_value: Dttp::CodeSets::TrainingInitiatives::EBACC)) }
-      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_initiative1id_value: Dttp::CodeSets::TrainingInitiatives::EBACC) }
 
       before do
         create_trainee_from_dttp
@@ -625,8 +530,7 @@ module Trainees
     end
 
     context "when training_initiative is not mapped" do
-      let(:api_placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: create(:api_placement_assignment, _dfe_initiative1id_value: SecureRandom.uuid)) }
-      let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [api_placement_assignment]) }
+      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_initiative1id_value: SecureRandom.uuid) }
 
       it "marks the application as non importable" do
         expect {
@@ -638,22 +542,35 @@ module Trainees
 
     context "when the trainee is withdrawn" do
       let(:date) { Time.zone.today }
-      let(:placement_assignment) do
-        create(:dttp_placement_assignment,
-               provider_dttp_id: provider.dttp_id,
-               response: create(:api_placement_assignment,
-                                _dfe_traineestatusid_value: "235af972-9e1b-e711-80c7-0050568902d3",
-                                dfe_dateleft: date,
-                                _dfe_reasonforleavingid_value: "436a46ad-11c2-e611-80be-00155d010316"))
-      end
-
-      let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], provider_dttp_id: provider.dttp_id) }
+      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: "235af972-9e1b-e711-80c7-0050568902d3", dfe_dateleft: date, _dfe_reasonforleavingid_value: "436a46ad-11c2-e611-80be-00155d010316") }
 
       it "saves the withdraw date and reason" do
         create_trainee_from_dttp
         trainee = Trainee.last
         expect(trainee.withdraw_date).to eq date
         expect(trainee.withdraw_reason).to eq WithdrawalReasons::FOR_ANOTHER_REASON
+      end
+    end
+
+    context "when the trainee is 'Standards not met'" do
+      before do
+        create_trainee_from_dttp
+      end
+
+      context "and they have a 'dateleft'" do
+        let(:api_placement_assignment) { create(:api_placement_assignment, dfe_dateleft: Time.zone.today, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
+
+        it "creates the trainee as withdrawn" do
+          expect(Trainee.last.state).to eq("withdrawn")
+        end
+      end
+
+      context "and they don't have a dateleft" do
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
+
+        it "creates the trainee as trn_received" do
+          expect(Trainee.last.state).to eq("trn_received")
+        end
       end
     end
   end

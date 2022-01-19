@@ -456,7 +456,9 @@ module Trainees
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
       when DttpStatuses::AWARDED_EYTS, DttpStatuses::AWARDED_QTS then "awarded"
       when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
-      when DttpStatuses::AWAITING_QTS, DttpStatuses::EYTS_REVOKED, DttpStatuses::QTS_REVOKED, DttpStatuses::STANDARDS_NOT_MET, DttpStatuses::DID_NOT_START, DttpStatuses::REJECTED then nil
+      when DttpStatuses::STANDARDS_NOT_MET
+        withdraw_date.present? ? "withdrawn" : "trn_received"
+      when DttpStatuses::AWAITING_QTS, DttpStatuses::EYTS_REVOKED, DttpStatuses::QTS_REVOKED, DttpStatuses::DID_NOT_START, DttpStatuses::REJECTED then nil
       end
     end
 
@@ -464,9 +466,13 @@ module Trainees
       return {} unless trainee_status == "withdrawn"
 
       {
-        withdraw_date: dttp_trainee.latest_placement_assignment.response["dfe_dateleft"],
+        withdraw_date: withdraw_date,
         withdraw_reason: withdraw_reason || WithdrawalReasons::FOR_ANOTHER_REASON,
       }
+    end
+
+    def withdraw_date
+      dttp_trainee.latest_placement_assignment.response["dfe_dateleft"]
     end
 
     def withdraw_reason
