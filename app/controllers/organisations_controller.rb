@@ -7,7 +7,7 @@ class OrganisationsController < ApplicationController
   end
 
   def show
-    # session[:current_organisation] = { type: params[:type], id: params[:id] }
+    session[:current_organisation] = { type: params[:type], id: params[:id] }
 
     # redirect_to session.delete(:requested_path) || root_path
     redirect_to(root_path)
