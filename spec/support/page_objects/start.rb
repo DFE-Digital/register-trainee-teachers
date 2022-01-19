@@ -4,6 +4,7 @@ module PageObjects
   class Start < PageObjects::Base
     set_url "/"
 
+    element :organisation_name, ".govuk-caption-l"
     element :page_heading, ".govuk-heading-xl"
 
     element :sign_in, ".app-start-page-banner__button"
