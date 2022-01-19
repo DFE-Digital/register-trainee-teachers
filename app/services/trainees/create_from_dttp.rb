@@ -148,18 +148,23 @@ module Trainees
     end
 
     def nationalities
-      # TODO: We have a few different names for british and some other citizenships
-      # ["american", "british", "cook islander", "cymraes", "cymro", "french", "israeli", "martiniquais", "mosotho", "new zealander", "puerto rican", "st helenian", "turkish"]
-      Nationality.where(name: nationality_names)
+      Nationality.where(name: nationality_name)
     end
 
-    def nationality_names
-      [
-        find_by_entity_id(
-          dttp_trainee.response["_dfe_nationality_value"],
-          Dttp::CodeSets::Nationalities::MAPPING,
-        ),
-      ]
+    def nationality_name
+      return Dttp::CodeSets::Nationalities::BRITISH if Dttp::CodeSets::Nationalities::UK_NATIONALITIES.include?(dttp_nationality_name)
+
+      nationality_name_from_ambiguous_mapping.presence || dttp_nationality_name
+    end
+
+    def nationality_name_from_ambiguous_mapping
+      Dttp::CodeSets::Nationalities::AMBIGUOUS_NATIONALITY_MAPPINGS.select { |_key, values| values.include?(dttp_nationality_name) }.keys.first
+    end
+
+    def dttp_nationality_name
+      @dttp_nationality_name ||=
+        find_by_entity_id(dttp_trainee.nationality, Dttp::CodeSets::Nationalities::MAPPING) ||
+          find_by_entity_id(dttp_trainee.nationality, Dttp::CodeSets::Nationalities::INACTIVE_MAPPING)
     end
 
     def disability_attributes

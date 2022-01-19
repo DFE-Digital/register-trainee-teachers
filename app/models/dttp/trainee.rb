@@ -67,6 +67,10 @@ module Dttp
       response["_dfe_ethnicityid_value"]
     end
 
+    def nationality
+      response["_dfe_nationality_value"]
+    end
+
     def trn
       response["dfe_trn"]
     end

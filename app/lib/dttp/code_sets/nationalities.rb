@@ -6,12 +6,48 @@ module Dttp
       BRITISH = "british"
       IRISH = "irish"
       OTHER = "other"
+      CYMRAES = "cymraes"
+      CYMRO = "cymro"
+      PRYDEINIG = "prydeinig"
+      ENGLAND = "england"
+      ISLE_OF_MAN = "Isle of Man"
+      JERSEY = "Jersey"
+      GUERNSEY = "Guernsey"
+      BRITISH_INDIAN_OCEAN_TERRITORY = "British Indian Ocean Territory (BIOT)"
+      FALKLAND_ISLANDS = "Falkland Islands [Falkland Islands (Malvinas)]"
+
+      NOT_KNOWN = "Not known"
+
+      AMERICAN = "american"
+      FRENCH = "french"
+      NEW_ZEALANDER = "new zealander"
+      ST_HELENIAN = "st helenian"
+
+      UK_NATIONALITIES = [
+        BRITISH,
+        CYMRAES,
+        CYMRO,
+        PRYDEINIG,
+        ENGLAND,
+        ISLE_OF_MAN,
+        JERSEY,
+        GUERNSEY,
+        BRITISH_INDIAN_OCEAN_TERRITORY,
+        FALKLAND_ISLANDS,
+      ].freeze
+
+      AMBIGUOUS_NATIONALITY_MAPPINGS = {
+        AMERICAN => [AMERICAN, "puerto rican"],
+        NEW_ZEALANDER => ["cook islander", NEW_ZEALANDER, "niuean"],
+        FRENCH => [FRENCH, "martiniquais", "wallisian"],
+        ST_HELENIAN => [ST_HELENIAN, "tristanian"],
+      }.freeze
 
       MAPPING = {
         "afghan" => { entity_id: "537d640e-5c62-e711-80d1-005056ac45bb" },
         "albanian" => { entity_id: "597d640e-5c62-e711-80d1-005056ac45bb" },
         "algerian" => { entity_id: "b37d640e-5c62-e711-80d1-005056ac45bb" },
-        "american" => { entity_id: "eb7e640e-5c62-e711-80d1-005056ac45bb" },
+        AMERICAN => { entity_id: "eb7e640e-5c62-e711-80d1-005056ac45bb" },
         "andorran" => { entity_id: "4f7d640e-5c62-e711-80d1-005056ac45bb" },
         "angolan" => { entity_id: "5d7d640e-5c62-e711-80d1-005056ac45bb" },
         "anguillan" => { entity_id: "577d640e-5c62-e711-80d1-005056ac45bb" },
@@ -64,8 +100,8 @@ module Dttp
         "costa rican" => { entity_id: "a17d640e-5c62-e711-80d1-005056ac45bb" },
         "croatian" => { entity_id: "f57d640e-5c62-e711-80d1-005056ac45bb" },
         "cuban" => { entity_id: "a37d640e-5c62-e711-80d1-005056ac45bb" },
-        "cymraes" => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
-        "cymro" => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
+        CYMRAES => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
+        CYMRO => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
         "cypriot" => { entity_id: "ff7e640e-5c62-e711-80d1-005056ac45bb" },
         "czech" => { entity_id: "a77d640e-5c62-e711-80d1-005056ac45bb" },
         "danish" => { entity_id: "ad7d640e-5c62-e711-80d1-005056ac45bb" },
@@ -84,7 +120,7 @@ module Dttp
         "fijian" => { entity_id: "c57d640e-5c62-e711-80d1-005056ac45bb" },
         "filipino" => { entity_id: "877e640e-5c62-e711-80d1-005056ac45bb" },
         "finnish" => { entity_id: "c37d640e-5c62-e711-80d1-005056ac45bb" },
-        "french" => { entity_id: "cd7d640e-5c62-e711-80d1-005056ac45bb" },
+        FRENCH => { entity_id: "cd7d640e-5c62-e711-80d1-005056ac45bb" },
         "gabonese" => { entity_id: "cf7d640e-5c62-e711-80d1-005056ac45bb" },
         "gambian" => { entity_id: "63c297b7-5c62-e711-80d1-005056ac45bb" },
         "georgian" => { entity_id: "d57d640e-5c62-e711-80d1-005056ac45bb" },
@@ -153,7 +189,7 @@ module Dttp
         "namibian" => { entity_id: "6d7e640e-5c62-e711-80d1-005056ac45bb" },
         "nauruan" => { entity_id: "7b7e640e-5c62-e711-80d1-005056ac45bb" },
         "nepalese" => { entity_id: "797e640e-5c62-e711-80d1-005056ac45bb" },
-        "new zealander" => { entity_id: "7d7e640e-5c62-e711-80d1-005056ac45bb" },
+        NEW_ZEALANDER => { entity_id: "7d7e640e-5c62-e711-80d1-005056ac45bb" },
         "nicaraguan" => { entity_id: "737e640e-5c62-e711-80d1-005056ac45bb" },
         "nigerian" => { entity_id: "717e640e-5c62-e711-80d1-005056ac45bb" },
         "nigerien" => { entity_id: "6f7e640e-5c62-e711-80d1-005056ac45bb" },
@@ -171,7 +207,7 @@ module Dttp
         "pitcairn islander" => { entity_id: "71c297b7-5c62-e711-80d1-005056ac45bb" },
         "polish" => { entity_id: "8b7e640e-5c62-e711-80d1-005056ac45bb" },
         "portuguese" => { entity_id: "75c297b7-5c62-e711-80d1-005056ac45bb" },
-        "prydeinig" => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
+        PRYDEINIG => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
         "puerto rican" => { entity_id: "eb7e640e-5c62-e711-80d1-005056ac45bb" },
         "qatari" => { entity_id: "977e640e-5c62-e711-80d1-005056ac45bb" },
         "romanian" => { entity_id: "9d7e640e-5c62-e711-80d1-005056ac45bb" },
@@ -195,7 +231,7 @@ module Dttp
         "south sudanese" => { entity_id: "c17e640e-5c62-e711-80d1-005056ac45bb" },
         "spanish" => { entity_id: "5fc297b7-5c62-e711-80d1-005056ac45bb" },
         "sri lankan" => { entity_id: "357e640e-5c62-e711-80d1-005056ac45bb" },
-        "st helenian" => { entity_id: "77c297b7-5c62-e711-80d1-005056ac45bb" },
+        ST_HELENIAN => { entity_id: "77c297b7-5c62-e711-80d1-005056ac45bb" },
         "st lucian" => { entity_id: "317e640e-5c62-e711-80d1-005056ac45bb" },
         "stateless" => { entity_id: "4d7d640e-5c62-e711-80d1-005056ac45bb" },
         "sudanese" => { entity_id: "ab7e640e-5c62-e711-80d1-005056ac45bb" },
@@ -229,6 +265,27 @@ module Dttp
         "yemeni" => { entity_id: "0d7f640e-5c62-e711-80d1-005056ac45bb" },
         "zambian" => { entity_id: "117f640e-5c62-e711-80d1-005056ac45bb" },
         "zimbabwean" => { entity_id: "137f640e-5c62-e711-80d1-005056ac45bb" },
+      }.freeze
+
+      INACTIVE_MAPPING = {
+        NOT_KNOWN => { entity_id: "157f640e-5c62-e711-80d1-005056ac45bb" },
+        FALKLAND_ISLANDS => { entity_id: "c77d640e-5c62-e711-80d1-005056ac45bb" },
+        "American Samoa" => { entity_id: "617d640e-5c62-e711-80d1-005056ac45bb" },
+        BRITISH_INDIAN_OCEAN_TERRITORY => { entity_id: "057e640e-5c62-e711-80d1-005056ac45bb" },
+        "Channel Islands not otherwise specified" => { entity_id: "057f640e-5c62-e711-80d1-005056ac45bb" },
+        "Czechoslovakia not otherwise specified" => { entity_id: "077f640e-5c62-e711-80d1-005056ac45bb" },
+        "Cyprus (Non-European Union)" => { entity_id: "017f640e-5c62-e711-80d1-005056ac45bb" },
+        "Cyprus not otherwise specified" => { entity_id: "037f640e-5c62-e711-80d1-005056ac45bb" },
+        ENGLAND => { entity_id: "40ad2d33-4787-e711-80e8-3863bb349ac0" },
+        GUERNSEY => { entity_id: "d77d640e-5c62-e711-80d1-005056ac45bb" },
+        ISLE_OF_MAN => { entity_id: "017e640e-5c62-e711-80d1-005056ac45bb" },
+        JERSEY => { entity_id: "0f7e640e-5c62-e711-80d1-005056ac45bb" },
+        "Northern Mariana Islands" => { entity_id: "597e640e-5c62-e711-80d1-005056ac45bb" },
+        "Serbia and Montenegro not otherwise specified" => { entity_id: "997e640e-5c62-e711-80d1-005056ac45bb" },
+        "South Georgia and The South Sandwich Islands" => { entity_id: "e77d640e-5c62-e711-80d1-005056ac45bb" },
+        "Union of Soviet Socialist Republics not otherwise specified" => { entity_id: "097f640e-5c62-e711-80d1-005056ac45bb" },
+        "Western Sahara" => { entity_id: "bb7d640e-5c62-e711-80d1-005056ac45bb" },
+        "Yugoslavia not otherwise specified" => { entity_id: "0b7f640e-5c62-e711-80d1-005056ac45bb" },
       }.freeze
     end
   end
