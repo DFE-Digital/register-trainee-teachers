@@ -3,8 +3,7 @@
 module Trainees
   class CreateFromDttp
     include ServicePattern
-
-    class UnrecognisedStatusError < StandardError; end
+    include HasDttpMapping
 
     INVALID_TRN = "999999999"
     UK_COUNTRIES = ["England", "United Kingdom", "Scotland", "Northern Ireland",
@@ -448,18 +447,7 @@ module Trainees
     end
 
     def trainee_status
-      case dttp_trainee_status
-      when DttpStatuses::DRAFT_RECORD then "draft"
-      when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "submitted_for_trn"
-      when DttpStatuses::STANDARDS_MET then "recommended_for_award"
-      when DttpStatuses::DEFERRED then "deferred"
-      when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
-      when DttpStatuses::AWARDED_EYTS, DttpStatuses::AWARDED_QTS then "awarded"
-      when DttpStatuses::LEFT_COURSE_BEFORE_END then "withdrawn"
-      when DttpStatuses::STANDARDS_NOT_MET
-        withdraw_date.present? ? "withdrawn" : "trn_received"
-      when DttpStatuses::AWAITING_QTS, DttpStatuses::EYTS_REVOKED, DttpStatuses::QTS_REVOKED, DttpStatuses::DID_NOT_START, DttpStatuses::REJECTED then nil
-      end
+      @trainee_status ||= MapStateFromDttp.call(dttp_trainee: dttp_trainee)
     end
 
     def withdrawal_attributes
@@ -493,17 +481,6 @@ module Trainees
 
     def funding_manager
       @funding_manager ||= FundingManager.new(trainee)
-    end
-
-    def dttp_trainee_status
-      find_by_entity_id(
-        dttp_trainee.latest_placement_assignment.response["_dfe_traineestatusid_value"],
-        Dttp::CodeSets::Statuses::MAPPING,
-      )
-    end
-
-    def find_by_entity_id(id, mapping)
-      mapping.select { |_key, value| value[:entity_id] == id }.keys&.first
     end
   end
 end

@@ -3,6 +3,7 @@
 module Degrees
   class MapFromDttp
     include ServicePattern
+    include HasDttpMapping
 
     def initialize(dttp_degree:)
       @dttp_degree = dttp_degree
@@ -121,10 +122,6 @@ module Degrees
 
     def unmapped_country?
       dttp_degree.country.present? && country.blank?
-    end
-
-    def find_by_entity_id(id, mapping)
-      mapping.select { |_key, value| value[:entity_id] == id }.keys&.first
     end
   end
 end

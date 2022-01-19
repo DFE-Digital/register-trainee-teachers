@@ -21,7 +21,6 @@ FactoryBot.define do
     _dfe_nationality_value { "d17d640e-5c62-e711-80d1-005056ac45bb" }
     dfe_trn { Faker::Number.number(digits: 7) }
     merged { false }
-    _dfe_traineestatusid_value { Dttp::CodeSets::Statuses::MAPPING[DttpStatuses::AWARDED_QTS][:entity_id] }
     dfe_husid { "1811499435078" }
 
     initialize_with { attributes.stringify_keys }
