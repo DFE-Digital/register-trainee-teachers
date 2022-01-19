@@ -136,9 +136,9 @@ module Trainees
     end
 
     def trainee_gender
-      # TODO: Need to take a decision on mapping gender other/not provided
-      # Hash#invert might not be desirable as we lose one of the duplicated values
-      Dttp::Params::Contact::GENDER_CODES.invert[dttp_trainee.response["gendercode"].to_i]
+      return :other if Dttp::Params::Contact::OTHER_GENDER_CODE == dttp_trainee.gender_code
+
+      Dttp::Params::Contact::GENDER_CODES.invert[dttp_trainee.gender_code]
     end
 
     def trainee_id

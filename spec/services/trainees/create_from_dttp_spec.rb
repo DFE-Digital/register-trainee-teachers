@@ -467,11 +467,11 @@ module Trainees
       end
 
       context "when gender is other" do
-        let(:api_trainee) { create(:api_trainee, gendercode: "389040000") }
+        let(:api_trainee) { create(:api_trainee, gendercode: Dttp::Params::Contact::OTHER_GENDER_CODE) }
 
-        it "maps gender to not provided" do
+        it "maps gender to other" do
           create_trainee_from_dttp
-          expect(Trainee.last.gender).to eq("gender_not_provided")
+          expect(Trainee.last.gender).to eq("other")
         end
       end
 
