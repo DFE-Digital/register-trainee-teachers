@@ -24,14 +24,36 @@ class UserWithOrganisationContext < SimpleDelegator
   end
 
   def organisation
-    return user.providers.first unless FeatureService.enabled?(:user_can_have_multiple_organisations)
+    return user.providers.first unless FeatureService.enabled?(:user_can_have_multiple_organisations) &&
+      multiple_organisations?
 
-    # TODO: placeholder behaviour. Should return the lead school or
-    # provider set in the session
-    user.providers.first
+    return if session[:current_organisation].blank?
+
+    school_or_provider
+  end
+
+  def multiple_organisations?
+    user.lead_schools.any? || user.providers.count > 1
   end
 
 private
 
   attr_reader :session
+
+  def organisation_class
+    session[:current_organisation][:type] == "School" ? School : Provider
+  end
+
+  def organisation_id
+    session[:current_organisation][:id]
+  end
+
+  def school_or_provider
+    organisation_to_return = if organisation_class == Provider
+                               user.providers.find_by(id: organisation_id)
+                             else
+                               user.lead_schools.find_by(id: organisation_id)
+                             end
+    organisation_to_return
+  end
 end

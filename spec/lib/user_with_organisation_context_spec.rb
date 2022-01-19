@@ -3,25 +3,28 @@
 require "rails_helper"
 
 describe UserWithOrganisationContext do
-  let(:user) { double(id: 1, boo: "yah", providers: ["first"]) }
+  let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider]) }
   let(:session) { {} }
+  let(:provider) { create(:provider) }
+  let(:lead_school) { create(:school, :lead) }
 
   subject do
     described_class.new(user: user, session: session)
   end
 
+  before do
+    disable_features("google.send_data_to_big_query")
+  end
+
   it "delegates missing methods to user" do
-    expect(subject.boo).to eq("yah")
     expect(subject.id).to eq(1)
+    expect(subject.first_name).to eq("Dave")
   end
 
   describe "#organisation" do
     subject { super().organisation }
 
     context "feature is not enabled" do
-      # TODO: this is placeholder behaviour until we
-      # start setting the current organisation context in the
-      # session
       before do
         disable_features(:user_can_have_multiple_organisations)
       end
@@ -34,8 +37,31 @@ describe UserWithOrganisationContext do
         enable_features(:user_can_have_multiple_organisations)
       end
 
-      # The correct behaviour. Return the provider or lead school
-      it "returns the current organisation as set in the session"
+      context "user has multiple organisations" do
+        let(:user) { create(:user, id: 1, providers: [provider], lead_schools: [lead_school]) }
+
+        context "provider is set in the session" do
+          let(:session) { { current_organisation: { id: provider.id, type: "Provider" } } }
+
+          it { is_expected.to eq(provider) }
+        end
+
+        context "lead school is set in the session" do
+          let(:session) { { current_organisation: { id: lead_school.id, type: "School" } } }
+
+          it { is_expected.to eq(lead_school) }
+        end
+
+        context "no organisation is set in the session" do
+          it { is_expected.to be_nil }
+        end
+      end
+
+      context "user has one provider" do
+        let(:user) { create(:user, id: 1, providers: [provider]) }
+
+        it { is_expected.to eq(provider) }
+      end
     end
   end
 
