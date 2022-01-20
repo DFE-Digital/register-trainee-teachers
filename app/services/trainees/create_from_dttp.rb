@@ -11,6 +11,8 @@ module Trainees
                     "Wales", "Isle of Man",
                     "United Kingdom, not otherwise specified"].freeze
 
+    MULTIPLE_DISABILITIES_TEXT = "HESA multiple disabilities"
+
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
       @trainee = Trainee.new(mapped_attributes)
@@ -55,6 +57,8 @@ module Trainees
       end
 
       trainee.save!
+
+      add_multiple_disability_text!
 
       calculate_funding!
 
@@ -175,7 +179,6 @@ module Trainees
         }
       end
 
-      # TODO: This needs a decision, since DTTP may have 'multiple disabilities'
       if disability == Diversities::MULTIPLE_DISABILITIES
         return {
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
@@ -194,6 +197,12 @@ module Trainees
         dttp_trainee.response["_dfe_disibilityid_value"],
         Dttp::CodeSets::Disabilities::MAPPING,
       )
+    end
+
+    def add_multiple_disability_text!
+      return unless disability == Diversities::MULTIPLE_DISABILITIES
+
+      trainee.trainee_disabilities.last.update!(additional_disability: MULTIPLE_DISABILITIES_TEXT)
     end
 
     def ethnicity_attributes

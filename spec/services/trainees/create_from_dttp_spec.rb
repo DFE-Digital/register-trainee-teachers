@@ -413,6 +413,20 @@ module Trainees
         end
       end
 
+      context "when disability is 'MULTIPLE_DISABILITIES'" do
+        let(:multiple_disability_id) { "d398eae7-4ba5-e711-80da-005056ac45bb" }
+        let(:api_trainee) { create(:api_trainee, _dfe_disibilityid_value: multiple_disability_id) }
+
+        before { create(:disability, name: Diversities::OTHER) }
+
+        it "saves the disability as 'other' and sets the additional_diversity text" do
+          create_trainee_from_dttp
+          trainee_disability = Trainee.last.trainee_disabilities.last
+          expect(trainee_disability.additional_disability).to eq(Trainees::CreateFromDttp::MULTIPLE_DISABILITIES_TEXT)
+          expect(trainee_disability.disability.name).to eq(Diversities::OTHER)
+        end
+      end
+
       context "when just ethnicity is disclosed" do
         let(:api_trainee) do
           create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::MAPPING[Diversities::AFRICAN][:entity_id])
