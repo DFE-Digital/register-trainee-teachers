@@ -356,6 +356,39 @@ module Trainees
           create_trainee_from_dttp
           expect(Trainee.last.nationalities.map(&:name)).to match_array(["british"])
         end
+
+        context "when the nationality is a uk nationality" do
+          let(:api_trainee) { create(:api_trainee, :with_uk_nationality) }
+
+          it "adds the trainee's nationality" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.nationalities.map(&:name)).to match_array(["british"])
+          end
+        end
+
+        context "when the nationality is not known/supported" do
+          let(:nationality) { Dttp::CodeSets::Nationalities::INACTIVE_MAPPING["American Samoa"][:entity_id] }
+          let(:api_trainee) { create(:api_trainee, _dfe_nationality_value: nationality) }
+
+          it "does not add the trainee's nationality" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.nationalities).to be_empty
+          end
+        end
+
+        Dttp::CodeSets::Nationalities::AMBIGUOUS_NATIONALITY_MAPPINGS.each do |nationality_name, ambiguous_mappings|
+          context "when the nationality is #{nationality_name}" do
+            let(:api_trainee) { create(:api_trainee, nationality_name: ambiguous_mappings.sample) }
+
+            it "uses the non-ambiguous nationality name" do
+              create_trainee_from_dttp
+              trainee = Trainee.last
+              expect(trainee.nationalities.map(&:name)).to match_array([nationality_name])
+            end
+          end
+        end
       end
 
       %w[white scottish].each do |name|
