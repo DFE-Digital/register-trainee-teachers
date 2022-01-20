@@ -48,7 +48,7 @@ module Dttp
           "dfe_ProviderId@odata.bind" => "/accounts(#{trainee.provider.dttp_id})",
           "dfe_ITTQualificationAimId@odata.bind" => "/dfe_ittqualificationaims(#{dttp_qualification_aim_id(trainee.training_route)})",
           "dfe_programmeyear" => 1,
-          "dfe_programmelength" => 1,
+          "dfe_programmelength" => trainee.course_duration_in_years,
           "dfe_ebacc" => trainee.ebacc,
         }
         .merge(commencement_date_params)
