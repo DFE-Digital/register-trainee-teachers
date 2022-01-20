@@ -136,9 +136,11 @@ module Trainees
     end
 
     def trainee_gender
-      return :other if Dttp::Params::Contact::OTHER_GENDER_CODE == dttp_trainee.gender_code
+      return :gender_not_provided if dttp_trainee.gender_code.blank?
 
-      Dttp::Params::Contact::GENDER_CODES.invert[dttp_trainee.gender_code]
+      return :other if Dttp::Params::Contact::OTHER_GENDER_CODE == dttp_trainee.gender_code.to_i
+
+      Dttp::Params::Contact::GENDER_CODES.invert[dttp_trainee.gender_code.to_i]
     end
 
     def trainee_id
