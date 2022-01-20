@@ -6,6 +6,8 @@ module Dttp
 
     belongs_to :trainee, foreign_key: :contact_dttp_id, primary_key: :dttp_id, inverse_of: :placement_assignments, optional: true
 
+    has_one :dormant_period, foreign_key: :placement_assignment_dttp_id, primary_key: :dttp_id, inverse_of: :placement_assignment
+
     validates :response, presence: true
 
     def route_dttp_id
