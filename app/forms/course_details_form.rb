@@ -53,7 +53,7 @@ class CourseDetailsForm < TraineeForm
   validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, if: :requires_study_mode?
 
   validate :itt_start_date_valid
-  validate :itt_end_date_valid
+  validate :itt_end_date_valid, if: :end_date_required?
 
   delegate :apply_application?, :requires_study_mode?, to: :trainee
 
@@ -75,7 +75,9 @@ class CourseDetailsForm < TraineeForm
   end
 
   def itt_end_date
-    new_date({ year: end_year, month: end_month, day: end_day })
+    if end_date_required?
+      new_date({ year: end_year, month: end_month, day: end_day })
+    end
   end
 
   def save!
@@ -127,6 +129,10 @@ class CourseDetailsForm < TraineeForm
       sum
     }
     assign_attributes_and_stash(opts)
+  end
+
+  def end_date_required?
+    trainee.hesa_id.blank?
   end
 
 private

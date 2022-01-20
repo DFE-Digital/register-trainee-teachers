@@ -367,6 +367,55 @@ describe CourseDetailsForm, type: :model do
         end
       end
     end
+
+    context "HESA trainee record" do
+      let(:trainee) { build(:trainee, hesa_id: "XXX") }
+
+      context "itt_end_date not set" do
+        let(:params) { {} }
+
+        before do
+          subject.valid?
+        end
+
+        it "does not validate itt_end_date" do
+          expect(subject.errors[:itt_end_date]).to be_empty
+        end
+      end
+
+      context "itt_end_date is set" do
+        let(:valid_start_date) do
+          Faker::Date.between(from: 1.year.ago, to: 2.days.ago)
+        end
+
+        let(:valid_end_date) do
+          Faker::Date.between(from: valid_start_date + 1.day, to: Time.zone.today)
+        end
+
+        let(:params) do
+          {
+            start_day: valid_start_date.day.to_s,
+            start_month: valid_start_date.month.to_s,
+            start_year: valid_start_date.year.to_s,
+            end_day: valid_end_date.day.to_s,
+            end_month: valid_end_date.month.to_s,
+            end_year: valid_end_date.year.to_s,
+          }
+        end
+
+        before do
+          subject.valid?
+        end
+
+        it "does not validate itt_end_date" do
+          expect(subject.errors[:itt_end_date]).to be_empty
+        end
+
+        it "returns nil" do
+          expect(subject.itt_end_date).to be_nil
+        end
+      end
+    end
   end
 
   context "valid trainee" do
