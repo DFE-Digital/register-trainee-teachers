@@ -69,18 +69,17 @@ module Funding
     end
 
     def grant_funding_row
-      grant_text = if data_model.applying_for_grant
-                     t(".grant_applied_for") +
-                      "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
-                   elsif !data_model.applying_for_grant.nil?
+      grant_text = if data_model.applying_for_grant?
+                     t(".grant_applied_for") + "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
+                   else
                      t(".no_grant_applied_for")
                    end
 
-      mappable_field(
-        grant_text&.html_safe,
-        t(".funding_method"),
-        edit_trainee_funding_bursary_path(trainee),
-      )
+      # In some cases, applying_for_grant can actually be nil which means it wasn't set properly during import.
+      # We should let the user know that this field is missing data and should be filled in manually.
+      grant_text = nil if data_model.applying_for_grant.nil?
+
+      mappable_field(grant_text&.html_safe, t(".funding_method"), edit_trainee_funding_bursary_path(trainee))
     end
 
     def scholarship_funding_row
