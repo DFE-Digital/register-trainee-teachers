@@ -13,17 +13,17 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
     end
 
     scenario "setting a provider context" do
+      given_a_trainee_exists_that_belongs_the_provider
       when_i_click_on_a_provider_link
       then_i_am_redirected_to_the_start_page
       and_i_am_in_the_provider_context
-      # and_i_can_see_trainees_belonging_to_that_provider
+      when_i_visit_the_draft_trainee_page
+      then_i_can_see_trainees_belonging_to_that_provider
     end
 
     scenario "setting a lead school context" do
       when_i_click_on_a_lead_school_link
       then_i_am_redirected_to_the_start_page
-      and_i_am_in_the_lead_school_context
-      # and_i_can_see_trainees_associated_with_that_lead_school
     end
   end
 
@@ -43,13 +43,16 @@ private
     expect(organisations_index_page.lead_school_links.map(&:text)).to match_array(user.lead_schools.map(&:name))
   end
 
+  def given_a_trainee_exists_that_belongs_the_provider
+    provider_trainee
+  end
+
   def when_i_click_on_a_provider_link
     @provider = multi_organisation_user.providers.first
     organisations_index_page.provider_links.find { |link| link.text == provider.name }.click
   end
 
   def when_i_click_on_a_lead_school_link
-    @lead_school = user.lead_schools.first
     organisation_contexts_index_page.lead_school_links.find { |link| link.text == lead_school.name }.click
   end
 
@@ -61,11 +64,27 @@ private
     expect(start_page.organisation_name.text).to eq(provider.name)
   end
 
-  def and_i_am_in_the_lead_school_context
-    expect(start_page.organisation_name.text).to eq(lead_school.name)
+  def when_i_visit_the_draft_trainee_page
+    start_page.primary_navigation.drafts_link.click
+  end
+
+  def then_i_can_see_trainees_belonging_to_that_provider
+    expect(trainee_drafts_page.trainee_name.first).to have_text("Dave Provides")
   end
 
   def user
     @_user ||= create(:user, :with_multiple_organisations)
+  end
+
+  def provider
+    @_provider ||= user.providers.first
+  end
+
+  def lead_school
+    @_lead_school ||= user.lead_schools.first
+  end
+
+  def provider_trainee
+    @_provider_trainee ||= create(:trainee, provider: provider, first_names: "Dave", last_name: "Provides")
   end
 end

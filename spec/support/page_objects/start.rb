@@ -18,5 +18,9 @@ module PageObjects
       element :cookies_link, ".govuk-footer__link", text: "Cookies"
       element :privacy_link, ".govuk-footer__link", text: "Privacy policy"
     end
+
+    section :primary_navigation, "nav.moj-primary-navigation" do
+      element :drafts_link, ".govuk-link", text: "Draft records"
+    end
   end
 end
