@@ -126,28 +126,20 @@ jobs:
           IMAGE_TAG:                ${{ github.event.inputs.sha }}
           CONFIRM_PRODUCTION:       yes
 
-      - uses: DFE-Digital/github-actions/keyvault-yaml-secret@master
+      - uses: DFE-Digital/keyvault-yaml-secret@v1
         if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
-        id: cf-username-secret
+        id: get-secrets
         with:
           keyvault: ${{ env.key_vault_name }}
-          yaml_secret: ${{ env.key_vault_infra_secret_name }}
-          secret: CF_USER
-
-      - uses: DFE-Digital/github-actions/keyvault-yaml-secret@master
-        if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
-        id: cf-password-secret
-        with:
-          keyvault: ${{ env.key_vault_name }}
-          yaml_secret: ${{ env.key_vault_infra_secret_name }}
-          secret: CF_PASSWORD
+          secret: ${{ env.key_vault_infra_secret_name }}
+          key: CF_USER,CF_PASSWORD
 
       - name: Setup cf cli
         if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
         uses: DFE-Digital/github-actions/setup-cf-cli@master
         with:
-          CF_USERNAME:   ${{ steps.cf-username-secret.outputs.secret-value }}
-          CF_PASSWORD:   ${{ steps.cf-password-secret.outputs.secret-value }}
+          CF_USERNAME:   ${{ steps.get-secrets.outputs.CF_USER }}
+          CF_PASSWORD:   ${{ steps.get-secrets.outputs.CF_PASSWORD }}
           CF_SPACE_NAME: ${{ env.paas_space_name }}
 
       - name: Run data migrations
