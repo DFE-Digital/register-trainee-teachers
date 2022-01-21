@@ -147,6 +147,46 @@ describe UserWithOrganisationContext do
     end
   end
 
+  describe "multiple_organisations?" do
+    subject { super().multiple_organisations? }
+
+    context "multi organisation feature is enabled" do
+      before do
+        enable_features(:user_can_have_multiple_organisations)
+      end
+
+      context "user has multiple organisations" do
+        let(:user) { create(:user, id: 1, lead_schools: [lead_school], providers: [provider]) }
+
+        it { is_expected.to eq(true) }
+      end
+
+      context "user doesn't have multiple organisations" do
+        let(:user) { create(:user, id: 1, providers: [provider]) }
+
+        it { is_expected.to eq(false) }
+      end
+    end
+
+    context "multi organisation feature is disabled" do
+      before do
+        disable_features(:user_can_have_multiple_organisations)
+      end
+
+      context "user has multiple organisations" do
+        let(:user) { create(:user, id: 1, lead_schools: [lead_school], providers: [provider]) }
+
+        it { is_expected.to eq(false) }
+      end
+
+      context "user doesn't have multiple organisations" do
+        let(:user) { create(:user, id: 1, providers: [provider]) }
+
+        it { is_expected.to eq(false) }
+      end
+    end
+  end
+
   describe "#user" do
     subject { super().user }
 

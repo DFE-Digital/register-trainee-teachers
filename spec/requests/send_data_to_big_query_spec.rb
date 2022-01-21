@@ -20,7 +20,7 @@ class TestController < ::ApplicationController
   end
 
   def authenticate
-    @current_user = User.last
+    @current_user = UserWithOrganisationContext.new(user: User.last, session: {})
   end
 
   attr_reader :current_user

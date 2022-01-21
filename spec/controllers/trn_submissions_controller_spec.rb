@@ -6,7 +6,7 @@ describe TrnSubmissionsController do
   include ActiveJob::TestHelper
 
   describe "#create" do
-    let(:current_user) { create(:user) }
+    let(:current_user) { UserWithOrganisationContext.new(user: create(:user), session: {})}
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)

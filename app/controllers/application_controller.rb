@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate
   before_action :track_page
+  before_action :check_organisation_context_is_set
   after_action :save_origin_path
   include Pundit
   include EmitsRequestEvents
@@ -65,6 +66,18 @@ private
 
   def authenticate
     save_requested_path_and_redirect unless authenticated?
+  end
+
+  def check_organisation_context_is_set
+    return unless authenticated?
+
+    redirect_to_organisation_contexts unless current_user.organisation.present? || current_user.system_admin?
+  end
+
+  def redirect_to_organisation_contexts
+    if request.path !~ /#{organisations_path}/
+      redirect_to(organisations_path)
+    end
   end
 
   def ensure_trainee_is_draft!

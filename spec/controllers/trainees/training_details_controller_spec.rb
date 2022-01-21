@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Trainees::TrainingDetailsController do
-  let(:user) { create(:user) }
+  let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
 
   before do
     allow(controller).to receive(:current_user).and_return(user)

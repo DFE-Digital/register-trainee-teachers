@@ -48,7 +48,7 @@ class DfESignInUser
   end
 
   def self.end_session!(session)
-    session.delete("dfe_sign_in_user")
+    session.destroy
   end
 
   def logout_url
