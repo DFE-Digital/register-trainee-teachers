@@ -402,14 +402,24 @@ module Trainees
     end
 
     def funding_attributes
-      return {} if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] == Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE && funding_entity_id.blank?
+      return {} if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] ==
+        Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE && funding_entity_id.blank?
 
       if funding_entity_id == Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED
-        return { applying_for_bursary: false }
+        return {
+          applying_for_grant: false,
+          applying_for_bursary: false,
+          applying_for_scholarship: false,
+        }
       end
 
       if funding_manager.can_apply_for_tiered_bursary?
-        return { applying_for_bursary: true, bursary_tier: route_or_tier_for_funding }
+        return {
+          applying_for_grant: false,
+          applying_for_bursary: true,
+          applying_for_scholarship: false,
+          bursary_tier: route_or_tier_for_funding,
+        }
       end
 
       {
