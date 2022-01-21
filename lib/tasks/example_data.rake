@@ -101,7 +101,8 @@ namespace :example_data do
       )
 
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
-      LeadSchoolUser.create!(user: persona, lead_school: School.lead_only.sample)
+
+      LeadSchoolUser.create!(user: persona, lead_school: School.lead_only.sample) if persona_attributes[:lead_school]
 
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|

@@ -7,7 +7,7 @@
     <% if persona.system_admin? %>
       <%= persona.first_name %> has <strong>administrator</strong> access.
     <% else %>
-      Belongs to <strong><%= persona.primary_provider.name %></strong> and is responsible for managing users.
+      <%= association_strings.join("<br>").html_safe %>
     <% end %>
     </p>
   </div>
