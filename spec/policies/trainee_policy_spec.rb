@@ -27,32 +27,67 @@ describe TraineePolicy do
   end
 
   describe TraineePolicy::Scope do
-    let(:user) { create(:user, providers: [provider]) }
-    let(:provider) { create(:provider) }
+    let(:user_with_organisation) do
+      double(UserWithOrganisationContext, system_admin?: is_system_admin?, organisation: organisation, lead_school?: is_lead_school?, provider?: is_provider?)
+    end
+    let(:is_lead_school?) { false }
+    let(:is_provider?) { false }
+    let(:is_system_admin?) { false }
 
-    subject { described_class.new(user, Trainee).resolve }
+    subject { described_class.new(user_with_organisation, Trainee).resolve }
 
-    context "trainees belonging to the user's provider" do
-      let(:trainee) { create(:trainee, provider: provider) }
+    context "user in provider context" do
+      let(:is_provider?) { true }
+      let(:provider) { create(:provider) }
+      let(:organisation) { provider }
 
-      it { is_expected.to contain_exactly(trainee) }
+      context "where the trainee is associated with the provider" do
+        let(:trainee) { create(:trainee, provider: provider) }
+
+        it { is_expected.to contain_exactly(trainee) }
+
+        context "and the trainee is deleted" do
+          let(:trainee) { create(:trainee, :discarded, provider: provider) }
+
+          it { is_expected.not_to contain_exactly(trainee) }
+        end
+      end
+
+      context "where the trainee is associated with another provider" do
+        let(:trainee) { create(:trainee) }
+
+        it { is_expected.not_to contain_exactly(trainee) }
+      end
     end
 
-    context "trainees not belonging to the user's provider" do
-      let(:trainee) { create(:trainee) }
+    context "user in lead_school context" do
+      let(:is_lead_school?) { true }
+      let(:lead_school) { create(:school, :lead) }
+      let(:organisation) { lead_school }
 
-      it { is_expected.not_to contain_exactly(trainee) }
-    end
+      context "where the trainee is associated with the provider" do
+        let(:trainee) { create(:trainee, lead_school: lead_school) }
 
-    context "trainees have been soft deleted" do
-      let(:trainee) { create(:trainee, :discarded, provider: provider) }
+        it { is_expected.to contain_exactly(trainee) }
 
-      it { is_expected.not_to contain_exactly(trainee) }
+        context "and the trainee is deleted" do
+          let(:trainee) { create(:trainee, :discarded, lead_school: lead_school) }
+
+          it { is_expected.not_to contain_exactly(trainee) }
+        end
+      end
+
+      context "where the trainee is associated with another provider" do
+        let(:trainee) { create(:trainee) }
+
+        it { is_expected.not_to contain_exactly(trainee) }
+      end
     end
 
     context "system_admin user" do
-      let(:user) { system_admin_user }
       let(:trainee) { create(:trainee, :discarded) }
+      let(:organisation) { nil }
+      let(:is_system_admin?) { true }
 
       it { is_expected.to contain_exactly(trainee) }
     end

@@ -36,6 +36,14 @@ class UserWithOrganisationContext < SimpleDelegator
     user.lead_schools.any? || user.providers.count > 1
   end
 
+  def provider?
+    organisation.is_a?(Provider)
+  end
+
+  def lead_school?
+    organisation.is_a?(School)
+  end
+
 private
 
   attr_reader :session

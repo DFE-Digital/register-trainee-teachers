@@ -65,6 +65,88 @@ describe UserWithOrganisationContext do
     end
   end
 
+  describe "#provider?" do
+    subject { super().provider? }
+
+    context "feature is not enabled" do
+      before do
+        disable_features(:user_can_have_multiple_organisations)
+      end
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "multi organisation feature is enabled" do
+      before do
+        enable_features(:user_can_have_multiple_organisations)
+      end
+
+      context "user has multiple organisations" do
+        let(:user) { create(:user, id: 1, providers: [provider], lead_schools: [lead_school]) }
+
+        context "provider is set in the session" do
+          let(:session) { { current_organisation: { id: provider.id, type: "Provider" } } }
+
+          it { is_expected.to eq(true) }
+        end
+
+        context "lead school is set in the session" do
+          let(:session) { { current_organisation: { id: lead_school.id, type: "School" } } }
+
+          it { is_expected.to eq(false) }
+        end
+
+        context "no organisation is set in the session" do
+          it { is_expected.to eq(false) }
+        end
+      end
+
+      context "user has one provider" do
+        let(:user) { create(:user, id: 1, providers: [provider]) }
+
+        it { is_expected.to eq(true) }
+      end
+    end
+  end
+
+  describe "#lead_school?" do
+    subject { super().lead_school? }
+
+    context "feature is not enabled" do
+      before do
+        disable_features(:user_can_have_multiple_organisations)
+      end
+
+      it { is_expected.to eq(false) }
+    end
+
+    context "multi organisation feature is enabled" do
+      before do
+        enable_features(:user_can_have_multiple_organisations)
+      end
+
+      context "user has multiple organisations" do
+        let(:user) { create(:user, id: 1, lead_schools: [lead_school], providers: [provider]) }
+
+        context "provider is set in the session" do
+          let(:session) { { current_organisation: { id: lead_school.id, type: "Provider" } } }
+
+          it { is_expected.to eq(false) }
+        end
+
+        context "lead school is set in the session" do
+          let(:session) { { current_organisation: { id: lead_school.id, type: "School" } } }
+
+          it { is_expected.to eq(true) }
+        end
+
+        context "no organisation is set in the session" do
+          it { is_expected.to eq(false) }
+        end
+      end
+    end
+  end
+
   describe "#user" do
     subject { super().user }
 
