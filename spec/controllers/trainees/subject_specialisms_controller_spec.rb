@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Trainees::SubjectSpecialismsController do
-  let(:user) { create(:user) }
+  let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
   let(:trainee) do
     create(:trainee,
            :provider_led_postgrad,
