@@ -516,17 +516,6 @@ module Trainees
       end
     end
 
-    context "when training state is not mapped" do
-      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: nil) }
-
-      it "marks the application as non importable" do
-        expect {
-          create_trainee_from_dttp
-        }.to change(Trainee, :count).by(0)
-        .and change(dttp_trainee, :state).to("non_importable_missing_state")
-      end
-    end
-
     context "when placement assignments are from multiple providers" do
       let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: create_list(:dttp_placement_assignment, 2)) }
 
@@ -591,28 +580,6 @@ module Trainees
         trainee = Trainee.last
         expect(trainee.withdraw_date).to eq date
         expect(trainee.withdraw_reason).to eq WithdrawalReasons::FOR_ANOTHER_REASON
-      end
-    end
-
-    context "when the trainee is 'Standards not met'" do
-      before do
-        create_trainee_from_dttp
-      end
-
-      context "and they have a 'dateleft'" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, dfe_dateleft: Time.zone.today, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
-
-        it "creates the trainee as withdrawn" do
-          expect(Trainee.last.state).to eq("withdrawn")
-        end
-      end
-
-      context "and they don't have a dateleft" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
-
-        it "creates the trainee as trn_received" do
-          expect(Trainee.last.state).to eq("trn_received")
-        end
       end
     end
   end
