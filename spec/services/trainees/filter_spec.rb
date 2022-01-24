@@ -6,8 +6,8 @@ module Trainees
   describe Filter do
     subject { described_class.call(trainees: trainees, filters: filters) }
 
-    let!(:draft_trainee) { create(:trainee, :draft) }
-    let!(:apply_draft_trainee) { create(:trainee, :with_apply_application) }
+    let!(:draft_trainee) { create(:trainee, :draft, first_names: "Draft") }
+    let!(:apply_draft_trainee) { create(:trainee, :with_apply_application, first_names: "Apply") }
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
 
@@ -130,22 +130,51 @@ module Trainees
       end
     end
 
-    context "with record_source filter set to apply" do
-      let(:filters) { { record_source: %w[apply] } }
+    describe "record source filter" do
+      let!(:dttp_trainee) { create(:trainee, :created_from_dttp, first_names: "DTTP") }
+      let(:filters) { { record_source: filter_value } }
 
-      it { is_expected.to contain_exactly(apply_draft_trainee) }
-    end
+      context "with record_source filter set to apply" do
+        let(:filter_value) { %w[apply] }
 
-    context "with record_source filter set to manual" do
-      let(:filters) { { record_source: %w[manual] } }
+        it { is_expected.to contain_exactly(apply_draft_trainee) }
+      end
 
-      it { is_expected.to contain_exactly(draft_trainee) }
-    end
+      context "with record_source filter set to manual" do
+        let(:filter_value) { %w[manual] }
 
-    context "with record_source filter set to both manual and apply" do
-      let(:filters) { { record_source: %w[apply manual] } }
+        it { is_expected.to contain_exactly(draft_trainee) }
+      end
 
-      it { is_expected.to contain_exactly(apply_draft_trainee, draft_trainee) }
+      context "with record_source filter set to dttp" do
+        let(:filter_value) { %w[dttp] }
+
+        it { is_expected.to contain_exactly(dttp_trainee) }
+      end
+
+      context "with record_source filter set to both manual and apply" do
+        let(:filter_value) { %w[apply manual] }
+
+        it { is_expected.to match_array([apply_draft_trainee, draft_trainee]) }
+      end
+
+      context "with record_source filter set to both dttp and apply" do
+        let(:filter_value) { %w[apply dttp] }
+
+        it { is_expected.to match_array([apply_draft_trainee, dttp_trainee]) }
+      end
+
+      context "with record_source filter set to both dttp and manual" do
+        let(:filter_value) { %w[manual dttp] }
+
+        it { is_expected.to match_array([draft_trainee, dttp_trainee]) }
+      end
+
+      context "with record_source filter set to both dttp, apply and manual" do
+        let(:filter_value) { %w[apply dttp manual] }
+
+        it { is_expected.to match_array([apply_draft_trainee, dttp_trainee, draft_trainee]) }
+      end
     end
 
     context "with study_mode filter set to full time" do
