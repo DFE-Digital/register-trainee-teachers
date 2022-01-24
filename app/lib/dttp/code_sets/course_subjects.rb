@@ -84,6 +84,10 @@ module Dttp
         ::CourseSubjects::UK_GOVERNMENT_PARLIAMENTARY_STUDIES => { entity_id: "96a12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::WELSH_LANGUAGE => { entity_id: "98a12838-b3cf-e911-a860-000d3ab1da01" },
       }.freeze
+
+      INACTIVE_MAPPING = {
+        ::CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS => { entity_id: "f88274df-181e-e711-80c8-0050568902d3" },
+      }.freeze
     end
   end
 end

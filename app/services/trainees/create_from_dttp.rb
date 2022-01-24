@@ -327,10 +327,8 @@ module Trainees
     end
 
     def course(dttp_course_uuid)
-      find_by_entity_id(
-        dttp_course_uuid,
-        Dttp::CodeSets::CourseSubjects::MAPPING,
-      )
+      find_by_entity_id(dttp_course_uuid, Dttp::CodeSets::CourseSubjects::MAPPING) ||
+        find_by_entity_id(dttp_course_uuid, Dttp::CodeSets::CourseSubjects::INACTIVE_MAPPING)
     end
 
     def course_education_phase(subject_name)

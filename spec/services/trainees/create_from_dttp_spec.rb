@@ -235,6 +235,19 @@ module Trainees
         end
       end
 
+      context "with 'Primary Mathematics Specialist' as course subject" do
+        let(:api_placement_assignment) do
+          create(:api_placement_assignment,
+                 _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::INACTIVE_MAPPING[::CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS][:entity_id])
+        end
+
+        it "sets the course subject one to Specialist Teaching" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.course_subject_one).to eq(CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
+        end
+      end
+
       context "with multiple placement_assignments" do
         let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID) }
         let(:placement_assignment_one) { create(:dttp_placement_assignment, :with_academic_year_twenty_twenty_one, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
