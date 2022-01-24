@@ -99,6 +99,7 @@ module Trainees
        .merge(school_attributes)
        .merge(training_initiative_attributes)
        .merge(withdrawal_attributes)
+       .merge(deferral_attributes)
     end
 
     def create_degrees!
@@ -482,6 +483,16 @@ module Trainees
       {
         withdraw_date: withdraw_date,
         withdraw_reason: withdraw_reason || WithdrawalReasons::FOR_ANOTHER_REASON,
+      }
+    end
+
+    def deferral_attributes
+      return {} if dttp_trainee.latest_placement_assignment.dormant_period.blank?
+
+      {
+        defer_date: dttp_trainee.latest_placement_assignment.dormant_period.date_left,
+        reinstate_date: dttp_trainee.latest_placement_assignment.dormant_period.date_returned,
+        dormancy_dttp_id: dttp_trainee.latest_placement_assignment.dormant_period.dttp_id,
       }
     end
 

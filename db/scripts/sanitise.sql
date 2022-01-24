@@ -55,3 +55,7 @@ SET
 UPDATE "dttp_degree_qualifications"
 SET
   response = NULL;
+
+UPDATE "dttp_dormant_periods"
+SET
+  response = NULL;

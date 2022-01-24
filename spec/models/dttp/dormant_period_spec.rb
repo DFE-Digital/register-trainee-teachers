@@ -3,13 +3,13 @@
 require "rails_helper"
 
 module Dttp
-  describe PlacementAssignment do
-    subject { build(:dttp_placement_assignment) }
+  describe DormantPeriod do
+    subject { build(:dttp_dormant_period) }
 
     it { is_expected.to be_valid }
 
     describe "relationships" do
-      it { is_expected.to have_one(:dormant_period) }
+      it { is_expected.to belong_to(:placement_assignment).optional }
     end
 
     describe "validations" do
