@@ -37,6 +37,10 @@ RSpec.feature "Filtering trainees" do
     then_only_the_apply_non_draft_trainee_is_visible
   end
 
+  scenario "cannot filter by dttp import as record source" do
+    then_i_should_not_see_imported_from_dttp_as_record_source
+  end
+
   scenario "when all trainees are from a single source" do
     given_all_trainees_are_from_a_single_source
     when_i_visit_the_trainee_index_page
@@ -83,6 +87,17 @@ RSpec.feature "Filtering trainees" do
 
     scenario "can filter by provider" do
       then_i_should_see_the_provider_filter
+    end
+
+    scenario "can filter by dttp import as record source" do
+      when_i_filter_by_dttp_import
+      then_only_the_trainee_imported_from_dttp_is_visible
+    end
+
+    scenario "cannot see dttp import filter when dttp trainees do not exist" do
+      when_dttp_trainees_do_not_exist
+      when_i_visit_the_trainee_index_page
+      then_i_should_not_see_imported_from_dttp_as_record_source
     end
   end
 
@@ -143,11 +158,13 @@ private
     @early_years_trainee ||= create(:trainee, :submitted_for_trn, :early_years_undergrad)
     @primary_trainee ||= create(:trainee, :submitted_for_trn, course_age_range: AgeRange::THREE_TO_EIGHT)
     @apply_non_draft_trainee ||= create(:trainee, :submitted_for_trn, :with_apply_application)
+    @dttp_import_trainee ||= create(:trainee, :submitted_for_trn, :created_from_dttp)
     Trainee.update_all(provider_id: @current_user.primary_provider.id)
   end
 
   def given_all_trainees_are_from_a_single_source
     Trainee.with_apply_application.destroy_all
+    Trainee.created_from_dttp.destroy_all
   end
 
   def then_the_record_source_filter_is_not_visible
@@ -176,6 +193,15 @@ private
   def when_i_filter_by_apply_draft_status
     trainee_index_page.imported_from_apply_checkbox.click
     trainee_index_page.apply_filters.click
+  end
+
+  def when_i_filter_by_dttp_import
+    trainee_index_page.imported_from_dttp_checkbox.click
+    trainee_index_page.apply_filters.click
+  end
+
+  def when_dttp_trainees_do_not_exist
+    Trainee.created_from_dttp.destroy_all
   end
 
   def when_i_remove_a_tag_for(value)
@@ -268,6 +294,10 @@ private
     expect(trainee_index_page).to have_text(full_name(@apply_non_draft_trainee))
   end
 
+  def then_i_should_not_see_imported_from_dttp_as_record_source
+    expect(trainee_index_page).not_to have_text("Imported from DTTP")
+  end
+
   def then_only_the_trn_received_trainee_is_visible
     expect(trainee_index_page).to have_text(full_name(@trn_received_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@withdrawn_trainee))
@@ -295,6 +325,11 @@ private
 
   def then_i_should_see_the_provider_filter
     expect(trainee_index_page).to have_provider_filter
+  end
+
+  def then_only_the_trainee_imported_from_dttp_is_visible
+    expect(trainee_index_page).to have_text(full_name(@dttp_import_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@apply_non_draft_trainee))
   end
 
   def full_name(trainee)
