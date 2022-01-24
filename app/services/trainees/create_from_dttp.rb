@@ -387,11 +387,21 @@ module Trainees
         return ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]
       end
 
+      return if primary_mathematics_specialism?
+
       find_by_entity_id(dttp_initiative_id, Dttp::CodeSets::TrainingInitiatives::MAPPING)
     end
 
     def unmapped_training_initiative?
-      dttp_initiative_id.present? && !ebacc? && training_initiative.blank?
+      dttp_initiative_id.present? && !special_initiatives? && training_initiative.blank?
+    end
+
+    def special_initiatives?
+      ebacc? || primary_mathematics_specialism?
+    end
+
+    def primary_mathematics_specialism?
+      dttp_initiative_id == Dttp::CodeSets::TrainingInitiatives::PRIMARY_MATHEMATICS_SPECIALISM
     end
 
     def ebacc?

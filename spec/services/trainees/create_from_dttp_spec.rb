@@ -574,6 +574,18 @@ module Trainees
       end
     end
 
+    context "when training_initiative is Primary mathematics specialism" do
+      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_initiative1id_value: Dttp::CodeSets::TrainingInitiatives::PRIMARY_MATHEMATICS_SPECIALISM) }
+
+      before do
+        create_trainee_from_dttp
+      end
+
+      it "sets no initiative" do
+        expect(Trainee.last.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+      end
+    end
+
     context "when training_initiative is not mapped" do
       let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_initiative1id_value: SecureRandom.uuid) }
 
