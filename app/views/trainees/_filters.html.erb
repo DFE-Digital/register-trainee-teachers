@@ -91,21 +91,26 @@
     </fieldset>
   </div>
 
-  <% if multiple_record_sources? %>
+  <% if show_source_filters? %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
           Record source
         </legend>
         <div class="govuk-checkboxes govuk-checkboxes--small">
+            <% available_record_sources.map do |source| %>
+              <% next if source == "dttp" && !current_user.system_admin? %>
             <div class="govuk-checkboxes__item">
-              <%= check_box_tag "record_source[]", "apply", checked?(filters, :record_source, "apply"), id: "record_source-apply", class: "govuk-checkboxes__input" %>
-              <%= label_tag "record_source-apply", label_for("record_source", "apply"), class: "govuk-label govuk-checkboxes__label" %>
+              <%= check_box_tag "record_source[]",
+                                source,
+                                checked?(filters, :record_source, source.to_s),
+                                id: "record_source-#{source}",
+                                class: "govuk-checkboxes__input" %>
+              <%= label_tag "record_source-#{source}",
+                            label_for("record_source", source),
+                            class: "govuk-label govuk-checkboxes__label" %>
             </div>
-            <div class="govuk-checkboxes__item">
-              <%= check_box_tag "record_source[]", "manual", checked?(filters, :record_source, "manual"), id: "record_source-manual", class: "govuk-checkboxes__input" %>
-              <%= label_tag "record_source-manual", label_for("record_source", "manual"), class: "govuk-label govuk-checkboxes__label" %>
-            </div>
+            <% end %>
         </div>
       </fieldset>
     </div>

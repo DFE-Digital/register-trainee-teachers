@@ -21,6 +21,7 @@ module PageObjects
       element :incomplete_checkbox, "#record_completion-incomplete"
       element :assessment_only_checkbox, "#training_route-assessment_only"
       element :imported_from_apply_checkbox, "#record_source-apply"
+      element :imported_from_dttp_checkbox, "#record_source-dttp"
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
       element :subject, "#subject"
       element :provider_filter, "#provider"

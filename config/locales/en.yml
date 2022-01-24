@@ -1010,6 +1010,7 @@ en:
         record_sources:
           apply: Imported from Apply
           manual: Added manually
+          dttp: Imported from DTTP
         trainee_id: *trainee_id
         training_routes:
           assessment_only: Assessment only

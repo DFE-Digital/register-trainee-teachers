@@ -491,5 +491,9 @@ FactoryBot.define do
     trait :discarded do
       discarded_at { Time.zone.now }
     end
+
+    trait :created_from_dttp do
+      created_from_dttp { true }
+    end
   end
 end

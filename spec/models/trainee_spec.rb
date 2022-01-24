@@ -72,7 +72,7 @@ describe Trainee do
     end
   end
 
-  context "scopes" do
+  describe "scopes" do
     describe "with_award_states" do
       it "returns trainees with the correct training route and state" do
         create(:trainee, :trn_received)
@@ -115,9 +115,19 @@ describe Trainee do
     describe ".with_manual_application" do
       let!(:manual_trainee) { create(:trainee) }
       let!(:apply_trainee) { create(:trainee, :with_apply_application) }
+      let!(:dttp_trainee) { create(:trainee, :created_from_dttp) }
 
-      it "returns trainees from apply" do
+      it "returns manually entered trainees" do
         expect(described_class.with_manual_application).to contain_exactly(manual_trainee)
+      end
+    end
+
+    describe ".created_from_dttp" do
+      let!(:draft_trainee) { create(:trainee) }
+      let!(:dttp_trainee) { create(:trainee, :created_from_dttp) }
+
+      it "returns trainees created from dttp" do
+        expect(described_class.created_from_dttp).to contain_exactly(dttp_trainee)
       end
     end
   end

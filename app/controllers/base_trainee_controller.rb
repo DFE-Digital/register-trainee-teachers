@@ -5,7 +5,8 @@ class BaseTraineeController < ApplicationController
     export_results_path
     filter_params
     filters
-    multiple_record_sources?
+    available_record_sources
+    show_source_filters?
     paginated_trainees
     providers
     search_primary_result_set
@@ -128,12 +129,31 @@ private
     ]
   end
 
-  def multiple_record_sources?
-    @multiple_record_sources ||= begin
-      apply_count = policy_scope(Trainee).with_apply_application.count
-      manual_count = policy_scope(Trainee).with_manual_application.count
-      apply_count.positive? && manual_count.positive?
-    end
+  def available_record_sources
+    sources = {
+      "apply" => records_contain_apply_source?,
+      "manual" => records_contain_manual_source?,
+      "dttp" => records_contain_dttp_source?,
+    }.select { |_key, value| value == true }.keys
+
+    sources.delete("dttp") unless current_user.system_admin?
+    sources
+  end
+
+  def show_source_filters?
+    available_record_sources.count > 1
+  end
+
+  def records_contain_manual_source?
+    policy_scope(Trainee).with_manual_application.count.positive?
+  end
+
+  def records_contain_dttp_source?
+    policy_scope(Trainee).created_from_dttp.count.positive?
+  end
+
+  def records_contain_apply_source?
+    policy_scope(Trainee).with_apply_application.count.positive?
   end
 
   def save_filter

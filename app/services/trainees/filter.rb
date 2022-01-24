@@ -30,12 +30,25 @@ module Trainees
       trainees.with_education_phase(*levels)
     end
 
-    def record_source(trainees, record_source)
-      return trainees if record_source.blank? || record_source.size > 1
+    def record_source(trainees, record_source_values)
+      scope_map = {
+        "dttp" => :created_from_dttp,
+        "manual" => :with_manual_application,
+        "apply" => :with_apply_application,
+      }
+      scoped_trainees = trainees
 
-      return trainees.with_manual_application if record_source.include?("manual")
+      Array(record_source_values).each_with_index do |source, i|
+        scope_name = scope_map[source]
 
-      trainees.with_apply_application
+        if i.zero?
+          scoped_trainees = scoped_trainees.send(scope_name)
+        else
+          scoped_trainees = scoped_trainees.or(trainees.send(scope_name))
+        end
+      end
+
+      scoped_trainees
     end
 
     def training_route(trainees, training_route)
