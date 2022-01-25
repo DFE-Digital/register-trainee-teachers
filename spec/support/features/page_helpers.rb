@@ -118,6 +118,10 @@ module Features
       @add_provider_to_user_page ||= PageObjects::Users::AddProvider.new
     end
 
+    def add_lead_school_to_user_page
+      @add_provider_to_user_page ||= PageObjects::Users::AddLeadSchool.new
+    end
+
     def provider_show_page
       @provider_show_page ||= PageObjects::Providers::Show.new
     end

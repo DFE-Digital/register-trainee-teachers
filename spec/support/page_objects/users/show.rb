@@ -6,11 +6,16 @@ module PageObjects
       element :link, ".add-provider-to-user"
     end
 
+    class AddLeadSchoolLink < SitePrism::Section
+      element :link, ".add-lead-school-to-user"
+    end
+
     class Show < PageObjects::Base
       set_url "/system-admin/users{/id}"
       element :add_provider, "a", text: "Add provider"
-      elements :providers, '.provider-row dd a'
-      # sections :add_provider, AddProviderLink, ".provider-row"
+      element :add_lead_school, "a", text: "Add lead school"
+      elements :providers, ".provider-row dd a"
+      elements :lead_schools, ".lead-school-row dd a"
     end
   end
 end

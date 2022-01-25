@@ -34,7 +34,7 @@
       <%= @user.email %>
     </dd>
   </div>
-  <div class="govuk-summary-list__row lead-school-rows">
+  <div class="govuk-summary-list__row lead-school-row">
     <dt class="govuk-summary-list__key">
       Lead schools
     </dt>
@@ -42,7 +42,7 @@
       <% @user.lead_schools.each do |lead_school| %>
         <%= govuk_link_to("#{lead_school.name} - #{lead_school.urn}", lead_school_path(lead_school), class: "govuk-!-display-block") %>
       <% end %>
-
+      <%= govuk_link_to("Add lead school", new_user_lead_school_path(@user), class: "govuk-!-display-block add-lead-school-to-user") %>
     </dd>
   </div>
   <div class="govuk-summary-list__row provider-row">
@@ -51,7 +51,7 @@
     </dt>
     <dd class="govuk-summary-list__value">
       <% @user.providers.each do |provider| %>
-        <%= govuk_link_to provider.name, provider_path(provider), class: "govuk-!-display-block" %>
+        <%= govuk_link_to "#{provider.name} - #{provider.code}", provider_path(provider), class: "govuk-!-display-block" %>
       <% end %>
       <%= govuk_link_to("Add provider", new_user_provider_path(@user), class: "govuk-!-display-block add-provider-to-user") %>
       </div>
