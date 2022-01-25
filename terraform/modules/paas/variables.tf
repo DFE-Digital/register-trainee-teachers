@@ -39,6 +39,7 @@ locals {
   redis_cache_service_name  = "register-redis-cache-${local.app_name_suffix}"
   web_app_name              = "register-${local.app_name_suffix}"
   app_environment = merge(var.app_config_variable, var.app_secrets_variable, {
+    DATABASE_URL  = cloudfoundry_service_key.postgres-key.credentials.uri
     SETTINGS__BLAZER_DATABASE_URL = cloudfoundry_service_key.postgres-blazer-key.credentials.uri
   })
   review_app_start_command = "bundle exec rake db:migrate db:seed example_data:generate && bundle exec rails server -b 0.0.0.0"

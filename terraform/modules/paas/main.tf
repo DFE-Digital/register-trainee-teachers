@@ -60,9 +60,6 @@ resource cloudfoundry_app web_app {
   }
 
   service_binding {
-    service_instance = cloudfoundry_service_instance.postgres_instance.id
-  }
-  service_binding {
     service_instance = cloudfoundry_service_instance.worker_redis_instance.id
   }
   service_binding {
@@ -95,9 +92,6 @@ resource cloudfoundry_app worker_app {
     service_instance = cloudfoundry_service_instance.cache_redis_instance.id
   }
   service_binding {
-    service_instance = cloudfoundry_service_instance.postgres_instance.id
-  }
-  service_binding {
     service_instance = cloudfoundry_user_provided_service.logging.id
   }
 }
@@ -118,6 +112,11 @@ resource cloudfoundry_user_provided_service logging {
   name             = local.logging_service_name
   space            = data.cloudfoundry_space.space.id
   syslog_drain_url = var.log_url
+}
+
+resource cloudfoundry_service_key postgres-key {
+  name             = local.postgres_service_name
+  service_instance = cloudfoundry_service_instance.postgres_instance.id
 }
 
 resource cloudfoundry_service_key postgres-blazer-key {
