@@ -72,6 +72,27 @@ RSpec.describe ContactDetails::View do
     end
   end
 
+  context "HESA trainee" do
+    before do
+      mock_trainee.hesa_id = "XXX"
+      mock_trainee.locale_code = "uk"
+      @result ||= render_inline(ContactDetails::View.new(data_model: mock_trainee))
+    end
+
+    it "does not renders rows for address, only email" do
+      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
+    end
+
+    it "does not render the address" do
+      expect(rendered_component).not_to have_text(mock_trainee.address_line_one)
+    end
+
+    it "renders the email address" do
+      expect(rendered_component)
+        .to have_text(mock_trainee.email)
+    end
+  end
+
 private
 
   def mock_trainee

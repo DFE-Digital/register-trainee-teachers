@@ -12,7 +12,7 @@ module ContactDetails
 
     def contact_detail_rows
       [
-        address_row,
+        (address_row if address_required?),
         email_row,
       ].compact
     end
@@ -23,6 +23,10 @@ module ContactDetails
 
     def trainee
       data_model.is_a?(Trainee) ? data_model : data_model.trainee
+    end
+
+    def address_required?
+      trainee.hesa_id.blank?
     end
 
     def address_row

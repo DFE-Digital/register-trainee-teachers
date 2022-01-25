@@ -18,7 +18,7 @@ class ContactDetailsForm < TraineeForm
 
   before_validation :sanitise_email
 
-  validates :locale_code, presence: true
+  validates :locale_code, presence: true, if: :address_required?
   validate :uk_address_valid, if: -> { uk? }
   validate :international_address_valid, if: -> { non_uk? }
   validates :postcode, postcode: true, if: ->(attr) { attr.postcode.present? }
@@ -42,6 +42,10 @@ class ContactDetailsForm < TraineeForm
     end
   end
 
+  def address_required?
+    trainee.hesa_id.blank?
+  end
+
 private
 
   def compute_fields
@@ -63,10 +67,24 @@ private
   end
 
   def nullify_unused_address_fields!
-    if uk?
+    if !address_required?
+      fields.merge!(
+        locale_code: nil,
+        international_address: nil,
+        address_line_one: nil,
+        address_line_two: nil,
+        town_city: nil,
+        postcode: nil,
+      )
+    elsif uk?
       fields.merge!(international_address: nil)
     else
-      fields.merge!(address_line_one: nil, address_line_two: nil, town_city: nil, postcode: nil)
+      fields.merge!(
+        address_line_one: nil,
+        address_line_two: nil,
+        town_city: nil,
+        postcode: nil,
+      )
     end
   end
 
