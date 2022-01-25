@@ -687,7 +687,7 @@ en:
       registered_trainees_link: View all registered trainees (%{count})
       guidance_heading: Guidance and feedback
       guidance_about_link: Find out about Register trainee teachers
-      guidance_data_link: Check what data you need to provide
+      guidance_data_link: check what data you need to provide
       give_feedback_link: Give feedback to help us improve Register trainee teachers
     start:
       bullet_desc: "Use this service to:"
