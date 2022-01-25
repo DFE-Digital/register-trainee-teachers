@@ -107,7 +107,7 @@ module Trainees
     end
 
     def multiple_providers?
-      dttp_trainee.placement_assignments.map(&:provider_dttp_id).uniq != [dttp_trainee.provider_dttp_id]
+      dttp_trainee.latest_placement_assignment.provider_dttp_id != dttp_trainee.provider_dttp_id
     end
 
     def trainee_already_exists?
