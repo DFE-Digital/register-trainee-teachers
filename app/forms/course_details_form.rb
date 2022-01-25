@@ -260,7 +260,7 @@ private
       errors.add(:itt_start_date, :future)
     elsif !itt_start_date.is_a?(Date)
       errors.add(:itt_start_date, :invalid)
-    elsif itt_start_date < earliest_valid_start_date
+    elsif before_academic_cycle?(itt_start_date)
       errors.add(:itt_start_date, :too_old)
     end
   end
@@ -305,8 +305,18 @@ private
     next_year + MAX_END_YEARS
   end
 
-  def earliest_valid_start_date
-    Date.parse("1/8/2020")
+  def before_academic_cycle?(date)
+    return false unless date && academic_cycle
+
+    date < academic_cycle.start_date
+  end
+
+  def course
+    @course ||= trainee.available_courses&.find_by(uuid: course_uuid)
+  end
+
+  def academic_cycle
+    @academic_cycle ||= (AcademicCycle.for_year(course.recruitment_cycle_year) if course)
   end
 
   def sanitise_subjects

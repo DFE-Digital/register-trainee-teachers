@@ -98,8 +98,6 @@ private
       errors.add(:start_date, :future)
     elsif !start_date.is_a?(Date)
       errors.add(:start_date, :invalid)
-    elsif start_date < earliest_valid_start_date
-      errors.add(:start_date, :too_old)
     elsif outside_academic_cycle?(start_date)
       errors.add(:start_date, :not_within_academic_cycle)
     end
@@ -141,10 +139,6 @@ private
 
   def max_years
     next_year + MAX_END_YEARS
-  end
-
-  def earliest_valid_start_date
-    Date.parse("1/8/2020")
   end
 
   def copy_dates_to_course
