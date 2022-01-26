@@ -120,7 +120,7 @@ group :development, :test do
   gem "launchy"
 
   # Testing framework
-  gem "rspec-rails", "~> 5.0.2"
+  gem "rspec-rails", "~> 5.1.0"
 
   gem "rails-controller-testing"
 
