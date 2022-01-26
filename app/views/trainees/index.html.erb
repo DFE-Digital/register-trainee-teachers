@@ -6,6 +6,10 @@
   </span>
 <% end %>
 
+<% if current_user.primary_provider %>
+    <span class="govuk-caption-l"><%= current_user.primary_provider.name %></span>
+<% end %>
+
 <h1 class="govuk-heading-xl" aria-live="polite">
   Registered trainees (<span id="js-trainee-count"><%= total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(total_trainees_count) %></span>)
 </h1>
