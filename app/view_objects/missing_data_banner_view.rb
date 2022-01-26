@@ -18,7 +18,7 @@ class MissingDataBannerView
   end
 
   def content
-    return unless missing_fields.any?
+    return unless can_render?
 
     tag.ul(class: "govuk-list app-notice-banner__list") do
       render_links
@@ -28,6 +28,10 @@ class MissingDataBannerView
 private
 
   attr_reader :trainee, :missing_fields
+
+  def can_render?
+    trainee.awaiting_action? && missing_fields.any?
+  end
 
   def render_links
     safe_join(

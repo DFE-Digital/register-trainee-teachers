@@ -4,7 +4,7 @@ module MappableFieldHelper
   def non_editable
     return false if system_admin
 
-    trainee.recommended_for_award? || trainee.awarded? || trainee.withdrawn?
+    !trainee.awaiting_action?
   end
 
   def mappable_field(field_value, field_label, action_url)
