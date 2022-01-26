@@ -5,8 +5,11 @@ module Degrees
     include ServicePattern
     include HasDttpMapping
 
-    def initialize(dttp_degree:)
+    BURSARY_RELATED = 1
+
+    def initialize(dttp_degree:, dttp_trainee:)
       @dttp_degree = dttp_degree
+      @dttp_trainee = dttp_trainee
     end
 
     def call
@@ -35,7 +38,7 @@ module Degrees
 
   private
 
-    attr_reader :dttp_degree
+    attr_reader :dttp_degree, :dttp_trainee
 
     def degree_params
       non_uk_degree? ? non_uk_degree_params : uk_degree_params
@@ -44,7 +47,7 @@ module Degrees
     def common_params
       {
         subject: subject,
-        graduation_year: dttp_degree.end_year,
+        graduation_year: dttp_degree.end_year || undergrad_date,
       }
     end
 
@@ -122,6 +125,17 @@ module Degrees
 
     def unmapped_country?
       dttp_degree.country.present? && country.blank?
+    end
+
+    # Only the date for the bursary-related degree is saved onto the placement assignment
+    def undergrad_date
+      return unless degree_is_bursary_related?
+
+      dttp_trainee.latest_placement_assignment.response["dfe_undergraddegreedateobtained"]
+    end
+
+    def degree_is_bursary_related?
+      dttp_degree.response["dfe_bursaryflag"] == BURSARY_RELATED
     end
   end
 end
