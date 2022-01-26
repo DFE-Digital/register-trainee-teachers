@@ -544,7 +544,22 @@ module Trainees
     end
 
     context "when placement assignments are from multiple providers" do
-      let(:dttp_trainee) { create(:dttp_trainee, :with_provider, placement_assignments: create_list(:dttp_placement_assignment, 2)) }
+      let(:placement_assignment_one) { create(:dttp_placement_assignment, :with_academic_year_twenty_twenty_one) }
+      let(:placement_assignment_two) { create(:dttp_placement_assignment, :with_academic_year_twenty_one_twenty_two, provider_dttp_id: provider.dttp_id) }
+      let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment_one, placement_assignment_two], provider: provider) }
+
+      it "imports the application" do
+        expect {
+          create_trainee_from_dttp
+        }.to change(Trainee, :count).by(1)
+        .and change(dttp_trainee, :state).to("imported")
+      end
+    end
+
+    context "when the latest placement assignment provider does not match the contact provider" do
+      let(:placement_assignment_one) { create(:dttp_placement_assignment, :with_academic_year_twenty_twenty_one, provider_dttp_id: provider.dttp_id) }
+      let(:placement_assignment_two) { create(:dttp_placement_assignment, :with_academic_year_twenty_one_twenty_two) }
+      let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment_one, placement_assignment_two], provider: provider) }
 
       it "marks the application as non importable" do
         expect {
