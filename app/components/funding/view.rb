@@ -69,7 +69,7 @@ module Funding
     end
 
     def grant_funding_row
-      grant_text = if data_model.applying_for_grant?
+      grant_text = if data_model.applying_for_grant
                      t(".grant_applied_for") + "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
                    else
                      t(".no_grant_applied_for")

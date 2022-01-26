@@ -4,6 +4,8 @@ require "rails_helper"
 
 module Funding
   describe View do
+    let(:data_model) { Funding::FormValidator.new(trainee) }
+
     before { render_inline(View.new(data_model: trainee)) }
 
     context "with tieried bursary" do
@@ -44,7 +46,7 @@ module Funding
           create(:funding_method_subject,
                  funding_method: funding_method,
                  allocation_subject: subject_specialism.allocation_subject)
-          render_inline(View.new(data_model: trainee))
+          render_inline(View.new(data_model: data_model))
         end
 
         it "renders if the trainee selects mathematics" do
@@ -95,7 +97,7 @@ module Funding
 
         describe "has no bursary" do
           before do
-            render_inline(View.new(data_model: trainee))
+            render_inline(View.new(data_model: data_model))
           end
 
           it "doesnt not render bursary row" do
@@ -104,6 +106,10 @@ module Funding
 
           context "and it non-draft" do
             let(:state) { :trn_received }
+
+            before do
+              render_inline(View.new(data_model: trainee))
+            end
 
             it "renders bursary not available" do
               expect(rendered_component).to have_text("Not applicable")
