@@ -650,27 +650,5 @@ module Trainees
         expect(trainee.dormancy_dttp_id).to eq(dormant_period.dttp_id)
       end
     end
-
-    context "when the trainee is 'Standards not met'" do
-      before do
-        create_trainee_from_dttp
-      end
-
-      context "and they have a 'dateleft'" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, dfe_dateleft: Time.zone.today, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
-
-        it "creates the trainee as withdrawn" do
-          expect(Trainee.last.state).to eq("withdrawn")
-        end
-      end
-
-      context "and they don't have a dateleft" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
-
-        it "creates the trainee as trn_received" do
-          expect(Trainee.last.state).to eq("trn_received")
-        end
-      end
-    end
   end
 end

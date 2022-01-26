@@ -23,7 +23,7 @@ module Degrees
 
     def create_degrees!
       dttp_trainee.degree_qualifications.each do |dttp_degree|
-        attrs = ::Degrees::MapFromDttp.call(dttp_degree: dttp_degree)
+        attrs = ::Degrees::MapFromDttp.call(dttp_degree: dttp_degree, dttp_trainee: dttp_trainee)
         next unless attrs
 
         trainee.degrees.build(attrs)

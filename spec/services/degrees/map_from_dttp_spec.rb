@@ -15,6 +15,8 @@ module Degrees
     let(:dttp_degree_qualification) { create(:dttp_degree_qualification, response: api_degree_qualification) }
     let(:graduation_year) { Date.parse(api_degree_qualification["dfe_degreeenddate"]).year }
 
+    let!(:dttp_trainee) { create(:dttp_trainee, :with_placement_assignment, degree_qualifications: [dttp_degree_qualification]) }
+
     let(:common_attributes) do
       {
         subject: degree_subject,
@@ -22,7 +24,12 @@ module Degrees
       }
     end
 
-    subject { described_class.call(dttp_degree: dttp_degree_qualification) }
+    subject do
+      described_class.call(
+        dttp_degree: dttp_degree_qualification,
+        dttp_trainee: dttp_trainee,
+      )
+    end
 
     it { is_expected.to be_a(Hash) }
     it { is_expected.to include(common_attributes) }
@@ -93,6 +100,34 @@ module Degrees
         end
 
         it { is_expected.to include(uk_degree_attributes) }
+      end
+
+      context "when there is no end date" do
+        let(:api_degree_qualification) do
+          create(
+            :api_degree_qualification,
+            _dfe_degreesubjectid_value: Dttp::CodeSets::DegreeSubjects::MAPPING[degree_subject][:entity_id],
+            dfe_degreeenddate: nil,
+            dfe_bursaryflag: bursary_flag,
+          )
+        end
+
+        context "and the degree is bursary-related" do
+          let(:bursary_flag) { 1 }
+
+          it "picks the graduation date from the placement assignment" do
+            expect(subject[:graduation_year]).not_to be_nil
+            expect(subject[:graduation_year]).to eq(dttp_trainee.latest_placement_assignment.response["dfe_undergraddegreedateobtained"])
+          end
+        end
+
+        context "and the degree is not bursary-related" do
+          let(:bursary_flag) { 2 }
+
+          it "ignores the graduation date from the placement assignment" do
+            expect(subject[:graduation_year]).to be_nil
+          end
+        end
       end
     end
 

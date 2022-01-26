@@ -18,6 +18,7 @@ FactoryBot.define do
         _dfe_academicyearid_value: academic_year,
         dfe_programmestartdate: programme_start_date.strftime("%Y-%m-%d"),
         dfe_programmeenddate: programme_end_date.strftime("%Y-%m-%d"),
+        dfe_undergraddegreedateobtained: Faker::Date.between(from: 2.years.ago, to: 1.year.ago),
       )
     }
 
