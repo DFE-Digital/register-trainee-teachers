@@ -8,6 +8,7 @@ RSpec.feature "Filtering trainees" do
     given_trainees_exist_in_the_system
     given_a_subject_specialism_is_available_for_selection
     when_i_visit_the_trainee_index_page
+    then_i_see_my_provider_name
     then_all_trainees_are_visible
   end
 
@@ -249,6 +250,10 @@ private
 
   def then_i_should_not_see_sort_links
     expect(trainee_index_page).not_to have_content("Sort by")
+  end
+
+  def then_i_see_my_provider_name
+    expect(trainee_index_page).to have_text(current_user.primary_provider.name)
   end
 
   def then_the_checkbox_should_still_be_checked_for(value)
