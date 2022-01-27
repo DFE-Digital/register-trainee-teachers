@@ -8,6 +8,12 @@ FactoryBot.define do
     accredited_body_code { create(:provider).code }
     recruitment_cycle_year { Settings.apply_applications.create.recruitment_cycle_year }
 
+    transient do
+      degree_slug { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s }
+      invalid_institution { "University of Warwick" }
+      invalid_subject { "History1" }
+    end
+
     trait :importable do
       state { "importable" }
     end
@@ -20,8 +26,8 @@ FactoryBot.define do
       invalid_data do
         {
           "degrees" => {
-            SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => {
-              institution: "University of Warwick",
+            degree_slug => {
+              institution: invalid_institution,
             },
           },
         }
@@ -31,9 +37,9 @@ FactoryBot.define do
     trait :with_multiple_invalid_data do
       invalid_data do
         { "degrees" => {
-          SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s => {
-            institution: "University of Warwick",
-            subject: "History1",
+          degree_slug => {
+            institution: invalid_institution,
+            subject: invalid_subject,
           },
         } }
       end

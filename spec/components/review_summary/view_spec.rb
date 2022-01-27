@@ -7,15 +7,18 @@ module ReviewSummary
     let(:trainee) { build(:trainee, :with_apply_application) }
     let(:form) { instance_double(ApplyApplications::TraineeDataForm, errors: ["bad data"]) }
     let(:described_component) { described_class.new(form: form, invalid_data_view: invalid_data_view) }
+    let(:trainee_data_form) { ApplyApplications::TraineeDataForm.new(trainee, include_degree_id: true) }
 
     let(:invalid_data_view) do
-      instance_double(ApplyInvalidDataView, summary_content: "Some header content",
-                                            summary_items_content: "",
-                                            invalid_data?: true)
+      instance_double(ApplyApplications::InvalidTraineeDataView, summary_content: "Some header content",
+                                                                 summary_items_content: "",
+                                                                 invalid_data?: true)
     end
 
     before do
-      allow(ApplyInvalidDataView).to receive(:new).with(trainee.apply_application).and_return(invalid_data_view)
+      allow(ApplyApplications::InvalidTraineeDataView).to(
+        receive(:new).with(trainee, trainee_data_form).and_return(invalid_data_view),
+      )
 
       render_inline(described_component)
     end
@@ -46,7 +49,7 @@ module ReviewSummary
 
     context "when the form has no errors" do
       let(:form) { instance_double(ApplyApplications::TraineeDataForm, errors: []) }
-      let(:invalid_data_view) { instance_double(ApplyInvalidDataView, invalid_data?: false) }
+      let(:invalid_data_view) { instance_double(ApplyApplications::InvalidTraineeDataView, invalid_data?: false) }
 
       it "does not render" do
         expect(rendered_component).not_to have_text("Some header content")
