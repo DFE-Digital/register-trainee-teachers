@@ -30,6 +30,20 @@ describe UserWithOrganisationContext do
       end
 
       it { is_expected.to eq(user.providers.first) }
+
+      context "user has a lead school and a provider" do
+        let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider], lead_schools: [lead_school]) }
+
+        it { is_expected.to eq(user.providers.first) }
+      end
+
+      context "user has only a lead school" do
+        let(:user) { create(:user, id: 1, first_name: "Dave", providers: [], lead_schools: [lead_school]) }
+
+        it "raises not authorised" do
+          expect { subject }.to raise_error(Pundit::NotAuthorizedError)
+        end
+      end
     end
 
     context "multi organisation feature is enabled" do
@@ -57,10 +71,16 @@ describe UserWithOrganisationContext do
         end
       end
 
-      context "user has one provider" do
+      context "user has only one provider" do
         let(:user) { create(:user, id: 1, providers: [provider]) }
 
         it { is_expected.to eq(provider) }
+      end
+
+      context "user has only one lead school" do
+        let(:user) { create(:user, id: 1, providers: [], lead_schools: [lead_school]) }
+
+        it { is_expected.to eq(lead_school) }
       end
     end
   end
