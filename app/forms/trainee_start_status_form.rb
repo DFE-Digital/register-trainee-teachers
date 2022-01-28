@@ -40,7 +40,7 @@ class TraineeStartStatusForm < TraineeForm
       date_hash = { year: year, month: month, day: day }
       date_args = date_hash.values.map(&:to_i)
 
-      valid_date?(date_args) ? Date.new(*date_args) : OpenStruct.new(date_hash)
+      valid_date?(date_args) ? Date.new(*date_args) : InvalidDate.new(date_hash)
     end
   end
 
