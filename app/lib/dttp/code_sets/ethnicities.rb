@@ -8,6 +8,17 @@ module Dttp
       INFORMATION_REFUSED = "information_refused"
       INFORMATION_NOT_YET_SOUGHT = "information_not_yet_sought"
 
+      NOT_PROVIDED_ETHNICITIES = [
+        Diversities::NOT_PROVIDED,
+        INFORMATION_REFUSED,
+        INFORMATION_NOT_YET_SOUGHT,
+      ].freeze
+
+      WHITE_ETHNICITIES = [
+        WHITE,
+        SCOTTISH,
+      ].freeze
+
       MAPPING = {
         ::Diversities::AFRICAN => { ethnic_minority: true, entity_id: "c00bb892-2b9d-e711-80d9-005056ac45bb" },
         ::Diversities::ANOTHER_ASIAN_BACKGROUND => { ethnic_minority: true, entity_id: "cc0bb892-2b9d-e711-80d9-005056ac45bb" },

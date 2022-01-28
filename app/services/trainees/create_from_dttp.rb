@@ -213,22 +213,17 @@ module Trainees
     end
 
     def ethnicity_attributes
-      if [
-        Diversities::NOT_PROVIDED,
-        Dttp::CodeSets::Ethnicities::INFORMATION_NOT_YET_SOUGHT,
-        Dttp::CodeSets::Ethnicities::INFORMATION_REFUSED,
-      ].include?(ethnic_background)
+      if Dttp::CodeSets::Ethnicities::NOT_PROVIDED_ETHNICITIES.include?(ethnic_background)
         return {
           ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+          ethnic_background: Diversities::NOT_PROVIDED,
         }
       end
 
-      if [
-        Dttp::CodeSets::Ethnicities::WHITE,
-        Dttp::CodeSets::Ethnicities::SCOTTISH,
-      ].include?(ethnic_background)
+      if Dttp::CodeSets::Ethnicities::WHITE_ETHNICITIES.include?(ethnic_background)
         return {
           ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:white],
+          ethnic_background: Diversities::NOT_PROVIDED,
         }
       end
 
@@ -241,7 +236,10 @@ module Trainees
         }
       end
 
-      {}
+      {
+        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+        ethnic_background: Diversities::NOT_PROVIDED,
+      }
     end
 
     def ethnic_background
