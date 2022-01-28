@@ -24,7 +24,7 @@ class UserWithOrganisationContext < SimpleDelegator
   end
 
   def organisation
-    return user.providers.first unless multiple_organisations?
+    return single_organisation unless multiple_organisations?
 
     return if session[:current_organisation].blank?
 
@@ -34,7 +34,7 @@ class UserWithOrganisationContext < SimpleDelegator
   def multiple_organisations?
     return false unless FeatureService.enabled?(:user_can_have_multiple_organisations)
 
-    user.lead_schools.any? || user.providers.count > 1
+    (user.lead_schools + user.providers).count > 1
   end
 
   def provider?
@@ -64,5 +64,9 @@ private
                                user.lead_schools.find_by(id: organisation_id)
                              end
     organisation_to_return
+  end
+
+  def single_organisation
+    user.lead_schools.first || user.providers.first
   end
 end

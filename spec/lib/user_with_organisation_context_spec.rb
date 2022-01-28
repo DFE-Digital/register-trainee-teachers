@@ -57,10 +57,16 @@ describe UserWithOrganisationContext do
         end
       end
 
-      context "user has one provider" do
+      context "user has only one provider" do
         let(:user) { create(:user, id: 1, providers: [provider]) }
 
         it { is_expected.to eq(provider) }
+      end
+
+      context "user has only one lead school" do
+        let(:user) { create(:user, id: 1, providers: [], lead_schools: [lead_school]) }
+
+        it { is_expected.to eq(lead_school) }
       end
     end
   end
