@@ -26,8 +26,12 @@ module CourseDetails
         age_range_row,
         study_mode_row,
         course_date_row(itt_start_date, :start),
-        course_date_row(itt_end_date, :end),
+        (course_date_row(itt_end_date, :end) if end_date_required?),
       ].compact
+    end
+
+    def end_date_required?
+      trainee.hesa_id.blank?
     end
 
   private

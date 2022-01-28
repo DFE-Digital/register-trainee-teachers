@@ -18,7 +18,8 @@ class IttDatesForm < TraineeForm
 
   attr_accessor(*FIELDS, :course)
 
-  validate :start_date_valid, :end_date_valid
+  validate :start_date_valid
+  validate :end_date_valid, if: :end_date_required?
 
   delegate :study_mode, to: :course_details_form
 
@@ -57,7 +58,13 @@ class IttDatesForm < TraineeForm
   end
 
   def end_date
-    compute_date({ year: end_year, month: end_month, day: end_day })
+    if end_date_required?
+      compute_date({ year: end_year, month: end_month, day: end_day })
+    end
+  end
+
+  def end_date_required?
+    trainee.hesa_id.blank?
   end
 
 private
@@ -80,6 +87,8 @@ private
   end
 
   def for_all_trainees?
+    return false unless end_date_required?
+
     ActiveModel::Type::Boolean.new.cast(is_for_all_trainees)
   end
 

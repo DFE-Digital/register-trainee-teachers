@@ -135,6 +135,40 @@ module CourseDetails
       end
     end
 
+    context "HESA trainee" do
+      context "with a publish course", feature_publish_course_details: true do
+        let(:trainee) { create(:trainee, :with_primary_education, :with_publish_course_details, hesa_id: "XXX", itt_end_date: Time.zone.today) }
+
+        before do
+          render_inline(View.new(data_model: trainee))
+        end
+
+        it "renders 6 rows" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
+        end
+
+        it "does not render the ITT end date" do
+          expect(rendered_component).not_to have_text("ITT end date")
+        end
+      end
+
+      context "without a publish course" do
+        let(:trainee) { create(:trainee, hesa_id: "XXX", itt_end_date: Time.zone.today) }
+
+        before do
+          render_inline(View.new(data_model: trainee))
+        end
+
+        it "renders 4 rows" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 4)
+        end
+
+        it "does not render the ITT end date" do
+          expect(rendered_component).not_to have_text("ITT end date")
+        end
+      end
+    end
+
     context "early years route" do
       before do
         render_inline(View.new(data_model: trainee))
