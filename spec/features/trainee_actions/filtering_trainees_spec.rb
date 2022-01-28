@@ -160,7 +160,7 @@ private
     @primary_trainee ||= create(:trainee, :submitted_for_trn, course_age_range: AgeRange::THREE_TO_EIGHT)
     @apply_non_draft_trainee ||= create(:trainee, :submitted_for_trn, :with_apply_application)
     @dttp_import_trainee ||= create(:trainee, :submitted_for_trn, :created_from_dttp)
-    Trainee.update_all(provider_id: @current_user.primary_provider.id)
+    Trainee.update_all(provider_id: @current_user.organisation.id)
   end
 
   def given_all_trainees_are_from_a_single_source
@@ -253,7 +253,7 @@ private
   end
 
   def then_i_see_my_provider_name
-    expect(trainee_index_page).to have_text(current_user.primary_provider.name)
+    expect(trainee_index_page).to have_text(current_user.organisation.name)
   end
 
   def then_the_checkbox_should_still_be_checked_for(value)

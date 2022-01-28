@@ -9,7 +9,7 @@ module PageObjects
 
       element :add_provider_link, "a", text: "Add a provider"
 
-      section :provider_card, PageObjects::Sections::ProviderCard, ".provider-card"
+      sections :provider_cards, PageObjects::Sections::ProviderCard, ".provider-card"
     end
   end
 end

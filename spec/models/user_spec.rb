@@ -115,12 +115,4 @@ describe User do
       end
     end
   end
-
-  describe ".primary_provider" do
-    subject { create(:user) }
-
-    context "returns first provider" do
-      it { expect(subject.primary_provider).to eq(subject.providers.first) }
-    end
-  end
 end

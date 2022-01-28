@@ -22,17 +22,16 @@ module SystemAdmin
 
     def edit
       user
-      @provider = user.primary_provider
+      provider
     end
 
     def show
       @user = user
-      @provider = user.primary_provider
     end
 
     def update
       user
-      @provider = user.primary_provider
+      provider
       if user.update(permitted_attributes(@user))
         redirect_to(provider_path(provider), flash: { success: t(".success") })
       else
@@ -42,13 +41,12 @@ module SystemAdmin
 
     def delete
       user
-      @provider = user.primary_provider
+      provider
     end
 
     def destroy
       user.discard
-      @provider = user.primary_provider
-      redirect_to(provider_path(@provider))
+      redirect_to(provider_path(provider))
     end
 
   private

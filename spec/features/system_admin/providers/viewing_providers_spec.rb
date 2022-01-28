@@ -13,7 +13,6 @@ feature "View providers" do
 
     scenario "i can view the providers" do
       then_i_see_the_provider
-      when_i_click_on_provider_name
     end
   end
 
@@ -22,10 +21,6 @@ feature "View providers" do
   end
 
   def then_i_see_the_provider
-    expect(providers_index_page).to have_provider_card
-  end
-
-  def when_i_click_on_provider_name
-    providers_index_page.provider_card.name.click
+    expect(providers_index_page.provider_cards).not_to be_empty
   end
 end

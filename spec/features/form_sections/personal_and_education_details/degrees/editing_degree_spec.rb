@@ -76,7 +76,7 @@ private
   end
 
   def given_a_non_draft_trainee_with_a_uk_degree
-    @uk_trainee ||= create(:trainee, :submitted_for_trn, provider: current_user.primary_provider)
+    @uk_trainee ||= create(:trainee, :submitted_for_trn, provider: current_user.organisation)
   end
 
   def given_a_trainee_with_a_non_uk_degree
@@ -147,13 +147,13 @@ private
   end
 
   def uk_trainee(trait: :draft)
-    @uk_trainee ||= create(:trainee, trait, provider: current_user.primary_provider).tap do |t|
+    @uk_trainee ||= create(:trainee, trait, provider: current_user.organisation).tap do |t|
       t.degrees << build(:degree, :uk_degree_type)
     end
   end
 
   def non_uk_trainee
-    @non_uk_trainee ||= create(:trainee, provider: current_user.primary_provider).tap do |t|
+    @non_uk_trainee ||= create(:trainee, provider: current_user.organisation).tap do |t|
       t.degrees << build(:degree, :non_uk_degree_type)
     end
   end

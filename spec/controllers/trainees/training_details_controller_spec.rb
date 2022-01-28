@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Trainees::TrainingDetailsController do
-  let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
+  let(:user) { build_current_user }
 
   before do
     allow(controller).to receive(:current_user).and_return(user)
@@ -11,7 +11,7 @@ describe Trainees::TrainingDetailsController do
 
   describe "#update" do
     context "with an apply draft trainee" do
-      let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.primary_provider) }
+      let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.organisation) }
 
       before do
         allow(TrainingDetailsForm).to receive(:new).and_return(double(save: true))
