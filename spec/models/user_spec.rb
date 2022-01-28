@@ -66,10 +66,6 @@ describe User do
     it { is_expected.to have_db_index(:dttp_id).unique(true) }
   end
 
-  describe "auditing" do
-    it { is_expected.to be_audited.associated_with(:primary_provider) }
-  end
-
   describe "#discard" do
     subject { create(:user) }
 
