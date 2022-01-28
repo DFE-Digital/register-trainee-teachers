@@ -6,8 +6,8 @@
   </span>
 <% end %>
 
-<% if current_user.primary_provider %>
-    <span class="govuk-caption-l"><%= current_user.primary_provider.name %></span>
+<% if current_user.organisation %>
+    <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
 <% end %>
 
 <h1 class="govuk-heading-xl" aria-live="polite">

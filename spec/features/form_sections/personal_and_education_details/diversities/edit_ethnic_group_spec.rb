@@ -3,10 +3,12 @@
 require "rails_helper"
 
 feature "edit ethnic group", type: :feature do
-  background { given_i_am_authenticated }
+  background  do
+    given_i_am_authenticated
+    given_a_trainee_exists(:diversity_disclosed, :disability_not_provided)
+  end
 
   scenario "edit with valid parameters" do
-    given_a_trainee_exists
     and_i_am_on_the_diversity_ethnic_group_page
     and_i_choose_the_asian_option
     and_i_submit_the_form
@@ -16,7 +18,6 @@ feature "edit ethnic group", type: :feature do
 
   context "trainee with no defined ethnic group" do
     background do
-      given_a_trainee_exists
       given_i_visited_the_diversities_confirm_page_page
       and_i_am_on_the_diversity_ethnic_group_page
     end
@@ -42,27 +43,12 @@ feature "edit ethnic group", type: :feature do
   end
 
   scenario "choosing not to provide ethnic group" do
-    given_a_trainee_exists
     given_i_visited_the_diversities_confirm_page_page
     and_i_am_on_the_diversity_ethnic_group_page
     and_i_choose_the_not_provided_option
     and_i_submit_the_form
     then_i_am_redirected_to_the_diversities_confirm_page_page
     and_the_diversity_ethnic_group_is_updated_with_not_provided
-  end
-
-  def given_a_trainee_exists
-    @trainee = create(:trainee, :diversity_disclosed, :disability_not_provided, provider: current_user.primary_provider)
-  end
-
-  def given_a_trainee_with_a_background_exists
-    @trainee = create(
-      :trainee,
-      :diversity_disclosed,
-      ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:mixed],
-      ethnic_background: Diversities::BACKGROUNDS[Diversities::ETHNIC_GROUP_ENUMS[:mixed]].sample,
-      provider: current_user.primary_provider,
-    )
   end
 
   def and_i_choose_the_asian_option

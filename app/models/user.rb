@@ -24,10 +24,6 @@ class User < ApplicationRecord
     EmailFormatValidator.new(record).validate
   end
 
-  def primary_provider
-    providers.first
-  end
-
   def name
     "#{first_name} #{last_name}"
   end

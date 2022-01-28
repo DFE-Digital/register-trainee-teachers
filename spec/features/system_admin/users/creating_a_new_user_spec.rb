@@ -8,8 +8,9 @@ feature "Creating a new user" do
 
   before do
     given_i_am_authenticated(user: user)
+    and_a_provider_exists
     when_i_visit_the_provider_index_page
-    and_i_click_on_a_provider
+    and_i_click_on_the_provider
     then_i_am_taken_to_the_provider_show_page
     and_i_click_on_add_a_user
   end
@@ -40,12 +41,16 @@ private
     providers_index_page.load
   end
 
-  def and_i_click_on_a_provider
-    providers_index_page.provider_card.name.click
+  def and_a_provider_exists
+    provider
+  end
+
+  def and_i_click_on_the_provider
+    providers_index_page.provider_cards.find { |provider_card| provider_card.name.text == provider.name }.name.click
   end
 
   def then_i_am_taken_to_the_provider_show_page
-    expect(provider_show_page).to be_displayed(id: user.primary_provider.id)
+    expect(provider_show_page).to be_displayed(id: provider.id)
   end
 
   def and_i_click_on_add_a_user
@@ -74,5 +79,9 @@ private
 
   def then_i_should_see_the_error_summary
     expect(new_user_page.error_summary).to be_visible
+  end
+
+  def provider
+    @provider ||= create(:provider)
   end
 end
