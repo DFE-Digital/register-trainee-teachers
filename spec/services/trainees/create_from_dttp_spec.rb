@@ -408,9 +408,10 @@ module Trainees
         context "when ethnicity is #{name}" do
           let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::INACTIVE_MAPPING[name][:entity_id]) }
 
-          it "sets the ethnic_group to white" do
+          it "sets the ethnic_group to white and the ethnic_background to 'Not provided'" do
             create_trainee_from_dttp
             expect(Trainee.last.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:white])
+            expect(Trainee.last.ethnic_background).to eq(Diversities::NOT_PROVIDED)
           end
         end
       end
@@ -426,12 +427,23 @@ module Trainees
         end
       end
 
-      context "when ethnicity is 'not provided'" do
-        let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::MAPPING[Diversities::NOT_PROVIDED][:entity_id]) }
+      context "when ethnicity is missing" do
+        let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: nil) }
 
-        it "sets the ethnic_group to 'Not provided'" do
+        it "sets the ethnic_group and background to 'Not provided'" do
           create_trainee_from_dttp
           expect(Trainee.last.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+          expect(Trainee.last.ethnic_background).to eq(Diversities::NOT_PROVIDED)
+        end
+      end
+
+      context "when ethnicity is explicitly 'not provided'" do
+        let(:api_trainee) { create(:api_trainee, _dfe_ethnicityid_value: Dttp::CodeSets::Ethnicities::MAPPING[Diversities::NOT_PROVIDED][:entity_id]) }
+
+        it "sets the ethnic_group and background to 'Not provided'" do
+          create_trainee_from_dttp
+          expect(Trainee.last.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+          expect(Trainee.last.ethnic_background).to eq(Diversities::NOT_PROVIDED)
         end
       end
 
