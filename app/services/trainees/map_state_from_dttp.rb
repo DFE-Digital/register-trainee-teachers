@@ -35,7 +35,7 @@ module Trainees
       end
 
       if awaiting_qts_or_standards_met?
-        return "trn_received"
+        return standards_met_to_state_mapping
       end
 
       most_progressed_state
@@ -80,7 +80,8 @@ module Trainees
       case dttp_status
       when DttpStatuses::DRAFT_RECORD then "draft"
       when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "submitted_for_trn"
-      when DttpStatuses::STANDARDS_MET, DttpStatuses::AWAITING_QTS then "recommended_for_award"
+      when DttpStatuses::AWAITING_QTS then "recommended_for_award"
+      when DttpStatuses::STANDARDS_MET then standards_met_to_state_mapping
       when DttpStatuses::DEFERRED then "deferred"
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
       when DttpStatuses::AWARDED_EYTS, DttpStatuses::AWARDED_QTS then "awarded"
@@ -89,6 +90,16 @@ module Trainees
         withdraw_date.present? ? "withdrawn" : "trn_received"
       when DttpStatuses::EYTS_REVOKED, DttpStatuses::QTS_REVOKED, DttpStatuses::DID_NOT_START, DttpStatuses::REJECTED then nil
       end
+    end
+
+    def standards_met_to_state_mapping
+      return "trn_received" if dttp_trainee.hesa_id.present?
+
+      recommended_for_award? ? "recommended_for_award" : "trn_received"
+    end
+
+    def recommended_for_award?
+      dttp_trainee.latest_placement_assignment.response["dfe_recommendtraineetonctl"] == true
     end
 
     def withdraw_date

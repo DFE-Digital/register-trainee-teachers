@@ -79,15 +79,35 @@ module Trainees
 
       context "and it is STANDARDS_NOT_MET" do
         context "and they have a 'dateleft'" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, dfe_dateleft: Time.zone.today, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
+          let(:api_placement_assignment) { create(:api_placement_assignment, dfe_dateleft: Time.zone.today, _dfe_traineestatusid_value: standards_not_met_id) }
 
           it { is_expected.to eq("withdrawn") }
         end
 
         context "and they don't have a dateleft" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: "215af972-9e1b-e711-80c7-0050568902d3") }
+          let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: standards_not_met_id) }
 
           it { is_expected.to eq("trn_received") }
+        end
+      end
+
+      context "and it is STANDARDS_MET" do
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: standards_met_id) }
+
+        context "and they are a hesa record" do
+          it { is_expected.to eq("trn_received") }
+        end
+
+        context "and they are a non hesa record" do
+          let(:api_trainee) { create(:api_trainee, dfe_husid: nil) }
+
+          it { is_expected.to eq("trn_received") }
+
+          context "and they have dfe_recommendtraineetonctl set to true" do
+            let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: standards_met_id, dfe_recommendtraineetonctl: true) }
+
+            it { is_expected.to eq("recommended_for_award") }
+          end
         end
       end
     end
