@@ -67,8 +67,9 @@ module Trainees
 
       dttp_trainee.imported!
 
-      trainee.update!(dttp_update_sha: trainee.sha)
+      update_dttp_sha!
 
+      set_created_at_and_updated_at!
       trainee
     end
 
@@ -526,6 +527,17 @@ module Trainees
 
     def funding_manager
       @funding_manager ||= FundingManager.new(trainee)
+    end
+
+    def update_dttp_sha!
+      trainee.dttp_update_sha = trainee.sha
+
+      trainee.save!
+    end
+
+    def set_created_at_and_updated_at!
+      trainee.update!(created_at: dttp_trainee.created_at)
+      trainee.update!(updated_at: dttp_trainee.updated_at)
     end
   end
 end

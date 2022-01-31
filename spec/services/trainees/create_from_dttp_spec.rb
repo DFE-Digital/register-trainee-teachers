@@ -87,6 +87,8 @@ module Trainees
         expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
         expect(trainee.training_initiative).to eq("now_teach")
         expect(trainee.hesa_id).to eq(api_trainee["dfe_husid"])
+        expect(trainee.created_at).to eq(api_trainee["createdon"])
+        expect(trainee.updated_at).to eq(api_trainee["modifiedon"])
         expect(trainee.dttp_update_sha).to eq(trainee.sha)
       end
 

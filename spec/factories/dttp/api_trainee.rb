@@ -22,6 +22,8 @@ FactoryBot.define do
     _dfe_nationality_value { Dttp::CodeSets::Nationalities::MAPPING[nationality_name][:entity_id] }
     dfe_trn { Faker::Number.number(digits: 7) }
     merged { false }
+    createdon { Faker::Date.between(from: 2.years.ago, to: 2.days.ago).iso8601 }
+    modifiedon { Faker::Date.between(from: 2.years.ago, to: 2.days.ago).iso8601 }
     dfe_husid { "1811499435078" }
 
     initialize_with { attributes.stringify_keys }
