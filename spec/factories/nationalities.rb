@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :nationality do
-    sequence(:name) { |n| "nationality #{n}" }
+    name { Dttp::CodeSets::Nationalities::MAPPING.keys.sample }
 
     trait :british do
       name { Dttp::CodeSets::Nationalities::BRITISH }
