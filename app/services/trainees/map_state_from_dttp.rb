@@ -21,14 +21,21 @@ module Trainees
     end
 
     def call
-      if dttp_statuses.empty? || status_not_determinable? || mapped_statuses.empty?
+      if sorted_dttp_statuses.empty? || mapped_statuses.empty?
         dttp_trainee.non_importable_missing_state!
         return
       end
 
-      # Specific rule
-      if dttp_statuses == [DttpStatuses::DEFERRED, DttpStatuses::STANDARDS_NOT_MET]
+      if trainee_deferred_but_placement_assignment_yet_to_complete?
+        return "trn_received"
+      end
+
+      if trainee_yet_to_complete_but_placement_assignment_deferred?
         return "deferred"
+      end
+
+      if awaiting_qts_or_standards_met?
+        return standards_met_to_state_mapping
       end
 
       most_progressed_state
@@ -38,29 +45,31 @@ module Trainees
 
     attr_reader :dttp_trainee, :placement_assignment
 
+    def trainee_deferred_but_placement_assignment_yet_to_complete?
+      dttp_statuses == [DttpStatuses::DEFERRED, DttpStatuses::YET_TO_COMPLETE_COURSE]
+    end
+
+    def trainee_yet_to_complete_but_placement_assignment_deferred?
+      dttp_statuses == [DttpStatuses::YET_TO_COMPLETE_COURSE, DttpStatuses::DEFERRED]
+    end
+
+    def awaiting_qts_or_standards_met?
+      sorted_dttp_statuses == [DttpStatuses::AWAITING_QTS, DttpStatuses::STANDARDS_MET]
+    end
+
+    def sorted_dttp_statuses
+      @sorted_dttp_statuses ||= dttp_statuses.sort
+    end
+
     def dttp_statuses
       @dttp_statuses ||= [
         find_by_entity_id(dttp_trainee.response["_dfe_traineestatusid_value"], Dttp::CodeSets::Statuses::MAPPING),
         find_by_entity_id(dttp_trainee.latest_placement_assignment.response["_dfe_traineestatusid_value"], Dttp::CodeSets::Statuses::MAPPING),
-      ].compact.sort
-    end
-
-    def status_not_determinable?
-      non_determinable_statuses.include?(dttp_statuses)
-    end
-
-    def non_determinable_statuses
-      [
-        [DttpStatuses::AWAITING_QTS, DttpStatuses::STANDARDS_MET],
-        [DttpStatuses::AWAITING_QTS, DttpStatuses::LEFT_COURSE_BEFORE_END],
-        [DttpStatuses::DEFERRED, DttpStatuses::AWAITING_QTS],
-        [DttpStatuses::DEFERRED, DttpStatuses::LEFT_COURSE_BEFORE_END],
-        [DttpStatuses::DEFERRED, DttpStatuses::YET_TO_COMPLETE_COURSE],
-      ].map(&:sort)
+      ].compact
     end
 
     def mapped_statuses
-      @mapped_statuses ||= dttp_statuses.map { |dttp_status| map_to_state(dttp_status) }.compact
+      @mapped_statuses ||= sorted_dttp_statuses.map { |dttp_status| map_to_state(dttp_status) }.compact
     end
 
     def most_progressed_state
@@ -71,7 +80,8 @@ module Trainees
       case dttp_status
       when DttpStatuses::DRAFT_RECORD then "draft"
       when DttpStatuses::PROSPECTIVE_TRAINEE_TRN_REQUESTED then "submitted_for_trn"
-      when DttpStatuses::STANDARDS_MET, DttpStatuses::AWAITING_QTS then "recommended_for_award"
+      when DttpStatuses::AWAITING_QTS then "recommended_for_award"
+      when DttpStatuses::STANDARDS_MET then standards_met_to_state_mapping
       when DttpStatuses::DEFERRED then "deferred"
       when DttpStatuses::YET_TO_COMPLETE_COURSE then "trn_received"
       when DttpStatuses::AWARDED_EYTS, DttpStatuses::AWARDED_QTS then "awarded"
@@ -80,6 +90,16 @@ module Trainees
         withdraw_date.present? ? "withdrawn" : "trn_received"
       when DttpStatuses::EYTS_REVOKED, DttpStatuses::QTS_REVOKED, DttpStatuses::DID_NOT_START, DttpStatuses::REJECTED then nil
       end
+    end
+
+    def standards_met_to_state_mapping
+      return "trn_received" if dttp_trainee.hesa_id.present?
+
+      recommended_for_award? ? "recommended_for_award" : "trn_received"
+    end
+
+    def recommended_for_award?
+      dttp_trainee.latest_placement_assignment.response["dfe_recommendtraineetonctl"] == true
     end
 
     def withdraw_date
