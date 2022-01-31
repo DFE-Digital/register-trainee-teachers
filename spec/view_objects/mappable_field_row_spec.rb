@@ -119,7 +119,7 @@ describe MappableFieldRow do
     context "non editable" do
       subject do
         described_class.new(
-          field_value: "History",
+          field_value: field_value,
           field_label: field_label,
           action_url: action_url,
           apply_draft: false,
@@ -133,6 +133,15 @@ describe MappableFieldRow do
         expect(subject[:action_href]).to be_nil
         expect(subject[:action_text]).to be_nil
         expect(subject[:action_visually_hidden_text]).to be_nil
+        expect(subject[:value]).to eq("Not provided")
+      end
+
+      context "when field value exists" do
+        let(:field_value) { "History" }
+
+        it "renders the provided value" do
+          expect(subject[:value]).to eq("History")
+        end
       end
     end
   end

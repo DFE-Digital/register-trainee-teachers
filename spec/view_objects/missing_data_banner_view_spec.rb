@@ -26,6 +26,14 @@ describe MissingDataBannerView do
         "<ul class=\"govuk-list app-notice-banner__list\"><li><a class=\"govuk-notification-banner__link\" href=\"#{expected_path}\">#{expected_display_name} is missing</a></li></ul>"
       end
 
+      context "and the trainee is not awaiting action" do
+        let(:trainee) { create(:trainee, %i[recommended_for_award withdrawn awarded].sample, first_names: nil) }
+
+        it "returns nothing" do
+          expect(subject).to be_falsey
+        end
+      end
+
       context "first_names" do
         let(:field) { :first_names }
         let(:expected_path) { edit_trainee_personal_details_path(trainee) }

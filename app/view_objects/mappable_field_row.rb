@@ -26,7 +26,7 @@ private
   attr_accessor :invalid_data, :record_id, :field_name, :field_value, :field_label, :text, :action_url, :has_errors, :apply_draft, :non_editable
 
   def value_attribute
-    return { value: unmapped_value.html_safe } if field_value.nil?
+    return { value: blank_field_value_content } if field_value.nil?
 
     { value: field_value }
   end
@@ -35,6 +35,16 @@ private
     return {} if field_value.nil? || action_url.nil? || non_editable
 
     { action_href: action_url, action_text: I18n.t(:change), action_visually_hidden_text: field_label.downcase }
+  end
+
+  def blank_field_value_content
+    return not_provided_text if non_editable
+
+    unmapped_value.html_safe
+  end
+
+  def not_provided_text
+    @not_provided_text ||= I18n.t("components.confirmation.not_provided")
   end
 
   def unmapped_value

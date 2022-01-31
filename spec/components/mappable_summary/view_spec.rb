@@ -53,8 +53,8 @@ module MappableSummary
       context "closed trainee records not editable" do
         let(:trainee) { create(:trainee, :withdrawn) }
 
-        it "renders missing data markup without edit links" do
-          expect(component).to have_text("Course is missing")
+        it "renders not provided text without edit links" do
+          expect(component).to have_text("Not provided")
           expect(component).not_to have_text("Enter an answer")
           expect(component).not_to have_css(".govuk-link")
           expect(component).not_to have_text("Change")
