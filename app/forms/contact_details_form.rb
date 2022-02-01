@@ -19,9 +19,9 @@ class ContactDetailsForm < TraineeForm
   before_validation :sanitise_email
 
   validates :locale_code, presence: true, if: :address_required?
-  validate :uk_address_valid, if: -> { uk? }
-  validate :international_address_valid, if: -> { non_uk? }
-  validates :postcode, postcode: true, if: ->(attr) { attr.postcode.present? }
+  validate :uk_address_valid, if: -> { address_required? && uk? }
+  validate :international_address_valid, if: -> { address_required? && non_uk? }
+  validates :postcode, postcode: true, if: -> { address_required? && postcode.present? }
   validates :email, presence: true
 
   validate do |record|
