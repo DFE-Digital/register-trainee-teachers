@@ -456,6 +456,10 @@ en:
             tuition: Lead school
             salaried: Lead and employing schools
             pg_teaching_apprenticeship: Lead and employing schools
+    personas:
+      view:
+        provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing users."
+        lead_school_user: "Associated with <strong>%{lead_school_name}</strong> and can view users assigned to that lead school."
   apply_applications:
     trainee_data:
       view:

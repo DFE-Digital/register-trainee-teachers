@@ -12,10 +12,10 @@ module Personas
 
     def association_strings
       providers = persona.providers.map do |provider|
-        "Belongs to <strong>#{provider.name}</strong> and is responsible for managing users."
+        t("components.personas.view.provider_user", provider_name: provider.name)
       end
       lead_schools = persona.lead_schools.map do |lead_school|
-        "Associated with <strong>#{lead_school.name}</strong> and can view users assigned to that lead school."
+        t("components.personas.view.lead_school_user", lead_school_name: lead_school.name)
       end
 
       providers + lead_schools
