@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   def start
     session[:requested_path] = root_path
     if authenticated?
-      if FeatureService.enabled?(:user_can_have_multiple_organisations) && (current_user.organisation.nil? && !current_user.system_admin?)
+      if FeatureService.enabled?(:user_can_have_multiple_organisations) && organisation_not_set?
         redirect_to(organisation_contexts_path) && return
       end
 
@@ -28,5 +28,11 @@ class PagesController < ApplicationController
 
   def guidance
     render(:guidance)
+  end
+
+private
+
+  def organisation_not_set?
+    current_user.organisation.nil? && !current_user.system_admin?
   end
 end
