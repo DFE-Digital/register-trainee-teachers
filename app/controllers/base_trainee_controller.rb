@@ -65,7 +65,7 @@ private
   end
 
   def total_trainees_count
-    filtered_trainees.count(:id)
+    filtered_trainees.count
   end
 
   def providers
