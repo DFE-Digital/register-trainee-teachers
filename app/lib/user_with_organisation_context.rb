@@ -58,12 +58,11 @@ private
   end
 
   def school_or_provider
-    organisation_to_return = if organisation_class == Provider
-                               user.providers.find_by(id: organisation_id)
-                             else
-                               user.lead_schools.find_by(id: organisation_id)
-                             end
-    organisation_to_return
+    if organisation_class == Provider
+      user.providers.find_by(id: organisation_id)
+    else
+      user.lead_schools.find_by(id: organisation_id)
+    end
   end
 
   def single_organisation
