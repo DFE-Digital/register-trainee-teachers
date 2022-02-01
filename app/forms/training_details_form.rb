@@ -42,7 +42,8 @@ private
 
   def trainee_id_uniqueness
     return if trainee_id.blank?
-    return unless existing_trainee_with_id
+    return if existing_trainee_with_id.blank?
+    return if existing_trainee_with_id.inactive?
 
     errors.add(:trainee_id, duplicate_error_message)
   end

@@ -342,6 +342,14 @@ class Trainee < ApplicationRecord
     ].select(&:present?).join(" ").presence
   end
 
+  def inactive?
+    if state == "awarded"
+      AcademicCycle.for_date(awarded_at) != AcademicCycle.for_date(Time.zone.now)
+    else
+      state == "withdrawn"
+    end
+  end
+
   def full_name
     [
       first_names,

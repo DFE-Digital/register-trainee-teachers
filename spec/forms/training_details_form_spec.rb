@@ -48,15 +48,35 @@ describe TrainingDetailsForm, type: :model do
         end
       end
 
-      context "duplicate" do
+      context "duplicate active trainee" do
         let!(:existing_trainee) { create(:trainee, trainee_id: "Test123") }
-        let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: "TEST123") }
+        let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: existing_trainee.trainee_id) }
+
+        it "existing trainee remains active" do
+          expect(existing_trainee.inactive?).to be(false)
+        end
 
         it "returns a duplicate error message" do
           expect(subject.errors[:trainee_id]).to include(
             I18n.t("#{error_attr}.trainee_id.uniqueness"),
           )
           expect(subject.duplicate_error?).to be_truthy
+        end
+      end
+
+      context "duplicate inactive trainee" do
+        let!(:existing_trainee) { create(:trainee, trainee_id: "Test123", state: "withdrawn") }
+        let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: existing_trainee.trainee_id) }
+
+        it "existing trainee is inactive" do
+          expect(existing_trainee.inactive?).to be(true)
+        end
+
+        it "returns a duplicate error message" do
+          expect(subject.errors[:trainee_id]).not_to include(
+            I18n.t("#{error_attr}.trainee_id.uniqueness"),
+          )
+          expect(subject.duplicate_error?).to be(false)
         end
       end
 
