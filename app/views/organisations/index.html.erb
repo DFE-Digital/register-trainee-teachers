@@ -7,7 +7,11 @@
       <ul class="govuk-list">
         <%- @providers.each do |provider| -%>
           <li class="govuk-!-margin-bottom-2">
-            <%= govuk_link_to provider.name, organisation_path(id: provider.id, type: "Provider"), class: "provider-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
+            <%= 
+              govuk_link_to provider.name, 
+                organisation_path(id: provider.id, type: "Provider"), 
+                class: "provider-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" 
+            %>
           </li>
         <%- end -%>
       </ul>
@@ -19,12 +23,15 @@
       <ul class="govuk-list">
         <li class="govuk-!-margin-bottom-2">
           <%- @lead_schools.each do |lead_school| -%>
-            <%= govuk_link_to lead_school.name, organisation_path(id: lead_school.id, type: "School"), class: "lead-school-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
+            <%= govuk_link_to lead_school.name, 
+              organisation_path(id: lead_school.id, type: "School"), 
+              class: "lead-school-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" 
+            %>
           <%- end -%>
         </li>
       </ul>
       <p class="govuk-body">
-      If you need to access a different organisation’s records, contact us at <%= support_email %>
+        If you need to access a different organisation’s records, contact us at <%= support_email %>
       </p>
     <%- end -%>
   </div>
