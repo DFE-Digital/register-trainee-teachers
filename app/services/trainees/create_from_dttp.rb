@@ -348,10 +348,17 @@ module Trainees
     end
 
     def study_mode
-      find_by_entity_id(
-        dttp_trainee.latest_placement_assignment.response["_dfe_studymodeid_value"],
-        Dttp::CodeSets::CourseStudyModes::MAPPING,
-      )
+      study_mode_id = dttp_trainee.latest_placement_assignment.study_mode_id
+
+      if Dttp::CodeSets::CourseStudyModes::OTHER_FULL_TIME_MODES.include?(study_mode_id)
+        return COURSE_STUDY_MODES[:full_time]
+      end
+
+      if Dttp::CodeSets::CourseStudyModes::OTHER_PART_TIME_MODES.include?(study_mode_id)
+        return COURSE_STUDY_MODES[:part_time]
+      end
+
+      find_by_entity_id(study_mode_id, Dttp::CodeSets::CourseStudyModes::MAPPING)
     end
 
     def school_attributes

@@ -21,5 +21,9 @@ module Dttp
     def employing_school_id
       response["_dfe_employingschoolid_value"]
     end
+
+    def study_mode_id
+      response["_dfe_studymodeid_value"]
+    end
   end
 end

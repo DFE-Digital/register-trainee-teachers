@@ -662,5 +662,25 @@ module Trainees
         expect(trainee.dormancy_dttp_id).to eq(dormant_period.dttp_id)
       end
     end
+
+    context "when the trainee has a study mode that's not part or full time" do
+      context "mappable to full time" do
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_studymodeid_value: "11640d4b-82b4-ea11-a812-000d3ad82cac") }
+
+        it "maps it to full time" do
+          create_trainee_from_dttp
+          expect(Trainee.last.study_mode).to eq(COURSE_STUDY_MODES[:full_time])
+        end
+      end
+
+      context "mappable to part time" do
+        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_studymodeid_value: "db110557-82b4-ea11-a812-000d3ad82cac") }
+
+        it "maps it to part time" do
+          create_trainee_from_dttp
+          expect(Trainee.last.study_mode).to eq(COURSE_STUDY_MODES[:part_time])
+        end
+      end
+    end
   end
 end
