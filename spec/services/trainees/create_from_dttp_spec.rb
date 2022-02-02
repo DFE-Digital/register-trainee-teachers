@@ -84,7 +84,7 @@ module Trainees
         expect(trainee.gender).to eq("male")
         expect(trainee.trainee_id).to eq(api_trainee["dfe_traineeid"])
         expect(trainee.nationalities).to be_empty
-        expect(trainee.trn).to eq(api_trainee["dfe_trn"].to_s)
+        expect(trainee.trn).to eq(api_trainee["dfe_trn"])
         expect(trainee.training_initiative).to eq("now_teach")
         expect(trainee.hesa_id).to eq(api_trainee["dfe_husid"])
         expect(trainee.dttp_update_sha).to eq(trainee.sha)
@@ -215,12 +215,30 @@ module Trainees
         end
       end
 
-      context "when the trainee has an invalid TRN" do
+      context "when the trainee has an invalid non-digit TRN" do
+        let(:api_trainee) { create(:api_trainee, :with_invalid_trn) }
+
+        it "does not save the TRN" do
+          create_trainee_from_dttp
+          expect(Trainee.last.trn).to be nil
+        end
+      end
+
+      context "when the trainee has an invalid TRN of 999999999" do
         let(:api_trainee) { create(:api_trainee, dfe_trn: "999999999") }
 
         it "does not save the TRN" do
           create_trainee_from_dttp
           expect(Trainee.last.trn).to be nil
+        end
+      end
+
+      context "when the trainee has a valid TRN with whitespace" do
+        let(:api_trainee) { create(:api_trainee, dfe_trn: "1065267 ") }
+
+        it "trims whitespace and saves the TRN" do
+          create_trainee_from_dttp
+          expect(Trainee.last.trn).to eq("1065267")
         end
       end
 
