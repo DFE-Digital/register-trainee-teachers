@@ -269,7 +269,7 @@ GEM
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
-    i18n (1.8.11)
+    i18n (1.9.1)
       concurrent-ruby (~> 1.0)
     json-jwt (1.13.0)
       activesupport (>= 4.2)
@@ -475,9 +475,9 @@ GEM
     semantic_logger (4.9.0)
       concurrent-ruby (~> 1.0)
     semantic_range (3.0.0)
-    sentry-rails (5.0.1)
+    sentry-rails (5.0.2)
       railties (>= 5.0)
-      sentry-ruby-core (~> 5.0.1)
+      sentry-ruby-core (~> 5.0.2)
     sentry-ruby (5.0.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       sentry-ruby-core (= 5.0.2)
@@ -579,7 +579,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.3)
+    zeitwerk (2.5.4)
 
 PLATFORMS
   ruby
