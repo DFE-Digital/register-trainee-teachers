@@ -232,10 +232,27 @@ describe CourseDetailsForm, type: :model do
 
         describe "#itt_start_date_valid" do
           let(:end_date_attributes) { {} }
+          let(:academic_cycle) { build(:academic_cycle, start_date: "2021-09-01", end_date: "2022-08-31") }
+
+          before do
+            # rubocop:disable RSpec/SubjectStub
+            allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
+            # rubocop:enable RSpec/SubjectStub
+            subject.valid?
+          end
 
           context "the start date fields are 12/11/2020" do
             let(:start_date_attributes) do
               { start_day: "12", start_month: "11", start_year: "2020" }
+            end
+
+            let(:academic_cycle) { build(:academic_cycle, start_date: "2020-09-01", end_date: "2021-08-31") }
+
+            before do
+              # rubocop:disable RSpec/SubjectStub
+              allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
+              # rubocop:enable RSpec/SubjectStub
+              subject.valid?
             end
 
             it "does not return an error message for itt start date" do
@@ -265,6 +282,15 @@ describe CourseDetailsForm, type: :model do
           context "the start date fields are too far in past" do
             let(:start_date_attributes) do
               { start_day: "12", start_month: "11", start_year: "2000" }
+            end
+
+            let(:academic_cycle) { build(:academic_cycle, start_date: "2021-09-01", end_date: "2022-08-31") }
+
+            before do
+              # rubocop:disable RSpec/SubjectStub
+              allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
+              # rubocop:enable RSpec/SubjectStub
+              subject.valid?
             end
 
             it "returns an error message for itt start date" do
