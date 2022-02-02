@@ -19,6 +19,7 @@ class ServiceUpdate::View < GovukComponent::Base
   end
 
   def content_html
-    Markdown.new(content).to_html.html_safe
+    custom_render = Redcarpet::Render::HTML.new(link_attributes: { class: "govuk-link" })
+    Redcarpet::Markdown.new(custom_render).render(content).html_safe
   end
 end
