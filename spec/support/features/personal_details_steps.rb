@@ -31,8 +31,8 @@ module Features
     end
 
     def and_nationalities_exist_in_the_system
-      @british ||= create(:nationality, name: "british")
-      @french ||= create(:nationality, name: "french")
+      @british ||= Nationality.find_or_create_by(name: "british")
+      @french ||= Nationality.find_or_create_by(name: "french")
     end
 
     def and_the_personal_details_is_marked_completed

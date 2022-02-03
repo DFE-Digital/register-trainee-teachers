@@ -121,9 +121,9 @@ private
   end
 
   def and_nationalities_exist_in_the_system
-    @british ||= create(:nationality, name: "british")
-    @french ||= create(:nationality, name: "french")
-    @south_african ||= create(:nationality, name: "south african")
+    @british ||= Nationality.find_or_create_by(name: "british")
+    @french ||= Nationality.find_or_create_by(name: "french")
+    @south_african ||= Nationality.find_or_create_by(name: "south african")
   end
 
   def when_i_visit_the_personal_details_page
