@@ -26,7 +26,10 @@ module SystemAdminRoutes
           end
         end
 
-        resources :users, only: %i[index]
+        resources :users, only: %i[index] do
+          resources :providers, controller: "user_providers", only: %i[new create]
+          resources :lead_schools, controller: "user_lead_schools", only: %i[new create]
+        end
         resources :dttp_providers, only: %i[index show create]
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]
