@@ -2,8 +2,8 @@
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
-    text: t("back"),
-    href: providers_path,
+    text: t(:back),
+    href: params[:context] == "users" ? users_path : providers_path,
   ) %>
 <% end %>
 

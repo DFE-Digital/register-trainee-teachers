@@ -33,7 +33,9 @@
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
             <% user.lead_schools.each do |lead_school| %>
-              <%= govuk_link_to(lead_school.name, lead_school_path(lead_school), class: "govuk-!-display-block") %>
+              <%= govuk_link_to(lead_school.name,
+                                lead_school_path(lead_school, context: :users),
+                                class: "govuk-!-display-block") %>
             <% end %>
           </span>
         </td>
@@ -41,7 +43,9 @@
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
             <% user.providers.each do |provider| %>
-              <%= govuk_link_to provider.name, provider_path(provider), class: "govuk-!-display-block" %>
+              <%= govuk_link_to provider.name,
+                                provider_path(provider, context: :users),
+                                class: "govuk-!-display-block" %>
             <% end %>
           </span>
         </td>
