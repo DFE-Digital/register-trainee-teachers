@@ -76,7 +76,7 @@ module Dttp
     end
 
     def trn
-      response["dfe_trn"]
+      response["dfe_trn"]&.strip
     end
 
     def country

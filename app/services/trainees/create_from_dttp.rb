@@ -5,7 +5,8 @@ module Trainees
     include ServicePattern
     include HasDttpMapping
 
-    INVALID_TRN = "999999999"
+    TRN_REGEX = /^(\d{6,7})$/.freeze
+
     UK_COUNTRIES = ["England", "United Kingdom", "Scotland", "Northern Ireland",
                     "Wales", "Isle of Man",
                     "United Kingdom, not otherwise specified"].freeze
@@ -136,7 +137,7 @@ module Trainees
     end
 
     def trn
-      dttp_trainee.trn == INVALID_TRN ? nil : dttp_trainee.trn
+      dttp_trainee.trn if TRN_REGEX.match?(dttp_trainee.trn)
     end
 
     def trainee_gender

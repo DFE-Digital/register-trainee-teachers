@@ -20,7 +20,7 @@ FactoryBot.define do
     address1_postalcode { Faker::Address.postcode }
     dfe_traineeid { "#{firstname}.#{lastname}.#{birthdate}" }
     _dfe_nationality_value { Dttp::CodeSets::Nationalities::MAPPING[nationality_name][:entity_id] }
-    dfe_trn { Faker::Number.number(digits: 7) }
+    dfe_trn { Faker::Number.number(digits: 7).to_s }
     merged { false }
     dfe_husid { "1811499435078" }
 
@@ -36,6 +36,10 @@ FactoryBot.define do
         Dttp::CodeSets::Nationalities::MAPPING.dig(nationality_name, :entity_id).presence ||
         Dttp::CodeSets::Nationalities::INACTIVE_MAPPING.dig(nationality_name, :entity_id)
       end
+    end
+
+    trait :with_invalid_trn do
+      dfe_trn { "Not Registered" }
     end
   end
 end
