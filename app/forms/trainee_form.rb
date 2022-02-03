@@ -51,7 +51,11 @@ class TraineeForm
   def missing_fields
     return [] if valid?
 
-    [errors.attribute_names]
+    [
+      errors.attribute_names.filter_map do |attribute_name|
+        attribute_name if public_send(attribute_name).blank?
+      end,
+    ]
   end
 
   def clear_stash
