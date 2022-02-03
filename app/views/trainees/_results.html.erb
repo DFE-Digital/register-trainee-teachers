@@ -14,7 +14,9 @@
     <div class="govuk-!-margin-bottom-8">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <h2 class="govuk-heading-m"><%= search_secondary_result_title %></h2>
+          <% if current_page?(:drafts) %>
+            <h2 class="govuk-heading-m"><%= search_secondary_result_title %></h2>
+          <% end  %>
         </div>
       </div>
       <%= render ApplicationRecordCard::View.with_collection(search_secondary_result_set, system_admin: @current_user.system_admin?) %>
