@@ -99,6 +99,15 @@ module Trainees
         end
       end
 
+      context "when the commencement_date is missing" do
+        let(:api_placement_assignment) { create(:api_placement_assignment, dfe_commencementdate: nil) }
+
+        it "uses the programme start date" do
+          create_trainee_from_dttp
+          expect(Trainee.last.commencement_date).to eq(placement_assignment.programme_start_date)
+        end
+      end
+
       context "when neither address line one or postcode is present" do
         let(:api_trainee) { create(:api_trainee, address1_line1: nil, address1_postalcode: nil) }
 
