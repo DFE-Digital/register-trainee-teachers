@@ -66,5 +66,14 @@ FactoryBot.define do
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID }
       _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED }
     end
+
+    trait :primary_mathematics_specialism do
+      _dfe_initiative1id_value do
+        [
+          Dttp::CodeSets::TrainingInitiatives::PRIMARY_MATHEMATICS_SPECIALISM,
+          Dttp::CodeSets::TrainingInitiatives::PRIMARY_GENERAL_WITH_MATHS,
+        ].sample
+      end
+    end
   end
 end

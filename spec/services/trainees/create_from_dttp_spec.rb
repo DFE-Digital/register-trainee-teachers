@@ -632,15 +632,16 @@ module Trainees
       end
     end
 
-    context "when training_initiative is Primary mathematics specialism" do
-      let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_initiative1id_value: Dttp::CodeSets::TrainingInitiatives::PRIMARY_MATHEMATICS_SPECIALISM) }
+    context "when training_initiative is a primary mathematics specialism" do
+      let(:api_placement_assignment) { create(:api_placement_assignment, :primary_mathematics_specialism) }
 
       before do
         create_trainee_from_dttp
       end
 
-      it "sets no initiative" do
+      it "sets no initiative and course subject to primary_mathematics_specialism" do
         expect(Trainee.last.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+        expect(Trainee.last.course_subject_one).to eq(CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
       end
     end
 

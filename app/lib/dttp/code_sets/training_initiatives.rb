@@ -5,6 +5,7 @@ module Dttp
     module TrainingInitiatives
       EBACC = "883398f8-0d89-e811-80f7-005056ac45bb"
       PRIMARY_MATHEMATICS_SPECIALISM = "5808fd3f-276e-e711-80d2-005056ac45bb"
+      PRIMARY_GENERAL_WITH_MATHS = "6808fd3f-276e-e711-80d2-005056ac45bb"
 
       # DTTP recognise future_teaching_scholars as a route not an initiative,
       # hence there is no mapping. See Dttp::CodeSets::Routes.
