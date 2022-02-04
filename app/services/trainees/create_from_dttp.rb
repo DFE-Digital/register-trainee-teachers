@@ -309,8 +309,6 @@ module Trainees
     end
 
     def course_attributes
-      course_subject_one_name = course(dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject1id_value"])
-
       {
         course_education_phase: course_education_phase(course_subject_one_name),
         course_subject_one: course_subject_one_name,
@@ -323,6 +321,12 @@ module Trainees
         itt_start_date: dttp_trainee.latest_placement_assignment.programme_start_date,
         itt_end_date: dttp_trainee.latest_placement_assignment.programme_end_date,
       }
+    end
+
+    def course_subject_one_name
+      return CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS if primary_mathematics_specialism?
+
+      course(dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject1id_value"])
     end
 
     def course(dttp_course_uuid)
@@ -405,7 +409,10 @@ module Trainees
     end
 
     def primary_mathematics_specialism?
-      dttp_initiative_id == Dttp::CodeSets::TrainingInitiatives::PRIMARY_MATHEMATICS_SPECIALISM
+      [
+        Dttp::CodeSets::TrainingInitiatives::PRIMARY_MATHEMATICS_SPECIALISM,
+        Dttp::CodeSets::TrainingInitiatives::PRIMARY_GENERAL_WITH_MATHS,
+      ].include?(dttp_initiative_id)
     end
 
     def ebacc?
