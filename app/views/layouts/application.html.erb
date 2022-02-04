@@ -53,6 +53,7 @@
         { name: "Home", url: root_path },
         { name: "Draft records", url: drafts_path, current: active_link_for("drafts", @trainee) },
         { name: "Registered trainees", url: trainees_path, current: active_link_for("trainees", @trainee) },
+        ({ name: current_user.organisation.name, url: organisations_path, align_right: true } if show_organisation_link?),
       ],
       current_path: request.path,
       current_user: @current_user,
