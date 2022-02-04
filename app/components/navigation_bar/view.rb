@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class NavigationBar::View < GovukComponent::Base
-  attr_reader :items, :current_path
+  attr_reader :items, :current_path, :current_user
 
   def initialize(items:, current_path:, current_user: {})
-    @items = items
+    @items = items.compact
     @current_path = current_path
     @current_user = current_user
   end
@@ -16,7 +16,14 @@ class NavigationBar::View < GovukComponent::Base
   end
 
   def user_signed_in?
-    @current_user.present?
+    current_user.present?
+  end
+
+  def list_item_classes(item)
+    [
+      "moj-primary-navigation__item",
+      ("moj-primary-navigation__align_right" if item[:align_right]),
+    ].compact.join(" ")
   end
 
 private
