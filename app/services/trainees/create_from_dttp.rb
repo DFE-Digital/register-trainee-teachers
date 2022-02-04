@@ -317,7 +317,7 @@ module Trainees
         course_min_age: age_range && age_range[0],
         course_max_age: age_range && age_range[1],
         study_mode: study_mode,
-        commencement_date: dttp_trainee.latest_placement_assignment.response["dfe_commencementdate"],
+        commencement_date: commencement_date,
         itt_start_date: dttp_trainee.latest_placement_assignment.programme_start_date,
         itt_end_date: dttp_trainee.latest_placement_assignment.programme_end_date,
       }
@@ -327,6 +327,10 @@ module Trainees
       return CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS if primary_mathematics_specialism?
 
       course(dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject1id_value"])
+    end
+
+    def commencement_date
+      dttp_trainee.latest_placement_assignment.response["dfe_commencementdate"] || dttp_trainee.latest_placement_assignment.programme_start_date
     end
 
     def course(dttp_course_uuid)
