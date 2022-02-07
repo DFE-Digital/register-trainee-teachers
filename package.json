@@ -10,7 +10,7 @@
   "dependencies": {
     "@ministryofjustice/frontend": "^1.2.0",
     "@rails/webpacker": "^5.4.3",
-    "accessible-autocomplete": "^2.0.3",
+    "accessible-autocomplete": "^2.0.4",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.21.0",
     "govuk-country-and-territory-autocomplete": "^1.0.1",
