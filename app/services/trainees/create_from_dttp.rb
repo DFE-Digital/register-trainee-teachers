@@ -51,16 +51,9 @@ module Trainees
 
       trainee.set_early_years_course_details
 
-      if funding_not_yet_mapped?
-        dttp_trainee.non_importable_missing_funding!
-        return
-      end
-
       trainee.save!
 
       add_multiple_disability_text!
-
-      calculate_funding!
 
       enqueue_background_jobs!
 
@@ -101,6 +94,7 @@ module Trainees
        .merge(training_initiative_attributes)
        .merge(withdrawal_attributes)
        .merge(deferral_attributes)
+       .merge(funding_attributes)
     end
 
     def create_degrees!
@@ -435,69 +429,6 @@ module Trainees
       Dttp::School.find_by(dttp_id: dttp_trainee.latest_placement_assignment.employing_school_id)&.urn
     end
 
-    def funding_attributes
-      return {} if dttp_trainee.latest_placement_assignment.response["dfe_allocatedplace"] ==
-        Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE && funding_entity_id.blank?
-
-      if funding_entity_id == Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED
-        return {
-          applying_for_grant: false,
-          applying_for_bursary: false,
-          applying_for_scholarship: false,
-        }
-      end
-
-      if funding_manager.can_apply_for_tiered_bursary?
-        return {
-          applying_for_grant: false,
-          applying_for_bursary: true,
-          applying_for_scholarship: false,
-          bursary_tier: route_or_tier_for_funding,
-        }
-      end
-
-      {
-        applying_for_grant: applying_for_grant,
-        applying_for_scholarship: applying_for_scholarship,
-        applying_for_bursary: applying_for_bursary,
-      }.reject { |_key, value| value == false }
-    end
-
-    def applying_for_grant
-      funding_manager.can_apply_for_grant? &&
-      [
-        Dttp::CodeSets::BursaryDetails::SCHOOL_DIRECT_SALARIED,
-        Dttp::CodeSets::BursaryDetails::EARLY_YEARS_SALARIED,
-      ].include?(funding_entity_id)
-    end
-
-    def applying_for_scholarship
-      funding_manager.can_apply_for_scholarship? &&
-      funding_entity_id == Dttp::CodeSets::BursaryDetails::SCHOLARSHIP
-    end
-
-    def applying_for_bursary
-      funding_manager.can_apply_for_bursary? && [
-        Dttp::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY,
-        Dttp::CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY,
-      ].include?(funding_entity_id)
-    end
-
-    def route_or_tier_for_funding
-      find_by_entity_id(
-        funding_entity_id,
-        Dttp::CodeSets::BursaryDetails::MAPPING,
-      )
-    end
-
-    def funding_entity_id
-      dttp_trainee.latest_placement_assignment.response["_dfe_bursarydetailsid_value"]
-    end
-
-    def funding_not_yet_mapped?
-      funding_entity_id.present? && funding_attributes.compact.blank?
-    end
-
     def trainee_status
       @trainee_status ||= MapStateFromDttp.call(dttp_trainee: dttp_trainee)
     end
@@ -537,12 +468,8 @@ module Trainees
       Dttp::RetrieveAwardJob.perform_with_default_delay(trainee) if trainee.recommended_for_award?
     end
 
-    def calculate_funding!
-      trainee.update!(funding_attributes) if funding_manager.can_apply_for_funding_type?
-    end
-
-    def funding_manager
-      @funding_manager ||= FundingManager.new(trainee)
+    def funding_attributes
+      @funding_attributes ||= MapFundingFromDttp.call(dttp_trainee: dttp_trainee)
     end
   end
 end

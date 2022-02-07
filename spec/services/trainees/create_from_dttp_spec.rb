@@ -144,30 +144,13 @@ module Trainees
       end
 
       context "when the trainee is on an early_years route" do
-        context "with no funding" do
-          let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_early_years_route) }
+        let(:dttp_trainee) { create(:dttp_trainee, :with_provider, :with_early_years_route) }
 
-          it "sets the course subject one to early years and age range zero to five" do
-            create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
-            expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
-          end
-        end
-
-        context "when the trainee has a grant" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, :with_early_years_salaried_bursary) }
-          let(:funding_method) { create(:funding_method, training_route: :early_years_salaried, funding_type: FUNDING_TYPE_ENUMS[:grant]) }
-          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::EARLY_YEARS_TEACHING) }
-
-          before do
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
-          end
-
-          it "sets funding" do
-            create_trainee_from_dttp
-            expect(Trainee.last.applying_for_grant).to eq(true)
-          end
+        it "sets the course subject one to early years and age range zero to five" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
+          expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
         end
       end
 
@@ -293,97 +276,6 @@ module Trainees
         it "sets the trainee submitted_for_trn_at date from the first placement assignment" do
           create_trainee_from_dttp
           expect(Trainee.last.submitted_for_trn_at).to eq(placement_assignment_one.response["dfe_trnassessmentdate"].to_date)
-        end
-      end
-
-      context "with funding information available" do
-        context "when bursary is NO_BURSARY_AWARDED" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, :with_no_bursary_awarded) }
-          let(:funding_method) { create(:funding_method, training_route: :pg_teaching_apprenticeship, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
-          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
-
-          before do
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
-          end
-
-          it "sets bursary to false" do
-            create_trainee_from_dttp
-            expect(Trainee.last.applying_for_bursary).to eq(false)
-          end
-        end
-
-        context "when scholarship" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, :with_scholarship) }
-          let(:funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
-          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
-
-          before do
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
-          end
-
-          it "sets scholarship" do
-            create_trainee_from_dttp
-            expect(Trainee.last.applying_for_scholarship).to eq(true)
-          end
-        end
-
-        context "when bursary" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_bursary) }
-          let(:funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:bursary]) }
-          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
-
-          before do
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: specialism.allocation_subject)
-          end
-
-          it "sets funding" do
-            create_trainee_from_dttp
-            expect(Trainee.last.applying_for_bursary).to eq(true)
-          end
-        end
-
-        context "when multiple funding methods are available" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_bursary) }
-          let(:bursary_funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:bursary]) }
-          let(:scholarship_funding_method) { create(:funding_method, training_route: :provider_led_postgrad, funding_type: FUNDING_TYPE_ENUMS[:scholarship]) }
-          let(:specialism) { create(:subject_specialism, subject_name: CourseSubjects::MODERN_LANGUAGES) }
-
-          before do
-            create(:funding_method_subject, funding_method: bursary_funding_method, allocation_subject: specialism.allocation_subject)
-            create(:funding_method_subject, funding_method: scholarship_funding_method, allocation_subject: specialism.allocation_subject)
-          end
-
-          it "sets the correct funding" do
-            create_trainee_from_dttp
-            trainee = Trainee.last
-            expect(trainee.applying_for_grant).to eq(nil)
-            expect(trainee.applying_for_bursary).to eq(true)
-            expect(trainee.applying_for_scholarship).to eq(nil)
-          end
-        end
-
-        context "when funding method does not exist" do
-          let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_bursary) }
-
-          it "marks the application as non importable" do
-            expect {
-              create_trainee_from_dttp
-            }.to change(Trainee, :count).by(0)
-            .and change(dttp_trainee, :state).to("non_importable_missing_funding")
-          end
-        end
-      end
-
-      context "with tiered bursary funding" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, :with_tiered_bursary) }
-        let(:placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
-        let(:dttp_trainee) { create(:dttp_trainee, provider: provider, placement_assignments: [placement_assignment]) }
-
-        it "sets bursary tier" do
-          create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.applying_for_bursary).to eq(true)
-          expect(trainee.bursary_tier).to eq(BURSARY_TIER_ENUMS[:tier_two])
         end
       end
 

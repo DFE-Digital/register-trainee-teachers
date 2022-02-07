@@ -25,5 +25,9 @@ module Dttp
     def study_mode_id
       response["_dfe_studymodeid_value"]
     end
+
+    def funding_id
+      response["_dfe_bursarydetailsid_value"]
+    end
   end
 end
