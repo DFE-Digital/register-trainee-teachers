@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_171355) do
+ActiveRecord::Schema.define(version: 2022_02_04_132842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -471,6 +471,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_171355) do
     t.datetime "discarded_at"
     t.boolean "created_from_dttp", default: false, null: false
     t.string "hesa_id"
+    t.jsonb "additional_dttp_data"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
