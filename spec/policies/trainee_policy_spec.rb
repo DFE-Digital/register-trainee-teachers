@@ -33,7 +33,7 @@ describe TraineePolicy do
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
   end
 
-  permissions :create?, :update?, :edit?, :new?, :destroy?, :confirm?, :recommended? do
+  permissions :create?, :update?, :edit?, :new?, :destroy?, :confirm? do
     it { is_expected.to permit(provider_user, provider_trainee) }
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
 
@@ -159,7 +159,7 @@ describe TraineePolicy do
     end
   end
 
-  permissions :show_recommended? do
+  permissions :recommended? do
     context "when trainee is recommended" do
       before do
         allow(provider_trainee).to receive(:recommended_for_award?).and_return(true)

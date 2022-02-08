@@ -6,8 +6,6 @@ module Trainees
       @outcome_form = OutcomeDateForm.new(trainee)
     end
 
-    def recommended
-      authorize(trainee, :show_recommended?)
-    end
+    def recommended; end
   end
 end
