@@ -70,11 +70,33 @@ describe Trainees::StartStatusesController, type: :controller do
         end
       end
 
-      context "withdraw" do
+      context "withdrawal form has not started and contains no date" do
         let(:page_context) { :withdraw }
 
         it "redirects to the withdrawal page" do
           expect(response).to redirect_to(trainee_withdrawal_path(trainee))
+        end
+      end
+
+      context "withdrawal form has started and contains a withdrawal date before the commencement date" do
+        let(:trainee) { create(:trainee, :submitted_for_trn, withdraw_date: Date.new(2022, 1, 1)) }
+        let(:page_context) { :withdraw }
+        let(:send_request) do
+          post(:update,
+               params: {
+                 trainee_id: trainee,
+                 trainee_start_status_form: {
+                   "commencement_status" => "itt_started_on_time",
+                   "commencement_date(3i)" => "2",
+                   "commencement_date(2i)" => "1",
+                   "commencement_date(1i)" => "2022",
+                   context: page_context,
+                 },
+               })
+        end
+
+        it "redirects to the withdrawal page" do
+          expect(response).to redirect_to(trainee_confirm_withdrawal_path(trainee))
         end
       end
     end

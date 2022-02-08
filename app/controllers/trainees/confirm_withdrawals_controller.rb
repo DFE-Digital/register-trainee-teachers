@@ -3,7 +3,6 @@
 module Trainees
   class ConfirmWithdrawalsController < BaseController
     def show
-      TraineeStartStatusForm.new(trainee).save!
       page_tracker.save_as_origin!
       withdrawal
     end
