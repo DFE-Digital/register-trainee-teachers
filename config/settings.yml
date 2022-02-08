@@ -55,6 +55,8 @@ features:
     pg_teaching_apprenticeship: false
   google:
     send_data_to_big_query: false
+  filters:
+    show_start_year_filter: false
 
 dfe_sign_in:
   # Our service name
