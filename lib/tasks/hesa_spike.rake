@@ -12,7 +12,7 @@ namespace :hesa do
     password = ENV["PASSWORD"]
 
     auth_url = "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
-    example_xml_url = "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNData/c21053/Latest/Test"
+    example_xml_url = "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNData/c21053/Test"
 
     agent = Mechanize.new
     agent.get(auth_url) do |page|
