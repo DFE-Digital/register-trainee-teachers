@@ -202,6 +202,7 @@ module Dttp
             "Level 6 NVQ",
             "Ordinary degree",
           ],
+          hint: "Including level 6 qualifications, graduate certificates and diplomas, degree apprenticeships and ordinary degrees",
           hesa_code: "402",
         },
         "Unknown" => { entity_id: "6f6a5652-c197-e711-80d8-005056ac45bb", abbreviation: nil },
