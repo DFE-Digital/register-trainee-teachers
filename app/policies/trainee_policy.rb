@@ -63,8 +63,8 @@ class TraineePolicy
     write? && trainee.deferred?
   end
 
-  def show_recommended?
-    write? && trainee.recommended_for_award?
+  def recommended?
+    read? && trainee.recommended_for_award?
   end
 
   def recommend_for_award?
@@ -78,7 +78,6 @@ class TraineePolicy
   alias_method :new?, :create?
   alias_method :destroy?, :create?
   alias_method :confirm?, :create?
-  alias_method :recommended?, :create?
 
 private
 
