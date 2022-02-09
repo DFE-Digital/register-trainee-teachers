@@ -11,6 +11,10 @@ module Features
       visit_sign_in_page
     end
 
+    def given_i_am_authenticated_as_a_lead_school_user(user: create(:user, :with_lead_school_organisation))
+      given_i_am_authenticated(user: user)
+    end
+
     def given_i_am_authenticated_as_system_admin
       given_i_am_authenticated(user: create(:user, :system_admin))
     end

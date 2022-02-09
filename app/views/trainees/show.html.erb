@@ -1,6 +1,8 @@
-<div class="record-outcome-action-bar">
-  <%= render RecordActions::View.new(@trainee, has_missing_fields: @missing_fields.present?) %>
-</div>
+<% if policy(@trainee).update? %>
+  <div class="record-outcome-action-bar">
+    <%= render RecordActions::View.new(@trainee, has_missing_fields: @missing_fields.present?) %>
+  </div>
+<% end %>
 
 <div class="record-details">
   <%= render RecordDetails::View.new(trainee: @trainee, last_updated_event: @trainee.timeline.first, system_admin: @current_user.system_admin?, editable: policy(@trainee).update?) %>
