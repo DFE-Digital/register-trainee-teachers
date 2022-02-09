@@ -41,6 +41,8 @@ module Trainees
   private
 
     def load_missing_data_view
+      return unless policy(trainee).update?
+
       @missing_data_view = MissingDataBannerView.new(
         Submissions::MissingDataValidator.new(trainee: trainee).missing_fields, trainee
       )
