@@ -10,7 +10,7 @@ module Schools
     let(:school2) { create(:school, open_date: Time.zone.today) }
 
     before do
-      render_inline(View.new(data_model: trainee))
+      render_inline(View.new(data_model: trainee, editable: true))
     end
 
     context "when trainee is on a school direct salaried route" do

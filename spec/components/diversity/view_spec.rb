@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Diversity::View do
-  before { render_inline(Diversity::View.new(data_model: trainee)) }
+  before { render_inline(Diversity::View.new(data_model: trainee, editable: true)) }
 
   describe "Diversity information" do
     context "when trainee has not shared any ethnic or disability information" do

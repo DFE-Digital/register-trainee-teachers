@@ -5,10 +5,10 @@ module Funding
     include SanitizeHelper
     include FundingHelper
 
-    def initialize(data_model:, has_errors: false, system_admin: false)
+    def initialize(data_model:, has_errors: false, editable: false)
       @data_model = data_model
       @has_errors = has_errors
-      @system_admin = system_admin
+      @editable = editable
     end
 
     def trainee
@@ -28,7 +28,7 @@ module Funding
 
   private
 
-    attr_accessor :data_model, :has_errors, :system_admin
+    attr_accessor :data_model, :has_errors, :editable
 
     delegate :can_apply_for_scholarship?, :scholarship_amount,
              :can_apply_for_bursary?, :bursary_amount,

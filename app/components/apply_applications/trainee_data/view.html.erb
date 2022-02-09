@@ -2,16 +2,16 @@
   <%= t("personal_details") %>
 </h2>
 
-<%= render Sections::View.new(trainee: trainee, form: form, section: :personal_details) %>
+<%= render Sections::View.new(trainee: trainee, form: form, section: :personal_details, editable: editable) %>
 
-<%= render Sections::View.new(trainee: trainee, form: form, section: :contact_details) %>
+<%= render Sections::View.new(trainee: trainee, form: form, section: :contact_details, editable: editable) %>
 
-<%= render Sections::View.new(trainee: trainee, form: form, section: :diversity) %>
+<%= render Sections::View.new(trainee: trainee, form: form, section: :diversity, editable: editable) %>
 
 <% if trainee.requires_degree? %>
   <h2 class="govuk-heading-m">
     <%= t("education") %>
   </h2>
 
-  <%= render Sections::View.new(trainee: trainee, form: form, section: :degrees) %>
+  <%= render Sections::View.new(trainee: trainee, form: form, section: :degrees, editable: editable) %>
 <% end %>

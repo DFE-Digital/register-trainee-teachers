@@ -6,6 +6,9 @@ describe "trainees/show.html.erb", "feature_routes.provider_led_postgrad": true 
   before do
     assign(:trainee, trainee)
     assign(:current_user, current_user)
+    without_partial_double_verification do
+      allow(view).to receive(:policy).and_return(double(update?: true))
+    end
   end
 
   context "placements enabled", feature_placements: true do

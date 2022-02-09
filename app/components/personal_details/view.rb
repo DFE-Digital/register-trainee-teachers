@@ -4,11 +4,11 @@ module PersonalDetails
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false, system_admin: false)
+    def initialize(data_model:, has_errors: false, editable: false)
       @data_model = data_model
       @nationalities = Nationality.where(id: data_model.nationality_ids)
       @has_errors = has_errors
-      @system_admin = system_admin
+      @editable = editable
     end
 
     def personal_detail_rows
@@ -22,7 +22,7 @@ module PersonalDetails
 
   private
 
-    attr_accessor :data_model, :nationalities, :has_errors, :system_admin
+    attr_accessor :data_model, :nationalities, :has_errors, :editable
 
     def trainee
       data_model.is_a?(Trainee) ? data_model : data_model.trainee

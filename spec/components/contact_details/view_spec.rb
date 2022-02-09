@@ -6,7 +6,7 @@ RSpec.describe ContactDetails::View do
   context "when no contact details data supplied for existing trainee" do
     before do
       @result ||= render_inline(
-        ContactDetails::View.new(data_model: Trainee.new),
+        ContactDetails::View.new(data_model: Trainee.new, editable: true),
       )
     end
 
@@ -22,7 +22,7 @@ RSpec.describe ContactDetails::View do
   context "UK based trainee" do
     before do
       mock_trainee.locale_code = "uk"
-      @result ||= render_inline(ContactDetails::View.new(data_model: mock_trainee))
+      @result ||= render_inline(ContactDetails::View.new(data_model: mock_trainee, editable: true))
     end
 
     it "renders rows for address, email" do

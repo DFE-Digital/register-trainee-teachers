@@ -39,6 +39,7 @@ module Degrees
           data_model: mock_trainee(degrees: mixture_of_uk_and_non_uk_degrees),
           show_add_another_degree_button: false,
           show_delete_button: true,
+          editable: true,
         ),
       )
     end

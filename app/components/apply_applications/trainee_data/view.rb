@@ -6,10 +6,11 @@ module ApplyApplications
       include ApplicationHelper
       include TraineeHelper
 
-      attr_reader :form, :invalid_data_view
+      attr_reader :form, :invalid_data_view, :editable
 
-      def initialize(trainee_data_form:)
+      def initialize(trainee_data_form:, editable: false)
         @form = trainee_data_form
+        @editable = editable
         @invalid_data_view = InvalidTraineeDataView.new(trainee, trainee_data_form)
       end
 

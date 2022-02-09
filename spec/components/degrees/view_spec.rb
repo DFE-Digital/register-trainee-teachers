@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Degrees::View do
   before do
-    render_inline(Degrees::View.new(data_model: trainee))
+    render_inline(Degrees::View.new(data_model: trainee, editable: true))
   end
 
   let(:trainee) do

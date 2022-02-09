@@ -6,11 +6,11 @@ module CourseDetails
     include CourseDetailsHelper
     include TraineeHelper
 
-    def initialize(data_model:, has_errors: false, system_admin: false)
+    def initialize(data_model:, has_errors: false, editable: false)
       @data_model = data_model
       @trainee = data_model.is_a?(Trainee) ? data_model : data_model.trainee
       @has_errors = has_errors
-      @system_admin = system_admin
+      @editable = editable
     end
 
     def summary_title
@@ -36,7 +36,7 @@ module CourseDetails
 
   private
 
-    attr_accessor :data_model, :trainee, :has_errors, :system_admin
+    attr_accessor :data_model, :trainee, :has_errors, :editable
 
     def publish_course_details_row
       if show_publish_courses?(trainee)

@@ -23,7 +23,7 @@ describe MappableFieldRow do
         action_url: action_url,
         has_errors: has_errors,
         apply_draft: true,
-        non_editable: false,
+        editable: true,
       ).to_h
     end
 
@@ -94,6 +94,7 @@ describe MappableFieldRow do
           text: "missing",
           action_url: action_url,
           apply_draft: true,
+          editable: true,
         ).to_h
       end
 
@@ -116,18 +117,16 @@ describe MappableFieldRow do
       end
     end
 
-    context "non editable" do
+    context "read_only/non-editable" do
       subject do
         described_class.new(
           field_value: field_value,
           field_label: field_label,
           action_url: action_url,
           apply_draft: false,
-          non_editable: non_editable,
+          editable: false,
         ).to_h
       end
-
-      let(:non_editable) { true }
 
       it "does not render change link" do
         expect(subject[:action_href]).to be_nil

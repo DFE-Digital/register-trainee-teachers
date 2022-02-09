@@ -6,7 +6,7 @@ module Sections
   describe View do
     let(:trainees_sections_component) do
       form = Submissions::TrnValidator.new(trainee: trainee)
-      described_class.new(trainee: trainee, section: section, form: form)
+      described_class.new(trainee: trainee, section: section, form: form, editable: true)
     end
 
     before do
