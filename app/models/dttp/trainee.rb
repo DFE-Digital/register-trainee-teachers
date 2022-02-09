@@ -57,6 +57,14 @@ module Dttp
       response["dfe_husid"]
     end
 
+    def created_at
+      response["createdon"]
+    end
+
+    def updated_at
+      response["modifiedon"]
+    end
+
     def date_of_birth
       return if response["birthdate"].blank?
 
