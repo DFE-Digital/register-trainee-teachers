@@ -41,6 +41,13 @@ describe TraineePolicy do
     it { is_expected.to permit(system_admin_user, lead_school_trainee) }
 
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
+
+    context "when the trainee is not awaiting any actions" do
+      let(:provider_trainee) { create(:trainee, %i[recommended_for_award withdrawn awarded].sample, provider: provider) }
+
+      it { is_expected.not_to permit(provider_user, provider_trainee) }
+      it { is_expected.to permit(system_admin_user, provider_trainee) }
+    end
   end
 
   permissions :withdraw? do

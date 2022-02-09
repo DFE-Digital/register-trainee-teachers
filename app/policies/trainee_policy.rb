@@ -86,7 +86,7 @@ private
   end
 
   def write?
-    user&.system_admin || user_in_provider_context?
+    user&.system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
   end
 
   def user_in_provider_context?
