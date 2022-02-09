@@ -4,8 +4,8 @@ module Hesa
   module Parsers
     class IttRecord
       class << self
-        def to_attributes(itt_student_doc:)
-          student_attributes = Hash.from_xml(itt_student_doc).dig("ITTRecord", "Student")
+        def to_attributes(itt_record_doc:)
+          student_attributes = Hash.from_xml(itt_record_doc).dig("ITTRecord", "Student")
           student_attributes = convert_all_null_values_to_nil(student_attributes)
 
           {
