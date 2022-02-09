@@ -67,6 +67,13 @@ module ApplicationRecordCard
       tag.p("TRN: #{record.trn}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__trn govuk-!-margin-bottom-0 govuk-!-margin-top-0")
     end
 
+    def start_year
+      return if !record.commencement_date.present?
+      year_text = record.commencement_date.strftime("%Y")
+
+      tag.p("Start year: #{year_text}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__start_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")
+    end
+
   private
 
     def has_no_name?
