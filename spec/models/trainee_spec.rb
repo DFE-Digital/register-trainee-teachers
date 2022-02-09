@@ -625,6 +625,52 @@ describe Trainee do
     end
   end
 
+  describe "#inactive?" do
+    context "when a trainee is withdrawn" do
+      let(:trainee) { create(:trainee, state: "withdrawn") }
+
+      it "returns true" do
+        expect(trainee.inactive?).to be(true)
+      end
+    end
+
+    context "when a trainee is awarded in a previous cycle" do
+      let(:trainee) { create(:trainee, state: "awarded", awarded_at: "31/02/2020") }
+
+      before do
+        create(:academic_cycle, start_date: "01/9/2021", end_date: "31/8/2022")
+        create(:academic_cycle, start_date: "01/9/2020", end_date: "31/8/2021")
+        create(:academic_cycle, start_date: "01/9/2019", end_date: "31/8/2020")
+      end
+
+      it "returns true" do
+        expect(trainee.inactive?).to be(true)
+      end
+    end
+
+    context "when a trainee is awarded in a current cycle" do
+      let(:trainee) { create(:trainee, state: "awarded", awarded_at: 2.days.ago) }
+
+      before do
+        create(:academic_cycle, start_date: "01/9/2021", end_date: Time.zone.now)
+        create(:academic_cycle, start_date: "01/9/2020", end_date: "31/8/2021")
+        create(:academic_cycle, start_date: "01/9/2019", end_date: "31/8/2020")
+      end
+
+      it "returns false" do
+        expect(trainee.inactive?).to be(false)
+      end
+    end
+
+    context "when a trainee is awaiting a trn" do
+      let(:trainee) { create(:trainee, state: "awarded", awarded_at: 2.days.ago) }
+
+      it "returns false" do
+        expect(trainee.inactive?).to be(false)
+      end
+    end
+  end
+
   describe "#duplicate?" do
     let(:trainee) { create(:trainee) }
 
