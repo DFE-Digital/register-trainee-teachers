@@ -1,11 +1,11 @@
-<%= render SummaryCard::View.new(title: t("components.confirmation.start_status.title"),
-                                 heading_level: 2,
-                                 rows: [
-      {
-        key: t("components.confirmation.start_status.title"),
-        value: start_status_or_date,
-        action_href: edit_trainee_start_status_path(trainee),
-        action_text: t(:change),
-        action_visually_hidden_text: 'start date',
-      },
-    ]) %>
+<%= render MappableSummary::View.new(
+  trainee: trainee,
+  title: t("components.confirmation.start_status.title"),
+  rows: [{
+      field_value: start_status_or_date,
+      field_label: t("components.confirmation.start_status.title"),
+      action_url: edit_trainee_start_status_path(trainee),
+    }],
+  editable: editable,
+  has_errors: false
+) %>

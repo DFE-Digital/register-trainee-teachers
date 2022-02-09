@@ -4,10 +4,10 @@ module Diversity
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false, system_admin: false)
+    def initialize(data_model:, has_errors: false, editable: false)
       @data_model = data_model
       @has_errors = has_errors
-      @system_admin = system_admin
+      @editable = editable
     end
 
     def trainee
@@ -28,7 +28,7 @@ module Diversity
 
   private
 
-    attr_accessor :data_model, :has_errors, :system_admin
+    attr_accessor :data_model, :has_errors, :editable
 
     def diversity_disclosure_row
       field_value = data_model.diversity_disclosure ? t("components.confirmation.diversity.diversity_disclosure.#{data_model.diversity_disclosure}") : nil

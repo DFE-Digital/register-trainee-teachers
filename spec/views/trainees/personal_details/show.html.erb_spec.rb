@@ -6,6 +6,9 @@ describe "trainees/personal_details/show.html.erb" do
   before do
     assign(:current_user, current_user)
     assign(:trainee, trainee)
+    without_partial_double_verification do
+      allow(view).to receive(:policy).and_return(double(write?: true))
+    end
     render
   end
 

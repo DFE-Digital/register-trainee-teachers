@@ -2,12 +2,11 @@
 
 module Sections
   class View < ViewComponent::Base
-    attr_accessor :trainee, :section, :form
-
-    def initialize(trainee:, section:, form:)
+    def initialize(trainee:, section:, form:, editable:)
       @trainee = trainee
       @section = section
       @form = form
+      @editable = editable
     end
 
     def component
@@ -20,18 +19,20 @@ module Sections
 
   private
 
+    attr_accessor :trainee, :section, :form, :editable
+
     delegate :funding_options, to: :helpers
 
     def confirmation_view_args
       if section == :trainee_data
         { trainee_data_form: form_klass.new(trainee) }
       else
-        confirmation_view_args = { data_model: form_klass.new(trainee), has_errors: form_has_errors? }
+        view_args = { data_model: form_klass.new(trainee), has_errors: form_has_errors?, editable: editable }
 
         if section == :degrees
-          confirmation_view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
+          view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
         end
-        confirmation_view_args
+        view_args
       end
     end
 

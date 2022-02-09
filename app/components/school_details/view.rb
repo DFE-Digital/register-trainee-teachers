@@ -4,14 +4,14 @@ module SchoolDetails
   class View < GovukComponent::Base
     include SchoolHelper
 
-    attr_reader :trainee, :lead_school, :employing_school, :has_errors, :system_admin
+    attr_reader :trainee, :lead_school, :employing_school, :has_errors, :editable
 
-    def initialize(trainee, has_errors: false, system_admin: false)
+    def initialize(trainee:, has_errors: false, editable: false)
       @trainee = trainee
       @lead_school = trainee.lead_school
       @employing_school = trainee.employing_school
       @has_errors = has_errors
-      @system_admin = system_admin
+      @editable = editable
     end
 
     def school_rows

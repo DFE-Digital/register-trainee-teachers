@@ -28,7 +28,7 @@ module SchoolDetails
       let(:school) { trainee.lead_school }
 
       before do
-        render_inline(View.new(trainee))
+        render_inline(View.new(trainee: trainee, editable: true))
       end
 
       it_behaves_like("school row", "lead school")
@@ -39,7 +39,7 @@ module SchoolDetails
       let(:school) { trainee.employing_school }
 
       before do
-        render_inline(View.new(trainee))
+        render_inline(View.new(trainee: trainee, editable: true))
       end
 
       it_behaves_like("school row", "employing school")

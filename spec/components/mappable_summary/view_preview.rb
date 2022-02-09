@@ -2,16 +2,16 @@
 
 require "govuk/components"
 class MappableSummary::ViewPreview < ViewComponent::Preview
-  def non_editable_record
-    render(MappableSummary::View.new(trainee: mock_closed_trainee, system_admin: false, title: "Star Wars", rows: missing_data_rows, has_errors: nil))
+  def readonly_record
+    render(MappableSummary::View.new(trainee: mock_closed_trainee, editable: false, title: "Star Wars", rows: missing_data_rows, has_errors: nil))
   end
 
   def editable_record
-    render(MappableSummary::View.new(trainee: mock_open_trainee, system_admin: false, title: "Star Wars", rows: missing_data_rows, has_errors: nil))
+    render(MappableSummary::View.new(trainee: mock_open_trainee, editable: true, title: "Star Wars", rows: missing_data_rows, has_errors: nil))
   end
 
   def editable_record_with_change_link
-    render(MappableSummary::View.new(trainee: mock_open_trainee, system_admin: false, title: "Star Wars", rows: rows, has_errors: nil))
+    render(MappableSummary::View.new(trainee: mock_open_trainee, editable: true, title: "Star Wars", rows: rows, has_errors: nil))
   end
 
 private

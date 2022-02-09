@@ -6,7 +6,7 @@ module Funding
   describe View do
     let(:data_model) { Funding::FormValidator.new(trainee) }
 
-    before { render_inline(View.new(data_model: trainee)) }
+    before { render_inline(View.new(data_model: trainee, editable: true)) }
 
     context "with tieried bursary" do
       let(:trainee) do
@@ -129,7 +129,7 @@ module Funding
                    funding_method: funding_method,
                    allocation_subject: subject_specialism.allocation_subject)
 
-            render_inline(View.new(data_model: trainee))
+            render_inline(View.new(data_model: trainee, editable: true))
           end
 
           describe "bursary funded" do
@@ -189,7 +189,7 @@ module Funding
       end
 
       before do
-        render_inline(View.new(data_model: trainee))
+        render_inline(View.new(data_model: trainee, editable: true))
       end
 
       context "when trainee applying_for_grant is true" do

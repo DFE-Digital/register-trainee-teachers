@@ -5,9 +5,10 @@ module Schools
     include SummaryHelper
     include SchoolHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, editable: false)
       @data_model = data_model
       @has_errors = has_errors
+      @editable = editable
       @lead_school = fetch_lead_school
       @employing_school = fetch_employing_school
     end
@@ -25,7 +26,7 @@ module Schools
 
   private
 
-    attr_accessor :data_model, :lead_school, :employing_school, :has_errors, :system_admin
+    attr_accessor :data_model, :lead_school, :employing_school, :has_errors, :editable
 
     def lead_school_not_applicable?
       if data_model.is_a?(Schools::FormValidator)
@@ -57,6 +58,7 @@ module Schools
         text: t("components.confirmation.missing"),
         action_url: section_url,
         has_errors: has_errors,
+        editable: editable,
       ).to_h
     end
 

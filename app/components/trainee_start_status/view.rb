@@ -2,10 +2,9 @@
 
 module TraineeStartStatus
   class View < GovukComponent::Base
-    attr_accessor :data_model
-
-    def initialize(data_model:)
+    def initialize(data_model:, editable: false)
       @data_model = data_model
+      @editable = editable
     end
 
     def trainee
@@ -17,5 +16,9 @@ module TraineeStartStatus
 
       data_model.commencement_date.strftime("%d %B %Y")
     end
+
+  private
+
+    attr_accessor :data_model, :editable
   end
 end

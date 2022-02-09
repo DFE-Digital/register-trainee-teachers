@@ -22,7 +22,7 @@ module CourseDetails
       end
 
       before do
-        render_inline(View.new(data_model: trainee))
+        render_inline(View.new(data_model: trainee, editable: true))
       end
 
       it "renders 6 rows" do
@@ -87,7 +87,7 @@ module CourseDetails
         let(:trainee) { create(:trainee, :with_primary_education, :with_publish_course_details) }
 
         before do
-          render_inline(View.new(data_model: trainee))
+          render_inline(View.new(data_model: trainee, editable: true))
         end
 
         it "renders the correct course details" do
