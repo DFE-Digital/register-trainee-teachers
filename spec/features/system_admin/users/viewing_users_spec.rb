@@ -9,6 +9,7 @@ feature "View users" do
     before do
       given_i_am_authenticated(user: user)
       and_there_is_a_dttp_user
+      and_a_provider_exists
       when_i_visit_the_provider_index_page
       and_i_click_on_a_provider
       then_i_am_taken_to_the_provider_show_page
@@ -34,16 +35,20 @@ feature "View users" do
     providers_index_page.load
   end
 
+  def and_a_provider_exists
+    provider
+  end
+
   def and_there_is_a_dttp_user
-    create(:dttp_user, provider_dttp_id: user.primary_provider.dttp_id)
+    create(:dttp_user, provider_dttp_id: provider.dttp_id)
   end
 
   def and_i_click_on_a_provider
-    providers_index_page.provider_card.name.click
+    providers_index_page.provider_cards.find { |card| card.name.text == provider.name }.name.click
   end
 
   def then_i_am_taken_to_the_provider_show_page
-    expect(provider_show_page).to be_displayed(id: user.primary_provider.id)
+    expect(provider_show_page).to be_displayed(id: provider.id)
   end
 
   def then_i_see_the_registered_users
@@ -64,5 +69,9 @@ feature "View users" do
 
   def then_the_dttp_user_is_registered
     expect(provider_dttp_users_index_page).not_to have_unregistered_user_data
+  end
+
+  def provider
+    @provider ||= create(:provider, dttp_id: SecureRandom.uuid, users: [build(:user)])
   end
 end

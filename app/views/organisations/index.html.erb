@@ -1,0 +1,38 @@
+<h1 class="govuk-heading-l">Choose organisation</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%- if @providers.any? -%>
+      <h2 class="govuk-heading-m">Accrediting providers</h2>
+      <ul class="govuk-list">
+        <%- @providers.each do |provider| -%>
+          <li class="govuk-!-margin-bottom-2">
+            <%= 
+              govuk_link_to provider.name, 
+                organisation_path(id: provider.id, type: "Provider"), 
+                class: "provider-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" 
+            %>
+          </li>
+        <%- end -%>
+      </ul>
+    <%- end -%>
+
+    <%- if @lead_schools.any? -%>
+      <h2 class="govuk-heading-m">Lead schools</h2>
+      <p class="govuk-body">As a lead school you can only view records. You cannot change them.</p>
+      <ul class="govuk-list">
+        <li class="govuk-!-margin-bottom-2">
+          <%- @lead_schools.each do |lead_school| -%>
+            <%= govuk_link_to lead_school.name, 
+              organisation_path(id: lead_school.id, type: "School"), 
+              class: "lead-school-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" 
+            %>
+          <%- end -%>
+        </li>
+      </ul>
+      <p class="govuk-body">
+        If you need to access a different organisation’s records, contact us at <%= support_email %>
+      </p>
+    <%- end -%>
+  </div>
+</div>

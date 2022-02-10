@@ -24,12 +24,6 @@ class User < ApplicationRecord
     EmailFormatValidator.new(record).validate
   end
 
-  audited associated_with: :primary_provider
-
-  def primary_provider
-    providers.first
-  end
-
   def name
     "#{first_name} #{last_name}"
   end

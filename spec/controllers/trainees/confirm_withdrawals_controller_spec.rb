@@ -6,7 +6,7 @@ describe Trainees::ConfirmWithdrawalsController do
   include ActiveJob::TestHelper
 
   let(:current_user) { build_current_user }
-  let(:trainee) { create(:trainee, :trn_received, provider: current_user.primary_provider) }
+  let(:trainee) { create(:trainee, :trn_received, provider: current_user.organisation) }
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)

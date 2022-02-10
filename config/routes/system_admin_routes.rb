@@ -13,7 +13,7 @@ module SystemAdminRoutes
         mount Sidekiq::Web, at: "/sidekiq", constraints: SystemAdminConstraint.new
         get "/sidekiq", to: redirect("/sign-in"), status: 302
 
-        resources :providers, only: %i[index new create show edit update], shallow: true do
+        resources :providers, only: %i[index new create show edit update] do
           resources :dttp_users, only: %i[index], path: "/dttp-users"
           resources :users do
             member do
@@ -26,10 +26,11 @@ module SystemAdminRoutes
           end
         end
 
-        resources :users, only: %i[index] do
+        resources :users do
           resources :providers, controller: "user_providers", only: %i[new create]
           resources :lead_schools, controller: "user_lead_schools", only: %i[new create]
         end
+        resources :users
         resources :dttp_providers, only: %i[index show create]
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]

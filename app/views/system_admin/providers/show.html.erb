@@ -25,8 +25,8 @@
     <% @users_view.registered.each do |user| %>
       <%= render UserCard::View.new(
         user: user,
-        edit_path: edit_user_path(user),
-        delete_path: delete_user_path(user),
+        edit_path: edit_provider_user_path(@provider, user),
+        delete_path: delete_provider_user_path(@provider, user),
       ) %>
     <% end %>
   </div>

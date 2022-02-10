@@ -4,6 +4,7 @@ module PageObjects
   class Start < PageObjects::Base
     set_url "/"
 
+    element :organisation_name, ".govuk-caption-l"
     element :page_heading, ".govuk-heading-xl"
 
     element :sign_in, ".app-start-page-banner__button"
@@ -16,6 +17,10 @@ module PageObjects
       element :accessibility_link, ".govuk-footer__link", text: "Accessibility"
       element :cookies_link, ".govuk-footer__link", text: "Cookies"
       element :privacy_link, ".govuk-footer__link", text: "Privacy policy"
+    end
+
+    section :primary_navigation, "nav.moj-primary-navigation" do
+      element :drafts_link, ".govuk-link", text: "Draft records"
     end
   end
 end

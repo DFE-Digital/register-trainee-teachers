@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Trainees::PersonalDetailsController do
-  let(:user) { create(:user) }
+  let(:user) { build_current_user }
 
   before do
     allow(controller).to receive(:current_user).and_return(user)
@@ -11,7 +11,7 @@ describe Trainees::PersonalDetailsController do
 
   describe "#show" do
     context "with a non-draft trainee" do
-      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.primary_provider) }
+      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.organisation) }
 
       before do
         get(:show, params: { trainee_id: trainee })
@@ -23,7 +23,7 @@ describe Trainees::PersonalDetailsController do
     end
 
     context "with a draft trainee" do
-      let(:trainee) { create(:trainee, :draft, provider: user.primary_provider) }
+      let(:trainee) { create(:trainee, :draft, provider: user.organisation) }
 
       it "redirects to /review-draft" do
         expect(get(:show, params: { trainee_id: trainee })).to redirect_to(trainee_review_drafts_path(trainee))
@@ -33,7 +33,7 @@ describe Trainees::PersonalDetailsController do
 
   describe "#update" do
     context "with an apply draft trainee" do
-      let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.primary_provider) }
+      let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.organisation) }
 
       before do
         allow(PersonalDetailsForm).to receive(:new).and_return(double(stash_or_save!: true))

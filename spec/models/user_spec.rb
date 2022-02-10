@@ -66,10 +66,6 @@ describe User do
     it { is_expected.to have_db_index(:dttp_id).unique(true) }
   end
 
-  describe "auditing" do
-    it { is_expected.to be_audited.associated_with(:primary_provider) }
-  end
-
   describe "#discard" do
     subject { create(:user) }
 
@@ -117,14 +113,6 @@ describe User do
       it "is not returned" do
         expect(User.system_admins).to be_empty
       end
-    end
-  end
-
-  describe ".primary_provider" do
-    subject { create(:user) }
-
-    context "returns first provider" do
-      it { expect(subject.primary_provider).to eq(subject.providers.first) }
     end
   end
 end

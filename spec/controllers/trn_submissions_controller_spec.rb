@@ -6,7 +6,7 @@ describe TrnSubmissionsController do
   include ActiveJob::TestHelper
 
   describe "#create" do
-    let(:current_user) { create(:user) }
+    let(:current_user) { build_current_user }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
@@ -19,7 +19,7 @@ describe TrnSubmissionsController do
             :trainee,
             :completed,
             :with_study_mode_and_future_course_dates,
-            provider: current_user.primary_provider,
+            provider: current_user.organisation,
           )
         end
 
@@ -30,7 +30,7 @@ describe TrnSubmissionsController do
       end
 
       context "and the itt start date is in the past" do
-        let(:trainee) { create(:trainee, :completed, provider: current_user.primary_provider) }
+        let(:trainee) { create(:trainee, :completed, provider: current_user.organisation) }
 
         it "redirects to the trainee start status page" do
           expect(post(:create, params: { trainee_id: trainee }))

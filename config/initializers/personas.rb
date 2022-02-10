@@ -10,6 +10,7 @@ PERSONAS = [
   { first_name: "Annie", last_name: "Bell", email: "annie_bell@example.org", provider: PROVIDER_A, system_admin: false },
   { first_name: "Bridget", last_name: "Campbell", email: "bridget_campbell@example.org", provider: PROVIDER_B, system_admin: false },
   { first_name: "Teach", last_name: "First", email: "teach_first@example.org", provider: PROVIDER_C, system_admin: false, provider_code: TEACH_FIRST_PROVIDER_CODE },
+  { first_name: "Denise", last_name: "Theominis", email: "denise_theominis@example.org", provider: PROVIDER_B, system_admin: false, lead_school: true },
 ].freeze
 
 PERSONA_EMAILS = PERSONAS.map { |persona| persona[:email] }

@@ -98,6 +98,10 @@ RSpec/RepeatedDescription:
   Exclude:
     - 'spec/jobs/register_for_trn_job_spec.rb'
 
+RSpec/RepeatedExample:
+  Exclude:
+    - 'spec/policies/trainee_policy_spec.rb'
+
 # Offense count: 10
 RSpec/RepeatedExampleGroupDescription:
   Exclude:

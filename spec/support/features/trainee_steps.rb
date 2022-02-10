@@ -5,7 +5,7 @@ module Features
     attr_reader :trainee
 
     def given_a_trainee_exists(*traits, **overrides)
-      @trainee ||= create(:trainee, *traits, **overrides, provider: current_user.primary_provider)
+      @trainee ||= create(:trainee, *traits, **overrides, provider: current_user.organisation)
     end
 
     def trainee_from_url

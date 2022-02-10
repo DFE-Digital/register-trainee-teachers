@@ -35,7 +35,7 @@ feature "Creating a new user" do
 private
 
   def when_i_visit_the_provider_show_page
-    provider_show_page.load(id: user.primary_provider.id)
+    provider_show_page.load(id: provider.id)
   end
 
   def and_i_click_on_edit_user_link
@@ -43,15 +43,11 @@ private
   end
 
   def then_i_am_taken_to_the_edit_user_page
-    edit_user_page.load(id: user.id)
+    edit_user_page.load(provider_id: provider.id, id: user.id)
   end
 
   def and_i_click_on_add_a_user
     provider_show_page.add_a_user.click
-  end
-
-  def provider_show_page
-    @provider_show_page ||= PageObjects::Providers::Show.new
   end
 
   def and_i_fill_in_email(email:)
@@ -67,10 +63,10 @@ private
   end
 
   def then_i_am_taken_to_the_provider_show_page
-    expect(provider_show_page).to be_displayed(id: user.primary_provider.id)
+    expect(provider_show_page).to be_displayed(id: provider.id)
   end
 
-  def edit_user_page
-    @edit_user_page ||= PageObjects::Users::Edit.new
+  def provider
+    user.providers.first
   end
 end

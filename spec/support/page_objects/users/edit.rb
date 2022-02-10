@@ -3,7 +3,7 @@
 module PageObjects
   module Users
     class Edit < PageObjects::Base
-      set_url "system-admin/users/{id}/edit"
+      set_url "system-admin/providers/{provider_id}/users/{id}/edit"
 
       element :email, "#user-email-field"
 

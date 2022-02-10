@@ -48,15 +48,17 @@
       items: header_items(@current_user),
     ) %>
 
-    <%= render NavigationBar::View.new(
-      items: [
-        { name: "Home", url: root_path },
-        { name: "Draft records", url: drafts_path, current: active_link_for("drafts", @trainee) },
-        { name: "Registered trainees", url: trainees_path, current: active_link_for("trainees", @trainee) },
-      ],
-      current_path: request.path,
-      current_user: @current_user,
-    ) %>
+    <% unless current_page?(:organisations) %>
+      <%= render NavigationBar::View.new(
+        items: [
+          { name: "Home", url: root_path },
+          { name: "Draft records", url: drafts_path, current: active_link_for("drafts", @trainee) },
+          { name: "Registered trainees", url: trainees_path, current: active_link_for("trainees", @trainee) },
+        ],
+        current_path: request.path,
+        current_user: @current_user,
+      ) %>
+  <% end %>
 
     <div class="app-phase-banner app-phase-banner__env--<%= Settings.environment.name %>">
       <div class="govuk-width-container">

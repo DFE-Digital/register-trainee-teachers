@@ -3,12 +3,12 @@
 require "rails_helper"
 
 describe Trainees::SubjectSpecialismsController do
-  let(:user) { create(:user) }
+  let(:user) { build_current_user }
   let(:trainee) do
     create(:trainee,
            :provider_led_postgrad,
            :submitted_for_trn,
-           provider: user.primary_provider,
+           provider: user.organisation,
            course_subject_one: nil,
            course_subject_two: nil,
            course_subject_three: nil)

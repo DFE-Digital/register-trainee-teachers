@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Trainees::Degrees::TypeController, type: :controller do
   describe "#create" do
-    let(:user) { create(:user, providers: [trainee.provider]) }
+    let(:user) { UserWithOrganisationContext.new(user: create(:user, providers: [trainee.provider]), session: {}) }
     let(:trainee) { create(:trainee) }
     let(:response) do
       post(:create, params: {
