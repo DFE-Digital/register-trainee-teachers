@@ -28,6 +28,23 @@ module NavigationBar
       end
     end
 
+    context "right aligned links" do
+      let(:items) do
+        [
+          { name: "Home", url: item_url },
+          { name: "Trainee records", url: item_url },
+          { name: "Right aligned", url: item_url, align_right: true },
+        ]
+      end
+
+      it "shows right aligned links" do
+        expect(component).to have_link("Home")
+        expect(component).to have_link("Trainee records")
+
+        expect(component.find(".moj-primary-navigation__item.moj-primary-navigation__align_right")).to have_text("Right aligned")
+      end
+    end
+
     context "where item current is true" do
       let(:current_item) { { name: "Bulk actions", url: item_url, current: true } }
       let(:current_path) { "http://www.google.com" }
