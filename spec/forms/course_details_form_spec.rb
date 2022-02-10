@@ -260,6 +260,25 @@ describe CourseDetailsForm, type: :model do
             end
           end
 
+          context "the start date fields are 01/08/2021" do
+            let(:start_date_attributes) do
+              { start_day: "01", start_month: "08", start_year: "2021" }
+            end
+
+            let(:academic_cycle) { build(:academic_cycle) }
+
+            before do
+              # rubocop:disable RSpec/SubjectStub
+              allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
+              # rubocop:enable RSpec/SubjectStub
+              subject.valid?
+            end
+
+            it "does not return an error message for itt start date" do
+              expect(subject.errors[:itt_start_date]).to be_empty
+            end
+          end
+
           include_examples date_error_message, :itt_start_date, :blank,
                            "", "", ""
           include_examples date_error_message, :itt_start_date, :invalid,
