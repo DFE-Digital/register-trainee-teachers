@@ -47,8 +47,12 @@ class TraineePolicy
     read?
   end
 
-  def create?
+  def new?
     user.provider?
+  end
+
+  def create?
+    user_in_provider_context?
   end
 
   def update?
@@ -76,8 +80,6 @@ class TraineePolicy
   end
 
   alias_method :index?, :show?
-
-  alias_method :new?, :create?
 
   alias_method :edit?, :update?
   alias_method :destroy?, :update?

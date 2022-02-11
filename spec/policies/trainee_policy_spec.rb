@@ -33,11 +33,15 @@ describe TraineePolicy do
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
   end
 
-  permissions :create?, :new? do
+  permissions :new?, :create? do
     it { is_expected.to permit(provider_user, provider_trainee) }
 
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
     it { is_expected.not_to permit(system_admin_user, provider_trainee) }
+  end
+
+  permissions :create? do
+    it { is_expected.not_to permit(other_provider_user, provider_trainee) }
   end
 
   permissions :update?, :edit?, :destroy?, :confirm? do
