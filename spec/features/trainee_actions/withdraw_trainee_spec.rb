@@ -137,6 +137,42 @@ feature "Withdrawing a trainee", type: :feature do
     then_the_duplicate_record_text_should_be_shown
   end
 
+  scenario "trainee is withdrawn and changes their start date to a date before the withdrawal date" do
+    when_i_am_on_the_withdrawal_page
+    and_i_choose_today
+    and_i_choose_a_specific_reason
+    and_i_continue
+    then_i_am_redirected_to_withdrawal_confirmation_page
+    and_i_click_change_start_date
+    and_i_choose_they_have_started
+    and_i_continue
+    and_i_select_no_they_started_later
+    and_i_fill_in_a_new_start_date(2.days.ago)
+    and_i_continue
+    then_i_am_redirected_to_withdrawal_confirmation_page
+    and_i_see_my_date(2.days.ago)
+  end
+
+  scenario "trainee is withdrawn and changes their start date to a date after the withdrawal date" do
+    when_i_am_on_the_withdrawal_page
+    when_i_choose_yesterday
+    and_i_choose_a_specific_reason
+    and_i_continue
+    then_i_am_redirected_to_withdrawal_confirmation_page
+    and_i_click_change_start_date
+    and_i_choose_they_have_started
+    and_i_continue
+    and_i_select_no_they_started_later
+    and_i_fill_in_a_new_start_date(1.hour.ago)
+    and_i_continue
+    then_i_should_be_on_the_withdrawal_page
+    and_i_choose_today
+    and_i_choose_a_specific_reason
+    and_i_continue
+    then_i_am_redirected_to_withdrawal_confirmation_page
+    and_i_see_my_date(1.hour.ago)
+  end
+
   def when_i_am_on_the_withdrawal_page
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn
@@ -320,5 +356,21 @@ feature "Withdrawing a trainee", type: :feature do
 
   def then_i_am_taken_to_the_forbidden_withdrawal_page
     expect(withdrawal_forbidden_page).to be_displayed
+  end
+
+  def and_i_click_change_start_date
+    withdrawal_confirmation_page.start_date_change_link.click
+  end
+
+  def then_i_am_redirected_to_start_date_verification_page
+    expect(start_date_verification_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_i_select_no_they_started_later
+    trainee_start_status_edit_page.commencement_status_started_later.choose
+  end
+
+  def and_i_fill_in_a_new_start_date(date)
+    trainee_start_status_edit_page.set_date_fields("commencement_date", date.strftime("%d/%m/%Y"))
   end
 end

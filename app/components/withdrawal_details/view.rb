@@ -13,7 +13,7 @@ module WithdrawalDetails
     end
 
     def trainee_commencement_date
-      date_for_summary_view(trainee.commencement_date)
+      date_for_summary_view(data_model.commencement_date)
     end
 
     def withdraw_date

@@ -5,13 +5,13 @@ require "rails_helper"
 describe WithdrawalDetails::View do
   include SummaryHelper
 
-  let(:trainee) { build(:trainee, :with_withdrawal_date, :with_start_date, id: 1) }
+  let(:trainee) { build(:trainee, withdraw_date: 2.days.ago, commencement_date: 3.days.ago, id: 1) }
   let(:withdraw_date) { trainee.withdraw_date }
   let(:withdraw_reason) { nil }
   let(:additional_withdraw_reason) { nil }
 
   let(:data_model) do
-    OpenStruct.new(trainee: trainee, date: withdraw_date, withdraw_reason: withdraw_reason, additional_withdraw_reason: additional_withdraw_reason)
+    OpenStruct.new(trainee: trainee, commencement_date: trainee.commencement_date, date: withdraw_date, withdraw_reason: withdraw_reason, additional_withdraw_reason: additional_withdraw_reason)
   end
 
   before do
