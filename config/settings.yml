@@ -24,6 +24,10 @@ dttp:
   tenant_id: "tenant-id-from-env"
   api_base_url: "api-base-url-from-env"
 
+hesa:
+  username: "email@example.com"
+  password: "1234"
+
 # Used to add feature flags in the app to control access to certain features.
 features:
   home_text: false
