@@ -18,7 +18,7 @@ module Trainees
                                       has_errors: false,
                                     )
                                   else
-                                    ::Degrees::View.new(data_model: data_model, editable: policy(@trainee).update?)
+                                    ::Degrees::View.new(data_model: data_model, editable: trainee_editable?)
                                   end
       end
 

@@ -7,7 +7,7 @@ describe "trainees/show.html.erb", "feature_routes.provider_led_postgrad": true 
     assign(:trainee, trainee)
     assign(:current_user, current_user)
     without_partial_double_verification do
-      allow(view).to receive(:policy).and_return(double(update?: true))
+      allow(view).to receive(:trainee_editable?).and_return(true)
     end
   end
 

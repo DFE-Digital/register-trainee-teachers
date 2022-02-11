@@ -7,7 +7,6 @@ module Trainees
     def show
       page_tracker.save_as_origin!
       @form = Submissions::TrnValidator.new(trainee: trainee)
-      @editable = policy(trainee).update?
     end
   end
 end
