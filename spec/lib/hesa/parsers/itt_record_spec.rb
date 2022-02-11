@@ -6,10 +6,11 @@ module Hesa
   module Parsers
     describe IttRecord do
       describe ".to_attributes" do
-        let(:itt_record_doc) { read_fixture_file("hesa/itt_record.xml") }
+        let(:xml_doc) { Nokogiri::XML(read_fixture_file("hesa/itt_record.xml")) }
+        let(:student_node) { xml_doc.xpath("//ITTRecord/Student").first }
 
         subject(:trainee_attributes) do
-          described_class.to_attributes(itt_record_doc: itt_record_doc)
+          described_class.to_attributes(student_node: student_node)
         end
 
         it "returns an hash with mapped trainee attributes" do

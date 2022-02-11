@@ -4,8 +4,9 @@ require "rails_helper"
 
 module Trainees
   describe CreateFromHesa do
-    let(:itt_record_doc) { read_fixture_file("hesa/itt_record.xml") }
-    let(:itt_record_xml_attributes) { Hesa::Parsers::IttRecord.to_attributes(itt_record_doc: itt_record_doc) }
+    let(:xml_doc) { Nokogiri::XML(read_fixture_file("hesa/itt_record.xml")) }
+    let(:student_node) { xml_doc.xpath("//ITTRecord/Student").first }
+    let(:itt_record_xml_attributes) { Hesa::Parsers::IttRecord.to_attributes(student_node: student_node) }
     let(:nationality_name) { ApplyApi::CodeSets::Nationalities::MAPPING[itt_record_xml_attributes[:nationality]] }
     let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING[itt_record_xml_attributes[:training_route]] }
     let(:trainee) { Trainee.first }
@@ -15,7 +16,7 @@ module Trainees
     context "trainee already exists and didn't come from HESA" do
       before do
         create(:trainee, hesa_id: itt_record_xml_attributes[:hesa_id])
-        described_class.call(itt_record_doc: itt_record_doc)
+        described_class.call(student_node: student_node)
       end
 
       it "updates the trainee from HESA XML document" do
@@ -37,7 +38,7 @@ module Trainees
     context "trainee doesn't exist" do
       before do
         create(:provider, ukprn: itt_record_xml_attributes[:ukprn])
-        described_class.call(itt_record_doc: itt_record_doc)
+        described_class.call(student_node: student_node)
       end
 
       it "creates the trainee from HESA XML document" do

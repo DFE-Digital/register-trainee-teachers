@@ -4,8 +4,8 @@ module Trainees
   class CreateFromHesa
     include ServicePattern
 
-    def initialize(itt_record_doc:)
-      @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(itt_record_doc: itt_record_doc)
+    def initialize(student_node:)
+      @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
       @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
     end
 
