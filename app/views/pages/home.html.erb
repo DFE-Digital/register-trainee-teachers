@@ -26,7 +26,7 @@
           )%>
         </li>
       <% end %>
-      <% if current_user.provider? %>
+      <% if policy(Trainee).create? %>
         <li class="govuk-!-margin-bottom-0">
           <%= govuk_link_to(
             t(".new_trainee_link"),
