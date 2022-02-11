@@ -2,26 +2,26 @@
   <%= t("components.heading.draft.#{@trainee.requires_degree? ? "personal_details_and_education" : "personal_details"}") %>
 </h2>
 
-<%= render Sections::View.new(trainee: @trainee, form: @form, section: :personal_details, editable: @editable) %>
+<%= render Sections::View.new(trainee: @trainee, form: @form, section: :personal_details, editable: @trainee_editable) %>
 
-<%= render Sections::View.new(trainee: @trainee, form: @form, section: :contact_details, editable: @editable) %>
+<%= render Sections::View.new(trainee: @trainee, form: @form, section: :contact_details, editable: @trainee_editable) %>
 
-<%= render Sections::View.new(trainee: @trainee, form: @form, section: :diversity, editable: @editable) %>
+<%= render Sections::View.new(trainee: @trainee, form: @form, section: :diversity, editable: @trainee_editable) %>
 
 <% if @trainee.requires_degree? %>
-  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :degrees, editable: @editable) %>
+  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :degrees, editable: @trainee_editable) %>
 <% end %>
 
 <h2 class="govuk-heading-m">
   About their teacher training
 </h2>
 
-<%= render Sections::View.new(trainee: @trainee, form: @form, section: :course_details, editable: @editable) %>
+<%= render Sections::View.new(trainee: @trainee, form: @form, section: :course_details, editable: @trainee_editable) %>
 
-<%= render Sections::View.new(trainee: @trainee, form: @form, section: :training_details, editable: @editable) %>
+<%= render Sections::View.new(trainee: @trainee, form: @form, section: :training_details, editable: @trainee_editable) %>
 
 <% if @trainee.requires_schools? %>
-  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :schools, editable: @editable) %>
+  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :schools, editable: @trainee_editable) %>
 <% end %>
 
-<%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding, editable: @editable) %>
+<%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding, editable: @trainee_editable) %>

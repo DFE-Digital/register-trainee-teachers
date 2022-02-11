@@ -91,7 +91,7 @@ private
   end
 
   def load_missing_data_view
-    return unless policy(trainee).update?
+    return unless trainee_editable?
 
     @missing_data_view = MissingDataBannerView.new(missing_fields, trainee)
   end
