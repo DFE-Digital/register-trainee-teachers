@@ -27,4 +27,8 @@ private
   end
 end
 
-Redis.current = Redis.new(url: RedisSetting.new(ENV["VCAP_SERVICES"]).url)
+class RedisClient
+  def self.current
+    @current ||= Redis.new(url: RedisSetting.new(ENV["VCAP_SERVICES"]).url)
+  end
+end
