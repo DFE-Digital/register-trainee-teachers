@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_08_155419) do
+ActiveRecord::Schema.define(version: 2022_02_14_142008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -318,6 +318,15 @@ ActiveRecord::Schema.define(version: 2022_02_08_155419) do
     t.integer "funding_type"
     t.bigint "academic_cycle_id"
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
+  end
+
+  create_table "hesa_collection_requests", force: :cascade do |t|
+    t.string "collection_reference"
+    t.datetime "requested_at"
+    t.datetime "updates_since"
+    t.string "response_body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "lead_school_users", force: :cascade do |t|
