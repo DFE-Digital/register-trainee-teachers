@@ -5,6 +5,7 @@ module Dttp
     module AcademicYears
       ACADEMIC_YEAR_2008_2009_FIRST = "1757b5c4-2bd1-e711-80df-005056ac45bb"
       ACADEMIC_YEAR_2008_2009_SECOND = "77f80620-680f-ea11-a811-000d3ab5d037"
+      ACADEMIC_YEAR_2019_2020 = "00469dd9-bc46-e711-80c8-0050568902d3"
       ACADEMIC_YEAR_2020_2021 = "76bcaeca-2bd1-e711-80df-005056ac45bb"
       ACADEMIC_YEAR_2021_2022 = "21196925-17b9-e911-a863-000d3ab0dc71"
       ACADEMIC_YEAR_2022_2023 = "ed0db9f4-eff5-eb11-94ef-000d3ab1e900"
@@ -34,7 +35,7 @@ module Dttp
         "2016/17" => { entity_id: "22320514-b646-e711-80c8-0050568902d3" },
         "2017/18" => { entity_id: "8289012b-2487-e711-80e7-3863bb3640b8" },
         "2018/19" => { entity_id: "0f8ee3cd-bc46-e711-80c8-0050568902d3" },
-        "2019/20" => { entity_id: "00469dd9-bc46-e711-80c8-0050568902d3" },
+        "2019/20" => { entity_id: ACADEMIC_YEAR_2019_2020 },
         "2020/21" => { entity_id: ACADEMIC_YEAR_2020_2021 },
         "2021/22" => { entity_id: ACADEMIC_YEAR_2021_2022 },
         "2022/23" => { entity_id: ACADEMIC_YEAR_2022_2023 },
