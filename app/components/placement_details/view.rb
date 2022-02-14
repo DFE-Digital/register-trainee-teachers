@@ -4,12 +4,12 @@ module PlacementDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_accessor :trainee, :system_admin, :has_errors, :show_link
+    attr_accessor :trainee, :editable, :has_errors, :show_link
 
-    def initialize(trainee:, system_admin:, has_errors: nil, link: true)
+    def initialize(trainee:, link: true, has_errors: false, editable: false)
       @trainee = trainee
       @not_provided_copy = I18n.t("components.confirmation.not_provided")
-      @system_admin = system_admin
+      @editable = editable
       @has_errors = has_errors
       @show_link = show_link?(link)
     end
@@ -25,8 +25,7 @@ module PlacementDetails
   private
 
     def show_link?(link)
-      return true if system_admin
-      return false if trainee.recommended_for_award? || trainee.awarded? || trainee.withdrawn?
+      return false if !editable
 
       link
     end

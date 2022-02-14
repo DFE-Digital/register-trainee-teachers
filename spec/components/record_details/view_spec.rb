@@ -38,7 +38,7 @@ module RecordDetails
     context "when any data has not been provided" do
       before do
         trainee.trainee_id = nil
-        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
       end
 
       it "tells the user that the data is missing" do
@@ -180,7 +180,7 @@ module RecordDetails
 
           before do
             trainee.commencement_date = commencement_date
-            render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+            render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end
 
           it "renders commencement_date" do
@@ -196,7 +196,7 @@ module RecordDetails
         context "commencement_date is not set" do
           before do
             trainee.commencement_date = nil
-            render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+            render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end
 
           it "renders not provided" do

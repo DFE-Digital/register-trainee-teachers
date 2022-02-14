@@ -5,11 +5,11 @@ require "govuk/components"
 module SchoolDetails
   class ViewPreview < ViewComponent::Preview
     def default
-      render(View.new(mock_trainee(with_employing: true)))
+      render(View.new(trainee: mock_trainee(with_employing: true)))
     end
 
     def with_only_one_school
-      render(View.new(mock_trainee))
+      render(View.new(trainee: mock_trainee))
     end
 
   private

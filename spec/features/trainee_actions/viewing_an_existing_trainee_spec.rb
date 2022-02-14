@@ -3,9 +3,9 @@
 require "rails_helper"
 
 feature "View trainees" do
-  background { given_i_am_authenticated }
-
   context "when trainee belongs to me" do
+    background { given_i_am_authenticated }
+
     scenario "viewing the personal details of a draft trainee" do
       given_a_trainee_exists
       when_i_view_the_trainee_drafts_page
@@ -24,11 +24,29 @@ feature "View trainees" do
   end
 
   context "when trainee does not belong to me" do
+    background { given_i_am_authenticated }
+
     let(:trainee) { create(:trainee) }
 
     scenario "viewing the personal details of trainee" do
       and_i_visit_the_trainee
       then_i_should_see_no_access_text
+    end
+  end
+
+  context "when i am a lead school user" do
+    let(:trainee) { create(:trainee, :submitted_for_trn, commencement_date: nil, lead_school: @current_user.lead_schools.first) }
+
+    background { given_i_am_authenticated_as_a_lead_school_user }
+
+    scenario "viewing the personal details of a registered trainee" do
+      and_i_visit_the_trainee
+      then_i_should_not_see_any_change_links_on_the(record_page)
+      and_i_should_not_see_any_action_links
+      and_i_should_not_see_any_incomplete_data_prompts_on_the(record_page)
+      and_i_visit_the_personal_details
+      then_i_should_not_see_any_change_links_on_the(personal_details_page)
+      and_i_should_not_see_any_incomplete_data_prompts_on_the(personal_details_page)
     end
   end
 
@@ -56,6 +74,25 @@ private
 
   def then_i_should_see_no_access_text
     expect(record_page).to have_text(t("components.page_titles.pages.forbidden"))
+  end
+
+  def then_i_should_not_see_any_change_links_on_the(expected_page)
+    expect(expected_page).not_to have_link("Change")
+  end
+
+  def and_i_should_not_see_any_action_links
+    expect(record_page).not_to have_link("delete this record")
+    expect(record_page).not_to have_link("withdraw")
+    expect(record_page).not_to have_link("reinstate")
+    expect(record_page).not_to have_link("defer")
+  end
+
+  def and_i_should_not_see_any_incomplete_data_prompts_on_the(expected_page)
+    expect(expected_page).not_to have_text(I18n.t("views.missing_data_banner_view.header"))
+  end
+
+  def and_i_visit_the_personal_details
+    visit trainee_personal_details_path(trainee)
   end
 
   def and_i_visit_the_trainee

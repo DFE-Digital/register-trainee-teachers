@@ -5,12 +5,13 @@ module RecordDetails
     include SanitizeHelper
     include SummaryHelper
 
-    attr_reader :trainee, :last_updated_event, :not_provided_copy, :system_admin
+    attr_reader :trainee, :last_updated_event, :not_provided_copy, :system_admin, :editable
 
-    def initialize(trainee:, last_updated_event:, system_admin: false)
+    def initialize(trainee:, last_updated_event:, system_admin: false, editable: false)
       @trainee = trainee
       @last_updated_event = last_updated_event
       @system_admin = system_admin
+      @editable = editable
     end
 
     def record_detail_rows

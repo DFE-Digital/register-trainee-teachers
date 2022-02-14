@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe TraineePolicy do
-  let(:system_admin_user) { create(:user, :system_admin) }
+  let(:system_admin_user) { user_with_organisation(create(:user, :system_admin), nil) }
   let(:provider) { create(:provider) }
   let(:other_provider) { create(:provider) }
   let(:provider_user) { user_with_organisation(create(:user, providers: [provider]), provider) }
@@ -33,7 +33,18 @@ describe TraineePolicy do
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
   end
 
-  permissions :create?, :update?, :edit?, :new?, :destroy?, :confirm?, :recommended? do
+  permissions :new?, :create? do
+    it { is_expected.to permit(provider_user, provider_trainee) }
+
+    it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
+    it { is_expected.not_to permit(system_admin_user, provider_trainee) }
+  end
+
+  permissions :create? do
+    it { is_expected.not_to permit(other_provider_user, provider_trainee) }
+  end
+
+  permissions :update?, :edit?, :destroy?, :confirm? do
     it { is_expected.to permit(provider_user, provider_trainee) }
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
 
@@ -41,6 +52,13 @@ describe TraineePolicy do
     it { is_expected.to permit(system_admin_user, lead_school_trainee) }
 
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
+
+    context "when the trainee is not awaiting any actions" do
+      let(:provider_trainee) { create(:trainee, %i[recommended_for_award withdrawn awarded].sample, provider: provider) }
+
+      it { is_expected.not_to permit(provider_user, provider_trainee) }
+      it { is_expected.to permit(system_admin_user, provider_trainee) }
+    end
   end
 
   permissions :withdraw? do
@@ -159,7 +177,7 @@ describe TraineePolicy do
     end
   end
 
-  permissions :show_recommended? do
+  permissions :recommended? do
     context "when trainee is recommended" do
       before do
         allow(provider_trainee).to receive(:recommended_for_award?).and_return(true)

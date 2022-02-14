@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
 
-  helper_method :current_user, :authenticated?, :audit_user
+  helper_method :current_user, :authenticated?, :audit_user, :trainee_editable?
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
@@ -82,6 +82,10 @@ private
 
   def ensure_trainee_is_draft!
     redirect_to(trainee_path(trainee)) unless trainee.draft?
+  end
+
+  def trainee_editable?
+    @trainee_editable ||= policy(trainee).update?
   end
 
   def ensure_trainee_is_not_draft!

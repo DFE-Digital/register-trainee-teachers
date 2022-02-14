@@ -13,7 +13,7 @@ module Trainees
           @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.diversity)
         end
 
-        @confirmation_component = ::Diversity::View.new(data_model: data_model)
+        @confirmation_component = ::Diversity::View.new(data_model: data_model, editable: trainee_editable?)
       end
 
       def update
@@ -28,7 +28,7 @@ module Trainees
 
           redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
         else
-          @confirmation_component = ::Diversity::View.new(data_model: data_model, has_errors: true)
+          @confirmation_component = ::Diversity::View.new(data_model: data_model, has_errors: true, editable: trainee_editable?)
 
           render(:show)
         end

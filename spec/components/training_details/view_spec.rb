@@ -11,7 +11,7 @@ module TrainingDetails
 
       before do
         trainee.trainee_id = nil
-        render_inline(View.new(data_model: trainee))
+        render_inline(View.new(data_model: trainee, editable: true))
       end
 
       it "tells the user that the data is missing" do

@@ -47,7 +47,15 @@ class TraineePolicy
     read?
   end
 
+  def new?
+    user.provider?
+  end
+
   def create?
+    user_in_provider_context?
+  end
+
+  def update?
     write?
   end
 
@@ -63,8 +71,8 @@ class TraineePolicy
     write? && trainee.deferred?
   end
 
-  def show_recommended?
-    write? && trainee.recommended_for_award?
+  def recommended?
+    read? && trainee.recommended_for_award?
   end
 
   def recommend_for_award?
@@ -73,12 +81,9 @@ class TraineePolicy
 
   alias_method :index?, :show?
 
-  alias_method :update?, :create?
-  alias_method :edit?, :create?
-  alias_method :new?, :create?
-  alias_method :destroy?, :create?
-  alias_method :confirm?, :create?
-  alias_method :recommended?, :create?
+  alias_method :edit?, :update?
+  alias_method :destroy?, :update?
+  alias_method :confirm?, :update?
 
 private
 
@@ -87,7 +92,7 @@ private
   end
 
   def write?
-    user&.system_admin || user_in_provider_context?
+    user&.system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
   end
 
   def user_in_provider_context?

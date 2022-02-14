@@ -12,7 +12,7 @@ module PersonalDetails
       let(:trainee) { build(:trainee, id: 1, first_names: nil, date_of_birth: nil, gender: nil) }
 
       before do
-        render_inline(View.new(data_model: personal_details_form))
+        render_inline(View.new(data_model: personal_details_form, editable: true))
       end
 
       it "renders blank rows for full name, date of birth, gender and nationality" do

@@ -4,9 +4,10 @@ module TrainingDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    def initialize(data_model:, has_errors: false)
+    def initialize(data_model:, has_errors: false, editable: false)
       @data_model = data_model
       @has_errors = has_errors
+      @editable = editable
     end
 
     def trainee
@@ -22,6 +23,7 @@ module TrainingDetails
           text: t("components.confirmation.missing"),
           action_url: edit_trainee_training_details_path(trainee),
           has_errors: has_errors,
+          editable: editable,
           apply_draft: trainee.apply_application?,
         ).to_h,
       ].compact
@@ -29,7 +31,7 @@ module TrainingDetails
 
   private
 
-    attr_accessor :data_model, :has_errors
+    attr_accessor :data_model, :has_errors, :editable
 
     def region
       return unless trainee&.provider&.hpitt_postgrad?
