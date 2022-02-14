@@ -26,8 +26,10 @@ dttp:
 
 hesa:
   auth_url: "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
-  username: "email@example.com"
-  password: "1234"
+  current_collection_reference: "C22053"
+  current_collection_start_date: "2022-04-01"
+  username: <get from secrets>
+  password: <get from secrets>
 
 # Used to add feature flags in the app to control access to certain features.
 features:
