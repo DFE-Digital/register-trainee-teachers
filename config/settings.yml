@@ -25,6 +25,7 @@ dttp:
   api_base_url: "api-base-url-from-env"
 
 hesa:
+  auth_url: "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
   username: "email@example.com"
   password: "1234"
 

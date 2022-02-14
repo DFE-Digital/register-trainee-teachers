@@ -6,14 +6,6 @@ module Hesa
   describe Client do
     let(:url) { "http://example.com" }
     let(:mechanize) { Mechanize.new }
-    let(:login_page) {
-      html = read_fixture_file("hesa/login_page.html")
-      Mechanize::Page.new(URI(url), nil, html, 200, mechanize)
-    }
-    let(:logged_in_page) {
-      html = read_fixture_file("hesa/logged_in_page.html")
-      Mechanize::Page.new(URI(url), nil, html, 200, mechanize)
-    }
 
     subject { Client.new }
 
@@ -27,8 +19,11 @@ module Hesa
         login_form = Struct.new(:EmailAddress, :Password, :submit).new
         allow(login_form).to receive(:EmailAddress=).with(Settings.hesa.username)
         allow(login_form).to receive(:Password=).with(Settings.hesa.password)
-        allow(login_form).to receive(:submit).and_return(logged_in_page)
+        allow(login_form).to receive(:submit).and_return(true)
 
+        login_page = Struct.new(:form_with) do
+          def form_with(id:); end
+        end.new
         allow(login_page).to receive(:form_with).with(id: "loginForm").and_return(login_form)
 
         allow(mechanize).to receive(:get).and_return(login_page)
@@ -36,25 +31,12 @@ module Hesa
       end
 
       it "logs in successfully" do
-        expect(subject.login).to eql(logged_in_page)
-      end
-    end
-
-    describe ".logged_in?" do
-      it "returns true if logged in" do
-        expect(subject.logged_in?(logged_in_page)).to be(true)
-      end
-
-      it "returns false if not logged in" do
-        expect(subject.logged_in?(login_page)).to be(false)
+        expect(subject.send(:login)).to be(true)
       end
     end
 
     describe ".get" do
-      let(:sample_xml) { read_fixture_file("hesa/itt_record.xml") }
-      let(:sample_page) {
-        Mechanize::Page.new(URI(url), nil, sample_xml, 200, mechanize)
-      }
+      let(:sample_page) { Struct.new(:body).new("Test") }
 
       before do
         allow(subject).to receive(:agent).and_return(mechanize)
@@ -63,7 +45,7 @@ module Hesa
       end
 
       it "returns XML from URL" do
-        expect(subject.get(url: url)).to eql(sample_xml)
+        expect(subject.get(url: url)).to eql("Test")
       end
     end
   end
