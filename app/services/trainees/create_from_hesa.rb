@@ -3,6 +3,7 @@
 module Trainees
   class CreateFromHesa
     include ServicePattern
+    include DiversityAttributes
 
     def initialize(student_node:)
       @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
@@ -13,6 +14,7 @@ module Trainees
       trainee.assign_attributes(mapped_attributes)
       trainee.save!
       trainee
+      add_multiple_disability_text!
     end
 
   private
@@ -27,6 +29,7 @@ module Trainees
       }.merge(personal_details_attributes)
        .merge(contact_attributes)
        .merge(provider_attributes)
+       .merge(ethnicity_and_disability_attributes)
     end
 
     def personal_details_attributes
@@ -62,6 +65,14 @@ module Trainees
 
     def training_route
       Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_trainee[:training_route]]
+    end
+
+    def ethnic_background
+      Hesa::CodeSets::Ethnicities::MAPPING[hesa_trainee[:ethnic_background]]
+    end
+
+    def disability
+      Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
     end
   end
 end
