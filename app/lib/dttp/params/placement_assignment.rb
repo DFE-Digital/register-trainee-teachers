@@ -186,6 +186,7 @@ module Dttp
       end
 
       def academic_year
+        return CodeSets::AcademicYears::ACADEMIC_YEAR_2019_2020 if itt_start_date_between?("1/8/2019", "31/7/2020")
         return CodeSets::AcademicYears::ACADEMIC_YEAR_2020_2021 if itt_start_date_between?("1/8/2020", "31/7/2021")
         return CodeSets::AcademicYears::ACADEMIC_YEAR_2021_2022 if itt_start_date_between?("1/8/2021", "31/7/2022")
 
