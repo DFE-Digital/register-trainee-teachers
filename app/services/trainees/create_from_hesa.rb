@@ -31,6 +31,7 @@ module Trainees
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
+       .merge(withdrawal_attributes)
     end
 
     def personal_details_attributes
@@ -69,6 +70,24 @@ module Trainees
         itt_end_date: hesa_trainee[:itt_end_date],
         commencement_date: hesa_trainee[:commencement_date] || hesa_trainee[:itt_start_date],
       }
+    end
+
+    def withdrawal_attributes
+      return {} unless trainee_withdrawn?
+
+      {
+        withdraw_date: hesa_trainee[:end_date],
+        withdraw_reason: reason_for_leaving,
+        state: "withdrawn",
+      }
+    end
+
+    def trainee_withdrawn?
+      hesa_trainee[:end_date].present? &&
+        [
+          Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION,
+          Hesa::CodeSets::ReasonsForLeavingCourse::UKNOWN_COMPLETION,
+        ].exclude?(reason_for_leaving)
     end
 
     def nationalities
@@ -116,6 +135,10 @@ module Trainees
 
     def age_range
       @age_range ||= Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
+    end
+
+    def reason_for_leaving
+      @reason_for_leaving ||= Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
     end
   end
 end
