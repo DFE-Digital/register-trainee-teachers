@@ -465,59 +465,6 @@ describe Trainee do
         expect(Trainee.ordered_by_last_name).to eq(expected_order)
       end
     end
-
-    describe "#ordered_by_drafts" do
-      let(:expected_order) do
-        [
-          draft_trainee_c,
-          draft_trainee_d,
-          deferred_trainee_a,
-          submitted_for_trn_trainee_b,
-        ]
-      end
-
-      it "orders the trainees by drafts first, then any other state" do
-        expect(save_trainees).not_to eq(expected_order)
-
-        expect(Trainee.ordered_by_drafts.first(2)).to match_array([draft_trainee_d, draft_trainee_c])
-      end
-    end
-
-    describe "#ordered_by_drafts_then_by" do
-      context "last_name field" do
-        let(:expected_order) do
-          [
-            draft_trainee_d,
-            draft_trainee_c,
-            submitted_for_trn_trainee_b,
-            deferred_trainee_a,
-          ]
-        end
-
-        it "orders the trainees by drafts first, then any other state, then by last_name" do
-          expect(save_trainees).not_to eq(expected_order)
-
-          expect(Trainee.ordered_by_drafts_then_by(:last_name)).to eq(expected_order)
-        end
-      end
-
-      context "updated_at field" do
-        let(:expected_order) do
-          [
-            draft_trainee_c,
-            draft_trainee_d,
-            submitted_for_trn_trainee_b,
-            deferred_trainee_a,
-          ]
-        end
-
-        it "orders the trainees by drafts first, then any other state, then by updated_at" do
-          expect(save_trainees).not_to eq(expected_order)
-
-          expect(Trainee.ordered_by_drafts_then_by(:updated_at)).to eq(expected_order)
-        end
-      end
-    end
   end
 
   describe "#with_subject_or_allocation_subject" do

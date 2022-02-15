@@ -101,6 +101,8 @@ module ApplicationRecordCard
     end
 
     context "when a trainee with all their details filled in" do
+      let(:state) { "draft" }
+
       let(:trainee) do
         Timecop.freeze(Time.zone.local(2020, 1, 1)) do
           build(
@@ -114,6 +116,7 @@ module ApplicationRecordCard
             created_at: Time.zone.now,
             trn: "789456",
             provider: provider,
+            state: state,
           )
         end
       end
@@ -144,10 +147,6 @@ module ApplicationRecordCard
         expect(rendered_component).to have_text("TRN: 789456")
       end
 
-      it "renders updated at" do
-        expect(rendered_component).to have_text("Updated: #{Time.zone.now.strftime('%-d %B %Y')}")
-      end
-
       it "renders trainee name" do
         expect(rendered_component).to have_text("Teddy Smith")
       end
@@ -158,6 +157,22 @@ module ApplicationRecordCard
 
       it "renders route if there is no route" do
         expect(rendered_component).to have_text(t("activerecord.attributes.trainee.training_routes.assessment_only"))
+      end
+
+      describe "rendering updated at" do
+        context "when the trainee is in draft" do
+          it "renders updated at from the model" do
+            expect(rendered_component).to have_text("Updated: #{trainee.created_at.strftime('%-d %B %Y')}")
+          end
+        end
+
+        context "when the trainee is not draft" do
+          let(:state) { "trn_received" }
+
+          it "renders updated at from the timeline" do
+            expect(rendered_component).to have_text("Updated: #{Time.zone.now.strftime('%-d %B %Y')}")
+          end
+        end
       end
     end
   end

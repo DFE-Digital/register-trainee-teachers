@@ -104,10 +104,6 @@ private
     @trainee ||= Trainee.from_param(params[:id])
   end
 
-  def ordered_trainees
-    policy_scope(Trainee.includes(provider: [:courses]).ordered_by_drafts_then_by(field))
-  end
-
   def trainee_params
     params.fetch(:trainee, {}).permit(:training_route)
   end

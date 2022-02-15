@@ -36,11 +36,16 @@ module ApplicationRecordCard
     end
 
     def updated_at
-      date_stamp = record.timeline&.first&.date.presence || record.created_at
-      date_text = tag.span(date_stamp.strftime("%-d %B %Y"))
+      date_text = tag.span(last_updated_date.strftime("%-d %B %Y"))
       class_list = "govuk-caption-m govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0 application-record-card__submitted"
 
       sanitize(tag.p(date_text.prepend("Updated: "), class: class_list))
+    end
+
+    def last_updated_date
+      return record.updated_at || record.created_at if record.draft?
+
+      record.timeline&.first&.date.presence || record.updated_at
     end
 
     def trainee_id
