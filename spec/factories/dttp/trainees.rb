@@ -6,6 +6,7 @@ FactoryBot.define do
       dttp_id_for_provider { provider&.dttp_id || SecureRandom.uuid }
       api_trainee_hash { create(:api_trainee) }
     end
+
     dttp_id { SecureRandom.uuid }
     response { api_trainee_hash.merge(dttp_id: dttp_id, provider_dttp_id: dttp_id_for_provider) }
     state { "importable" }

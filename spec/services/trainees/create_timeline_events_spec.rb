@@ -15,6 +15,28 @@ module Trainees
         it "returns a trainee created event" do
           expect(subject.title).to eq(t("components.timeline.titles.trainee.create"))
         end
+
+        context "when the audit user is a string (not a model)" do
+          before do
+            trainee.own_and_associated_audits.first.update(user: "HESA")
+          end
+
+          it "returns a timeline event with that string as the user" do
+            expect(subject.username).to eq("HESA")
+          end
+        end
+
+        context "when the audit was created after the model instance was created" do
+          let(:trainee_created_at) { Time.zone.yesterday }
+
+          before do
+            trainee.update(created_at: trainee_created_at)
+          end
+
+          it "returns a timeline event with the earlier created_at" do
+            expect(subject.date).to eq(trainee_created_at)
+          end
+        end
       end
 
       context "with a trainee update audit" do
