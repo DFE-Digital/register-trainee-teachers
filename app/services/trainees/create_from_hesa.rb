@@ -35,6 +35,7 @@ module Trainees
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(withdrawal_attributes)
+       .merge(funding_attributes)
     end
 
     def personal_details_attributes
@@ -91,6 +92,14 @@ module Trainees
           Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION,
           Hesa::CodeSets::ReasonsForLeavingCourse::UKNOWN_COMPLETION,
         ].exclude?(reason_for_leaving)
+    end
+
+    def funding_attributes
+      @funding_attributes ||= MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
+    end
+
+    def funding_entity_id
+      Hesa::CodeSets::BursaryLevels::MAPPING[hesa_trainee[:bursary_level]]
     end
 
     def nationalities

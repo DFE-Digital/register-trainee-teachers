@@ -389,7 +389,11 @@ module Trainees
     end
 
     def funding_attributes
-      @funding_attributes ||= MapFundingFromDttp.call(dttp_trainee: dttp_trainee)
+      @funding_attributes ||= MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
+    end
+
+    def funding_entity_id
+      @funding_entity_id ||= dttp_trainee.latest_placement_assignment.funding_id
     end
 
     def update_dttp_sha!

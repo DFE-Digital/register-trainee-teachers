@@ -57,6 +57,9 @@ module Trainees
       expect(degree.grade).to eq("First-class honours")
       expect(degree.other_grade).to be_nil
       expect(degree.country).to eq("Canada")
+      expect(trainee.applying_for_bursary).to eq(false)
+      expect(trainee.applying_for_grant).to eq(false)
+      expect(trainee.applying_for_scholarship).to eq(false)
     end
 
     context "trainee doesn't exist" do
@@ -194,6 +197,14 @@ module Trainees
             expect(trainee.withdraw_date).to be_nil
             expect(trainee.withdraw_reason).to be_nil
           end
+        end
+      end
+
+      context "when bursary is available" do
+        let(:hesa_stub_attributes) { { bursary_level: "B" } }
+
+        it "uses the MapFundingFromDttpEntityId service to determine bursary information" do
+          expect(trainee.applying_for_bursary).to eq(true)
         end
       end
     end

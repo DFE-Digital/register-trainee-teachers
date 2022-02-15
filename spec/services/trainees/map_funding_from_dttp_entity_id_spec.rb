@@ -3,14 +3,13 @@
 require "rails_helper"
 
 module Trainees
-  describe MapFundingFromDttp do
+  describe MapFundingFromDttpEntityId do
     include SeedHelper
 
     let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_traineestatusid_value: nil) }
     let(:placement_assignment) { create(:dttp_placement_assignment, response: api_placement_assignment) }
-    let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment]) }
 
-    subject { described_class.call(dttp_trainee: dttp_trainee) }
+    subject { described_class.call(funding_entity_id: placement_assignment.funding_id) }
 
     context "with funding information available" do
       context "when bursary is NO_BURSARY_AWARDED" do
