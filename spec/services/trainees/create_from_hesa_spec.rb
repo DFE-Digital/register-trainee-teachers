@@ -44,6 +44,19 @@ module Trainees
       expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
       expect(trainee.itt_end_date).to be_nil
       expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
+
+      expect(trainee.degrees.count).to eq(student_attributes[:degrees].count)
+      degree = trainee.degrees.first
+      hesa_degree = student_attributes[:degrees].first
+      expect(degree.locale_code).to eq("non_uk")
+      expect(degree.uk_degree).to be_nil
+      expect(degree.non_uk_degree).to eq("Unknown")
+      expect(degree.subject).to eq(hesa_degree[:subject])
+      expect(degree.institution).to eq("The Open University")
+      expect(degree.graduation_year).to eq(2005)
+      expect(degree.grade).to eq("First-class honours")
+      expect(degree.other_grade).to be_nil
+      expect(degree.country).to eq("Canada")
     end
 
     context "trainee doesn't exist" do

@@ -66,7 +66,7 @@
             <PREVIOUSQUALIFICATION>
                 <F_BURSFLAG>01</F_BURSFLAG>
                 <F_DEGCLSS>01</F_DEGCLSS>
-                <F_DEGCTRY>NULL</F_DEGCTRY>
+                <F_DEGCTRY>CA</F_DEGCTRY>
                 <F_DEGENDDT>2005-07-01</F_DEGENDDT>
                 <F_DEGEST>0001</F_DEGEST>
                 <F_DEGLENGTH>4</F_DEGLENGTH>

@@ -13,8 +13,11 @@ module Trainees
     def call
       trainee.assign_attributes(mapped_attributes)
       trainee.save!
-      trainee
+
+      create_degrees!
       add_multiple_disability_text!
+
+      trainee
     end
 
   private
@@ -139,6 +142,10 @@ module Trainees
 
     def reason_for_leaving
       @reason_for_leaving ||= Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
+    end
+
+    def create_degrees!
+      ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
     end
   end
 end
