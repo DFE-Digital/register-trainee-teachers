@@ -35,6 +35,15 @@ module Trainees
       expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
       expect(trainee.nationalities.pluck(:name)).to include(nationality_name)
       expect(trainee.trn).to eq(student_attributes[:trn])
+      expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:secondary])
+      expect(trainee.course_subject_one).to eq(::CourseSubjects::BIOLOGY)
+      expect(trainee.course_subject_two).to be_nil
+      expect(trainee.course_subject_three).to be_nil
+      expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
+      expect(trainee.study_mode).to eq("full_time")
+      expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
+      expect(trainee.itt_end_date).to be_nil
+      expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
     end
 
     context "trainee doesn't exist" do
@@ -129,6 +138,14 @@ module Trainees
 
         it "sets the ethnic_group to 'Not provided'" do
           expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+        end
+      end
+
+      context "when commencement_date is not null" do
+        let(:hesa_stub_attributes) { { commencement_date: "2020-09-27" } }
+
+        it "uses the commencement_date" do
+          expect(trainee.commencement_date).to eq(Date.parse("2020-09-27"))
         end
       end
     end
