@@ -5,20 +5,19 @@ require "rails_helper"
 module Trainees
   describe CreateFromHesa do
     let(:nationality_name) { ApplyApi::CodeSets::Nationalities::MAPPING[student_attributes[:nationality]] }
-    let(:hesa_disability_codes) { Hesa::CodeSets::Disabilities::MAPPING.invert }
-    let(:hesa_ethnicity_codes) { Hesa::CodeSets::Ethnicities::MAPPING.invert }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING[student_attributes[:training_route]] }
     let(:hesa_api_stub) { ApiStubs::HesaApi.new(hesa_stub_attributes) }
     let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }
     let(:create_custom_state) { "implemented where necessary" }
     let(:hesa_stub_attributes) { {} }
+    let(:trainee_degree) { trainee.degrees.first }
 
     subject(:trainee) { Trainee.first }
 
     before do
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
+      create(:school, urn: student_attributes[:lead_school_urn])
       create_custom_state
       described_class.call(student_node: student_node)
     end
@@ -44,22 +43,22 @@ module Trainees
       expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
       expect(trainee.itt_end_date).to be_nil
       expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
-
-      expect(trainee.degrees.count).to eq(student_attributes[:degrees].count)
-      degree = trainee.degrees.first
-      hesa_degree = student_attributes[:degrees].first
-      expect(degree.locale_code).to eq("non_uk")
-      expect(degree.uk_degree).to be_nil
-      expect(degree.non_uk_degree).to eq("Unknown")
-      expect(degree.subject).to eq(hesa_degree[:subject])
-      expect(degree.institution).to eq("The Open University")
-      expect(degree.graduation_year).to eq(2005)
-      expect(degree.grade).to eq("First-class honours")
-      expect(degree.other_grade).to be_nil
-      expect(degree.country).to eq("Canada")
       expect(trainee.applying_for_bursary).to eq(false)
       expect(trainee.applying_for_grant).to eq(false)
       expect(trainee.applying_for_scholarship).to eq(false)
+      expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
+      expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
+      expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+      expect(trainee.degrees.count).to eq(student_attributes[:degrees].count)
+      expect(trainee_degree.locale_code).to eq("non_uk")
+      expect(trainee_degree.uk_degree).to be_nil
+      expect(trainee_degree.non_uk_degree).to eq("Unknown")
+      expect(trainee_degree.subject).to eq(student_attributes[:degrees].first[:subject])
+      expect(trainee_degree.institution).to eq("The Open University")
+      expect(trainee_degree.graduation_year).to eq(2005)
+      expect(trainee_degree.grade).to eq("First-class honours")
+      expect(trainee_degree.other_grade).to be_nil
+      expect(trainee_degree.country).to eq("Canada")
     end
 
     context "trainee doesn't exist" do
@@ -71,6 +70,8 @@ module Trainees
     end
 
     context "trainee already exists and didn't come from HESA" do
+      let(:hesa_disability_codes) { Hesa::CodeSets::Disabilities::MAPPING.invert }
+      let(:hesa_ethnicity_codes) { Hesa::CodeSets::Ethnicities::MAPPING.invert }
       let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id]) }
 
       describe "#created_from_hesa" do
@@ -222,6 +223,18 @@ module Trainees
 
         it "uses the MapFundingFromDttpEntityId service to determine bursary information" do
           expect(trainee.applying_for_bursary).to eq(true)
+        end
+      end
+
+      context "when training initiative is available and mappable" do
+        let(:hesa_training_initiative_codes) { Hesa::CodeSets::TrainingInitiatives::MAPPING.invert }
+
+        let(:hesa_stub_attributes) do
+          { training_initiative: hesa_training_initiative_codes[ROUTE_INITIATIVES_ENUMS[:now_teach]] }
+        end
+
+        it "maps the the HESA code to the register enum" do
+          expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:now_teach])
         end
       end
     end
