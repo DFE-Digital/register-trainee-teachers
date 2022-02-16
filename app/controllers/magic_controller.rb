@@ -5,7 +5,7 @@ class MagicController < ApplicationController
 
   def index
     unless FeatureService.enabled?(:dfe_sign_in_fallback)
-      redirect_to sign_in_path
+      redirect_to(sign_in_path)
     end
   end
 
@@ -18,13 +18,13 @@ class MagicController < ApplicationController
       MagicEmailMailer.magic_email(user: user, token: magic_link_token).deliver_later
     end
 
-    redirect_to sign_in_check_email_path
+    redirect_to(sign_in_check_email_path)
   end
 
   def check_your_email; end
 
   def authenticate_with_token
-    redirect_to action: :index and return unless FeatureService.enabled?(:dfe_sign_in_fallback)
+    redirect_to(action: :index) and return unless FeatureService.enabled?(:dfe_sign_in_fallback)
 
     user = User.authenticate!(params.fetch(:token))
 
@@ -41,6 +41,6 @@ class MagicController < ApplicationController
 
     user.update!(last_signed_in_at: Time.zone.now)
 
-    redirect_to trainees_path
+    redirect_to(trainees_path)
   end
 end
