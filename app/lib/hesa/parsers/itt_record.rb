@@ -4,8 +4,8 @@ module Hesa
   module Parsers
     class IttRecord
       class << self
-        def to_attributes(itt_record_doc:)
-          student_attributes = Hash.from_xml(itt_record_doc).dig("ITTRecord", "Student")
+        def to_attributes(student_node:)
+          student_attributes = Hash.from_xml(student_node.to_s)["Student"]
           student_attributes = convert_all_null_values_to_nil(student_attributes)
 
           {
@@ -13,7 +13,7 @@ module Hesa
             last_name: student_attributes["F_PSURNAME"],
             email: student_attributes["F_NQTEMAIL"],
             date_of_birth: student_attributes["F_BIRTHDTE"],
-            ethnic_group: student_attributes["F_ETHNIC"],
+            ethnic_background: student_attributes["F_ETHNIC"],
             gender: student_attributes["F_SEXID"],
             ukprn: student_attributes["F_UKPRN"],
             trainee_id: student_attributes["F_OWNSTU"],
@@ -32,7 +32,7 @@ module Hesa
             applying_for_bursary: student_attributes["F_FUNDCODE"],
             international_address: student_attributes["F_DOMICILE"],
             withdraw_date: student_attributes["F_ENDDATE"],
-            disability_disclosure: student_attributes["F_DISABLE"],
+            disability: student_attributes["F_DISABLE"],
             bursary_tier: student_attributes["F_BURSLEV"],
             trn: student_attributes["F_TREFNO"],
             training_route: student_attributes["F_ENTRYRTE"],

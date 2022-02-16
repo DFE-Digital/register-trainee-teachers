@@ -6,10 +6,10 @@ module Hesa
   module Parsers
     describe IttRecord do
       describe ".to_attributes" do
-        let(:itt_record_doc) { read_fixture_file("hesa/itt_record.xml") }
+        let(:student_node) { ApiStubs::HesaApi.new.student_node }
 
         subject(:trainee_attributes) do
-          described_class.to_attributes(itt_record_doc: itt_record_doc)
+          described_class.to_attributes(student_node: student_node)
         end
 
         it "returns an hash with mapped trainee attributes" do
@@ -18,7 +18,7 @@ module Hesa
             last_name: "Geoorge",
             email: "student.name@email.com",
             date_of_birth: "1978-08-13",
-            ethnic_group: "80",
+            ethnic_background: "80",
             gender: "1",
             trn: nil,
             ukprn: "10007713",
@@ -36,7 +36,7 @@ module Hesa
             international_address: "XF",
             withdraw_reason: nil,
             withdraw_date: nil,
-            disability_disclosure: "00",
+            disability: "00",
             bursary_tier: "6",
             employing_school_id: "115795",
             lead_school_id: "115795",

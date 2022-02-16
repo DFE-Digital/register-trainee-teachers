@@ -2,6 +2,11 @@
 
 module Diversities
   NOT_PROVIDED = "Not provided"
+  INFORMATION_REFUSED = "information_refused"
+  INFORMATION_NOT_YET_SOUGHT = "information_not_yet_sought"
+
+  WHITE = "white"
+  SCOTTISH = "scottish"
 
   BANGLADESHI = "Bangladeshi"
   CHINESE = "Chinese"
@@ -27,6 +32,17 @@ module Diversities
 
   ARAB = "Arab"
   ANOTHER_ETHNIC_BACKGROUND = "Another ethnic background"
+
+  NOT_PROVIDED_ETHNICITIES = [
+    NOT_PROVIDED,
+    INFORMATION_REFUSED,
+    INFORMATION_NOT_YET_SOUGHT,
+  ].freeze
+
+  WHITE_ETHNICITIES = [
+    WHITE,
+    SCOTTISH,
+  ].freeze
 
   DIVERSITY_DISCLOSURE_ENUMS = {
     diversity_disclosed: "diversity_disclosed",
