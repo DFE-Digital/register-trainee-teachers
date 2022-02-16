@@ -8,4 +8,8 @@ class UserPolicy < ProviderPolicy
   def permitted_attributes_for_update
     [:email]
   end
+
+  def drafts?
+    !user.lead_school?
+  end
 end
