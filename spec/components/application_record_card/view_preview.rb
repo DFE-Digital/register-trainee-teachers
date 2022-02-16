@@ -17,7 +17,7 @@ module ApplicationRecordCard
       end
 
       define_method "single_card_with_incomplete_data#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: Trainee.new(id: 1, created_at: Time.zone.now, provider: mock_provider), system_admin: system_admin))
+        render(ApplicationRecordCard::View.new(record: Trainee.new(id: 1, updated_at: Time.zone.now, provider: mock_provider), system_admin: system_admin))
       end
 
       define_method "single_card_with_two_subjects#{suffice}" do
@@ -34,7 +34,7 @@ module ApplicationRecordCard
     def mock_trainee
       Trainee.new(
         id: 1,
-        created_at: Time.zone.now,
+        updated_at: Time.zone.now,
         first_names: "Tom",
         last_name: "Jones",
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
@@ -46,7 +46,7 @@ module ApplicationRecordCard
     def mock_trainee_with_trn_and_trainee_id
       Trainee.new(
         id: 1,
-        created_at: Time.zone.now,
+        updated_at: Time.zone.now,
         first_names: "Tom",
         last_name: "Jones",
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
@@ -60,7 +60,7 @@ module ApplicationRecordCard
     def mock_trainee_with_two_subjects
       Trainee.new(
         id: 1,
-        created_at: Time.zone.now,
+        updated_at: Time.zone.now,
         first_names: "Tom",
         last_name: "Jones",
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
@@ -73,7 +73,7 @@ module ApplicationRecordCard
     def mock_trainee_with_three_subjects
       Trainee.new(
         id: 1,
-        created_at: Time.zone.now,
+        updated_at: Time.zone.now,
         first_names: "Tom",
         last_name: "Jones",
         training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
@@ -86,11 +86,11 @@ module ApplicationRecordCard
 
     def mock_multiple_trainees
       [
-        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Tom", last_name: "Jones", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Primary", course_subject_two: "Mathematics", course_subject_three: "Latin", provider: mock_provider),
-        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Paddington", last_name: "Bear", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Science", course_subject_two: "Mathematics", provider: mock_provider),
-        Trainee.new(id: 1, created_at: Time.zone.now, provider: mock_provider),
-        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Tim", last_name: "Knight", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Maths", provider: mock_provider),
-        Trainee.new(id: 1, created_at: Time.zone.now, first_names: "Toby", last_name: "Rocker", provider: mock_provider),
+        Trainee.new(id: 1, updated_at: Time.zone.now, first_names: "Tom", last_name: "Jones", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Primary", course_subject_two: "Mathematics", course_subject_three: "Latin", provider: mock_provider),
+        Trainee.new(id: 1, updated_at: Time.zone.now, first_names: "Paddington", last_name: "Bear", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Science", course_subject_two: "Mathematics", provider: mock_provider),
+        Trainee.new(id: 1, updated_at: Time.zone.now, provider: mock_provider),
+        Trainee.new(id: 1, updated_at: Time.zone.now, first_names: "Tim", last_name: "Knight", training_route: TRAINING_ROUTE_ENUMS[:assessment_only], course_subject_one: "Maths", provider: mock_provider),
+        Trainee.new(id: 1, updated_at: Time.zone.now, first_names: "Toby", last_name: "Rocker", provider: mock_provider),
       ]
     end
 

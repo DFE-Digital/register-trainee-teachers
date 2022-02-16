@@ -6,8 +6,8 @@ module ApplicationRecordCard
   describe View do
     let(:provider) { create(:provider, :with_courses) }
     let(:course) { provider.courses.first }
-    let(:trainee) { Trainee.new(created_at: Time.zone.now, course_uuid: course.uuid, provider: provider) }
     let(:system_admin) { false }
+    let(:trainee) { create(:trainee, first_names: nil, provider: provider, course_uuid: course.uuid, trainee_id: nil) }
 
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
@@ -33,20 +33,12 @@ module ApplicationRecordCard
     end
 
     context "when the Trainee has no subject" do
-      let(:trainee) do
-        create(:trainee, provider: provider, course_uuid: course.uuid)
-      end
-
-      before do
-        trainee
-      end
-
       it "renders the course name" do
         expect(rendered_component).to have_text(course.name)
       end
 
       context "and is an Early Years trainee" do
-        let(:trainee) { Trainee.new(created_at: Time.zone.now, training_route: TRAINING_ROUTE_ENUMS[:early_years_undergrad]) }
+        let(:trainee) { create(:trainee, :early_years_undergrad) }
 
         it "renders 'Early years teaching'" do
           expect(rendered_component).to have_text("Early years teaching")
@@ -55,6 +47,8 @@ module ApplicationRecordCard
     end
 
     context "when the Trainee has no route" do
+      let(:trainee) { build(:trainee, training_route: nil, updated_at: Time.zone.now) }
+
       it "renders 'No route provided'" do
         expect(rendered_component).to have_text("No route provided")
       end
@@ -83,7 +77,7 @@ module ApplicationRecordCard
         { state: :withdrawn, colour: "red", text: "withdrawn" },
       ].each do |state_expectation|
         context "when state is #{state_expectation[:state]}" do
-          let(:trainee) { build(:trainee, state_expectation[:state], training_route: TRAINING_ROUTE_ENUMS[:assessment_only], created_at: Time.zone.now) }
+          let(:trainee) { create(:trainee, state_expectation[:state], training_route: TRAINING_ROUTE_ENUMS[:assessment_only]) }
 
           it "renders '#{state_expectation[:text]}'" do
             expect(rendered_component).to have_selector(".govuk-tag", text: state_expectation[:text])
@@ -102,26 +96,20 @@ module ApplicationRecordCard
 
     context "when a trainee with all their details filled in" do
       let(:state) { "draft" }
-
-      let(:trainee) do
-        Timecop.freeze(Time.zone.local(2020, 1, 1)) do
-          build(
-            :trainee,
-            id: 1,
-            first_names: "Teddy",
-            last_name: "Smith",
-            course_subject_one: "Designer",
-            training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
-            trainee_id: "132456",
-            created_at: Time.zone.now,
-            trn: "789456",
-            provider: provider,
-            state: state,
-          )
-        end
-      end
-
       let(:system_admin) { false }
+      let(:trainee) do
+        create(
+          :trainee,
+          first_names: "Teddy",
+          last_name: "Smith",
+          course_subject_one: "Design",
+          training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+          trainee_id: "132456",
+          trn: "789456",
+          provider: provider,
+          state: state,
+        )
+      end
 
       before do
         render_inline(described_class.new(record: trainee, system_admin: system_admin))
@@ -152,10 +140,10 @@ module ApplicationRecordCard
       end
 
       it "renders subject" do
-        expect(rendered_component).to have_text("Designer")
+        expect(rendered_component).to have_text("Design")
       end
 
-      it "renders route if there is no route" do
+      it "renders route" do
         expect(rendered_component).to have_text(t("activerecord.attributes.trainee.training_routes.assessment_only"))
       end
 

@@ -43,7 +43,7 @@ module ApplicationRecordCard
     end
 
     def last_updated_date
-      return record.updated_at || record.created_at if record.draft?
+      return record.updated_at if record.draft?
 
       record.timeline&.first&.date.presence || record.updated_at
     end
