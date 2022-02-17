@@ -148,6 +148,41 @@ module Trainees
           expect(trainee.commencement_date).to eq(Date.parse("2020-09-27"))
         end
       end
+
+      context "when end date is available" do
+        let(:date) { "2020-12-12" }
+        let(:hesa_reasons_for_leaving_codes) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
+
+        context "and the trainee did not complete the course" do
+          let(:hesa_stub_attributes) do
+            {
+              end_date: date,
+              reason_for_leaving: hesa_reasons_for_leaving_codes[WithdrawalReasons::HEALTH_REASONS],
+            }
+          end
+
+          it "creates a withdrawn trainee with the relevant details" do
+            expect(trainee.state).to eq("withdrawn")
+            expect(trainee.withdraw_date).to eq(Date.parse(date))
+            expect(trainee.withdraw_reason).to eq(WithdrawalReasons::HEALTH_REASONS)
+          end
+        end
+
+        context "and the trainee completed the course" do
+          let(:hesa_stub_attributes) do
+            {
+              end_date: date,
+              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION],
+            }
+          end
+
+          it "does not create a withdrawn trainee" do
+            expect(trainee.state).not_to eq("withdrawn")
+            expect(trainee.withdraw_date).to be_nil
+            expect(trainee.withdraw_reason).to be_nil
+          end
+        end
+      end
     end
   end
 end
