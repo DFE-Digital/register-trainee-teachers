@@ -48,8 +48,8 @@ module Hesa
           # flatten to cover both cases.
           [qualifications.values].flatten.map do |qualification|
             {
-              graduation_year: qualification["F_DEGENDDT"],
-              uk_degree: qualification["F_DEGTYPE"],
+              graduation_date: qualification["F_DEGENDDT"],
+              degree_type: qualification["F_DEGTYPE"],
               subject: qualification["F_DEGSBJ1"],
               institution: qualification["F_DEGEST"],
               grade: qualification["F_DEGCLSS"],

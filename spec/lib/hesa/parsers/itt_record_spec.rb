@@ -44,12 +44,12 @@ module Hesa
             training_route: "02",
             nationality: "NZ",
             degrees: [{
-              country: nil,
+              country: "CA",
               grade: "01",
-              graduation_year: "2005-07-01",
+              graduation_date: "2005-07-01",
               institution: "0001",
               subject: nil,
-              uk_degree: "999",
+              degree_type: "999",
             }],
           })
         end
