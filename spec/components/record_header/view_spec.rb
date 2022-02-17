@@ -67,7 +67,7 @@ module RecordHeader
 
     describe "status tag" do
       before do
-        allow(StatusTag::View).to receive(:new).with(trainee: trainee).and_return(double(render_in: "liverpool"))
+        allow(StatusTag::View).to receive(:new).with(trainee: trainee, hide_progress_tag: false).and_return(double(render_in: "liverpool"))
         render_inline(described_class.new(trainee: trainee))
       end
 

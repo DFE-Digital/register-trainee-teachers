@@ -6,7 +6,7 @@
           <h2 class="govuk-heading-m"><%= search_primary_result_title %></h2>
         </div>
       </div>
-      <%= render ApplicationRecordCard::View.with_collection(search_primary_result_set, system_admin: @current_user.system_admin?) %>
+      <%= render ApplicationRecordCard::View.with_collection(search_primary_result_set, system_admin: @current_user.system_admin?, hide_progress_tag: @current_user.lead_school?) %>
     </div>
   <% end %>
 
@@ -19,7 +19,7 @@
           <% end  %>
         </div>
       </div>
-      <%= render ApplicationRecordCard::View.with_collection(search_secondary_result_set, system_admin: @current_user.system_admin?) %>
+      <%= render ApplicationRecordCard::View.with_collection(search_secondary_result_set, system_admin: @current_user.system_admin?, hide_progress_tag: @current_user.lead_school?) %>
     </div>
   <% end %>
 
