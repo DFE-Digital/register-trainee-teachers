@@ -96,7 +96,8 @@ private
   end
 
   def paginated_trainees
-    @paginated_trainees ||= filtered_trainees.ordered_by_drafts_then_by(field).page(params[:page] || 1)
+    @paginated_trainees ||= filtered_trainees.public_send("ordered_by_#{field}")
+                                             .page(params[:page] || 1)
   end
 
   def filters

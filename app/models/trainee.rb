@@ -160,15 +160,8 @@ class Trainee < ApplicationRecord
                   against: %i[first_names middle_names last_name trainee_id trn],
                   using: { tsearch: { prefix: true } }
 
-  scope :ordered_by_drafts_then_by, (lambda do |field|
-    ordered_by_drafts.public_send("ordered_by_#{field}")
-  end)
-
   scope :ordered_by_updated_at, -> { order(updated_at: :desc) }
   scope :ordered_by_last_name, -> { order(last_name: :asc) }
-
-  # NOTE: Returns draft trainees first, then all trainees in any other state.
-  scope :ordered_by_drafts, -> { order(ordered_by_drafts_clause) }
 
   # NOTE: Enforce subquery to remove duplications and allow for chain-ability.
   scope :with_subject_or_allocation_subject, (lambda do |subject|
@@ -238,15 +231,6 @@ class Trainee < ApplicationRecord
 
   def sha
     Digest::SHA1.hexdigest(value_digest)
-  end
-
-  def self.ordered_by_drafts_clause
-    Arel.sql(<<~SQL)
-      CASE trainees.state
-      WHEN #{states.fetch('draft')} THEN 0
-      ELSE 1
-      END
-    SQL
   end
 
   def self.join_allocation_subjects_clause
