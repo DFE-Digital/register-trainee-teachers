@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_08_155419) do
+ActiveRecord::Schema.define(version: 2022_02_17_162803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -320,6 +320,15 @@ ActiveRecord::Schema.define(version: 2022_02_08_155419) do
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
   end
 
+  create_table "hesa_collection_requests", force: :cascade do |t|
+    t.string "collection_reference"
+    t.datetime "requested_at"
+    t.datetime "updates_since"
+    t.string "response_body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "lead_school_users", force: :cascade do |t|
     t.bigint "lead_school_id", null: false
     t.bigint "user_id", null: false
@@ -507,6 +516,17 @@ ActiveRecord::Schema.define(version: 2022_02_08_155419) do
     t.index ["training_route"], name: "index_trainees_on_training_route"
   end
 
+  create_table "trn_requests", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.uuid "request_id"
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_trn_requests_on_request_id"
+    t.index ["state"], name: "index_trn_requests_on_state"
+    t.index ["trainee_id"], name: "index_trn_requests_on_trainee_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -552,4 +572,5 @@ ActiveRecord::Schema.define(version: 2022_02_08_155419) do
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"
+  add_foreign_key "trn_requests", "trainees"
 end
