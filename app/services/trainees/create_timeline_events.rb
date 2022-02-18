@@ -5,6 +5,7 @@ module Trainees
     include ServicePattern
 
     STATE_CHANGE = "state_change"
+    IMPORT_SOURCES = %w[DTTP HESA].freeze
 
     FIELDS = %w[
       trainee_id
@@ -60,16 +61,28 @@ module Trainees
 
     def call
       if action == "create"
-        return TimelineEvent.new(
-          title: title,
-          date: [created_at, auditable&.created_at].compact.min,
-          username: username,
-        )
+        creation_events = [
+          TimelineEvent.new(
+            title: create_title,
+            date: [created_at, auditable&.created_at].compact.min,
+            username: username,
+          ),
+        ]
+
+        if hesa_or_dttp_user?
+          creation_events <<
+            TimelineEvent.new(
+              title: import_title,
+              date: created_at,
+            )
+        end
+
+        return creation_events
       end
 
       if action == "destroy"
         return TimelineEvent.new(
-          title: title,
+          title: destroy_title,
           date: created_at,
           username: username,
         )
@@ -91,7 +104,7 @@ module Trainees
         next if change == [nil, ""]
 
         TimelineEvent.new(
-          title: I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated"),
+          title: update_title(field),
           date: created_at,
           username: username,
         )
@@ -110,10 +123,6 @@ module Trainees
 
     def model
       @model ||= auditable_type.downcase
-    end
-
-    def title
-      I18n.t("components.timeline.titles.#{model}.#{action}")
     end
 
     def state_change_title
@@ -143,12 +152,34 @@ module Trainees
       end
     end
 
-    def username
-      return unless user
+    def create_title
+      title = I18n.t("components.timeline.titles.#{model}.create")
+      title += " in #{user}" if hesa_or_dttp_user?
+      title
+    end
 
-      return user if user.is_a?(String)
+    def import_title
+      I18n.t("components.timeline.titles.trainee.import", source: user)
+    end
+
+    def destroy_title
+      I18n.t("components.timeline.titles.#{model}.destroy")
+    end
+
+    def update_title(field)
+      title = I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated")
+      title += " in #{user}" if hesa_or_dttp_user?
+      title
+    end
+
+    def username
+      return unless user && !user.is_a?(String)
 
       user.system_admin? ? "DfE administrator" : user.name
+    end
+
+    def hesa_or_dttp_user?
+      IMPORT_SOURCES.include?(user)
     end
   end
 end
