@@ -24,20 +24,36 @@ Disability.upsert_all(
   unique_by: :name,
 )
 
-ALLOCATION_SUBJECT_SPECIALISM_MAPPING.each do |allocation_subject, subject_specialisms|
-  allocation_subject = AllocationSubject.find_or_create_by!(name: allocation_subject)
-  if allocation_subject.name == AllocationSubjects::PRIMARY
-    allocation_subject.subject_specialisms.find_or_create_by!(name: CourseSubjects::PRIMARY_TEACHING)
-  else
-    subject_specialisms.each do |subject_specialism_name|
-      allocation_subject.subject_specialisms.find_or_create_by!(name: subject_specialism_name)
-    end
-  end
-end
+allocation_subjects = AllocationSubject.upsert_all(
+  ALLOCATION_SUBJECT_SPECIALISM_MAPPING.keys.map do |allocation_subject|
+    {
+      name: allocation_subject,
+      created_at: Time.zone.now,
+      updated_at: Time.zone.now,
+    }
+  end,
+  unique_by: :name,
+  returning: %w[name id],
+)
 
-ACADEMIC_CYCLES.each do |academic_cycle|
-  AcademicCycle.find_or_create_by!(start_date: academic_cycle[:start_date], end_date: academic_cycle[:end_date])
-end
+SubjectSpecialism.upsert_all(
+  allocation_subjects.rows.flat_map do |allocation_subject_name, allocation_subject_id|
+    ALLOCATION_SUBJECT_SPECIALISM_MAPPING[allocation_subject_name].map do |subject_specialism_name|
+      {
+        name: subject_specialism_name,
+        allocation_subject_id: allocation_subject_id,
+        created_at: Time.zone.now,
+        updated_at: Time.zone.now,
+      }
+    end
+  end,
+)
+
+AcademicCycle.upsert_all(
+  ACADEMIC_CYCLES.map do |academic_cycle|
+    academic_cycle.merge(created_at: Time.zone.now, updated_at: Time.zone.now)
+  end,
+)
 
 (Settings.current_default_course_year..Time.zone.today.year).each do |year|
   academic_cycle = AcademicCycle.for_year(year)
