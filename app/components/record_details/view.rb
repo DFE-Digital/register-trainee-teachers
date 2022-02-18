@@ -5,12 +5,12 @@ module RecordDetails
     include SanitizeHelper
     include SummaryHelper
 
-    attr_reader :trainee, :last_updated_event, :not_provided_copy, :system_admin, :editable
+    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :editable
 
-    def initialize(trainee:, last_updated_event:, system_admin: false, editable: false)
+    def initialize(trainee:, last_updated_event:, show_provider: false, editable: false)
       @trainee = trainee
       @last_updated_event = last_updated_event
-      @system_admin = system_admin
+      @show_provider = show_provider
       @editable = editable
     end
 
@@ -31,7 +31,7 @@ module RecordDetails
   private
 
     def provider_row
-      return unless system_admin
+      return unless show_provider
 
       { field_label: t(".provider"),
         field_value: trainee.provider.name_and_code }

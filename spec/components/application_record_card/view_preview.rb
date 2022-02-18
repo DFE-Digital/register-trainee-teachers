@@ -5,27 +5,27 @@ module ApplicationRecordCard
     [true, false].each do |system_admin|
       suffice = system_admin ? "_as_system_admin" : ""
       define_method "single_card#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee, system_admin: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee, show_provider: system_admin))
       end
 
       define_method "single_card_with_trn_and_trainee_id#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee_with_trn_and_trainee_id, system_admin: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee_with_trn_and_trainee_id, show_provider: system_admin))
       end
 
       define_method "multiple_cards#{suffice}" do
-        render(ApplicationRecordCard::View.with_collection(mock_multiple_trainees, system_admin: system_admin))
+        render(ApplicationRecordCard::View.with_collection(mock_multiple_trainees, show_provider: system_admin))
       end
 
       define_method "single_card_with_incomplete_data#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: Trainee.new(id: 1, updated_at: Time.zone.now, provider: mock_provider), system_admin: system_admin))
+        render(ApplicationRecordCard::View.new(record: Trainee.new(id: 1, updated_at: Time.zone.now, provider: mock_provider), show_provider: system_admin))
       end
 
       define_method "single_card_with_two_subjects#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee_with_two_subjects, system_admin: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee_with_two_subjects, show_provider: system_admin))
       end
 
       define_method "single_card_with_three_subjects#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee_with_three_subjects, system_admin: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee_with_three_subjects, show_provider: system_admin))
       end
     end
 

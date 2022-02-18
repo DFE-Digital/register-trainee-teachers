@@ -8,12 +8,12 @@ module ApplicationRecordCard
 
     with_collection_parameter :record
 
-    attr_reader :record, :heading_level, :system_admin, :hide_progress_tag
+    attr_reader :record, :heading_level, :show_provider, :hide_progress_tag
 
-    def initialize(heading_level = 3, record:, system_admin:, hide_progress_tag: false)
+    def initialize(heading_level = 3, record:, show_provider: false, hide_progress_tag: false)
       @record = record
       @heading_level = heading_level
-      @system_admin = system_admin
+      @show_provider = show_provider
       @hide_progress_tag = hide_progress_tag
     end
 
@@ -56,7 +56,7 @@ module ApplicationRecordCard
     end
 
     def provider_name
-      return unless system_admin
+      return unless show_provider
 
       tag.p(record.provider.name.to_s, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-bottom-0 govuk-!-margin-top-2")
     end

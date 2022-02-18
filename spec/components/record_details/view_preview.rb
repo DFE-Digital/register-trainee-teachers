@@ -18,7 +18,7 @@ module RecordDetails
     end
 
     def as_system_admin
-      render(View.new(trainee: mock_trainee(nil), last_updated_event: last_updated_event, system_admin: true))
+      render(View.new(trainee: mock_trainee(nil), last_updated_event: last_updated_event, show_provider: true))
     end
 
     def with_no_trainee_id
