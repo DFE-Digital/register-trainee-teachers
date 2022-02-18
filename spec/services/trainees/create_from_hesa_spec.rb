@@ -198,6 +198,23 @@ module Trainees
             expect(trainee.withdraw_reason).to be_nil
           end
         end
+
+        context "and the reason for completion is 'Completion of course - result unknown'" do
+          let(:hesa_modes) { Hesa::CodeSets::Modes::MAPPING.invert }
+
+          let(:hesa_stub_attributes) do
+            {
+              end_date: date,
+              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION],
+              mode: hesa_modes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
+            }
+          end
+
+          it "creates a deferred trainee with the relevant details" do
+            expect(trainee.state).to eq("deferred")
+            expect(trainee.defer_date).to eq(Date.parse(date))
+          end
+        end
       end
 
       context "when bursary is available" do
