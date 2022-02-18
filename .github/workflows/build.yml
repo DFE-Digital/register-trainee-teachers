@@ -109,7 +109,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         ref: ${{ github.head_ref }}
         checkName: ${{ github.event.pull_request.number }} Deployment
-        timeoutSeconds:  1800
+        timeoutSeconds:  3600
         intervalSeconds: 10
 
     - name: Exit if review app deployment failed
