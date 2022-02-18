@@ -1,23 +1,21 @@
 # frozen_string_literal: true
 
 module Trainees
-  class MapFundingFromDttp
+  class MapFundingFromDttpEntityId
     include ServicePattern
     include HasDttpMapping
 
-    def initialize(dttp_trainee:)
-      @dttp_trainee = dttp_trainee
+    def initialize(funding_entity_id:)
+      @funding_entity_id = funding_entity_id
     end
 
     def call
-      return {} unless dttp_trainee
-
       funding_attributes.compact
     end
 
   private
 
-    attr_reader :dttp_trainee
+    attr_reader :funding_entity_id
 
     def funding_attributes
       return {} if funding_entity_id.blank?
@@ -64,10 +62,6 @@ module Trainees
 
     def tier_for_funding
       find_by_entity_id(funding_entity_id, Dttp::CodeSets::BursaryDetails::MAPPING)
-    end
-
-    def funding_entity_id
-      @funding_entity_id ||= dttp_trainee.latest_placement_assignment.funding_id
     end
   end
 end
