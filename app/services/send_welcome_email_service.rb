@@ -10,6 +10,7 @@ class SendWelcomeEmailService
   def call
     return unless FeatureService.enabled?(:send_emails)
     return if current_user.welcome_email_sent_at
+    return unless lead_school_user?
 
     WelcomeEmailMailer.generate(
       first_name: current_user.first_name,
@@ -24,4 +25,8 @@ class SendWelcomeEmailService
 private
 
   attr_reader :current_user
+
+  def lead_school_user?
+    current_user.lead_schools.any?
+  end
 end
