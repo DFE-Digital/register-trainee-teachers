@@ -34,6 +34,7 @@ module Trainees
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
+       .merge(deferral_attributes)
        .merge(withdrawal_attributes)
        .merge(funding_attributes)
     end
@@ -76,6 +77,23 @@ module Trainees
       }
     end
 
+    def deferral_attributes
+      return {} unless trainee_deferred?
+
+      {
+        defer_date: hesa_trainee[:end_date],
+        state: "deferred",
+      }
+    end
+
+    def trainee_deferred?
+      completion_of_course_result_unknown? &&
+      [
+        Hesa::CodeSets::Modes::DORMANT_FULL_TIME,
+        Hesa::CodeSets::Modes::DORMANT_PART_TIME,
+      ].include?(mode)
+    end
+
     def withdrawal_attributes
       return {} unless trainee_withdrawn?
 
@@ -87,11 +105,22 @@ module Trainees
     end
 
     def trainee_withdrawn?
-      hesa_trainee[:end_date].present? &&
-        [
-          Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION,
-          Hesa::CodeSets::ReasonsForLeavingCourse::UKNOWN_COMPLETION,
-        ].exclude?(reason_for_leaving)
+      hesa_trainee[:end_date].present? && reasons_for_leaving_indicate_withdrawal?
+    end
+
+    def reasons_for_leaving_indicate_withdrawal?
+      [
+        successful_completion_of_course?,
+        completion_of_course_result_unknown?,
+      ].none?
+    end
+
+    def successful_completion_of_course?
+      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION
+    end
+
+    def completion_of_course_result_unknown?
+      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION
     end
 
     def funding_attributes
@@ -141,8 +170,14 @@ module Trainees
       COURSE_EDUCATION_PHASE_ENUMS[:secondary]
     end
 
+    # This field indicates the mode the student was reported on for the DfE census in their first year.
     def study_mode
       Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:study_mode]]
+    end
+
+    # This field indicates the method by which a student is being taught their course.
+    def mode
+      @mode ||= Hesa::CodeSets::Modes::MAPPING[hesa_trainee[:mode]]
     end
 
     def age_range

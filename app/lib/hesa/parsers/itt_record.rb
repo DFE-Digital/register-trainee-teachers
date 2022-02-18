@@ -24,6 +24,7 @@ module Hesa
             itt_end_date: student_attributes["F_ENDDATE"],
             employing_school_id: student_attributes["F_SDEMPLOY"],
             lead_school_id: student_attributes["F_SDLEAD"],
+            mode: student_attributes["F_MODE"],
             study_mode: student_attributes["F_CRMODE"],
             course_age_range: student_attributes["F_ITTPHSC"],
             commencement_date: student_attributes["F_ITTCOMDATE"],

@@ -4,7 +4,7 @@ module Hesa
   module CodeSets
     module ReasonsForLeavingCourse
       SUCCESSFUL_COMPLETION = "Successful completion of course"
-      UKNOWN_COMPLETION = "Completion of course - result unknown"
+      UNKNOWN_COMPLETION = "Completion of course - result unknown"
 
       MAPPING = {
         "01" => SUCCESSFUL_COMPLETION,
@@ -18,7 +18,7 @@ module Hesa
         "09" => WithdrawalReasons::EXCLUSION,
         "10" => WithdrawalReasons::GONE_INTO_EMPLOYMENT,
         "11" => WithdrawalReasons::FOR_ANOTHER_REASON,
-        "98" => UKNOWN_COMPLETION,
+        "98" => UNKNOWN_COMPLETION,
         "99" => WithdrawalReasons::UNKNOWN,
       }.freeze
     end
