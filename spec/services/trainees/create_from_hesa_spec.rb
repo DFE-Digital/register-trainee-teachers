@@ -243,7 +243,10 @@ module Trainees
       end
 
       context "when bursary is available" do
-        let(:hesa_stub_attributes) { { bursary_level: "B" } }
+        let(:hesa_bursary_level_codes) { Hesa::CodeSets::BursaryLevels::MAPPING.invert }
+        let(:hesa_stub_attributes) do
+          { bursary_level: hesa_bursary_level_codes[Dttp::CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY] }
+        end
 
         it "uses the MapFundingFromDttpEntityId service to determine bursary information" do
           expect(trainee.applying_for_bursary).to eq(true)
