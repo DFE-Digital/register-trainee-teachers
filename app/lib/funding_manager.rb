@@ -49,9 +49,8 @@ class FundingManager
   end
 
   def funding_available?
-    funding_methods = academic_cycle.nil? ? FundingMethod.all : academic_cycle.funding_methods
-
-    Rails.cache.fetch("FundingManager.funding_available?/#{training_route}", expires_in: 1.day) do
+    Rails.cache.fetch("FundingManager.funding_available?/#{training_route}/#{academic_cycle&.id}", expires_in: 1.day) do
+      funding_methods = academic_cycle.nil? ? FundingMethod.all : academic_cycle.funding_methods
       funding_methods.includes(:funding_method_subjects)
                     .where.not(funding_method_subjects: { id: nil })
                     .where(training_route: training_route).present?
