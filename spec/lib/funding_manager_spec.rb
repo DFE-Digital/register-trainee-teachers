@@ -166,6 +166,38 @@ describe FundingManager do
         end
       end
     end
+
+    context "when academic year is nil for trainee" do
+      let(:trainee_without_start_dates) { create(:trainee) }
+      let(:route) { trainee_without_start_dates.training_route }
+      let(:subject_specialism) { create(:subject_specialism) }
+      let(:academic_cycle) { create(:academic_cycle, previous_cycle: true) }
+      let(:funding_manager) { described_class.new(trainee_without_start_dates) }
+
+      before do
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
+      end
+
+      context "and the route is funded in a another academic year" do
+        let(:funding_method) { create(:funding_method, training_route: route, academic_cycle: academic_cycle) }
+
+        it "returns true" do
+          expect(subject).to be_truthy
+        end
+      end
+
+      TRAINING_ROUTE_ENUMS.keys.reject { |x| x == :assessment_only }.map do |route|
+        let(:training_route) { route }
+
+        context "and the route is not funded in another academic year" do
+          let(:funding_method) { create(:funding_method, training_route: training_route, academic_cycle: academic_cycle) }
+
+          it "returns false" do
+            expect(subject).to be_falsey
+          end
+        end
+      end
+    end
   end
 
   describe "#can_apply_for_bursary?" do
