@@ -223,7 +223,7 @@ en:
         cookie_policy: Cookies on Register trainee teachers
         guidance: Data requirements
         privacy_policy: Privacy Notice for the Register trainee teachers service (Register)
-        forbidden: You do not have access to view details for this trainee
+        forbidden: &forbidden You do not have permission to perform this action
         home: Home
         request_an_account: Request an account
         not_found: Page not found
@@ -823,6 +823,9 @@ en:
       dfe_sign_in_button: Sign in using DfE Sign-in
       persona_sign_in_button: Sign in using Persona
   errors:
+    forbidden:
+      heading: *forbidden
+      support_message_html: "If you think you should have access, contact: %{link}."
     not_found:
       heading: Page not found
       body: Check the web address and try again.
