@@ -22,43 +22,67 @@ module Trainees
       described_class.call(student_node: student_node)
     end
 
-    it "updates the trainee from HESA XML document" do
-      expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
-      expect(trainee.first_names).to eq(student_attributes[:first_names])
-      expect(trainee.last_name).to eq(student_attributes[:last_name])
-      expect(trainee.address_line_one).to eq(student_attributes[:address_line_one])
-      expect(trainee.address_line_two).to eq(student_attributes[:address_line_two])
-      expect(trainee.email).to eq(student_attributes[:email])
-      expect(trainee.date_of_birth).to eq(Date.parse(student_attributes[:date_of_birth]))
-      expect(trainee.gender).to eq("female")
-      expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
-      expect(trainee.nationalities.pluck(:name)).to include(nationality_name)
-      expect(trainee.trn).to eq(student_attributes[:trn])
-      expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:secondary])
-      expect(trainee.course_subject_one).to eq(::CourseSubjects::BIOLOGY)
-      expect(trainee.course_subject_two).to be_nil
-      expect(trainee.course_subject_three).to be_nil
-      expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
-      expect(trainee.study_mode).to eq("full_time")
-      expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
-      expect(trainee.itt_end_date).to be_nil
-      expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
-      expect(trainee.applying_for_bursary).to eq(false)
-      expect(trainee.applying_for_grant).to eq(false)
-      expect(trainee.applying_for_scholarship).to eq(false)
-      expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
-      expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
-      expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
-      expect(trainee.degrees.count).to eq(student_attributes[:degrees].count)
-      expect(trainee_degree.locale_code).to eq("non_uk")
-      expect(trainee_degree.uk_degree).to be_nil
-      expect(trainee_degree.non_uk_degree).to eq("Unknown")
-      expect(trainee_degree.subject).to eq(student_attributes[:degrees].first[:subject])
-      expect(trainee_degree.institution).to eq("The Open University")
-      expect(trainee_degree.graduation_year).to eq(2005)
-      expect(trainee_degree.grade).to eq("First-class honours")
-      expect(trainee_degree.other_grade).to be_nil
-      expect(trainee_degree.country).to eq("Canada")
+    describe "HESA information imported from XML" do
+      it "updates the Trainee ID, HESA ID and TRN" do
+        expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
+        expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
+        expect(trainee.trn).to eq(student_attributes[:trn])
+      end
+
+      it "updates the trainee's personal details" do
+        expect(trainee.first_names).to eq(student_attributes[:first_names])
+        expect(trainee.last_name).to eq(student_attributes[:last_name])
+        expect(trainee.gender).to eq("female")
+        expect(trainee.date_of_birth).to eq(Date.parse(student_attributes[:date_of_birth]))
+        expect(trainee.nationalities.pluck(:name)).to include(nationality_name)
+      end
+
+      it "updates the trainee's contact details" do
+        expect(trainee.email).to eq(student_attributes[:email])
+        expect(trainee.address_line_one).to eq(student_attributes[:address_line_one])
+        expect(trainee.address_line_two).to eq(student_attributes[:address_line_two])
+      end
+
+      it "associates the trainer to a provider" do
+        expect(trainee.provider.ukprn).to eq(student_attributes[:ukprn])
+      end
+
+      it "updates trainee's course details" do
+        expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:secondary])
+        expect(trainee.course_subject_one).to eq(::CourseSubjects::BIOLOGY)
+        expect(trainee.course_subject_two).to be_nil
+        expect(trainee.course_subject_three).to be_nil
+        expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
+        expect(trainee.study_mode).to eq("full_time")
+        expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
+        expect(trainee.itt_end_date).to be_nil
+        expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
+      end
+
+      it "updates the trainee's school and training details" do
+        expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
+        expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
+        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+      end
+
+      it "updates the trainee's funding details" do
+        expect(trainee.applying_for_bursary).to eq(false)
+        expect(trainee.applying_for_grant).to eq(false)
+        expect(trainee.applying_for_scholarship).to eq(false)
+      end
+
+      it "creates the trainee's degree" do
+        expect(trainee.degrees.count).to eq(student_attributes[:degrees].count)
+        expect(trainee_degree.locale_code).to eq("non_uk")
+        expect(trainee_degree.uk_degree).to be_nil
+        expect(trainee_degree.non_uk_degree).to eq("Unknown")
+        expect(trainee_degree.subject).to eq(student_attributes[:degrees].first[:subject])
+        expect(trainee_degree.institution).to eq("The Open University")
+        expect(trainee_degree.graduation_year).to eq(2005)
+        expect(trainee_degree.grade).to eq("First-class honours")
+        expect(trainee_degree.other_grade).to be_nil
+        expect(trainee_degree.country).to eq("Canada")
+      end
     end
 
     context "trainee doesn't exist" do
