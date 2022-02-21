@@ -17,6 +17,9 @@ RUN apk add --update --no-cache --virtual build-dependances \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependances
 
+# Remove once base image ruby:2.7.5-alpine3.15 has been updated with latest gmp
+RUN apk add --no-cache gmp=6.2.1-r1
+
 COPY package.json yarn.lock ./
 RUN  yarn install --frozen-lockfile && \
      yarn cache clean
