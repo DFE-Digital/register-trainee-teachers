@@ -1,8 +1,8 @@
 <%= extends_layout :error do %>
   <%= render PageTitle::View.new(i18n_key: "pages.forbidden") %>
 
-  <h1 class="govuk-heading-l">You do not have access to view details for this trainee</h1>
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-  <p class="govuk-body">If you think you should have access, contact: <%= support_email(subject: "Register trainee teachers support") %>.</p>
+  <p class="govuk-body"><%= t(".support_message_html", link: support_email(subject: "Register trainee teachers support")) %></p>
 
 <% end %>
