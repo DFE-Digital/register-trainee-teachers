@@ -37,6 +37,8 @@ module Trainees
        .merge(deferral_attributes)
        .merge(withdrawal_attributes)
        .merge(funding_attributes)
+       .merge(school_attributes)
+       .merge(training_initiative_attributes)
     end
 
     def personal_details_attributes
@@ -127,8 +129,20 @@ module Trainees
       @funding_attributes ||= MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
     end
 
-    def funding_entity_id
-      Hesa::CodeSets::BursaryLevels::MAPPING[hesa_trainee[:bursary_level]]
+    def school_attributes
+      return {} if hesa_trainee[:lead_school_urn].blank?
+
+      attrs = { lead_school: School.find_by(urn: hesa_trainee[:lead_school_urn]) }
+
+      if hesa_trainee[:employing_school_urn].present?
+        attrs.merge!({ employing_school: School.find_by(urn: hesa_trainee[:employing_school_urn]) })
+      end
+
+      attrs
+    end
+
+    def training_initiative_attributes
+      { training_initiative: training_initiative || ROUTE_INITIATIVES_ENUMS[:no_initiative] }
     end
 
     def nationalities
@@ -151,6 +165,10 @@ module Trainees
       Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
     end
 
+    def training_initiative
+      Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_trainee[:training_initiative]]
+    end
+
     def course_subject_name(subject_code)
       Hesa::CodeSets::CourseSubjects::MAPPING[subject_code]
     end
@@ -168,6 +186,10 @@ module Trainees
       ].include?(course_subject_one_name)
 
       COURSE_EDUCATION_PHASE_ENUMS[:secondary]
+    end
+
+    def funding_entity_id
+      Hesa::CodeSets::BursaryLevels::MAPPING[hesa_trainee[:bursary_level]]
     end
 
     # This field indicates the mode the student was reported on for the DfE census in their first year.

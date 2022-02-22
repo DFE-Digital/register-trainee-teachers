@@ -39,8 +39,8 @@ module Hesa
             end_date: nil,
             disability: "00",
             bursary_level: "6",
-            employing_school_id: "115795",
-            lead_school_id: "115795",
+            employing_school_urn: "115795",
+            lead_school_urn: "115795",
             training_route: "02",
             nationality: "NZ",
             degrees: [{
