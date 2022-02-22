@@ -5,19 +5,23 @@ module Trainees
     include ServicePattern
     include DiversityAttributes
 
+    USERNAME = "HESA"
+
     def initialize(student_node:)
       @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
       @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
     end
 
     def call
-      trainee.assign_attributes(mapped_attributes)
-      trainee.save!
+      Audited.audit_class.as_user(USERNAME) do
+        trainee.assign_attributes(mapped_attributes)
+        trainee.save!
 
-      create_degrees!
-      add_multiple_disability_text!
+        create_degrees!
+        add_multiple_disability_text!
 
-      trainee
+        trainee
+      end
     end
 
   private

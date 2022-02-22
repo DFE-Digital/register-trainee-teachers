@@ -29,6 +29,8 @@ module Trainees
     def preceeds_trn?(audit)
       submitted_at = trainee.submitted_for_trn_at
 
+      return false if !trainee.draft? && !submitted_at
+
       !submitted_at || audit.created_at < submitted_at
     end
 

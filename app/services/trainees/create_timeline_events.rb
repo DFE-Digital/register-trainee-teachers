@@ -5,6 +5,7 @@ module Trainees
     include ServicePattern
 
     STATE_CHANGE = "state_change"
+    IMPORT_SOURCES = %w[DTTP HESA].freeze
 
     FIELDS = %w[
       trainee_id
@@ -36,6 +37,7 @@ module Trainees
       course_subject_three
       applying_for_bursary
       applying_for_scholarship
+      applying_for_grant
       training_initiative
       bursary_tier
       study_mode
@@ -58,37 +60,60 @@ module Trainees
     end
 
     def call
-      if create_single_event?
-        TimelineEvent.new(
-          title: single_event_title,
+      if action == "create"
+        creation_events = [
+          TimelineEvent.new(
+            title: create_title,
+            date: [created_at, auditable&.created_at].compact.min,
+            username: username,
+          ),
+        ]
+
+        if hesa_or_dttp_user?
+          creation_events <<
+            TimelineEvent.new(
+              title: import_title,
+              date: created_at,
+            )
+        end
+
+        return creation_events
+      end
+
+      if action == "destroy"
+        return TimelineEvent.new(
+          title: destroy_title,
           date: created_at,
           username: username,
-          items: items,
         )
-      else
-        audited_changes.map do |field, change|
-          next unless FIELDS.include?(field)
-          # If a user leaves an already-empty field blank, Rails saves this as
-          # an empty string. Ignore this.
-          next if change == [nil, ""]
+      end
 
-          TimelineEvent.new(
-            title: I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated"),
-            date: created_at,
-            username: username,
-            items: nil,
-          )
-        end
+      if action == STATE_CHANGE
+        return TimelineEvent.new(
+          title: state_change_title,
+          date: created_at,
+          username: username,
+          items: state_change_description,
+        )
+      end
+
+      audited_changes.map do |field, change|
+        next unless FIELDS.include?(field)
+        # If a user leaves an already-empty field blank, Rails saves this as
+        # an empty string. Ignore this.
+        next if change == [nil, ""]
+
+        TimelineEvent.new(
+          title: update_title(field),
+          date: created_at,
+          username: username,
+        )
       end
     end
 
   private
 
     attr_reader :audit
-
-    def create_single_event?
-      action != "update"
-    end
 
     # An action can be one of "create", "destroy" or "update". Here, we're
     # creating a new "state_change" action as they're displayed differently.
@@ -98,21 +123,6 @@ module Trainees
 
     def model
       @model ||= auditable_type.downcase
-    end
-
-    def single_event_title
-      return state_change_title if action == STATE_CHANGE
-
-      I18n.t("components.timeline.titles.#{model}.#{action}")
-    end
-
-    def items
-      if action == STATE_CHANGE && state_change_action == "withdrawn" && auditable.withdraw_date
-        [
-          ["#{I18n.t('components.timeline.withdrawal_date')}:", auditable.withdraw_date.strftime("%e %B %Y").to_s],
-          ["#{I18n.t('components.timeline.withdrawal_reason')}:", (auditable.additional_withdraw_reason&.upcase_first || auditable.withdraw_reason&.humanize).to_s],
-        ]
-      end
     end
 
     def state_change_title
@@ -133,10 +143,43 @@ module Trainees
       end
     end
 
+    def state_change_description
+      if state_change_action == "withdrawn" && auditable.withdraw_date
+        [
+          ["#{I18n.t('components.timeline.withdrawal_date')}:", auditable.withdraw_date.strftime("%e %B %Y").to_s],
+          ["#{I18n.t('components.timeline.withdrawal_reason')}:", (auditable.additional_withdraw_reason&.upcase_first || auditable.withdraw_reason&.humanize).to_s],
+        ]
+      end
+    end
+
+    def create_title
+      title = I18n.t("components.timeline.titles.#{model}.create")
+      title += " in #{user}" if hesa_or_dttp_user?
+      title
+    end
+
+    def import_title
+      I18n.t("components.timeline.titles.trainee.import", source: user)
+    end
+
+    def destroy_title
+      I18n.t("components.timeline.titles.#{model}.destroy")
+    end
+
+    def update_title(field)
+      title = I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated")
+      title += " in #{user}" if hesa_or_dttp_user?
+      title
+    end
+
     def username
-      return unless user
+      return unless user && !user.is_a?(String)
 
       user.system_admin? ? "DfE administrator" : user.name
+    end
+
+    def hesa_or_dttp_user?
+      IMPORT_SOURCES.include?(user)
     end
   end
 end

@@ -383,6 +383,7 @@ en:
       titles:
         trainee:
           create: Record created
+          import: Record imported from %{source}
           draft: Trainee marked as draft
           submitted_for_trn: Trainee submitted for TRN
           trn_received: TRN received
@@ -417,8 +418,10 @@ en:
           country: Degree country updated
         nationalisation:
           create: Nationality updated
+          destroy: Nationality deleted
         traineedisability:
           create: Disability details updated
+          destroy: Disability details deleted
     sections:
       titles:
         personal_details: Personal details

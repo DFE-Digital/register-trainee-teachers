@@ -4,10 +4,14 @@ module Trainees
   class CreateFromDttpJob < ApplicationJob
     queue_as :default
 
+    USERNAME = "DTTP"
+
     def perform(dttp_trainee)
       return unless FeatureService.enabled?("import_trainees_from_dttp")
 
-      CreateFromDttp.call(dttp_trainee: dttp_trainee)
+      Audited.audit_class.as_user(USERNAME) do
+        CreateFromDttp.call(dttp_trainee: dttp_trainee)
+      end
     end
   end
 end

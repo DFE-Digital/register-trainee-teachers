@@ -13,7 +13,33 @@ module Trainees
     describe "#call" do
       context "with a trainee creation audit" do
         it "returns a trainee created event" do
-          expect(subject.title).to eq(t("components.timeline.titles.trainee.create"))
+          expect(subject.first.title).to eq("Record created")
+        end
+
+        context "when the creation audit was from a DTTP or HESA import" do
+          before do
+            trainee.own_and_associated_audits.first.update(user: "HESA")
+          end
+
+          it "returns an array including a creation timeline event with that user in the title" do
+            expect(subject.first.title).to eq("Record created in HESA")
+          end
+
+          it "returns an array including an import event" do
+            expect(subject.last.title).to eq("Record imported from HESA")
+          end
+        end
+
+        context "when the audit was created after the model instance was created" do
+          let(:trainee_created_at) { Time.zone.yesterday }
+
+          before do
+            trainee.update(created_at: trainee_created_at)
+          end
+
+          it "returns a timeline event with the earlier created_at" do
+            expect(subject.first.date).to eq(trainee_created_at)
+          end
         end
       end
 
@@ -47,6 +73,20 @@ module Trainees
 
           it "returns a timeline event obscuring the admin's name" do
             expect(subject.first.username).to eq("DfE administrator")
+          end
+        end
+
+        context "made in HESA" do
+          before do
+            trainee.own_and_associated_audits.first.update(username: "HESA")
+          end
+
+          it "returns a timeline event that reflects the update" do
+            expect(subject.first.title).to eq("First names updated in HESA")
+          end
+
+          it "returns a timeline event with no name" do
+            expect(subject.first.username).to eq(nil)
           end
         end
       end
@@ -106,7 +146,7 @@ module Trainees
 
         it "returns a 'creation' timeline event" do
           degree.reload
-          expect(subject.title).to eq(t("components.timeline.titles.degree.create"))
+          expect(subject.first.title).to eq(t("components.timeline.titles.degree.create"))
         end
       end
 
