@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class StatusTag::View < GovukComponent::Base
-  def initialize(trainee:, classes: "")
+  def initialize(trainee:, classes: "", hide_progress_tag: false)
     super(classes: classes, html_attributes: {})
     @trainee = trainee
+    @hide_progress_tag = hide_progress_tag
   end
 
   def tags
@@ -23,7 +24,7 @@ class StatusTag::View < GovukComponent::Base
 
 private
 
-  attr_accessor :trainee
+  attr_accessor :trainee, :hide_progress_tag
 
   def status_colour
     {
@@ -42,7 +43,8 @@ private
   end
 
   def record_progress_tag
-    return if @trainee.draft? || @trainee.submission_ready? || !@trainee.awaiting_action?
+    return if hide_progress_tag
+    return if trainee.draft? || trainee.submission_ready? || !trainee.awaiting_action?
 
     { status: "incomplete", status_colour: "grey", classes: classes.concat(%w[govuk-tag--white]) }
   end

@@ -8,12 +8,13 @@ module ApplicationRecordCard
 
     with_collection_parameter :record
 
-    attr_reader :record, :heading_level, :system_admin
+    attr_reader :record, :heading_level, :system_admin, :hide_progress_tag
 
-    def initialize(heading_level = 3, record:, system_admin:)
+    def initialize(heading_level = 3, record:, system_admin:, hide_progress_tag: false)
       @record = record
       @heading_level = heading_level
       @system_admin = system_admin
+      @hide_progress_tag = hide_progress_tag
     end
 
     def trainee_name

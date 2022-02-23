@@ -46,4 +46,16 @@ RSpec.describe StatusTag::View do
       expect(rendered_component).to have_text("incomplete")
     end
   end
+
+  context "when hide_progress_tag is true" do
+    before do
+      render_inline(described_class.new(trainee: trainee, hide_progress_tag: true))
+    end
+
+    let(:trainee) { build(:trainee, :trn_received, :not_submission_ready) }
+
+    it "does not render the incomplete progress tag" do
+      expect(rendered_component).not_to have_text("incomplete")
+    end
+  end
 end
