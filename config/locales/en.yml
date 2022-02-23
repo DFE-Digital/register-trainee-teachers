@@ -510,6 +510,7 @@ en:
         nationality_names: *personal_details_path
         locale_code: &contact_details_path edit_trainee_contact_details_path
         address_line_one: *contact_details_path
+        postcode: *contact_details_path
         email: *contact_details_path
         ethnic_background: edit_trainee_diversity_ethnic_background_path
         ethnic_group: edit_trainee_diversity_ethnic_group_path
@@ -558,6 +559,7 @@ en:
         nationality_names: *nationality
         locale_code: *address
         address_line_one: *address
+        postcode: *address
         email: *email_address
         ethnic_background: *ethnicity
         ethnic_group: *ethnicity
