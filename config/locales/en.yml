@@ -396,6 +396,8 @@ en:
           reinstated: Trainee reinstated
           course_uuid: Course updated
           course_max_age: Course age range updated
+          itt_start_date: &itt_start_date <abbr title="Initial teacher training">ITT</abbr> start date
+          itt_end_date: &itt_end_date <abbr title="Initial teacher training">ITT</abbr> end date
           course_subject_one: Course subject updated
           commencement_date: Trainee start date updated
           trainee_id: Trainee ID updated
@@ -480,8 +482,8 @@ en:
         multiple_subjects: Subjects
         level: Level
         age_range: &course_age_range Age range
-        itt_start_date: &itt_start_date <abbr title="Initial teacher training">ITT</abbr> start date
-        itt_end_date: &itt_end_date <abbr title="Initial teacher training">ITT</abbr> end date
+        itt_start_date: *itt_start_date
+        itt_end_date: *itt_end_date
         duration: Duration
         course_details: Course details
         study_mode: Full time or part time

@@ -167,7 +167,7 @@ module Trainees
     end
 
     def update_title(field)
-      title = I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated")
+      title = I18n.t("components.timeline.titles.#{model}.#{field}", default: "#{field.humanize} updated").html_safe
       title += " in #{user}" if hesa_or_dttp_user?
       title
     end
