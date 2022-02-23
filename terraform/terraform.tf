@@ -57,7 +57,6 @@ module paas {
   worker_app_instances  = var.paas_worker_app_instances
   worker_app_memory     = var.paas_worker_app_memory
   log_url               = local.infra_secrets.LOGSTASH_URL
-  docker_credentials    = local.docker_credentials
   app_secrets_variable  = local.app_secrets
   app_config_variable   = local.app_config
   worker_app_stopped    = var.paas_worker_app_stopped
