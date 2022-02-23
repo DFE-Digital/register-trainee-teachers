@@ -168,10 +168,9 @@ describe FundingManager do
     end
 
     context "when academic year is nil for trainee" do
-      let(:trainee_without_start_dates) { create(:trainee) }
-      let(:route) { trainee_without_start_dates.training_route }
+      let(:trainee_without_start_dates) { create(:trainee, training_route: :assessment_only) }
       let(:subject_specialism) { create(:subject_specialism) }
-      let(:academic_cycle) { create(:academic_cycle, previous_cycle: true) }
+      let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
       let(:funding_manager) { described_class.new(trainee_without_start_dates) }
 
       before do
@@ -179,7 +178,7 @@ describe FundingManager do
       end
 
       context "and the route is funded in a another academic year" do
-        let(:funding_method) { create(:funding_method, training_route: route, academic_cycle: academic_cycle) }
+        let(:funding_method) { create(:funding_method, training_route: trainee_without_start_dates.training_route, academic_cycle: previous_academic_cycle) }
 
         it "returns true" do
           expect(subject).to be_truthy
@@ -187,10 +186,8 @@ describe FundingManager do
       end
 
       TRAINING_ROUTE_ENUMS.keys.reject { |x| x == :assessment_only }.map do |route|
-        let(:training_route) { route }
-
-        context "and the route is not funded in another academic year" do
-          let(:funding_method) { create(:funding_method, training_route: training_route, academic_cycle: academic_cycle) }
+        context "and the #{route} route is not funded in another academic year" do
+          let(:funding_method) { create(:funding_method, training_route: route, academic_cycle: previous_academic_cycle) }
 
           it "returns false" do
             expect(subject).to be_falsey
