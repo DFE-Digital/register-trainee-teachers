@@ -11,7 +11,7 @@
 <% end %>
 
 <h1 class="govuk-heading-xl" aria-live="polite">
-  Draft records (<span id="js-trainee-count"><%= total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(total_trainees_count) %></span>)
+  Draft trainees (<span id="js-trainee-count"><%= total_trainees_count %></span><span class="govuk-visually-hidden"> <%= "record".pluralize(total_trainees_count) %></span>)
 </h1>
 
 <% if policy(Trainee).new? %>
