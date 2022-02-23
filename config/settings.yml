@@ -123,7 +123,7 @@ track_validation_errors: true
 
 govuk_notify:
   api_key: please_change_me
-  welcome_email_template_id: 7765732c-f068-4c7f-abbc-ea5275a4b6ca
+  welcome_email_template_id: 6577aefe-8a88-41c1-a6d6-9eb8bcd49af0
 
 google_tag_manager:
   tracking_id: GTM-PD8MFNL
