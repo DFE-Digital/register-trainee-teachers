@@ -4,6 +4,11 @@ class DraftsController < BaseTraineeController
   include TraineeHelper
   include ActivityTracker
 
+  def index
+    authorize(current_user, :drafts?)
+    super
+  end
+
 private
 
   def search_path(filter_params = nil)

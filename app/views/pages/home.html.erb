@@ -1,48 +1,56 @@
 <%= render PageTitle::View.new(i18n_key: "pages.home") %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <% if current_user.organisation %>
-      <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
-    <% end %>
-    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
-    <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
-    <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
-      <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
-        <li>
-          <%= govuk_link_to(
-            t(".draft_trainees_link", count: @home_view.draft_trainees_count),
-            drafts_path,
-            { class: "govuk-link--no-visited-state" }
-          )%>
-        </li>
+<% unless hide_draft_records? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <% if current_user.organisation %>
+        <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
       <% end %>
-      <% if @home_view.draft_apply_trainees_count > 0 %>
-        <li>
-          <%= govuk_link_to(
-            t(".draft_apply_trainees_link", count: @home_view.draft_apply_trainees_count),
-            drafts_path("record_source[]": :apply),
-            { class: "govuk-link--no-visited-state" }
-          )%>
-        </li>
-      <% end %>
-      <% if policy(Trainee).new? %>
-        <li class="govuk-!-margin-bottom-0">
-          <%= govuk_link_to(
-            t(".new_trainee_link"),
-            new_trainee_path,
-            { class: "govuk-link--no-visited-state" }
-          ) %>
-        </li>
-      <% end %>
-    </ul>
+      <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+      <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
+      <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
+        <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
+          <li>
+            <%= govuk_link_to(
+              t(".draft_trainees_link", count: @home_view.draft_trainees_count),
+              drafts_path,
+              { class: "govuk-link--no-visited-state" }
+            )%>
+          </li>
+        <% end %>
+        <% if @home_view.draft_apply_trainees_count > 0 %>
+          <li>
+            <%= govuk_link_to(
+              t(".draft_apply_trainees_link", count: @home_view.draft_apply_trainees_count),
+              drafts_path("record_source[]": :apply),
+              { class: "govuk-link--no-visited-state" }
+            )%>
+          </li>
+        <% end %>
+        <% if policy(Trainee).new? %>
+          <li class="govuk-!-margin-bottom-0">
+            <%= govuk_link_to(
+              t(".new_trainee_link"),
+              new_trainee_path,
+              { class: "govuk-link--no-visited-state" }
+            ) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
-</div>
 
-<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
+    <% if hide_draft_records? %>
+      <% if current_user.organisation %>
+        <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
+      <% end %>
+      <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+    <% end %>
     <h2 class="govuk-heading-l"><%= t(".registered_heading") %></h2>
     <ul class="govuk-list govuk-list--spaced">
       <% if @home_view.registered_trainees_count > 0 %>

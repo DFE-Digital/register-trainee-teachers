@@ -15,6 +15,7 @@ features:
     pg_teaching_apprenticeship: true
     provider_led_undergrad: true
     opt_in_undergrad: true
+  user_can_have_multiple_organisations: true
 
 pagination:
   records_per_page: 30

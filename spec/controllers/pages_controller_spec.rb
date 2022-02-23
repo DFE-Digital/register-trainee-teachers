@@ -32,5 +32,19 @@ describe PagesController, type: :controller do
       expect(session[:requested_path]).to eq "/"
       expect(response).to render_template("home")
     end
+
+    context "lead school user" do
+      render_views
+
+      before do
+        allow(current_user).to receive(:lead_school?).and_return(true)
+      end
+
+      it "renders home page" do
+        get :start
+        expect(response.body).not_to match("Draft records")
+        expect(response.body).not_to match("Draft trainees")
+      end
+    end
   end
 end
