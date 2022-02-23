@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE: dfedigital/register-trainee-teachers
+      DOCKER_IMAGE: ghcr.io/dfe-digital/register-trainee-teachers
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
@@ -36,12 +36,13 @@ jobs:
         echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
         echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
 
-    - name: Login to DockerHub
+    - name: Login to GitHub Container Registry
       if: github.actor != 'dependabot[bot]'
-      uses: docker/login-action@v1.9.0
+      uses: docker/login-action@v1.12.0
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Docker Image
       uses: docker/build-push-action@v2

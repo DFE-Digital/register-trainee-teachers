@@ -111,7 +111,7 @@ destroy: terraform-init
 
 terraform-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=main))
-	$(eval export TF_VAR_paas_app_docker_image=dfedigital/register-trainee-teachers:$(IMAGE_TAG))
+	$(eval export TF_VAR_paas_app_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 	az account set -s $(AZ_SUBSCRIPTION) && az account show \

@@ -24,8 +24,6 @@ variable worker_app_memory { default = 512 }
 
 variable log_url {}
 
-variable docker_credentials { type = map }
-
 variable app_secrets_variable { type = map } #secrets from yml file
 
 variable app_config_variable { type = map } #from yml file

@@ -50,7 +50,6 @@ resource cloudfoundry_app web_app {
   strategy                   = "blue-green-v2"
   timeout                    = var.app_start_timeout
   environment                = local.app_environment
-  docker_credentials         = var.docker_credentials
 
   dynamic "routes" {
     for_each = local.web_app_routes
@@ -82,7 +81,6 @@ resource cloudfoundry_app worker_app {
   strategy           = "blue-green-v2"
   timeout            = var.app_start_timeout
   environment        = local.app_environment
-  docker_credentials = var.docker_credentials
   stopped            = var.worker_app_stopped
 
   service_binding {
