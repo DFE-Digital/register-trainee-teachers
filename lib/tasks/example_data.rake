@@ -127,6 +127,8 @@ namespace :example_data do
       # Hpitt provider can only have trainees on the hpitt_postgrad route
       enabled_routes = [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] if provider.hpitt_postgrad?
 
+      nationalities = Nationality.all
+
       # For each route that's enabled...
       enabled_routes.each do |route|
         # And for all possible trainee states...
@@ -135,7 +137,11 @@ namespace :example_data do
           sample_size = rand(4...8)
 
           sample_size.times do |sample_index|
-            attrs = { randomise_subjects: true, created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago) }
+            attrs = {
+              randomise_subjects: true,
+              created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago),
+              nationalities: [],
+            }
             attrs.merge!(provider: provider) if provider
 
             # Some route-specific logic, but could move into factories too
@@ -187,10 +193,10 @@ namespace :example_data do
 
             trainee = FactoryBot.create(:trainee, route, state, attrs)
 
-            trainee.nationalities << Nationality.all.sample
+            trainee.nationalities << nationalities.sample
 
             if rand(10) < 2 # Give 20% of trainees an extra nationality and a non-uk degree
-              trainee.nationalities << Nationality.all.sample
+              trainee.nationalities << nationalities.sample
               degree_type = :non_uk_degree_with_details
             else
               degree_type = :uk_degree_with_details
