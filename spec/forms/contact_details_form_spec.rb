@@ -136,6 +136,7 @@ describe ContactDetailsForm, type: :model do
       allow(form_store).to receive(:get).and_return({
         "address_line_one" => address_line_one,
         "email" => "test @example.com",
+        "postcode" => " SW1P 3BT ",
       })
       allow(form_store).to receive(:set).with(trainee.id, :contact_details, nil)
     end
@@ -144,8 +145,12 @@ describe ContactDetailsForm, type: :model do
       expect { subject.save! }.to change(trainee, :address_line_one).to(address_line_one)
     end
 
-    it "strips whitespace from emails" do
+    it "strips all whitespace from emails" do
       expect { subject.save! }.to change(trainee, :email).to("test@example.com")
+    end
+
+    it "strips leading and trailing whitespace from postcodes" do
+      expect { subject.save! }.to change(trainee, :postcode).to("SW1P 3BT")
     end
   end
 end

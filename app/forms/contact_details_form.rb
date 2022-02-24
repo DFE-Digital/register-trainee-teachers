@@ -58,7 +58,7 @@ private
 
   def update_trainee_attributes
     nullify_unused_address_fields!
-    # Need to save the email attribute formatted by the ContactDetailsForm.
+    # Need to save the email attributes formatted by the ContactDetailsForm.
     trainee.assign_attributes(fields.merge(email: email))
   end
 
