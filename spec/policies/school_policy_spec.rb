@@ -16,15 +16,10 @@ describe SchoolPolicy do
   describe SchoolPolicy::Scope do
     let!(:school1) { create(:school, name: "AAA") }
     let!(:school2) { create(:school, name: "BBB") }
+    let(:user) { system_admin_user }
 
     subject { described_class.new(user, School).resolve }
 
-    context "ordered by name" do
-      let(:user) { system_admin_user }
-      let(:trainee) { create(:trainee, :discarded) }
-
-      it { expect(subject[0]).to eql(school1) }
-      it { expect(subject[1]).to eql(school2) }
-    end
+    it { expect(subject).to match_array([school1, school2]) }
   end
 end
