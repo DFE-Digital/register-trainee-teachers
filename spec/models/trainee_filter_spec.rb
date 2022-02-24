@@ -47,8 +47,8 @@ describe TraineeFilter do
       let(:subject_filter) { "japanese" }
       let(:params) { { subject: subject_filter } }
 
-      it "applies the capitalized subject as stored in the DB" do
-        expect(subject.filters).to eq({ "subject" => subject_filter.capitalize })
+      it "returns the subject as stored correctly cased in the DB" do
+        expect(subject.filters).to eq({ "subject" => subject_filter })
       end
     end
 

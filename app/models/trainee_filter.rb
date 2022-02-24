@@ -86,7 +86,7 @@ private
   def subject
     return {} unless params[:subject].present? && params[:subject] != "All subjects"
 
-    { "subject" => params[:subject].capitalize }
+    { "subject" => params[:subject] }
   end
 
   def text_search

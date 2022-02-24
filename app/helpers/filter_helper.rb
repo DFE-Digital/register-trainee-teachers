@@ -6,7 +6,7 @@ module FilterHelper
   end
 
   def title_html(filter, value)
-    tag.span("Remove ", class: "govuk-visually-hidden") + value + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")
+    tag.span("Remove ", class: "govuk-visually-hidden") + value.upcase_first + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")
   end
 
   def tags_for_filter(filters, filter, value)
