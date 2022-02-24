@@ -2,7 +2,7 @@ en:
   pages:
     guidance:
       body_html: "
-      <p class='govuk-body'>Register trainee teachers is the service that will eventually replace the Database of Trainee Teachers &amp; Providers (DTTP) portal.</p>
+      <p class='govuk-body'>Register trainee teachers is the service that replaced the Database of Trainee Teachers &amp; Providers (DTTP) portal in 2022.</p>
 
       <p class='govuk-body'>Accredited Initial Teacher Training (ITT) providers use it to provide DfE with their trainee data.</p>
 
@@ -11,6 +11,23 @@ en:
       <p class='govuk-body'>Those tasks include withdrawing, deferring, getting teacher reference numbers (TRN) and recommending for qualified teacher status (QTS) or early years teacher status (EYTS).</p>
 
       <p class='govuk-body'>DfE also uses the data for funding, the ITT census and analysis to inform policy development.</p>
+
+      <h3 class='govuk-heading-m'>Register access for lead schools</h3>
+
+      <p class='govuk-body'>Lead schools can access Register trainee teachers to view funding information and trainee records.</p>
+
+      <p class='govuk-body'>In the funding information, you can view a summary of past and predicted payments. There’s a breakdown of monthly payments and a breakdown of bursaries, scholarships and grants.</p>
+
+      <p class='govuk-body'>The access for lead schools is view only. As a lead school, you cannot:</p>
+
+      <ul class='govuk-list govuk-list--bullet'>
+        <li>add trainee records</li>
+        <li>change trainee records</li>
+        <li>view draft trainee records</li>
+        <li>view a trainee’s diversity information</li>
+        <li>view a trainee’s gender</li>
+        <li>view a trainee’s nationality</li>
+      </ul>
 
       <h3 class='govuk-heading-m'>Adding trainee records</h3>
 
