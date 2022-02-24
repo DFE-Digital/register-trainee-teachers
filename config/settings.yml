@@ -26,8 +26,11 @@ dttp:
 
 hesa:
   auth_url: "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
-  username: "email@example.com"
-  password: "1234"
+  collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData/"
+  current_collection_reference: "C22053"
+  current_collection_start_date: "2022-04-01"
+  username: <get from secrets>
+  password: <get from secrets>
 
 # Used to add feature flags in the app to control access to certain features.
 features:
@@ -63,6 +66,7 @@ features:
   filters:
     show_start_year_filter: false
   user_can_have_multiple_organisations: false
+  sync_from_hesa: false
 
 dfe_sign_in:
   # Our service name
