@@ -98,7 +98,7 @@ feature "submit for TRN" do
     end
 
     context "clicking return to draft record later" do
-      scenario "returns the user to the draft records page" do
+      scenario "returns the user to the draft trainees page" do
         given_a_trainee_exists
         and_i_am_on_the_check_details_page
         when_i_click_return_to_draft_later

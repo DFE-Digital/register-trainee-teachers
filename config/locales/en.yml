@@ -236,8 +236,8 @@ en:
       check_details:
         show: Check trainee record
       draft_trainees:
-        index: Draft records (%{total_trainees_count_text})
-        paginated_index: Draft records (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
+        index: Draft trainees (%{total_trainees_count_text})
+        paginated_index: Draft trainees (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
       trainees:
         delete: Delete this draft record
         index: Registered trainees (%{total_trainees_count_text})
@@ -396,6 +396,8 @@ en:
           reinstated: Trainee reinstated
           course_uuid: Course updated
           course_max_age: Course age range updated
+          itt_start_date: &itt_start_date <abbr title="Initial teacher training">ITT</abbr> start date
+          itt_end_date: &itt_end_date <abbr title="Initial teacher training">ITT</abbr> end date
           course_subject_one: Course subject updated
           commencement_date: Trainee start date updated
           trainee_id: Trainee ID updated
@@ -480,8 +482,8 @@ en:
         multiple_subjects: Subjects
         level: Level
         age_range: &course_age_range Age range
-        itt_start_date: &itt_start_date <abbr title="Initial teacher training">ITT</abbr> start date
-        itt_end_date: &itt_end_date <abbr title="Initial teacher training">ITT</abbr> end date
+        itt_start_date: *itt_start_date
+        itt_end_date: *itt_end_date
         duration: Duration
         course_details: Course details
         study_mode: Full time or part time
@@ -508,6 +510,7 @@ en:
         nationality_names: *personal_details_path
         locale_code: &contact_details_path edit_trainee_contact_details_path
         address_line_one: *contact_details_path
+        postcode: *contact_details_path
         email: *contact_details_path
         ethnic_background: edit_trainee_diversity_ethnic_background_path
         ethnic_group: edit_trainee_diversity_ethnic_group_path
@@ -556,6 +559,7 @@ en:
         nationality_names: *nationality
         locale_code: *address
         address_line_one: *address
+        postcode: *address
         email: *email_address
         ethnic_background: *ethnicity
         ethnic_group: *ethnicity

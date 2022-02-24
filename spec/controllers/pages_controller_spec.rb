@@ -42,7 +42,6 @@ describe PagesController, type: :controller do
 
       it "renders home page" do
         get :start
-        expect(response.body).not_to match("Draft records")
         expect(response.body).not_to match("Draft trainees")
       end
     end

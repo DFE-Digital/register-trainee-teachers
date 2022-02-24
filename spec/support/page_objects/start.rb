@@ -20,7 +20,7 @@ module PageObjects
     end
 
     section :primary_navigation, "nav.moj-primary-navigation" do
-      element :drafts_link, ".govuk-link", text: "Draft records"
+      element :drafts_link, ".govuk-link", text: "Draft trainees"
     end
   end
 end
