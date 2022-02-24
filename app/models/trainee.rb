@@ -198,7 +198,7 @@ class Trainee < ApplicationRecord
   audited associated_with: :provider
   has_associated_audits
 
-  auto_strip_attributes :first_names, :last_name, squish: true
+  auto_strip_attributes :first_names, :last_name, :postcode, squish: true
 
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
