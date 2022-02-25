@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class HesaCollectionRequest < ApplicationRecord
+  enum state: { import_success: 0, import_failed: 1 }
+
   class << self
     def next_from_date
       current_collection_ref = Settings.hesa.current_collection_reference
