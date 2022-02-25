@@ -280,6 +280,7 @@ FactoryBot.define do
     trait :with_early_years_course_details do
       course_subject_one { CourseSubjects::EARLY_YEARS_TEACHING }
       course_age_range { AgeRange::ZERO_TO_FIVE }
+      with_study_mode_and_course_dates
     end
 
     trait :early_years_assessment_only do
@@ -314,6 +315,12 @@ FactoryBot.define do
 
     trait :opt_in_undergrad do
       training_route { TRAINING_ROUTE_ENUMS[:opt_in_undergrad] }
+    end
+
+    trait :draft do
+      completed
+      state { "draft" }
+      submission_ready
     end
 
     trait :submitted_for_trn do
