@@ -15,9 +15,9 @@ module RecordDetails
     let(:trainee_progress) { "trainee-progress" }
     let(:timeline_event) { double(date: Time.zone.today) }
 
-    context "when system admin is true" do
+    context "when :show_provider is true" do
       before do
-        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, system_admin: true))
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, show_provider: true))
       end
 
       it "renders the provider name and code" do
@@ -25,9 +25,9 @@ module RecordDetails
       end
     end
 
-    context "when system admin is false" do
+    context "when :show_provider is not true" do
       before do
-        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, system_admin: false))
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
       end
 
       it "renders the provider name and code" do

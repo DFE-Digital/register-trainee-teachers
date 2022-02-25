@@ -6,20 +6,20 @@ module ApplicationRecordCard
   describe View do
     let(:provider) { create(:provider, :with_courses) }
     let(:course) { provider.courses.first }
-    let(:system_admin) { false }
+    let(:show_provider) { false }
     let(:trainee) { create(:trainee, first_names: nil, provider: provider, course_uuid: course.uuid, trainee_id: nil) }
 
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
-      render_inline(described_class.new(record: trainee, system_admin: system_admin))
+      render_inline(described_class.new(record: trainee, show_provider: show_provider))
     end
 
     it "does not render provider name" do
       expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
     end
 
-    context "when system admin is true" do
-      let(:system_admin) { true }
+    context "when :show_provider is true" do
+      let(:show_provider) { true }
 
       it "renders provider name" do
         expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
@@ -96,7 +96,7 @@ module ApplicationRecordCard
 
     context "when a trainee with all their details filled in" do
       let(:state) { "draft" }
-      let(:system_admin) { false }
+      let(:show_provider) { false }
       let(:trainee) do
         create(
           :trainee,
@@ -112,15 +112,15 @@ module ApplicationRecordCard
       end
 
       before do
-        render_inline(described_class.new(record: trainee, system_admin: system_admin))
+        render_inline(described_class.new(record: trainee, show_provider: show_provider))
       end
 
       it "does not render provider name" do
         expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
       end
 
-      context "when system admin is true" do
-        let(:system_admin) { true }
+      context "when :show_provider is true" do
+        let(:show_provider) { true }
 
         it "renders provider name" do
           expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
