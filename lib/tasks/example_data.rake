@@ -199,24 +199,6 @@ namespace :example_data do
 
             end
 
-            # Make *roughly* half of draft trainees apply drafts
-            if state == :draft && sample_index < sample_size / 2 && enabled_course_routes.include?(route)
-              courses = provider.courses.where(route: route)
-              sample_course = courses.offset(rand(courses.count)).first
-              attrs.merge!(course_uuid: sample_course.uuid,
-                           course_education_phase: sample_course.level,
-                           study_mode: TRAINEE_STUDY_MODE_ENUMS[sample_course.study_mode],
-                           course_min_age: sample_course.min_age,
-                           course_max_age: sample_course.max_age,
-                           itt_start_date: nil,
-                           itt_end_date: nil,
-                           trainee_id: nil,
-                           lead_school_id: nil,
-                           employing_school_id: nil,
-                           apply_application: FactoryBot.create(:apply_application, accredited_body_code: provider.code))
-
-            end
-
             # Make *roughly* 25% of submitted_for_trn trainees not have a commencement date
             if state == :submitted_for_trn && sample_index < sample_size / 4
               attrs.merge!(commencement_date: nil)
@@ -229,6 +211,9 @@ namespace :example_data do
                 submission_ready: false,
                 itt_start_date: nil,
                 itt_end_date: nil,
+                trainee_id: nil,
+                lead_school: nil,
+                employing_school: nil,
               )
             end
 
