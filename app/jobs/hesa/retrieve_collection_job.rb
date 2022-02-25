@@ -8,11 +8,18 @@ module Hesa
       request_time = Time.zone.now
       xml_response = Hesa::Client.get(url: url)
 
-      # TODO: when we try to import the trainees we're going to mark
-      # the collection success/failure and include any failure in the subsequent run of this job
-      # This will prevent a failure here e.g. an error repsonse from incrementing the
-      # date and skipping a portion of the updates
+      Nokogiri::XML(xml_response).root.children.each do |student_node|
+        trainee, ukprn = Trainees::CreateFromHesa.call(student_node: student_node)
+        if trainee.invalid?
+          Sentry.capture_message("HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{ukprn})")
+          return save_hesa_request(xml_response, request_time).import_failed!
+        end
+      end
 
+      save_hesa_request(xml_response, request_time).import_successful!
+    end
+
+    def save_hesa_request(xml_response, request_time)
       HesaCollectionRequest.create(
         requested_at: request_time,
         collection_reference: collection_reference,
@@ -22,15 +29,11 @@ module Hesa
     end
 
     def url
-      "#{base_url}#{collection_reference}/#{updates_since}"
+      "#{Settings.hesa.collection_base_url}/#{collection_reference}/#{updates_since}"
     end
 
     def collection_reference
       Settings.hesa.current_collection_reference
-    end
-
-    def base_url
-      Settings.hesa.collection_base_url
     end
 
     def updates_since

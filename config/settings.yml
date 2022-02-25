@@ -26,7 +26,7 @@ dttp:
 
 hesa:
   auth_url: "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
-  collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData/"
+  collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData"
   current_collection_reference: "C22053"
   current_collection_start_date: "2022-04-01"
   username: <get from secrets>
