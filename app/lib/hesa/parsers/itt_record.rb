@@ -46,7 +46,7 @@ module Hesa
           # If there's only one qualification, we get a hash. If there's more
           # than one, we get an array of hashes. Hence the need to wrap and
           # flatten to cover both cases.
-          [qualifications.values].flatten.map do |qualification|
+          [qualifications&.values].flatten.compact.map do |qualification|
             {
               graduation_date: qualification["F_DEGENDDT"],
               degree_type: qualification["F_DEGTYPE"],
@@ -59,9 +59,11 @@ module Hesa
         end
 
         def convert_all_null_values_to_nil(hash)
-          hash.transform_values do |v|
-            if v.is_a?(Hash)
-              convert_all_null_values_to_nil(v)
+          hash.deep_transform_values do |v|
+            if v.is_a?(Array)
+              v.each do |h|
+                convert_all_null_values_to_nil(h)
+              end
             else
               v == "NULL" ? nil : v
             end
