@@ -140,7 +140,7 @@
       filter_course_subjects_options,
       :value,
       :text,
-      ->(object) { object.text == filters[:subject] if filters },
+      ->(object) { object.text.downcase == filters[:subject] if filters },
     ), class: "govuk-select" %>
   </div>
 

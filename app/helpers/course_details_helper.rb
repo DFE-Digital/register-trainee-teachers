@@ -68,7 +68,6 @@ private
   end
 
   def all_subjects
-    @all_subjects ||= (SubjectSpecialism.pluck(:name) + AllocationSubject.pluck(:name) + [Trainees::Filter::ALL_SCIENCES_FILTER])
-      .map(&:downcase).uniq.sort
+    @all_subjects ||= (SubjectSpecialism.pluck(:name) + AllocationSubject.pluck(:name) + [Trainees::Filter::ALL_SCIENCES_FILTER]).uniq(&:downcase).sort_by(&:downcase)
   end
 end
