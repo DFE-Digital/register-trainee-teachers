@@ -35,7 +35,6 @@ module Trainees
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
       }.merge(personal_details_attributes)
-       .merge(contact_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
@@ -53,14 +52,7 @@ module Trainees
         date_of_birth: hesa_trainee[:date_of_birth],
         gender: hesa_trainee[:gender].to_i,
         nationalities: nationalities,
-      }
-    end
-
-    def contact_attributes
-      {
         email: hesa_trainee[:email],
-        address_line_one: hesa_trainee[:address_line_one],
-        address_line_two: hesa_trainee[:address_line_two],
       }
     end
 
