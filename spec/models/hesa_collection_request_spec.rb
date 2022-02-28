@@ -3,25 +3,35 @@
 require "rails_helper"
 
 describe HesaCollectionRequest do
+  let(:settings_date) { Date.parse("2022-10-01") }
+  let(:collection_reference) { "C123" }
+
   describe ".next_from_date" do
     before do
-      allow(Settings.hesa).to receive(:current_collection_reference).and_return("C123")
-      allow(Settings.hesa).to receive(:current_collection_start_date).and_return("2022-10-01")
+      allow(Settings.hesa).to receive(:current_collection_reference).and_return(collection_reference)
+      allow(Settings.hesa).to receive(:current_collection_start_date).and_return(settings_date)
     end
 
     subject { described_class.next_from_date }
 
     context "where there is no previous request for the current collection" do
       it "returns the current collection start date" do
-        expect(subject).to eq(DateTime.parse("2022-10-01").utc.iso8601)
+        expect(subject).to eq(settings_date)
       end
     end
 
     context "where there is a previous request for the current collection" do
-      let!(:previous_request) { create(:hesa_collection_request, collection_reference: "C123", requested_at: "10/01/2022 13:00:00") }
+      let(:requested_at) { 2.days.ago }
+
+      before do
+        create(:hesa_collection_request,
+               :import_successful,
+               collection_reference: collection_reference,
+               requested_at: requested_at)
+      end
 
       it "returns the last request run datetime" do
-        expect(subject).to eq(previous_request.requested_at.utc.iso8601)
+        expect(subject).to eq(requested_at.to_date)
       end
     end
   end

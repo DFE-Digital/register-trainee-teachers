@@ -8,9 +8,9 @@ class HesaCollectionRequest < ApplicationRecord
       current_collection_ref = Settings.hesa.current_collection_reference
       latest_request = where(collection_reference: current_collection_ref).import_successful.order(:created_at).last
 
-      return Settings.hesa.current_collection_start_date.to_date.to_s if latest_request.nil?
+      return Settings.hesa.current_collection_start_date.to_date if latest_request.nil?
 
-      latest_request.requested_at.utc.iso8601
+      latest_request.requested_at.to_date
     end
   end
 end
