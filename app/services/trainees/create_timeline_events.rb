@@ -192,7 +192,7 @@ module Trainees
     end
 
     def provider_name
-      Provider.find(audit.associated_id).name
+      Provider.find_by(id: audit.associated_id)&.name
     end
   end
 end
