@@ -79,6 +79,10 @@ class TraineePolicy
     write? && trainee.trn_received?
   end
 
+  def export?
+    user_is_system_admin? || user.provider?
+  end
+
   alias_method :index?, :show?
 
   alias_method :edit?, :update?
@@ -88,11 +92,11 @@ class TraineePolicy
 private
 
   def read?
-    user&.system_admin? || user_in_provider_context? || user_in_lead_school_context?
+    user_is_system_admin? || user_in_provider_context? || user_in_lead_school_context?
   end
 
   def write?
-    user&.system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
+    user_is_system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
   end
 
   def user_in_provider_context?
@@ -103,5 +107,9 @@ private
     return false if trainee.lead_school.nil?
 
     user&.organisation == trainee.lead_school
+  end
+
+  def user_is_system_admin?
+    user&.system_admin?
   end
 end
