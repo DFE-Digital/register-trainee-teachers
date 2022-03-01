@@ -112,7 +112,7 @@ FactoryBot.define do
       applying_for_bursary { false }
       applying_for_scholarship { false }
       applying_for_grant { false }
-      nationalities { [Nationality.offset(rand(Nationality.count)).first || build(:nationality)] }
+      nationalities { [Nationality.all.sample || build(:nationality)] }
       progress do
         Progress.new(
           personal_details: true,
