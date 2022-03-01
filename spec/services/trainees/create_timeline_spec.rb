@@ -7,7 +7,7 @@ module Trainees
     let(:trainee) { create(:trainee) }
     let(:audits) { trainee.own_and_associated_audits }
 
-    subject { described_class.call(trainee: trainee) }
+    subject { described_class.call(trainee: trainee, current_user: nil) }
 
     describe "#call" do
       context "when a trainee is updated but not yet submitted for trn" do
@@ -70,7 +70,7 @@ module Trainees
 
     def reload_audits
       trainee.own_and_associated_audits.each do |audit|
-        allow(CreateTimelineEvents).to receive(:call).with(audit: audit).and_return(double(title: "title", date: audit.created_at))
+        allow(CreateTimelineEvents).to receive(:call).with(audit: audit, current_user: nil).and_return(double(title: "title", date: audit.created_at))
       end
     end
   end

@@ -4,8 +4,9 @@ module Trainees
   class CreateTimeline
     include ServicePattern
 
-    def initialize(trainee:)
+    def initialize(trainee:, current_user: nil)
       @trainee = trainee
+      @current_user = current_user
     end
 
     def call
@@ -14,10 +15,10 @@ module Trainees
 
   private
 
-    attr_reader :trainee
+    attr_reader :trainee, :current_user
 
     def events
-      filtered_audits.map { |audit| CreateTimelineEvents.call(audit: audit) }
+      filtered_audits.map { |audit| CreateTimelineEvents.call(audit: audit, current_user: current_user) }
     end
 
     def filtered_audits

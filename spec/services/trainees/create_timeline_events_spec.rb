@@ -6,9 +6,10 @@ module Trainees
   describe CreateTimelineEvents do
     let(:system_admin) { create(:user, :system_admin) }
     let(:provider_user) { create(:user) }
+    let(:current_user) { nil }
     let(:trainee) { create(:trainee, awarded_at: Time.zone.now) }
 
-    subject { described_class.call(audit: trainee.own_and_associated_audits.first) }
+    subject { described_class.call(audit: trainee.own_and_associated_audits.first, current_user: current_user) }
 
     describe "#call" do
       context "with a trainee creation audit" do
@@ -57,8 +58,34 @@ module Trainees
             expect(subject.first.title).to eq("First names updated")
           end
 
-          it "returns a timeline event with the user's name" do
-            expect(subject.first.username).to eq(provider_user.name)
+          context "and there's no current_user set" do
+            it "returns a timeline event with the provider's name" do
+              expect(subject.first.username).to eq(trainee.provider.name)
+            end
+          end
+
+          context "and there's a current_user different to the audit's user" do
+            let(:current_user) { create(:user) }
+
+            it "returns a timeline event with the provider's name" do
+              expect(subject.first.username).to eq(trainee.provider.name)
+            end
+          end
+
+          context "and there's a current_user the same as the audit's user" do
+            let(:current_user) { provider_user }
+
+            it "returns a timeline event with the user's name" do
+              expect(subject.first.username).to eq(provider_user.name)
+            end
+          end
+
+          context "and the current_user is a system admin" do
+            let(:current_user) { create(:user, :system_admin) }
+
+            it "returns a timeline event with the user's name and the provider's name" do
+              expect(subject.first.username).to eq("#{provider_user.name} (#{trainee.provider.name})")
+            end
           end
         end
 
