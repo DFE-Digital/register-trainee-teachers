@@ -11,7 +11,7 @@ describe Trainees::TrainingDetailsController do
 
   describe "#update" do
     context "with an apply draft trainee" do
-      let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.organisation) }
+      let(:trainee) { create(:trainee, :incomplete_draft, :with_apply_application, provider: user.organisation) }
 
       before do
         allow(TrainingDetailsForm).to receive(:new).and_return(double(save: true))

@@ -242,8 +242,8 @@ module Submissions
         end
       end
 
-      context "when trainee is draft" do
-        let(:trainee) { build(:trainee, :draft) }
+      context "when trainee is incomplete draft" do
+        let(:trainee) { build(:trainee, :incomplete_draft) }
 
         it "returns false" do
           expect(subject.all_sections_complete?).to be(false)

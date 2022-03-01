@@ -323,6 +323,10 @@ FactoryBot.define do
       submission_ready
     end
 
+    trait :incomplete_draft do
+      state { "draft" }
+    end
+
     trait :submitted_for_trn do
       completed
       dttp_id { SecureRandom.uuid }
