@@ -139,7 +139,7 @@ namespace :example_data do
           sample_size.times do |sample_index|
             nationalities = [nationalities.sample]
 
-            if sample_index < sample_size / 5 # Give 20% of trainees an extra nationality and a non-uk degree
+            if sample_index < sample_size * 20.0 / 100 # Give 20% of trainees an extra nationality and a non-uk degree
               nationalities << nationalities.sample
               degree_type = :non_uk_degree_with_details
             else
@@ -164,7 +164,7 @@ namespace :example_data do
 
               if state == :draft
                 # Make *roughly* half of draft trainees apply drafts
-                if sample_index < sample_size / 2
+                if sample_index >= sample_size / 2
                   # Create apply drafts for *next* academic cycle
                   courses = courses.where(recruitment_cycle_year: Settings.current_default_course_year + 1)
 
@@ -200,12 +200,12 @@ namespace :example_data do
             end
 
             # Make *roughly* 25% of submitted_for_trn trainees not have a commencement date
-            if state == :submitted_for_trn && sample_index < sample_size / 4
+            if state == :submitted_for_trn && sample_index < sample_size * 25.0 / 100
               attrs.merge!(commencement_date: nil)
             end
 
-            # Make 25% of drafts (both apply and manual) incomplete
-            if state == :draft && (sample_index < sample_size / 4)
+            # Make 75% of drafts (both apply and manual) incomplete
+            if state == :draft && (sample_index < sample_size * 75.0 / 100)
               attrs.merge!(
                 progress: Progress.new,
                 submission_ready: false,
