@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_173011) do
+ActiveRecord::Schema.define(version: 2022_02_25_152144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -208,6 +208,17 @@ ActiveRecord::Schema.define(version: 2022_02_24_173011) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_disabilities_on_name", unique: true
+  end
+
+  create_table "dqt_trn_requests", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.uuid "request_id", null: false
+    t.jsonb "response"
+    t.integer "state", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_dqt_trn_requests_on_request_id", unique: true
+    t.index ["trainee_id"], name: "index_dqt_trn_requests_on_trainee_id"
   end
 
   create_table "dttp_bursary_details", force: :cascade do |t|
@@ -549,6 +560,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_173011) do
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"
+  add_foreign_key "dqt_trn_requests", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
   add_foreign_key "lead_school_users", "schools", column: "lead_school_id"
   add_foreign_key "lead_school_users", "users"
