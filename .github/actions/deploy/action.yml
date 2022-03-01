@@ -26,13 +26,9 @@ runs:
     - name: Set Current Deployment Environment variable
       shell: bash
       run: |
-        echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV ##TO DO: this doesn't set to anything
-
         if [ -n "${{ inputs.pr }}" ]; then
-          PR_NUMBER=${{ inputs.pr }}
-          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          echo "APP_NAME=$PR_NUMBER" >> $GITHUB_ENV
-          echo "DEPLOY_URL=https://register-pr-$PR_NUMBER.london.cloudapps.digital" >> $GITHUB_ENV
+          echo "APP_NAME=${{ inputs.pr }}" >> $GITHUB_ENV
+          echo "DEPLOY_URL=https://register-pr-${{ inputs.pr }}.london.cloudapps.digital" >> $GITHUB_ENV
           DEPLOY_ENV=review
         else
           DEPLOY_ENV=${{ inputs.environment }}
@@ -44,10 +40,10 @@ runs:
         echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "paas_space_name=$(jq -r '.paas_space_name' ${tf_vars_file})" >> $GITHUB_ENV  ##TO DO: can this be removed?
+        echo "paas_space_name=$(jq -r '.paas_space_name' ${tf_vars_file})" >> $GITHUB_ENV
 
     - name: Start ${{ inputs.environment }} Deployment
-      uses: bobheadxi/deployments@v0.4.2
+      uses: bobheadxi/deployments@v1
       id: deployment
       with:
         step: start
@@ -104,7 +100,7 @@ runs:
     - name: Generate example data
       shell: bash
       if: env.DEPLOY_ENV == 'review'
-      run: cf run-task "register-pr-${PR_NUMBER}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
+      run: cf run-task "register-pr-${{ inputs.pr }}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
 
     - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
       uses: benc-uk/workflow-dispatch@v1.1
@@ -112,7 +108,7 @@ runs:
         workflow: Smoke Tests
         ref: ${{ github.event.pull_request.head.ref }} # this will be an empty string when triggered by something other than a PR, benc-uk/workflow-dispatch will default to github.context.ref
         token:    ${{ inputs.actions-api-access-token }}
-        inputs:   '{"environment": "${{ env.DEPLOY_ENV }}", "pr": "${{ env.PR_NUMBER }}"}'
+        inputs:   '{"environment": "${{ env.DEPLOY_ENV }}", "pr": "${{ inputs.pr }}"}'
 
     - name: Wait for smoke tests
       id: wait_for_smoke_tests
@@ -130,8 +126,8 @@ runs:
       run: exit 1
 
     - name: Update ${{ inputs.environment }} status
-      if: ${{ always() }}
-      uses: bobheadxi/deployments@v0.4.2
+      if: always()
+      uses: bobheadxi/deployments@v1
       with:
         step: finish
         token: ${{ github.token }}
