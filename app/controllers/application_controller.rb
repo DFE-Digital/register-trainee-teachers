@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :track_page
   before_action :check_organisation_context_is_set
   after_action :save_origin_path
-  include Pundit
+  include Pundit::Authorization
   include EmitsRequestEvents
 
   rescue_from Pundit::NotAuthorizedError do
