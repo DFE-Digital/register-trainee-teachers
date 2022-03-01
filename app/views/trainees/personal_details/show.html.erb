@@ -1,14 +1,18 @@
 <div class="personal-details">
-  <%= render PersonalDetails::View.new(data_model: @trainee, editable: trainee_editable?) %>
+  <%= render PersonalDetails::View.new(data_model: @trainee,
+                                       editable: trainee_editable?,
+                                       minimal: lead_school_user?) %>
 </div>
 
 <div class="contact-details">
   <%= render ContactDetails::View.new(data_model: @trainee, editable: trainee_editable?) %>
 </div>
 
-<div class="diversity-details">
-  <%= render Diversity::View.new(data_model: @trainee, editable: trainee_editable?) %>
-</div>
+<% unless lead_school_user? %>
+  <div class="diversity-details">
+    <%= render Diversity::View.new(data_model: @trainee, editable: trainee_editable?) %>
+  </div>
+<% end %>
 
 <% if @trainee.requires_degree? %>
   <% if @trainee.degrees.any? %>

@@ -52,7 +52,7 @@
       <%= render NavigationBar::View.new(
         items: [
           { name: "Home", url: root_path },
-          ({ name: "Draft trainees", url: drafts_path, current: active_link_for("drafts", @trainee) } unless hide_draft_records?),
+          ({ name: "Draft trainees", url: drafts_path, current: active_link_for("drafts", @trainee) } unless lead_school_user?),
           { name: "Registered trainees", url: trainees_path, current: active_link_for("trainees", @trainee) },
           ({ name: current_user.organisation.name, url: organisations_path, align_right: true } if show_organisation_link?),
         ],
