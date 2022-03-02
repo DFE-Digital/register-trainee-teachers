@@ -33,7 +33,7 @@ describe Trainees::PersonalDetailsController do
 
   describe "#update" do
     context "with an apply draft trainee" do
-      let(:trainee) { create(:trainee, :draft, :with_apply_application, provider: user.organisation) }
+      let(:trainee) { create(:trainee, :incomplete_draft, :with_apply_application, provider: user.organisation) }
 
       before do
         allow(PersonalDetailsForm).to receive(:new).and_return(double(stash_or_save!: true))

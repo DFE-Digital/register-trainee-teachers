@@ -146,7 +146,7 @@ private
     (@uk_trainee || @non_uk_trainee)
   end
 
-  def uk_trainee(trait: :draft)
+  def uk_trainee(trait: :incomplete_draft)
     @uk_trainee ||= create(:trainee, trait, provider: current_user.organisation).tap do |t|
       t.degrees << build(:degree, :uk_degree_type)
     end

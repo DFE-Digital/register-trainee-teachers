@@ -37,7 +37,7 @@ describe FindEmptyTrainees do
 
   context "for early year routes" do
     let!(:draft_trainee_with_no_data) do
-      create(:trainee, :incomplete, :early_years_salaried)
+      create(:trainee, :incomplete, :early_years_salaried, study_mode: nil, itt_start_date: nil, itt_end_date: nil)
     end
 
     subject { described_class.call }

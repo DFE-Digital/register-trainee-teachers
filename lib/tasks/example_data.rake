@@ -137,10 +137,20 @@ namespace :example_data do
           sample_size = rand(4...8)
 
           sample_size.times do |sample_index|
+            nationalities = [nationalities.sample]
+
+            if sample_index < sample_size * 20.0 / 100 # Give 20% of trainees an extra nationality and a non-uk degree
+              nationalities << nationalities.sample
+              degree_type = :non_uk_degree_with_details
+            else
+              degree_type = :uk_degree_with_details
+            end
+
             attrs = {
               randomise_subjects: true,
               created_at: Faker::Date.between(from: 100.days.ago, to: 50.days.ago),
-              nationalities: [],
+              nationalities: nationalities,
+              degrees: [FactoryBot.build(:degree, degree_type)],
             }
             attrs.merge!(provider: provider) if provider
 
@@ -148,10 +158,29 @@ namespace :example_data do
             attrs.merge!(lead_school: lead_schools.sample) if LEAD_SCHOOL_ROUTES.include?(route)
             attrs.merge!(employing_school: employing_schools.sample) if EMPLOYING_SCHOOL_ROUTES.include?(route)
 
-            if state != :draft
-              course = provider.courses.where(route: TRAINING_ROUTES_FOR_COURSE[route.to_s]).sample
+            if enabled_course_routes.include?(route)
 
-              if course
+              courses = provider.courses.where(route: route)
+
+              if state == :draft
+                # Make *roughly* half of draft trainees apply drafts
+                if sample_index >= sample_size / 2
+                  # Create apply drafts for *next* academic cycle
+                  courses = courses.where(recruitment_cycle_year: Settings.current_default_course_year + 1)
+
+                  attrs.merge!(
+                    apply_application: FactoryBot.build(:apply_application,
+                                                        accredited_body_code: provider.code),
+                  )
+                else
+                  # Create manual drafts for *current* academic cycle
+                  courses = courses.where(recruitment_cycle_year: Settings.current_default_course_year)
+                end
+              end
+
+              course = courses.sample
+
+              if course.present?
                 course_subject_one, course_subject_two, course_subject_three = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name)).values.map(&:first).compact
 
                 attrs.merge!(
@@ -160,34 +189,32 @@ namespace :example_data do
                   course_subject_one: course_subject_one,
                   course_subject_two: course_subject_two,
                   course_subject_three: course_subject_three,
-                  study_mode: TRAINEE_STUDY_MODE_ENUMS[course.study_mode],
+                  study_mode: TRAINEE_STUDY_MODE_ENUMS[course.study_mode] || TRAINEE_STUDY_MODE_ENUMS.keys.sample,
                   course_min_age: course.min_age,
                   course_max_age: course.max_age,
                   itt_start_date: course.published_start_date,
                   itt_end_date: course.published_start_date + 9.months,
                 )
-
-                if (rand(10) < 2) && (state == :submitted_for_trn)
-                  attrs.merge!(commencement_date: nil)
-                end
               end
+
             end
 
-            # Make *roughly* half of draft trainees apply drafts
-            if state == :draft && sample_index < sample_size / 2 && enabled_course_routes.include?(route)
-              courses = provider.courses.where(route: route)
-              sample_course = courses.offset(rand(courses.count)).first
-              attrs.merge!(course_uuid: sample_course.uuid,
-                           course_education_phase: sample_course.level,
-                           study_mode: TRAINEE_STUDY_MODE_ENUMS[sample_course.study_mode],
-                           course_min_age: sample_course.min_age,
-                           course_max_age: sample_course.max_age,
-                           itt_start_date: nil,
-                           itt_end_date: nil,
-                           trainee_id: nil,
-                           lead_school_id: nil,
-                           employing_school_id: nil,
-                           apply_application: FactoryBot.create(:apply_application, accredited_body_code: provider.code))
+            # Make *roughly* 25% of submitted_for_trn trainees not have a commencement date
+            if state == :submitted_for_trn && sample_index < sample_size * 25.0 / 100
+              attrs.merge!(commencement_date: nil)
+            end
+
+            # Make 75% of drafts (both apply and manual) incomplete
+            if state == :draft && (sample_index < sample_size * 75.0 / 100)
+              attrs.merge!(
+                progress: Progress.new,
+                submission_ready: false,
+                itt_start_date: nil,
+                itt_end_date: nil,
+                trainee_id: nil,
+                lead_school: nil,
+                employing_school: nil,
+              )
             end
 
             if route.to_s.include?(EARLY_YEARS_ROUTE_NAME_PREFIX)
@@ -197,18 +224,7 @@ namespace :example_data do
               )
             end
 
-            trainee = FactoryBot.create(:trainee, route, state, attrs)
-
-            trainee.nationalities << nationalities.sample
-
-            if rand(10) < 2 # Give 20% of trainees an extra nationality and a non-uk degree
-              trainee.nationalities << nationalities.sample
-              degree_type = :non_uk_degree_with_details
-            else
-              degree_type = :uk_degree_with_details
-            end
-
-            FactoryBot.create(:degree, degree_type, trainee: trainee)
+            FactoryBot.create(:trainee, route, state, attrs)
           end
         end
       end
