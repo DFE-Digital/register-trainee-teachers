@@ -24,7 +24,6 @@ module UserCard
         :user,
         first_name: "Luke",
         last_name: "Skywalker",
-        email: "luke@email.com",
         created_at: Time.zone.now,
         dttp_id: SecureRandom.uuid,
         providers: [provider],

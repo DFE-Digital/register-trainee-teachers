@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_25_152144) do
+ActiveRecord::Schema.define(version: 2022_03_02_160415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -543,8 +543,8 @@ ActiveRecord::Schema.define(version: 2022_02_25_152144) do
     t.datetime "discarded_at"
     t.index ["dfe_sign_in_uid"], name: "index_users_on_dfe_sign_in_uid", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
-    t.index ["dttp_id"], name: "index_unique_active_users", unique: true, where: "(discarded_at IS NULL)"
-    t.index ["email"], name: "index_users_on_email"
+    t.index ["dttp_id"], name: "index_unique_active_dttp_users", unique: true, where: "(discarded_at IS NULL)"
+    t.index ["email"], name: "index_unique_active_users", unique: true, where: "(discarded_at IS NULL)"
   end
 
   create_table "validation_errors", force: :cascade do |t|
