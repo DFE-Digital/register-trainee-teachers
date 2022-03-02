@@ -56,12 +56,12 @@ class BackfillMissingProviderUkprns < ActiveRecord::Migration[6.1]
       119 => 10057399,
       121 => 10054033,
     }.each do |provider_id, ukprn|
-      Provider.find(provider_id).update(ukprn: ukprn)
+      Provider.find_by(id: provider_id)&.update(ukprn: ukprn)
     end
 
     # Fix data for existing provider.
     # It's currently pointing to St Mary's University, Belfast instead of St Mary's University, Twickenham
-    Provider.find_by(ukprn: 10008026).update(dttp_id: "9b407223-7042-e811-80ff-3863bb3640b8", ukprn: 10007843)
+    Provider.find_by(ukprn: 10008026)&.update(dttp_id: "9b407223-7042-e811-80ff-3863bb3640b8", ukprn: 10007843)
   end
 
   def down
