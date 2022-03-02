@@ -48,19 +48,31 @@ describe TraineesController do
       it { expect { trigger } .not_to raise_error }
     end
 
-    context "csv export" do
-      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.organisation) }
+    describe "csv export" do
+      context "with a provider user" do
+        let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.organisation) }
 
-      before do
-        trainee
-        get(:index, format: "csv")
+        before do
+          trainee
+          get(:index, format: "csv")
+        end
+
+        it "tracks activity" do
+          activity = Activity.last
+          expect(activity.controller_name).to eql("trainees")
+          expect(activity.action_name).to eql("index")
+          expect(activity.metadata).to eql({ "action" => "index", "controller" => "trainees", "format" => "csv" })
+        end
       end
 
-      it "tracks activity" do
-        activity = Activity.last
-        expect(activity.controller_name).to eql("trainees")
-        expect(activity.action_name).to eql("index")
-        expect(activity.metadata).to eql({ "action" => "index", "controller" => "trainees", "format" => "csv" })
+      context "with a lead school user" do
+        let(:user) { build_current_user(user: create(:user, :with_lead_school_organisation)) }
+
+        it "returns a forbidden response" do
+          enable_features(:user_can_have_multiple_organisations)
+          get(:index, format: "csv")
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
   end
