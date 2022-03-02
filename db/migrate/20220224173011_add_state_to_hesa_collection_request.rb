@@ -3,6 +3,6 @@
 class AddStateToHesaCollectionRequest < ActiveRecord::Migration[6.1]
   def change
     add_column :hesa_collection_requests, :state, :integer
-    add_index :trainees, :state
+    add_index :hesa_collection_requests, :state
   end
 end

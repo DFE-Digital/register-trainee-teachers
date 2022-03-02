@@ -328,6 +328,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_173011) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "state"
+    t.index ["state"], name: "index_hesa_collection_requests_on_state"
   end
 
   create_table "lead_school_users", force: :cascade do |t|
