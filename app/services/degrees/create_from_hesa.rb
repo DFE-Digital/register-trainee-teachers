@@ -6,7 +6,7 @@ module Degrees
 
     def initialize(trainee:, hesa_degrees:)
       @trainee = trainee
-      @hesa_degrees = hesa_degrees
+      @hesa_degrees = hesa_degrees.reject { |d| d.compact.empty? }
     end
 
     def call
@@ -18,16 +18,18 @@ module Degrees
     attr_reader :hesa_degrees, :trainee
 
     def create_degrees!
-      hesa_degrees.each do |hesa_degree|
-        degree = trainee.degrees.find_or_initialize_by(subject: hesa_degree[:subject])
+      hesa_degrees.map do |hesa_degree|
+        subject = Hesa::CodeSets::DegreeSubjects::MAPPING[hesa_degree[:subject]]
+        degree = trainee.degrees.find_or_initialize_by(subject: subject)
 
         degree.institution = Hesa::CodeSets::Institutions::MAPPING[hesa_degree[:institution]]
-        degree.graduation_year = hesa_degree[:graduation_date].to_date.year
+        degree.graduation_year = hesa_degree[:graduation_date]&.to_date&.year
 
         country_specific_attributes(degree, hesa_degree)
         grade_attributes(degree, hesa_degree)
 
         degree.save!
+        degree
       end
     end
 

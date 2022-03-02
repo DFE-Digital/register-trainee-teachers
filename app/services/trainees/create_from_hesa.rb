@@ -15,13 +15,14 @@ module Trainees
     def call
       Audited.audit_class.as_user(USERNAME) do
         trainee.assign_attributes(mapped_attributes)
-        trainee.save!
 
-        create_degrees!
-        add_multiple_disability_text!
-
-        trainee
+        if trainee.save!
+          create_degrees!
+          add_multiple_disability_text!
+        end
       end
+
+      [trainee, hesa_trainee[:ukprn]]
     end
 
   private
@@ -34,7 +35,6 @@ module Trainees
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
       }.merge(personal_details_attributes)
-       .merge(contact_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
@@ -52,14 +52,7 @@ module Trainees
         date_of_birth: hesa_trainee[:date_of_birth],
         gender: hesa_trainee[:gender].to_i,
         nationalities: nationalities,
-      }
-    end
-
-    def contact_attributes
-      {
         email: hesa_trainee[:email],
-        address_line_one: hesa_trainee[:address_line_one],
-        address_line_two: hesa_trainee[:address_line_two],
       }
     end
 

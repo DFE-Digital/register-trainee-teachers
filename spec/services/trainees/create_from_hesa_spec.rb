@@ -35,12 +35,7 @@ module Trainees
         expect(trainee.gender).to eq("female")
         expect(trainee.date_of_birth).to eq(Date.parse(student_attributes[:date_of_birth]))
         expect(trainee.nationalities.pluck(:name)).to include(nationality_name)
-      end
-
-      it "updates the trainee's contact details" do
         expect(trainee.email).to eq(student_attributes[:email])
-        expect(trainee.address_line_one).to eq(student_attributes[:address_line_one])
-        expect(trainee.address_line_two).to eq(student_attributes[:address_line_two])
       end
 
       it "associates the trainer to a provider" do
