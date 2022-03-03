@@ -7,6 +7,8 @@ module Trainees
 
     USERNAME = "HESA"
 
+    class HesaImportError < StandardError; end
+
     def initialize(student_node:)
       @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
       @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
@@ -21,8 +23,9 @@ module Trainees
           add_multiple_disability_text!
         end
       end
-
-      [trainee, hesa_trainee[:ukprn]]
+    rescue ActiveRecord::RecordInvalid
+      raise(HesaImportError,
+            "HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{hesa_trainee[:ukprn]})")
     end
 
   private
