@@ -32,6 +32,10 @@ hesa:
   username: <get from secrets>
   password: <get from secrets>
 
+dqt:
+  base_url: "https://teacher-qualifications-api.education.gov.uk/"
+  api_key: <get from secrets>
+
 # Used to add feature flags in the app to control access to certain features.
 features:
   home_text: false
@@ -67,6 +71,7 @@ features:
     show_start_year_filter: false
   user_can_have_multiple_organisations: false
   sync_from_hesa: false
+  integrate_with_dqt: false
 
 dfe_sign_in:
   # Our service name
