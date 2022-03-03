@@ -14,11 +14,10 @@ module Hesa
       xml_response = Hesa::Client.get(url: url)
 
       Nokogiri::XML(xml_response).root.children.each do |student_node|
-        trainee, ukprn = Trainees::CreateFromHesa.call(student_node: student_node)
-        if trainee.invalid?
-          Sentry.capture_message("HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{ukprn})")
-          return save_hesa_request(xml_response, request_time).import_failed!
-        end
+        Trainees::CreateFromHesa.call(student_node: student_node)
+      rescue Trainees::CreateFromHesa::HesaImportError => e
+        Sentry.capture_exception(e)
+        return save_hesa_request(xml_response, request_time).import_failed!
       end
 
       save_hesa_request(xml_response, request_time).import_successful!

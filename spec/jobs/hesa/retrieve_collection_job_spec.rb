@@ -73,10 +73,18 @@ module Hesa
       end
 
       context "invalid data" do
-        let(:trainee) { build(:trainee, provider: nil).tap(&:save) }
+        let(:trainee) { build(:trainee, provider: nil) }
+        let(:hesa_import_error) do
+          error_msg = "HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{ukprn})"
+          Trainees::CreateFromHesa::HesaImportError.new(error_msg)
+        end
+
+        before do
+          allow(Trainees::CreateFromHesa).to receive(:call).and_raise(hesa_import_error)
+        end
 
         it "sends an error message to Sentry" do
-          expect(Sentry).to receive(:capture_message).with("HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{ukprn})")
+          expect(Sentry).to receive(:capture_exception).with(hesa_import_error)
           described_class.new.perform
         end
 
