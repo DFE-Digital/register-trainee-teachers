@@ -20,11 +20,15 @@ describe User do
     end
   end
 
-  context "validates dttp_id" do
+  context "uniqueness validations" do
     subject { create(:user) }
 
-    it "validates uniqueness" do
+    it "validates uniqueness of dttp_id" do
       expect(subject).to validate_uniqueness_of(:dttp_id).case_insensitive.with_message("Enter a unique DTTP ID")
+    end
+
+    it "validates uniqueness of email" do
+      expect(subject).to validate_uniqueness_of(:email).with_message("Enter a unique email address")
     end
   end
 
@@ -33,26 +37,26 @@ describe User do
 
     subject { build(:user) }
 
-    context "user with same dttp_id as active user" do
+    context "user with same email as active user" do
       before do
-        subject.dttp_id = first_user.dttp_id
+        subject.email = first_user.email
         subject.save
       end
 
       it "errors" do
-        expect(subject.errors[:dttp_id]).to include(I18n.t("activerecord.errors.models.user.attributes.dttp_id.taken"))
+        expect(subject.errors[:email]).to include(I18n.t("activerecord.errors.models.user.attributes.email.taken"))
       end
     end
 
-    context "user with same dttp_id as inactive user" do
+    context "user with same email as inactive user" do
       before do
-        subject.dttp_id = first_user.dttp_id
+        subject.email = first_user.email
         first_user.discard
         subject.save
       end
 
       it "allows user to be saved" do
-        expect(subject.errors[:dttp_id]).not_to include(I18n.t("activerecord.errors.models.user.attributes.dttp_id.taken"))
+        expect(subject.errors[:email]).not_to include(I18n.t("activerecord.errors.models.user.attributes.email.taken"))
       end
     end
   end
@@ -64,6 +68,7 @@ describe User do
   describe "indexes" do
     it { is_expected.to have_db_index(:dfe_sign_in_uid).unique(true) }
     it { is_expected.to have_db_index(:dttp_id).unique(true) }
+    it { is_expected.to have_db_index(:email).unique(true) }
   end
 
   describe "#discard" do
