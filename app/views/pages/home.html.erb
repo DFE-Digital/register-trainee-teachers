@@ -1,6 +1,6 @@
 <%= render PageTitle::View.new(i18n_key: "pages.home") %>
 
-<% unless hide_draft_records? %>
+<% unless lead_school_user? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <% if current_user.organisation %>
@@ -45,7 +45,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <% if hide_draft_records? %>
+    <% if lead_school_user? %>
       <% if current_user.organisation %>
         <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
       <% end %>
