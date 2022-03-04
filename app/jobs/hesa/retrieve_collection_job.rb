@@ -13,8 +13,10 @@ module Hesa
       request_time = Time.zone.now
       xml_response = Hesa::Client.get(url: url)
 
-      Nokogiri::XML(xml_response).root.children.each do |student_node|
-        Trainees::CreateFromHesa.call(student_node: student_node)
+      Nokogiri::XML::Reader(xml_response).each do |node|
+        if node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
+          Trainees::CreateFromHesa.call(student_node: Nokogiri::XML(node.outer_xml).at("./Student"))
+        end
       rescue Trainees::CreateFromHesa::HesaImportError => e
         Sentry.capture_exception(e)
         return save_hesa_request(xml_response, request_time).import_failed!
