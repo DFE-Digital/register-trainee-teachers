@@ -11,8 +11,15 @@ module Trainees
 
     def call
       trainee.submit_for_trn!
-      Dttp::RegisterForTrnJob.perform_later(trainee, dttp_id)
-      Dttp::RetrieveTrnJob.perform_with_default_delay(trainee)
+
+      if FeatureService.enabled?(:persist_to_dttp)
+        Dttp::RegisterForTrnJob.perform_later(trainee, dttp_id)
+        Dttp::RetrieveTrnJob.perform_with_default_delay(trainee)
+      end
+
+      if FeatureService.enabled?(:integrate_with_dqt)
+        Dqt::RegisterForTrnJob.perform_later(trainee)
+      end
     end
 
   private
