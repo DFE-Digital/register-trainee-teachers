@@ -33,7 +33,7 @@ module Dqt
     end
 
     def update_trainee
-      trainee.submit_for_trn!
+      trainee.submit_for_trn! if trainee.can_submit_for_trn?
     end
   end
 end
