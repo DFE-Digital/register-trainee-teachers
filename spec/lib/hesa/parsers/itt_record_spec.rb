@@ -15,7 +15,7 @@ module Hesa
         it "returns an hash with mapped trainee attributes" do
           expect(trainee_attributes).to match({
             first_names: "Dave",
-            last_name: "Geoorge",
+            last_name: "George",
             email: "student.name@email.com",
             date_of_birth: "1978-08-13",
             ethnic_background: "80",

@@ -4,7 +4,7 @@ module ApiStubs
   class HesaApi
     TAG_MAP = {
       first_names: "F_FNAMES",
-      last_name: "F_PSURNAME",
+      last_name: "F_SURNAME",
       email: "F_NQTEMAIL",
       date_of_birth: "F_BIRTHDTE",
       ethnic_background: "F_ETHNIC",
