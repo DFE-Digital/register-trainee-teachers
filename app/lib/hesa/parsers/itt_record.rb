@@ -10,7 +10,7 @@ module Hesa
 
           {
             first_names: student_attributes["F_FNAMES"],
-            last_name: student_attributes["F_PSURNAME"],
+            last_name: student_attributes["F_SURNAME"],
             email: student_attributes["F_NQTEMAIL"],
             date_of_birth: student_attributes["F_BIRTHDTE"],
             ethnic_background: student_attributes["F_ETHNIC"],
