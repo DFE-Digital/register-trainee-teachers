@@ -63,3 +63,9 @@ Register/RegisterFormWith:
    Include:
     - "app/views/**/*"
     - "app/components/**/*"
+
+Style/OpenStructUse:
+  Exclude:
+    - "config/initializers/**/*"
+    - "db/data/**/*"
+    - "spec/**/*"

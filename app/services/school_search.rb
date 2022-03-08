@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 class SchoolSearch
+  class Result
+    attr_reader :schools, :limit
+
+    def initialize(schools:, limit:)
+      @schools = schools
+      @limit = limit
+    end
+  end
+
   include ServicePattern
 
   MIN_QUERY_LENGTH = 2
@@ -13,7 +22,7 @@ class SchoolSearch
   end
 
   def call
-    OpenStruct.new(schools: specified_schools, limit: limit)
+    Result.new(schools: specified_schools, limit: limit)
   end
 
   def specified_schools
