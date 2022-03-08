@@ -55,8 +55,9 @@ module Trainees
 
     delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, to: :audit
 
-    def initialize(audit:)
+    def initialize(audit:, current_user: nil)
       @audit = audit
+      @current_user = current_user
     end
 
     def call
@@ -113,7 +114,7 @@ module Trainees
 
   private
 
-    attr_reader :audit
+    attr_reader :audit, :current_user
 
     # An action can be one of "create", "destroy" or "update". Here, we're
     # creating a new "state_change" action as they're displayed differently.
@@ -172,14 +173,26 @@ module Trainees
       title
     end
 
+    # The `user` is the user associated with the audit. The `current_user` is
+    # the logged in user.
     def username
       return unless user && !user.is_a?(String)
 
-      user.system_admin? ? "DfE administrator" : user.name
+      return "DfE administrator" if user.system_admin?
+
+      return "#{user.name} (#{provider_name})" if current_user&.system_admin?
+
+      return provider_name if current_user != user
+
+      user.name
     end
 
     def hesa_or_dttp_user?
       IMPORT_SOURCES.include?(user)
+    end
+
+    def provider_name
+      Provider.find_by(id: audit.associated_id)&.name
     end
   end
 end
