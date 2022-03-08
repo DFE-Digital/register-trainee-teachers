@@ -1,5 +1,5 @@
 <% unless paginated_trainees.empty? %>
-  <% if FeatureService.enabled?(:trainee_export) %>
+  <% if FeatureService.enabled?(:trainee_export) && policy(:trainee).export? %>
     <div class="app-export--link">
       <%= govuk_link_to(
         I18n.t("views.trainees.index.export"),

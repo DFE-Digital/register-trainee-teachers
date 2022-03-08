@@ -28,6 +28,7 @@ class BaseTraineeController < ApplicationController
       format.html
       format.js { render(json: json_response) }
       format.csv do
+        authorize(:trainee, :export?)
         track_activity
         send_data(data_export.data, filename: data_export.filename, disposition: :attachment)
       end

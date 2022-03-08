@@ -225,6 +225,20 @@ describe TraineePolicy do
     end
   end
 
+  permissions :export? do
+    context "when the user is an admin" do
+      it { is_expected.to permit(system_admin_user) }
+    end
+
+    context "when the user is a provider user" do
+      it { is_expected.to permit(provider_user) }
+    end
+
+    context "when the user is a lead school user" do
+      it { is_expected.not_to permit(lead_school_user) }
+    end
+  end
+
   describe TraineePolicy::Scope do
     let(:user_with_organisation) do
       double(UserWithOrganisationContext, system_admin?: is_system_admin?, organisation: organisation, lead_school?: is_lead_school?, provider?: is_provider?)
