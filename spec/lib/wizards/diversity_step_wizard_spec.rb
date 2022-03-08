@@ -43,7 +43,7 @@ module Wizards
         let(:trainee) { create(:trainee, :with_diversity_information) }
 
         it "returns nil" do
-          expect(subject.start_point).to eq nil
+          expect(subject.start_point).to be_nil
         end
       end
     end

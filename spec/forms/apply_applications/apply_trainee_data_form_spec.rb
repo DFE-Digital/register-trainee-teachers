@@ -15,7 +15,7 @@ module ApplyApplications
         end
 
         it "returns the entire form as invalid" do
-          expect(subject.progress).to eq false
+          expect(subject.progress).to be false
           expect(subject.errors).not_to be_empty
         end
       end
@@ -24,7 +24,7 @@ module ApplyApplications
         let(:trainee) { create(:trainee, :with_apply_application, :completed) }
 
         it "returns the entire form as invalid" do
-          expect(subject.progress).to eq true
+          expect(subject.progress).to be true
           expect(subject.errors).to be_empty
         end
       end

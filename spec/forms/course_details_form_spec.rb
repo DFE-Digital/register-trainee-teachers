@@ -551,7 +551,7 @@ describe CourseDetailsForm, type: :model do
         end
 
         it "doesnt wipe course uuid" do
-          expect(trainee.course_uuid).not_to eq nil
+          expect(trainee.course_uuid).not_to be_nil
         end
       end
 

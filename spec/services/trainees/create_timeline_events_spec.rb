@@ -86,7 +86,7 @@ module Trainees
           end
 
           it "returns a timeline event with no name" do
-            expect(subject.first.username).to eq(nil)
+            expect(subject.first.username).to be_nil
           end
         end
       end

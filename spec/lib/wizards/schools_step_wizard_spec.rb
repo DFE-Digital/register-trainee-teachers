@@ -27,7 +27,7 @@ module Wizards
         let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, :with_employing_school) }
 
         it "returns nil" do
-          expect(subject.start_point).to eq nil
+          expect(subject.start_point).to be_nil
         end
       end
     end

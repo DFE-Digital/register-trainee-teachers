@@ -65,7 +65,7 @@ module NavigationBar
 
         it "renders the link without aria-current" do
           rendered_link = component.find(".moj-primary-navigation__link", text: non_current_item[:name])
-          expect(rendered_link["aria-current"]).to eq(nil)
+          expect(rendered_link["aria-current"]).to be_nil
         end
       end
 
@@ -86,7 +86,7 @@ module NavigationBar
 
         it "renders the link without aria-current" do
           rendered_link = component.find(".moj-primary-navigation__link", text: no_current_item[:name])
-          expect(rendered_link["aria-current"]).to eq(nil)
+          expect(rendered_link["aria-current"]).to be_nil
         end
       end
 

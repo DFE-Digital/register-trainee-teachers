@@ -118,7 +118,7 @@ module Trainees
         end
 
         it "does not set the local to UK" do
-          expect(Trainee.last.locale_code).to be nil
+          expect(Trainee.last.locale_code).to be_nil
         end
 
         context "but the country is set to England" do
@@ -214,7 +214,7 @@ module Trainees
 
         it "does not save the TRN" do
           create_trainee_from_dttp
-          expect(Trainee.last.trn).to be nil
+          expect(Trainee.last.trn).to be_nil
         end
       end
 
@@ -223,7 +223,7 @@ module Trainees
 
         it "does not save the TRN" do
           create_trainee_from_dttp
-          expect(Trainee.last.trn).to be nil
+          expect(Trainee.last.trn).to be_nil
         end
       end
 

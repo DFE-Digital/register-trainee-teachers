@@ -61,9 +61,9 @@ module Trainees
       end
 
       it "updates the trainee's funding details" do
-        expect(trainee.applying_for_bursary).to eq(false)
-        expect(trainee.applying_for_grant).to eq(false)
-        expect(trainee.applying_for_scholarship).to eq(false)
+        expect(trainee.applying_for_bursary).to be(false)
+        expect(trainee.applying_for_grant).to be(false)
+        expect(trainee.applying_for_scholarship).to be(false)
       end
 
       it "creates the trainee's degree" do
@@ -84,7 +84,7 @@ module Trainees
       describe "#created_from_hesa" do
         subject { trainee.created_from_hesa }
 
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
     end
 
@@ -96,7 +96,7 @@ module Trainees
       describe "#created_from_hesa" do
         subject { trainee.created_from_hesa }
 
-        it { is_expected.to eq(false) }
+        it { is_expected.to be(false) }
       end
 
       context "when ethnicity is missing" do
@@ -244,7 +244,7 @@ module Trainees
         end
 
         it "uses the MapFundingFromDttpEntityId service to determine bursary information" do
-          expect(trainee.applying_for_bursary).to eq(true)
+          expect(trainee.applying_for_bursary).to be(true)
         end
       end
 

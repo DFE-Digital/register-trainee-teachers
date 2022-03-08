@@ -22,11 +22,11 @@ module Degrees
     attr_reader :application_record, :degrees_form
 
     def create_degrees!
-      invalid_data = raw_degrees.map do |degree|
+      invalid_data = raw_degrees.to_h do |degree|
         degree_form = degrees_form.build_degree(::Degrees::MapFromApply.call(attributes: degree))
 
         [degree_form.to_param, degree_form.save_and_return_invalid_data!]
-      end.to_h
+      end
 
       application_record.update!(degrees_invalid_data: invalid_data)
     end
