@@ -544,6 +544,7 @@ en:
         commencement_date_radio_option: *commencement_date_path
         trainee_id: edit_trainee_training_details_path
         study_mode: *course_path
+        primary_course_subjects: *course_path
     missing_data_view:
       degrees_form: degree
       missing_fields_summary:
@@ -591,6 +592,7 @@ en:
         commencement_date_radio_option: *commencement_date
         trainee_id: *trainee_id
         study_mode: *study_mode
+        primary_course_subjects: *course_subject
     drafts:
       index:
         results:
