@@ -25,7 +25,7 @@ module Sections
 
     def confirmation_view_args
       if section == :trainee_data
-        { trainee_data_form: form_klass.new(trainee) }
+        { trainee_data_form: form_klass.new(trainee), editable: editable }
       else
         view_args = { data_model: form_klass.new(trainee), has_errors: form_has_errors?, editable: editable }
 
