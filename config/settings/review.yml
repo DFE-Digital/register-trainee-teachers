@@ -19,9 +19,13 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
   user_can_have_multiple_organisations: true
+  integrate_with_dqt: true
 
 pagination:
   records_per_page: 30
 
 environment:
   name: review
+
+dqt:
+  base_url: "https://test-teacher-qualifications-api.education.gov.uk/"
