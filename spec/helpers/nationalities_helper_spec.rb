@@ -9,7 +9,7 @@ describe NationalitiesHelper do
 
   describe "#checkbox_nationalities" do
     let(:expected_nationality) do
-      OpenStruct.new(
+      NationalityOption.new(
         id: nationality.name.titleize,
         name: nationality.name.titleize,
         description: t("views.default_nationalities.#{nationality.name}.description"),
@@ -17,7 +17,10 @@ describe NationalitiesHelper do
     end
 
     it "returns formatted versions of given nationality records" do
-      expect(checkbox_nationalities([nationality])).to include(expected_nationality)
+      nationality_option = checkbox_nationalities([nationality]).first
+      expect(nationality_option.id).to eq(expected_nationality.id)
+      expect(nationality_option.name).to eq(expected_nationality.name)
+      expect(nationality_option.description).to eq(expected_nationality.description)
     end
   end
 

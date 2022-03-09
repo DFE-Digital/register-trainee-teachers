@@ -18,14 +18,14 @@ describe SystemAdminConstraint do
       let(:email) { "dave@example.com" }
       let!(:system_admin) { create(:user, :system_admin, email: email) }
 
-      it { is_expected.to eq(true) }
+      it { is_expected.to be(true) }
     end
 
     context "non system admin" do
       let(:email) { "dave@example.com" }
       let!(:user) { create(:user, email: email) }
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
 
     context "discarded system admin" do
@@ -36,14 +36,14 @@ describe SystemAdminConstraint do
         system_admin.discard!
       end
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
 
     context "no matching user" do
       let(:email) { "dave@example.com" }
       let!(:system_admin) { create(:user, email: "dennis@example.com") }
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
 
     context "no DfESigninUser (the session has ended)" do
@@ -51,7 +51,7 @@ describe SystemAdminConstraint do
       let!(:system_admin) { create(:user, email: "dennis@example.com") }
       let(:dfe_signin_user) { nil }
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
   end
 end

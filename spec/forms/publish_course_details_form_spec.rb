@@ -73,7 +73,7 @@ describe PublishCourseDetailsForm, type: :model do
   context "missing course_uuid" do
     describe "#stash" do
       it "returns false and adds an error to the form" do
-        expect(subject.stash).to eq false
+        expect(subject.stash).to be false
         expect(subject.errors.messages).to eq({ course_uuid: ["Select a course"] })
       end
     end

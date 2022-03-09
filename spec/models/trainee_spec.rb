@@ -624,7 +624,7 @@ describe Trainee do
     before { trainee.dup.tap { |t| t.slug = t.generate_slug }.save }
 
     it "returns true if another trainee has the same nam, date of birth and email address" do
-      expect(trainee.duplicate?).to eq(true)
+      expect(trainee.duplicate?).to be(true)
     end
   end
 end

@@ -3,9 +3,9 @@
 module ApplicationHelper
   def to_options(array, first_value: nil)
     result = array.map do |name|
-      OpenStruct.new(value: name, text: name.upcase_first)
+      SelectOption.new(value: name, text: name.upcase_first)
     end
-    result.unshift(OpenStruct.new(value: first_value, text: first_value&.upcase_first))
+    result.unshift(SelectOption.new(value: first_value, text: first_value&.upcase_first))
     result
   end
 

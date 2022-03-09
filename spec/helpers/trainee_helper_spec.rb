@@ -61,7 +61,7 @@ describe TraineeHelper do
 
     context "without invalid data" do
       it "returns nil as no invalid data found" do
-        expect(invalid_data_message("subject", degree)).to eq(nil)
+        expect(invalid_data_message("subject", degree)).to be_nil
       end
     end
   end

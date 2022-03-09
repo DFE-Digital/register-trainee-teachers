@@ -39,7 +39,7 @@ describe "schools_data:import" do
       expect(s1.postcode).to eq "FAKE"
       expect(s1.lead_school).to be true
       expect(s1.open_date).to eq Date.parse("17/12/1989")
-      expect(s1.close_date).to be nil
+      expect(s1.close_date).to be_nil
 
       s2 = School.find_by_urn(54_321)
       expect(s2.name).to eq "South Park Elementary"
@@ -47,7 +47,7 @@ describe "schools_data:import" do
       expect(s2.postcode).to eq "REAL"
       expect(s2.lead_school).to be false
       expect(s2.open_date).to eq Date.parse("13/08/1997")
-      expect(s2.close_date).to be nil
+      expect(s2.close_date).to be_nil
     end
 
     context "if a school already exists" do
@@ -71,7 +71,7 @@ describe "schools_data:import" do
         expect(school.postcode).to eq "FAKE"
         expect(school.lead_school).to be true
         expect(school.open_date).to eq Date.parse("17/12/1989")
-        expect(school.close_date).to be nil
+        expect(school.close_date).to be_nil
       end
     end
   end

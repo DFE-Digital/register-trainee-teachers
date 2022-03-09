@@ -17,7 +17,7 @@ describe SubjectSpecialismForm, type: :model do
     let(:position) { 1 }
 
     it "validates the presence of the course subject matching the position" do
-      expect(subject.valid?).to eq false
+      expect(subject.valid?).to be false
       expect(subject.errors[:course_subject_one]).to contain_exactly("Select a specialism")
     end
   end

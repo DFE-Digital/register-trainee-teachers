@@ -193,7 +193,7 @@ describe HPITT do
 
     context "when thes school is not present" do
       it "returns nil" do
-        expect(subject).to eq(nil)
+        expect(subject).to be_nil
       end
     end
   end

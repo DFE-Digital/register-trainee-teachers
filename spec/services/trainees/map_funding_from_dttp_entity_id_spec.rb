@@ -16,7 +16,7 @@ module Trainees
         let(:api_placement_assignment) { create(:api_placement_assignment, :with_no_bursary_awarded) }
 
         it "sets bursary to false" do
-          expect(subject[:applying_for_bursary]).to eq(false)
+          expect(subject[:applying_for_bursary]).to be(false)
         end
       end
 
@@ -24,7 +24,7 @@ module Trainees
         let(:api_placement_assignment) { create(:api_placement_assignment, :with_scholarship) }
 
         it "sets scholarship" do
-          expect(subject[:applying_for_scholarship]).to eq(true)
+          expect(subject[:applying_for_scholarship]).to be(true)
         end
       end
 
@@ -32,7 +32,7 @@ module Trainees
         let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_bursary) }
 
         it "sets funding" do
-          expect(subject[:applying_for_bursary]).to eq(true)
+          expect(subject[:applying_for_bursary]).to be(true)
         end
       end
 
@@ -40,7 +40,7 @@ module Trainees
         let(:api_placement_assignment) { create(:api_placement_assignment, :with_early_years_salaried_bursary) }
 
         it "sets funding" do
-          expect(subject[:applying_for_grant]).to eq(true)
+          expect(subject[:applying_for_grant]).to be(true)
         end
       end
     end
@@ -49,7 +49,7 @@ module Trainees
       let(:api_placement_assignment) { create(:api_placement_assignment, :with_tiered_bursary) }
 
       it "sets bursary tier" do
-        expect(subject[:applying_for_bursary]).to eq(true)
+        expect(subject[:applying_for_bursary]).to be(true)
         expect(subject[:bursary_tier]).to eq(BURSARY_TIER_ENUMS[:tier_two])
       end
     end

@@ -94,7 +94,7 @@ describe "hpitt:import" do
     expect(trainee.trainee_id).to eq "L0V3LYiD"
     expect(trainee.commencement_date).to eq Date.parse("13/04/2021")
 
-    expect(trainee.progress.attributes.values).to all eq(true)
+    expect(trainee.progress.attributes.values).to all be(true)
 
     expect(trainee.degrees.count).to eq 1
     degree = trainee.degrees.first

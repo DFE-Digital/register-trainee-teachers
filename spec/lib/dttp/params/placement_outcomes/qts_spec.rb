@@ -37,7 +37,7 @@ module Dttp
 
           describe "dfe_recommendraineetonctl" do
             it "is set to true" do
-              expect(subject["dfe_recommendtraineetonctl"]).to eq(true)
+              expect(subject["dfe_recommendtraineetonctl"]).to be(true)
             end
           end
         end
