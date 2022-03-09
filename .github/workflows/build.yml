@@ -146,7 +146,7 @@ jobs:
         arm-access-key: ${{ secrets.ARM_ACCESS_KEY_REVIEW }}
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
         environment: review
-        pr: ${{ github.event.pull_request.number }}
+        pr-number: ${{ github.event.pull_request.number }}
         sha: ${{ needs.build.outputs.image_tag }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 

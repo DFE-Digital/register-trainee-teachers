@@ -11,7 +11,7 @@ inputs:
   environment:
     description: Environment to deploy to
     required: true
-  pr:
+  pr-number:
     description: PR number for the review app
     required: false
   sha:
@@ -26,29 +26,32 @@ runs:
     - name: Set Current Deployment Environment variable
       shell: bash
       run: |
-        if [ -n "${{ inputs.pr }}" ]; then
-          echo "APP_NAME=${{ inputs.pr }}" >> $GITHUB_ENV
-          echo "DEPLOY_URL=https://register-pr-${{ inputs.pr }}.london.cloudapps.digital" >> $GITHUB_ENV
-          DEPLOY_ENV=review
+        if [ -n "${{ inputs.pr-number }}" ]; then
+          echo "APP_NAME=${{ inputs.pr-number }}" >> $GITHUB_ENV
+          echo "DEPLOY_URL=https://register-pr-${{ inputs.pr-number }}.london.cloudapps.digital" >> $GITHUB_ENV
+          DEPLOY_ENV=${{ inputs.environment }}-${{ inputs.pr-number }}
+          echo "DEPLOY_REF=${{ github.head_ref }}" >> $GITHUB_ENV
         else
           DEPLOY_ENV=${{ inputs.environment }}
+          echo "DEPLOY_REF=${{ github.ref }}" >> $GITHUB_ENV
         fi
 
         echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
 
-        tf_vars_file=terraform/workspace-variables/${DEPLOY_ENV}.tfvars.json
+        tf_vars_file=terraform/workspace-variables/${{ inputs.environment }}.tfvars.json
         echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "paas_space_name=$(jq -r '.paas_space_name' ${tf_vars_file})" >> $GITHUB_ENV
 
-    - name: Start ${{ inputs.environment }} Deployment
+    - name: Start ${{ env.DEPLOY_ENV }} Deployment
       uses: bobheadxi/deployments@v1
       id: deployment
       with:
         step: start
         token: ${{ github.token }}
-        env: ${{ inputs.environment }}
+        env: ${{ env.DEPLOY_ENV }}
+        ref: ${{ env.DEPLOY_REF }}
 
     - uses: azure/login@v1
       with:
@@ -69,7 +72,7 @@ runs:
 
     - name: Terraform init, Terraform Plan and Apply
       shell: bash
-      run: make ${{ env.DEPLOY_ENV }} ci deploy
+      run: make ${{ inputs.environment }} ci deploy
       env:
         ARM_ACCESS_KEY:           ${{ inputs.arm-access-key }}
         TF_VAR_azure_credentials: ${{ inputs.azure-credentials }}
@@ -77,7 +80,7 @@ runs:
         CONFIRM_PRODUCTION:       yes
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
-      if: env.DEPLOY_ENV == 'review' || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
+      if: startsWith(env.DEPLOY_ENV,'review') || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
       id: get-secrets
       with:
         keyvault: ${{ env.key_vault_name }}
@@ -85,7 +88,7 @@ runs:
         key: CF_USER,CF_PASSWORD
 
     - name: Setup cf cli
-      if: env.DEPLOY_ENV == 'review' || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
+      if: startsWith(env.DEPLOY_ENV,'review') || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
         CF_USERNAME:   ${{ steps.get-secrets.outputs.CF_USER }}
@@ -99,16 +102,16 @@ runs:
 
     - name: Generate example data
       shell: bash
-      if: env.DEPLOY_ENV == 'review'
-      run: cf run-task "register-pr-${{ inputs.pr }}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
+      if: startsWith(env.DEPLOY_ENV,'review')
+      run: cf run-task "register-pr-${{ inputs.pr-number }}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
 
-    - name: Trigger ${{ env.DEPLOY_ENV }} Smoke Tests
+    - name: Trigger ${{ inputs.environment }} Smoke Tests
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Tests
         ref: ${{ github.event.pull_request.head.ref }} # this will be an empty string when triggered by something other than a PR, benc-uk/workflow-dispatch will default to github.context.ref
         token:    ${{ inputs.actions-api-access-token }}
-        inputs:   '{"environment": "${{ env.DEPLOY_ENV }}", "pr": "${{ inputs.pr }}"}'
+        inputs:   '{"environment": "${{ inputs.environment }}", "pr": "${{ inputs.pr-number }}"}'
 
     - name: Wait for smoke tests
       id: wait_for_smoke_tests
@@ -116,7 +119,7 @@ runs:
       with:
         token: ${{ github.token }}
         ref:   ${{ github.ref }}
-        checkName: smoke-tests-${{ env.DEPLOY_ENV }}
+        checkName: smoke-tests-${{ inputs.environment }}
         timeoutSeconds:  300
         intervalSeconds: 15
 
@@ -125,16 +128,17 @@ runs:
       if: steps.wait_for_smoke_tests.outputs.conclusion == 'failure'
       run: exit 1
 
-    - name: Update ${{ inputs.environment }} status
+    - name: Update ${{ env.DEPLOY_ENV }} status
       if: always()
       uses: bobheadxi/deployments@v1
       with:
         step: finish
         token: ${{ github.token }}
-        env: ${{ inputs.environment }}
+        env: ${{ env.DEPLOY_ENV }}
         status: ${{ job.status }}
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
         env_url: ${{ env.DEPLOY_URL }}
+        ref: ${{ env.DEPLOY_REF }}
 
     - name: Check for Failure
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
