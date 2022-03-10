@@ -370,6 +370,7 @@ en:
       record_source: Record source
       selected_title: Selected filters
       state: Status
+      start_year: Start year
       subject: Subject
       text_search: Text search
       title: Filters
@@ -618,6 +619,7 @@ en:
           status: Status
           study_mode: Full time or part time
           subject: Subject
+          start_year: Start year
           type_of_training: Type of training
       edit:
         delete: delete this record,

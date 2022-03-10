@@ -120,13 +120,13 @@ private
       :subject,
       :text_search,
       :sort_by,
+      :start_year,
       {
         level: [],
         training_route: [],
         state: [],
         record_source: [],
         record_completion: [],
-        trainee_start_year: [],
       },
     ]
   end

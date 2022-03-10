@@ -47,27 +47,15 @@
     </fieldset>
   </div>
 
-  <% if FeatureService.enabled?("filters.show_start_year_filter") %>
+  <% if filter_start_year_options.count > 2 %>
     <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-          <%= t("views.trainees.index.filters.trainee_start_year") %>
-        </legend>
-        <div class="govuk-checkboxes govuk-checkboxes--small">
-          <% AcademicCycle.trainees_filter.map do |academic_cycle| %>
-            <div class="govuk-checkboxes__item">
-              <%= check_box_tag "trainee_start_year[]",
-                                academic_cycle.start_year,
-                                checked?(filters, :trainee_start_year, academic_cycle.start_year.to_s),
-                                id: "trainee_start_year-#{academic_cycle.start_year}",
-                                class: "govuk-checkboxes__input" %>
-              <%= label_tag "trainee_start_year-#{academic_cycle.start_year}",
-                            academic_cycle.label,
-                            class: "govuk-label govuk-checkboxes__label" %>
-            </div>
-          <% end %>
-        </div>
-      </fieldset>
+      <%= label_tag "start_year", t("views.trainees.index.filters.start_year"), class: "govuk-label govuk-label--s" %>
+      <%= select_tag :start_year, options_from_collection_for_select(
+        filter_start_year_options,
+        :value,
+        :text,
+        ->(object) { object.text == filters[:start_year] if filters },
+        ), class: "govuk-select filter-select__start-year" %>
     </div>
   <% end %>
 

@@ -93,4 +93,22 @@ describe CourseDetailsHelper do
       it { is_expected.to eq("Biology with Art and design and Mathematics") }
     end
   end
+
+  describe "#start_year_options" do
+    before do
+      create(:academic_cycle, cycle_year: 2019)
+      cycle_with_trainee = create(:academic_cycle, cycle_year: 2020)
+      create(:academic_cycle, cycle_year: 2021)
+      create(:trainee, commencement_date: Date.new(2021, 1, 2))
+      allow(self).to receive(:academic_years_with_an_in_scope_trainee).and_return([cycle_with_trainee])
+    end
+
+    it "returns formatted start years where for which there is a trainee" do
+      Timecop.freeze(Time.zone.local(2021, 1, 3)) do
+        expect(filter_start_year_options.size).to eq(2)
+        expect(filter_start_year_options.first.value).to eq("All years")
+        expect(filter_start_year_options.last.value).to eq("2020 to 2021 (current year)")
+      end
+    end
+  end
 end

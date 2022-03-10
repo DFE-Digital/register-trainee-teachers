@@ -68,9 +68,10 @@ module ApplicationRecordCard
     end
 
     def start_year
-      return if !record.commencement_date.present?
-      year_text = record.commencement_date.strftime("%Y")
+      academic_cycle = AcademicCycle.for_date(record.commencement_date)
+      return unless academic_cycle
 
+      year_text = "#{academic_cycle.start_year} to #{academic_cycle.start_year + 1}"
       tag.p("Start year: #{year_text}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__start_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")
     end
 

@@ -79,6 +79,7 @@ private
     [
       :subject,
       :text_search,
+      :start_year,
       :sort_by, {
         level: [],
         training_route: [],

@@ -12,6 +12,7 @@ module ApplicationRecordCard
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
       render_inline(described_class.new(record: trainee, show_provider: show_provider))
+      create(:academic_cycle, cycle_year: 2019)
     end
 
     it "does not render provider name" do
@@ -106,7 +107,7 @@ module ApplicationRecordCard
           training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           trainee_id: "132456",
           trn: "789456",
-          commencement_date: Time.zone.now,
+          commencement_date: DateTime.new(2020, 1, 2),
           provider: provider,
           state: state,
         )
@@ -136,12 +137,8 @@ module ApplicationRecordCard
         expect(rendered_component).to have_text("TRN: 789456")
       end
 
-      it 'renders start_year' do
-        expect(rendered_component).to have_text("Start year: #{trainee.commencement_date.strftime('%Y')}")
-      end
-
-      it "renders updated at" do
-        expect(rendered_component).to have_text("Updated: #{Time.zone.now.strftime('%-d %B %Y')}")
+      it "renders start_year" do
+        expect(rendered_component).to have_text("Start year: 2019 to 2020")
       end
 
       it "renders trainee name" do
