@@ -280,6 +280,7 @@ FactoryBot.define do
     trait :with_early_years_course_details do
       course_subject_one { CourseSubjects::EARLY_YEARS_TEACHING }
       course_age_range { AgeRange::ZERO_TO_FIVE }
+      with_primary_education
       with_study_mode_and_course_dates
     end
 

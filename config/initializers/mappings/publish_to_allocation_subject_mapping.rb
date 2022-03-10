@@ -68,7 +68,6 @@ PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING = {
   "History" => [CourseSubjects::HISTORY],
   "Music" => [CourseSubjects::MUSIC_EDUCATION_AND_TEACHING],
   "Philosophy" => [CourseSubjects::PHILOSOPHY],
-  "Physics" => [CourseSubjects::PHYSICS],
   "Psychology" => [CourseSubjects::PSYCHOLOGY],
   "Religious education" => [CourseSubjects::RELIGIOUS_STUDIES],
   "Science" => [CourseSubjects::GENERAL_SCIENCES],
@@ -98,6 +97,7 @@ PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING = {
   "Drama" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::DRAMA],
   "Mathematics" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::MATHEMATICS],
   "Physical education" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::PHYSICAL_EDUCATION],
+  "Physics" => ALLOCATION_SUBJECT_SPECIALISM_MAPPING[AllocationSubjects::PHYSICS],
 }.freeze
 
 PUBLISH_SUBJECT_SPECIALISM_MAPPING = PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING.merge(PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING).freeze
