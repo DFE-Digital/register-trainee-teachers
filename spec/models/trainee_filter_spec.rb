@@ -5,7 +5,7 @@ require "rails_helper"
 describe TraineeFilter do
   let(:permitted_params) do
     ActionController::Parameters.new(params)
-    .permit(:provider, :subject, :text_search, training_route: [], state: [], record_source: [], study_mode: [])
+    .permit(:provider, :start_year, :subject, :text_search, training_route: [], state: [], record_source: [], study_mode: [])
   end
 
   subject { TraineeFilter.new(params: permitted_params) }
@@ -49,6 +49,19 @@ describe TraineeFilter do
 
       it "returns the subject as stored correctly cased in the DB" do
         expect(subject.filters).to eq({ "subject" => subject_filter })
+      end
+    end
+
+    context "with start year" do
+      let(:start_year_filter) { "2022" }
+      let(:params) { { start_year: start_year_filter } }
+
+      before do
+        create(:academic_cycle, cycle_year: 2022)
+      end
+
+      it "applies the start year as stored in the DB" do
+        expect(subject.filters).to eq({ "start_year" => start_year_filter })
       end
     end
 

@@ -32,6 +32,7 @@ private
       **record_source,
       **provider,
       **record_completions,
+      **start_year,
       **trainee_start_years,
       **study_modes,
     ).with_indifferent_access
@@ -47,6 +48,13 @@ private
     COURSE_LEVELS.keys.map(&:to_s).each_with_object([]) do |option, arr|
       arr << option if params[:level]&.include?(option)
     end
+  end
+
+  def start_year
+    academic_cycle ||= AcademicCycle.for_year(params[:start_year])
+    return {} unless academic_cycle
+
+    { "start_year" => params[:start_year] }
   end
 
   def training_route

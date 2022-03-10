@@ -6,10 +6,15 @@ module Trainees
   describe Filter do
     subject { described_class.call(trainees: trainees, filters: filters) }
 
-    let!(:draft_trainee) { create(:trainee, :incomplete_draft, first_names: "Draft") }
-    let!(:apply_draft_trainee) { create(:trainee, :with_apply_application, first_names: "Apply") }
+    let(:draft_trainee) { create(:trainee, :incomplete_draft, first_names: "Draft") }
+    let(:apply_draft_trainee) { create(:trainee, :with_apply_application, first_names: "Apply") }
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
+
+    before do
+      create(:academic_cycle, cycle_year: 2019)
+      create(:academic_cycle, cycle_year: 2020)
+    end
 
     it { is_expected.to match_array(trainees) }
 
@@ -118,15 +123,38 @@ module Trainees
       end
     end
 
-    context "with trainee_start_year filter" do
-      let!(:future_trainee) { create(:trainee, :with_study_mode_and_future_course_dates) }
-      let(:year) { future_trainee.itt_start_date.year }
-      let!(:academic_cycle) { create(:academic_cycle, start_date: "01/09/#{year}", end_date: "31/8/#{year + 1}") }
+    context "with start_year filter" do
+      let(:trainee) { create(:trainee, commencement_date: commencement_date) }
 
-      context "complete" do
-        let(:filters) { { trainee_start_year: [future_trainee.itt_start_date.year] } }
+      let(:filters) { { start_year: 2020 } }
 
-        it { is_expected.to match_array([future_trainee]) }
+      context "trainee starting in that year" do
+        let(:commencement_date) { DateTime.new(2021, 1, 1) }
+
+        it "returns the trainee" do
+          expect(subject).to match_array([trainee])
+        end
+      end
+
+      context "trainee not starting in that year" do
+        let(:commencement_date) { DateTime.new(2020, 1, 1) }
+
+        it "does not return the trainee" do
+          expect(subject).to be_empty
+        end
+      end
+
+      context "start year is current" do
+        let(:academic_cycle) { create(:academic_cycle, :current) }
+        let(:filters) { { start_year: academic_cycle.start_year } }
+
+        context "trainee commencement date and itt_start_date are blank" do
+          let(:trainee) { create(:trainee, :draft, commencement_date: nil, itt_start_date: nil) }
+
+          it "returns the trainee" do
+            expect(subject).to match_array([trainee])
+          end
+        end
       end
     end
 

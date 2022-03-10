@@ -80,6 +80,14 @@ module Trainees
       trainees.with_subject_or_allocation_subject(subject)
     end
 
+    def start_year(trainees, start_year)
+      return trainees if start_year.blank?
+
+      academic_cycle_scope = AcademicCycle.for_year(start_year).trainees_starting
+
+      trainees.merge(academic_cycle_scope)
+    end
+
     def trainees_on_science_courses(trainees)
       trainees.with_subject_or_allocation_subject("physics").or(trainees.with_subject_or_allocation_subject("chemistry").or(trainees.with_subject_or_allocation_subject("biology")))
     end
@@ -102,22 +110,6 @@ module Trainees
       trainees.where(submission_ready: record_completion.include?("complete"))
     end
 
-    def trainee_start_year(trainees, start_years)
-      return trainees if start_years.blank?
-
-      scoped = nil
-      start_years.each do |start_year|
-        academic_cycle = AcademicCycle.for_year(start_year)
-        if scoped
-          scoped = scoped.or(academic_cycle.trainees_starting)
-        else
-          scoped = academic_cycle.trainees_starting
-        end
-      end
-
-      trainees.merge(scoped)
-    end
-
     def study_mode(trainees, study_mode)
       return trainees if study_mode.blank? || (study_mode.count == 2)
 
@@ -132,11 +124,11 @@ module Trainees
       filtered_trainees = training_route(filtered_trainees, filters[:training_route])
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
+      filtered_trainees = start_year(filtered_trainees, filters[:start_year])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
       filtered_trainees = level(filtered_trainees, filters[:level])
       filtered_trainees = provider(filtered_trainees, filters[:provider])
       filtered_trainees = submission_ready(filtered_trainees, filters[:record_completion])
-      filtered_trainees = trainee_start_year(filtered_trainees, filters[:trainee_start_year])
       filtered_trainees = study_mode(filtered_trainees, filters[:study_mode])
 
       record_source(filtered_trainees, filters[:record_source])
