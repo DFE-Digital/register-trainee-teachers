@@ -61,4 +61,24 @@ describe AcademicCycle, type: :model do
       expect(build(:academic_cycle, start_date: "01/9/2021", end_date: "31/8/2022").start_year).to be(2021)
     end
   end
+
+  describe "#current?" do
+    around do |example|
+      Timecop.freeze(2021, 3, 1) do
+        example.run
+      end
+    end
+
+    subject { academic_year.current? }
+
+    context "Time.now is in the academic year" do
+      let(:academic_year) { create(:academic_cycle, cycle_year: 2020) }
+      it { is_expected.to be(true) }
+    end
+
+    context "Time.now is not in the academic year" do
+      let(:academic_year) { create(:academic_cycle, cycle_year: 2021) }
+      it { is_expected.to be(false) }
+    end
+  end
 end

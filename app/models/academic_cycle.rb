@@ -34,6 +34,10 @@ class AcademicCycle < ApplicationRecord
     "#{start_year} to #{start_year + 1}"
   end
 
+  def current?
+    Time.zone.now >= start_date && Time.zone.now < end_date
+  end
+
 private
 
   def start_date_before_end_date
