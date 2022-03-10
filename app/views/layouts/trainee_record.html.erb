@@ -8,7 +8,7 @@
     ) %>
   <% end %>
 
-  <%= render RecordHeader::View.new(trainee: @trainee, hide_progress_tag: @current_user.lead_school?) %>
+  <%= render RecordHeader::View.new(trainee: @trainee, hide_progress_tag: policy(@trainee).hide_progress_tag?) %>
 
   <% if @missing_data_view %>
     <%= render NoticeBanner::View.new do |component| %>

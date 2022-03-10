@@ -8,8 +8,7 @@
       </div>
       <%= render ApplicationRecordCard::View.with_collection(
         search_primary_result_set,
-        hide_progress_tag: @current_user.lead_school?,
-        show_provider: @current_user.system_admin? || @current_user.lead_school?
+        current_user: @current_user,
         ) %>
     </div>
   <% end %>
@@ -25,8 +24,7 @@
       </div>
       <%= render ApplicationRecordCard::View.with_collection(
         search_secondary_result_set,
-        hide_progress_tag: @current_user.lead_school?,
-        show_provider: @current_user.system_admin? || @current_user.lead_school?
+        current_user: @current_user,
         ) %>
     </div>
   <% end %>

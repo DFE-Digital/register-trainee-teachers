@@ -8,13 +8,12 @@ module ApplicationRecordCard
 
     with_collection_parameter :record
 
-    attr_reader :record, :heading_level, :show_provider, :hide_progress_tag
+    attr_reader :record, :heading_level, :current_user
 
-    def initialize(heading_level = 3, record:, show_provider: false, hide_progress_tag: false)
+    def initialize(heading_level = 3, record:, current_user:)
       @record = record
       @heading_level = heading_level
-      @show_provider = show_provider
-      @hide_progress_tag = hide_progress_tag
+      @current_user = current_user
     end
 
     def trainee_name
@@ -73,6 +72,14 @@ module ApplicationRecordCard
 
       year_text = "#{academic_cycle.start_year} to #{academic_cycle.start_year + 1}"
       tag.p("Start year: #{year_text}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__start_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")
+    end
+
+    def show_provider
+      current_user.system_admin? || current_user.lead_school?
+    end
+
+    def hide_progress_tag
+      TraineePolicy.new(current_user, record).hide_progress_tag?
     end
 
   private

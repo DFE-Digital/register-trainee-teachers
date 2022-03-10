@@ -14,6 +14,7 @@ describe TraineePolicy do
 
   let(:provider_trainee) { create(:trainee, provider: provider) }
   let(:lead_school_trainee) { create(:trainee, lead_school: lead_school) }
+  let(:hesa_trainee) { create(:trainee, provider: provider, hesa_id: "XXX123") }
 
   subject { described_class }
 
@@ -46,6 +47,7 @@ describe TraineePolicy do
 
   permissions :update?, :edit?, :destroy?, :confirm? do
     it { is_expected.to permit(provider_user, provider_trainee) }
+    it { is_expected.not_to permit(provider_user, hesa_trainee) }
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
@@ -237,6 +239,12 @@ describe TraineePolicy do
     context "when the user is a lead school user" do
       it { is_expected.not_to permit(lead_school_user) }
     end
+  end
+
+  permissions :hide_progress_tag? do
+    it { is_expected.not_to permit(provider_user, provider_trainee) }
+    it { is_expected.to permit(provider_user, hesa_trainee) }
+    it { is_expected.to permit(lead_school_user, lead_school_trainee) }
   end
 
   describe TraineePolicy::Scope do
