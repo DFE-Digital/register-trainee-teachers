@@ -29,7 +29,7 @@ class AcademicCycle < ApplicationRecord
       result_scope = result_scope.or(Trainee.where(commencement_date: nil, itt_start_date: nil))
     end
 
-    result_scope
+    result_scope.kept
   end
 
   def start_year
