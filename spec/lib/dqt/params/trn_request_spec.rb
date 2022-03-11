@@ -51,7 +51,7 @@ module Dqt
         it "returns a hash including degree attributes" do
           expect(subject["qualification"]).to eq({
             providerUkprn: nil,
-            countryCode: described_class::UNITED_KINGDOM,
+            countryCode: "XK",
             subject: degree.subject,
             class: described_class::DEGREE_CLASSES[degree.grade],
             date: Date.new(degree.graduation_year).iso8601,
@@ -77,12 +77,12 @@ module Dqt
         end
 
         context "when trainee has an international degree" do
-          let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details) }
+          let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country: "Albania") }
           let(:trainee) { create(:trainee, :completed, degrees: [non_uk_degree]) }
 
-          it "maps the degree country to countryCode" do
+          it "maps the degree country to HESA countryCode" do
             expect(subject["qualification"]).to include({
-              countryCode: degree.country,
+              countryCode: "AL",
             })
           end
         end
