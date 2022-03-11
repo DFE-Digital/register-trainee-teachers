@@ -346,6 +346,10 @@ class Trainee < ApplicationRecord
     Trainee.where(first_names: first_names, last_name: last_name, date_of_birth: date_of_birth, email: email).count > 1
   end
 
+  def hesa_record?
+    hesa_id.present?
+  end
+
 private
 
   def value_digest

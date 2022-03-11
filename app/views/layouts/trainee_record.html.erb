@@ -10,6 +10,17 @@
 
   <%= render RecordHeader::View.new(trainee: @trainee, hide_progress_tag: policy(@trainee).hide_progress_tag?) %>
 
+  <% if @trainee.hesa_record? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <%= render GovukComponent::InsetTextComponent.new(classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0") do %>
+          <h3 class="govuk-heading-s"><%= t(".hesa_uneditable_heading") %></h3>
+          <%= t(".body_html", award_level: @trainee.early_years_route? ? t(".eyts_award_level") : t(".qts_award_level")).html_safe %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if @missing_data_view %>
     <%= render NoticeBanner::View.new do |component| %>
       <% component.header { @missing_data_view.header } %>

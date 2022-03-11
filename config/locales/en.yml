@@ -1472,3 +1472,10 @@ en:
     schools:
       errors:
         bad_request: The query param needs to be at least %{length} characters
+  layouts:
+    trainee_record:
+      hesa_uneditable_heading: This record was imported from HESA and cannot be edited
+      body_html: <p class="govuk-body">Updates from HESA are imported regularly.</p>
+            <p class="govuk-body">You will be able to recommend the trainee for %{award_level} at the end of the academic year.</p>
+      qts_award_level: QTS
+      eyts_award_level: EYTS
