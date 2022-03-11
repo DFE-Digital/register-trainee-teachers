@@ -316,7 +316,7 @@ class Trainee < ApplicationRecord
   end
 
   def awaiting_action?
-    !%w[recommended_for_award withdrawn awarded].include?(state)
+    !%w[recommended_for_award withdrawn awarded].include?(state) && hesa_id.blank?
   end
 
   def short_name

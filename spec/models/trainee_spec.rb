@@ -627,4 +627,26 @@ describe Trainee do
       expect(trainee.duplicate?).to be(true)
     end
   end
+
+  describe "#awaiting_action?" do
+    let(:trainee) { create(:trainee, awaiting_states.sample) }
+    let(:awaiting_states) { %i[submitted_for_trn trn_received deferred] }
+    let(:non_awaiting_states) { %i[recommended_for_award withdrawn awarded] }
+
+    subject { trainee.awaiting_action? }
+
+    it { is_expected.to be_truthy }
+
+    context "with a trainee in a non awaiting_action state" do
+      let(:trainee) { create(:trainee, non_awaiting_states.sample) }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "with a trainee is a hesa record" do
+      let(:trainee) { create(:trainee, awaiting_states.sample, hesa_id: "0310261553101") }
+
+      it { is_expected.to be_falsey }
+    end
+  end
 end
