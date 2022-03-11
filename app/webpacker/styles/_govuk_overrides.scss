@@ -6,7 +6,7 @@
   white-space: nowrap;
 }
 
-.govuk-select .filter-select__start-year {
+.govuk-select {
   @include govuk-media-query($from: desktop) {
     letter-spacing: -0.05px;
   }

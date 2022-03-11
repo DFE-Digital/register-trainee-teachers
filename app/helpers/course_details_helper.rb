@@ -11,8 +11,8 @@ module CourseDetailsHelper
     to_options(all_subjects, first_value: "All subjects")
   end
 
-  def filter_start_year_options
-    to_options(all_start_years, first_value: "All years")
+  def filter_start_year_options(current_user)
+    to_options(all_start_years(current_user), first_value: "All years")
   end
 
   def main_age_ranges_options(level: :primary)
@@ -75,21 +75,11 @@ private
     @all_subjects ||= (SubjectSpecialism.pluck(:name) + AllocationSubject.pluck(:name) + [Trainees::Filter::ALL_SCIENCES_FILTER]).uniq(&:downcase).sort_by(&:downcase)
   end
 
-  def all_start_years
-    @all_start_years ||= formatted_start_years
+  def all_start_years(current_user)
+    @all_start_years ||= StartYearFilterOptions.render(user: current_user, draft: draft_records_view?)
   end
 
-  def formatted_start_years
-    academic_years_with_an_in_scope_trainee.reverse.map(&:start_year).each_with_object([]) do |start_year, array|
-      if current_academic_cycle_year?(start_year)
-        array << "#{start_year} to #{start_year + 1} (current year)"
-      else
-        array << "#{start_year} to #{start_year + 1}"
-      end
-    end
-  end
-
-  def current_academic_cycle_year?(year)
-    AcademicCycle.for_date(Time.zone.now).start_year == year
+  def draft_records_view?
+    request.path.match?(/\/drafts/)
   end
 end

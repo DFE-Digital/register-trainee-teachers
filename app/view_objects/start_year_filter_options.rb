@@ -35,7 +35,7 @@ private
   def academic_cycles_with_an_in_scope_trainee
     @academic_cycles_with_an_in_scope_trainee ||= AcademicCycle.order(start_date: :desc).select do |cycle|
       scope = TraineePolicy::Scope.new(user, cycle.trainees_starting).resolve
-      scope = scope.not_draft unless draft
+      scope = draft ? scope.draft : scope.not_draft
       scope.any?
     end
   end

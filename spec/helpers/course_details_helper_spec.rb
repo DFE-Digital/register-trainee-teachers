@@ -95,20 +95,16 @@ describe CourseDetailsHelper do
   end
 
   describe "#start_year_options" do
+    let(:current_user) { double }
+
     before do
-      create(:academic_cycle, cycle_year: 2019)
-      cycle_with_trainee = create(:academic_cycle, cycle_year: 2020)
-      create(:academic_cycle, cycle_year: 2021)
-      create(:trainee, commencement_date: Date.new(2021, 1, 2))
-      allow(self).to receive(:academic_years_with_an_in_scope_trainee).and_return([cycle_with_trainee])
+      allow(self).to receive(:request).and_return(double(path: "/trainees"))
     end
 
-    it "returns formatted start years where for which there is a trainee" do
-      Timecop.freeze(Time.zone.local(2021, 1, 3)) do
-        expect(filter_start_year_options.size).to eq(2)
-        expect(filter_start_year_options.first.value).to eq("All years")
-        expect(filter_start_year_options.last.value).to eq("2020 to 2021 (current year)")
-      end
+    it "returns formatted start years" do
+      expect(StartYearFilterOptions).to receive(:render).with(user: current_user, draft: false)
+        .and_return(["2020 to 2021"])
+      expect(filter_start_year_options(current_user).map(&:value)).to eq(["All years", "2020 to 2021"])
     end
   end
 end
