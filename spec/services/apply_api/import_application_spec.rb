@@ -23,16 +23,34 @@ module ApplyApi
         end
 
         context "and the apply application_data also exists in register" do
+          let(:existing_application) { ApiStubs::ApplyApi.application(degree_attributes: { subject: "different subject" }) }
+
           before do
-            create(:apply_application, :imported, apply_id: application_data["id"])
+            create(:apply_application, state, apply_id: application_data["id"], application: existing_application)
           end
 
-          it "does not create a duplicate" do
-            expect { subject }.not_to(change { ApplyApplication.count })
+          context "and is importable" do
+            let(:state) { :importable }
+
+            it "does not create a duplicate" do
+              expect { subject }.not_to(change { ApplyApplication.count })
+            end
+
+            it "updates old values" do
+              expect { subject }.to(change { ApplyApplication.last.application })
+            end
           end
 
-          it "does not update old values" do
-            expect { subject }.not_to(change { ApplyApplication.last.state })
+          context "and has already been imported" do
+            let(:state) { :imported }
+
+            it "does not create a duplicate" do
+              expect { subject }.not_to(change { ApplyApplication.count })
+            end
+
+            it "does not update old values" do
+              expect { subject }.not_to(change { ApplyApplication.last.application })
+            end
           end
         end
 

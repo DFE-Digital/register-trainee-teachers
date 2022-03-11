@@ -11,7 +11,7 @@ module ApplyApi
     end
 
     def call
-      return unless application.new_record?
+      return if application.persisted? && !application.importable?
 
       ApplyApplication.transaction do
         application.update!(
