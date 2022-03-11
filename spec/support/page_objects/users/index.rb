@@ -8,6 +8,9 @@ module PageObjects
 
     class Index < PageObjects::Base
       set_url "/system-admin/users"
+
+      element :add_a_user, "a", text: "Add a user"
+
       sections :users, UserRow, ".user-row"
     end
   end
