@@ -221,7 +221,7 @@ namespace :example_data do
               attrs.merge!(
                 course_subject_one: CourseSubjects::EARLY_YEARS_TEACHING,
                 course_age_range: AgeRange::ZERO_TO_FIVE,
-                course_education_phase: COURSE_EDUCATION_PHASE_ENUMS[:primary],
+                course_education_phase: nil,
               )
             end
 
