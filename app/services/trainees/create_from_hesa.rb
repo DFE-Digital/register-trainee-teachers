@@ -58,7 +58,7 @@ module Trainees
         first_names: hesa_trainee[:first_names],
         last_name: hesa_trainee[:last_name],
         date_of_birth: hesa_trainee[:date_of_birth],
-        gender: hesa_trainee[:gender].to_i,
+        gender: gender,
         nationalities: nationalities,
         email: hesa_trainee[:email],
       }
@@ -148,6 +148,10 @@ module Trainees
 
     def training_initiative_attributes
       { training_initiative: training_initiative || ROUTE_INITIATIVES_ENUMS[:no_initiative] }
+    end
+
+    def gender
+      Hesa::CodeSets::Genders::MAPPING[hesa_trainee[:gender]]
     end
 
     def nationalities
