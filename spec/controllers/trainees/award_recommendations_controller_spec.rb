@@ -13,30 +13,42 @@ describe Trainees::AwardRecommendationsController do
     allow(OutcomeDateForm).to receive(:new).with(trainee).and_return(double(save!: true))
   end
 
-  describe "#create" do
-    it "updates the placement assignment in DTTP to mark it ready for QTS" do
-      expect {
-        post :create, params: { trainee_id: trainee }
-      }.to have_enqueued_job(Dttp::RecommendForAwardJob).with(trainee)
-    end
+  context "when the DTTP feature flag is enabled", feature_persist_to_dttp: true do
+    describe "#create" do
+      it "updates the placement assignment in DTTP to mark it ready for QTS" do
+        expect {
+          post :create, params: { trainee_id: trainee }
+        }.to have_enqueued_job(Dttp::RecommendForAwardJob).with(trainee)
+      end
 
-    it "queues a background job to poll for the trainee's QTS" do
-      expect(Dttp::RetrieveAwardJob).to receive(:perform_with_default_delay).with(trainee)
-      post :create, params: { trainee_id: trainee }
-    end
-
-    it "redirects user to the recommended page" do
-      post :create, params: { trainee_id: trainee }
-      expect(response).to redirect_to(recommended_trainee_outcome_details_path(trainee))
-    end
-
-    context "trainee state" do
-      before do
+      it "queues a background job to poll for the trainee's QTS" do
+        expect(Dttp::RetrieveAwardJob).to receive(:perform_with_default_delay).with(trainee)
         post :create, params: { trainee_id: trainee }
       end
 
-      it "transitions the trainee state to recommended_for_award" do
-        expect(trainee.reload).to be_recommended_for_award
+      it "redirects user to the recommended page" do
+        post :create, params: { trainee_id: trainee }
+        expect(response).to redirect_to(recommended_trainee_outcome_details_path(trainee))
+      end
+
+      context "trainee state" do
+        before do
+          post :create, params: { trainee_id: trainee }
+        end
+
+        it "transitions the trainee state to recommended_for_award" do
+          expect(trainee.reload).to be_recommended_for_award
+        end
+      end
+    end
+  end
+
+  context "when the DQT feature flag is enabled", feature_integrate_with_dqt: true do
+    describe "#create" do
+      it "sends the ITT outcome to DQT" do
+        expect {
+          post :create, params: { trainee_id: trainee }
+        }.to have_enqueued_job(Dqt::RecommendForAwardJob).with(trainee)
       end
     end
   end

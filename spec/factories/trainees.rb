@@ -343,6 +343,7 @@ FactoryBot.define do
 
     trait :recommended_for_award do
       trn_received
+      outcome_date { Time.zone.now }
       recommended_for_award_at { Time.zone.now }
       state { "recommended_for_award" }
     end
