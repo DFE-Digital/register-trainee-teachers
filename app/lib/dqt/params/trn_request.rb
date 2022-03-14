@@ -4,6 +4,7 @@ module Dqt
   module Params
     class TrnRequest
       UNITED_KINGDOM = "United Kingdom"
+      UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED = "United Kingdom, not otherwise specified"
 
       GENDER_CODES = {
         male: "Male",
@@ -101,7 +102,7 @@ module Dqt
       def qualification_params
         {
           providerUkprn: nil,
-          countryCode: degree.uk? ? UNITED_KINGDOM : degree.country,
+          countryCode: country_codes[degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country],
           subject: degree.subject,
           class: DEGREE_CLASSES[degree.grade],
           date: Date.parse("01-01-#{degree.graduation_year}").iso8601,
@@ -110,6 +111,10 @@ module Dqt
 
       def degree
         trainee.degrees.first
+      end
+
+      def country_codes
+        @country_codes ||= Hesa::CodeSets::Countries::MAPPING.invert
       end
     end
   end
