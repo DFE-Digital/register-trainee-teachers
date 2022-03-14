@@ -23,7 +23,13 @@ class AcademicCycle < ApplicationRecord
       COALESCE(commencement_date, itt_start_date) BETWEEN :start_date AND :end_date
     SQL
 
-    Trainee.where(query, start_date: start_date, end_date: end_date)
+    result_scope = Trainee.where(query, start_date: start_date, end_date: end_date)
+
+    if current?
+      result_scope = result_scope.or(Trainee.where(commencement_date: nil, itt_start_date: nil))
+    end
+
+    result_scope.kept
   end
 
   def start_year
@@ -32,6 +38,10 @@ class AcademicCycle < ApplicationRecord
 
   def label
     "#{start_year} to #{start_year + 1}"
+  end
+
+  def current?
+    Time.zone.now >= start_date && Time.zone.now < end_date
   end
 
 private

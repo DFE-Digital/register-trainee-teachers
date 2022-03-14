@@ -67,6 +67,14 @@ module ApplicationRecordCard
       tag.p("TRN: #{record.trn}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__trn govuk-!-margin-bottom-0 govuk-!-margin-top-0")
     end
 
+    def start_year
+      academic_cycle = AcademicCycle.for_date(record.commencement_date)
+      return unless academic_cycle
+
+      year_text = "#{academic_cycle.start_year} to #{academic_cycle.start_year + 1}"
+      tag.p("Start year: #{year_text}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__start_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")
+    end
+
   private
 
     def has_no_name?

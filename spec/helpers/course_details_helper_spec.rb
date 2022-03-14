@@ -93,4 +93,18 @@ describe CourseDetailsHelper do
       it { is_expected.to eq("Biology with Art and design and Mathematics") }
     end
   end
+
+  describe "#start_year_options" do
+    let(:current_user) { double }
+
+    before do
+      allow(self).to receive(:request).and_return(double(path: "/trainees"))
+    end
+
+    it "returns formatted start years" do
+      expect(StartYearFilterOptions).to receive(:render).with(user: current_user, draft: false)
+        .and_return(["2020 to 2021"])
+      expect(filter_start_year_options(current_user).map(&:value)).to eq(["All years", "2020 to 2021"])
+    end
+  end
 end
