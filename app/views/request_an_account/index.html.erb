@@ -12,13 +12,13 @@
       <p class="govuk-body  govuk-!-margin-bottom-4">
         Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.
       </p>
-      <p class="govuk-body-m"><%= t("pages.request_an_account.send_email") %>
+      <p class="govuk-body"><%= t("pages.request_an_account.send_email") %>
         <%= govuk_mail_to(Settings.support_email,
                           Settings.support_email,
                           subject: t("pages.request_an_account.email_subject")) %>
       </p>
 
-      <p class="govuk-body-m"><%= t("pages.request_an_account.tell_us") %>:</p>
+      <p class="govuk-body"><%= t("pages.request_an_account.tell_us") %>:</p>
 
     <ul class='govuk-list govuk-list--bullet'>
       <li><%= t("pages.request_an_account.bullets.1") %></li>
