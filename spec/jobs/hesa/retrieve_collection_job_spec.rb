@@ -20,8 +20,8 @@ module Hesa
     context "feature flag is on" do
       let(:trainee) { build(:trainee) }
       let(:current_reference) { "C123" }
-      let(:next_date) { DateTime.parse("10/01/2022").utc.iso8601 }
-      let(:expected_url) { "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData/#{current_reference}/#{next_date}" }
+      let(:from_date) { "2022-04-01" }
+      let(:expected_url) { "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData/#{current_reference}/#{from_date}" }
       let(:hesa_api_stub) { ApiStubs::HesaApi.new }
       let(:hesa_xml) { ApiStubs::HesaApi.new.raw_xml }
       let(:ukprn) { hesa_api_stub.student_attributes[:ukprn] }
@@ -29,8 +29,8 @@ module Hesa
 
       before do
         enable_features :sync_from_hesa
-        allow(Settings.hesa).to receive(:current_collection_reference).and_return("C123")
-        allow(HesaCollectionRequest).to receive(:next_from_date).and_return(next_date)
+        allow(Settings.hesa).to receive(:current_collection_start_date).and_return(from_date)
+        allow(Settings.hesa).to receive(:current_collection_reference).and_return(current_reference)
         allow(Hesa::Client).to receive(:get).and_return(hesa_api_stub.raw_xml)
         allow(Trainees::CreateFromHesa).to receive(:call).and_return([trainee, ukprn])
       end
@@ -65,10 +65,6 @@ module Hesa
             expected_time = Time.zone.now
             expect(last_hesa_collection_request.requested_at.tv_sec).to eq(expected_time.tv_sec)
           end
-        end
-
-        it "stores updates_since" do
-          expect(last_hesa_collection_request.updates_since).to eq(next_date)
         end
       end
 

@@ -21,7 +21,7 @@ describe HesaCollectionRequest do
     end
 
     context "where there is a previous request for the current collection" do
-      let(:requested_at) { 2.days.ago }
+      let(:requested_at) { 2.hours.ago }
 
       before do
         create(:hesa_collection_request,
@@ -30,7 +30,7 @@ describe HesaCollectionRequest do
                requested_at: requested_at)
       end
 
-      it "returns the last request run datetime" do
+      it "returns the last request run date" do
         expect(subject).to eq(requested_at.to_date)
       end
     end

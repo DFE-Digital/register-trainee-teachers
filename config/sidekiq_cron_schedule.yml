@@ -39,6 +39,6 @@ delete_empty_trainees:
   class: "DeleteEmptyTraineesJob"
   queue: default
 import_collection_from_hesa:
-  cron: "0 0 * * *"
+  cron: "0 */2 * * *"
   class: "Hesa::RetrieveCollectionJob"
   queue: default
