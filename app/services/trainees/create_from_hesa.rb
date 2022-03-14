@@ -41,6 +41,7 @@ module Trainees
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
         trn: trn,
+        state: trainee_status,
       }.merge(personal_details_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
@@ -85,53 +86,15 @@ module Trainees
     end
 
     def deferral_attributes
-      return {} unless trainee_deferred?
+      return {} unless trainee_status == :deferred
 
-      {
-        defer_date: hesa_trainee[:end_date],
-        state: "deferred",
-      }
-    end
-
-    def trainee_deferred?
-      completion_of_course_result_unknown? &&
-      [
-        Hesa::CodeSets::Modes::DORMANT_FULL_TIME,
-        Hesa::CodeSets::Modes::DORMANT_PART_TIME,
-      ].include?(mode)
+      { defer_date: hesa_trainee[:end_date] }
     end
 
     def withdrawal_attributes
-      return {} unless trainee_withdrawn?
+      return {} unless trainee_status == :withdrawn
 
-      {
-        withdraw_date: hesa_trainee[:end_date],
-        withdraw_reason: reason_for_leaving,
-        state: "withdrawn",
-      }
-    end
-
-    def trainee_withdrawn?
-      hesa_trainee[:end_date].present? && reasons_for_leaving_indicate_withdrawal?
-    end
-
-    def reasons_for_leaving_indicate_withdrawal?
-      [
-        successful_completion_of_course?,
-        completion_of_course_result_unknown?,
-      ].none?
-    end
-
-    def successful_completion_of_course?
-      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION
-    end
-
-    def completion_of_course_result_unknown?
-      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION
-    end
-
-    def funding_attributes
-      @funding_attributes ||= MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
+      { withdraw_date: hesa_trainee[:end_date], withdraw_reason: reason_for_leaving }
     end
 
     def school_attributes
@@ -148,6 +111,10 @@ module Trainees
 
     def training_initiative_attributes
       { training_initiative: training_initiative || ROUTE_INITIATIVES_ENUMS[:no_initiative] }
+    end
+
+    def funding_attributes
+      MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
     end
 
     def gender
@@ -218,19 +185,23 @@ module Trainees
 
     # This field indicates the method by which a student is being taught their course.
     def mode
-      @mode ||= Hesa::CodeSets::Modes::MAPPING[hesa_trainee[:mode]]
+      Hesa::CodeSets::Modes::MAPPING[hesa_trainee[:mode]]
     end
 
     def age_range
-      @age_range ||= Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
+      Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
     end
 
     def reason_for_leaving
-      @reason_for_leaving ||= Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
+      Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
     end
 
     def create_degrees!
       ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
+    end
+
+    def trainee_status
+      @trainee_status ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee)
     end
   end
 end

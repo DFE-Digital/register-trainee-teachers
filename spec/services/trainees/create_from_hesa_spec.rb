@@ -9,7 +9,8 @@ module Trainees
     let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }
     let(:create_custom_state) { "implemented where necessary" }
-    let(:hesa_stub_attributes) { { trn: "8080808" } }
+    let(:hesa_stub_attributes) { { trn: trn } }
+    let(:trn) { Faker::Number.number(digits: 7) }
     let(:trainee_degree) { trainee.degrees.first }
 
     subject(:trainee) { Trainee.first }
@@ -224,7 +225,7 @@ module Trainees
 
           it "creates a withdrawn trainee with the relevant details" do
             expect(trainee.state).to eq("withdrawn")
-            expect(trainee.withdraw_date).to eq(Date.parse(date))
+            expect(trainee.withdraw_date).to eq(date)
             expect(trainee.withdraw_reason).to eq(WithdrawalReasons::HEALTH_REASONS)
           end
         end
@@ -237,10 +238,13 @@ module Trainees
             }
           end
 
-          it "does not create a withdrawn trainee" do
-            expect(trainee.state).not_to eq("withdrawn")
+          it "does not set the withdraw fields" do
             expect(trainee.withdraw_date).to be_nil
             expect(trainee.withdraw_reason).to be_nil
+          end
+
+          it "creates a awarded trainee with the relevant details" do
+            expect(trainee.state).to eq("awarded")
           end
         end
 
