@@ -38,6 +38,7 @@ module Hesa
             trn: student_attributes["F_TREFNO"],
             training_route: student_attributes["F_ENTRYRTE"],
             nationality: student_attributes["F_NATION"],
+            hesa_updated_at: student_attributes["F_STATUS_TIMESTAMP"],
             degrees: to_degrees_attributes(student_attributes["PREVIOUSQUALIFICATIONS"]),
           }
         end

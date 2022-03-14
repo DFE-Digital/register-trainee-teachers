@@ -43,6 +43,7 @@ module Hesa
             lead_school_urn: "115795",
             training_route: "02",
             nationality: "NZ",
+            hesa_updated_at: "17/10/2016 14:27:04",
             degrees: [{
               country: "CA",
               grade: "01",

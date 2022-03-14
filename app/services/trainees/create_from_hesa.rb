@@ -42,6 +42,7 @@ module Trainees
         training_route: training_route,
         trn: trn,
         state: trainee_status,
+        hesa_updated_at: hesa_trainee[:hesa_updated_at],
       }.merge(personal_details_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
@@ -86,9 +87,13 @@ module Trainees
     end
 
     def deferral_attributes
-      return {} unless trainee_status == :deferred
+      return { defer_date: nil } unless trainee_status == :deferred
 
-      { defer_date: hesa_trainee[:end_date] }
+      # It's possible that the HESA record gets updated even though the record remains deferred. We don't
+      # want change the defer_date if it's
+      return {} if trainee.defer_date.present?
+
+      { defer_date: hesa_trainee[:hesa_updated_at] } # hesa_trainee[:end_date] is not applicable in this scenario
     end
 
     def withdrawal_attributes
@@ -181,11 +186,6 @@ module Trainees
     # This field indicates the mode the student was reported on for the DfE census in their first year.
     def study_mode
       Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:study_mode]]
-    end
-
-    # This field indicates the method by which a student is being taught their course.
-    def mode
-      Hesa::CodeSets::Modes::MAPPING[hesa_trainee[:mode]]
     end
 
     def age_range
