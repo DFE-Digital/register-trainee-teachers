@@ -185,7 +185,7 @@ module Trainees
 
     # This field indicates the mode the student was reported on for the DfE census in their first year.
     def study_mode
-      Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:study_mode]]
+      Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:mode]]
     end
 
     def age_range

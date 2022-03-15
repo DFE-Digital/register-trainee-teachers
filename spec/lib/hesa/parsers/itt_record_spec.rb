@@ -28,7 +28,6 @@ module Hesa
             course_subject_three: nil,
             itt_start_date: "2016-09-27",
             itt_end_date: nil,
-            study_mode: "1",
             mode: "01",
             course_age_range: "71",
             commencement_date: nil,
