@@ -47,7 +47,6 @@ module Trainees
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
-       .merge(deferral_attributes)
        .merge(withdrawal_attributes)
        .merge(funding_attributes)
        .merge(school_attributes)
@@ -84,16 +83,6 @@ module Trainees
         itt_end_date: hesa_trainee[:itt_end_date],
         commencement_date: hesa_trainee[:commencement_date] || hesa_trainee[:itt_start_date],
       }
-    end
-
-    def deferral_attributes
-      return { defer_date: nil } unless trainee_status == :deferred
-
-      # It's possible that the HESA record gets updated even though the record remains deferred. We don't
-      # want change the defer_date if it's
-      return {} if trainee.defer_date.present?
-
-      { defer_date: hesa_trainee[:hesa_updated_at] } # hesa_trainee[:end_date] is not applicable in this scenario
     end
 
     def withdrawal_attributes
