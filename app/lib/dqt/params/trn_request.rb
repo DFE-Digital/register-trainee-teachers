@@ -92,8 +92,9 @@ module Dqt
           "programmeStartDate" => trainee.itt_start_date.iso8601,
           "programmeEndDate" => trainee.itt_end_date.iso8601,
           "programmeType" => PROGRAMME_TYPE[trainee.training_route],
-          "subject1" => trainee.course_subject_one,
-          "subject2" => trainee.course_subject_two,
+          "subject1" => course_subject_code(trainee.course_subject_one),
+          "subject2" => course_subject_code(trainee.course_subject_two),
+          "subject3" => course_subject_code(trainee.course_subject_three),
           "ageRangeFrom" => trainee.course_min_age,
           "ageRangeTo" => trainee.course_max_age,
         }
@@ -103,14 +104,22 @@ module Dqt
         {
           providerUkprn: nil,
           countryCode: country_codes[degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country],
-          subject: degree.subject,
+          subject: degree_subject,
           class: DEGREE_CLASSES[degree.grade],
           date: Date.parse("01-01-#{degree.graduation_year}").iso8601,
         }
       end
 
+      def course_subject_code(subject_name)
+        Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name]
+      end
+
       def degree
         trainee.degrees.first
+      end
+
+      def degree_subject
+        Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject]
       end
 
       def country_codes

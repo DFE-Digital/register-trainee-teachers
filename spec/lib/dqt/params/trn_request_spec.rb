@@ -7,6 +7,7 @@ module Dqt
     describe TrnRequest do
       let(:trainee) { create(:trainee, :completed, gender: "female") }
       let(:degree) { trainee.degrees.first }
+      let(:degree_subject) { Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject] }
 
       describe "#params" do
         subject { described_class.new(trainee: trainee).params }
@@ -41,8 +42,9 @@ module Dqt
             "programmeStartDate" => trainee.itt_start_date.iso8601,
             "programmeEndDate" => trainee.itt_end_date.iso8601,
             "programmeType" => "AssessmentOnlyRoute",
-            "subject1" => trainee.course_subject_one,
+            "subject1" => "100403",
             "subject2" => trainee.course_subject_two,
+            "subject3" => trainee.course_subject_three,
             "ageRangeFrom" => trainee.course_min_age,
             "ageRangeTo" => trainee.course_max_age,
           })
@@ -52,7 +54,7 @@ module Dqt
           expect(subject["qualification"]).to eq({
             providerUkprn: nil,
             countryCode: "XK",
-            subject: degree.subject,
+            subject: degree_subject,
             class: described_class::DEGREE_CLASSES[degree.grade],
             date: Date.new(degree.graduation_year).iso8601,
           })
