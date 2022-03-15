@@ -14,6 +14,7 @@ module Dqt
 
     GET_SUCCESSES = [200].freeze
     PUT_SUCCESSES = [200, 201].freeze
+    PATCH_SUCCESSES = [204].freeze
 
     def self.get(...)
       response = Request.get(...)
@@ -25,6 +26,12 @@ module Dqt
       response = Request.put(...)
 
       handle_response(response: response, statuses: PUT_SUCCESSES)
+    end
+
+    def self.patch(...)
+      response = Request.patch(...)
+
+      handle_response(response: response, statuses: PATCH_SUCCESSES)
     end
 
     def self.handle_response(response:, statuses:)

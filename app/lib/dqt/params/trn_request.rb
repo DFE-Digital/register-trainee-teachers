@@ -102,11 +102,11 @@ module Dqt
 
       def qualification_params
         {
-          providerUkprn: nil,
-          countryCode: country_codes[degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country],
-          subject: degree_subject,
-          class: DEGREE_CLASSES[degree.grade],
-          date: Date.parse("01-01-#{degree.graduation_year}").iso8601,
+          "providerUkprn" => nil,
+          "countryCode" => country_codes[degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country],
+          "subject" => degree_subject,
+          "class" => DEGREE_CLASSES[degree.grade],
+          "date" => Date.parse("01-01-#{degree.graduation_year}").iso8601,
         }
       end
 
