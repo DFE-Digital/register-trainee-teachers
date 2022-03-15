@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_160415) do
+ActiveRecord::Schema.define(version: 2022_03_08_163546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -333,12 +333,11 @@ ActiveRecord::Schema.define(version: 2022_03_02_160415) do
 
   create_table "hesa_collection_requests", force: :cascade do |t|
     t.string "collection_reference"
-    t.datetime "requested_at"
-    t.datetime "updates_since"
     t.text "response_body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "state"
+    t.datetime "requested_at"
     t.index ["state"], name: "index_hesa_collection_requests_on_state"
   end
 

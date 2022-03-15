@@ -2,10 +2,10 @@
 
 module Hesa
   class RetrieveCollectionJob < ApplicationJob
-    def perform(updates_since: HesaCollectionRequest.next_from_date,
+    def perform(from_date: HesaCollectionRequest.next_from_date,
                 collection_reference: Settings.hesa.current_collection_reference,
                 sync_from_hesa: FeatureService.enabled?(:sync_from_hesa))
-      @updates_since = updates_since
+      @from_date = from_date
       @collection_reference = collection_reference
 
       return unless sync_from_hesa
@@ -29,13 +29,12 @@ module Hesa
       HesaCollectionRequest.create(
         requested_at: request_time,
         collection_reference: @collection_reference,
-        updates_since: @updates_since,
         response_body: xml_response,
       )
     end
 
     def url
-      "#{Settings.hesa.collection_base_url}/#{@collection_reference}/#{@updates_since}"
+      "#{Settings.hesa.collection_base_url}/#{@collection_reference}/#{@from_date}"
     end
   end
 end
