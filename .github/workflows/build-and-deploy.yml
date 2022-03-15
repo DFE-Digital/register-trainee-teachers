@@ -77,6 +77,8 @@ jobs:
   test:
     name: Test
     needs: [build]
+    outputs: 
+      image_tag: ${{ needs.build.outputs.image_tag }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -171,5 +173,5 @@ jobs:
         arm-access-key: ${{ secrets[format('ARM_ACCESS_KEY_{0}', matrix.environment)] }}
         azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
         environment: ${{ matrix.environment }}
-        sha: ${{ needs.build.outputs.image_tag }}
+        sha: ${{ needs.test.outputs.image_tag }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
