@@ -50,6 +50,7 @@ module Trainees
        .merge(funding_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
+       .compact
     end
 
     def personal_details_attributes
