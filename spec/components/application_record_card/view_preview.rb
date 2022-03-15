@@ -4,28 +4,33 @@ module ApplicationRecordCard
   class ViewPreview < ViewComponent::Preview
     [true, false].each do |system_admin|
       suffice = system_admin ? "_as_system_admin" : ""
+      user = if system_admin
+               Struct.new(:system_admin?, :lead_school?).new(true, false)
+             else
+               Struct.new(:system_admin?, :lead_school?).new(false, false)
+             end
       define_method "single_card#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee, show_provider: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee, current_user: user))
       end
 
       define_method "single_card_with_trn_and_trainee_id#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee_with_trn_and_trainee_id, show_provider: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee_with_trn_and_trainee_id, current_user: user))
       end
 
       define_method "multiple_cards#{suffice}" do
-        render(ApplicationRecordCard::View.with_collection(mock_multiple_trainees, show_provider: system_admin))
+        render(ApplicationRecordCard::View.with_collection(mock_multiple_trainees, current_user: user))
       end
 
       define_method "single_card_with_incomplete_data#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: Trainee.new(id: 1, updated_at: Time.zone.now, provider: mock_provider), show_provider: system_admin))
+        render(ApplicationRecordCard::View.new(record: Trainee.new(id: 1, updated_at: Time.zone.now, provider: mock_provider), current_user: user))
       end
 
       define_method "single_card_with_two_subjects#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee_with_two_subjects, show_provider: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee_with_two_subjects, current_user: user))
       end
 
       define_method "single_card_with_three_subjects#{suffice}" do
-        render(ApplicationRecordCard::View.new(record: mock_trainee_with_three_subjects, show_provider: system_admin))
+        render(ApplicationRecordCard::View.new(record: mock_trainee_with_three_subjects, current_user: user))
       end
     end
 

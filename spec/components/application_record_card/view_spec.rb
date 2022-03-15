@@ -6,21 +6,35 @@ module ApplicationRecordCard
   describe View do
     let(:provider) { create(:provider, :with_courses) }
     let(:course) { provider.courses.first }
-    let(:show_provider) { false }
+    let(:current_user) do
+      double(UserWithOrganisationContext, system_admin?: false, lead_school?: false)
+    end
     let(:trainee) { create(:trainee, first_names: nil, provider: provider, course_uuid: course.uuid, trainee_id: nil) }
 
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
-      render_inline(described_class.new(record: trainee, show_provider: show_provider))
       create(:academic_cycle, cycle_year: 2019)
+      render_inline(described_class.new(record: trainee, current_user: current_user))
     end
 
     it "does not render provider name" do
       expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
     end
 
-    context "when :show_provider is true" do
-      let(:show_provider) { true }
+    context "when system admin user" do
+      let(:current_user) do
+        double(UserWithOrganisationContext, system_admin?: true, lead_school?: false)
+      end
+
+      it "renders provider name" do
+        expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+      end
+    end
+
+    context "when lead school user" do
+      let(:current_user) do
+        double(UserWithOrganisationContext, system_admin?: false, lead_school?: true)
+      end
 
       it "renders provider name" do
         expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
@@ -97,7 +111,6 @@ module ApplicationRecordCard
 
     context "when a trainee with all their details filled in" do
       let(:state) { "draft" }
-      let(:show_provider) { false }
       let(:trainee) do
         create(
           :trainee,
@@ -114,15 +127,27 @@ module ApplicationRecordCard
       end
 
       before do
-        render_inline(described_class.new(record: trainee, show_provider: show_provider))
+        render_inline(described_class.new(record: trainee, current_user: current_user))
       end
 
       it "does not render provider name" do
         expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
       end
 
-      context "when :show_provider is true" do
-        let(:show_provider) { true }
+      context "when system admin user" do
+        let(:current_user) do
+          double(UserWithOrganisationContext, system_admin?: true, lead_school?: false)
+        end
+
+        it "renders provider name" do
+          expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+        end
+      end
+
+      context "when lead school user" do
+        let(:current_user) do
+          double(UserWithOrganisationContext, system_admin?: false, lead_school?: true)
+        end
 
         it "renders provider name" do
           expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
