@@ -18,7 +18,7 @@
         <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-schools=true
             data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_schools_form[query]"></div>
 
-        <%= f.govuk_submit %>
+        <%= f.govuk_submit(t(:continue), class: "govuk-!-margin-top-4") %>
       <% end %>
     </div>
   </div>
