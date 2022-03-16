@@ -2,16 +2,30 @@
 
 module SystemAdmin
   class UserLeadSchoolsController < ApplicationController
+    before_action :set_user
+
     def new
-      @user = User.find(params[:user_id])
-      @lead_schools = School.lead_only
+      @lead_school_form = UserLeadSchoolsForm.new
     end
 
     def create
+      @lead_school_form = UserLeadSchoolsForm.new(lead_school_params.merge(user: @user))
+
+      if @lead_school_form.save!
+        redirect_to(user_path(@user), flash: { success: "Lead school added" })
+      else
+        render(:new)
+      end
+    end
+
+  private
+
+    def lead_school_params
+      params.require(:system_admin_user_lead_schools_form).permit(:lead_school_id)
+    end
+
+    def set_user
       @user = User.find(params[:user_id])
-      @lead_school = School.find_by(name: params[:school][:lead_school])
-      LeadSchoolUser.find_or_create_by!(lead_school: @lead_school, user: @user)
-      redirect_to(user_path(@user), flash: { success: "Lead school added" })
     end
   end
 end

@@ -1,19 +1,22 @@
 <div class="govuk-form-group">
-  <label class="govuk-label" for="sort">
-    <%= "Select lead school to add to #{@user.name}" %>
-  </label>
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <%= register_form_with model: [@user, School.new], url: user_lead_schools_path(@user), local: true do |f| %>
-
+      <%= register_form_with model: @lead_school_form, url: user_lead_schools_path(@user), local: true,
+                             html: { data: { module: "app-schools-autocomplete" } } do |f| %>
         <%= f.govuk_error_summary %>
+        <%= f.hidden_field :lead_school_id, id: "school-id" %>
 
-        <h1 class="govuk-heading-l">
-          Add a lead school for <%= @user.name %>
-        </h1>
+        <%= f.govuk_text_field(
+          :query,
+          label: { text: "Add a lead school for #{@user.name}", size: "l", tag: "h1" },
+          hint: { text: "Search for a school by its unique reference number (URN), name or postcode" },
+          value: params[:query],
+          "data-field" => "schools-autocomplete",
+          width: "three-quarters",
+        ) %>
 
-        <p><%= f.govuk_select(:lead_school, @lead_schools.map(&:name), label: { text: "Add lead school", size: "s" }, width: 20, autocomplete: :enabled, class: 'lead-school-select') %></p>
+        <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-schools=true
+            data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_schools_form[query]"></div>
 
         <%= f.govuk_submit %>
       <% end %>

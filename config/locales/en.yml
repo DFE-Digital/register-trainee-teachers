@@ -1153,6 +1153,10 @@ en:
           attributes:
             reviewed:
               blank: Select yes if this is the correct course
+        system_admin/user_lead_schools_form:
+          attributes:
+            lead_school_id:
+              blank: Select a lead school
         contact_details_form:
           attributes:
             locale_code:
