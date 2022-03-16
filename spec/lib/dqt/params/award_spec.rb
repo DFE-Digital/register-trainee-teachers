@@ -15,7 +15,6 @@ module Dqt
             "ittProviderUkprn" => trainee.provider.ukprn,
             "outcome" => "Pass",
             "assessmentDate" => trainee.outcome_date.iso8601,
-            "birthDate" => trainee.date_of_birth.iso8601,
           })
         end
       end
