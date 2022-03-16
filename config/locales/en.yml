@@ -1155,8 +1155,15 @@ en:
               blank: Select yes if this is the correct course
         system_admin/user_lead_schools_form:
           attributes:
+            query:
+              blank: Enter a school unique reference number (URN), name or postcode
+              both_fields_are_present: Select a lead school or select lead school not applicable
             lead_school_id:
-              blank: Select a lead school
+              blank: Select a lead school or search again
+            results_search_again_query:
+              blank: Enter a school unique reference number (URN), name or postcode
+            no_results_search_again_query:
+              blank: Enter a school unique reference number (URN), name or postcode
         contact_details_form:
           attributes:
             locale_code:

@@ -28,7 +28,7 @@ module SystemAdminRoutes
 
         resources :users do
           resources :providers, controller: "user_providers", only: %i[new create]
-          resources :lead_schools, controller: "user_lead_schools", only: %i[new create]
+          resources :lead_schools, controller: "user_lead_schools", only: %i[index new create]
         end
         resources :users
         resources :dttp_providers, only: %i[index show create]

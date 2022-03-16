@@ -4,12 +4,11 @@ require "rails_helper"
 
 feature "creating a new lead school for a user" do
   let(:user) { create(:user, system_admin: true) }
-  let(:dttp_id) { SecureRandom.uuid }
   let!(:user_to_be_updated) { create(:user, first_name: "James", last_name: "Rodney") }
-  let!(:new_lead_school) { create(:school, :lead, name: "Richards School Supreme") }
 
   before do
     given_i_am_authenticated(user: user)
+    and_a_number_of_lead_schools_exist
     when_i_visit_the_user_index_page
     and_i_click_on_the_user_name_link
     then_i_am_taken_to_the_user_show_page
@@ -17,18 +16,39 @@ feature "creating a new lead school for a user" do
     then_i_am_taken_to_the_add_lead_school_to_user_page
   end
 
-  describe "adding a provider to a user" do
-    context "valid details" do
-      scenario "adding a new user record associated with a provider" do
-        and_i_select_a_lead_school_from_the_dropdown
+  describe "adding a lead school to a user" do
+    context "with javascript" do
+      scenario "works", js: true do
+        and_i_fill_in_my_lead_school
+        and_i_click_the_first_item_in_the_list
         and_i_click_submit
         then_i_am_taken_to_the_user_show_page
         and_i_see_the_new_lead_school
+      end
+
+      context "when a lead school is not selected" do
+        it "works", js: true do
+          and_i_fill_in_my_lead_school
+          and_i_click_submit
+          then_i_am_redirected_to_the_lead_schools_page
+        end
+      end
+    end
+
+    context "without javascript" do
+      scenario "works" do
+        and_i_fill_in_my_lead_school_without_js
+        and_i_click_submit
+        then_i_am_redirected_to_the_lead_schools_page
       end
     end
   end
 
 private
+
+  def and_a_number_of_lead_schools_exist
+    @lead_schools = create_list(:school, 5, :lead)
+  end
 
   def when_i_visit_the_user_index_page
     users_index_page.load
@@ -50,8 +70,24 @@ private
     expect(add_lead_school_to_user_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}/lead_schools/new")
   end
 
-  def and_i_select_a_lead_school_from_the_dropdown
-    add_lead_school_to_user_page.lead_school_select.select("Richards School Supreme")
+  def my_lead_school_name
+    my_lead_school.name.split.first
+  end
+
+  def my_lead_school
+    @my_lead_school ||= @lead_schools.sample
+  end
+
+  def and_i_fill_in_my_lead_school
+    add_lead_school_to_user_page.lead_school.fill_in with: my_lead_school_name
+  end
+
+  def and_i_fill_in_my_lead_school_without_js
+    add_lead_school_to_user_page.no_js_lead_school.fill_in with: my_lead_school_name
+  end
+
+  def and_i_click_the_first_item_in_the_list
+    click(add_lead_school_to_user_page.autocomplete_list_item)
   end
 
   def and_i_click_submit
@@ -59,6 +95,10 @@ private
   end
 
   def and_i_see_the_new_lead_school
-    expect(users_show_page.lead_schools.map(&:text)).to include("#{new_lead_school.name} - #{new_lead_school.urn}")
+    expect(users_show_page.lead_schools.map(&:text)).to include("#{my_lead_school.name} - #{my_lead_school.urn}")
+  end
+
+  def then_i_am_redirected_to_the_lead_schools_page
+    expect(user_lead_schools_page).to be_displayed
   end
 end
