@@ -23,7 +23,9 @@ inputs:
 runs:
   using: composite
   steps:
+    # all steps prior to the "Evaluate job status" step require an id to ensure that we correctly report the deployment outcome
     - name: Set Current Deployment Environment variable
+      id: set_env_var
       shell: bash
       run: |
         if [ -n "${{ inputs.pr-number }}" ]; then
@@ -45,8 +47,8 @@ runs:
         echo "paas_space_name=$(jq -r '.paas_space_name' ${tf_vars_file})" >> $GITHUB_ENV
 
     - name: Start ${{ env.DEPLOY_ENV }} Deployment
-      uses: bobheadxi/deployments@v1
       id: deployment
+      uses: bobheadxi/deployments@v1
       with:
         step: start
         token: ${{ github.token }}
@@ -54,10 +56,12 @@ runs:
         ref: ${{ env.DEPLOY_REF }}
 
     - uses: azure/login@v1
+      id: login_azure
       with:
         creds: ${{ inputs.azure-credentials }}
 
     - name: Validate Key Vault Secrets
+      id: validate_key_vault_secrets
       uses: DFE-Digital/github-actions/validate-key-vault-secrets@master
       with:
         KEY_VAULT: ${{ env.key_vault_name }}
@@ -66,11 +70,13 @@ runs:
           ${{ env.key_vault_infra_secret_name }}
 
     - name: Pin Terraform version
+      id: use_terraform
       uses: hashicorp/setup-terraform@v1.2.1
       with:
         terraform_version: 0.13.5
 
     - name: Terraform init, Terraform Plan and Apply
+      id: apply_terraform
       shell: bash
       run: make ${{ inputs.environment }} ci deploy
       env:
@@ -80,14 +86,15 @@ runs:
         CONFIRM_PRODUCTION:       yes
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
-      if: startsWith(env.DEPLOY_ENV,'review') || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
       id: get-secrets
+      if: startsWith(env.DEPLOY_ENV,'review') || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
       with:
         keyvault: ${{ env.key_vault_name }}
         secret: ${{ env.key_vault_infra_secret_name }}
         key: CF_USER,CF_PASSWORD
 
     - name: Setup cf cli
+      id: setup_cf_cli
       if: startsWith(env.DEPLOY_ENV,'review') || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
@@ -96,16 +103,19 @@ runs:
         CF_SPACE_NAME: ${{ env.paas_space_name }}
 
     - name: Run data migrations
+      id: run_data_migrations
       shell: bash
       if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
       run: cf run-task "register-${DEPLOY_ENV}" --command "cd /app && bundle exec rails data:migrate" --wait
 
     - name: Generate example data
+      id: generate_example_data
       shell: bash
       if: startsWith(env.DEPLOY_ENV,'review')
       run: cf run-task "register-pr-${{ inputs.pr-number }}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
 
     - name: Trigger ${{ inputs.environment }} Smoke Tests
+      id: trigger_smoke_Tests
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Tests
@@ -124,23 +134,37 @@ runs:
         intervalSeconds: 15
 
     - name: Stop when smoke tests fail
+      id: stop_when_smoke_tests_fail
       shell: bash
       if: steps.wait_for_smoke_tests.outputs.conclusion == 'failure'
       run: exit 1
 
+    - name: Evaluate job status
+      id: evaluate_job_status
+      if: always()
+      shell: bash
+      run: |
+        if [[ ${{ join(steps.*.outcome, ',') }} =~ "failure" ]]; then
+          echo JOB_STATUS="failure" >> $GITHUB_ENV
+        else
+          echo JOB_STATUS="success" >> $GITHUB_ENV
+        fi;
+
     - name: Update ${{ env.DEPLOY_ENV }} status
+      id: update_status
       if: always()
       uses: bobheadxi/deployments@v1
       with:
         step: finish
         token: ${{ github.token }}
         env: ${{ env.DEPLOY_ENV }}
-        status: ${{ job.status }}
+        status: ${{ env.JOB_STATUS }}
         deployment_id: ${{ steps.deployment.outputs.deployment_id }}
         env_url: ${{ env.DEPLOY_URL }}
         ref: ${{ env.DEPLOY_REF }}
 
     - name: Check for Failure
+      id: check_for_failure
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
       uses: rtCamp/action-slack-notify@master
       env:
