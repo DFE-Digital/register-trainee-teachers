@@ -37,13 +37,13 @@ module Trainees
 
     def mapped_attributes
       {
-        created_from_hesa: trainee.id.blank?,
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
         trn: trn,
         state: trainee_status,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
-      }.merge(personal_details_attributes)
+      }.merge(created_from_hesa_attribute)
+       .merge(personal_details_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
@@ -52,6 +52,16 @@ module Trainees
        .merge(school_attributes)
        .merge(training_initiative_attributes)
        .compact
+    end
+
+    def trn
+      hesa_trainee[:trn] if TRN_REGEX.match?(hesa_trainee[:trn])
+    end
+
+    def created_from_hesa_attribute
+      return {} if trainee.id.present?
+
+      { created_from_hesa: true }
     end
 
     def personal_details_attributes
@@ -133,10 +143,6 @@ module Trainees
 
     def disability
       Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
-    end
-
-    def trn
-      hesa_trainee[:trn] if TRN_REGEX.match?(hesa_trainee[:trn])
     end
 
     def enqueue_background_jobs!
