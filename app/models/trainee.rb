@@ -181,9 +181,10 @@ class Trainee < ApplicationRecord
     )
   end)
 
-  scope :with_manual_application, -> { where(apply_application: nil, created_from_dttp: false) }
+  scope :with_manual_application, -> { where(apply_application: nil, created_from_dttp: false, hesa_id: nil) }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
   scope :created_from_dttp, -> { where(created_from_dttp: true) }
+  scope :imported_from_hesa, -> { where.not(hesa_id: nil) }
 
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
 
