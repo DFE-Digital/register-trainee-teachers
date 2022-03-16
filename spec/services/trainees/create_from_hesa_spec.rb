@@ -9,8 +9,8 @@ module Trainees
     let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }
     let(:create_custom_state) { "implemented where necessary" }
-    let(:hesa_stub_attributes) { { trn: trn } }
-    let(:trn) { Faker::Number.number(digits: 7) }
+    let(:hesa_stub_attributes) { { trn: hesa_trn } }
+    let(:hesa_trn) { Faker::Number.number(digits: 7).to_s }
     let(:trainee_degree) { trainee.degrees.first }
 
     subject(:trainee) { Trainee.first }
@@ -99,9 +99,10 @@ module Trainees
     end
 
     context "trainee already exists and didn't come from HESA" do
+      let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
       let(:hesa_disability_codes) { Hesa::CodeSets::Disabilities::MAPPING.invert }
       let(:hesa_ethnicity_codes) { Hesa::CodeSets::Ethnicities::MAPPING.invert }
-      let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id], trn: "5050505") }
+      let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn) }
 
       describe "#created_from_hesa" do
         subject { trainee.created_from_hesa }
@@ -109,18 +110,18 @@ module Trainees
         it { is_expected.to be(false) }
       end
 
-      context "when the trainee had a previously saved trn" do
-        context "and the trn exists" do
-          it "updates the trn" do
-            expect(trainee.trn).to eq("8080808")
+      context "when the trainee has a previously saved TRN" do
+        context "HESA has a different TRN" do
+          it "updates the trainee TRN with the HESA TRN" do
+            expect(trainee.trn).to eq(hesa_trn)
           end
         end
 
-        context "and the trn does not exist" do
-          let(:hesa_stub_attributes) { {} }
+        context "HESA TRN is nil" do
+          let(:hesa_stub_attributes) { { trn: nil } }
 
-          it "does not overwrite the trn" do
-            expect(trainee.trn).to eq("5050505")
+          it "does not overwrite the existing trainee TRN" do
+            expect(trainee.trn).to eq(existing_trn)
           end
         end
       end
