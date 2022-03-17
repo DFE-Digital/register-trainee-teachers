@@ -27,7 +27,7 @@ module Trainees
     end
 
     def trn_received?
-      reason_for_leaving.blank? && trn.present? && !trainee_dormant?
+      (reason_for_leaving.blank? || completion_of_course_result_unknown?) && trn.present? && !trainee_dormant?
     end
 
     def withdrawn?

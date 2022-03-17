@@ -10,7 +10,7 @@ module Trainees
     let(:hesa_trainee) { Hesa::Parsers::IttRecord.to_attributes(student_node: hesa_api_stub.student_node) }
     let(:hesa_reason_for_leaving_codes) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
     let(:hesa_mode_codes) { Hesa::CodeSets::Modes::MAPPING.invert }
-    let(:trn) { Faker::Number.number(digits: 7) }
+    let(:hesa_trn) { Faker::Number.number(digits: 7) }
     let(:date_today) { Time.zone.today }
 
     subject { described_class.call(hesa_trainee: hesa_trainee) }
@@ -25,10 +25,22 @@ module Trainees
 
     context "trn_received" do
       let(:hesa_stub_attributes) do
-        { reason_for_leaving: nil, mode: nil, trn: trn }
+        { reason_for_leaving: nil, mode: nil, trn: hesa_trn }
       end
 
       it { is_expected.to eq(:trn_received) }
+
+      context "course completed - result unknown" do
+        let(:hesa_stub_attributes) do
+          {
+            mode: nil,
+            trn: hesa_trn,
+            reason_for_leaving: hesa_mode_codes[Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION],
+          }
+        end
+
+        it { is_expected.to eq(:trn_received) }
+      end
     end
 
     context "withdrawn" do
@@ -41,7 +53,10 @@ module Trainees
 
     context "awarded" do
       let(:hesa_stub_attributes) do
-        { reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION], end_date: date_today }
+        {
+          end_date: date_today,
+          reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION],
+        }
       end
 
       it { is_expected.to eq(:awarded) }
