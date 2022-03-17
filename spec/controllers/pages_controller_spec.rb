@@ -46,4 +46,18 @@ describe PagesController, type: :controller do
       end
     end
   end
+
+  describe "GET #start_traineeteacherportal" do
+    it "returns a 200 status code" do
+      get :start_traineeteacherportal
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the start_traineeteacherportal page" do
+      get :start_traineeteacherportal
+
+      expect(response).to have_rendered("start_traineeteacherportal")
+    end
+  end
 end
