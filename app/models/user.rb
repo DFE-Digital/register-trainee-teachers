@@ -17,8 +17,6 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
-  validates :dttp_id, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }, unless: :system_admin?
-  validates :dttp_id, uniqueness: true, if: :active_user_by_dttp_id?
   validates :email, uniqueness: { case_sensitive: false }, if: :active_user?
 
   validate do |record|
@@ -34,10 +32,6 @@ class User < ApplicationRecord
   end
 
 private
-
-  def active_user_by_dttp_id?
-    User.kept.exists?(dttp_id: dttp_id)
-  end
 
   def sanitise_email
     self.email = email.gsub(/\s+/, "") unless email.nil?
