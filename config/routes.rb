@@ -4,6 +4,15 @@ Rails.application.routes.draw do
   extend SystemAdminRoutes
   extend ApiRoutes
 
+  if Settings.dttp.portal_host.present?
+    constraints(->(req) { req.host == Settings.dttp.portal_host }) do
+      start_traineeteacherportal_url = "#{CanonicalRails.protocol}#{CanonicalRails.host}/start_traineeteacherportal"
+
+      root to: redirect(start_traineeteacherportal_url), as: :traineeteacherportal_root
+      get "/*ttp_path", to: redirect(start_traineeteacherportal_url), as: :traineeteacherportal
+    end
+  end
+
   get :ping, controller: :heartbeat
   get :healthcheck, controller: :heartbeat
   get :sha, controller: :heartbeat
@@ -12,6 +21,7 @@ Rails.application.routes.draw do
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/guidance", to: "pages#guidance"
   get "/check-data", to: "pages#check_data"
+  get "/start_traineeteacherportal", to: "pages#start_traineeteacherportal"
 
   get "/404", to: "errors#not_found", via: :all, as: :not_found
   get "/422", to: "errors#unprocessable_entity", via: :all

@@ -5,6 +5,7 @@ dttp:
   back_office_url: https://dttp-ppad.crm4.dynamics.com/
   scope: https://dttp-ppad.crm4.dynamics.com/.default
   api_base_url: https://dttp-ppad.crm4.dynamics.com/api/data/v9.1
+  portal_host: traineeteacherportal-pp.education.gov.uk
 
 dfe_sign_in:
   # URL that the users are redirected to for signing in
