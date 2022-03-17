@@ -8,9 +8,9 @@ module PageObjects
 
     class Index < PageObjects::Base
       set_url "/system-admin/users"
-
       element :add_a_user, "a", text: "Add a user"
-
+      element :search, 'input[name="search"]'
+      element :submit_search, ".submit-search"
       sections :users, UserRow, ".user-row"
     end
   end
