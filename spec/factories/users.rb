@@ -24,5 +24,10 @@ FactoryBot.define do
       providers { [] }
       lead_schools { [build(:school, :lead)] }
     end
+
+    trait :with_no_organisation_in_db do
+      providers { [] }
+      lead_schools { [] }
+    end
   end
 end

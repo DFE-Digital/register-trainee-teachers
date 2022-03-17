@@ -28,6 +28,19 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
     end
   end
 
+  context "a user with no organisations in the DB" do
+    background { given_i_am_authenticated(user: no_organisation_user) }
+
+    before do
+      given_i_visit_the_organisations_page
+      then_i_am_redirected_to_the_organisations_page
+    end
+
+    scenario "display the content for a user with no organisation" do
+      then_i_see_the_content_for_a_user_with_no_organisation
+    end
+  end
+
 private
 
   attr_reader :provider, :lead_school
@@ -77,6 +90,10 @@ private
     expect(trainee_drafts_page.trainee_name.first).to have_text("Dave Provides")
   end
 
+  def then_i_see_the_content_for_a_user_with_no_organisation
+    expect(organisations_index_page).to have_text(I18n.t("pages.no_organisation.heading"))
+  end
+
   def multi_organisation_user
     @_multi_organisation_user ||= create(:user, :with_multiple_organisations)
   end
@@ -91,5 +108,9 @@ private
 
   def provider_trainee
     @_provider_trainee ||= create(:trainee, provider: provider, first_names: "Dave", last_name: "Provides")
+  end
+
+  def no_organisation_user
+    @_no_organisation_user ||= create(:user, :with_no_organisation_in_db)
   end
 end

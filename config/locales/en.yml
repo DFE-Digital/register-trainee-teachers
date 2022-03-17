@@ -229,6 +229,7 @@ en:
         not_found: Page not found
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
+        no_organisation: You have not been linked to an organisation yet
       sign_in:
         index: Sign in
       trn_submissions:
@@ -822,6 +823,8 @@ en:
       heading: Check what data you need to provide
     privacy_policy:
       heading: Privacy Notice for the Register trainee teachers service (Register)
+    no_organisation: 
+      heading: You have not been linked to an organisation yet
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers

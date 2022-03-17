@@ -1,0 +1,17 @@
+en:
+  pages:
+    no_organisation:
+      body_html: "
+      <p class='govuk-body'>You’ve successfully signed in to Register, but your account has not been linked to an organisation yet.</p>
+
+      <p class='govuk-body'>Your account needs to be linked to an organisation so you can use Register.</p>
+
+      <p class='govuk-body'>To be added to an organisation, email us at <a class='govuk-link' href='mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20'>becomingateacher@digital.education.gov.uk</a></p>
+
+      <p class='govuk-body'>In your email tell us:</p>
+
+      <ul class='govuk-list govuk-list--bullet'>
+        <li>the email address associated with your Register account</li>
+        <li>which organisation you’d like to be added to</li>
+      </ul>
+    "

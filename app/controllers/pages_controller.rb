@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     session[:requested_path] = root_path
     if authenticated?
       if FeatureService.enabled?(:user_can_have_multiple_organisations) && organisation_not_set?
-        redirect_to(organisation_contexts_path) && return
+        redirect_to(organisations_path) && return
       end
 
       @trainees = policy_scope(Trainee.all)
