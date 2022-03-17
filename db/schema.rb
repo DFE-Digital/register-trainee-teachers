@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_08_163546) do
+ActiveRecord::Schema.define(version: 2022_03_15_113557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -333,11 +333,11 @@ ActiveRecord::Schema.define(version: 2022_03_08_163546) do
 
   create_table "hesa_collection_requests", force: :cascade do |t|
     t.string "collection_reference"
+    t.datetime "requested_at"
     t.text "response_body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "state"
-    t.datetime "requested_at"
     t.index ["state"], name: "index_hesa_collection_requests_on_state"
   end
 
@@ -510,6 +510,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_163546) do
     t.string "hesa_id"
     t.jsonb "additional_dttp_data"
     t.boolean "created_from_hesa", default: false, null: false
+    t.string "dqt_update_sha"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"

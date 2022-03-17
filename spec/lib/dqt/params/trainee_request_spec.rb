@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Dqt
   module Params
-    describe TrnRequest do
+    describe TraineeRequest do
       let(:trainee) { create(:trainee, :completed, gender: "female") }
       let(:degree) { trainee.degrees.first }
       let(:degree_subject) { Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject] }
@@ -12,27 +12,10 @@ module Dqt
       describe "#params" do
         subject { described_class.new(trainee: trainee).params }
 
-        let(:uk_address_hash) do
-          {
-
-            "addressLine1" => trainee.address_line_one,
-            "addressLine2" => trainee.address_line_two,
-            "addressLine3" => nil,
-            "city" => trainee.town_city,
-            "postalCode" => trainee.postcode,
-            "country" => described_class::UNITED_KINGDOM,
-          }
-        end
-
         it "returns a hash including personal attributes" do
           expect(subject).to include({
-            "firstName" => trainee.first_names,
-            "middleName" => trainee.middle_names,
-            "lastName" => trainee.last_name,
+            "trn" => trainee.trn,
             "birthDate" => trainee.date_of_birth.iso8601,
-            "emailAddress" => trainee.email,
-            "genderCode" => "Female",
-            "address" => uk_address_hash,
           })
         end
 
@@ -58,24 +41,6 @@ module Dqt
             "class" => described_class::DEGREE_CLASSES[degree.grade],
             "date" => Date.new(degree.graduation_year).iso8601,
           })
-        end
-
-        context "when gender is gender_not_provided" do
-          let(:trainee) { create(:trainee, :completed, gender: "gender_not_provided") }
-
-          it "maps gender to other" do
-            expect(subject["genderCode"]).to eq("Other")
-          end
-        end
-
-        context "when trainee has an international address" do
-          let(:trainee) { create(:trainee, :completed, :with_non_uk_address) }
-
-          it "maps international address to addressLine1" do
-            expect(subject["address"]).to eq({
-              "addressLine1" => trainee.international_address,
-            })
-          end
         end
 
         context "when trainee has an international degree" do
