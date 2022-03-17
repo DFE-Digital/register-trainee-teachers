@@ -1034,8 +1034,9 @@ en:
       trainee:
         record_sources:
           apply: Imported from Apply
-          manual: Added manually
           dttp: Imported from DTTP
+          hesa: Imported from HESA
+          manual: Added manually
         trainee_id: *trainee_id
         training_routes:
           assessment_only: Assessment only

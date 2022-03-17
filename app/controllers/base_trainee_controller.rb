@@ -133,9 +133,10 @@ private
 
   def available_record_sources
     sources = {
-      "apply" => records_contain_apply_source?,
       "manual" => records_contain_manual_source?,
+      "apply" => records_contain_apply_source?,
       "dttp" => records_contain_dttp_source?,
+      "hesa" => records_contain_hesa_source?,
     }.select { |_key, value| value == true }.keys
 
     sources.delete("dttp") unless current_user.system_admin?
@@ -147,15 +148,19 @@ private
   end
 
   def records_contain_manual_source?
-    policy_scope(Trainee).with_manual_application.count.positive?
+    policy_scope(trainee_search_scope).with_manual_application.count.positive?
   end
 
   def records_contain_dttp_source?
-    policy_scope(Trainee).created_from_dttp.count.positive?
+    policy_scope(trainee_search_scope).created_from_dttp.count.positive?
   end
 
   def records_contain_apply_source?
-    policy_scope(Trainee).with_apply_application.count.positive?
+    policy_scope(trainee_search_scope).with_apply_application.count.positive?
+  end
+
+  def records_contain_hesa_source?
+    policy_scope(trainee_search_scope).imported_from_hesa.count.positive?
   end
 
   def save_filter
