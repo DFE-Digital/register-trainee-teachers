@@ -221,10 +221,21 @@ namespace :example_data do
               attrs.merge!(
                 course_subject_one: CourseSubjects::EARLY_YEARS_TEACHING,
                 course_age_range: AgeRange::ZERO_TO_FIVE,
+                course_education_phase: nil,
               )
             end
 
-            FactoryBot.create(:trainee, route, state, attrs)
+            trainee = FactoryBot.create(:trainee, route, state, attrs)
+
+            if sample_index < sample_size * 80.0 / 100
+              funding_manager = FundingManager.new(trainee)
+
+              trainee.applying_for_bursary = true if funding_manager.can_apply_for_bursary?
+              trainee.applying_for_grant = true if funding_manager.can_apply_for_grant?
+              trainee.applying_for_scholarship = true if funding_manager.can_apply_for_scholarship?
+            end
+
+            trainee.save!
           end
         end
       end

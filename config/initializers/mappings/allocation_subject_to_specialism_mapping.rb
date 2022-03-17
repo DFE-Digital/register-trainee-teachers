@@ -107,8 +107,8 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::SPORT_AND_EXERCISE_SCIENCES,
   ],
   AllocationSubjects::PHYSICS => [
-    CourseSubjects::APPLIED_PHYSICS,
     CourseSubjects::PHYSICS,
+    CourseSubjects::APPLIED_PHYSICS,
   ],
   AllocationSubjects::RELIGIOUS_EDUCATION => [
     CourseSubjects::PHILOSOPHY,
