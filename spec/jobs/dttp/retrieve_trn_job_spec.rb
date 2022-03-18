@@ -62,7 +62,7 @@ module Dttp
     context "time_out after has passed" do
       it "doesn't queue another job" do
         expect(SlackNotifierService).to receive(:call)
-        described_class.perform_now(trainee, Time.zone.now - 1.minute)
+        described_class.perform_now(trainee, 1.minute.ago)
         expect(RetrieveTrnJob).not_to have_been_enqueued
       end
     end

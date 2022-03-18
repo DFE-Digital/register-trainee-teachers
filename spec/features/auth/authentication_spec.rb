@@ -83,7 +83,7 @@ private
   end
 
   def when_i_signed_in_more_than_2_hours_ago
-    Timecop.travel(Time.zone.now + 2.hours + 1.second) do
+    Timecop.travel(2.hours.from_now + 1.second) do
       expect(trainee_index_page).to be_displayed
       trainee_index_page.load
     end
