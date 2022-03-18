@@ -2,6 +2,7 @@
 :concurrency: 5
 :queues:
   - default
+  - dqt
   - dttp
   - mailers
   - low_priority
