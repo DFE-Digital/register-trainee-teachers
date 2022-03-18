@@ -160,7 +160,7 @@ private
   def set_primary_phase_subjects
     return if course_subject_one.blank?
 
-    PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.key([course_subject_one, course_subject_two, course_subject_three].reject(&:blank?)) || :other
+    PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.key([course_subject_one, course_subject_two, course_subject_three].compact_blank) || :other
   end
 
   def set_course_subject_from_primary_phase

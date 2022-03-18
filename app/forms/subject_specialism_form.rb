@@ -74,7 +74,7 @@ private
       :course_subject_one,
       :course_subject_two,
       :course_subject_three,
-    ).reject { |_k, v| v.blank? }
+    ).compact_blank
 
     return {} if subjects.blank?
 

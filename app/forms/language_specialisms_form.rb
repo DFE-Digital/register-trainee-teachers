@@ -26,11 +26,11 @@ class LanguageSpecialismsForm < TraineeForm
       course_subject_one,
       course_subject_two,
       course_subject_three,
-    ].reject(&:blank?)
+    ].compact_blank
   end
 
   def language_specialisms
-    (@language_specialisms || []).reject(&:blank?)
+    (@language_specialisms || []).compact_blank
   end
 
   def stash
@@ -51,7 +51,7 @@ private
   end
 
   def course_subjects(subjects)
-    subjects = (subjects || []).reject(&:blank?)
+    subjects = (subjects || []).compact_blank
     return {} if subjects.blank?
 
     {

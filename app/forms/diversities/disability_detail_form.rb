@@ -44,7 +44,7 @@ module Diversities
     def new_attributes
       if disability_disclosure_form.disabled?
         fields_from_store.merge(params).symbolize_keys.tap do |f|
-          f[:disability_ids] = f[:disability_ids].reject(&:blank?).map(&:to_i) if f[:disability_ids]
+          f[:disability_ids] = f[:disability_ids].compact_blank.map(&:to_i) if f[:disability_ids]
         end
       else
         { disability_ids: [], additional_disability: nil }

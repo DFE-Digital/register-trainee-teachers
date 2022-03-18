@@ -73,7 +73,7 @@ class PersonalDetailsForm < TraineeForm
             ]
           end
 
-          nationalities.reject(&:blank?)
+          nationalities.compact_blank
             .map { |name| Nationality.find_by_name(name.downcase)&.id }.uniq.compact
         end
       end

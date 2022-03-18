@@ -54,7 +54,7 @@ module ContactDetails
 
     def formatted_address
       address = (data_model.uk? ? uk_address : international_address)
-        .reject(&:blank?)
+        .compact_blank
         .map { |item| html_escape(item) }
         .join(tag.br)
 
