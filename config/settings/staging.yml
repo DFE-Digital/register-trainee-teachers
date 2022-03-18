@@ -36,6 +36,7 @@ features:
     school_direct_tuition_fee: true
   google:
     send_data_to_big_query: true
+  integrate_with_dqt: true
 
 environment:
   name: staging
