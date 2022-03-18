@@ -14,6 +14,11 @@ variable deployment_strategy { default = "blue-green-v2" }
 
 variable web_app_hostname {}
 
+variable dttp_portal {
+  default = []
+  type = list
+}
+
 variable web_app_instances { default = 1 }
 
 variable web_app_memory { default = 512 }
@@ -44,7 +49,7 @@ locals {
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "register-worker-${local.app_name_suffix}"
   logging_service_name     = "register-logit-${local.app_name_suffix}"
-  web_app_routes           = [cloudfoundry_route.web_app_service_gov_uk_route.id, cloudfoundry_route.web_app_route.id]
+  web_app_routes           = flatten([cloudfoundry_route.web_app_service_gov_uk_route, cloudfoundry_route.web_app_route, values(cloudfoundry_route.web_app_dttp_gov_uk_route)])
   noeviction_maxmemory_policy = {
     maxmemory_policy = "noeviction"
   }
