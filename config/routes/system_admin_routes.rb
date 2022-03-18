@@ -15,7 +15,7 @@ module SystemAdminRoutes
 
         resources :providers, only: %i[index new create show edit update] do
           resources :dttp_users, only: %i[index], path: "/dttp-users"
-          resources :users do
+          resources :users, controller: "providers/users", only: %i[index new create edit update destroy] do
             member do
               get "delete"
             end
@@ -30,7 +30,6 @@ module SystemAdminRoutes
           resources :providers, controller: "user_providers", only: %i[new create]
           resources :lead_schools, controller: "user_lead_schools", only: %i[new create]
         end
-        resources :users
         resources :dttp_providers, only: %i[index show create]
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]

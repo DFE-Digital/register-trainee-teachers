@@ -1456,6 +1456,12 @@ en:
         success: User has been successfully added.
       update:
         success: User details have been successfully updated.
+    providers:
+      users: 
+        create:
+          success: User has been successfully added.
+        update: 
+          success: User details have been successfully updated.
     lead_schools:
       users:
         create:
