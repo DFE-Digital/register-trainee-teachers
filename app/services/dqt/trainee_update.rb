@@ -14,7 +14,7 @@ module Dqt
     def call
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      dqt_update("/v2/teachers/update/#{trainee.trn}", payload)
+      dqt_update("/v2/teachers/update/#{trainee.trn}?birthDate=#{trainee.date_of_birth.iso8601}", payload)
 
       trainee.update!(dqt_update_sha: trainee.sha)
     end

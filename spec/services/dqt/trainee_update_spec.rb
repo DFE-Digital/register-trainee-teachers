@@ -6,7 +6,7 @@ module Dqt
   describe TraineeUpdate do
     describe "#call" do
       let(:trainee) { create(:trainee, :completed, :with_secondary_course_details, :with_start_date, :with_degree) }
-      let(:dqt_path) { "/v2/teachers/update/#{trainee.trn}" }
+      let(:dqt_path) { "/v2/teachers/update/#{trainee.trn}?birthDate=#{trainee.date_of_birth.iso8601}" }
       let(:dqt_payload) { Params::TraineeRequest.new(trainee: trainee).to_json }
       let(:dqt_response) { { status: 204 } }
 
