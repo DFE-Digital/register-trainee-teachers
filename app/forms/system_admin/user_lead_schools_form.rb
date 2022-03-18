@@ -12,13 +12,15 @@ module SystemAdmin
       no_results_search_again_query
     ].freeze
 
+    QUERY_ERROR = I18n.t("activemodel.errors.models.user_lead_schools_form.attributes.query.length")
+
     validates :lead_school_id, presence: true, if: :school_validation_required?
 
     validates :query,
               presence: true,
               length: {
                 minimum: SchoolSearch::MIN_QUERY_LENGTH,
-                message: I18n.t("activemodel.errors.models.user_lead_schools_form.attributes.query.length"),
+                message: QUERY_ERROR,
               },
               if: -> { initial_search? }
 
@@ -26,7 +28,7 @@ module SystemAdmin
               presence: true,
               length: {
                 minimum: SchoolSearch::MIN_QUERY_LENGTH,
-                message: I18n.t("activemodel.errors.models.user_lead_schools_form.attributes.query.length"),
+                message: QUERY_ERROR,
               },
               if: -> { results_searching_again? }
 
@@ -34,7 +36,7 @@ module SystemAdmin
               presence: true,
               length: {
                 minimum: SchoolSearch::MIN_QUERY_LENGTH,
-                message: I18n.t("activemodel.errors.models.user_lead_schools_form.attributes.query.length"),
+                message: QUERY_ERROR,
               },
               if: -> { no_results_searching_again? }
 

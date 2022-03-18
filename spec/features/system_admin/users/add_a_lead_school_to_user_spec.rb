@@ -21,7 +21,7 @@ feature "creating a new lead school for a user" do
       scenario "works", js: true do
         and_i_fill_in_my_lead_school
         and_i_click_the_first_item_in_the_list
-        and_i_click_submit
+        and_i_continue
         then_i_am_taken_to_the_user_show_page
         and_i_see_the_new_lead_school
       end
@@ -29,7 +29,7 @@ feature "creating a new lead school for a user" do
       context "when a lead school is not selected" do
         it "works", js: true do
           and_i_fill_in_my_lead_school
-          and_i_click_submit
+          and_i_continue
           then_i_am_redirected_to_the_lead_schools_page
         end
       end
@@ -38,7 +38,7 @@ feature "creating a new lead school for a user" do
     context "without javascript" do
       scenario "works" do
         and_i_fill_in_my_lead_school_without_js
-        and_i_click_submit
+        and_i_continue
         then_i_am_redirected_to_the_lead_schools_page
       end
     end
@@ -67,7 +67,7 @@ private
   end
 
   def then_i_am_taken_to_the_add_lead_school_to_user_page
-    expect(add_lead_school_to_user_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}/lead_schools/new")
+    expect(add_lead_school_to_user_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}/lead-schools/new")
   end
 
   def my_lead_school_name
@@ -90,8 +90,8 @@ private
     click(add_lead_school_to_user_page.autocomplete_list_item)
   end
 
-  def and_i_click_submit
-    add_lead_school_to_user_page.submit.click
+  def and_i_continue
+    click(add_lead_school_to_user_page.submit)
   end
 
   def and_i_see_the_new_lead_school
