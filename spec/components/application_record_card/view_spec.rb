@@ -29,6 +29,10 @@ module ApplicationRecordCard
       it "renders provider name" do
         expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
       end
+
+      it "renders the record source" do
+        expect(rendered_component).to have_selector(".application-record-card__record_source", text: I18n.t("components.application_record_card.record_source.title"))
+      end
     end
 
     context "when lead school user" do

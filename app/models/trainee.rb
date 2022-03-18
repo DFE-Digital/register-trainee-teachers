@@ -351,6 +351,16 @@ class Trainee < ApplicationRecord
     hesa_id.present?
   end
 
+  def record_source
+    return "hesa" if hesa_record?
+
+    return "apply" if apply_application?
+
+    return "dttp" if  created_from_dttp?
+
+    "manual"
+  end
+
 private
 
   def value_digest

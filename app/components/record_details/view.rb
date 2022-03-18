@@ -5,18 +5,20 @@ module RecordDetails
     include SanitizeHelper
     include SummaryHelper
 
-    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :editable
+    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :show_record_source, :editable
 
-    def initialize(trainee:, last_updated_event:, show_provider: false, editable: false)
+    def initialize(trainee:, last_updated_event:, show_provider: false, show_record_source: false, editable: false)
       @trainee = trainee
       @last_updated_event = last_updated_event
       @show_provider = show_provider
       @editable = editable
+      @show_record_source = show_record_source
     end
 
     def record_detail_rows
       [
         provider_row,
+        record_source_row,
         trainee_id_row,
         region,
         trn_row,
@@ -35,6 +37,13 @@ module RecordDetails
 
       { field_label: t(".provider"),
         field_value: trainee.provider.name_and_code }
+    end
+
+    def record_source_row
+      return unless show_record_source
+
+      { field_label: t(".record_source.title"),
+        field_value: t(".record_source.#{trainee.record_source}") }
     end
 
     def trainee_id_row

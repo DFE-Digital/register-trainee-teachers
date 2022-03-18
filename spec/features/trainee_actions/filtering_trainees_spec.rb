@@ -195,7 +195,7 @@ private
   end
 
   def then_the_record_source_filter_is_not_visible
-    expect(trainee_index_page).not_to have_text(I18n.t("components.filter.record_source"))
+    expect(trainee_index_page).not_to have_text(I18n.t("activerecord.attributes.trainee.record_sources.manual"))
   end
 
   def given_a_subject_specialism_is_available_for_selection
