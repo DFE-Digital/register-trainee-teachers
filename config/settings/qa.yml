@@ -7,6 +7,9 @@ dttp:
   api_base_url: https://dttp-test.crm4.dynamics.com/api/data/v9.1
   portal_host: traineeteacherportal-dv.education.gov.uk
 
+dqt:
+  base_url: https://test-teacher-qualifications-api.education.gov.uk/
+
 features:
   home_text: true
   use_dfe_sign_in: false
