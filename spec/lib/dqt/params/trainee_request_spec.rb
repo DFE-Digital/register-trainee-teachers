@@ -15,7 +15,6 @@ module Dqt
         it "returns a hash including personal attributes" do
           expect(subject).to include({
             "trn" => trainee.trn,
-            "birthDate" => trainee.date_of_birth.iso8601,
           })
         end
 
