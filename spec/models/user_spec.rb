@@ -8,24 +8,11 @@ describe User do
       expect(subject).to validate_presence_of(:first_name)
       expect(subject).to validate_presence_of(:last_name)
       expect(subject).to validate_presence_of(:email)
-      expect(subject).to validate_presence_of(:dttp_id).with_message("Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949")
-    end
-
-    context "system_admin" do
-      before { subject.system_admin = true }
-
-      it "allows empty dttp_id" do
-        expect(subject).not_to validate_presence_of(:dttp_id).with_message("Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949")
-      end
     end
   end
 
   context "uniqueness validations" do
     subject { create(:user) }
-
-    it "validates uniqueness of dttp_id" do
-      expect(subject).to validate_uniqueness_of(:dttp_id).case_insensitive.with_message("Enter a unique DTTP ID")
-    end
 
     it "validates uniqueness of email" do
       expect(subject).to validate_uniqueness_of(:email).with_message("Enter a unique email address")
@@ -67,7 +54,6 @@ describe User do
 
   describe "indexes" do
     it { is_expected.to have_db_index(:dfe_sign_in_uid).unique(true) }
-    it { is_expected.to have_db_index(:dttp_id).unique(true) }
     it { is_expected.to have_db_index(:email).unique(true) }
   end
 

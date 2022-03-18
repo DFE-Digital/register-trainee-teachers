@@ -346,6 +346,10 @@ class Trainee < ApplicationRecord
     Trainee.where(first_names: first_names, last_name: last_name, date_of_birth: date_of_birth, email: email).count > 1
   end
 
+  def hesa_record?
+    hesa_id.present?
+  end
+
 private
 
   def value_digest
@@ -353,7 +357,7 @@ private
     # we use this to determine if we need to update DTTP. We use values only and exclude nils to avoid
     # sending updates when we add a field to the schema.
 
-    exclude_list = %w[created_at updated_at dttp_update_sha progress submission_ready]
+    exclude_list = %w[created_at updated_at dttp_update_sha dqt_update_sha progress submission_ready]
 
     trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
 

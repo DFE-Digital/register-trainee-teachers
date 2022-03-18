@@ -161,7 +161,7 @@ FactoryBot.define do
       course_subject_three { primary_specialism_subjects.third }
       course_age_range do
         Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
-          v[:levels]&.include?(course_education_phase.to_sym)
+          v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
       with_study_mode_and_course_dates
@@ -180,7 +180,7 @@ FactoryBot.define do
       course_subject_three { nil }
       course_age_range do
         Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
-          v[:levels]&.include?(course_education_phase.to_sym)
+          v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
       with_study_mode_and_course_dates
@@ -343,6 +343,7 @@ FactoryBot.define do
 
     trait :recommended_for_award do
       trn_received
+      outcome_date { Time.zone.now }
       recommended_for_award_at { Time.zone.now }
       state { "recommended_for_award" }
     end

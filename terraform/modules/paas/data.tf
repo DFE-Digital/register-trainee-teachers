@@ -22,3 +22,7 @@ data cloudfoundry_service redis {
 data cloudfoundry_domain register_education_gov_uk {
   name = "register-trainee-teachers.education.gov.uk"
 }
+
+data cloudfoundry_domain education_gov_uk {
+  name = "education.gov.uk"
+}

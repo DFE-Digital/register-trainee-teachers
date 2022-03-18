@@ -30,6 +30,10 @@ class PagesController < ApplicationController
     render(:guidance)
   end
 
+  def start_traineeteacherportal
+    render(:start_traineeteacherportal)
+  end
+
 private
 
   def organisation_not_set?

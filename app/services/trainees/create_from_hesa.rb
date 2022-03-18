@@ -7,6 +7,8 @@ module Trainees
 
     USERNAME = "HESA"
 
+    TRN_REGEX = /^(\d{6,7})$/.freeze
+
     class HesaImportError < StandardError; end
 
     def initialize(student_node:)
@@ -21,6 +23,7 @@ module Trainees
         if trainee.save!
           create_degrees!
           add_multiple_disability_text!
+          enqueue_background_jobs!
         end
       end
     rescue ActiveRecord::RecordInvalid
@@ -37,6 +40,7 @@ module Trainees
         created_from_hesa: trainee.id.blank?,
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
+        trn: trn,
       }.merge(personal_details_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
@@ -46,6 +50,7 @@ module Trainees
        .merge(funding_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
+       .compact
     end
 
     def personal_details_attributes
@@ -163,6 +168,16 @@ module Trainees
 
     def disability
       Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
+    end
+
+    def trn
+      hesa_trainee[:trn] if TRN_REGEX.match?(hesa_trainee[:trn])
+    end
+
+    def enqueue_background_jobs!
+      if FeatureService.enabled?(:integrate_with_dqt) && trainee.trn.blank?
+        Dqt::RegisterForTrnJob.perform_later(trainee)
+      end
     end
 
     def training_initiative

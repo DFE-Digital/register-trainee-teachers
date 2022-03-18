@@ -51,6 +51,7 @@ module paas {
   redis_service_plan    = var.paas_redis_service_plan
   space_name            = var.paas_space_name
   web_app_hostname      = var.paas_web_app_hostname
+  dttp_portal           = var.paas_dttp_portal
   deployment_strategy   = var.paas_deployment_strategy
   web_app_instances     = var.paas_web_app_instances
   web_app_memory        = var.paas_web_app_memory

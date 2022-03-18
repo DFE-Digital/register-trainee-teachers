@@ -1456,6 +1456,12 @@ en:
         success: User has been successfully added.
       update:
         success: User details have been successfully updated.
+    providers:
+      users: 
+        create:
+          success: User has been successfully added.
+        update: 
+          success: User details have been successfully updated.
     lead_schools:
       users:
         create:
@@ -1472,3 +1478,9 @@ en:
     schools:
       errors:
         bad_request: The query param needs to be at least %{length} characters
+  layouts:
+    trainee_record:
+      hesa_uneditable_heading: This record was imported from HESA and cannot be edited
+      body_html: <p class="govuk-body">Updates from HESA are imported regularly.</p>
+      qts_award_level: QTS
+      eyts_award_level: EYTS

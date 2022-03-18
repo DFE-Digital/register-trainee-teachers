@@ -16,6 +16,11 @@ variable paas_deployment_strategy { default = "blue-green-v2" }
 
 variable paas_web_app_hostname {}
 
+variable paas_dttp_portal {
+  default = []
+  type = list
+}
+
 variable paas_web_app_instances { default = 2 }
 
 variable paas_web_app_memory { default = 512 }

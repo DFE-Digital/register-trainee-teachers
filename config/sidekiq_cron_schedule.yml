@@ -2,6 +2,10 @@ update_trainees_to_dttp:
   cron: "0 0 * * *"
   class: "Dttp::QueueTraineeUpdatesJob"
   queue: dttp
+update_trainees_to_dqt:
+  cron: "0 0 * * *"
+  class: "Dqt::QueueTraineeUpdatesJob"
+  queue: dqt
 truncate_activerecord_session_store:
   cron: "0 0 * * *"
   class: "SessionStoreTruncateJob"
@@ -39,6 +43,6 @@ delete_empty_trainees:
   class: "DeleteEmptyTraineesJob"
   queue: default
 import_collection_from_hesa:
-  cron: "0 0 * * *"
+  cron: "0 */2 * * *"
   class: "Hesa::RetrieveCollectionJob"
   queue: default

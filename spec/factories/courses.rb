@@ -5,7 +5,7 @@ FactoryBot.define do
     transient do
       age_range do
         Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
-          v[:levels]&.include?(level)
+          v[:option] == :main && v[:levels]&.include?(level)
         end.keys.sample
       end
     end

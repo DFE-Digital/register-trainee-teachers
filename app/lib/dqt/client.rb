@@ -14,6 +14,7 @@ module Dqt
 
     GET_SUCCESSES = [200].freeze
     PUT_SUCCESSES = [200, 201].freeze
+    PATCH_SUCCESSES = [204].freeze
 
     def self.get(...)
       response = Request.get(...)
@@ -27,8 +28,14 @@ module Dqt
       handle_response(response: response, statuses: PUT_SUCCESSES)
     end
 
+    def self.patch(...)
+      response = Request.patch(...)
+
+      handle_response(response: response, statuses: PATCH_SUCCESSES)
+    end
+
     def self.handle_response(response:, statuses:)
-      return JSON.parse(response) if statuses.include?(response.code)
+      return JSON.parse(response.body) if statuses.include?(response.code)
 
       raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}")
     end

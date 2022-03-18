@@ -9,12 +9,13 @@ module Trainees
     let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }
     let(:create_custom_state) { "implemented where necessary" }
-    let(:hesa_stub_attributes) { {} }
+    let(:hesa_stub_attributes) { { trn: "8080808" } }
     let(:trainee_degree) { trainee.degrees.first }
 
     subject(:trainee) { Trainee.first }
 
     before do
+      allow(Dqt::RegisterForTrnJob).to receive(:perform_later)
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:school, urn: student_attributes[:lead_school_urn])
@@ -78,6 +79,14 @@ module Trainees
         expect(trainee_degree.other_grade).to be_nil
         expect(trainee_degree.country).to eq("Canada")
       end
+
+      context "when the trn does not exist", feature_integrate_with_dqt: true do
+        let(:hesa_stub_attributes) { {} }
+
+        it "enqueues Dqt::RegisterForTrnJob" do
+          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(Trainee.last)
+        end
+      end
     end
 
     context "trainee doesn't exist" do
@@ -91,12 +100,28 @@ module Trainees
     context "trainee already exists and didn't come from HESA" do
       let(:hesa_disability_codes) { Hesa::CodeSets::Disabilities::MAPPING.invert }
       let(:hesa_ethnicity_codes) { Hesa::CodeSets::Ethnicities::MAPPING.invert }
-      let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id]) }
+      let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id], trn: "5050505") }
 
       describe "#created_from_hesa" do
         subject { trainee.created_from_hesa }
 
         it { is_expected.to be(false) }
+      end
+
+      context "when the trainee had a previously saved trn" do
+        context "and the trn exists" do
+          it "updates the trn" do
+            expect(trainee.trn).to eq("8080808")
+          end
+        end
+
+        context "and the trn does not exist" do
+          let(:hesa_stub_attributes) { {} }
+
+          it "does not overwrite the trn" do
+            expect(trainee.trn).to eq("5050505")
+          end
+        end
       end
 
       context "when ethnicity is missing" do

@@ -8,22 +8,19 @@ feature "Creating a new user" do
 
   before do
     given_i_am_authenticated(user: user)
-    and_a_provider_exists
-    when_i_visit_the_provider_index_page
-    and_i_click_on_the_provider
-    then_i_am_taken_to_the_provider_show_page
+    when_i_visit_the_user_index_page
     and_i_click_on_add_a_user
   end
 
-  describe "Adding a user to a provider" do
+  describe "Adding a user" do
     context "Valid details" do
-      scenario "Adding a new user record associated with a provider" do
+      scenario "Adding a new user record without organisation association" do
         and_i_fill_in_first_name
         and_i_fill_in_last_name
         and_i_fill_in_email
         and_i_fill_in_dttp_id
         when_i_save_the_form
-        then_i_am_taken_to_the_provider_show_page
+        then_i_am_taken_to_the_user_show_page
       end
     end
 
@@ -37,24 +34,16 @@ feature "Creating a new user" do
 
 private
 
-  def when_i_visit_the_provider_index_page
-    providers_index_page.load
+  def when_i_visit_the_user_index_page
+    users_index_page.load
   end
 
-  def and_a_provider_exists
-    provider
-  end
-
-  def and_i_click_on_the_provider
-    providers_index_page.provider_cards.find { |provider_card| provider_card.name.text == provider.name }.name.click
-  end
-
-  def then_i_am_taken_to_the_provider_show_page
-    expect(provider_show_page).to be_displayed(id: provider.id)
+  def then_i_am_taken_to_the_user_show_page
+    expect(users_show_page).to have_text(I18n.t("system_admin.users.create.success"))
   end
 
   def and_i_click_on_add_a_user
-    provider_show_page.add_a_user.click
+    users_index_page.add_a_user.click
   end
 
   def and_i_fill_in_first_name
@@ -79,9 +68,5 @@ private
 
   def then_i_should_see_the_error_summary
     expect(new_user_page.error_summary).to be_visible
-  end
-
-  def provider
-    @provider ||= create(:provider)
   end
 end

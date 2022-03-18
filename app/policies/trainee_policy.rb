@@ -83,6 +83,10 @@ class TraineePolicy
     user_is_system_admin? || user.provider?
   end
 
+  def hide_progress_tag?
+    user.lead_school? || trainee.hesa_record?
+  end
+
   alias_method :index?, :show?
 
   alias_method :edit?, :update?
@@ -96,7 +100,7 @@ private
   end
 
   def write?
-    user_is_system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
+    user_is_system_admin? || (!trainee.hesa_record? && user_in_provider_context? && trainee.awaiting_action?)
   end
 
   def user_in_provider_context?

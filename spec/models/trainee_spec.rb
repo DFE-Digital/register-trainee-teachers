@@ -303,6 +303,14 @@ describe Trainee do
           }.not_to(change { subject.sha })
         end
       end
+
+      context "when the dqt_update_sha is updated" do
+        it "doesn't alter the sha" do
+          expect {
+            subject.update(dqt_update_sha: subject.sha)
+          }.not_to(change { subject.sha })
+        end
+      end
     end
 
     describe "#training_route_manager" do

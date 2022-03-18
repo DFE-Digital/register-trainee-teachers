@@ -5,6 +5,7 @@ dttp:
   back_office_url: https://dttp-test.crm4.dynamics.com/
   scope: https://dttp-test.crm4.dynamics.com/.default
   api_base_url: https://dttp-test.crm4.dynamics.com/api/data/v9.1
+  portal_host: traineeteacherportal-dv.education.gov.uk
 
 features:
   home_text: true
