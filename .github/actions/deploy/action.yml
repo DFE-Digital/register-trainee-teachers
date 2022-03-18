@@ -118,14 +118,14 @@ runs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ github.token }}
-        ref:   ${{ github.ref }}
+        ref:   ${{ env.DEPLOY_REF }}
         checkName: smoke-tests-${{ inputs.environment }}
         timeoutSeconds:  300
         intervalSeconds: 15
 
     - name: Stop when smoke tests fail
       shell: bash
-      if: steps.wait_for_smoke_tests.outputs.conclusion == 'failure'
+      if: steps.wait_for_smoke_tests.outputs.conclusion != 'success'
       run: exit 1
 
     - name: Update ${{ env.DEPLOY_ENV }} status
