@@ -13,7 +13,7 @@ module Trainees
 
         Dttp::DeferJob.perform_later(trainee)
 
-        flash[:success] = "Trainee deferred"
+        flash[:success] = I18n.t("flash.trainee_deferred")
         redirect_to(trainee_path(trainee))
       end
     end
