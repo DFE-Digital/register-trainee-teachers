@@ -60,6 +60,7 @@ module Trainees
           end_day: course_end_date.day,
           end_month: course_end_date.month,
           end_year: course_end_date.year,
+          course_uuid: course_uuid,
         }, user: current_user).stash_or_save!
 
         redirect_to(course_confirmation_path)
