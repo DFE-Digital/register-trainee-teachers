@@ -48,11 +48,13 @@ qa:
 	$(eval DEPLOY_ENV=qa)
 	$(eval SPACE=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
 
 staging:
 	$(eval DEPLOY_ENV=staging)
 	$(eval SPACE=bat-staging)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
+	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
 
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
@@ -60,6 +62,7 @@ production:
 	$(eval SPACE=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 	$(eval HOST_NAME=www)
+	$(eval DTTP_HOSTNAME=traineeteacherportal)
 
 dttpimport:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
@@ -126,13 +129,17 @@ enable-maintenance: ## make qa enable-maintenance / make production enable-maint
 	cf target -s ${SPACE}
 	cd service_unavailable_page && cf push
 	cf map-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf map-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
 	echo Waiting 5s for route to be registered... && sleep 5
 	cf unmap-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf unmap-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
 
 disable-maintenance: ## make qa disable-maintenance / make production disable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
 	cf target -s ${SPACE}
 	cf map-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf map-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
 	echo Waiting 5s for route to be registered... && sleep 5
 	cf unmap-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf unmap-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
 	cf delete register-unavailable -r -f
