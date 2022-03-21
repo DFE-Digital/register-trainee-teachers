@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_18_111733) do
+ActiveRecord::Schema.define(version: 2022_03_18_112417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -341,6 +341,23 @@ ActiveRecord::Schema.define(version: 2022_03_18_111733) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "state"
     t.index ["state"], name: "index_hesa_collection_requests_on_state"
+  end
+
+  create_table "hesa_metadata", force: :cascade do |t|
+    t.bigint "trainee_id"
+    t.integer "study_length"
+    t.string "study_length_unit"
+    t.string "itt_aim"
+    t.string "itt_qualification_aim"
+    t.string "fundability"
+    t.string "service_leaver"
+    t.string "course_programme_title"
+    t.integer "placement_school_urn"
+    t.date "pg_apprenticeship_start_date"
+    t.string "year_of_course"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trainee_id"], name: "index_hesa_metadata_on_trainee_id"
   end
 
   create_table "lead_school_users", force: :cascade do |t|

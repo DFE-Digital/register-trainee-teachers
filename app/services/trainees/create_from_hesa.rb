@@ -22,6 +22,7 @@ module Trainees
 
         if trainee.save!
           create_degrees!
+          store_hesa_metadata!
           add_multiple_disability_text!
           enqueue_background_jobs!
         end
@@ -193,6 +194,41 @@ module Trainees
 
     def create_degrees!
       ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
+    end
+
+    def store_hesa_metadata!
+      hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee: trainee)
+      hesa_metadatum.assign_attributes(study_length: hesa_trainee[:study_length],
+                                       study_length_unit: study_length_unit,
+                                       itt_aim: itt_aim,
+                                       itt_qualification_aim: itt_qualification_aim,
+                                       fundability: fundability,
+                                       service_leaver: service_leaver,
+                                       course_programme_title: hesa_trainee[:course_programme_title]&.strip,
+                                       placement_school_urn: hesa_trainee[:placements]&.first&.fetch(:school_urn),
+                                       pg_apprenticeship_start_date: hesa_trainee[:pg_apprenticeship_start_date],
+                                       year_of_course: hesa_trainee[:year_of_course])
+      hesa_metadatum.save
+    end
+
+    def study_length_unit
+      Hesa::CodeSets::StudyLengthUnits::MAPPING[hesa_trainee[:study_length_unit]]
+    end
+
+    def itt_aim
+      Hesa::CodeSets::IttAims::MAPPING[hesa_trainee[:itt_aim]]
+    end
+
+    def itt_qualification_aim
+      Hesa::CodeSets::IttQualificationAims::MAPPING[hesa_trainee[:itt_qualification_aim]]
+    end
+
+    def fundability
+      Hesa::CodeSets::FundCodes::MAPPING[hesa_trainee[:fund_code]]
+    end
+
+    def service_leaver
+      Hesa::CodeSets::ServiceLeavers::MAPPING[hesa_trainee[:service_leaver]]
     end
 
     def trainee_status

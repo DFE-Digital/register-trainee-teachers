@@ -37,7 +37,17 @@ module Hesa
             training_route: student_attributes["F_ENTRYRTE"],
             nationality: student_attributes["F_NATION"],
             hesa_updated_at: student_attributes["F_STATUS_TIMESTAMP"],
+            itt_aim: student_attributes["F_ITTAIM"],
+            itt_qualification_aim: student_attributes["F_QLAIM"],
+            fund_code: student_attributes["F_FUNDCODE"],
+            study_length: student_attributes["F_SPLENGTH"],
+            study_length_unit: student_attributes["F_UNITLGTH"],
+            service_leaver: student_attributes["F_SERLEAVE"],
+            course_programme_title: student_attributes["F_CTITLE"],
+            pg_apprenticeship_start_date: student_attributes["F_PGAPPSTDT"],
+            year_of_course: student_attributes["F_YEARPRG"],
             degrees: to_degrees_attributes(student_attributes["PREVIOUSQUALIFICATIONS"]),
+            placements: to_placement_attributes(student_attributes["PLACEMENTS"]),
           }
         end
 
@@ -53,6 +63,14 @@ module Hesa
               institution: qualification["F_DEGEST"],
               grade: qualification["F_DEGCLSS"],
               country: qualification["F_DEGCTRY"],
+            }
+          end
+        end
+
+        def to_placement_attributes(placements)
+          [placements&.values].flatten.compact.map do |placement|
+            {
+              school_urn: placement["F_PLMNTSCH"],
             }
           end
         end

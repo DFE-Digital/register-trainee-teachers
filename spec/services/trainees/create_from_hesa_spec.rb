@@ -81,6 +81,18 @@ module Trainees
         expect(trainee_degree.country).to eq("Canada")
       end
 
+      it "creates a trainee HESA metadata record" do
+        expect(trainee.hesa_metadatum.study_length).to eq(3)
+        expect(trainee.hesa_metadatum.study_length_unit).to eq("years")
+        expect(trainee.hesa_metadatum.itt_aim).to eq("Both professional status and academic award")
+        expect(trainee.hesa_metadatum.itt_qualification_aim).to eq("Masters, not by research")
+        expect(trainee.hesa_metadatum.fundability).to eq("Eligible for funding from the DfE")
+        expect(trainee.hesa_metadatum.service_leaver).to eq("Trainee has not left full time employment in the British Army, Royal Air Force or Royal Navy within 5 years of beginning the programme")
+        expect(trainee.hesa_metadatum.course_programme_title).to eq("FE Course 1")
+        expect(trainee.hesa_metadatum.placement_school_urn).to eq(900000)
+        expect(trainee.hesa_metadatum.year_of_course).to eq("0")
+      end
+
       context "when the trn does not exist", feature_integrate_with_dqt: true do
         let(:hesa_stub_attributes) { {} }
 

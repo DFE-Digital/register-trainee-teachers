@@ -42,6 +42,15 @@ module Hesa
             training_route: "02",
             nationality: "NZ",
             hesa_updated_at: "17/10/2016 14:27:04",
+            itt_aim: "202",
+            itt_qualification_aim: "032",
+            course_programme_title: "FE Course 1",
+            pg_apprenticeship_start_date: nil,
+            fund_code: "7",
+            service_leaver: "01",
+            study_length: "3",
+            study_length_unit: "1",
+            year_of_course: "0",
             degrees: [{
               country: "CA",
               grade: "01",
@@ -50,6 +59,7 @@ module Hesa
               subject: nil,
               degree_type: "999",
             }],
+            placements: [{ school_urn: "900000" }],
           })
         end
       end

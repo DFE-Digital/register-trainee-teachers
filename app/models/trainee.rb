@@ -31,6 +31,8 @@ class Trainee < ApplicationRecord
   has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
   has_many :disabilities, through: :trainee_disabilities
 
+  has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
+
   attribute :progress, Progress.to_type
 
   delegate :award_type,
