@@ -33,7 +33,6 @@ module Hesa
             commencement_date: nil,
             training_initiative: "C",
             hesa_id: "0310261553101",
-            international_address: "XF",
             reason_for_leaving: nil,
             end_date: nil,
             disability: "00",

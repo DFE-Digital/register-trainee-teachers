@@ -29,7 +29,6 @@ module Hesa
             commencement_date: student_attributes["F_ITTCOMDATE"],
             training_initiative: student_attributes["F_INITIATIVES1"],
             hesa_id: student_attributes["F_HUSID"],
-            international_address: student_attributes["F_DOMICILE"],
             disability: student_attributes["F_DISABLE"],
             end_date: student_attributes["F_ENDDATE"],
             reason_for_leaving: student_attributes["F_RSNEND"],
