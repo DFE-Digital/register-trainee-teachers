@@ -99,7 +99,7 @@ en:
       reinstated_before_starting: Trainee returned before their <abbr title="initial teacher training">ITT</abbr> started
   components:
     admin_feature:
-      title: Admin feature
+      title: Admin
     heading:
       apply_draft:
         registration_data_from_apply: Registration data from Apply
