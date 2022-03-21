@@ -12,7 +12,7 @@ module Trainees
         trainee.withdraw!
         Dttp::WithdrawJob.perform_later(trainee)
 
-        flash[:success] = "Trainee withdrawn"
+        flash[:success] = I18n.t("flash.trainee_withdrawn")
         redirect_to(trainee_path(trainee))
       end
     end

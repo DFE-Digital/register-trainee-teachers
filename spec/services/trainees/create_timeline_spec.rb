@@ -33,7 +33,7 @@ module Trainees
 
         context "and a subsequent update is made" do
           before do
-            Timecop.travel(Time.zone.now + 1.hour) { update_name }
+            Timecop.travel(1.hour.from_now) { update_name }
             reload_audits
           end
 

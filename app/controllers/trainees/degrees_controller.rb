@@ -38,7 +38,7 @@ module Trainees
     def destroy
       @degree_form.destroy!
 
-      flash[:success] = "Trainee degree deleted"
+      flash[:success] = I18n.t("flash.trainee_degree_deleted")
 
       redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
     end

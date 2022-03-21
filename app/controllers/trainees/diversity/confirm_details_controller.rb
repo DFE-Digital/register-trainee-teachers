@@ -24,7 +24,7 @@ module Trainees
 
           toggle_trainee_progress_field if trainee.draft?
 
-          flash[:success] = "Trainee diversity updated"
+          flash[:success] = I18n.t("flash.trainee_diversity_updated")
 
           redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
         else

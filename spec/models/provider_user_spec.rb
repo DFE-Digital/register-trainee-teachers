@@ -6,9 +6,6 @@ RSpec.describe ProviderUser, type: :model do
   subject { create(:provider_user) }
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:provider) }
-    it { is_expected.to validate_presence_of(:user) }
-
     it { is_expected.to validate_uniqueness_of(:user).scoped_to(:provider_id) }
   end
 

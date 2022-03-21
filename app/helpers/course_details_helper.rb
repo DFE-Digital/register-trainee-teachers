@@ -28,15 +28,15 @@ module CourseDetailsHelper
   end
 
   def subjects_for_summary_view(subject_one, subject_two, subject_three)
-    primary_subjects = PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.key([subject_one, subject_two, subject_three].reject(&:blank?))
+    primary_subjects = PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.key([subject_one, subject_two, subject_three].compact_blank)
 
     return primary_subjects if primary_subjects.present?
 
     subject_one = PublishSubjects::PRIMARY if subject_one.eql?(CourseSubjects::PRIMARY_TEACHING)
 
-    additional_subjects = [subject_two, subject_three].reject(&:blank?).join(" and ")
+    additional_subjects = [subject_two, subject_three].compact_blank.join(" and ")
 
-    [subject_one&.upcase_first, additional_subjects].reject(&:blank?).join(" with ")
+    [subject_one&.upcase_first, additional_subjects].compact_blank.join(" with ")
   end
 
   def format_language(language)

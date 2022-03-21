@@ -267,7 +267,7 @@ class Trainee < ApplicationRecord
   end
 
   def course_subjects
-    [course_subject_one, course_subject_two, course_subject_three].reject(&:blank?)
+    [course_subject_one, course_subject_two, course_subject_three].compact_blank
   end
 
   def route_data_manager

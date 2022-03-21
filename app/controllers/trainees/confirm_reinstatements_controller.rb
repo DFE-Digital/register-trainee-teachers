@@ -13,7 +13,7 @@ module Trainees
 
         Dttp::ReinstateJob.perform_later(trainee)
 
-        flash[:success] = "Trainee reinstated"
+        flash[:success] = I18n.t("flash.trainee_reinstated")
         redirect_to(trainee_path(trainee))
       end
     end

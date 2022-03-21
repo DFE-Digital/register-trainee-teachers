@@ -6,6 +6,12 @@ en:
   cancel: Cancel
   change: Change
   continue: Continue
+  flash:
+    trainee_deferred: Trainee deferred
+    trainee_degree_deleted: Trainee degree deleted
+    trainee_diversity_updated: Trainee diversity updated
+    trainee_reinstated: Trainee reinstated
+    trainee_withdrawn: Trainee withdrawn
   update_record: Update record
   return_home: Return home
   mark_as_completed: I have %{action} this section

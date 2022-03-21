@@ -62,7 +62,7 @@ module Dqt
     context "time_out after has passed" do
       it "doesn't queue another job" do
         expect(SlackNotifierService).to receive(:call)
-        described_class.perform_now(trn_request, Time.zone.now - 1.minute)
+        described_class.perform_now(trn_request, 1.minute.ago)
         expect(RetrieveTrnJob).not_to have_been_enqueued
       end
     end
