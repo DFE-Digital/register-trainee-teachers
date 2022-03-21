@@ -247,7 +247,7 @@ class Trainee < ApplicationRecord
   def available_courses
     return provider.courses.order(:name) if apply_application?
 
-    provider.courses.where(route: training_route) if TRAINING_ROUTES_FOR_COURSE.keys.include?(training_route)
+    provider.courses.where(route: training_route).order(:name) if TRAINING_ROUTES_FOR_COURSE.keys.include?(training_route)
   end
 
   def clear_disabilities
