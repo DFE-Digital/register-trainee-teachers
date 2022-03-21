@@ -35,6 +35,11 @@ FactoryBot.define do
       name { PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING.keys.sample }
     end
 
+    trait :with_full_time_dates do
+      full_time_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
+      full_time_end_date { Faker::Date.in_date_period(month: 8, year: current_recruitment_cycle_year + 1) }
+    end
+
     factory :course_with_unmappable_subject do
       transient do
         subjects_count { 1 }
