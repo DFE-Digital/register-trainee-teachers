@@ -13,6 +13,9 @@ dfe_sign_in:
   # URL of the users profile
   profile: https://pp-profile.signin.education.gov.uk
 
+dqt:
+  base_url: https://qualified-teachers-api-preprod.london.cloudapps.digital/
+
 features:
   basic_auth: false
   sync_from_dttp: true
@@ -33,6 +36,7 @@ features:
     school_direct_tuition_fee: true
   google:
     send_data_to_big_query: true
+  integrate_with_dqt: true
 
 environment:
   name: staging
