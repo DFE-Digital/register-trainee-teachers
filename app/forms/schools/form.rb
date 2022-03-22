@@ -95,7 +95,7 @@ module Schools
     end
 
     def both_fields_are_not_selected
-      if school_id.present? && params[:query].present? && school_not_applicable?
+      if params[:query].present? && school_not_applicable?
         errors.add(:query, :both_fields_are_present)
       end
     end

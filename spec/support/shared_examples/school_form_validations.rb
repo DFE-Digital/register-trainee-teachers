@@ -40,4 +40,15 @@ RSpec.shared_examples "school form validations" do |school_id_key|
       )
     end
   end
+
+  context "school not chosen, but query present and also marked as not applicable" do
+    let(:form_name) { school_id_key.sub("id", "form") }
+    let(:params) { { school_id_key.sub("id", "not_applicable") => "1", query: "school" } }
+
+    it "returns an error" do
+      expect(subject.errors[:query]).to include(
+        I18n.t("activemodel.errors.models.schools/#{form_name}.attributes.query.both_fields_are_present"),
+      )
+    end
+  end
 end
