@@ -152,7 +152,6 @@ shared:
     - awarded_at
     - bursary_tier
     - commencement_date
-    - course_code
     - itt_end_date
     - course_max_age
     - course_min_age
@@ -206,7 +205,6 @@ shared:
     - dttp_id
     - id
     - last_signed_in_at
-    - provider_id
     - system_admin
     - updated_at
     - welcome_email_sent_at
