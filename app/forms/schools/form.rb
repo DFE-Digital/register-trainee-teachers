@@ -12,8 +12,6 @@ module Schools
 
     attr_accessor(*NON_TRAINEE_FIELDS)
 
-    validates :school_id, presence: true, if: :school_validation_required?
-
     validate :both_fields_are_not_selected
 
     validates :query,

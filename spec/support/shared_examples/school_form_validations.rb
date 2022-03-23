@@ -24,8 +24,8 @@ RSpec.shared_examples "school form validations" do |school_id_key|
     let(:params) { { "results_search_again_query" => "", school_id_key => "", "search_results_found" => "true" } }
 
     it "returns an error" do
-      expect(subject.errors[:school_id]).to include(
-        I18n.t("activemodel.errors.models.schools/#{form_name}.attributes.school_id.blank"),
+      expect(subject.errors[school_id_key]).to include(
+        I18n.t("activemodel.errors.models.schools/#{form_name}.attributes.#{school_id_key}.blank"),
       )
     end
   end

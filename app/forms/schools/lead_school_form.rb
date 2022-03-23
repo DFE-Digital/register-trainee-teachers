@@ -9,6 +9,8 @@ module Schools
 
     attr_accessor(*FIELDS)
 
+    validates :lead_school_id, presence: true, if: :school_validation_required?
+
     alias_method :school_id, :lead_school_id
     alias_method :school_not_applicable, :lead_school_not_applicable
 
