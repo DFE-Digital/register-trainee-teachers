@@ -61,6 +61,8 @@ module Trainees
     end
 
     def call
+      return if trainee_association_imported_from_dttp?
+
       if action == "create"
         creation_events = [
           TimelineEvent.new(
@@ -189,6 +191,14 @@ module Trainees
 
     def hesa_or_dttp_user?
       IMPORT_SOURCES.include?(user)
+    end
+
+    def dttp_user?
+      user == "DTTP"
+    end
+
+    def trainee_association_imported_from_dttp?
+      auditable_type != "Trainee" && action == "create" && dttp_user?
     end
 
     def provider_name
