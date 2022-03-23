@@ -23,7 +23,7 @@ jobs:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
-    outputs: 
+    outputs:
       docker_image: ${{ env.DOCKER_IMAGE }}
       image_tag: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
@@ -79,10 +79,48 @@ jobs:
         SLACK_MESSAGE: ':alert: Build failure on ${{ github.event.inputs.environment }} :sadparrot:'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
+  audit:
+    name: Audit
+    needs: [build]
+    outputs:
+      image_tag: ${{ needs.build.outputs.image_tag }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set environment variables
+      run: |
+        echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
+
+    - name: Pull docker images
+      run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
+
+    - name: Bring images up
+      run: |
+        docker-compose up --no-build -d
+
+    - name: Install git
+      run: docker-compose exec -T web /bin/sh -c 'apk add git'
+
+    - name: Bundle audit
+      run: docker-compose exec -T web /bin/sh -c 'bundle-audit check --update'
+
+    - name: Check for Failure
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_COLOR: '#ef5343'
+        SLACK_ICON_EMOJI: ':lock:'
+        SLACK_USERNAME: Register Trainee Teachers
+        SLACK_TITLE: Audit Failure
+        SLACK_MESSAGE: ':alert: Audit failure on ${{ github.event.inputs.environment }} :sadparrot:'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
   test:
     name: Test
     needs: [build]
-    outputs: 
+    outputs:
       image_tag: ${{ needs.build.outputs.image_tag }}
     runs-on: ubuntu-latest
     steps:
@@ -164,7 +202,7 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     strategy:
-      matrix: 
+      matrix:
         environment: [qa,staging,production,sandbox,dttpimport]
       max-parallel: 1
     steps:
