@@ -119,7 +119,11 @@ module Features
     end
 
     def add_lead_school_to_user_page
-      @add_provider_to_user_page ||= PageObjects::Users::AddLeadSchool.new
+      @add_lead_school_to_user_page ||= PageObjects::Users::AddLeadSchool.new
+    end
+
+    def user_lead_schools_page
+      @user_lead_schools_page ||= PageObjects::Users::LeadSchools.new
     end
 
     def provider_show_page

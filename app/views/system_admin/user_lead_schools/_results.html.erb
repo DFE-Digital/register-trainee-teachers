@@ -1,0 +1,34 @@
+<%= f.govuk_error_summary %>
+
+<%= f.hidden_field :lead_school_id, value: nil %>
+<%= f.hidden_field :search_results_found, value: "true" %>
+
+<%= f.govuk_radio_buttons_fieldset :lead_school_id,
+  legend: { text: t("components.page_titles.trainees.lead_schools.index"), tag: "h1", size: "l" },
+  hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} ‘#{query}’" } do %>
+    <% @school_search.schools.each_with_index do |school, index| %>
+      <%= f.govuk_radio_button :lead_school_id, school.id,
+                              checked: false,
+                              label: { text: school.name },
+                              link_errors: index.zero?,
+                              hint: { text: school_urn_and_location(school) } %>
+    <% end %>
+
+  <%= f.govuk_radio_divider %>
+
+  <%= f.govuk_radio_button :lead_school_id,
+                          :results_search_again,
+                          label: { text: t("components.page_titles.search_schools.search_button") } do %>
+    <%= f.govuk_text_field :results_search_again_query,
+                          label: { text: t("components.page_titles.search_schools.search_hint") },
+                          width: "three-quarters" %>
+  <% end %>
+<% end %>
+
+<%= render SchoolResultNotice::View.new(
+  search_query: query,
+  search_limit: @school_search.limit,
+  search_count: @school_search.schools.unscope(:limit).count,
+) %>
+
+<%= f.govuk_submit %>
