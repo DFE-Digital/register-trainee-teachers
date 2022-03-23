@@ -88,6 +88,14 @@ module Dqt
             })
           end
         end
+
+        context "when trainee has no degree" do
+          let(:trainee) { create(:trainee, :early_years_undergrad) }
+
+          it "doesn't include qualification" do
+            expect(subject["qualification"]).to be_nil
+          end
+        end
       end
     end
   end
