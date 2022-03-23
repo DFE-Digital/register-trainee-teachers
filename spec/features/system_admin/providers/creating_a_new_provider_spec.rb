@@ -5,6 +5,7 @@ require "rails_helper"
 feature "Creating a new provider" do
   let(:user) { create(:user, system_admin: true) }
   let(:dttp_id) { SecureRandom.uuid }
+  let(:ukprn) { Faker::Number.number(digits: 8) }
 
   before do
     given_i_am_authenticated(user: user)
@@ -15,6 +16,7 @@ feature "Creating a new provider" do
   scenario "submitting with valid parameters" do
     and_i_fill_in_name
     and_i_fill_in_dttp_id
+    and_i_fill_in_ukprn
     and_i_select_apply_sync_enabled
     and_i_submit_the_form
     then_i_should_see_the_provider_index_page
@@ -43,6 +45,10 @@ private
     new_provider_page.dttp_id.set(dttp_id)
   end
 
+  def and_i_fill_in_ukprn
+    new_provider_page.ukprn.set(ukprn)
+  end
+
   def and_i_select_apply_sync_enabled
     new_provider_page.apply_sync_enabled.set(true)
   end
@@ -63,6 +69,9 @@ private
     )
     expect(new_provider_page).to have_text(
       I18n.t("#{translation_key_prefix}.dttp_id.invalid"),
+    )
+    expect(new_provider_page).to have_text(
+      I18n.t("#{translation_key_prefix}.ukprn.invalid"),
     )
   end
 end
