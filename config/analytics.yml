@@ -8,12 +8,12 @@ shared:
     - updated_at
     - user_id
   apply_applications:
-    - id
-    - apply_id
     - accredited_body_code
+    - apply_id
+    - created_at
+    - id
     - recruitment_cycle_year
     - state
-    - created_at
     - updated_at
   allocation_subjects:
     - created_at
@@ -26,23 +26,23 @@ shared:
     - course_length
     - created_at
     - duration_in_years
+    - full_time_end_date
+    - full_time_start_date
     - id
     - level
     - max_age
     - min_age
     - name
-    - qualification
-    - route
+    - part_time_end_date
+    - part_time_start_date
     - published_start_date
+    - qualification
+    - recruitment_cycle_year
+    - route
     - study_mode
     - summary
     - updated_at
-    - recruitment_cycle_year
     - uuid
-    - full_time_start_date
-    - full_time_end_date
-    - part_time_start_date
-    - part_time_end_date
   course_subjects:
     - id
     - course_id
@@ -81,17 +81,17 @@ shared:
     - updated_at
     - urn
   funding_methods:
+    - academic_cycle_id
+    - allocation_subject_id
     - amount
+    - bursary_id
     - created_at
+    - created_at
+    - funding_type
     - id
     - training_route
     - updated_at
-    - allocation_subject_id
-    - bursary_id
-    - created_at
     - updated_at
-    - funding_type
-    - academic_cycle_id
   funding_method_subjects:
     - allocation_subject_id
     - created_at
@@ -121,19 +121,19 @@ shared:
   schools:
     - close_date
     - created_at
+    - created_at
+    - data
+    - id
     - id
     - lead_school
     - name
     - open_date
     - postcode
+    - session_id
     - town
     - updated_at
-    - urn
-    - created_at
-    - data
-    - id
-    - session_id
     - updated_at
+    - urn
   subject_specialisms:
     - allocation_subject_id
     - created_at
@@ -149,26 +149,35 @@ shared:
   trainees:
     - apply_application_id
     - applying_for_bursary
+    - applying_for_grant
+    - applying_for_scholarship
     - awarded_at
     - bursary_tier
     - commencement_date
-    - course_code
-    - itt_end_date
+    - commencement_status
+    - course_education_phase
     - course_max_age
     - course_min_age
-    - itt_start_date
     - course_subject_one
     - course_subject_three
     - course_subject_two
+    - course_uuid
     - created_at
     - defer_date
+    - discarded_at
     - dormancy_dttp_id
     - dttp_id
     - dttp_update_sha
+    - ebacc
     - employing_school_id
+    - employing_school_not_applicable
     - gender
+    - hesa_id
     - id
+    - itt_end_date
+    - itt_start_date
     - lead_school_id
+    - lead_school_not_applicable
     - locale_code
     - outcome_date
     - placement_assignment_dttp_id
@@ -176,10 +185,12 @@ shared:
     - progress
     - provider_id
     - recommended_for_award_at
+    - region
     - reinstate_date
     - slug
     - state
     - study_mode
+    - submission_ready
     - submitted_for_trn_at
     - training_initiative
     - training_route
@@ -187,18 +198,6 @@ shared:
     - updated_at
     - withdraw_date
     - withdraw_reason
-    - applying_for_grant
-    - applying_for_scholarship
-    - commencement_status
-    - course_education_phase
-    - course_uuid
-    - discarded_at
-    - ebacc
-    - employing_school_not_applicable
-    - lead_school_not_applicable
-    - region
-    - submission_ready
-    - hesa_id
   users:
     - created_at
     - dfe_sign_in_uid
@@ -206,10 +205,9 @@ shared:
     - dttp_id
     - id
     - last_signed_in_at
-    - provider_id
     - system_admin
     - updated_at
     - welcome_email_sent_at
   hesa_collection_requests:
-    - state
     - requested_at
+    - state
