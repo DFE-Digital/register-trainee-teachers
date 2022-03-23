@@ -1181,7 +1181,6 @@ en:
           attributes:
             query:
               blank: Enter a school unique reference number (URN), name or postcode
-              both_fields_are_present: Select a lead school or select lead school not applicable
             lead_school_id:
               blank: Select a lead school or search again
             results_search_again_query:

@@ -49,7 +49,7 @@ module Trainees
     end
 
     def index_or_edit_page
-      @employing_school_form.search_results_found? || @employing_school_form.no_results_searching_again?? :index : :edit
+      @employing_school_form.search_results_found? || @employing_school_form.no_results_searching_again? ? :index : :edit
     end
 
     def authorize_trainee
