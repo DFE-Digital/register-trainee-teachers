@@ -61,7 +61,7 @@ module Dqt
           "genderCode" => GENDER_CODES[trainee.gender.to_sym],
           "initialTeacherTraining" => initial_teacher_training_params,
           "qualification" => qualification_params,
-        }
+        }.compact
       end
 
       def address_params
@@ -101,6 +101,8 @@ module Dqt
       end
 
       def qualification_params
+        return if trainee.degrees.empty?
+
         {
           "providerUkprn" => nil,
           "countryCode" => country_codes[degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country],
