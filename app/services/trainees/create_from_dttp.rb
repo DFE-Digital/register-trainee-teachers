@@ -384,8 +384,7 @@ module Trainees
     end
 
     def enqueue_background_jobs!
-      Dttp::RetrieveTrnJob.perform_with_default_delay(trainee) if trainee.submitted_for_trn?
-      Dttp::RetrieveAwardJob.perform_with_default_delay(trainee) if trainee.recommended_for_award?
+      Dqt::RetrieveTrnJob.perform_later(trainee) if trainee.submitted_for_trn?
     end
 
     def funding_attributes
