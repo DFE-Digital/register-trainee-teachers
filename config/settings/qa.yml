@@ -29,7 +29,6 @@ features:
     opt_in_undergrad: true
   google:
     send_data_to_big_query: true
-  user_can_have_multiple_organisations: true
 
 pagination:
   records_per_page: 30
