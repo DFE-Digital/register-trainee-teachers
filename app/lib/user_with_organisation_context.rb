@@ -45,6 +45,12 @@ class UserWithOrganisationContext < SimpleDelegator
     organisation.is_a?(School)
   end
 
+  def no_organisation?
+    return false unless FeatureService.enabled?(:user_can_have_multiple_organisations)
+
+    user.providers.none? && user.lead_schools.none? && !user.system_admin?
+  end
+
 private
 
   attr_reader :session

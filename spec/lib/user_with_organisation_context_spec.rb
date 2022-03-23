@@ -207,6 +207,58 @@ describe UserWithOrganisationContext do
     end
   end
 
+  describe "no_organisation?" do
+    subject { super().no_organisation? }
+
+    context "multi organisation feature is enabled" do
+      before do
+        enable_features(:user_can_have_multiple_organisations)
+      end
+
+      context "user has no organisations" do
+        let(:user) { create(:user, id: 1, lead_schools: [], providers: []) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "user has an organisation" do
+        let(:user) { create(:user, id: 1, providers: [provider]) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "user is system admin" do
+        let(:user) { create(:user, :system_admin) }
+
+        it { is_expected.to be(false) }
+      end
+    end
+
+    context "multi organisation feature is disabled" do
+      before do
+        disable_features(:user_can_have_multiple_organisations)
+      end
+
+      context "user has no organisations" do
+        let(:user) { create(:user, id: 1, lead_schools: [], providers: []) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "user has an organisation" do
+        let(:user) { create(:user, id: 1, providers: [provider]) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "user is system admin" do
+        let(:user) { create(:user, :system_admin) }
+
+        it { is_expected.to be(false) }
+      end
+    end
+  end
+
   describe "#user" do
     subject { super().user }
 

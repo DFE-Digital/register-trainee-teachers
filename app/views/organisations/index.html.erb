@@ -34,5 +34,10 @@
         If you need to access a different organisation’s records, contact us at <%= support_email %>
       </p>
     <%- end -%>
+
+    <%- if current_user.no_organisation? -%>
+      <h2 class="govuk-heading-m"><%=t("pages.no_organisation.heading")%></h2>
+      <%= t("pages.no_organisation.body_html") %>
+    <%- end -%>
   </div>
 </div>
