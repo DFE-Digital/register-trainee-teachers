@@ -90,6 +90,7 @@ module Trainees
         expect(trainee.created_at).to eq(api_trainee["createdon"])
         expect(trainee.updated_at).to eq(api_trainee["modifiedon"])
         expect(trainee.dttp_update_sha).to eq(trainee.sha)
+        expect(trainee.dqt_update_sha).to eq(trainee.sha)
       end
 
       context "when the country is something other than England and has a non-uk postcode" do
