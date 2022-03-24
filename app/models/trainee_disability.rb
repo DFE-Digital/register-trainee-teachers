@@ -5,4 +5,6 @@ class TraineeDisability < ApplicationRecord
   belongs_to :trainee
 
   audited associated_with: :trainee
+
+  auto_strip_attributes :additional_disability
 end
