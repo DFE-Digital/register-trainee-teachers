@@ -31,6 +31,16 @@ class Degree < ApplicationRecord
 
   default_scope { order(graduation_year: :asc) }
 
+  auto_strip_attributes(
+    :subject,
+    :institution,
+    :grade,
+    :country,
+    :other_grade,
+    squish: true,
+    nullify: false,
+  )
+
   def graduation_year_valid
     errors.add(:graduation_year, :future) if graduation_year > next_year
     errors.add(:graduation_year, :invalid) unless graduation_year.between?(next_year - MAX_GRAD_YEARS, next_year)
