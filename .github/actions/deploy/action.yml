@@ -105,28 +105,12 @@ runs:
       if: startsWith(env.DEPLOY_ENV,'review')
       run: cf run-task "register-pr-${{ inputs.pr-number }}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
 
-    - name: Trigger ${{ inputs.environment }} Smoke Tests
-      uses: benc-uk/workflow-dispatch@v1.1
+    - name: Run Smoke Tests for ${{ inputs.environment }}
+      uses: ./.github/actions/smoke-test/
       with:
-        workflow: Smoke Tests
-        ref: ${{ github.event.pull_request.head.ref }} # this will be an empty string when triggered by something other than a PR, benc-uk/workflow-dispatch will default to github.context.ref
-        token:    ${{ inputs.actions-api-access-token }}
-        inputs:   '{"environment": "${{ inputs.environment }}", "pr": "${{ inputs.pr-number }}"}'
-
-    - name: Wait for smoke tests
-      id: wait_for_smoke_tests
-      uses: fountainhead/action-wait-for-check@v1.0.0
-      with:
-        token: ${{ github.token }}
-        ref:   ${{ env.DEPLOY_REF }}
-        checkName: smoke-tests-${{ inputs.environment }}
-        timeoutSeconds:  300
-        intervalSeconds: 15
-
-    - name: Stop when smoke tests fail
-      shell: bash
-      if: steps.wait_for_smoke_tests.outputs.conclusion != 'success'
-      run: exit 1
+        environment: ${{ inputs.environment }}
+        pr-number: ${{ inputs.pr-number }}
+        slack-webhook: ${{ inputs.slack-webhook }}
 
     - name: Update ${{ env.DEPLOY_ENV }} status
       if: always()
