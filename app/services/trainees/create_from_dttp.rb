@@ -60,7 +60,7 @@ module Trainees
 
       dttp_trainee.imported!
 
-      update_dttp_sha!
+      update_shases!
 
       set_created_at_and_updated_at!
       trainee
@@ -395,8 +395,10 @@ module Trainees
       @funding_entity_id ||= dttp_trainee.latest_placement_assignment.funding_id
     end
 
-    def update_dttp_sha!
-      trainee.dttp_update_sha = trainee.sha
+    def update_shases!
+      sha = trainee.sha
+      trainee.dttp_update_sha = sha
+      trainee.dqt_update_sha = sha
 
       trainee.save!
     end
