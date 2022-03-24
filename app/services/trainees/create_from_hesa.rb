@@ -41,7 +41,7 @@ module Trainees
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
         trn: trn,
-        state: trainee_status,
+        state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
       }.merge(created_from_hesa_attribute)
        .merge(personal_details_attributes)
@@ -97,7 +97,7 @@ module Trainees
     end
 
     def withdrawal_attributes
-      return {} unless trainee_status == :withdrawn
+      return {} unless trainee_state == :withdrawn
 
       { withdraw_date: hesa_trainee[:end_date], withdraw_reason: reason_for_leaving }
     end
@@ -231,8 +231,8 @@ module Trainees
       Hesa::CodeSets::ServiceLeavers::MAPPING[hesa_trainee[:service_leaver]]
     end
 
-    def trainee_status
-      @trainee_status ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee)
+    def trainee_state
+      @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee)
     end
   end
 end
