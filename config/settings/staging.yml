@@ -22,7 +22,6 @@ features:
   import_courses_from_ttapi: true
   import_applications_from_apply: true
   publish_course_details: true
-  persist_to_dttp: true
   routes:
     early_years_assessment_only: true
     early_years_postgrad: true
@@ -36,7 +35,6 @@ features:
     school_direct_tuition_fee: true
   google:
     send_data_to_big_query: true
-  integrate_with_dqt: true
 
 environment:
   name: staging
