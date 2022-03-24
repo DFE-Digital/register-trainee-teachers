@@ -66,6 +66,12 @@ en:
       trainee_status: Trainee status
       last_updated: Last updated
       record_created: Record created
+      record_source: 
+        title: Record source
+        apply: Imported from Apply
+        dttp: Imported from DTTP
+        hesa: Imported from HESA
+        manual: Added manually
       trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
       progress_date_prefix:
@@ -93,7 +99,7 @@ en:
       reinstated_before_starting: Trainee returned before their <abbr title="initial teacher training">ITT</abbr> started
   components:
     admin_feature:
-      title: Admin feature
+      title: Admin
     heading:
       apply_draft:
         registration_data_from_apply: Registration data from Apply
@@ -105,6 +111,12 @@ en:
       subject:
         early_years: Early years teaching
         blank: No subject provided
+      record_source: 
+        title: Record source
+        apply: Apply
+        dttp: DTTP
+        hesa: HESA
+        manual: Manual
       route:
         blank: No route provided
       trainee_name:
@@ -1036,9 +1048,11 @@ en:
     attributes:
       trainee:
         record_sources:
+          title: Record source
           apply: Imported from Apply
-          manual: Added manually
           dttp: Imported from DTTP
+          hesa: Imported from HESA
+          manual: Added manually
         trainee_id: *trainee_id
         training_routes:
           assessment_only: Assessment only

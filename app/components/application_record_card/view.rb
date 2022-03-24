@@ -60,6 +60,14 @@ module ApplicationRecordCard
       tag.p(record.provider.name.to_s, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-bottom-0 govuk-!-margin-top-2")
     end
 
+    def record_source
+      return unless show_record_source
+
+      title = I18n.t("components.application_record_card.record_source.title")
+      record_source_text = I18n.t("components.application_record_card.record_source.#{record.record_source}")
+      tag.p("#{title}: #{record_source_text}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__record_source govuk-!-margin-bottom-0 govuk-!-margin-top-2")
+    end
+
     def trn
       return if record.trn.blank?
 
@@ -76,6 +84,10 @@ module ApplicationRecordCard
 
     def show_provider
       current_user.system_admin? || current_user.lead_school?
+    end
+
+    def show_record_source
+      current_user.system_admin?
     end
 
     def hide_progress_tag

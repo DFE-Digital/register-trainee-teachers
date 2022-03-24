@@ -35,6 +35,7 @@ module Trainees
         "dttp" => :created_from_dttp,
         "manual" => :with_manual_application,
         "apply" => :with_apply_application,
+        "hesa" => :imported_from_hesa,
       }
       scoped_trainees = trainees
 

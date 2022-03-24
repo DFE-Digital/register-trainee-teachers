@@ -35,6 +35,26 @@ module RecordDetails
       end
     end
 
+    context "when :show_record_source is true" do
+      before do
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, show_record_source: true))
+      end
+
+      it "renders the record source" do
+        expect(rendered_component).to have_text(I18n.t("record_details.view.record_source.title"))
+      end
+    end
+
+    context "when :show_record_source is false" do
+      before do
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, show_record_source: false))
+      end
+
+      it "does not render the record source" do
+        expect(rendered_component).not_to have_text(I18n.t(".record_details.view.record_source"))
+      end
+    end
+
     context "when any data has not been provided" do
       before do
         trainee.trainee_id = nil

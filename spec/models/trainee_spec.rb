@@ -116,6 +116,7 @@ describe Trainee do
       let!(:manual_trainee) { create(:trainee) }
       let!(:apply_trainee) { create(:trainee, :with_apply_application) }
       let!(:dttp_trainee) { create(:trainee, :created_from_dttp) }
+      let!(:hesa_trainee) { create(:trainee, :imported_from_hesa) }
 
       it "returns manually entered trainees" do
         expect(described_class.with_manual_application).to contain_exactly(manual_trainee)
@@ -128,6 +129,15 @@ describe Trainee do
 
       it "returns trainees created from dttp" do
         expect(described_class.created_from_dttp).to contain_exactly(dttp_trainee)
+      end
+    end
+
+    describe ".imported_from_hesa" do
+      let!(:draft_trainee) { create(:trainee) }
+      let!(:hesa_trainee) { create(:trainee, :imported_from_hesa) }
+
+      it "returns trainees created from hesa" do
+        expect(described_class.imported_from_hesa).to contain_exactly(hesa_trainee)
       end
     end
   end
@@ -360,6 +370,42 @@ describe Trainee do
           expect(Trainees::CreateTimeline).to receive(:call).once
 
           subject.timeline
+        end
+      end
+    end
+
+    describe "#record_source" do
+      subject { trainee.record_source }
+
+      context "manual record source" do
+        let(:trainee) { create(:trainee) }
+
+        it "returns manual record source" do
+          expect(subject).to eql("manual")
+        end
+      end
+
+      context "dttp record source" do
+        let(:trainee) { create(:trainee, :created_from_dttp) }
+
+        it "returns dttp record source" do
+          expect(subject).to eql("dttp")
+        end
+      end
+
+      context "apply record source" do
+        let(:trainee) { create(:trainee, :with_apply_application) }
+
+        it "returns apply record source" do
+          expect(subject).to eql("apply")
+        end
+      end
+
+      context "hesa record source" do
+        let(:trainee) { create(:trainee, :imported_from_hesa) }
+
+        it "returns hesa record source" do
+          expect(subject).to eql("hesa")
         end
       end
     end

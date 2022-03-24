@@ -517,5 +517,9 @@ FactoryBot.define do
     trait :created_from_dttp do
       created_from_dttp { true }
     end
+
+    trait :imported_from_hesa do
+      hesa_id { Faker::Number.number(digits: 5) }
+    end
   end
 end

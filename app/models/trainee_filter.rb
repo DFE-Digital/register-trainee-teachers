@@ -4,7 +4,7 @@ class TraineeFilter
   AWARD_STATES = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded].freeze
   STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES
 
-  RECORD_SOURCES = %w[apply manual dttp].freeze
+  RECORD_SOURCES = %w[apply manual dttp hesa].freeze
 
   def initialize(params:)
     @params = params
