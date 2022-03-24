@@ -65,9 +65,9 @@ describe Trainee do
 
     it do
       expect(subject).to define_enum_for(:bursary_tier).with_values(
-        BURSARY_TIER_ENUMS[:tier_one] => 0,
-        BURSARY_TIER_ENUMS[:tier_two] => 1,
-        BURSARY_TIER_ENUMS[:tier_three] => 2,
+        BURSARY_TIER_ENUMS[:tier_one] => 1,
+        BURSARY_TIER_ENUMS[:tier_two] => 2,
+        BURSARY_TIER_ENUMS[:tier_three] => 3,
       )
     end
   end
