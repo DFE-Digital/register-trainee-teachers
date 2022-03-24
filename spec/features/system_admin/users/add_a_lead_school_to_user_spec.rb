@@ -70,20 +70,16 @@ private
     expect(add_lead_school_to_user_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}/lead-schools/new")
   end
 
-  def my_lead_school_name
-    my_lead_school.name.split.first
-  end
-
   def my_lead_school
     @my_lead_school ||= @lead_schools.sample
   end
 
   def and_i_fill_in_my_lead_school
-    add_lead_school_to_user_page.lead_school.fill_in with: my_lead_school_name
+    add_lead_school_to_user_page.lead_school.fill_in with: my_lead_school.name
   end
 
   def and_i_fill_in_my_lead_school_without_js
-    add_lead_school_to_user_page.no_js_lead_school.fill_in with: my_lead_school_name
+    add_lead_school_to_user_page.no_js_lead_school.fill_in with: my_lead_school.name
   end
 
   def and_i_click_the_first_item_in_the_list
