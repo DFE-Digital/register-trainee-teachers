@@ -9,7 +9,7 @@ class FundingManager
 
   def initialize(trainee)
     @trainee = trainee
-    @academic_cycle = find_academic_cycle
+    @academic_cycle = trainee.academic_cycle
   end
 
   def bursary_amount
@@ -81,9 +81,5 @@ private
     allocation_subject.funding_methods.find_by(training_route: training_route,
                                                funding_type: funding_type,
                                                academic_cycle: academic_cycle)&.amount
-  end
-
-  def find_academic_cycle
-    AcademicCycle.for_date(trainee.commencement_date || trainee.itt_start_date)
   end
 end

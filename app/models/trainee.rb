@@ -363,6 +363,10 @@ class Trainee < ApplicationRecord
     "manual"
   end
 
+  def academic_cycle
+    AcademicCycle.for_date(commencement_date || itt_start_date)
+  end
+
 private
 
   def value_digest
