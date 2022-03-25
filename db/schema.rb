@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_24_162356) do
+ActiveRecord::Schema.define(version: 2022_03_25_163438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(version: 2022_03_24_162356) do
     t.string "ukprn"
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.jsonb "response"
     t.index ["dttp_id"], name: "index_dttp_providers_on_dttp_id", unique: true
   end
 
