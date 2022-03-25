@@ -11,8 +11,6 @@ module PageObjects
 
       element :provider_led_postgrad, "#trainee-training-route-provider-led-postgrad-field"
 
-      element :other, "#trainee-training-route-other-field"
-
       element :continue_button, 'button.govuk-button[type="submit"]'
     end
   end

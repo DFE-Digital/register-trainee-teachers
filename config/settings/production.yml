@@ -11,7 +11,6 @@ recommended_for_award_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSc
 trn_submitted_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSd-Jc3ef8yNYmIps3H905TuUkVfLYqpwP5ouQilNbHMSElCkg/viewform"
 
 dttp:
-  back_office_url: https://dttp.crm4.dynamics.com/
   scope: https://dttp.crm4.dynamics.com/.default
   api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
   portal_host: traineeteacherportal.education.gov.uk

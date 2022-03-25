@@ -7,12 +7,8 @@ module Trainees
     def edit; end
 
     def update
-      if training_route == "other"
-        redirect_to(trainees_not_supported_route_path(trainee_id: trainee))
-      else
-        trainee.update_training_route!(training_route)
-        redirect_url
-      end
+      trainee.update_training_route!(training_route)
+      redirect_url
     end
 
   private

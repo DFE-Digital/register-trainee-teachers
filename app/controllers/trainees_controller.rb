@@ -20,17 +20,13 @@ class TraineesController < BaseTraineeController
   end
 
   def create
-    if trainee_params[:training_route] == "other"
-      redirect_to(trainees_not_supported_route_path)
+    provider_id = current_user.provider? ? current_user.organisation.id : nil
+    authorize(@trainee = Trainee.new(trainee_params.merge(provider_id: provider_id)))
+    trainee.set_early_years_course_details
+    if trainee.save
+      redirect_to(trainee_review_drafts_path(trainee))
     else
-      provider_id = current_user.provider? ? current_user.organisation.id : nil
-      authorize(@trainee = Trainee.new(trainee_params.merge(provider_id: provider_id)))
-      trainee.set_early_years_course_details
-      if trainee.save
-        redirect_to(trainee_review_drafts_path(trainee))
-      else
-        render(:new)
-      end
+      render(:new)
     end
   end
 

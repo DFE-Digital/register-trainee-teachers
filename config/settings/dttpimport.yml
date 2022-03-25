@@ -2,7 +2,6 @@
 base_url: https://register-dttpimport.london.cloudapps.digital
 
 dttp:
-  back_office_url: https://dttp.crm4.dynamics.com/
   scope: https://dttp.crm4.dynamics.com/.default
   api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
 

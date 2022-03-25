@@ -262,7 +262,6 @@ en:
         delete: Delete this draft record
         index: Registered trainees (%{total_trainees_count_text})
         paginated_index: Registered trainees (%{total_trainees_count_text}) - page %{current_page} of %{total_pages}
-        not_supported_route: Other routes not supported
         show:
           overview: Trainee record overview
           draft: Add a trainee
@@ -922,12 +921,6 @@ en:
       edit:
         email:
           hint: Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE.
-    not_supported_route:
-      heading: Other routes not supported
-      body: You can only add trainees for the routes listed on the previous page. We’ll be adding more routes soon.
-      bullet_desc: "You can:"
-      go_back: go back and change your answer
-      use_dttp: use DTTP to register a different route
     course_years:
       edit:
         heading: Which year’s courses do you want to choose from?
