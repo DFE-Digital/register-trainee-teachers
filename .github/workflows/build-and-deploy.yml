@@ -182,13 +182,15 @@ jobs:
   deploy_all:
     name: Deployment To All
     concurrency: deploy_all
+    environment: 
+      name: ${{ matrix.environment }}
+      url: ${{ steps.deploy_app.outputs.deploy-url }}
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     needs: [test]
     runs-on: ubuntu-latest
     strategy:
       matrix: 
         environment: [qa,staging,production,sandbox,dttpimport]
-        url: ${{ steps.deploy_app.outputs.deploy-url }}
       max-parallel: 1
     steps:
     - name: Checkout
