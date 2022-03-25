@@ -30,8 +30,8 @@ class PagesController < ApplicationController
     render(:guidance)
   end
 
-  def start_traineeteacherportal
-    render(:start_traineeteacherportal)
+  def dttp_replaced
+    render(:dttp_replaced)
   end
 
 private

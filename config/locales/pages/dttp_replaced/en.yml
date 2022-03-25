@@ -1,0 +1,8 @@
+en:
+  pages:
+    dttp_replaced:
+      button_text: Go to Register
+      email_subject: DTTP no longer available
+      heading: DTTP has been replaced by Register trainee teachers
+      support: If you have any questions, email
+      use_register: You must use Register trainee teachers (Register) for any actions previously performed in DTTP.
