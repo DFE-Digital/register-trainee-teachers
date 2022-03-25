@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_15_113557) do
+ActiveRecord::Schema.define(version: 2022_03_18_112417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "academic_cycles", force: :cascade do |t|
     t.date "start_date", null: false
@@ -160,9 +162,9 @@ ActiveRecord::Schema.define(version: 2022_03_15_113557) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
+    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
-    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age", null: false
     t.integer "max_age", null: false
@@ -341,6 +343,23 @@ ActiveRecord::Schema.define(version: 2022_03_15_113557) do
     t.index ["state"], name: "index_hesa_collection_requests_on_state"
   end
 
+  create_table "hesa_metadata", force: :cascade do |t|
+    t.bigint "trainee_id"
+    t.integer "study_length"
+    t.string "study_length_unit"
+    t.string "itt_aim"
+    t.string "itt_qualification_aim"
+    t.string "fundability"
+    t.string "service_leaver"
+    t.string "course_programme_title"
+    t.integer "placement_school_urn"
+    t.date "pg_apprenticeship_start_date"
+    t.string "year_of_course"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trainee_id"], name: "index_hesa_metadata_on_trainee_id"
+  end
+
   create_table "lead_school_users", force: :cascade do |t|
     t.bigint "lead_school_id", null: false
     t.bigint "user_id", null: false
@@ -381,8 +400,8 @@ ActiveRecord::Schema.define(version: 2022_03_15_113557) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
@@ -491,14 +510,14 @@ ActiveRecord::Schema.define(version: 2022_03_15_113557) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at"
-    t.boolean "applying_for_bursary"
     t.integer "training_initiative"
+    t.boolean "applying_for_bursary"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.integer "course_education_phase"
     t.boolean "applying_for_scholarship"
+    t.integer "course_education_phase"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_school_not_applicable", default: false
@@ -511,6 +530,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_113557) do
     t.jsonb "additional_dttp_data"
     t.boolean "created_from_hesa", default: false, null: false
     t.string "dqt_update_sha"
+    t.datetime "hesa_updated_at"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"

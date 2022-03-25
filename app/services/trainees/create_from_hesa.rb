@@ -22,6 +22,7 @@ module Trainees
 
         if trainee.save!
           create_degrees!
+          store_hesa_metadata!
           add_multiple_disability_text!
           enqueue_background_jobs!
         end
@@ -37,15 +38,16 @@ module Trainees
 
     def mapped_attributes
       {
-        created_from_hesa: trainee.id.blank?,
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
         trn: trn,
-      }.merge(personal_details_attributes)
+        state: trainee_state,
+        hesa_updated_at: hesa_trainee[:hesa_updated_at],
+      }.merge(created_from_hesa_attribute)
+       .merge(personal_details_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
-       .merge(deferral_attributes)
        .merge(withdrawal_attributes)
        .merge(funding_attributes)
        .merge(school_attributes)
@@ -53,12 +55,22 @@ module Trainees
        .compact
     end
 
+    def trn
+      hesa_trainee[:trn] if TRN_REGEX.match?(hesa_trainee[:trn])
+    end
+
+    def created_from_hesa_attribute
+      return {} if trainee.id.present?
+
+      { created_from_hesa: true }
+    end
+
     def personal_details_attributes
       {
         first_names: hesa_trainee[:first_names],
         last_name: hesa_trainee[:last_name],
         date_of_birth: hesa_trainee[:date_of_birth],
-        gender: hesa_trainee[:gender].to_i,
+        gender: gender,
         nationalities: nationalities,
         email: hesa_trainee[:email],
       }
@@ -84,54 +96,10 @@ module Trainees
       }
     end
 
-    def deferral_attributes
-      return {} unless trainee_deferred?
-
-      {
-        defer_date: hesa_trainee[:end_date],
-        state: "deferred",
-      }
-    end
-
-    def trainee_deferred?
-      completion_of_course_result_unknown? &&
-      [
-        Hesa::CodeSets::Modes::DORMANT_FULL_TIME,
-        Hesa::CodeSets::Modes::DORMANT_PART_TIME,
-      ].include?(mode)
-    end
-
     def withdrawal_attributes
-      return {} unless trainee_withdrawn?
+      return {} unless trainee_state == :withdrawn
 
-      {
-        withdraw_date: hesa_trainee[:end_date],
-        withdraw_reason: reason_for_leaving,
-        state: "withdrawn",
-      }
-    end
-
-    def trainee_withdrawn?
-      hesa_trainee[:end_date].present? && reasons_for_leaving_indicate_withdrawal?
-    end
-
-    def reasons_for_leaving_indicate_withdrawal?
-      [
-        successful_completion_of_course?,
-        completion_of_course_result_unknown?,
-      ].none?
-    end
-
-    def successful_completion_of_course?
-      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION
-    end
-
-    def completion_of_course_result_unknown?
-      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION
-    end
-
-    def funding_attributes
-      @funding_attributes ||= MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
+      { withdraw_date: hesa_trainee[:end_date], withdraw_reason: reason_for_leaving }
     end
 
     def school_attributes
@@ -148,6 +116,14 @@ module Trainees
 
     def training_initiative_attributes
       { training_initiative: training_initiative || ROUTE_INITIATIVES_ENUMS[:no_initiative] }
+    end
+
+    def funding_attributes
+      MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
+    end
+
+    def gender
+      Hesa::CodeSets::Genders::MAPPING[hesa_trainee[:gender]]
     end
 
     def nationalities
@@ -168,10 +144,6 @@ module Trainees
 
     def disability
       Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
-    end
-
-    def trn
-      hesa_trainee[:trn] if TRN_REGEX.match?(hesa_trainee[:trn])
     end
 
     def enqueue_background_jobs!
@@ -209,24 +181,58 @@ module Trainees
 
     # This field indicates the mode the student was reported on for the DfE census in their first year.
     def study_mode
-      Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:study_mode]]
-    end
-
-    # This field indicates the method by which a student is being taught their course.
-    def mode
-      @mode ||= Hesa::CodeSets::Modes::MAPPING[hesa_trainee[:mode]]
+      Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:mode]]
     end
 
     def age_range
-      @age_range ||= Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
+      Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
     end
 
     def reason_for_leaving
-      @reason_for_leaving ||= Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
+      Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
     end
 
     def create_degrees!
       ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
+    end
+
+    def store_hesa_metadata!
+      hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee: trainee)
+      hesa_metadatum.assign_attributes(study_length: hesa_trainee[:study_length],
+                                       study_length_unit: study_length_unit,
+                                       itt_aim: itt_aim,
+                                       itt_qualification_aim: itt_qualification_aim,
+                                       fundability: fundability,
+                                       service_leaver: service_leaver,
+                                       course_programme_title: hesa_trainee[:course_programme_title]&.strip,
+                                       placement_school_urn: hesa_trainee[:placements]&.first&.fetch(:school_urn),
+                                       pg_apprenticeship_start_date: hesa_trainee[:pg_apprenticeship_start_date],
+                                       year_of_course: hesa_trainee[:year_of_course])
+      hesa_metadatum.save
+    end
+
+    def study_length_unit
+      Hesa::CodeSets::StudyLengthUnits::MAPPING[hesa_trainee[:study_length_unit]]
+    end
+
+    def itt_aim
+      Hesa::CodeSets::IttAims::MAPPING[hesa_trainee[:itt_aim]]
+    end
+
+    def itt_qualification_aim
+      Hesa::CodeSets::IttQualificationAims::MAPPING[hesa_trainee[:itt_qualification_aim]]
+    end
+
+    def fundability
+      Hesa::CodeSets::FundCodes::MAPPING[hesa_trainee[:fund_code]]
+    end
+
+    def service_leaver
+      Hesa::CodeSets::ServiceLeavers::MAPPING[hesa_trainee[:service_leaver]]
+    end
+
+    def trainee_state
+      @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee)
     end
   end
 end

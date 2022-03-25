@@ -2,37 +2,6 @@
 
 module ApiStubs
   class HesaApi
-    TAG_MAP = {
-      first_names: "F_FNAMES",
-      last_name: "F_SURNAME",
-      email: "F_NQTEMAIL",
-      date_of_birth: "F_BIRTHDTE",
-      ethnic_background: "F_ETHNIC",
-      gender: "F_SEXID",
-      ukprn: "F_UKPRN",
-      trainee_id: "F_OWNSTU",
-      course_subject_one: "F_SBJCA1",
-      course_subject_two: "F_SBJCA2",
-      course_subject_three: "F_SBJCA3",
-      itt_start_date: "F_PGAPPSTDT",
-      employing_school_urn: "F_SDEMPLOY",
-      lead_school_urn: "F_SDLEAD",
-      reason_for_leaving: "F_RSNEND",
-      mode: "F_MODE",
-      study_mode: "F_CRMODE",
-      course_min_age: "F_ITTPHSC",
-      commencement_date: "F_ITTCOMDATE",
-      training_initiative: "F_INITIATIVES1",
-      hesa_id: "F_HUSID",
-      international_address: "F_DOMICILE",
-      end_date: "F_ENDDATE",
-      disability: "F_DISABLE",
-      bursary_level: "F_BURSLEV",
-      trn: "F_TREFNO",
-      training_route: "F_ENTRYRTE",
-      nationality: "F_NATION",
-    }.freeze
-
     attr_reader :raw_xml, :attributes, :student_node, :student_attributes
 
     def initialize(attributes = {})
@@ -48,7 +17,7 @@ module ApiStubs
     def override_node_tags(student_node)
       attributes.each do |key, value|
         value = "NULL" if value.nil?
-        student_node.xpath("//#{TAG_MAP[key]}").first.content = value
+        student_node.xpath("//#{Hesa::Parsers::IttRecord::TAG_MAP[key]}").first.content = value
       end
       student_node
     end

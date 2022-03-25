@@ -43,7 +43,7 @@ module Trainees
         return
       end
 
-      if trainee_status.blank?
+      if trainee_state.blank?
         dttp_trainee.non_importable_missing_state!
         return
       end
@@ -75,7 +75,7 @@ module Trainees
 
       {
         created_from_dttp: true,
-        state: trainee_status,
+        state: trainee_state,
         provider: dttp_trainee.provider,
         trainee_id: trainee_id,
         training_route: training_route,
@@ -349,12 +349,12 @@ module Trainees
       Dttp::School.find_by(dttp_id: dttp_trainee.latest_placement_assignment.employing_school_id)&.urn
     end
 
-    def trainee_status
-      @trainee_status ||= MapStateFromDttp.call(dttp_trainee: dttp_trainee)
+    def trainee_state
+      @trainee_state ||= MapStateFromDttp.call(dttp_trainee: dttp_trainee)
     end
 
     def withdrawal_attributes
-      return {} unless trainee_status == "withdrawn"
+      return {} unless trainee_state == "withdrawn"
 
       {
         withdraw_date: withdraw_date,

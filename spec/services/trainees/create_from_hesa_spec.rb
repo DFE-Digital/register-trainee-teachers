@@ -9,7 +9,8 @@ module Trainees
     let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }
     let(:create_custom_state) { "implemented where necessary" }
-    let(:hesa_stub_attributes) { { trn: "8080808" } }
+    let(:hesa_stub_attributes) { { trn: hesa_trn } }
+    let(:hesa_trn) { Faker::Number.number(digits: 7).to_s }
     let(:trainee_degree) { trainee.degrees.first }
 
     subject(:trainee) { Trainee.first }
@@ -33,7 +34,7 @@ module Trainees
       it "updates the trainee's personal details" do
         expect(trainee.first_names).to eq(student_attributes[:first_names])
         expect(trainee.last_name).to eq(student_attributes[:last_name])
-        expect(trainee.gender).to eq("female")
+        expect(trainee.gender).to eq("male")
         expect(trainee.date_of_birth).to eq(Date.parse(student_attributes[:date_of_birth]))
         expect(trainee.nationalities.pluck(:name)).to include(nationality_name)
         expect(trainee.email).to eq(student_attributes[:email])
@@ -80,6 +81,18 @@ module Trainees
         expect(trainee_degree.country).to eq("Canada")
       end
 
+      it "creates a trainee HESA metadata record" do
+        expect(trainee.hesa_metadatum.study_length).to eq(3)
+        expect(trainee.hesa_metadatum.study_length_unit).to eq("years")
+        expect(trainee.hesa_metadatum.itt_aim).to eq("Both professional status and academic award")
+        expect(trainee.hesa_metadatum.itt_qualification_aim).to eq("Masters, not by research")
+        expect(trainee.hesa_metadatum.fundability).to eq("Eligible for funding from the DfE")
+        expect(trainee.hesa_metadatum.service_leaver).to eq("Trainee has not left full time employment in the British Army, Royal Air Force or Royal Navy within 5 years of beginning the programme")
+        expect(trainee.hesa_metadatum.course_programme_title).to eq("FE Course 1")
+        expect(trainee.hesa_metadatum.placement_school_urn).to eq(900000)
+        expect(trainee.hesa_metadatum.year_of_course).to eq("0")
+      end
+
       context "when the trn does not exist", feature_integrate_with_dqt: true do
         let(:hesa_stub_attributes) { {} }
 
@@ -98,9 +111,10 @@ module Trainees
     end
 
     context "trainee already exists and didn't come from HESA" do
+      let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
       let(:hesa_disability_codes) { Hesa::CodeSets::Disabilities::MAPPING.invert }
       let(:hesa_ethnicity_codes) { Hesa::CodeSets::Ethnicities::MAPPING.invert }
-      let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id], trn: "5050505") }
+      let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn) }
 
       describe "#created_from_hesa" do
         subject { trainee.created_from_hesa }
@@ -108,18 +122,18 @@ module Trainees
         it { is_expected.to be(false) }
       end
 
-      context "when the trainee had a previously saved trn" do
-        context "and the trn exists" do
-          it "updates the trn" do
-            expect(trainee.trn).to eq("8080808")
+      context "when the trainee has a previously saved TRN" do
+        context "HESA has a different TRN" do
+          it "updates the trainee TRN with the HESA TRN" do
+            expect(trainee.trn).to eq(hesa_trn)
           end
         end
 
-        context "and the trn does not exist" do
-          let(:hesa_stub_attributes) { {} }
+        context "HESA TRN is nil" do
+          let(:hesa_stub_attributes) { { trn: nil } }
 
-          it "does not overwrite the trn" do
-            expect(trainee.trn).to eq("5050505")
+          it "does not overwrite the existing trainee TRN" do
+            expect(trainee.trn).to eq(existing_trn)
           end
         end
       end
@@ -224,7 +238,7 @@ module Trainees
 
           it "creates a withdrawn trainee with the relevant details" do
             expect(trainee.state).to eq("withdrawn")
-            expect(trainee.withdraw_date).to eq(Date.parse(date))
+            expect(trainee.withdraw_date).to eq(date)
             expect(trainee.withdraw_reason).to eq(WithdrawalReasons::HEALTH_REASONS)
           end
         end
@@ -237,10 +251,13 @@ module Trainees
             }
           end
 
-          it "does not create a withdrawn trainee" do
-            expect(trainee.state).not_to eq("withdrawn")
+          it "does not set the withdraw fields" do
             expect(trainee.withdraw_date).to be_nil
             expect(trainee.withdraw_reason).to be_nil
+          end
+
+          it "creates a awarded trainee with the relevant details" do
+            expect(trainee.state).to eq("awarded")
           end
         end
 
@@ -249,7 +266,6 @@ module Trainees
 
           let(:hesa_stub_attributes) do
             {
-              end_date: date,
               reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION],
               mode: hesa_modes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
             }
@@ -257,7 +273,6 @@ module Trainees
 
           it "creates a deferred trainee with the relevant details" do
             expect(trainee.state).to eq("deferred")
-            expect(trainee.defer_date).to eq(Date.parse(date))
           end
         end
       end
