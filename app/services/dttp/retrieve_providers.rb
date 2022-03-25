@@ -14,15 +14,7 @@ module Dttp
       "$filter" => "dfe_provider eq true and (statecode eq #{ACTIVE_STATECODE} and statuscode ne #{CLOSED_STATUSCODE}) and (#{INSTITUTION_TYPES})",
     }.freeze
 
-    SELECT = {
-      "$select" => %w[
-        name
-        dfe_ukprn
-        accountid
-      ].join(","),
-    }.freeze
-
-    QUERY = FILTER.merge(SELECT).to_query
+    QUERY = FILTER.to_query
 
   private
 
