@@ -35,7 +35,7 @@ module Dqt
     end
 
     def self.handle_response(response:, statuses:)
-      return JSON.parse(response.body) if statuses.include?(response.code)
+      return JSON.parse(response.body || "{}") if statuses.include?(response.code)
 
       raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}")
     end
