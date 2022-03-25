@@ -83,7 +83,9 @@ private
   end
 
   def and_i_click_the_first_item_in_the_list
-    click(add_lead_school_to_user_page.autocomplete_list_item)
+    # this will cause capybara to wait for the list to be filtered before clicking 'first'
+    expect(add_lead_school_to_user_page).to have_autocomplete_list_items(count: 1)
+    click(add_lead_school_to_user_page.autocomplete_list_items.first)
   end
 
   def and_i_continue
