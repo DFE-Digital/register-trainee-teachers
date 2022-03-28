@@ -12,23 +12,6 @@ en:
 
       <p class='govuk-body'>DfE also uses the data for funding, the ITT census and analysis to inform policy development.</p>
 
-      <h3 class='govuk-heading-m'>Register access for lead schools</h3>
-
-      <p class='govuk-body'>Lead schools can access Register trainee teachers to view funding information and trainee records.</p>
-
-      <p class='govuk-body'>In the funding information, you can view a summary of past and predicted payments. There’s a breakdown of monthly payments and a breakdown of bursaries, scholarships and grants.</p>
-
-      <p class='govuk-body'>The access for lead schools is view only. As a lead school, you cannot:</p>
-
-      <ul class='govuk-list govuk-list--bullet'>
-        <li>add trainee records</li>
-        <li>change trainee records</li>
-        <li>view draft trainee records</li>
-        <li>view a trainee’s diversity information</li>
-        <li>view a trainee’s gender</li>
-        <li>view a trainee’s nationality</li>
-      </ul>
-
       <h3 class='govuk-heading-m'>Adding trainee records</h3>
 
       <p class='govuk-body'>You can add a trainee record manually, which means that you input all of the required data from your own records.</p>
@@ -63,25 +46,15 @@ en:
 
       <p class='govuk-body'>They also use it to access the teacher self service portal where they can view their teacher record, view their qualifications and update personal details.</p>
 
-      <p class='govuk-body'>When you’ve requested a TRN, Register will usually be updated with the TRN within 3 working days.</p>
-
       <p class='govuk-body'>Assessment only candidates will usually receive an email with their TRN. For all other routes, trainees will receive a letter. This means trainees may contact you to find out their TRN.</p>
 
       <h3 class='govuk-heading-m'>Recommending a trainee for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)</h3>
 
       <p class='govuk-body'>When a trainee has successfully completed their training (or completed their assessement for AO) and met the required standards, you can recommend them for QTS or EYTS in Register.</p>
 
-      <p class='govuk-body'>DfE will usually award QTS or EYTS within 3 days.</p>
-
       <h3 class='govuk-heading-m'>Withdraw and defer</h3>
 
       <p class='govuk-body'>Once you’ve registered a trainee, you can withdraw or defer them. You can do this using the links on the trainee record.</p>
-
-      <h3 class='govuk-heading-m'>Funding</h3>
-
-      <p class='govuk-body'>For the ITT routes where funding applies, the data supports bursaries and scholarships, for example, it’s used to provide accurate funding to training providers.</p>
-
-      <p class='govuk-body'>It’s used for the funding of grants on the School direct salaried route. It also provides evidence for DfE when its finances are audited.</p>
 
       <h3 class='govuk-heading-m'>Census</h3>
 
