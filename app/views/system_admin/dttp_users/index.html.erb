@@ -23,7 +23,6 @@
       <%= render UserCard::View.new(
         user: user,
         edit_path: edit_user_path(user),
-        delete_path: delete_provider_user_path(@provider, user),
         registration_form_path: provider_import_user_path(@provider.id),
       ) %>
     <% end %>

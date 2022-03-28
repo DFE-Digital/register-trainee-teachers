@@ -40,16 +40,6 @@ module SystemAdmin
         end
       end
 
-      def delete
-        user
-        provider
-      end
-
-      def destroy
-        user.discard
-        redirect_to(provider_path(provider))
-      end
-
     private
 
       def provider

@@ -15,11 +15,7 @@ module SystemAdminRoutes
 
         resources :providers, only: %i[index new create show edit update] do
           resources :dttp_users, only: %i[index], path: "/dttp-users"
-          resources :users, controller: "providers/users", only: %i[index new create edit update destroy] do
-            member do
-              get "delete"
-            end
-          end
+          resources :users, controller: "providers/users", only: %i[index new create edit update]
 
           scope module: :imports do
             post "/users/import", to: "users#create", as: :import_user
