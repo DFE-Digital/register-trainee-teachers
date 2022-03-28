@@ -25,7 +25,9 @@ dfe_sign_in:
 features:
   basic_auth: false
   enable_feedback_link: true
+  sync_trainees_from_dttp: true
   sync_from_dttp: true
+  import_trainees_from_dttp: true
   send_emails: true
   import_courses_from_ttapi: true
   import_applications_from_apply: true
