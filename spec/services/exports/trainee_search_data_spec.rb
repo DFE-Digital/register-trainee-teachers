@@ -106,7 +106,7 @@ module Exports
           "training_initiative" => "Transition to Teach",
           "funding_method" => "bursary",
           "funding_value" => (funding_manager.bursary_amount if trainee.applying_for_bursary),
-          "bursary_tier" => ("Tier #{BURSARY_TIERS[trainee.bursary_tier] + 1}" if trainee.bursary_tier),
+          "bursary_tier" => ("Tier #{BURSARY_TIERS[trainee.bursary_tier]}" if trainee.bursary_tier),
           "award_standards_met_date" => trainee.outcome_date&.iso8601,
           "award_awarded_at" => trainee.awarded_at&.iso8601,
           "defer_date" => trainee.defer_date&.iso8601,
