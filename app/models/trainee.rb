@@ -201,7 +201,29 @@ class Trainee < ApplicationRecord
   audited associated_with: :provider
   has_associated_audits
 
-  auto_strip_attributes :first_names, :last_name, :postcode, squish: true
+  auto_strip_attributes(
+    :first_names,
+    :middle_names,
+    :last_name,
+    :address_line_one,
+    :address_line_two,
+    :town_city,
+    :postcode,
+    :email,
+    :international_address,
+    :ethnic_background,
+    :additional_ethnic_background,
+    :trn,
+    :additional_withdraw_reason,
+    :region,
+    :hesa_id,
+    :course_subject_one,
+    :course_subject_two,
+    :course_subject_three,
+    :additional_withdraw_reason,
+    squish: true,
+    nullify: false,
+  )
 
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
