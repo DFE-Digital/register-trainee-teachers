@@ -6,10 +6,10 @@ Rails.application.routes.draw do
 
   if Settings.dttp.portal_host.present?
     constraints(->(req) { req.host == Settings.dttp.portal_host }) do
-      start_traineeteacherportal_url = "#{CanonicalRails.protocol}#{CanonicalRails.host}/start_traineeteacherportal"
+      dttp_replaced_url = "#{CanonicalRails.protocol}#{CanonicalRails.host}/dttp-replaced"
 
-      root to: redirect(start_traineeteacherportal_url), as: :traineeteacherportal_root
-      get "/*ttp_path", to: redirect(start_traineeteacherportal_url), as: :traineeteacherportal
+      root to: redirect(dttp_replaced_url), as: :traineeteacherportal_root
+      get "/*ttp_path", to: redirect(dttp_replaced_url), as: :traineeteacherportal
     end
   end
 
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/guidance", to: "pages#guidance"
   get "/check-data", to: "pages#check_data"
-  get "/start_traineeteacherportal", to: "pages#start_traineeteacherportal"
+  get "/dttp-replaced", to: "pages#dttp_replaced"
 
   get "/404", to: "errors#not_found", via: :all, as: :not_found
   get "/422", to: "errors#unprocessable_entity", via: :all

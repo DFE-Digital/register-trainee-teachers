@@ -248,6 +248,7 @@ en:
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
         no_organisation: You have not been linked to an organisation yet
+        dttp_replaced: DTTP replaced
       sign_in:
         index: Sign in
       trn_submissions:
