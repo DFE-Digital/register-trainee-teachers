@@ -19,7 +19,7 @@ module Trainees
 
         context "when the creation audit was from a DTTP or HESA import" do
           before do
-            trainee.own_and_associated_audits.first.update(user: "HESA")
+            trainee.own_and_associated_audits.first.update!(user: "HESA")
           end
 
           it "returns an array including a creation timeline event with that user in the title" do
@@ -35,7 +35,7 @@ module Trainees
           let(:trainee_created_at) { Time.zone.yesterday }
 
           before do
-            trainee.update(created_at: trainee_created_at)
+            trainee.update!(created_at: trainee_created_at)
           end
 
           it "returns a timeline event with the earlier created_at" do
@@ -51,7 +51,7 @@ module Trainees
 
         context "made by a provider user" do
           before do
-            trainee.own_and_associated_audits.first.update(user: provider_user)
+            trainee.own_and_associated_audits.first.update!(user: provider_user)
           end
 
           it "returns a timeline event that reflects the update" do
@@ -91,7 +91,7 @@ module Trainees
 
         context "made by a system admin" do
           before do
-            trainee.own_and_associated_audits.first.update(user: system_admin)
+            trainee.own_and_associated_audits.first.update!(user: system_admin)
           end
 
           it "returns a timeline event that reflects the update" do
@@ -105,7 +105,7 @@ module Trainees
 
         context "made in HESA" do
           before do
-            trainee.own_and_associated_audits.first.update(username: "HESA")
+            trainee.own_and_associated_audits.first.update!(username: "HESA")
           end
 
           it "returns a timeline event that reflects the update" do
@@ -174,6 +174,17 @@ module Trainees
         it "returns a 'creation' timeline event" do
           degree.reload
           expect(subject.first.title).to eq(t("components.timeline.titles.degree.create"))
+        end
+
+        context "when imported from dttp" do
+          before do
+            degree.save!
+            trainee.own_and_associated_audits.first.update!(user: "DTTP")
+          end
+
+          it "returns empty timeline event" do
+            expect(subject).to be_nil
+          end
         end
       end
 
