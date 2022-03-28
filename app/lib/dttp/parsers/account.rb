@@ -10,6 +10,7 @@ module Dttp
               name: provider["name"],
               ukprn: provider["dfe_ukprn"],
               dttp_id: provider["accountid"],
+              response: provider,
             }
           end
         end
