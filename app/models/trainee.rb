@@ -158,6 +158,12 @@ class Trainee < ApplicationRecord
     end
   end
 
+  enum cohort: {
+    current: 0,
+    past: 1,
+    future: 2,
+  }
+
   pg_search_scope :with_name_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name trainee_id trn],
                   using: { tsearch: { prefix: true } }
