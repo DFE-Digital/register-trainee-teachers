@@ -804,18 +804,20 @@ en:
               hint: For example, the trainee is not eligible or is self-funded
   pages:
     request_an_account:
-      inviting_limited_itt:
-        We are only inviting a limited amount of initial teacher training providers to use Register,
-        to begin with. If your organisation has not received an invite from the DfE you cannot request an account yet.
-      to_get_setup: To get set up on Register trainee teachers you need a DfE Sign-in account.
+      first_para: To get a Register trainee teachers (Register) account you need a DfE Sign-in account.
       sign_in_account: DfE Sign-in account
-      send_email: To request an account, send an email to
-      tell_us: In your email, tell us
+      send_email: Then request an account for Register by emailing
       email_subject: Get set up on Register
-      bullets:
-        1: the name of your training provider
-        2: that you would like to start using Register trainee teachers
-        3: the email address associated with your DfE Sign-in account
+      email_address: "The email address used for your DfE Sign-in and Register account must:"
+      bullets1:
+        1: be a named email address, for example jane.doe@example.com
+        2: have an email domain from your organisation, for example we cannot accept emails that end with @gmail.com or @icloud.com
+      tell_us: "In your email, tell us:"
+      bullets2:
+        1: the name of your training provider or Lead school
+        2: that you would like to start using Register
+        3: the email address used for your DfE Sign-in account
+      final_para: We will email you once we have set up your account.
     home:
       heading: Your trainee teachers
       draft_heading: Draft trainees
