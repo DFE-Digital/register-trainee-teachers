@@ -1,6 +1,7 @@
 <%= f.govuk_error_summary %>
 
 <%= f.hidden_field :lead_school_id, value: nil %>
+<%= f.hidden_field :lead_school_not_applicable, value: "false" %>
 <%= f.hidden_field :search_results_found, value: "true" %>
 
 <%= render TraineeName::View.new(@trainee) %>
