@@ -384,6 +384,7 @@ en:
         search_button: Search again
       service_updates: News and updates
     filter:
+      cohort: Cohort
       level: Education phase
       provider: Provider
       record_source: Record source
@@ -628,17 +629,18 @@ en:
           above_the_fold_title: Draft trainees
           below_the_fold_title: Registered trainees
         filters:
-          record_completion: Record completion
-          trainee_start_year: *trainee_start_year
-          incomplete: Incomplete
+          cohort: Cohort
           complete: Complete
+          incomplete: Incomplete
           level: Education phase
           provider: Provider
+          record_completion: Record completion
           search: Search for a trainee
           status: Status
           study_mode: Full time or part time
           subject: Subject
           start_year: Start year
+          trainee_start_year: *trainee_start_year
           type_of_training: Type of training
       edit:
         delete: delete this record,
@@ -1043,6 +1045,10 @@ en:
   activerecord:
     attributes:
       trainee:
+        cohorts:
+          current: Current
+          past: Past
+          future: Next year's
         record_sources:
           title: Record source
           apply: Imported from Apply

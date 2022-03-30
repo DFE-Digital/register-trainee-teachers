@@ -127,6 +127,7 @@ private
         state: [],
         record_source: [],
         record_completion: [],
+        cohort: [],
       },
     ]
   end

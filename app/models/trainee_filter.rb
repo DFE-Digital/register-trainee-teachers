@@ -35,6 +35,7 @@ private
       **start_year,
       **trainee_start_years,
       **study_modes,
+      **cohorts
     ).with_indifferent_access
   end
 
@@ -140,6 +141,18 @@ private
   def study_mode_options
     %w[full_time part_time].each_with_object([]) do |option, arr|
       arr << option if params[:study_mode]&.include?(option)
+    end
+  end
+
+  def cohorts
+    return {} unless cohort_options.any?
+
+    { "cohort" => cohort_options }
+  end
+
+  def cohort_options
+    Trainee.cohorts.keys.each_with_object([]) do |option, arr|
+      arr << option if params[:cohort]&.include?(option)
     end
   end
 end

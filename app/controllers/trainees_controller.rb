@@ -83,6 +83,7 @@ private
         record_source: [],
         record_completion: [],
         study_mode: [],
+        cohort: [],
       }
     ]
   end
