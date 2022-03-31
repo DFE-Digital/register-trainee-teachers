@@ -45,6 +45,8 @@ module Funding
     end
 
     def funding_method_row
+      return if no_funding_methods? && data_model.bursary_tier.blank?
+
       if can_apply_for_grant?
         grant_funding_row
       elsif data_model.applying_for_scholarship
@@ -113,6 +115,10 @@ module Funding
 
     def bursary_funding_hint
       "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
+    end
+
+    def no_funding_methods?
+      !trainee.academic_cycle || trainee.academic_cycle.funding_methods.none?
     end
 
     def mappable_field(field_value, field_label, action_url)

@@ -97,6 +97,7 @@ module Funding
 
         describe "has no bursary" do
           before do
+            create(:funding_method)
             render_inline(View.new(data_model: data_model))
           end
 
@@ -246,6 +247,14 @@ module Funding
         it "has correct change link" do
           expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Enter an answer")
         end
+      end
+    end
+
+    describe "when we don't know the funding rules for the trainee's cycle" do
+      let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true) }
+
+      it "doesn't render the funding row" do
+        expect(rendered_component).not_to have_text("Funding method")
       end
     end
   end
