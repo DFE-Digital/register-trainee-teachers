@@ -18,6 +18,10 @@ class AcademicCycle < ApplicationRecord
     where("end_date >= :date AND start_date <= :date", date: date).first
   end
 
+  def self.current
+    for_date(Time.zone.now)
+  end
+
   def trainees_starting
     query = <<~SQL
       COALESCE(commencement_date, itt_start_date) BETWEEN :start_date AND :end_date
@@ -41,7 +45,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def current?
-    Time.zone.now >= start_date && Time.zone.now < end_date
+    Time.zone.now >= start_date && Time.zone.now <= end_date
   end
 
 private
