@@ -15,11 +15,5 @@
         ) %>
       <% end %>
     <% end %>
-
-    <% if multiple_routes_enabled? %>
-      <%= f.govuk_radio_divider %>
-    <% end %>
-
-    <%= f.govuk_radio_button :training_route, :other, label: { text: "Other" } %>
   <% end %>
 <% end %>

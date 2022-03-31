@@ -166,10 +166,6 @@ module Features
       @disabilities_page ||= PageObjects::Trainees::Diversities::Disabilities.new
     end
 
-    def not_supported_route_page
-      @not_supported_route_page ||= PageObjects::Trainees::NotSupportedRoute.new
-    end
-
     def deferral_page
       @deferral_page ||= PageObjects::Trainees::Deferral.new
     end

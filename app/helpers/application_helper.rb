@@ -36,8 +36,4 @@ module ApplicationHelper
     items.unshift({ name: t("header.items.system_admin"), url: users_path }) if current_user.system_admin?
     items
   end
-
-  def multiple_routes_enabled?
-    TRAINING_ROUTE_FEATURE_FLAGS.any? { |flag| FeatureService.enabled?("routes.#{flag}") }
-  end
 end
