@@ -25,7 +25,6 @@ dfe_sign_in:
 features:
   basic_auth: false
   enable_feedback_link: true
-  sync_from_dttp: true
   send_emails: true
   import_courses_from_ttapi: true
   import_applications_from_apply: true
@@ -43,6 +42,7 @@ features:
     school_direct_tuition_fee: true
   google:
     send_data_to_big_query: true
+  integrate_with_dqt: true
 
 environment:
   name: beta

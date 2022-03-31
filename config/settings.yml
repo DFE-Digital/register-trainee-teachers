@@ -71,7 +71,7 @@ features:
     show_start_year_filter: false
   user_can_have_multiple_organisations: true
   sync_from_hesa: false
-  integrate_with_dqt: true
+  integrate_with_dqt: false
 
 dfe_sign_in:
   # Our service name
