@@ -173,8 +173,8 @@ namespace :example_data do
                   courses = courses.where(recruitment_cycle_year: Settings.current_default_course_year + 1)
 
                   attrs.merge!(
-                    apply_application: FactoryBot.build(:apply_application,
-                                                        accredited_body_code: provider.code),
+                    apply_application: FactoryBot.build(:apply_application, accredited_body_code: provider.code),
+                    cohort: "future",
                   )
                 else
                   # Create manual drafts for *current* academic cycle
