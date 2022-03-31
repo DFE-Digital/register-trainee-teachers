@@ -1,11 +1,11 @@
-<% unless lead_school_user? %>
+<% if show_cohort_filter? %>
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
         <%= t("views.trainees.index.filters.cohort") %>
       </legend>
       <div class="govuk-checkboxes govuk-checkboxes--small">
-        <% Trainee.cohorts.keys.map do |cohort| %>
+        <% available_cohorts.map do |cohort| %>
           <div class="govuk-checkboxes__item">
             <%= check_box_tag "cohort[]",
                               cohort,

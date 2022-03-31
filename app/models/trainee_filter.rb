@@ -35,7 +35,7 @@ private
       **start_year,
       **trainee_start_years,
       **study_modes,
-      **cohorts
+      **cohorts,
     ).with_indifferent_access
   end
 

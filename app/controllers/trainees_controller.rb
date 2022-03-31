@@ -34,7 +34,7 @@ class TraineesController < BaseTraineeController
     authorize(trainee)
     trainee.draft? ? trainee.destroy! : trainee.discard!
     flash[:success] = t("views.trainees.delete.#{trainee.draft? ? :draft : :record}")
-    redirect_to(trainees_path)
+    redirect_to(trainee.draft? ? drafts_path(cohort: %w[current]) : trainees_path(cohort: %w[current]))
   end
 
 private
@@ -76,7 +76,8 @@ private
       :subject,
       :text_search,
       :start_year,
-      :sort_by, {
+      :sort_by,
+      {
         level: [],
         training_route: [],
         state: [],
@@ -84,7 +85,7 @@ private
         record_completion: [],
         study_mode: [],
         cohort: [],
-      }
+      },
     ]
   end
 

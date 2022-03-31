@@ -7,6 +7,7 @@ class BaseTraineeController < ApplicationController
     filters
     available_record_sources
     show_source_filters?
+    show_cohort_filter?
     paginated_trainees
     providers
     search_primary_result_set
@@ -106,7 +107,8 @@ private
   end
 
   def filter_params
-    params.permit(permitted_params + permitted_admin_params)
+    new_params = show_cohort_filter? ? params : params.except(:cohort)
+    new_params.permit(permitted_params + permitted_admin_params)
   end
 
   def permitted_admin_params
@@ -130,6 +132,17 @@ private
         cohort: [],
       },
     ]
+  end
+
+  def show_cohort_filter?
+    available_cohorts.length > 1
+  end
+
+  def available_cohorts
+    Trainee.cohorts.keys.select do |cohort|
+      trainees = TraineePolicy::Scope.new(current_user, Trainee.public_send(cohort)).resolve
+      trainees.any?
+    end
   end
 
   def available_record_sources
