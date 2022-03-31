@@ -35,6 +35,10 @@ FactoryBot.define do
       _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY }
     end
 
+    trait :with_early_years_school_direct do
+      _dfe_routeid_value { "6d89922e-acc2-e611-80be-00155d010316" }
+    end
+
     trait :with_early_years_salaried_bursary do
       enabled_training_routes { ["early_years_salaried"] }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_DTTP_ID }
