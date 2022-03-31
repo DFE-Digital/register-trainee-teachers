@@ -236,16 +236,19 @@ class Trainee < ApplicationRecord
   def trn_received!(new_trn = nil)
     raise(StateTransitionError, "Cannot transition to :trn_received without a trn") unless new_trn || trn
 
-    # Skip deferred and withdrawn to avoid state change
-    # but to still register trn
+    # Skip deferred and withdrawn to avoid state change but to still register trn
     receive_trn! unless deferred? || withdrawn?
+
     # A deferred trainee will probably already have a trn - don't overwrite that!
     update!(trn: new_trn) unless trn
+
+    reset_dqt_sha!
   end
 
   def award_qts!(awarded_at)
     self.awarded_at = awarded_at
     award!
+    reset_dqt_sha!
   end
 
   def dttp_id=(value)
@@ -387,6 +390,10 @@ class Trainee < ApplicationRecord
 
   def academic_cycle
     AcademicCycle.for_date(commencement_date || itt_start_date)
+  end
+
+  def reset_dqt_sha!
+    update!(dqt_update_sha: sha)
   end
 
 private

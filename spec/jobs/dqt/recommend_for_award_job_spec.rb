@@ -19,8 +19,21 @@ module Dqt
       it "updates the trainee awarded_at attribute" do
         expect {
           described_class.perform_now(trainee)
-          trainee.reload
         }.to change(trainee, :awarded_at).to(Time.zone.parse(award_date))
+      end
+
+      context "DTQ sha" do
+        let(:trainee_sha) { "ABC" }
+
+        before do
+          allow(trainee).to receive(:sha).and_return(trainee_sha)
+        end
+
+        it "sets the dqt_update_sha to the trainee sha" do
+          expect {
+            described_class.perform_now(trainee)
+          }.to change(trainee, :dqt_update_sha).to(trainee_sha)
+        end
       end
     end
 

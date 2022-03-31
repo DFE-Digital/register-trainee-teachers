@@ -16,7 +16,7 @@ module Dqt
 
       dqt_update("/v2/teachers/update/#{trainee.trn}?birthDate=#{trainee.date_of_birth.iso8601}", payload)
 
-      trainee.update!(dqt_update_sha: trainee.sha)
+      trainee.reset_dqt_sha!
     end
 
   private
