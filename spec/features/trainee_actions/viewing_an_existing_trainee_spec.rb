@@ -21,6 +21,12 @@ feature "View trainees" do
       and_i_click_the_trainee_name_on_the(trainee_index_page)
       then_i_should_see_the_trainee_details_on_the(record_page)
     end
+
+    scenario "viewing the personal details of an inactive but incomplete trainee" do
+      given_a_trainee_exists(:awarded, :provider_led_postgrad, degrees: [])
+      and_i_visit_the_personal_details
+      then_i_should_not_see_any_add_degree_links_on_the(record_page)
+    end
   end
 
   context "when trainee does not belong to me" do
@@ -78,6 +84,10 @@ private
 
   def then_i_should_not_see_any_change_links_on_the(expected_page)
     expect(expected_page).not_to have_link("Change")
+  end
+
+  def then_i_should_not_see_any_add_degree_links_on_the(expected_page)
+    expect(expected_page).not_to have_link("Add degree details")
   end
 
   def and_i_should_not_see_any_action_links
