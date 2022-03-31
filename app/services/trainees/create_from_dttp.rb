@@ -123,6 +123,9 @@ module Trainees
       @dttp_route ||= find_by_entity_id(
         dttp_trainee.latest_placement_assignment.route_dttp_id,
         Dttp::CodeSets::Routes::MAPPING,
+      ) || find_by_entity_id(
+        dttp_trainee.latest_placement_assignment.route_dttp_id,
+        Dttp::CodeSets::Routes::INACTIVE_MAPPING,
       )
     end
 

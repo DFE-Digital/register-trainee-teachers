@@ -19,6 +19,11 @@ module Dttp
         TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => { entity_id: "51a5f96f-e122-e811-80ec-005056ac45bb" },
         TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => { entity_id: "7b89922e-acc2-e611-80be-00155d010316" },
       }.freeze
+
+      INACTIVE_MAPPING = {
+        # EYITT - School Direct (Early Years)
+        TRAINING_ROUTE_ENUMS[:early_years_postgrad] => { entity_id: "6d89922e-acc2-e611-80be-00155d010316" },
+      }.freeze
     end
   end
 end

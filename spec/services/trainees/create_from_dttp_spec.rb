@@ -93,6 +93,16 @@ module Trainees
         expect(trainee.dqt_update_sha).to eq(trainee.sha)
       end
 
+      context "when the route is early_years_school_direct" do
+        let(:api_placement_assignment) { create(:api_placement_assignment, :with_early_years_school_direct) }
+
+        it "maps the trainee to early_years_postgrad" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.training_route).to eq("early_years_postgrad")
+        end
+      end
+
       context "when the country is something other than England and has a non-uk postcode" do
         let(:api_trainee) { create(:api_trainee, address1_postalcode: nil, address1_country: "France") }
 
@@ -118,7 +128,7 @@ module Trainees
           create_trainee_from_dttp
         end
 
-        it "does not set the local to UK" do
+        it "does not set the locale to UK" do
           expect(Trainee.last.locale_code).to be_nil
         end
 
@@ -127,7 +137,7 @@ module Trainees
             create(:api_trainee, address1_line1: nil, address1_postalcode: nil, address1_country: "England")
           end
 
-          it "sets the local to UK" do
+          it "sets the locale to UK" do
             expect(Trainee.last.locale_code).to eq("uk")
           end
         end
