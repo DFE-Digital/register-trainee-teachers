@@ -97,6 +97,7 @@ namespace :example_data do
       # Create the provider for that persona
       provider = Provider.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(
         name: persona_attributes[:provider],
+        ukprn: Faker::Number.number(digits: 8),
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       )
 

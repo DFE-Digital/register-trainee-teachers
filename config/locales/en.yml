@@ -1125,6 +1125,8 @@ en:
               taken: Enter a unique DTTP ID
             code:
               invalid: Enter a provider code in the correct format, like 12Y
+            ukprn:
+              invalid: Enter a UKPRN in the correct format, like 12345678
         user:
           attributes:
             first_name:
