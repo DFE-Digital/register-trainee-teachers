@@ -3,27 +3,30 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l"><%= t("components.page_titles.pages.request_an_account") %></h1>
-      <p class="govuk-body">
-        <%= t("pages.request_an_account.inviting_limited_itt") %>
-      </p>
-      <p class="govuk-body">
-        <%= t("pages.request_an_account.to_get_setup") %>
-      </p>
-      <p class="govuk-body govuk-!-margin-bottom-4">
-        Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.
-      </p>
-      <p class="govuk-body"><%= t("pages.request_an_account.send_email") %>
-        <%= govuk_mail_to(Settings.support_email,
-                          Settings.support_email,
-                          subject: t("pages.request_an_account.email_subject")) %>
-      </p>
+    <p class="govuk-body"><%= t("pages.request_an_account.first_para") %></p>
+    <p class="govuk-body govuk-!-margin-bottom-4">
+      Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.
+    </p>
+    <p class="govuk-body"><%= t("pages.request_an_account.send_email") %>
+    <%= govuk_mail_to(
+      Settings.support_email,
+      Settings.support_email,
+      subject: t("pages.request_an_account.email_subject")
+    ) %>
+  </p>
 
-      <p class="govuk-body"><%= t("pages.request_an_account.tell_us") %>:</p>
+  <p class="govuk-body"><%= t("pages.request_an_account.email_address") %></p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li><%= t("pages.request_an_account.bullets1.1") %></li>
+    <li><%= t("pages.request_an_account.bullets1.2") %></li>
+  </ul>
 
-    <ul class='govuk-list govuk-list--bullet'>
-      <li><%= t("pages.request_an_account.bullets.1") %></li>
-      <li><%= t("pages.request_an_account.bullets.2") %></li>
-      <li><%= t("pages.request_an_account.bullets.3") %></li>
-    </ul>
-  </div>
+  <p class="govuk-body"><%= t("pages.request_an_account.tell_us") %></p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li><%= t("pages.request_an_account.bullets2.1") %></li>
+    <li><%= t("pages.request_an_account.bullets2.2") %></li>
+    <li><%= t("pages.request_an_account.bullets2.3") %></li>
+  </ul>
+
+  <p class="govuk-body"><%= t("pages.request_an_account.final_para") %></p>
 </div>
