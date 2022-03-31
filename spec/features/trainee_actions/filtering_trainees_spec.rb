@@ -53,11 +53,6 @@ RSpec.feature "Filtering trainees" do
       then_only_assessment_only_trainee_is_visible
     end
 
-    scenario "can filter by cohort" do
-      when_i_filter_by_cohort
-      then_only_that_cohorts_trainee_is_visible
-    end
-
     scenario "can clear filters" do
       when_i_filter_by_subject("Biology")
       then_only_biology_trainees_are_visible
@@ -181,7 +176,6 @@ private
     @primary_trainee ||= create(:trainee, :submitted_for_trn, course_age_range: AgeRange::THREE_TO_EIGHT)
     @apply_non_draft_trainee ||= create(:trainee, :submitted_for_trn, :with_apply_application)
     @dttp_import_trainee ||= create(:trainee, :submitted_for_trn, :created_from_dttp)
-    @current_cohort_trainee ||= create(:trainee, :submitted_for_trn)
     Trainee.update_all(provider_id: @current_user.organisation.id)
   end
 
@@ -265,11 +259,6 @@ private
 
   def when_i_filter_by_early_years_level
     trainee_index_page.early_years_checkbox.click
-    trainee_index_page.apply_filters.click
-  end
-
-  def when_i_filter_by_cohort
-    trainee_index_page.past_cohort_checkbox.click
     trainee_index_page.apply_filters.click
   end
 
@@ -385,10 +374,6 @@ private
   def then_only_the_trainee_imported_from_dttp_is_visible
     expect(trainee_index_page).to have_text(full_name(@dttp_import_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@apply_non_draft_trainee))
-  end
-
-  def then_only_that_cohorts_trainee_is_visible
-    expect(trainee_index_page).not_to have_text(full_name(@current_cohort_trainee))
   end
 
   def full_name(trainee)

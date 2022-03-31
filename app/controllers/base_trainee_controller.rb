@@ -6,6 +6,7 @@ class BaseTraineeController < ApplicationController
     filter_params
     filters
     available_record_sources
+    available_cohorts
     show_source_filters?
     show_cohort_filter?
     paginated_trainees
