@@ -141,7 +141,7 @@ private
 
   def available_cohorts
     Trainee.cohorts.keys.select do |cohort|
-      trainees = TraineePolicy::Scope.new(current_user, Trainee.public_send(cohort)).resolve
+      trainees = TraineePolicy::Scope.new(current_user, trainee_search_scope.public_send(cohort)).resolve
       trainees.any?
     end
   end

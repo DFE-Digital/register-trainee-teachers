@@ -44,18 +44,18 @@ RSpec.feature "Filtering trainees by cohort" do
 private
 
   def given_only_current_trainees_exist
-    @current_cohort_trainee ||= create(:trainee, :awarded, :current_cohort, provider: current_provider)
+    @current_cohort_trainee ||= create(:trainee, :awarded, :current, provider: current_provider)
   end
 
   def given_only_past_and_current_trainees_exist
-    @past_cohort_trainee ||= create(:trainee, :awarded, :past_cohort, provider: current_provider)
-    @current_cohort_trainee ||= create(:trainee, :awarded, :current_cohort, provider: current_provider)
+    @past_cohort_trainee ||= create(:trainee, :awarded, :past, provider: current_provider)
+    @current_cohort_trainee ||= create(:trainee, :awarded, :current, provider: current_provider)
   end
 
   def given_trainees_from_all_cohorts_exist
-    @past_cohort_trainee ||= create(:trainee, :awarded, :past_cohort, provider: current_provider)
-    @current_cohort_trainee ||= create(:trainee, :awarded, :current_cohort, provider: current_provider)
-    @future_cohort_trainee ||= create(:trainee, :awarded, :future_cohort, provider: current_provider)
+    @past_cohort_trainee ||= create(:trainee, :awarded, :past, provider: current_provider)
+    @current_cohort_trainee ||= create(:trainee, :awarded, :current, provider: current_provider)
+    @future_cohort_trainee ||= create(:trainee, :awarded, :future, provider: current_provider)
   end
 
   def current_provider
