@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_25_163438) do
+ActiveRecord::Schema.define(version: 2022_03_29_160910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -532,7 +532,9 @@ ActiveRecord::Schema.define(version: 2022_03_25_163438) do
     t.boolean "created_from_hesa", default: false, null: false
     t.string "dqt_update_sha"
     t.datetime "hesa_updated_at"
+    t.integer "cohort", default: 0
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
+    t.index ["cohort"], name: "index_trainees_on_cohort"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["discarded_at"], name: "index_trainees_on_discarded_at"
