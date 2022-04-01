@@ -3,7 +3,7 @@
 module SystemAdmin
   class UsersController < ApplicationController
     def index
-      @users = policy_scope(User.kept, policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1)
+      @users = filtered_users(policy_scope(User.kept, policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1))
     end
 
     def new
@@ -28,6 +28,14 @@ module SystemAdmin
 
     def user
       @user ||= authorize(User.find(params[:id]))
+    end
+
+    def filtered_users(users)
+      if params[:search]
+        users.where("last_name like ? or email like ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      else
+        users
+      end
     end
   end
 end

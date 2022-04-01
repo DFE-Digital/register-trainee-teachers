@@ -1,64 +1,86 @@
-<%= render PageTitle::View.new(i18n_key: "users.index") %>
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-two-thirds-from-desktop">
+    <%= render PageTitle::View.new(i18n_key: "users.index") %>
 
-<h1 class="govuk-heading-l">Users</h1>
+    <h1 class="govuk-heading-l">Users</h1>
+  </div>
+</div>
 
-<%= render "system_admin/tab_nav" %>
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-full">
+    <%= render "system_admin/tab_nav" %>
 
-<p class="govuk-body">
-  <%= render GovukComponent::StartButtonComponent.new(
-  text: "Add a user",
-  href: new_user_path,
-) %>
-</p>
+    <p class="govuk-body">
+      <%= render GovukComponent::StartButtonComponent.new(
+      text: "Add a user",
+      href: new_user_path,
+    ) %>
+    </p>
 
-<table class="govuk-table" summary="Users list">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Name</th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Email</th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Lead Schools</th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Providers</th>
-    </tr>
-  </thead>
+    <div class="govuk-grid-row">
+      <div class ="govuk-grid-column-full">
+        <%= register_form_with url: users_path, method: :get do |f| %>
+          <%= f.govuk_text_field :search,
+                                 label: { text: "Search for a user"},
+                                 hint: { text: "Search using the person’s email address or surname", size: "s" },
+                                 value: params[:search],
+                                 width: "two-thirds" %>
+          <%= f.govuk_submit "Search", class: "submit-search" %>
+        <% end %>
+      </div>
+    </div>
 
-  <tbody class="govuk-table__body">
-    <% @users.each do |user| %>
-      <tr class="govuk-table__row user-row">
-
-        <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= govuk_link_to(user.name, user_path(user), class: "govuk-!-display-block user-link") %>
-          </span>
-        </td>
-
-        <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= user.email %>
-          </span>
-        </td>
-
-        <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <% user.lead_schools.each do |lead_school| %>
-              <%= govuk_link_to(lead_school.name,
-                                lead_school_path(lead_school, context: :users),
-                                class: "govuk-!-display-block") %>
-            <% end %>
-          </span>
-        </td>
-
-        <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <% user.providers.each do |provider| %>
-              <%= govuk_link_to provider.name,
-                                provider_path(provider, context: :users),
-                                class: "govuk-!-display-block" %>
-            <% end %>
-          </span>
-        </td>
+  <table class="govuk-table" summary="Users list">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Name</th>
+        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Email</th>
+        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Lead Schools</th>
+        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Providers</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<%= render Paginator::View.new(scope: @users) %>
+    <tbody class="govuk-table__body">
+      <% @users.each do |user| %>
+        <tr class="govuk-table__row user-row">
+
+          <td class="govuk-table__cell">
+            <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+              <%= govuk_link_to(user.name, user_path(user), class: "govuk-!-display-block user-link") %>
+            </span>
+          </td>
+
+          <td class="govuk-table__cell">
+            <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+              <%= user.email %>
+            </span>
+          </td>
+
+          <td class="govuk-table__cell">
+            <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+              <% user.lead_schools.each do |lead_school| %>
+                <%= govuk_link_to(lead_school.name,
+                                  lead_school_path(lead_school, context: :users),
+                                  class: "govuk-!-display-block") %>
+              <% end %>
+            </span>
+          </td>
+
+          <td class="govuk-table__cell">
+            <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+              <% user.providers.each do |provider| %>
+                <%= govuk_link_to provider.name,
+                                  provider_path(provider, context: :users),
+                                  class: "govuk-!-display-block" %>
+              <% end %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= render Paginator::View.new(scope: @users) %>
+  </div>
+</div>
+
