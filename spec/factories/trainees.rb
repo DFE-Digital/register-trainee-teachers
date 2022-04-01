@@ -9,7 +9,6 @@ FactoryBot.define do
 
     sequence :trainee_id do |n|
       year = potential_itt_start_date.strftime("%y").to_i
-
       "#{year}/#{year + 1}-#{n}"
     end
 
