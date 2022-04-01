@@ -163,6 +163,7 @@ class Trainee < ApplicationRecord
     past: 1,
     future: 2,
   }
+  COMPLETE_STATES = %w[recommended_for_award withdrawn awarded].freeze
 
   pg_search_scope :with_name_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name trainee_id trn],
@@ -192,7 +193,13 @@ class Trainee < ApplicationRecord
   scope :with_manual_application, -> { where(apply_application: nil, created_from_dttp: false, hesa_id: nil) }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
   scope :created_from_dttp, -> { where(created_from_dttp: true) }
+
+  # We only look for the HESA ID to determine if a trainee record came from HESA.
+  # Even though some records imported from DTTP will have a HESA ID, their original source is HESA so we chose this implementation
   scope :imported_from_hesa, -> { where.not(hesa_id: nil) }
+
+  scope :complete_for_filter, -> { where(submission_ready: true).or(where(state: COMPLETE_STATES)).or(where(id: imported_from_hesa)) }
+  scope :incomplete_for_filter, -> { where.not(id: complete_for_filter) }
 
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
 
@@ -356,7 +363,7 @@ class Trainee < ApplicationRecord
   end
 
   def awaiting_action?
-    !%w[recommended_for_award withdrawn awarded].include?(state)
+    !COMPLETE_STATES.include?(state)
   end
 
   def short_name
