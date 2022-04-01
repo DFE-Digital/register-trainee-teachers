@@ -2,6 +2,7 @@
 
 require Rails.root.join("spec/support/api_stubs/apply_api")
 require Rails.root.join("spec/support/date_helpers")
+require Rails.root.join("config/environment")
 
 # Course names are not all that important here because it's for marketing
 # purposes (can be anything). What's important are the subjects associated
@@ -46,6 +47,8 @@ REAL_PUBLISH_COURSES_WITH_SUBJECTS = {
   "Religious education" => ["Religious education"],
   "Social Sciences" => ["Social sciences"],
 }.freeze
+
+HESA_TRAINING_ROUTES = Hesa::CodeSets::TrainingRoutes::MAPPING.values.freeze
 
 namespace :example_data do
   desc "Create personas, their providers and a selection of trainees"
@@ -226,7 +229,15 @@ namespace :example_data do
               )
             end
 
-            trainee = FactoryBot.create(:trainee, route, state, attrs)
+            if provider.name.include?(PROVIDER_C) && HESA_TRAINING_ROUTES.include?(route.to_s) && state != :draft
+              trainee = FactoryBot.create(:trainee, route, state, :imported_from_hesa, attrs)
+              if sample_index < sample_size * 50.0 / 100
+                trainee.created_from_dttp = true
+                trainee.created_from_hesa = false
+              end
+            else
+              trainee = FactoryBot.create(:trainee, route, state, attrs)
+            end
 
             if sample_index < sample_size * 80.0 / 100
               funding_manager = FundingManager.new(trainee)

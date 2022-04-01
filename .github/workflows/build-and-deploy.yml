@@ -23,7 +23,7 @@ jobs:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
-    outputs: 
+    outputs:
       docker_image: ${{ env.DOCKER_IMAGE }}
       image_tag: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
@@ -82,7 +82,7 @@ jobs:
   test:
     name: Test
     needs: [build]
-    outputs: 
+    outputs:
       image_tag: ${{ needs.build.outputs.image_tag }}
     runs-on: ubuntu-latest
     steps:
@@ -119,7 +119,7 @@ jobs:
       run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
 
     - name: Run Rspec tests
-      run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'bundle exec rake spec'
+      run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test bundle exec rake spec'
 
     - name: Run Javascript tests
       run: docker-compose exec -T web /bin/sh -c 'yarn run test'
@@ -164,7 +164,7 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     strategy:
-      matrix: 
+      matrix:
         environment: [qa,staging,production,sandbox,dttpimport]
       max-parallel: 1
     steps:

@@ -519,7 +519,9 @@ FactoryBot.define do
     end
 
     trait :imported_from_hesa do
-      hesa_id { Faker::Number.number(digits: 5) }
+      hesa_id { Faker::Number.number(digits: 13) }
+      created_from_hesa { true }
+      hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
     end
   end
 end
