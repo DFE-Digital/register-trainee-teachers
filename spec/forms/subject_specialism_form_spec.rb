@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe SubjectSpecialismForm, type: :model do
-  let(:params) { {} }
+  let(:position) { 1 }
   let(:trainee) { build(:trainee, id: 123456) }
   let(:form_store) { class_double(FormStore) }
 
@@ -11,19 +11,29 @@ describe SubjectSpecialismForm, type: :model do
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
+    allow(form_store).to receive(:set).and_return(nil)
   end
 
   describe "validations" do
-    let(:position) { 1 }
+    let(:params) { {} }
+
+    before { subject.stash_or_save! }
 
     it "validates the presence of the course subject matching the position" do
-      expect(subject.valid?).to be false
       expect(subject.errors[:course_subject_one]).to contain_exactly("Select a specialism")
+    end
+
+    context "trainee has existing course subject data" do
+      let(:params) { { course_subject_one: "" } }
+      let(:trainee) { build(:trainee, id: 123456, course_subject_one: CourseSubjects::ART_AND_DESIGN) }
+
+      it "validates the presence of the course subject matching the position" do
+        expect(subject.errors[:course_subject_one]).to contain_exactly("Select a specialism")
+      end
     end
   end
 
   describe "#stash" do
-    let(:position) { 1 }
     let(:params) { { course_subject_one: "special" } }
 
     it "uses FormStore to temporarily save the fields under a key combination of trainee ID and subject_specialism" do

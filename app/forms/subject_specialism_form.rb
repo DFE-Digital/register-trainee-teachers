@@ -64,17 +64,13 @@ private
   end
 
   def specialism_is_present
-    if @position && send(subject_attribute).blank?
+    if @position && public_send(subject_attribute).blank?
       errors.add(subject_attribute, I18n.t(ERROR_TRANSLATION_KEY))
     end
   end
 
   def course_subjects(params)
-    subjects = params.slice(
-      :course_subject_one,
-      :course_subject_two,
-      :course_subject_three,
-    ).compact_blank
+    subjects = params.slice(:course_subject_one, :course_subject_two, :course_subject_three)
 
     return {} if subjects.blank?
 

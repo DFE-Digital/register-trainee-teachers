@@ -29,6 +29,8 @@
                                    link_errors: index.zero?,
                                    label: { text: specialism.upcase_first },) %>
         <% end %>
+
+        <%= f.hidden_field course_subject_attribute_name, value: "", multiple: true %>
       <% end %>
     </div>
 
