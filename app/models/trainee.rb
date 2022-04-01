@@ -235,6 +235,12 @@ class Trainee < ApplicationRecord
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
   before_save :set_submission_ready, if: :completion_trackable?
 
+  after_commit :set_cohort
+
+  def set_cohort
+    Trainees::SetCohortJob.perform_later(self)
+  end
+
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
@@ -409,7 +415,7 @@ private
     # we use this to determine if we need to update DTTP. We use values only and exclude nils to avoid
     # sending updates when we add a field to the schema.
 
-    exclude_list = %w[created_at updated_at dttp_update_sha dqt_update_sha progress submission_ready]
+    exclude_list = %w[created_at updated_at dttp_update_sha dqt_update_sha progress submission_ready cohort]
 
     trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
 
