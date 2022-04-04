@@ -66,7 +66,11 @@ private
   end
 
   def total_trainees_count
-    filtered_trainees.count
+    if filtered_trainees.count == unfiltered_trainees.count
+      filtered_trainees.count.to_s
+    else
+      "#{filtered_trainees.count} of #{unfiltered_trainees.count}"
+    end
   end
 
   def providers
@@ -89,6 +93,13 @@ private
     @filtered_trainees ||= Trainees::Filter.call(
       trainees: policy_scope(trainee_search_scope),
       filters: filters,
+    )
+  end
+
+  def unfiltered_trainees
+    @unfiltered_trainees ||= Trainees::Filter.call(
+      trainees: policy_scope(trainee_search_scope),
+      filters: {},
     )
   end
 
