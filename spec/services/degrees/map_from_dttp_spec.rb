@@ -74,12 +74,12 @@ module Degrees
       end
 
       context "with an inactive degree type" do
-        let(:degree_type) { "BA (Hons) /Education" }
+        let(:degree_type) { "BA/Education" }
         let(:api_degree_qualification) do
           create(
             :api_degree_qualification,
             _dfe_awardinginstitutionid_value: Dttp::CodeSets::Institutions::MAPPING[institution][:entity_id],
-            _dfe_degreetypeid_value: Dttp::CodeSets::DegreeTypes::INACTIVE_MAPPING[degree_type][:entity_id],
+            _dfe_degreetypeid_value: "cf695652-c197-e711-80d8-005056ac45bb",
             _dfe_classofdegreeid_value: Dttp::CodeSets::Grades::MAPPING[grade][:entity_id],
           )
         end
