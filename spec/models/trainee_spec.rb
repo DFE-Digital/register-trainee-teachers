@@ -164,6 +164,29 @@ describe Trainee do
     end
   end
 
+  describe "#available_courses" do
+    let(:course_route) { TRAINING_ROUTES_FOR_COURSE.keys.first }
+    let!(:physics_course) { create(:course, route: course_route, name: "Physics", accredited_body_code: provider.code) }
+    let!(:citizenship_course) { create(:course, route: course_route, name: "Citizenship", accredited_body_code: provider.code) }
+    let!(:economics_course) { create(:course, route: TRAINING_ROUTES_FOR_COURSE.keys.last, name: "Economics", accredited_body_code: provider.code) }
+    let(:trainee) { create(:trainee, training_route: course_route) }
+    let(:provider) { trainee.provider }
+
+    subject { trainee.available_courses }
+
+    it "returns courses available for the route ordered by name" do
+      expect(subject).to eq([citizenship_course, physics_course])
+    end
+
+    context "with a trainee from apply" do
+      let(:trainee) { create(:trainee, :with_apply_application) }
+
+      it "returns all courses available from the provider ordered by name" do
+        expect(subject).to eq([citizenship_course, economics_course, physics_course])
+      end
+    end
+  end
+
   context "slug" do
     subject { create(:trainee) }
 
