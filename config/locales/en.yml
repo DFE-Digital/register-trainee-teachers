@@ -827,6 +827,9 @@ en:
       new_trainee_link: Create a new trainee record
       registered_heading: Registered trainees
       registered_trainees_link: View all registered trainees (%{count})
+      future_registered_trainees_link: View next year’s trainees (%{count})
+      current_registered_trainees_link: View current trainees (%{count})
+      current_trainees_heading: Current trainees
       guidance_heading: News, guidance and feedback
       service_updates_link: View news and updates
       guidance_about_link: Find out about Register trainee teachers

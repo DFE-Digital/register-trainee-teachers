@@ -20,6 +20,14 @@ RSpec.describe Badges::View do
     render_inline(described_class.new(counts))
   end
 
+  it "renders links to the current cohort" do
+    counts.each_key do |state|
+      link_text = t("activerecord.attributes.trainee.states.#{state}")
+      href = "/trainees?cohort%5B%5D=current&state%5B%5D=#{state}"
+      expect(rendered_component).to have_link(link_text, href: href)
+    end
+  end
+
   context "No trainees have been awarded or are recommended for qualifications" do
     let(:counts) do
       super().merge(

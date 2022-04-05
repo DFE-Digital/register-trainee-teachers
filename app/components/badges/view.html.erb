@@ -4,7 +4,7 @@
         <% state_counts.map do |state, count| %>
             <%= render TraineeStatusCard::View.new(state: state,
                                                    count: count,
-                                                   target: trainees_path(state: map_state_to_filter_params(state))) %>
+                                                   target: trainees_path(state: map_state_to_filter_params(state), cohort: %w[current])) %>
         <% end %>
     </div>
   </div>

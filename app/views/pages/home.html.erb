@@ -62,6 +62,32 @@
           )%>
         </li>
       <% end %>
+      <% if @home_view.future_registered_trainees_count > 0 %>
+        <li>
+          <%= govuk_link_to(
+            t(".future_registered_trainees_link", count: @home_view.future_registered_trainees_count),
+            trainees_path(cohort: %w[future]),
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h3 class="govuk-heading-m"><%= t(".current_trainees_heading") %></h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <% if @home_view.current_registered_trainees_count > 0 %>
+        <li>
+          <%= govuk_link_to(
+            t(".current_registered_trainees_link", count: @home_view.current_registered_trainees_count),
+            trainees_path(cohort: %w[current]),
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>
