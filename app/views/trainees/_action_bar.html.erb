@@ -1,4 +1,5 @@
 <% unless paginated_trainees.empty? %>
+  <%= render SortLinks::View.new %>
   <% if FeatureService.enabled?(:trainee_export) && policy(:trainee).export? %>
     <div class="app-export--link">
       <%= govuk_link_to(
@@ -8,5 +9,4 @@
       ) %>
     </div>
   <% end %>
-  <%= render SortLinks::View.new %>
 <% end %>
