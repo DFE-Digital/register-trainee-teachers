@@ -11,3 +11,8 @@
     letter-spacing: -0.05px;
   }
 }
+
+.govuk-table {
+  overflow-x: auto; // Force internal sideways scrolling when content is wider than view
+  display: block;
+}
