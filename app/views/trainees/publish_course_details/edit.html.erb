@@ -22,7 +22,7 @@
 
       <div class="govuk-form-group">
         <%= f.govuk_radio_buttons_fieldset :course_uuid,
-          legend: { text: t(".course_code_label"), tag: "h1", size: "m" },
+          legend: { text: t(".course_code_label"), size: "m" },
           hint: { text: courses_fieldset_text_for(@trainee) },
           classes: "published-courses" do %>
           <% @courses.each_with_index do |course, i| %>
