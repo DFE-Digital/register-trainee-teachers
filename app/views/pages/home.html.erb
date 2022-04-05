@@ -13,7 +13,7 @@
           <li>
             <%= govuk_link_to(
               t(".draft_trainees_link", count: @home_view.draft_trainees_count),
-              drafts_path(cohort: %w[current]),
+              drafts_path,
               { class: "govuk-link--no-visited-state" }
             )%>
           </li>
@@ -22,7 +22,7 @@
           <li>
             <%= govuk_link_to(
               t(".draft_apply_trainees_link", count: @home_view.draft_apply_trainees_count),
-              drafts_path("record_source[]": :apply, cohort: %w[current]),
+              drafts_path("record_source[]": :apply),
               { class: "govuk-link--no-visited-state" }
             )%>
           </li>
@@ -57,7 +57,7 @@
         <li>
           <%= govuk_link_to(
             t(".registered_trainees_link", count: @home_view.registered_trainees_count),
-            trainees_path(cohort: %w[current]),
+            trainees_path,
             { class: "govuk-link--no-visited-state" }
           )%>
         </li>
