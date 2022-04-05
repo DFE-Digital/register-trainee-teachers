@@ -383,6 +383,7 @@ en:
         search_hint: Search for a school by it’s unique reference number (URN), name or postcode
         search_button: Search again
       service_updates: News and updates
+      organisations: Choose organisation
     filter:
       level: Education phase
       provider: Provider
@@ -845,6 +846,9 @@ en:
       heading: Privacy Notice for the Register trainee teachers service (Register)
     no_organisation: 
       heading: You have not been linked to an organisation yet
+  organisations:
+    index:
+      heading: Choose organisation
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers

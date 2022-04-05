@@ -1,7 +1,9 @@
-<h1 class="govuk-heading-l">Choose organisation</h1>
+<%= render PageTitle::View.new(i18n_key: "organisations") %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
     <%- if @providers.any? -%>
       <h2 class="govuk-heading-m">Accrediting providers</h2>
       <ul class="govuk-list">
@@ -20,7 +22,7 @@
     <%- if @lead_schools.any? -%>
       <h2 class="govuk-heading-m">Lead schools</h2>
       <p class="govuk-body">As a lead school you can only view records. You cannot change them.</p>
-      <ul class="govuk-list">
+      <ul class="govuk-list govuk-!-margin-bottom-7">
         <li class="govuk-!-margin-bottom-2">
           <%- @lead_schools.each do |lead_school| -%>
             <%= govuk_link_to lead_school.name, 
