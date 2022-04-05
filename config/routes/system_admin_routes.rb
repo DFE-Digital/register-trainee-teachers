@@ -32,6 +32,12 @@ module SystemAdminRoutes
         resources :lead_schools, path: "lead-schools", only: %i[index show] do
           resources :users, controller: "lead_schools/users", only: %i[new create edit update]
         end
+
+        resources :dttp_trainees, only: [:show], path: "dttp-trainees" do
+          member do
+            get :placement_assignments, path: "placement-assignments"
+          end
+        end
       end
     end
   end
