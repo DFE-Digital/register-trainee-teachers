@@ -3,6 +3,7 @@
 .app-records-actions {
   margin: 0 0 govuk-spacing(3) 0;
   border-bottom: 1px solid govuk-colour("mid-grey");
+  @include govuk-clearfix();
 
   @include govuk-media-query($until: $mobile-big-start) {
     padding-bottom: govuk-spacing(4);
@@ -30,7 +31,6 @@
     .app-records-actions-text-links {
       display: flex;
       justify-content: space-between;
-      flex-direction: row-reverse;
 
       .app-export--link {
         text-align: right;
