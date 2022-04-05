@@ -195,8 +195,8 @@ en:
       education_phase: Education phase
       subject: Subject
       age_range: Age range
-      itt_start_date: <abbr title='Initial teacher training'>ITT</abbr> start date
-      itt_end_date: <abbr title='Initial teacher training'>ITT</abbr> end date
+      itt_start_date: ITT start date
+      itt_end_date: ITT end date
       route: Training route
       course_details: Course details
       details_not_on_publish: Course details added manually
