@@ -788,8 +788,8 @@ en:
             tier_three:
               label: Yes - Tier 3 (£2,000)
               hint: 2:2 honours degree
-          guidance_link_text: "Funding: initial teacher training (ITT), academic year 2021 to 2022 (opens in new tab)"
-          guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-2021-to-2022
+          guidance_link_text: "Funding: initial teacher training (ITT), academic year "
+          guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-
         funding_type:
           bursary:
             label: Yes, apply for a bursary

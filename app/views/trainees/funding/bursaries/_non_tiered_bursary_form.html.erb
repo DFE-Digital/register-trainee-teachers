@@ -14,8 +14,8 @@
 
   <p class="govuk-body">
     <%= govuk_link_to(
-      t("views.forms.funding.bursaries.guidance_link_text"),
-      t("views.forms.funding.bursaries.guidance_url"),
+      t("views.forms.funding.bursaries.guidance_link_text") + @bursary_form.funding_guidance_link_text,
+      t("views.forms.funding.bursaries.guidance_url") + @bursary_form.funding_guidance_url,
       { target: "_blank", rel: "noreferrer noopener" }
     ) %>
   </p>
