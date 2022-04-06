@@ -127,4 +127,26 @@ describe AcademicCycle, type: :model do
       it { is_expected.to be(false) }
     end
   end
+
+  describe ".current" do
+    around do |example|
+      Timecop.freeze(2021, 3, 1) do
+        example.run
+      end
+    end
+
+    let(:past_academic_year) { create(:academic_cycle, cycle_year: 2019) }
+    let(:current_academic_year) { create(:academic_cycle, cycle_year: 2020) }
+    let(:future_academic_year) { create(:academic_cycle, cycle_year: 2021) }
+
+    before do
+      past_academic_year
+      current_academic_year
+      future_academic_year
+    end
+
+    subject { described_class.current }
+
+    it { is_expected.to eq(current_academic_year) }
+  end
 end
