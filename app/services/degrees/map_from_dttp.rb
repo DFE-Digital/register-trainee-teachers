@@ -93,7 +93,7 @@ module Degrees
 
     def institution
       find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::MAPPING) ||
-        find_by_entity_id(dttp_degree.institution, Dttp::CodeSets::Institutions::INACTIVE_MAPPING)
+        Dttp::CodeSets::Institutions::INACTIVE_MAPPING[dttp_degree.institution]
     end
 
     def unmapped_institution?

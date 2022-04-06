@@ -380,28 +380,30 @@ module Dttp
       INACTIVE_MAPPING = {
         # University of London (Institutes and activities) is a separate account
         # in DTTP with it's own entity_id:
-        UNIVERSITY_OF_LONDON => { entity_id: "5243a44d-7042-e811-80ff-3863bb3640b8" },
+        "5243a44d-7042-e811-80ff-3863bb3640b8" => UNIVERSITY_OF_LONDON,
         # Homerton College is a separate account in DTTP, map to Cambridge
-        THE_UNIVERSITY_OF_CAMBRIDGE => { entity_id: "ed8f17b0-a141-e811-80ff-3863bb351d40" },
+        "ed8f17b0-a141-e811-80ff-3863bb351d40" => THE_UNIVERSITY_OF_CAMBRIDGE,
         # These institutions are all 'inactive' accounts in DTTP, but there are
         # older degrees associated to them. The 'active' versions should be
         # accounted for in our `MAPPING` above:
-        BIRKBECK_COLLEGE => { entity_id: "9fc53e05-7042-e811-80ff-3863bb3640b8" },
-        CONSERVATOIRE_FOR_DANCE_AND_DRAMA => { entity_id: "e8d0c9d6-e897-e711-80d8-005056ac45bb" },
-        FALMOUTH_UNIVERSITY => { entity_id: "49f35f0b-7042-e811-80ff-3863bb3640b8" },
-        GUILDHALL_SCHOOL_OF_MUSIC_AND_DRAMA => { entity_id: "076e5e11-7042-e811-80ff-3863bb3640b8" },
-        HARPER_ADAMS_UNIVERSITY => { entity_id: "830c1d33-3fa2-e811-812b-5065f38ba241" },
-        HEYTHROP_COLLEGE => { entity_id: "1b6e5e11-7042-e811-80ff-3863bb3640b8" },
-        PLYMOUTH_COLLEGE_OF_ART => { entity_id: "9a15761c-e897-e711-80d8-005056ac45bb" },
-        QUEEN_MARY_UNIVERSITY_OF_LONDON => { entity_id: "47f3791d-7042-e811-80ff-3863bb3640b8" },
-        ROSE_BRUFORD_COLLEGE => { entity_id: "5af3791d-7042-e811-80ff-3863bb3640b8" },
-        ROYAL_AGRICULTURAL_UNIVERSITY => { entity_id: "5e407223-7042-e811-80ff-3863bb3640b8" },
-        ROYAL_NORTHERN_COLLEGE_OF_MUSIC => { entity_id: "74407223-7042-e811-80ff-3863bb3640b8" },
-        SOUTHAMPTON_SOLENT_UNIVERSITY => { entity_id: "8b407223-7042-e811-80ff-3863bb3640b8" },
-        THE_ARTS_UNIVERSITY_BOURNEMOUTH => { entity_id: "c6407223-7042-e811-80ff-3863bb3640b8" },
-        THE_OPEN_UNIVERSITY => { entity_id: "3c7af34a-2887-e711-80d8-005056ac45bb" },
-        UNIVERSITY_CAMPUS_SUFFOLK => { entity_id: "154b9247-7042-e811-80ff-3863bb3640b8" },
-        UNIVERSITY_OF_THE_ARTS_LONDON => { entity_id: "9823a753-7042-e811-80ff-3863bb3640b8" },
+        "9fc53e05-7042-e811-80ff-3863bb3640b8" => BIRKBECK_COLLEGE,
+        "e8d0c9d6-e897-e711-80d8-005056ac45bb" => CONSERVATOIRE_FOR_DANCE_AND_DRAMA,
+        "49f35f0b-7042-e811-80ff-3863bb3640b8" => FALMOUTH_UNIVERSITY,
+        "076e5e11-7042-e811-80ff-3863bb3640b8" => GUILDHALL_SCHOOL_OF_MUSIC_AND_DRAMA,
+        "830c1d33-3fa2-e811-812b-5065f38ba241" => HARPER_ADAMS_UNIVERSITY,
+        "0e6e5e11-7042-e811-80ff-3863bb3640b8" => HARPER_ADAMS_UNIVERSITY,
+        "1b6e5e11-7042-e811-80ff-3863bb3640b8" => HEYTHROP_COLLEGE,
+        "9a15761c-e897-e711-80d8-005056ac45bb" => PLYMOUTH_COLLEGE_OF_ART,
+        "47f3791d-7042-e811-80ff-3863bb3640b8" => QUEEN_MARY_UNIVERSITY_OF_LONDON,
+        "5af3791d-7042-e811-80ff-3863bb3640b8" => ROSE_BRUFORD_COLLEGE,
+        "5e407223-7042-e811-80ff-3863bb3640b8" => ROYAL_AGRICULTURAL_UNIVERSITY,
+        "74407223-7042-e811-80ff-3863bb3640b8" => ROYAL_NORTHERN_COLLEGE_OF_MUSIC,
+        "8b407223-7042-e811-80ff-3863bb3640b8" => SOUTHAMPTON_SOLENT_UNIVERSITY,
+        "c6407223-7042-e811-80ff-3863bb3640b8" => THE_ARTS_UNIVERSITY_BOURNEMOUTH,
+        "3c7af34a-2887-e711-80d8-005056ac45bb" => THE_OPEN_UNIVERSITY,
+        "154b9247-7042-e811-80ff-3863bb3640b8" => UNIVERSITY_CAMPUS_SUFFOLK,
+        "9823a753-7042-e811-80ff-3863bb3640b8" => UNIVERSITY_OF_THE_ARTS_LONDON,
+        "b2d0c9d6-e897-e711-80d8-005056ac45bb" => "The Royal College of Nursing",
       }.freeze
     end
   end

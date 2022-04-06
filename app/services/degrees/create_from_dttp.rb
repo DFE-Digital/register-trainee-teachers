@@ -22,7 +22,7 @@ module Degrees
     attr_reader :dttp_trainee, :trainee
 
     def create_degrees!
-      dttp_trainee.degree_qualifications.each do |dttp_degree|
+      dttp_trainee.degree_qualifications.not_imported.each do |dttp_degree|
         attrs = ::Degrees::MapFromDttp.call(dttp_degree: dttp_degree, dttp_trainee: dttp_trainee)
         next unless attrs
 
