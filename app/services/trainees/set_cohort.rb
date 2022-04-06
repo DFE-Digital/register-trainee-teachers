@@ -9,6 +9,7 @@ module Trainees
     end
 
     def call
+      return trainee if trainee.itt_start_date.nil?
       return trainee if trainee_is_current? && trainee.current!
       return trainee if trainee_is_future? && trainee.future!
       return trainee if trainee_is_past? && trainee.past!
