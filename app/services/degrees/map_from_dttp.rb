@@ -74,7 +74,8 @@ module Degrees
     end
 
     def subject
-      find_by_entity_id(dttp_degree.subject, Dttp::CodeSets::DegreeSubjects::MAPPING)
+      find_by_entity_id(dttp_degree.subject, Dttp::CodeSets::DegreeSubjects::MAPPING) ||
+        Dttp::CodeSets::JacsSubjects::MAPPING[dttp_degree.subject]
     end
 
     def unmapped_subject?

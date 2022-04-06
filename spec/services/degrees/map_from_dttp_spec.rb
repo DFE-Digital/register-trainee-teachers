@@ -34,6 +34,20 @@ module Degrees
     it { is_expected.to be_a(Hash) }
     it { is_expected.to include(common_attributes) }
 
+    context "with a JACS subject" do
+      let(:degree_subject) { Dttp::CodeSets::JacsSubjects::MAPPING[degree_subject_entity_id] }
+      let(:degree_subject_entity_id) { "85350ca9-e9c1-e611-80be-00155d010316" }
+
+      let(:api_degree_qualification) do
+        create(
+          :api_degree_qualification,
+          _dfe_degreesubjectid_value: degree_subject_entity_id,
+        )
+      end
+
+      it { is_expected.to include(common_attributes) }
+    end
+
     context "with a uk degree" do
       let(:institution) { Dttp::CodeSets::Institutions::GOLDSMITHS_COLLEGE }
       let(:degree_type) { Dttp::CodeSets::DegreeTypes::BACHELOR_OF_ARTS }
