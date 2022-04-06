@@ -234,8 +234,8 @@ class Trainee < ApplicationRecord
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
   before_save :set_submission_ready, if: :completion_trackable?
-  after_commit :update_trainee_in_dqt, if: :dqt_updatable?
 
+  after_commit :update_trainee_in_dqt, on: :update, if: :dqt_updatable?
   after_commit :set_cohort
 
   def set_cohort
