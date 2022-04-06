@@ -174,6 +174,6 @@ feature "submit for TRN" do
     expect(trn_success_page).to have_text("#{trainee_name(trainee)} is registered")
     expect(trn_success_page).to have_link("view #{trainee_name(trainee)}", href: trainee_path(trainee))
     expect(trn_success_page).to have_link("add a new trainee", href: new_trainee_path)
-    expect(trn_success_page).to have_link("view all your records", href: trainees_path)
+    expect(trn_success_page).to have_link("view all your records", href: trainees_path(cohort: %w[current]))
   end
 end

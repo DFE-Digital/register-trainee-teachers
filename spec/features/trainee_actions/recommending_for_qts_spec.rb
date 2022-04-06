@@ -36,6 +36,6 @@ feature "Recommending for QTS", type: :feature do
   def and_the_page_has_the_correct_links
     recommended_for_qts_page.load(trainee_id: trainee.slug)
     expect(recommended_for_qts_page).to have_link("view #{trainee_name(@trainee)}", href: trainee_path(@trainee))
-    expect(recommended_for_qts_page).to have_link("view all your records", href: trainees_path)
+    expect(recommended_for_qts_page).to have_link("view all your records", href: trainees_path(cohort: %w[current]))
   end
 end

@@ -32,7 +32,7 @@
             <p class="govuk-body">
              This trainee record is not complete and cannot be submitted for TRN.
              If you do not have all the required information now, you can
-             <%= govuk_link_to " return to this draft later", trainees_path %>.
+             <%= govuk_link_to " return to this draft later", drafts_path(cohort: %w[current]) %>.
             </p>
           </div>
         <% end %>
@@ -54,4 +54,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to("Return to this draft later", drafts_path, { id: "return-to-draft-later" }) %></p>
+<p class="govuk-body"><%= govuk_link_to("Return to this draft later", drafts_path(cohort: %w[current]), { id: "return-to-draft-later" }) %></p>

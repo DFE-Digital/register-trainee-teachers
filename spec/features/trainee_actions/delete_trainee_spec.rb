@@ -111,7 +111,7 @@ private
   end
 
   def i_am_redirected_to_the_trainee_records_list
-    expect(trainee_index_page).to be_displayed
+    expect(trainee_drafts_page).to be_displayed
   end
 
   def and_i_see_a_flash_message

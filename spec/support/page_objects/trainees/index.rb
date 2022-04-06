@@ -25,6 +25,9 @@ module PageObjects
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
       element :subject, "#subject"
       element :provider_filter, "#provider"
+      element :cohort_filter, "#cohort"
+      element :past_cohort_checkbox, "#cohort-past"
+      element :future_cohort_checkbox, "#cohort-future"
 
       element :export_link, ".app-trainee-export"
 

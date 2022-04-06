@@ -1,0 +1,23 @@
+<% if show_cohort_filter? %>
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        <%= t("views.trainees.index.filters.cohort") %>
+      </legend>
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% available_cohorts.map do |cohort| %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag "cohort[]",
+                              cohort,
+                              checked?(filters, :cohort, cohort),
+                              id: "cohort-#{cohort}",
+                              class: "govuk-checkboxes__input" %>
+            <%= label_tag "cohort-#{cohort}",
+                          label_for("cohort", cohort),
+                          class: "govuk-label govuk-checkboxes__label" %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+<% end %>
