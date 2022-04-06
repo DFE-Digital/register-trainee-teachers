@@ -26,6 +26,16 @@ FactoryBot.define do
     _dfe_academicyearid_value { SecureRandom.uuid }
     dfe_allocatedplace { [Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE, Dttp::Params::PlacementAssignment::ALLOCATED_PLACE].sample }
 
+    _dfe_awardinginstitutionid_value { Dttp::CodeSets::Institutions::MAPPING.to_a.sample[1][:entity_id] }
+    _dfe_subjectofugdegreeid_value { Dttp::CodeSets::DegreeSubjects::MAPPING.to_a.sample[1][:entity_id] }
+    _dfe_firstdegreeorequivalentid_value { Dttp::CodeSets::DegreeOrEquivalentQualifications::MAPPING.to_a.sample[1][:entity_id] }
+    _dfe_classofugdegreeid_value { Dttp::CodeSets::Grades::MAPPING.to_a.sample[1][:entity_id] }
+    _dfe_overseastrainedteachercountryid_value { nil }
+
+    trait :with_non_uk_degree_information do
+      _dfe_overseastrainedteachercountryid_value { Dttp::CodeSets::Countries::MAPPING.to_a.sample[1][:entity_id] }
+    end
+
     initialize_with { attributes.stringify_keys }
     to_create { |instance| instance }
 

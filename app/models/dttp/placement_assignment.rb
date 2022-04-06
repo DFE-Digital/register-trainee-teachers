@@ -29,5 +29,29 @@ module Dttp
     def funding_id
       response["_dfe_bursarydetailsid_value"]
     end
+
+    def degree_awarding_institution
+      response["_dfe_awardinginstitutionid_value"]
+    end
+
+    def degree_subject
+      response["_dfe_subjectofugdegreeid_value"]
+    end
+
+    def degree_type
+      response["_dfe_firstdegreeorequivalentid_value"]
+    end
+
+    def degree_grade
+      response["_dfe_classofugdegreeid_value"]
+    end
+
+    def degree_year
+      response["dfe_undergraddegreedateobtained"]&.to_date&.year
+    end
+
+    def degree_country
+      response["_dfe_overseastrainedteachercountryid_value"]
+    end
   end
 end
