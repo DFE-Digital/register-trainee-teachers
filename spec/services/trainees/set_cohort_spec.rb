@@ -74,6 +74,18 @@ module Trainees
 
         it { is_expected.to eq("current") }
       end
+
+      context "when a trainee has no ITT start date" do
+        let(:trainee) do
+          build(
+            :trainee,
+            itt_start_date: nil,
+            itt_end_date: nil,
+          )
+        end
+
+        it { is_expected.to eq("current") }
+      end
     end
   end
 end
