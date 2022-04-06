@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_29_160910) do
+ActiveRecord::Schema.define(version: 2022_04_06_101914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -221,6 +221,17 @@ ActiveRecord::Schema.define(version: 2022_03_29_160910) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["request_id"], name: "index_dqt_trn_requests_on_request_id", unique: true
     t.index ["trainee_id"], name: "index_dqt_trn_requests_on_trainee_id"
+  end
+
+  create_table "dttp_accounts", force: :cascade do |t|
+    t.uuid "dttp_id"
+    t.string "ukprn"
+    t.string "name"
+    t.jsonb "response"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dttp_id"], name: "index_dttp_accounts_on_dttp_id"
+    t.index ["ukprn"], name: "index_dttp_accounts_on_ukprn"
   end
 
   create_table "dttp_bursary_details", force: :cascade do |t|
