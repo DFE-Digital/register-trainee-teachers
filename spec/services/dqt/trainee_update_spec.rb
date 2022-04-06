@@ -21,10 +21,6 @@ module Dqt
         expect(Client).to receive(:patch).with(dqt_path, body: dqt_payload)
         subject
       end
-
-      it "sets new dqt_update_sha on trainee" do
-        expect { subject }.to change(trainee, :dqt_update_sha).to(trainee.sha)
-      end
     end
   end
 end

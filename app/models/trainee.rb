@@ -234,6 +234,7 @@ class Trainee < ApplicationRecord
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
   before_save :set_submission_ready, if: :completion_trackable?
+  after_commit :update_trainee_in_dqt, if: :dqt_updatable?
 
   after_commit :set_cohort
 
@@ -253,14 +254,11 @@ class Trainee < ApplicationRecord
 
     # A deferred trainee will probably already have a trn - don't overwrite that!
     update!(trn: new_trn) unless trn
-
-    reset_dqt_sha!
   end
 
   def award_qts!(awarded_at)
     self.awarded_at = awarded_at
     award!
-    reset_dqt_sha!
   end
 
   def dttp_id=(value)
@@ -404,10 +402,6 @@ class Trainee < ApplicationRecord
     AcademicCycle.for_date(commencement_date || itt_start_date)
   end
 
-  def reset_dqt_sha!
-    update!(dqt_update_sha: sha)
-  end
-
 private
 
   def value_digest
@@ -415,7 +409,7 @@ private
     # we use this to determine if we need to update DTTP. We use values only and exclude nils to avoid
     # sending updates when we add a field to the schema.
 
-    exclude_list = %w[created_at updated_at dttp_update_sha dqt_update_sha progress submission_ready cohort]
+    exclude_list = %w[created_at updated_at dttp_update_sha progress submission_ready cohort]
 
     trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
 
@@ -450,5 +444,13 @@ private
 
     submission_klass = validate_trn ? Submissions::TrnValidator : Submissions::MissingDataValidator
     self.submission_ready = submission_klass.new(trainee: self).valid?
+  end
+
+  def dqt_updatable?
+    !hesa_record? && %w[submitted_for_trn trn_received deferred].include?(state)
+  end
+
+  def update_trainee_in_dqt
+    Dqt::UpdateTraineeJob.perform_later(self)
   end
 end
