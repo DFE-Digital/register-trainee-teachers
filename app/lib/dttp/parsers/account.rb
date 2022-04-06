@@ -25,6 +25,17 @@ module Dttp
             }
           end
         end
+
+        def to_account_attributes(accounts:)
+          accounts.map do |account|
+            {
+              name: account["name"],
+              ukprn: account["dfe_ukprn"],
+              dttp_id: account["accountid"],
+              response: account,
+            }
+          end
+        end
       end
     end
   end
