@@ -235,7 +235,7 @@ class Trainee < ApplicationRecord
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
   before_save :set_submission_ready, if: :completion_trackable?
 
-  after_commit :update_trainee_in_dqt, on: :update, if: :dqt_updatable?
+  after_commit :update_trainee_in_dqt, on: :update
   after_commit :set_cohort
 
   def set_cohort
@@ -444,10 +444,6 @@ private
 
     submission_klass = validate_trn ? Submissions::TrnValidator : Submissions::MissingDataValidator
     self.submission_ready = submission_klass.new(trainee: self).valid?
-  end
-
-  def dqt_updatable?
-    !hesa_record? && %w[submitted_for_trn trn_received deferred].include?(state)
   end
 
   def update_trainee_in_dqt

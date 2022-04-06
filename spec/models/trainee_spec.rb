@@ -266,41 +266,12 @@ describe Trainee do
         allow(Dqt::UpdateTraineeJob).to receive(:perform_later).with(trainee)
       end
 
-      context "with trainee moving from draft to submitted_for_trn" do
+      context "when a trainee is updated" do
         let(:trainee) { create(:trainee, :draft) }
 
-        it "calls the TraineeUpdate service" do
+        it "queues a UpdateTraineeJob job" do
           trainee.submit_for_trn!
           expect(Dqt::UpdateTraineeJob).to have_received(:perform_later).with(trainee)
-        end
-      end
-
-      context "with valid-state trainee being updated" do
-        let(:trainee) { create(:trainee, :trn_received) }
-
-        it "calls the TraineeUpdate service" do
-          trainee.update(date_of_birth: trainee.date_of_birth + 1.year)
-          expect(Dqt::UpdateTraineeJob).to have_received(:perform_later).with(trainee)
-        end
-      end
-
-      context "with a hesa trainee" do
-        let(:trainee) { create(:trainee, :trn_received, :imported_from_hesa) }
-
-        it "does not call the TraineeUpdate service" do
-          trainee.update(date_of_birth: trainee.date_of_birth + 1.year)
-          expect(Dqt::UpdateTraineeJob).not_to have_received(:perform_later).with(trainee)
-        end
-      end
-
-      %i[draft recommended_for_award withdrawn awarded].each do |state|
-        context "with a #{state} trainee" do
-          let(:trainee) { create(:trainee, state) }
-
-          it "does not call the TraineeUpdate service" do
-            trainee.update(date_of_birth: trainee.date_of_birth + 1.year)
-            expect(Dqt::UpdateTraineeJob).not_to have_received(:perform_later).with(trainee)
-          end
         end
       end
     end
