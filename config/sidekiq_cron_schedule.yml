@@ -42,6 +42,6 @@ import_collection_from_hesa:
   cron: "0 */2 * * *"
   class: "Hesa::RetrieveCollectionJob"
   queue: default
-update_trainee_cohorts:
-  cron: "0 5 * * *"
-  class: "Trainees::QueueCohortUpdatesJob"
+# update_trainee_cohorts:
+#   cron: "0 5 * * *"
+#   class: "Trainees::QueueCohortUpdatesJob"

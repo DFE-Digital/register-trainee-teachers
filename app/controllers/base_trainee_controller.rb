@@ -147,7 +147,8 @@ private
   end
 
   def show_cohort_filter?
-    available_cohorts.length > 1
+    # available_cohorts.length > 1
+    false
   end
 
   def available_cohorts
