@@ -13,7 +13,7 @@
           Add a provider for <%= @user.name %>
         </h1>
 
-        <p><%= f.govuk_select(:provider, @providers.map(&:name), label: { text: "Add provider", size: "s" }, width: 20, autocomplete: :enabled, class: 'provider-select') %></p>
+        <p><%= f.govuk_select(:provider, @providers.map(&:name).sort, label: { text: "Add provider", size: "s" }, width: 20, autocomplete: :enabled, class: 'provider-select') %></p>
 
         <%= f.govuk_submit %>
       <% end %>
