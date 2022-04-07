@@ -235,8 +235,6 @@ class Trainee < ApplicationRecord
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
   before_save :set_submission_ready, if: :completion_trackable?
 
-  after_commit :update_trainee_in_dqt, on: :update
-
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
   end
@@ -439,9 +437,5 @@ private
 
     submission_klass = validate_trn ? Submissions::TrnValidator : Submissions::MissingDataValidator
     self.submission_ready = submission_klass.new(trainee: self).valid?
-  end
-
-  def update_trainee_in_dqt
-    Dqt::UpdateTraineeJob.perform_later(self)
   end
 end
