@@ -260,21 +260,6 @@ describe Trainee do
         end
       end
     end
-
-    describe "#update_trainee_in_dqt" do
-      before do
-        allow(Dqt::UpdateTraineeJob).to receive(:perform_later).with(trainee)
-      end
-
-      context "when a trainee is updated" do
-        let(:trainee) { create(:trainee, :draft) }
-
-        it "queues a UpdateTraineeJob job" do
-          trainee.submit_for_trn!
-          expect(Dqt::UpdateTraineeJob).to have_received(:perform_later).with(trainee)
-        end
-      end
-    end
   end
 
   context "class methods" do
