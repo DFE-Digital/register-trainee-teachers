@@ -19,11 +19,11 @@
 
     <% if items.present? %>
       <div class="<%= header_class %>">
-        <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide navigation menu" data-module="govuk-button">
-          Menu
-        </button>
-        <nav aria-label="Account menu">
-          <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end">
+        <nav class="govuk-header__navigation" aria-label="Account menu">
+          <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide navigation menu" data-module="govuk-button">
+            Menu
+          </button>
+          <ul id="navigation" class="govuk-header__navigation-list govuk-header__navigation--end">
             <% items.each do |item| %>
               <li class="govuk-header__navigation-item">
                 <%= govuk_link_to(item[:name], item[:url], class: "govuk-header__link") %>
