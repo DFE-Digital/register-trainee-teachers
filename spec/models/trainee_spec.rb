@@ -722,18 +722,4 @@ describe Trainee do
       expect(trainee.duplicate?).to be(true)
     end
   end
-
-  describe "set_cohort" do
-    let(:trainee) { create(:trainee) }
-
-    it "queues up a SetCohortJob" do
-      expect(Trainees::SetCohortJob).to receive(:perform_later).with(trainee)
-      trainee.set_cohort
-    end
-
-    it "is called after_commit" do
-      expect(Trainees::SetCohortJob).to receive(:perform_later).with(trainee)
-      trainee.update(first_names: "Dennis")
-    end
-  end
 end

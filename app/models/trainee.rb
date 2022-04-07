@@ -236,11 +236,6 @@ class Trainee < ApplicationRecord
   before_save :set_submission_ready, if: :completion_trackable?
 
   after_commit :update_trainee_in_dqt, on: :update
-  after_commit :set_cohort
-
-  def set_cohort
-    Trainees::SetCohortJob.perform_later(self)
-  end
 
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
