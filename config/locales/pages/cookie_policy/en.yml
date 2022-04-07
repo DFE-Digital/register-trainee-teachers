@@ -76,7 +76,7 @@ en:
         You’ve <span class="decision accepted">accepted</span><span class="decision rejected"> rejected</span> analytics cookies.
         You can %{cookie_preferences_link} at any time.
       page_link_text: change your cookie settings
-      button_text: Hide this message
+      button_text: Hide this <span class="govuk-visually-hidden">cookies</span> message
     preference_updated: Your cookie preferences have been updated
     message_html:
       <p class="govuk-body">We use some essential cookies to make this service work.</p>
