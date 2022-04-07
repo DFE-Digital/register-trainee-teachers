@@ -35,6 +35,7 @@ module Exports
         {
           "register_id" => trainee.slug,
           "trainee_url" => "#{Settings.base_url}/trainees/#{trainee.slug}",
+          "record_source" => record_source(trainee),
           "apply_id" => trainee.apply_application&.apply_id,
           "provider_trainee_id" => trainee.trainee_id,
           "trn" => trainee.trn,
@@ -277,6 +278,15 @@ module Exports
         "full_time" => "Full time",
         "part_time" => "Part time",
       }[trainee.study_mode]
+    end
+
+    def record_source(trainee)
+      {
+        "manual" => "Manual",
+        "apply" => "Apply",
+        "dttp" => "DTTP",
+        "hesa" => "HESA",
+      }[trainee.record_source]
     end
 
     def sanitise(value)
