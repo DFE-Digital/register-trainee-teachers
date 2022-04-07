@@ -401,7 +401,6 @@ module Trainees
     def update_shases!
       sha = trainee.sha
       trainee.dttp_update_sha = sha
-      trainee.dqt_update_sha = sha
 
       trainee.save!
     end

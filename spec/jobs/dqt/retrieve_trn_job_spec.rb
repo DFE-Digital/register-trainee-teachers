@@ -46,20 +46,6 @@ module Dqt
         described_class.perform_now(trn_request, timeout_date)
         expect(RetrieveTrnJob).not_to have_been_enqueued
       end
-
-      context "DTQ sha" do
-        let(:trainee_sha) { "ABC" }
-
-        before do
-          allow(trainee).to receive(:sha).and_return(trainee_sha)
-        end
-
-        it "sets the dqt_update_sha to the trainee sha" do
-          expect {
-            described_class.perform_now(trn_request, timeout_date)
-          }.to change(trainee, :dqt_update_sha).to(trainee_sha)
-        end
-      end
     end
 
     context "TRN is not available" do
