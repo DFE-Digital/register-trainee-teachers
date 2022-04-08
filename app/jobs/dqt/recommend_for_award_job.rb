@@ -8,15 +8,21 @@ module Dqt
     def perform(trainee)
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      award_date = RecommendForAward.call(trainee: trainee)
-
-      if award_date
-        trainee.award_qts!(award_date)
+      if trainee.hesa_record?
+        message = "Trainee id: #{trainee.id}, slug: #{trainee.slug} has been recommended for award but is a HESA trainee"
+        username = "Register Trainee Teachers: Job Failure"
+        SlackNotifierService.call(message: message, username: username)
       else
-        raise(
-          DqtNoAwardDateError,
-          "failed to retrieve award date from DQT for trainee: #{trainee.id}",
-        )
+        award_date = RecommendForAward.call(trainee: trainee)
+
+        if award_date
+          trainee.award_qts!(award_date)
+        else
+          raise(
+            DqtNoAwardDateError,
+            "failed to retrieve award date from DQT for trainee: #{trainee.id}",
+          )
+        end
       end
     end
   end
