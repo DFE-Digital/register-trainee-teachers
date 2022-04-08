@@ -31,7 +31,7 @@ const prepareNationalitySelect = () => {
   const addNthNationalityHiddenSpan = (removeLink, nthNationality) => {
     const nthNationalitySpan = document.createElement('span')
     nthNationalitySpan.classList.add('govuk-visually-hidden')
-    nthNationalitySpan.innerHTML = `${nthNationality} nationality`
+    nthNationalitySpan.innerHTML = `${nthNationality} additional nationality`
     removeLink.appendChild(nthNationalitySpan)
   }
 
