@@ -27,7 +27,7 @@ module ApplyApplications
       trainee.progress.course_details = mark_as_reviewed
       clear_funding_information if course_subjects_changed?
 
-      trainee.save!
+      Trainees::Update.call(trainee: trainee)
     end
 
     def course_subject_one

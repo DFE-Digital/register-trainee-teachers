@@ -35,7 +35,7 @@ class ContactDetailsForm < TraineeForm
   def save!
     if valid?
       update_trainee_attributes
-      trainee.save!
+      Trainees::Update.call(trainee: trainee)
       store.set(trainee.id, :contact_details, nil)
     else
       false

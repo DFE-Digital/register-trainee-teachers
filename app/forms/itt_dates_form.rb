@@ -32,7 +32,7 @@ class IttDatesForm < TraineeForm
   def save!
     if valid?
       update_trainee_itt_dates
-      trainee.save!
+      Trainees::Update.call(trainee: trainee)
       copy_dates_to_course if for_all_trainees?
       clear_stash
     else

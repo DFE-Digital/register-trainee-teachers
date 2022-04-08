@@ -9,7 +9,7 @@ class RouteDataManager
     trainee.training_route = route
     reset_trainee_details if trainee.training_route_changed?
     trainee.set_early_years_course_details
-    trainee.save!
+    Trainees::Update.call(trainee: trainee)
   end
 
 private
