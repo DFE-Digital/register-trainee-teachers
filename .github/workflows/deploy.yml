@@ -20,6 +20,9 @@ on:
 jobs:
   deploy:
     name: ${{ github.event.inputs.environment }} deployment
+    environment:
+      name: ${{ github.event.inputs.environment }}
+      url: ${{ steps.deploy_app.outputs.deploy-url }}    
     concurrency: deploy_all # ensures that the job waits for any deployments triggered by the build workflow to finish
     runs-on: ubuntu-latest
     steps:
@@ -27,6 +30,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy App to ${{ github.event.inputs.environment }}
+        id: deploy_app
         uses: ./.github/actions/deploy/
         with:
           actions-api-access-token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}

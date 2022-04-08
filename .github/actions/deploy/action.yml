@@ -20,20 +20,31 @@ inputs:
   slack-webhook:
     required: true
 
+outputs:
+  deploy-url:
+    value: ${{ steps.set_env_var.outputs.deploy_url }}
+
 runs:
   using: composite
   steps:
-    - name: Set Current Deployment Environment variable
+    - name: Set Environment variables
+      id: set_env_var
       shell: bash
       run: |
         if [ -n "${{ inputs.pr-number }}" ]; then
           echo "APP_NAME=${{ inputs.pr-number }}" >> $GITHUB_ENV
-          echo "DEPLOY_URL=https://register-pr-${{ inputs.pr-number }}.london.cloudapps.digital" >> $GITHUB_ENV
+          echo "::set-output name=deploy_url::https://register-pr-${{ inputs.pr-number }}.london.cloudapps.digital"
           DEPLOY_ENV=${{ inputs.environment }}-${{ inputs.pr-number }}
           echo "DEPLOY_REF=${{ github.head_ref }}" >> $GITHUB_ENV
         else
           DEPLOY_ENV=${{ inputs.environment }}
           echo "DEPLOY_REF=${{ github.ref }}" >> $GITHUB_ENV
+
+          if [ ${{ inputs.environment }} == "production" ]; then
+            echo "::set-output name=deploy_url::https://www.register-trainee-teachers.education.gov.uk"
+          else
+            echo "::set-output name=deploy_url::https://${{ inputs.environment }}.register-trainee-teachers.education.gov.uk"
+          fi
         fi
 
         echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
@@ -43,15 +54,6 @@ runs:
         echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "paas_space_name=$(jq -r '.paas_space_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-    - name: Start ${{ env.DEPLOY_ENV }} Deployment
-      uses: bobheadxi/deployments@v1
-      id: deployment
-      with:
-        step: start
-        token: ${{ github.token }}
-        env: ${{ env.DEPLOY_ENV }}
-        ref: ${{ env.DEPLOY_REF }}
 
     - uses: azure/login@v1
       with:
@@ -112,20 +114,7 @@ runs:
         pr-number: ${{ inputs.pr-number }}
         slack-webhook: ${{ inputs.slack-webhook }}
 
-    - name: Update ${{ env.DEPLOY_ENV }} status
-      if: always()
-      uses: bobheadxi/deployments@v1
-      with:
-        step: finish
-        token: ${{ github.token }}
-        env: ${{ env.DEPLOY_ENV }}
-        status: ${{ job.status }}
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-        env_url: ${{ env.DEPLOY_URL }}
-        ref: ${{ env.DEPLOY_REF }}
-        override: false
-
-    - name: Check for Failure
+    - name: Notify Slack channel on job failure
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
       uses: rtCamp/action-slack-notify@master
       env:
@@ -133,6 +122,6 @@ runs:
         SLACK_COLOR: '#ef5343'
         SLACK_ICON_EMOJI: ':github-logo:'
         SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Build Failure
+        SLACK_TITLE: Deploy to ${{ inputs.environment }} failed
         SLACK_MESSAGE: ':alert: Build failure on ${{ inputs.environment }} :sadparrot:'
         SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
