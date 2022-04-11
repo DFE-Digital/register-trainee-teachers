@@ -105,10 +105,14 @@ module Trainees
       trainees.where(provider: provider)
     end
 
-    def submission_ready(trainees, record_completion)
+    def record_completion(trainees, record_completion)
       return trainees if record_completion.blank? || record_completion.size > 1
 
-      trainees.where(submission_ready: record_completion.include?("complete"))
+      if record_completion.include?("complete")
+        trainees.complete_for_filter
+      else
+        trainees.incomplete_for_filter
+      end
     end
 
     def study_mode(trainees, study_mode)
@@ -135,7 +139,7 @@ module Trainees
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
       filtered_trainees = level(filtered_trainees, filters[:level])
       filtered_trainees = provider(filtered_trainees, filters[:provider])
-      filtered_trainees = submission_ready(filtered_trainees, filters[:record_completion])
+      filtered_trainees = record_completion(filtered_trainees, filters[:record_completion])
       filtered_trainees = study_mode(filtered_trainees, filters[:study_mode])
       filtered_trainees = cohort(filtered_trainees, filters[:cohort])
 

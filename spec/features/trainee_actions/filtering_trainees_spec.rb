@@ -13,14 +13,21 @@ RSpec.feature "Filtering trainees" do
       then_all_registered_trainees_are_visible
     end
 
-    scenario "can filter by complete records" do
-      when_i_filter_by_complete
-      then_only_complete_records_are_visible
-    end
+    context "when filtering trainees by record completion" do
+      before do
+        given_an_incomplete_hesa_trainee_exists
+        given_an_incomplete_withdrawn_trainee_exists
+      end
 
-    scenario "can filter by incomplete records" do
-      when_i_filter_by_incomplete
-      then_only_incomplete_records_are_visible
+      scenario "can filter by complete records" do
+        when_i_filter_by_complete
+        then_only_complete_records_are_visible
+      end
+
+      scenario "can filter by incomplete records" do
+        when_i_filter_by_incomplete
+        then_only_incomplete_records_are_visible
+      end
     end
 
     scenario "can filter by subject" do
@@ -185,6 +192,18 @@ private
     @dttp_draft_trainee ||= create(:trainee, :created_from_dttp, provider: current_provider)
   end
 
+  def given_an_incomplete_hesa_trainee_exists
+    @incomplete_hesa_trainee ||= create(:trainee, :imported_from_hesa, :submitted_for_trn)
+    @incomplete_hesa_trainee.update(commencement_date: nil)
+    Trainee.update_all(provider_id: @current_user.organisation.id)
+  end
+
+  def given_an_incomplete_withdrawn_trainee_exists
+    @incomplete_withdrawn_trainee ||= create(:trainee, :submitted_for_trn, :withdrawn)
+    @incomplete_withdrawn_trainee.update(commencement_date: nil)
+    Trainee.update_all(provider_id: @current_user.organisation.id)
+  end
+
   def current_provider
     @current_provider ||= @current_user.organisation
   end
@@ -311,11 +330,15 @@ private
   end
 
   def then_only_complete_records_are_visible
-    expect(trainee_index_page).to have_text(full_name(@complete_trainee))
+    expect(trainee_index_page).to have_text(full_name(@complete_trainee)) &
+      have_text(full_name(@incomplete_hesa_trainee)) &
+      have_text(full_name(@incomplete_withdrawn_trainee))
   end
 
   def then_only_incomplete_records_are_visible
     expect(trainee_index_page).to have_text(full_name(@incomplete_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@incomplete_hesa_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@incomplete_withdrawn_trainee))
   end
 
   def then_only_the_searchable_trainee_is_visible
