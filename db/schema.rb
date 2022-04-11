@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_12_173718) do
+ActiveRecord::Schema.define(version: 2022_04_11_153448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -399,6 +399,13 @@ ActiveRecord::Schema.define(version: 2022_04_12_173718) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_nationalities_on_name", unique: true
+  end
+
+  create_table "payment_profiles", force: :cascade do |t|
+    t.integer "payable_id"
+    t.string "payable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "provider_users", force: :cascade do |t|
