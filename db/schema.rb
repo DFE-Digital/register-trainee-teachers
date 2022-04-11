@@ -401,6 +401,14 @@ ActiveRecord::Schema.define(version: 2022_04_11_153448) do
     t.index ["name"], name: "index_nationalities_on_name", unique: true
   end
 
+  create_table "payment_profile_rows", force: :cascade do |t|
+    t.integer "payment_profile_id"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["payment_profile_id"], name: "index_payment_profile_rows_on_payment_profile_id"
+  end
+
   create_table "payment_profiles", force: :cascade do |t|
     t.integer "payable_id"
     t.string "payable_type"
