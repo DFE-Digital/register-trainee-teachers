@@ -31,6 +31,8 @@ module Dttp
             {
               name: account["name"],
               ukprn: account["dfe_ukprn"],
+              urn: account["dfe_urn"],
+              accreditation_id: account["dfe_providerid"],
               dttp_id: account["accountid"],
               response: account,
             }
