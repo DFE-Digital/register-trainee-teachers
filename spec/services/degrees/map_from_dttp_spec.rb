@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Degrees
   describe MapFromDttp do
-    let(:degree_subject) { Dttp::CodeSets::DegreeSubjects::ANIMATION }
+    let(:degree_subject) { DegreeSubjects::ANIMATION }
     let(:api_degree_qualification) do
       create(
         :api_degree_qualification,
