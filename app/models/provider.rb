@@ -14,6 +14,8 @@ class Provider < ApplicationRecord
   has_many :apply_applications, ->(provider) { unscope(:where).where(accredited_body_code: provider.code) }
   has_many :dttp_trainees, class_name: "Dttp::Trainee", foreign_key: :provider_dttp_id, primary_key: :dttp_id, inverse_of: :provider
 
+  has_many :payment_profiles, as: :payable
+
   audited
 
   has_associated_audits
