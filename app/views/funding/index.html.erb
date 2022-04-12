@@ -1,0 +1,100 @@
+<%= render PageTitle::View.new(text: "Payment profile") %>
+
+<h2 class="govuk-heading-l">
+  Monthly Payments
+</h2>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header app-table__column-50">
+            Month
+          </th>
+          <th class="govuk-table__header app-table__column-25">
+            Total
+          </th>
+          <th class="govuk-table__header app-table__column-25">
+            Running Total
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%- @payment_profile_view.actual_payments.each do |payment_row| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= payment_row[:month] %></td>
+            <td class="govuk-table__cell"><%= payment_row[:total] %></td>
+            <td class="govuk-table__cell"><%= payment_row[:running_total] %></td>
+          </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header app-table__column-50">
+            Month
+          </th>
+          <th class="govuk-table__header app-table__column-25">
+            Total
+          </th>
+          <th class="govuk-table__header app-table__column-25">
+            Running Total
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%- @payment_profile_view.predicted_payments.each do |payment_row| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= payment_row[:month] %></td>
+            <td class="govuk-table__cell"><%= payment_row[:total] %></td>
+            <td class="govuk-table__cell"><%= payment_row[:running_total] %></td>
+          </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- @payment_profile_view.month_breakdowns.each do |month_breakdown| %>
+  <h3 class="govuk-heading-m"><%= month_breakdown.title %></h3>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header app-table__column-50">
+              Month
+            </th>
+            <th class="govuk-table__header app-table__column-25">
+              Total
+            </th>
+            <th class="govuk-table__header app-table__column-25">
+              Running Total
+            </th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <%- month_breakdown.rows.each do |data_row| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= data_row[:description] %></td>
+              <td class="govuk-table__cell"><%= data_row[:amount] %></td>
+              <td class="govuk-table__cell"><%= data_row[:running_total] %></td>
+            </tr>
+          <%- end -%>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Total</td>
+            <td class="govuk-table__cell govuk-!-font-weight-bold"><%= month_breakdown.total_amount %></td>
+            <td class="govuk-table__cell govuk-!-font-weight-bold"><%= month_breakdown.total_running_total %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<%- end -%>
