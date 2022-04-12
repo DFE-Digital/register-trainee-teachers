@@ -134,6 +134,19 @@ module Degrees
         end
 
         it { is_expected.to have_attributes(uk_degree_attributes) }
+
+        context "with a uk country value" do
+          let(:country) { "United Kingdom" }
+          let(:api_placement_assignment) do
+            create(
+              :api_placement_assignment,
+              _dfe_firstdegreeorequivalentid_value: Dttp::CodeSets::DegreeTypes::MAPPING[degree_type][:entity_id],
+              _dfe_overseastrainedteachercountryid_value: Dttp::CodeSets::Countries::MAPPING[country][:entity_id],
+            )
+          end
+
+          it { is_expected.to have_attributes(uk_degree_attributes) }
+        end
       end
 
       context "with non-uk degree attributes" do

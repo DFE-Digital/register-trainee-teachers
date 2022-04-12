@@ -40,10 +40,6 @@ module Degrees
       non_uk_degree? ? non_uk_degree_params : uk_degree_params
     end
 
-    def non_uk_degree?
-      placement_assignment.degree_country.present?
-    end
-
     def uk_degree_params
       {
         locale_code: Trainee.locale_codes[:uk],
