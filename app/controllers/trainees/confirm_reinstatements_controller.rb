@@ -10,9 +10,6 @@ module Trainees
     def update
       if reinstatement.save! || trainee.starts_course_in_the_future?
         trainee.trn.present? ? trainee.receive_trn! : trainee.submit_for_trn!
-
-        Dttp::ReinstateJob.perform_later(trainee)
-
         flash[:success] = I18n.t("flash.trainee_reinstated")
         redirect_to(trainee_path(trainee))
       end

@@ -17,12 +17,6 @@ describe Trainees::ConfirmReinstatementsController do
     context "with a trainee with a trn" do
       let(:trn) { "trn" }
 
-      it "queues a background job to reinstate a trainee" do
-        expect {
-          post :update, params: { trainee_id: trainee }
-        }.to have_enqueued_job(Dttp::ReinstateJob).with(trainee)
-      end
-
       context "trainee has a trn" do
         it "updates the state of the trainee to trn_received" do
           expect {
@@ -56,12 +50,6 @@ describe Trainees::ConfirmReinstatementsController do
         }.to change {
           trainee.state
         } .from("deferred") .to("submitted_for_trn")
-      end
-
-      it "queues a background job to reinstate a trainee" do
-        expect {
-          post :update, params: { trainee_id: trainee }
-        }.to have_enqueued_job(Dttp::ReinstateJob).with(trainee)
       end
     end
   end
