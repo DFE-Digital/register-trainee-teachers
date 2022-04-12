@@ -24,6 +24,7 @@ module Funding
     delegate :can_apply_for_scholarship?, :can_apply_for_tiered_bursary?,
              :can_apply_for_grant?, :grant_amount, :bursary_amount,
              :scholarship_amount, :allocation_subject_name,
+             :funding_guidance_link_text, :funding_guidance_url,
              to: :funding_manager
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)
