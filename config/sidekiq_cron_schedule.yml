@@ -1,7 +1,3 @@
-update_trainees_to_dttp:
-  cron: "0 0 * * *"
-  class: "Dttp::QueueTraineeUpdatesJob"
-  queue: dttp
 truncate_activerecord_session_store:
   cron: "0 0 * * *"
   class: "SessionStoreTruncateJob"
