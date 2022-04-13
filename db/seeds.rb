@@ -41,6 +41,7 @@ SubjectSpecialism.upsert_all(
     ALLOCATION_SUBJECT_SPECIALISM_MAPPING[allocation_subject_name].map do |subject_specialism_name|
       {
         name: subject_specialism_name,
+        hecos_code: DegreeSubjects::MAPPING.dig(CourseSubjects::MAPPING[subject_specialism_name], :hecos_code),
         allocation_subject_id: allocation_subject_id,
         created_at: Time.zone.now,
         updated_at: Time.zone.now,

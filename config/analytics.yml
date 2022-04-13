@@ -137,6 +137,7 @@ shared:
   subject_specialisms:
     - allocation_subject_id
     - created_at
+    - hecos_code
     - id
     - name
     - updated_at

@@ -453,6 +453,7 @@ ActiveRecord::Schema.define(version: 2022_04_11_123017) do
     t.bigint "allocation_subject_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "hecos_code"
     t.index "lower((name)::text)", name: "index_subject_specialisms_on_lower_name", unique: true
     t.index ["allocation_subject_id"], name: "index_subject_specialisms_on_allocation_subject_id"
   end
