@@ -15,12 +15,6 @@ describe Trainees::AwardRecommendationsController do
 
   context "when the DTTP feature flag is enabled", feature_persist_to_dttp: true do
     describe "#create" do
-      it "updates the placement assignment in DTTP to mark it ready for QTS" do
-        expect {
-          post :create, params: { trainee_id: trainee }
-        }.to have_enqueued_job(Dttp::RecommendForAwardJob).with(trainee)
-      end
-
       it "queues a background job to poll for the trainee's QTS" do
         expect(Dttp::RetrieveAwardJob).to receive(:perform_with_default_delay).with(trainee)
         post :create, params: { trainee_id: trainee }

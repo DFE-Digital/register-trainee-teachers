@@ -7,7 +7,6 @@ module Trainees
         trainee.recommend_for_award!
 
         if FeatureService.enabled?(:persist_to_dttp)
-          Dttp::RecommendForAwardJob.perform_later(trainee)
           Dttp::RetrieveAwardJob.perform_with_default_delay(trainee)
         end
 
