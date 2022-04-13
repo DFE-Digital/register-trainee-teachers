@@ -6,7 +6,6 @@ namespace :hpitt do
     trainees_to_exclude = %w[0034G00002fqS22QAE]
     teach_first_provider_id = 209
     teach_first = Provider.find(teach_first_provider_id)
-    teach_first_user_dttp_id = "7004f0e7-2506-ea11-a811-000d3ab4df6c"
 
     current_interval = 0
     interval_increment = 15
@@ -20,8 +19,7 @@ namespace :hpitt do
 
         trainee.submit_for_trn!
 
-        Dttp::RegisterForTrnJob.set(wait: current_interval.seconds).perform_later(trainee, teach_first_user_dttp_id)
-        Dttp::RetrieveTrnJob.perform_with_default_delay(trainee)
+        Dqt::RegisterForTrnJob.set(wait: current_interval.seconds).perform_later(trainee)
       end
       current_interval += interval_increment
     end

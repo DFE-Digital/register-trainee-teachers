@@ -24,7 +24,7 @@ describe TrnSubmissionsController do
         end
 
         it "calls the SubmitForTrn service" do
-          expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: trainee, dttp_id: current_user.dttp_id })
+          expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: trainee })
           post :create, params: { trainee_id: trainee }
         end
       end

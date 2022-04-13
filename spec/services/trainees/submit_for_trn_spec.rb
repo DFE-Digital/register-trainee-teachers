@@ -5,17 +5,10 @@ require "rails_helper"
 module Trainees
   describe SubmitForTrn do
     let(:trainee) { create(:trainee, :draft, :completed) }
-    let(:dttp_id) { SecureRandom.uuid }
 
-    subject { described_class.call(trainee: trainee, dttp_id: dttp_id) }
+    subject { described_class.call(trainee: trainee) }
 
     context "persist_to_dttp enabled", feature_persist_to_dttp: true do
-      it "queues a background job to register trainee for TRN" do
-        expect {
-          subject
-        }.to have_enqueued_job(Dttp::RegisterForTrnJob).with(trainee, dttp_id)
-      end
-
       it "queues a background job to poll for the trainee's TRN" do
         expect(Dttp::RetrieveTrnJob).to receive(:perform_with_default_delay).with(trainee)
         subject

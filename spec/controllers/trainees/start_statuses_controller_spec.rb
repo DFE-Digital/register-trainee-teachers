@@ -42,7 +42,7 @@ describe Trainees::StartStatusesController, type: :controller do
         let(:trainee) { create(:trainee, :completed) }
 
         it "submits for TRN" do
-          expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: trainee, dttp_id: current_user.dttp_id })
+          expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: trainee })
           send_request
         end
       end

@@ -4,16 +4,14 @@ module Trainees
   class SubmitForTrn
     include ServicePattern
 
-    def initialize(trainee:, dttp_id:)
+    def initialize(trainee:)
       @trainee = trainee
-      @dttp_id = dttp_id
     end
 
     def call
       trainee.submit_for_trn!
 
       if FeatureService.enabled?(:persist_to_dttp)
-        Dttp::RegisterForTrnJob.perform_later(trainee, dttp_id)
         Dttp::RetrieveTrnJob.perform_with_default_delay(trainee)
       end
 
@@ -24,6 +22,6 @@ module Trainees
 
   private
 
-    attr_reader :trainee, :dttp_id
+    attr_reader :trainee
   end
 end
