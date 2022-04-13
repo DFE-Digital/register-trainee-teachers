@@ -25,6 +25,9 @@ module Trainees
       gender_not_provided: OTHER_GENDER_CODE,
     }.freeze
 
+    POSTGRAD_CODE = 12
+    UNDERGRAD_CODE = 20
+
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
       @trainee = Trainee.new(mapped_attributes)
@@ -143,7 +146,7 @@ module Trainees
     end
 
     def undergrad_level?
-      dttp_trainee.latest_placement_assignment.response["dfe_courselevel"] == Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG
+      dttp_trainee.latest_placement_assignment.response["dfe_courselevel"] == UNDERGRAD_CODE
     end
 
     def trn
