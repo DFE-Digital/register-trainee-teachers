@@ -502,6 +502,15 @@ ActiveRecord::Schema.define(version: 2022_04_11_153936) do
     t.index ["trainee_id"], name: "index_trainee_disabilities_on_trainee_id"
   end
 
+  create_table "trainee_payment_summaries", force: :cascade do |t|
+    t.integer "payable_id"
+    t.string "payable_type"
+    t.string "academic_year"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["payable_id", "payable_type"], name: "index_trainee_payment_summaries_on_payable_id_and_payable_type"
+  end
+
   create_table "trainees", force: :cascade do |t|
     t.text "trainee_id"
     t.text "first_names"
