@@ -50,7 +50,6 @@ features:
   sync_trainees_from_dttp: false
   import_trainees_from_dttp: false
   send_emails: false
-  persist_to_dttp: false
   placements: false
   routes:
     early_years_assessment_only: false
