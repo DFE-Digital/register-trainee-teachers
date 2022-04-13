@@ -41,6 +41,16 @@ module Degrees
       end
     end
 
+    context "when the degree is already imported" do
+      let!(:dttp_degree_qualification) { create(:dttp_degree_qualification, dttp_trainee: dttp_trainee, response: api_degree_qualification, state: "imported") }
+
+      it "does not re-import the same degree" do
+        expect {
+          create_from_dttp
+        }.not_to change(trainee.degrees, :count)
+      end
+    end
+
     context "when details are missing (not unmapped)" do
       let(:api_degree_qualification) do
         create(

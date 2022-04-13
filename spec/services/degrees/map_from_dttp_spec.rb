@@ -34,6 +34,20 @@ module Degrees
     it { is_expected.to be_a(Hash) }
     it { is_expected.to include(common_attributes) }
 
+    context "with a JACS subject" do
+      let(:degree_subject) { Dttp::CodeSets::JacsSubjects::MAPPING[degree_subject_entity_id] }
+      let(:degree_subject_entity_id) { "85350ca9-e9c1-e611-80be-00155d010316" }
+
+      let(:api_degree_qualification) do
+        create(
+          :api_degree_qualification,
+          _dfe_degreesubjectid_value: degree_subject_entity_id,
+        )
+      end
+
+      it { is_expected.to include(common_attributes) }
+    end
+
     context "with a uk degree" do
       let(:institution) { Dttp::CodeSets::Institutions::GOLDSMITHS_COLLEGE }
       let(:degree_type) { Dttp::CodeSets::DegreeTypes::BACHELOR_OF_ARTS }
@@ -60,11 +74,12 @@ module Degrees
       it { is_expected.to include(uk_degree_attributes) }
 
       context "with an inactive institution" do
-        let(:institution) { "Queen Mary University of London" }
+        let(:institution) { Dttp::CodeSets::Institutions::INACTIVE_MAPPING[institution_entity_id] }
+        let(:institution_entity_id) { "47f3791d-7042-e811-80ff-3863bb3640b8" }
         let(:api_degree_qualification) do
           create(
             :api_degree_qualification,
-            _dfe_awardinginstitutionid_value: Dttp::CodeSets::Institutions::INACTIVE_MAPPING[institution][:entity_id],
+            _dfe_awardinginstitutionid_value: institution_entity_id,
             _dfe_degreetypeid_value: Dttp::CodeSets::DegreeTypes::MAPPING[degree_type][:entity_id],
             _dfe_classofdegreeid_value: Dttp::CodeSets::Grades::MAPPING[grade][:entity_id],
           )

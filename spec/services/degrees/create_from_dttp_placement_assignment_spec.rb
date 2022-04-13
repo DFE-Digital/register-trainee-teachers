@@ -8,7 +8,7 @@ module Degrees
     let(:api_placement_assignment) { create(:api_placement_assignment) }
     let(:placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
     let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment]) }
-    let(:degree_subject) { Dttp::CodeSets::DegreeSubjects::ECONOMICS }
+    let(:degree_subject) { DegreeSubjects::ECONOMICS }
     let(:institution) { Dttp::CodeSets::Institutions::GOLDSMITHS_COLLEGE }
     let(:grade) { Dttp::CodeSets::Grades::FIRST_CLASS_HONOURS }
     let(:degree_type) { Dttp::CodeSets::DegreeTypes::BACHELOR_OF_ARTS }
