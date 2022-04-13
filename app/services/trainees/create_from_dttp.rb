@@ -14,6 +14,17 @@ module Trainees
 
     NOT_APPLICABLE_SCHOOL_URNS = %w[900010 99999996].freeze
 
+    NOT_PROVIDED = "NOTPROVIDED"
+
+    OTHER_GENDER_CODE = 389_040_000
+
+    GENDER_CODES = {
+      male: 1,
+      female: 2,
+      other: OTHER_GENDER_CODE,
+      gender_not_provided: OTHER_GENDER_CODE,
+    }.freeze
+
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
       @trainee = Trainee.new(mapped_attributes)
@@ -142,13 +153,13 @@ module Trainees
     def trainee_gender
       return :gender_not_provided if dttp_trainee.gender_code.blank?
 
-      return :other if Dttp::Params::Contact::OTHER_GENDER_CODE == dttp_trainee.gender_code.to_i
+      return :other if OTHER_GENDER_CODE == dttp_trainee.gender_code.to_i
 
-      Dttp::Params::Contact::GENDER_CODES.invert[dttp_trainee.gender_code.to_i]
+      GENDER_CODES.invert[dttp_trainee.gender_code.to_i]
     end
 
     def trainee_id
-      return if dttp_trainee.response["dfe_traineeid"] == Dttp::Params::Contact::NOT_PROVIDED
+      return if dttp_trainee.response["dfe_traineeid"] == NOT_PROVIDED
 
       dttp_trainee.response["dfe_traineeid"]
     end

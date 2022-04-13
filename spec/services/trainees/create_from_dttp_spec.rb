@@ -475,7 +475,7 @@ module Trainees
       end
 
       context "when gender is other" do
-        let(:api_trainee) { create(:api_trainee, gendercode: Dttp::Params::Contact::OTHER_GENDER_CODE) }
+        let(:api_trainee) { create(:api_trainee, gendercode: Trainees::CreateFromDttp::OTHER_GENDER_CODE) }
 
         it "maps gender to other" do
           create_trainee_from_dttp
