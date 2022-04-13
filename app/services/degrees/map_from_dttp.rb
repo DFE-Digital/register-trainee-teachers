@@ -68,21 +68,6 @@ module Degrees
       }
     end
 
-    def non_uk_degree?
-      country && united_kingdom_countries.exclude?(country)
-    end
-
-    def united_kingdom_countries
-      [
-        Dttp::CodeSets::Countries::UNITED_KINGDOM,
-        Dttp::CodeSets::Countries::ENGLAND,
-        Dttp::CodeSets::Countries::NORTHERN_IRELAND,
-        Dttp::CodeSets::Countries::SCOTLAND,
-        Dttp::CodeSets::Countries::UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED,
-        Dttp::CodeSets::Countries::WALES,
-      ]
-    end
-
     def non_uk_degree
       # For non-uk degrees, dfe_name has more detail than dfe_degreetypeid_value
       dttp_degree.response["dfe_name"] || degree_type
