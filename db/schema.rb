@@ -511,6 +511,17 @@ ActiveRecord::Schema.define(version: 2022_04_11_153936) do
     t.index ["payable_id", "payable_type"], name: "index_trainee_payment_summaries_on_payable_id_and_payable_type"
   end
 
+  create_table "trainee_payment_summary_row_amounts", force: :cascade do |t|
+    t.integer "trainee_payment_summary_row_id"
+    t.integer "payment_type"
+    t.integer "tier"
+    t.integer "amount"
+    t.integer "number_of_trainees"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trainee_payment_summary_row_id"], name: "index_trainee_payment_row_amounts_on_trainee_payment_row_id"
+  end
+
   create_table "trainee_payment_summary_rows", force: :cascade do |t|
     t.integer "trainee_payment_summary_id"
     t.string "subject"
