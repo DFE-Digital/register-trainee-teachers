@@ -6,10 +6,6 @@ module Trainees
       if OutcomeDateForm.new(trainee).save! && trainee.submission_ready?
         trainee.recommend_for_award!
 
-        if FeatureService.enabled?(:persist_to_dttp)
-          Dttp::RetrieveAwardJob.perform_with_default_delay(trainee)
-        end
-
         if FeatureService.enabled?(:integrate_with_dqt)
           Dqt::RecommendForAwardJob.perform_later(trainee)
         end
