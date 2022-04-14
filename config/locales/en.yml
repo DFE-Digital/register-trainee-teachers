@@ -816,7 +816,7 @@ en:
         2: have an email domain from your organisation, for example we cannot accept emails that end with @gmail.com or @icloud.com
       tell_us: "In your email, tell us:"
       bullets2:
-        1: the name of your training provider or Lead school
+        1: the name of the training provider or lead school you represent
         2: that you would like to start using Register
         3: the email address used for your DfE Sign-in account
       final_para: We will email you once we have set up your account.

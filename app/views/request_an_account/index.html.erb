@@ -1,10 +1,17 @@
 <%= render PageTitle::View.new(text: t("components.page_titles.pages.request_an_account")) %>
 
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: root_path,
+  ) %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l"><%= t("components.page_titles.pages.request_an_account") %></h1>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-9"><%= t("components.page_titles.pages.request_an_account") %></h1>
     <p class="govuk-body"><%= t("pages.request_an_account.first_para") %></p>
-    <p class="govuk-body govuk-!-margin-bottom-4">
+    <p class="govuk-body">
       Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.
     </p>
     <p class="govuk-body"><%= t("pages.request_an_account.send_email") %>
