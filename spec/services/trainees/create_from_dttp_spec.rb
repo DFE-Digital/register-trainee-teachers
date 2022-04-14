@@ -92,6 +92,57 @@ module Trainees
         expect(trainee.dttp_update_sha).to eq(trainee.sha)
       end
 
+      context "when the trainee has a lead school" do
+        let(:api_placement_assignment) {
+          create(:api_placement_assignment,
+                 _dfe_leadschoolid_value: dttp_school.dttp_id)
+        }
+        let(:dttp_school) { create(:dttp_school) }
+        let!(:school) { create(:school, urn: dttp_school.urn) }
+
+        it "maps the trainee to the lead school" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.lead_school).to eq(school)
+        end
+
+        context "when the lead school is not applicable" do
+          let(:dttp_school) { create(:dttp_school, :not_applicable) }
+
+          it "maps the trainee as lead school not applicable" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.lead_school_not_applicable).to be_truthy
+          end
+        end
+      end
+
+      context "when the trainee has an employing school" do
+        let(:api_placement_assignment) {
+          create(:api_placement_assignment,
+                 _dfe_leadschoolid_value: dttp_school.dttp_id,
+                 _dfe_employingschoolid_value: dttp_school.dttp_id)
+        }
+        let(:dttp_school) { create(:dttp_school) }
+        let!(:school) { create(:school, urn: dttp_school.urn) }
+
+        it "maps the trainee to the employing school" do
+          create_trainee_from_dttp
+          trainee = Trainee.last
+          expect(trainee.employing_school).to eq(school)
+        end
+
+        context "when the employing school is not applicable" do
+          let(:dttp_school) { create(:dttp_school, :not_applicable) }
+
+          it "maps the trainee as employing school not applicable" do
+            create_trainee_from_dttp
+            trainee = Trainee.last
+            expect(trainee.employing_school_not_applicable).to be_truthy
+          end
+        end
+      end
+
       context "when the route is early_years_school_direct" do
         let(:api_placement_assignment) { create(:api_placement_assignment, :with_early_years_school_direct) }
 
