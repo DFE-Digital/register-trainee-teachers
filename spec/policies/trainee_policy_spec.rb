@@ -7,6 +7,7 @@ describe TraineePolicy do
   let(:provider) { create(:provider) }
   let(:other_provider) { create(:provider) }
   let(:provider_user) { user_with_organisation(create(:user, providers: [provider]), provider) }
+  let(:read_only_provider_user) { user_with_organisation(create(:user, providers: [provider], read_only: true), provider) }
   let(:other_provider_user) { user_with_organisation(create(:user, providers: [other_provider]), other_provider) }
   let(:lead_school) { create(:school, :lead) }
   let(:lead_school_user) { user_with_organisation(create(:user, providers: []), lead_school) }
@@ -26,6 +27,7 @@ describe TraineePolicy do
 
   permissions :show?, :index? do
     it { is_expected.to permit(provider_user, provider_trainee) }
+    it { is_expected.to permit(read_only_provider_user, provider_trainee) }
     it { is_expected.to permit(lead_school_user, lead_school_trainee) }
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
@@ -38,6 +40,7 @@ describe TraineePolicy do
     it { is_expected.to permit(provider_user, provider_trainee) }
 
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
+    it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
     it { is_expected.not_to permit(system_admin_user, provider_trainee) }
   end
 
@@ -49,6 +52,7 @@ describe TraineePolicy do
     it { is_expected.to permit(provider_user, provider_trainee) }
     it { is_expected.not_to permit(provider_user, hesa_trainee) }
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
+    it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
     it { is_expected.to permit(system_admin_user, lead_school_trainee) }
@@ -71,6 +75,7 @@ describe TraineePolicy do
 
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
+      it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end

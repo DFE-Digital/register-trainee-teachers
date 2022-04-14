@@ -48,11 +48,11 @@ class TraineePolicy
   end
 
   def new?
-    user.provider?
+    user.provider? && !user_is_read_only?
   end
 
   def create?
-    user_in_provider_context?
+    user_in_provider_context? && !user_is_read_only?
   end
 
   def update?
@@ -100,11 +100,17 @@ private
   end
 
   def write?
+    return false if user_is_read_only?
+
     user_is_system_admin? || (!trainee.hesa_record? && user_in_provider_context? && trainee.awaiting_action?)
   end
 
   def user_in_provider_context?
     user&.organisation == trainee.provider
+  end
+
+  def user_is_read_only?
+    user&.read_only
   end
 
   def user_in_lead_school_context?
