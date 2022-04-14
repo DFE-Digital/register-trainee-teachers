@@ -121,17 +121,12 @@ shared:
   schools:
     - close_date
     - created_at
-    - created_at
-    - data
-    - id
     - id
     - lead_school
     - name
     - open_date
     - postcode
-    - session_id
     - town
-    - updated_at
     - updated_at
     - urn
   subject_specialisms:
