@@ -43,6 +43,7 @@ shared:
     - summary
     - updated_at
     - uuid
+    - course_allocation_subject_id
   course_subjects:
     - id
     - course_id

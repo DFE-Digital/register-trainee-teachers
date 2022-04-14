@@ -35,6 +35,7 @@ class PublishCourseDetailsForm < TraineeForm
           itt_end_date: nil,
           study_mode: nil,
           course_education_phase: nil,
+          course_allocation_subject: nil,
         },
       )
     else
@@ -97,7 +98,8 @@ private
                               course_subject_two: course_subject_two,
                               course_subject_three: course_subject_three,
                               course_education_phase: course&.level,
-                              course_age_range: course_age_range)
+                              course_age_range: course_age_range,
+                              course_allocation_subject: course_allocation_subject)
   end
 
   def course_subjects

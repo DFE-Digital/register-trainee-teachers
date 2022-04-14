@@ -164,6 +164,7 @@ FactoryBot.define do
         end.keys.sample
       end
       with_study_mode_and_course_dates
+      course_allocation_subject { create(:subject_specialism, name: course_subject_one)&.allocation_subject }
     end
 
     trait :with_secondary_course_details do
@@ -183,6 +184,7 @@ FactoryBot.define do
         end.keys.sample
       end
       with_study_mode_and_course_dates
+      course_allocation_subject { SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject }
     end
 
     trait :with_study_mode_and_course_dates do

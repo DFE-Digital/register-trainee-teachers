@@ -15,4 +15,8 @@ module CourseFormHelpers
   def course_subjects_changed?
     trainee.course_subject_one_changed? || trainee.course_subject_two_changed? || trainee.course_subject_three_changed?
   end
+
+  def course_allocation_subject
+    SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
+  end
 end

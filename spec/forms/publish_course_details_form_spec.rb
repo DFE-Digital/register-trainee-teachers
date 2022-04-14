@@ -41,6 +41,9 @@ describe PublishCourseDetailsForm, type: :model do
         let(:subject_specialism_form) do
           SubjectSpecialismForm.new(trainee, params: { course_subject_one: subject_name })
         end
+        let(:allocation_subject) do
+          create(:subject_specialism, name: subject_name).allocation_subject
+        end
 
         before do
           create(:course_with_subjects,
@@ -56,6 +59,7 @@ describe PublishCourseDetailsForm, type: :model do
           expect { subject.save! }
           .to change { trainee.course_subject_one }.to(subject_name)
           .and change { trainee.course_education_phase }.to(course_level)
+          .and change { trainee.course_allocation_subject }.to(allocation_subject)
         end
 
         context "with a pg_teaching_apprenticeship trainee" do

@@ -13,6 +13,10 @@ module Trainees
     let(:hesa_trn) { Faker::Number.number(digits: 7).to_s }
     let(:trainee_degree) { trainee.degrees.first }
 
+    let!(:course_allocation_subject) do
+      create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
+    end
+
     subject(:trainee) { Trainee.first }
 
     before do
@@ -29,6 +33,7 @@ module Trainees
         expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
         expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
         expect(trainee.trn).to eq(student_attributes[:trn])
+        expect(trainee.course_allocation_subject).to eq(course_allocation_subject)
       end
 
       it "updates the trainee's personal details" do

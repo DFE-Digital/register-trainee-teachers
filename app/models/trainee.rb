@@ -17,6 +17,8 @@ class Trainee < ApplicationRecord
 
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
+  belongs_to :course_allocation_subject, optional: true, class_name: "AllocationSubject"
+
   belongs_to :published_course,
              ->(trainee) { where(accredited_body_code: trainee.provider.code) },
              class_name: "Course",

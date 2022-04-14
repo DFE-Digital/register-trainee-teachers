@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_13_165608) do
+ActiveRecord::Schema.define(version: 2022_04_19_083257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(version: 2022_04_13_165608) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "dttp_id"
+    t.date "deprecated_on"
+    t.index ["dttp_id"], name: "index_allocation_subjects_on_dttp_id", unique: true
     t.index ["name"], name: "index_allocation_subjects_on_name", unique: true
   end
 
@@ -546,8 +549,10 @@ ActiveRecord::Schema.define(version: 2022_04_13_165608) do
     t.boolean "created_from_hesa", default: false, null: false
     t.datetime "hesa_updated_at"
     t.integer "cohort", default: 0
+    t.bigint "course_allocation_subject_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["cohort"], name: "index_trainees_on_cohort"
+    t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
     t.index ["discarded_at"], name: "index_trainees_on_discarded_at"
@@ -608,6 +613,7 @@ ActiveRecord::Schema.define(version: 2022_04_13_165608) do
   add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
+  add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"

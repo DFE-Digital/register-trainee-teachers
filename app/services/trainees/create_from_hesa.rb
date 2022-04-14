@@ -43,6 +43,7 @@ module Trainees
         trn: trn,
         state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
+        course_allocation_subject: course_allocation_subject,
       }.merge(created_from_hesa_attribute)
        .merge(personal_details_attributes)
        .merge(provider_attributes)
@@ -233,6 +234,10 @@ module Trainees
 
     def trainee_state
       @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee)
+    end
+
+    def course_allocation_subject
+      SubjectSpecialism.find_by(name: course_subject_one_name)&.allocation_subject
     end
   end
 end

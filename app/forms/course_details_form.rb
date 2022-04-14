@@ -177,6 +177,7 @@ private
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
       course_education_phase: course_education_phase,
+      course_allocation_subject: course_allocation_subject,
     }
 
     set_course_subject_from_primary_phase if is_primary_phase?
