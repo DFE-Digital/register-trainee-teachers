@@ -17,7 +17,7 @@ class StartDateVerificationForm < TraineeForm
   def save!
     if valid?
       update_trainee_commencement_status
-      trainee.save!
+      Trainees::Update.call(trainee: trainee)
       clear_stash
     else
       false

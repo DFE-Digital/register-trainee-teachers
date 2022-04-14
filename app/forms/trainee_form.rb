@@ -31,7 +31,7 @@ class TraineeForm
   def save!
     if valid?
       assign_attributes_to_trainee
-      trainee.save!
+      Trainees::Update.call(trainee: trainee)
       clear_stash
     else
       false

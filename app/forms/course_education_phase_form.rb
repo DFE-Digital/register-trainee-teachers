@@ -13,7 +13,7 @@ class CourseEducationPhaseForm < TraineeForm
     if valid?
       trainee.assign_attributes(fields)
       clear_course_subjects if trainee.course_education_phase_changed?
-      trainee.save!
+      Trainees::Update.call(trainee: trainee)
       clear_stash
     else
       false

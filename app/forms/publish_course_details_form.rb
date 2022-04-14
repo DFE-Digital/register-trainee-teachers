@@ -23,16 +23,19 @@ class PublishCourseDetailsForm < TraineeForm
 
   def process_manual_entry!
     if trainee.draft?
-      trainee.update!(
-        course_uuid: nil,
-        course_subject_one: nil,
-        course_subject_two: nil,
-        course_subject_three: nil,
-        course_age_range: nil,
-        itt_start_date: nil,
-        itt_end_date: nil,
-        study_mode: nil,
-        course_education_phase: nil,
+      Trainees::Update.call(
+        trainee: trainee,
+        params: {
+          course_uuid: nil,
+          course_subject_one: nil,
+          course_subject_two: nil,
+          course_subject_three: nil,
+          course_age_range: nil,
+          itt_start_date: nil,
+          itt_end_date: nil,
+          study_mode: nil,
+          course_education_phase: nil,
+        },
       )
     else
       CourseDetailsForm.new(trainee).nullify_and_stash!
@@ -46,7 +49,7 @@ class PublishCourseDetailsForm < TraineeForm
 
     update_trainee_attributes
     clear_funding_information if course_subjects_changed?
-    trainee.save!
+    Trainees::Update.call(trainee: trainee)
     clear_all_stashes
   end
 

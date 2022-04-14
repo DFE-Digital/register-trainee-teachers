@@ -9,7 +9,7 @@ module Trainees
     def update
       @course_years_form = CourseYearsForm.new(course_years_params)
       if @course_years_form.valid?
-        trainee.update(course_uuid: nil)
+        Trainees::Update.call(trainee: trainee, params: { course_uuid: nil })
         redirect_to(edit_trainee_publish_course_details_path(trainee, year: @course_years_form.course_year))
       else
         render(:edit)
