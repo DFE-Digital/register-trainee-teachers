@@ -12,6 +12,8 @@ module Trainees
                     "Wales", "Isle of Man",
                     "United Kingdom, not otherwise specified"].freeze
 
+    NOT_APPLICABLE_SCHOOL_URNS = %w[900010 99999996].freeze
+
     def initialize(dttp_trainee:)
       @dttp_trainee = dttp_trainee
       @trainee = Trainee.new(mapped_attributes)
@@ -291,14 +293,26 @@ module Trainees
       return {} if dttp_trainee.latest_placement_assignment.lead_school_id.blank?
 
       # Should we raise when schools are not found so that we can add them?
-      attrs = {
-        lead_school: School.find_by(urn: lead_school_urn),
-      }
+      if NOT_APPLICABLE_SCHOOL_URNS.include?(lead_school_urn)
+        attrs = {
+          lead_school_not_applicable: true,
+        }
+      else
+        attrs = {
+          lead_school: School.find_by(urn: lead_school_urn),
+        }
+      end
 
       if dttp_trainee.latest_placement_assignment.employing_school_id.present?
-        attrs.merge!({
-          employing_school: School.find_by(urn: employing_school_urn),
-        })
+        if NOT_APPLICABLE_SCHOOL_URNS.include?(employing_school_urn)
+          attrs.merge!({
+            employing_school_not_applicable: true,
+          })
+        else
+          attrs.merge!({
+            employing_school: School.find_by(urn: employing_school_urn),
+          })
+        end
       end
 
       attrs

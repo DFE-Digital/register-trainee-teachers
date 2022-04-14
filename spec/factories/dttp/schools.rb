@@ -19,5 +19,9 @@ FactoryBot.define do
     trait :inactive do
       status_code { Dttp::School::STATUS_CODES[:inactive] }
     end
+
+    trait :not_applicable do
+      urn { %w[900010 99999996].sample }
+    end
   end
 end
