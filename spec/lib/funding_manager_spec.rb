@@ -10,6 +10,7 @@ describe FundingManager do
     build(:trainee,
           :with_start_date,
           :with_study_mode_and_course_dates,
+          :with_course_allocation_subject,
           course_subject_one: course_subject_one,
           training_route: training_route,
           bursary_tier: bursary_tier)
