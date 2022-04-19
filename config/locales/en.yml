@@ -66,7 +66,7 @@ en:
       trainee_status: Trainee status
       last_updated: Last updated
       record_created: Record created
-      record_source: 
+      record_source:
         title: Record source
         apply: Imported from Apply
         dttp: Imported from DTTP
@@ -111,7 +111,7 @@ en:
       subject:
         early_years: Early years teaching
         blank: No subject provided
-      record_source: 
+      record_source:
         title: Record source
         apply: Apply
         dttp: DTTP
@@ -240,7 +240,7 @@ en:
         accessibility: Accessibility statement for Register trainee teachers
         cookie_policy: Cookies on Register trainee teachers
         guidance: Data requirements
-        privacy_policy: Privacy Notice for the Register trainee teachers service (Register)
+        privacy_policy: Register trainee teachers privacy policy
         forbidden: &forbidden You do not have permission to perform this action
         home: Home
         request_an_account: Request an account
@@ -845,8 +845,8 @@ en:
     check_data:
       heading: Check what data you need to provide
     privacy_policy:
-      heading: Privacy Notice for the Register trainee teachers service (Register)
-    no_organisation: 
+      heading: Register trainee teachers privacy policy
+    no_organisation:
       heading: You have not been linked to an organisation yet
   organisations:
     index:
@@ -1498,10 +1498,10 @@ en:
       update:
         success: User details have been successfully updated.
     providers:
-      users: 
+      users:
         create:
           success: User has been successfully added.
-        update: 
+        update:
           success: User details have been successfully updated.
     lead_schools:
       users:
