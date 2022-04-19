@@ -159,6 +159,7 @@ shared:
     - course_subject_two
     - course_uuid
     - created_at
+    - created_from_hesa
     - defer_date
     - discarded_at
     - dormancy_dttp_id
