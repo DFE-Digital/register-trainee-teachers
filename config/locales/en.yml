@@ -1130,6 +1130,9 @@ en:
               blank: Select the country where the degree was obtained
         provider:
           attributes:
+            accreditation_id: 
+              blank: Enter an accreditation ID
+              taken: Enter a unique accreditation ID
             name:
               blank: Enter a provider name
             dttp_id:
