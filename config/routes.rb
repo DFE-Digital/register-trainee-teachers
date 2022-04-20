@@ -149,6 +149,7 @@ Rails.application.routes.draw do
   if FeatureService.enabled?("funding")
     namespace :funding do
       resource :monthly_payments, only: %i[show], path: "/monthly-payments"
+      resource :trainee_summary, only: %i[show], path: "/trainee-summary"
     end
   end
 
