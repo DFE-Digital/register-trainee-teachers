@@ -146,5 +146,11 @@ Rails.application.routes.draw do
   resources :service_updates, only: %i[index], path: "service-updates"
   resources :organisations, only: %i[index show], path: "organisations"
 
+  if FeatureService.enabled?("funding")
+    namespace :funding do
+      resource :monthly_payments, only: %i[show], path: "/monthly-payments"
+    end
+  end
+
   root to: "pages#start"
 end

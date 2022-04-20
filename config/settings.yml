@@ -71,6 +71,7 @@ features:
   user_can_have_multiple_organisations: true
   sync_from_hesa: false
   integrate_with_dqt: false
+  funding: false
 
 dfe_sign_in:
   # Our service name
