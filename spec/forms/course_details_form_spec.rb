@@ -495,6 +495,8 @@ describe CourseDetailsForm, type: :model do
     let(:trainee) { create(:trainee) }
 
     describe "#save!" do
+      let(:allocation_subject) { create(:subject_specialism, name: params[:course_subject_one]).allocation_subject }
+
       before do
         allow(form_store).to receive(:set).with(trainee.id, :course_details, nil)
       end
@@ -511,6 +513,8 @@ describe CourseDetailsForm, type: :model do
           .from(nil).to(Date.parse(valid_start_date.to_s))
           .and change { trainee.itt_end_date }
           .from(nil).to(Date.parse(valid_end_date.to_s))
+          .and change { trainee.course_allocation_subject }
+          .from(nil).to(allocation_subject)
       end
 
       context "with primary education phase" do
