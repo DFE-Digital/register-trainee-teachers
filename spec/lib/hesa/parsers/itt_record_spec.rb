@@ -52,7 +52,7 @@ module Hesa
             study_length_unit: "1",
             year_of_course: "0",
             degrees: [{
-              country: "CA",
+              country: "XF",
               grade: "01",
               graduation_date: "2005-07-01",
               institution: "0001",

@@ -70,15 +70,15 @@ module Trainees
 
       it "creates the trainee's degree" do
         expect(trainee.degrees.count).to eq(student_attributes[:degrees].count)
-        expect(trainee_degree.locale_code).to eq("non_uk")
-        expect(trainee_degree.uk_degree).to be_nil
-        expect(trainee_degree.non_uk_degree).to eq("Unknown")
+        expect(trainee_degree.locale_code).to eq("uk")
+        expect(trainee_degree.uk_degree).to eq("Unknown")
+        expect(trainee_degree.non_uk_degree).to be_nil
         expect(trainee_degree.subject).to eq(student_attributes[:degrees].first[:subject])
         expect(trainee_degree.institution).to eq("The Open University")
         expect(trainee_degree.graduation_year).to eq(2005)
         expect(trainee_degree.grade).to eq("First-class honours")
         expect(trainee_degree.other_grade).to be_nil
-        expect(trainee_degree.country).to eq("Canada")
+        expect(trainee_degree.country).to be_nil
       end
 
       it "creates a trainee HESA metadata record" do

@@ -22,7 +22,6 @@ module Degrees
         subject = Hesa::CodeSets::DegreeSubjects::MAPPING[hesa_degree[:subject]]
         degree = trainee.degrees.find_or_initialize_by(subject: subject)
 
-        degree.institution = Hesa::CodeSets::Institutions::MAPPING[hesa_degree[:institution]]
         degree.graduation_year = hesa_degree[:graduation_date]&.to_date&.year
 
         country_specific_attributes(degree, hesa_degree)
@@ -33,15 +32,15 @@ module Degrees
       end
     end
 
-    def uk_country?(country)
-      Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
-    end
-
     def country_specific_attributes(degree, hesa_degree)
       country = Hesa::CodeSets::Countries::MAPPING[hesa_degree[:country]]
       degree_type = Hesa::CodeSets::DegreeTypes::MAPPING[hesa_degree[:degree_type]]
+      institution = Hesa::CodeSets::Institutions::MAPPING[hesa_degree[:institution]]
 
-      if uk_country?(country)
+      # Country code is not always provided, so we have
+      # to fallback to institution which is always UK based
+      if uk_country?(country) || institution
+        degree.institution = institution
         degree.locale_code = "uk"
         degree.country = nil
         degree.uk_degree = degree_type
@@ -64,6 +63,10 @@ module Degrees
         degree.grade = grade
         degree.other_grade = nil
       end
+    end
+
+    def uk_country?(country)
+      Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
     end
   end
 end
