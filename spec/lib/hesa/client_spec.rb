@@ -6,6 +6,7 @@ module Hesa
   describe Client do
     let(:url) { "http://example.com" }
     let(:mechanize) { Mechanize.new }
+    let(:login_page) { double(:form) }
 
     subject { Client.new }
 
@@ -16,16 +17,11 @@ module Hesa
 
     describe ".login" do
       before do
-        login_form = Struct.new(:EmailAddress, :Password, :submit).new
-        allow(login_form).to receive(:EmailAddress=).with(Settings.hesa.username)
+        login_form = Struct.new(:Username, :Password, :submit).new
+        allow(login_form).to receive(:Username=).with(Settings.hesa.username)
         allow(login_form).to receive(:Password=).with(Settings.hesa.password)
         allow(login_form).to receive(:submit).and_return(true)
-
-        login_page = Struct.new(:form_with) do
-          def form_with(id:); end
-        end.new
-        allow(login_page).to receive(:form_with).with(id: "loginForm").and_return(login_form)
-
+        allow(login_page).to receive(:form).and_return(login_form)
         allow(mechanize).to receive(:get).and_return(login_page)
         allow(subject).to receive(:agent).and_return(mechanize)
       end
