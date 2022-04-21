@@ -15,9 +15,8 @@ module Hesa
   private
 
     def login
-      page = agent.get(Settings.hesa.auth_url)
-      form = page.form_with(id: "loginForm")
-      form.EmailAddress = Settings.hesa.username
+      form = agent.get(Settings.hesa.auth_url).form
+      form.Username = Settings.hesa.username
       form.Password = Settings.hesa.password
       form.submit
     end
