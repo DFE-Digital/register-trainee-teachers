@@ -5,6 +5,9 @@ on:
     types: [closed]
     branches: [main]
 
+permissions:
+  deployments: write
+
 jobs:
   delete-review-app:
     name: Delete Review App ${{ github.event.pull_request.number }}
@@ -71,9 +74,18 @@ jobs:
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING_REVIEW }}
 
       - name: Update ${{ matrix.environment }} status
+        id: deactivate-env
         if:   ${{ always() && env.TF_STATE_EXISTS == 'true' }}
-        uses: bobheadxi/deployments@v0.4.3
+        uses: bobheadxi/deployments@v1
         with:
           step:   deactivate-env
           token:  ${{ secrets.GITHUB_TOKEN }}
+          env:    review-${{ env.PR_NUMBER }}
+
+      - name: Delete review-${{ env.PR_NUMBER }} environment
+        if:   always() && (steps.deactivate-env.outcome == 'success')
+        uses: bobheadxi/deployments@v1
+        with:
+          step:   delete-env
+          token:  ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
           env:    review-${{ env.PR_NUMBER }}
