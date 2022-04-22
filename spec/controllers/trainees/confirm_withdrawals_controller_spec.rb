@@ -14,20 +14,12 @@ describe Trainees::ConfirmWithdrawalsController do
   end
 
   describe "#update" do
-    it "updates the placement assignment in DTTP to mark it as withdrawn" do
-      expect {
-        post :update, params: { trainee_id: trainee }
-      }.to have_enqueued_job(Dttp::WithdrawJob).with(trainee)
+    before do
+      post :update, params: { trainee_id: trainee }
     end
 
-    context "trainee state" do
-      before do
-        post :update, params: { trainee_id: trainee }
-      end
-
-      it "transitions the trainee state to withdrawn" do
-        expect(trainee.reload).to be_withdrawn
-      end
+    it "transitions the trainee state to withdrawn" do
+      expect(trainee.reload).to be_withdrawn
     end
   end
 end

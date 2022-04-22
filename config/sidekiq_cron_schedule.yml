@@ -1,7 +1,3 @@
-update_trainees_to_dttp:
-  cron: "0 0 * * *"
-  class: "Dttp::QueueTraineeUpdatesJob"
-  queue: dttp
 truncate_activerecord_session_store:
   cron: "0 0 * * *"
   class: "SessionStoreTruncateJob"
@@ -22,18 +18,6 @@ import_courses_from_ttapi:
   cron: "0 3 * * *"
   class: "TeacherTrainingApi::ImportCoursesJob"
   queue: default
-import_providers_from_dttp:
-  cron: "0 4 * * *"
-  class: "Dttp::SyncProvidersJob"
-  queue: dttp
-import_schools_from_dttp:
-  cron: "0 4 * * *"
-  class: "Dttp::SyncSchoolsJob"
-  queue: dttp
-import_users_from_dttp:
-  cron: "0 4 * * *"
-  class: "Dttp::SyncUsersJob"
-  queue: dttp
 delete_empty_trainees:
   cron: "0 0 * * *"
   class: "DeleteEmptyTraineesJob"

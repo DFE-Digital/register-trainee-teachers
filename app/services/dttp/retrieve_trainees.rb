@@ -6,9 +6,10 @@ module Dttp
     include SyncPattern
 
     MAX_PAGE_SIZE = 50
+    TRAINEE_CONTACT_TYPE_DTTP_ID = "faba11c7-07d9-e711-80e1-005056ac45bb"
 
     FILTER = {
-      "$filter" => "_dfe_contacttypeid_value eq #{Dttp::Params::Contact::TRAINEE_CONTACT_TYPE_DTTP_ID}",
+      "$filter" => "_dfe_contacttypeid_value eq #{TRAINEE_CONTACT_TYPE_DTTP_ID}",
     }.freeze
 
     QUERY = FILTER.to_query

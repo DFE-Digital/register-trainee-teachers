@@ -24,7 +24,6 @@ FactoryBot.define do
     dfe_trnassessmentdate { dfe_programmestartdate }
     _dfe_traineestatusid_value { "295af972-9e1b-e711-80c7-0050568902d3" }
     _dfe_academicyearid_value { SecureRandom.uuid }
-    dfe_allocatedplace { [Dttp::Params::PlacementAssignment::NO_ALLOCATED_PLACE, Dttp::Params::PlacementAssignment::ALLOCATED_PLACE].sample }
 
     _dfe_awardinginstitutionid_value { Dttp::CodeSets::Institutions::MAPPING.to_a.sample[1][:entity_id] }
     _dfe_subjectofugdegreeid_value { Dttp::CodeSets::DegreeSubjects::MAPPING.to_a.sample[1][:entity_id] }

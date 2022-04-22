@@ -14,7 +14,7 @@ class TrnSubmissionsController < ApplicationController
       return redirect_to(edit_trainee_start_status_path(trainee))
     end
 
-    Trainees::SubmitForTrn.call(trainee: trainee, dttp_id: current_user.dttp_id)
+    Trainees::SubmitForTrn.call(trainee: trainee)
     redirect_to(trn_submission_path(trainee))
   end
 

@@ -227,7 +227,13 @@ module Trainees
       end
 
       context "when the trainee is provider_led_postgrad" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_undergrad, dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_PG) }
+        let(:api_placement_assignment) do
+          create(
+            :api_placement_assignment,
+            :with_provider_led_undergrad,
+            dfe_courselevel: Trainees::CreateFromDttp::POSTGRAD_CODE,
+          )
+        end
 
         it "creates a trainee with provider_led_postgrad route" do
           create_trainee_from_dttp
@@ -236,7 +242,13 @@ module Trainees
       end
 
       context "when the trainee is provider_led_undergrad" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, :with_provider_led_undergrad, dfe_courselevel: Dttp::Params::PlacementAssignment::COURSE_LEVEL_UG) }
+        let(:api_placement_assignment) do
+          create(
+            :api_placement_assignment,
+            :with_provider_led_undergrad,
+            dfe_courselevel: Trainees::CreateFromDttp::UNDERGRAD_CODE,
+          )
+        end
 
         it "creates a trainee with provider_led_undergrad route" do
           create_trainee_from_dttp
@@ -475,7 +487,7 @@ module Trainees
       end
 
       context "when gender is other" do
-        let(:api_trainee) { create(:api_trainee, gendercode: Dttp::Params::Contact::OTHER_GENDER_CODE) }
+        let(:api_trainee) { create(:api_trainee, gendercode: Trainees::CreateFromDttp::OTHER_GENDER_CODE) }
 
         it "maps gender to other" do
           create_trainee_from_dttp
