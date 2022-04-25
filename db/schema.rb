@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_19_083257) do
+ActiveRecord::Schema.define(version: 2022_04_25_170224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -348,6 +348,17 @@ ActiveRecord::Schema.define(version: 2022_04_19_083257) do
     t.integer "funding_type"
     t.bigint "academic_cycle_id"
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
+  end
+
+  create_table "funding_payment_schedule_row_amounts", force: :cascade do |t|
+    t.integer "funding_payment_schedule_row_id"
+    t.integer "month"
+    t.integer "year"
+    t.integer "amount_in_pence"
+    t.boolean "predicted"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["funding_payment_schedule_row_id"], name: "index_payment_schedule_row_amounts_on_payment_schedule_row_id"
   end
 
   create_table "funding_payment_schedule_rows", force: :cascade do |t|
