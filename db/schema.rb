@@ -350,6 +350,14 @@ ActiveRecord::Schema.define(version: 2022_04_19_083257) do
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
   end
 
+  create_table "funding_payment_schedule_rows", force: :cascade do |t|
+    t.integer "funding_payment_schedule_id"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["funding_payment_schedule_id"], name: "index_payment_schedule_rows_on_funding_payment_schedule_id"
+  end
+
   create_table "funding_payment_schedules", force: :cascade do |t|
     t.integer "payable_id"
     t.string "payable_type"
