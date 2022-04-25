@@ -100,7 +100,7 @@ resource cloudfoundry_route web_app_route {
   hostname = local.web_app_name
 }
 
-resource cloudfoundry_route web_app_service_gov_uk_route {
+resource cloudfoundry_route web_app_education_gov_uk_route {
   domain   = data.cloudfoundry_domain.register_education_gov_uk.id
   space    = data.cloudfoundry_space.space.id
   hostname = var.web_app_hostname
