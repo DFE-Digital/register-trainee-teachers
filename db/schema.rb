@@ -359,6 +359,18 @@ ActiveRecord::Schema.define(version: 2022_04_19_083257) do
     t.index ["payable_id", "payable_type"], name: "index_funding_trainee_summaries_on_payable_id_and_payable_type"
   end
 
+  create_table "funding_trainee_summary_rows", force: :cascade do |t|
+    t.integer "funding_trainee_summary_id"
+    t.string "subject"
+    t.string "route"
+    t.string "lead_school_name"
+    t.string "lead_school_urn"
+    t.string "cohort_level"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["funding_trainee_summary_id"], name: "index_trainee_summary_rows_on_trainee_summary_id"
+  end
+
   create_table "hesa_collection_requests", force: :cascade do |t|
     t.string "collection_reference"
     t.datetime "requested_at"
