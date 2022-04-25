@@ -106,6 +106,12 @@ resource cloudfoundry_route web_app_education_gov_uk_route {
   hostname = var.web_app_hostname
 }
 
+resource cloudfoundry_route web_app_service_gov_uk_route {
+  domain   = data.cloudfoundry_domain.register_service_gov_uk.id
+  space    = data.cloudfoundry_space.space.id
+  hostname = var.web_app_hostname
+}
+
 resource cloudfoundry_route web_app_dttp_gov_uk_route {
   for_each = toset(var.dttp_portal)
   domain   = data.cloudfoundry_domain.education_gov_uk.id

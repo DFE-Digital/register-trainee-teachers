@@ -49,7 +49,7 @@ locals {
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "register-worker-${local.app_name_suffix}"
   logging_service_name     = "register-logit-${local.app_name_suffix}"
-  web_app_routes           = flatten([cloudfoundry_route.web_app_education_gov_uk_route, cloudfoundry_route.web_app_route, values(cloudfoundry_route.web_app_dttp_gov_uk_route)])
+  web_app_routes           = flatten([cloudfoundry_route.web_app_education_gov_uk_route, cloudfoundry_route.web_app_route, values(cloudfoundry_route.web_app_dttp_gov_uk_route), cloudfoundry_route.web_app_service_gov_uk_route])
   noeviction_maxmemory_policy = {
     maxmemory_policy = "noeviction"
   }
