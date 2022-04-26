@@ -102,6 +102,7 @@ namespace :example_data do
         name: persona_attributes[:provider],
         ukprn: Faker::Number.number(digits: 8),
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
+        accreditation_id: Faker::Number.number(digits: 4),
       )
 
       ProviderUser.find_or_create_by!(user: persona, provider: provider)

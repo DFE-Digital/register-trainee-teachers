@@ -33,8 +33,12 @@ module SystemAdmin
       @dttp_provider ||= ::Dttp::Provider.find(params[:dttp_provider_id])
     end
 
+    def dttp_provider_account
+      @dttp_provider_account ||= ::Dttp::Account.find_by(dttp_id: dttp_provider.dttp_id)
+    end
+
     def provider_params
-      dttp_provider.attributes.symbolize_keys.slice(:name, :dttp_id, :ukprn)
+      dttp_provider_account.attributes.symbolize_keys.slice(:name, :dttp_id, :ukprn, :accreditation_id)
     end
   end
 end

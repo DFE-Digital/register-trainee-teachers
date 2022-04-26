@@ -479,6 +479,8 @@ ActiveRecord::Schema.define(version: 2022_04_25_170224) do
     t.boolean "apply_sync_enabled", default: false
     t.string "code"
     t.string "ukprn"
+    t.string "accreditation_id"
+    t.index ["accreditation_id"], name: "index_providers_on_accreditation_id"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 

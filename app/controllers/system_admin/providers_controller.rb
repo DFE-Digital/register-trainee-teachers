@@ -39,7 +39,7 @@ module SystemAdmin
   private
 
     def provider_params
-      params.require(:provider).permit(:name, :dttp_id, :code, :ukprn, :apply_sync_enabled)
+      params.require(:provider).permit(:name, :dttp_id, :code, :ukprn, :accreditation_id, :apply_sync_enabled)
     end
 
     def set_provider

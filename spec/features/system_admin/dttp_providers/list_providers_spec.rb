@@ -8,6 +8,7 @@ feature "List providers" do
 
     before do
       @dttp_provider = create(:dttp_provider, name: "Test 1")
+      @dttp_provider_account = create(:dttp_account, name: @dttp_provider.name, dttp_id: @dttp_provider.dttp_id)
       given_i_am_authenticated(user: user)
     end
 
