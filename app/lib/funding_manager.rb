@@ -9,6 +9,7 @@ class FundingManager
 
   def initialize(trainee)
     @trainee = trainee
+    @allocation_subject = trainee.course_allocation_subject
     @academic_cycle = trainee.academic_cycle
   end
 
@@ -71,16 +72,12 @@ class FundingManager
 
 private
 
-  attr_reader :trainee, :academic_cycle
+  attr_reader :trainee, :academic_cycle, :allocation_subject
 
   delegate :training_route, :course_subject_one, :bursary_tier, to: :trainee
 
   def available_bursary_amount
     available_amount(:bursary)
-  end
-
-  def allocation_subject
-    @allocation_subject ||= SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
   end
 
   def available_amount(funding_type)

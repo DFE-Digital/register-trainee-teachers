@@ -12,6 +12,7 @@ module Funding
       let(:trainee) do
         build(:trainee,
               :early_years_postgrad,
+              :with_course_allocation_subject,
               applying_for_bursary: true,
               bursary_tier: BURSARY_TIERS.keys.first)
       end
@@ -200,6 +201,7 @@ module Funding
                  :with_study_mode_and_course_dates,
                  :school_direct_salaried,
                  :with_grant,
+                 course_allocation_subject: allocation_subject,
                  course_subject_one: "chemistry")
         end
 
@@ -217,6 +219,7 @@ module Funding
                  :school_direct_salaried,
                  :with_grant,
                  course_subject_one: "chemistry",
+                 course_allocation_subject: allocation_subject,
                  applying_for_grant: false)
         end
 
@@ -236,7 +239,9 @@ module Funding
                  :with_study_mode_and_course_dates,
                  :school_direct_salaried,
                  :with_grant,
+                 :with_course_allocation_subject,
                  course_subject_one: "chemistry",
+                 course_allocation_subject: allocation_subject,
                  applying_for_grant: nil)
         end
 

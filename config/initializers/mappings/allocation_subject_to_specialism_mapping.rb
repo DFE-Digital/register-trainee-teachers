@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
+  AllocationSubjects::ANCIENT_LANGUAGES => [
+    CourseSubjects::ANCIENT_HEBREW,
+    CourseSubjects::CLASSICAL_GREEK_STUDIES,
+    CourseSubjects::LATIN_LANGUAGE,
+  ],
   AllocationSubjects::ART_AND_DESIGN => [
     CourseSubjects::ART_AND_DESIGN,
     CourseSubjects::GRAPHIC_DESIGN,
@@ -22,11 +27,8 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::APPLIED_CHEMISTRY,
   ],
   AllocationSubjects::CLASSICS => [
-    CourseSubjects::ANCIENT_HEBREW,
-    CourseSubjects::CLASSICAL_GREEK_STUDIES,
     CourseSubjects::CLASSICAL_STUDIES,
     CourseSubjects::HISTORICAL_LINGUISTICS,
-    CourseSubjects::LATIN_LANGUAGE,
   ],
   AllocationSubjects::COMPUTING => [
     CourseSubjects::APPLIED_COMPUTING,

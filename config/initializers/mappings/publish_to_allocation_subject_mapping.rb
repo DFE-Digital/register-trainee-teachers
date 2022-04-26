@@ -59,6 +59,8 @@ PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING = {
 
 PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING = {
   # Subjects with a simple 1-to-1 specialism mapping
+  "Ancient Greek" => [CourseSubjects::CLASSICAL_GREEK_STUDIES],
+  "Ancient Hebrew" => [CourseSubjects::ANCIENT_HEBREW],
   "Citizenship" => [CourseSubjects::CITIZENSHIP],
   "Communication and media studies" => [CourseSubjects::MEDIA_AND_COMMUNICATION_STUDIES],
   "Dance" => [CourseSubjects::DANCE],
@@ -66,6 +68,7 @@ PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING = {
   "Geography" => [CourseSubjects::GEOGRAPHY],
   "Health and social care" => [CourseSubjects::HEALTH_AND_SOCIAL_CARE],
   "History" => [CourseSubjects::HISTORY],
+  "Latin" => [CourseSubjects::LATIN_LANGUAGE],
   "Music" => [CourseSubjects::MUSIC_EDUCATION_AND_TEACHING],
   "Philosophy" => [CourseSubjects::PHILOSOPHY],
   "Psychology" => [CourseSubjects::PSYCHOLOGY],

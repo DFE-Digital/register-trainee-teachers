@@ -74,7 +74,8 @@ module Funding
                  :with_start_date,
                  :with_study_mode_and_course_dates,
                  training_route: funding_method.training_route.to_sym,
-                 course_subject_one: subject_specialism.name)
+                 course_subject_one: subject_specialism.name,
+                 course_allocation_subject: allocation_subject)
         end
 
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil) }

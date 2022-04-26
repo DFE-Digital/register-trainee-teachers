@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module AllocationSubjects
+  ANCIENT_LANGUAGES = "Ancient languages"
   ART_AND_DESIGN = "Art and design"
   BIOLOGY = "Biology"
   BUSINESS_STUDIES = "Business studies"
