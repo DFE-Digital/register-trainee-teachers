@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_19_083257) do
+ActiveRecord::Schema.define(version: 2022_04_25_170224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -348,6 +348,65 @@ ActiveRecord::Schema.define(version: 2022_04_19_083257) do
     t.integer "funding_type"
     t.bigint "academic_cycle_id"
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
+  end
+
+  create_table "funding_payment_schedule_row_amounts", force: :cascade do |t|
+    t.integer "funding_payment_schedule_row_id"
+    t.integer "month"
+    t.integer "year"
+    t.integer "amount_in_pence"
+    t.boolean "predicted"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["funding_payment_schedule_row_id"], name: "index_payment_schedule_row_amounts_on_payment_schedule_row_id"
+  end
+
+  create_table "funding_payment_schedule_rows", force: :cascade do |t|
+    t.integer "funding_payment_schedule_id"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["funding_payment_schedule_id"], name: "index_payment_schedule_rows_on_funding_payment_schedule_id"
+  end
+
+  create_table "funding_payment_schedules", force: :cascade do |t|
+    t.integer "payable_id"
+    t.string "payable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["payable_id", "payable_type"], name: "index_funding_payment_schedules_on_payable_id_and_payable_type"
+  end
+
+  create_table "funding_trainee_summaries", force: :cascade do |t|
+    t.integer "payable_id"
+    t.string "payable_type"
+    t.string "academic_year"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["payable_id", "payable_type"], name: "index_funding_trainee_summaries_on_payable_id_and_payable_type"
+  end
+
+  create_table "funding_trainee_summary_row_amounts", force: :cascade do |t|
+    t.integer "funding_trainee_summary_row_id"
+    t.integer "payment_type"
+    t.integer "tier"
+    t.integer "amount"
+    t.integer "number_of_trainees"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["funding_trainee_summary_row_id"], name: "index_trainee_summary_row_amounts_on_trainee_summary_row_id"
+  end
+
+  create_table "funding_trainee_summary_rows", force: :cascade do |t|
+    t.integer "funding_trainee_summary_id"
+    t.string "subject"
+    t.string "route"
+    t.string "lead_school_name"
+    t.string "lead_school_urn"
+    t.string "cohort_level"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["funding_trainee_summary_id"], name: "index_trainee_summary_rows_on_trainee_summary_id"
   end
 
   create_table "hesa_collection_requests", force: :cascade do |t|
