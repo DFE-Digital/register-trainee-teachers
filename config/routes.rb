@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/guidance", to: "pages#guidance"
   get "/check-data", to: "pages#check_data"
+  get "/data-sharing-agreement", to: "pages#data_sharing_agreement"
   get "/dttp-replaced", to: "pages#dttp_replaced"
 
   get "/404", to: "errors#not_found", via: :all, as: :not_found

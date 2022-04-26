@@ -249,6 +249,7 @@ en:
         unprocessable_entity: Sorry, the change you wanted was rejected
         no_organisation: You have not been linked to an organisation yet
         dttp_replaced: DTTP replaced
+        data_sharing_agreement: Register trainee teachers data sharing agreement
       sign_in:
         index: Sign in
       trn_submissions:
@@ -833,6 +834,7 @@ en:
       guidance_about_link: Find out about Register trainee teachers
       guidance_data_link: Check what data you need to provide
       give_feedback_link: Give feedback to help us improve Register trainee teachers
+      data_sharing_agreement_link: Data sharing agreement
     start:
       service_updates_title: Latest news and updates
       service_updates_link: View all news and updates
@@ -842,6 +844,8 @@ en:
       heading: Accessibility statement for Register trainee teachers
     guidance:
       heading: About Register trainee teachers
+    data_sharing_agreement:
+      heading: Register trainee teachers data sharing agreement
     check_data:
       heading: Check what data you need to provide
     privacy_policy:
