@@ -405,7 +405,7 @@ en:
           within 5 working days.
         </p>
         <p class='govuk-body'>
-          Data subjects wanting to make an SAR can email the DfE at <a
+          Data subjects wanting to make an SAR can email the DfE at <a class='govuk-link'
             href='mailto:becomingateacher@digital.education.gov.uk.?subject=Subject%20access%20request'>becomingateacher@digital.education.gov.uk</a>.
         </p>
         <h2 class='govuk-heading-m' id='#handling-freedom-of-information-act-requests'>
