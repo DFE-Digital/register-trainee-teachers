@@ -95,6 +95,13 @@
           { class: "govuk-link--no-visited-state" }
         )%>
       </li>
+      <li>
+        <%= govuk_link_to(
+          t(".data_sharing_agreement_link"),
+          data_sharing_agreement_path,
+          { class: "govuk-link--no-visited-state" }
+        )%>
+      </li>
       <% if FeatureService.enabled?("enable_feedback_link") %>
         <li>
           <%= govuk_link_to(

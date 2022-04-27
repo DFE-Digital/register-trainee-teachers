@@ -34,6 +34,10 @@ class PagesController < ApplicationController
     render(:dttp_replaced)
   end
 
+  def data_sharing_agreement
+    render(:data_sharing_agreement)
+  end
+
 private
 
   def organisation_not_set?
