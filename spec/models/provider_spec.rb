@@ -35,6 +35,8 @@ describe Provider do
 
   describe "associations" do
     it { is_expected.to have_many(:users) }
+    it { is_expected.to have_many(:funding_payment_schedules) }
+    it { is_expected.to have_many(:funding_trainee_summaries) }
   end
 
   describe "auditing" do
