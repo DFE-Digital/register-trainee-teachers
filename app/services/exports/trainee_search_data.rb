@@ -40,7 +40,7 @@ module Exports
           "provider_trainee_id" => trainee.trainee_id,
           "trn" => trainee.trn,
           "status" => status(trainee),
-          "academic_year" => nil,
+          "start_year" => start_year(trainee),
           "updated_at" => trainee.updated_at&.iso8601,
           "record_created_at" => trainee.created_at&.iso8601,
           "submitted_for_trn_at" => trainee.submitted_for_trn_at&.iso8601,
@@ -267,6 +267,13 @@ module Exports
       return EARLY_YEARS_ROUTE_NAME_PREFIX.humanize if trainee.early_years_route?
 
       trainee.course_education_phase&.upcase_first
+    end
+
+    def start_year(trainee)
+      academic_cycle = trainee.academic_cycle
+      return unless academic_cycle
+
+      "#{academic_cycle.start_year} to #{academic_cycle.start_year + 1}"
     end
 
     def course_education_phase(course)
