@@ -18,6 +18,7 @@ require "sprockets/railtie"
 require "rails/test_unit/railtie"
 require "view_component/engine"
 require "govuk/components"
+require "./app/middlewares/redirect_to_service_gov_uk_middleware"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -40,6 +41,9 @@ module RegisterTraineeTeachers
     config.view_component.show_previews = !Rails.env.production?
 
     config.middleware.use(Rack::Deflater)
+    unless Rails.env.production?
+      config.middleware.insert_after(ActionDispatch::HostAuthorization, RedirectToServiceGovUkMiddleware)
+    end
     config.active_job.queue_adapter = :sidekiq
 
     config.session_store(:active_record_store, key: "_register_trainee_teachers_session")
