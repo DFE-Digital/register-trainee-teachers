@@ -160,7 +160,6 @@ jobs:
       id: deploy_review
       uses: ./.github/actions/deploy/
       with:
-        actions-api-access-token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
         arm-access-key: ${{ secrets.ARM_ACCESS_KEY_REVIEW }}
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
         environment: review
@@ -200,7 +199,6 @@ jobs:
       id: deploy_app
       uses: ./.github/actions/deploy/
       with:
-        actions-api-access-token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
         arm-access-key: ${{ secrets[format('ARM_ACCESS_KEY_{0}', matrix.environment)] }}
         azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
         environment: ${{ matrix.environment }}
