@@ -23,7 +23,7 @@ jobs:
     name: ${{ github.event.inputs.environment }} deployment
     environment:
       name: ${{ github.event.inputs.environment }}
-      url: ${{ steps.deploy_app.outputs.deploy-url }}    
+      url: ${{ steps.deploy_app.outputs.deploy-url }}
     concurrency: deploy_all # ensures that the job waits for any deployments triggered by the build workflow to finish
     runs-on: ubuntu-latest
     steps:
@@ -34,7 +34,6 @@ jobs:
         id: deploy_app
         uses: ./.github/actions/deploy/
         with:
-          actions-api-access-token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
           arm-access-key: ${{ secrets[format('ARM_ACCESS_KEY_{0}', github.event.inputs.environment)] }}
           azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', github.event.inputs.environment)] }}
           environment: ${{ github.event.inputs.environment }}
