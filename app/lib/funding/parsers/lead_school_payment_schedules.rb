@@ -2,10 +2,10 @@
 
 module Funding
   module Parsers
-    class ProviderPaymentSchedules < PaymentSchedulesBase
+    class LeadSchoolPaymentSchedules < PaymentSchedulesBase
       class << self
         def id_column
-          "Provider ID"
+          "Lead school URN"
         end
       end
     end
