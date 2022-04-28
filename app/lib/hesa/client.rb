@@ -18,7 +18,7 @@ module Hesa
       form = agent.get(Settings.hesa.auth_url).form
       form.Username = Settings.hesa.username
       form.Password = Settings.hesa.password
-      form.submit
+      agent.submit(form, form.button_with(type: "submit"))
     end
 
     def agent
