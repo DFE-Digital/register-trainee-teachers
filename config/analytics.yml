@@ -1,4 +1,10 @@
 shared:
+ academic_cycles:
+    - created_at
+    - end_date
+    - id
+    - start_date
+    - updated_at
   activities:
     - action_name
     - controller_name
@@ -66,6 +72,10 @@ shared:
     - trainee_id
     - uk_degree
     - updated_at
+  disabilities:
+    - created_at
+    - id
+    - updated_at
   dttp_providers:
     - created_at
     - dttp_id
@@ -99,6 +109,27 @@ shared:
     - funding_method_id
     - id
     - updated_at
+  hesa_metadata:
+    - course_programme_title
+    - created_at
+    - fundability
+    - id
+    - itt_aim
+    - itt_qualification_aim
+    - pg_apprenticeship_start_date
+    - placement_school_urn
+    - service_leaver
+    - study_length
+    - study_length_unit
+    - trainee_id
+    - updated_at
+    - year_of_course
+  lead_school_users:
+    - created_at
+    - id
+    - lead_school_id
+    - updated_at
+    - user_id
   nationalisations:
     - created_at
     - id
@@ -110,7 +141,14 @@ shared:
     - id
     - name
     - updated_at
+  provider_users:
+    - created_at
+    - id
+    - provider_id
+    - updated_at
+    - user_id
   providers:
+    - accreditation_id
     - apply_sync_enabled
     - code
     - created_at
@@ -160,9 +198,12 @@ shared:
     - course_subject_two
     - course_uuid
     - created_at
+    - created_from_dttp
     - created_from_hesa
     - defer_date
+    - disability_disclosure
     - discarded_at
+    - diversity_disclosure
     - dormancy_dttp_id
     - dttp_id
     - dttp_update_sha
@@ -190,6 +231,8 @@ shared:
     - study_mode
     - submission_ready
     - submitted_for_trn_at
+    - town
+    - town_city
     - training_initiative
     - training_route
     - trn
