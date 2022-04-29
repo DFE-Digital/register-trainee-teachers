@@ -9,8 +9,8 @@ CanonicalRails.setup do |config|
 
   # This is the main host, not just the TLD, omit slashes and protocol. If you have more than one, pick the one you want to rank in search results.
 
-  config.host = ENV.fetch("APPLICATION_HOST", "www.register-trainee-teachers.education.gov.uk")
-  config.port # = '3000'
+  config.host = ENV.fetch("APPLICATION_HOST", URI(Settings.base_url).host)
+  config.port = ENV.fetch("PORT", URI(Settings.base_url).port) # = '3000'
 
   # http://en.wikipedia.org/wiki/URL_normalization
   # Trailing slash represents semantics of a directory, ie a collection view - implying an :index get route;
