@@ -1,5 +1,5 @@
 shared:
- academic_cycles:
+  academic_cycles:
     - created_at
     - end_date
     - id
@@ -190,6 +190,7 @@ shared:
     - bursary_tier
     - commencement_date
     - commencement_status
+    - course_allocation_subject_id
     - course_education_phase
     - course_max_age
     - course_min_age
@@ -231,7 +232,6 @@ shared:
     - study_mode
     - submission_ready
     - submitted_for_trn_at
-    - town
     - town_city
     - training_initiative
     - training_route
