@@ -62,7 +62,8 @@ module Degrees
 
     def institution
       find_by_entity_id(placement_assignment.degree_awarding_institution, Dttp::CodeSets::Institutions::MAPPING) ||
-        Dttp::CodeSets::Institutions::INACTIVE_MAPPING[placement_assignment.degree_awarding_institution]
+        Dttp::CodeSets::Institutions::INACTIVE_MAPPING[placement_assignment.degree_awarding_institution] ||
+        Dttp::Account.find_by(dttp_id: placement_assignment.degree_awarding_institution)&.response&.fetch("name")
     end
 
     def grade

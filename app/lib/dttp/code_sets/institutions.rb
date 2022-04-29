@@ -404,6 +404,22 @@ module Dttp
         "154b9247-7042-e811-80ff-3863bb3640b8" => UNIVERSITY_CAMPUS_SUFFOLK,
         "9823a753-7042-e811-80ff-3863bb3640b8" => UNIVERSITY_OF_THE_ARTS_LONDON,
         "b2d0c9d6-e897-e711-80d8-005056ac45bb" => "The Royal College of Nursing",
+        "c7cfc9d6-e897-e711-80d8-005056ac45bb" => "The Royal Veterinary College",
+        "2a82cdd0-e897-e711-80d8-005056ac45bb" => "Queen Mary and Westfield College",
+        "2279f34a-2887-e711-80d8-005056ac45bb" => "Bradford College",
+        "55cfc9d6-e897-e711-80d8-005056ac45bb" => "Northern School of Contemporary Dance",
+        "8f23a753-7042-e811-80ff-3863bb3640b8" => "University of St Mark and St John",
+        "32582527-3fa2-e811-812b-5065f38ba241" => "University College for the Creative Arts",
+        "4d1ab82c-ee97-e711-80d8-005056ac45bb" => "Harris Academy Tottenham",
+        "3bc46ffa-ee97-e711-80d8-005056ac45bb" => "Harris Academy St John's Wood",
+        "2416761c-e897-e711-80d8-005056ac45bb" => "Colchester Institute",
+        "2d687c16-e897-e711-80d8-005056ac45bb" => "NCG",
+        "5cbfbf8a-eb97-e711-80d8-005056ac45bb" => "Guildhall School of Music and Drama",
+        "6bc46ffa-ee97-e711-80d8-005056ac45bb" => "Harris Garrard Academy",
+        "edde3e30-ec97-e711-80d8-005056ac45bb" => "Harris Academy Purley",
+        "164a42d4-eb97-e711-80d8-005056ac45bb" => "Harris Academy Falconwood",
+        "25538b4e-ed97-e711-80d8-005056ac45bb" => "Harris Academy Beckenham",
+        "6f9e8dac-e897-e711-80d8-005056ac45bb" => "London College of Printing & Distributive Trades",
       }.freeze
     end
   end
