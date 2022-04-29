@@ -56,7 +56,17 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = Settings.features.use_ssl
 
+  # Required in local development because `Rails.configuration.hosts` is set and
+  # restricts which host names we can use to access this app. It appears that
+  # this isn't set in other environments.
   if Settings.dttp.portal_host.present?
     config.hosts << Settings.dttp.portal_host
+  end
+
+  # Required for same reason as dttp.portal_host, except we don't have a
+  # configuration point to use, so we just rely on the feature flag and setup an
+  # arbitrary domain which will need to be set in /etc/hosts
+  if Settings.features.redirect_education_domain
+    config.hosts << 'local.register-trainee-teachers.education.gov.uk'
   end
 end

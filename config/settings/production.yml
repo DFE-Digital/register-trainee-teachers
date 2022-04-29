@@ -43,6 +43,7 @@ features:
     send_data_to_big_query: true
   integrate_with_dqt: true
   sync_from_hesa: true
+  redirect_education_domain: false
 
 environment:
   name: beta
