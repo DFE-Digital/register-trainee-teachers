@@ -6,10 +6,10 @@ Rails.application.routes.draw do
 
   if Settings.dttp.portal_host.present?
     constraints(->(req) { req.host == Settings.dttp.portal_host }) do
-      dttp_replaced_url = "#{CanonicalRails.protocol}#{CanonicalRails.host}/dttp-replaced"
+      dttp_replaced_url = "#{Settings.base_url}/dttp-replaced"
 
       root to: redirect(dttp_replaced_url), as: :traineeteacherportal_root
-      get "/*ttp_path", to: redirect(dttp_replaced_url), as: :traineeteacherportal
+      get "/*path", to: redirect(dttp_replaced_url), as: :traineeteacherportal
     end
   end
 
