@@ -9,7 +9,9 @@
 <div class="govuk-grid-row govuk-main-wrapper--auto-spacing">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h2 class="govuk-heading-l"><%= t(".service_updates_title") %></h2>
-    <%= render ServiceUpdate::View.new(service_update: ServiceUpdate.recent_update) %>
+    <% ServiceUpdate.recent_updates.each do |service_update| %>
+      <%= render ServiceUpdate::View.new(service_update: service_update) %>
+    <% end %>
     <%= govuk_link_to(t(".service_updates_link"), service_updates_path, { class: "govuk-body" }) %>
   </div>
 </div>

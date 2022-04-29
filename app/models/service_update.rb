@@ -17,7 +17,7 @@ class ServiceUpdate
     end
   end
 
-  def self.recent_update
-    all.first
+  def self.recent_updates
+    all.select { |service_update| service_update.date > 1.month.ago }
   end
 end
