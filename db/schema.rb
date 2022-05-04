@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_25_170224) do
+ActiveRecord::Schema.define(version: 2022_05_03_114908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -480,7 +480,7 @@ ActiveRecord::Schema.define(version: 2022_04_25_170224) do
     t.string "code"
     t.string "ukprn"
     t.string "accreditation_id"
-    t.index ["accreditation_id"], name: "index_providers_on_accreditation_id"
+    t.index ["accreditation_id"], name: "index_providers_on_accreditation_id", unique: true
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
   end
 
