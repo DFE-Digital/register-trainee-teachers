@@ -58,7 +58,7 @@ module Degrees
         it "sets non-UK attributes only" do
           expect(degree.locale_code).to eq("non_uk")
           expect(degree.uk_degree).to be_nil
-          expect(degree.non_uk_degree).to eq("Master of Science (M SC)")
+          expect(degree.non_uk_degree).to eq("Master of Science")
           expect(degree.subject).to eq("Mathematics")
           expect(degree.institution).to be_nil
           expect(degree.graduation_year).to eq(2004)

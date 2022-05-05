@@ -34,8 +34,8 @@ module Degrees
 
     def country_specific_attributes(degree, hesa_degree)
       country = Hesa::CodeSets::Countries::MAPPING[hesa_degree[:country]]
-      degree_type = Hesa::CodeSets::DegreeTypes::MAPPING[hesa_degree[:degree_type]]
       institution = Hesa::CodeSets::Institutions::MAPPING[hesa_degree[:institution]]
+      degree_type = find_degree_type(hesa_degree[:degree_type])
 
       # Country code is not always provided, so we have
       # to fallback to institution which is always UK based
@@ -67,6 +67,10 @@ module Degrees
 
     def uk_country?(country)
       Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
+    end
+
+    def find_degree_type(hesa_code)
+      Dttp::CodeSets::DegreeTypes::MAPPING.find { |_, v| v[:hesa_code].to_i == hesa_code.to_i }&.first
     end
   end
 end
