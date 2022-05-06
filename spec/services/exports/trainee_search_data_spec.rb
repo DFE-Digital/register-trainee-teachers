@@ -33,6 +33,10 @@ module Exports
       FundingManager.new(trainee)
     end
 
+    before do
+      create(:academic_cycle, :current)
+    end
+
     subject { described_class.new([trainee]) }
 
     describe "#data" do
@@ -47,7 +51,7 @@ module Exports
           "provider_trainee_id" => trainee.trainee_id,
           "trn" => trainee.trn,
           "status" => "QTS awarded",
-          "academic_year" => nil,
+          "start_year" => "2021 to 2022",
           "updated_at" => trainee.updated_at&.iso8601,
           "record_created_at" => trainee.created_at&.iso8601,
           "submitted_for_trn_at" => trainee.submitted_for_trn_at&.iso8601,
