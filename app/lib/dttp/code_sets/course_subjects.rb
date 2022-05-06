@@ -87,6 +87,113 @@ module Dttp
 
       INACTIVE_MAPPING = {
         ::CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS => { entity_id: "f88274df-181e-e711-80c8-0050568902d3" },
+        ::CourseSubjects::MATHEMATICS => {
+          entity_id: "768274df-181e-e711-80c8-0050568902d3",
+          original_name: "Mathematics (JACS)",
+        },
+        ::CourseSubjects::PRIMARY_TEACHING => {
+          entity_id: "f28274df-181e-e711-80c8-0050568902d3",
+          original_name: "Primary (No specialism) (JACS)",
+        },
+        ::CourseSubjects::BIOLOGY => {
+          entity_id: "568274df-181e-e711-80c8-0050568902d3",
+          original_name: "Biology (JACS)",
+        },
+        ::CourseSubjects::EARLY_YEARS_TEACHING => {
+          entity_id: "fa8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Primary - FS/KS1 (Early years) (JACS)",
+        },
+        ::CourseSubjects::CHEMISTRY => {
+          entity_id: "688274df-181e-e711-80c8-0050568902d3",
+          original_name: "Chemistry (JACS)",
+        },
+        ::CourseSubjects::PHYSICS => {
+          entity_id: "6c8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Physics (JACS)",
+        },
+        ::CourseSubjects::FRENCH_LANGUAGE => {
+          entity_id: "cc8274df-181e-e711-80c8-0050568902d3",
+          original_name: "French (JACS)",
+        },
+        ::CourseSubjects::DESIGN_AND_TECHNOLOGY => {
+          entity_id: "e08274df-181e-e711-80c8-0050568902d3",
+          original_name: "Design and technology (JACS)",
+        },
+        ::CourseSubjects::COMPUTER_SCIENCE => {
+          entity_id: "868274df-181e-e711-80c8-0050568902d3",
+          original_name: "Computer Science (JACS)",
+        },
+        ::CourseSubjects::PSYCHOLOGY => {
+          entity_id: "608274df-181e-e711-80c8-0050568902d3",
+          original_name: "Psychology (JACS)",
+        },
+        ::CourseSubjects::SPANISH_LANGUAGE => {
+          entity_id: "d28274df-181e-e711-80c8-0050568902d3",
+          original_name: "Spanish (JACS)",
+        },
+        ::CourseSubjects::PHYSICAL_EDUCATION => {
+          entity_id: "5c8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Physical education (JACS)",
+        },
+        ::CourseSubjects::ENGLISH_STUDIES => {
+          entity_id: "c08274df-181e-e711-80c8-0050568902d",
+          original_name: "English (JACS)",
+        },
+        ::CourseSubjects::MODERN_LANGUAGES => {
+          entity_id: "d88274df-181e-e711-80c8-0050568902d3",
+          original_name: "Other Modern Language (JACS)",
+        },
+        ::CourseSubjects::MUSIC_EDUCATION_AND_TEACHING => {
+          entity_id: "e48274df-181e-e711-80c8-0050568902d3",
+          original_name: "Music (JACS)",
+        },
+        ::CourseSubjects::DRAMA => {
+          entity_id: "e88274df-181e-e711-80c8-0050568902d3",
+          original_name: "Drama (JACS)",
+        },
+        ::CourseSubjects::GEOGRAPHY => {
+          entity_id: "9c8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Geography (JACS)",
+        },
+        ::CourseSubjects::ART_AND_DESIGN => {
+          entity_id: "ec8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Art (JACS)",
+        },
+        ::CourseSubjects::RELIGIOUS_STUDIES => {
+          entity_id: "dc8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Religious education (JACS)",
+        },
+        ::CourseSubjects::GERMAN_LANGUAGE => {
+          entity_id: "ce8274df-181e-e711-80c8-0050568902d3",
+          original_name: "German (JACS)",
+        },
+        ::CourseSubjects::HISTORY => {
+          entity_id: "da8274df-181e-e711-80c8-0050568902d3",
+          original_name: "History (JACS)",
+        },
+        ::CourseSubjects::BUSINESS_STUDIES => {
+          entity_id: "a68274df-181e-e711-80c8-0050568902d3",
+          original_name: "Business studies (JACS)",
+        },
+        ::CourseSubjects::SOCIAL_SCIENCES => {
+          entity_id: "9e8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Social sciences/social studies (JACS)",
+        },
+        ::CourseSubjects::SPORT_AND_EXERCISE_SCIENCES => {
+          entity_id: "5e8274df-181e-e711-80c8-0050568902d3",
+          original_name: "# Sport & exercise science not elsewhere classified for Primary PE (JACS)",
+        },
+        ::CourseSubjects::CLASSICAL_STUDIES => {
+          entity_id: "ca8274df-181e-e711-80c8-0050568902d3",
+          original_name: "Classics (JACS)",
+        },
+        ::CourseSubjects::CITIZENSHIP => {
+          entity_id: "948274df-181e-e711-80c8-0050568902d3",
+          original_name: "Citizenship (JACS)",
+        },
+        "Primary - General (Mathematics)" => { entity_id: "f68274df-181e-e711-80c8-0050568902d3" },
+        "Primary Foundation (JACS)" => { entity_id: "f48274df-181e-e711-80c8-0050568902d3" },
+        "Physics with maths (JACS)" => { entity_id: "708274df-181e-e711-80c8-0050568902d3" },
       }.freeze
     end
   end
