@@ -50,6 +50,13 @@ variable key_vault_infra_secret_name {}
 
 variable azure_credentials { default = null }
 
+variable paas_restore_from_db_guid {
+  default = ""
+}
+
+variable paas_db_backup_before_point_in_time {
+  default = ""
+}
 
 locals {
   paas_api_url  = "https://api.london.cloud.service.gov.uk"

@@ -35,6 +35,10 @@ variable app_config_variable { type = map } #from yml file
 
 variable worker_app_stopped { default = false }
 
+variable "restore_from_db_guid" {}
+
+variable "db_backup_before_point_in_time" {}
+
 locals {
   app_name_suffix           = var.app_environment != "review" ? var.app_environment : "pr-${var.web_app_hostname}"
   postgres_service_name     = "register-postgres-${local.app_name_suffix}"
@@ -57,7 +61,12 @@ locals {
   allkeys_lru_maxmemory_policy = {
     maxmemory_policy = "allkeys-lru"
   }
-  postgres_params = {
+  postgres_backup_restore_params = var.restore_from_db_guid != "" && var.db_backup_before_point_in_time != "" ? {
+    restore_from_point_in_time_of     = var.restore_from_db_guid
+    restore_from_point_in_time_before = var.db_backup_before_point_in_time
+  } : {}
+  postgres_extensions = {
     enable_extensions = ["pgcrypto", "btree_gist"]
   }
+  postgres_params = merge(local.postgres_backup_restore_params, local.postgres_extensions)
 }
