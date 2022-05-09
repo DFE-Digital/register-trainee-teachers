@@ -332,8 +332,10 @@ class Trainee < ApplicationRecord
 
   def set_early_years_course_details
     if early_years_route?
-      self.course_subject_one = CourseSubjects::EARLY_YEARS_TEACHING
+      course_subject = CourseSubjects::EARLY_YEARS_TEACHING
+      self.course_subject_one = course_subject
       self.course_age_range = AgeRange::ZERO_TO_FIVE
+      self.course_allocation_subject = SubjectSpecialism.find_by(name: course_subject)&.allocation_subject
     end
   end
 
