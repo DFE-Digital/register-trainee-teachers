@@ -139,5 +139,39 @@ module Funding
         expect(provider_one_first_row.amounts.find_by(month: 12)).to be_predicted
       end
     end
+
+    context "unknown provider" do
+      let(:invalid_schedules_attributes) do
+        {
+          "5635" => [
+            {
+              "Academic year" => "2021/22",
+              "Provider ID" => "5635",
+              "Provider name" => "Provider 1",
+              "Description" => "Training bursary trainees",
+              "Total funding" => "1676000.00",
+              "August" => nil,
+              "September" => "88587.00",
+              "October" => "88587.00",
+              "November" => "88587.00",
+              "December" => "338319.00",
+              "January" => "151020.00",
+              "February" => "151020.00",
+              "March" => "216800.00",
+              "April" => "150840.00",
+              "May" => "150840.00",
+              "June" => "150840.00",
+              "July" => "100560.00",
+            },
+          ]
+        }
+      end
+
+      subject { described_class.call(attributes: invalid_schedules_attributes, first_predicted_month_index: 12) }
+
+      it "raises" do
+        expect { subject }.to raise_error(PayableNotFoundError, "payable with id: 5635 doesn't exist")
+      end
+    end
   end
 end

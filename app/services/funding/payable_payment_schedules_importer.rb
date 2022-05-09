@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 module Funding
+  class PayableNotFoundError < StandardError; end
+
   class PayablePaymentSchedulesImporter
     include ServicePattern
 
     MONTH_ORDER = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7].freeze
+
 
     def initialize(attributes:, first_predicted_month_index:)
       @attributes = attributes
@@ -14,6 +17,8 @@ module Funding
     def call
       attributes.each_key do |id|
         payable = payable(id)
+        raise(PayableNotFoundError, "payable with id: #{id} doesn't exist") if payable.nil?
+
         schedule = payable.funding_payment_schedules.create
 
         row_attributes = attributes[id]

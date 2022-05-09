@@ -245,5 +245,39 @@ module Funding
         expect(lead_school_one_first_row.amounts.find_by(month: 12)).to be_predicted
       end
     end
+
+    context "unknown school" do
+      let(:invalid_schedules_attributes) do
+        {
+          "105491" => [
+            {
+              "Academic year" => "2021/22",
+              "Lead school URN" => "105491",
+              "Lead school name" => "Lead School 3",
+              "Description" => "Course extension trainee funding",
+              "Total funding" => "6500",
+              "August" => "1625.00",
+              "September" => "1625.00",
+              "October" => "1625.00",
+              "November" => "812.50",
+              "December" => "812.50",
+              "January" => "0.00",
+              "February" => "0.00",
+              "March" => "0.00",
+              "April" => "0.00",
+              "May" => "0.00",
+              "June" => "0.00",
+              "July" => "0.00",
+            },
+          ]
+        }
+      end
+
+      subject { described_class.call(attributes: invalid_schedules_attributes, first_predicted_month_index: 12) }
+
+      it "raises" do
+        expect { subject }.to raise_error(PayableNotFoundError, "payable with id: 105491 doesn't exist")
+      end
+    end
   end
 end
