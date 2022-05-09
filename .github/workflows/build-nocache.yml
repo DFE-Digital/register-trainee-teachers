@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ env.IMAGE_TAG }}
+      docker_image: ${{ env.DOCKER_IMAGE }}
     env:
       DOCKER_IMAGE: ghcr.io/dfe-digital/register-trainee-teachers
 
@@ -91,8 +94,6 @@ jobs:
   audit:
     name: Audit
     needs: [build]
-    outputs:
-      image_tag: ${{ needs.build.outputs.image_tag }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
