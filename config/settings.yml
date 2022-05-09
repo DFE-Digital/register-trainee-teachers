@@ -71,6 +71,7 @@ features:
   sync_from_hesa: false
   integrate_with_dqt: false
   funding: false
+  redirect_education_domain: true
 
 dfe_sign_in:
   # Our service name

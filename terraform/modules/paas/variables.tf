@@ -41,10 +41,11 @@ locals {
   redis_worker_service_name = "register-redis-worker-${local.app_name_suffix}"
   redis_cache_service_name  = "register-redis-cache-${local.app_name_suffix}"
   web_app_name              = "register-${local.app_name_suffix}"
+  base_url_env_var          = var.app_environment == "review" ? { SETTINGS__BASE_URL = "https://${local.web_app_name}.london.cloudapps.digital" } : {}
   app_environment = merge(var.app_config_variable, var.app_secrets_variable, {
     DATABASE_URL  = cloudfoundry_service_key.postgres-key.credentials.uri
     SETTINGS__BLAZER_DATABASE_URL = cloudfoundry_service_key.postgres-blazer-key.credentials.uri
-  })
+  }, local.base_url_env_var)
   web_app_start_command    = "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "register-worker-${local.app_name_suffix}"
