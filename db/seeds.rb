@@ -55,38 +55,56 @@ ACADEMIC_CYCLES.each do |academic_cycle|
   AcademicCycle.find_or_create_by!(start_date: academic_cycle[:start_date], end_date: academic_cycle[:end_date])
 end
 
-(Settings.current_default_course_year..Time.zone.today.year).each do |year|
-  academic_cycle = AcademicCycle.for_year(year)
+SEED_FUNDING_RULES = [
+  {
+    academic_cycle: AcademicCycle.for_year(2020),
+    bursaries: BURSARIES_2021,
+    scholarships: SCHOLARSHIPS_2021,
+    grants: GRANTS_2021,
+  },
+  # 2022 bursaries and scholarships were the same as 2021
+  {
+    academic_cycle: AcademicCycle.for_year(2021),
+    bursaries: BURSARIES_2021,
+    scholarships: SCHOLARSHIPS_2021,
+    grants: GRANTS_2021,
+  },
+  {
+    academic_cycle: AcademicCycle.for_year(2022),
+    bursaries: BURSARIES_2023,
+    scholarships: SCHOLARSHIPS_2023,
+    grants: GRANTS_2023,
+  },
+].freeze
 
-  SEED_BURSARIES.each do |b|
+SEED_FUNDING_RULES.each do |rule|
+  rule[:bursaries].each do |b|
     bursary = FundingMethod.find_or_create_by!(training_route: b.training_route,
                                                amount: b.amount,
-                                               academic_cycle: academic_cycle)
-    bursary.funding_type = :bursary
-    bursary.save!
-
+                                               funding_type: FUNDING_TYPE_ENUMS[:bursary],
+                                               academic_cycle: rule[:academic_cycle])
     b.allocation_subjects.map do |subject|
       allocation_subject = AllocationSubject.find_by!(name: subject)
       bursary.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
     end
   end
 
-  SEED_SCHOLARSHIPS.each do |s|
+  rule[:scholarships].each do |s|
     funding_method = FundingMethod.find_or_create_by!(training_route: s.training_route,
                                                       amount: s.amount,
                                                       funding_type: FUNDING_TYPE_ENUMS[:scholarship],
-                                                      academic_cycle: academic_cycle)
+                                                      academic_cycle: rule[:academic_cycle])
     s.allocation_subjects.map do |subject|
       allocation_subject = AllocationSubject.find_by!(name: subject)
       funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
     end
   end
 
-  SEED_GRANTS.each do |s|
+  rule[:grants].each do |s|
     funding_method = FundingMethod.find_or_create_by!(training_route: s.training_route,
                                                       amount: s.amount,
                                                       funding_type: FUNDING_TYPE_ENUMS[:grant],
-                                                      academic_cycle: academic_cycle)
+                                                      academic_cycle: rule[:academic_cycle])
     s.allocation_subjects.map do |subject|
       allocation_subject = AllocationSubject.find_by!(name: subject)
       funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
