@@ -1,3 +1,10 @@
+- date: '2022-05-09'
+  title: HESA records now visible in Register for the April census update
+  content: |
+    The import from HESA to Register is working normally. This means if you’re a Higher Education Institute (HEI), you can use Register to see data that you have updated and uploaded to HESA. This will allow you to complete your April census update by 13 May.
+
+    If you have updated any data about placements in HESA, you will not be able to see this in Register yet, but this will be available in future. If you identify any further issues with your data, contact [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=HESA%20import%20issues%20in%20Register).
+
 - date: '2022-04-29'
   title: April HESA census update extended to Friday 13 May 2022
   content: |
