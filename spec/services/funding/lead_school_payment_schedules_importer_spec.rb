@@ -269,7 +269,7 @@ module Funding
               "June" => "0.00",
               "July" => "0.00",
             },
-          ]
+          ],
         }
       end
 

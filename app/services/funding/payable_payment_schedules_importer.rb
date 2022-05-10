@@ -8,7 +8,6 @@ module Funding
 
     MONTH_ORDER = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7].freeze
 
-
     def initialize(attributes:, first_predicted_month_index:)
       @attributes = attributes
       @first_predicted_month_index = first_predicted_month_index
