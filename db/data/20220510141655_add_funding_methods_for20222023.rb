@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class SeedAcademicCyclesFor20222023 < ActiveRecord::Migration[6.1]
+class AddFundingMethodsFor20222023 < ActiveRecord::Migration[6.1]
   def up
     # i.e. the academic cycle 2022/23 for the recruitment year 2022
     academic_cycle = AcademicCycle.for_year(2022)
 
-    SEED_2023_BURSARIES.each do |b|
+    BURSARIES_2023.each do |b|
       bursary = FundingMethod.find_or_create_by!(
         training_route: b.training_route,
         amount: b.amount,
@@ -18,12 +18,12 @@ class SeedAcademicCyclesFor20222023 < ActiveRecord::Migration[6.1]
       end
     end
 
-    SEED_2023_SCHOLARSHIPS.each do |s|
+    SCHOLARSHIPS_2023.each do |s|
       funding_method = FundingMethod.find_or_create_by!(
         training_route: s.training_route,
         amount: s.amount,
         funding_type: FUNDING_TYPE_ENUMS[:scholarship],
-        academic_cycle_: academic_cycle,
+        academic_cycle: academic_cycle,
       )
       s.allocation_subjects.map do |subject|
         allocation_subject = AllocationSubject.find_by!(name: subject)
@@ -31,7 +31,7 @@ class SeedAcademicCyclesFor20222023 < ActiveRecord::Migration[6.1]
       end
     end
 
-    SEED_2023_GRANTS.each do |s|
+    GRANTS_2023.each do |s|
       funding_method = FundingMethod.find_or_create_by!(
         training_route: s.training_route,
         amount: s.amount,
