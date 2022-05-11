@@ -7,7 +7,7 @@ module Funding
     belongs_to :payable, polymorphic: true
     has_many :rows,
              class_name: "Funding::TraineeSummaryRow",
-             foreign_key: "funding_trainee_summary_id",
+             foreign_key: :funding_trainee_summary_id,
              dependent: :destroy,
              inverse_of: :trainee_summary
   end
