@@ -5,7 +5,6 @@ module Dttp
     module CourseSubjects
       EARLY_YEARS_DTTP_ID = "3aa12838-b3cf-e911-a860-000d3ab1da01"
       MODERN_LANGUAGES_DTTP_ID = "6ca12838-b3cf-e911-a860-000d3ab1da01"
-      RELIGIOUS_EDUCATION_DTTP_ID = "82a12838-b3cf-e911-a860-000d3ab1da01"
 
       MAPPING = {
         ::CourseSubjects::ANCIENT_HEBREW => { entity_id: "5fcd03f1-83ef-eb11-bacb-000d3ab62e3c" },
@@ -60,7 +59,7 @@ module Dttp
         ::CourseSubjects::MODERN_LANGUAGES => { entity_id: MODERN_LANGUAGES_DTTP_ID },
         ::CourseSubjects::MUSIC_EDUCATION_AND_TEACHING => { entity_id: "6ea12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::PERFORMING_ARTS => { entity_id: "70a12838-b3cf-e911-a860-000d3ab1da01" },
-        ::CourseSubjects::PHILOSOPHY => { entity_id: RELIGIOUS_EDUCATION_DTTP_ID },
+        ::CourseSubjects::PHILOSOPHY => { entity_id: "020fb594-a747-ec11-8c62-000d3ab8e8ce" },
         ::CourseSubjects::PHYSICAL_EDUCATION => { entity_id: "26353dcc-e5ee-eb11-bacb-000d3ab62638" },
         ::CourseSubjects::PHYSICS => { entity_id: "72a12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::PORTUGUESE_LANGUAGE => { entity_id: "74a12838-b3cf-e911-a860-000d3ab1da01" },
