@@ -14,5 +14,12 @@
 
 .govuk-table {
   overflow-x: auto; // Force internal sideways scrolling when content is wider than view
-  display: block;
+}
+
+.app-table__in-accordion tr:last-child td {
+  border-bottom: none;
+}
+
+.govuk-table__header--numeric {
+  text-align: right;
 }

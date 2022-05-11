@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
 module Funding
-  class MonthlyPaymentsView
+  class PaymentScheduleView
     include ActionView::Helpers
 
-    MonthBreakdown = Struct.new(:title, :rows, :total_amount, :total_running_total)
+    BLANK_CHARACTER = "–"
+
+    MonthBreakdown = Struct.new(:title, :rows, :total_amount, :total_running_total) do
+      def no_payments?
+        rows.all? { |row| row[:amount] == BLANK_CHARACTER }
+      end
+    end
 
     def initialize(payment_schedule:)
       @payment_schedule = payment_schedule
@@ -20,14 +26,22 @@ module Funding
 
     def payment_breakdown
       payment_rows = payment_schedule.rows
-      all_months.map do |month_index|
+      all_months.map { |month_index|
         MonthBreakdown.new(
           month_name_and_year(month_index),
-          month_breakdown(month_index),
+          sort(month_breakdown(month_index)),
           format_pounds(total_amount_for(payment_rows, month_index)),
           format_pounds(total_running_total_for(payment_rows, month_index)),
         )
-      end
+      }
+    end
+
+    def any?
+      payment_schedule&.rows&.any?
+    end
+
+    def last_updated_at
+      payment_schedule.created_at.strftime("%d %B %Y")
     end
 
   private
@@ -65,7 +79,7 @@ module Funding
     end
 
     def format_pounds(value_in_pence)
-      return "–" if value_in_pence.zero?
+      return BLANK_CHARACTER if value_in_pence.zero?
 
       number_to_currency(value_in_pence.to_d / 100, unit: "£")
     end
@@ -125,6 +139,10 @@ module Funding
       end
 
       running_total
+    end
+
+    def sort(payment_rows)
+      payment_rows.sort { |a, b| a[:description] <=> b[:description] }
     end
   end
 end

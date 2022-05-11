@@ -1,0 +1,45 @@
+<div class="govuk-accordion__section">
+  <div class="govuk-accordion__section-header">
+    <h2 class="govuk-accordion__section-heading">
+      <button type="button"
+              id="accordion-default-heading-<%= index %>"
+              aria-controls="accordion-default-content-<%= index %>"
+              class="govuk-accordion__section-button">
+        <%= month_breakdown.title %>
+        <span class="govuk-accordion__icon"></span>
+      </button>
+    </h2>
+  </div>
+  <div id="accordion-default-content-<%= index %>"
+       class="govuk-accordion__section-content"
+       aria-labelledby="accordion-default-heading-<%= index %>">
+    <%- if month_breakdown.no_payments? -%>
+      <p class="govuk-body"><%= t('funding.payment_schedule.no_payments', month_and_year: month_breakdown.title) %></p>
+    <%- else -%>
+      <table class="govuk-table app-table__in-accordion govuk-!-margin-bottom-6">
+        <caption class="govuk-table__caption govuk-visually-hidden"><%= month_breakdown.title %> payments</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header app-table__column-50">Payment type</th>
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric app-table__column-25">Amount</th>
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric app-table__column-25">Running total</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% month_breakdown.rows.each do |row| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= row[:description] %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[:amount] %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[:running_total] %></td>
+            </tr>
+          <% end %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Total</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-weight-bold"><%= month_breakdown.total_amount %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-weight-bold"><%= month_breakdown.total_running_total %></td>
+          </tr>
+          </tbody>
+      </table>
+    <%- end -%>
+  </div>
+</div>

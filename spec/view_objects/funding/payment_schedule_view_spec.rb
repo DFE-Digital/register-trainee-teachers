@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Funding
-  describe MonthlyPaymentsView do
+  describe PaymentScheduleView do
     let(:payment_schedule) { build(:payment_schedule, :for_provider, rows: payment_schedule_rows) }
 
     subject { described_class.new(payment_schedule: payment_schedule) }
@@ -98,6 +98,28 @@ module Funding
             total_running_total: "£17.00",
           },
         ])
+      end
+    end
+
+    describe "#any?" do
+      subject { described_class.new(payment_schedule: payment_schedule).any? }
+
+      context "no payment schedule rows" do
+        let(:payment_schedule_rows) { [] }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "payment schedule rows exist" do
+        let(:payment_schedule_rows) do
+          [
+            build(:payment_schedule_row, amounts: [
+              build(:payment_schedule_row_amount, month: 1, amount_in_pence: 100),
+            ]),
+          ]
+        end
+
+        it { is_expected.to be(true) }
       end
     end
   end
