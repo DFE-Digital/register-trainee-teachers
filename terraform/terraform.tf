@@ -61,6 +61,8 @@ module paas {
   app_secrets_variable  = local.app_secrets
   app_config_variable   = local.app_config
   worker_app_stopped    = var.paas_worker_app_stopped
+  restore_from_db_guid      = var.paas_restore_from_db_guid
+  db_backup_before_point_in_time = var.paas_db_backup_before_point_in_time
 }
 
 #authenticate into provider

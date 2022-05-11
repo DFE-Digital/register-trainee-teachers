@@ -143,3 +143,29 @@ disable-maintenance: ## make qa disable-maintenance / make production disable-ma
 	cf unmap-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
 	cf unmap-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
 	cf delete register-unavailable -r -f
+
+get-image-tag:
+	$(eval export TAG=$(shell cf target -s ${SPACE} 1> /dev/null && cf app register-${DEPLOY_ENV} | grep -Po "docker image:\s+\S+:\K\w+"))
+	@echo ${TAG}
+
+get-postgres-instance-guid: ## Gets the postgres service instance's guid make qa get-postgres-instance-guid
+	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${SPACE} 1> /dev/null && cf service register-postgres-${DEPLOY_ENV} --guid))
+	@echo ${DB_INSTANCE_GUID}
+
+rename-postgres-service: ## make qa rename-postgres-service
+	cf target -s ${SPACE} 1> /dev/null
+	cf rename-service register-postgres-${DEPLOY_ENV} register-postgres-${DEPLOY_ENV}-old
+
+remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state PASSCODE=xxxx
+	cd terraform && terraform state rm module.paas.cloudfoundry_service_instance.postgres_instance
+
+set-restore-variables:
+	$(if $(IMAGE_TAG), , $(error can only run with an IMAGE_TAG))
+	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${SPACE} get-postgres-instance-guid`))
+	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
+	$(eval export TF_VAR_paas_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
+	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
+	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
+	echo "Restoring register-trainee-teachers from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
+
+restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAGE_TAG=12345abcdef67890ghijklmnopqrstuvwxyz1234 DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" PASSCODE=xxxxx
