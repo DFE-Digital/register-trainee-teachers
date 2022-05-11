@@ -7,28 +7,28 @@ FactoryBot.define do
     trait :with_scholarship do
       payment_type { "scholarship" }
       tier { nil }
-      amount { Faker::Number.number(digits: 6) }
+      amount_in_pence { Faker::Number.number(digits: 6) }
       number_of_trainees { Faker::Number.number(digits: 2) }
     end
 
     trait :with_bursary do
       payment_type { "bursary" }
       tier { nil }
-      amount { Faker::Number.number(digits: 6) }
+      amount_in_pence { Faker::Number.number(digits: 6) }
       number_of_trainees { Faker::Number.number(digits: 2) }
     end
 
     trait :with_tiered_bursary do
       payment_type { "bursary" }
       tier { 2 }
-      amount { Faker::Number.number(digits: 6) }
+      amount_in_pence { Faker::Number.number(digits: 6) }
       number_of_trainees { Faker::Number.number(digits: 2) }
     end
 
     trait :with_grant do
       payment_type { "grant" }
       tier { nil }
-      amount { Faker::Number.number(digits: 6) }
+      amount_in_pence { Faker::Number.number(digits: 6) }
       number_of_trainees { Faker::Number.number(digits: 2) }
     end
   end

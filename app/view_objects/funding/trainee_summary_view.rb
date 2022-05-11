@@ -38,42 +38,42 @@ module Funding
 
     def bursary_breakdown_rows
       data_for_bursaries.map do |amount|
-        total_amount = amount.number_of_trainees * amount.amount
+        total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route_and_subject: format_route_and_subject_string(amount),
           lead_school: format_lead_school_string(amount),
           trainees: amount.number_of_trainees,
-          amount_per_trainee: format_pounds(amount.amount),
+          amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
       end
     end
 
     def scholarship_breakdown_rows
       data_for_scholarships.map do |amount|
-        total_amount = amount.number_of_trainees * amount.amount
+        total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route_and_subject: format_route_and_subject_string(amount),
           lead_school: format_lead_school_string(amount),
           trainees: amount.number_of_trainees,
-          amount_per_trainee: format_pounds(amount.amount),
+          amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
       end
     end
 
     def tiered_bursary_breakdown_rows
       data_for_tiered_bursaries.map do |amount|
-        total_amount = amount.number_of_trainees * amount.amount
+        total_amount = amount.number_of_trainees * amount.amount_in_pence
         { tier: amount.tier,
           trainees: amount.number_of_trainees,
-          amount_per_trainee: format_pounds(amount.amount),
+          amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
       end
     end
 
     def grant_breakdown_rows
       data_for_grants.map do |amount|
-        total_amount = amount.number_of_trainees * amount.amount
+        total_amount = amount.number_of_trainees * amount.amount_in_pence
         { subject: amount.row.subject,
           trainees: amount.number_of_trainees,
-          amount_per_trainee: format_pounds(amount.amount),
+          amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
       end
     end
@@ -81,7 +81,7 @@ module Funding
   private
 
     def payment_type_total(data_for_payment_type)
-      data_for_payment_type.map { |data| (data.amount * data.number_of_trainees) }.sum
+      data_for_payment_type.map { |data| (data.amount_in_pence * data.number_of_trainees) }.sum
     end
 
     def data_for_scholarships

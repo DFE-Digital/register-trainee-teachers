@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_03_114908) do
+ActiveRecord::Schema.define(version: 2022_05_11_150459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -390,7 +390,7 @@ ActiveRecord::Schema.define(version: 2022_05_03_114908) do
     t.integer "funding_trainee_summary_row_id"
     t.integer "payment_type"
     t.integer "tier"
-    t.integer "amount"
+    t.integer "amount_in_pence"
     t.integer "number_of_trainees"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
