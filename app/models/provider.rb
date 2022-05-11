@@ -9,7 +9,7 @@ class Provider < ApplicationRecord
   validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }
   validates :code, format: { with: /\A[A-Z0-9]+\z/i }, allow_blank: true
   validates :ukprn, format: { with: /\A[0-9]{8}\z/ }
-  validates :accreditation_id, presence: true
+  validates :accreditation_id, presence: true, uniqueness: true
 
   has_many :courses, class_name: "Course", foreign_key: :accredited_body_code, primary_key: :code, inverse_of: :provider
   has_many :apply_applications, ->(provider) { unscope(:where).where(accredited_body_code: provider.code) }

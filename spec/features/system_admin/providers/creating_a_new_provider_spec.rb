@@ -30,14 +30,14 @@ feature "Creating a new provider" do
     then_i_see_error_messages
   end
 
-# scenario "submitting with an existing accreditation ID" do
-#   when_i_enter_an_existing_accreditation_id
-#   and_i_fill_in_name
-#   and_i_fill_in_dttp_id
-#   and_i_fill_in_ukprn
-#   and_i_submit_the_form
-#   then_i_see_accreditation_id_uniqueness_error
-# end
+  scenario "submitting with an existing accreditation ID" do
+    when_i_enter_an_existing_accreditation_id
+    and_i_fill_in_name
+    and_i_fill_in_dttp_id
+    and_i_fill_in_ukprn
+    and_i_submit_the_form
+    then_i_see_accreditation_id_uniqueness_error
+  end
 
 private
 

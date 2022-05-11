@@ -27,11 +27,11 @@ feature "Edit providers" do
       then_i_should_see_the_provider_index_page
     end
 
-    # scenario "editing with an existing accreditation ID" do
-    #   when_i_enter_an_existing_accreditation_id
-    #   and_i_submit_the_form
-    #   then_i_see_accreditation_id_uniqueness_error
-    # end
+    scenario "editing with an existing accreditation ID" do
+      when_i_enter_an_existing_accreditation_id
+      and_i_submit_the_form
+      then_i_see_accreditation_id_uniqueness_error
+    end
   end
 
   def when_i_visit_the_provider_index_page
