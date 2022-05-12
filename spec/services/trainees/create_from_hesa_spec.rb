@@ -105,6 +105,26 @@ module Trainees
           expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(Trainee.last)
         end
       end
+
+      context "when the HESA training route is Provider-led" do
+        let(:hesa_stub_attributes) { { training_route: "01", itt_qualification_aim: itt_qualification_aim } }
+
+        context "when the qualification aim is undergrad level" do
+          let(:itt_qualification_aim) { "001" }
+
+          it "creates a Provider-led (undergrad) trainee" do
+            expect(trainee.training_route).to eq("provider_led_undergrad")
+          end
+        end
+
+        context "when the qualification aim is not undergrad level" do
+          let(:itt_qualification_aim) { "020" }
+
+          it "creates a Provider-led (postgrad) trainee" do
+            expect(trainee.training_route).to eq("provider_led_postgrad")
+          end
+        end
+      end
     end
 
     context "trainee doesn't exist" do
