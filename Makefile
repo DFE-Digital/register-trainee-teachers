@@ -24,17 +24,16 @@ help:
 	@echo "    visit https://login.london.cloud.service.gov.uk/passcode. Then run"
 	@echo "    deploy-plan to test:"
 	@echo ""
-	@echo "        make review APP_NAME=PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF PASSCODE=AUTHCODE"
+	@echo "        make review APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF PASSCODE=AUTHCODE"
 
 review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a name for your review app))
 	$(eval DEPLOY_ENV=review)
-	$(eval backend_key=-backend-config=key=pr-$(APP_NAME).tfstate)
-	$(eval export TF_VAR_paas_app_environment=review)
-	$(eval export TF_VAR_paas_web_app_hostname=$(APP_NAME))
+	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
+	$(eval export TF_VAR_paas_app_name=$(APP_NAME))
 	$(eval SPACE=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-	echo https://register-pr-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
+	echo https://register-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
 
 local: ## Configure local dev environment
 	$(eval DEPLOY_ENV=local)

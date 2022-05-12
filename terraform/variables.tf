@@ -57,6 +57,7 @@ variable paas_restore_from_db_guid {
 variable paas_db_backup_before_point_in_time {
   default = ""
 }
+variable paas_app_name { default = null }
 
 locals {
   paas_api_url  = "https://api.london.cloud.service.gov.uk"

@@ -30,8 +30,8 @@ runs:
       shell: bash
       run: |
         if [ -n "${{ inputs.pr-number }}" ]; then
-          echo "APP_NAME=${{ inputs.pr-number }}" >> $GITHUB_ENV
-          echo "::set-output name=deploy_url::https://register-pr-${{ inputs.pr-number }}.london.cloudapps.digital"
+          echo "APP_NAME=pr-${{ inputs.pr-number }}" >> $GITHUB_ENV
+          echo "::set-output name=deploy_url::https://register-${APP_NAME}.london.cloudapps.digital"
           DEPLOY_ENV=${{ inputs.environment }}-${{ inputs.pr-number }}
           echo "DEPLOY_REF=${{ github.head_ref }}" >> $GITHUB_ENV
         else
@@ -103,7 +103,7 @@ runs:
     - name: Generate example data
       shell: bash
       if: startsWith(env.DEPLOY_ENV,'review')
-      run: cf run-task "register-pr-${{ inputs.pr-number }}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
+      run: cf run-task "register-${APP_NAME}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
 
     - name: Run Smoke Tests for ${{ inputs.environment }}
       uses: ./.github/actions/smoke-test/
