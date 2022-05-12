@@ -14,7 +14,7 @@ variable paas_redis_service_plan {}
 
 variable paas_deployment_strategy { default = "blue-green-v2" }
 
-variable paas_web_app_hostname {}
+variable paas_web_app_hostname { default = [] }
 
 variable paas_dttp_portal {
   default = []
