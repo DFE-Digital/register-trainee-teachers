@@ -124,6 +124,14 @@ module Trainees
             expect(trainee.training_route).to eq("provider_led_postgrad")
           end
         end
+
+        context "when the qualification aim is nil" do
+          let(:itt_qualification_aim) { nil }
+
+          it "creates a Provider-led (undergrad) trainee" do
+            expect(trainee.training_route).to eq("provider_led_postgrad")
+          end
+        end
       end
     end
 
