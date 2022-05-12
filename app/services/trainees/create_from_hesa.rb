@@ -50,6 +50,7 @@ module Trainees
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(withdrawal_attributes)
+       .merge(deferral_attributes)
        .merge(funding_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
@@ -101,6 +102,12 @@ module Trainees
       return {} unless trainee_state == :withdrawn
 
       { withdraw_date: hesa_trainee[:end_date], withdraw_reason: reason_for_leaving }
+    end
+
+    def deferral_attributes
+      return {} unless trainee_state == :deferred
+
+      { defer_date: hesa_trainee[:end_date] }
     end
 
     def school_attributes

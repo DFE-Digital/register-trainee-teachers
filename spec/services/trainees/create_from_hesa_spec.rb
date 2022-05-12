@@ -299,12 +299,14 @@ module Trainees
 
           let(:hesa_stub_attributes) do
             {
+              end_date: date,
               reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION],
               mode: hesa_modes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
             }
           end
 
           it "creates a deferred trainee with the relevant details" do
+            expect(trainee.defer_date).to eq(Date.parse(date))
             expect(trainee.state).to eq("deferred")
           end
         end
