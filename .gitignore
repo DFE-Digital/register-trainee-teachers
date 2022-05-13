@@ -9,6 +9,10 @@
 /db/*.sqlite3-journal
 /db/data_schema.rb
 
+# Ignore SQL backups
+*.sql
+*.tar.gz
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*

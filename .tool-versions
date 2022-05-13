@@ -3,3 +3,7 @@ ruby 2.7.5
 yarn 1.22.18
 bundler 2.1.4
 terraform 0.13.5
+cf 7.4.0
+az 2.36.0
+jq 1.6
+make 4.2.1

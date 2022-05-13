@@ -46,6 +46,7 @@ qa:
 	$(eval DEPLOY_ENV=qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
+	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
 
 staging:
 	$(eval DEPLOY_ENV=staging)
@@ -58,6 +59,7 @@ production:
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 	$(eval HOST_NAME=www)
 	$(eval DTTP_HOSTNAME=traineeteacherportal)
+	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
 
 dttpimport:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
@@ -76,6 +78,9 @@ install-fetch-config:
 
 set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
+
+read-deployment-config:
+	$(eval export POSTGRES_DATABASE_NAME=register-postgres-${DEPLOY_ENV})
 
 read-tf-config:
 	$(eval key_vault_name=$(shell jq -r '.key_vault_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
@@ -163,3 +168,8 @@ set-restore-variables:
 	echo "Restoring register-trainee-teachers from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
 
 restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAGE_TAG=12345abcdef67890ghijklmnopqrstuvwxyz1234 DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" PASSCODE=xxxxx
+
+restore-data-from-nightly-backup: read-deployment-config read-tf-config # make production restore-data-from-nightly-backup CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES BACKUP_DATE="yyyy-mm-dd"
+	bin/download-nightly-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
+	$(if $(CONFIRM_RESTORE), , $(error Restore can only run with CONFIRM_RESTORE))
+	bin/restore-nightly-backup ${SPACE} ${POSTGRES_DATABASE_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
