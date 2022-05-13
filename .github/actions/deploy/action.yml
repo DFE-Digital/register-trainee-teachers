@@ -29,25 +29,23 @@ runs:
       id: set_env_var
       shell: bash
       run: |
+        tf_vars_file=terraform/workspace-variables/${{ inputs.environment }}.tfvars.json
+
         if [ -n "${{ inputs.pr-number }}" ]; then
           echo "APP_NAME=pr-${{ inputs.pr-number }}" >> $GITHUB_ENV
           echo "::set-output name=deploy_url::https://register-${APP_NAME}.london.cloudapps.digital"
-          DEPLOY_ENV=${{ inputs.environment }}-${{ inputs.pr-number }}
           echo "DEPLOY_REF=${{ github.head_ref }}" >> $GITHUB_ENV
         else
-          DEPLOY_ENV=${{ inputs.environment }}
           echo "DEPLOY_REF=${{ github.ref }}" >> $GITHUB_ENV
 
-          if [ ${{ inputs.environment }} == "production" ]; then
-            echo "::set-output name=deploy_url::https://www.register-trainee-teachers.education.gov.uk"
+          hostname=$(jq -r '.paas_web_app_hostname | first' ${tf_vars_file})
+          if [[ $hostname != null ]]; then
+            echo "::set-output name=deploy_url::https://${hostname}.register-trainee-teachers.service.gov.uk"
           else
-            echo "::set-output name=deploy_url::https://${{ inputs.environment }}.register-trainee-teachers.education.gov.uk"
+            echo "::set-output name=deploy_url::https://register-${{ inputs.environment }}.london.cloudapps.digital"
           fi
         fi
 
-        echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
-
-        tf_vars_file=terraform/workspace-variables/${{ inputs.environment }}.tfvars.json
         echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
@@ -80,7 +78,7 @@ runs:
         CONFIRM_PRODUCTION:       yes
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
-      if: startsWith(env.DEPLOY_ENV,'review') || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
+      if: inputs.environment == 'review' || inputs.environment == 'staging' || inputs.environment == 'dttpimport' || inputs.environment == 'production'
       id: get-secrets
       with:
         keyvault: ${{ env.key_vault_name }}
@@ -88,7 +86,7 @@ runs:
         key: CF_USER,CF_PASSWORD
 
     - name: Setup cf cli
-      if: startsWith(env.DEPLOY_ENV,'review') || env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
+      if: inputs.environment == 'review' || inputs.environment == 'staging' || inputs.environment == 'dttpimport' || inputs.environment == 'production'
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
         CF_USERNAME:   ${{ steps.get-secrets.outputs.CF_USER }}
@@ -97,12 +95,12 @@ runs:
 
     - name: Run data migrations
       shell: bash
-      if: env.DEPLOY_ENV == 'staging' || env.DEPLOY_ENV == 'dttpimport' || env.DEPLOY_ENV == 'production'
-      run: cf run-task "register-${DEPLOY_ENV}" --command "cd /app && bundle exec rails data:migrate" --wait
+      if: inputs.environment == 'staging' || inputs.environment == 'dttpimport' || inputs.environment == 'production'
+      run: cf run-task "register-${{ inputs.environment }}" --command "cd /app && bundle exec rails data:migrate" --wait
 
     - name: Generate example data
       shell: bash
-      if: startsWith(env.DEPLOY_ENV,'review')
+      if: inputs.environment == 'review'
       run: cf run-task "register-${APP_NAME}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
 
     - name: Run Smoke Tests for ${{ inputs.environment }}
