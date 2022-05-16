@@ -1,0 +1,57 @@
+<%= render PageTitle::View.new(i18n_key: "funding") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
+<% end %>
+
+<% if current_user.organisation %>
+  <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
+<% end %>
+
+<h1 class="govuk-heading-xl">
+  <%= t("funding.view.title") %>
+</h1>
+
+<%= render TabNavigation::View.new(items: [
+  { name: t("funding.payment_schedule.heading", start_year: @start_year, end_year: @end_year), url: funding_payment_schedule_path },
+  { name: t("funding.trainee_summary.heading", start_year: @start_year, end_year: @end_year), url: funding_trainee_summary_path },
+]) %>
+
+<h2 class="govuk-heading-l">
+  <%= t("funding.trainee_summary.heading", start_year: @start_year, end_year: @end_year)%>
+</h2>
+
+<% if @trainee_summary_view.empty? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop" >
+      <p class="govuk-body">
+        <%= @current_user.provider? ? t("funding.trainee_summary.provider.no_funding") : t("funding.trainee_summary.lead_school.no_funding") %>
+      </p>
+      <p class="govuk-body">
+        <%= t("funding.trainee_summary.email_line_one") %>
+        <%= govuk_mail_to(
+          Settings.support_email,
+          Settings.support_email,
+          subject: t("funding.trainee_summary.email_subject")
+        ) %>
+        <%= t("funding.trainee_summary.email_line_two") %>
+      </p>
+    </div>
+  </div>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <p class="govuk-body"><%= t('funding.trainee_summary.last_updated_at', date: @trainee_summary_view&.last_updated_at) %></p>
+    </div>
+  </div>
+
+  <%= render "summary" %>
+
+  <%= render "bursaries" if @trainee_summary_view.bursary_breakdown_rows.any? %>
+
+  <%= render "scholarships" if @trainee_summary_view.scholarship_breakdown_rows.any? %>
+
+  <%= render "tiered_bursaries" if @trainee_summary_view.tiered_bursary_breakdown_rows.any? %>
+
+  <%= render "grants" if @trainee_summary_view.grant_breakdown_rows.any? %>
+<% end %>

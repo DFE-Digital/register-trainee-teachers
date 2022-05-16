@@ -1,0 +1,36 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m" >
+        <%= t("funding.trainee_summary.table_headings.tiered_bursaries.title") %>
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-half">
+            <%= t("funding.trainee_summary.column_headings.tier") %>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.trainees") %>
+          </th>
+          <th nowrap scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.amount_per_trainee")%>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.total") %>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%- @trainee_summary_view.tiered_bursary_breakdown_rows.each do |tiered_bursary_row| %>
+          <% next if tiered_bursary_row[:total] == "—" %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"> <%= t("funding.trainee_summary.column_headings.tier") %> <%= tiered_bursary_row[:tier] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= tiered_bursary_row[:trainees] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= tiered_bursary_row[:amount_per_trainee] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= tiered_bursary_row[:total] %></td>
+          </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+  </div>
+</div>

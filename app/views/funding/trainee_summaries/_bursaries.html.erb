@@ -1,0 +1,40 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m" >
+        <%= t("funding.trainee_summary.table_headings.bursaries.title")%>
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-third">
+            <%= t("funding.trainee_summary.column_headings.route_and_course")%>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-third">
+            <%= t("funding.trainee_summary.column_headings.lead_school")%>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.trainees")%>
+          </th>
+          <th nowrap scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.amount_per_trainee")%>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.total")%>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%- @trainee_summary_view.bursary_breakdown_rows.each do |bursary_row| %>
+          <% next if bursary_row[:total] == "—" %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= bursary_row[:route] %><br><%= bursary_row[:subject] %><p></p></td>
+            <td class="govuk-table__cell"><%= bursary_row[:lead_school] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= bursary_row[:trainees] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= bursary_row[:amount_per_trainee] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= bursary_row[:total] %></td>
+          </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+  </div>
+</div>
