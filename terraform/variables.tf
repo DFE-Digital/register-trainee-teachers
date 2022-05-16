@@ -14,7 +14,7 @@ variable paas_redis_service_plan {}
 
 variable paas_deployment_strategy { default = "blue-green-v2" }
 
-variable paas_web_app_hostname {}
+variable paas_web_app_hostname { default = [] }
 
 variable paas_dttp_portal {
   default = []
@@ -57,6 +57,7 @@ variable paas_restore_from_db_guid {
 variable paas_db_backup_before_point_in_time {
   default = ""
 }
+variable paas_app_name { default = null }
 
 locals {
   paas_api_url  = "https://api.london.cloud.service.gov.uk"

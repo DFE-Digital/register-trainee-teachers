@@ -50,6 +50,7 @@ module paas {
   postgres_service_plan = var.paas_postgres_service_plan
   redis_service_plan    = var.paas_redis_service_plan
   space_name            = var.paas_space_name
+  app_name              = var.paas_app_name
   web_app_hostname      = var.paas_web_app_hostname
   dttp_portal           = var.paas_dttp_portal
   deployment_strategy   = var.paas_deployment_strategy

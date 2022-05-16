@@ -34,13 +34,14 @@ variable app_secrets_variable { type = map } #secrets from yml file
 variable app_config_variable { type = map } #from yml file
 
 variable worker_app_stopped { default = false }
+variable app_name { default = null }
 
 variable "restore_from_db_guid" {}
 
 variable "db_backup_before_point_in_time" {}
 
 locals {
-  app_name_suffix           = var.app_environment != "review" ? var.app_environment : "pr-${var.web_app_hostname}"
+  app_name_suffix           = var.app_name == null ? var.app_environment : var.app_name
   postgres_service_name     = "register-postgres-${local.app_name_suffix}"
   redis_worker_service_name = "register-redis-worker-${local.app_name_suffix}"
   redis_cache_service_name  = "register-redis-cache-${local.app_name_suffix}"
@@ -54,7 +55,12 @@ locals {
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "register-worker-${local.app_name_suffix}"
   logging_service_name     = "register-logit-${local.app_name_suffix}"
-  web_app_routes           = flatten([cloudfoundry_route.web_app_education_gov_uk_route, cloudfoundry_route.web_app_route, values(cloudfoundry_route.web_app_dttp_gov_uk_route), cloudfoundry_route.web_app_service_gov_uk_route])
+  web_app_routes           = flatten([
+    cloudfoundry_route.web_app_route,
+    values(cloudfoundry_route.web_app_education_gov_uk_route),
+    values(cloudfoundry_route.web_app_dttp_gov_uk_route),
+    values(cloudfoundry_route.web_app_service_gov_uk_route)
+  ])
   noeviction_maxmemory_policy = {
     maxmemory_policy = "noeviction"
   }

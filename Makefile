@@ -24,17 +24,15 @@ help:
 	@echo "    visit https://login.london.cloud.service.gov.uk/passcode. Then run"
 	@echo "    deploy-plan to test:"
 	@echo ""
-	@echo "        make review APP_NAME=PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF PASSCODE=AUTHCODE"
+	@echo "        make review APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF PASSCODE=AUTHCODE"
 
 review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a name for your review app))
 	$(eval DEPLOY_ENV=review)
-	$(eval backend_key=-backend-config=key=pr-$(APP_NAME).tfstate)
-	$(eval export TF_VAR_paas_app_environment=review)
-	$(eval export TF_VAR_paas_web_app_hostname=$(APP_NAME))
-	$(eval SPACE=bat-qa)
+	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
+	$(eval export TF_VAR_paas_app_name=$(APP_NAME))
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-	echo https://register-pr-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
+	echo https://register-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
 
 local: ## Configure local dev environment
 	$(eval DEPLOY_ENV=local)
@@ -46,20 +44,17 @@ ci:	## Run in automation environment
 
 qa:
 	$(eval DEPLOY_ENV=qa)
-	$(eval SPACE=bat-qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
 
 staging:
 	$(eval DEPLOY_ENV=staging)
-	$(eval SPACE=bat-staging)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
 
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=production)
-	$(eval SPACE=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 	$(eval HOST_NAME=www)
 	$(eval DTTP_HOSTNAME=traineeteacherportal)
@@ -67,12 +62,10 @@ production:
 dttpimport:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=dttpimport)
-	$(eval SPACE=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
 sandbox:
 	$(eval DEPLOY_ENV=sandbox)
-	$(eval SPACE=bat-prod)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
 install-fetch-config:
@@ -84,23 +77,24 @@ install-fetch-config:
 set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
 
-read-keyvault-config:
-	$(eval export key_vault_name=$(shell jq -r '.key_vault_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+read-tf-config:
+	$(eval key_vault_name=$(shell jq -r '.key_vault_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval key_vault_app_secret_name=$(shell jq -r '.key_vault_app_secret_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval key_vault_infra_secret_name=$(shell jq -r '.key_vault_infra_secret_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval space=$(shell jq -r '.paas_space_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 
-edit-app-secrets: read-keyvault-config install-fetch-config set-azure-account
+edit-app-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} \
 		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} -f yaml -c
 
-edit-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+edit-infra-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} \
 		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml -c
 
-print-app-secrets: read-keyvault-config install-fetch-config set-azure-account
+print-app-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} -f yaml
 
-print-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+print-infra-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
 
 deploy-plan: terraform-init
@@ -120,13 +114,13 @@ terraform-init:
 	az account set -s $(AZ_SUBSCRIPTION) && az account show \
 	&& cd terraform && terraform init -reconfigure -backend-config=workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
-console:
-	cf target -s ${SPACE}
+console: read-tf-config
+	cf target -s ${space}
 	cf ssh register-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
 
-enable-maintenance: ## make qa enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
+enable-maintenance: read-tf-config ## make qa enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
-	cf target -s ${SPACE}
+	cf target -s ${space}
 	cd service_unavailable_page && cf push
 	cf map-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
 	cf map-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
@@ -134,9 +128,9 @@ enable-maintenance: ## make qa enable-maintenance / make production enable-maint
 	cf unmap-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
 	cf unmap-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
 
-disable-maintenance: ## make qa disable-maintenance / make production disable-maintenance CONFIRM_PRODUCTION=y
+disable-maintenance: read-tf-config ## make qa disable-maintenance / make production disable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
-	cf target -s ${SPACE}
+	cf target -s ${space}
 	cf map-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
 	cf map-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
 	echo Waiting 5s for route to be registered... && sleep 5
