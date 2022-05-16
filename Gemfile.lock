@@ -86,7 +86,7 @@ GEM
       smart_properties
     bindata (2.4.10)
     bindex (0.8.1)
-    blazer (2.6.2)
+    blazer (2.6.3)
       activerecord (>= 5)
       chartkick (>= 3.2)
       railties (>= 5)
@@ -302,7 +302,7 @@ GEM
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.17.0)
+    loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
