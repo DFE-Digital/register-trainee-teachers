@@ -15,6 +15,13 @@ class Trainee < ApplicationRecord
              optional: true,
              class_name: "Dttp::Trainee"
 
+  belongs_to :hesa_student,
+             foreign_key: :hesa_id,
+             primary_key: :hesa_id,
+             inverse_of: :trainee,
+             optional: true,
+             class_name: "Hesa::Student"
+
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
   belongs_to :course_allocation_subject, optional: true, class_name: "AllocationSubject"
