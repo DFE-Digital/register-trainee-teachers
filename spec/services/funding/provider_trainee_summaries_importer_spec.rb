@@ -146,7 +146,7 @@ module Funding
         it "creates TraineeSummaryRowAmounts with the correct attributes" do
           expect(provider_one_first_row.amounts.first.attributes).to include(
             {
-              "amount" => 2_400_000,
+              "amount_in_pence" => 2_400_000,
               "number_of_trainees" => 2,
               "payment_type" => "bursary",
               "tier" => nil,
@@ -155,7 +155,7 @@ module Funding
 
           expect(provider_one_first_row.amounts.second.attributes).to include(
             {
-              "amount" => 2_600_000,
+              "amount_in_pence" => 2_600_000,
               "number_of_trainees" => 1,
               "payment_type" => "scholarship",
               "tier" => nil,
@@ -164,7 +164,7 @@ module Funding
 
           expect(provider_two_first_row.amounts.first.attributes).to include(
             {
-              "amount" => 1_500_000,
+              "amount_in_pence" => 1_500_000,
               "number_of_trainees" => 3,
               "payment_type" => "bursary",
               "tier" => 1,
@@ -173,7 +173,7 @@ module Funding
 
           expect(provider_two_first_row.amounts.second.attributes).to include(
             {
-              "amount" => 1_000_000,
+              "amount_in_pence" => 1_000_000,
               "number_of_trainees" => 2,
               "payment_type" => "bursary",
               "tier" => 2,
@@ -182,7 +182,7 @@ module Funding
 
           expect(provider_two_first_row.amounts.last.attributes).to include(
             {
-              "amount" => 500_000,
+              "amount_in_pence" => 500_000,
               "number_of_trainees" => 1,
               "payment_type" => "bursary",
               "tier" => 3,

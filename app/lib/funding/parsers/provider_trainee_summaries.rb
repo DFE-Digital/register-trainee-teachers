@@ -2,7 +2,7 @@
 
 module Funding
   module Parsers
-    class ProviderTraineeSummaries < PaymentSchedulesBase
+    class ProviderTraineeSummaries < Base
       class << self
         def id_column
           "Provider"

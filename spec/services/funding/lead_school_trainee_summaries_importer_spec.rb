@@ -106,13 +106,13 @@ module Funding
 
         it "creates TraineeSummaryRows with the correct attributes" do
           expect(lead_school_one_first_row.attributes).to include(
-            lead_school_one_expected_attibutes.merge({ "subject" => "Physics"}),
+            lead_school_one_expected_attibutes.merge({ "subject" => "Physics" }),
           )
           expect(lead_school_one_second_row.attributes).to include(
             lead_school_one_expected_attibutes.merge({ "subject" => "Modern Languages" }),
           )
           expect(lead_school_one_third_row.attributes).to include(
-            lead_school_one_expected_attibutes.merge({ "subject" => "History"}),
+            lead_school_one_expected_attibutes.merge({ "subject" => "History" }),
           )
           expect(lead_school_two_first_row.attributes).to include(lead_school_two_expected_attibutes)
         end
@@ -129,11 +129,11 @@ module Funding
         it "creates TraineeSummaryRowAmounts with the correct attributes" do
           expect(lead_school_one_first_row.amounts.first.attributes).to include(
             {
-              "amount" => 2_400_000,
+              "amount_in_pence" => 2_400_000,
               "number_of_trainees" => 2,
               "payment_type" => "grant",
               "tier" => nil,
-            }
+            },
           )
         end
       end

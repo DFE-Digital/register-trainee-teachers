@@ -2,9 +2,13 @@
 
 module Funding
   module Parsers
-    class TraineeSummariesBase
+    class Base
       class << self
         def id_column
+          raise(NotImplementedError("implement in subclass"))
+        end
+
+        def expected_headers
           raise(NotImplementedError("implement in subclass"))
         end
 

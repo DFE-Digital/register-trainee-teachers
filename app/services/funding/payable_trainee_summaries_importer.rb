@@ -35,7 +35,7 @@ module Funding
             next unless number_of_trainees.to_d.positive? && amount_in_pence.to_d.positive?
 
             row.amounts.create(
-              amount: amount_in_pence,
+              amount_in_pence: amount_in_pence,
               number_of_trainees: number_of_trainees,
               payment_type: amount_map[:payment_type],
               tier: amount_map[:tier],
