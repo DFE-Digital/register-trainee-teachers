@@ -469,8 +469,9 @@ FactoryBot.define do
 
       after(:create) do |trainee, _|
         funding_method = create(:funding_method, :bursary, :with_subjects, training_route: :provider_led_postgrad)
-        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
+        trainee.commencement_date = funding_method.academic_cycle.start_date
       end
     end
 
@@ -479,8 +480,9 @@ FactoryBot.define do
 
       after(:create) do |trainee, _|
         funding_method = create(:funding_method, :grant, :with_subjects, training_route: :early_years_salaried)
-        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
+        trainee.commencement_date = funding_method.academic_cycle.start_date
       end
     end
 
@@ -489,8 +491,9 @@ FactoryBot.define do
 
       after(:create) do |trainee, _|
         funding_method = create(:funding_method, :scholarship, :with_subjects, training_route: :provider_led_postgrad)
-        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
+        trainee.commencement_date = funding_method.academic_cycle.start_date
       end
     end
 
@@ -499,8 +502,9 @@ FactoryBot.define do
 
       after(:create) do |trainee, _|
         funding_method = create(:funding_method, :grant, :with_subjects, training_route: :provider_led_postgrad)
-        trainee.course_subject_one = funding_method.allocation_subjects.first.name
+        trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
+        trainee.commencement_date = funding_method.academic_cycle.start_date
       end
     end
 

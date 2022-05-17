@@ -191,6 +191,25 @@ module Exports
       end
     end
 
+    describe "#funding_value" do
+      context "when we know the funding methods for that cycle" do
+        let(:trainee) { create(:trainee, :with_provider_led_bursary) }
+
+        it "returns the amount" do
+          expect(subject.send(:funding_value, trainee)).to eq(FundingMethod.last.amount)
+        end
+      end
+
+      context "when we don't know the funding methods for that cycle" do
+        let(:trainee) { create(:trainee, applying_for_bursary: true) }
+
+        it "returns 'data not available'" do
+          trainee = Trainee.new(applying_for_bursary: true)
+          expect(subject.send(:funding_value, trainee)).to eq("data not available")
+        end
+      end
+    end
+
     describe "#course_summary" do
       it "returns blank" do
         trainee = Trainee.new(study_mode: "full_time")
