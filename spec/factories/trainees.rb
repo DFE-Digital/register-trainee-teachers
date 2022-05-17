@@ -465,10 +465,17 @@ FactoryBot.define do
     end
 
     trait :with_provider_led_bursary do
+      transient do
+        funding_amount { 100 }
+      end
+
       applying_for_bursary { true }
 
-      after(:create) do |trainee, _|
+      after(:create) do |trainee, evaluator|
         funding_method = create(:funding_method, :bursary, :with_subjects, training_route: :provider_led_postgrad)
+        funding_method.amount = evaluator.funding_amount if evaluator.funding_amount.present?
+        funding_method.save
+
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
         trainee.commencement_date = funding_method.academic_cycle.start_date
@@ -498,10 +505,17 @@ FactoryBot.define do
     end
 
     trait :with_grant do
+      transient do
+        funding_amount { 100 }
+      end
+
       applying_for_grant { true }
 
-      after(:create) do |trainee, _|
+      after(:create) do |trainee, evaluator|
         funding_method = create(:funding_method, :grant, :with_subjects, training_route: :provider_led_postgrad)
+        funding_method.amount = evaluator.funding_amount if evaluator.funding_amount.present?
+        funding_method.save
+
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
         trainee.commencement_date = funding_method.academic_cycle.start_date
