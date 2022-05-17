@@ -144,15 +144,15 @@ disable-maintenance: read-tf-config ## make qa disable-maintenance / make produc
 	cf delete register-unavailable -r -f
 
 get-image-tag:
-	$(eval export TAG=$(shell cf target -s ${SPACE} 1> /dev/null && cf app register-${DEPLOY_ENV} | grep -Po "docker image:\s+\S+:\K\w+"))
+	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${DEPLOY_ENV} | grep -Po "docker image:\s+\S+:\K\w+"))
 	@echo ${TAG}
 
 get-postgres-instance-guid: ## Gets the postgres service instance's guid make qa get-postgres-instance-guid
-	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${SPACE} 1> /dev/null && cf service register-postgres-${DEPLOY_ENV} --guid))
+	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${space} 1> /dev/null && cf service register-postgres-${DEPLOY_ENV} --guid))
 	@echo ${DB_INSTANCE_GUID}
 
 rename-postgres-service: ## make qa rename-postgres-service
-	cf target -s ${SPACE} 1> /dev/null
+	cf target -s ${space} 1> /dev/null
 	cf rename-service register-postgres-${DEPLOY_ENV} register-postgres-${DEPLOY_ENV}-old
 
 remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state PASSCODE=xxxx
@@ -160,7 +160,7 @@ remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state PAS
 
 set-restore-variables:
 	$(if $(IMAGE_TAG), , $(error can only run with an IMAGE_TAG))
-	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${SPACE} get-postgres-instance-guid`))
+	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
 	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
 	$(eval export TF_VAR_paas_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
 	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
@@ -172,4 +172,4 @@ restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAG
 restore-data-from-nightly-backup: read-deployment-config read-tf-config # make production restore-data-from-nightly-backup CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES BACKUP_DATE="yyyy-mm-dd"
 	bin/download-nightly-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
 	$(if $(CONFIRM_RESTORE), , $(error Restore can only run with CONFIRM_RESTORE))
-	bin/restore-nightly-backup ${SPACE} ${POSTGRES_DATABASE_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
+	bin/restore-nightly-backup ${space} ${POSTGRES_DATABASE_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
