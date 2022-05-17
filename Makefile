@@ -46,6 +46,7 @@ qa:
 	$(eval DEPLOY_ENV=qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
+	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
 
 staging:
 	$(eval DEPLOY_ENV=staging)
@@ -58,6 +59,7 @@ production:
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 	$(eval HOST_NAME=www)
 	$(eval DTTP_HOSTNAME=traineeteacherportal)
+	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
 
 dttpimport:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
@@ -76,6 +78,9 @@ install-fetch-config:
 
 set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
+
+read-deployment-config:
+	$(eval export POSTGRES_DATABASE_NAME=register-postgres-${DEPLOY_ENV})
 
 read-tf-config:
 	$(eval key_vault_name=$(shell jq -r '.key_vault_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
@@ -139,15 +144,15 @@ disable-maintenance: read-tf-config ## make qa disable-maintenance / make produc
 	cf delete register-unavailable -r -f
 
 get-image-tag:
-	$(eval export TAG=$(shell cf target -s ${SPACE} 1> /dev/null && cf app register-${DEPLOY_ENV} | grep -Po "docker image:\s+\S+:\K\w+"))
+	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${DEPLOY_ENV} | grep -Po "docker image:\s+\S+:\K\w+"))
 	@echo ${TAG}
 
 get-postgres-instance-guid: ## Gets the postgres service instance's guid make qa get-postgres-instance-guid
-	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${SPACE} 1> /dev/null && cf service register-postgres-${DEPLOY_ENV} --guid))
+	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${space} 1> /dev/null && cf service register-postgres-${DEPLOY_ENV} --guid))
 	@echo ${DB_INSTANCE_GUID}
 
 rename-postgres-service: ## make qa rename-postgres-service
-	cf target -s ${SPACE} 1> /dev/null
+	cf target -s ${space} 1> /dev/null
 	cf rename-service register-postgres-${DEPLOY_ENV} register-postgres-${DEPLOY_ENV}-old
 
 remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state PASSCODE=xxxx
@@ -155,7 +160,7 @@ remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state PAS
 
 set-restore-variables:
 	$(if $(IMAGE_TAG), , $(error can only run with an IMAGE_TAG))
-	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${SPACE} get-postgres-instance-guid`))
+	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
 	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
 	$(eval export TF_VAR_paas_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
 	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
@@ -163,3 +168,8 @@ set-restore-variables:
 	echo "Restoring register-trainee-teachers from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
 
 restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAGE_TAG=12345abcdef67890ghijklmnopqrstuvwxyz1234 DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" PASSCODE=xxxxx
+
+restore-data-from-nightly-backup: read-deployment-config read-tf-config # make production restore-data-from-nightly-backup CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES BACKUP_DATE="yyyy-mm-dd"
+	bin/download-nightly-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
+	$(if $(CONFIRM_RESTORE), , $(error Restore can only run with CONFIRM_RESTORE))
+	bin/restore-nightly-backup ${space} ${POSTGRES_DATABASE_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
