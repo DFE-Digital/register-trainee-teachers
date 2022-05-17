@@ -2,13 +2,7 @@
 base_url: https://www.register-trainee-teachers.service.gov.uk
 
 # The url for the google doc feedback link (live version)
-feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLScTW00rH5Gm8Ama38fgGNQ6Ek7CQPRyadjBfp3BvhYkwJS1jw/viewform"
-
-# The url for the google doc feedback link for recommended for award (live version)
-recommended_for_award_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLScqCdDNyDHNBuUDG5YGWL7TzFI2WdmL6ib5326tUsphtC7PfQ/viewform"
-
-# The url for the google doc feedback link for submitting a trainee for trn (live version)
-trn_submitted_feedback_url: "https://docs.google.com/forms/d/e/1FAIpQLSd-Jc3ef8yNYmIps3H905TuUkVfLYqpwP5ouQilNbHMSElCkg/viewform"
+feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSd6s98QtFceURRhUAguIXutWsJtZRSYehE2o68LvAbchSldiw/viewform"
 
 dttp:
   scope: https://dttp.crm4.dynamics.com/.default
