@@ -32,7 +32,8 @@ runs:
         tf_vars_file=terraform/workspace-variables/${{ inputs.environment }}.tfvars.json
 
         if [ -n "${{ inputs.pr-number }}" ]; then
-          echo "APP_NAME=pr-${{ inputs.pr-number }}" >> $GITHUB_ENV
+          APP_NAME=pr-${{ inputs.pr-number }}
+          echo "APP_NAME=${APP_NAME}" >> $GITHUB_ENV
           echo "::set-output name=deploy_url::https://register-${APP_NAME}.london.cloudapps.digital"
           echo "DEPLOY_REF=${{ github.head_ref }}" >> $GITHUB_ENV
         else
