@@ -23,7 +23,8 @@ class FixFundingMethodsFor20192020 < ActiveRecord::Migration[6.1]
   ].freeze
 
   def up
-    academic_cycle = AcademicCycle.find_by(start_date: "2019-09-01")
+    # i.e. the academic cycle 2019/20
+    academic_cycle = AcademicCycle.for_year(2019)
     undergrad_routes = %w[provider_led_undergrad opt_in_undergrad]
 
     incorrect_funding_methods = academic_cycle.funding_methods.where(training_route: undergrad_routes)
