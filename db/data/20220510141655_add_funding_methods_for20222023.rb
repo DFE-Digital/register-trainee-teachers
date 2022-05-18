@@ -5,7 +5,7 @@ class AddFundingMethodsFor20222023 < ActiveRecord::Migration[6.1]
     # i.e. the academic cycle 2022/23 for the recruitment year 2022
     academic_cycle = AcademicCycle.for_year(2022)
 
-    BURSARIES_2023.each do |b|
+    BURSARIES_2022_TO_2023.each do |b|
       bursary = FundingMethod.find_or_create_by!(
         training_route: b.training_route,
         amount: b.amount,
@@ -18,7 +18,7 @@ class AddFundingMethodsFor20222023 < ActiveRecord::Migration[6.1]
       end
     end
 
-    SCHOLARSHIPS_2023.each do |s|
+    SCHOLARSHIPS_2022_TO_2023.each do |s|
       funding_method = FundingMethod.find_or_create_by!(
         training_route: s.training_route,
         amount: s.amount,
@@ -31,7 +31,7 @@ class AddFundingMethodsFor20222023 < ActiveRecord::Migration[6.1]
       end
     end
 
-    GRANTS_2023.each do |s|
+    GRANTS_2022_TO_2023.each do |s|
       funding_method = FundingMethod.find_or_create_by!(
         training_route: s.training_route,
         amount: s.amount,

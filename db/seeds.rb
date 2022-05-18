@@ -58,22 +58,21 @@ end
 SEED_FUNDING_RULES = [
   {
     academic_cycle: AcademicCycle.for_year(2020),
-    bursaries: BURSARIES_2021,
-    scholarships: SCHOLARSHIPS_2021,
-    grants: GRANTS_2021,
+    bursaries: BURSARIES_2020_TO_2021,
+    scholarships: SCHOLARSHIPS_2020_TO_2021,
+    grants: GRANTS_2020_TO_2021,
   },
-  # 2022 bursaries and scholarships were the same as 2021
   {
     academic_cycle: AcademicCycle.for_year(2021),
-    bursaries: BURSARIES_2021,
-    scholarships: SCHOLARSHIPS_2021,
-    grants: GRANTS_2021,
+    bursaries: BURSARIES_2021_TO_2022,
+    scholarships: SCHOLARSHIPS_2021_TO_2022,
+    grants: GRANTS_2021_TO_2022,
   },
   {
     academic_cycle: AcademicCycle.for_year(2022),
-    bursaries: BURSARIES_2023,
-    scholarships: SCHOLARSHIPS_2023,
-    grants: GRANTS_2023,
+    bursaries: BURSARIES_2022_TO_2023,
+    scholarships: SCHOLARSHIPS_2022_TO_2023,
+    grants: GRANTS_2022_TO_2023,
   },
 ].freeze
 

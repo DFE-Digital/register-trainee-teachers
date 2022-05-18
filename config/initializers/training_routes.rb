@@ -92,7 +92,7 @@ EARLY_YEARS_TRAINING_ROUTES = TRAINING_ROUTES.select { |t| t.starts_with?(EARLY_
 
 # 2021 funding rules (which also applied to 2022)
 
-BURSARIES_2021 = [
+BURSARIES_2020_TO_2021 = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
     amount: 9_000,
@@ -163,7 +163,7 @@ BURSARIES_2021 = [
   ),
 ].freeze
 
-SCHOLARSHIPS_2021 = [
+SCHOLARSHIPS_2020_TO_2021 = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 26_000,
@@ -186,7 +186,7 @@ SCHOLARSHIPS_2021 = [
   ),
 ].freeze
 
-GRANTS_2021 = [
+GRANTS_2020_TO_2021 = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
     amount: 14_000,
@@ -239,9 +239,11 @@ GRANTS_2021 = [
   ),
 ].freeze
 
-# 2023 funding rules
+BURSARIES_2021_TO_2022 = BURSARIES_2020_TO_2021
+SCHOLARSHIPS_2021_TO_2022 = SCHOLARSHIPS_2020_TO_2021
+GRANTS_2021_TO_2022 = GRANTS_2020_TO_2021
 
-BURSARIES_2023 = [
+BURSARIES_2022_TO_2023 = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
     amount: 9_000,
@@ -316,7 +318,7 @@ BURSARIES_2023 = [
   ),
 ].freeze
 
-SCHOLARSHIPS_2023 = [
+SCHOLARSHIPS_2022_TO_2023 = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 26_000,
@@ -339,7 +341,7 @@ SCHOLARSHIPS_2023 = [
   ),
 ].freeze
 
-GRANTS_2023 = [
+GRANTS_2022_TO_2023 = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
     amount: 14_000,
