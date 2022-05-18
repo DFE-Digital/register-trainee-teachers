@@ -4,6 +4,8 @@ module Exports
   class TraineeSearchData
     VULNERABLE_CHARACTERS = %w[= + - @].freeze
 
+    DATA_NOT_AVAILABLE = "data not available"
+
     def initialize(trainees)
       @data_for_export = format_trainees(trainees)
     end
@@ -153,11 +155,11 @@ module Exports
       funding_manager = funding_manager(trainee)
 
       if trainee.applying_for_bursary?
-        funding_manager.bursary_amount
+        funding_manager.bursary_amount || DATA_NOT_AVAILABLE
       elsif trainee.applying_for_scholarship?
-        funding_manager.scholarship_amount
+        funding_manager.scholarship_amount || DATA_NOT_AVAILABLE
       elsif trainee.applying_for_grant?
-        funding_manager.grant_amount
+        funding_manager.grant_amount || DATA_NOT_AVAILABLE
       end
     end
 
