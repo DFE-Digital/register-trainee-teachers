@@ -399,7 +399,7 @@ GRANTS_2022_TO_2023 = [
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
-    amount: 6_000,
+    amount: 1_000,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
     ],
