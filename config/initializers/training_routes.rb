@@ -314,6 +314,7 @@ BURSARIES_2022_TO_2023 = [
       AllocationSubjects::PHYSICS,
       AllocationSubjects::COMPUTING,
       AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::ANCIENT_LANGUAGES,
     ],
   ),
 ].freeze
