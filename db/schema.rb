@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_16_103021) do
+ActiveRecord::Schema.define(version: 2022_05_17_105051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -437,7 +437,7 @@ ActiveRecord::Schema.define(version: 2022_05_16_103021) do
   end
 
   create_table "hesa_students", force: :cascade do |t|
-    t.bigint "hesa_id"
+    t.string "hesa_id"
     t.string "first_names"
     t.string "last_name"
     t.string "email"
