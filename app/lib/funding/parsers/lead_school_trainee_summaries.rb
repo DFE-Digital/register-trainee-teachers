@@ -2,7 +2,7 @@
 
 module Funding
   module Parsers
-    class LeadSchoolPaymentSchedules < Base
+    class LeadSchoolTraineeSummaries < Base
       class << self
         def id_column
           "Lead school URN"
@@ -13,20 +13,11 @@ module Funding
             "Academic year",
             "Lead school URN",
             "Lead school name",
+            "Subject",
             "Description",
-            "Total funding",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
+            "Funding/trainee",
+            "Trainees",
+            "Total Funding",
           ]
         end
       end
