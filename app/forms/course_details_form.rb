@@ -267,7 +267,7 @@ private
       errors.add(:itt_start_date, :future)
     elsif !itt_start_date.is_a?(Date)
       errors.add(:itt_start_date, :invalid)
-    elsif one_month_before_academic_cycle_starts?(itt_start_date)
+    elsif before_academic_cycle_starts?(itt_start_date)
       errors.add(:itt_start_date, :too_old)
     end
   end
@@ -312,10 +312,10 @@ private
     next_year + MAX_END_YEARS
   end
 
-  def one_month_before_academic_cycle_starts?(date)
+  def before_academic_cycle_starts?(date)
     return false unless date && academic_cycle
 
-    date < (academic_cycle.start_date - 1.month)
+    date < academic_cycle.start_date
   end
 
   def course

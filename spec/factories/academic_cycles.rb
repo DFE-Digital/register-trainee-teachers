@@ -17,15 +17,15 @@ FactoryBot.define do
     end
 
     start_date do
-      Date.new(cycle_year, 9, 1)
+      Date.new(cycle_year, 8, 1)
     end
 
     end_date do
-      Date.new(cycle_year + 1, 8, 31)
+      Date.new(cycle_year + 1, 7, 31)
     end
 
     trait :current do
-      cycle_year { Time.zone.now.month >= 9 ? Time.zone.now.year : Time.zone.now.year - 1 }
+      cycle_year { Time.zone.now.month >= 8 ? Time.zone.now.year : Time.zone.now.year - 1 }
     end
   end
 end
