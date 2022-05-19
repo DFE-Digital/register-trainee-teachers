@@ -73,7 +73,7 @@ private
   end
 
   def unmapped_from_hesa_import
-    %(<div class="govuk-inset-text govuk-!-margin-0">
+    %(<div class="app-inset-notice">
       #{field_value}
     </div>)
   end

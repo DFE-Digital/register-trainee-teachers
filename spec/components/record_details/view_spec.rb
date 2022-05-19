@@ -66,19 +66,6 @@ module RecordDetails
       end
     end
 
-    context "when trainee is created from hesa and has no trn" do
-      before do
-        trainee.created_from_hesa = true
-        trainee.hesa_id = 1
-        trainee.trn = nil
-        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
-      end
-
-      it "tells the user that the data was not copied from hesa" do
-        expect(rendered_component).to have_text(t("components.confirmation.not_provided_from_hesa_update"))
-      end
-    end
-
     context "when data has been provided" do
       before do
         render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
@@ -250,6 +237,19 @@ module RecordDetails
               expect(rendered_component).to have_text(strip_tags(t("record_details.view.deferred_before_itt_started")))
             end
           end
+        end
+      end
+
+      context "with no ITT start date and a hesa record" do
+        before do
+          trainee.commencement_status = :itt_started_on_time
+          trainee.itt_start_date = nil
+          trainee.hesa_id = 1
+          render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+        end
+
+        it "renders the not provided from hesa message" do
+          expect(rendered_component).to have_text(I18n.t("components.confirmation.not_provided_from_hesa_update"))
         end
       end
     end
