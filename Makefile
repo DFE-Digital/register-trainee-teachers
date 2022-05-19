@@ -128,18 +128,22 @@ enable-maintenance: read-tf-config ## make qa enable-maintenance / make producti
 	cf target -s ${space}
 	cd service_unavailable_page && cf push
 	cf map-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf map-route register-unavailable register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
 	cf map-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
 	echo Waiting 5s for route to be registered... && sleep 5
 	cf unmap-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf unmap-route register-${DEPLOY_ENV} register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
 	cf unmap-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
 
 disable-maintenance: read-tf-config ## make qa disable-maintenance / make production disable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
 	cf target -s ${space}
 	cf map-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf map-route register-${DEPLOY_ENV} register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
 	cf map-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
 	echo Waiting 5s for route to be registered... && sleep 5
 	cf unmap-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
+	cf unmap-route register-unavailable register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
 	cf unmap-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
 	cf delete register-unavailable -r -f
 
