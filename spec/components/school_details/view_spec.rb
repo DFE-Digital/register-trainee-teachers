@@ -44,5 +44,17 @@ module SchoolDetails
 
       it_behaves_like("school row", "employing school")
     end
+
+    context "when urn not provided from hesa import" do
+      let(:trainee) { create(:trainee, created_from_hesa: true, hesa_id: 1) }
+
+      before do
+        render_inline(View.new(trainee: trainee, editable: true))
+      end
+
+      it "renders the not imported from hesa message" do
+        expect(rendered_component).to have_text(t("components.confirmation.not_provided_from_hesa_update"))
+      end
+    end
   end
 end

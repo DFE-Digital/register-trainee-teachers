@@ -84,7 +84,7 @@ class TraineePolicy
   end
 
   def hide_progress_tag?
-    user.lead_school? || trainee.hesa_record?
+    user.lead_school?
   end
 
   alias_method :index?, :show?

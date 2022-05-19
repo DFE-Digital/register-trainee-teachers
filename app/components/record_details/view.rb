@@ -57,12 +57,17 @@ module RecordDetails
     end
 
     def trn_row
-      return nil unless [trainee.trn, trainee.submitted_for_trn_at].any?(&:present?)
+      return nil unless [trainee.trn, trainee.submitted_for_trn_at, trainee.hesa_record?].any?(&:present?)
 
       if trainee.trn.present?
         {
           field_label: t(".trn"),
           field_value: trainee.trn,
+        }
+      elsif trainee.hesa_record?
+        {
+          field_label: t(".trn"),
+          field_value: not_imported_from_hesa_message(trainee.trn),
         }
       else
         {
@@ -106,7 +111,9 @@ module RecordDetails
 
     def trainee_start_date_row
       start_date = RecordDetails::TraineeStartDate.new(trainee)
-
+      if start_date.course_empty? && trainee.hesa_record?
+        start_date = t("components.confirmation.not_provided_from_hesa_update")
+      end
       return if start_date.course_empty?
 
       mappable_field(start_date.text, t(".trainee_start_date"), start_date.link)
@@ -156,6 +163,12 @@ module RecordDetails
         deferred: trainee.defer_date,
         withdrawn: trainee.withdraw_date,
       }[trainee.state.to_sym]
+    end
+
+    def not_imported_from_hesa_message(parameter)
+      if parameter.blank? && trainee.hesa_record?
+        t("components.confirmation.not_provided_from_hesa_update")
+      end
     end
 
     def mappable_field(field_value, field_label, action_url)

@@ -122,6 +122,7 @@ en:
       trainee_name:
         blank: Draft record
     confirmation:
+      not_provided_from_hesa_update: Not provided from HESA update
       missing: missing
       not_provided: Not provided
       heading: Confirm %{section_title}
@@ -1134,7 +1135,7 @@ en:
               blank: Select the country where the degree was obtained
         provider:
           attributes:
-            accreditation_id: 
+            accreditation_id:
               blank: Enter an accreditation ID
               taken: Enter a unique accreditation ID
             name:

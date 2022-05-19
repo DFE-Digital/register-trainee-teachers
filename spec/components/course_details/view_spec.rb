@@ -82,6 +82,31 @@ module CourseDetails
       end
     end
 
+    context "with an apply draft, hesa trainee missing itt end date" do
+      let(:trainee) do
+        create(:trainee,
+               :provider_led_postgrad,
+               :with_publish_course_details,
+               :with_apply_application,
+               itt_end_date: nil,
+               hesa_id: 1)
+      end
+      let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, { uuid: course.uuid }) }
+
+      let(:specialisms) { ["Spanish language", "public services"] }
+
+      let(:course) { trainee.published_course }
+
+      before do
+        render_inline(View.new(data_model: data_model))
+      end
+
+      it "renders the not completed from hesa message" do
+        expect(rendered_component)
+          .to have_text(t("components.confirmation.not_provided_from_hesa_update"))
+      end
+    end
+
     context "when data has been provided" do
       context "with a publish course", feature_publish_course_details: true do
         let(:trainee) { create(:trainee, :with_primary_education, :with_publish_course_details) }
@@ -143,12 +168,8 @@ module CourseDetails
           render_inline(View.new(data_model: trainee))
         end
 
-        it "renders 6 rows" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
-        end
-
-        it "does not render the ITT end date" do
-          expect(rendered_component).not_to have_text("ITT end date")
+        it "renders 7 rows" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
         end
       end
 
@@ -159,12 +180,8 @@ module CourseDetails
           render_inline(View.new(data_model: trainee))
         end
 
-        it "renders 4 rows" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 4)
-        end
-
-        it "does not render the ITT end date" do
-          expect(rendered_component).not_to have_text("ITT end date")
+        it "renders 5 rows" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 5)
         end
       end
     end

@@ -31,6 +31,7 @@ private
 
   def value_attribute
     return { value: blank_field_value_content } if field_value.nil?
+    return { value: unmapped_from_hesa_import.html_safe } if field_value == I18n.t("components.confirmation.not_provided_from_hesa_update")
 
     { value: field_value }
   end
@@ -69,6 +70,12 @@ private
       #{field_hint_text(field_label)}
     </a>
   </div>)
+  end
+
+  def unmapped_from_hesa_import
+    %(<div class="govuk-inset-text govuk-!-margin-0">
+      #{field_value}
+    </div>)
   end
 
   def error_message_prefix

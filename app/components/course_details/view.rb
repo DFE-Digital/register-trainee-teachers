@@ -26,12 +26,8 @@ module CourseDetails
         age_range_row,
         study_mode_row,
         course_date_row(itt_start_date, :start),
-        (course_date_row(itt_end_date, :end) if end_date_required?),
+        course_date_row(itt_end_date, :end),
       ].compact
-    end
-
-    def end_date_required?
-      trainee.hesa_id.blank?
     end
 
   private
@@ -122,6 +118,8 @@ module CourseDetails
     end
 
     def itt_end_date
+      return t("components.confirmation.not_provided_from_hesa_update") if data_model.itt_end_date.blank? && trainee.hesa_record?
+
       if data_model.itt_end_date.present?
         date_for_summary_view(data_model.itt_end_date)
       end
@@ -133,6 +131,12 @@ module CourseDetails
 
     def default_mappable_field(field_value, field_label)
       { field_value: field_value, field_label: field_label, action_url: edit_trainee_course_details_path(trainee) }
+    end
+
+    def not_imported_from_hesa_message(parameter)
+      if parameter.blank? && trainee.hesa_record?
+        t("components.confirmation.not_provided_from_hesa_update")
+      end
     end
   end
 end

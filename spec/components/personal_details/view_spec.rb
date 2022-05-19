@@ -27,6 +27,18 @@ module PersonalDetails
       end
     end
 
+    context "when data has been provided with hesa optional fields" do
+      let(:trainee) { create(:trainee, id: 1, nationalities: [], created_from_hesa: true, hesa_id: 1) }
+
+      before do
+        render_inline(View.new(data_model: personal_details_form))
+      end
+
+      it "renders the not uploaded from hesa message" do
+        expect(rendered_component).to have_text(t("components.confirmation.not_provided_from_hesa_update"))
+      end
+    end
+
     context "when data has been provided" do
       let(:trainee) { create(:trainee, id: 1, nationalities: [british]) }
 
