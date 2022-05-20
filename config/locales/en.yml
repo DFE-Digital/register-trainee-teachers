@@ -808,7 +808,7 @@ en:
   pages:
     request_an_account:
       get_account_heading: Who can get a Register account
-      get_account: "You can only get a Register account is you are one of the following:"
+      get_account: "You can only get a Register account if you are one of the following:"
       bullets1:
         1: an initial teacher training (ITT) accredited provider
         2: a lead school involved in School Direct training routes
@@ -818,16 +818,16 @@ en:
       second_para: To use Register, each person in your organisation will need a DfE Sign-in account.
       email_address: "The email address you use for your DfE Sign-in account must:"
       bullets2:
-        1: be a named email address, for example jane.doe@example.com
+        1: be a named individual email address, for example jane.doe@example.com
         2: have an email domain from your organisation, for example we cannot accept emails that end with @gmail.com or @icloud.com
       sign_in_account: DfE Sign-in account
       step_2_heading: "Step 2: Email us to request a Register account"
       send_email: Once you have a DfE Sign-in account with a named email address, email
-      email_subject: Get a Register account
+      email_subject: Request a Register account
       
       tell_us: "In your email, tell us:"
       bullets3:
-        1: the name of the training provider or lead school you work for
+        1: the name of the accredited provider or lead school you work for
         2: that you would like to start using Register
         3: the email address used for your DfE Sign-in account
       third_para: If there is more than one person at your organisation who would like to get set up, you can send one email with everyone’s details.
