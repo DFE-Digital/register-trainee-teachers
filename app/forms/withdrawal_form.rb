@@ -11,6 +11,16 @@ class WithdrawalForm < MultiDateForm
     @commencement_date ||= ::TraineeStartStatusForm.new(trainee).commencement_date
   end
 
+  def save!
+    if valid?
+      assign_attributes_to_trainee
+      Trainees::Update.call(trainee: trainee, withdrawal: true)
+      clear_stash
+    else
+      false
+    end
+  end
+
 private
 
   def compute_fields
