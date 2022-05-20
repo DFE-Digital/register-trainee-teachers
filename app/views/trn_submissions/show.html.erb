@@ -23,12 +23,6 @@
 
     <p class="govuk-body">DfE will contact trainees to give them their TRN.</p>
 
-    <%= render FeedbackLink::View.new(
-      enabled: Settings.features.enable_feedback_link,
-      feedback_link_url: Settings.trn_submitted_feedback_url,
-      feedback_type_text: "registering the trainee",
-    ) %>
-
     <h2 class="govuk-heading-m">Next steps</h2>
 
     <ul class="govuk-list govuk-list--bullet">
