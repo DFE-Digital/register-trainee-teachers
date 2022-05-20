@@ -24,7 +24,7 @@ module Dqt
       end
 
       it "makes the correct request" do
-        expect(Dqt::Client).to receive(:patch).with(
+        expect(Dqt::Client).to receive(:put).with(
           expected_path,
           body: json_body_params,
         ).and_return(dqt_response)

@@ -19,7 +19,7 @@ module Dqt
     attr_reader :trainee
 
     def dqt_update
-      Client.patch(path, body: params.to_json)
+      Client.put(path, body: params.to_json)
     end
 
     def path
