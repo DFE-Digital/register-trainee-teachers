@@ -13,6 +13,7 @@ module AllocationSubjects
   EARLY_YEARS_ITT = "Early years ITT"
   ECONOMICS = "Economics"
   ENGLISH = "English"
+  GENERAL_SCIENCES = "General sciences"
   GEOGRAPHY = "Geography"
   HISTORY = "History"
   MATHEMATICS = "Mathematics"

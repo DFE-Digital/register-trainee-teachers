@@ -124,6 +124,7 @@ BURSARIES_2020_TO_2021 = [
     amount: 7_000,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
+      AllocationSubjects::GENERAL_SCIENCES,
     ],
   ),
   OpenStruct.new(

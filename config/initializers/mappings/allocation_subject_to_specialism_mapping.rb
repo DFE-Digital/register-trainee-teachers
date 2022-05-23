@@ -14,7 +14,6 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::BIOLOGY,
     CourseSubjects::APPLIED_BIOLOGY,
     CourseSubjects::ENVIRONMENTAL_SCIENCES,
-    CourseSubjects::GENERAL_SCIENCES,
   ],
   AllocationSubjects::BUSINESS_STUDIES => [
     CourseSubjects::BUSINESS_STUDIES,
@@ -63,6 +62,9 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
   ],
   AllocationSubjects::GEOGRAPHY => [
     CourseSubjects::GEOGRAPHY,
+  ],
+  AllocationSubjects::GENERAL_SCIENCES => [
+    CourseSubjects::GENERAL_SCIENCES,
   ],
   AllocationSubjects::HISTORY => [
     CourseSubjects::HISTORY,
