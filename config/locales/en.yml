@@ -814,7 +814,7 @@ en:
         2: a lead school involved in School Direct training routes
       steps_heading: Steps to get an account
       first_para: Follow these steps to get an account to use Register.
-      step_one_heading: "Step 1: Get a DfE Sign-in account"
+      step_1_heading: "Step 1: Get a DfE Sign-in account"
       second_para: To use Register, each person in your organisation will need a DfE Sign-in account.
       email_address: "The email address you use for your DfE Sign-in account must:"
       bullets2:
