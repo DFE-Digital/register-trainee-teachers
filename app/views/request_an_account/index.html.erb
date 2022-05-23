@@ -10,30 +10,47 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l govuk-!-margin-bottom-9"><%= t("components.page_titles.pages.request_an_account") %></h1>
+    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.get_account_heading") %></h2>
+    <p class="govuk-body"><%= t("pages.request_an_account.get_account") %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t("pages.request_an_account.bullets1.1") %></li>
+      <li><%= t("pages.request_an_account.bullets1.2") %></li>
+    </ul>
+    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.steps_heading") %></h2>
     <p class="govuk-body"><%= t("pages.request_an_account.first_para") %></p>
-    <p class="govuk-body">
-      Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.
-    </p>
+    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_1_heading") %></h2>
+    <p class="govuk-body"><%= t("pages.request_an_account.second_para") %></p>
+    <p class="govuk-body"><%= t("pages.request_an_account.email_address") %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t("pages.request_an_account.bullets2.1") %></li>
+      <li><%= t("pages.request_an_account.bullets2.2") %></li>
+    </ul>
+    <p class="govuk-body">Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.</p>
+    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_2_heading") %></h2>
     <p class="govuk-body"><%= t("pages.request_an_account.send_email") %>
     <%= govuk_mail_to(
       Settings.support_email,
       Settings.support_email,
       subject: t("pages.request_an_account.email_subject")
     ) %>
+    </p>
+    <p class="govuk-body"><%= t("pages.request_an_account.tell_us") %>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t("pages.request_an_account.bullets3.1") %></li>
+      <li><%= t("pages.request_an_account.bullets3.2") %></li>
+      <li><%= t("pages.request_an_account.bullets3.3") %></li>
+    </ul>
+    <p class="govuk-body"><%= t("pages.request_an_account.third_para") %></p>
+    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_3_heading") %></h2>
+    <p class="govuk-body"><%= t("pages.request_an_account.fourth_para") %></p>
+    <p class="govuk-body"><%= t("pages.request_an_account.fifth_para") %></p>
+    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_4_heading") %></h2>
+    <p class="govuk-body"><%= t("pages.request_an_account.sixth_para") %></p>
+    <p class="govuk-body"><%= t("pages.request_an_account.final_para") %>
+    <%= govuk_mail_to(
+      Settings.support_email,
+      Settings.support_email,
+      subject: t("pages.request_an_account.multiple_providers_email_subject")
+    ) %>
   </p>
-
-  <p class="govuk-body"><%= t("pages.request_an_account.email_address") %></p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li><%= t("pages.request_an_account.bullets1.1") %></li>
-    <li><%= t("pages.request_an_account.bullets1.2") %></li>
-  </ul>
-
-  <p class="govuk-body"><%= t("pages.request_an_account.tell_us") %></p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li><%= t("pages.request_an_account.bullets2.1") %></li>
-    <li><%= t("pages.request_an_account.bullets2.2") %></li>
-    <li><%= t("pages.request_an_account.bullets2.3") %></li>
-  </ul>
-
-  <p class="govuk-body"><%= t("pages.request_an_account.final_para") %></p>
 </div>
