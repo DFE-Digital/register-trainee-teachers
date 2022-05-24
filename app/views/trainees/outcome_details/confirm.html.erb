@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.outcome_details.confirm_#{@trainee.award_type.downcase}") %>
+<%= render PageTitle::View.new(text: "Check #{@trainee.award_type} details") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: t(:back_to_record), href: trainee_path(@trainee)) %>
