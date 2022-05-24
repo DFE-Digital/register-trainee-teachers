@@ -10,6 +10,6 @@ class UserPolicy < ProviderPolicy
   end
 
   def drafts?
-    !user.lead_school?
+    user.system_admin? || !user.lead_school?
   end
 end
