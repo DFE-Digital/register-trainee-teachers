@@ -33,11 +33,6 @@ module Trainees
           described_class.call(trainee: trainee, params: params)
         end
 
-        it "queues a withdrawal to DQT when `withdrawal` option is set" do
-          expect(Dqt::WithdrawTraineeJob).to receive(:perform_later).with(trainee)
-          described_class.call(trainee: trainee, params: params, withdrawal: true)
-        end
-
         it "queues a cohort update" do
           expect(Trainees::SetCohortJob).to receive(:perform_later).with(trainee)
           described_class.call(trainee: trainee, params: params)
