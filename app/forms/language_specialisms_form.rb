@@ -4,6 +4,7 @@ class LanguageSpecialismsForm < TraineeForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
+  include CourseFormHelpers
 
   FIELDS = %i[
     language_specialisms
@@ -31,6 +32,19 @@ class LanguageSpecialismsForm < TraineeForm
 
   def language_specialisms
     (@language_specialisms || []).compact_blank
+  end
+
+  def save!
+    return false unless valid?
+
+    trainee.assign_attributes(
+      course_subject_one: course_subject_one,
+      course_subject_two: course_subject_two,
+      course_subject_three: course_subject_three,
+      course_allocation_subject: course_allocation_subject,
+    )
+    Trainees::Update.call(trainee: trainee)
+    clear_stash
   end
 
   def stash

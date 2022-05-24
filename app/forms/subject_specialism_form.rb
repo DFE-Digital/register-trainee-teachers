@@ -4,6 +4,7 @@ class SubjectSpecialismForm < TraineeForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
+  include CourseFormHelpers
 
   FIELDS = %i[
     course_subject_one
@@ -29,6 +30,19 @@ class SubjectSpecialismForm < TraineeForm
       course_subject_two,
       course_subject_three,
     ].compact
+  end
+
+  def save!
+    return false unless valid?
+
+    trainee.assign_attributes(
+      course_subject_one: course_subject_one,
+      course_subject_two: course_subject_two,
+      course_subject_three: course_subject_three,
+      course_allocation_subject: course_allocation_subject,
+    )
+    Trainees::Update.call(trainee: trainee)
+    clear_stash
   end
 
   def stash
