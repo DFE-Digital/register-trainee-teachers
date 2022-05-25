@@ -5,8 +5,8 @@ require "rails_helper"
 module Dqt
   module Params
     describe Withdrawal do
-      let(:hesa_student) { create(:hesa_student, ukprn: "12345678") }
-      let(:trainee) { create(:trainee, :withdrawn, hesa_student: hesa_student) }
+      let(:provider) { create(:provider, ukprn: "12345678") }
+      let(:trainee) { create(:trainee, :withdrawn, provider: provider) }
 
       subject { described_class.new(trainee: trainee).params }
 

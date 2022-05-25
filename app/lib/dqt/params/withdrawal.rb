@@ -20,7 +20,7 @@ module Dqt
 
       def build_params
         {
-          "ittProviderUkprn" => trainee.hesa_student&.ukprn,
+          "ittProviderUkprn" => trainee.provider.ukprn,
           "outcome" => WITHDRAWN,
         }
       end
