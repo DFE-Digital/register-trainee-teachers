@@ -40,6 +40,10 @@ class AcademicCycle < ApplicationRecord
     start_date.year
   end
 
+  def end_year
+    end_date.year
+  end
+
   def label
     "#{start_year} to #{start_year + 1}"
   end

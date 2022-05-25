@@ -12,6 +12,7 @@ features:
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
   redirect_education_domain: true
+  funding: true
 
 environment:
   name: beta

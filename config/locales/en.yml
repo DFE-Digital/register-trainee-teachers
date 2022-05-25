@@ -48,10 +48,25 @@ en:
       no_bursary_applied_for: Not funded
       no_grant_applied_for: Not grant funded
       no_funding_available: Not applicable
+      contact_info: Contact %{email} if you think there should be trainees who are eligible.
       tiered_bursary_applied_for:
         tier_one: Applied for Tier 1
         tier_two: Applied for Tier 2
         tier_three: Applied for Tier 3
+    trainee_summary:
+      heading: Bursaries and scholarships %{start_year} to %{end_year}
+    payment_schedule:
+      no_data: There are no scheduled payments right now.
+      contact_info: Contact becoming a %{email} if you think there should be scheduled payments.
+      month: Month
+      total: Total
+      running_total: Running total
+      payment_breakdown: Payment breakdown
+      heading: Payment Schedule %{start_year} to %{end_year}
+      payments_table_caption:  Payments to %{month_and_year}
+      predicted_payments_table_caption: Predicted Payments
+      no_payments: No payments for %{month_and_year}
+      last_updated_at: "Last updated: %{date}"
   schools:
     view:
       summary_title: Schools
@@ -1151,7 +1166,7 @@ en:
               blank: Select the country where the degree was obtained
         provider:
           attributes:
-            accreditation_id: 
+            accreditation_id:
               blank: Enter an accreditation ID
               taken: Enter a unique accreditation ID
             name:

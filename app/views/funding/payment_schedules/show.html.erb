@@ -1,0 +1,91 @@
+<%= render PageTitle::View.new(text: "Funding") %>
+
+
+<% if current_user.organisation %>
+  <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
+<% end %>
+
+<h1 class="govuk-heading-xl"><%= t('funding.view.title') %></h1>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
+<% end %>
+
+<%= render TabNavigation::View.new(items: [
+  { name: t('funding.payment_schedule.heading', start_year: @start_year, end_year: @end_year), url: funding_payment_schedule_path },
+  { name: t('funding.trainee_summary.heading', start_year: @start_year, end_year: @end_year), url: funding_trainee_summary_path },
+]) %>
+
+<%- if @payment_schedule_view.any? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-3">
+      <h1 class="govuk-heading-l"><%= t('funding.payment_schedule.heading', start_year: @start_year, end_year: @end_year) %></h1>
+      <p class="govuk-body"><%= t('funding.payment_schedule.last_updated_at', date: @payment_schedule_view.last_updated_at) %></p>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <table id="payments" class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m govuk-!-margin-bottom-3">
+          <%= t('funding.payment_schedule.payments_table_caption', month_and_year: Time.zone.now.strftime("%b %Y")) %>
+        </caption>
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= t('funding.payment_schedule.month') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.total') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.running_total') %></th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <%- @payment_schedule_view.actual_payments.each do |actual_payment| -%>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= actual_payment[:month] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= actual_payment[:total] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= actual_payment[:running_total] %></td>
+          </tr>
+        <%- end -%>
+        </tbody>
+      </table>
+      <table id="predicted-payments" class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m govuk-!-margin-bottom-3">
+          <%= t('funding.payment_schedule.predicted_payments_table_caption') %>
+        </caption>
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= t('funding.payment_schedule.month') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.total') %></th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.running_total') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%- @payment_schedule_view.predicted_payments.each do |predicted_payment| -%>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= predicted_payment[:month] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= predicted_payment[:total] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= predicted_payment[:running_total] %></td>
+          </tr>
+        <%- end -%>
+        </tbody>
+      </table>
+      <h2 class="govuk-heading-m"><%= t('funding.payment_schedule.payment_breakdown') %></h2>
+      <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+        <%- @payment_schedule_view.payment_breakdown.each_with_index do |month_breakdown, index| -%>
+          <%= render "month_breakdown", month_breakdown: month_breakdown, index: index + 1 %>
+        <%- end -%>
+      </div>
+    </div>
+  </div>
+<%- else -%>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop" >
+      <p class="govuk-body"><%= t("funding.payment_schedule.no_data") %></p>
+      <p class="govuk-body">
+        <%= t("funding.payment_schedule.contact_info", email: govuk_mail_to(
+          Settings.support_email,
+          Settings.support_email,
+          subject: t("funding.view.title")
+        )).html_safe %>
+      </p>
+    </div>
+  </div>
+<%- end -%>

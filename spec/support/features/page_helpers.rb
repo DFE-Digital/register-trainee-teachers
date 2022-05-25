@@ -362,6 +362,10 @@ module Features
       @user_delete_page ||= PageObjects::Users::Delete.new
     end
 
+    def payment_schedule_page
+      @payment_schedule_page ||= PageObjects::Funding::PaymentSchedule.new
+    end
+
   private
 
     def progress_with_prefix(status)
