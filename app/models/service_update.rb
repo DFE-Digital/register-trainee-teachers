@@ -18,6 +18,8 @@ class ServiceUpdate
   end
 
   def self.recent_updates
-    all.select { |service_update| service_update.date > 1.month.ago }
+    recent_updates = all.select { |service_update| service_update.date > 1.month.ago }
+
+    recent_updates[0, 2]
   end
 end
