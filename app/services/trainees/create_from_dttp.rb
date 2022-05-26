@@ -28,8 +28,9 @@ module Trainees
     POSTGRAD_CODE = 12
     UNDERGRAD_CODE = 20
 
-    def initialize(dttp_trainee:)
+    def initialize(dttp_trainee:, placement_assignment: nil)
       @dttp_trainee = dttp_trainee
+      @placement_assignment = placement_assignment || dttp_trainee.latest_placement_assignment
       @trainee = Trainee.new(mapped_attributes)
     end
 
@@ -84,7 +85,7 @@ module Trainees
 
   private
 
-    attr_reader :dttp_trainee, :trainee
+    attr_reader :dttp_trainee, :trainee, :placement_assignment
 
     def mapped_attributes
       return if dttp_trainee.placement_assignments.blank?
@@ -97,10 +98,10 @@ module Trainees
         training_route: training_route,
         trn: trn,
         submitted_for_trn_at: dttp_trainee.earliest_placement_assignment.response["dfe_trnassessmentdate"],
-        outcome_date: dttp_trainee.latest_placement_assignment.response["dfe_datestandardsassessmentpassed"],
-        awarded_at: dttp_trainee.latest_placement_assignment.response["dfe_qtseytsawarddate"],
+        outcome_date: placement_assignment.response["dfe_datestandardsassessmentpassed"],
+        awarded_at: placement_assignment.response["dfe_qtseytsawarddate"],
         dttp_id: dttp_trainee.dttp_id,
-        placement_assignment_dttp_id: dttp_trainee.latest_placement_assignment.dttp_id,
+        placement_assignment_dttp_id: placement_assignment.dttp_id,
         hesa_id: dttp_trainee.hesa_id,
       }.merge(personal_details_attributes)
        .merge(contact_attributes)
@@ -118,7 +119,7 @@ module Trainees
     end
 
     def multiple_providers?
-      dttp_trainee.latest_placement_assignment.provider_dttp_id != dttp_trainee.provider_dttp_id
+      placement_assignment.provider_dttp_id != dttp_trainee.provider_dttp_id
     end
 
     def trainee_already_exists?
@@ -137,16 +138,16 @@ module Trainees
 
     def dttp_route
       @dttp_route ||= find_by_entity_id(
-        dttp_trainee.latest_placement_assignment.route_dttp_id,
+        placement_assignment.route_dttp_id,
         Dttp::CodeSets::Routes::MAPPING,
       ) || find_by_entity_id(
-        dttp_trainee.latest_placement_assignment.route_dttp_id,
+        placement_assignment.route_dttp_id,
         Dttp::CodeSets::Routes::INACTIVE_MAPPING,
       )
     end
 
     def undergrad_level?
-      dttp_trainee.latest_placement_assignment.response["dfe_courselevel"] == UNDERGRAD_CODE
+      placement_assignment.response["dfe_courselevel"] == UNDERGRAD_CODE
     end
 
     def trn
@@ -245,25 +246,25 @@ module Trainees
       {
         course_education_phase: course_education_phase(course_subject_one_name),
         course_subject_one: course_subject_one_name,
-        course_subject_two: course(dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject2id_value"]),
-        course_subject_three: course(dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject3id_value"]),
+        course_subject_two: course(placement_assignment.response["_dfe_ittsubject2id_value"]),
+        course_subject_three: course(placement_assignment.response["_dfe_ittsubject3id_value"]),
         course_min_age: age_range && age_range[0],
         course_max_age: age_range && age_range[1],
         study_mode: study_mode,
         commencement_date: commencement_date,
-        itt_start_date: dttp_trainee.latest_placement_assignment.programme_start_date,
-        itt_end_date: dttp_trainee.latest_placement_assignment.programme_end_date,
+        itt_start_date: placement_assignment.programme_start_date,
+        itt_end_date: placement_assignment.programme_end_date,
       }
     end
 
     def course_subject_one_name
       return CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS if primary_mathematics_specialism?
 
-      course(dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject1id_value"])
+      course(placement_assignment.response["_dfe_ittsubject1id_value"])
     end
 
     def commencement_date
-      dttp_trainee.latest_placement_assignment.response["dfe_commencementdate"] || dttp_trainee.latest_placement_assignment.programme_start_date
+      placement_assignment.response["dfe_commencementdate"] || placement_assignment.programme_start_date
     end
 
     def course(dttp_course_uuid)
@@ -284,13 +285,13 @@ module Trainees
 
     def age_range
       @age_range ||= find_by_entity_id(
-        dttp_trainee.latest_placement_assignment.response["_dfe_coursephaseid_value"],
+        placement_assignment.response["_dfe_coursephaseid_value"],
         Dttp::CodeSets::AgeRanges::MAPPING,
       )
     end
 
     def study_mode
-      study_mode_id = dttp_trainee.latest_placement_assignment.study_mode_id
+      study_mode_id = placement_assignment.study_mode_id
 
       if Dttp::CodeSets::CourseStudyModes::OTHER_FULL_TIME_MODES.include?(study_mode_id)
         return COURSE_STUDY_MODES[:full_time]
@@ -304,7 +305,7 @@ module Trainees
     end
 
     def school_attributes
-      return {} if dttp_trainee.latest_placement_assignment.lead_school_id.blank?
+      return {} if placement_assignment.lead_school_id.blank?
 
       # Should we raise when schools are not found so that we can add them?
       if NOT_APPLICABLE_SCHOOL_URNS.include?(lead_school_urn)
@@ -317,7 +318,7 @@ module Trainees
         }
       end
 
-      if dttp_trainee.latest_placement_assignment.employing_school_id.present?
+      if placement_assignment.employing_school_id.present?
         if NOT_APPLICABLE_SCHOOL_URNS.include?(employing_school_urn)
           attrs.merge!({
             employing_school_not_applicable: true,
@@ -369,15 +370,15 @@ module Trainees
     end
 
     def dttp_initiative_id
-      @dttp_initiative_id ||= dttp_trainee.latest_placement_assignment.response["_dfe_initiative1id_value"]
+      @dttp_initiative_id ||= placement_assignment.response["_dfe_initiative1id_value"]
     end
 
     def lead_school_urn
-      Dttp::School.find_by(dttp_id: dttp_trainee.latest_placement_assignment.lead_school_id)&.urn
+      Dttp::School.find_by(dttp_id: placement_assignment.lead_school_id)&.urn
     end
 
     def employing_school_urn
-      Dttp::School.find_by(dttp_id: dttp_trainee.latest_placement_assignment.employing_school_id)&.urn
+      Dttp::School.find_by(dttp_id: placement_assignment.employing_school_id)&.urn
     end
 
     def trainee_state
@@ -394,22 +395,22 @@ module Trainees
     end
 
     def deferral_attributes
-      return {} if dttp_trainee.latest_placement_assignment.dormant_period.blank?
+      return {} if placement_assignment.dormant_period.blank?
 
       {
-        defer_date: dttp_trainee.latest_placement_assignment.dormant_period.date_left,
-        reinstate_date: dttp_trainee.latest_placement_assignment.dormant_period.date_returned,
-        dormancy_dttp_id: dttp_trainee.latest_placement_assignment.dormant_period.dttp_id,
+        defer_date: placement_assignment.dormant_period.date_left,
+        reinstate_date: placement_assignment.dormant_period.date_returned,
+        dormancy_dttp_id: placement_assignment.dormant_period.dttp_id,
       }
     end
 
     def withdraw_date
-      dttp_trainee.latest_placement_assignment.response["dfe_dateleft"]
+      placement_assignment.response["dfe_dateleft"]
     end
 
     def withdraw_reason
       find_by_entity_id(
-        dttp_trainee.latest_placement_assignment.response["_dfe_reasonforleavingid_value"],
+        placement_assignment.response["_dfe_reasonforleavingid_value"],
         Dttp::CodeSets::ReasonsForLeavingCourse::MAPPING,
       )
     end
@@ -423,7 +424,7 @@ module Trainees
     end
 
     def funding_entity_id
-      @funding_entity_id ||= dttp_trainee.latest_placement_assignment.funding_id
+      @funding_entity_id ||= placement_assignment.funding_id
     end
 
     def update_shases!
