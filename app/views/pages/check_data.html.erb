@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "pages.check_data") %>
+<%= render PageTitle::View.new(text: t(".heading")) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
