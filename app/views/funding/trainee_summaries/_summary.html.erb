@@ -1,0 +1,32 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half-from-desktop">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m" > <%= @trainee_summary_view.summary.title %> </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">
+            <%= t("funding.trainee_summary.column_headings.payment_type") %>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.total") %>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @trainee_summary_view.summary.summary_data.each do |summary_row| %>
+          <% next if summary_row.total.zero? %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= summary_row.payment_type %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= @trainee_summary_view.format_pounds(summary_row.total) %></td>
+          </tr>
+        <% end %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">
+            <%= t("funding.trainee_summary.column_headings.total") %>
+          </td>
+          <td class="govuk-table__cell govuk-table__cell--numeric app-table__column-20 govuk-!-font-weight-bold"><%= @trainee_summary_view.format_pounds(@trainee_summary_view.summary.total) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

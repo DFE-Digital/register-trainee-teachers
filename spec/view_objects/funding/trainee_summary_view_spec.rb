@@ -47,19 +47,23 @@ module Funding
       end
 
       describe "#summary_data" do
-        let(:expected_summary) {
-          [TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "ITT Bursaries", total: 400000),
-           TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "ITT Scholarship", total: 2300000),
-           TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "Early years ITT bursaries", total: 500000),
-           TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "Grants", total: 900000)]
-        }
+        let(:expected_summary) do
+          [
+            TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "ITT Bursaries", total: 400000),
+            TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "ITT Scholarship", total: 2300000),
+            TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "Early years ITT bursaries", total: 500000),
+            TraineeSummaryView::PaymentTypeSummaryRow.new(payment_type: "Grants", total: 900000),
+          ]
+        end
         let(:summary_data_map) { subject.summary.summary_data.map { |d| [d.payment_type, d.total] } }
-        let(:expected_summary_data) {
-          [["ITT Bursaries", 400000],
-           ["ITT Scholarship", 2300000],
-           ["Early years ITT bursaries", 500000],
-           ["Grants", 900000]]
-        }
+        let(:expected_summary_data) do
+          [
+            ["ITT bursaries", 400000],
+            ["ITT scholarship", 2300000],
+            ["Early years ITT bursaries", 500000],
+            ["Grants", 900000],
+          ]
+        end
 
         it "returns the correct payment type and total" do
           expect(summary_data_map).to eql(expected_summary_data)
@@ -69,17 +73,22 @@ module Funding
 
     describe "#last_updated_at_string" do
       it "returns the created_at of the last trainee_summary in the correct format" do
-        expect(subject.last_updated_at_string).to eq(summary.created_at.strftime("Last updated: %d %B %Y"))
+        expect(subject.last_updated_at).to eq(summary.created_at.strftime("%d %B %Y"))
       end
     end
 
     describe "#bursary_breakdown_rows" do
       let(:bursary_array) {
-        [{ route_and_subject: "Provider-led\nMaths",
-           lead_school: "BAT Academy",
-           trainees: maths_bursary_trainees,
-           amount_per_trainee: "£2,000.00",
-           total: "£4,000.00" }]
+        [
+          {
+            route: "Provider-led",
+            subject: "Maths",
+            lead_school: "BAT Academy",
+            trainees: maths_bursary_trainees,
+            amount_per_trainee: "£2,000",
+            total: "£4,000",
+          },
+        ]
       }
 
       context "when there are bursaries" do
@@ -90,18 +99,26 @@ module Funding
     end
 
     describe "#scholarship_breakdown_rows" do
-      let(:scholarship_array) {
-        [{ route_and_subject: "Provider-led\nMaths",
-           lead_school: "BAT Academy",
-           trainees: maths_scholarship_trainees,
-           amount_per_trainee: "£5,000.00",
-           total: "£15,000.00" },
-         { route_and_subject: "Provider-led\nBiology",
-           lead_school: "Regminster College",
-           trainees: biology_scholarship_trainees,
-           amount_per_trainee: "£2,000.00",
-           total: "£8,000.00" }]
-      }
+      let(:scholarship_array) do
+        [
+          {
+            route: "Provider-led",
+            subject: "Biology",
+            lead_school: "Regminster College",
+            trainees: biology_scholarship_trainees,
+            amount_per_trainee: "£2,000",
+            total: "£8,000",
+          },
+          {
+            route: "Provider-led",
+            subject: "Maths",
+            lead_school: "BAT Academy",
+            trainees: maths_scholarship_trainees,
+            amount_per_trainee: "£5,000",
+            total: "£15,000",
+          },
+        ]
+      end
 
       context "when there are scholarships" do
         it "returns a breakdown of the scholarships" do
@@ -111,12 +128,9 @@ module Funding
     end
 
     describe "#tiered_bursary_breakdown_rows" do
-      let(:tiered_bursary_array) {
-        [{ tier: 1,
-           trainees: biology_tiered_bursary_trainees,
-           amount_per_trainee: "£1,000.00",
-           total: "£5,000.00" }]
-      }
+      let(:tiered_bursary_array) do
+        [{ tier: 1, trainees: biology_tiered_bursary_trainees, amount_per_trainee: "£1,000", total: "£5,000" }]
+      end
 
       context "when there are tiered bursaries" do
         it "returns a breakdown of the tiered bursaries" do
@@ -126,12 +140,17 @@ module Funding
     end
 
     describe "#grant_breakdown_rows" do
-      let(:grant_array) {
-        [{ subject: "Maths",
-           trainees: maths_grant_trainees,
-           amount_per_trainee: "£3,000.00",
-           total: "£9,000.00" }]
-      }
+      let(:grant_array) do
+        [
+          {
+            route: "Provider-led",
+            subject: "Maths",
+            trainees: maths_grant_trainees,
+            amount_per_trainee: "£3,000",
+            total: "£9,000",
+          },
+        ]
+      end
 
       context "when there are grants" do
         it "returns a breakdown of the grants" do

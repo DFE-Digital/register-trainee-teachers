@@ -366,6 +366,10 @@ module Features
       @payment_schedule_page ||= PageObjects::Funding::PaymentSchedule.new
     end
 
+    def trainee_summary_page
+      @trainee_summary_page ||= PageObjects::Funding::TraineeSummary.new
+    end
+
   private
 
     def progress_with_prefix(status)

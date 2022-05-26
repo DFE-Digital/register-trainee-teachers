@@ -53,8 +53,6 @@ en:
         tier_one: Applied for Tier 1
         tier_two: Applied for Tier 2
         tier_three: Applied for Tier 3
-    trainee_summary:
-      heading: Bursaries and scholarships %{start_year} to %{end_year}
     payment_schedule:
       no_data: There are no scheduled payments right now.
       contact_info: Contact becoming a %{email} if you think there should be scheduled payments.
@@ -62,11 +60,38 @@ en:
       total: Total
       running_total: Running total
       payment_breakdown: Payment breakdown
-      heading: Payment Schedule %{start_year} to %{end_year}
+      heading: Payment schedule %{start_year} to %{end_year}
       payments_table_caption:  Payments to %{month_and_year}
       predicted_payments_table_caption: Predicted Payments
       no_payments: No payments for %{month_and_year}
       last_updated_at: "Last updated: %{date}"
+    trainee_summary:
+      heading: Trainee summary %{start_year} to %{end_year}
+      last_updated_at: "Last updated: %{date}"
+      table_headings:
+        bursaries:
+          title: ITT bursaries breakdown
+        scholarships:
+          title: ITT scholarships breakdown
+        tiered_bursaries:
+          title: Early years ITT bursaries breakdown
+        grants:
+          title: Grants breakdown
+      column_headings:
+        amount_per_trainee: Amount per trainee
+        lead_school: Lead school
+        payment_type: Payment type
+        route_and_course: Route and course
+        tier: Tier
+        total: Total
+        trainees: Trainees
+      provider:
+        no_funding: There are no trainees eligible for bursaries and scholarships right now.
+      lead_school:
+        no_funding: There are no trainees eligible for grants right now.
+      email_line_one: Contact
+      email_subject: Funding
+      email_line_two: if you think there should be trainees who are eligible.
   schools:
     view:
       summary_title: Schools
@@ -250,6 +275,7 @@ en:
     itt_end_date:
       hint: The end date of the Initial Teacher Training part of their course.
     page_titles:
+      funding: Funding
       personas: Personas
       pages:
         accessibility: Accessibility statement for Register trainee teachers

@@ -1,0 +1,36 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m" >
+        <%= t("funding.trainee_summary.table_headings.grants.title") %>
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th nowrap scope="col" class="govuk-table__header govuk-!-width-one-quarter">
+            <%= t("funding.trainee_summary.column_headings.route_and_course") %>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.trainees") %>
+          </th>
+          <th nowrap scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.amount_per_trainee")%>
+          </th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">
+            <%= t("funding.trainee_summary.column_headings.total") %>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%- @trainee_summary_view.grant_breakdown_rows.each do |grant_row| %>
+          <% next if grant_row[:total] == "—" %>
+          <tr class="govuk-table__row">
+            <td nowrap class="govuk-table__cell"><%= grant_row[:route]%> <br> <%= grant_row[:subject] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= grant_row[:trainees] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= grant_row[:amount_per_trainee] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><%= grant_row[:total] %></td>
+          </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+  </div>
+</div>
