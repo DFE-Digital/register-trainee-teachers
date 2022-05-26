@@ -250,6 +250,7 @@ module Trainees
         course_subject_three: course(placement_assignment.response["_dfe_ittsubject3id_value"]),
         course_min_age: age_range && age_range[0],
         course_max_age: age_range && age_range[1],
+        course_allocation_subject: course_allocation_subject,
         study_mode: study_mode,
         commencement_date: commencement_date,
         itt_start_date: placement_assignment.programme_start_date,
@@ -425,6 +426,10 @@ module Trainees
 
     def funding_entity_id
       @funding_entity_id ||= placement_assignment.funding_id
+    end
+
+    def course_allocation_subject
+      SubjectSpecialism.find_by(name: course_subject_one_name)&.allocation_subject
     end
 
     def update_shases!
