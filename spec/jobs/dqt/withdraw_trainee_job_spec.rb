@@ -19,6 +19,12 @@ module Dqt
         expect(WithdrawTrainee).to receive(:call).with(trainee: trainee)
         described_class.perform_now(trainee)
       end
+
+      it "does not call the WithdrawTrainee service for a HESA trainee" do
+        trainee.hesa_id = "12345678"
+        expect(WithdrawTrainee).not_to receive(:call).with(trainee: trainee)
+        described_class.perform_now(trainee)
+      end
     end
 
     context "with the `integrate_with_dqt` feature flag inactive" do

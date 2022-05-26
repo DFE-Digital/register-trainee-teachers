@@ -8,7 +8,15 @@ module Dqt
     def perform(trainee)
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
+      return unless trainee_updatable?(trainee)
+
       WithdrawTrainee.call(trainee: trainee)
+    end
+
+  private
+
+    def trainee_updatable?(trainee)
+      !trainee.hesa_record?
     end
   end
 end
