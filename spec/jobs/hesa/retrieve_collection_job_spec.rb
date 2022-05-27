@@ -46,6 +46,12 @@ module Hesa
       end
 
       describe "HesaCollectionRequest" do
+        around do |example|
+          Timecop.freeze do
+            example.run
+          end
+        end
+
         before { described_class.new.perform }
 
         it "marks the import as successful" do
@@ -61,10 +67,8 @@ module Hesa
         end
 
         it "stores the requested_at" do
-          Timecop.freeze do
-            expected_time = Time.zone.now
-            expect(last_hesa_collection_request.requested_at.tv_sec).to eq(expected_time.tv_sec)
-          end
+          expected_time = Time.zone.now
+          expect(last_hesa_collection_request.requested_at.tv_sec).to eq(expected_time.tv_sec)
         end
       end
 
