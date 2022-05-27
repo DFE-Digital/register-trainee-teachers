@@ -172,6 +172,7 @@ class Trainee < ApplicationRecord
     past: 1,
     future: 2,
   }
+
   COMPLETE_STATES = %w[recommended_for_award withdrawn awarded].freeze
 
   pg_search_scope :with_name_trainee_id_or_trn_like,

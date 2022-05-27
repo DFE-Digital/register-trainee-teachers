@@ -4,7 +4,10 @@ module Exports
   class TraineeSearchData
     VULNERABLE_CHARACTERS = %w[= + - @].freeze
 
+    CURRENTLY_NOT_AVAILABLE = "Currently no data available in Register"
     DATA_NOT_AVAILABLE = "data not available"
+    END_DATE_NOT_REQUIRED_BY_HESA = "End date not required by HESA so no data available in Register"
+    NOT_REQUIRED_BY_HESA = "Not required by HESA so no data available in Register"
 
     def initialize(trainees)
       @data_for_export = format_trainees(trainees)
@@ -91,7 +94,7 @@ module Exports
           "course_study_mode" => course_study_mode(trainee),
           "course_level" => course_level(trainee),
           "itt_start_date" => trainee.itt_start_date&.iso8601,
-          "itt_end_date" => trainee.itt_end_date&.iso8601,
+          "itt_end_date" => itt_end_date(trainee),
           "course_duration_in_years" => trainee.course_duration_in_years,
           "course_summary" => course_summary(trainee, course),
           "commencement_date" => trainee.commencement_date&.iso8601,
@@ -104,8 +107,8 @@ module Exports
           "funding_value" => funding_value(trainee),
           "bursary_tier" => bursary_tier(trainee),
           "award_standards_met_date" => trainee.outcome_date&.iso8601,
-          "award_awarded_at" => trainee.awarded_at&.iso8601,
-          "defer_date" => trainee.defer_date&.iso8601,
+          "award_awarded_at" => awarded_at(trainee),
+          "defer_date" => defer_date(trainee),
           "reinstate_date" => trainee.reinstate_date&.iso8601,
           "withdraw_date" => trainee.withdraw_date&.to_date&.iso8601,
           "withdraw_reason" => trainee.withdraw_reason,
@@ -310,6 +313,36 @@ module Exports
 
     def employing_school_name(trainee)
       trainee.employing_school_not_applicable? ? I18n.t(:not_applicable) : trainee.employing_school&.name
+    end
+
+    def itt_end_date(trainee)
+      end_date = trainee.itt_end_date&.iso8601
+
+      if trainee.hesa_record? && !trainee.awaiting_action?
+        return end_date || END_DATE_NOT_REQUIRED_BY_HESA
+      end
+
+      end_date
+    end
+
+    def awarded_at(trainee)
+      awarded_at = trainee.awarded_at&.iso8601
+
+      if trainee.hesa_record? && trainee.awarded?
+        return awarded_at || CURRENTLY_NOT_AVAILABLE
+      end
+
+      awarded_at
+    end
+
+    def defer_date(trainee)
+      defer_date = trainee.defer_date&.iso8601
+
+      if trainee.hesa_record? && trainee.deferred?
+        return defer_date || NOT_REQUIRED_BY_HESA
+      end
+
+      defer_date
     end
   end
 end
