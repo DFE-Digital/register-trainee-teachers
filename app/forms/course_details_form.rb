@@ -177,7 +177,6 @@ private
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
       course_education_phase: course_education_phase,
-      course_allocation_subject: course_allocation_subject,
     }
 
     set_course_subject_from_primary_phase if is_primary_phase?
@@ -188,6 +187,7 @@ private
         course_subject_two: course_subject_two.presence,
         course_subject_three: course_subject_three.presence,
         course_age_range: course_age_range,
+        course_allocation_subject: course_allocation_subject,
       })
     end
 

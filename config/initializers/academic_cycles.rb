@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-CURRENT_ACADEMIC_CYCLE_ID = 7 # { start_date: "01/9/2021", end_date: "31/8/2022" },
-
 ACADEMIC_CYCLES = [
   { start_date: "01/9/2015", end_date: "31/8/2016" },
   { start_date: "01/9/2016", end_date: "31/8/2017" },
