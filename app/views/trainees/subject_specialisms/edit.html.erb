@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.subject_specialisms.edit",
+<%= render PageTitle::View.new(text: t(".heading", subject: @subject.downcase),
                                has_errors: @subject_specialism_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>

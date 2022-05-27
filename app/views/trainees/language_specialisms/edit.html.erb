@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.language_specialisms.edit", has_errors: @language_specialisms_form.errors.present?) %>
+<%= render PageTitle::View.new(text: t(".heading"), has_errors: @language_specialisms_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>

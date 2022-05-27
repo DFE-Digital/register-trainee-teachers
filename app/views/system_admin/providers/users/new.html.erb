@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "users.new", has_errors: @user.errors.present?) %>
+<%= render PageTitle::View.new(text: "Add a user for #{@provider.name}", has_errors: @user.errors.present?) %>
 
 <%= render GovukComponent::BackLinkComponent.new(
       text: "Back",

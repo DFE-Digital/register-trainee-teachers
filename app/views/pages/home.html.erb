@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "pages.home") %>
+<%= render PageTitle::View.new(text: t(".heading")) %>
 
 <% unless lead_school_user? %>
   <div class="govuk-grid-row">
