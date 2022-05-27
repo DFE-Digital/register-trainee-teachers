@@ -5,6 +5,8 @@ require "rails_helper"
 feature "Withdrawing a trainee", type: :feature do
   include SummaryHelper
 
+  before { ActiveJob::Base.queue_adapter.enqueued_jobs.clear }
+
   context "validation errors" do
     before do
       when_i_am_on_the_withdrawal_page
@@ -62,6 +64,17 @@ feature "Withdrawing a trainee", type: :feature do
       and_i_see_my_date(@chosen_date)
       when_i_withdraw
       then_the_withdrawal_details_is_updated
+    end
+
+    scenario "when DQT integration feature is active" do
+      when_i_choose_today
+      and_integrate_with_dqt_feature_is_active
+      and_i_continue
+      then_i_am_redirected_to_withdrawal_confirmation_page
+      and_i_see_my_date(Time.zone.today)
+      when_i_withdraw
+      then_the_withdraw_date_and_reason_is_updated
+      and_a_withdrawal_job_has_been_queued
     end
   end
 
@@ -372,5 +385,13 @@ feature "Withdrawing a trainee", type: :feature do
 
   def and_i_fill_in_a_new_start_date(date)
     trainee_start_status_edit_page.set_date_fields("commencement_date", date.strftime("%d/%m/%Y"))
+  end
+
+  def and_integrate_with_dqt_feature_is_active
+    enable_features(:integrate_with_dqt)
+  end
+
+  def and_a_withdrawal_job_has_been_queued
+    expect(Dqt::WithdrawTraineeJob).to have_been_enqueued
   end
 end
