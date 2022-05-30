@@ -106,8 +106,11 @@ namespace :example_data do
       )
 
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
+      lead_school = LeadSchoolUser.create!(user: persona, lead_school: School.lead_only.sample) if persona_attributes[:lead_school]
 
-      LeadSchoolUser.create!(user: persona, lead_school: School.lead_only.sample) if persona_attributes[:lead_school]
+      # Create funding schedules
+      FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
+      FactoryBot.create(:payment_schedule, :for_full_year, payable: lead_school) if lead_school
 
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
