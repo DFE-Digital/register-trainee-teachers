@@ -5,7 +5,9 @@ class AddMissingWithdrawnTrainee < ActiveRecord::Migration[6.1]
     # This trainee changed course, thus has 2 placement assignments. The data migration will create
     # a duplicate record for the first placement at the request of the provider.
     ActiveRecord::Base.transaction do
-      dttp_trainee = Dttp::Trainee.find(29820)
+      dttp_trainee = Dttp::Trainee.find_by(id: 29820)
+      next unless dttp_trainee
+
       existing_trainee = dttp_trainee.trainee
       trainee_dttp_id = existing_trainee.dttp_id
 
