@@ -11,38 +11,43 @@ module Funding
     end
 
     def call
+      missing_payable_ids = []
       attributes.each_key do |id|
         payable = payable(id)
 
-        raise(PayableNotFoundError, "payable with id: #{id} doesn't exist") if payable.nil?
+        if payable.nil?
+          missing_payable_ids << id
+        else
+          academic_year = attributes.values.flatten.first[academic_year_column]
+          summary = payable.funding_trainee_summaries.create(academic_year: academic_year)
 
-        academic_year = attributes.values.flatten.first[academic_year_column]
-        summary = payable.funding_trainee_summaries.create(academic_year: academic_year)
-
-        attributes[id].each do |row_hash|
-          row = summary.rows.create(
-            subject: row_hash["Subject"],
-            route: row_hash[route_column],
-            lead_school_name: row_hash[lead_school_name_column],
-            lead_school_urn: row_hash[lead_school_urn_column],
-            cohort_level: row_hash["Cohort Level"],
-          )
-
-          amount_maps.each do |amount_map|
-            number_of_trainees = row_hash[amount_map[:number_of_trainees]]
-            amount_in_pence = row_hash[amount_map[:amount]].to_d * 100
-
-            next unless number_of_trainees.to_d.positive? && amount_in_pence.to_d.positive?
-
-            row.amounts.create(
-              amount_in_pence: amount_in_pence,
-              number_of_trainees: number_of_trainees,
-              payment_type: amount_map[:payment_type],
-              tier: amount_map[:tier],
+          attributes[id].each do |row_hash|
+            row = summary.rows.create(
+              subject: row_hash["Subject"],
+              route: row_hash[route_column],
+              lead_school_name: row_hash[lead_school_name_column],
+              lead_school_urn: row_hash[lead_school_urn_column],
+              cohort_level: row_hash["Cohort Level"],
             )
+
+            amount_maps.each do |amount_map|
+              number_of_trainees = row_hash[amount_map[:number_of_trainees]]
+              amount_in_pence = row_hash[amount_map[:amount]].to_d * 100
+
+              next unless number_of_trainees.to_d.positive? && amount_in_pence.to_d.positive?
+
+              row.amounts.create(
+                amount_in_pence: amount_in_pence,
+                number_of_trainees: number_of_trainees,
+                payment_type: amount_map[:payment_type],
+                tier: amount_map[:tier],
+              )
+            end
           end
         end
       end
+
+      missing_payable_ids
     end
 
     def payable(_id)
