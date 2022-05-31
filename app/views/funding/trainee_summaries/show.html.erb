@@ -2,6 +2,10 @@
 
 <%= render "funding/navigation" %>
 
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
+<% end %>
+
 <h2 class="govuk-heading-l">
   <%= t("funding.trainee_summary.heading", start_year: @start_year, end_year: @end_year)%>
 </h2>
@@ -27,6 +31,15 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <p class="govuk-body"><%= t('funding.trainee_summary.last_updated_at', date: @trainee_summary_view&.last_updated_at) %></p>
+      <p class="govuk-body app-export--link">
+        <span class="app-nowrap">
+          <%= govuk_link_to(
+                I18n.t('funding.trainee_summary.export_label', start_year: @start_year, end_year: @end_year),
+                funding_trainee_summary_path(format: :csv),
+                class: "app-trainee-export govuk-link--no-visited-state",
+                ) %>
+        </span>
+      </p>
     </div>
   </div>
 

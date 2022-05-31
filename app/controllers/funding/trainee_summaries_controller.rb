@@ -3,11 +3,25 @@
 module Funding
   class TraineeSummariesController < ApplicationController
     def show
-      @trainee_summary_view = TraineeSummaryView.new(trainee_summary: trainee_summary)
-      @navigation_view = NavigationView.new(organisation: organisation)
+      trainee_summary = current_user.organisation&.funding_trainee_summaries&.order(:created_at)&.last
+      respond_to do |format|
+        format.html do
+          @trainee_summary_view = TraineeSummaryView.new(trainee_summary: trainee_summary)
+          @navigation_view = ::Funding::NavigationView.new(organisation: organisation)
 
-      @start_year = current_academic_cycle.start_year
-      @end_year = current_academic_cycle.end_year
+          current_academic_cycle = AcademicCycle.current
+          @start_year = current_academic_cycle.start_year
+          @end_year = current_academic_cycle.end_year
+        end
+        format.csv do
+          data_export = Exports::FundingTraineeSummaryData.new(trainee_summary, organisation.name)
+          send_data(
+            data_export.csv,
+            filename: data_export.filename,
+            disposition: :attachment,
+          )
+        end
+      end
     end
 
   private
