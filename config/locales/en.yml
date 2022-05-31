@@ -275,7 +275,7 @@ en:
     itt_end_date:
       hint: The end date of the Initial Teacher Training part of their course.
     page_titles:
-      funding: Funding
+      funding: Funding - Trainee summary %{start_year} to %{end_year}
       personas: Personas
       pages:
         accessibility: Accessibility statement for Register trainee teachers
