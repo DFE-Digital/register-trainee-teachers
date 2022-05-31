@@ -4,6 +4,12 @@ DELETE FROM "blazer_audits";
 DELETE FROM "validation_errors";
 DELETE FROM "apply_application_sync_requests";
 DELETE FROM "hesa_students";
+DELETE FROM "funding_payment_schedules";
+DELETE FROM "funding_payment_schedule_rows";
+DELETE FROM "funding_payment_schedule_row_amounts";
+DELETE FROM "funding_trainee_summaries";
+DELETE FROM "funding_trainee_summary_rows";
+DELETE FROM "funding_trainee_summary_row_amounts";
 
 -- Users
 UPDATE "users"
