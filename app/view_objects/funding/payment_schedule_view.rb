@@ -86,7 +86,7 @@ module Funding
 
     def actual_months
       payment_schedule.rows.flat_map do |row|
-        row.amounts.filter_map do |amount|
+        row.amounts.order(:year, :month).filter_map do |amount|
           amount.month unless amount.predicted?
         end
       end.uniq
@@ -94,14 +94,14 @@ module Funding
 
     def predicted_months
       payment_schedule.rows.flat_map do |row|
-        row.amounts.filter_map do |amount|
+        row.amounts.order(:year, :month).filter_map do |amount|
           amount.month if amount.predicted?
         end
       end.uniq
     end
 
     def all_months
-      payment_schedule.rows.first.amounts.map(&:month)
+      payment_schedule.rows.first.amounts.order(:year, :month).map(&:month)
     end
 
     def month_name_and_year(month_index)
