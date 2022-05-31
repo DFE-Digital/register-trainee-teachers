@@ -21,7 +21,7 @@ FactoryBot.define do
     end
 
     trait :with_grant_amount do
-      route { "School Direct salaried" }
+      route { "School direct (salaried)" }
       amounts do
         [build(:trainee_summary_row_amount, :with_grant)]
       end
@@ -40,6 +40,7 @@ FactoryBot.define do
     end
 
     trait :with_tiered_bursary_amount do
+      route { "Early years (salaried)" }
       amounts do
         [build(:trainee_summary_row_amount, :with_tiered_bursary)]
       end
