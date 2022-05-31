@@ -58,7 +58,7 @@
 
   // Summary list component overrides
   .govuk-summary-list {
-    margin-bottom: 0;
+    margin-bottom: govuk-spacing(-2);
   }
 
   // Remove last item’s bottom border on mobile
