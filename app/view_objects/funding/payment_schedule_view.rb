@@ -82,7 +82,7 @@ module Funding
     def format_pounds(value_in_pence)
       return BLANK_CHARACTER if value_in_pence.zero?
 
-      number_to_currency(value_in_pence.to_d / 100, unit: "£")
+      number_to_currency(value_in_pence.to_d / 100, unit: "£", negative_format: "- %u%n")
     end
 
     def actual_months
