@@ -56,12 +56,12 @@ module Funding
           {
             month: "December 2021",
             total: "£2.00",
-            running_total: "£2.00",
+            running_total: "£3.00",
           },
           {
             month: "January 2022",
             total: "£6.00",
-            running_total: "£8.00",
+            running_total: "£9.00",
           },
         ])
       end
