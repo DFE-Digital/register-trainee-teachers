@@ -23,7 +23,7 @@ module Funding
     def summary_data
       [
         PaymentTypeSummaryRow.new(payment_type: "ITT bursaries", total: payment_type_total(data_for_bursaries)),
-        PaymentTypeSummaryRow.new(payment_type: "ITT scholarship", total: payment_type_total(data_for_scholarships)),
+        PaymentTypeSummaryRow.new(payment_type: "ITT scholarships", total: payment_type_total(data_for_scholarships)),
         PaymentTypeSummaryRow.new(payment_type: "Early years ITT bursaries", total: payment_type_total(data_for_tiered_bursaries)),
         PaymentTypeSummaryRow.new(payment_type: "Grants", total: payment_type_total(data_for_grants)),
       ]
@@ -40,7 +40,7 @@ module Funding
     end
 
     def bursary_breakdown_rows
-      sort(data_for_bursaries).map do |amount|
+      sort_by_route_then_subject(data_for_bursaries).map do |amount|
         total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route: amount.row.route,
           subject: amount.row.subject,
@@ -52,7 +52,7 @@ module Funding
     end
 
     def scholarship_breakdown_rows
-      sort(data_for_scholarships).map do |amount|
+      sort_by_route_then_subject(data_for_scholarships).map do |amount|
         total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route: amount.row.route,
           subject: amount.row.subject,
@@ -64,9 +64,10 @@ module Funding
     end
 
     def tiered_bursary_breakdown_rows
-      sort(data_for_tiered_bursaries).map do |amount|
+      sort_by_route_then_tier(data_for_tiered_bursaries).map do |amount|
         total_amount = amount.number_of_trainees * amount.amount_in_pence
-        { tier: amount.tier,
+        { route: amount.row.route,
+          tier: "Tier #{amount.tier}",
           trainees: amount.number_of_trainees,
           amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
@@ -74,7 +75,7 @@ module Funding
     end
 
     def grant_breakdown_rows
-      sort(data_for_grants).map do |amount|
+      sort_by_route_then_subject(data_for_grants).map do |amount|
         total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route: amount.row.route,
           subject: amount.row.subject,
@@ -98,8 +99,12 @@ module Funding
       data_for_payment_type.map { |data| (data.amount_in_pence * data.number_of_trainees) }.sum
     end
 
-    def sort(data)
+    def sort_by_route_then_subject(data)
       Array(data.sort_by { |amount| [amount.row.route, amount.row.subject] })
+    end
+
+    def sort_by_route_then_tier(data)
+      Array(data.sort_by { |amount| [amount.row.route, amount.tier] })
     end
 
     def data_for_scholarships
