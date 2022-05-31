@@ -59,7 +59,7 @@ module Funding
         let(:expected_summary_data) do
           [
             ["ITT bursaries", 400000],
-            ["ITT scholarship", 2300000],
+            ["ITT scholarships", 2300000],
             ["Early years ITT bursaries", 500000],
             ["Grants", 900000],
           ]
@@ -129,7 +129,15 @@ module Funding
 
     describe "#tiered_bursary_breakdown_rows" do
       let(:tiered_bursary_array) do
-        [{ tier: 1, trainees: biology_tiered_bursary_trainees, amount_per_trainee: "£1,000", total: "£5,000" }]
+        [
+          {
+            route: "Provider-led",
+            tier: "Tier 1",
+            trainees: biology_tiered_bursary_trainees,
+            amount_per_trainee: "£1,000",
+            total: "£5,000",
+          },
+        ]
       end
 
       context "when there are tiered bursaries" do
