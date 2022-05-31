@@ -55,7 +55,7 @@ en:
         tier_three: Applied for Tier 3
     payment_schedule:
       no_data: There are no scheduled payments right now.
-      contact_info: Contact becoming a %{email} if you think there should be scheduled payments.
+      contact_info: Contact %{email} if you think there should be scheduled payments.
       month: Month
       total: Total
       running_total: Running total

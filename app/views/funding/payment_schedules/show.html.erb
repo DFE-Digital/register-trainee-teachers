@@ -65,6 +65,11 @@
   </div>
 <%- else -%>
   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-l"><%= t('funding.payment_schedule.heading', start_year: @start_year, end_year: @end_year) %></h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop" >
       <p class="govuk-body"><%= t("funding.payment_schedule.no_data") %></p>
       <p class="govuk-body">
