@@ -251,5 +251,142 @@ module Exports
         expect(subject.send(:course_summary, trainee, course)).to eq("PGCE with QTS part time")
       end
     end
+
+    describe "#itt_end_date" do
+      context "when the trainee is a HESA record" do
+        let(:trainee) { create(:trainee, :imported_from_hesa, state, itt_end_date: itt_end_date) }
+
+        context "in the awarded state" do
+          let(:state) { :awarded }
+
+          context "with an itt_end_date" do
+            let(:itt_end_date) { Time.zone.today }
+
+            it "returns the itt_end_date" do
+              expect(subject.send(:itt_end_date, trainee)).to eq(itt_end_date.iso8601)
+            end
+          end
+
+          context "without an itt_end_date" do
+            let(:itt_end_date) { nil }
+
+            it "returns the 'not required' string" do
+              expected_string = "End date not required by HESA so no data available in Register"
+              expect(subject.send(:itt_end_date, trainee)).to eq(expected_string)
+            end
+          end
+        end
+
+        context "in the trn_received state" do
+          let(:state) { :trn_received }
+
+          context "with an itt_end_date" do
+            let(:itt_end_date) { Time.zone.today }
+
+            it "returns the itt_end_date" do
+              expect(subject.send(:itt_end_date, trainee)).to eq(itt_end_date.iso8601)
+            end
+          end
+
+          context "without an itt_end_date" do
+            let(:itt_end_date) { nil }
+
+            it "returns nil" do
+              expect(subject.send(:itt_end_date, trainee)).to be_nil
+            end
+          end
+        end
+      end
+
+      context "when the awarded trainee doesn't have an itt_end_date but is not a HESA record" do
+        let(:trainee) { create(:trainee, :awarded, itt_end_date: nil) }
+
+        it "returns nil" do
+          expect(subject.send(:itt_end_date, trainee)).to be_nil
+        end
+      end
+    end
+
+    describe "#awarded_at" do
+      context "when the trainee is a HESA record" do
+        let(:trainee) { create(:trainee, :imported_from_hesa, state) }
+
+        context "in the awarded state" do
+          let(:state) { :awarded }
+
+          context "with an awarded_at" do
+            it "returns the awarded_at" do
+              expect(subject.send(:awarded_at, trainee)).to eq(trainee.awarded_at.iso8601)
+            end
+          end
+
+          context "without an awarded_at" do
+            before { trainee.update(awarded_at: nil) }
+
+            it "returns the 'not available' string" do
+              expected_string = "Currently no data available in Register"
+              expect(subject.send(:awarded_at, trainee)).to eq(expected_string)
+            end
+          end
+        end
+
+        context "in the trn_received state" do
+          let(:state) { :trn_received }
+
+          it "returns nil" do
+            expect(subject.send(:awarded_at, trainee)).to be_nil
+          end
+        end
+      end
+
+      context "when the awarded trainee doesn't have an awarded_at but is not a HESA record" do
+        let(:trainee) { create(:trainee, :awarded, awarded_at: nil) }
+
+        it "returns nil" do
+          expect(subject.send(:awarded_at, trainee)).to be_nil
+        end
+      end
+    end
+
+    describe "#defer_date" do
+      context "when the trainee is a HESA record" do
+        let(:trainee) { create(:trainee, :imported_from_hesa, state) }
+
+        context "in the deferred state" do
+          let(:state) { :deferred }
+
+          context "with a defer_date" do
+            it "returns the defer_date" do
+              expect(subject.send(:defer_date, trainee)).to eq(trainee.defer_date.iso8601)
+            end
+          end
+
+          context "without a defer_date" do
+            before { trainee.update(defer_date: nil) }
+
+            it "returns the 'not available' string" do
+              expected_string = "Not required by HESA so no data available in Register"
+              expect(subject.send(:defer_date, trainee)).to eq(expected_string)
+            end
+          end
+        end
+
+        context "in the trn_received state" do
+          let(:state) { :trn_received }
+
+          it "returns nil" do
+            expect(subject.send(:defer_date, trainee)).to be_nil
+          end
+        end
+      end
+
+      context "when the deferred trainee doesn't have an defer_date but is not a HESA record" do
+        let(:trainee) { create(:trainee, :deferred, defer_date: nil) }
+
+        it "returns nil" do
+          expect(subject.send(:defer_date, trainee)).to be_nil
+        end
+      end
+    end
   end
 end
