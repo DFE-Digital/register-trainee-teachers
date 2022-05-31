@@ -106,10 +106,14 @@ module RecordDetails
 
     def trainee_start_date_row
       start_date = RecordDetails::TraineeStartDate.new(trainee)
+      start_date_text = start_date.text
+      if start_date.course_empty? && trainee.hesa_record?
+        start_date_text = t("components.confirmation.not_provided_from_hesa_update")
+      elsif start_date.course_empty?
+        return
+      end
 
-      return if start_date.course_empty?
-
-      mappable_field(start_date.text, t(".trainee_start_date"), start_date.link)
+      mappable_field(start_date_text, t(".trainee_start_date"), start_date.link)
     end
 
     def render_text_with_hint(date)

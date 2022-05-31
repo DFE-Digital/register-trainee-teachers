@@ -57,6 +57,7 @@ module PersonalDetails
     end
 
     def nationality
+      return t("components.confirmation.not_provided_from_hesa_update") if nationalities.blank? && trainee.hesa_record?
       return if nationalities.blank?
 
       if nationalities.size == 1

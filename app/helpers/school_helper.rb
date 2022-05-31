@@ -6,6 +6,7 @@ module SchoolHelper
   end
 
   def school_detail(school)
+    return tag.p(t("components.confirmation.not_provided_from_hesa_update"), class: "govuk-body") if school.blank? && trainee.hesa_record?
     return unless school
 
     tag.p(school.name, class: "govuk-body") + tag.span(school_urn_and_location(school), class: "govuk-hint")

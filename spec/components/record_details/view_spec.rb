@@ -239,6 +239,19 @@ module RecordDetails
           end
         end
       end
+
+      context "with no ITT start date and a hesa record" do
+        before do
+          trainee.commencement_status = :itt_started_on_time
+          trainee.itt_start_date = nil
+          trainee.hesa_id = 1
+          render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+        end
+
+        it "renders the not provided from hesa message" do
+          expect(rendered_component).to have_text(I18n.t("components.confirmation.not_provided_from_hesa_update"))
+        end
+      end
     end
   end
 end

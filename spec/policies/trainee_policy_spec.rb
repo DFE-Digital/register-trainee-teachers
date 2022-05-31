@@ -248,7 +248,7 @@ describe TraineePolicy do
 
   permissions :hide_progress_tag? do
     it { is_expected.not_to permit(provider_user, provider_trainee) }
-    it { is_expected.to permit(provider_user, hesa_trainee) }
+    it { is_expected.not_to permit(provider_user, hesa_trainee) }
     it { is_expected.to permit(lead_school_user, lead_school_trainee) }
   end
 
