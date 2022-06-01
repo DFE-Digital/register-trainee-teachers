@@ -18,7 +18,7 @@ module Funding
     end
 
     def path_for_funding_trainee_summary
-      funding_trainee_summary_path
+      system_admin ? provider_funding_trainee_summary_path(organisation) : funding_trainee_summary_path
     end
 
   private

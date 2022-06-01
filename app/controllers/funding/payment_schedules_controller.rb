@@ -4,7 +4,7 @@ module Funding
   class PaymentSchedulesController < ApplicationController
     def show
       @payment_schedule_view = PaymentScheduleView.new(payment_schedule: payment_schedule)
-      @navigation_view = ::Funding::NavigationView.new(organisation: organisation)
+      @navigation_view = NavigationView.new(organisation: organisation)
 
       @start_year = current_academic_cycle.start_year
       @end_year = current_academic_cycle.end_year
