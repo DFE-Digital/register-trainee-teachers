@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-PROVIDER_A = "Provider A"
-PROVIDER_B = "Provider B"
-PROVIDER_C = "University A"
+PROVIDER_A = "Londinium Teacher Training"
+PROVIDER_B = "North County SCITT"
+PROVIDER_C = "University of BAT"
 TEACH_FIRST_PROVIDER_CODE = "HPITT"
 
 PERSONAS = [

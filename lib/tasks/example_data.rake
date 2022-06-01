@@ -104,10 +104,16 @@ namespace :example_data do
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
         accreditation_id: Faker::Number.number(digits: 4),
       )
-
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
+      FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
+      FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_rows, payable: provider)
 
-      LeadSchoolUser.create!(user: persona, lead_school: School.lead_only.sample) if persona_attributes[:lead_school]
+      if persona_attributes[:lead_school]
+        lead_school = School.lead_only.sample
+        LeadSchoolUser.create!(user: persona, lead_school: lead_school)
+        FactoryBot.create(:payment_schedule, :for_full_year, payable: lead_school)
+        FactoryBot.create(:trainee_summary, :with_grant_rows, payable: lead_school)
+      end
 
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
