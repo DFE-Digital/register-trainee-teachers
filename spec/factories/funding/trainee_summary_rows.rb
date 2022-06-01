@@ -10,16 +10,6 @@ FactoryBot.define do
     lead_school_urn { Faker::Number.number(digits: 7) }
     cohort_level { "PG" }
 
-    trait :with_lead_school do
-      lead_school_name { "The School of Life" }
-      lead_school_urn { Faker::Number.number(digits: 7) }
-    end
-
-    trait :without_lead_school do
-      lead_school_name { nil }
-      lead_school_urn { nil }
-    end
-
     trait :with_grant_amount do
       route { "School direct (salaried)" }
       amounts do
