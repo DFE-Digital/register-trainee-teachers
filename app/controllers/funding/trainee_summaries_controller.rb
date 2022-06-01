@@ -5,6 +5,8 @@ module Funding
     def show
       trainee_summary = current_user.organisation&.funding_trainee_summaries&.order(:created_at)&.last
       @trainee_summary_view = TraineeSummaryView.new(trainee_summary: trainee_summary)
+      @navigation_view = ::Funding::NavigationView.new(organisation: current_user.organisation)
+
       current_academic_cycle = AcademicCycle.current
       @start_year = current_academic_cycle.start_year
       @end_year = current_academic_cycle.end_year

@@ -9,7 +9,8 @@
 
 <h1 class="govuk-heading-l"><%= @provider.name %></h1>
 
-<p> <%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %> </p>
+<p><%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %></p>
+<p><%= govuk_link_to "View provider's funding", provider_funding_payment_schedule_path(@provider) %></p>
 
 <%= render "system_admin/provider_tab_nav" %>
 
