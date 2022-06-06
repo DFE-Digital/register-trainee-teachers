@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module Funding
-  class PayableNotFoundError < StandardError; end
-
   class PayablePaymentSchedulesImporter
     include ServicePattern
 
@@ -14,26 +12,32 @@ module Funding
     end
 
     def call
-      attributes.each_key do |id|
+      missing_payable_ids = []
+
+      attributes.each do |id, row_attributes|
         payable = payable(id)
-        raise(PayableNotFoundError, "payable with id: #{id} doesn't exist") if payable.nil?
 
-        schedule = payable.funding_payment_schedules.create
+        if payable.nil?
+          missing_payable_ids << id
+        else
+          schedule = payable.funding_payment_schedules.create
 
-        row_attributes = attributes[id]
-        row_attributes.each do |row_hash|
-          row = schedule.rows.create(description: row_hash["Description"])
-          Date::MONTHNAMES.compact.each do |month_name|
-            month_index = Date::MONTHNAMES.index(month_name)
-            row.amounts.create(
-              month: month_index,
-              year: year_for_month(row_hash["Academic year"], month_index),
-              amount_in_pence: row_hash[month_name].to_d * 100,
-              predicted: MONTH_ORDER.index(month_index) >= MONTH_ORDER.index(first_predicted_month_index.to_i),
-            )
+          row_attributes.each do |row_hash|
+            row = schedule.rows.create(description: row_hash["Description"])
+            Date::MONTHNAMES.compact.each do |month_name|
+              month_index = Date::MONTHNAMES.index(month_name)
+              row.amounts.create(
+                month: month_index,
+                year: year_for_month(row_hash["Academic year"], month_index),
+                amount_in_pence: row_hash[month_name].to_d * 100,
+                predicted: MONTH_ORDER.index(month_index) >= MONTH_ORDER.index(first_predicted_month_index.to_i),
+              )
+            end
           end
         end
       end
+
+      missing_payable_ids
     end
 
     def payable(_id)
