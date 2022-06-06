@@ -62,7 +62,7 @@ en:
       payment_breakdown: Payment breakdown
       heading: Payment schedule %{start_year} to %{end_year}
       payments_table_caption:  Payments to %{month_and_year}
-      predicted_payments_table_caption: Predicted Payments
+      predicted_payments_table_caption: Predicted payments
       no_payments: No payments for %{month_and_year}
       last_updated_at: "Last updated: %{date}"
     trainee_summary:
