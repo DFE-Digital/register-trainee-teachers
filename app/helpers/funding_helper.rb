@@ -29,6 +29,8 @@ module FundingHelper
 private
 
   def cannot_start_funding?(trainee)
+    return true if trainee.early_years_route? && trainee.academic_cycle.nil?
+
     funding_manager = FundingManager.new(trainee)
     funding_manager.funding_available? && trainee.course_subject_one.blank?
   end

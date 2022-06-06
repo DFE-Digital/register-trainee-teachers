@@ -3,7 +3,10 @@
 require "rails_helper"
 
 feature "early_years_salaried end-to-end journey", type: :feature do
-  background { given_i_am_authenticated }
+  background {
+    given_i_am_authenticated
+    create(:academic_cycle, :current)
+  }
 
   scenario "submit for TRN", "feature_routes.early_years_salaried": true do
     given_i_have_created_an_early_years_salaried_trainee

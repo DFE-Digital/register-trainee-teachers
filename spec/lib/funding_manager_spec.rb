@@ -178,7 +178,7 @@ describe FundingManager do
         create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
       end
 
-      context "and the route is funded in a another academic year" do
+      context "and the route is funded in another academic year" do
         let(:funding_method) { create(:funding_method, training_route: trainee_without_start_dates.training_route, academic_cycle: previous_academic_cycle) }
 
         it "returns true" do
