@@ -61,6 +61,7 @@ en:
       running_total: Running total
       payment_breakdown: Payment breakdown
       heading: Payment schedule %{start_year} to %{end_year}
+      export_label: Export payment schedule %{start_year} to %{end_year}
       payments_table_caption:  Payments to %{month_and_year}
       predicted_payments_table_caption: Predicted payments
       no_payments: No payments for %{month_and_year}

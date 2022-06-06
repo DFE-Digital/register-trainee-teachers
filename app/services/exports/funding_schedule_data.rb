@@ -6,14 +6,14 @@ module Exports
       @payment_schedule = payment_schedule
     end
 
-    def csv
+    def to_csv
       header_row ||= data.first&.keys
 
       CSV.generate(headers: true) do |rows|
         rows << header_row
 
         data.each do |row|
-          rows << row.values
+          rows << formatted_values(row)
         end
       end
     end
@@ -21,7 +21,7 @@ module Exports
     def data
       month_order = Funding::PayablePaymentSchedulesImporter::MONTH_ORDER
 
-      data = month_order.map.with_index do |month, month_index|
+      data = month_order.map.with_index do |month, _month_index|
         data_for_month = { "Month" => label_for(month) }
 
         month_total = 0
@@ -60,6 +60,14 @@ module Exports
     def label_for(month)
       year = month > 7 ? AcademicCycle.current.start_year : AcademicCycle.current.end_year
       Date.new(year, month).to_s(:govuk_approx)
+    end
+
+    def formatted_values(row)
+      [row.values.first] + row.values[1..].map { |amount_in_pence| format_amount(amount_in_pence) }
+    end
+
+    def format_amount(amount_in_pence)
+      amount_in_pence.zero? ? "0" : ActionController::Base.helpers.number_to_currency(amount_in_pence.to_d / 100, unit: "£")
     end
   end
 end

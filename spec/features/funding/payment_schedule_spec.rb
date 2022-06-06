@@ -15,6 +15,12 @@ feature "viewing the payment schedule" do
     and_i_should_see_the_payment_breakdowns
   end
 
+  scenario "exporting payment schedule" do
+    given_i_am_on_the_funding_page
+    and_i_export_the_results
+    then_i_see_my_exported_data_in_csv_format
+  end
+
 private
 
   def and_funding_data_exists
@@ -42,5 +48,19 @@ private
 
   def and_i_should_see_the_payment_breakdowns
     expect(payment_schedule_page.payment_breakdown_tables.size).to eq(3)
+  end
+
+  def and_i_export_the_results
+    payment_schedule_page.export_link.click
+  end
+
+  def then_i_see_my_exported_data_in_csv_format
+    expect(csv_data).to include("Month,#{Funding::PaymentScheduleRow.first.description},Month total")
+    expect(csv_data).to include("March 2022,£6.00,£6.00")
+    expect(csv_data).to include("Total,£9.00,£9.00")
+  end
+
+  def csv_data
+    @csv_data ||= payment_schedule_page.text
   end
 end
