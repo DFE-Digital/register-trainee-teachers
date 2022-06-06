@@ -6,7 +6,7 @@ module Funding
 
     BLANK_CHARACTER = "–"
 
-    MonthBreakdown = Struct.new(:title, :rows, :total_amount, :total_running_total) do
+    MonthBreakdown = Struct.new(:title, :rows, :total_amount, :total_running_total, :last_actual_month?) do
       def no_payments?
         rows.all? { |row| row[:amount] == BLANK_CHARACTER }
       end
@@ -32,6 +32,7 @@ module Funding
           sort(month_breakdown(month_index)),
           format_pounds(total_amount_for(payment_rows, month_index)),
           format_pounds(total_running_total_for(payment_rows, month_index)),
+          last_actual_month?(month_index),
         )
       }
     end
@@ -143,6 +144,10 @@ module Funding
 
     def sort(payment_rows)
       payment_rows.sort { |a, b| a[:description] <=> b[:description] }
+    end
+
+    def last_actual_month?(month_index)
+      actual_months.last == month_index
     end
   end
 end

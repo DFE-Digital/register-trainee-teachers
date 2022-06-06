@@ -71,13 +71,15 @@ module Funding
       let(:payment_schedule_rows) do
         [
           build(:payment_schedule_row, description: "Payment Schedule 1", amounts: [
-            build(:payment_schedule_row_amount, month: 1, year: 2022, amount_in_pence: 200),
-            build(:payment_schedule_row_amount, month: 12, year: 2021, amount_in_pence: 500),
+            build(:payment_schedule_row_amount, month: 1, year: 2022, amount_in_pence: 200, predicted: true),
+            build(:payment_schedule_row_amount, month: 11, year: 2021, amount_in_pence: 100, predicted: false),
+            build(:payment_schedule_row_amount, month: 12, year: 2021, amount_in_pence: 500, predicted: false),
 
           ]),
           build(:payment_schedule_row, description: "Payment Schedule 2", amounts: [
-            build(:payment_schedule_row_amount, month: 1, year: 2022, amount_in_pence: 300),
-            build(:payment_schedule_row_amount, month: 12, year: 2021, amount_in_pence: 700),
+            build(:payment_schedule_row_amount, month: 1, year: 2022, amount_in_pence: 300, predicted: true),
+            build(:payment_schedule_row_amount, month: 11, year: 2021, amount_in_pence: 200, predicted: false),
+            build(:payment_schedule_row_amount, month: 12, year: 2021, amount_in_pence: 700, predicted: false),
           ]),
         ]
       end
@@ -85,22 +87,34 @@ module Funding
       it "returns a list of monthly breakdown objects grouped by month and year" do
         expect(subject.payment_breakdown.map(&:to_h)).to eq([
           {
+            title: "November 2021",
+            rows: [
+              { description: "Payment Schedule 1", amount: "£1.00", running_total: "£1.00" },
+              { description: "Payment Schedule 2", amount: "£2.00", running_total: "£2.00" },
+            ],
+            total_amount: "£3.00",
+            total_running_total: "£3.00",
+            last_actual_month?: false,
+          },
+          {
             title: "December 2021",
             rows: [
-              { description: "Payment Schedule 1", amount: "£5.00", running_total: "£5.00" },
-              { description: "Payment Schedule 2", amount: "£7.00", running_total: "£7.00" },
+              { description: "Payment Schedule 1", amount: "£5.00", running_total: "£6.00" },
+              { description: "Payment Schedule 2", amount: "£7.00", running_total: "£9.00" },
             ],
             total_amount: "£12.00",
-            total_running_total: "£12.00",
+            total_running_total: "£15.00",
+            last_actual_month?: true,
           },
           {
             title: "January 2022",
             rows: [
-              { description: "Payment Schedule 1", amount: "£2.00", running_total: "£7.00" },
-              { description: "Payment Schedule 2", amount: "£3.00", running_total: "£10.00" },
+              { description: "Payment Schedule 1", amount: "£2.00", running_total: "£8.00" },
+              { description: "Payment Schedule 2", amount: "£3.00", running_total: "£12.00" },
             ],
             total_amount: "£5.00",
-            total_running_total: "£17.00",
+            total_running_total: "£20.00",
+            last_actual_month?: false,
           },
         ])
       end
