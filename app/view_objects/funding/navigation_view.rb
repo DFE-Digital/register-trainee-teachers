@@ -14,11 +14,23 @@ module Funding
     end
 
     def path_for_funding_payment_schedule
-      system_admin ? provider_funding_payment_schedule_path(organisation) : funding_payment_schedule_path
+      return funding_payment_schedule_path if !system_admin
+
+      if organisation.is_a?(Provider)
+        provider_funding_payment_schedule_path(organisation)
+      else
+        lead_school_funding_payment_schedule_path(organisation)
+      end
     end
 
     def path_for_funding_trainee_summary
-      system_admin ? provider_funding_trainee_summary_path(organisation) : funding_trainee_summary_path
+      return funding_trainee_summary_path if !system_admin
+
+      if organisation.is_a?(Provider)
+        provider_funding_trainee_summary_path(organisation)
+      else
+        lead_school_funding_trainee_summary_path(organisation)
+      end
     end
 
   private

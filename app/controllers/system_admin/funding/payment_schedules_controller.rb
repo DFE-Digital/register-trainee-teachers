@@ -10,13 +10,13 @@ module SystemAdmin
         @start_year = current_academic_cycle.start_year
         @end_year = current_academic_cycle.end_year
 
-        render 'funding/payment_schedules/show'
+        render("funding/payment_schedules/show")
       end
 
-      private
+    private
 
       def organisation
-        @organisation ||= authorize(Provider.find(params[:provider_id]))
+        @organisation ||= params[:provider_id].present? ? Provider.find(params[:provider_id]) : School.find(params[:lead_school_id])
       end
 
       def payment_schedule

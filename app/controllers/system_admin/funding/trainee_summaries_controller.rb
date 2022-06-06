@@ -10,17 +10,17 @@ module SystemAdmin
         @start_year = current_academic_cycle.start_year
         @end_year = current_academic_cycle.end_year
 
-        render 'funding/trainee_summaries/show'
+        render("funding/trainee_summaries/show")
       end
 
     private
 
       def organisation
-        @organisation ||= authorize(Provider.find(params[:provider_id]))
+        @organisation ||= params[:provider_id].present? ? Provider.find(params[:provider_id]) : School.find(params[:lead_school_id])
       end
 
       def trainee_summary
-        @trainee_summary ||= organisation&.funding_trainee_summaries&.order(:created_at)&.last
+        @trainee_summary ||= organisation.funding_trainee_summaries&.order(:created_at)&.last
       end
 
       def current_academic_cycle

@@ -13,7 +13,7 @@ module Funding
   private
 
     def organisation
-      @organisation ||=  current_user.organisation
+      @organisation ||= current_user.organisation
     end
 
     def trainee_summary
