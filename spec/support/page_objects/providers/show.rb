@@ -8,6 +8,7 @@ module PageObjects
 
       element :add_a_user, "a", text: "Add a user"
       element :edit_this_provider, "a", text: "Edit this provider"
+      element :view_funding, "a", text: "View funding"
 
       element :register_user, "#register-dttp-user"
 

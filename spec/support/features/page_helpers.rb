@@ -370,6 +370,22 @@ module Features
       @trainee_summary_page ||= PageObjects::Funding::TraineeSummary.new
     end
 
+    def providers_payment_schedule_page
+      @providers_payment_schedule_page ||= PageObjects::SystemAdmin::Funding::ProvidersPaymentSchedule.new
+    end
+
+    def providers_trainee_summary_page
+      @providers_trainee_summary_page ||= PageObjects::SystemAdmin::Funding::LeadSchoolsTraineeSummary.new
+    end
+
+    def lead_schools_payment_schedule_page
+      @lead_schools_payment_schedule_page ||= PageObjects::SystemAdmin::Funding::LeadSchoolsPaymentSchedule.new
+    end
+
+    def lead_schools_trainee_summary_page
+      @lead_schools_trainee_summary_page ||= PageObjects::SystemAdmin::Funding::LeadSchoolsTraineeSummary.new
+    end
+
   private
 
     def progress_with_prefix(status)
