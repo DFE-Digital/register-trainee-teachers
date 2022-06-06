@@ -159,8 +159,8 @@ module Funding
 
       subject { described_class.call(attributes: invalid_summaries_attributes) }
 
-      it "raises a PayableNotFoundError exception" do
-        expect { subject }.to raise_error(PayableNotFoundError, "payable with id: 4444 doesn't exist")
+      it "returns a list of missing lead school urns" do
+        expect(subject).to eq(["4444"])
       end
     end
   end
