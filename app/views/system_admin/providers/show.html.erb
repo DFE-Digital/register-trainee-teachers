@@ -9,7 +9,42 @@
 
 <h1 class="govuk-heading-l"><%= @provider.name %></h1>
 
-<p> <%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %> </p>
+<p><%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %></p>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      UKPRN
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @provider.ukprn %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Provider code
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @provider.code %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Provider accreditation ID
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @provider.accreditation_id %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Funding
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= govuk_link_to "View funding", provider_funding_payment_schedule_path(@provider) %>
+    </dd>
+  </div>
+</dl>
 
 <%= render "system_admin/provider_tab_nav" %>
 

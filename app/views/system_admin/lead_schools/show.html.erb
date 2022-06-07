@@ -50,6 +50,14 @@
       <%= @lead_school.close_date&.strftime("%d %B %Y") %>
     </dd>
   </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Funding
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= govuk_link_to "View funding", lead_school_funding_payment_schedule_path(@lead_school) %>
+    </dd>
+  </div>
 </dl>
 
 <%= render TabNavigation::View.new(items: [

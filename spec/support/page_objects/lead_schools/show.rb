@@ -7,6 +7,7 @@ module PageObjects
 
       element :add_a_user, "a", text: "Add a user"
       element :edit_user_data, "a", text: "Edit"
+      element :view_funding, "a", text: "View funding"
     end
   end
 end

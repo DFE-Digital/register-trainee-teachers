@@ -57,7 +57,7 @@
       <%= govuk_accordion do |accordion|
         @payment_schedule_view.payment_breakdown.each do |month_breakdown|
           accordion.section(heading_text: month_breakdown.title, expanded: month_breakdown.last_actual_month?) do 
-            render partial: "month_breakdown", locals: { month_breakdown: month_breakdown }            
+            render partial: "funding/payment_schedules/month_breakdown", locals: { month_breakdown: month_breakdown }
           end
         end
       end %>

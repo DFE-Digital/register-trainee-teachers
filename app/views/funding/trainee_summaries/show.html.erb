@@ -30,13 +30,13 @@
     </div>
   </div>
 
-  <%= render "summary" %>
+  <%= render "funding/trainee_summaries/summary" %>
 
-  <%= render "bursaries" if @trainee_summary_view.bursary_breakdown_rows.any? %>
+  <%= render "funding/trainee_summaries/bursaries" if @trainee_summary_view.bursary_breakdown_rows.any? %>
 
-  <%= render "scholarships" if @trainee_summary_view.scholarship_breakdown_rows.any? %>
+  <%= render "funding/trainee_summaries/scholarships" if @trainee_summary_view.scholarship_breakdown_rows.any? %>
 
-  <%= render "tiered_bursaries" if @trainee_summary_view.tiered_bursary_breakdown_rows.any? %>
+  <%= render "funding/trainee_summaries/tiered_bursaries" if @trainee_summary_view.tiered_bursary_breakdown_rows.any? %>
 
-  <%= render "grants" if @trainee_summary_view.grant_breakdown_rows.any? %>
+  <%= render "funding/trainee_summaries/grants" if @trainee_summary_view.grant_breakdown_rows.any? %>
 <% end %>
