@@ -275,8 +275,8 @@ module Funding
 
       subject { described_class.call(attributes: invalid_schedules_attributes, first_predicted_month_index: 12) }
 
-      it "raises" do
-        expect { subject }.to raise_error(PayableNotFoundError, "payable with id: 105491 doesn't exist")
+      it "returns a list of lead school urns not found in database" do
+        expect(subject).to eq(["105491"])
       end
     end
   end
