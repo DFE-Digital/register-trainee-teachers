@@ -997,12 +997,12 @@ en:
           hint: Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE.
     course_years:
       edit:
-        heading: Which year’s courses do you want to choose from?
+        heading: Which academic year do you want to choose courses from?
         summary_with_route: &summary_with_route "%{summary}, %{route}"
     publish_course_details:
       edit:
         heading: "Your courses starting in %{from_year} to %{to_year}"
-        change_year_link_text: Choose from courses starting in a different year
+        change_year_link_text: Choose from courses starting in a different academic year
         course_code_label: What course are they doing?
         course_not_listed: Another course not listed
         enter_course_details: Enter course details manually
