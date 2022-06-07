@@ -561,17 +561,30 @@ describe CourseDetailsForm, type: :model do
 
       context "when the course_subject has changed" do
         let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true) }
-        let(:trainee) { create(:trainee, :with_funding, :with_secondary_course_details, applying_for_scholarship: true, course_subject_one: CourseSubjects::BIOLOGY, progress: progress) }
+        let(:trainee) do
+          create(:trainee,
+                 :with_funding,
+                 :with_publish_course_details,
+                 applying_for_scholarship: true,
+                 course_subject_one: CourseSubjects::BIOLOGY,
+                 progress: progress)
+        end
+
         let(:params) do
           {
             course_subject_one: CourseSubjects::HISTORICAL_LINGUISTICS,
           }
         end
 
-        it "nullifies the bursary information and resets funding section progress" do
+        before do
+          create(:subject_specialism, name: CourseSubjects::HISTORICAL_LINGUISTICS)
+        end
+
+        it "nullifies the course_uuid, bursary information and resets funding section progress" do
           expect { subject.save! }
           .to change { trainee.applying_for_bursary }
           .from(trainee.applying_for_bursary).to(nil)
+          .and change { trainee.course_uuid }.to(nil)
           .and change { trainee.applying_for_scholarship }.to(nil)
           .and change { trainee.progress.funding }.from(true).to(false)
         end
