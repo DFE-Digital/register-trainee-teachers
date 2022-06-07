@@ -1,21 +1,6 @@
-<%= render PageTitle::View.new(i18n_key: "funding") %>
+<%= render PageTitle::View.new(text: t("components.page_titles.funding.trainee_summary", start_year: @start_year, end_year: @end_year)) %>
 
-<%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
-<% end %>
-
-<% if current_user.organisation %>
-  <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
-<% end %>
-
-<h1 class="govuk-heading-xl">
-  <%= t("funding.view.title") %>
-</h1>
-
-<%= render TabNavigation::View.new(items: [
-  { name: t("funding.payment_schedule.heading", start_year: @start_year, end_year: @end_year), url: funding_payment_schedule_path },
-  { name: t("funding.trainee_summary.heading", start_year: @start_year, end_year: @end_year), url: funding_trainee_summary_path },
-]) %>
+<%= render "funding/navigation" %>
 
 <h2 class="govuk-heading-l">
   <%= t("funding.trainee_summary.heading", start_year: @start_year, end_year: @end_year)%>

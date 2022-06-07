@@ -82,6 +82,7 @@ en:
         lead_school: Lead school
         payment_type: Payment type
         route_and_course: Route and course
+        route: Route
         tier: Tier
         total: Total
         trainees: Trainees
@@ -276,7 +277,9 @@ en:
     itt_end_date:
       hint: The end date of the Initial Teacher Training part of their course.
     page_titles:
-      funding: Funding
+      funding:
+        trainee_summary: Funding - Trainee summary %{start_year} to %{end_year}
+        payment_schedule: Funding - Payment schedule %{start_year} to %{end_year}
       personas: Personas
       pages:
         accessibility: Accessibility statement for Register trainee teachers
