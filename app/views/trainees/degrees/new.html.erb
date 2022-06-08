@@ -6,7 +6,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: "Back",
-    href: trainee_degrees_new_type_path(@trainee),
+    href: trainee_degrees_new_type_path(@trainee, degree: { locale_code: @degree_form.uk? ? "uk" : "non_uk" }),
   ) %>
 <% end %>
 

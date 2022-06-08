@@ -60,6 +60,16 @@ RSpec.feature "Adding a degree" do
       end
     end
 
+    context "the user uses the back link on the details page" do
+      scenario "the user clicks the back button" do
+        given_i_have_selected_the_uk_route
+        and_i_am_on_the_degree_details_page
+        and_i_fill_in_the_form
+        and_i_click_back
+        then_i_see_the_type_page_with_uk_selected
+      end
+    end
+
     context "the user enters valid details, with an 'Other' grade" do
       let(:other_grade) { "A different grade" }
 
@@ -261,5 +271,13 @@ private
       )
       expect(degree_details_page).to have_content(message)
     end
+  end
+
+  def and_i_click_back
+    degree_details_page.back.click
+  end
+
+  def then_i_see_the_type_page_with_uk_selected
+    expect(degree_type_page.uk_degree).to be_checked
   end
 end
