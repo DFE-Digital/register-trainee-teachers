@@ -2,6 +2,14 @@
 
 require "rails_helper"
 
+SCHOOL_NAMES = [
+  "Mallowtown High",
+  "Lakeacre High",
+  "Iceborough Secondary College",
+  "Clearcourt Secondary College",
+  "Brookville Secondary College",
+].freeze
+
 feature "creating a new lead school for a user" do
   let(:user) { create(:user, system_admin: true) }
   let!(:user_to_be_updated) { create(:user, first_name: "James", last_name: "Rodney") }
@@ -47,7 +55,9 @@ feature "creating a new lead school for a user" do
 private
 
   def and_a_number_of_lead_schools_exist
-    @lead_schools = create_list(:school, 5, :lead)
+    @lead_schools = SCHOOL_NAMES.map do |name|
+      create(:school, :lead, name: name)
+    end
   end
 
   def when_i_visit_the_user_index_page
