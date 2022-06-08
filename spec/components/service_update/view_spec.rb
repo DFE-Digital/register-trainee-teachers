@@ -34,5 +34,33 @@ describe ServiceUpdate::View do
     it "renders pretty date" do
       expect(component.date_pretty.strip).to eql("8 November 2021")
     end
+
+    describe "title_element" do
+      context "by default" do
+        it "returns an h2" do
+          expect(component.title_element).to include("h2")
+        end
+      end
+
+      context "when a title_tag is provided" do
+        let(:component) { described_class.new(service_update: service_update, title_tag: title_tag) }
+
+        context "which is valid" do
+          let(:title_tag) { "h3" }
+
+          it "returns that tag" do
+            expect(component.title_element).to include("h3")
+          end
+        end
+
+        context "which is invalid" do
+          let(:title_tag) { "hi" }
+
+          it "returns an h2" do
+            expect(component.title_element).to include("h2")
+          end
+        end
+      end
+    end
   end
 end
