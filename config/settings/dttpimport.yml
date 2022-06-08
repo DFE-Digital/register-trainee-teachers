@@ -31,7 +31,8 @@ features:
     school_direct_tuition_fee: true
   google:
     send_data_to_big_query: false
-  sync_from_hesa: true
+  hesa_import:
+    sync_collection: true
 
 environment:
   name: dttpimport
