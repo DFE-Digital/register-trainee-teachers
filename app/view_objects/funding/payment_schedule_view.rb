@@ -21,7 +21,11 @@ module Funding
     end
 
     def predicted_payments
-      payment_data_for(predicted_months)
+      initial_total = actual_months.sum do |month_index|
+        month_total(month_index)
+      end
+
+      payment_data_for(predicted_months, initial_total: initial_total)
     end
 
     def payment_breakdown
@@ -117,8 +121,8 @@ module Funding
       row.amounts.find { |amount| amount.month == month_index }
     end
 
-    def payment_data_for(months)
-      running_total = 0
+    def payment_data_for(months, initial_total: 0)
+      running_total = initial_total
 
       months.map do |month_index|
         total = month_total(month_index)
