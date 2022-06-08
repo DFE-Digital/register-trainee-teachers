@@ -181,6 +181,8 @@ private
 
     set_course_subject_from_primary_phase if is_primary_phase?
 
+    attributes.merge!(course_uuid: nil) if course_allocation_subject_changed?
+
     unless trainee.early_years_route?
       attributes.merge!({
         course_subject_one: course_subject_one,
@@ -343,5 +345,9 @@ private
       sanitised_date = public_send(date_attribute).to_s.gsub(/\s+/, "")
       public_send("#{date_attribute}=", sanitised_date)
     end
+  end
+
+  def course_allocation_subject_changed?
+    trainee.course_allocation_subject != course_allocation_subject
   end
 end
