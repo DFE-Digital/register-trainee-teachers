@@ -213,6 +213,7 @@ shared:
     - employing_school_not_applicable
     - gender
     - hesa_id
+    - hesa_updated_at
     - id
     - itt_end_date
     - itt_start_date
