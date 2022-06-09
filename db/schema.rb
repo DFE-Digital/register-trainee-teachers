@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_093411) do
     t.text "other_grade"
     t.string "slug", null: false
     t.uuid "dttp_id"
+    t.uuid "institution_uuid"
     t.index ["dttp_id"], name: "index_degrees_on_dttp_id"
     t.index ["locale_code"], name: "index_degrees_on_locale_code"
     t.index ["slug"], name: "index_degrees_on_slug", unique: true
