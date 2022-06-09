@@ -106,7 +106,7 @@ module Dqt
         return if trainee.degrees.empty?
 
         {
-          "providerUkprn" => nil,
+          "providerUkprn" => degree_ukprn,
           "countryCode" => find_country_code(degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country),
           "subject" => degree_subject,
           "class" => DEGREE_CLASSES[degree.grade],
@@ -124,6 +124,12 @@ module Dqt
 
       def degree_subject
         Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject]
+      end
+
+      def degree_ukprn
+        return if degree.institution_uuid.nil?
+
+        DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn]
       end
 
       def find_country_code(country)

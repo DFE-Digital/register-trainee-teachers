@@ -5,8 +5,8 @@ require "rails_helper"
 module Dqt
   module Params
     describe TrnRequest do
-      let(:trainee) { create(:trainee, :completed, gender: "female") }
-      let(:degree) { trainee.degrees.first }
+      let(:trainee) { create(:trainee, :completed, gender: "female", degrees: [degree]) }
+      let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:degree_subject) { Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject] }
 
       describe "#params" do
@@ -51,13 +51,23 @@ module Dqt
         end
 
         it "returns a hash including degree attributes" do
+          allow(DfE::ReferenceData::Degrees::INSTITUTIONS).to receive(:one).with(degree.institution_uuid).and_return({ ukprn: "12345678" })
           expect(subject["qualification"]).to eq({
-            "providerUkprn" => nil,
+            "providerUkprn" => "12345678",
             "countryCode" => "XK",
             "subject" => degree_subject,
             "class" => described_class::DEGREE_CLASSES[degree.grade],
             "date" => Date.new(degree.graduation_year).iso8601,
           })
+        end
+
+        context "where there is no institution uuid" do
+          let(:degree) { build(:degree, :uk_degree_with_details, institution_uuid: nil) }
+
+          it "sets the providerUkprn to nil" do
+            allow(DfE::ReferenceData::Degrees::INSTITUTIONS).to receive(:one).with(nil).and_return(nil)
+            expect(subject["qualification"]).to match(hash_including("providerUkprn" => nil))
+          end
         end
 
         context "when gender is gender_not_provided" do

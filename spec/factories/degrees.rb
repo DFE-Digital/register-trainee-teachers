@@ -23,6 +23,7 @@ FactoryBot.define do
       institution { Dttp::CodeSets::Institutions::MAPPING.keys.sample }
       grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
+      institution_uuid { DfE::ReferenceData::Degrees::INSTITUTIONS.all_as_hash.keys.sample }
     end
 
     trait :non_uk_degree_type do
