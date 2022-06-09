@@ -7,6 +7,15 @@
     <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-3">
       <h1 class="govuk-heading-l"><%= t('funding.payment_schedule.heading', start_year: @start_year, end_year: @end_year) %></h1>
       <p class="govuk-body"><%= t('funding.payment_schedule.last_updated_at', date: @payment_schedule_view.last_updated_at) %></p>
+      <p class="govuk-body app-export--link">
+        <span class="app-nowrap">
+          <%= govuk_link_to(
+            I18n.t('funding.payment_schedule.export_label', start_year: @start_year, end_year: @end_year),
+            funding_payment_schedule_path(format: :csv),
+            class: "app-trainee-export govuk-link--no-visited-state",
+          ) %>
+        </span>
+      </p>
     </div>
   </div>
   <div class="govuk-grid-row">
