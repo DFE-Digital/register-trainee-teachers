@@ -3,7 +3,10 @@
 require "rails_helper"
 
 feature "provider-led (undergrad) end-to-end journey", type: :feature do
-  background { given_i_am_authenticated }
+  background {
+    given_i_am_authenticated
+    and_an_academic_cycle_exists
+  }
 
   scenario "submit for TRN", "feature_routes.provider_led_undergrad": true do
     given_i_have_created_a_provider_led_undergrad_trainee

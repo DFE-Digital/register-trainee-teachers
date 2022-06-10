@@ -6,7 +6,10 @@ feature "provider-led (postgrad) end-to-end journey", type: :feature do
   let(:itt_start_date) { 1.week.from_now }
   let(:itt_end_date) { itt_start_date + 1.year }
 
-  background { given_i_am_authenticated }
+  background {
+    given_i_am_authenticated
+    and_an_academic_cycle_exists
+  }
 
   scenario "submit for TRN", "feature_routes.provider_led_postgrad": true, feature_publish_course_details: true do
     given_i_have_created_a_provider_led_trainee

@@ -5,7 +5,10 @@ require "rails_helper"
 feature "teach-first end-to-end journey", type: :feature do
   let(:user) { create(:user, providers: [create(:provider, code: TEACH_FIRST_PROVIDER_CODE)]) }
 
-  background { given_i_am_authenticated(user: user) }
+  background {
+    given_i_am_authenticated(user: user)
+    and_an_academic_cycle_exists
+  }
 
   scenario "submit for TRN" do
     given_i_have_created_a_teach_first_trainee

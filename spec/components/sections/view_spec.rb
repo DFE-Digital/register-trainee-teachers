@@ -10,6 +10,7 @@ module Sections
     end
 
     before do
+      create(:academic_cycle, :current)
       render_inline(trainees_sections_component)
     end
 
@@ -68,7 +69,6 @@ module Sections
       include_examples renders_incomplete_section, :course_details, :incomplete
       include_examples renders_incomplete_section, :training_details, :incomplete
       include_examples renders_incomplete_section, :trainee_data, :incomplete
-      include_examples renders_incomplete_section, :funding, :incomplete
 
       context "requires school" do
         include_examples renders_incomplete_section, :schools, :incomplete
@@ -86,10 +86,21 @@ module Sections
 
         include_examples renders_incomplete_section, :course_details, :incomplete
       end
+
+      context "trainee incomplete funding section" do
+        let(:trainee) { create(:trainee, :with_start_date) }
+
+        before {
+          trainee.progress.course_details = true
+          render_inline(trainees_sections_component)
+        }
+
+        include_examples renders_incomplete_section, :funding, :incomplete
+      end
     end
 
     context "trainee in progress" do
-      let(:trainee) { create(:trainee, :in_progress, applying_for_bursary: false, training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach]) }
+      let(:trainee) { create(:trainee, :in_progress) }
 
       # Personal details is invalid due to nationalities being missing
       include_examples renders_incomplete_section, :personal_details, :in_progress_invalid
@@ -99,25 +110,25 @@ module Sections
       include_examples renders_incomplete_section, :course_details, :in_progress_valid
       include_examples renders_incomplete_section, :training_details, :in_progress_valid
       include_examples renders_incomplete_section, :trainee_data, :in_progress_valid
-      include_examples renders_incomplete_section, :funding, :in_progress_valid
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
 
         include_examples renders_incomplete_section, :schools, :in_progress_valid
       end
+
+      context "trainee in progress funding section" do
+        before do
+          trainee.progress.course_details = true
+          render_inline(trainees_sections_component)
+        end
+
+        include_examples renders_incomplete_section, :funding, :in_progress_valid
+      end
     end
 
     context "trainee completed" do
-      let(:trainee) do
-        create(
-          :trainee,
-          :completed,
-          course_uuid: nil,
-          applying_for_bursary: false,
-          training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
-        )
-      end
+      let(:trainee) { create(:trainee, :completed) }
 
       include_examples renders_confirmation, :personal_details
       include_examples renders_confirmation, :contact_details
