@@ -6,10 +6,19 @@ module Hesa
       new.get(...)
     end
 
+    def self.upload_trn_file(...)
+      new.upload_trn_file(...)
+    end
+
     def get(url:)
       login
       page = agent.get(url)
       page.body
+    end
+
+    def upload_trn_file(url:, file:)
+      login
+      agent.post(url, { file: file })
     end
 
   private
