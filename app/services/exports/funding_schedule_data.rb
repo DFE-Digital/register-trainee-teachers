@@ -2,18 +2,20 @@
 
 module Exports
   class FundingScheduleData
+    VULNERABLE_CHARACTERS = %w[= + - @].freeze
+
     def initialize(payment_schedule:)
       @payment_schedule = payment_schedule
     end
 
     def to_csv
-      header_row ||= data.first&.keys
+      header_row = sanitize_row(data.first&.keys)
 
       CSV.generate(headers: true) do |rows|
         rows << header_row
 
         data.each do |row|
-          rows << formatted_values(row)
+          rows << sanitize_row(formatted_values(row))
         end
       end
     end
@@ -68,6 +70,16 @@ module Exports
 
     def format_amount(amount_in_pence)
       amount_in_pence.zero? ? "0" : ActionController::Base.helpers.number_to_currency(amount_in_pence.to_d / 100, unit: "£")
+    end
+
+    def sanitize_row(row)
+      row.map { |value| sanitize(value) }
+    end
+
+    def sanitize(value)
+      return value unless value.is_a?(String)
+
+      value.start_with?(*VULNERABLE_CHARACTERS) ? "'#{value}" : value
     end
   end
 end
