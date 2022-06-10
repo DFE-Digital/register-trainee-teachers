@@ -28,6 +28,11 @@ feature "viewing the trainee summary", feature_funding: true do
       scenario "displays the summary table" do
         then_i_see_the_summary_table
       end
+
+      scenario "downloads trainee summary export csv" do
+        and_i_export_the_results
+        then_i_see_my_exported_data_in_csv_format
+      end
     end
 
     context "bursary rows with zero totals" do
@@ -218,5 +223,29 @@ private
 
   def then_i_do_not_see_the_tiered_bursary_row_in_the_table
     expect(trainee_summary_page). not_to have_text("Tier #{tier}")
+  end
+
+  def and_i_export_the_results
+    trainee_summary_page.export_link.click
+  end
+
+  def then_i_see_my_exported_data_in_csv_format
+    expect(csv_data).to include("Funding type,Route,Course,Lead school,Tier,Number of trainees,Amount per trainee,Total")
+    expect(csv_data).to include("bursary")
+    expect(csv_data).to include(row.route)
+    expect(csv_data).to include(row.subject)
+    expect(csv_data).to include(row.lead_school_name)
+    expect(csv_data).to include("Not applicable")
+    expect(csv_data).to include(row.amounts.first.number_of_trainees.to_s)
+    expect(csv_data).to include(to_pounds(row.amounts.first.amount_in_pence))
+    expect(csv_data).to include(to_pounds(row.amounts.first.number_of_trainees * row.amounts.first.amount_in_pence))
+  end
+
+  def csv_data
+    @csv_data ||= trainee_summary_page.text
+  end
+
+  def to_pounds(value_in_pence)
+    ActionController::Base.helpers.number_to_currency(value_in_pence.to_d / 100, unit: "£")
   end
 end

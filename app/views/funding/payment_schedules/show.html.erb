@@ -65,7 +65,7 @@
       <h2 class="govuk-heading-m"><%= t('funding.payment_schedule.payment_breakdown') %></h2>
       <%= govuk_accordion do |accordion|
         @payment_schedule_view.payment_breakdown.each do |month_breakdown|
-          accordion.section(heading_text: month_breakdown.title, expanded: month_breakdown.last_actual_month?) do 
+          accordion.section(heading_text: month_breakdown.title, expanded: month_breakdown.last_actual_month?) do
             render partial: "funding/payment_schedules/month_breakdown", locals: { month_breakdown: month_breakdown }
           end
         end
