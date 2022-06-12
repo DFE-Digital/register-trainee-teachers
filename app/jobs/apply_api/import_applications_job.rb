@@ -21,8 +21,10 @@ module ApplyApi
   private
 
     def new_applications(recruitment_cycle_year)
-      RetrieveApplications.call(changed_since: @from_date || last_successful_sync,
-                                recruitment_cycle_year: recruitment_cycle_year)
+      RetrieveApplications.call(
+        changed_since: @from_date || last_successful_sync,
+        recruitment_cycle_year: recruitment_cycle_year,
+      )
     end
 
     def last_successful_sync
