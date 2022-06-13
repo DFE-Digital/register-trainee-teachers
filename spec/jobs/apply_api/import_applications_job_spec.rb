@@ -36,10 +36,37 @@ module ApplyApi
         end
       end
 
-      context "when the last sync was successful" do
+      context "when the last sync was successful but for the wrong year" do
         let(:last_sync) { Time.zone.yesterday }
 
-        before { create(:apply_application_sync_request, :successful, created_at: last_sync) }
+        before do
+          create(
+            :apply_application_sync_request,
+            :successful,
+            created_at: last_sync,
+            recruitment_cycle_year: recruitment_cycle_year - 1,
+          )
+        end
+
+        it "imports all applications from Apply" do
+          expect(RetrieveApplications).to receive(:call).with(changed_since: nil, recruitment_cycle_year: recruitment_cycle_year)
+          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+
+          described_class.perform_now
+        end
+      end
+
+      context "when the last sync was successful in the correct year" do
+        let(:last_sync) { Time.zone.yesterday }
+
+        before do
+          create(
+            :apply_application_sync_request,
+            :successful,
+            created_at: last_sync,
+            recruitment_cycle_year: recruitment_cycle_year,
+          )
+        end
 
         it "imports just the new applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: last_sync, recruitment_cycle_year: recruitment_cycle_year)
@@ -54,8 +81,18 @@ module ApplyApi
         let(:last_sync) { Time.zone.today }
 
         before do
-          create(:apply_application_sync_request, :successful, created_at: last_successful_sync)
-          create(:apply_application_sync_request, :unsuccessful, created_at: last_sync)
+          create(
+            :apply_application_sync_request,
+            :successful,
+            created_at: last_successful_sync,
+            recruitment_cycle_year: recruitment_cycle_year,
+          )
+          create(
+            :apply_application_sync_request,
+            :unsuccessful,
+            created_at: last_sync,
+            recruitment_cycle_year: recruitment_cycle_year,
+          )
         end
 
         it "imports just the new applications from Apply" do
