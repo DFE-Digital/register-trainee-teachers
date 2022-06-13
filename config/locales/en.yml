@@ -287,7 +287,7 @@ en:
         accessibility: Accessibility statement for Register trainee teachers
         cookie_policy: Cookies on Register trainee teachers
         guidance: Data requirements
-        privacy_policy: Register trainee teachers privacy notice
+        privacy_notice: Register trainee teachers privacy notice
         forbidden: &forbidden You do not have permission to perform this action
         home: Home
         request_an_account: Request an account for Register trainee teachers (Register)
@@ -912,7 +912,7 @@ en:
       heading: Register trainee teachers data sharing agreement
     check_data:
       heading: Check what data you need to provide
-    privacy_policy:
+    privacy_notice:
       heading: Register trainee teachers privacy notice
     no_organisation:
       heading: You have not been linked to an organisation yet

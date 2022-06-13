@@ -326,8 +326,8 @@ module Features
       @edit_cookie_preferences_page ||= PageObjects::EditCookiePreferences.new
     end
 
-    def privacy_policy_page
-      @privacy_policy_page ||= PageObjects::PrivacyPolicy.new
+    def privacy_notice_page
+      @privacy_notice_page ||= PageObjects::PrivacyNotice.new
     end
 
     def start_date_verification_page

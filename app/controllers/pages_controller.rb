@@ -22,8 +22,8 @@ class PagesController < ApplicationController
     render(:accessibility)
   end
 
-  def privacy_policy
-    render(:privacy_policy)
+  def privacy_notice
+    render(:privacy_notice)
   end
 
   def guidance

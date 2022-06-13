@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   get :sha, controller: :heartbeat
 
   get "/accessibility", to: "pages#accessibility", as: :accessibility
-  get "/privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
+  get "/privacy-policy", to: redirect("/privacy-notice")
+  get "/privacy-notice", to: "pages#privacy_notice", as: :privacy_notice
+
   get "/guidance", to: "pages#guidance"
   get "/check-data", to: "pages#check_data"
   get "/data-sharing-agreement", to: "pages#data_sharing_agreement"
