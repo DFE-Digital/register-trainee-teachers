@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_093411) do
     t.boolean "successful"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "recruitment_cycle_year"
+    t.index ["recruitment_cycle_year"], name: "index_apply_application_sync_requests_on_recruitment_cycle_year"
   end
 
   create_table "apply_applications", force: :cascade do |t|
