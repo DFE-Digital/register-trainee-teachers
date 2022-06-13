@@ -8,6 +8,7 @@ module Dqt
       def build_params
         {
           "trn" => trainee.trn,
+          "husid" => trainee.hesa_id,
           "initialTeacherTraining" => initial_teacher_training_params,
           "qualification" => qualification_params,
         }

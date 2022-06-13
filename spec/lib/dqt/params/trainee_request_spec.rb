@@ -5,7 +5,7 @@ require "rails_helper"
 module Dqt
   module Params
     describe TraineeRequest do
-      let(:trainee) { create(:trainee, :completed, gender: "female") }
+      let(:trainee) { create(:trainee, :completed, gender: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
       let(:degree_subject) { Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject] }
 
@@ -15,6 +15,7 @@ module Dqt
         it "returns a hash including personal attributes" do
           expect(subject).to include({
             "trn" => trainee.trn,
+            "husid" => trainee.hesa_id,
           })
         end
 

@@ -59,6 +59,7 @@ module Dqt
           "birthDate" => trainee.date_of_birth.iso8601,
           "emailAddress" => trainee.email,
           "address" => address_params,
+          "husid" => trainee.hesa_id,
           "genderCode" => GENDER_CODES[trainee.gender.to_sym],
           "initialTeacherTraining" => initial_teacher_training_params,
           "qualification" => qualification_params,
