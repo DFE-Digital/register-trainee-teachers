@@ -24,7 +24,7 @@ module Funding
     end
 
     def path_for_funding_trainee_summary
-      return funding_trainee_summary_path(format: :html) if !system_admin
+      return funding_trainee_summary_path if !system_admin
 
       if organisation.is_a?(Provider)
         provider_funding_trainee_summary_path(organisation)
