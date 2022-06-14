@@ -28,6 +28,7 @@ module PageObjects
 
       element :error_summary, ".govuk-error-summary"
       element :continue, "button[type='submit']"
+      element :back, "a.govuk-back-link"
     end
   end
 end

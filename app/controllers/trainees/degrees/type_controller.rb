@@ -4,7 +4,7 @@ module Trainees
   module Degrees
     class TypeController < BaseController
       def new
-        @degree = trainee.degrees.build
+        @degree = trainee.degrees.build(locale_code_params)
       end
 
       def create
