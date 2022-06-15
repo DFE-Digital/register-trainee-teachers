@@ -20,6 +20,7 @@ dttp:
 hesa:
   auth_url: "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
   collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData"
+  trn_data_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNData"
   current_collection_reference: "C21053"
   current_collection_start_date: "2022-04-01"
   username: <get from secrets>
@@ -62,12 +63,13 @@ features:
   filters:
     show_start_year_filter: false
   user_can_have_multiple_organisations: true
-  sync_from_hesa: false
   integrate_with_dqt: false
   funding: false
   redirect_education_domain: true
   set_trainee_cohorts: false
-
+  hesa_import:
+    sync_collection: false
+    sync_trn_data: false
 dfe_sign_in:
   # Our service name
   identifier: rtt
