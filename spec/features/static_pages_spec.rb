@@ -18,7 +18,7 @@ feature "static pages" do
   scenario "navigate to privacy policy" do
     given_i_am_on_the_start_page
     and_i_click_on_the_privacy_link_in_the_footer
-    then_i_should_see_the_privacy_policy
+    then_i_should_see_the_privacy_notice
   end
 
   scenario "navigate to sign in" do
@@ -79,9 +79,9 @@ private
     expect(edit_cookie_preferences_page.page_heading).to have_text("Cookies")
   end
 
-  def then_i_should_see_the_privacy_policy
-    expect(privacy_policy_page).to be_displayed
-    expect(privacy_policy_page.page_heading).to have_text(t("components.page_titles.pages.privacy_policy"))
+  def then_i_should_see_the_privacy_notice
+    expect(privacy_notice_page).to be_displayed
+    expect(privacy_notice_page.page_heading).to have_text(t("components.page_titles.pages.privacy_notice"))
   end
 
   def when_i_click_on_request_an_account
