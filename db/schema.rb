@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_08_084133) do
+ActiveRecord::Schema.define(version: 2022_06_15_133237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -663,6 +663,8 @@ ActiveRecord::Schema.define(version: 2022_06_08_084133) do
     t.datetime "hesa_updated_at"
     t.integer "cohort", default: 0
     t.bigint "course_allocation_subject_id"
+    t.bigint "start_academic_cycle_id"
+    t.bigint "end_academic_cycle_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["cohort"], name: "index_trainees_on_cohort"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
@@ -672,6 +674,7 @@ ActiveRecord::Schema.define(version: 2022_06_08_084133) do
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"
     t.index ["employing_school_id"], name: "index_trainees_on_employing_school_id"
+    t.index ["end_academic_cycle_id"], name: "index_trainees_on_end_academic_cycle_id"
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
     t.index ["gender"], name: "index_trainees_on_gender"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
@@ -679,6 +682,7 @@ ActiveRecord::Schema.define(version: 2022_06_08_084133) do
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
     t.index ["slug"], name: "index_trainees_on_slug", unique: true
+    t.index ["start_academic_cycle_id"], name: "index_trainees_on_start_academic_cycle_id"
     t.index ["state"], name: "index_trainees_on_state"
     t.index ["training_route"], name: "index_trainees_on_training_route"
   end
@@ -726,6 +730,8 @@ ActiveRecord::Schema.define(version: 2022_06_08_084133) do
   add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
+  add_foreign_key "trainees", "academic_cycles", column: "end_academic_cycle_id"
+  add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
   add_foreign_key "trainees", "providers"
