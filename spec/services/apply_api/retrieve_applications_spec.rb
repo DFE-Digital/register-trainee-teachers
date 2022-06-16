@@ -22,7 +22,7 @@ module ApplyApi
 
         context "when no 'changed_since' is provided" do
           it "logs the successful request" do
-            expect(subject).to change { ApplyApplicationSyncRequest.count }.by(1)
+            expect { subject }.to change { ApplyApplicationSyncRequest.count }.by(1)
           end
 
           it "returns all the Apply applications" do
