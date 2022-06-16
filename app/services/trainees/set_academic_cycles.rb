@@ -29,7 +29,7 @@ module Trainees
     def start_academic_cycle
       start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.current
     end
-    
+
     def end_academic_cycle
       AcademicCycle.for_date(end_date) if end_date.present?
     end
@@ -43,10 +43,7 @@ module Trainees
     end
 
     def start_date_plus_duration
-      
       return unless start_date
-      
-      binding.pry
 
       if course_duration > 5.years
         raise("Trainee id: #{trainee.id}, slug: #{trainee.slug} has a course length greater than five years")
@@ -58,7 +55,7 @@ module Trainees
     def course_duration
       actual_course_duration || estimated_course_duration
     end
-    
+
     def actual_course_duration
       return unless [course_duration_unit, course_duration_amount].all?(&:present?)
 
@@ -76,7 +73,7 @@ module Trainees
     def estimated_course_duration
       return 3.years if UNDERGRAD_ROUTES.include?(training_route)
       return 2.years if trainee.part_time?
-      
+
       1.year
     end
   end
