@@ -2,7 +2,7 @@
 
 module Exports
   class FundingScheduleData
-    VULNERABLE_CHARACTERS = %w[= + - @].freeze
+    include ExportsHelper
 
     def initialize(payment_schedule:)
       @payment_schedule = payment_schedule
@@ -74,12 +74,6 @@ module Exports
 
     def sanitize_row(row)
       row.map { |value| sanitize(value) }
-    end
-
-    def sanitize(value)
-      return value unless value.is_a?(String)
-
-      value.start_with?(*VULNERABLE_CHARACTERS) ? "'#{value}" : value
     end
 
     def organisation_name

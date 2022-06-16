@@ -23,7 +23,7 @@ module Funding
   private
 
     def data_export
-      @data_export ||= Exports::FundingScheduleData.new(payment_schedule: payment_schedule, organisation: organisation)
+      @data_export ||= Exports::FundingScheduleData.new(payment_schedule: payment_schedule)
     end
 
     def organisation
