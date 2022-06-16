@@ -18,9 +18,10 @@ module ApplyApi
     def self.get(params)
       response = Request.get("/applications?#{query(params)}")
 
-      log_request!(response, params)
-
-      raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}") if response.code != GET_SUCCESS
+      if response.code != GET_SUCCESS
+        log_request!(response, params)
+        raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}")
+      end
 
       response
     end

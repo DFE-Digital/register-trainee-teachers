@@ -20,10 +20,28 @@ module ApplyApi
       subject
     end
 
-    it "creates an ApplyApplicationSyncRequest record with recruitment_cycle_year" do
-      expect { subject }.to(
-        change { ApplyApplicationSyncRequest.successful.where(recruitment_cycle_year: recruitment_cycle_year).count }.by(1),
-      )
+    context "when the API call is successful" do
+      it "does not create an ApplyApplicationSyncRequest record with recruitment_cycle_year" do
+        expect { subject }.not_to(
+          change { ApplyApplicationSyncRequest.where(recruitment_cycle_year: recruitment_cycle_year).count },
+        )
+      end
+    end
+
+    context "when the API call fails" do
+      let(:http_response) { { status: 500, body: "Oops..." } }
+
+      it "raises an HttpError" do
+        expect { subject }.to raise_error(ApplyApi::Client::HttpError)
+      end
+
+      it "creates an unsuccessful ApplyApplicationSyncRequest record with recruitment_cycle_year" do
+        expect do
+          subject
+        rescue ApplyApi::Client::HttpError
+          # Suppress exception so that we can assert no `ApplyApplicationSyncRequest` is created.
+        end.to change { ApplyApplicationSyncRequest.unsuccessful.where(recruitment_cycle_year: recruitment_cycle_year).count }.by(1)
+      end
     end
   end
 end
