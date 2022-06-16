@@ -21,6 +21,7 @@ hesa:
   auth_url: "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
   collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData"
   trn_data_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNData"
+  trn_file_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNFile"
   current_collection_reference: "C21053"
   current_collection_start_date: "2022-04-01"
   username: <get from secrets>
@@ -67,6 +68,7 @@ features:
   funding: false
   redirect_education_domain: true
   set_trainee_cohorts: false
+  hesa_trn_requests: false
   hesa_import:
     sync_collection: false
     sync_trn_data: false

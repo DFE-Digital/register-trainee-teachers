@@ -13,6 +13,8 @@ module Hesa
     before do
       allow(Settings.hesa).to receive(:username).and_return("test@example.com")
       allow(Settings.hesa).to receive(:password).and_return("test12345")
+      allow(subject).to receive(:agent).and_return(mechanize)
+      allow(subject).to receive(:login).and_return(true)
     end
 
     describe ".login" do
@@ -36,13 +38,24 @@ module Hesa
       let(:sample_page) { Struct.new(:body).new("Test") }
 
       before do
-        allow(subject).to receive(:agent).and_return(mechanize)
         allow(mechanize).to receive(:get).with(url).and_return(sample_page)
-        allow(subject).to receive(:login).and_return(true)
       end
 
       it "returns XML from URL" do
         expect(subject.get(url: url)).to eql("Test")
+      end
+    end
+
+    describe ".upload_trn_file" do
+      let(:sample_page) { Struct.new(:body).new("True") }
+      let(:file) { double }
+
+      before do
+        allow(mechanize).to receive(:post).with(url, file: file).and_return(sample_page)
+      end
+
+      it "sends a form post request with file data" do
+        subject.upload_trn_file(url: url, file: file)
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_15_133237) do
+ActiveRecord::Schema.define(version: 2022_06_16_093411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -484,6 +484,13 @@ ActiveRecord::Schema.define(version: 2022_06_15_133237) do
     t.string "collection_reference"
     t.integer "state"
     t.text "response_body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "hesa_trn_submissions", force: :cascade do |t|
+    t.text "payload"
+    t.datetime "submitted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
