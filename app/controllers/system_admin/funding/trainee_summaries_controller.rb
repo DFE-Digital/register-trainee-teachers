@@ -4,13 +4,20 @@ module SystemAdmin
   module Funding
     class TraineeSummariesController < ApplicationController
       def show
-        @trainee_summary_view = ::Funding::TraineeSummaryView.new(trainee_summary: trainee_summary)
-        @navigation_view = ::Funding::NavigationView.new(organisation: organisation, system_admin: true)
+        respond_to do |format|
+          format.html do
+            @trainee_summary_view = ::Funding::TraineeSummaryView.new(trainee_summary: trainee_summary)
+            @navigation_view = ::Funding::NavigationView.new(organisation: organisation, system_admin: true)
 
-        @start_year = current_academic_cycle.start_year
-        @end_year = current_academic_cycle.end_year
+            @start_year = current_academic_cycle.start_year
+            @end_year = current_academic_cycle.end_year
 
-        render("funding/trainee_summaries/show")
+            render("funding/trainee_summaries/show")
+          end
+          format.csv do
+            send_data(data_export.csv, filename: data_export.filename, disposition: :attachment)
+          end
+        end
       end
 
     private
@@ -25,6 +32,10 @@ module SystemAdmin
 
       def current_academic_cycle
         @current_academic_cycle ||= AcademicCycle.current
+      end
+
+      def data_export
+        @data_export ||= Exports::FundingTraineeSummaryData.new(trainee_summary, organisation.name)
       end
     end
   end
