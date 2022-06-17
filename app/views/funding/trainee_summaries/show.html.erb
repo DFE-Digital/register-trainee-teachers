@@ -2,10 +2,6 @@
 
 <%= render "funding/navigation" %>
 
-<%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
-<% end %>
-
 <h2 class="govuk-heading-l">
   <%= t("funding.trainee_summary.heading", start_year: @start_year, end_year: @end_year)%>
 </h2>
