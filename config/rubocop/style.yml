@@ -105,3 +105,8 @@ Style/SlicingWithRange:
 
 Style/KeywordParametersOrder:
   Enabled: false
+
+Style/RedundantInitialize:
+  Exclude:
+    - app/components/notice_banner/view.rb
+
