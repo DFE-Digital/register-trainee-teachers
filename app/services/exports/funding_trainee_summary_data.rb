@@ -33,6 +33,8 @@ module Exports
     def format_rows(trainee_summary)
       trainee_summary.rows.map do |row|
         trainee_summary_row_amount = row.amounts.first
+        next if trainee_summary_row_amount.nil?
+
         {
           "Funding type" => funding_type_prefix(row) + trainee_summary_row_amount.payment_type,
           "Route" => row.route,
@@ -43,7 +45,7 @@ module Exports
           "Amount per trainee" => to_pounds(trainee_summary_row_amount.amount_in_pence),
           "Total" => to_pounds(trainee_summary_row_amount.number_of_trainees * trainee_summary_row_amount.amount_in_pence),
         }
-      end
+      end.compact
     end
 
     def sanitise(value)
