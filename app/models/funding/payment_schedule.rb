@@ -10,5 +10,19 @@ module Funding
              dependent: :destroy,
              foreign_key: :funding_payment_schedule_id,
              inverse_of: :payment_schedule
+
+    def start_year
+      return if rows.empty?
+      return if rows.first.amounts.empty?
+
+      rows.first.amounts.minimum(:year)
+    end
+
+    def end_year
+      return if rows.empty?
+      return if rows.first.amounts.empty?
+
+      rows.first.amounts.maximum(:year)
+    end
   end
 end
