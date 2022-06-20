@@ -889,7 +889,7 @@ en:
       heading: Your trainee teachers
       draft_heading: Draft trainees
       draft_trainees_link: View all draft trainees (%{count})
-      draft_apply_trainees_link: View draft trainees imported from Apply (%{count})
+      draft_apply_trainees_link: View draft trainees imported from Apply (%{count} out of %{total} draft trainees)
       new_trainee_link: Create a new trainee record
       registered_heading: Registered trainees
       registered_trainees_link: View all registered trainees (%{count})

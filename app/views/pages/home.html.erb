@@ -21,7 +21,7 @@
         <% if @home_view.draft_apply_trainees_count > 0 %>
           <li>
             <%= govuk_link_to(
-              t(".draft_apply_trainees_link", count: @home_view.draft_apply_trainees_count),
+              t(".draft_apply_trainees_link", count: @home_view.draft_apply_trainees_count, total: @home_view.draft_trainees_count),
               drafts_path("record_source[]": :apply),
               { class: "govuk-link--no-visited-state" }
             )%>
