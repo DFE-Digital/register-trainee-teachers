@@ -16,14 +16,14 @@
       <% month_breakdown.rows.each do |row| %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= row[:description] %></td>
-          <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[:amount] %></td>
-          <td class="govuk-table__cell govuk-table__cell--numeric"><%= row[:running_total] %></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= row[:amount] %></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= row[:running_total] %></td>
         </tr>
       <% end %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell govuk-!-font-weight-bold">Total</td>
-        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-weight-bold"><%= month_breakdown.total_amount %></td>
-        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-weight-bold"><%= month_breakdown.total_running_total %></td>
+        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-weight-bold no-wrap"><%= month_breakdown.total_amount %></td>
+        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-weight-bold no-wrap"><%= month_breakdown.total_running_total %></td>
       </tr>
     </tbody>
   </table>
