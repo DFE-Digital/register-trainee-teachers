@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/DFE-Digital/dfe-analytics.git
+  revision: 3b4e180c87125aee0255c70acf81997e4043c878
+  tag: v1.0.0
+  specs:
+    dfe-analytics (1.0.0)
+      google-cloud-bigquery (~> 1.38)
+      request_store_rails (~> 2)
+
+GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
   revision: bff087e5208c75811619cb65f80633272e792d7f
   tag: v0.1.0
@@ -454,6 +463,8 @@ GEM
       uber (< 0.2.0)
     request_store (1.5.1)
       rack (>= 1.4)
+    request_store_rails (2.0.0)
+      concurrent-ruby (~> 1.0)
     retriable (3.1.2)
     rexml (3.2.5)
     rspec-core (3.11.0)
@@ -639,6 +650,7 @@ DEPENDENCIES
   config (~> 4.0)
   cuprite (~> 0.13)
   data_migrate
+  dfe-analytics!
   dfe-reference-data!
   discard (~> 1.2)
   dotenv-rails

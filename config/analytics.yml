@@ -49,7 +49,6 @@ shared:
     - summary
     - updated_at
     - uuid
-    - course_allocation_subject_id
   course_subjects:
     - id
     - course_id
@@ -85,7 +84,7 @@ shared:
     - updated_at
   dttp_schools:
     - created_at
-    - dttp_i
+    - dttp_id
     - id
     - name
     - status_code
@@ -93,9 +92,7 @@ shared:
     - urn
   funding_methods:
     - academic_cycle_id
-    - allocation_subject_id
     - amount
-    - bursary_id
     - created_at
     - created_at
     - funding_type
