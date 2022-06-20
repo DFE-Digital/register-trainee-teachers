@@ -892,7 +892,6 @@ en:
       draft_apply_trainees_link: View draft trainees imported from Apply (%{count} out of %{total} draft trainees)
       new_trainee_link: Create a trainee record
       registered_heading: Registered trainees
-      registered_trainees_link: View all registered trainees (%{count})
       guidance_heading: News, guidance and feedback
       service_updates_link: View news and updates
       guidance_about_link: Find out about Register trainee teachers

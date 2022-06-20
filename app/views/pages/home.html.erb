@@ -1,12 +1,17 @@
 <%= render PageTitle::View.new(text: t(".heading")) %>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <% if current_user.organisation %>
+      <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
+    <% end %>
+    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+  </div>
+</div>
+
 <% unless lead_school_user? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <% if current_user.organisation %>
-        <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
-      <% end %>
-      <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
       <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
       <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
         <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
@@ -45,28 +50,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <% if lead_school_user? %>
-      <% if current_user.organisation %>
-        <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
-      <% end %>
-      <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
-    <% end %>
     <h2 class="govuk-heading-l"><%= t(".registered_heading") %></h2>
-    <ul class="govuk-list govuk-list--spaced">
-      <% if @home_view.registered_trainees_count > 0 %>
-        <li>
-          <%= govuk_link_to(
-            t(".registered_trainees_link", count: @home_view.registered_trainees_count),
-            trainees_path,
-            { class: "govuk-link--no-visited-state" }
-          )%>
-        </li>
-      <% end %>
-    </ul>
   </div>
+  <%= render "badges" %>
 </div>
-
-<%= render "badges" %>
 
 <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
