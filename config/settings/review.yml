@@ -18,7 +18,6 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
   user_can_have_multiple_organisations: true
-  funding: true
 
 pagination:
   records_per_page: 30

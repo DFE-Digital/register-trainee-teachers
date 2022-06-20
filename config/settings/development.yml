@@ -18,7 +18,6 @@ features:
     pg_teaching_apprenticeship: true
     provider_led_undergrad: true
     opt_in_undergrad: true
-  funding: true
 
 pagination:
   records_per_page: 30

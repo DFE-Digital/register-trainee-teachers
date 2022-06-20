@@ -65,7 +65,7 @@ features:
     show_start_year_filter: false
   user_can_have_multiple_organisations: true
   integrate_with_dqt: false
-  funding: false
+  funding: true
   redirect_education_domain: true
   set_trainee_cohorts: false
   hesa_trn_requests: false
