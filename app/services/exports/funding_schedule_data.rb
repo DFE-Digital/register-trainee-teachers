@@ -2,7 +2,7 @@
 
 module Exports
   class FundingScheduleData
-    VULNERABLE_CHARACTERS = %w[= + - @].freeze
+    include ExportsHelper
 
     def initialize(payment_schedule:)
       @payment_schedule = payment_schedule
@@ -48,7 +48,7 @@ module Exports
     end
 
     def filename
-      "#{Time.zone.now.strftime('%Y-%m-%d_%H-%M_%S')}_Funding-schedule_exported_records.csv"
+      "#{organisation_name.downcase.gsub(' ', '-')}-payment_schedule-#{payment_schedule.start_year}-to-#{payment_schedule.end_year}.csv"
     end
 
   private
@@ -76,10 +76,8 @@ module Exports
       row.map { |value| sanitize(value) }
     end
 
-    def sanitize(value)
-      return value unless value.is_a?(String)
-
-      value.start_with?(*VULNERABLE_CHARACTERS) ? "'#{value}" : value
+    def organisation_name
+      @payment_schedule.payable.name
     end
   end
 end

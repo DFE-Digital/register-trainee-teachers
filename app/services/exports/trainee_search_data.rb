@@ -2,7 +2,7 @@
 
 module Exports
   class TraineeSearchData
-    VULNERABLE_CHARACTERS = %w[= + - @].freeze
+    include ExportsHelper
 
     CURRENTLY_NOT_AVAILABLE = "Currently no data available in Register"
     DATA_NOT_AVAILABLE = "data not available"
@@ -20,7 +20,7 @@ module Exports
         rows << header_row
 
         data_for_export.map(&:values).each do |value|
-          rows << value.map { |v| sanitise(v) }
+          rows << value.map { |v| sanitize(v) }
         end
       end
     end
@@ -299,12 +299,6 @@ module Exports
         "dttp" => "DTTP",
         "hesa" => "HESA",
       }[trainee.record_source]
-    end
-
-    def sanitise(value)
-      return value unless value.is_a?(String)
-
-      value.start_with?(*VULNERABLE_CHARACTERS) ? value.prepend("'") : value
     end
 
     def lead_school_name(trainee)

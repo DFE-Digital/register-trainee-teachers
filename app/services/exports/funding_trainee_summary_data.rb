@@ -2,7 +2,7 @@
 
 module Exports
   class FundingTraineeSummaryData
-    VULNERABLE_CHARACTERS = %w[= + - @].freeze
+    include ExportsHelper
 
     def initialize(trainee_summary, organisation_name)
       @organisation_name = organisation_name
@@ -17,13 +17,13 @@ module Exports
         rows << header_row
 
         data.map(&:values).each do |value|
-          rows << value.map { |v| sanitise(v) }
+          rows << value.map { |v| sanitize(v) }
         end
       end
     end
 
     def filename
-      "#{@organisation_name.gsub(' ', '-')}-trainee-summary-#{@trainee_summary.academic_year}-to-#{@trainee_summary.academic_year.to_i + 1}.csv"
+      "#{@organisation_name.downcase.gsub(' ', '-')}-trainee-summary-#{@trainee_summary.academic_year}-to-#{@trainee_summary.academic_year.to_i + 1}.csv"
     end
 
   private
@@ -46,12 +46,6 @@ module Exports
           "Total" => to_pounds(trainee_summary_row_amount.number_of_trainees * trainee_summary_row_amount.amount_in_pence),
         }
       end.compact
-    end
-
-    def sanitise(value)
-      return value unless value.is_a?(String)
-
-      value.start_with?(*VULNERABLE_CHARACTERS) ? value.prepend("'") : value
     end
 
     def to_pounds(value_in_pence)

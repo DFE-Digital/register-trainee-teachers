@@ -4,9 +4,9 @@ require "rails_helper"
 
 module Exports
   describe FundingTraineeSummaryData do
-    let!(:lead_school) { create(:school, lead_school: true) }
+    let!(:payable) { create(:school, lead_school: true, name: "Fussington Academy") }
     let!(:trainee_summary) { create(:trainee_summary, :for_school) }
-    let!(:trainee_summary_row) { create(:trainee_summary_row, trainee_summary: trainee_summary, lead_school_urn: lead_school.urn) }
+    let!(:trainee_summary_row) { create(:trainee_summary_row, trainee_summary: trainee_summary, lead_school_urn: payable.urn) }
     let!(:tiered_bursary_amount) { create(:trainee_summary_row_amount, :with_tiered_bursary, row: trainee_summary_row) }
     let!(:empty_trainee_summary_row) { create(:trainee_summary_row, trainee_summary: trainee_summary) }
 
@@ -14,7 +14,7 @@ module Exports
       create(:academic_cycle, :current)
     end
 
-    subject { described_class.new(trainee_summary, lead_school.name) }
+    subject { described_class.new(trainee_summary, payable.name) }
 
     describe "#csv" do
       let(:expected_output) do
@@ -41,6 +41,10 @@ module Exports
       it "skips rows without amounts" do
         expected_csv_with_headers_row_count = 2
         expect(CSV.parse(subject.csv).length).to eq(expected_csv_with_headers_row_count)
+      end
+
+      it "sets the correct title" do
+        expect(subject.filename).to include("fussington-academy-trainee-summary-2021-to-2022.csv")
       end
     end
   end

@@ -66,6 +66,10 @@ module Exports
       it "sets the correct row values" do
         expect(exporter.data).to eq(expected_output)
       end
+
+      it "sets the correct filename" do
+        expect(exporter.filename).to eq("#{payment_schedule.payable.name.downcase.gsub(' ', '-')}-payment_schedule-2021-to-2022.csv")
+      end
     end
 
     describe "#to_csv" do
