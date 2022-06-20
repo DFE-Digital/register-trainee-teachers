@@ -2,34 +2,28 @@
 
 module TraineeStatusCard
   class View < GovukComponent::Base
-    attr_reader :state, :count, :target
+    attr_reader :status, :count, :target
 
     STATUS_COLOURS = {
-      draft: "grey",
-      submitted_for_trn: "turquoise",
-      trn_received: "blue",
-      recommended_for_award: "purple",
-      awarded: "",
-      qts_recommended: "purple",
-      qts_received: "",
-      eyts_recommended: "purple",
-      eyts_received: "",
+      course_not_started_yet: "",
+      in_training: "",
+      awarded_this_year: "",
       deferred: "yellow",
-      withdrawn: "red",
+      incomplete: "grey",
     }.freeze
 
-    def initialize(state:, count:, target:)
-      @state = state
+    def initialize(status:, count:, target:)
+      @status = status
       @target = target
       @count = count
     end
 
     def state_name
-      I18n.t("activerecord.attributes.trainee.states.#{state}")
+      I18n.t("components.trainee_status_card.#{status}")
     end
 
     def status_colour
-      STATUS_COLOURS[state.to_sym]
+      STATUS_COLOURS[status.to_sym]
     end
   end
 end

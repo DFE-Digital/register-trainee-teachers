@@ -494,6 +494,12 @@ en:
         traineedisability:
           create: Disability details updated
           destroy: Disability details deleted
+    trainee_status_card:
+      course_not_started_yet: Course not started yet
+      in_training: In training
+      awarded_this_year: Awarded this year
+      deferred: Currently deferred
+      incomplete: Incomplete records
     sections:
       titles:
         personal_details: Personal details

@@ -3,118 +3,70 @@
 require "rails_helper"
 
 describe HomeView do
+  include Rails.application.routes.url_helpers
+
   let(:draft_trainee) { create(:trainee, :draft) }
+  let!(:current_academic_cycle) { create(:academic_cycle, :current) }
 
   subject { described_class.new(trainees) }
 
-  describe "#state_counts" do
-    context "no trainees in award states" do
-      let(:trainees) do
-        trainee_id = draft_trainee.id
-        Trainee.where(id: trainee_id)
-      end
+  describe "#badges" do
+    let(:not_started_trainee) { create(:trainee, itt_start_date: current_academic_cycle.end_date + 1.day) }
+    let(:in_training_trainees) { create_list(:trainee, 2, :trn_received) }
+    let(:awarded_this_year_trainee) { create(:trainee, :awarded) }
+    let(:awarded_last_year_trainee) { create(:trainee, :awarded, awarded_at: current_academic_cycle.start_date - 1.day) }
+    let(:deferred_trainees) { create_list(:trainee, 2, :deferred) }
 
-      it "labels award counts generically" do
-        expect(subject.state_counts.symbolize_keys).to eq(
-          awarded: 0,
-          deferred: 0,
-          draft: 1,
-          recommended_for_award: 0,
-          submitted_for_trn: 0,
-          trn_received: 0,
-          withdrawn: 0,
-        )
-      end
-    end
-
-    context "trainees only in eyts award states" do
-      let(:trainees) do
-        trainee_id = create(:trainee, :early_years_undergrad, :awarded).id
-        Trainee.where(id: trainee_id)
-      end
-
-      it "labels award counts as eyts" do
-        expect(subject.state_counts.symbolize_keys).to eq(
-          deferred: 0,
-          draft: 0,
-          submitted_for_trn: 0,
-          trn_received: 0,
-          withdrawn: 0,
-          eyts_awarded: 1,
-          eyts_recommended: 0,
-        )
-      end
-    end
-
-    context "trainees only in qts award states" do
-      let(:trainees) do
-        trainee_id = create(:trainee, :assessment_only, :awarded).id
-        Trainee.where(id: trainee_id)
-      end
-
-      it "labels award counts as qts" do
-        expect(subject.state_counts.symbolize_keys).to eq(
-          deferred: 0,
-          draft: 0,
-          submitted_for_trn: 0,
-          trn_received: 0,
-          withdrawn: 0,
-          qts_awarded: 1,
-          qts_recommended: 0,
-        )
-      end
-    end
-
-    context "trainees in qts and eyts award states" do
-      let(:trainees) do
-        trainee_ids = [
-          create(:trainee, :assessment_only, :awarded).id,
-          create(:trainee, :early_years_undergrad, :awarded).id,
-        ]
-        Trainee.where(id: trainee_ids)
-      end
-
-      it "labels award counts generically" do
-        expect(subject.state_counts.symbolize_keys).to eq(
-          deferred: 0,
-          draft: 0,
-          submitted_for_trn: 0,
-          trn_received: 0,
-          withdrawn: 0,
-          awarded: 2,
-          recommended_for_award: 0,
-        )
-      end
-    end
-  end
-
-  describe "#registered_state_counts" do
-    let(:trainees) { Trainee.all }
-
-    it "returns just the state_counts relevant for registered trainees" do
-      expect(subject.registered_state_counts.symbolize_keys).to eq(
-        deferred: 0,
-        submitted_for_trn: 0,
-        trn_received: 0,
-        withdrawn: 0,
-        awarded: 0,
-        recommended_for_award: 0,
-      )
-    end
-  end
-
-  describe "#registered_trainees_count" do
     let(:trainees) do
       trainee_ids = [
-        draft_trainee.id,
-        create(:trainee, :assessment_only, :awarded).id,
-        create(:trainee, :early_years_undergrad, :awarded).id,
-      ]
+        not_started_trainee.id,
+        awarded_this_year_trainee.id,
+        awarded_last_year_trainee.id,
+      ] + in_training_trainees.pluck(:id) + deferred_trainees.pluck(:id)
+
       Trainee.where(id: trainee_ids)
     end
 
-    it "returns the number of trainees in registered states" do
-      expect(subject.registered_trainees_count).to eq(2)
+    before do
+      # rubocop:disable RSpec/MessageChain
+      allow(Trainee).to receive_message_chain(:course_not_yet_started, :count).and_return(1)
+      # rubocop:enable RSpec/MessageChain
+    end
+
+    it "returns correct counts and links" do
+      expect(subject.badges.map(&:to_h)).to eq(
+        [
+          {
+            status: :course_not_started_yet,
+            trainee_count: 1,
+            link: trainees_path(status: %w[course_not_yet_started]),
+          },
+          {
+            status: :in_training,
+            trainee_count: 2,
+            link: trainees_path(status: %w[in_training]),
+          },
+          {
+            status: :awarded_this_year,
+            trainee_count: 1,
+            link: trainees_path(
+              status: %w[awarded],
+              end_year: current_academic_cycle.start_year,
+            ),
+          },
+          {
+            status: :deferred,
+            trainee_count: 2,
+            link: trainees_path(status: %w[deferred]),
+          },
+          # i.e. the not_started_trainee who is still in draft
+          {
+            status: :incomplete,
+            trainee_count: 1,
+            link: trainees_path(record_completion: %w[incomplete]),
+          },
+        ],
+      )
     end
   end
 

@@ -51,7 +51,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     @include govuk-media-query($from: tablet) {
-      grid-template-columns: 1fr 1fr 1fr 1fr
+      grid-template-columns: 1fr 1fr 1fr
     }
     gap: govuk-spacing(4);
     grid-auto-rows: 1fr;

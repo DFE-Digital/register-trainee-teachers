@@ -1,23 +1,19 @@
 # frozen_string_literal: true
 
 class HomeView
+  include Rails.application.routes.url_helpers
+
+  attr_reader :badges
+
   def initialize(trainees)
     @trainees = Trainees::Filter.call(trainees: trainees, filters: {})
-    populate_state_counts!
+    create_badges
   end
 
-  attr_reader :state_counts
-
-  def registered_state_counts
-    @registered_state_counts ||= state_counts.except("draft")
-  end
-
-  def registered_trainees_count
-    @registered_trainees_count ||= registered_state_counts.values.sum
-  end
+  Badge = Struct.new(:status, :trainee_count, :link)
 
   def draft_trainees_count
-    @draft_trainees_count ||= state_counts["draft"]
+    trainees.draft.count
   end
 
   def draft_apply_trainees_count
@@ -28,35 +24,52 @@ private
 
   attr_reader :trainees
 
-  def populate_state_counts!
-    defaults = Trainee.states.keys.index_with { 0 }
-    counts = trainees.group(:state).count.reverse_merge(defaults)
+  def create_badges
+    @badges = [
+      Badge.new(
+        :in_training,
+        trainees.in_training.count,
+        trainees_path(status: %w[in_training]),
+      ),
 
-    if eyts_trainees? == qts_trainees?
-      counts["awarded"] ||= 0
-      counts["recommended_for_award"] ||= 0
-    elsif eyts_trainees?
-      awarded = counts.delete("awarded")
-      counts["eyts_awarded"] = awarded
+      Badge.new(
+        :awarded_this_year,
+        trainees.awarded_in_cycle(current_academic_cycle).count,
+        trainees_path(
+          status: %w[awarded],
+          end_year: current_academic_cycle.start_year,
+        ),
+      ),
 
-      recommended = counts.delete("recommended_for_award")
-      counts["eyts_recommended"] = recommended
-    elsif qts_trainees?
-      awarded = counts.delete("awarded")
-      counts["qts_awarded"] = awarded
+      Badge.new(
+        :deferred,
+        trainees.deferred.count,
+        trainees_path(status: %w[deferred]),
+      ),
 
-      recommended = counts.delete("recommended_for_award")
-      counts["qts_recommended"] = recommended
+      Badge.new(
+        :incomplete,
+        trainees.incomplete_for_filter.count,
+        trainees_path(record_completion: %w[incomplete]),
+      ),
+    ]
+
+    if course_not_yet_started_count.positive?
+      @badges.prepend(
+        Badge.new(
+          :course_not_started_yet,
+          course_not_yet_started_count,
+          trainees_path(status: %w[course_not_yet_started]),
+        ),
+      )
     end
-
-    @state_counts = counts
   end
 
-  def eyts_trainees?
-    @eyts_trainees ||= trainees.with_award_states("eyts_recommended", "eyts_awarded").count.positive?
+  def current_academic_cycle
+    @current_academic_cycle ||= AcademicCycle.current
   end
 
-  def qts_trainees?
-    @qts_trainees ||= trainees.with_award_states("qts_recommended", "qts_awarded").count.positive?
+  def course_not_yet_started_count
+    @course_not_yet_started_count ||= trainees.course_not_yet_started.count
   end
 end
