@@ -133,10 +133,21 @@ module Funding
         end
       end
 
-      it "sets predicted correctly" do
-        subject
-        expect(provider_one_first_row.amounts.find_by(month: 11)).not_to be_predicted
-        expect(provider_one_first_row.amounts.find_by(month: 12)).to be_predicted
+      context "predicted month is passed" do
+        it "sets predicted correctly" do
+          subject
+          expect(provider_one_first_row.amounts.find_by(month: 11)).not_to be_predicted
+          expect(provider_one_first_row.amounts.find_by(month: 12)).to be_predicted
+        end
+      end
+
+      context "predicted month is nil" do
+        subject { described_class.call(attributes: schedules_attributes, first_predicted_month_index: nil) }
+
+        it "sets all months as actual" do
+          subject
+          expect(provider_one_first_row.amounts.where(predicted: false).count).to eq(12)
+        end
       end
     end
 
