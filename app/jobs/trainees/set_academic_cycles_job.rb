@@ -5,7 +5,8 @@ module Trainees
     def perform(trainee)
       return unless FeatureService.enabled?(:set_trainee_academic_cycles)
 
-      Trainees::SetAcademicCycles.call(trainee: trainee)
+      trainee = Trainees::SetAcademicCycles.call(trainee: trainee)
+      trainee.save!
     end
   end
 end

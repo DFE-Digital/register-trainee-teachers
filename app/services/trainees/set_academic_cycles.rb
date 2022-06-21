@@ -13,8 +13,6 @@ module Trainees
     def call
       trainee.start_academic_cycle = start_academic_cycle
       trainee.end_academic_cycle = end_academic_cycle
-
-      trainee.save!
       trainee
     end
 
