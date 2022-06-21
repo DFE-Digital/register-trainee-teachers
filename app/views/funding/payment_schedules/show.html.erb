@@ -41,27 +41,29 @@
         <%- end -%>
         </tbody>
       </table>
-      <table id="predicted-payments" class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m govuk-!-margin-bottom-3">
-          <%= t('funding.payment_schedule.predicted_payments_table_caption') %>
-        </caption>
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header"><%= t('funding.payment_schedule.month') %></th>
-          <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.total') %></th>
-          <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.running_total') %></th>
-        </tr>
-        </thead>
-        <tbody>
-        <%- @payment_schedule_view.predicted_payments.each do |predicted_payment| -%>
+      <%- if @payment_schedule_view.predicted_payments.any? %>
+        <table id="predicted-payments" class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m govuk-!-margin-bottom-3">
+            <%= t('funding.payment_schedule.predicted_payments_table_caption') %>
+          </caption>
+          <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= predicted_payment[:month] %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= predicted_payment[:total] %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= predicted_payment[:running_total] %></td>
+            <th scope="col" class="govuk-table__header"><%= t('funding.payment_schedule.month') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.total') %></th>
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric"><%= t('funding.payment_schedule.running_total') %></th>
           </tr>
-        <%- end -%>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+          <%- @payment_schedule_view.predicted_payments.each do |predicted_payment| -%>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= predicted_payment[:month] %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= predicted_payment[:total] %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= predicted_payment[:running_total] %></td>
+            </tr>
+          <%- end -%>
+          </tbody>
+        </table>
+      <%- end -%>
       <h2 class="govuk-heading-m"><%= t('funding.payment_schedule.payment_breakdown') %></h2>
       <%= govuk_accordion do |accordion|
         @payment_schedule_view.payment_breakdown.each do |month_breakdown|
