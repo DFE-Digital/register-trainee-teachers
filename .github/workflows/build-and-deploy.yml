@@ -158,6 +158,9 @@ jobs:
     - name: Run SCSS Linter
       run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
 
+    - name: Run DfE Analytics checks
+      run:  docker-compose exec -T web /bin/sh -c 'bundle exec rake dfe:analytics:check'
+
     - name: Run Rspec tests
       run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test bundle exec rake spec'
 
