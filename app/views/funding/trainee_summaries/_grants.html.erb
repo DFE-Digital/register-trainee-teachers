@@ -27,7 +27,7 @@
             <td nowrap class="govuk-table__cell"><%= grant_row[:route]%> <br> <%= grant_row[:subject] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= grant_row[:trainees] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= grant_row[:amount_per_trainee] %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><%= grant_row[:total] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= grant_row[:total] %></td>
           </tr>
         <%- end -%>
       </tbody>

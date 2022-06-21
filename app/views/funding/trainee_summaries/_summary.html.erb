@@ -17,14 +17,14 @@
           <% next if summary_row.total.zero? %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= summary_row.payment_type %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><%= @trainee_summary_view.format_pounds(summary_row.total) %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= @trainee_summary_view.format_pounds(summary_row.total) %></td>
           </tr>
         <% end %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">
             <%= t("funding.trainee_summary.column_headings.total") %>
           </td>
-          <td class="govuk-table__cell govuk-table__cell--numeric app-table__column-20 govuk-!-font-weight-bold"><%= @trainee_summary_view.format_pounds(@trainee_summary_view.summary.total) %></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric app-table__column-20 govuk-!-font-weight-bold no-wrap"><%= @trainee_summary_view.format_pounds(@trainee_summary_view.summary.total) %></td>
         </tr>
       </tbody>
     </table>

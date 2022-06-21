@@ -8,7 +8,7 @@
       <h1 class="govuk-heading-l"><%= t('funding.payment_schedule.heading', start_year: @start_year, end_year: @end_year) %></h1>
       <p class="govuk-body"><%= t('funding.payment_schedule.last_updated_at', date: @payment_schedule_view.last_updated_at) %></p>
       <p class="govuk-body app-export--link">
-        <span class="app-nowrap">
+        <span class="no-wrap">
           <%= govuk_link_to(
             I18n.t('funding.payment_schedule.export_label', start_year: @start_year, end_year: @end_year),
             funding_csv_export_path(:payment_schedule, @organisation),
@@ -35,8 +35,8 @@
         <%- @payment_schedule_view.actual_payments.each do |actual_payment| -%>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= actual_payment[:month] %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><%= actual_payment[:total] %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><%= actual_payment[:running_total] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= actual_payment[:total] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= actual_payment[:running_total] %></td>
           </tr>
         <%- end -%>
         </tbody>
@@ -56,8 +56,8 @@
         <%- @payment_schedule_view.predicted_payments.each do |predicted_payment| -%>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= predicted_payment[:month] %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><%= predicted_payment[:total] %></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><%= predicted_payment[:running_total] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= predicted_payment[:total] %></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= predicted_payment[:running_total] %></td>
           </tr>
         <%- end -%>
         </tbody>
