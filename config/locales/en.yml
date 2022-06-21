@@ -437,7 +437,7 @@ en:
       provider: Provider
       record_source: Record source
       selected_title: Selected filters
-      state: Status
+      status: Status
       start_year: Start year
       end_year: End year
       subject: Subject
@@ -684,7 +684,7 @@ en:
           provider: Provider
           record_completion: Record completion
           search: Search for a trainee
-          status: Status
+          status: Training status
           study_mode: Full time or part time
           subject: Subject
           start_year: Start year
@@ -1150,6 +1150,12 @@ en:
           qts_awarded: QTS awarded
           eyts_recommended: EYTS recommended
           eyts_awarded: EYTS awarded
+        statuses:
+          course_not_yet_started: Course not started yet
+          in_training: In training
+          deferred: Deferred
+          withdrawn: Withdrawn
+          awarded: Awarded
         training_initiatives:
           transition_to_teach: Transition to Teach
           troops_to_teachers: Troops to Teachers

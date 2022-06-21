@@ -25,7 +25,7 @@ describe TraineeFilter do
           subject: "Biology",
           text_search: "search terms",
           training_route: [TRAINING_ROUTE_ENUMS[:assessment_only]],
-          state: %w[draft],
+          status: %w[course_not_started],
         }
       end
 
@@ -83,8 +83,8 @@ describe TraineeFilter do
       include_examples returns_nil
     end
 
-    context "with invalid state" do
-      let(:params) { { state: %w[not_a_state] } }
+    context "with invalid status" do
+      let(:params) { { status: %w[not_a_status] } }
 
       include_examples returns_nil
     end
@@ -108,6 +108,16 @@ describe TraineeFilter do
 
       it "returns trainee_start_year in hash" do
         expect(subject.filters).to eq({ "trainee_start_year" => ["2020"] })
+      end
+    end
+
+    context "with trainee status" do
+      let(:params) { { status: ["in_training"] } }
+
+      subject { TraineeFilter.new(params: params) }
+
+      it "returns trainee_start_year in hash" do
+        expect(subject.filters).to eq({ "status" => ["in_training"] })
       end
     end
   end

@@ -140,6 +140,30 @@ describe Trainee do
         expect(described_class.imported_from_hesa).to contain_exactly(hesa_trainee)
       end
     end
+
+    describe ".in_training" do
+      let!(:submitted_trainee) { create(:trainee, :submitted_for_trn, itt_start_date: 2.days.ago) }
+      let!(:trn_received_trainee) { create(:trainee, :trn_received, itt_start_date: 2.days.ago) }
+      let!(:recommended_for_award_trainee) { create(:trainee, :recommended_for_award, itt_start_date: 2.days.ago) }
+      let!(:recommended_for_award_trainee_in_future) { create(:trainee, :recommended_for_award, itt_start_date: Time.zone.today + 1.day) }
+      let!(:deferred_trainee) { create(:trainee, :deferred, itt_start_date: 2.days.ago) }
+
+      it "returns trainees in the submitted, trn_received and recommended for award states with start dates in the past" do
+        expect(described_class.in_training).to include(submitted_trainee, trn_received_trainee, recommended_for_award_trainee)
+        expect(described_class.in_training).not_to include(recommended_for_award_trainee_in_future, deferred_trainee)
+      end
+    end
+
+    describe ".course_not_yet_started" do
+      let!(:draft_trainee) { create(:trainee, :draft) }
+      let!(:recommended_for_award_trainee_in_past) { create(:trainee, :recommended_for_award, itt_start_date: 1.day.ago) }
+      let!(:recommended_for_award_trainee_in_future) { create(:trainee, :recommended_for_award, itt_start_date: Time.zone.today + 1.day) }
+
+      it "returns non draft trainees with start dates in the future" do
+        expect(described_class.course_not_yet_started).to include(recommended_for_award_trainee_in_future)
+        expect(described_class.course_not_yet_started).not_to include(draft_trainee, recommended_for_award_trainee_in_past)
+      end
+    end
   end
 
   context "associations" do
