@@ -32,6 +32,9 @@ review:
 	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
 	$(eval export TF_VAR_paas_app_name=$(APP_NAME))
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
+	$(eval space=bat-qa)
+	$(eval paas_env=pr-$(APP_NAME))
+	$(eval BACKUP_CONTAINER_NAME=pr-$(APP_NAME)-db-backup)
 	echo https://register-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
 
 local: ## Configure local dev environment
@@ -46,6 +49,8 @@ qa:
 	$(eval DEPLOY_ENV=qa)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
+	$(eval space=bat-qa)
+	$(eval paas_env=qa)
 	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
 
 staging:
@@ -59,6 +64,7 @@ production:
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 	$(eval HOST_NAME=www)
 	$(eval DTTP_HOSTNAME=traineeteacherportal)
+	$(eval paas_env=production)
 	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
 
 dttpimport:
@@ -80,7 +86,7 @@ set-azure-account:
 	az account set -s ${AZ_SUBSCRIPTION}
 
 read-deployment-config:
-	$(eval export POSTGRES_DATABASE_NAME=register-postgres-${DEPLOY_ENV})
+	$(eval export POSTGRES_DATABASE_NAME=register-postgres-${paas_env})
 
 read-tf-config:
 	$(eval key_vault_name=$(shell jq -r '.key_vault_name' terraform/workspace-variables/$(DEPLOY_ENV).tfvars.json))
@@ -148,16 +154,16 @@ disable-maintenance: read-tf-config ## make qa disable-maintenance / make produc
 	cf delete register-unavailable -r -f
 
 get-image-tag:
-	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${DEPLOY_ENV} | grep -Po "docker image:\s+\S+:\K\w+"))
+	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${paas_env} | grep -Po "docker image:\s+\S+:\K\w+"))
 	@echo ${TAG}
 
 get-postgres-instance-guid: ## Gets the postgres service instance's guid make qa get-postgres-instance-guid
-	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${space} 1> /dev/null && cf service register-postgres-${DEPLOY_ENV} --guid))
+	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${space} 1> /dev/null && cf service register-postgres-${paas_env} --guid))
 	@echo ${DB_INSTANCE_GUID}
 
 rename-postgres-service: ## make qa rename-postgres-service
 	cf target -s ${space} 1> /dev/null
-	cf rename-service register-postgres-${DEPLOY_ENV} register-postgres-${DEPLOY_ENV}-old
+	cf rename-service register-postgres-${paas_env} register-postgres-${paas_env}-old
 
 remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state PASSCODE=xxxx
 	cd terraform && terraform state rm module.paas.cloudfoundry_service_instance.postgres_instance
@@ -174,6 +180,12 @@ set-restore-variables:
 restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAGE_TAG=12345abcdef67890ghijklmnopqrstuvwxyz1234 DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" PASSCODE=xxxxx
 
 restore-data-from-nightly-backup: read-deployment-config read-tf-config # make production restore-data-from-nightly-backup CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES BACKUP_DATE="yyyy-mm-dd"
-	bin/download-nightly-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
+	bin/download-nightly-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${paas_env}_ ${BACKUP_DATE}
 	$(if $(CONFIRM_RESTORE), , $(error Restore can only run with CONFIRM_RESTORE))
-	bin/restore-nightly-backup ${space} ${POSTGRES_DATABASE_NAME} register_${DEPLOY_ENV}_ ${BACKUP_DATE}
+	bin/restore-nightly-backup ${space} ${POSTGRES_DATABASE_NAME} register_${paas_env}_ ${BACKUP_DATE}
+
+upload-review-backup: read-deployment-config read-tf-config # make review upload-review-backup BACKUP_DATE=2022-06-10 APP_NAME=1234
+	bin/upload-review-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${paas_env}_${BACKUP_DATE}.tar.gz
+
+backup-review-database: read-deployment-config # make review backup-review-database APP_NAME=1234
+	bin/backup-review-database ${POSTGRES_DATABASE_NAME} ${paas_env}

@@ -1,10 +1,11 @@
 # Disaster recovery
 
-This documentation covers one scenario:
+This documentation covers two scenarios:
 
+- [Loss of database instance](#loss-of-database-instance)
 - [Data loss](#data-loss)
 
-In case of any of the above disaster scenario, please do the following:
+In case of any of the above database disaster scenarios, please do the following:
 
 ### Freeze pipeline
 
@@ -12,7 +13,16 @@ Alert all developers that no one should merge to main branch.
 
 ### Local Dependencies
 
-You will need the [az](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and [cf](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) CLIs installed as well as [jq](https://stedolan.github.io/jq/download/), [make](https://www.gnu.org/software/make/) and either [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) or [tfenv](https://github.com/tfutils/tfenv#installation).
+You will need the following tools installed to successfully complete the process:
+- [az](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+- [cf](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
+- [conduit](https://github.com/alphagov/paas-cf-conduit)
+- pg_dump: `sudo apt-get install postgresql-client`
+- [jq](https://stedolan.github.io/jq/download/)
+- [make](https://www.gnu.org/software/make/)
+- either [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) or [tfenv](https://github.com/tfutils/tfenv#installation)
+
+When testing against a review environment (e.g. ending `pr-1234`) add `APP_NAME=1234` to the end of any `make review...` commands.
 
 ### Maintenance mode
 
@@ -20,7 +30,7 @@ In the instance of data loss it will probably be desirable to enable [Maintenanc
 
 ### Set up a virtual meeting
 
-Set up virtual meeting via Zoom, Slack, Teams or Google Hangout, inviting all the relevant technical stakeholders. Regularly provide updates on
+Set up a virtual meeting via Zoom, Slack, Teams or Google Meet, inviting all the relevant technical stakeholders. Regularly provide updates on
 the #twd_publish Slack channel to keep product owners abreast of developments.
 
 ### Internet Connection
@@ -32,23 +42,27 @@ Ensure whoever is executing the process has a reliable and reasonably fast Inter
 In case the database instance is lost, the objectives are:
 
 - Recreate the lost postgres database instance
-- Restore data from nightly backup stored in Azure.  The point-in-time and snapshot backups created by the PaaS Postgres service will not be available if it's been deleted.
+- Restore data from nightly backup stored in Azure. The point-in-time and snapshot backups created by the PaaS Postgres service will not be available if it's been deleted.
 
 ### Recreate the lost postgres database instance
 
 Please note, this process should take about 25 mins* to complete. In case the database service is deleted or in an inconsistent state we must recreate it and repopulate it.
-First make sure it is fully gone by running
+
+First make sure it is fully gone by running:
 
 ```
 cf services | grep register-postgres
 # check output for lost or corrupted instance
 cf delete-service <instance-name>
 ```
-Then recreate the lost postgres database instance using the following make recipes `deploy-plan` and `deploy`.  To see the proposed changes:
+
+N.B. When testing the `cf delete-service <instance name>` in the review environment the postgres service key needs deleting first. Retrieve the service key with `cf service-keys <instance name>` and then delete the service key using `cf delete-service-key <instance name> <service key name>`
+
+Then recreate the lost postgres database instance using the following make recipes `deploy-plan` and `deploy`. Replacing the `qa` in the app name below with `pr-1234` when testing in the review environment. To see the proposed changes:
 
 ```
 TAG=$(cf app register-<env> | awk -F : '$1 == "docker image" {print $3}')
-make <env> register-plan PASSCODE=<my-passcode> IMAGE_TAG=${TAG} [CONFIRM_PRODUCTION=YES]
+make <env> deploy-plan PASSCODE=<my-passcode> IMAGE_TAG=${TAG} [CONFIRM_PRODUCTION=YES]
 ```
 To apply proposed changes i.e. create new database instance:
 ```
@@ -57,7 +71,7 @@ make <env> deploy PASSCODE=<my-passcode> IMAGE_TAG=${TAG} [CONFIRM_PRODUCTION=YE
 ```
 This will create a new postgres database instance as described in the terraform configuration file.
 
-\* based on ~20 minutes to recreate postgres instance and ~5 min restore time when testing process in QA
+\* ~20 minutes to recreate postgres instance and ~5 min restore time when testing process in QA
 
 ### Restore Data From Nightly Backup
 
@@ -67,6 +81,8 @@ Once the lost database instance has been recreated, the last nightly backup will
 
 The make recipe `restore-data-from-nightly-backup` executes 2 scripts, these should be committed with the execute permission (755) set but these may have been inadvertently altered.  If you get a permissions error executing them run `chmod +x <path/to/script>`.
 
+When testing this step against a review environment a manual backup will need to be created from the review postgres instance. Use the make receipe `backup-review-database` by executing `make review backup-review-database APP_NAME=1234`. This can then be uploaded to the backup Azure storage container by executing `make review upload-review-backup BACKUP_DATE="yyyy-mm-dd" APP_NAME=1234`.
+
 ```
 # space is the name of the environment in GOV.UK PaaS, eg 'bat-prod'
 # env is the target environment in the make file e.g. 'production'
@@ -75,13 +91,23 @@ cf login -o dfe -s <space> -u my.name@digital.education.gov.uk
 make <env> restore-data-from-nightly-backup BACKUP_DATE="yyyy-mm-dd" CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES
 ```
 
-This will download the latest daily backup from Azure Storage and then populate the new database with data.
+This will download the latest daily backup from Azure Storage and then populate the new database with data. If more than one backup has been created on the date specified the script will select the most recent from that date.
+
+During the restore process a number of errors are expected because the permission level being used is not high enough to perform actions on certain database objects. These are listed below:
+```
+ERROR:  must be owner of event trigger reassign_owned (or make_readable, forbid_ddl_reader)
+ERROR:  must be owner of function public.reassign_owned (or public.make_readable_generic, public.make_readable, public.forbid_ddl_reader)
+ERROR:  must be owner of extension uuid-ossp (or pgcrypto, citext, btree_gist, btree_gin)
+ERROR:  function "forbid_ddl_reader" already exists with same argument types (or "make_readable", "make_readable_generic", "reassign_owned")
+ERROR:  permission denied for table spatial_ref_sys
+ERROR:  permission denied to create event trigger "forbid_ddl_reader" (or "make_readable", "reassign_owned")
+```
 
 ## Data Loss
 
-In the case of a data loss, we need to recover the data as soon as possible in order to resume normal service. Declare a major incident and document the incident timelines as you go along.
+In the case of a data loss, we need to recover the data as soon as possible in order to resume normal service. Declare a major incident and document the incident timelines as you go along. It is not currently possible to test the data loss scenario with a review environment.
 
-The application's database is a postgres instance, which resides on PaaS. This provides a point-in-time backup with the resolution of 1 second, available between 5min and 7days. We can use terraform to create a new database instance and use a point-in-time backup from the corrupted instance to restore the data.  This will be done in a single terraform apply operation.
+The application's database is a postgres instance, which resides on PaaS. This provides a point-in-time backup with the resolution of 1 second, available between 5min and 7days. We can use terraform to create a new database instance and use a point-in-time backup from the corrupted instance to restore the data. This will be done in a single terraform apply operation.
 
 ### Make note of database failure time
 
@@ -142,7 +168,7 @@ You will be prompted to review the terraform plan.  Check for the following:
 - a new database instance is being created using a point-in-time database backup of corrupted database
 - new service keys are created
 
-The restore process should take ~25 min.  Terraform should write logs to the console with progress, the bulk of the time will be spent recreating the postgres instance.
+The restore process should take ~25 min. Terraform should write logs to the console with progress, the bulk of the time will be spent recreating the postgres instance.
 
 ### PaaS documentation
 
