@@ -121,6 +121,7 @@ group :development, :test do
   gem "scss_lint-govuk"
 
   # Debugging
+  gem "debug"
   gem "pry-byebug"
 
   # Better use of test helpers such as save_and_open_page/screenshot
