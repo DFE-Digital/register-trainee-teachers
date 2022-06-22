@@ -170,12 +170,6 @@ class Trainee < ApplicationRecord
     end
   end
 
-  enum cohort: {
-    current: 0,
-    past: 1,
-    future: 2,
-  }
-
   COMPLETE_STATES = %w[recommended_for_award withdrawn awarded].freeze
 
   pg_search_scope :with_name_trainee_id_or_trn_like,
@@ -424,7 +418,7 @@ private
     # we use this to determine if we need to update DTTP. We use values only and exclude nils to avoid
     # sending updates when we add a field to the schema.
 
-    exclude_list = %w[created_at updated_at dttp_update_sha progress submission_ready cohort]
+    exclude_list = %w[created_at updated_at dttp_update_sha progress submission_ready]
 
     trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
 

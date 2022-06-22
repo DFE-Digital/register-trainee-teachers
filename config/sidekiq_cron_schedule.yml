@@ -30,6 +30,3 @@ import_trn_data_from_hesa:
   cron: "0 */2 * * *"
   class: "Hesa::RetrieveTrnDataJob"
   queue: default
-# update_trainee_cohorts:
-#   cron: "0 5 * * *"
-#   class: "Trainees::QueueCohortUpdatesJob"
