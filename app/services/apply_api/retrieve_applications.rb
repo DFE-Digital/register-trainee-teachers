@@ -22,14 +22,14 @@ module ApplyApi
     end
 
     def response
-      @response ||= Client.get("/applications?#{query}")
+      @response ||= Client.get(params)
     end
 
-    def query
+    def params
       {
         recruitment_cycle_year: recruitment_cycle_year,
         changed_since: changed_since&.utc&.iso8601,
-      }.compact.to_query
+      }
     end
   end
 end

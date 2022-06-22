@@ -22,10 +22,7 @@ module ApplyApi
 
         context "when no 'changed_since' is provided" do
           it "logs the successful request" do
-            subject
-            request = ApplyApplicationSyncRequest.last
-            expect(request).to be_successful
-            expect(request.response_code).to eq status
+            expect { subject }.to change { ApplyApplicationSyncRequest.count }.by(1)
           end
 
           it "returns all the Apply applications" do
@@ -47,7 +44,7 @@ module ApplyApi
           let(:expected_path) { "/applications?#{expected_query}" }
 
           it "includes the changed_at param in the request" do
-            expect(Client).to receive(:get).with(expected_path).and_call_original
+            expect(ApplyApi::Client::Request).to receive(:get).with(expected_path).and_call_original
             subject
           end
         end

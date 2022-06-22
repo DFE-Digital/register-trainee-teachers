@@ -15,21 +15,26 @@ module ApplyApi
 
     GET_SUCCESS = 200
 
-    def self.get(...)
-      response = Request.get(...)
+    def self.get(params)
+      response = Request.get("/applications?#{query(params)}")
 
-      log_request!(response)
+      log_request!(response, params)
 
       raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}") if response.code != GET_SUCCESS
 
       response
     end
 
-    def self.log_request!(response)
+    def self.log_request!(response, params)
       ApplyApplicationSyncRequest.create!(
         successful: response.code == GET_SUCCESS,
         response_code: response.code,
+        recruitment_cycle_year: params[:recruitment_cycle_year],
       )
+    end
+
+    def self.query(params)
+      params.compact.to_query
     end
   end
 end
