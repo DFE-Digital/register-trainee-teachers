@@ -127,7 +127,7 @@ module Dqt
       end
 
       def degree_ukprn
-        return if degree.institution_uuid.nil?
+        return nil if degree.institution_uuid.nil?
 
         DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn]
       end

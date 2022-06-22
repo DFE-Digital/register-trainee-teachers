@@ -34,7 +34,7 @@ module Degrees
 
     def country_specific_attributes(degree, hesa_degree)
       country = Hesa::CodeSets::Countries::MAPPING[hesa_degree[:country]]
-      institution = DfE::ReferenceData::Degrees::INSTITUTIONS.some({ hesa_itt_code: hesa_institution_code(hesa_degree) })[0]
+      institution = hesa_institution_code(hesa_degree).nil? ? nil : DfE::ReferenceData::Degrees::INSTITUTIONS.some({ hesa_itt_code: hesa_institution_code(hesa_degree) }).first
       degree_type = find_degree_type(hesa_degree[:degree_type])
 
       # Country code is not always provided, so we have

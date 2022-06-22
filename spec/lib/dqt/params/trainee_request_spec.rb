@@ -8,6 +8,7 @@ module Dqt
       let(:trainee) { create(:trainee, :completed, gender: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
       let(:degree_subject) { Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject] }
+      let(:ukprn) { DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
 
       describe "#params" do
         subject { described_class.new(trainee: trainee).params }
@@ -35,7 +36,7 @@ module Dqt
 
         it "returns a hash including degree attributes" do
           expect(subject["qualification"]).to eq({
-            "providerUkprn" => nil,
+            "providerUkprn" => ukprn,
             "countryCode" => "XK",
             "subject" => degree_subject,
             "class" => described_class::DEGREE_CLASSES[degree.grade],
