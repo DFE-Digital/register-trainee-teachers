@@ -87,6 +87,15 @@ module Dqt
               "countryCode" => "AL",
             })
           end
+
+          context "country has extra information" do
+            let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country: "Hong Kong (Special Administrative Region of China)") }
+            let(:trainee) { create(:trainee, :completed, degrees: [non_uk_degree]) }
+
+            it "maps the degree country to HESA countryCode" do
+              expect(subject["qualification"]).to include({ "countryCode" => "HK" })
+            end
+          end
         end
 
         context "when trainee has no degree" do
