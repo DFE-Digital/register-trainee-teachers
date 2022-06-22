@@ -12,7 +12,7 @@ module Trainees
 
         before do
           allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
-          allow(Trainees::SetCohortJob).to receive(:perform_later)
+          allow(Trainees::SetAcademicCyclesJob).to receive(:perform_later)
         end
 
         it "updates the trainee" do
@@ -33,8 +33,8 @@ module Trainees
           described_class.call(trainee: trainee, params: params)
         end
 
-        it "queues a cohort update" do
-          expect(Trainees::SetCohortJob).to receive(:perform_later).with(trainee)
+        it "queues a set academic cycles job" do
+          expect(Trainees::SetAcademicCyclesJob).to receive(:perform_later).with(trainee)
           described_class.call(trainee: trainee, params: params)
         end
 

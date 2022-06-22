@@ -69,6 +69,7 @@ features:
   redirect_education_domain: true
   set_trainee_cohorts: false
   hesa_trn_requests: false
+  set_trainee_academic_cycles: false
   hesa_import:
     sync_collection: false
     sync_trn_data: false

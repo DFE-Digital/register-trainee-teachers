@@ -34,6 +34,9 @@ class Trainee < ApplicationRecord
              inverse_of: :trainees,
              optional: true
 
+  belongs_to :start_academic_cycle, optional: true, class_name: "AcademicCycle"
+  belongs_to :end_academic_cycle, optional: true, class_name: "AcademicCycle"
+
   has_many :degrees, dependent: :destroy
   has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
   has_many :nationalities, through: :nationalisations

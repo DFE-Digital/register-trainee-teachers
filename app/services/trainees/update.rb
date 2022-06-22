@@ -12,7 +12,7 @@ module Trainees
     def call
       trainee.update!(params)
       Dqt::UpdateTraineeJob.perform_later(trainee)
-      Trainees::SetCohortJob.perform_later(trainee)
+      Trainees::SetAcademicCyclesJob.perform_later(trainee)
       true
     end
 

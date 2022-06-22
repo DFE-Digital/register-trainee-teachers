@@ -3,13 +3,15 @@
 FactoryBot.define do
   factory :academic_cycle do
     transient do
-      next_cycle { false }
       previous_cycle { false }
+      next_cycle { false }
+      one_after_next_cycle { false }
 
       cycle_year do
         cycles = [
-          -> { current_recruitment_cycle_year + 1 if next_cycle },
           -> { current_recruitment_cycle_year - 1 if previous_cycle },
+          -> { current_recruitment_cycle_year + 1 if next_cycle },
+          -> { current_recruitment_cycle_year + 2 if one_after_next_cycle },
         ].map(&:call).compact
 
         cycles.any? ? cycles.first : current_recruitment_cycle_year
