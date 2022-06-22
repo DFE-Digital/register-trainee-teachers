@@ -91,6 +91,7 @@ FactoryBot.define do
       with_secondary_course_details
       with_start_date
       with_degree
+      with_funding
     end
 
     trait :with_degree do

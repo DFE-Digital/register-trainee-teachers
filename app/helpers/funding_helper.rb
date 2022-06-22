@@ -6,7 +6,7 @@ module FundingHelper
   end
 
   def funding_options(trainee)
-    cannot_start_funding?(trainee) ? :funding_inactive : :funding_active
+    can_start_funding_section?(trainee) ? :funding_active : :funding_inactive
   end
 
   def format_currency(amount)
@@ -28,8 +28,7 @@ module FundingHelper
 
 private
 
-  def cannot_start_funding?(trainee)
-    funding_manager = FundingManager.new(trainee)
-    funding_manager.funding_available? && trainee.course_subject_one.blank?
+  def can_start_funding_section?(trainee)
+    trainee.progress.course_details && trainee.academic_cycle.present?
   end
 end

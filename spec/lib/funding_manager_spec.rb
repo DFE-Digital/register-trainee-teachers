@@ -7,15 +7,19 @@ describe FundingManager do
   let(:bursary_tier) { nil }
   let(:training_route) { :early_years_postgrad }
   let(:trainee) do
-    build(:trainee,
-          :with_start_date,
-          :with_study_mode_and_course_dates,
-          :with_course_allocation_subject,
-          course_subject_one: course_subject_one,
-          training_route: training_route,
-          bursary_tier: bursary_tier)
+    create(:trainee,
+           :with_start_date,
+           :with_study_mode_and_course_dates,
+           :with_course_allocation_subject,
+           course_subject_one: course_subject_one,
+           training_route: training_route,
+           bursary_tier: bursary_tier)
   end
   let(:funding_manager) { described_class.new(trainee) }
+
+  before do
+    create(:academic_cycle, :current)
+  end
 
   describe "#bursary_amount" do
     subject { funding_manager.bursary_amount }
@@ -178,7 +182,7 @@ describe FundingManager do
         create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
       end
 
-      context "and the route is funded in a another academic year" do
+      context "and the route is funded in another academic year" do
         let(:funding_method) { create(:funding_method, training_route: trainee_without_start_dates.training_route, academic_cycle: previous_academic_cycle) }
 
         it "returns true" do
