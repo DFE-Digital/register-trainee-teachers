@@ -107,7 +107,7 @@ module Dqt
 
         {
           "providerUkprn" => nil,
-          "countryCode" => country_codes[degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country],
+          "countryCode" => find_country_code(degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country),
           "subject" => degree_subject,
           "class" => DEGREE_CLASSES[degree.grade],
           "date" => Date.parse("01-01-#{degree.graduation_year}").iso8601,
@@ -126,8 +126,8 @@ module Dqt
         Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject]
       end
 
-      def country_codes
-        @country_codes ||= Hesa::CodeSets::Countries::MAPPING.invert
+      def find_country_code(country)
+        Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
       end
     end
   end
