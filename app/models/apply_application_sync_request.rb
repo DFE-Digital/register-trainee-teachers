@@ -2,4 +2,5 @@
 
 class ApplyApplicationSyncRequest < ApplicationRecord
   scope :successful, -> { where(successful: true) }
+  scope :unsuccessful, -> { where(successful: false) }
 end

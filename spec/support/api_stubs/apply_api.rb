@@ -6,17 +6,26 @@ module ApiStubs
       { data: [application] }.to_json
     end
 
-    def self.application(course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
+    def self.applications_page1
+      { data: [application(id: "3772"), application(id: "3773")] }.to_json
+    end
+
+    def self.applications_page2
+      { data: [application(id: "3774")] }.to_json
+    end
+
+    def self.application(id: "3772", course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
       uk_application(
+        id: id,
         course_attributes: course_attributes,
         candidate_attributes: candidate_attributes,
         degree_attributes: degree_attributes,
       ).to_json
     end
 
-    def self.uk_application(course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
+    def self.uk_application(id: "3772", course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
       {
-        id: "3772",
+        id: id,
         type: "application",
         attributes: {
           support_reference: "NV6357",
