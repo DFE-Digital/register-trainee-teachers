@@ -164,6 +164,16 @@ describe Trainee do
         expect(described_class.course_not_yet_started).not_to include(draft_trainee, recommended_for_award_trainee_in_past)
       end
     end
+
+    describe ".awarded_in_cycle" do
+      let(:academic_cycle) { create(:academic_cycle, :current) }
+      let(:awarded_this_year_trainee) { create(:trainee, :awarded) }
+      let(:awarded_last_year_trainee) { create(:trainee, :awarded, awarded_at: current_academic_cycle.start_date - 1.day) }
+
+      it "returns trainees created from hesa" do
+        expect(described_class.awarded_in_cycle(academic_cycle)).to contain_exactly(awarded_this_year_trainee)
+      end
+    end
   end
 
   context "associations" do
