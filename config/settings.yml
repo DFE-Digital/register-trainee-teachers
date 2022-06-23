@@ -94,6 +94,7 @@ apply_applications:
   import:
     recruitment_cycle_years:
       - 2021
+      - 2022
   create:
     recruitment_cycle_year: 2021
 
