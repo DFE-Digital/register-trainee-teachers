@@ -105,7 +105,7 @@ module Trainees
           end
 
           it "calculates the end academic cycle" do
-            expect(subject).to eq(next_academic_cycle)
+            expect(subject).to eq(current_academic_cycle)
           end
         end
 
