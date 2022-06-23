@@ -6,7 +6,7 @@ module Funding
 
     MONTH_ORDER = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7].freeze
 
-    def initialize(attributes:, first_predicted_month_index:)
+    def initialize(attributes:, first_predicted_month_index: nil)
       @attributes = attributes
       @first_predicted_month_index = first_predicted_month_index
     end
@@ -30,7 +30,7 @@ module Funding
                 month: month_index,
                 year: year_for_month(row_hash["Academic year"], month_index),
                 amount_in_pence: row_hash[month_name].to_d * 100,
-                predicted: MONTH_ORDER.index(month_index) >= MONTH_ORDER.index(first_predicted_month_index.to_i),
+                predicted: predicted?(month_index),
               )
             end
           end
@@ -52,6 +52,12 @@ module Funding
       years = year_string.split("/")
       year_string = [1, 2, 3, 4, 5, 6, 7].include?(month_index) ? "20#{years[1]}" : years[0]
       year_string.to_i
+    end
+
+    def predicted?(month_index)
+      return false if first_predicted_month_index.nil?
+
+      MONTH_ORDER.index(month_index) >= MONTH_ORDER.index(first_predicted_month_index.to_i)
     end
   end
 end

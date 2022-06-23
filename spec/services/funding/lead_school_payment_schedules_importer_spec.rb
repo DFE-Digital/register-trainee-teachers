@@ -239,10 +239,21 @@ module Funding
         end
       end
 
-      it "sets predicted correctly" do
-        subject
-        expect(lead_school_one_first_row.amounts.find_by(month: 11)).not_to be_predicted
-        expect(lead_school_one_first_row.amounts.find_by(month: 12)).to be_predicted
+      context "first predicted month is passed" do
+        it "sets predicted correctly" do
+          subject
+          expect(lead_school_one_first_row.amounts.find_by(month: 11)).not_to be_predicted
+          expect(lead_school_one_first_row.amounts.find_by(month: 12)).to be_predicted
+        end
+      end
+
+      context "first predicted month is nil" do
+        subject { described_class.call(attributes: schedules_attributes, first_predicted_month_index: nil) }
+
+        it "sets all months predicted to false" do
+          subject
+          expect(lead_school_one_first_row.amounts.where(predicted: false).count).to eq(12)
+        end
       end
     end
 
