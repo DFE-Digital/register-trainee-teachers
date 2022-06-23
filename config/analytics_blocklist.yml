@@ -45,6 +45,7 @@
   - response_code
   - successful
   - created_at
+  - recruitment_cycle_year
   - updated_at
   :disabilities:
   - name

@@ -63,6 +63,7 @@ shared:
     - graduation_year
     - id
     - institution
+    - institution_uuid
     - locale_code
     - non_uk_degree
     - other_grade
@@ -121,6 +122,12 @@ shared:
     - trainee_id
     - updated_at
     - year_of_course
+  hesa_trn_submissions:
+    - id
+    - created_at
+    - payload
+    - submitted_at
+    - updated_at
   lead_school_users:
     - created_at
     - id
@@ -208,6 +215,7 @@ shared:
     - ebacc
     - employing_school_id
     - employing_school_not_applicable
+    - end_academic_cycle_id
     - gender
     - hesa_id
     - hesa_updated_at
@@ -226,6 +234,7 @@ shared:
     - region
     - reinstate_date
     - slug
+    - start_academic_cycle_id
     - state
     - study_mode
     - submission_ready
