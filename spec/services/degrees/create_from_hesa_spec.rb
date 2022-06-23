@@ -40,6 +40,7 @@ module Degrees
           expect(degree.grade).to eq("First-class honours")
           expect(degree.other_grade).to be_nil
           expect(degree.country).to be_nil
+          expect(degree.institution_uuid).to eq("5c9e1d2d-3fa2-e811-812b-5065f38ba241")
         end
       end
 
