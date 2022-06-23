@@ -42,7 +42,7 @@ private
     return if dfe_sign_in_user.blank?
 
     @current_user ||= begin
-      user = User.kept.find_by("LOWER(email) = ?", dfe_sign_in_user.email)
+      user = User.kept.find_by("LOWER(dfe_sign_in_uid) = ?", dfe_sign_in_user.dfe_sign_in_uid.downcase)
       UserWithOrganisationContext.new(user: user, session: session) if user.present?
     end
   end
