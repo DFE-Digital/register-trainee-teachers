@@ -37,7 +37,7 @@ private
         trainees.awarded_in_cycle(current_academic_cycle).count,
         trainees_path(
           status: %w[awarded],
-          end_year: current_academic_cycle.start_year,
+          end_year: "#{current_academic_cycle.start_year} to #{current_academic_cycle.end_year}",
         ),
       ),
 

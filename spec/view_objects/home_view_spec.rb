@@ -51,7 +51,7 @@ describe HomeView do
             trainee_count: 1,
             link: trainees_path(
               status: %w[awarded],
-              end_year: current_academic_cycle.start_year,
+              end_year: "#{current_academic_cycle.start_year} to #{current_academic_cycle.end_year}",
             ),
           },
           {

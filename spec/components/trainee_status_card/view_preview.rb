@@ -11,7 +11,7 @@ module TraineeStatusCard
             status: status,
             target: "trainees_path",
             count: Array(1..100).sample,
-          )
+          ),
         )
       end
     end
