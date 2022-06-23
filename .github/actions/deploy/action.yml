@@ -67,7 +67,7 @@ runs:
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v1.2.1
       with:
-        terraform_version: 0.13.5
+        terraform_version: 0.14.11
 
     - name: Terraform init, Terraform Plan and Apply
       shell: bash

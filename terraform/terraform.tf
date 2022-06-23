@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 0.13.5"
+  required_version = "0.14.11"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -11,8 +11,8 @@ terraform {
     }
 
     statuscake = {
-      source  = "terraform-providers/statuscake"
-      version = "1.0.0"
+      source  = "StatusCakeDev/statuscake"
+      version = "1.0.1"
     }
   }
   backend azurerm {
@@ -26,7 +26,6 @@ provider cloudfoundry {
   password          = var.paas_sso_passcode == "" ? local.infra_secrets.CF_PASSWORD : null
   sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
   store_tokens_path = var.paas_sso_passcode != "" ? ".cftoken" : null
-  version           = "~> 0.12"
 }
 
 
