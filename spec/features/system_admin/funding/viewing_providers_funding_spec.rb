@@ -23,7 +23,6 @@ feature "Viewing provider's funding" do
   end
 
   def and_funding_data_exists
-    create(:academic_cycle, :current)
     create(:payment_schedule, payable: provider)
     create(:trainee_summary, :with_bursary_and_scholarship_rows, payable: provider)
   end
