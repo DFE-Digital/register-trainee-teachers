@@ -51,7 +51,9 @@ module Trainees
     end
 
     def course_duration
-      actual_course_duration || estimated_course_duration
+      course_duration = actual_course_duration || estimated_course_duration
+      # Year long courses end on average 10 months after they start, so the calculation below reflects this reality.
+      course_duration_unit == "years" ? course_duration - 2.months : course_duration
     end
 
     def actual_course_duration
