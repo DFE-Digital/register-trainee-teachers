@@ -58,4 +58,6 @@ Rails.application.configure do
 
   # We don't use hosts authorization in deployed environments and there's no value to having it in dev.
   config.hosts.clear
+
+  config.active_job.queue_adapter = :async
 end

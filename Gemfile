@@ -108,6 +108,9 @@ gem "mechanize" # interact with HESA
 
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v0.1.0"
 
+# for sending analytics data to the analytics platform
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.0.0"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
@@ -118,6 +121,7 @@ group :development, :test do
   gem "scss_lint-govuk"
 
   # Debugging
+  gem "debug"
   gem "pry-byebug"
 
   # Better use of test helpers such as save_and_open_page/screenshot

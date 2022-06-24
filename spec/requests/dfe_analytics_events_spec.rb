@@ -54,14 +54,14 @@ describe "sending request events", type: :request do
     it "does send to big query" do
       expect {
         get "/test?foo=bar", headers: headers
-      }.to(have_enqueued_job(BigQuery::SendEventJob))
+      }.to(have_sent_analytics_event_types(:web_request))
     end
 
     context "controller doesn't have a current_user" do
       it "does send to big query" do
         expect {
           get "/unauthenticated_test?foo=bar", headers: headers
-        }.to(have_enqueued_job(BigQuery::SendEventJob))
+        }.to(have_sent_analytics_event_types(:web_request))
       end
     end
   end
@@ -74,7 +74,7 @@ describe "sending request events", type: :request do
     it "doesn't send to big query" do
       expect {
         get "/test?foo=bar", headers: headers
-      }.not_to(have_enqueued_job(BigQuery::SendEventJob))
+      }.not_to(have_sent_analytics_event_types(:web_request))
     end
   end
 end

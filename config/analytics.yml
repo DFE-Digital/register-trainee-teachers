@@ -49,7 +49,6 @@ shared:
     - summary
     - updated_at
     - uuid
-    - course_allocation_subject_id
   course_subjects:
     - id
     - course_id
@@ -64,6 +63,7 @@ shared:
     - graduation_year
     - id
     - institution
+    - institution_uuid
     - locale_code
     - non_uk_degree
     - other_grade
@@ -85,7 +85,7 @@ shared:
     - updated_at
   dttp_schools:
     - created_at
-    - dttp_i
+    - dttp_id
     - id
     - name
     - status_code
@@ -93,9 +93,7 @@ shared:
     - urn
   funding_methods:
     - academic_cycle_id
-    - allocation_subject_id
     - amount
-    - bursary_id
     - created_at
     - created_at
     - funding_type
@@ -124,6 +122,12 @@ shared:
     - trainee_id
     - updated_at
     - year_of_course
+  hesa_trn_submissions:
+    - id
+    - created_at
+    - payload
+    - submitted_at
+    - updated_at
   lead_school_users:
     - created_at
     - id
@@ -211,6 +215,7 @@ shared:
     - ebacc
     - employing_school_id
     - employing_school_not_applicable
+    - end_academic_cycle_id
     - gender
     - hesa_id
     - hesa_updated_at
@@ -229,6 +234,7 @@ shared:
     - region
     - reinstate_date
     - slug
+    - start_academic_cycle_id
     - state
     - study_mode
     - submission_ready

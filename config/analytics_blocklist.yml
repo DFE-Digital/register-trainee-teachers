@@ -1,0 +1,253 @@
+---
+:shared:
+  :audits:
+  - id
+  - auditable_id
+  - auditable_type
+  - associated_id
+  - associated_type
+  - user_id
+  - user_type
+  - username
+  - action
+  - audited_changes
+  - version
+  - comment
+  - remote_address
+  - request_uuid
+  - created_at
+  :data_migrations:
+  - version
+  :trainees:
+  - trainee_id
+  - first_names
+  - last_name
+  - date_of_birth
+  - address_line_one
+  - address_line_two
+  - email
+  - middle_names
+  - international_address
+  - ethnic_group
+  - ethnic_background
+  - additional_ethnic_background
+  - additional_withdraw_reason
+  - additional_dttp_data
+  - hesa_updated_at
+  :allocation_subjects:
+  - dttp_id
+  - deprecated_on
+  :apply_applications:
+  - application
+  - invalid_data
+  :apply_application_sync_requests:
+  - id
+  - response_code
+  - successful
+  - created_at
+  - recruitment_cycle_year
+  - updated_at
+  :disabilities:
+  - name
+  - description
+  :dqt_trn_requests:
+  - id
+  - trainee_id
+  - request_id
+  - response
+  - state
+  - created_at
+  - updated_at
+  :dttp_accounts:
+  - id
+  - dttp_id
+  - ukprn
+  - name
+  - response
+  - created_at
+  - updated_at
+  - urn
+  - accreditation_id
+  :dttp_bursary_details:
+  - id
+  - response
+  - dttp_id
+  - created_at
+  - updated_at
+  :dttp_degree_qualifications:
+  - id
+  - response
+  - state
+  - dttp_id
+  - contact_dttp_id
+  - created_at
+  - updated_at
+  :dttp_dormant_periods:
+  - id
+  - response
+  - dttp_id
+  - placement_assignment_dttp_id
+  - created_at
+  - updated_at
+  :dttp_placement_assignments:
+  - id
+  - response
+  - dttp_id
+  - contact_dttp_id
+  - created_at
+  - updated_at
+  - provider_dttp_id
+  - academic_year
+  - programme_start_date
+  - programme_end_date
+  - trainee_status
+  :dttp_providers:
+  - response
+  :dttp_trainees:
+  - id
+  - response
+  - state
+  - dttp_id
+  - provider_dttp_id
+  - created_at
+  - updated_at
+  - status
+  :dttp_training_initiatives:
+  - id
+  - response
+  - dttp_id
+  - created_at
+  - updated_at
+  :dttp_users:
+  - id
+  - first_name
+  - last_name
+  - email
+  - dttp_id
+  - provider_dttp_id
+  - created_at
+  - updated_at
+  :funding_payment_schedules:
+  - id
+  - payable_id
+  - payable_type
+  - created_at
+  - updated_at
+  :funding_payment_schedule_rows:
+  - id
+  - funding_payment_schedule_id
+  - description
+  - created_at
+  - updated_at
+  :funding_payment_schedule_row_amounts:
+  - id
+  - funding_payment_schedule_row_id
+  - month
+  - year
+  - amount_in_pence
+  - predicted
+  - created_at
+  - updated_at
+  :funding_trainee_summaries:
+  - id
+  - payable_id
+  - payable_type
+  - academic_year
+  - created_at
+  - updated_at
+  :funding_trainee_summary_rows:
+  - id
+  - funding_trainee_summary_id
+  - subject
+  - route
+  - lead_school_name
+  - lead_school_urn
+  - cohort_level
+  - created_at
+  - updated_at
+  :funding_trainee_summary_row_amounts:
+  - id
+  - funding_trainee_summary_row_id
+  - payment_type
+  - tier
+  - amount_in_pence
+  - number_of_trainees
+  - created_at
+  - updated_at
+  :hesa_collection_requests:
+  - id
+  - collection_reference
+  - response_body
+  - created_at
+  - updated_at
+  :hesa_students:
+  - id
+  - hesa_id
+  - first_names
+  - last_name
+  - email
+  - date_of_birth
+  - ethnic_background
+  - gender
+  - ukprn
+  - trainee_id
+  - course_subject_one
+  - course_subject_two
+  - course_subject_three
+  - itt_start_date
+  - itt_end_date
+  - employing_school_urn
+  - lead_school_urn
+  - mode
+  - course_age_range
+  - commencement_date
+  - training_initiative
+  - disability
+  - end_date
+  - reason_for_leaving
+  - bursary_level
+  - trn
+  - training_route
+  - nationality
+  - hesa_updated_at
+  - itt_aim
+  - itt_qualification_aim
+  - fund_code
+  - study_length
+  - study_length_unit
+  - service_leaver
+  - course_programme_title
+  - pg_apprenticeship_start_date
+  - year_of_course
+  - degrees
+  - placements
+  - created_at
+  - updated_at
+  :hesa_trn_requests:
+  - id
+  - collection_reference
+  - state
+  - response_body
+  - created_at
+  - updated_at
+  :users:
+  - first_name
+  - last_name
+  - email
+  - read_only
+  :schools:
+  - searchable
+  :trainee_disabilities:
+  - id
+  - trainee_id
+  - disability_id
+  - created_at
+  - updated_at
+  - additional_disability
+  :validation_errors:
+  - id
+  - user_id
+  - form_object
+  - details
+  - created_at
+  - updated_at

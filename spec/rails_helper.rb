@@ -14,6 +14,7 @@ require "rspec/rails"
 require "webmock/rspec"
 require "pundit/rspec"
 require "audited-rspec"
+require "dfe/analytics/rspec/matchers"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
