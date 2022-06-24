@@ -25,6 +25,7 @@ describe PagesController, type: :controller do
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
+      create(:academic_cycle, :current)
     end
 
     it "renders home page" do
