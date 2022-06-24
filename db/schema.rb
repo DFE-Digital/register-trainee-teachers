@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_16_093411) do
+ActiveRecord::Schema.define(version: 2022_06_22_105221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -671,12 +671,10 @@ ActiveRecord::Schema.define(version: 2022_06_16_093411) do
     t.jsonb "additional_dttp_data"
     t.boolean "created_from_hesa", default: false, null: false
     t.datetime "hesa_updated_at"
-    t.integer "cohort", default: 0
     t.bigint "course_allocation_subject_id"
     t.bigint "start_academic_cycle_id"
     t.bigint "end_academic_cycle_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
-    t.index ["cohort"], name: "index_trainees_on_cohort"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"

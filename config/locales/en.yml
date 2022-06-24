@@ -433,7 +433,6 @@ en:
       service_updates: News and updates
       organisations: Choose organisation
     filter:
-      cohort: Cohort
       level: Education phase
       provider: Provider
       record_source: Record source
@@ -678,7 +677,6 @@ en:
           above_the_fold_title: Draft trainees
           below_the_fold_title: Registered trainees
         filters:
-          cohort: Cohort
           complete: Complete
           incomplete: Incomplete
           level: Education phase
@@ -1117,10 +1115,6 @@ en:
   activerecord:
     attributes:
       trainee:
-        cohorts:
-          current: Current
-          past: Past
-          future: Next year's
         record_sources:
           title: Record source
           apply: Imported from Apply

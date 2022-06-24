@@ -548,25 +548,5 @@ FactoryBot.define do
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       hesa_student { create(:hesa_student, hesa_id: hesa_id) }
     end
-
-    trait :past do
-      cohort { "past" }
-      itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year - 1) }
-      itt_end_date { Faker::Date.in_date_period(month: 8, year: itt_start_date.year + 1) }
-      awarded
-      awarded_at { itt_end_date }
-    end
-
-    trait :current do
-      cohort { "current" }
-      itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
-      itt_end_date { Faker::Date.in_date_period(month: 8, year: itt_start_date.year + 1) }
-    end
-
-    trait :future do
-      cohort { "future" }
-      itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year + 1) }
-      itt_end_date { Faker::Date.in_date_period(month: 8, year: itt_start_date.year + 1) }
-    end
   end
 end

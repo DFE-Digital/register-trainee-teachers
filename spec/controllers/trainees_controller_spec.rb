@@ -98,14 +98,4 @@ describe TraineesController do
       end
     end
   end
-
-  describe "#destroy" do
-    context "with a non-draft trainee" do
-      let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.organisation) }
-
-      it "redirects to the trainee index page, with the current cohort filter applied" do
-        expect(get(:destroy, params: { id: trainee })).to redirect_to(trainees_path(cohort: %w[current]))
-      end
-    end
-  end
 end

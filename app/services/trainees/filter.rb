@@ -126,12 +126,6 @@ module Trainees
       end
     end
 
-    def cohort(trainees, cohort)
-      return trainees if cohort.blank?
-
-      trainees.where(cohort: cohort)
-    end
-
     def filter_trainees
       filtered_trainees = trainees
 
@@ -144,7 +138,6 @@ module Trainees
       filtered_trainees = provider(filtered_trainees, filters[:provider])
       filtered_trainees = record_completion(filtered_trainees, filters[:record_completion])
       filtered_trainees = study_mode(filtered_trainees, filters[:study_mode])
-      filtered_trainees = cohort(filtered_trainees, filters[:cohort])
 
       record_source(filtered_trainees, filters[:record_source])
     end
