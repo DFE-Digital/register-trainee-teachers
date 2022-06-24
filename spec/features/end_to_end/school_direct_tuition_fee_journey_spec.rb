@@ -3,10 +3,7 @@
 require "rails_helper"
 
 feature "school-direct-tuition-fee end-to-end journey", type: :feature do
-  background {
-    given_i_am_authenticated
-    and_an_academic_cycle_exists
-  }
+  background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.school_direct_tuition_fee": true do
     given_i_have_created_a_school_direct_tuition_fee_trainee
