@@ -118,7 +118,7 @@ module Funding
               "August" => nil,
               "September" => nil,
               "October" => "16480.10",
-              "November" => "8285.55",
+              "November" => "8,285.55",
               "December" => "8285.55",
               "January" => "8285.55",
               "February" => "8285.55",
@@ -221,6 +221,12 @@ module Funding
         subject
         october_amount = lead_school_two_first_row.amounts.find_by(month: 10)
         expect(october_amount.amount_in_pence).to eq(1648010)
+      end
+
+      it "sets the amount correctly for amounts containing commas" do
+        subject
+        november_amount = lead_school_two_first_row.amounts.find_by(month: 11)
+        expect(november_amount.amount_in_pence).to eq(828555)
       end
 
       it "sets the year correctly" do
