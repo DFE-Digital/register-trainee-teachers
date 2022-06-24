@@ -100,35 +100,6 @@ module Exports
       def format_amount(amount_in_pence)
         amount_in_pence.zero? ? "0" : "\"#{ActionController::Base.helpers.number_to_currency(amount_in_pence.to_d / 100, unit: '£')}\""
       end
-
-      context "with vulnerabilities in the data" do
-        let(:expected_header_line) do
-          "Month,'@Training bursary trainees,'+Course extension provider payments,Month total"
-        end
-        let(:expected_data_line) do
-          "'=January 2022,£12.34,£23.45,£35.79"
-        end
-
-        before do
-          suspect_data = [
-            {
-              MONTH_HEADING => "=January 2022",
-              "@Training bursary trainees" => 1234,
-              "+Course extension provider payments" => 2345,
-              MONTH_TOTAL_HEADING => 3579,
-            },
-          ]
-          allow(exporter).to receive(:data).and_return(suspect_data)
-        end
-
-        it "Sanitizes header line correctly" do
-          expect(exporter.to_csv).to include(expected_header_line)
-        end
-
-        it "Sanitizes data correctly" do
-          expect(exporter.to_csv).to include(expected_data_line)
-        end
-      end
     end
   end
 end
