@@ -119,7 +119,7 @@ module Funding
               "September" => nil,
               "October" => "16480.10",
               "November" => "8,285.55",
-              "December" => "8285.55",
+              "December" => "",
               "January" => "8285.55",
               "February" => "8285.55",
               "March" => "8285.55",
@@ -227,6 +227,12 @@ module Funding
         subject
         november_amount = lead_school_two_first_row.amounts.find_by(month: 11)
         expect(november_amount.amount_in_pence).to eq(828555)
+      end
+
+      it "sets the amount to 0 when the value is blank" do
+        subject
+        december_amount = lead_school_two_first_row.amounts.find_by(month: 12)
+        expect(december_amount.amount_in_pence).to eq(0)
       end
 
       it "sets the year correctly" do

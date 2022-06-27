@@ -61,7 +61,7 @@ module Funding
     end
 
     def in_pence(amount_string)
-      return if amount_string.blank?
+      return 0 if amount_string.blank?
 
       amount_string.gsub(",", "").to_d * 100
     end
