@@ -26,3 +26,19 @@ trainee.without_auditing do
   trainee.update_columns(state: "XXX", withdraw_reason: nil, additional_withdraw_reason: nil, withdraw_date: nil)
 end
 ```
+
+## Error code on DQT trainee jobs
+
+Sometimes the different jobs that send trainee info to DQT (such as `Dqt::UpdateTraineeJob`) will produce an error. You can view these failed jobs in the Sidekiq UI. Some common errors:
+
+### 500 error
+
+This is a cloud server error. You can usually just rerun these jobs and they'll succeed. If not, speak with DQT about the trainee.
+
+### 404 error
+
+This is triggered when DQT cannot find the trainee. We've seen this happen when there is a mismatch on the Date of Birth (we send both TRN and DOB to DQT to match trainees). Speak with the DQT team to align the date of birth if possible, then rerun.
+
+### 400 error
+
+This error means there is an unprocessable entry. This normally means there is some kind of validation error in the payload which will need to be investigated.
