@@ -49,7 +49,7 @@ private
 
       Badge.new(
         :incomplete,
-        trainees.incomplete_for_filter.count,
+        trainees.not_draft.incomplete_for_filter.count,
         trainees_path(record_completion: %w[incomplete]),
       ),
     ]

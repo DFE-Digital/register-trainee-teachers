@@ -3,7 +3,7 @@
       <% badges.map do |badge| %>
           <%= render TraineeStatusCard::View.new(status: badge.status,
                                                  count: badge.trainee_count,
-                                                 target:badge.link
+                                                 target: badge.link
                                                 ) %>
       <% end %>
   </div>

@@ -11,26 +11,26 @@ describe HomeView do
   subject { described_class.new(trainees) }
 
   describe "#badges" do
-    let(:not_started_trainee) { create(:trainee, itt_start_date: current_academic_cycle.end_date + 1.day) }
+    let(:not_started_trainee) { create(:trainee, :trn_received, itt_start_date: current_academic_cycle.end_date + 1.day) }
     let(:in_training_trainees) { create_list(:trainee, 2, :trn_received) }
     let(:awarded_this_year_trainee) { create(:trainee, :awarded) }
     let(:awarded_last_year_trainee) { create(:trainee, :awarded, awarded_at: current_academic_cycle.start_date - 1.day) }
     let(:deferred_trainees) { create_list(:trainee, 2, :deferred) }
+    let(:incomplete_trainee) { create(:trainee, :trn_received, :incomplete) }
 
     let(:trainees) do
       trainee_ids = [
         not_started_trainee.id,
         awarded_this_year_trainee.id,
         awarded_last_year_trainee.id,
+        incomplete_trainee.id,
       ] + in_training_trainees.pluck(:id) + deferred_trainees.pluck(:id)
 
       Trainee.where(id: trainee_ids)
     end
 
     before do
-      # rubocop:disable RSpec/MessageChain
       allow(Trainee).to receive_message_chain(:course_not_yet_started, :count).and_return(1)
-      # rubocop:enable RSpec/MessageChain
     end
 
     it "returns correct counts and links" do
@@ -41,9 +41,10 @@ describe HomeView do
             trainee_count: 1,
             link: trainees_path(status: %w[course_not_yet_started]),
           },
+          # Both the in training trainees plus the incomplete one.
           {
             status: :in_training,
-            trainee_count: 2,
+            trainee_count: 3,
             link: trainees_path(status: %w[in_training]),
           },
           {
@@ -59,7 +60,6 @@ describe HomeView do
             trainee_count: 2,
             link: trainees_path(status: %w[deferred]),
           },
-          # i.e. the not_started_trainee who is still in draft
           {
             status: :incomplete,
             trainee_count: 1,
