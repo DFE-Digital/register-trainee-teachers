@@ -76,6 +76,7 @@ private
       :subject,
       :text_search,
       :start_year,
+      :end_year,
       :sort_by,
       {
         level: [],

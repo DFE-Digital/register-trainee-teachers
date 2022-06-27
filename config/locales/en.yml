@@ -439,6 +439,7 @@ en:
       selected_title: Selected filters
       state: Status
       start_year: Start year
+      end_year: End year
       subject: Subject
       text_search: Text search
       title: Filters
@@ -687,6 +688,7 @@ en:
           study_mode: Full time or part time
           subject: Subject
           start_year: Start year
+          end_year: End year
           trainee_start_year: *trainee_start_year
           type_of_training: Type of training
       edit:

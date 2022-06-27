@@ -132,6 +132,7 @@ private
       :text_search,
       :sort_by,
       :start_year,
+      :end_year,
       {
         level: [],
         training_route: [],

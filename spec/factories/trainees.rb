@@ -28,6 +28,9 @@ FactoryBot.define do
     additional_ethnic_background { nil }
     disability_disclosure { nil }
 
+    start_academic_cycle { AcademicCycle.for_date(itt_start_date) }
+    end_academic_cycle { AcademicCycle.for_date(itt_end_date) }
+
     with_uk_address
     email { "#{first_names}.#{last_name}@example.com" }
     applying_for_bursary { nil }
@@ -195,13 +198,31 @@ FactoryBot.define do
     trait :with_study_mode_and_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
       itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
-      itt_end_date { Faker::Date.in_date_period(month: 8, year: current_recruitment_cycle_year + 1) }
+      itt_end_date do
+        additional_years = if [2, 9, 10].include?(training_route)
+                             3
+                           elsif study_mode == "part_time"
+                             2
+                           else
+                             1
+                           end
+        Faker::Date.in_date_period(month: 6, year: current_recruitment_cycle_year + additional_years)
+      end
     end
 
     trait :with_study_mode_and_future_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
       itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year + 1) }
-      itt_end_date { Faker::Date.in_date_period(month: 8, year: itt_start_date.year + 1) }
+      itt_end_date do
+        additional_years = if [2, 9, 10].include?(training_route)
+                             3
+                           elsif study_mode == "part_time"
+                             2
+                           else
+                             1
+                           end
+        Faker::Date.in_date_period(month: 6, year: itt_start_date.year + additional_years)
+      end
     end
 
     trait :with_publish_course_details do
