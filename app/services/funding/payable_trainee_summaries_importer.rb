@@ -5,6 +5,7 @@ module Funding
 
   class PayableTraineeSummariesImporter
     include ServicePattern
+    include HasAmountsInPence
 
     def initialize(attributes:)
       @attributes = attributes
@@ -32,9 +33,9 @@ module Funding
 
             amount_maps.each do |amount_map|
               number_of_trainees = row_hash[amount_map[:number_of_trainees]]
-              amount_in_pence = row_hash[amount_map[:amount]].to_d * 100
+              amount_in_pence = in_pence(row_hash[amount_map[:amount]])
 
-              next unless number_of_trainees.to_d.positive? && amount_in_pence.to_d.positive?
+              next unless number_of_trainees.to_i.positive? && amount_in_pence.to_i.positive?
 
               row.amounts.create(
                 amount_in_pence: amount_in_pence,
