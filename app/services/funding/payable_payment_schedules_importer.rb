@@ -29,7 +29,7 @@ module Funding
               row.amounts.create(
                 month: month_index,
                 year: year_for_month(row_hash["Academic year"], month_index),
-                amount_in_pence: row_hash[month_name].to_d * 100,
+                amount_in_pence: in_pence(row_hash[month_name]),
                 predicted: predicted?(month_index),
               )
             end
@@ -58,6 +58,12 @@ module Funding
       return false if first_predicted_month_index.nil?
 
       MONTH_ORDER.index(month_index) >= MONTH_ORDER.index(first_predicted_month_index.to_i)
+    end
+
+    def in_pence(amount_string)
+      return if amount_string.blank?
+
+      amount_string.gsub(",", "").to_d * 100
     end
   end
 end

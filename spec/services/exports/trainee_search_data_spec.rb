@@ -129,16 +129,6 @@ module Exports
       it "sets the correct row values" do
         expect(subject.data).to include(expected_output.values.join(","))
       end
-
-      context "when names contain whitespace or vulnerable characters" do
-        before do
-          trainee.update!(first_names: "Christophe", middle_names: "Malcolm", last_name: "=SUM(A1&A2)")
-        end
-
-        it "adds an apostrophe before vulnerable characters" do
-          expect(subject.data).to include("Christophe,Malcolm,'=SUM(A1&A2)")
-        end
-      end
     end
 
     describe "#time" do
