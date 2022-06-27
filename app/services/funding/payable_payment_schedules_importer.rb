@@ -3,6 +3,7 @@
 module Funding
   class PayablePaymentSchedulesImporter
     include ServicePattern
+    include HasAmountsInPence
 
     MONTH_ORDER = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7].freeze
 
@@ -58,12 +59,6 @@ module Funding
       return false if first_predicted_month_index.nil?
 
       MONTH_ORDER.index(month_index) >= MONTH_ORDER.index(first_predicted_month_index.to_i)
-    end
-
-    def in_pence(amount_string)
-      return 0 if amount_string.blank?
-
-      amount_string.gsub(",", "").to_d * 100
     end
   end
 end

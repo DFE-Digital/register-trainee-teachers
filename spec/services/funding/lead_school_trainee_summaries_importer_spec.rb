@@ -14,9 +14,9 @@ module Funding
               "Lead school name" => "Lead School 1",
               "Subject" => "Physics",
               "Description" => "School Direct salaried",
-              "Funding/trainee" => "24000",
+              "Funding/trainee" => "24,000",
               "Trainees" => "2",
-              "Total Funding" => "42000",
+              "Total Funding" => "42,000",
             },
             {
               "Academic year" => "2021/22",
