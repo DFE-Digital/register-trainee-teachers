@@ -113,4 +113,37 @@ describe HomeView do
       expect(subject.draft_apply_trainees_count).to eq(1)
     end
   end
+
+  describe "#apply_drafts_link_text" do
+    context "when all draft trainees are apply drafts" do
+      let(:trainees) do
+        trainee_ids = [
+          create(:trainee, :draft, :with_apply_application).id,
+        ]
+        Trainee.where(id: trainee_ids)
+      end
+
+      it "returns the correct text" do
+        expect(subject.apply_drafts_link_text).to eq(
+          I18n.t("pages.home.draft_apply_trainees_link_all_apply", count: 1),
+        )
+      end
+    end
+
+    context "when not all draft trainees are apply drafts" do
+      let(:trainees) do
+        trainee_ids = [
+          create(:trainee, :draft).id,
+          create(:trainee, :draft, :with_apply_application).id,
+        ]
+        Trainee.where(id: trainee_ids)
+      end
+
+      it "returns the correct text" do
+        expect(subject.apply_drafts_link_text).to eq(
+          I18n.t("pages.home.draft_apply_trainees_link", count: 1, total: 2),
+        )
+      end
+    end
+  end
 end

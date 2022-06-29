@@ -13,11 +13,26 @@ class HomeView
   Badge = Struct.new(:status, :trainee_count, :link)
 
   def draft_trainees_count
-    trainees.draft.count
+    @draft_trainees_count ||= trainees.draft.count
   end
 
   def draft_apply_trainees_count
-    trainees.draft.with_apply_application.count
+    @draft_apply_trainees_count ||= trainees.draft.with_apply_application.count
+  end
+
+  def apply_drafts_link_text
+    if drafts_are_all_apply_drafts?
+      I18n.t(
+        "pages.home.draft_apply_trainees_link_all_apply",
+        count: draft_apply_trainees_count,
+      )
+    else
+      I18n.t(
+        "pages.home.draft_apply_trainees_link",
+        count: draft_apply_trainees_count,
+        total: draft_trainees_count,
+      )
+    end
   end
 
 private
@@ -71,5 +86,9 @@ private
 
   def course_not_yet_started_count
     @course_not_yet_started_count ||= trainees.course_not_yet_started.count
+  end
+
+  def drafts_are_all_apply_drafts?
+    draft_apply_trainees_count == draft_trainees_count
   end
 end
