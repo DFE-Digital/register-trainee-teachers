@@ -19,7 +19,6 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
   funding: true
-  set_trainee_academic_cycles: true
 
 pagination:
   records_per_page: 30
