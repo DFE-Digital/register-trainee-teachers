@@ -426,6 +426,7 @@ FactoryBot.define do
         courses_count { 5 }
         subject_names { [] }
         study_mode { "full_time" }
+        recruitment_cycle_year { Settings.current_default_course_year }
       end
 
       after(:create) do |trainee, evaluator|
@@ -433,7 +434,8 @@ FactoryBot.define do
                     subject_names: evaluator.subject_names,
                     accredited_body_code: trainee.provider.code,
                     route: trainee.training_route,
-                    study_mode: evaluator.study_mode)
+                    study_mode: evaluator.study_mode,
+                    recruitment_cycle_year: evaluator.recruitment_cycle_year)
 
         trainee.reload
       end
