@@ -68,7 +68,6 @@ features:
   funding: true
   redirect_education_domain: true
   hesa_trn_requests: false
-  set_trainee_academic_cycles: false
   hesa_import:
     sync_collection: false
     sync_trn_data: false
