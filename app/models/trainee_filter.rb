@@ -33,6 +33,7 @@ private
       **provider,
       **record_completions,
       **start_year,
+      **end_year,
       **trainee_start_years,
       **study_modes,
     ).with_indifferent_access
@@ -52,9 +53,18 @@ private
 
   def start_year
     academic_cycle ||= AcademicCycle.for_year(params[:start_year])
+
     return {} unless academic_cycle
 
     { "start_year" => params[:start_year] }
+  end
+
+  def end_year
+    academic_cycle ||= AcademicCycle.for_year(params[:end_year])
+
+    return {} unless academic_cycle
+
+    { "end_year" => params[:end_year] }
   end
 
   def training_route

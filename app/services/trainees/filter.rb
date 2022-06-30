@@ -81,10 +81,18 @@ module Trainees
       trainees.with_subject_or_allocation_subject(subject)
     end
 
-    def start_year(trainees, start_year)
-      return trainees if start_year.blank?
+    def start_year(trainees, cycle_start_year)
+      return trainees if cycle_start_year.blank?
 
-      academic_cycle_scope = AcademicCycle.for_year(start_year).trainees_starting
+      academic_cycle_scope = AcademicCycle.for_year(cycle_start_year).trainees_starting
+
+      trainees.merge(academic_cycle_scope)
+    end
+
+    def end_year(trainees, cycle_start_year)
+      return trainees if cycle_start_year.blank?
+
+      academic_cycle_scope = AcademicCycle.for_year(cycle_start_year).trainees_ending
 
       trainees.merge(academic_cycle_scope)
     end
@@ -133,6 +141,7 @@ module Trainees
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = start_year(filtered_trainees, filters[:start_year])
+      filtered_trainees = end_year(filtered_trainees, filters[:end_year])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
       filtered_trainees = level(filtered_trainees, filters[:level])
       filtered_trainees = provider(filtered_trainees, filters[:provider])

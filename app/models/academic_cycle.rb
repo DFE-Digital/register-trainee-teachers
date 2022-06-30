@@ -9,9 +9,7 @@ class AcademicCycle < ApplicationRecord
   scope :trainees_filter, -> { order(start_date: :desc).limit(3) }
 
   def self.for_year(year)
-    from_date = Date.new(year.to_i, 1, 1)
-    to_date = from_date.end_of_year
-    where(start_date: from_date..to_date).first
+    where("extract(year from start_date) = ?", year.to_i).first
   end
 
   def self.for_date(date)
@@ -23,17 +21,15 @@ class AcademicCycle < ApplicationRecord
   end
 
   def trainees_starting
-    query = <<~SQL
-      COALESCE(commencement_date, itt_start_date) BETWEEN :start_date AND :end_date
-    SQL
+    trainee_scope = Trainee.where(start_academic_cycle: self)
+    trainee_scope = trainee_scope.or(Trainee.where(start_academic_cycle: nil)) if current?
+    trainee_scope
+  end
 
-    result_scope = Trainee.where(query, start_date: start_date, end_date: end_date)
-
-    if current?
-      result_scope = result_scope.or(Trainee.where(commencement_date: nil, itt_start_date: nil))
-    end
-
-    result_scope.kept
+  def trainees_ending
+    trainee_scope = Trainee.where(end_academic_cycle: self)
+    trainee_scope = trainee_scope.or(Trainee.where(end_academic_cycle: nil)) if current?
+    trainee_scope
   end
 
   def start_year

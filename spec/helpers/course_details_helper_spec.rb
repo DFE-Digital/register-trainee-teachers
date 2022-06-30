@@ -102,9 +102,10 @@ describe CourseDetailsHelper do
     end
 
     it "returns formatted start years" do
-      expect(StartYearFilterOptions).to receive(:render).with(user: current_user, draft: false)
-        .and_return(["2020 to 2021"])
-      expect(filter_start_year_options(current_user).map(&:value)).to eq(["All years", "2020 to 2021"])
+      expect(AcademicYearFilterOptions).to receive(:new).with(user: current_user, draft: false)
+                                                           .and_return(double(formatted_years: ["2020 to 2021"]))
+
+      expect(filter_year_options(current_user, :start_year).map(&:value)).to eq(["All years", "2020 to 2021"])
     end
   end
 end

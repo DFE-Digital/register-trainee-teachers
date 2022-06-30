@@ -24,14 +24,14 @@
 
   <%= render "trainees/record_completion_filter", search_path: search_path %>
 
-  <% if filter_start_year_options(current_user).count > 2 %>
+  <% [:start_year, :end_year].each do |field| %>
     <div class="govuk-form-group">
-      <%= label_tag "start_year", t("views.trainees.index.filters.start_year"), class: "govuk-label govuk-label--s" %>
-      <%= select_tag :start_year, options_from_collection_for_select(
-        filter_start_year_options(current_user),
+      <%= label_tag field, t("views.trainees.index.filters.#{field}"), class: "govuk-label govuk-label--s" %>
+      <%= select_tag field, options_from_collection_for_select(
+        filter_year_options(current_user, field),
         :value,
         :text,
-        ->(object) { object.text == filters[:start_year] if filters },
+        ->(object) { object.text == filters[field] if filters },
         ), class: "govuk-select" %>
     </div>
   <% end %>

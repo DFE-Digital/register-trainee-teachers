@@ -11,8 +11,8 @@ module CourseDetailsHelper
     to_options(all_subjects, first_value: "All subjects")
   end
 
-  def filter_start_year_options(current_user)
-    to_options(all_start_years(current_user), first_value: "All years")
+  def filter_year_options(current_user, cycle_context)
+    to_options(year_filter_options(current_user, cycle_context), first_value: "All years")
   end
 
   def main_age_ranges_options(level: :primary)
@@ -75,8 +75,8 @@ private
     @all_subjects ||= (SubjectSpecialism.pluck(:name) + AllocationSubject.pluck(:name) + [Trainees::Filter::ALL_SCIENCES_FILTER]).uniq(&:downcase).sort_by(&:downcase)
   end
 
-  def all_start_years(current_user)
-    @all_start_years ||= StartYearFilterOptions.render(user: current_user, draft: draft_records_view?)
+  def year_filter_options(current_user, cycle_context)
+    AcademicYearFilterOptions.new(user: current_user, draft: draft_records_view?).formatted_years(cycle_context)
   end
 
   def draft_records_view?
