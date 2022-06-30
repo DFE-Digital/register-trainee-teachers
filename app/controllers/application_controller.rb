@@ -42,9 +42,27 @@ private
     return if dfe_sign_in_user.blank?
 
     @current_user ||= begin
-      user = User.kept.find_by("LOWER(email) = ?", dfe_sign_in_user.email)
+      user = lookup_user_by_dfe_sign_in_uid || lookup_user_by_email
       UserWithOrganisationContext.new(user: user, session: session) if user.present?
     end
+  end
+
+  def lookup_user_by_dfe_sign_in_uid
+    return nil if dfe_sign_in_user&.dfe_sign_in_uid.blank?
+
+    User.kept.find_by(
+      "LOWER(dfe_sign_in_uid) = ?",
+      dfe_sign_in_user.dfe_sign_in_uid.downcase,
+    )
+  end
+
+  def lookup_user_by_email
+    return nil if dfe_sign_in_user&.email.blank?
+
+    User.kept.find_by(
+      "LOWER(email) = ?",
+      dfe_sign_in_user.email.downcase,
+    )
   end
 
   def audit_user

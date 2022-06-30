@@ -10,6 +10,7 @@ describe SignOutController, type: :controller do
   let(:dfe_sign_in_user) do
     {
       "email" => user.email,
+      "dfe_sign_in_uid" => user.dfe_sign_in_uid,
       "last_active_at" => Time.zone.now,
       "id_token" => "id_token",
       "provider" => provider,
