@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
       randomise_subjects { false }
-      potential_itt_start_date { itt_start_date || Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
+      potential_itt_start_date { itt_start_date || Faker::Date.in_date_period(month: 8, year: current_recruitment_cycle_year) }
     end
 
     sequence :trainee_id do |n|
@@ -194,14 +194,14 @@ FactoryBot.define do
 
     trait :with_study_mode_and_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
-      itt_end_date { Faker::Date.in_date_period(month: 8, year: current_recruitment_cycle_year + 1) }
+      itt_start_date { Faker::Date.in_date_period(month: 8, year: current_recruitment_cycle_year) }
+      itt_end_date { Faker::Date.in_date_period(month: 7, year: current_recruitment_cycle_year + 1) }
     end
 
     trait :with_study_mode_and_future_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year + 1) }
-      itt_end_date { Faker::Date.in_date_period(month: 8, year: itt_start_date.year + 1) }
+      itt_start_date { Faker::Date.in_date_period(month: 8, year: current_recruitment_cycle_year + 1) }
+      itt_end_date { Faker::Date.in_date_period(month: 7, year: itt_start_date.year + 1) }
     end
 
     trait :with_publish_course_details do
