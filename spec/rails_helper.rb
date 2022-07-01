@@ -50,5 +50,10 @@ RSpec.configure do |config|
     driven_by(:rack_test)
   end
 
+  config.before(:each, type: :feature) do
+    create(:academic_cycle, :current)
+    create(:academic_cycle, next_cycle: true)
+  end
+
   Faker::Config.locale = "en-GB"
 end
