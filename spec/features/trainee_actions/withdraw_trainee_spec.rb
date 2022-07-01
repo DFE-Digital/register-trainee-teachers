@@ -176,14 +176,14 @@ feature "Withdrawing a trainee", type: :feature do
     and_i_choose_they_have_started
     and_i_continue
     and_i_select_no_they_started_later
-    and_i_fill_in_a_new_start_date(1.hour.ago)
+    and_i_fill_in_a_new_start_date(Time.zone.today)
     and_i_continue
     then_i_should_be_on_the_withdrawal_page
     and_i_choose_today
     and_i_choose_a_specific_reason
     and_i_continue
     then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_see_my_date(1.hour.ago)
+    and_i_see_my_date(Time.zone.today)
   end
 
   def when_i_am_on_the_withdrawal_page
@@ -300,11 +300,19 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def given_a_trainee_exists_to_be_withdrawn
-    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, commencement_date: 10.days.ago)
+    given_a_trainee_exists(
+      %i[submitted_for_trn trn_received].sample,
+      commencement_date: 10.days.ago,
+      itt_end_date: 1.year.from_now,
+    )
   end
 
   def given_a_trainee_exists_to_be_withdrawn_with_no_start_date
-    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample, commencement_date: nil)
+    given_a_trainee_exists(
+      %i[submitted_for_trn trn_received].sample,
+      commencement_date: nil,
+      itt_end_date: 1.year.from_now,
+    )
   end
 
   def given_a_deferred_trainee_exists
