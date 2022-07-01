@@ -58,17 +58,19 @@ module Trainees
       trainees.where(training_route: training_route)
     end
 
-    def state(trainees, states)
-      return trainees if states.blank?
+    def status(trainees, statuses)
+      return trainees if statuses.blank?
 
-      non_award_states = states.dup
+      scoped_trainees = trainees
 
-      award_states = []
-      states.each do |state|
-        award_states << non_award_states.delete(state) if TraineeFilter::AWARD_STATES.include?(state)
+      statuses.each_with_index do |status, i|
+        if i.zero?
+          scoped_trainees = scoped_trainees.public_send(status)
+        else
+          scoped_trainees = scoped_trainees.or(trainees.public_send(status))
+        end
       end
-
-      trainees.where(state: non_award_states).or(trainees.with_award_states(*award_states))
+      scoped_trainees
     end
 
     def subject(trainees, subject)
@@ -138,7 +140,7 @@ module Trainees
       filtered_trainees = trainees
 
       filtered_trainees = training_route(filtered_trainees, filters[:training_route])
-      filtered_trainees = state(filtered_trainees, filters[:state])
+      filtered_trainees = status(filtered_trainees, filters[:status])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = start_year(filtered_trainees, filters[:start_year])
       filtered_trainees = end_year(filtered_trainees, filters[:end_year])

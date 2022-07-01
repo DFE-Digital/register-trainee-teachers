@@ -81,7 +81,7 @@ private
       {
         level: [],
         training_route: [],
-        state: [],
+        status: [],
         record_source: [],
         record_completion: [],
         study_mode: [],

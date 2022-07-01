@@ -64,21 +64,48 @@ module Trainees
       end
     end
 
-    context "with state filter" do
-      let!(:submitted_for_trn_trainee) { create(:trainee, :submitted_for_trn) }
-      let!(:qts_awarded_trainee) { create(:trainee, :qts_awarded) }
-      let!(:eyts_awarded_trainee) { create(:trainee, :eyts_awarded) }
+    context "with status filter" do
+      let!(:submitted_for_trn_trainee) { create(:trainee, :submitted_for_trn, :itt_start_date_in_the_past) }
+      let!(:qts_awarded_trainee) { create(:trainee, :qts_awarded, :itt_start_date_in_the_past) }
+      let!(:eyts_awarded_trainee) { create(:trainee, :eyts_awarded, :itt_start_date_in_the_past) }
+      let!(:not_yet_started_trainee) { create(:trainee, :trn_received, :itt_start_date_in_the_future) }
+      let!(:withdrawn_trainee) { create(:trainee, :withdrawn, :itt_start_date_in_the_past) }
+      let!(:deferred_trainee) { create(:trainee, :deferred, :itt_start_date_in_the_past) }
 
-      context "with trn_submitted, qts_awarded" do
-        let(:filters) { { state: %w[submitted_for_trn qts_awarded] } }
+      context "with in_training" do
+        let(:filters) { { status: %w[in_training] } }
 
-        it { is_expected.to contain_exactly(submitted_for_trn_trainee, qts_awarded_trainee) }
+        it { is_expected.to contain_exactly(submitted_for_trn_trainee) }
       end
 
-      context "with only draft trainees" do
-        let(:filters) { { state: %w[draft] } }
+      context "with awarded" do
+        let(:filters) { { status: %w[awarded] } }
 
-        it { is_expected.to contain_exactly(draft_trainee, apply_draft_trainee) }
+        it { is_expected.to contain_exactly(qts_awarded_trainee, eyts_awarded_trainee) }
+      end
+
+      context "with in_training, awarded" do
+        let(:filters) { { status: %w[in_training awarded] } }
+
+        it { is_expected.to contain_exactly(submitted_for_trn_trainee, qts_awarded_trainee, eyts_awarded_trainee) }
+      end
+
+      context "with withdrawn" do
+        let(:filters) { { status: %w[withdrawn] } }
+
+        it { is_expected.to contain_exactly(withdrawn_trainee) }
+      end
+
+      context "with deferred" do
+        let(:filters) { { status: %w[deferred] } }
+
+        it { is_expected.to contain_exactly(deferred_trainee) }
+      end
+
+      context "with course not yet started" do
+        let(:filters) { { status: %w[course_not_yet_started] } }
+
+        it { is_expected.to contain_exactly(not_yet_started_trainee) }
       end
     end
 

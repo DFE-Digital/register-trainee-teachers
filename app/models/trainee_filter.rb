@@ -2,7 +2,7 @@
 
 class TraineeFilter
   AWARD_STATES = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded].freeze
-  STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES
+  STATUSES = %w[course_not_yet_started in_training deferred awarded withdrawn].freeze
 
   RECORD_SOURCES = %w[apply manual dttp hesa].freeze
 
@@ -26,7 +26,7 @@ private
     @merged_filters ||= text_search.merge(
       **level,
       **training_route,
-      **state,
+      **status,
       **subject,
       **text_search,
       **record_source,
@@ -89,15 +89,15 @@ private
     end
   end
 
-  def state
-    return {} unless state_options.any?
+  def status
+    return {} unless status_options.any?
 
-    { "state" => state_options }
+    { "status" => status_options }
   end
 
-  def state_options
-    STATES.each_with_object([]) do |option, arr|
-      arr << option if params[:state]&.include?(option)
+  def status_options
+    STATUSES.each_with_object([]) do |option, arr|
+      arr << option if params[:status]&.include?(option)
     end
   end
 

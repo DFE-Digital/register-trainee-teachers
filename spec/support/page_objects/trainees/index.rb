@@ -34,7 +34,8 @@ module PageObjects
     class Index < Base
       set_url "/trainees"
 
-      element :trn_received_checkbox, "#state-trn_received"
+      element :in_training_checkbox, "#status-in_training"
+      element :withdrawn_checkbox, "#status-withdrawn"
     end
 
     class Drafts < Base

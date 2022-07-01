@@ -188,6 +188,10 @@ class Trainee < ApplicationRecord
     )
   end)
 
+  scope :course_not_yet_started, -> { where("itt_start_date > ?", Time.zone.now).where.not(state: %i[draft deferred withdrawn]) }
+
+  scope :in_training, -> { where(state: %i[submitted_for_trn trn_received recommended_for_award], itt_start_date: Date.new..Time.zone.now) }
+
   scope :with_award_states, (lambda do |*award_states|
     qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }
     eyts_states = award_states.select { |s| s.start_with?("eyts") }.map { |s| genericize_state(s) }

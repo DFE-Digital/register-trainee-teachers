@@ -14,6 +14,7 @@ class BaseTraineeController < ApplicationController
     search_secondary_result_set
     search_secondary_result_title
     total_trainees_count
+    all_trainees_started?
     training_routes
   ].freeze
 
@@ -85,6 +86,10 @@ private
       .sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
   end
 
+  def all_trainees_started?
+    policy_scope(trainee_search_scope).course_not_yet_started.blank?
+  end
+
   def current_page_exceeds_total_pages?
     paginated_trainees.total_pages.nonzero? && paginated_trainees.current_page > paginated_trainees.total_pages
   end
@@ -136,7 +141,7 @@ private
       {
         level: [],
         training_route: [],
-        state: [],
+        status: [],
         record_source: [],
         record_completion: [],
       },

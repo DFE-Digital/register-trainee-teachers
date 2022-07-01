@@ -46,8 +46,14 @@ RSpec.feature "Filtering trainees" do
     end
 
     scenario "can filter by status" do
-      when_i_filter_by_trn_received_status
-      then_only_the_trn_received_trainee_is_visible
+      when_i_filter_by_in_training_status
+      then_only_the_in_training_trainee_is_visible
+    end
+
+    scenario "can filter by multiple statuses" do
+      when_i_filter_by_in_training_status
+      and_i_filter_by_withdrawn_status
+      then_the_in_training_and_withdrawn_trainees_are_visible
     end
 
     scenario "can filter by level" do
@@ -236,8 +242,13 @@ private
     trainee_index_page.apply_filters.click
   end
 
-  def when_i_filter_by_trn_received_status
-    trainee_index_page.trn_received_checkbox.click
+  def when_i_filter_by_in_training_status
+    trainee_index_page.in_training_checkbox.click
+    trainee_index_page.apply_filters.click
+  end
+
+  def and_i_filter_by_withdrawn_status
+    trainee_index_page.withdrawn_checkbox.click
     trainee_index_page.apply_filters.click
   end
 
@@ -365,9 +376,14 @@ private
     expect(trainee_index_page).to have_text(I18n.t("components.filter.record_source"))
   end
 
-  def then_only_the_trn_received_trainee_is_visible
+  def then_only_the_in_training_trainee_is_visible
     expect(trainee_index_page).to have_text(full_name(@trn_received_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@withdrawn_trainee))
+  end
+
+  def then_the_in_training_and_withdrawn_trainees_are_visible
+    expect(trainee_index_page).to have_text(full_name(@trn_received_trainee))
+    expect(trainee_index_page).to have_text(full_name(@withdrawn_trainee))
   end
 
   def then_only_assessment_only_trainee_is_visible
