@@ -7,14 +7,15 @@ describe HomeView do
 
   let(:draft_trainee) { create(:trainee, :draft) }
   let!(:current_academic_cycle) { create(:academic_cycle, :current) }
+  let(:last_current_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
 
   subject { described_class.new(trainees) }
 
   describe "#badges" do
     let(:not_started_trainee) { create(:trainee, :trn_received, itt_start_date: current_academic_cycle.end_date + 1.day) }
     let(:in_training_trainees) { create_list(:trainee, 2, :trn_received) }
-    let(:awarded_this_year_trainee) { create(:trainee, :awarded) }
-    let(:awarded_last_year_trainee) { create(:trainee, :awarded, awarded_at: current_academic_cycle.start_date - 1.day) }
+    let(:awarded_this_year_trainee) { create(:trainee, :awarded, end_academic_cycle: current_academic_cycle) }
+    let(:awarded_last_year_trainee) { create(:trainee, :awarded, end_academic_cycle: last_current_academic_cycle) }
     let(:deferred_trainees) { create_list(:trainee, 2, :deferred) }
     let(:incomplete_trainee) { create(:trainee, :trn_received, :incomplete) }
 
