@@ -193,9 +193,7 @@ class Trainee < ApplicationRecord
 
   scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: Date.new..Time.zone.now) }
 
-  scope :awarded_in_cycle, (lambda do |cycle|
-    where(awarded_at: cycle.start_date..cycle.end_date)
-  end)
+  scope :awarded_in_cycle, ->(cycle) { cycle.trainees_ending.awarded }
 
   scope :with_award_states, (lambda do |*award_states|
     qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }
