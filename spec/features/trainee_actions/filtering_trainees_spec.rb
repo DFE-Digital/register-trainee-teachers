@@ -10,7 +10,10 @@ RSpec.feature "Filtering trainees" do
       given_a_subject_specialism_is_available_for_selection
       when_i_visit_the_trainee_index_page
       then_i_see_my_provider_name
-      then_all_registered_trainees_are_visible
+    end
+
+    scenario "defaults to in training filter selected" do
+      then_only_the_in_training_trainee_is_visible
     end
 
     context "when filtering trainees by record completion" do
@@ -20,6 +23,7 @@ RSpec.feature "Filtering trainees" do
       end
 
       scenario "can filter by complete records" do
+        when_i_deselect_the_in_training_filter
         when_i_filter_by_complete
         then_only_complete_records_are_visible
       end
@@ -31,6 +35,7 @@ RSpec.feature "Filtering trainees" do
     end
 
     scenario "can filter by subject" do
+      when_i_deselect_the_in_training_filter
       when_i_filter_by_subject("Biology")
       then_only_biology_trainees_are_visible
       then_the_tag_is_visible_for("Biology")
@@ -45,14 +50,8 @@ RSpec.feature "Filtering trainees" do
       then_the_record_source_filter_is_not_visible
     end
 
-    scenario "can filter by status" do
-      when_i_filter_by_in_training_status
-      then_only_the_in_training_trainee_is_visible
-    end
-
     scenario "can filter by multiple statuses" do
-      when_i_filter_by_in_training_status
-      and_i_filter_by_withdrawn_status
+      when_i_filter_by_withdrawn_status
       then_the_in_training_and_withdrawn_trainees_are_visible
     end
 
@@ -116,7 +115,10 @@ RSpec.feature "Filtering trainees" do
     end
 
     context "searching" do
-      before { when_i_search_for(search_term) }
+      before do
+        when_i_deselect_the_in_training_filter
+        when_i_search_for(search_term)
+      end
 
       shared_examples_for "a working search" do
         it "returns the correct trainee" do
@@ -242,12 +244,12 @@ private
     trainee_index_page.apply_filters.click
   end
 
-  def when_i_filter_by_in_training_status
+  def when_i_deselect_the_in_training_filter
     trainee_index_page.in_training_checkbox.click
     trainee_index_page.apply_filters.click
   end
 
-  def and_i_filter_by_withdrawn_status
+  def when_i_filter_by_withdrawn_status
     trainee_index_page.withdrawn_checkbox.click
     trainee_index_page.apply_filters.click
   end
@@ -328,7 +330,7 @@ private
   end
 
   def then_all_registered_trainees_are_visible
-    Trainee.where.not(state: "draft").each { |trainee| expect(trainee_index_page).to have_text(full_name(trainee)) }
+    Trainee.not_draft.each { |trainee| expect(trainee_index_page).to have_text(full_name(trainee)) }
   end
 
   def then_all_draft_trainees_are_visible
