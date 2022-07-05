@@ -49,7 +49,7 @@ private
 
       Badge.new(
         :awarded_this_year,
-        trainees.awarded_in_cycle(current_academic_cycle).count,
+        trainees.awarded.merge(current_academic_cycle.trainees_ending).count,
         trainees_path(
           status: %w[awarded],
           end_year: "#{current_academic_cycle.start_year} to #{current_academic_cycle.end_year}",
