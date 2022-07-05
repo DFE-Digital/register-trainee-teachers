@@ -43,3 +43,6 @@ RSpec/Capybara/FeatureMethods:
     - "scenario"
     - "feature"
     - "background"
+
+RSpec/MessageChain:
+  Enabled: false

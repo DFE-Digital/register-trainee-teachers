@@ -68,11 +68,6 @@ RSpec/FilePath:
     - 'spec/helpers/degree_helper_spec.rb'
     - 'spec/models/dfe_sign_in_user_spec.rb'
 
-# Offense count: 2
-RSpec/MessageChain:
-  Exclude:
-    - 'spec/services/send_welcome_email_service_spec.rb'
-
 # Offense count: 81
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: have_received, receive

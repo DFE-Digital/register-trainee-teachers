@@ -24,7 +24,6 @@ feature "viewing the payment schedule" do
 private
 
   def and_funding_data_exists
-    create(:academic_cycle, :current)
     create(:payment_schedule, rows: [
       build(:payment_schedule_row, amounts: [
         build(:payment_schedule_row_amount, month: 1, amount_in_pence: 100),

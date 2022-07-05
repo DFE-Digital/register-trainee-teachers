@@ -171,6 +171,7 @@ class Trainee < ApplicationRecord
   end
 
   COMPLETE_STATES = %w[recommended_for_award withdrawn awarded].freeze
+  IN_TRAINING_STATES = %w[submitted_for_trn trn_received recommended_for_award].freeze
 
   pg_search_scope :with_name_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name trainee_id trn],
@@ -190,7 +191,7 @@ class Trainee < ApplicationRecord
 
   scope :course_not_yet_started, -> { where("itt_start_date > ?", Time.zone.now).where.not(state: %i[draft deferred withdrawn]) }
 
-  scope :in_training, -> { where(state: %i[submitted_for_trn trn_received recommended_for_award], itt_start_date: Date.new..Time.zone.now) }
+  scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: Date.new..Time.zone.now) }
 
   scope :with_award_states, (lambda do |*award_states|
     qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }

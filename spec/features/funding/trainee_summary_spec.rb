@@ -9,7 +9,6 @@ feature "viewing the trainee summary", feature_funding: true do
   background {
     Rails.application.reload_routes!
     given_i_am_authenticated(user: user)
-    create(:academic_cycle, :current)
   }
 
   context "with a trainee summary" do

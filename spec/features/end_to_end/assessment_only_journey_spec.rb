@@ -3,10 +3,7 @@
 require "rails_helper"
 
 feature "assessment-only end-to-end journey", type: :feature do
-  background {
-    given_i_am_authenticated
-    and_an_academic_cycle_exists
-  }
+  background { given_i_am_authenticated }
 
   scenario "submit for TRN" do
     given_i_have_created_an_assessment_only_trainee

@@ -23,7 +23,6 @@ feature "Viewing lead school's funding" do
   end
 
   def and_funding_data_exists
-    create(:academic_cycle, :current)
     create(:payment_schedule, payable: lead_school)
     create(:trainee_summary, :with_grant_rows, payable: lead_school)
   end

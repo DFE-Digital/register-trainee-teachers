@@ -7,10 +7,6 @@ feature "edit bursary", type: :feature do
 
   let(:course_subject) { CourseSubjects::LAW }
 
-  before do
-    create(:academic_cycle, :current)
-  end
-
   scenario "edit with valid parameters" do
     given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject, itt_start_date: 1.day.ago)
     and_a_bursary_exists_for_their_subject

@@ -46,10 +46,6 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:opt_in_undergrad])
     end
 
-    def and_an_academic_cycle_exists
-      create(:academic_cycle, :current)
-    end
-
   private
 
     def choose_training_route_for(route)

@@ -3,10 +3,7 @@
 require "rails_helper"
 
 feature "pg_teaching_apprenticeship end-to-end journey", type: :feature do
-  background {
-    given_i_am_authenticated
-    and_an_academic_cycle_exists
-  }
+  background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.pg_teaching_apprenticeship": true do
     given_i_have_created_a_pg_teaching_apprenticeship_trainee
