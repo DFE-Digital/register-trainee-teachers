@@ -1,8 +1,20 @@
+- date: '2022-07-05'
+  title: Improvements to Register’s homepage and filters
+  content: |
+    We’ve improved our homepage designs and the way you can filter trainee records. On the homepage, under ‘Registered trainees’, you’ll see trainees are grouped by ‘training status’, which include:
+      <ul>
+        <li>course not started yet (trainees who are registered but their course has not started)</li>
+        <li>in training (all trainees currently doing training, excluding those on courses that have not started or are deferred)</li>
+        <li>currently deferred</li>
+        <li>awarded this year (all trainees awarded QTS or EYTS in the current academic year)</li>
+        <li>incomplete records (registered trainees that are missing data)</li>
+      </ul>
+    We’ve also included a new filter called ‘End year’, which shows all trainees that will finish or have finished in a given academic year. This is so you can easily find past trainee records if you need to, but they will not interfere with records of trainees who are still training.
 - date: '2022-06-20'
   title: Funding information is now available on Register
   content: |
      If you have trainees that are eligible for funding, you’ll now be able to see funding information from the 2021 to 2022 academic year onwards on Register. You can access this from the main navigation bar under ‘Funding’.
-     
+
      Accredited providers will see funding paid and predicted to be paid for scholarships and bursaries. Lead schools will see funding paid and predicted to be paid for salary grants.
 
 - date: '2022-05-16'
