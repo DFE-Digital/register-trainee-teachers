@@ -4,27 +4,27 @@ module DegreesHelper
   include ApplicationHelper
 
   def degree_type_options
-    to_enhanced_options(degree_type_data) do |name, attributes|
-      synonyms = (attributes[:synonyms] || []) << attributes[:abbreviation]
+    to_enhanced_options(degree_type_data) do |ref_data|
+      synonyms = (ref_data[:synonyms] || []) << ref_data[:abbreviation]
       data = {
         "data-synonyms" => synonyms.join("|"),
-        "data-append" => attributes[:abbreviation] && tag.strong("(#{attributes[:abbreviation]})"),
-        "data-boost" => (Dttp::CodeSets::DegreeTypes::COMMON.include?(name) ? 1.5 : 1),
-        "data-hint" => attributes[:hint] && tag.span(attributes[:hint], class: "autocomplete__option--hint"),
+        "data-append" => ref_data[:abbreviation] && tag.strong("(#{ref_data[:abbreviation]})"),
+        "data-boost" => (Degree::COMMON_TYPES.include?(ref_data[:name]) ? 1.5 : 1),
+        "data-hint" => ref_data[:hint] && tag.span(ref_data[:hint], class: "autocomplete__option--hint"),
       }.compact
-      [name, name, data]
+      [ref_data[:name], ref_data[:name], data]
     end
   end
 
   def institutions_options
-    to_enhanced_options(institution_data) do |name, attributes|
-      [name, name, { "data-synonyms" => (attributes[:synonyms] || []).join("|") }]
+    to_enhanced_options(institution_data) do |ref_data|
+      [ref_data[:name], ref_data[:name], { "data-synonyms" => (ref_data[:synonyms] || []).join("|") }]
     end
   end
 
   def subjects_options
-    to_enhanced_options(subject_data) do |name, attributes|
-      [name, name, { "data-synonyms" => (attributes[:synonyms] || []).join("|") }]
+    to_enhanced_options(subject_data) do |ref_data|
+      [ref_data[:name], ref_data[:name], { "data-synonyms" => (ref_data[:synonyms] || []).join("|") }]
     end
   end
 
@@ -33,7 +33,7 @@ module DegreesHelper
   end
 
   def grades
-    Dttp::CodeSets::Grades::MAPPING.keys
+    Degree::GRADES
   end
 
   def path_for_degrees(trainee)
@@ -45,15 +45,15 @@ module DegreesHelper
 private
 
   def institution_data
-    Dttp::CodeSets::Institutions::MAPPING
+    DfE::ReferenceData::Degrees::INSTITUTIONS.all
   end
 
   def subject_data
-    Dttp::CodeSets::DegreeSubjects::MAPPING
+    DfE::ReferenceData::Degrees::SUBJECTS.all
   end
 
   def degree_type_data
-    Dttp::CodeSets::DegreeTypes::MAPPING
+    DfE::ReferenceData::Degrees::TYPES.all
   end
 
   def countries

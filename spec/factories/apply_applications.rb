@@ -3,15 +3,20 @@
 FactoryBot.define do
   factory :apply_application do
     sequence(:apply_id)
-    application { JSON.parse(ApiStubs::ApplyApi.application) }
+    application { JSON.parse(ApiStubs::ApplyApi.application(degree_attributes: degree_attributes)) }
     invalid_data { {} }
     accredited_body_code { create(:provider).code }
     recruitment_cycle_year { Settings.apply_applications.create.recruitment_cycle_year }
 
     transient do
       degree_slug { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s }
-      invalid_institution { "University of Warwick" }
+      invalid_institution { "Unknown institution" }
       invalid_subject { "History1" }
+      degree_attributes { {} }
+    end
+
+    trait :invalid do
+      degree_attributes { { institution_details: invalid_institution } }
     end
 
     trait :importable do
@@ -23,6 +28,7 @@ FactoryBot.define do
     end
 
     trait :with_invalid_data do
+      invalid
       invalid_data do
         {
           "degrees" => {

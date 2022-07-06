@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_22_105221) do
+ActiveRecord::Schema.define(version: 2022_06_30_135252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -202,6 +202,9 @@ ActiveRecord::Schema.define(version: 2022_06_22_105221) do
     t.string "slug", null: false
     t.uuid "dttp_id"
     t.uuid "institution_uuid"
+    t.uuid "uk_degree_uuid"
+    t.uuid "subject_uuid"
+    t.uuid "grade_uuid"
     t.index ["dttp_id"], name: "index_degrees_on_dttp_id"
     t.index ["locale_code"], name: "index_degrees_on_locale_code"
     t.index ["slug"], name: "index_degrees_on_slug", unique: true

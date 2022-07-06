@@ -24,19 +24,16 @@ module Degrees
     def common_params
       {
         is_apply_import: true,
-        subject: subject,
         graduation_year: attributes["award_year"],
-      }
+      }.merge(subject_params)
     end
 
     def uk_degree_params
       {
         locale_code: Trainee.locale_codes[:uk],
-        uk_degree: qualification_type,
-        institution: institution,
-        grade: grade.presence || Dttp::CodeSets::Grades::OTHER,
-        other_grade: grade.present? ? nil : attributes["grade"],
-      }
+      }.merge(qualification_type_params)
+       .merge(grade_params)
+       .merge(institution_params)
     end
 
     def non_uk_degree_params
@@ -47,47 +44,88 @@ module Degrees
       }
     end
 
+    def qualification_type_params
+      qualification_type = find_dfe_reference_type
+
+      if qualification_type
+        { uk_degree: qualification_type[:name], uk_degree_uuid: qualification_type[:id] }
+      else
+        { uk_degree: attributes["qualification_type"] }
+      end
+    end
+
+    def institution_params
+      institution = find_dfe_reference_institution
+
+      if institution
+        { institution: institution[:name], institution_uuid: institution[:id] }
+      else
+        { institution: attributes["institution_details"] }
+      end
+    end
+
+    def subject_params
+      subject = find_dfe_reference_subject
+
+      if subject
+        { subject: subject[:name], subject_uuid: subject[:id] }
+      else
+        { subject: attributes["subject"] }
+      end
+    end
+
+    def grade_params
+      grade = find_dfe_reference_grade
+
+      if Degree::GRADES.include?(grade[:name])
+        { grade: grade[:name], grade_uuid: grade[:id], other_grade: nil }
+      else
+        { grade: Degree::OTHER_GRADE, grade_uuid: grade[:id], other_grade: grade[:name] }
+      end
+    end
+
     def uk_degree?
       attributes["non_uk_qualification_type"].nil?
     end
 
-    def subject
-      course_subject = Dttp::CodeSets::DegreeSubjects::MAPPING.find do |k, _|
-        same_string?(k, attributes["subject"])
-      end
-
-      course_subject.presence&.first || attributes["subject"]
+    def find_dfe_reference_subject
+      find_dfe_reference_item(:subjects,
+                              uuid: attributes["subject_uuid"],
+                              hesa_itt_code: sanitised_hesa(attributes["hesa_degsbj"]),
+                              name: attributes["subject"])
     end
 
-    def qualification_type
-      degree_type = Dttp::CodeSets::DegreeTypes::MAPPING.find do |k, v|
-        same_hesa_code?(v[:hesa_code], attributes["hesa_degtype"]) ||
-        same_string?(v[:abbreviation], attributes["qualification_type"]) ||
-        same_string?(k, attributes["qualification_type"])
-      end
-
-      degree_type.presence&.first || attributes["qualification_type"]
+    def find_dfe_reference_type
+      find_dfe_reference_item(:types,
+                              uuid: attributes["degree_type_uuid"],
+                              hesa_itt_code: sanitised_hesa(attributes["hesa_degtype"]),
+                              abbreviation: attributes["qualification_type"])
     end
 
-    def institution
-      institution_details = attributes["institution_details"].split(",").first
-
-      institution_type = Dttp::CodeSets::Institutions::MAPPING.find do |k, v|
-        same_hesa_code?(v[:hesa_code], attributes["hesa_degest"]) ||
-        same_string?(k, institution_details)
-      end
-
-      institution_type.presence&.first || institution_details
+    def find_dfe_reference_institution
+      find_dfe_reference_item(:institutions,
+                              uuid: attributes["institution_uuid"],
+                              hesa_itt_code: sanitised_hesa(attributes["hesa_degest"]),
+                              name: attributes["institution_details"].split(",").first)
     end
 
-    def grade
-      @grade ||= Dttp::CodeSets::Grades::MAPPING.find do |key, value|
-        same_hesa_code?(value[:hesa_code], attributes["hesa_degclss"]) || almost_identical?(key, attributes["grade"])
-      end&.first
+    def find_dfe_reference_grade
+      find_dfe_reference_item(:grades,
+                              uuid: attributes["grade_uuid"],
+                              hesa_itt_code: sanitised_hesa(attributes["hesa_degclss"]),
+                              name: attributes["grade"])
     end
 
     def country
-      Dttp::CodeSets::Countries::MAPPING.find { |_, v| v[:country_code] == attributes["hesa_degctry"] }.first
+      Dttp::CodeSets::Countries::MAPPING.find { |_, v| v[:country_code] == attributes["hesa_degctry"] }&.first
+    end
+
+    def find_dfe_reference_item(list_type, filters)
+      DfE::ReferenceData::Degrees.const_get(list_type.to_s.upcase).all.find do |record|
+        filters.compact.any? do |field, value|
+          same_string?(record[field], value) || almost_identical?(record[field], value)
+        end
+      end
     end
   end
 end

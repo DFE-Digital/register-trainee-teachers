@@ -11,9 +11,15 @@ describe DegreesHelper do
     let(:degree_synonym) { "Bachelors" }
 
     before do
-      stub_const("Dttp::CodeSets::DegreeTypes::MAPPING", {
-        degree_type => { abbreviation: degree_abbreviation, synonyms: [degree_synonym] },
-      })
+      stub_const("DfE::ReferenceData::Degrees::TYPES",
+                 DfE::ReferenceData::HardcodedReferenceList.new({
+                   SecureRandom.uuid => {
+                     name: degree_type,
+                     abbreviation: degree_abbreviation,
+                     synonyms: [degree_synonym],
+                   },
+                 }))
+
       stub_const("Dttp::CodeSets::DegreeTypes::COMMON", [degree_type])
     end
 
@@ -38,9 +44,13 @@ describe DegreesHelper do
     let(:synonym) { "UCL" }
 
     before do
-      stub_const("Dttp::CodeSets::Institutions::MAPPING", {
-        institution => { synonyms: [synonym] },
-      })
+      stub_const("DfE::ReferenceData::Degrees::INSTITUTIONS",
+                 DfE::ReferenceData::HardcodedReferenceList.new({
+                   SecureRandom.uuid => {
+                     name: institution,
+                     synonyms: [synonym],
+                   },
+                 }))
     end
 
     it "iterates over array and prints out correct institutions options" do
@@ -56,9 +66,13 @@ describe DegreesHelper do
     let(:synonym) { "maths" }
 
     before do
-      stub_const("Dttp::CodeSets::DegreeSubjects::MAPPING", {
-        degree_subject => { synonyms: [synonym] },
-      })
+      stub_const("DfE::ReferenceData::Degrees::SUBJECTS",
+                 DfE::ReferenceData::HardcodedReferenceList.new({
+                   SecureRandom.uuid => {
+                     name: degree_subject,
+                     synonyms: [synonym],
+                   },
+                 }))
     end
 
     it "iterates over array and prints out correct subjects values" do

@@ -60,6 +60,7 @@ shared:
     - created_at
     - dttp_id
     - grade
+    - grade_uuid
     - graduation_year
     - id
     - institution
@@ -69,8 +70,10 @@ shared:
     - other_grade
     - slug
     - subject
+    - subject_uuid
     - trainee_id
     - uk_degree
+    - uk_degree_uuid
     - updated_at
   disabilities:
     - created_at
