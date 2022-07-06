@@ -15,7 +15,7 @@ instructions](https://asdf-vm.com/#/core-manage-asdf).
 
 Once installed, run:
 
-```
+```bash
 asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
@@ -32,10 +32,12 @@ newer versions of tools.
 2. Run `yarn` to install node dependencies
 3. Run `bin/rails db:setup` to set up the database development and test schemas, and seed with test data
 4. Add a file to config/settings called development.local.yml containing the following:
-   ```
+
+   ```yml
        features:
          use_ssl: false
    ```
+
 5. Run `bundle exec rails server` to launch the app on http://localhost:5000
 6. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
 
@@ -51,18 +53,21 @@ our ADRs, see the link for how to install (hint: `brew install adr-tools` or use
 ASDF).
 
 ## Running specs, linter(without auto correct) and annotate models and serializers
-To ensure webpacker works for you when tests run: 
-```
+To ensure webpacker works for you when tests run:
+
+```bash
 RAILS_ENV=test bundle exec rails assets:precompile 
 ```
-Then you can run the full test suite with: 
-```
+
+Then you can run the full test suite with:
+
+```bash
 bundle exec rake
 ```
 
 ## Running specs
 
-```
+```bash
 bundle exec rspec
 ```
 
@@ -139,7 +144,7 @@ Basic auth is enabled in non-production and non-local environments. The credenti
 
 ## SSL https local dev
 
-When running the https local dev environment if you are on Mac and using Chrome you may need to get past an invalid certificate screen. https://stackoverflow.com/questions/58802767/no-proceed-anyway-option-on-neterr-cert-invalid-in-chrome-on-macos
+When running the https local dev environment if you are on Mac and using Chrome you may need to get past an invalid certificate screen. <https://stackoverflow.com/questions/58802767/no-proceed-anyway-option-on-neterr-cert-invalid-in-chrome-on-macos>
 
 ### DfE Sign-in
 
@@ -164,6 +169,7 @@ Register is hosted on [GOVUK PAAS](https://www.cloud.service.gov.uk/)
 [Additional GOVUK PAAS documentation](docs/govuk_paas.md)
 
 ## DTTP settings for testing
+
 Add the following settings to your `development.yml.local` (ask a team member for the secrets):
 
 ```yaml
@@ -176,13 +182,18 @@ dttp:
 ```
 
 ## PaaS Space Access and App interaction
-In order to login, change space roles and interact with PaaS based application, please follow this [instruction] https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/2409791489/Changing+set+and+unset+roles+and+interacting+with+App+on+PaaS
+
+In order to login, change space roles and interact with PaaS based application,
+please follow this [instruction](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/2409791489/Changing+set+and+unset+roles+and+interacting+with+App+on+PaaS)
 
 ### Generating schools data
+
 To create/update schools data, we do this using a rake task:
-```
+
+```bash
 bundle exec rake schools_data:import
 ```
+
 which reads from a csv located in `data/schools.csv`. This will create
 any new schools that aren't in the database, or update existing ones
 based on the urn.
@@ -193,9 +204,10 @@ if required, the `data/schools.csv` can be regenerated using this rake
 task (if school details update, or there is a new list of lead schools
 for the coming year.
 
-```
+```bash
 bundle exec rake schools_data:generate_csv[establishment_csv_path, lead_schools_csv_path]
 ```
+
 The establisment csv can be downloaded here https://get-information-schools.service.gov.uk/Downloads
 under "Establishment fields".
 
@@ -206,6 +218,7 @@ The second tab: "MASTER LIST_All Lead Schools" must be exported as a csv.
 ## Running Apply application import against example data
 
 Add the following to your `development.local.yml`:
+
 ```yml
 features:
   import_applications_from_apply: true
@@ -214,8 +227,10 @@ apply_api:
   base_url: "https://sandbox.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: <request token from Apply team>
 ```
+
 Running the following script:
-```
+
+```ruby
 ApplyApi::ImportApplication.class_eval do
   def provider
     Provider.all.sample
