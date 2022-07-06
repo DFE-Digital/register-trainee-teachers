@@ -154,7 +154,7 @@ disable-maintenance: read-tf-config ## make qa disable-maintenance / make produc
 	cf delete register-unavailable -r -f
 
 get-image-tag:
-	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${paas_env} | grep -Po "docker image:\s+\S+:\K\w+"))
+	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${paas_env} | awk -F : '$$1 == "docker image" {print $$3}'))
 	@echo ${TAG}
 
 get-postgres-instance-guid: ## Gets the postgres service instance's guid make qa get-postgres-instance-guid
