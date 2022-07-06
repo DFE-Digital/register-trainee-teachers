@@ -129,6 +129,10 @@ console: read-tf-config
 	cf target -s ${space}
 	cf ssh register-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
 
+worker-console: read-tf-config
+	cf target -s ${space}
+	cf ssh register-worker-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
+
 enable-maintenance: read-tf-config ## make qa enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
 	cf target -s ${space}
