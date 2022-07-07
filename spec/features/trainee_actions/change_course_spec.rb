@@ -6,7 +6,7 @@ feature "Change course", type: :feature, feature_publish_course_details: true do
   let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
   let(:itt_end_date) { itt_start_date + 1.year }
 
-  scenario "TRN received" do
+  scenario "TRN received", feature_always_show_course_year_choice: false do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
     and_trainee_related_courses_exist
@@ -18,6 +18,17 @@ feature "Change course", type: :feature, feature_publish_course_details: true do
     and_i_enter_itt_dates
     and_i_click_update_record
     then_the_trainee_course_has_changed
+  end
+
+  scenario "published course not selected", feature_always_show_course_year_choice: true do
+    given_i_am_authenticated
+    and_a_trainee_exists
+    and_trainee_related_courses_exist
+    and_i_am_on_the_trainee_record_page
+    when_i_click_to_change_course_details
+    then_i_am_redirected_to_the_course_years_page
+    and_i_choose_a_different_year
+    and_i_am_redirected_to_the_publish_course_details_page
   end
 
 private
@@ -32,6 +43,10 @@ private
 
   def and_a_trainee_exists_with_trn_received
     given_a_trainee_exists(:trn_received, :with_publish_course_details, :school_direct_salaried, :with_secondary_education)
+  end
+
+  def and_a_trainee_exists
+    given_a_trainee_exists(:trn_received, :school_direct_salaried, :with_secondary_education)
   end
 
   def when_i_click_to_change_course_details
@@ -68,5 +83,18 @@ private
 
   def and_i_submit_the_course_details_form
     course_details_page.submit_button.click
+  end
+
+  def then_i_am_redirected_to_the_course_years_page
+    expect(course_years_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_i_choose_a_different_year
+    course_years_page.choose("#{itt_start_date.year} to #{itt_end_date.year} (current year)")
+    course_years_page.continue.click
+  end
+
+  def and_i_am_redirected_to_the_publish_course_details_page
+    expect(publish_course_details_page).to be_displayed(id: trainee.slug)
   end
 end

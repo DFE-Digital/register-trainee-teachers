@@ -190,6 +190,10 @@ module Features
       @course_details_page ||= PageObjects::Trainees::CourseDetails.new
     end
 
+    def course_years_page
+      @course_years_page ||= PageObjects::Trainees::CourseYears.new
+    end
+
     def confirm_course_details_page
       @confirm_course_details_page ||= PageObjects::Trainees::ConfirmCourseDetails.new
     end
