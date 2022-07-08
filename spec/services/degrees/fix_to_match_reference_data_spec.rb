@@ -27,6 +27,7 @@ module Degrees
 
             it "is updated" do
               expect(subject.institution).to eq("University of Chichester")
+              expect(subject.institution_uuid).to be(institution_id_for("University of Chichester"))
             end
           end
 
@@ -35,6 +36,7 @@ module Degrees
 
             it "is left unchanged" do
               expect(subject.institution).to eq(institution)
+              expect(subject.institution_uuid).to eq(nil)
             end
           end
         end
@@ -53,6 +55,7 @@ module Degrees
 
             it "is updated" do
               expect(subject.uk_degree).to eq("Foundation of Arts")
+              expect(subject.uk_degree_uuid).to be(type_id_for("Foundation of Arts"))
             end
           end
 
@@ -79,6 +82,7 @@ module Degrees
 
             it "is updated" do
               expect(subject.subject).to eq("English studies")
+              expect(subject.subject_uuid).to eq(subject_id_for("English studies"))
             end
           end
 
@@ -105,6 +109,8 @@ module Degrees
 
             it "is updated" do
               expect(subject.grade).to eq("First-class honours")
+              expect(subject.grade_uuid).to eq(grade_id_for("First-class honours"))
+
             end
           end
 
@@ -113,6 +119,7 @@ module Degrees
 
             it "is left unchanged" do
               expect(subject.grade).to eq(grade)
+              expect(subject.grade_uuid).to eq(nil)
             end
           end
         end
@@ -161,6 +168,7 @@ module Degrees
 
             it "is updated" do
               expect(subject.grade).to eq("First-class honours")
+              expect(subject.grade_uuid).to eq(nil)
             end
           end
 
@@ -169,10 +177,27 @@ module Degrees
 
             it "is left unchanged" do
               expect(subject.grade).to eq(grade)
+              expect(subject.grade_uuid).to eq(nil)
             end
           end
         end
       end
+    end
+
+    def institution_id_for(name)
+      DfE::ReferenceData::Degrees::INSTITUTIONS.some({ name: name }).first.id
+    end
+
+    def subject_id_for(name)
+      DfE::ReferenceData::Degrees::SUBJECTS.some({ name: name }).first.id
+    end
+
+    def grade_id_for(name)
+      DfE::ReferenceData::Degrees::GRADES.some({ name: name }).first.id
+    end
+
+    def type_id_for(name)
+      DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.some({ name: name }).first.id
     end
   end
 end

@@ -62,7 +62,7 @@ module Schools
       describe "employing school" do
         it "does not render" do
           expect(rendered_component).not_to have_text(trainee.employing_school.name)
-          expect(rendered_component).not_to have_text(trainee.employing_school.urn)
+          expect(rendered_compon:went).not_to have_text(trainee.employing_school.urn)
           expect(rendered_component).not_to have_text(trainee.employing_school.town)
           expect(rendered_component).not_to have_text(trainee.employing_school.postcode)
         end

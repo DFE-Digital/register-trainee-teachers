@@ -48,38 +48,42 @@ module Degrees
 
     def uk_update_params
       {
-        institution: correct_institution,
-        subject: correct_subject,
-        grade: correct_grade,
-        uk_degree: correct_type,
+        institution: correct_institution(:name),
+        institution_uuid: correct_institution(:id),
+        subject: correct_subject(:name),
+        subject_uuid: correct_subject(:id),
+        grade: correct_grade(:name),
+        grade_uuid: correct_grade(:id),
+        uk_degree: correct_type(:name),
+        uk_degree_uuid: correct_type(:id),
       }.compact
     end
 
     def non_uk_update_params
       {
-        subject: correct_subject,
-        grade: correct_grade,
+        subject: correct_subject(:name),
+        grade: correct_grade(:name),
       }.compact
     end
 
-    def correct_subject
+    def correct_subject(param)
       ref_version = find_in_reference_data(:subjects, degree.subject)
-      return ref_version[:name] if ref_version
+      return ref_version[param] if ref_version
     end
 
-    def correct_institution
+    def correct_institution(param)
       ref_version = find_in_reference_data(:institutions, degree.institution)
-      return ref_version[:name] if ref_version
+      return ref_version[param] if ref_version
     end
 
-    def correct_grade
+    def correct_grade(param)
       ref_version = find_in_reference_data(:grades, degree.grade)
-      return ref_version[:name] if ref_version
+      return ref_version[param] if ref_version
     end
 
-    def correct_type
+    def correct_type(param)
       ref_version = find_in_reference_data(:types, degree.uk_degree)
-      return ref_version[:name] if ref_version
+      return ref_version[param] if ref_version
     end
 
     def find_in_reference_data(collection_constant, value)
