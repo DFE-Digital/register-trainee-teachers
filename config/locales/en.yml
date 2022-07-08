@@ -166,6 +166,7 @@ en:
         blank: Draft record
     confirmation:
       not_provided_from_hesa_update: Not provided from HESA update
+      expected_hesa_end_date: Expected in academic year %{academic_end_label}
       missing: missing
       not_provided: Not provided
       heading: Confirm %{section_title}

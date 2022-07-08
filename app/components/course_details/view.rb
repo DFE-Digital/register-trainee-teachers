@@ -119,6 +119,7 @@ module CourseDetails
 
     def itt_end_date
       return t("components.confirmation.not_provided_from_hesa_update") if data_model.itt_end_date.blank? && trainee.hesa_record?
+      return t("components.confirmation.expected_hesa_end_date", academic_end_label: trainee.end_academic_cycle.label) if trainee.hesa_record? && trainee.end_academic_cycle.present?
 
       if data_model.itt_end_date.present?
         date_for_summary_view(data_model.itt_end_date)
