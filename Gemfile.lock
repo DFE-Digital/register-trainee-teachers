@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: bff087e5208c75811619cb65f80633272e792d7f
-  tag: v0.1.0
+  revision: a80d152fddf597c8b677b8d8a2ee77e115667ec1
+  tag: v0.2.0
   specs:
-    dfe-reference-data (0.1.0)
+    dfe-reference-data (0.2.0)
       activesupport
 
 GEM
@@ -281,7 +281,7 @@ GEM
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
-    i18n (1.10.0)
+    i18n (1.11.0)
       concurrent-ruby (~> 1.0)
     io-console (0.5.11)
     irb (1.4.1)
