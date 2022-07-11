@@ -42,7 +42,7 @@ module ApiStubs
       }
     end
 
-    def self.non_uk_application
+    def self.non_uk_application(degree_attributes: {})
       {
         id: "3772",
         type: "application",
@@ -55,7 +55,7 @@ module ApiStubs
           candidate: candidate_info,
           contact_details: non_uk_contact_details,
           course: course,
-          qualifications: qualifications,
+          qualifications: non_uk_qualifications(degree_attributes),
           hesa_itt_data: {},
         },
       }
@@ -83,7 +83,7 @@ module ApiStubs
       }.merge(degree_attributes)
     end
 
-    def self.non_uk_degree
+    def self.non_uk_degree(degree_attributes = {})
       {
         id: 123,
         qualification_type: "BA",
@@ -92,17 +92,17 @@ module ApiStubs
         grade: "AA*B",
         start_year: "1989",
         award_year: "1992",
-        institution_details: "University of Huddersfield",
+        institution_details: "",
         equivalency_details: "Enic: 4000123456 - Between GCSE and GCSE AS Level - Equivalent to GCSE C",
         comparable_uk_degree: "masters_degree",
-        hesa_degtype: "085",
-        hesa_degsbj: "100323",
-        hesa_degclss: "12",
-        hesa_degest: "0052",
+        hesa_degtype: "",
+        hesa_degsbj: "",
+        hesa_degclss: "",
+        hesa_degest: "",
         hesa_degctry: "KN",
         hesa_degstdt: "2021-01-01",
         hesa_degenddt: "2020-01-01",
-      }
+      }.merge(degree_attributes)
     end
 
     def self.candidate_info(candidate_attributes = {})
@@ -177,6 +177,14 @@ module ApiStubs
           },
         ],
         degrees: [uk_degree(degree_attributes)],
+        other_qualifications: [],
+        missing_gcses_explanation: nil,
+      }
+    end
+
+    def self.non_uk_qualifications(degree_attributes = {})
+      {
+        degrees: [non_uk_degree(degree_attributes)],
         other_qualifications: [],
         missing_gcses_explanation: nil,
       }

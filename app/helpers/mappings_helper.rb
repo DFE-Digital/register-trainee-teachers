@@ -12,7 +12,9 @@ module MappingsHelper
   end
 
   def almost_identical?(source_string, incoming_string)
-    sanitised_word(incoming_string).start_with?(sanitised_word(source_string))
+    return false if source_string.blank? || incoming_string.blank?
+
+    sanitised_word(source_string.downcase)&.start_with?(sanitised_word(incoming_string.downcase))
   end
 
   def sanitised_word(word)
@@ -26,6 +28,6 @@ module MappingsHelper
 
     # The hesa code can sometimes be padded with some leading zeros
     # So we need to sensibly convert the strings to their integer values for an equal comparison
-    BigDecimal(code).to_i
+    BigDecimal(code).to_i.to_s
   end
 end

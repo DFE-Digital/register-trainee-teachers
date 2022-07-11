@@ -111,11 +111,11 @@ describe DegreeForm, type: :model do
     end
 
     context "degree transitions from invalid to valid" do
-      let(:trainee) { build(:trainee, :with_invalid_apply_application) }
+      let(:trainee) { create(:trainee, :with_invalid_apply_application) }
       let(:degree) { trainee.degrees.first }
 
       before do
-        degree.institution = Dttp::CodeSets::Institutions::MAPPING.keys.sample
+        degree.institution = Degree::INSTITUTIONS.sample
       end
 
       it "deletes the invalid degree" do

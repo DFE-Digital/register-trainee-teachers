@@ -37,7 +37,7 @@ describe MappingsHelper do
 
   describe "#sanitised_hesa" do
     it "returns the integer value for a hesa code" do
-      expect(sanitised_hesa("004")).to eq(4)
+      expect(sanitised_hesa("004")).to eq("4")
     end
 
     it "returns nil if no code is given" do

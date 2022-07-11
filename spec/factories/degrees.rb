@@ -12,18 +12,16 @@ FactoryBot.define do
 
     trait :uk_degree_type do
       locale_code { :uk }
-      uk_degree { Dttp::CodeSets::DegreeTypes::MAPPING.keys.sample }
+      uk_degree { Degree::TYPES.sample }
     end
 
     trait :uk_degree_with_details do
       uk_degree_type
-
-      subject { Dttp::CodeSets::DegreeSubjects::MAPPING.keys.sample }
-
-      institution { Dttp::CodeSets::Institutions::MAPPING.keys.sample }
-      grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
+      subject { Degree::SUBJECTS.sample }
+      grade { Degree::GRADES.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
       institution_uuid { DfE::ReferenceData::Degrees::INSTITUTIONS.all_as_hash.keys.sample }
+      institution { institution_uuid && DfE::ReferenceData::Degrees::INSTITUTIONS.one(institution_uuid)[:name] }
     end
 
     trait :non_uk_degree_type do
@@ -34,10 +32,8 @@ FactoryBot.define do
 
     trait :non_uk_degree_with_details do
       non_uk_degree_type
-
-      subject { Dttp::CodeSets::DegreeSubjects::MAPPING.keys.sample }
-
-      grade { Dttp::CodeSets::Grades::MAPPING.keys.sample }
+      subject { Degree::SUBJECTS.sample }
+      grade { Degree::GRADES.sample }
       country { Dttp::CodeSets::Countries::MAPPING.keys.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
     end

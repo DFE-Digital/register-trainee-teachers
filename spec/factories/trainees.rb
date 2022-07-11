@@ -479,7 +479,7 @@ FactoryBot.define do
     end
 
     trait :with_invalid_apply_application do
-      degrees { [build(:degree, :uk_degree_with_details, institution: "University of Warwick")] }
+      degrees { [build(:degree, :uk_degree_with_details, institution: "Unknown institution")] }
       apply_application { build(:apply_application, :with_invalid_data, degree_slug: degrees.first.slug) }
     end
 

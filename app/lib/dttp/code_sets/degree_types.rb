@@ -5,8 +5,6 @@ module Dttp
     module DegreeTypes
       BACHELOR_OF_ARTS = "Bachelor of Arts"
 
-      COMMON = [BACHELOR_OF_ARTS, "Bachelor of Science", "Master of Arts", "PhD"].freeze
-
       MAPPING = {
         BACHELOR_OF_ARTS => { entity_id: "db695652-c197-e711-80d8-005056ac45bb", abbreviation: "BA", hesa_code: "51" },
         "Bachelor of Arts Economics" => { entity_id: "dd695652-c197-e711-80d8-005056ac45bb", abbreviation: "BAEcon", hesa_code: "52" },
