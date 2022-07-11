@@ -115,6 +115,34 @@ module Dqt
             expect(subject["qualification"]).to be_nil
           end
         end
+
+        context "when the trainee course subject one is non-hesa" do
+          let(:trainee) { create(:trainee, :completed, course_subject_one: course_subject) }
+
+          context "citizenship" do
+            let(:course_subject) { ::CourseSubjects::CITIZENSHIP }
+
+            it "sets subject to 999001" do
+              expect(subject["initialTeacherTraining"]["subject1"]).to eq("999001")
+            end
+          end
+
+          context "physical education" do
+            let(:course_subject) { ::CourseSubjects::PHYSICAL_EDUCATION }
+
+            it "sets subject to 999002" do
+              expect(subject["initialTeacherTraining"]["subject1"]).to eq("999002")
+            end
+          end
+
+          context "design and technology" do
+            let(:course_subject) { ::CourseSubjects::DESIGN_AND_TECHNOLOGY }
+
+            it "sets subject to 999003" do
+              expect(subject["initialTeacherTraining"]["subject1"]).to eq("999003")
+            end
+          end
+        end
       end
     end
   end
