@@ -703,7 +703,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 100703,Sandhurst Primary School,London,SE6 1NW,false,"",""
 100704,Stillness Junior School,London,SE23 1NH,false,"",""
 100705,Stillness Infant School,London,SE23 1NH,false,"",""
-100706,Tidemill Primary School,London,SE8 4RN,false,"",31-08-2011
+100706,Tidemill Primary School,London,SE8 4RN,true,"",31-08-2011
 100707,Torridon Junior School,London,SE6 1TG,false,01-01-1900,31-08-2018
 100708,Torridon Primary School,London,SE6 1TG,false,"",""
 100709,John Ball Primary School,London,SE3 0TP,false,"",""
@@ -1930,7 +1930,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 101930,Dormers Wells High School,Southall,UB1 3HZ,false,"",31-12-2017
 101931,Featherstone High School,Southall,UB2 5HF,false,"",30-11-2011
 101932,Acton High School,London,W3 8EY,false,"",31-08-2018
-101933,Twyford Church of England High School,London,W3 9PP,false,"",30-09-2011
+101933,Twyford Church of England High School,London,W3 9PP,true,"",30-09-2011
 101934,The Cardinal Wiseman Catholic School,Greenford,UB6 9AW,false,"",""
 101935,Wood End Junior School,Greenford,UB6 0EQ,false,"",30-04-2011
 101936,Wood End Infant School,Northolt,UB5 4LB,false,01-01-1900,31-08-2021
@@ -2766,7 +2766,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 102766,St Luke's Primary School,London,E16 1JB,false,"",""
 102767,St Antony's RC Junior School,London,E7 9QB,false,"",31-08-1999
 102768,St Antony's Infant School,London,E7 9QB,false,"",31-08-1999
-102769,St Edward's Catholic Primary School,London,E13 9AX,false,"",31-08-2019
+102769,St Edward's Catholic Primary School,London,E13 9AX,true,"",31-08-2019
 102770,St Francis' Catholic Primary School,London,E15 1HD,false,01-09-1992,31-08-2019
 102771,St Helen's Catholic Primary School,London,E13 8DW,false,"",31-03-2015
 102772,St Joachim's RC Primary School,London,E16 3DT,false,"",31-03-2015
@@ -3222,7 +3222,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 103224,Wyndcliffe Junior Community School,Birmingham,B9 5BG,false,"",31-08-2003
 103225,Wyndcliffe Infant School,Birmingham,B9 5BG,false,"",31-08-2003
 103226,Albert Bradbeer Junior School,Birmingham,B31 4RD,false,"",31-08-2006
-103227,Lozells Junior and Infant School and Nursery,Birmingham,B19 2EP,false,"",""
+103227,Lozells Junior and Infant School and Nursery,Birmingham,B19 2EP,true,"",""
 103228,Lyndon Green Junior School,Birmingham,B26 1LU,false,"",""
 103229,Lyndon Green Infant School,Birmingham,B26 1LZ,false,"",""
 103230,Mapledene Junior School,Birmingham,B26 3XE,false,"",31-12-2003
@@ -3986,7 +3986,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 103988,St Paul's CofE (C) Primary School,Tipton,DY4 9BH,false,"",28-02-2015
 103989,St Mary Magdalene CofE Voluntary Controlled Primary School,West Bromwich,B71 1RP,false,"",""
 103990,All Saints CofE Primary School,West Bromwich,B71 1QN,false,"",""
-103991,St John Bosco Catholic Primary School,West Bromwich,B71 2ST,false,"",31-08-2021
+103991,St John Bosco Catholic Primary School,West Bromwich,B71 2ST,true,"",31-08-2021
 103992,St John's CofE Primary School,Wednesbury,WS10 7AL,false,"",30-11-2014
 103993,St Mary's Catholic Primary School,Wednesbury,WS10 9PN,false,"",31-03-2020
 103994,Sacred Heart Catholic Primary School,Tipton,DY4 8SW,false,"",31-08-2005
@@ -4857,7 +4857,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 104860,Birkdale Primary School,Southport,PR8 4EL,false,"",""
 104861,Churchtown Primary School,Southport,PR9 7NN,false,"",31-01-2019
 104862,Farnborough Road Junior School,Southport,PR8 3DF,false,"",""
-104863,Farnborough Road Infant School,Southport,PR8 3DF,false,"",""
+104863,Farnborough Road Infant School,Southport,PR8 3DF,true,"",""
 104864,Linaker Primary School,Southport,PR8 5DB,false,"",""
 104865,Norwood Primary School,Southport,PR9 7DU,false,"",""
 104866,Marshside Primary School,Southport,PR9 9XA,false,"",""
@@ -5903,7 +5903,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 105907,Clifton Primary School,Manchester,M27 6PF,false,"",""
 105908,Grosvenor Road Junior School,Manchester,M27 1LN,false,"",01-09-1995
 105909,Grosvenor Road County Infant School,Manchester,M27 1LN,false,"",01-09-1995
-105910,Moorside Primary School,Swinton,M27 0LN,false,"",""
+105910,Moorside Primary School,Swinton,M27 0LN,true,"",""
 105911,Mesne Lea Primary School,Manchester,M28 7FG,false,"",""
 105912,Bridgewater Primary School,Manchester,M38 9WD,false,"",""
 105913,Peel Hall Primary School,Manchester,M38 0BZ,false,"",""
@@ -7572,7 +7572,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 107577,Holy Trinity CofE Senior School,Halifax,HX2 9TD,false,"",31-08-2010
 107578,Hipperholme and Lightcliffe High School and Sports College,Halifax,HX3 8TL,false,"",31-07-2011
 107579,The Brooksbank School,Elland,HX5 0QG,false,"",30-09-2011
-107580,Brighouse High School,Brighouse,HD6 2NY,false,"",31-03-2011
+107580,Brighouse High School,Brighouse,HD6 2NY,true,"",31-03-2011
 107581,St Catherine's Catholic High School,Halifax,HX2 9TH,false,"",31-07-2013
 107582,The Gleddings School,Halifax,HX3 0JB,false,05-12-1957,""
 107583,Rishworth School,Sowerby Bridge,HX6 4QA,false,01-01-1911,""
@@ -7801,7 +7801,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 107806,Hunslet Nursery School,Leeds,LS10 2LA,false,"",31-08-1998
 107807,The Armley Park Centre,Leeds,LS12 2BB,false,"",01-06-2000
 107808,The Craven Road Centre,Leeds,LS6 2SN,false,"",01-01-2000
-107809,Guiseley Primary School,Leeds,LS20 9DA,false,"",""
+107809,Guiseley Primary School,Leeds,LS20 9DA,true,"",""
 107810,Rawdon Littlemoor Primary School,Leeds,LS19 6DD,false,"",""
 107811,Yeadon South View Junior School,Leeds,LS19 7QR,false,"",31-08-2004
 107812,Yeadon South View Infant School,Leeds,LS19 7QR,false,"",31-08-2004
@@ -7955,7 +7955,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 107960,Armley Primary School,Leeds,LS12 2AY,false,01-01-1900,30-11-2019
 107961,Bramley Primary School,Leeds,LS13 3DP,false,01-01-1900,31-10-2018
 107962,Castleton Primary School,Leeds,LS12 1JZ,false,"",""
-107963,Cobden Primary School,Leeds,LS12 5LA,false,"",""
+107963,Cobden Primary School,Leeds,LS12 5LA,true,"",""
 107964,Park Spring Primary School,Leeds,LS13 4QT,false,"",""
 107965,Raynville Primary School,Leeds,LS13 2TQ,false,"",31-03-2019
 107966,Stanningley Primary School,Pudsey,LS28 6PE,false,"",""
@@ -8289,7 +8289,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 108294,South Elmsall Middle School,Pontefract,WF9 2JX,false,"",31-08-1996
 108295,The Freeston Business and Enterprise College,Normanton,WF6 1HZ,false,"",31-10-2011
 108296,The Cathedral School,Wakefield,WF2 8QF,false,"",31-12-2011
-108297,St Wilfrid's Catholic High School and Sixth Form College: With Speech and Language Resource,Pontefract,WF7 6BD,false,"",31-10-2012
+108297,St Wilfrid's Catholic High School and Sixth Form College: With Speech and Language Resource,Pontefract,WF7 6BD,true,"",31-10-2012
 108298,St Helen's CofE Middle School,Pontefract,WF9 4EG,false,"",01-09-1996
 108299,St Thomas A Becket Catholic College Specialist Status In Humanities: With Autism Resource,Wakefield,WF2 6EQ,false,"",31-10-2012
 108300,Ackworth School,West Yorkshire,WF7 7LT,false,01-01-1906,""
@@ -9831,7 +9831,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 109836,Bearwood Primary School,Wokingham,RG41 5BB,false,"",""
 109837,Wescott Infant School,Wokingham,RG40 2EN,false,"",30-06-2020
 109838,Loddon Junior School,Reading,RG6 7LP,false,"",31-08-2006
-109839,Whiteknights Primary School,Reading,RG2 8EP,false,01-01-1900,31-12-2021
+109839,Whiteknights Primary School,Reading,RG2 8EP,true,01-01-1900,31-12-2021
 109840,Keep Hatch Primary School,Wokingham,RG40 1PG,false,"",31-12-2020
 109841,Woodlands Park Primary School,Maidenhead,SL6 3JB,false,"",""
 109842,Furze Platt Junior School,Maidenhead,SL6 6HQ,false,"",""
@@ -11421,12 +11421,12 @@ urn,name,town,postcode,lead_school,open_date,close_date
 111427,Knutsford High School,Knutsford,WA16 0EA,false,26-02-1997,31-03-2012
 111428,Holmes Chapel Comprehensive School,Crewe,CW4 7DX,false,"",31-08-2011
 111429,The Whitby High School,Ellesmere Port,CH66 2NU,false,"",""
-111430,Culcheth High School,Warrington,WA3 5HH,false,"",""
+111430,Culcheth High School,Warrington,WA3 5HH,true,"",""
 111431,Penketh High School,Warrington,WA5 2BY,false,"",31-03-2013
 111432,Fairfield High School,Widnes,WA8 6TE,false,"",31-08-2010
 111433,Woolston Community High School,Warrington,WA1 4LS,false,"",31-08-2012
 111434,Great Sankey High School,Warrington,WA5 3AA,false,"",31-12-2012
-111435,Wade Deacon High School,Widnes,WA8 7TD,false,"",28-02-2013
+111435,Wade Deacon High School,Widnes,WA8 7TD,true,"",28-02-2013
 111436,Poynton High School,Stockport,SK12 1PU,false,01-01-1900,30-11-2018
 111437,Brookvale Comprehensive School,Runcorn,WA7 6EP,false,"",01-09-2001
 111438,Lysander Community High School,Warrington,WA2 0LN,false,01-09-1978,31-12-2012
@@ -13467,7 +13467,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 113476,Collaton St Mary Church of England Primary School,Paignton,TQ3 3YA,false,"",31-10-2017
 113477,Wolborough Church of England (Aided) Nursery and Primary School,Newton Abbot,TQ12 2JX,false,"",""
 113478,St Mary's Church of England Primary School,Plymouth,PL8 2AG,false,"",""
-113479,St Andrew's Church of England Primary School,Yelverton,PL20 7NA,false,"",""
+113479,St Andrew's Church of England Primary School,Yelverton,PL20 7NA,true,"",""
 113480,Meavy Church of England Primary School,Yelverton,PL20 6PJ,false,"",30-09-2016
 113481,Lady Modiford's Church of England (Voluntary Aided) Primary School,Yelverton,PL20 6JR,false,"",30-09-2016
 113482,St Peter's Church of England (VA) Junior School,Tavistock,PL19 9HW,false,"",30-06-2015
@@ -13529,7 +13529,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 113538,Coombe Dean School,Plymouth,PL9 8ES,false,"",31-03-2011
 113539,Tavistock College,Tavistock,PL19 8DD,false,"",31-12-2017
 113540,Okehampton College,Okehampton,EX20 1PW,false,"",31-12-2017
-113541,Ivybridge Community College,Ivybridge,PL21 0JA,false,"",31-10-2010
+113541,Ivybridge Community College,Ivybridge,PL21 0JA,true,"",31-10-2010
 113542,Eggbuckland Community College,Plymouth,PL6 5YB,false,"",31-08-2013
 113543,Tor Bridge High,Plymouth,PL6 8UN,false,"",31-07-2011
 113544,Lipson Community College,Plymouth,PL4 7PG,false,"",31-03-2011
@@ -13758,7 +13758,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 113768,Wareham St Mary Church of England Voluntary Controlled Primary School,Wareham,BH20 4PG,false,"",30-06-2015
 113769,West Lulworth Church of England First School,Wareham,BH20 5SA,false,"",31-08-2007
 113770,Winfrith Church of England First School,Dorchester,DT2 8JL,false,"",31-08-2007
-113771,"St John's Church of England Voluntary Controlled First School, Wimborne",Wimborne,BH21 1BX,false,"",28-02-2015
+113771,"St John's Church of England Voluntary Controlled First School, Wimborne",Wimborne,BH21 1BX,true,"",28-02-2015
 113772,All Saints Church of England Voluntary Controlled Primary School,Sherborne,DT9 5NQ,false,"",""
 113773,Loders CofE VC Primary School,Bridport,DT6 3SA,false,"",31-03-2016
 113774,Pimperne Church of England VC Primary School,Blandford Forum,DT11 8WF,false,"",""
@@ -14216,7 +14216,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 114227,Belmont CofE (Controlled) Primary School,Durham,DH1 2QP,false,"",""
 114228,St Oswald's Church of England Aided Primary and Nursery School,Durham,DH1 3DQ,false,"",""
 114229,Shincliffe CofE (Controlled) Primary School,Durham,DH1 2PN,false,"",""
-114230,St Margaret's Church of England Primary School,Durham,DH1 4QB,false,"",""
+114230,St Margaret's Church of England Primary School,Durham,DH1 4QB,true,"",""
 114231,Easington CofE Primary School,Peterlee,SR8 3BP,false,"",""
 114232,Hutton Henry CofE (Controlled) Primary School,Hartlepool,TS27 4RY,false,"",""
 114233,Bishopton Redmarshall CofE Primary School,Stockton-on-Tees,TS21 1HD,false,"",31-07-2011
@@ -14294,7 +14294,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 114305,"Greenfield Community College, A Specialist Arts and Science School",Newton Aycliffe,DL5 7LF,false,"",""
 114306,King James I Community Arts College,Bishop Auckland,DL14 7JZ,false,"",31-05-2011
 114307,Sunnydale Community College for Maths and Computing,Shildon,DL4 2EP,false,"",31-12-2014
-114308,Belmont Community School,Durham,DH1 2QP,false,"",""
+114308,Belmont Community School,Durham,DH1 2QP,true,"",""
 114309,Framwellgate School Durham,Durham,DH1 5BQ,false,"",30-11-2011
 114310,Durham Sixth Form Centre,Durham,DH1 1SG,false,"",""
 114311,Durham Community Business College for Technology and Enterprise,Durham,DH7 7NG,false,"",""
@@ -15342,7 +15342,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 115353,The Grays School Media Arts College,Grays,RM17 5LL,false,"",30-06-2013
 115354,William Edwards School and Sports College,Grays,RM16 3NJ,false,"",31-07-2011
 115355,Gable Hall School,Stanford-le-Hope,SS17 8JT,false,"",30-06-2011
-115356,St Clere's School,Stanford-le-Hope,SS17 0NW,false,"",31-08-2011
+115356,St Clere's School,Stanford-le-Hope,SS17 0NW,true,"",31-08-2011
 115357,The Gilberd School,Colchester,CO4 9PU,false,"",29-02-2012
 115358,Anglo European School,Ingatestone,CM4 0DJ,false,"",30-11-2011
 115359,Colchester Royal Grammar School,Colchester,CO3 3ND,false,"",31-12-2011
@@ -16323,7 +16323,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 116334,Leesland Church of England Controlled Junior School,Gosport,PO12 3QF,false,"",""
 116335,Leesland Church of England Controlled Infant School,Gosport,PO12 3NL,false,"",""
 116336,Newtown Church of England Voluntary Controlled Primary School,Gosport,PO12 1JD,false,"",""
-116337,Rowledge Church of England Controlled Primary School,Farnham,GU10 4BW,false,"",""
+116337,Rowledge Church of England Controlled Primary School,Farnham,GU10 4BW,true,"",""
 116338,Bartley Church of England Junior School,Southampton,SO40 2HR,false,"",""
 116339,Bitterne CE Primary School,Southampton,SO19 7BX,false,"",""
 116340,Bitterne Church of England Infant School,Southampton,SO19 7RB,false,"",31-08-2014
@@ -16649,7 +16649,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 116662,Meadows First School,Bromsgrove,B61 0AH,false,"",""
 116663,Millfields First School,Bromsgrove,B61 7BS,false,"",""
 116664,Sidemoor First School and Nursery,Bromsgrove,B61 8QN,false,01-01-1900,31-03-2021
-116665,Blackwell First School,Bromsgrove,B60 1BN,false,"",""
+116665,Blackwell First School,Bromsgrove,B60 1BN,true,"",""
 116666,St Peter's Primary School,Bromyard,HR7 4UY,false,"",""
 116667,Burghill Community Primary School,Hereford,HR4 7RP,false,"",30-04-2013
 116668,Clifford Primary School,Clifford,HR3 5HA,false,"",""
@@ -16903,7 +16903,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 116916,Sytchampton Endowed Primary School,Stourport-on-Severn,DY13 9SX,false,"",""
 116917,Tardebigge CofE First School,Bromsgrove,B60 3AH,false,"",""
 116918,Weston-under-Penyard CofE Primary School,Ross-on-Wye,HR9 7PA,false,"",""
-116919,Whitchurch CofE Primary School,Ross-on-Wye,HR9 6DA,false,"",""
+116919,Whitchurch CofE Primary School,Ross-on-Wye,HR9 6DA,true,"",""
 116920,Wolverley Sebright First School,Kidderminster,DY11 5TP,false,"",31-08-2007
 116921,Our Lady Queen of Peace Catholic Primary,Worcester,WR2 4EN,false,"",""
 116922,St Clement's CofE Primary,Worcester,WR2 5NS,false,"",30-09-2014
@@ -17798,7 +17798,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 117811,Holme Valley Primary School,Scunthorpe,DN16 3SL,false,"",""
 117812,Bowmandale Primary School,Barton-upon-Humber,DN18 5EE,false,"",""
 117813,Rokeby Park Primary School,Kingston-upon-Hull,HU4 7NJ,false,"",31-05-2018
-117814,Spring Cottage Primary School,Hull,HU8 9JH,false,"",31-01-2014
+117814,Spring Cottage Primary School,Hull,HU8 9JH,true,"",31-01-2014
 117815,St George's Primary School,Hull,HU3 6ED,false,"",31-10-2016
 117816,Sidmouth Primary School,Hull,HU5 2JY,false,"",31-08-2018
 117817,Southcoates Primary School,Hull,HU9 3TW,false,"",31-05-2014
@@ -18907,7 +18907,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 118920,Herne Bay High School,Herne Bay,CT6 7NS,false,"",28-02-2011
 118921,Queen Elizabeth's Grammar School,Faversham,ME13 7BQ,false,"",31-03-2011
 118922,Hillview School for Girls,Tonbridge,TN9 2HE,false,"",31-07-2011
-118923,The Thomas Aveling School,Rochester,ME1 2UW,false,"",31-08-2011
+118923,The Thomas Aveling School,Rochester,ME1 2UW,true,"",31-08-2011
 118924,Chaucer Technology School,Canterbury,CT1 1SU,false,"",01-09-2015
 118925,Montgomery School,Canterbury,CT2 0HD,false,"",31-08-2007
 118926,New Brompton College,Gillingham,ME7 5HT,false,"",31-08-2010
@@ -19390,7 +19390,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 119403,Holmeswood Methodist School,Ormskirk,L40 1UD,false,"",""
 119404,Warton Archbishop Hutton's VC Primary School,Nr Carnforth,LA5 9QU,false,"",""
 119405,Banks Methodist School,Southport,PR9 8EY,false,"",""
-119406,Trinity Church of England/Methodist School,Skelmersdale,WN8 8PW,false,"",""
+119406,Trinity Church of England/Methodist School,Skelmersdale,WN8 8PW,true,"",""
 119407,Hapton Church of England/Methodist Primary School,Burnley,BB11 5RF,false,"",""
 119408,Turton and Edgworth CofE/Methodist Controlled Primary School,Bolton,BL7 0AH,false,"",""
 119409,Richard Durning's Endowed Primary School,Ormskirk,L40 3SL,false,"",""
@@ -20205,7 +20205,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 120218,"Bishop Ellis Catholic Primary School, Thurmaston",Leicester,LE4 8GP,false,01-01-1900,""
 120219,Saint Joseph's Catholic Primary School Market Harborough Leicestershire,Market Harborough,LE16 9BZ,false,"",31-03-2012
 120220,"Saint Clare's Catholic Primary School, Coalville, Leicestershire",Coalville,LE67 3SF,false,"",30-06-2012
-120221,Christ The King Catholic Primary School,Leicester,LE3 6DF,false,"",31-08-2018
+120221,Christ The King Catholic Primary School,Leicester,LE3 6DF,true,"",31-08-2018
 120222,Sacred Heart Catholic Primary School,Leicester,LE5 3HH,false,"",31-03-2012
 120223,Saint Patrick's Catholic Primary School,Leicester,LE4 6QN,false,"",30-09-2018
 120224,St Joseph's Catholic Primary School,Leicester,LE5 1HF,false,"",30-04-2012
@@ -20386,7 +20386,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 120399,"The Bluecoat School, Stamford",Stamford,PE9 1HE,false,"",31-12-2020
 120400,Skellingthorpe the Holt Primary School,Lincoln,LN6 5XJ,false,"",""
 120401,Belmont Community Primary School,Grantham,NG31 9LR,false,"",""
-120402,Bourne Westfield Primary School,Bourne,PE10 9QS,false,"",31-10-2011
+120402,Bourne Westfield Primary School,Bourne,PE10 9QS,true,"",31-10-2011
 120403,Branston Junior School,Lincoln,LN4 1LH,false,"",31-07-2012
 120404,Millfield Community Primary School,Lincoln,LN4 1RQ,false,"",31-07-2011
 120405,Toftstead Primary School,Boston,PE20 3RQ,false,"",31-08-2010
@@ -21284,7 +21284,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 121297,Great Smeaton Community Primary School,Northallerton,DL6 2EQ,false,"",31-08-2011
 121298,Hawes Community Primary School,Hawes,DL8 3RQ,false,"",30-09-2016
 121299,Ralph Butterfield Primary School,York,YO32 3LS,false,"",""
-121300,Oakridge Community Primary School,Saltburn-by-the-Sea,TS13 5HA,false,"",""
+121300,Oakridge Community Primary School,Saltburn-by-the-Sea,TS13 5HA,true,"",""
 121301,"Staithes, Seton Community Primary School",Saltburn-by-the-Sea,TS13 5AU,false,"",""
 121302,Hunton and Arrathorne Community Primary School,Bedale,DL8 1QB,false,"",""
 121303,Kirkbymoorside Community Primary School,York,YO62 6AG,false,01-01-1900,31-01-2021
@@ -21637,7 +21637,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 121650,"St Benedict's Roman Catholic Primary School, Ampleforth",York,YO62 4DE,false,"",31-07-2019
 121651,St Hedda's Roman Catholic Primary School,Whitby,YO21 1UX,false,"",31-08-2020
 121652,"St Peter and St Paul Roman Catholic Primary School, Leyburn",Leyburn,DL8 5DL,false,"",31-08-2011
-121653,"St Mary's Catholic Primary School, Malton",Malton,YO17 7DB,false,"",30-06-2019
+121653,"St Mary's Catholic Primary School, Malton",Malton,YO17 7DB,true,"",30-06-2019
 121654,"St Joseph's Roman Catholic Primary School, Pickering",Pickering,YO18 8AR,false,"",30-06-2019
 121655,"St Mary's Roman Catholic Primary School, Richmond",Richmond,DL10 7DZ,false,"",30-06-2019
 121656,St Peter's Roman Catholic Primary School,Scarborough,YO12 6LX,false,"",31-07-2019
@@ -21683,7 +21683,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 121696,Rossett School,Harrogate,HG2 9JP,false,"",30-06-2011
 121697,Harrogate High School,Harrogate,HG1 4AP,false,"",31-05-2012
 121698,Settle Middle School,Settle,BD24 0BU,false,"",31-08-2012
-121699,Boroughbridge High School,York,YO51 9JX,false,"",""
+121699,Boroughbridge High School,York,YO51 9JX,true,"",""
 121700,Nidderdale High School,Harrogate,HG3 5HL,false,"",""
 121701,Brayton Academy,Selby,YO8 9QS,false,"",31-08-2016
 121702,Selby High School Specialist School for the Arts and Science,Selby,YO8 4HT,false,"",""
@@ -23617,7 +23617,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 123632,The Charles Darwin School,Telford,TF1 3ET,false,"",01-01-2000
 123633,Hinkshay School,Telford,TF3 1DG,false,"",31-12-1999
 123634,Severndale,Shrewsbury,SY2 5SL,false,"",31-12-2013
-123635,The Bridge at HLC,Telford,TF1 5NQ,false,"",""
+123635,The Bridge at HLC,Telford,TF1 5NQ,true,"",""
 123636,Sedgemoor Centre,Bridgwater,TA6 5HT,false,"",31-08-2013
 123637,Mendip Centre,Glastonbury,BA6 9NS,false,"",31-08-2013
 123638,Yeovil Centre,Yeovil,BA21 4EN,false,"",31-07-2003
@@ -23981,7 +23981,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 123996,Townsend Primary School,Stoke-on-Trent,ST2 9AS,false,"",31-08-2004
 123997,Forest Park Primary School,Stoke-on-Trent,ST1 5ED,false,01-09-2005,30-04-2019
 123998,Harpfield Primary School,Stoke-on-Trent,ST4 6AP,false,01-01-1900,30-04-2013
-123999,The Willows Primary School,Stoke-on-Trent,ST4 7JY,false,"",""
+123999,The Willows Primary School,Stoke-on-Trent,ST4 7JY,true,"",""
 124000,Oakhill Primary School,Stoke-on-Trent,ST4 5NS,false,"",30-04-2019
 124001,Penkhull Infants' School,Stoke-on-Trent,ST4 7JS,false,"",31-08-2002
 124002,Blurton Primary School,Stoke-on-Trent,ST3 3AZ,false,01-01-1900,31-12-2019
@@ -24220,7 +24220,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 124235,Betley CofE VC Primary School,Crewe,CW3 9AX,false,"",""
 124236,St John's CofE (C) First School,Stafford,ST19 9AH,false,"",31-03-2018
 124237,St Mary and St Chad CE (VC) First School,Stafford,ST19 9DT,false,"",31-07-2019
-124238,St Anne's CofE (VC) Primary School,Stoke-on-Trent,ST6 8TA,false,"",""
+124238,St Anne's CofE (VC) Primary School,Stoke-on-Trent,ST6 8TA,true,"",""
 124239,Walhouse CofE (C) Junior School,Cannock,WS11 1HN,false,"",31-12-2004
 124240,Chadsmoor CofE (VC) Junior School,Cannock,WS11 6DR,false,"",""
 124241,St Edward's CofE (C) First School,Leek,ST13 7HP,false,"",31-12-2016
@@ -25245,7 +25245,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 125261,Tomlinscote School and Sixth Form College,Camberley,GU16 8PY,false,"",31-08-2013
 125262,Rydens School,Hersham,KT12 5PY,false,"",31-07-2011
 125263,The Matthew Arnold School,Staines,TW18 1PF,false,"",31-08-2012
-125264,The Ashcombe School,Dorking,RH4 1LY,false,"",31-12-2016
+125264,The Ashcombe School,Dorking,RH4 1LY,true,"",31-12-2016
 125265,George Abbot School,Guildford,GU1 1XX,false,"",30-06-2011
 125266,The Bishop David Brown School,Woking,GU21 5RF,false,"",31-10-2015
 125267,Sunbury Manor School,Sunbury-on-Thames,TW16 6LF,false,"",31-03-2011
@@ -25451,7 +25451,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 125468,Walton Leigh School,Walton-on-Thames,KT12 5AB,false,"",""
 125469,Woodlands School,Leatherhead,KT22 8RY,false,"",""
 125470,Clifton Hill School,Caterham,CR3 5PN,false,"",""
-125471,The Ridgeway Community School,Farnham,GU9 8HB,false,"",31-03-2017
+125471,The Ridgeway Community School,Farnham,GU9 8HB,true,"",31-03-2017
 125472,Brooklands School - Split Site,REIGATE,RH2 0DF,false,"",""
 125473,Manor Mead School,Shepperton,TW17 8EL,false,"",""
 125474,Portesbery School,Deepcut,GU16 6TA,false,"",""
@@ -25727,7 +25727,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 125744,"Aylesford School, A Specialist Language and Music College",Warwick,CV34 6LA,false,"",31-12-2011
 125745,Campion School,Leamington Spa,CV31 1QH,false,"",31-12-2011
 125746,The Coleshill School,Birmingham,B46 3EX,false,"",31-07-2011
-125747,Kenilworth School and Sixth Form,Kenilworth,CV8 2DA,false,"",31-12-2018
+125747,Kenilworth School and Sixth Form,Kenilworth,CV8 2DA,true,"",31-12-2018
 125748,North Leamington School,Leamington Spa,CV32 6RD,false,"",31-10-2016
 125749,Bilton School - A Maths and Computing College,Rugby,CV22 7JT,false,"",30-11-2011
 125750,Alcester High School Technology College,Alcester,B49 6QQ,false,"",31-07-2011
@@ -26043,7 +26043,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 126060,St Peter's Catholic Primary School,East Grinstead,RH19 1JB,false,"",""
 126061,"St Wilfrid's Catholic Primary School, Burgess Hill",Burgess Hill,RH15 9RJ,false,"",""
 126062,Chichester High School for Boys,Chichester,PO19 8AE,false,"",31-08-2013
-126063,Chichester High School for Girls,Chichester,PO19 8EB,false,"",31-08-2013
+126063,Chichester High School for Girls,Chichester,PO19 8EB,true,"",31-08-2013
 126064,Tanbridge House School,Horsham,RH12 1SR,false,"",""
 126065,The Forest School,Horsham,RH13 5NT,false,"",""
 126066,Millais School,Horsham,RH13 5HR,true,"",""
@@ -30422,7 +30422,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 130484,City of Wolverhampton College,Wolverhampton,WV6 0DU,false,"",""
 130485,Bilston Community College,Bilston,WV14 6ER,false,"",01-10-1999
 130486,Knowsley Community College,Liverpool,L36 9TD,false,"",11-12-2017
-130487,The City of Liverpool College,Liverpool,L3 5TP,false,"",""
+130487,The City of Liverpool College,Liverpool,L3 5TP,true,"",""
 130488,St Helens College,St Helens,WA10 1PP,false,"",""
 130489,Carmel College,St Helens,WA10 3AG,false,"",""
 130490,Hugh Baird College,Bootle,L20 7EW,false,"",""
@@ -30529,7 +30529,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 130591,Craven College,Skipton,BD23 1US,false,"",""
 130592,Selby College,Selby,YO8 8AT,false,"",""
 130593,Scarborough Sixth Form College,Scarborough,YO12 5LF,false,"",""
-130594,York College,York,YO23 2BB,false,"",""
+130594,York College,York,YO23 2BB,true,"",""
 130595,Askham Bryan College,York,YO23 3FR,false,"",""
 130596,York Sixth Form College,York,YO23 2UD,false,"",01-04-1999
 130597,Bedford College,Bedford,MK42 9AH,false,"",""
@@ -31792,7 +31792,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 131873,Springwood Primary School,Stockport,SK6 4JA,false,01-09-1999,31-08-2005
 131874,Henry Fawcett Primary School,London,SE11 5BZ,false,01-09-1999,""
 131875,Fairfield Farm College (Fairfield Farm Trust),Westbury,BA13 4DL,false,16-06-2006,""
-131876,Debden Park High School,Loughton,IG10 2BQ,false,01-09-1999,31-03-2011
+131876,Debden Park High School,Loughton,IG10 2BQ,true,01-09-1999,31-03-2011
 131877,Chantry Primary School,Luton,LU4 0QP,false,01-09-1999,31-07-2012
 131878,Farleigh Further Education College - Frome,Frome,BA11 2AB,false,16-06-2006,""
 131879,Risley Avenue Primary School,London,N17 7AB,false,01-09-1999,""
@@ -32454,7 +32454,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 132772,Access School,Shrewsbury,SY4 3EW,false,03-11-2000,""
 132774,Carmel Christian School,Bristol,BS4 5NL,false,08-11-2000,""
 132775,Tumblewood Community School,Westbury,BA13 4LF,false,13-11-2000,17-07-2020
-132776,CACFO UK Education Centre,Thornton Heath,CR7 8HQ,false,15-11-2000,""
+132776,CACFO UK Education Centre,Thornton Heath,CR7 8HQ,true,15-11-2000,""
 132777,Schoolhouse Education,London,SE2 9LZ,false,04-07-2006,13-07-2018
 132778,Willowbrook School,Exeter,EX4 8NN,false,01-09-2000,""
 132779,Wiltshire College and University Centre,Chippenham,SN15 3QD,false,01-11-2000,""
@@ -32969,7 +32969,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 133309,Liverpool Progressive School,Liverpool,L9 1NR,false,11-04-2001,""
 133310,Isp Teynham,Sittingbourne,ME9 9EA,false,26-04-2001,11-06-2010
 133311,Ridgefield Primary School,Cambridge,CB1 3RJ,false,01-09-2002,""
-133312,Abacus Primary School,Wickford,SS12 9GJ,false,01-09-2002,""
+133312,Abacus Primary School,Wickford,SS12 9GJ,true,01-09-2002,""
 133313,Shooters Hill Post-16 Campus,London,SE18 4LD,false,01-09-2002,31-10-2012
 133314,Oakefield Primary and Nursery School,Crewe,CW1 3SL,false,01-01-2007,31-10-2013
 133315,Kings Avenue School,London,SW4 8BQ,false,01-01-2001,""
@@ -34420,7 +34420,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 135004,The Harefield Academy,Uxbridge,UB9 6ET,false,01-09-2005,""
 135005,Keys Education,Bason Bridge,TA9 4RL,false,06-04-2005,01-06-2006
 135006,Strides Learning Support Centre,Worthing,BN14 8AT,false,06-04-2005,04-12-2009
-135007,Trinity Academy,Doncaster,DN8 5BY,false,01-09-2005,""
+135007,Trinity Academy,Doncaster,DN8 5BY,true,01-09-2005,""
 135008,Meadowbank Primary School,Cheadle,SK8 2LE,false,01-09-2005,31-03-2018
 135009,Leatherhead Trinity School and Nursery,Leatherhead,KT22 7BP,false,01-09-2006,""
 135010,Sutton Tuition and Reintegration Service,Carshalton,SM5 4NR,false,01-03-2004,""
@@ -35267,7 +35267,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 135932,Trecrogo House,Launceston,PL15 7LQ,false,03-08-2009,31-05-2013
 135933,Blackburn Raza Muslim Girls School,Blackburn,BB1 7LL,false,04-08-2009,31-01-2011
 135934,Parkwood E-Act Academy,Sheffield,S5 8UL,false,01-09-2009,""
-135935,Leeds West Academy,Leeds,LS13 1DQ,false,01-09-2009,""
+135935,Leeds West Academy,Leeds,LS13 1DQ,true,01-09-2009,""
 135936,Fulwood Academy,Preston,PR2 9YR,false,01-09-2009,""
 135938,The Bushey Academy,Bushey,WD23 3AA,false,01-09-2009,31-01-2020
 135939,Grangeside School,Basingstoke,RG22 5TH,false,01-09-2010,31-08-2014
@@ -35276,7 +35276,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 135942,De Warenne Academy,Doncaster,DN12 3JY,false,01-09-2009,""
 135943,The Ridings Federation Yate International Academy,Yate,BS37 4DX,false,01-09-2009,31-08-2017
 135944,The Ridings Federation Winterbourne International Academy,Bristol,BS36 1JL,false,01-09-2009,31-01-2018
-135945,Sirius Academy West,Hull,HU4 7JB,false,01-09-2009,""
+135945,Sirius Academy West,Hull,HU4 7JB,true,01-09-2009,""
 135946,All Saints Academy Dunstable,Dunstable,LU5 5AB,false,01-09-2009,""
 135947,The George Eliot School,Nuneaton,CV11 4QP,false,01-09-2009,31-08-2011
 135948,Manchester Settlement,Manchester,M11 1JG,false,12-08-2009,31-08-2018
@@ -35295,7 +35295,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 135961,Outwood Grange Academy,Wakefield,WF1 2PF,true,01-09-2009,""
 135962,Shoreham Academy,Shoreham-by-Sea,BN43 6YT,false,01-09-2009,""
 135963,Outwood Academy Adwick,Doncaster,DN6 7SF,false,01-09-2009,""
-135964,Strood Academy,Rochester,ME2 2SX,false,01-09-2009,""
+135964,Strood Academy,Rochester,ME2 2SX,true,01-09-2009,""
 135965,Ark Charter Academy,Southsea,PO5 4HL,false,01-09-2009,""
 135966,Kettering Buccleuch Academy,Kettering,NN16 9NS,false,01-09-2009,""
 135967,Kettering Science Academy,Kettering,NN15 7AA,false,01-09-2009,""
@@ -35428,7 +35428,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 136099,An-Noor Primary School,Derby,DE23 8FB,false,15-04-2010,19-12-2011
 136100,StreetVibes Media Academy,London,SE9 1DA,false,19-04-2010,""
 136101,KWS Educational Services,Luton,LU1 1LP,false,26-04-2010,13-11-2017
-136102,Co-op Academy Stoke-On-Trent,Stoke-on-Trent,ST6 4LD,false,01-09-2010,""
+136102,Co-op Academy Stoke-On-Trent,Stoke-on-Trent,ST6 4LD,true,01-09-2010,""
 136103,Hampton Academy,Hampton,TW12 3HB,false,01-09-2010,31-10-2016
 136104,Twickenham Academy,Twickenham,TW2 6JW,false,01-09-2010,31-10-2016
 136105,Manchester Communication Academy,Manchester,M40 8NT,false,01-09-2010,""
@@ -35877,7 +35877,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 136569,South Dartmoor Community College,Ashburton,TQ13 7EW,false,01-04-2011,""
 136570,Queen Elizabeth's Grammar School,Faversham,ME13 7BQ,false,01-04-2011,""
 136571,Hartsdown Academy,Margate,CT9 5RE,false,01-04-2011,""
-136572,The Roseland Academy,Truro,TR2 5SE,false,01-04-2011,""
+136572,The Roseland Academy,Truro,TR2 5SE,true,01-04-2011,""
 136573,Penrice Academy,St Austell,PL25 3NR,true,01-04-2011,""
 136574,Corfe Hills School,Broadstone,BH18 9BG,false,01-04-2011,""
 136575,Saltash Community School,Saltash,PL12 4AY,false,01-04-2011,""
@@ -35885,7 +35885,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 136577,The King John School,Benfleet,SS7 1RQ,false,01-04-2011,""
 136578,The Crypt School,Gloucester,GL2 5AE,false,01-04-2011,""
 136579,The Appleton School,Benfleet,SS7 5RN,true,01-04-2011,""
-136580,Swavesey Village College,Cambridge,CB24 4RS,false,01-04-2011,""
+136580,Swavesey Village College,Cambridge,CB24 4RS,true,01-04-2011,""
 136581,Valley Park School,Maidstone,ME14 5DT,false,01-04-2011,""
 136582,Invicta Grammar School,Maidstone,ME14 5DS,true,01-04-2011,""
 136583,Towers School and Sixth Form Centre,Ashford,TN24 9AL,false,01-04-2011,""
@@ -35949,7 +35949,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 136641,Freemantle Church of England Community Academy,Southampton,SO15 3BQ,false,01-04-2011,""
 136642,"King Edward VI Grammar School, Chelmsford",Chelmsford,CM1 3SX,false,01-04-2011,""
 136643,Bohunt School,Liphook,GU30 7NY,true,01-04-2011,""
-136644,Hayes School,Bromley,BR2 7DB,false,01-04-2011,""
+136644,Hayes School,Bromley,BR2 7DB,true,01-04-2011,""
 136645,Christleton High School,Chester,CH3 7AD,false,01-04-2011,""
 136646,Queen Elizabeth's,Crediton,EX17 3LU,false,01-04-2011,""
 136647,Kennet School,Thatcham,RG19 4LL,false,01-04-2011,""
@@ -36132,7 +36132,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 136851,Bishop Fox's School,Taunton,TA1 3HQ,false,01-07-2011,""
 136852,Penryn College,Penryn,TR10 8PZ,false,01-07-2011,""
 136853,Oxley Park Academy,Milton Keynes,MK4 4TA,false,01-07-2011,""
-136854,Ortu Gable Hall School,Stanford-le-Hope,SS17 8JT,false,01-07-2011,""
+136854,Ortu Gable Hall School,Stanford-le-Hope,SS17 8JT,true,01-07-2011,""
 136855,Moulsham Infant School,Chelmsford,CM2 9DG,false,01-07-2011,""
 136856,Gordano School,Bristol,BS20 7QR,false,01-07-2011,""
 136857,Bovingdon Primary Academy,Hemel Hempstead,HP3 0HL,true,01-07-2011,""
@@ -36465,8 +36465,8 @@ urn,name,town,postcode,lead_school,open_date,close_date
 137196,Ormiston Maritime Academy,Grimsby,DN34 5AH,false,01-08-2011,""
 137197,Hall Mead School,Upminster,RM14 1SF,true,01-08-2011,""
 137198,Rooks Heath School,Harrow,HA2 9AH,false,01-08-2011,""
-137199,Canons High School,Edgware,HA8 6AN,false,01-08-2011,""
-137200,Humberston Academy,Grimsby,DN36 4TF,false,01-08-2011,""
+137199,Canons High School,Edgware,HA8 6AN,true,01-08-2011,""
+137200,Humberston Academy,Grimsby,DN36 4TF,true,01-08-2011,""
 137201,Heighington Millfield Primary Academy,Lincoln,LN4 1RQ,false,01-08-2011,""
 137202,St Dunstan's School,Glastonbury,BA6 9BY,false,01-08-2011,""
 137203,Westfield Academy,Yeovil,BA21 3EP,false,01-08-2011,""
@@ -36565,7 +36565,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 137297,Birkdale High School,Southport,PR8 3DT,false,17-08-2011,""
 137298,Severn Vale School,Gloucester,GL2 4PR,false,17-08-2011,""
 137299,Richard Challoner School,New Malden,KT3 5PE,false,17-08-2011,""
-137300,Priory Community School,Weston-Super-Mare,BS22 6BP,false,17-08-2011,""
+137300,Priory Community School,Weston-Super-Mare,BS22 6BP,true,17-08-2011,""
 137301,Palace Fields Primary Academy,Runcorn,WA7 2QW,false,17-08-2011,31-08-2016
 137302,King Edward VI School,Stratford-upon-Avon,CV37 6BE,false,17-08-2011,""
 137303,Independent Jewish Day School,LONDON,NW4 2AH,false,17-08-2011,""
@@ -36802,7 +36802,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 137539,Hasmonean High School for Boys,London,NW4 1NA,false,01-10-2011,""
 137540,Kibworth Mead Academy,Leicester,LE8 0LG,false,01-10-2011,""
 137541,Lynn Grove Academy,Great Yarmouth,NR31 8AP,false,01-10-2011,""
-137542,Mellor Primary School,Stockport,SK6 5PL,false,01-10-2011,""
+137542,Mellor Primary School,Stockport,SK6 5PL,true,01-10-2011,""
 137543,Pennine Way Junior Academy,Swadlincote,DE11 9EY,false,01-10-2011,""
 137544,Stisted Church of England Primary Academy,Braintree,CM77 8AN,false,01-10-2011,""
 137545,"St John's (CofE) Primary Academy, Clifton",Brighouse,HD6 4HP,false,01-10-2011,""
@@ -36853,7 +36853,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 137597,Values Academy,Nuneaton,CV10 8JX,false,25-10-2011,""
 137598,Berwick Academy,Berwick-upon-Tweed,TD15 2JF,false,01-11-2011,""
 137599,Bourne Westfield Primary Academy,Bourne,PE10 9QS,true,01-11-2011,""
-137600,Stamford Welland Academy,Stamford,PE9 1HE,false,01-11-2011,""
+137600,Stamford Welland Academy,Stamford,PE9 1HE,true,01-11-2011,""
 137601,Cheetham CofE Community Academy,Manchester,M8 9FR,false,01-11-2011,""
 137602,Dearham Primary School,Maryport,CA15 7HR,false,01-11-2011,""
 137603,Ridgewood School,Doncaster,DN5 7UB,false,01-11-2011,""
@@ -36972,7 +36972,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 137733,Shoeburyness High School,Southend-on-Sea,SS3 9LL,false,01-12-2011,""
 137734,St Thomas More Catholic High School,North Shields,NE29 8LF,false,01-12-2011,""
 137735,The Beacon School,Banstead,SM7 1AG,false,01-12-2011,""
-137736,Rosebery School,Epsom,KT18 7NQ,false,01-12-2011,""
+137736,Rosebery School,Epsom,KT18 7NQ,true,01-12-2011,""
 137737,South Ossett Infant Academy,Ossett,WF5 0BE,false,01-12-2011,""
 137738,Community & Hospital Education Service,Liskeard,PL14 6BS,false,01-01-2012,31-05-2013
 137739,Cranbrook School,Cranbrook,TN17 3JD,false,01-12-2011,""
@@ -37356,7 +37356,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 138130,Oakwood Academy,Eccles,M30 9DY,true,01-05-2012,""
 138131,Education & Youth Services Ltd,Lincoln,LN5 7EU,false,30-04-2012,07-03-2016
 138132,Woodspring School,Weston Super Mare,BS22 7YA,false,30-04-2012,26-10-2018
-138133,The Mead Community Primary School,Trowbridge,BA14 7GN,false,01-05-2012,""
+138133,The Mead Community Primary School,Trowbridge,BA14 7GN,true,01-05-2012,""
 138134,Saint Ambrose College,Altrincham,WA15 0HE,false,01-05-2012,""
 138135,Robert May's School,Hook,RG29 1NA,false,01-05-2012,""
 138136,The Arthur Terry School,Sutton Coldfield,B74 4RZ,true,01-05-2012,""
@@ -37396,7 +37396,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 138171,Harewood College,Bournemouth,BH7 6NZ,false,01-06-2012,31-07-2019
 138172,"St Bede's Catholic Comprehensive School and Sixth Form College, Lanchester",Durham,DH7 0RD,true,01-06-2012,""
 138173,The Meadow Community Primary School,Wigston,LE18 3QZ,false,01-06-2012,""
-138174,Belfairs Academy,Leigh-on-Sea,SS9 3TG,false,01-06-2012,""
+138174,Belfairs Academy,Leigh-on-Sea,SS9 3TG,true,01-06-2012,""
 138175,Mowden Infant School,Darlington,DL3 9QG,false,01-06-2012,""
 138176,Mowden Junior School,Darlington,DL3 9DE,false,01-06-2012,""
 138177,Cromwell Community College,Chatteris,PE16 6UU,true,01-06-2012,""
@@ -37534,7 +37534,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 138312,Westminster City School,London,SW1E 5HJ,false,01-07-2012,""
 138313,The Grey Coat Hospital,London,SW1P 2DY,false,01-07-2012,""
 138314,Armthorpe Academy,Doncaster,DN3 2DA,false,01-07-2012,""
-138315,Pilton Bluecoat Church of England Academy,Barnstaple,EX31 1JU,false,01-07-2012,""
+138315,Pilton Bluecoat Church of England Academy,Barnstaple,EX31 1JU,true,01-07-2012,""
 138316,St John Roman Catholic Primary School,Baldock,SG7 6TT,false,01-07-2012,""
 138317,Christ Church Church of England Primary School,Bristol,BS8 3AW,false,01-07-2012,""
 138318,Neston High School,Neston,CH64 9NH,false,01-07-2012,""
@@ -37717,7 +37717,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 138503,One City Schools,Manchester,M11 3FF,false,30-07-2012,23-04-2013
 138504,Elaine Primary Academy,Rochester,ME2 2YN,false,01-09-2012,30-04-2018
 138505,Arrow Vale RSA Academy,Redditch,B98 0GF,true,01-09-2012,""
-138506,Ormiston Sudbury Academy,Sudbury,CO10 1NW,false,01-09-2012,""
+138506,Ormiston Sudbury Academy,Sudbury,CO10 1NW,true,01-09-2012,""
 138507,The Grove Academy,Watford,WD25 9RH,false,01-09-2012,""
 138508,"St Augustine's Catholic Primary and Nursery School, A Voluntary Academy",Nottingham,NG3 4JS,false,01-09-2012,""
 138509,St Columba Church of England Primary Academy,Fareham,PO15 6LL,false,01-09-2012,31-12-2019
@@ -38192,7 +38192,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 138996,Kingsmoor Academy,Harlow,CM18 7PS,false,01-12-2012,""
 138997,Kingston Park Academy,Worksop,S81 9AW,false,01-12-2012,""
 138998,Mansfield Green E-ACT Academy,Birmingham,B6 5NH,false,01-01-2013,""
-138999,Millfield L.E.A.D. Academy,Leicester,LE3 2WF,false,01-01-2013,""
+138999,Millfield L.E.A.D. Academy,Leicester,LE3 2WF,true,01-01-2013,""
 139000,Moor Green Primary Academy,Birmingham,B13 8QP,false,01-01-2013,""
 139001,Perry Wood Primary and Nursery School,Worcester,WR5 1PP,false,01-12-2012,""
 139002,Reaside Academy,Birmingham,B45 0HY,false,01-12-2012,""
@@ -38453,7 +38453,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 139282,John Smeaton Academy,Leeds,LS15 8TA,false,01-01-2014,31-08-2021
 139284,Ratby Primary School,Leicester,LE6 0LN,false,01-02-2013,""
 139285,Springwell Dene School,Sunderland,SR3 4EE,false,01-02-2013,31-08-2015
-139286,St John's Church of England Middle School Academy,Bromsgrove,B61 7DH,false,01-02-2013,""
+139286,St John's Church of England Middle School Academy,Bromsgrove,B61 7DH,true,01-02-2013,""
 139287,Stonebow Primary School Loughborough,Loughborough,LE11 4ZH,false,01-02-2013,""
 139288,Westbourne Academy,Ipswich,IP1 5JN,false,01-02-2013,""
 139289,Widewell Primary Academy,Plymouth,PL6 7ER,false,01-02-2013,""
@@ -38874,7 +38874,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 139729,West Newcastle Academy,Newcastle-upon-Tyne,NE4 8QP,false,02-09-2013,""
 139730,Connell Co-Op College,Manchester,M11 3BS,false,02-09-2013,""
 139731,Titan St Georges Academy,Birmingham,B6 6EL,false,02-09-2013,""
-139732,Churchill Special Free School,Haverhill,CB9 0LB,false,02-09-2013,""
+139732,Churchill Special Free School,Haverhill,CB9 0LB,true,02-09-2013,""
 139733,Eden Park Academy,Leeds,LS11 7EN,false,30-05-2013,17-07-2020
 139734,Woodside Lodge Outdoor Learning Centre,Leicestershire,LE12 8UE,false,14-05-2013,""
 139735,All Saints Catholic College,Dukinfield,SK16 5AP,false,01-06-2013,""
@@ -38976,7 +38976,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 139834,East London Science School,London,E3 3DU,false,02-09-2013,""
 139835,Rhodes Farm School,Hatfield,AL9 6NN,false,24-07-2013,24-07-2017
 139836,Rise Mentoring,Bradford,BD4 7EX,false,28-06-2013,20-05-2014
-139837,Abacus Belsize Primary School,London,N1C 4PF,false,01-09-2013,""
+139837,Abacus Belsize Primary School,London,N1C 4PF,true,01-09-2013,""
 139838,Bellfield Primary School,Hull,HU8 9DD,false,01-07-2013,""
 139839,Biddick Academy,Washington,NE38 8AL,false,01-07-2013,""
 139840,Birchwood Community High School,Warrington,WA3 7PT,false,01-07-2013,""
@@ -39124,7 +39124,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 139985,Pegasus School,Oxford,OX4 6RQ,false,01-08-2013,""
 139986,Porter Croft Church of England Primary Academy,Sheffield,S11 8JN,false,01-08-2013,""
 139987,Stone with Woodford Church of England Primary School,Berkeley,GL13 9JX,false,01-08-2013,""
-139988,The Ferrers School,Rushden,NN10 8LF,false,01-08-2013,""
+139988,The Ferrers School,Rushden,NN10 8LF,true,01-08-2013,""
 139989,The Green School for Girls,Isleworth,TW7 5BB,false,01-08-2013,""
 139990,Ursula Taylor Church of England School,Bedford,MK41 6EG,false,01-08-2013,""
 139991,West Thurrock Academy,Grays,RM20 3HR,false,01-08-2013,""
@@ -39162,7 +39162,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 140024,Cooks Spinney Primary Academy and Nursery,Harlow,CM20 3BW,false,01-12-2013,""
 140025,"St John Fisher Primary, A Catholic Voluntary Academy",Sheffield,S12 4HJ,false,01-12-2013,""
 140026,St Mary's Church of England Primary School,Godalming,GU8 4UF,false,01-11-2013,""
-140027,St Michael's Church of England Primary School,Helston,TR13 8AR,false,01-12-2013,""
+140027,St Michael's Church of England Primary School,Helston,TR13 8AR,true,01-12-2013,""
 140028,St Paul's CofE Primary School,Addlestone,KT15 1TD,true,01-04-2014,""
 140030,St Peter's Church of England Academy,Wellingborough,NN9 6PA,false,01-11-2013,""
 140031,Stanground St Johns CofE Primary School,Peterborough,PE2 8JG,false,01-11-2013,""
@@ -39266,7 +39266,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 140130,Green End Primary School,Manchester,M19 1DR,false,01-09-2013,""
 140131,Haltwhistle Community Campus Lower School,Haltwhistle,NE49 9DP,false,01-09-2013,31-05-2017
 140132,Haltwhistle Community Campus Upper School,Haltwhistle,NE49 9BA,false,01-09-2013,31-05-2017
-140133,Hawthorns School,Manchester,M34 5SF,false,01-09-2013,""
+140133,Hawthorns School,Manchester,M34 5SF,true,01-09-2013,""
 140134,Holland Park School,London,W8 7AF,false,01-09-2013,""
 140135,Henley-In-Arden CofE Primary School,Henley-in-Arden,B95 5FT,false,01-09-2013,""
 140136,Jubilee Park Academy,Tipton,DY4 0QS,false,01-09-2013,""
@@ -39452,7 +39452,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 140326,The Halifax Academy,Halifax,HX2 0BA,false,01-11-2013,""
 140327,Green Oaks Primary Academy,Northampton,NN2 7RR,false,01-01-2014,""
 140328,Falmouth Primary Academy,Falmouth,TR11 2BB,false,01-12-2013,""
-140329,Castle Wood Academy,Gainsborough,DN21 1EH,false,01-09-2015,""
+140329,Castle Wood Academy,Gainsborough,DN21 1EH,true,01-09-2015,""
 140330,Kinetic Academy,Stoke-on-Trent,ST3 7DJ,false,06-11-2013,""
 140332,Foxhole Learning Academy,St. Austell,PL26 7XD,false,01-12-2013,""
 140333,England Lane Academy,Knottingley,WF11 0JA,false,01-12-2013,""
@@ -39536,7 +39536,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 140414,Kings Heath Primary Academy,Northampton,NN5 7LN,false,01-02-2014,""
 140415,Outwood Academy City,Sheffield,S13 8SS,false,01-01-2014,""
 140416,Court Fields School,Wellington,TA21 8SW,false,01-01-2014,""
-140417,St Matthew's Church of England Primary School,Stockport,SK3 9EA,false,01-01-2014,""
+140417,St Matthew's Church of England Primary School,Stockport,SK3 9EA,true,01-01-2014,""
 140418,Wood End Primary School,Atherstone,CV9 2QL,false,01-01-2014,""
 140419,Queen's Church of England Academy,Nuneaton,CV11 5LR,false,01-01-2014,""
 140420,Tadpole Farm CofE Primary Academy,Swindon,SN25 2QS,false,01-09-2014,""
@@ -39589,7 +39589,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 140468,Ladock C of E School,Truro,TR2 4PL,false,01-12-2013,""
 140469,Veryan CofE School,Truro,TR2 5QA,false,01-12-2013,""
 140470,Chesterton Community Sports College,Newcastle,ST5 7LP,false,01-12-2013,""
-140471,Robert Wilkinson Primary Academy,York,YO32 5UH,false,01-12-2013,""
+140471,Robert Wilkinson Primary Academy,York,YO32 5UH,true,01-12-2013,""
 140472,"Bishop Luffa School, Chichester",Chichester,PO19 3HP,true,01-12-2013,""
 140473,The Hendreds Church of England School,Wantage,OX12 8JX,false,01-12-2013,""
 140474,Grove Church of England School,Wantage,OX12 7PW,false,01-12-2013,""
@@ -40258,7 +40258,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 141170,Holt Farm Junior School,Rochford,SS4 1RS,false,01-09-2014,""
 141171,Castlewood School,Birmingham,B36 9LF,false,16-12-2014,""
 141172,Kessingland Church of England Primary Academy,Lowestoft,NR33 7QA,false,01-09-2014,""
-141173,Rise Park Junior School,Romford,RM1 4UD,false,01-09-2014,""
+141173,Rise Park Junior School,Romford,RM1 4UD,true,01-09-2014,""
 141174,Severn Beach Primary School,Bristol,BS35 4PP,false,01-09-2014,""
 141175,Priory School,Southsea,PO4 0DL,false,01-09-2014,""
 141176,Sir John Talbot's School,Whitchurch,SY13 2BY,false,01-09-2014,""
@@ -40337,7 +40337,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 141256,King Ina CofE Academy (Infants),Somerton,TA11 6JB,false,01-09-2014,30-04-2021
 141257,St Mary's Catholic Academy,Blackpool,FY3 7EQ,false,01-09-2014,""
 141258,Broadstone First School,Broadstone,BH18 8AA,true,01-09-2014,""
-141259,The Ripley Academy,Ripley,DE5 3JQ,false,01-09-2014,""
+141259,The Ripley Academy,Ripley,DE5 3JQ,true,01-09-2014,""
 141260,Holbeach Primary Academy,Spalding,PE12 7LZ,false,01-09-2014,""
 141261,Churchwood Primary Academy,St Leonards-on-Sea,TN38 9PB,false,01-09-2014,""
 141262,Hollington Primary Academy,St Leonards-on-Sea,TN38 9DS,false,01-09-2014,""
@@ -40649,7 +40649,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 141593,Whyteleafe Primary School,Whyteleafe,CR3 0AA,false,01-12-2014,""
 141594,"Holy Family and St Michael's Catholic Primary School, A Voluntary Academy",Pontefract,WF8 2HN,false,01-12-2014,""
 141595,"English Martyrs Catholic Primary School, A Voluntary Academy",Wakefield,WF2 9DD,false,01-12-2014,""
-141598,Bridgewater High School,Warrington,WA4 3AE,false,01-12-2014,""
+141598,Bridgewater High School,Warrington,WA4 3AE,true,01-12-2014,""
 141600,Rose Green Junior School,Bognor Regis,PO21 3NA,false,01-12-2014,""
 141601,St Luke's CofE Primary School,Maidenhead,SL6 7EG,false,01-12-2014,""
 141602,Burchetts Green CofE Infants' School,Maidenhead,SL6 6QZ,false,01-12-2014,""
@@ -40803,7 +40803,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 141757,Allenbourn Middle School,Wimborne,BH21 1PL,false,01-03-2015,""
 141758,Anthony Curton CofE Primary School,Wisbech,PE14 7NG,false,01-03-2015,""
 141759,Ashton West End Primary Academy,Ashton-under-Lyne,OL7 0BJ,false,01-03-2015,""
-141760,The Sir Donald Bailey Academy,Newark,NG24 4EP,false,01-03-2015,""
+141760,The Sir Donald Bailey Academy,Newark,NG24 4EP,true,01-03-2015,""
 141761,Brayford Academy,Barnstaple,EX32 7QJ,false,01-04-2015,""
 141762,Canford Heath Infant School,Poole,BH17 8PJ,false,01-04-2015,""
 141763,Canford Heath Junior School,Poole,BH17 8PJ,false,01-04-2015,""
@@ -41029,7 +41029,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 141992,Cardinal Wiseman Catholic School,Coventry,CV2 2AJ,false,01-08-2015,""
 141993,George Hastwell School Special Academy,Barrow-in-Furness,LA14 3LW,false,01-09-2015,""
 141994,Longdon Park School,Derbyshire,DE65 6GU,false,21-04-2015,""
-141995,Yewdale School,Carlisle,CA2 7SD,false,01-09-2015,""
+141995,Yewdale School,Carlisle,CA2 7SD,true,01-09-2015,""
 141997,Shield Row Primary School,Stanley,DH9 0HQ,false,01-09-2015,""
 141998,Dene House Primary School,Peterlee,SR8 5RL,false,01-09-2015,""
 141999,South Hetton Primary,Durham,DH6 2TJ,false,01-09-2015,""
@@ -41649,7 +41649,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 142668,Tregony Community Primary School,Truro,TR2 5RP,false,01-03-2016,""
 142669,Upton St James CofE Primary School,Torquay,TQ1 4AZ,false,01-05-2016,""
 142670,Kingsteignton School,Newton Abbot,TQ12 3QY,false,01-09-2016,""
-142671,Twynham Primary School,Christchurch,BH23 2NH,false,19-05-2016,""
+142671,Twynham Primary School,Christchurch,BH23 2NH,true,19-05-2016,""
 142672,Active Support Education Centre,Beds,LU3 1RJ,false,07-02-2017,""
 142673,Trinity Solutions Academy,Newcastle-upon-Tyne,NE4 8XJ,false,01-01-2016,""
 142674,Hall Cliffe Primary School,Wakefield,WF2 0QB,false,25-02-2016,""
@@ -41788,7 +41788,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 142810,Wisbech St Mary CofE Academy,Wisbech,PE13 4RJ,false,01-09-2016,""
 142811,Guilden Morden CofE Primary Academy,Nr Royston,SG8 0JZ,false,01-11-2016,""
 142812,Somercotes Infant and Nursery School,Alfreton,DE55 4LY,false,01-09-2017,""
-142813,Templars Academy,Witham,CM8 2NJ,false,01-06-2016,""
+142813,Templars Academy,Witham,CM8 2NJ,true,01-06-2016,""
 142814,St Nicholas Church of England Primary Academy,New Romney,TN28 8BP,false,01-06-2016,""
 142817,Cedar Children's Academy,Rochester,ME2 2JP,false,01-06-2016,""
 142818,Valley Primary Academy,Norwich,NR5 8XZ,false,01-06-2016,""
@@ -42010,7 +42010,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143056,Bardwell Church of England Primary School,Bury St Edmunds,IP31 1AD,false,01-08-2016,""
 143057,Brinsworth Whitehill Primary School,Rotherham,S60 5HT,false,01-08-2016,""
 143058,Bruche Primary School Academy,Warrington,WA1 3TT,false,01-09-2016,""
-143059,Buile Hill Academy,Salford,M6 8RD,false,01-08-2016,""
+143059,Buile Hill Academy,Salford,M6 8RD,true,01-08-2016,""
 143060,Burford Primary and Nursery School,Nottingham,NG5 6FX,false,01-08-2016,""
 143061,Byron Wood Primary Academy,Sheffield,S4 7EJ,false,01-08-2016,""
 143062,Chatsworth High School and Community College,Salford,M30 9DY,false,01-10-2016,""
@@ -42148,7 +42148,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143198,Hazelbury Primary School,London,N9 9TT,false,01-09-2016,""
 143199,Lavender Primary School,Enfield,EN2 0SX,false,01-09-2017,""
 143200,Chesterfield Primary School,Enfield,EN3 6BG,false,01-09-2016,""
-143201,Bowes Primary School,London,N11 2HL,false,01-09-2016,""
+143201,Bowes Primary School,London,N11 2HL,true,01-09-2016,""
 143202,Brimsdown Primary School,Enfield,EN3 7NA,false,01-09-2017,""
 143203,Bardfield Academy,Basildon,SS16 4NL,false,01-09-2016,""
 143204,Richard De Clare Community Academy,Halstead,CO9 2JT,false,01-09-2016,""
@@ -42164,7 +42164,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143214,Sulivan Primary School,London,SW6 3BN,false,01-10-2016,""
 143215,Jesmond Gardens Primary School,Hartlepool,TS24 8PJ,true,01-10-2016,""
 143216,Benhurst Primary School,Hornchurch,RM12 4QS,false,01-10-2016,""
-143217,The Bridge School,London,N7 9LD,false,01-05-2017,""
+143217,The Bridge School,London,N7 9LD,true,01-05-2017,""
 143218,Oakfield Primary Academy,Dartford,DA1 2SW,false,01-09-2016,""
 143219,Temple Hill Primary Academy,Dartford,DA1 5ND,false,01-09-2016,""
 143220,Upton Junior School,Broadstairs,CT10 2AH,false,01-09-2016,""
@@ -42214,7 +42214,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143271,Cheviot Primary School,Newcastle-upon-Tyne,NE5 4EB,false,01-11-2016,""
 143272,Farne Primary School,Newcastle-upon-Tyne,NE5 4AP,false,01-11-2016,""
 143273,Wyndham Primary School,Newcastle-upon-Tyne,NE3 4QP,false,01-11-2016,""
-143274,Forest Gate Community School,London,E7 9BB,false,01-10-2016,""
+143274,Forest Gate Community School,London,E7 9BB,true,01-10-2016,""
 143275,Eko Pathways,London,E6 6FE,false,01-11-2016,""
 143276,Gainsborough Primary School,London,E15 3AF,false,01-11-2016,""
 143277,Kaizen Primary School,London,E13 8LF,true,01-11-2016,""
@@ -42301,7 +42301,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143364,Cardinal Newman Catholic Primary School,Hersham,KT12 4QT,true,01-09-2016,""
 143365,St Anne's Catholic Primary School,Chertsey,KT16 8ET,true,01-09-2016,""
 143366,St Alban's Catholic Primary School,East Molesey,KT8 2PG,true,01-09-2016,""
-143367,"Salesian School, Chertsey",Chertsey,KT16 9LU,false,01-09-2016,""
+143367,"Salesian School, Chertsey",Chertsey,KT16 9LU,true,01-09-2016,""
 143368,Holy Family Catholic Primary School,Addlestone,KT15 1BP,true,01-09-2016,""
 143369,"St John the Baptist Catholic Comprehensive School, Woking",Woking,GU22 9AL,true,01-09-2016,""
 143370,St Hugh of Lincoln Catholic Primary School,Woking,GU21 8TU,true,01-09-2016,""
@@ -42408,7 +42408,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143477,Bearwood Primary and Nursery School,Bournemouth,BH11 9UN,false,01-10-2016,""
 143478,Zetland Primary School,Redcar,TS10 3JL,false,01-10-2016,""
 143479,Ormesby Primary School,Middlesbrough,TS7 9AB,false,01-10-2016,""
-143480,Wath Church of England Primary School,Rotherham,S63 6PY,false,01-03-2017,""
+143480,Wath Church of England Primary School,Rotherham,S63 6PY,true,01-03-2017,""
 143481,Crags Community School,Rotherham,S66 7QJ,false,01-10-2019,""
 143482,Aughton Junior Academy,Sheffield,S26 3XQ,false,01-10-2016,""
 143483,Ankermoor Primary Academy,Tamworth,B77 3NW,false,01-10-2016,""
@@ -42638,7 +42638,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143798,Phillimore Community Primary School,Sheffield,S9 5EF,false,01-12-2016,""
 143799,Manor Lodge Community Primary and Nursery School,Sheffield,S2 1UF,false,01-12-2016,""
 143800,Ludlow Infant and Nursery School Academy,Ludlow,SY8 1HG,false,01-12-2016,31-08-2019
-143801,Ludlow Primary School,Ludlow,SY8 1HX,false,01-12-2016,""
+143801,Ludlow Primary School,Ludlow,SY8 1HX,true,01-12-2016,""
 143802,St Ethelbert's Catholic Primary School,Slough,SL2 5QR,false,01-12-2016,""
 143803,St Joseph's Catholic High School,Slough,SL2 5HW,false,01-12-2016,""
 143804,St Anthony's Catholic Primary School,Slough,SL2 3AA,false,01-12-2016,""
@@ -42751,7 +42751,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 143926,Wixams Tree Primary School,Bedford,MK42 6BA,false,01-09-2017,""
 143927,Royal Greenwich Trust School,London,SE7 8LJ,false,01-09-2016,""
 143928,Foundation Bridge Academy,Stoke-on-Trent,ST6 1JJ,false,02-03-2017,17-07-2020
-143929,Hereford Sixth Form College,Hereford,HR1 1LU,false,01-03-2017,""
+143929,Hereford Sixth Form College,Hereford,HR1 1LU,true,01-03-2017,""
 143930,Cheshire Alternative Provision School,Lower Park Street,CW12 1EH,false,20-04-2017,""
 143931,Nightingale,Orpington,BR6 9BH,false,01-01-2017,01-03-2019
 143932,Bluebell School Ltd,Stoke on Trent,ST7 1EH,false,19-06-2017,""
@@ -42857,7 +42857,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 144038,Chandag Junior School,"Keynsham, Bristol",BS31 1PQ,false,01-07-2017,""
 144039,Elstow School,Bedford,MK42 9GP,false,01-04-2017,""
 144041,Shenstone School,Crayford,DA1 4DZ,false,01-09-2017,""
-144042,Brays School,Birmingham,B26 1NS,false,01-04-2017,""
+144042,Brays School,Birmingham,B26 1NS,true,01-04-2017,""
 144043,The Bridge School,Birmingham,B73 6UE,false,01-04-2017,""
 144044,Canon Slade CofE School,Bolton,BL2 3BP,false,01-12-2017,""
 144045,St Catherine's CofE Primary School,Bolton,BL6 5SJ,false,01-01-2018,""
@@ -43015,12 +43015,12 @@ urn,name,town,postcode,lead_school,open_date,close_date
 144235,Stebon Primary School,London,E14 7AD,false,01-07-2017,""
 144236,Bygrove Primary School,London,E14 6DN,true,01-07-2017,""
 144237,Wrenthorpe Academy,Wakefield,WF2 0LW,false,01-04-2017,""
-144238,St Mary's CofE Primary School,London,E17 9HJ,false,01-04-2017,""
+144238,St Mary's CofE Primary School,London,E17 9HJ,true,01-04-2017,""
 144239,St Saviour's Church of England Primary School,London,E17 8ER,true,01-04-2017,""
 144240,Kassia Academy and Support Services,Warrington,WA2 0QQ,false,01-01-2018,""
 144241,Oakwood Avenue Community Primary School,Warrington,WA1 3SZ,false,01-09-2019,""
 144242,Bishops Itchington Primary School,Southam,CV47 2RN,false,01-07-2018,""
-144243,St Philip Howard Catholic School,Bognor Regis,PO22 0EN,false,01-04-2017,""
+144243,St Philip Howard Catholic School,Bognor Regis,PO22 0EN,true,01-04-2017,""
 144244,East Preston Junior School,Littlehampton,BN16 1EZ,false,01-05-2017,""
 144248,St Edmund Campion Catholic Primary School,Maidenhead,SL6 4PX,false,01-07-2017,""
 144249,Bisham Church of England Academy,Marlow,SL7 1RW,false,01-09-2017,""
@@ -43986,7 +43986,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 145331,Bridestowe Primary School,Okehampton,EX20 4EL,false,01-01-2018,""
 145332,Lydford Primary School,Okehampton,EX20 4AU,false,01-01-2018,""
 145333,North Tawton Community Primary School and Nursery,North Tawton,EX20 2HB,false,01-01-2018,""
-145334,Okehampton Primary School and Foundation Unit,Okehampton,EX20 1JB,false,01-01-2018,""
+145334,Okehampton Primary School and Foundation Unit,Okehampton,EX20 1JB,true,01-01-2018,""
 145335,South Tawton Primary School,Okehampton,EX20 2LG,false,01-01-2018,""
 145336,Tavistock College,Tavistock,PL19 8DD,true,01-01-2018,""
 145337,Okehampton College,Okehampton,EX20 1PW,true,01-01-2018,""
@@ -44393,7 +44393,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 145787,Discovery Primary Academy,Peterborough,PE4 6HX,false,01-09-2018,""
 145788,Market Drayton Junior School,Market Drayton,TF9 3HU,false,01-06-2018,""
 145789,The Wilfred Owen School,Shrewsbury,SY2 5SH,false,01-06-2018,""
-145790,St Peter's CofE Primary School,Shrewsbury,SY4 5BX,false,01-06-2018,""
+145790,St Peter's CofE Primary School,Shrewsbury,SY4 5BX,true,01-06-2018,""
 145791,Woodfield Infant School,Shrewsbury,SY3 8LU,false,01-06-2018,""
 145792,Market Drayton Infant & Nursery School,Market Drayton,TF9 3BA,false,01-06-2018,""
 145793,Greenacres Primary School,Shrewsbury,SY1 3QG,false,01-06-2018,""
@@ -44748,7 +44748,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 146212,The Village School,London,NW9 0JY,false,01-03-2019,""
 146213,Austhorpe Primary School,Leeds,LS15 8TP,false,01-09-2018,""
 146214,ARK John Archer Primary Academy,London,SW11 2AA,false,01-09-2018,""
-146215,Meadowfield Primary School,Leeds,LS9 0JY,false,01-11-2018,""
+146215,Meadowfield Primary School,Leeds,LS9 0JY,true,01-11-2018,""
 146217,Boston Spa Academy,Wetherby,LS23 6RW,false,01-09-2018,""
 146218,Templenewsam Halton Primary School,Leeds,LS15 7SY,false,01-11-2018,""
 146219,Whitkirk Primary School,Leeds,LS15 0EU,false,01-11-2018,""
@@ -45431,7 +45431,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 147063,Abbeygate Sixth Form College,Bury St Edmunds,IP33 3YU,false,02-09-2019,""
 147064,ACE Tiverton Special School,Tiverton,EX16 5HB,false,02-09-2019,""
 147065,Badbury Park Primary School,Swindon,SN3 6ER,false,02-09-2019,""
-147066,Boorley Park,Botley,SO32 2SH,false,02-09-2019,""
+147066,Boorley Park,Botley,SO32 2SH,true,02-09-2019,""
 147067,Bronte Girls' Academy,Bradford,BD4 7EB,false,02-09-2019,""
 147068,Castle Mead Academy,Leicester,LE3 5QT,false,02-09-2019,""
 147069,Charlton Wood Primary Academy,Bristol,BS34 5BN,false,02-09-2019,""
@@ -45603,7 +45603,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 147261,SET Causton,Felixstowe,IP11 9ED,false,01-07-2019,""
 147262,St Michael with St Thomas CE Primary School,Widnes,WA8 8LD,true,01-08-2019,""
 147263,Tor Bridge Primary School,Plymouth,PL6 8EE,false,01-04-2021,""
-147264,Bovington Academy,Wareham,BH20 6LE,false,01-07-2019,""
+147264,Bovington Academy,Wareham,BH20 6LE,true,01-07-2019,""
 147265,Waltham Holy Cross Primary Academy,Waltham Abbey,EN9 1LG,false,01-11-2019,""
 147266,Ditton Primary School,Widnes,WA8 7HD,false,01-07-2019,""
 147267,Simms Cross Primary School,Widnes,WA8 7QS,false,01-12-2020,""
@@ -46031,7 +46031,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 147807,Curzon Church of England Combined School,Amersham,HP7 0QL,false,01-06-2020,""
 147808,Dogsthorpe Infant School,Peterborough,PE1 4LH,false,01-12-2020,""
 147809,Comberbach Nursery and Primary School,Northwich,CW9 6BG,false,01-05-2020,""
-147810,Little Bollington CofE Primary School,Altrincham,WA14 4SZ,false,01-04-2020,""
+147810,Little Bollington CofE Primary School,Altrincham,WA14 4SZ,true,01-04-2020,""
 147811,Elmsleigh Infant & Nursery School,Swadlincote,DE11 0EG,false,01-04-2020,""
 147813,Brixham Church of England Primary School,Brixham,TQ5 9HF,false,01-09-2020,""
 147814,Stanhope Barrington CofE Primary School,BISHOP AUCKLAND,DL13 2NU,false,01-04-2020,""
@@ -46071,7 +46071,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 147852,Stoneham Park Primary Academy,Eastleigh,SO50 9SB,false,01-09-2020,""
 147853,Thames Park Secondary School,Grays,RM17 6TF,false,01-09-2020,""
 147854,The Axis Academy,Crewe,CW2 8TU,false,01-09-2020,""
-147855,The Workplace,Bexhill,TN39 4HS,false,01-09-2020,""
+147855,The Workplace,Bexhill,TN39 4HS,true,01-09-2020,""
 147856,Westvale Park Primary Academy,Horley,RH6 8SU,false,01-09-2020,""
 147857,Wymondham College Prep School,Wymondham,NR18 9SZ,false,01-09-2020,""
 147858,The Fusion Academy,Leicester,LE9 8AG,false,01-09-2020,""
@@ -46366,11 +46366,11 @@ urn,name,town,postcode,lead_school,open_date,close_date
 148209,Bonnygate Primary School,South Ockendon,RM15 5BA,false,01-12-2020,""
 148210,Ford End Church of England Primary School,Chelmsford,CM3 1LQ,false,01-12-2020,""
 148211,Aylburton Church of England Primary School,Lydney,GL15 6DB,false,01-01-2021,""
-148212,Lydney Church of England Community School,Lydney,GL15 5JH,false,01-01-2021,""
+148212,Lydney Church of England Community School,Lydney,GL15 5JH,true,01-01-2021,""
 148213,Awbridge Primary School,Romsey,SO51 0HL,false,01-12-2020,""
 148214,Wellow Primary School,Romsey,SO51 6BG,false,01-12-2020,""
 148215,Weyford Nursery and Primary Academy,Bordon,GU35 0ET,false,01-11-2020,""
-148216,Halterworth Primary School,Romsey,SO51 9AD,false,01-12-2020,""
+148216,Halterworth Primary School,Romsey,SO51 9AD,true,01-12-2020,""
 148217,Holy Trinity Church of England Primary School,Gravesend,DA12 1LU,false,01-11-2020,""
 148218,Winthorpe Primary School,Newark,NG24 2NN,false,01-11-2020,""
 148219,Co-Op Academy Clarice Cliff,Stoke-on-Trent,ST4 3DP,false,01-12-2020,""
@@ -46405,7 +46405,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 148253,Hague Bar Primary School,High Peak,SK22 3AP,false,01-11-2020,""
 148254,Ormskirk Academy,Ormskirk,L39 2AT,false,01-04-2022,""
 148255,LS-TEN,West Yorkshire,LS10 1NT,false,11-01-2021,""
-148256,"Our Lady and St Brendan's Catholic Primary School, A Voluntary Academy",Bradford,BD10 0QA,false,01-11-2020,""
+148256,"Our Lady and St Brendan's Catholic Primary School, A Voluntary Academy",Bradford,BD10 0QA,true,01-11-2020,""
 148257,Polebrook Church of England Primary School,Peterborough,PE8 5LN,false,01-11-2020,""
 148258,"St Columba's Catholic Primary School, a Voluntary Academy",Bradford,BD4 9PY,false,01-03-2021,""
 148259,"St Cuthbert's Catholic Primary School, Chester-Le-Street",Chester le Street,DH3 3PH,false,01-12-2020,""
@@ -46727,7 +46727,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 148607,Threlkeld CofE Primary School,Keswick,CA12 4RX,false,01-06-2021,""
 148608,Hollingwood Primary School,Chesterfield,S43 2JG,false,01-07-2021,""
 148609,"St Patrick's Catholic Primary School, Dipton",Stanley,DH9 9BB,false,01-05-2021,""
-148611,Redwell Primary School,Wellingborough,NN8 5LQ,false,01-08-2021,""
+148611,Redwell Primary School,Wellingborough,NN8 5LQ,true,01-08-2021,""
 148614,Hawksmoor School,London,SE28 8AS,false,01-04-2021,""
 148615,Wingfield Primary School,London,SE3 9GJ,false,01-04-2021,""
 148616,Cockburn Laurence Calvert Academy,Leeds,LS10 4UZ,false,01-09-2021,""
@@ -46795,7 +46795,7 @@ urn,name,town,postcode,lead_school,open_date,close_date
 148698,"St Cuthberts Catholic Primary School, Windermere",Windermere,LA23 2DD,false,01-09-2021,""
 148699,"Sacred Heart Catholic Primary School, Barrow",Barrow-in-Furness,LA14 2BA,false,01-09-2021,""
 148700,"St Cuthberts  Catholic Primary School, Carlisle",Carlisle,CA1 2UE,false,01-09-2021,""
-148701,"St Margaret Mary Catholic Primary School, Carlisle",Carlisle,CA2 4JD,false,01-09-2021,""
+148701,"St Margaret Mary Catholic Primary School, Carlisle",Carlisle,CA2 4JD,true,01-09-2021,""
 148702,"St Bernards Catholic High School, Barrow",Barrow-in-Furness,LA13 9LE,false,01-09-2021,""
 148703,"St Josephs Catholic High School, Workington",Workington,CA14 3EE,false,01-09-2021,""
 148704,"St Joseph's Catholic Primary School, Gilesgate",Durham,DH1 2JQ,false,01-09-2021,""
