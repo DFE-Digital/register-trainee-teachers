@@ -8,12 +8,10 @@ class AcademicYearFilterOptions
 
   def formatted_years(cycle_context)
     compute_academic_cycles(cycle_context).map do |academic_cycle|
-      start_year = academic_cycle.start_date.year
-      end_year = academic_cycle.end_date.year
-      if current_academic_cycle_year?(start_year)
-        "#{start_year} to #{end_year} (current year)"
+      if academic_cycle.current?
+        "#{academic_cycle.label} (current year)"
       else
-        "#{start_year} to #{end_year}"
+        academic_cycle.label
       end
     end
   end
@@ -21,10 +19,6 @@ class AcademicYearFilterOptions
 private
 
   attr_reader :user, :draft
-
-  def current_academic_cycle_year?(year)
-    AcademicCycle.current&.start_year == year
-  end
 
   def compute_academic_cycles(cycle_context)
     scope = TraineePolicy::Scope.new(user, Trainee.public_send(draft ? :draft : :not_draft)).resolve
