@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe AcademicYearFilterOptions do
   let(:current_year_string) do
-    "#{academic_cycle.start_year} to #{academic_cycle.end_year} (current year)"
+    "#{academic_cycle.label} (current year)"
   end
 
   let(:current_user) do
@@ -75,7 +75,7 @@ describe AcademicYearFilterOptions do
     subject { described_class.new(user: current_user, draft: true).formatted_years(cycle_context) }
 
     it "returns the future cycle" do
-      expect(subject).to match_array(["#{academic_cycle.start_year} to #{academic_cycle.end_year}"])
+      expect(subject).to match_array([academic_cycle.label])
     end
   end
 end
