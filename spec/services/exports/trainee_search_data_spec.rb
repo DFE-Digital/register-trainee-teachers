@@ -36,6 +36,7 @@ module Exports
 
     before do
       create(:academic_cycle, :current)
+      create(:academic_cycle, next_cycle: true)
     end
 
     subject { described_class.new([trainee]) }
@@ -53,7 +54,8 @@ module Exports
           "provider_trainee_id" => trainee.trainee_id,
           "trn" => trainee.trn,
           "status" => "QTS awarded",
-          "start_year" => "2021 to 2022",
+          "start_academic_year" => "2021 to 2022",
+          "end_academic_year" => "2022 to 2023",
           "record_created_at" => trainee.created_at&.iso8601,
           "updated_at" => trainee.updated_at&.iso8601,
           "hesa_updated_at" => trainee.hesa_updated_at&.iso8601,
