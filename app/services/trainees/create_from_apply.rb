@@ -26,11 +26,11 @@ module Trainees
 
       raise(MissingCourseError, "Cannot find course with uuid: #{@raw_course['course_uuid']}") if course.nil? # Courses can be missing in non-prod environments
 
+      Trainees::SetAcademicCycles.call(trainee: trainee)
       trainee.save!
       save_personal_details!
       create_degrees!
       application_record.imported!
-
       trainee
     end
 
