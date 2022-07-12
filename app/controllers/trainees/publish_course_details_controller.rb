@@ -4,6 +4,8 @@ module Trainees
   class PublishCourseDetailsController < BaseController
     include Publishable
 
+    before_action :redirect_to_course_years_page, only: :edit, if: :redirect_to_course_years_page?
+
     before_action :set_course_year
 
     def edit
@@ -47,7 +49,7 @@ module Trainees
       if course_years_form.valid?
         @course_year = course_years_form.course_year
       else
-        redirect_to(edit_trainee_course_years_path(@trainee))
+        redirect_to_course_years_page
       end
     end
 
@@ -71,6 +73,17 @@ module Trainees
 
     def course_params
       params.fetch(:publish_course_details_form, {}).permit(:course_uuid)
+    end
+
+    def redirect_to_course_years_page
+      page_tracker.remove_last_page
+      redirect_to(edit_trainee_course_years_path(@trainee))
+    end
+
+    def redirect_to_course_years_page?
+      FeatureService.enabled?(:always_show_course_year_choice) &&
+        params[:year].nil? &&
+        trainee.course_uuid.nil?
     end
   end
 end
