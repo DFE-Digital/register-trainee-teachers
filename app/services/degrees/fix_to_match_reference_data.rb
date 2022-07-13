@@ -23,7 +23,11 @@ module Degrees
     attr_reader :degree
 
     def existing_degree_values
-      @existing_degree_values ||= {
+      @existing_degree_values ||= degree.uk? ? uk_degree_values : non_uk_degree_values
+    end
+
+    def uk_degree_values
+      {
         institution: degree.institution,
         subject: degree.subject,
         grade: degree.grade,
@@ -31,12 +35,30 @@ module Degrees
       }
     end
 
+    def non_uk_degree_values
+      {
+        subject: degree.subject,
+        grade: degree.grade,
+      }
+    end
+
     def update_params
+      degree.uk? ? uk_update_params : non_uk_update_params
+    end
+
+    def uk_update_params
       {
         institution: correct_institution,
         subject: correct_subject,
         grade: correct_grade,
         uk_degree: correct_type,
+      }.compact
+    end
+
+    def non_uk_update_params
+      {
+        subject: correct_subject,
+        grade: correct_grade,
       }.compact
     end
 
