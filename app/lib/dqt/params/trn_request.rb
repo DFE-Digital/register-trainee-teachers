@@ -38,10 +38,11 @@ module Dqt
         Dttp::CodeSets::Grades::PASS => "Pass",
       }.freeze
 
-      attr_reader :trainee, :params
+      attr_reader :params
 
       def initialize(trainee:)
         @trainee = trainee
+        @degree = trainee.degrees.first
         @params = build_params
       end
 
@@ -106,9 +107,9 @@ module Dqt
         return if trainee.degrees.empty?
 
         {
-          "providerUkprn" => degree_ukprn,
-          "countryCode" => find_country_code(degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country),
-          "subject" => degree_subject,
+          "providerUkprn" => institution_ukprn,
+          "countryCode" => country_code,
+          "subject" => subject_code,
           "class" => DEGREE_CLASSES[degree.grade],
           "date" => Date.parse("01-01-#{degree.graduation_year}").iso8601,
         }
@@ -123,23 +124,22 @@ module Dqt
         Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name]
       end
 
-      def degree
-        trainee.degrees.first
+      def subject_code
+        DfE::ReferenceData::Degrees::SUBJECTS.some({ name: degree.subject }).first&.hesa_itt_code
       end
 
-      def degree_subject
-        Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject]
-      end
-
-      def degree_ukprn
+      def institution_ukprn
         return nil if degree.institution_uuid.nil?
 
         DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn]
       end
 
-      def find_country_code(country)
+      def country_code
+        country = degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country
         Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
       end
+
+      attr_reader :trainee, :degree
     end
   end
 end
