@@ -7,8 +7,20 @@ module Dqt
     describe TraineeRequest do
       let(:trainee) { create(:trainee, :completed, gender: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
-      let(:degree_subject) { Hesa::CodeSets::DegreeSubjects::MAPPING.invert[degree.subject] }
+      let(:hesa_code) { "11111" }
       let(:ukprn) { DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
+
+      before do
+        stub_const(
+          "DfE::ReferenceData::Degrees::SUBJECTS",
+          DfE::ReferenceData::HardcodedReferenceList.new({
+            SecureRandom.uuid => {
+              name: degree.subject,
+              hesa_itt_code: hesa_code,
+            },
+          }),
+        )
+      end
 
       describe "#params" do
         subject { described_class.new(trainee: trainee).params }
@@ -38,7 +50,7 @@ module Dqt
           expect(subject["qualification"]).to eq({
             "providerUkprn" => ukprn,
             "countryCode" => "XK",
-            "subject" => degree_subject,
+            "subject" => hesa_code,
             "class" => described_class::DEGREE_CLASSES[degree.grade],
             "date" => Date.new(degree.graduation_year).iso8601,
           })
