@@ -161,7 +161,7 @@ module Hesa
         "LT" => "Lithuania",
         "LU" => "Luxembourg",
         "MO" => "Macao (Special Administrative Region of China) [Macao]",
-        "MK" => "Macedonia [Macedonia, The Former Yugoslav Republic of]",
+        "MK" => "North Macedonia",
         "MG" => "Madagascar",
         "MW" => "Malawi",
         "MY" => "Malaysia",
