@@ -79,7 +79,7 @@ runs:
         CONFIRM_PRODUCTION:       yes
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
-      if: inputs.environment == 'review' || inputs.environment == 'staging' || inputs.environment == 'dttpimport' || inputs.environment == 'production'
+      if: inputs.environment == 'review' || inputs.environment == 'staging' || inputs.environment == 'productiondata' || inputs.environment == 'production'
       id: get-secrets
       with:
         keyvault: ${{ env.key_vault_name }}
@@ -87,7 +87,7 @@ runs:
         key: CF_USER,CF_PASSWORD
 
     - name: Setup cf cli
-      if: inputs.environment == 'review' || inputs.environment == 'staging' || inputs.environment == 'dttpimport' || inputs.environment == 'production'
+      if: inputs.environment == 'review' || inputs.environment == 'staging' || inputs.environment == 'productiondata' || inputs.environment == 'production'
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
         CF_USERNAME:   ${{ steps.get-secrets.outputs.CF_USER }}
@@ -96,7 +96,7 @@ runs:
 
     - name: Run data migrations
       shell: bash
-      if: inputs.environment == 'staging' || inputs.environment == 'dttpimport' || inputs.environment == 'production'
+      if: inputs.environment == 'staging' || inputs.environment == 'productiondata' || inputs.environment == 'production'
       run: cf run-task "register-${{ inputs.environment }}" --command "cd /app && bundle exec rails data:migrate" --wait
 
     - name: Generate example data

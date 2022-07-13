@@ -26,7 +26,7 @@ review:
   RAILS_ENV: review
   RACK_ENV: review
 
-dttpimport:
+productiondata:
   <<: *default
-  RAILS_ENV: dttpimport
-  RACK_ENV: dttpimport
+  RAILS_ENV: productiondata
+  RACK_ENV: productiondata
