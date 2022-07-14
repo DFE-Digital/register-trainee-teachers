@@ -40,12 +40,18 @@ module Degrees
       # Country code is not always provided, so we have
       # to fallback to institution which is always UK based
       if uk_country?(country) || institution
-        degree.institution = institution[:name]
+        # HESA guidance says to leave institution blank and set
+        # country for UK degrees where the HESA list doesn't
+        # have the institution so it may not be present for some UK degrees
+        if institution
+          degree.institution = institution[:name]
+          degree.institution_uuid = institution[:id]
+        end
+
         degree.locale_code = "uk"
         degree.country = nil
         degree.uk_degree = degree_type
         degree.non_uk_degree = nil
-        degree.institution_uuid = institution[:id]
       else
         degree.locale_code = "non_uk"
         degree.country = country

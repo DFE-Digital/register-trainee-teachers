@@ -29,18 +29,59 @@ module Degrees
         expect(trainee.degrees.count).to eq(student_attributes[:degrees].count)
       end
 
-      context "UK degree" do
-        it "sets UK attributes only" do
+      context "UK country code but no institution reference" do
+        let(:hesa_degrees) do
+          [
+            {
+              graduation_date: "2003-06-01",
+              degree_type: "400",
+              subject: "100485",
+              institution: nil,
+              grade: "02",
+              country: "XF",
+            },
+          ]
+        end
+
+        it "creates a UK degree with nil institution and institution_uuid" do
           expect(degree.locale_code).to eq("uk")
-          expect(degree.uk_degree).to eq("Unknown")
+          expect(degree.uk_degree).to eq("First Degree")
           expect(degree.non_uk_degree).to be_nil
-          expect(degree.subject).to eq(hesa_degree[:subject])
-          expect(degree.institution).to eq("The Open University")
-          expect(degree.graduation_year).to eq(2005)
-          expect(degree.grade).to eq("First-class honours")
+          expect(degree.subject).to eq("Law")
+          expect(degree.institution).to be_nil
+          expect(degree.graduation_year).to eq(2003)
+          expect(degree.grade).to eq("Upper second-class honours (2:1)")
           expect(degree.other_grade).to be_nil
           expect(degree.country).to be_nil
-          expect(degree.institution_uuid).to eq("5c9e1d2d-3fa2-e811-812b-5065f38ba241")
+          expect(degree.institution_uuid).to be_nil
+        end
+      end
+
+      context "institution but no UK country code" do
+        let(:hesa_degrees) do
+          [
+            {
+              graduation_date: "2003-06-01",
+              degree_type: "400",
+              subject: "100485",
+              institution: "00429",
+              grade: "02",
+              country: nil,
+            },
+          ]
+        end
+
+        it "creates a UK degree" do
+          expect(degree.locale_code).to eq("uk")
+          expect(degree.uk_degree).to eq("First Degree")
+          expect(degree.non_uk_degree).to be_nil
+          expect(degree.subject).to eq("Law")
+          expect(degree.institution).to eq("Raindance Educational Services")
+          expect(degree.graduation_year).to eq(2003)
+          expect(degree.grade).to eq("Upper second-class honours (2:1)")
+          expect(degree.other_grade).to be_nil
+          expect(degree.country).to be_nil
+          expect(degree.institution_uuid).to eq("bb3e182c-1425-ec11-b6e6-000d3adf095a")
         end
       end
 
