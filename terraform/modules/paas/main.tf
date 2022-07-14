@@ -71,6 +71,8 @@ resource cloudfoundry_app web_app {
 
 
 resource cloudfoundry_app worker_app {
+  count = var.worker_app_instances >= 1 ? 1 : 0
+
   name               = local.worker_app_name
   command            = local.worker_app_start_command
   docker_image       = var.app_docker_image
