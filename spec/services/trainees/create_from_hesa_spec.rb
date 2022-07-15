@@ -12,6 +12,8 @@ module Trainees
     let(:hesa_stub_attributes) { { trn: hesa_trn } }
     let(:hesa_trn) { Faker::Number.number(digits: 7).to_s }
     let(:trainee_degree) { trainee.degrees.first }
+    let(:hesa_course_subject_codes) { Hesa::CodeSets::CourseSubjects::MAPPING.invert }
+    let(:hesa_age_range_codes) { Hesa::CodeSets::AgeRanges::MAPPING.invert }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -21,6 +23,7 @@ module Trainees
 
     before do
       allow(Dqt::RegisterForTrnJob).to receive(:perform_later)
+      allow(Sentry).to receive(:capture_message)
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:school, urn: student_attributes[:lead_school_urn])
@@ -50,9 +53,9 @@ module Trainees
       end
 
       it "updates trainee's course details" do
-        expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:secondary])
-        expect(trainee.course_subject_one).to eq(::CourseSubjects::BIOLOGY)
-        expect(trainee.course_subject_two).to be_nil
+        expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:primary])
+        expect(trainee.course_subject_one).to eq(::CourseSubjects::PRIMARY_TEACHING)
+        expect(trainee.course_subject_two).to eq(::CourseSubjects::BIOLOGY)
         expect(trainee.course_subject_three).to be_nil
         expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
         expect(trainee.study_mode).to eq("full_time")
@@ -332,6 +335,35 @@ module Trainees
 
         it "maps the the HESA code to the register enum" do
           expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:now_teach])
+        end
+      end
+
+      context "trainee's course is in the primary age but subject isn't" do
+        let(:hesa_stub_attributes) do
+          {
+            course_age_range: hesa_age_range_codes[AgeRange::SEVEN_TO_ELEVEN],
+            course_subject_one: hesa_course_subject_codes[CourseSubjects::DESIGN],
+          }
+        end
+
+        it "adds 'primary teaching' and places it in the course_subject_one column" do
+          expect(trainee.course_subject_one).to eq(CourseSubjects::PRIMARY_TEACHING)
+          expect(trainee.course_subject_two).to eq(CourseSubjects::DESIGN)
+        end
+      end
+
+      context "trainee's course is in the primary age but primary subject not the first subject" do
+        let(:hesa_stub_attributes) do
+          {
+            course_age_range: hesa_age_range_codes[AgeRange::SEVEN_TO_ELEVEN],
+            course_subject_one: hesa_course_subject_codes[CourseSubjects::DESIGN],
+            course_subject_two: hesa_course_subject_codes[CourseSubjects::PRIMARY_TEACHING],
+          }
+        end
+
+        it "moves 'primary teaching' to be the first subject" do
+          expect(trainee.course_subject_one).to eq(CourseSubjects::PRIMARY_TEACHING)
+          expect(trainee.course_subject_two).to eq(CourseSubjects::DESIGN)
         end
       end
     end
