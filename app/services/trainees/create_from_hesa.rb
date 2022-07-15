@@ -6,6 +6,7 @@ module Trainees
     include DiversityAttributes
 
     USERNAME = "HESA"
+    UPPER_BOUND_PRIMARY_AGE = 11
 
     TRN_REGEX = /^(\d{6,7})$/.freeze
 
@@ -84,18 +85,20 @@ module Trainees
     end
 
     def course_attributes
-      {
+      attributes = {
         course_education_phase: course_education_phase,
         course_subject_one: course_subject_one_name,
-        course_subject_two: course_subject_name(hesa_trainee[:course_subject_two]),
-        course_subject_three: course_subject_name(hesa_trainee[:course_subject_three]),
+        course_subject_two: course_subject_two_name,
+        course_subject_three: course_subject_three_name,
         course_min_age: age_range && age_range[0],
-        course_max_age: age_range && age_range[1],
+        course_max_age: course_max_age,
         study_mode: study_mode,
         itt_start_date: hesa_trainee[:itt_start_date],
         itt_end_date: hesa_trainee[:itt_end_date],
         commencement_date: hesa_trainee[:commencement_date] || hesa_trainee[:itt_start_date],
       }
+
+      primary_education_phase? ? fix_invalid_primary_course_subjects(attributes) : attributes
     end
 
     def withdrawal_attributes
@@ -184,13 +187,24 @@ module Trainees
       course_subject_name(hesa_trainee[:course_subject_one])
     end
 
-    def course_education_phase
-      return if course_subject_one_name.blank?
+    def course_subject_two_name
+      course_subject_name(hesa_trainee[:course_subject_two])
+    end
 
-      return COURSE_EDUCATION_PHASE_ENUMS[:primary] if [
-        CourseSubjects::PRIMARY_TEACHING,
-        CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS,
-      ].include?(course_subject_one_name)
+    def course_subject_three_name
+      course_subject_name(hesa_trainee[:course_subject_three])
+    end
+
+    def course_max_age
+      age_range && age_range[1]
+    end
+
+    def primary_education_phase?
+      course_max_age && course_max_age <= UPPER_BOUND_PRIMARY_AGE
+    end
+
+    def course_education_phase
+      return COURSE_EDUCATION_PHASE_ENUMS[:primary] if primary_education_phase?
 
       COURSE_EDUCATION_PHASE_ENUMS[:secondary]
     end
@@ -214,6 +228,18 @@ module Trainees
 
     def create_degrees!
       ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
+    end
+
+    def fix_invalid_primary_course_subjects(course_attributes)
+      # This always ensures "primary teaching" is the first subject or inserts it if it's missing
+      other_subjects = course_subjects - [CourseSubjects::PRIMARY_TEACHING]
+      course_attributes.merge(course_subject_one: CourseSubjects::PRIMARY_TEACHING,
+                              course_subject_two: other_subjects.first,
+                              course_subject_three: other_subjects.second)
+    end
+
+    def course_subjects
+      [course_subject_one_name, course_subject_two_name, course_subject_three_name].compact
     end
 
     def store_hesa_metadata!
