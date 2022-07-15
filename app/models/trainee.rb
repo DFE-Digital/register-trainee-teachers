@@ -121,6 +121,7 @@ class Trainee < ApplicationRecord
   enum course_education_phase: {
     COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,
     COURSE_EDUCATION_PHASE_ENUMS[:secondary] => 1,
+    COURSE_EDUCATION_PHASE_ENUMS[:early_years] => 2,
   }
 
   enum state: {
@@ -346,6 +347,7 @@ class Trainee < ApplicationRecord
       self.course_subject_one = course_subject
       self.course_age_range = AgeRange::ZERO_TO_FIVE
       self.course_allocation_subject = SubjectSpecialism.find_by(name: course_subject)&.allocation_subject
+      self.course_education_phase = COURSE_EDUCATION_PHASE_ENUMS[:early_years]
     end
   end
 
