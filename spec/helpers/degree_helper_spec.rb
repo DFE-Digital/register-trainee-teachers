@@ -11,7 +11,7 @@ describe DegreesHelper do
     let(:degree_synonym) { "Bachelors" }
 
     before do
-      stub_const("DfE::ReferenceData::Degrees::TYPES",
+      stub_const("DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: degree_type,
