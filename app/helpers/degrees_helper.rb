@@ -53,7 +53,7 @@ private
   end
 
   def degree_type_data
-    DfE::ReferenceData::Degrees::TYPES.all
+    DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.all
   end
 
   def countries
