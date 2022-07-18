@@ -55,8 +55,6 @@ class PublishCourseDetailsForm < TraineeForm
   end
 
   def stash
-    return true if manual_entry_chosen?
-
     clear_all_stashes
 
     super
