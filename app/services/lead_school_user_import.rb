@@ -27,7 +27,9 @@ class LeadSchoolUserImport
 private
 
   def create_lead_school_user(school, data)
-    school.users.create_with(first_name: data["First name"], last_name: data["Surname"])
-    .find_or_create_by!(email: data["Email"])
+    user = User.create_with(first_name: data["First name"], last_name: data["Surname"])
+      .find_or_create_by!(email: data["Email"])
+
+    user.lead_schools << school unless user.lead_schools.include?(school)
   end
 end
