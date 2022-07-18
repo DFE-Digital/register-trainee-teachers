@@ -93,16 +93,6 @@ describe Trainee do
       end
     end
 
-    describe ".with_education_phase" do
-      it "returns trainees with the correct training route and state" do
-        create(:trainee, :with_primary_education)
-        secondary_trainee = create(:trainee, :with_secondary_education)
-        early_years_trainee = create(:trainee, training_route: EARLY_YEARS_TRAINING_ROUTES.values.sample)
-
-        expect(described_class.with_education_phase("secondary", "early_years")).to contain_exactly(early_years_trainee, secondary_trainee)
-      end
-    end
-
     describe ".with_apply_application" do
       let!(:manual_trainee) { create(:trainee) }
       let!(:apply_trainee) { create(:trainee, :with_apply_application) }
