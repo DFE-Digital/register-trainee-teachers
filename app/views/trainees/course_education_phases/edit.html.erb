@@ -12,7 +12,9 @@
       <%= f.govuk_error_summary %>
 
       <%= render TraineeName::View.new(@trainee) %>
-      <%= f.govuk_collection_radio_buttons(:course_education_phase, COURSE_EDUCATION_PHASE_ENUMS.values,
+      <%= f.govuk_collection_radio_buttons(
+        :course_education_phase,
+        course_education_phase_checkbox_values,
         ->(value) { value },
         ->(label) { I18n.t("views.forms.course_education_phase.label_names.#{label}") },
         ->(label) { label == COURSE_EDUCATION_PHASE_ENUMS[:secondary] ? I18n.t("views.forms.course_education_phase.label_names.#{label}_hint") : nil },
