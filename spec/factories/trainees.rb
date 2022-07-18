@@ -406,12 +406,12 @@ FactoryBot.define do
     end
 
     trait :eyts_awarded do
-      training_route { EARLY_YEARS_ROUTES.sample }
+      training_route { EARLY_YEARS_TRAINING_ROUTES.keys.sample }
       state { "awarded" }
     end
 
     trait :eyts_recommended do
-      training_route { EARLY_YEARS_ROUTES.sample }
+      training_route { EARLY_YEARS_TRAINING_ROUTES.keys.sample }
       state { "recommended_for_award" }
     end
 

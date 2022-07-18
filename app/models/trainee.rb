@@ -198,8 +198,8 @@ class Trainee < ApplicationRecord
     qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }
     eyts_states = award_states.select { |s| s.start_with?("eyts") }.map { |s| genericize_state(s) }
 
-    where(training_route: EARLY_YEARS_ROUTES, state: eyts_states).or(
-      where(state: qts_states).where.not(training_route: EARLY_YEARS_ROUTES),
+    where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys, state: eyts_states).or(
+      where(state: qts_states).where.not(training_route: EARLY_YEARS_TRAINING_ROUTES.keys),
     )
   end)
 
