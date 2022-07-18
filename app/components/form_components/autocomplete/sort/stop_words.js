@@ -1,4 +1,4 @@
-const stopWords = ['the', 'of', 'in', 'and', 'at', '&']
+const stopWords = ['the', 'of', 'in', 'and', 'at', '&', 'with']
 
 const removeStopWords = (text) => {
   const isAllStopWords = text.trim().split(' ').every((word) => stopWords.includes(word))
