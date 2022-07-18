@@ -39,4 +39,38 @@ describe LeadSchoolUserImport do
       expect(first_school_user.email).to eq(first_csv_email)
     end
   end
+
+  context "same user with multiple schools" do
+    let(:school_one) { create(:school, :lead) }
+    let(:school_two) { create(:school, :lead) }
+
+    let(:data) do
+      [
+        {
+          "URN" => school_one.urn,
+          "First name" => "Dave",
+          "Surname" => "Smith",
+          "Email" => "dave@example.com",
+        },
+        {
+          "URN" => school_two.urn,
+          "First name" => "Dave",
+          "Surname" => "Smith",
+          "Email" => "dave@example.com",
+        },
+      ]
+    end
+
+    subject { described_class.call(attributes: data) }
+
+    it "creates one user" do
+      subject
+      expect(User.count).to eq(1)
+    end
+
+    it "associates the user with both schools" do
+      subject
+      expect(User.find_by(email: "dave@example.com").lead_schools).to match_array([school_one, school_two])
+    end
+  end
 end
