@@ -29,16 +29,22 @@ module Degrees
     def uk_degree_values
       {
         institution: degree.institution,
+        institution_uuid: degree.institution_uuid,
         subject: degree.subject,
+        subject_uuid: degree.subject_uuid,
         grade: degree.grade,
+        grade_uuid: degree.grade_uuid,
         uk_degree: degree.uk_degree,
+        uk_degree_uuid: degree.uk_degree_uuid,
       }
     end
 
     def non_uk_degree_values
       {
         subject: degree.subject,
+        subject_uuid: degree.subject_uuid,
         grade: degree.grade,
+        grade_uuid: degree.grade_uuid,
       }
     end
 
@@ -48,38 +54,44 @@ module Degrees
 
     def uk_update_params
       {
-        institution: correct_institution,
-        subject: correct_subject,
-        grade: correct_grade,
-        uk_degree: correct_type,
+        institution: correct_institution[:name],
+        institution_uuid: correct_institution[:id],
+        subject: correct_subject[:name],
+        subject_uuid: correct_subject[:id],
+        grade: correct_grade[:name],
+        grade_uuid: correct_grade[:id],
+        uk_degree: correct_type[:name],
+        uk_degree_uuid: correct_type[:id],
       }.compact
     end
 
     def non_uk_update_params
       {
-        subject: correct_subject,
-        grade: correct_grade,
+        subject: correct_subject[:name],
+        subject_uuid: correct_subject[:id],
+        grade: correct_grade[:name],
+        grade_uuid: correct_grade[:id],
       }.compact
     end
 
     def correct_subject
       ref_version = find_in_reference_data(:subjects, degree.subject)
-      return ref_version[:name] if ref_version
+      ref_version || {}
     end
 
     def correct_institution
       ref_version = find_in_reference_data(:institutions, degree.institution)
-      return ref_version[:name] if ref_version
+      ref_version || {}
     end
 
     def correct_grade
       ref_version = find_in_reference_data(:grades, degree.grade)
-      return ref_version[:name] if ref_version
+      ref_version || {}
     end
 
     def correct_type
-      ref_version = find_in_reference_data(:types, degree.uk_degree)
-      return ref_version[:name] if ref_version
+      ref_version = find_in_reference_data(:types_including_generics, degree.uk_degree)
+      ref_version || {}
     end
 
     def find_in_reference_data(collection_constant, value)
@@ -89,12 +101,13 @@ module Degrees
       by_key = refdataset.some(name: value).first
       return by_key if by_key.present?
 
-      synonym_key = collection_constant == :institutions ? :match_synonyms : :synonyms
-
       refdataset.all.find do |item|
-        item[synonym_key].include?(value) ||
-          item.name.downcase == value.downcase
+        match_values(item).include?(value.downcase.strip)
       end
+    end
+
+    def match_values(item)
+      [item[:name], item[:match_synonyms], item[:abbreviation]].flatten.compact.map(&:downcase).map(&:strip)
     end
   end
 end
