@@ -57,6 +57,7 @@ class FindEmptyTrainees
     trainees.course_subject_one
     trainees.course_min_age
     trainees.course_max_age
+    trainees.course_education_phase
   ].freeze
 
   class FieldsDoNotExistError < StandardError; end
