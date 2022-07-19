@@ -31,6 +31,8 @@ module SystemAdmin
         if user.update(permitted_attributes(user))
           redirect_to(provider_path(provider), flash: { success: t(".success") })
         else
+          user
+          provider
           render(:edit)
         end
       end
