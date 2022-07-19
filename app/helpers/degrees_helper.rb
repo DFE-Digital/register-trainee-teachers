@@ -49,7 +49,7 @@ private
   end
 
   def subject_data
-    DfE::ReferenceData::Degrees::SUBJECTS.all
+    DfE::ReferenceData::Degrees::SINGLE_SUBJECTS.all
   end
 
   def degree_type_data
