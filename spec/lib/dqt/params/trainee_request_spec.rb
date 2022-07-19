@@ -16,7 +16,7 @@ module Dqt
           DfE::ReferenceData::HardcodedReferenceList.new({
             SecureRandom.uuid => {
               name: degree.subject,
-              hesa_itt_code: hesa_code,
+              hecos_code: hesa_code,
             },
           }),
         )

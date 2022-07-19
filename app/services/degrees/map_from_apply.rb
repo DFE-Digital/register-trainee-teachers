@@ -91,12 +91,12 @@ module Degrees
     def find_dfe_reference_subject
       find_dfe_reference_item(:subjects,
                               uuid: attributes["subject_uuid"],
-                              hesa_itt_code: sanitised_hesa(attributes["hesa_degsbj"]),
+                              hecos_code: sanitised_hesa(attributes["hesa_degsbj"]),
                               name: attributes["subject"])
     end
 
     def find_dfe_reference_type
-      find_dfe_reference_item(:types,
+      find_dfe_reference_item(:types_including_generics,
                               uuid: attributes["degree_type_uuid"],
                               hesa_itt_code: sanitised_hesa(attributes["hesa_degtype"]),
                               abbreviation: attributes["qualification_type"])

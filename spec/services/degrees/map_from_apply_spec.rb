@@ -13,7 +13,7 @@ module Degrees
     let(:application_data) do
       ApiStubs::ApplyApi.application(degree_attributes: {
         subject: dfe_degree_subject_reference_data[:name],
-        hesa_degsbj: dfe_degree_subject_reference_data[:hesa_itt_code],
+        hesa_degsbj: dfe_degree_subject_reference_data[:hecos_code],
         grade: dfe_degree_grade_reference_data[:name],
         hesa_degclss: dfe_degree_grade_reference_data[:hesa_itt_code],
         qualification_type: dfe_degree_type_reference_data[:abbreviation],
@@ -24,7 +24,7 @@ module Degrees
     end
 
     let(:dfe_degree_type_reference_data) do
-      DfE::ReferenceData::Degrees::TYPES.some(name: degree_qualification_type).first
+      DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.some(name: degree_qualification_type).first
     end
 
     let(:dfe_degree_subject_reference_data) do
