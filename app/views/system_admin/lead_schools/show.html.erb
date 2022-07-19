@@ -64,8 +64,8 @@
   { name: "Users", url: lead_school_path(@lead_school) },
 ]) %>
 
-<% if @lead_school.users.any? %>
-  <% @lead_school.users.each do |user| %>
+<% if @lead_school.users.kept.any? %>
+  <% @lead_school.users.kept.each do |user| %>
     <%= render UserCard::View.new(
       user: user,
       edit_path: edit_lead_school_user_path(@lead_school, user),
