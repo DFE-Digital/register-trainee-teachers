@@ -27,6 +27,8 @@ module Exports
         applying_for_bursary: true,
         international_address: "Test addr",
         degrees: degrees,
+        itt_start_date: AcademicCycle.current.start_date,
+        itt_end_date: AcademicCycle.current.end_date,
       )
     end
     let(:degrees) { [build(:degree, :uk_degree_with_details, institution: Dttp::CodeSets::Institutions::MAPPING.keys.first)] }
@@ -53,7 +55,8 @@ module Exports
           "provider_trainee_id" => trainee.trainee_id,
           "trn" => trainee.trn,
           "status" => "QTS awarded",
-          "start_year" => "2021 to 2022",
+          "start_academic_year" => "2021 to 2022",
+          "end_academic_year" => "2021 to 2022",
           "record_created_at" => trainee.created_at&.iso8601,
           "updated_at" => trainee.updated_at&.iso8601,
           "hesa_updated_at" => trainee.hesa_updated_at&.iso8601,

@@ -63,11 +63,11 @@ class FundingManager
   end
 
   def funding_guidance_url
-    "#{funding_year}-to-#{funding_year + 1}"
+    academic_cycle.label.parameterize
   end
 
   def funding_guidance_link_text
-    "#{funding_year} to #{funding_year + 1} (opens a new tab)"
+    "#{academic_cycle.label} (opens a new tab)"
   end
 
 private
@@ -86,9 +86,5 @@ private
     allocation_subject.funding_methods.find_by(training_route: training_route,
                                                funding_type: funding_type,
                                                academic_cycle: academic_cycle)&.amount
-  end
-
-  def funding_year
-    @funding_year ||= AcademicCycle.for_date(trainee.itt_start_date).start_year
   end
 end
