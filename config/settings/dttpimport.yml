@@ -14,7 +14,6 @@ dfe_sign_in:
 features:
   basic_auth: true
   enable_feedback_link: false
-  send_emails: false
   import_courses_from_ttapi: true
   import_applications_from_apply: false
   publish_course_details: true
