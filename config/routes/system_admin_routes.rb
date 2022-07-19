@@ -14,7 +14,7 @@ module SystemAdminRoutes
         get "/sidekiq", to: redirect("/sign-in"), status: 302
 
         resources :providers, only: %i[index new create show edit update] do
-          resources :users, controller: "providers/users", only: %i[index new create edit update]
+          resources :users, controller: "providers/users", only: %i[index edit update]
 
           namespace :funding do
             resource :payment_schedule, only: %i[show], path: "/payment-schedule"

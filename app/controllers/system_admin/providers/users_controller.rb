@@ -4,22 +4,9 @@ module SystemAdmin
   module Providers
     class UsersController < ApplicationController
       def index
-        @users = policy_scope(User, policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1)
-      end
-
-      def new
-        @user = authorize(provider.users.build)
-      end
-
-      def create
-        @user = authorize(provider.users.build(permitted_attributes(User)))
-
-        if @user.save
-          ProviderUser.find_or_create_by!(provider: provider, user: @user)
-          redirect_to(provider_path(provider), flash: { success: t(".success") })
-        else
-          render(:new)
-        end
+        @users = policy_scope(User, policy_scope_class: UserPolicy)
+          .order_by_last_name
+          .page(params[:page] || 1)
       end
 
       def edit

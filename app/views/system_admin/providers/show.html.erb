@@ -48,13 +48,6 @@
 
 <h2 class="govuk-heading-m">Users</h2>
 
-<p class="govuk-body">
-  <%= render GovukComponent::StartButtonComponent.new(
-  text: "Add a user",
-  href: new_provider_user_path(@provider),
-) %>
-</p>
-
 <% if @users_view.users.any? %>
   <% @users_view.users.each do |user| %>
     <%= render UserCard::View.new(
