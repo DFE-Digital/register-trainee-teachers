@@ -28,7 +28,7 @@ module Degrees
     end
 
     let(:dfe_degree_subject_reference_data) do
-      DfE::ReferenceData::Degrees::SUBJECTS.some(name: degree_subject).first
+      DfE::ReferenceData::Degrees::SINGLE_SUBJECTS.some(name: degree_subject).first
     end
 
     let(:dfe_degree_grade_reference_data) do

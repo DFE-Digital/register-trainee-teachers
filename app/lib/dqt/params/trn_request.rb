@@ -125,7 +125,7 @@ module Dqt
       end
 
       def subject_code
-        DfE::ReferenceData::Degrees::SUBJECTS.some({ name: degree.subject }).first&.hecos_code
+        DfE::ReferenceData::Degrees::SINGLE_SUBJECTS.some({ name: degree.subject }).first&.hecos_code
       end
 
       def institution_ukprn

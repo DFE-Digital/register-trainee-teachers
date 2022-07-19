@@ -66,7 +66,7 @@ describe DegreesHelper do
     let(:synonym) { "maths" }
 
     before do
-      stub_const("DfE::ReferenceData::Degrees::SUBJECTS",
+      stub_const("DfE::ReferenceData::Degrees::SINGLE_SUBJECTS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: degree_subject,

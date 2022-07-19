@@ -4,7 +4,7 @@ class Degree < ApplicationRecord
   include Sluggable
 
   INSTITUTIONS = DfE::ReferenceData::Degrees::INSTITUTIONS.all.map(&:name)
-  SUBJECTS = DfE::ReferenceData::Degrees::SUBJECTS.all.map(&:name)
+  SUBJECTS = DfE::ReferenceData::Degrees::SINGLE_SUBJECTS.all.map(&:name)
   TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.all.map(&:name)
   COMMON_TYPES = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
 

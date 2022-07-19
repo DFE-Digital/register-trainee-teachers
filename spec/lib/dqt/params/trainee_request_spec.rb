@@ -12,7 +12,7 @@ module Dqt
 
       before do
         stub_const(
-          "DfE::ReferenceData::Degrees::SUBJECTS",
+          "DfE::ReferenceData::Degrees::SINGLE_SUBJECTS",
           DfE::ReferenceData::HardcodedReferenceList.new({
             SecureRandom.uuid => {
               name: degree.subject,
