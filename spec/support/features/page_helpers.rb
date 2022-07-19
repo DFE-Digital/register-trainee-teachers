@@ -130,10 +130,6 @@ module Features
       @provider_show_page ||= PageObjects::Providers::Show.new
     end
 
-    def provider_dttp_users_index_page
-      @provider_dttp_users_index_page ||= PageObjects::Provider::DttpUsers::Index.new
-    end
-
     def validation_errors_index_page
       @validation_errors_index_page ||= PageObjects::ValidationErrors::Index.new
     end

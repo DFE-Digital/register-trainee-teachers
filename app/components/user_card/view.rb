@@ -6,9 +6,8 @@ module UserCard
 
     attr_reader :user
 
-    def initialize(user:, registration_form_path: nil, edit_path: nil)
+    def initialize(user:, edit_path: nil)
       @user = user
-      @registration_form_path = registration_form_path
       @edit_path = edit_path
     end
 
@@ -28,6 +27,6 @@ module UserCard
 
   private
 
-    attr_reader :registration_form_path, :edit_path
+    attr_reader :edit_path
   end
 end

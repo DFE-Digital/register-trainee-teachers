@@ -6,15 +6,8 @@ module SystemAdmin
       @provider = provider
     end
 
-    def registered
-      @registered ||= provider.users.kept.order(:last_name)
-    end
-
-    def not_registered
-      @not_registered ||= ::Dttp::User.not_registered_with_provider(
-        provider.dttp_id,
-        registered.pluck(:dttp_id),
-      ).where.not(email: nil)
+    def users
+      @users ||= provider.users.kept.order(:last_name)
     end
 
   private

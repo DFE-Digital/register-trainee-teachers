@@ -21,14 +21,4 @@
       <%= govuk_link_to('Edit', edit_path) %>
     </div>
   <% end %>
-
-  <% if registration_form_path.present? %>
-    <%= govuk_button_to(
-      "Register user to provider",
-      registration_form_path,
-      params: { dttp_user_id: user },
-      id: "register-dttp-user",
-      class: "govuk-button--secondary",
-    ) %>
-  <% end %>
 </div>

@@ -13,6 +13,7 @@ module SystemAdmin
 
       def create
         @user = authorize(provider.users.build(permitted_attributes(User)))
+
         if @user.save
           ProviderUser.find_or_create_by!(provider: provider, user: @user)
           redirect_to(provider_path(provider), flash: { success: t(".success") })
@@ -26,14 +27,8 @@ module SystemAdmin
         provider
       end
 
-      def show
-        @user = user
-      end
-
       def update
-        user
-        provider
-        if user.update(permitted_attributes(@user))
+        if user.update(permitted_attributes(user))
           redirect_to(provider_path(provider), flash: { success: t(".success") })
         else
           render(:edit)
