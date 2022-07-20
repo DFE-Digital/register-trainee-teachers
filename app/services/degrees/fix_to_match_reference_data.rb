@@ -75,7 +75,7 @@ module Degrees
     end
 
     def correct_subject
-      ref_version = find_in_reference_data(:subjects, degree.subject)
+      ref_version = find_in_reference_data(:single_subjects, degree.subject)
       ref_version || {}
     end
 

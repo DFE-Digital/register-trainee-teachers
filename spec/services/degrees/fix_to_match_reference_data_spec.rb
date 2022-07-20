@@ -107,14 +107,14 @@ module Degrees
 
         context "value is incorrect" do
           context "match is found in reference data with different casing" do
-            let(:subject_name) { "English Studies" }
+            let(:subject_name) { "Medical Sciences" }
 
             it "is updates the value" do
-              expect(subject.subject).to eq("English studies")
+              expect(subject.subject).to eq("Medical sciences")
             end
 
             it "updates the UUID" do
-              expect(subject.subject_uuid).to eq("e18070f0-5dce-e911-a985-000d3ab79618")
+              expect(subject.subject_uuid).to eq("8d8070f0-5dce-e911-a985-000d3ab79618")
             end
           end
 
