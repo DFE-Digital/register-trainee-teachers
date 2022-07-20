@@ -37,7 +37,7 @@ module SystemAdminRoutes
         resources :schools, only: %i[index]
 
         resources :lead_schools, path: "lead-schools", only: %i[index show] do
-          resources :users, controller: "lead_schools/users", only: %i[new create edit update]
+          resources :users, controller: "lead_schools/users", only: %i[edit update]
 
           namespace :funding do
             resource :payment_schedule, only: %i[show], path: "/payment-schedule"

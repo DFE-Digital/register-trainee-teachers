@@ -64,13 +64,6 @@
   { name: "Users", url: lead_school_path(@lead_school) },
 ]) %>
 
-<p class="govuk-body">
-  <%= render GovukComponent::StartButtonComponent.new(
-  text: "Add a user",
-  href: new_lead_school_user_path(@lead_school),
-) %>
-</p>
-
 <% if @lead_school.users.any? %>
   <% @lead_school.users.each do |user| %>
     <%= render UserCard::View.new(

@@ -10,16 +10,6 @@ module SystemAdmin
         @user = authorize(@lead_school.users.new)
       end
 
-      def create
-        @user = authorize(@lead_school.users.new(permitted_attributes(User)))
-        if @user.save
-          LeadSchoolUser.find_or_create_by!(lead_school: @lead_school, user: @user)
-          redirect_to(lead_school_path(@lead_school), flash: { success: t(".success") })
-        else
-          render(:new)
-        end
-      end
-
       def edit; end
 
       def update
