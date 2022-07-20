@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 96e1b7d843d55b96f8dc15218f003e95209f03ce
-  ref: 96e1b7d
+  revision: f7d9ee41ab929331635eda448d833ee3e09fc009
+  ref: f7d9ee4
   specs:
     dfe-reference-data (0.2.0)
       activesupport
@@ -574,7 +574,7 @@ GEM
     thor (1.2.1)
     timecop (0.9.5)
     trailblazer-option (0.1.2)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
     uk_postcode (2.1.8)
