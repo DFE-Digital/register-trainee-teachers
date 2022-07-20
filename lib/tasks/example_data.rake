@@ -235,6 +235,16 @@ namespace :example_data do
               )
             end
 
+            # Ensure no subjects are set on apply applications - this means that
+            # the user is required to confirm the course.
+            if attrs[:apply_application].present?
+              attrs.merge!(
+                course_subject_one: nil,
+                course_subject_two: nil,
+                course_subject_three: nil,
+              )
+            end
+
             if provider.name.include?(PROVIDER_C) && HESA_TRAINING_ROUTES.include?(route.to_s) && state != :draft
               trainee = FactoryBot.create(:trainee, route, state, :imported_from_hesa, attrs)
               if sample_index < sample_size * 50.0 / 100
