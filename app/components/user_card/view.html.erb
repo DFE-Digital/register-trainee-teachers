@@ -1,4 +1,4 @@
-<div class="user-card govuk-!-margin-bottom-5">
+<div class="user-card govuk-!-padding-bottom-5">
   <div class="user-card__name">
     <h2 class="govuk-heading-s user-card__name__heading">
       <%= user.name %>
@@ -20,15 +20,5 @@
     <div class="govuk-caption-m govuk-!-font-size-16">
       <%= govuk_link_to('Edit', edit_path) %>
     </div>
-  <% end %>
-
-  <% if registration_form_path.present? %>
-    <%= govuk_button_to(
-      "Register user to provider",
-      registration_form_path,
-      params: { dttp_user_id: user },
-      id: "register-dttp-user",
-      class: "govuk-button--secondary",
-    ) %>
   <% end %>
 </div>

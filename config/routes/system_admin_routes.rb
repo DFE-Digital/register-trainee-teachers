@@ -14,16 +14,11 @@ module SystemAdminRoutes
         get "/sidekiq", to: redirect("/sign-in"), status: 302
 
         resources :providers, only: %i[index new create show edit update] do
-          resources :dttp_users, only: %i[index], path: "/dttp-users"
           resources :users, controller: "providers/users", only: %i[index new create edit update]
 
           namespace :funding do
             resource :payment_schedule, only: %i[show], path: "/payment-schedule"
             resource :trainee_summary, only: %i[show], path: "/trainee-summary"
-          end
-
-          scope module: :imports do
-            post "/users/import", to: "users#create", as: :import_user
           end
         end
 
