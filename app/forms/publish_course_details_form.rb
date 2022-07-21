@@ -45,7 +45,11 @@ class PublishCourseDetailsForm < TraineeForm
   end
 
   def save!
-    return true if manual_entry_chosen?
+    if manual_entry_chosen?
+      store.set(id, form_store_key, { course_uuid: NOT_LISTED })
+      return true
+    end
+
     return false unless valid?
 
     update_trainee_attributes
