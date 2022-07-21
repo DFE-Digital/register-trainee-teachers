@@ -118,7 +118,7 @@ module Funding
     end
 
     def no_funding_methods?
-      !trainee.academic_cycle || trainee.academic_cycle.funding_methods.none?
+      !trainee.start_academic_cycle || trainee.start_academic_cycle.funding_methods.none?
     end
 
     def mappable_field(field_value, field_label, action_url)

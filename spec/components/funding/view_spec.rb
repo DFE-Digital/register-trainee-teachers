@@ -5,6 +5,7 @@ require "rails_helper"
 module Funding
   describe View do
     let(:data_model) { Funding::FormValidator.new(trainee) }
+    let(:start_academic_cycle) { create(:academic_cycle) }
 
     before { render_inline(View.new(data_model: trainee, editable: true)) }
 
@@ -13,6 +14,8 @@ module Funding
         build(:trainee,
               :early_years_postgrad,
               :with_course_allocation_subject,
+              :with_start_date,
+              start_academic_cycle: start_academic_cycle,
               applying_for_bursary: true,
               bursary_tier: BURSARY_TIERS.keys.first)
       end
@@ -34,6 +37,7 @@ module Funding
               :with_study_mode_and_course_dates,
               training_initiative: training_initiative,
               training_route: route,
+              start_academic_cycle: start_academic_cycle,
               applying_for_bursary: true,
               course_subject_one: subject_specialism.name)
       end
@@ -78,6 +82,7 @@ module Funding
               :with_study_mode_and_course_dates,
               training_initiative: training_initiative,
               training_route: route,
+              start_academic_cycle: start_academic_cycle,
               applying_for_bursary: applying_for_bursary,
               course_subject_one: course_subject_one)
       end
@@ -120,7 +125,9 @@ module Funding
         end
 
         describe "has bursary" do
-          let(:trainee) { create(:trainee, :with_provider_led_bursary, funding_amount: 24000, applying_for_bursary: applying_for_bursary) }
+          let(:trainee) {
+            create(:trainee, :with_provider_led_bursary, funding_amount: 24000, applying_for_bursary: applying_for_bursary, start_academic_cycle: start_academic_cycle)
+          }
 
           before do
             render_inline(View.new(data_model: trainee, editable: true))
@@ -168,7 +175,7 @@ module Funding
     end
 
     context "with grant" do
-      let(:trainee) { create(:trainee, :with_grant, funding_amount: 25000, applying_for_grant: applying_for_grant) }
+      let(:trainee) { create(:trainee, :with_grant, funding_amount: 25000, applying_for_grant: applying_for_grant, start_academic_cycle: start_academic_cycle) }
 
       before do
         render_inline(View.new(data_model: trainee, editable: true))
@@ -209,7 +216,7 @@ module Funding
     end
 
     describe "when we don't know the funding rules for the trainee's cycle" do
-      let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true) }
+      let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true, start_academic_cycle: start_academic_cycle) }
 
       it "doesn't render the funding row" do
         expect(rendered_component).not_to have_text("Funding method")

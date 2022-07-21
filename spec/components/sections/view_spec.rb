@@ -17,7 +17,7 @@ module Sections
     context "apply draft trainee in review" do
       let(:section) { :course_details }
       let(:status) { :review }
-      let(:trainee) { create(:trainee, :in_progress, :with_apply_application) }
+      let(:trainee) { create(:trainee, :in_progress, :with_apply_application, start_academic_cycle: AcademicCycle.first) }
 
       it "renders section text for apply draft course details" do
         expect(rendered_component).to have_css(".app-inset-text__title", text: expected_title(section, status))
@@ -60,7 +60,7 @@ module Sections
     end
 
     context "trainee incomplete" do
-      let(:trainee) { create(:trainee, :incomplete) }
+      let(:trainee) { create(:trainee, :incomplete, start_academic_cycle: AcademicCycle.first) }
 
       include_examples renders_incomplete_section, :personal_details, :incomplete
       include_examples renders_incomplete_section, :contact_details, :incomplete
@@ -82,13 +82,13 @@ module Sections
       end
 
       context "trainee on early years route" do
-        let(:trainee) { create(:trainee, :incomplete, training_route: "early_years_undergrad") }
+        let(:trainee) { create(:trainee, :incomplete, training_route: "early_years_undergrad", start_academic_cycle: AcademicCycle.first) }
 
         include_examples renders_incomplete_section, :course_details, :incomplete
       end
 
       context "trainee incomplete funding section" do
-        let(:trainee) { create(:trainee, :with_start_date) }
+        let(:trainee) { create(:trainee, :with_start_date, start_academic_cycle: AcademicCycle.first) }
 
         before {
           trainee.progress.course_details = true

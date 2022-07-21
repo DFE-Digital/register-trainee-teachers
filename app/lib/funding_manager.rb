@@ -10,7 +10,7 @@ class FundingManager
   def initialize(trainee)
     @trainee = trainee
     @allocation_subject = trainee.course_allocation_subject
-    @academic_cycle = trainee.academic_cycle
+    @academic_cycle = trainee.start_academic_cycle
   end
 
   def bursary_amount
