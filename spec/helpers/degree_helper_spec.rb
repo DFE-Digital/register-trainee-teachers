@@ -57,6 +57,7 @@ describe DegreesHelper do
       expect(institutions_options).to match([
         [nil, nil, nil],
         [institution, institution, { "data-synonyms" => synonym }],
+        ["Other", "Other", { "data-synonyms" => "" }],
       ])
     end
   end
