@@ -32,7 +32,6 @@ module SystemAdminRoutes
           resources :lead_schools, controller: "user_lead_schools", only: %i[index new create], path: "lead-schools"
         end
 
-        resources :dttp_providers, only: %i[index show create]
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]
 

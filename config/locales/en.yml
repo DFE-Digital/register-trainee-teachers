@@ -412,8 +412,6 @@ en:
         index: Providers
         new: Add a provider
         edit: Edit a provider
-      dttp_providers:
-        index: Dttp Providers
       users:
         index: Users
         new: Add a user

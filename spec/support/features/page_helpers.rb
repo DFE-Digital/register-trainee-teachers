@@ -82,10 +82,6 @@ module Features
       @provider_index_page ||= PageObjects::Providers::Index.new
     end
 
-    def dttp_providers_index_page
-      @dttp_providers_index_page ||= PageObjects::DttpProviders::Index.new
-    end
-
     def schools_index_page
       @schools_index_page ||= PageObjects::Schools::Index.new
     end
