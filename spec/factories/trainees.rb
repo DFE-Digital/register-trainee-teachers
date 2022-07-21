@@ -308,6 +308,7 @@ FactoryBot.define do
       course_subject_one { CourseSubjects::EARLY_YEARS_TEACHING }
       course_age_range { AgeRange::ZERO_TO_FIVE }
       with_study_mode_and_course_dates
+      course_education_phase { COURSE_EDUCATION_PHASE_ENUMS[:early_years] }
     end
 
     trait :early_years_assessment_only do
@@ -405,12 +406,12 @@ FactoryBot.define do
     end
 
     trait :eyts_awarded do
-      training_route { EARLY_YEARS_ROUTES.sample }
+      training_route { EARLY_YEARS_TRAINING_ROUTES.keys.sample }
       state { "awarded" }
     end
 
     trait :eyts_recommended do
-      training_route { EARLY_YEARS_ROUTES.sample }
+      training_route { EARLY_YEARS_TRAINING_ROUTES.keys.sample }
       state { "recommended_for_award" }
     end
 

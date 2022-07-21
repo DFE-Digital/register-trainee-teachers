@@ -23,6 +23,10 @@ module CourseDetailsHelper
     to_options(age_ranges(option: :additional, level: level))
   end
 
+  def course_education_phase_checkbox_values
+    [COURSE_EDUCATION_PHASE_ENUMS[:primary], COURSE_EDUCATION_PHASE_ENUMS[:secondary]]
+  end
+
   def route_title(route)
     t("views.forms.publish_course_details.route_titles.#{route}")
   end

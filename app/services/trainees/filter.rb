@@ -24,10 +24,10 @@ module Trainees
       trainees.where.not(id: FindEmptyTrainees.call(trainees: trainees, ids_only: true))
     end
 
-    def level(trainees, levels)
-      return trainees if levels.blank?
+    def course_education_phase(trainees, course_education_phases)
+      return trainees if course_education_phases.blank?
 
-      trainees.with_education_phase(*levels)
+      trainees.where(course_education_phase: course_education_phases)
     end
 
     def record_source(trainees, record_source_values)
@@ -145,7 +145,7 @@ module Trainees
       filtered_trainees = start_year(filtered_trainees, filters[:start_year])
       filtered_trainees = end_year(filtered_trainees, filters[:end_year])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
-      filtered_trainees = level(filtered_trainees, filters[:level])
+      filtered_trainees = course_education_phase(filtered_trainees, filters[:level])
       filtered_trainees = provider(filtered_trainees, filters[:provider])
       filtered_trainees = record_completion(filtered_trainees, filters[:record_completion])
       filtered_trainees = study_mode(filtered_trainees, filters[:study_mode])

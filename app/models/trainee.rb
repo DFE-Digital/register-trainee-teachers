@@ -121,6 +121,7 @@ class Trainee < ApplicationRecord
   enum course_education_phase: {
     COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,
     COURSE_EDUCATION_PHASE_ENUMS[:secondary] => 1,
+    COURSE_EDUCATION_PHASE_ENUMS[:early_years] => 2,
   }
 
   enum state: {
@@ -197,8 +198,8 @@ class Trainee < ApplicationRecord
     qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }
     eyts_states = award_states.select { |s| s.start_with?("eyts") }.map { |s| genericize_state(s) }
 
-    where(training_route: EARLY_YEARS_ROUTES, state: eyts_states).or(
-      where(state: qts_states).where.not(training_route: EARLY_YEARS_ROUTES),
+    where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys, state: eyts_states).or(
+      where(state: qts_states).where.not(training_route: EARLY_YEARS_TRAINING_ROUTES.keys),
     )
   end)
 
@@ -214,14 +215,6 @@ class Trainee < ApplicationRecord
   scope :incomplete_for_filter, -> { where.not(id: complete_for_filter) }
 
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
-
-  scope :with_education_phase, (lambda do |*levels|
-    education_phases = levels.reject { |level| level == EARLY_YEARS_ROUTE_NAME_PREFIX }
-
-    where(course_education_phase: education_phases).or(
-      levels.include?(EARLY_YEARS_ROUTE_NAME_PREFIX) ? on_early_years_routes : none,
-    )
-  end)
 
   audited associated_with: :provider
   has_associated_audits
@@ -346,6 +339,7 @@ class Trainee < ApplicationRecord
       self.course_subject_one = course_subject
       self.course_age_range = AgeRange::ZERO_TO_FIVE
       self.course_allocation_subject = SubjectSpecialism.find_by(name: course_subject)&.allocation_subject
+      self.course_education_phase = COURSE_EDUCATION_PHASE_ENUMS[:early_years]
     end
   end
 
