@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Creating a new user" do
+feature "Editing a user" do
   let(:system_admin) { create(:user, system_admin: true) }
   let(:user) { create(:user) }
   let(:dttp_id) { SecureRandom.uuid }
@@ -44,10 +44,6 @@ private
 
   def then_i_am_taken_to_the_edit_user_page
     edit_user_page.load(provider_id: provider.id, id: user.id)
-  end
-
-  def and_i_click_on_add_a_user
-    provider_show_page.add_a_user.click
   end
 
   def and_i_fill_in_email(email:)

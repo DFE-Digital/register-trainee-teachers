@@ -107,7 +107,7 @@ module Features
     end
 
     def show_user_page
-      @new_user_page ||= PageObjects::Users::Show.new
+      @show_user_page ||= PageObjects::Users::Show.new
     end
 
     def add_provider_to_user_page

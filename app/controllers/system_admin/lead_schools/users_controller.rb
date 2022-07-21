@@ -4,11 +4,7 @@ module SystemAdmin
   module LeadSchools
     class UsersController < ApplicationController
       before_action :set_lead_school
-      before_action :set_user, only: %i[edit update]
-
-      def new
-        @user = authorize(@lead_school.users.new)
-      end
+      before_action :set_user
 
       def edit; end
 
