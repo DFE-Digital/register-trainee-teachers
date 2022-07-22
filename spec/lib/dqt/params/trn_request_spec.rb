@@ -63,8 +63,8 @@ module Dqt
         end
 
         it "returns a hash including degree attributes" do
-          allow(DfE::ReferenceData::Degrees::INSTITUTIONS).to receive(:one).with(degree.institution_uuid).and_return({ ukprn: "12345678" })
-          expect(subject["qualification"]).to eq({
+          allow(Degrees::DfeReference::INSTITUTIONS).to receive(:one).with(degree.institution_uuid).and_return(double(ukprn: "12345678"))
+          expect(subject["qualification"]).to include({
             "providerUkprn" => "12345678",
             "countryCode" => "XK",
             "subject" => hesa_code,
@@ -73,11 +73,31 @@ module Dqt
           })
         end
 
+        context "imported from HESA" do
+          let(:itt_aim) { Hesa::CodeSets::IttAims::MAPPING.values.sample }
+          let(:dqt_itt_aim) { described_class::ITT_AIMS[itt_aim] }
+          let(:trainee) do
+            create(:trainee,
+                   :completed,
+                   :imported_from_hesa,
+                   gender: "female",
+                   itt_aim: itt_aim,
+                   degrees: [degree])
+          end
+
+          it "includes the qualitifcation aim and type" do
+            expect(subject["qualification"]).to include("ittQualificationAim" => dqt_itt_aim)
+          end
+        end
+
         context "where there is no institution uuid" do
           let(:degree) { build(:degree, :uk_degree_with_details, institution_uuid: nil) }
 
+          before do
+            allow(Degrees::DfeReference::INSTITUTIONS).to receive(:one).with(nil).and_return(nil)
+          end
+
           it "sets the providerUkprn to nil" do
-            allow(DfE::ReferenceData::Degrees::INSTITUTIONS).to receive(:one).with(nil).and_return(nil)
             expect(subject["qualification"]).to match(hash_including("providerUkprn" => nil))
           end
         end

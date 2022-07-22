@@ -51,6 +51,7 @@ module Dqt
             "providerUkprn" => ukprn,
             "countryCode" => "XK",
             "subject" => hesa_code,
+            "ittQualificationAim" => nil,
             "class" => described_class::DEGREE_CLASSES[degree.grade],
             "date" => Date.new(degree.graduation_year).iso8601,
           })
