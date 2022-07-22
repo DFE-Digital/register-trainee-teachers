@@ -106,7 +106,8 @@ gem "redcarpet"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v1.0.0"
+# pinned to a commit as v1 doesn't contain the Doctor of Philosophy disambiguation
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", ref: "9ed4450"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.2.1"
