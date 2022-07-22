@@ -77,10 +77,10 @@ module Degrees
     def grade_params
       grade = find_dfe_reference_grade
 
-      if Degree::GRADES.include?(grade.name)
+      if grade
         { grade: grade.name, grade_uuid: grade.id, other_grade: nil }
       else
-        { grade: Degree::OTHER_GRADE, grade_uuid: grade.id, other_grade: grade.name }
+        { grade: Degree::OTHER_GRADE, grade_uuid: nil, other_grade: attributes["grade"] }
       end
     end
 

@@ -82,20 +82,20 @@ module Degrees
         it { is_expected.to include(expected_uk_degree_attributes) }
       end
 
-      context "grade outside the Register scope (Dttp::CodeSets::Grades::MAPPING)" do
-        let(:degree_grade) { "Aegrotat" }
+      context "unrecognised grade" do
+        let(:unrecognised_grade) { "Balloney" }
 
-        before do
+        let(:application_data) do
           ApiStubs::ApplyApi.application(degree_attributes: {
-            grade: dfe_degree_grade_reference_data[:name],
-            grade_uuid: dfe_degree_grade_reference_data[:id],
+            grade: unrecognised_grade,
+            grade_uuid: nil,
+            hesa_degclss: nil,
           })
         end
 
-        it "stores the UUID but saved the name in the other_grade attribute" do
-          expect(subject).to include(grade: Dttp::CodeSets::Grades::OTHER,
-                                     grade_uuid: dfe_degree_grade_reference_data[:id],
-                                     other_grade: dfe_degree_grade_reference_data[:name])
+        it "stores the other grade" do
+          expect(subject).to include(grade: "Other",
+                                     other_grade: unrecognised_grade)
         end
       end
     end
