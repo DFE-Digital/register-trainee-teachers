@@ -56,8 +56,8 @@ module Hesa
               grade: "01",
               graduation_date: "2005-07-01",
               institution: "0001",
-              subject: nil,
-              degree_type: "999",
+              subject: "100251",
+              degree_type: "205",
             }],
             placements: [{ school_urn: "900000" }],
           })

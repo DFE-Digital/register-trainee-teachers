@@ -70,11 +70,11 @@
                 <F_DEGENDDT>2005-07-01</F_DEGENDDT>
                 <F_DEGEST>0001</F_DEGEST>
                 <F_DEGLENGTH>4</F_DEGLENGTH>
-                <F_DEGSBJ1>NULL</F_DEGSBJ1>
-                <F_DEGSBJ2>100251</F_DEGSBJ2>
-                <F_DEGSBJ3>100038</F_DEGSBJ3>
+                <F_DEGSBJ1>100251</F_DEGSBJ1>
+                <F_DEGSBJ2>100038</F_DEGSBJ2>
+                <F_DEGSBJ3>NULL</F_DEGSBJ3>
                 <F_DEGSTDT>2004-09-01</F_DEGSTDT>
-                <F_DEGTYPE>999</F_DEGTYPE>
+                <F_DEGTYPE>205</F_DEGTYPE>
                 <F_FIRSTDEG>01</F_FIRSTDEG>
             </PREVIOUSQUALIFICATION>
         </PREVIOUSQUALIFICATIONS>

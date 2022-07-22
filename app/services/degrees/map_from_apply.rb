@@ -48,7 +48,7 @@ module Degrees
       qualification_type = find_dfe_reference_type
 
       if qualification_type
-        { uk_degree: qualification_type[:name], uk_degree_uuid: qualification_type[:id] }
+        { uk_degree: qualification_type.name, uk_degree_uuid: qualification_type.id }
       else
         { uk_degree: attributes["qualification_type"] }
       end
@@ -58,7 +58,7 @@ module Degrees
       institution = find_dfe_reference_institution
 
       if institution
-        { institution: institution[:name], institution_uuid: institution[:id] }
+        { institution: institution.name, institution_uuid: institution.id }
       else
         { institution: attributes["institution_details"] }
       end
@@ -68,7 +68,7 @@ module Degrees
       subject = find_dfe_reference_subject
 
       if subject
-        { subject: subject[:name], subject_uuid: subject[:id] }
+        { subject: subject.name, subject_uuid: subject.id }
       else
         { subject: attributes["subject"] }
       end
@@ -77,10 +77,10 @@ module Degrees
     def grade_params
       grade = find_dfe_reference_grade
 
-      if Degree::GRADES.include?(grade[:name])
-        { grade: grade[:name], grade_uuid: grade[:id], other_grade: nil }
+      if Degree::GRADES.include?(grade.name)
+        { grade: grade.name, grade_uuid: grade.id, other_grade: nil }
       else
-        { grade: Degree::OTHER_GRADE, grade_uuid: grade[:id], other_grade: grade[:name] }
+        { grade: Degree::OTHER_GRADE, grade_uuid: grade.id, other_grade: grade.name }
       end
     end
 
@@ -89,43 +89,31 @@ module Degrees
     end
 
     def find_dfe_reference_subject
-      find_dfe_reference_item(:subjects,
-                              uuid: attributes["subject_uuid"],
-                              hecos_code: sanitised_hesa(attributes["hesa_degsbj"]),
-                              name: attributes["subject"])
+      DfeReference.find_subject(uuid: attributes["subject_uuid"],
+                                name: attributes["subject"],
+                                hecos_code: attributes["hesa_degsbj"])
     end
 
     def find_dfe_reference_type
-      find_dfe_reference_item(:types_including_generics,
-                              uuid: attributes["degree_type_uuid"],
-                              hesa_itt_code: sanitised_hesa(attributes["hesa_degtype"]),
-                              abbreviation: attributes["qualification_type"])
+      DfeReference.find_type(uuid: attributes["degree_type_uuid"],
+                             abbreviation: attributes["qualification_type"],
+                             hesa_code: attributes["hesa_degtype"])
     end
 
     def find_dfe_reference_institution
-      find_dfe_reference_item(:institutions,
-                              uuid: attributes["institution_uuid"],
-                              hesa_itt_code: sanitised_hesa(attributes["hesa_degest"]),
-                              name: attributes["institution_details"].split(",").first)
+      DfeReference.find_institution(uuid: attributes["institution_uuid"],
+                                    name: attributes["institution_details"].split(",").first,
+                                    hesa_code: attributes["hesa_degest"])
     end
 
     def find_dfe_reference_grade
-      find_dfe_reference_item(:grades,
-                              uuid: attributes["grade_uuid"],
-                              hesa_itt_code: sanitised_hesa(attributes["hesa_degclss"]),
-                              name: attributes["grade"])
+      DfeReference.find_grade(uuid: attributes["grade_uuid"],
+                              name: attributes["grade"],
+                              hesa_code: attributes["hesa_degclss"])
     end
 
     def country
       Dttp::CodeSets::Countries::MAPPING.find { |_, v| v[:country_code] == attributes["hesa_degctry"] }&.first
-    end
-
-    def find_dfe_reference_item(list_type, filters)
-      DfE::ReferenceData::Degrees.const_get(list_type.to_s.upcase).all.find do |record|
-        filters.compact.any? do |field, value|
-          same_string?(record[field], value) || almost_identical?(record[field], value)
-        end
-      end
     end
   end
 end
