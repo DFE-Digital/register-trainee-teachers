@@ -4,6 +4,18 @@ module Degrees
   class CreateFromHesa
     include ServicePattern
 
+    # The dfe-reference gem does not include degree types with honours in
+    # the name, so we need fallback to the non-honours generic degree types.
+    HONOURS_TO_NON_HONOURS_HESA_CODE_MAP = {
+      "002" => "001",
+      "004" => "003",
+      "006" => "005",
+      "008" => "007",
+      "010" => "009",
+      # "013" => "BSc (Hons) with intercalated PGCE", # not currently available in dfe-reference-gem
+      "014" => "012",
+    }.freeze
+
     def initialize(trainee:, hesa_degrees:)
       @trainee = trainee
       @hesa_degrees = hesa_degrees.reject { |d| d.compact.empty? }
@@ -37,7 +49,7 @@ module Degrees
     def country_specific_attributes(degree, hesa_degree)
       country = Hesa::CodeSets::Countries::MAPPING[hesa_degree[:country]]
       dfe_institution = dfe_reference_institution_item(hesa_degree[:institution])
-      dfe_type = dfe_reference_type_item(hesa_degree[:degree_type])
+      dfe_type = dfe_reference_type_item(degree_type_hesa_code(hesa_degree))
 
       # Country code is not always provided, so we have
       # to fallback to institution which is always UK based
@@ -64,16 +76,10 @@ module Degrees
     end
 
     def grade_attributes(degree, hesa_degree)
-      dfe_grade = dfe_reference_grade_item(hesa_degree[:grade])
+      dfe_grade = dfe_reference_grade_item(degree_grade_hesa_code(hesa_degree))
 
-      if Hesa::CodeSets::Grades::OTHER_GRADES.include?(hesa_degree[:grade])
-        degree.grade = Hesa::CodeSets::Grades::OTHER
-        degree.other_grade = grade.name
-      else
-        degree.grade = dfe_grade.name
-        degree.grade_uuid = dfe_grade.id
-        degree.other_grade = nil
-      end
+      degree.grade = dfe_grade.name
+      degree.grade_uuid = dfe_grade.id
     end
 
     def uk_country?(country)
@@ -94,6 +100,16 @@ module Degrees
 
     def dfe_reference_grade_item(hesa_code)
       DfeReference.find_grade(hesa_code: hesa_code)
+    end
+
+    def degree_type_hesa_code(hesa_degree)
+      HONOURS_TO_NON_HONOURS_HESA_CODE_MAP[hesa_degree[:degree_type]] || hesa_degree[:degree_type]
+    end
+
+    def degree_grade_hesa_code(hesa_degree)
+      # The HESA code "09" which is "Pass - degree awarded without honours following an honours course"
+      # is not currently supported by the dfe-reference gem. Falling back to the nearest equivalent.
+      hesa_degree[:grade] == "09" ? "14" : hesa_degree[:grade]
     end
   end
 end
