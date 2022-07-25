@@ -14,6 +14,9 @@ module Trainees
     let(:trainee_degree) { trainee.degrees.first }
     let(:hesa_course_subject_codes) { Hesa::CodeSets::CourseSubjects::MAPPING.invert }
     let(:hesa_age_range_codes) { Hesa::CodeSets::AgeRanges::MAPPING.invert }
+    let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2016) }
+    let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2018) }
+    let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -61,6 +64,8 @@ module Trainees
         expect(trainee.study_mode).to eq("full_time")
         expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
         expect(trainee.itt_end_date).to be_nil
+        expect(trainee.start_academic_cycle).to eq(start_academic_cycle)
+        expect(trainee.end_academic_cycle).to be_nil
         expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
       end
 

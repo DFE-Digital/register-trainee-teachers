@@ -20,6 +20,7 @@ module Trainees
     def call
       Audited.audit_class.as_user(USERNAME) do
         trainee.assign_attributes(mapped_attributes)
+        Trainees::SetAcademicCycles.call(trainee: trainee)
 
         if trainee.save!
           create_degrees!

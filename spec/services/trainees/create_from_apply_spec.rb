@@ -14,6 +14,9 @@ module Trainees
     let(:trainee) { create_trainee_from_apply }
     let(:subject_names) { [] }
     let(:course_uuid) { course_info["course_uuid"] }
+    let!(:current_academic_cycle) { create(:academic_cycle) }
+    let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
+    let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
 
     let!(:course) do
       create(
