@@ -23,8 +23,8 @@ module Dqt
         TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => "TeachFirstProgramme",
         TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => "UndergraduateOptIn",
         TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => "Apprenticeship",
-        TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => "Core",
-        TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => "Core",
+        TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => "ProviderLedPostgrad",
+        TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => "ProviderLedUndergrad",
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => "SchoolDirectTrainingProgrammeSalaried",
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => "SchoolDirectTrainingProgrammeSelfFunded",
       }.freeze
