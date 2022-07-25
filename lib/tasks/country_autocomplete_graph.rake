@@ -31,7 +31,7 @@ namespace :country_autocomplete_graph do
       missing_from_dttp[primary_key] = original_location_graph[primary_key]
     end
 
-    File.write(Rails.root.join("public", graph_file_name), dttp_location_graph.to_json)
+    File.write(Rails.public_path.join(graph_file_name), dttp_location_graph.to_json)
 
     File.write(Rails.root.join("missing-location-graph-from-dttp.json"), missing_from_dttp.to_json)
   end

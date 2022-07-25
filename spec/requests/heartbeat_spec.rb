@@ -115,7 +115,7 @@ describe "heartbeat requests" do
 
   describe "GET /sha" do
     it "returns the sha from the env var COMMIT_SHA" do
-      allow(ENV).to receive(:[]).with("COMMIT_SHA").and_return("deadbeef")
+      allow(ENV).to receive(:fetch).with("COMMIT_SHA", nil).and_return("deadbeef")
 
       get "/sha"
 

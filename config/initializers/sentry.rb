@@ -6,5 +6,5 @@ Sentry.init do |config|
     filter.filter(event.to_hash)
   end
 
-  config.release = ENV["COMMIT_SHA"]
+  config.release = ENV.fetch("COMMIT_SHA", nil)
 end
