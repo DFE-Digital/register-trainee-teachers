@@ -45,7 +45,12 @@ module DegreesHelper
 private
 
   def institution_data
-    DfE::ReferenceData::Degrees::INSTITUTIONS.all
+    DfE::ReferenceData::TweakedReferenceList.new(
+      DfE::ReferenceData::Degrees::INSTITUTIONS,
+      {
+        "96e9359f-dbad-4486-8de9-f05f3c7104c2" => { name: "Other", match_synonyms: [], suggestion_synonyms: [], abbreviation: nil },
+      },
+    ).all
   end
 
   def subject_data
