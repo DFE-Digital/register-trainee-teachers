@@ -112,6 +112,11 @@ gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/df
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.2.1"
 
+group :production do
+  # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
+  gem "cloudfront-rails"
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]

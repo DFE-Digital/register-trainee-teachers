@@ -131,6 +131,8 @@ GEM
     chartkick (4.1.3)
     childprocess (4.1.0)
     cliver (0.3.2)
+    cloudfront-rails (0.4.0)
+      railties (> 4.0)
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
     config (4.0.0)
@@ -635,6 +637,7 @@ DEPENDENCIES
   byebug
   canonical-rails
   capybara (~> 3.37)
+  cloudfront-rails
   config (~> 4.0)
   cuprite (~> 0.13)
   data_migrate
