@@ -284,24 +284,6 @@ module Trainees
           end
         end
 
-        context "and the trainee completed the course" do
-          let(:hesa_stub_attributes) do
-            {
-              end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION],
-            }
-          end
-
-          it "does not set the withdraw fields" do
-            expect(trainee.withdraw_date).to be_nil
-            expect(trainee.withdraw_reason).to be_nil
-          end
-
-          it "creates a awarded trainee with the relevant details" do
-            expect(trainee.state).to eq("awarded")
-          end
-        end
-
         context "and the reason for completion is 'Completion of course - result unknown'" do
           let(:hesa_modes) { Hesa::CodeSets::Modes::MAPPING.invert }
 
