@@ -50,16 +50,5 @@ module Trainees
 
       it { is_expected.to eq(:withdrawn) }
     end
-
-    context "awarded" do
-      let(:hesa_stub_attributes) do
-        {
-          end_date: date_today,
-          reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::SUCCESSFUL_COMPLETION],
-        }
-      end
-
-      it { is_expected.to eq(:awarded) }
-    end
   end
 end

@@ -14,8 +14,6 @@ module Trainees
       return :trn_received if trn_received?
       return :withdrawn if withdrawn?
       return :deferred if trainee_dormant?
-
-      :awarded if successful_completion_of_course?
     end
 
   private
