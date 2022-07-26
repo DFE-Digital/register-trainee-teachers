@@ -8,7 +8,8 @@ describe DegreesHelper do
   describe "#degree_type_options" do
     let(:degree_type) { "Bachelor of Arts" }
     let(:degree_abbreviation) { "BA" }
-    let(:degree_synonym) { "Bachelors" }
+    let(:match_synonym) { "Bachelors" }
+    let(:suggestion_synonym) { "Bachelor" }
 
     before do
       stub_const("DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS",
@@ -16,7 +17,8 @@ describe DegreesHelper do
                    SecureRandom.uuid => {
                      name: degree_type,
                      abbreviation: degree_abbreviation,
-                     synonyms: [degree_synonym],
+                     match_synonyms: [match_synonym],
+                     suggestion_synonyms: [suggestion_synonym],
                    },
                  }))
 
@@ -32,7 +34,7 @@ describe DegreesHelper do
           {
             "data-append" => "<strong>(#{degree_abbreviation})</strong>",
             "data-boost" => 1.5,
-            "data-synonyms" => "#{degree_synonym}|#{degree_abbreviation}",
+            "data-synonyms" => "#{match_synonym}|#{suggestion_synonym}|#{degree_abbreviation}",
           },
         ],
       ])
@@ -41,14 +43,16 @@ describe DegreesHelper do
 
   describe "#institutions_options" do
     let(:institution) { "University College London" }
-    let(:synonym) { "UCL" }
+    let(:suggestion_synonym) { "London College University" }
+    let(:match_synonym) { "UCL" }
 
     before do
       stub_const("DfE::ReferenceData::Degrees::INSTITUTIONS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: institution,
-                     synonyms: [synonym],
+                     suggestion_synonyms: [suggestion_synonym],
+                     match_synonyms: [match_synonym],
                    },
                  }))
     end
@@ -56,7 +60,7 @@ describe DegreesHelper do
     it "iterates over array and prints out correct institutions options" do
       expect(institutions_options).to match([
         [nil, nil, nil],
-        [institution, institution, { "data-synonyms" => synonym }],
+        [institution, institution, { "data-synonyms" => "#{match_synonym}|#{suggestion_synonym}" }],
         ["Other", "Other", { "data-synonyms" => "" }],
       ])
     end
@@ -64,14 +68,16 @@ describe DegreesHelper do
 
   describe "#subjects_options" do
     let(:degree_subject) { "Mathematics" }
-    let(:synonym) { "maths" }
+    let(:suggestion_synonym) { "Stats" }
+    let(:match_synonym) { "Maths" }
 
     before do
       stub_const("DfE::ReferenceData::Degrees::SINGLE_SUBJECTS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: degree_subject,
-                     synonyms: [synonym],
+                     match_synonyms: [match_synonym],
+                     suggestion_synonyms: [suggestion_synonym],
                    },
                  }))
     end
@@ -79,7 +85,7 @@ describe DegreesHelper do
     it "iterates over array and prints out correct subjects values" do
       expect(subjects_options).to match([
         [nil, nil, nil],
-        [degree_subject, degree_subject, { "data-synonyms" => synonym }],
+        [degree_subject, degree_subject, { "data-synonyms" => "#{match_synonym}|#{suggestion_synonym}" }],
       ])
     end
   end

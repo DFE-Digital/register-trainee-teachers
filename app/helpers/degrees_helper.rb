@@ -5,7 +5,7 @@ module DegreesHelper
 
   def degree_type_options
     to_enhanced_options(degree_type_data) do |ref_data|
-      synonyms = (ref_data[:synonyms] || []) << ref_data[:abbreviation]
+      synonyms = Array(ref_data[:match_synonyms]) + Array(ref_data[:suggestion_synonyms]) + Array(ref_data[:abbreviation])
       data = {
         "data-synonyms" => synonyms.join("|"),
         "data-append" => ref_data[:abbreviation] && tag.strong("(#{ref_data[:abbreviation]})"),
@@ -18,13 +18,17 @@ module DegreesHelper
 
   def institutions_options
     to_enhanced_options(institution_data) do |ref_data|
-      [ref_data[:name], ref_data[:name], { "data-synonyms" => (ref_data[:synonyms] || []).join("|") }]
+      [ref_data[:name],
+       ref_data[:name],
+       { "data-synonyms" => (Array(ref_data[:match_synonyms]) + Array(ref_data[:suggestion_synonyms])).join("|") }]
     end
   end
 
   def subjects_options
     to_enhanced_options(subject_data) do |ref_data|
-      [ref_data[:name], ref_data[:name], { "data-synonyms" => (ref_data[:synonyms] || []).join("|") }]
+      [ref_data[:name],
+       ref_data[:name],
+       { "data-synonyms" => (Array(ref_data[:match_synonyms]) + Array(ref_data[:suggestion_synonyms])).join("|") }]
     end
   end
 
