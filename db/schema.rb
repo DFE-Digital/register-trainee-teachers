@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_30_135252) do
+ActiveRecord::Schema.define(version: 2022_07_26_160157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -169,8 +169,8 @@ ActiveRecord::Schema.define(version: 2022_06_30_135252) do
     t.string "summary", null: false
     t.integer "level", null: false
     t.string "accredited_body_code", null: false
-    t.integer "min_age", null: false
-    t.integer "max_age", null: false
+    t.integer "min_age"
+    t.integer "max_age"
     t.integer "study_mode"
     t.uuid "uuid"
     t.integer "recruitment_cycle_year"

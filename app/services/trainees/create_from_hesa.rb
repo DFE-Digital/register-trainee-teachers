@@ -6,7 +6,6 @@ module Trainees
     include DiversityAttributes
 
     USERNAME = "HESA"
-    UPPER_BOUND_PRIMARY_AGE = 11
 
     TRN_REGEX = /^(\d{6,7})$/.freeze
 
@@ -201,7 +200,7 @@ module Trainees
     end
 
     def primary_education_phase?
-      course_max_age && course_max_age <= UPPER_BOUND_PRIMARY_AGE
+      course_max_age && course_max_age <= AgeRange::UPPER_BOUND_PRIMARY_AGE
     end
 
     def course_education_phase
