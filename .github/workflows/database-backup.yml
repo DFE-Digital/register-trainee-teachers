@@ -7,6 +7,10 @@ on:
         required: true
         type: boolean
         default: false
+      restoreToProductionDataEnv:
+        required: true
+        type: boolean
+        default: false
   schedule: # 03:00 UTC
     - cron: '0 3 * * *'
 
@@ -51,7 +55,7 @@ jobs:
     - name: Upload Backup to Azure Storage
       run: |
         az storage blob upload --container-name prod-db-backup \
-        --file ${BACKUP_FILE_NAME}.tar.gz --name ${BACKUP_FILE_NAME}.tar.gz \
+        --file ${BACKUP_FILE_NAME}.tar.gz --name ${BACKUP_FILE_NAME}.tar.gz --overwrite \
         --connection-string '${{ secrets.AZURE_PROD_DB_BACKUP_STORAGE_CONNECTION_STRING }}'
 
     - name: Sanitise the Database backup
@@ -63,8 +67,6 @@ jobs:
         echo "::group::Sanitise user data"
         psql -d ${DATABASE_NAME} -f db/scripts/sanitise.sql
         echo "::endgroup::"
-
-        rm ${{ env.BACKUP_FILE_NAME }}.sql
 
         echo "::group::Backup Sanitised Database"
         pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f backup_sanitised.sql
@@ -82,3 +84,9 @@ jobs:
         name: backup_sanitised
         path: backup_sanitised.sql
         retention-days: 3
+
+    - name: Restore backup to productiondata
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
+      run: |
+        cf conduit register-postgres-productiondata -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
+        rm ${BACKUP_FILE_NAME}.sql

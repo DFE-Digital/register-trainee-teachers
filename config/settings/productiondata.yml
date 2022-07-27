@@ -1,5 +1,5 @@
 # The url for this app, also used by `dfe_sign_in`
-base_url: https://register-dttpimport.london.cloudapps.digital
+base_url: https://register-productiondata.london.cloudapps.digital
 
 dttp:
   scope: https://dttp.crm4.dynamics.com/.default
@@ -34,7 +34,7 @@ features:
     sync_collection: true
 
 environment:
-  name: dttpimport
+  name: productiondata
 
 apply_applications:
   import:
