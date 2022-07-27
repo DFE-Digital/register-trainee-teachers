@@ -39,6 +39,7 @@ module Trainees
         ethnic_background: candidate_info["ethnic_background"],
         diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
         email: contact_details["email"],
+        course_education_phase: course.level,
         training_route: course.route,
         course_uuid: course.uuid,
         course_min_age: course.min_age,
@@ -123,6 +124,10 @@ module Trainees
     it "does not capture to sentry" do
       expect(Sentry).not_to receive(:capture_message)
       create_trainee_from_apply
+    end
+
+    context "course education phase" do
+      it { is_expected.to have_attributes(course_education_phase: COURSE_EDUCATION_PHASE_ENUMS[:primary]) }
     end
 
     context "disabilities" do
