@@ -77,7 +77,7 @@ module ApiStubs
         hesa_degsbj: nil,
         hesa_degclss: "01",
         hesa_degest: nil,
-        hesa_degctry: nil,
+        hesa_degctry: "XK",
         hesa_degstdt: "-01-01",
         hesa_degenddt: "2020-01-01",
       }.merge(degree_attributes)

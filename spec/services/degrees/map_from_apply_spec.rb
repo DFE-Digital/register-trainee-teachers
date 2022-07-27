@@ -98,6 +98,22 @@ module Degrees
                                      other_grade: unrecognised_grade)
         end
       end
+
+      context "degree country, comparable_uk_degree and non_uk_qualification_type are nil" do
+        let(:uk_degree) { "Bachelor of Arts" }
+
+        let(:application_data) do
+          ApiStubs::ApplyApi.application(degree_attributes: {
+            hesa_degctry: nil,
+            comparable_uk_degree: nil,
+            non_uk_qualification_type: nil,
+          })
+        end
+
+        it "sets degree to uk" do
+          expect(subject).to include(uk_degree: uk_degree)
+        end
+      end
     end
 
     context "with a non-uk degree" do
@@ -114,6 +130,26 @@ module Degrees
       end
 
       it { is_expected.to include(expected_non_uk_degree_attributes) }
+
+      context "degree country is nil but comparable_uk_degree exists" do
+        let(:application_data) do
+          ApiStubs::ApplyApi.non_uk_application(degree_attributes: {
+            hesa_degctry: nil,
+            non_uk_qualification_type: nil,
+          }).to_json
+        end
+
+        let(:expected_non_uk_degree_attributes) do
+          {
+            locale_code: Trainee.locale_codes[:non_uk],
+            non_uk_degree: degree_attributes["comparable_uk_degree"],
+          }
+        end
+
+        it "sets correct locale_code and non_uk_degree" do
+          expect(subject).to include(expected_non_uk_degree_attributes)
+        end
+      end
     end
   end
 end
