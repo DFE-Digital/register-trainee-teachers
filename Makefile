@@ -67,9 +67,9 @@ production:
 	$(eval paas_env=production)
 	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
 
-dttpimport:
+productiondata:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
-	$(eval DEPLOY_ENV=dttpimport)
+	$(eval DEPLOY_ENV=productiondata)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
 sandbox:

@@ -280,7 +280,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [sandbox,dttpimport]
+        environment: [sandbox,productiondata]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
