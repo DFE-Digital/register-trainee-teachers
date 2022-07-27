@@ -5,6 +5,8 @@ module Degrees
     include ServicePattern
     include MappingsHelper
 
+    UK_DEGREE_CODES = %w[UK XK].freeze
+
     def initialize(attributes:)
       @attributes = attributes
     end
@@ -85,7 +87,11 @@ module Degrees
     end
 
     def uk_degree?
-      attributes["non_uk_qualification_type"].nil?
+      if attributes["hesa_degctry"]
+        UK_DEGREE_CODES.include?(attributes["hesa_degctry"])
+      else
+        attributes["comparable_uk_degree"].nil? && attributes["non_uk_qualification_type"].nil?
+      end
     end
 
     def find_dfe_reference_subject
