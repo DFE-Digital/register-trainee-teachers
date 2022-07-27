@@ -90,7 +90,7 @@ private
   end
 
   def and_i_choose_a_different_year
-    course_years_page.choose("#{itt_start_date.year} to #{itt_end_date.year} (current year)")
+    course_years_page.choose("#{itt_start_date.year} to #{itt_end_date.year}")
     course_years_page.continue.click
   end
 
