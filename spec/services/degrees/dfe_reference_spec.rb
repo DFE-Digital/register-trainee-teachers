@@ -5,7 +5,9 @@ require "rails_helper"
 module Degrees
   describe DfeReference do
     describe ".find_subject" do
-      let(:degree_subject) { DfE::ReferenceData::Degrees::SUBJECTS.all.sample }
+      let(:degree_subject) do
+        DfE::ReferenceData::Degrees::SUBJECTS.all.find { |item| item[:hecos_code].present? }
+      end
 
       it "can find the subject by UUID" do
         expect(described_class.find_subject(uuid: degree_subject.id)).to eq(degree_subject)
@@ -41,7 +43,9 @@ module Degrees
     end
 
     describe ".find_institution" do
-      let(:degree_institution) { DfE::ReferenceData::Degrees::INSTITUTIONS.all.sample }
+      let(:degree_institution) do
+        DfE::ReferenceData::Degrees::INSTITUTIONS.all.find { |item| item[:hesa_itt_code].present? }
+      end
 
       it "can find the institution by UUID" do
         expect(described_class.find_institution(uuid: degree_institution.id)).to eq(degree_institution)
@@ -57,7 +61,9 @@ module Degrees
     end
 
     describe ".find_grade" do
-      let(:degree_grade) { DfE::ReferenceData::Degrees::GRADES.all.sample }
+      let(:degree_grade) do
+        DfE::ReferenceData::Degrees::GRADES.all.find { |item| item[:hesa_code].present? }
+      end
 
       it "can find the grade by UUID" do
         expect(described_class.find_grade(uuid: degree_grade.id)).to eq(degree_grade)
