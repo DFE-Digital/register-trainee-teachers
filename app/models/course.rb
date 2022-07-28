@@ -5,8 +5,6 @@ class Course < ApplicationRecord
   validates :name, presence: true
   validates :published_start_date, presence: true
   validates :level, presence: true
-  validates :min_age, presence: true
-  validates :max_age, presence: true
   validates :duration_in_years, presence: true
   validates :qualification, presence: true
   validates :route, presence: true

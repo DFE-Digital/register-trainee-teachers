@@ -65,16 +65,16 @@ module TeacherTrainingApi
           end
         end
 
-        context "course has a further_education level" do
-          let(:course_attributes) { { level: "further_education" } }
+        context "course level is primary but max age is greater than 11" do
+          let(:course_attributes) { { level: "primary", max_age: 16 } }
 
-          it "doesn't get imported" do
-            expect { subject }.not_to(change { Course.count })
+          it "doesn't set the age range (provider will have to do it manually to ensure correct values)" do
+            expect(subject).to have_attributes(min_age: nil, max_age: nil)
           end
         end
 
-        context "course has an invalid age range" do
-          let(:course_attributes) { { age_minimum: nil } }
+        context "course has a further_education level" do
+          let(:course_attributes) { { level: "further_education" } }
 
           it "doesn't get imported" do
             expect { subject }.not_to(change { Course.count })

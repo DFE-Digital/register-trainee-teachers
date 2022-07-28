@@ -21,16 +21,14 @@ module TeacherTrainingApi
 
     def call
       return unless IMPORTABLE_STATES.include?(course_attributes[:state])
-      return if further_education_level_course? || invalid_age_range?
+      return if further_education_level_course?
 
-      course.update!(
+      course.update!({
         name: course_attributes[:name],
         code: course_attributes[:code],
         published_start_date: published_start_date,
         level: course_attributes[:level],
         qualification: qualification,
-        min_age: course_attributes[:age_minimum],
-        max_age: course_attributes[:age_maximum],
         duration_in_years: duration_in_years,
         course_length: course_attributes[:course_length],
         subjects: subjects,
@@ -39,19 +37,27 @@ module TeacherTrainingApi
         study_mode: course_attributes[:study_mode],
         accredited_body_code: accredited_body_code,
         recruitment_cycle_year: Settings.current_recruitment_cycle_year,
-      )
+      }.merge(course_age_attributes))
+
+      course
     end
 
   private
 
     attr_reader :course_data, :provider_data, :course_attributes
 
-    def further_education_level_course?
-      course_attributes[:level] == "further_education"
+    def course_age_attributes
+      return {} if primary_level_course? && course_attributes[:age_maximum].to_i > AgeRange::UPPER_BOUND_PRIMARY_AGE
+
+      { min_age: course_attributes[:age_minimum], max_age: course_attributes[:age_maximum] }
     end
 
-    def invalid_age_range?
-      course_attributes.values_at(:age_minimum, :age_maximum).include?(nil)
+    def primary_level_course?
+      course_attributes[:level] == "primary"
+    end
+
+    def further_education_level_course?
+      course_attributes[:level] == "further_education"
     end
 
     def subjects

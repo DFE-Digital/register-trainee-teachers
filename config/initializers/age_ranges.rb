@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module AgeRange
+  UPPER_BOUND_PRIMARY_AGE = 11
+
   THREE_TO_ELEVEN = [3, 11].freeze
   FIVE_TO_ELEVEN = [5, 11].freeze
   ELEVEN_TO_SIXTEEN = [11, 16].freeze

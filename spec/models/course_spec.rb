@@ -40,8 +40,6 @@ describe Course do
       expect(subject).to validate_presence_of(:name)
       expect(subject).to validate_presence_of(:published_start_date)
       expect(subject).to validate_presence_of(:level)
-      expect(subject).to validate_presence_of(:min_age)
-      expect(subject).to validate_presence_of(:max_age)
       expect(subject).to validate_presence_of(:duration_in_years)
       expect(subject).to validate_presence_of(:qualification)
       expect(subject).to validate_presence_of(:route)
