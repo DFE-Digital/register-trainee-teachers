@@ -6,4 +6,4 @@ require "rspec/core"
 require "config"
 require "httparty"
 
-Config.load_and_set_settings(Config.setting_files("config", ENV["RAILS_ENV"]))
+Config.load_and_set_settings(Config.setting_files("config", ENV.fetch("RAILS_ENV", nil)))
