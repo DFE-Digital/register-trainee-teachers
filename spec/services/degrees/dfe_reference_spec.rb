@@ -21,13 +21,17 @@ module Degrees
     end
 
     describe ".find_type" do
-      let(:degree_type) { DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.all.sample }
+      let(:degree_type) do
+        DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.all.find do |item|
+          item[:hesa_itt_code].present? && item[:abbreviation].present?
+        end
+      end
 
       it "can find the type by UUID" do
         expect(described_class.find_type(uuid: degree_type.id)).to eq(degree_type)
       end
 
-      it "can find the type by name" do
+      it "can find the type by abbreviation" do
         expect(described_class.find_type(abbreviation: degree_type.abbreviation)).to eq(degree_type)
       end
 
