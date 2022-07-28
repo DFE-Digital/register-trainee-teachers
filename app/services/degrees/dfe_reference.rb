@@ -25,10 +25,32 @@ module Degrees
       end
 
       def find_item(list_type, filters)
-        DfE::ReferenceData::Degrees.const_get(list_type.to_s.upcase).all.find do |record|
-          filters.compact.any? do |field, value|
-            same_string?(record[field], value)
-          end
+        ref_dataset = DfE::ReferenceData::Degrees.const_get(list_type.to_s.upcase)
+
+        hesa_filter = {
+          hesa_itt_code: filters[:hesa_itt_code],
+          hesa_code: filters[:hesa_code],
+          hecos_code: filters[:hecos_code],
+        }.compact
+
+        return ref_dataset.one(filters[:id]) if filters[:id].present?
+
+        return ref_dataset.some(hesa_filter).first if hesa_filter.any?
+
+        ref_dataset.all.find do |record|
+          match_degree_strings(filters, record)
+        end
+      end
+
+    private
+
+      def match_values(item)
+        [item[:name], item[:match_synonyms], item[:abbreviation]].flatten.compact.map(&:downcase).map(&:strip)
+      end
+
+      def match_degree_strings(filters, item)
+        filters.compact.any? do |_field, value|
+          match_values(item).include?(value.downcase.strip)
         end
       end
     end
