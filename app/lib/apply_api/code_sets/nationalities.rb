@@ -176,7 +176,7 @@ module ApplyApi
         "prydeinig" => "GB",
         "puerto rican" => "PR",
         "qatari" => "QA",
-        "romanian" => "RP",
+        "romanian" => "RO",
         "russian" => "RU",
         "rwandan" => "RW",
         "salvadorean" => "SV",
