@@ -51,6 +51,7 @@ runs:
         echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "paas_space_name=$(jq -r '.paas_space_name' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "paas_worker_app_instances=$(jq -r '.paas_worker_app_instances' ${tf_vars_file})" >> $GITHUB_ENV
 
     - uses: azure/login@v1
       with:
@@ -93,6 +94,7 @@ runs:
         CF_USERNAME:   ${{ steps.get-secrets.outputs.CF_USER }}
         CF_PASSWORD:   ${{ steps.get-secrets.outputs.CF_PASSWORD }}
         CF_SPACE_NAME: ${{ env.paas_space_name }}
+        INSTALL_CONDUIT: true
 
     - name: Run data migrations
       shell: bash
@@ -103,6 +105,14 @@ runs:
       shell: bash
       if: inputs.environment == 'review'
       run: cf run-task "register-${APP_NAME}" --command "cd /app && bundle exec rails db:seed example_data:generate" --wait
+
+    - name: Delete redis queues for productiondata
+      shell: bash
+      if: ${{ inputs.environment == 'productiondata' && env.paas_worker_app_instances == 0 }}
+      run: |
+        sudo apt-get install -y redis-tools redis-server
+        redis-cli --version
+        cf conduit register-redis-worker-productiondata -- redis-cli del queues
 
     - name: Run Smoke Tests for ${{ inputs.environment }}
       uses: ./.github/actions/smoke-test/
