@@ -516,11 +516,16 @@ module Trainees
       context "when trainee already exists" do
         before { create(:trainee, dttp_id: dttp_trainee.dttp_id) }
 
+        it "application is not imported" do
+          expect {
+            create_trainee_from_dttp
+          }.not_to change(Trainee, :count)
+        end
+
         it "marks the application as a duplicate" do
           expect {
             create_trainee_from_dttp
-          }.to change(Trainee, :count).by(0)
-          .and change(dttp_trainee, :state).to("non_importable_duplicate")
+          }.to change(dttp_trainee, :state).to("non_importable_duplicate")
         end
       end
     end
@@ -528,11 +533,16 @@ module Trainees
     context "when training route is missing" do
       let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_routeid_value: nil) }
 
+      it "application is not imported" do
+        expect {
+          create_trainee_from_dttp
+        }.not_to change(Trainee, :count)
+      end
+
       it "marks the application as non importable" do
         expect {
           create_trainee_from_dttp
-        }.to change(Trainee, :count).by(0)
-        .and change(dttp_trainee, :state).to("non_importable_missing_route")
+        }.to change(dttp_trainee, :state).to("non_importable_missing_route")
       end
     end
 
@@ -554,11 +564,16 @@ module Trainees
       let(:placement_assignment_two) { create(:dttp_placement_assignment, :with_academic_year_twenty_one_twenty_two) }
       let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment_one, placement_assignment_two], provider: provider) }
 
+      it "application is not imported" do
+        expect {
+          create_trainee_from_dttp
+        }.not_to change(Trainee, :count)
+      end
+
       it "marks the application as non importable" do
         expect {
           create_trainee_from_dttp
-        }.to change(Trainee, :count).by(0)
-        .and change(dttp_trainee, :state).to("non_importable_multi_provider")
+        }.to change(dttp_trainee, :state).to("non_importable_multi_provider")
       end
     end
 
@@ -611,11 +626,16 @@ module Trainees
     context "when training_initiative is not mapped" do
       let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_initiative1id_value: SecureRandom.uuid) }
 
+      it "application is not imported" do
+        expect {
+          create_trainee_from_dttp
+        }.not_to change(Trainee, :count)
+      end
+
       it "marks the application as non importable" do
         expect {
           create_trainee_from_dttp
-        }.to change(Trainee, :count).by(0)
-        .and change(dttp_trainee, :state).to("non_importable_missing_initiative")
+        }.to change(dttp_trainee, :state).to("non_importable_missing_initiative")
       end
     end
 

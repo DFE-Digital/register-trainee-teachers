@@ -32,7 +32,7 @@ describe "heartbeat requests" do
       it "returns HTTP success" do
         get "/healthcheck"
 
-        expect(response.status).to eq(200)
+        expect(response).to have_http_status :ok
       end
 
       it "returns JSON" do
@@ -59,7 +59,7 @@ describe "heartbeat requests" do
       it("returns 503") do
         get "/healthcheck"
 
-        expect(response.status).to eq 503
+        expect(response).to have_http_status :service_unavailable
       end
 
       it "sets the sidekiq queue to false" do
@@ -79,7 +79,7 @@ describe "heartbeat requests" do
       it("returns 503") do
         get "/healthcheck"
 
-        expect(response.status).to eq 503
+        expect(response).to have_http_status :service_unavailable
       end
 
       it "sets the sidekiq queue to false" do
@@ -100,7 +100,7 @@ describe "heartbeat requests" do
       it("returns 503") do
         get "/healthcheck"
 
-        expect(response.status).to eq 503
+        expect(response).to have_http_status :service_unavailable
       end
 
       it "sets the sidekiq queue to false" do
