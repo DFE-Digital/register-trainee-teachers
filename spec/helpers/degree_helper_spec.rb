@@ -12,7 +12,7 @@ describe DegreesHelper do
     let(:suggestion_synonym) { "Bachelor" }
 
     before do
-      stub_const("DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS",
+      stub_const("Degrees::DfeReference::TYPES",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: degree_type,
@@ -21,8 +21,7 @@ describe DegreesHelper do
                      suggestion_synonyms: [suggestion_synonym],
                    },
                  }))
-
-      stub_const("Dttp::CodeSets::DegreeTypes::COMMON", [degree_type])
+      stub_const("Degrees::DfeReference::COMMON_TYPES", [degree_type])
     end
 
     it "iterates over array and prints out correct degree options" do
@@ -47,7 +46,7 @@ describe DegreesHelper do
     let(:match_synonym) { "UCL" }
 
     before do
-      stub_const("DfE::ReferenceData::Degrees::INSTITUTIONS",
+      stub_const("Degrees::DfeReference::INSTITUTIONS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: institution,
@@ -61,7 +60,6 @@ describe DegreesHelper do
       expect(institutions_options).to match([
         [nil, nil, nil],
         [institution, institution, { "data-synonyms" => "#{match_synonym}|#{suggestion_synonym}" }],
-        ["Other", "Other", { "data-synonyms" => "" }],
       ])
     end
   end
@@ -72,7 +70,7 @@ describe DegreesHelper do
     let(:match_synonym) { "Maths" }
 
     before do
-      stub_const("DfE::ReferenceData::Degrees::SINGLE_SUBJECTS",
+      stub_const("Degrees::DfeReference::SUBJECTS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: degree_subject,
@@ -92,7 +90,7 @@ describe DegreesHelper do
 
   describe "#countries_options" do
     before do
-      allow(self).to receive(:countries).and_return(%w[country])
+      stub_const("Dttp::CodeSets::Countries::MAPPING", { "country" => { country_code: "C" } })
     end
 
     it "iterates over array and prints out correct countries values" do

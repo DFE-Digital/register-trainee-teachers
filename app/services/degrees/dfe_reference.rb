@@ -2,6 +2,45 @@
 
 module Degrees
   class DfeReference
+    OTHER = "Other"
+
+    COMMON_TYPES = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
+
+    SUPPORTED_GRADES_BY_HESA_CODES = %w[1 2 3 5 14].freeze
+
+    SUPPORTED_GRADES = DfE::ReferenceData::Degrees::GRADES.all_as_hash.select { |_, item|
+      SUPPORTED_GRADES_BY_HESA_CODES.include?(item[:hesa_code])
+    }
+
+    GRADES = DfE::ReferenceData::HardcodedReferenceList.new(
+      SUPPORTED_GRADES.merge(
+        {
+          "4182ef37-df1c-4f1e-9be6-feb66037f775" => {
+            name: OTHER,
+            match_synonyms: [],
+            suggestion_synonyms: [],
+          },
+        },
+      ),
+    )
+
+    INSTITUTIONS = DfE::ReferenceData::TweakedReferenceList.new(
+      DfE::ReferenceData::Degrees::INSTITUTIONS,
+      DfE::ReferenceData::Record.new(
+        {
+          "96e9359f-dbad-4486-8de9-f05f3c7104c2" => {
+            name: OTHER,
+            match_synonyms: [],
+            suggestion_synonyms: [],
+            abbreviation: nil,
+          },
+        },
+      ),
+    )
+
+    SUBJECTS = DfE::ReferenceData::Degrees::SINGLE_SUBJECTS
+    TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS
+
     class << self
       include MappingsHelper
 
@@ -9,9 +48,10 @@ module Degrees
         find_item(:single_subjects, id: uuid, hecos_code: sanitised_hesa(hecos_code), name: name)
       end
 
-      def find_type(uuid: nil, abbreviation: nil, hesa_code: nil)
+      def find_type(uuid: nil, name: nil, abbreviation: nil, hesa_code: nil)
         find_item(:types_including_generics,
                   id: uuid,
+                  name: name,
                   hesa_itt_code: sanitised_hesa(hesa_code),
                   abbreviation: abbreviation)
       end

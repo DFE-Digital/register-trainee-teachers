@@ -29,11 +29,12 @@ class DegreeForm
 
   validates :subject, :institution, autocomplete: true, allow_nil: true
   validates :country, autocomplete: true, allow_nil: true
-  validate :validate_with_degree_model
 
-  validates :institution, inclusion: { in: Degree::INSTITUTIONS }, allow_nil: true
-  validates :subject, inclusion: { in: Degree::SUBJECTS }, allow_nil: true
-  validates :uk_degree, inclusion: { in: Degree::TYPES }, allow_nil: true
+  validates :institution, inclusion: { in: Degrees::DfeReference::INSTITUTIONS.all.map(&:name) }, allow_nil: true
+  validates :subject, inclusion: { in: Degrees::DfeReference::SUBJECTS.all.map(&:name) }, allow_nil: true
+  validates :uk_degree, inclusion: { in: Degrees::DfeReference::TYPES.all.map(&:name) }, allow_nil: true
+
+  validate :validate_with_degree_model
 
   delegate :uk?, :non_uk?, :non_uk_degree_non_enic?, :persisted?, to: :degree
 
@@ -87,7 +88,7 @@ class DegreeForm
   def save!
     return false unless valid?
 
-    degree.attributes = fields
+    degree.attributes = fields.merge(uuids_fields)
     degree.save!(context: locale_code.to_sym)
     degrees_form.delete_degree_on_store(slug)
     true
@@ -131,5 +132,14 @@ private
   def clear_relevant_invalid_apply_data
     degrees_form.trainee.apply_application.invalid_data.tap { |invalid_data| invalid_data["degrees"].delete(slug) }
     degrees_form.trainee.apply_application.save!
+  end
+
+  def uuids_fields
+    {
+      subject_uuid: Degrees::DfeReference.find_subject(name: subject)&.id,
+      institution_uuid: Degrees::DfeReference.find_institution(name: institution)&.id,
+      uk_degree_uuid: Degrees::DfeReference.find_type(name: uk_degree)&.id,
+      grade_uuid: Degrees::DfeReference.find_grade(name: grade)&.id,
+    }
   end
 end

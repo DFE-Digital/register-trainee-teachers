@@ -31,7 +31,7 @@ describe DegreeForm, type: :model do
   end
 
   describe "#initialize" do
-    subject { DegreeForm.new(degrees_form: degrees_form, degree: Degree.new(subject: "Test")) }
+    let(:degree) { Degree.new(subject: "Test") }
 
     it "initialize with degree params" do
       expect(subject.subject).to eql("Test")
@@ -39,7 +39,7 @@ describe DegreeForm, type: :model do
   end
 
   describe "#fields" do
-    subject { DegreeForm.new(degrees_form: degrees_form, degree: Degree.new(subject: "Test")) }
+    let(:degree) { Degree.new(subject: "Test") }
 
     it "return fields from initialize" do
       fields = subject.fields
@@ -56,7 +56,7 @@ describe DegreeForm, type: :model do
   end
 
   describe "#attributes" do
-    subject { DegreeForm.new(degrees_form: degrees_form, degree: Degree.new) }
+    let(:degree) { Degree.new }
 
     it "return all attributes" do
       subject.attributes = {
@@ -94,7 +94,7 @@ describe DegreeForm, type: :model do
         allow(subject).to receive(:save!).and_return(true)
       end
 
-      it "save!s" do
+      it "save!" do
         expect(subject.save_or_stash).to be_truthy
       end
     end
@@ -115,13 +115,43 @@ describe DegreeForm, type: :model do
       let(:degree) { trainee.degrees.first }
 
       before do
-        degree.institution = Degree::INSTITUTIONS.sample
+        degree.institution = Degrees::DfeReference::INSTITUTIONS.all.sample.name
       end
 
       it "deletes the invalid degree" do
         expect { subject.save_or_stash }.to change {
           trainee.apply_application.degrees_invalid_data.length
         }.from(1).to(0)
+      end
+    end
+
+    context "UUID attributes" do
+      let(:dfe_institution) { Degrees::DfeReference::INSTITUTIONS.all.sample }
+      let(:dfe_subject) { Degrees::DfeReference::SUBJECTS.all.sample }
+      let(:dfe_type) { Degrees::DfeReference::TYPES.all.sample }
+      let(:dfe_grade) { Degrees::DfeReference::GRADES.all.sample }
+
+      let(:degree) do
+        build(:degree,
+              :uk_degree_with_details,
+              trainee: trainee,
+              institution: dfe_institution.name,
+              institution_uuid: nil,
+              subject: dfe_subject.name,
+              subject_uuid: nil,
+              uk_degree: dfe_type.name,
+              uk_degree_uuid: nil,
+              grade: dfe_grade.name,
+              grade_uuid: nil)
+      end
+
+      before { subject.save! }
+
+      it "saves the UUID for each degree attribute" do
+        expect(degree.institution_uuid).to eq(dfe_institution.id)
+        expect(degree.subject_uuid).to eq(dfe_subject.id)
+        expect(degree.uk_degree_uuid).to eq(dfe_type.id)
+        expect(degree.grade_uuid).to eq(dfe_grade.id)
       end
     end
   end
