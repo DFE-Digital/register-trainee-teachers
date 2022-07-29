@@ -3,7 +3,6 @@
 module Degrees
   class MapFromApply
     include ServicePattern
-    include MappingsHelper
 
     UK_DEGREE_CODES = %w[UK XK].freeze
 

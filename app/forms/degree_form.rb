@@ -88,7 +88,7 @@ class DegreeForm
   def save!
     return false unless valid?
 
-    degree.attributes = fields.merge(uuids_fields)
+    degree.attributes = fields.merge(uuids)
     degree.save!(context: locale_code.to_sym)
     degrees_form.delete_degree_on_store(slug)
     true
@@ -134,7 +134,7 @@ private
     degrees_form.trainee.apply_application.save!
   end
 
-  def uuids_fields
+  def uuids
     {
       subject_uuid: Degrees::DfeReference.find_subject(name: subject)&.id,
       institution_uuid: Degrees::DfeReference.find_institution(name: institution)&.id,
