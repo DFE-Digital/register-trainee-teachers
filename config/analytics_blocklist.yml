@@ -33,7 +33,6 @@
   - additional_ethnic_background
   - additional_withdraw_reason
   - additional_dttp_data
-  - hesa_updated_at
   :allocation_subjects:
   - dttp_id
   - deprecated_on
@@ -249,5 +248,18 @@
   - user_id
   - form_object
   - details
+  - created_at
+  - updated_at
+  :sessions:
+  - id
+  - session_id
+  - data
+  - created_at
+  - updated_at
+  :schema_migrations:
+  - version
+  :ar_internal_metadata:
+  - key
+  - value
   - created_at
   - updated_at
