@@ -258,3 +258,8 @@
   - updated_at
   :schema_migrations:
   - version
+  :ar_internal_metadata:
+  - key
+  - value
+  - created_at
+  - updated_at
