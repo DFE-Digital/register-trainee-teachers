@@ -33,7 +33,6 @@
   - additional_ethnic_background
   - additional_withdraw_reason
   - additional_dttp_data
-  - hesa_updated_at
   :allocation_subjects:
   - dttp_id
   - deprecated_on
