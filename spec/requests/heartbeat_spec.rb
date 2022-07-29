@@ -32,7 +32,7 @@ describe "heartbeat requests" do
       it "returns HTTP success" do
         get "/healthcheck"
 
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status :ok
       end
 
       it "returns JSON" do
