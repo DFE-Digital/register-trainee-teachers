@@ -2,7 +2,7 @@
 base_url: https://www.register-trainee-teachers.service.gov.uk
 
 # The url for the google doc feedback link (live version)
-feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSd6s98QtFceURRhUAguIXutWsJtZRSYehE2o68LvAbchSldiw/viewform"
+feedback_link_url: https://docs.google.com/forms/d/e/1FAIpQLSd6s98QtFceURRhUAguIXutWsJtZRSYehE2o68LvAbchSldiw/viewform
 
 dttp:
   scope: https://dttp.crm4.dynamics.com/.default
@@ -14,6 +14,9 @@ dfe_sign_in:
   issuer: https://oidc.signin.education.gov.uk
   # URL of the users profile
   profile: https://profile.signin.education.gov.uk
+
+dqt:
+  base_url: https://teacher-qualifications-api.education.gov.uk/
 
 features:
   basic_auth: false
