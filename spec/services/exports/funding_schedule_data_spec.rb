@@ -68,7 +68,7 @@ module Exports
       end
 
       it "sets the correct filename" do
-        expect(exporter.filename).to eq("#{payment_schedule.payable.name.downcase.gsub(' ', '-')}-payment_schedule-2021-to-2022.csv")
+        expect(exporter.filename).to eq("#{payment_schedule.payable.name.downcase.gsub(' ', '-')}-payment_schedule-#{academic_cycle.label.parameterize}.csv")
       end
     end
 

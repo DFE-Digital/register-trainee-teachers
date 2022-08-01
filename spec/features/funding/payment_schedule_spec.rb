@@ -55,7 +55,7 @@ private
 
   def then_i_see_my_exported_data_in_csv_format
     expect(csv_data).to include("Month,#{Funding::PaymentScheduleRow.first.description},Month total")
-    expect(csv_data).to include("March 2022,£6.00,£6.00")
+    expect(csv_data).to include("March #{current_academic_year + 1},£6.00,£6.00")
     expect(csv_data).to include("Total,£9.00,£9.00")
   end
 

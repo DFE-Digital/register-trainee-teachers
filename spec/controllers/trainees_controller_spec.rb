@@ -50,10 +50,8 @@ describe TraineesController do
 
     describe "csv export" do
       context "with a provider user" do
-        let(:trainee) { create(:trainee, :submitted_for_trn, provider: user.organisation) }
-
         before do
-          trainee
+          create(:trainee, :submitted_for_trn, provider: user.organisation)
           get(:index, format: "csv")
         end
 

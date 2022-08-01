@@ -6,16 +6,15 @@ describe FundingManager do
   let(:course_subject_one) { nil }
   let(:bursary_tier) { nil }
   let(:training_route) { :early_years_postgrad }
+  let(:funding_manager) { described_class.new(trainee) }
   let(:trainee) do
     create(:trainee,
-           :with_start_date,
            :with_study_mode_and_course_dates,
            :with_course_allocation_subject,
            course_subject_one: course_subject_one,
            training_route: training_route,
            bursary_tier: bursary_tier)
   end
-  let(:funding_manager) { described_class.new(trainee) }
 
   before do
     create(:academic_cycle, :current)
@@ -223,18 +222,17 @@ describe FundingManager do
 
         context "with trainee course subject one" do
           let(:course_subject_one) { subject_specialism.name }
-
           let(:subject_specialism) { create(:subject_specialism) }
           let(:amount) { 24_000 }
           let(:funding_method) { create(:funding_method, training_route: training_route, amount: amount) }
 
           before do
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
+            create(:funding_method_subject,
+                   funding_method: funding_method,
+                   allocation_subject: subject_specialism.allocation_subject)
           end
 
-          it "returns true" do
-            expect(subject).to be_truthy
-          end
+          it { is_expected.to be_truthy }
         end
       end
     end

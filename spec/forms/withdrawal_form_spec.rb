@@ -73,7 +73,6 @@ describe WithdrawalForm, type: :model do
       it "hydrates the date values from the deferral date" do
         expect(subject.fields).to match(
           a_hash_including(
-            date_string: "other",
             day: trainee.defer_date.day,
             month: trainee.defer_date.month,
             year: trainee.defer_date.year,

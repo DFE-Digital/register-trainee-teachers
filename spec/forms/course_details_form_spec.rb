@@ -260,9 +260,9 @@ describe CourseDetailsForm, type: :model do
             end
           end
 
-          context "the start date fields are 01/08/2021" do
+          context "the start date fields are 01/08/#{current_academic_year}" do
             let(:start_date_attributes) do
-              { start_day: "01", start_month: "08", start_year: "2021" }
+              { start_day: "01", start_month: "08", start_year: current_academic_year }
             end
 
             let(:academic_cycle) { build(:academic_cycle) }

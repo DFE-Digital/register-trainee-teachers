@@ -3,9 +3,7 @@
 require "rails_helper"
 
 describe AcademicYearFilterOptions do
-  let(:current_year_string) do
-    "#{academic_cycle.label} (current year)"
-  end
+  let(:current_year_string) { "#{academic_cycle.label} (current year)" }
 
   let(:current_user) do
     double(lead_school?: false, provider?: true, organisation: trainee.provider, system_admin?: false)

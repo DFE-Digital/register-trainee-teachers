@@ -6,8 +6,10 @@ FactoryBot.define do
     contact_dttp_id { SecureRandom.uuid }
     provider_dttp_id { SecureRandom.uuid }
     academic_year { Dttp::Trainee::ACADEMIC_YEAR_ENTITY_IDS.sample }
-    programme_start_date { Faker::Date.in_date_period(month: 9) }
-    programme_end_date { Faker::Date.in_date_period(month: 8, year: Faker::Date.in_date_period.year + 1) }
+    programme_start_date { Faker::Date.in_date_period(month: ACADEMIC_CYCLE_START_MONTH) }
+    programme_end_date do
+      Faker::Date.in_date_period(month: ACADEMIC_CYCLE_END_MONTH, year: Faker::Date.in_date_period.year + 1)
+    end
     trainee_status { SecureRandom.uuid }
     response {
       create(

@@ -11,11 +11,6 @@ module Trainees
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
 
-    before do
-      create(:academic_cycle, cycle_year: 2019)
-      create(:academic_cycle, cycle_year: 2020)
-    end
-
     it { is_expected.to match_array(trainees) }
 
     context "empty trainee exists" do
@@ -151,12 +146,12 @@ module Trainees
     end
 
     context "start and end year filters" do
-      let(:current_year) { Time.zone.now.year }
+      let!(:trainee) { create(:trainee, start_academic_cycle: academic_cycle) }
+      let(:year_filter) { "#{current_academic_year} to #{current_academic_year + 1}" }
       let(:academic_cycle) { create(:academic_cycle, :current) }
 
       context "with start_year filter" do
-        let!(:trainee) { create(:trainee, start_academic_cycle: academic_cycle) }
-        let(:filters) { { start_year: "#{current_year - 1} to #{current_year}" } }
+        let(:filters) { { start_year: year_filter } }
 
         context "trainee starting in that year" do
           it "returns the trainee" do
@@ -187,7 +182,7 @@ module Trainees
 
       context "with end_year filter" do
         let!(:trainee) { create(:trainee, end_academic_cycle: academic_cycle) }
-        let(:filters) { { end_year: "#{current_year - 1} to #{current_year}" } }
+        let(:filters) { { end_year: year_filter } }
 
         context "trainee ending in that year" do
           it "returns the trainee" do

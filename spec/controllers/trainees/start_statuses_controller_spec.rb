@@ -78,8 +78,10 @@ describe Trainees::StartStatusesController, type: :controller do
         end
       end
 
-      context "withdrawal form has started and contains a withdrawal date before the commencement date" do
-        let(:trainee) { create(:trainee, :submitted_for_trn, withdraw_date: Date.new(2022, 1, 1)) }
+      context "withdrawal form has started and contains a withdrawal date after the commencement date" do
+        let(:commencement_date) { compute_valid_itt_start_date }
+        let(:withdraw_date) { compute_valid_itt_start_date + 1.day }
+        let(:trainee) { create(:trainee, :submitted_for_trn, withdraw_date: withdraw_date) }
         let(:page_context) { :withdraw }
         let(:send_request) do
           post(:update,
@@ -87,15 +89,15 @@ describe Trainees::StartStatusesController, type: :controller do
                  trainee_id: trainee,
                  trainee_start_status_form: {
                    "commencement_status" => "itt_started_on_time",
-                   "commencement_date(3i)" => "2",
-                   "commencement_date(2i)" => "1",
-                   "commencement_date(1i)" => "2022",
+                   "commencement_date(3i)" => commencement_date.day,
+                   "commencement_date(2i)" => commencement_date.month,
+                   "commencement_date(1i)" => commencement_date.year,
                    context: page_context,
                  },
                })
         end
 
-        it "redirects to the withdrawal page" do
+        it "redirects to the withdrawal confirmation page" do
           expect(response).to redirect_to(trainee_confirm_withdrawal_path(trainee))
         end
       end
