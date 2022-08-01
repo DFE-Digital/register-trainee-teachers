@@ -49,14 +49,6 @@
   :disabilities:
   - name
   - description
-  :dqt_trn_requests:
-  - id
-  - trainee_id
-  - request_id
-  - response
-  - state
-  - created_at
-  - updated_at
   :dttp_accounts:
   - id
   - dttp_id
