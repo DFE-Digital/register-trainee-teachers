@@ -79,6 +79,14 @@ shared:
     - created_at
     - id
     - updated_at
+  :dqt_trn_requests:
+  - id
+  - trainee_id
+  - request_id
+  - response
+  - state
+  - created_at
+  - updated_at
   dttp_providers:
     - created_at
     - dttp_id
