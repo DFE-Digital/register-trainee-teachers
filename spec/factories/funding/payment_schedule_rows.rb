@@ -16,7 +16,7 @@ FactoryBot.define do
           build(
             :payment_schedule_row_amount,
             month: month,
-            year: (1..7).include?(month) ? academic_cycle.end_date.year : academic_cycle.start_date.year,
+            year: (1..7).include?(month) ? academic_cycle.end_year : academic_cycle.start_year,
             predicted: index > current_month_index,
           )
         end

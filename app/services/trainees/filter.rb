@@ -43,9 +43,9 @@ module Trainees
         scope_name = scope_map[source]
 
         if i.zero?
-          scoped_trainees = scoped_trainees.send(scope_name)
+          scoped_trainees = scoped_trainees.public_send(scope_name)
         else
-          scoped_trainees = scoped_trainees.or(trainees.send(scope_name))
+          scoped_trainees = scoped_trainees.or(trainees.public_send(scope_name))
         end
       end
 

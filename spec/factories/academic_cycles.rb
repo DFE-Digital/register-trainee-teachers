@@ -9,12 +9,12 @@ FactoryBot.define do
 
       cycle_year do
         cycles = [
-          -> { current_recruitment_cycle_year - 1 if previous_cycle },
-          -> { current_recruitment_cycle_year + 1 if next_cycle },
-          -> { current_recruitment_cycle_year + 2 if one_after_next_cycle },
+          -> { current_academic_year - 1 if previous_cycle },
+          -> { current_academic_year + 1 if next_cycle },
+          -> { current_academic_year + 2 if one_after_next_cycle },
         ].map(&:call).compact
 
-        cycles.any? ? cycles.first : current_recruitment_cycle_year
+        cycles.any? ? cycles.first : current_academic_year
       end
     end
 
@@ -27,7 +27,7 @@ FactoryBot.define do
     end
 
     trait :current do
-      cycle_year { Time.zone.now.month >= 8 ? Time.zone.now.year : Time.zone.now.year - 1 }
+      cycle_year { current_academic_year }
     end
   end
 end

@@ -19,7 +19,7 @@ feature "Recommending for QTS", type: :feature do
   end
 
   def and_a_trainee_exists_ready_for_qts
-    given_a_trainee_exists(:with_placement_assignment, :trn_received)
+    given_a_trainee_exists(:with_placement_assignment, :trn_received, :itt_start_date_in_the_past)
     stub_dttp_placement_assignment_request(outcome_date: Time.zone.today, status: 204)
   end
 

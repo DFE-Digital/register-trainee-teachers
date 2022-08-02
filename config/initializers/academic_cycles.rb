@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+ACADEMIC_CYCLE_START_MONTH = 8
+ACADEMIC_CYCLE_END_MONTH = 7
+
 ACADEMIC_CYCLES = [
   { start_date: "01/8/2015", end_date: "31/7/2016" },
   { start_date: "01/8/2016", end_date: "31/7/2017" },

@@ -23,7 +23,7 @@ FactoryBot.define do
     route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
     study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
     uuid { SecureRandom.uuid }
-    recruitment_cycle_year { current_recruitment_cycle_year }
+    recruitment_cycle_year { current_academic_year }
 
     summary do |builder|
       qualifications = builder.qualification.to_s.gsub("_", " ").upcase.gsub("WITH", "with")
@@ -36,8 +36,8 @@ FactoryBot.define do
     end
 
     trait :with_full_time_dates do
-      full_time_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
-      full_time_end_date { Faker::Date.in_date_period(month: 8, year: current_recruitment_cycle_year + 1) }
+      full_time_start_date { Faker::Date.in_date_period(month: ACADEMIC_CYCLE_START_MONTH, year: current_academic_year) }
+      full_time_end_date { Faker::Date.in_date_period(month: ACADEMIC_CYCLE_END_MONTH, year: current_academic_year + 1) }
     end
 
     factory :course_with_unmappable_subject do

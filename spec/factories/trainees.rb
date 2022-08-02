@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
       randomise_subjects { false }
-      potential_itt_start_date { itt_start_date || Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
+      potential_itt_start_date { itt_start_date || compute_valid_itt_start_date }
     end
 
     sequence :trainee_id do |n|
@@ -197,7 +197,7 @@ FactoryBot.define do
 
     trait :with_study_mode_and_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year) }
+      itt_start_date { compute_valid_itt_start_date }
       itt_end_date do
         additional_years = if [2, 9, 10].include?(training_route)
                              3
@@ -206,13 +206,13 @@ FactoryBot.define do
                            else
                              1
                            end
-        Faker::Date.in_date_period(month: 6, year: current_recruitment_cycle_year + additional_years)
+        Faker::Date.in_date_period(month: ACADEMIC_CYCLE_END_MONTH, year: current_academic_year + additional_years)
       end
     end
 
     trait :with_study_mode_and_future_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      itt_start_date { Faker::Date.in_date_period(month: 9, year: current_recruitment_cycle_year + 1) }
+      itt_start_date { Faker::Date.in_date_period(month: ACADEMIC_CYCLE_START_MONTH, year: current_academic_year + 1) }
       itt_end_date do
         additional_years = if [2, 9, 10].include?(training_route)
                              3
@@ -221,7 +221,7 @@ FactoryBot.define do
                            else
                              1
                            end
-        Faker::Date.in_date_period(month: 6, year: itt_start_date.year + additional_years)
+        Faker::Date.in_date_period(month: ACADEMIC_CYCLE_END_MONTH, year: itt_start_date.year + additional_years)
       end
     end
 
@@ -236,7 +236,7 @@ FactoryBot.define do
         if itt_start_date.present?
           Faker::Date.between(from: itt_start_date, to: itt_start_date + rand(20).days)
         else
-          Time.zone.today
+          compute_valid_itt_start_date
         end
       end
     end
