@@ -29,6 +29,6 @@ module FundingHelper
 private
 
   def can_start_funding_section?(trainee)
-    trainee.progress.course_details && trainee.academic_cycle.present?
+    trainee.progress.course_details && trainee.start_academic_cycle.present?
   end
 end

@@ -190,7 +190,7 @@ module Exports
     describe "#funding_value" do
       context "when the trainee is funded" do
         context "when we know the funding methods for that cycle" do
-          let(:trainee) { create(:trainee, :with_provider_led_bursary) }
+          let(:trainee) { create(:trainee, :with_provider_led_bursary, start_academic_cycle: AcademicCycle.first) }
 
           it "returns the amount" do
             expect(subject.send(:funding_value, trainee)).to eq(FundingMethod.last.amount)

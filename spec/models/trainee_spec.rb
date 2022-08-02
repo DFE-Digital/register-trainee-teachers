@@ -438,17 +438,6 @@ describe Trainee do
         end
       end
     end
-
-    describe "academic_cycle" do
-      let(:academic_cycle) { create(:academic_cycle, cycle_year: 2018) }
-      let(:trainee) { create(:trainee, commencement_date: Date.new(academic_cycle.start_year, 9, 1)) }
-
-      subject { trainee.academic_cycle }
-
-      it "returns the AcademicCycle the trainee started in" do
-        expect(subject).to eq(academic_cycle)
-      end
-    end
   end
 
   describe "#with_name_trainee_id_or_trn_like" do
