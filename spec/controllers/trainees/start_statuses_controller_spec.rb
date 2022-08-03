@@ -80,7 +80,7 @@ describe Trainees::StartStatusesController, type: :controller do
 
       context "withdrawal form has started and contains a withdrawal date after the commencement date" do
         let(:commencement_date) { compute_valid_itt_start_date }
-        let(:withdraw_date) { compute_valid_itt_start_date + 1.day }
+        let(:withdraw_date) { compute_valid_itt_start_date + 2.days }
         let(:trainee) { create(:trainee, :submitted_for_trn, withdraw_date: withdraw_date) }
         let(:page_context) { :withdraw }
         let(:send_request) do

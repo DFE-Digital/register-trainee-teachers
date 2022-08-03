@@ -6,7 +6,7 @@ module Degrees
   describe DfeReference do
     describe ".find_subject" do
       let(:degree_subject) do
-        DfE::ReferenceData::Degrees::SUBJECTS.all.find { |item| item[:hecos_code].present? }
+        Degrees::DfeReference::SUBJECTS.all.find { |item| item[:hecos_code].present? }
       end
 
       it "can find the subject by UUID" do
@@ -24,13 +24,17 @@ module Degrees
 
     describe ".find_type" do
       let(:degree_type) do
-        DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.all.find do |item|
+        Degrees::DfeReference::TYPES.all.find do |item|
           item[:hesa_itt_code].present? && item[:abbreviation].present?
         end
       end
 
       it "can find the type by UUID" do
         expect(described_class.find_type(uuid: degree_type.id)).to eq(degree_type)
+      end
+
+      it "can find the type by name" do
+        expect(described_class.find_type(abbreviation: degree_type.name)).to eq(degree_type)
       end
 
       it "can find the type by abbreviation" do
@@ -44,7 +48,7 @@ module Degrees
 
     describe ".find_institution" do
       let(:degree_institution) do
-        DfE::ReferenceData::Degrees::INSTITUTIONS.all.find { |item| item[:hesa_itt_code].present? }
+        Degrees::DfeReference::INSTITUTIONS.all.find { |item| item[:hesa_itt_code].present? }
       end
 
       it "can find the institution by UUID" do
@@ -62,7 +66,7 @@ module Degrees
 
     describe ".find_grade" do
       let(:degree_grade) do
-        DfE::ReferenceData::Degrees::GRADES.all.find { |item| item[:hesa_code].present? }
+        Degrees::DfeReference::GRADES.all.find { |item| item[:hesa_code].present? }
       end
 
       it "can find the grade by UUID" do

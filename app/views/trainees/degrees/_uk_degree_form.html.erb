@@ -58,13 +58,13 @@
         hint: -> { render InvalidDataText::View.new(form_section: :grade, degree_form: @degree_form) },
         classes: "degree-grade") do %>
 
-    <% grades.each_with_index do |name, index| %>
-      <% if name != "Other" %>
-        <%= f.govuk_radio_button :grade, name, label: { text: name.capitalize }, link_errors: index.zero? %>
-      <% else %>
-        <%= f.govuk_radio_button :grade, name, label: { text: name } do %>
+    <% Degrees::DfeReference::GRADES.all.each_with_index do |item, index| %>
+      <% if item[:name] == Degrees::DfeReference::OTHER %>
+        <%= f.govuk_radio_button :grade, item[:name], label: { text: item[:name] } do %>
           <%= f.govuk_text_field :other_grade, label: { text: "Enter the degree grade" }, width: "two-thirds" %>
         <% end %>
+      <% else %>
+        <%= f.govuk_radio_button :grade, item[:name], label: { text: item[:name].capitalize }, link_errors: index.zero? %>
       <% end %>
     <% end %>
   <% end %>

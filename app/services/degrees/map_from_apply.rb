@@ -3,7 +3,6 @@
 module Degrees
   class MapFromApply
     include ServicePattern
-    include MappingsHelper
 
     UK_DEGREE_CODES = %w[UK XK].freeze
 
@@ -82,7 +81,7 @@ module Degrees
       if grade
         { grade: grade.name, grade_uuid: grade.id, other_grade: nil }
       else
-        { grade: Degree::OTHER_GRADE, grade_uuid: nil, other_grade: attributes["grade"] }
+        { grade: Degrees::DfeReference::OTHER, grade_uuid: nil, other_grade: attributes["grade"] }
       end
     end
 

@@ -3,16 +3,6 @@
 class Degree < ApplicationRecord
   include Sluggable
 
-  INSTITUTIONS = DfE::ReferenceData::Degrees::INSTITUTIONS.all.map(&:name) << "Other"
-  SUBJECTS = DfE::ReferenceData::Degrees::SINGLE_SUBJECTS.all.map(&:name)
-  TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS.all.map(&:name)
-  COMMON_TYPES = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
-
-  # TODO: switch over to DfE::ReferenceData::GRADES when the time is right. Currently,
-  # it doesn't support 'Other' and it has a lot more options which come from DTTP/HESA.
-  GRADES = Dttp::CodeSets::Grades::MAPPING.keys
-  OTHER_GRADE = "Other"
-
   MAX_GRAD_YEARS = 60
 
   attr_writer :is_apply_import
