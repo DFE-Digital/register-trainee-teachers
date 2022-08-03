@@ -18,8 +18,7 @@ describe CourseYearsForm, type: :model do
 
     it "returns course years hash" do
       expect(subject.course_years_options).to eql({
-        2011 => "2011 to 2012",
-        2010 => "2010 to 2011 (current year)",
+        2010 => "2010 to 2011",
         2009 => "2009 to 2010",
       })
     end

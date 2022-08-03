@@ -19,11 +19,10 @@ class CourseYearsForm
 
   def course_years_options
     [
-      default_course_year + 1,
       default_course_year,
       default_course_year - 1,
     ].inject({}) do |sum, y|
-      sum[y] = "#{y} to #{y + 1}#{' (current year)' if y == default_course_year}"
+      sum[y] = "#{y} to #{y + 1}"
       sum
     end
   end
