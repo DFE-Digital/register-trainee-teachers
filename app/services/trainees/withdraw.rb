@@ -9,7 +9,6 @@ module Trainees
     end
 
     def call
-      trainee.save!
       Dqt::WithdrawTraineeJob.perform_later(trainee) unless hesa_trainee?
       true
     end
