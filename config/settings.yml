@@ -98,7 +98,7 @@ apply_applications:
       - 2021
       - 2022
   create:
-    recruitment_cycle_year: 2021
+    recruitment_cycle_year: 2022
 
 jobs:
   poll_delay_hours: 1
