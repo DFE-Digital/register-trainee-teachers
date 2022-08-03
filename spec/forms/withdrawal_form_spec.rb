@@ -102,5 +102,12 @@ describe WithdrawalForm, type: :model do
 
       expect { subject.save! }.to change(trainee, :withdraw_reason).to(WithdrawalReasons::FINANCIAL_REASONS)
     end
+
+    it "triggers trainee update job" do
+      expect(form_store).to receive(:set).with(trainee.id, :withdrawal, nil)
+      expect(Trainees::Update).to receive(:call).with(trainee: trainee,
+                                                      update_dqt: false)
+      subject.save!
+    end
   end
 end

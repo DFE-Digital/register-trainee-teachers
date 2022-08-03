@@ -17,6 +17,7 @@ module Dqt
 
         if award_date
           trainee.award_qts!(award_date)
+          Trainees::Update.call(trainee: trainee, update_dqt: false)
         else
           raise(
             DqtNoAwardDateError,
