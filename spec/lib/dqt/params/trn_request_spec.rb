@@ -8,6 +8,7 @@ module Dqt
       let(:trainee) { create(:trainee, :completed, gender: "female", degrees: [degree]) }
       let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:hesa_code) { "11111" }
+      let(:dqt_degree_type) { "DqtDegreeType" }
 
       before do
         stub_const(
@@ -19,6 +20,10 @@ module Dqt
             },
           }),
         )
+
+        stub_const("Dqt::CodeSets::DegreeTypes::MAPPING", {
+          degree.uk_degree_uuid => dqt_degree_type,
+        })
       end
 
       describe "#params" do
@@ -70,6 +75,7 @@ module Dqt
             "subject" => hesa_code,
             "class" => described_class::DEGREE_CLASSES[degree.grade],
             "date" => Date.new(degree.graduation_year).iso8601,
+            "heQualificationType" => dqt_degree_type,
           })
         end
 

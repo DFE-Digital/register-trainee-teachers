@@ -119,6 +119,7 @@ module Dqt
           "class" => DEGREE_CLASSES[degree.grade],
           "date" => Date.parse("01-01-#{degree.graduation_year}").iso8601,
           "ittQualificationAim" => ITT_AIMS[trainee.hesa_metadatum&.itt_aim],
+          "heQualificationType" => CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
         }
       end
 
