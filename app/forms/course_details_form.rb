@@ -84,7 +84,7 @@ class CourseDetailsForm < TraineeForm
     if valid?
       update_trainee_attributes
       clear_funding_information if course_subjects_changed?
-      Trainees::Update.call(trainee: trainee, set_academic_cycles_now: true)
+      Trainees::Update.call(trainee: trainee)
       clear_stash
     else
       false

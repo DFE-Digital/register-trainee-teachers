@@ -38,6 +38,7 @@ feature "edit Trainee start status" do
     end
 
     scenario "when the trainee has not yet started" do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       given_a_trainee_exists(:submitted_for_trn, :itt_start_date_in_the_future)
       when_i_visit_the_edit_trainee_start_status_page
       when_i_choose_the_trainee_has_not_yet_started

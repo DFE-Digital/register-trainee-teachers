@@ -26,6 +26,7 @@ feature "editing a degree" do
       # the uk form is a superset of the non_uk one, so we just need one
       # test for autocompletes
       scenario "user partially submits autocompletes", js: true do
+        ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
         given_a_trainee_with_a_uk_degree
         when_i_visit_the_edit_degree_details_page
         and_i_fill_in_subject_without_selecting_a_value(with: "moose")

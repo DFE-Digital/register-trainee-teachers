@@ -36,7 +36,7 @@ module ApplyApplications
       trainee.progress.diversity = true
       trainee.progress.degrees = true
       trainee.progress.trainee_data = true
-      Trainees::Update.call(trainee: trainee, set_academic_cycles_now: true)
+      Trainees::Update.call(trainee: trainee)
     end
 
     def progress_status(progress_key)

@@ -107,6 +107,7 @@ RSpec.feature "Adding a degree" do
 
   describe "Non-UK Route" do
     scenario "the user enters valid details on Non-UK degree details page" do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       given_i_have_selected_the_non_uk_route
       and_i_am_on_the_degree_details_page
       and_i_fill_in_the_form
@@ -124,6 +125,7 @@ RSpec.feature "Adding a degree" do
     end
 
     scenario "the user submits partially entered autocompletes", js: true do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       given_i_have_selected_the_non_uk_route
       and_i_am_on_the_degree_details_page
       and_i_fill_in_country_without_selecting_a_value(with: "mongoose")

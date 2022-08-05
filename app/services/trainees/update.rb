@@ -4,22 +4,21 @@ module Trainees
   class Update
     include ServicePattern
 
-    def initialize(trainee:, params: {}, update_dqt: true, set_academic_cycles_now: false)
+    def initialize(trainee:, params: {}, update_dqt: true)
       @trainee = trainee
       @params = params
       @update_dqt = update_dqt
-      @set_academic_cycles_now = set_academic_cycles_now
     end
 
     def call
       trainee.update!(params)
       Dqt::UpdateTraineeJob.perform_later(trainee) if update_dqt
-      Trainees::SetAcademicCyclesJob.send(set_academic_cycles_now ? :perform_now : :perform_later, trainee)
+      Trainees::SetAcademicCyclesJob.perform_later(trainee)
       true
     end
 
   private
 
-    attr_reader :trainee, :params, :update_dqt, :set_academic_cycles_now
+    attr_reader :trainee, :params, :update_dqt
   end
 end
