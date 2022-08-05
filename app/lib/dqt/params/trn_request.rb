@@ -38,6 +38,12 @@ module Dqt
         Dttp::CodeSets::Grades::PASS => "Pass",
       }.freeze
 
+      # HESA/Register considers the following mapping as ITT_AIMS, but DQT calls it ittQualificationAim
+      ITT_AIMS = {
+        "Professional status only" => "ProfessionalStatusOnly",
+        "Both professional status and academic award" => "ProfessionalStatusAndAcademicAward",
+      }.freeze
+
       attr_reader :params
 
       def initialize(trainee:)
@@ -112,6 +118,7 @@ module Dqt
           "subject" => subject_code,
           "class" => DEGREE_CLASSES[degree.grade],
           "date" => Date.parse("01-01-#{degree.graduation_year}").iso8601,
+          "ittQualificationAim" => ITT_AIMS[trainee.hesa_metadatum&.itt_aim],
         }
       end
 
@@ -125,13 +132,13 @@ module Dqt
       end
 
       def subject_code
-        DfE::ReferenceData::Degrees::SINGLE_SUBJECTS.some({ name: degree.subject }).first&.hecos_code
+        Degrees::DfeReference.find_subject(name: degree.subject)&.hecos_code
       end
 
       def institution_ukprn
-        return nil if degree.institution_uuid.nil?
+        return if degree.institution_uuid.nil?
 
-        DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn]
+        Degrees::DfeReference::INSTITUTIONS.one(degree.institution_uuid)&.ukprn
       end
 
       def country_code

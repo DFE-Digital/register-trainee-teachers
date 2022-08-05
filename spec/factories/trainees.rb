@@ -567,10 +567,18 @@ FactoryBot.define do
     end
 
     trait :imported_from_hesa do
+      transient do
+        itt_aim { Hesa::CodeSets::IttAims::MAPPING.values.sample }
+      end
+
       hesa_id { Faker::Number.number(digits: 13) }
       created_from_hesa { true }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       hesa_student { create(:hesa_student, hesa_id: hesa_id) }
+
+      after(:create) do |trainee, evaluator|
+        create(:hesa_metadatum, trainee: trainee, itt_aim: evaluator.itt_aim)
+      end
     end
   end
 end

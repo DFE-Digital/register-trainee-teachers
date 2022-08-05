@@ -56,11 +56,10 @@ module Trainees
 
     def trainee_commencement_date_before_withdrawal_date?
       withdrawal_date = WithdrawalForm.new(trainee).date
-      if withdrawal_date.present?
-        @trainee_start_status_form.withdrawing? && @trainee_start_status_form.commencement_date < withdrawal_date
-      else
-        false
-      end
+
+      return false unless withdrawal_date
+
+      @trainee_start_status_form.withdrawing? && @trainee_start_status_form.commencement_date < withdrawal_date
     end
   end
 end
