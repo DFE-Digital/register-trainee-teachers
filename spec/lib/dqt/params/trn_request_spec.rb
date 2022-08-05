@@ -79,6 +79,16 @@ module Dqt
           })
         end
 
+        context "when there is no degree type" do
+          before do
+            stub_const("Dqt::CodeSets::DegreeTypes::MAPPING", {})
+          end
+
+          it "sends an empty string as heQualificationType" do
+            expect(subject["qualification"]["heQualificationType"]).to eq("")
+          end
+        end
+
         context "imported from HESA" do
           let(:itt_aim) { Hesa::CodeSets::IttAims::MAPPING.values.sample }
           let(:dqt_itt_aim) { described_class::ITT_AIMS[itt_aim] }
