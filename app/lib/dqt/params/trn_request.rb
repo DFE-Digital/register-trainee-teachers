@@ -110,7 +110,8 @@ module Dqt
       end
 
       def qualification_params
-        return if trainee.degrees.empty?
+        return if degree.nil?
+        return if CodeSets::DegreeTypes::FOUNDATIONS.include?(degree.uk_degree_uuid)
 
         {
           "providerUkprn" => institution_ukprn,

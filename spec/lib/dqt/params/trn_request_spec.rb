@@ -8,7 +8,6 @@ module Dqt
       let(:trainee) { create(:trainee, :completed, gender: "female", degrees: [degree]) }
       let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:hesa_code) { "11111" }
-      let(:dqt_degree_type) { "DqtDegreeType" }
 
       before do
         stub_const(
@@ -20,10 +19,6 @@ module Dqt
             },
           }),
         )
-
-        stub_const("Dqt::CodeSets::DegreeTypes::MAPPING", {
-          degree.uk_degree_uuid => dqt_degree_type,
-        })
       end
 
       describe "#params" do
@@ -69,23 +64,30 @@ module Dqt
 
         it "returns a hash including degree attributes" do
           allow(Degrees::DfeReference::INSTITUTIONS).to receive(:one).with(degree.institution_uuid).and_return(double(ukprn: "12345678"))
+
           expect(subject["qualification"]).to include({
             "providerUkprn" => "12345678",
             "countryCode" => "XK",
             "subject" => hesa_code,
             "class" => described_class::DEGREE_CLASSES[degree.grade],
             "date" => Date.new(degree.graduation_year).iso8601,
-            "heQualificationType" => dqt_degree_type,
+            "heQualificationType" => Dqt::CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
           })
         end
 
         context "when there is no degree type" do
-          before do
-            stub_const("Dqt::CodeSets::DegreeTypes::MAPPING", {})
-          end
+          let(:degree) { build(:degree, :uk_degree_with_details, uk_degree_uuid: nil) }
 
           it "sends an empty string as heQualificationType" do
             expect(subject["qualification"]["heQualificationType"]).to eq("")
+          end
+        end
+
+        context "when the degree is actually a foundation" do
+          let(:degree) { build(:degree, :uk_foundation) }
+
+          it "doesn't send a degree to DQT" do
+            expect(subject["qualification"]).to be_nil
           end
         end
 
