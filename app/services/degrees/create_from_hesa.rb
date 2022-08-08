@@ -4,6 +4,8 @@ module Degrees
   class CreateFromHesa
     include ServicePattern
 
+    UNKNOWN_DEGREE_TYPE = "999"
+
     # The dfe-reference gem does not include degree types with honours in
     # the name, so we need fallback to the non-honours generic degree types.
     HONOURS_TO_NON_HONOURS_HESA_CODE_MAP = {
@@ -31,6 +33,8 @@ module Degrees
 
     def create_degrees!
       hesa_degrees.map do |hesa_degree|
+        next unless importable?(hesa_degree)
+
         dfe_subject = dfe_reference_subject_item(hesa_degree[:subject])
         degree = trainee.degrees.find_or_initialize_by(subject: dfe_subject&.name)
 
@@ -108,6 +112,12 @@ module Degrees
       # The HESA code "09" which is "Pass - degree awarded without honours following an honours course"
       # is not currently supported by the dfe-reference gem. Falling back to the nearest equivalent.
       hesa_degree[:grade] == "09" ? "14" : hesa_degree[:grade]
+    end
+
+    def importable?(hesa_degree)
+      return true unless hesa_degree[:degree_type].include?(UNKNOWN_DEGREE_TYPE)
+
+      hesa_degree.compact.size > 1
     end
   end
 end

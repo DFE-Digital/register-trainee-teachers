@@ -109,6 +109,47 @@ module Degrees
           expect(degree.country).to eq("India")
         end
       end
+
+      context "degree type 999" do
+        context "and all other values are nil" do
+          let(:hesa_degrees) do
+            [
+              {
+                graduation_date: nil,
+                degree_type: "999",
+                subject: nil,
+                institution: nil,
+                grade: nil,
+                country: nil,
+              },
+            ]
+          end
+
+          it "does not save the degree" do
+            expect(trainee.degrees.count).to eq(0)
+          end
+        end
+
+        context "and at least one other value present" do
+          let(:hesa_degrees) do
+            [
+              {
+                graduation_date: nil,
+                degree_type: "999",
+                subject: nil,
+                institution: nil,
+                grade: "14",
+                country: nil,
+              },
+            ]
+          end
+
+          it "saves the degree" do
+            expect(trainee.degrees.count).to eq(1)
+            expect(degree.grade).to eq("Pass")
+          end
+        end
+      end
     end
   end
 end
