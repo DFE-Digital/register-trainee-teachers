@@ -28,7 +28,7 @@ module Hesa
         end_date: "F_ENDDATE",
         reason_for_leaving: "F_RSNEND",
         bursary_level: "F_BURSLEV",
-        trn: "F_TREFNO",
+        trn: "F_TRN",
         training_route: "F_ENTRYRTE",
         nationality: "F_NATION",
         hesa_updated_at: "F_STATUS_TIMESTAMP",
