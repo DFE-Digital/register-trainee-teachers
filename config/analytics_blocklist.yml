@@ -214,6 +214,7 @@
   - placements
   - created_at
   - updated_at
+  - collection_reference
   :hesa_trn_requests:
   - id
   - collection_reference
