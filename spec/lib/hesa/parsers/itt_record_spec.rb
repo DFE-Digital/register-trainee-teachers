@@ -27,7 +27,7 @@ module Hesa
             course_subject_two: nil,
             course_subject_three: nil,
             itt_start_date: "2016-09-27",
-            itt_end_date: nil,
+            itt_end_date: "2017-10-01",
             mode: "01",
             course_age_range: "13909",
             commencement_date: nil,

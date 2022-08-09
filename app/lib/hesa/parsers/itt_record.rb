@@ -16,7 +16,7 @@ module Hesa
         course_subject_two: "F_SBJCA2",
         course_subject_three: "F_SBJCA3",
         itt_start_date: "F_COMDATE",
-        itt_end_date: "F_ENDDATE",
+        itt_end_date: "F_EXPECTEDENDDATE",
         employing_school_urn: "F_SDEMPLOY",
         lead_school_urn: "F_SDLEAD",
         mode: "F_MODE",
