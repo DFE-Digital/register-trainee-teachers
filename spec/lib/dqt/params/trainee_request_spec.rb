@@ -9,6 +9,7 @@ module Dqt
       let(:degree) { trainee.degrees.first }
       let(:hesa_code) { "11111" }
       let(:ukprn) { DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
+      let(:dqt_degree_type) { "DqtDegreeType" }
 
       before do
         stub_const(
@@ -20,6 +21,10 @@ module Dqt
             },
           }),
         )
+
+        stub_const("Dqt::CodeSets::DegreeTypes::MAPPING", {
+          degree.uk_degree_uuid => dqt_degree_type,
+        })
       end
 
       describe "#params" do
@@ -54,6 +59,7 @@ module Dqt
             "ittQualificationAim" => nil,
             "class" => described_class::DEGREE_CLASSES[degree.grade],
             "date" => Date.new(degree.graduation_year).iso8601,
+            "heQualificationType" => dqt_degree_type,
           })
         end
 
