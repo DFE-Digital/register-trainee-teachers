@@ -174,7 +174,7 @@ module Trainees
       context "when neither ethnicity nor disabilities are disclosed" do
         let(:hesa_stub_attributes) do
           {
-            ethnic_background: hesa_disability_codes[Diversities::INFORMATION_REFUSED],
+            ethnic_background: hesa_disability_codes[Diversities::NOT_PROVIDED],
             disability: nil,
           }
         end
@@ -187,7 +187,7 @@ module Trainees
       context "when just disability is disclosed" do
         let(:hesa_stub_attributes) do
           {
-            ethnic_background: hesa_ethnicity_codes[Diversities::INFORMATION_REFUSED],
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
             disability: hesa_disability_codes[Diversities::LEARNING_DIFFICULTY],
           }
         end
@@ -202,7 +202,7 @@ module Trainees
         let(:create_custom_state) { create(:disability, name: Diversities::OTHER) }
         let(:hesa_stub_attributes) do
           {
-            ethnic_background: hesa_ethnicity_codes[Diversities::INFORMATION_REFUSED],
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
             disability: hesa_disability_codes[Diversities::MULTIPLE_DISABILITIES],
           }
         end
@@ -216,16 +216,10 @@ module Trainees
       context "when just ethnicity is disclosed" do
         let(:hesa_stub_attributes) { { ethnic_background: hesa_ethnicity_codes[Diversities::AFRICAN] } }
 
-        it "sets the diversity disclosure to 'diversity_disclosed'" do
+        it "sets the diversity disclosure to 'diversity_disclosed' and the correct ethnic group and background" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
-        end
-      end
-
-      context "when ethnicity is information_refused" do
-        let(:hesa_stub_attributes) { { ethnic_background: hesa_ethnicity_codes[Diversities::INFORMATION_REFUSED] } }
-
-        it "sets the ethnic_group to 'Not provided'" do
-          expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+          expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:black])
+          expect(trainee.ethnic_background).to eq(Diversities::AFRICAN)
         end
       end
 

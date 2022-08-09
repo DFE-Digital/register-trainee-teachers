@@ -133,6 +133,22 @@ module Trainees
       MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
     end
 
+    def ethnicity_attributes
+      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
+        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+
+        return {
+          ethnic_group: ethnic_group,
+          ethnic_background: ethnic_background,
+        }
+      end
+
+      {
+        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+        ethnic_background: Diversities::NOT_PROVIDED,
+      }
+    end
+
     def gender
       Hesa::CodeSets::Genders::MAPPING[hesa_trainee[:gender]]
     end
