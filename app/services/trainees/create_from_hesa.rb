@@ -146,18 +146,6 @@ module Trainees
     end
 
     def training_route
-      provider_led_undergrad? ? TRAINING_ROUTE_ENUMS[:provider_led_undergrad] : hesa_route
-    end
-
-    def provider_led_undergrad?
-      hesa_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad] && undergrad_level?
-    end
-
-    def undergrad_level?
-      Hesa::CodeSets::IttQualificationAims::UNDERGRAD_AIMS.include?(itt_qualification_aim)
-    end
-
-    def hesa_route
       Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_trainee[:training_route]]
     end
 
