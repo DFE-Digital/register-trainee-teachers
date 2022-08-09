@@ -3,15 +3,15 @@
 module Hesa
   module CodeSets
     module TrainingInitiatives
-      # https://www.hesa.ac.uk/collection/c21053/xml/c21053/c21053codelists.xsd
-      # The follow initiatives do not have a matching enum:
-      #  - 'D' => Primary mathematics specialist
-      #  - 'P' => Abridged ITT course
-      #  - 'Y' => Additional ITT place for PE with a priority subject
+      # https://www.hesa.ac.uk/collection/c22053/e/initiatives
+      # The commented out lines do not have a matching enum in Register.
       MAPPING = {
-        "M" => ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
-        "13" => ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
-        "14" => ROUTE_INITIATIVES_ENUMS[:now_teach],
+        # "001"	=> Abridged ITT course,
+        "009"	=> ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
+        # "011"	=> Primary mathematics specialist,
+        # "019"	=> Additional ITT place for PE with a priority subject,
+        "025"	=> ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+        "026"	=> ROUTE_INITIATIVES_ENUMS[:now_teach],
       }.freeze
     end
   end

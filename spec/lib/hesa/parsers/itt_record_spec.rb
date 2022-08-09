@@ -31,7 +31,7 @@ module Hesa
             mode: "01",
             course_age_range: "13909",
             commencement_date: nil,
-            training_initiative: "C",
+            training_initiative: "009",
             hesa_id: "0310261553101",
             reason_for_leaving: nil,
             end_date: nil,

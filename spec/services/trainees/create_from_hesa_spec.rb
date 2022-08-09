@@ -72,7 +72,7 @@ module Trainees
       it "updates the trainee's school and training details" do
         expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
         expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
-        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
       end
 
       it "updates the trainee's funding details" do
