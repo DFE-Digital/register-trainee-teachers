@@ -37,7 +37,6 @@ module Hesa
         fund_code: "F_FUNDCODE",
         study_length: "F_SPLENGTH",
         study_length_unit: "F_UNITLGTH",
-        service_leaver: "F_SERLEAVE",
         course_programme_title: "F_CTITLE",
         pg_apprenticeship_start_date: "F_PGAPPSTDT",
         year_of_course: "F_YEARPRG",

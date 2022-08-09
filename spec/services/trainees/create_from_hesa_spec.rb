@@ -100,7 +100,6 @@ module Trainees
         expect(trainee.hesa_metadatum.itt_aim).to eq("Both professional status and academic award")
         expect(trainee.hesa_metadatum.itt_qualification_aim).to eq("Masters, not by research")
         expect(trainee.hesa_metadatum.fundability).to eq("Eligible for funding from the DfE")
-        expect(trainee.hesa_metadatum.service_leaver).to eq("Trainee has not left full time employment in the British Army, Royal Air Force or Royal Navy within 5 years of beginning the programme")
         expect(trainee.hesa_metadatum.course_programme_title).to eq("FE Course 1")
         expect(trainee.hesa_metadatum.placement_school_urn).to eq(900000)
         expect(trainee.hesa_metadatum.year_of_course).to eq("0")

@@ -253,7 +253,6 @@ module Trainees
                                        itt_aim: itt_aim,
                                        itt_qualification_aim: itt_qualification_aim,
                                        fundability: fundability,
-                                       service_leaver: service_leaver,
                                        course_programme_title: hesa_trainee[:course_programme_title]&.strip,
                                        placement_school_urn: hesa_trainee[:placements]&.first&.fetch(:school_urn),
                                        pg_apprenticeship_start_date: hesa_trainee[:pg_apprenticeship_start_date],
@@ -275,10 +274,6 @@ module Trainees
 
     def fundability
       Hesa::CodeSets::FundCodes::MAPPING[hesa_trainee[:fund_code]]
-    end
-
-    def service_leaver
-      Hesa::CodeSets::ServiceLeavers::MAPPING[hesa_trainee[:service_leaver]]
     end
 
     def trainee_state
