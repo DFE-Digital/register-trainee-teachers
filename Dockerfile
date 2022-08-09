@@ -18,7 +18,7 @@ RUN apk add --update --no-cache --virtual build-dependances \
     apk del build-dependances
 
 # Remove once base image ruby:2.7.5-alpine3.15 has been updated with latest libraries
-RUN apk add --no-cache libretls=3.3.4-r3 ncurses-libs=6.3_p20211120-r1 zlib=1.2.12-r2
+RUN apk add --no-cache libretls=3.3.4-r3 ncurses-libs=6.3_p20211120-r1 zlib=1.2.12-r3
 
 COPY package.json yarn.lock ./
 RUN  yarn install --frozen-lockfile && \
