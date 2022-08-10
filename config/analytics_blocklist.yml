@@ -222,7 +222,7 @@
   - response_body
   - created_at
   - updated_at
-   hesa_trn_submissions:
+  :hesa_trn_submissions:
     - payload
   :users:
   - first_name
