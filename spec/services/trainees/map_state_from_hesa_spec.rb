@@ -15,37 +15,78 @@ module Trainees
 
     subject { described_class.call(hesa_trainee: hesa_trainee) }
 
-    context "submitted_for_trn" do
-      let(:hesa_stub_attributes) do
-        { reason_for_leaving: nil, mode: nil, trn: nil }
-      end
-
-      it { is_expected.to eq(:submitted_for_trn) }
-    end
-
-    context "trn_received" do
-      let(:hesa_stub_attributes) do
-        { reason_for_leaving: nil, mode: nil, trn: hesa_trn }
-      end
-
-      it { is_expected.to eq(:trn_received) }
-
-      context "course completed - result unknown" do
+    context "when the trainee has no 'reason for leaving'" do
+      context "and has no TRN" do
         let(:hesa_stub_attributes) do
-          {
-            mode: nil,
-            trn: hesa_trn,
-            reason_for_leaving: hesa_mode_codes[Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION],
-          }
+          { reason_for_leaving: nil, trn: nil }
+        end
+
+        it { is_expected.to eq(:submitted_for_trn) }
+      end
+
+      context "and has a TRN" do
+        let(:hesa_stub_attributes) do
+          { reason_for_leaving: nil, trn: hesa_trn }
         end
 
         it { is_expected.to eq(:trn_received) }
       end
     end
 
-    context "withdrawn" do
+    context "when the trainee's reason for leaving is COMPLETED_WITH_CREDIT_OR_AWARD" do
+      context "and has a TRN" do
+        let(:hesa_stub_attributes) do
+          {
+            reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
+            trn: hesa_trn,
+          }
+        end
+
+        it { is_expected.to eq(:trn_received) }
+      end
+
+      context "and has no TRN" do
+        let(:hesa_stub_attributes) do
+          {
+            reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
+            trn: nil,
+          }
+        end
+
+        it { is_expected.to eq(:submitted_for_trn) }
+      end
+    end
+
+    context "when the trainee's reason for leaving is COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN" do
+      context "and they have a TRN" do
+        let(:hesa_stub_attributes) do
+          {
+            reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
+            trn: hesa_trn,
+          }
+        end
+
+        it { is_expected.to eq(:trn_received) }
+      end
+
+      context "and they have no TRN" do
+        let(:hesa_stub_attributes) do
+          {
+            reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
+            trn: nil,
+          }
+        end
+
+        it { is_expected.to eq(:submitted_for_trn) }
+      end
+    end
+
+    context "when the trainee's reason for leaving is a valid withdrawal reason" do
       let(:hesa_stub_attributes) do
-        { reason_for_leaving: hesa_reason_for_leaving_codes[WithdrawalReasons::HEALTH_REASONS], end_date: date_today }
+        {
+          reason_for_leaving: hesa_reason_for_leaving_codes[WithdrawalReasons::DEATH],
+          end_date: date_today,
+        }
       end
 
       it { is_expected.to eq(:withdrawn) }

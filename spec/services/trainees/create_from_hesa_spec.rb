@@ -236,24 +236,24 @@ module Trainees
           let(:hesa_stub_attributes) do
             {
               end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[WithdrawalReasons::HEALTH_REASONS],
+              reason_for_leaving: hesa_reasons_for_leaving_codes[WithdrawalReasons::DEATH],
             }
           end
 
           it "creates a withdrawn trainee with the relevant details" do
             expect(trainee.state).to eq("withdrawn")
             expect(trainee.withdraw_date).to eq(date)
-            expect(trainee.withdraw_reason).to eq(WithdrawalReasons::HEALTH_REASONS)
+            expect(trainee.withdraw_reason).to eq(WithdrawalReasons::DEATH)
           end
         end
 
-        context "and the reason for completion is 'Completion of course - result unknown'" do
+        context "and the reason for completion is 'Left but award of credit or a qualification not yet known'" do
           let(:hesa_modes) { Hesa::CodeSets::Modes::MAPPING.invert }
 
           let(:hesa_stub_attributes) do
             {
               end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION],
+              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
               mode: hesa_modes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
             }
           end

@@ -3,23 +3,15 @@
 module Hesa
   module CodeSets
     module ReasonsForLeavingCourse
-      SUCCESSFUL_COMPLETION = "Successful completion of course"
-      UNKNOWN_COMPLETION = "Completion of course - result unknown"
+      COMPLETED_WITH_CREDIT_OR_AWARD = "Left and awarded credit or a qualification"
+      COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN = "Left but award of credit or a qualification not yet known"
 
       MAPPING = {
-        "01" => SUCCESSFUL_COMPLETION,
-        "02" => WithdrawalReasons::DID_NOT_PASS_EXAMS,
-        "03" => WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER,
-        "04" => WithdrawalReasons::HEALTH_REASONS,
-        "05" => WithdrawalReasons::DEATH,
-        "06" => WithdrawalReasons::FINANCIAL_REASONS,
-        "07" => WithdrawalReasons::PERSONAL_REASONS,
-        "08" => WithdrawalReasons::WRITTEN_OFF_AFTER_LAPSE_OF_TIME,
-        "09" => WithdrawalReasons::EXCLUSION,
-        "10" => WithdrawalReasons::GONE_INTO_EMPLOYMENT,
-        "11" => WithdrawalReasons::FOR_ANOTHER_REASON,
-        "98" => UNKNOWN_COMPLETION,
-        "99" => WithdrawalReasons::UNKNOWN,
+        "01" =>	COMPLETED_WITH_CREDIT_OR_AWARD,
+        "03" =>	WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER,
+        "05" =>	WithdrawalReasons::DEATH,
+        "11" =>	WithdrawalReasons::FOR_ANOTHER_REASON,
+        "98" =>	COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN,
       }.freeze
     end
   end
