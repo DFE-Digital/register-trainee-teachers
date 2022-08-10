@@ -21,6 +21,18 @@ module Dqt
           described_class.perform_now(trainee)
         }.to change(trainee, :awarded_at).to(Time.zone.parse(award_date))
       end
+
+      it "triggers the trainee update job" do
+        expect(Trainees::Update).to receive(:call).with(trainee: trainee,
+                                                        update_dqt: false)
+        described_class.perform_now(trainee)
+      end
+
+      it "updates the trainee state to awarded" do
+        expect {
+          described_class.perform_now(trainee)
+        }.to change(trainee, :state).to("awarded")
+      end
     end
 
     context "we don't receive an award date" do

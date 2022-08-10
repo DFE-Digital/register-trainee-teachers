@@ -21,7 +21,7 @@ module Dqt
       it "updates the trainee but not DQT" do
         expect(Trainees::Update).to receive(:call).with(trainee: trainee,
                                                         params: { awarded_at: award_date },
-                                                        update_dtq: false)
+                                                        update_dqt: false)
         described_class.perform_now(trainee)
       end
     end

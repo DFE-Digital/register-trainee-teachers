@@ -14,6 +14,7 @@ class WithdrawalForm < MultiDateForm
   def save!
     if valid?
       assign_attributes_to_trainee
+      Trainees::Update.call(trainee: trainee, update_dqt: false)
       Trainees::Withdraw.call(trainee: trainee)
       clear_stash
     else
