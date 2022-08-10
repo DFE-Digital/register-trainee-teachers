@@ -19,7 +19,7 @@ module Hesa
             email: "student.name@email.com",
             date_of_birth: "1978-08-13",
             ethnic_background: "899",
-            gender: "1",
+            sex: "11",
             trn: nil,
             ukprn: "10007713",
             trainee_id: "99157234/2/01",

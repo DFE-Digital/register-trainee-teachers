@@ -9,7 +9,7 @@ module Hesa
         email: "F_NQTEMAIL",
         date_of_birth: "F_BIRTHDTE",
         ethnic_background: "F_ETHNIC",
-        gender: "F_SEXID",
+        sex: "F_SEXID",
         ukprn: "F_UKPRN",
         trainee_id: "F_OWNSTU",
         course_subject_one: "F_SBJCA1",

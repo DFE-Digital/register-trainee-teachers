@@ -77,6 +77,7 @@ class Trainee < ApplicationRecord
     female: 1,
     other: 2,
     gender_not_provided: 3,
+    prefer_not_to_say: 4,
   }
 
   enum commencement_status: COMMENCEMENT_STATUSES

@@ -73,7 +73,7 @@ module Trainees
         first_names: hesa_trainee[:first_names],
         last_name: hesa_trainee[:last_name],
         date_of_birth: hesa_trainee[:date_of_birth],
-        gender: gender,
+        gender: sex,
         nationalities: nationalities,
         email: hesa_trainee[:email],
       }
@@ -149,8 +149,8 @@ module Trainees
       }
     end
 
-    def gender
-      Hesa::CodeSets::Genders::MAPPING[hesa_trainee[:gender]]
+    def sex
+      Hesa::CodeSets::Sexes::MAPPING[hesa_trainee[:sex]]
     end
 
     def nationalities
