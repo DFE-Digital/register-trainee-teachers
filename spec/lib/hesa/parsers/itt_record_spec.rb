@@ -47,8 +47,6 @@ module Hesa
             course_programme_title: "FE Course 1",
             pg_apprenticeship_start_date: nil,
             fund_code: "7",
-            study_length: "3",
-            study_length_unit: "1",
             year_of_course: "0",
             degrees: [{
               country: "XF",

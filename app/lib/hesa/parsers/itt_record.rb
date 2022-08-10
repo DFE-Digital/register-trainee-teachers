@@ -35,8 +35,6 @@ module Hesa
         itt_aim: "F_ITTAIM",
         itt_qualification_aim: "F_QLAIM",
         fund_code: "F_FUNDCODE",
-        study_length: "F_SPLENGTH",
-        study_length_unit: "F_UNITLGTH",
         course_programme_title: "F_CTITLE",
         pg_apprenticeship_start_date: "F_PGAPPSTDT",
         year_of_course: "F_YEARPRG",

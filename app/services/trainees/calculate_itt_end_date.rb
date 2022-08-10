@@ -56,6 +56,9 @@ module Trainees
       1.year
     end
 
+    # The fields study_length and study_length_unit were removed from HESA from
+    # the 22/23 collection onwards, but we may still need to fall back on these
+    # for updates to 21/22 trainees.
     def course_duration_amount
       hesa_metadatum&.study_length
     end

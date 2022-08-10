@@ -95,8 +95,6 @@ module Trainees
       end
 
       it "creates a trainee HESA metadata record" do
-        expect(trainee.hesa_metadatum.study_length).to eq(3)
-        expect(trainee.hesa_metadatum.study_length_unit).to eq("years")
         expect(trainee.hesa_metadatum.itt_aim).to eq("Both professional status and academic award")
         expect(trainee.hesa_metadatum.itt_qualification_aim).to eq("Masters, not by research")
         expect(trainee.hesa_metadatum.fundability).to eq("Eligible for funding from the DfE")
