@@ -136,7 +136,6 @@ shared:
   hesa_trn_submissions:
     - id
     - created_at
-    - payload
     - submitted_at
     - updated_at
   lead_school_users:
