@@ -248,9 +248,7 @@ module Trainees
 
     def store_hesa_metadata!
       hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee: trainee)
-      hesa_metadatum.assign_attributes(study_length: hesa_trainee[:study_length],
-                                       study_length_unit: study_length_unit,
-                                       itt_aim: itt_aim,
+      hesa_metadatum.assign_attributes(itt_aim: itt_aim,
                                        itt_qualification_aim: itt_qualification_aim,
                                        fundability: fundability,
                                        course_programme_title: hesa_trainee[:course_programme_title]&.strip,
@@ -258,10 +256,6 @@ module Trainees
                                        pg_apprenticeship_start_date: hesa_trainee[:pg_apprenticeship_start_date],
                                        year_of_course: hesa_trainee[:year_of_course])
       hesa_metadatum.save
-    end
-
-    def study_length_unit
-      Hesa::CodeSets::StudyLengthUnits::MAPPING[hesa_trainee[:study_length_unit]]
     end
 
     def itt_aim
