@@ -4,13 +4,18 @@ module Trainees
   class MapStateFromHesa
     include ServicePattern
 
-    def initialize(hesa_trainee:)
+    def initialize(hesa_trainee:, trainee_persisted:)
       @hesa_trainee = hesa_trainee
+      @trainee_persisted = trainee_persisted
       @trn = hesa_trainee[:trn]
     end
 
     def call
       return :deferred if trainee_dormant?
+      # If the trainee has completed the course, but the result is unknown we
+      # do not know enough to transition their state. If it's the first time
+      # we're seeing this trainee, they are created as trn_received (line 41)
+      return false if trainee_persisted && completed_with_unknown_result?
       return :submitted_for_trn if submitted_for_trn?
       return :trn_received if trn_received?
       return :withdrawn if withdrawn?
@@ -18,7 +23,7 @@ module Trainees
 
   private
 
-    attr_reader :hesa_trainee, :trn
+    attr_reader :hesa_trainee, :trn, :trainee_persisted
 
     def trainee_dormant?
       [

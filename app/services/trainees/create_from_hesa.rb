@@ -277,7 +277,7 @@ module Trainees
     end
 
     def trainee_state
-      @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee)
+      @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee, trainee_persisted: trainee.persisted?) || trainee.state
     end
 
     def course_allocation_subject
