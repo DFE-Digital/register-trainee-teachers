@@ -3,8 +3,8 @@
 module Hesa
   module CodeSets
     module CourseSubjects
-      # https://www.hesa.ac.uk/collection/c21053/xml/c21053/c21053codelists.xsd
-      # https://www.hesa.ac.uk/collection/c21053/e/sbjca
+      # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/e/sbjca
       MAPPING = {
         "101117" => ::CourseSubjects::ANCIENT_HEBREW,
         "100343" => ::CourseSubjects::APPLIED_BIOLOGY,

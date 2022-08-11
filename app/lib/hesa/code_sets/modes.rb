@@ -6,8 +6,8 @@ module Hesa
       DORMANT_FULL_TIME = "Dormant - previously full-time"
       DORMANT_PART_TIME = "Dormant - previously part-time"
 
-      # https://www.hesa.ac.uk/collection/c21053/xml/c21053/c21053codelists.xsd
-      # https://www.hesa.ac.uk/collection/c21053/e/mode
+      # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/e/mode
       MAPPING = {
         "01" => "Full-time according to funding council definitions",
         "02" => "Other full-time",

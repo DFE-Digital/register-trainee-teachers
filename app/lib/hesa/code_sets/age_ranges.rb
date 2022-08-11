@@ -3,7 +3,7 @@
 module Hesa
   module CodeSets
     module AgeRanges
-      # https://www.hesa.ac.uk/collection/c22053/xml/c21053/c21053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
       # https://www.hesa.ac.uk/collection/c22053/e/ittphsc
       MAPPING = {
         "13909"	=> AgeRange::THREE_TO_SEVEN,

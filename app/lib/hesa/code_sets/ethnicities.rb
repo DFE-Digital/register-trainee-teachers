@@ -3,7 +3,7 @@
 module Hesa
   module CodeSets
     module Ethnicities
-      # https://www.hesa.ac.uk/collection/c22053/xml/c21053/c21053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
       MAPPING = {
         "180"	=> Diversities::ARAB,
         "100"	=> Diversities::BANGLADESHI,
