@@ -99,7 +99,7 @@ module Dqt
         {
           "providerUkprn" => trainee.provider.ukprn,
           "programmeStartDate" => trainee.itt_start_date.iso8601,
-          "programmeEndDate" => trainee.itt_end_date.iso8601,
+          "programmeEndDate" => itt_end_date&.iso8601,
           "programmeType" => PROGRAMME_TYPE[trainee.training_route],
           "subject1" => course_subject_code(trainee.course_subject_one),
           "subject2" => course_subject_code(trainee.course_subject_two),
@@ -146,6 +146,10 @@ module Dqt
       def country_code
         country = degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country
         Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+      end
+
+      def itt_end_date
+        trainee.itt_end_date || Trainees::CalculateIttEndDate.call(trainee: trainee, actual: true)
       end
 
       attr_reader :trainee, :degree

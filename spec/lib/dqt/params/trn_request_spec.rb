@@ -5,9 +5,10 @@ require "rails_helper"
 module Dqt
   module Params
     describe TrnRequest do
-      let(:trainee) { create(:trainee, :completed, gender: "female", degrees: [degree]) }
+      let(:trainee_attributes) { {} }
       let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:hesa_code) { "11111" }
+      let(:trainee) { create(:trainee, :completed, gender: "female", degrees: [degree], **trainee_attributes) }
 
       before do
         stub_const(
@@ -60,6 +61,16 @@ module Dqt
             "ageRangeFrom" => trainee.course_min_age,
             "ageRangeTo" => trainee.course_max_age,
           })
+        end
+
+        context "itt_end_date is missing" do
+          let(:training_route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
+          let(:hesa_metadatum) { build(:hesa_metadatum, study_length: 1, study_length_unit: "years") }
+          let(:trainee_attributes) { { itt_end_date: nil, hesa_metadatum: hesa_metadatum, training_route: training_route } }
+
+          it "calculates the end date using the course duration data" do
+            expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 1.year).iso8601)
+          end
         end
 
         it "returns a hash including degree attributes" do
