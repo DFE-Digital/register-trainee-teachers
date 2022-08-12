@@ -42,7 +42,7 @@ module Hesa
       end
 
       it "creates or updates a trainee from a student node element" do
-        expect(Trainees::CreateFromHesa).to(receive(:call).with(student_node: instance_of(Nokogiri::XML::Element)))
+        expect(Trainees::CreateFromHesa).to(receive(:call).with(student_node: instance_of(Nokogiri::XML::Element), record_source: RecordSources::HESA_COLLECTION))
         described_class.new.perform
       end
 

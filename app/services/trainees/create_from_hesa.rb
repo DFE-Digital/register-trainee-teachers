@@ -11,9 +11,10 @@ module Trainees
 
     class HesaImportError < StandardError; end
 
-    def initialize(student_node:)
+    def initialize(student_node:, record_source:)
       @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
       @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
+      @record_source = record_source
     end
 
     def call
@@ -34,7 +35,7 @@ module Trainees
 
   private
 
-    attr_reader :hesa_trainee, :trainee
+    attr_reader :hesa_trainee, :trainee, :record_source
 
     def mapped_attributes
       {
@@ -44,6 +45,7 @@ module Trainees
         state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
         course_allocation_subject: course_allocation_subject,
+        record_source: record_source,
       }.merge(created_from_hesa_attribute)
        .merge(personal_details_attributes)
        .merge(provider_attributes)

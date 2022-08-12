@@ -18,5 +18,9 @@ module Hesa
     def url
       "#{Settings.hesa.collection_base_url}/#{@collection_reference}/#{CollectionRequest.next_from_date}"
     end
+
+    def record_source
+      RecordSources::HESA_COLLECTION
+    end
   end
 end

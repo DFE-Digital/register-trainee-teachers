@@ -575,6 +575,7 @@ FactoryBot.define do
       end
 
       hesa_id { Faker::Number.number(digits: 13) }
+      record_source { RecordSources::HESA_COLLECTION }
       created_from_hesa { true }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       hesa_student { create(:hesa_student, hesa_id: hesa_id) }

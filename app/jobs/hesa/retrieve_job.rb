@@ -13,7 +13,7 @@ module Hesa
       Nokogiri::XML::Reader(xml_response).each do |node|
         if node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
           student_node = Nokogiri::XML(node.outer_xml).at("./Student")
-          Trainees::CreateFromHesa.call(student_node: student_node)
+          Trainees::CreateFromHesa.call(student_node: student_node, record_source: record_source)
         end
       rescue Trainees::CreateFromHesa::HesaImportError => e
         Sentry.capture_exception(e)
@@ -28,6 +28,10 @@ module Hesa
     end
 
     def url
+      raise(NotImplementedError)
+    end
+
+    def record_source
       raise(NotImplementedError)
     end
   end
