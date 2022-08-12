@@ -8,14 +8,16 @@ module Hesa
         "95" =>	Diversities::NO_KNOWN_DISABILITY,
         "58" =>	Diversities::BLIND,
         "57" =>	Diversities::DEAF,
-        "59" =>	"Development condition that you have had since childhood which affects motor, cognitive, social and emotional skills, and speech and language",
+        "59" =>	Diversities::DEVELOPMENT_CONDITION,
         "51" =>	Diversities::LEARNING_DIFFICULTY,
         "54" =>	Diversities::LONG_STANDING_ILLNESS,
         "55" =>	Diversities::MENTAL_HEALTH_CONDITION,
         "56" =>	Diversities::PHYSICAL_DISABILITY,
         "53" =>	Diversities::SOCIAL_IMPAIRMENT,
         "96" =>	Diversities::OTHER,
-        "98" =>	"Prefer not to say",
+        # HESA distinguishes between (in order) 'Prefer not to say' and
+        # 'Not available'. We consider these equivalent in Register.
+        "98" =>	Diversities::NOT_PROVIDED,
         "99" =>	Diversities::NOT_PROVIDED,
       }.freeze
     end
