@@ -64,6 +64,7 @@ module Trainees
         training_route: course&.route,
         disabilities: disabilities,
         study_mode: study_mode,
+        record_source: RecordSources::APPLY,
       }.merge(address).merge(ethnic_background_attributes)
     end
 
