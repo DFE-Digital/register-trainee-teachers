@@ -4,6 +4,7 @@ module Hesa
   module CodeSets
     module Ethnicities
       # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/e/ethnic
       MAPPING = {
         "180"	=> Diversities::ARAB,
         "100"	=> Diversities::BANGLADESHI,
@@ -24,6 +25,8 @@ module Hesa
         "168"	=> Diversities::ROMA,
         "179"	=> Diversities::ANOTHER_WHITE_BACKGROUND,
         "899"	=> Diversities::ANOTHER_ETHNIC_BACKGROUND,
+        # HESA distinguishes between (in order) 'Not known', 'Prefer not to say'
+        # and 'Not available'. We consider these equivalent in Register.
         "997"	=> Diversities::NOT_PROVIDED,
         "998"	=> Diversities::NOT_PROVIDED,
         "999"	=> Diversities::NOT_PROVIDED,
