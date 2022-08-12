@@ -103,6 +103,7 @@ module Trainees
         dttp_id: dttp_trainee.dttp_id,
         placement_assignment_dttp_id: placement_assignment.dttp_id,
         hesa_id: dttp_trainee.hesa_id,
+        record_source: RecordSources::DTTP,
       }.merge(personal_details_attributes)
        .merge(contact_attributes)
        .merge(ethnicity_and_disability_attributes)

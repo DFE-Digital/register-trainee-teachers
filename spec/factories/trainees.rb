@@ -566,6 +566,7 @@ FactoryBot.define do
 
     trait :created_from_dttp do
       created_from_dttp { true }
+      record_source { RecordSources::DTTP }
     end
 
     trait :imported_from_hesa do

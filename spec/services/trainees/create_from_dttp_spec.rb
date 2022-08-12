@@ -90,6 +90,7 @@ module Trainees
         expect(trainee.created_at).to eq(api_trainee["createdon"])
         expect(trainee.updated_at).to eq(api_trainee["modifiedon"])
         expect(trainee.dttp_update_sha).to eq(trainee.sha)
+        expect(trainee.record_source).to eq(RecordSources::DTTP)
       end
 
       context "when the trainee has a lead school" do
