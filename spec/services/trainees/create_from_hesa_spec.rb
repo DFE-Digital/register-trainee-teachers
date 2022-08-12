@@ -17,6 +17,10 @@ module Trainees
     let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2016) }
     let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2017) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
+    let(:first_disability_name) { Diversities::LEARNING_DIFFICULTY }
+    let!(:first_disability) { create(:disability, name: first_disability_name) }
+    let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
+    let!(:second_disability) { create(:disability, name: second_disability_name) }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -185,17 +189,55 @@ module Trainees
         let(:hesa_stub_attributes) do
           {
             ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
-            disability1: hesa_disability_codes[Diversities::LEARNING_DIFFICULTY],
+            disability1: hesa_disability_codes[first_disability_name],
           }
         end
 
-        it "sets the diversity disclosure to 'diversity_disclosed'" do
+        it "correctly sets the disclosures and the disability on the trainee" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
+          expect(trainee.disabilities).to include(first_disability)
+        end
+      end
+
+      context "when multiple disabilities are disclosed" do
+        let(:hesa_stub_attributes) do
+          {
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
+            disability1: hesa_disability_codes[first_disability_name],
+            disability2: hesa_disability_codes[second_disability_name],
+          }
+        end
+
+        it "correctly sets the disclosures and all the disabilities on the trainee" do
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
+          expect(trainee.disabilities).to include(first_disability, second_disability)
+        end
+      end
+
+      context "when disability is disclosed as No known disability" do
+        let(:hesa_stub_attributes) do
+          {
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
+            disability1: hesa_disability_codes[Diversities::NO_KNOWN_DISABILITY],
+          }
+        end
+
+        it "sets no disabilities on the trainee" do
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
+          expect(trainee.disabilities).to be_empty
         end
       end
 
       context "when just ethnicity is disclosed" do
-        let(:hesa_stub_attributes) { { ethnic_background: hesa_ethnicity_codes[Diversities::AFRICAN] } }
+        let(:hesa_stub_attributes) do
+          {
+            ethnic_background: hesa_ethnicity_codes[Diversities::AFRICAN],
+            disability1: hesa_disability_codes[Diversities::NOT_PROVIDED],
+          }
+        end
 
         it "sets the diversity disclosure to 'diversity_disclosed' and the correct ethnic group and background" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
