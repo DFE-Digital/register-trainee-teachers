@@ -1,3 +1,5 @@
+<%= f.hidden_field :record_source, value: RecordSources::MANUAL %>
+
 <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.training_routes.edit"), tag: "h1" }) do %>
 
   <% if current_user.provider? && current_user.organisation.hpitt_postgrad? %>

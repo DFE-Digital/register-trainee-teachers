@@ -116,6 +116,6 @@ private
   end
 
   def trainee_params
-    params.fetch(:trainee, {}).permit(:training_route)
+    params.fetch(:trainee, {}).permit(:training_route, :record_source)
   end
 end

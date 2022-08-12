@@ -13,6 +13,7 @@ feature "Create trainee journey" do
     and_i_select_assessment_only_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview
+    and_trainee_record_source_is_set_to_manual
   end
 
   scenario "setting up an initial provider led record", "feature_routes.provider_led_postgrad": true do
@@ -133,5 +134,9 @@ private
   def and_trainee_course_subject_one_set_to_early_years_teaching
     expect(Trainee.last.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
     expect(Trainee.last.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
+  end
+
+  def and_trainee_record_source_is_set_to_manual
+    expect(Trainee.last.record_source).to eq(RecordSources::MANUAL)
   end
 end
