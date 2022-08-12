@@ -118,11 +118,33 @@ module Trainees
       end
     end
 
-    context "when called with TRN data record source" do
+    context "when the trainee was originally created via the TRN data endpoint" do
+      let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
+      let(:create_custom_state) do
+        create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: RecordSources::HESA_TRN_DATA)
+      end
+
+      it "updates the trainee record source to be HESA collection" do
+        expect(trainee.record_source).to eq(RecordSources::HESA_COLLECTION)
+      end
+    end
+
+    context "when the trainee is submitted via TRN data" do
       let(:record_source) { RecordSources::HESA_TRN_DATA }
 
       it "sets record source to HESA_TRN_DATA" do
-        expect(trainee.record_source).to eq(record_source)
+        expect(trainee.record_source).to eq(RecordSources::HESA_TRN_DATA)
+      end
+
+      context "but was originally created via the collection endpoint" do
+        let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
+        let(:create_custom_state) do
+          create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: RecordSources::HESA_COLLECTION)
+        end
+
+        it "does not update the trainee record source" do
+          expect(trainee.record_source).to eq(RecordSources::HESA_COLLECTION)
+        end
       end
     end
 

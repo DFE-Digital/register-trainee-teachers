@@ -45,7 +45,7 @@ module Trainees
         state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
         course_allocation_subject: course_allocation_subject,
-        record_source: record_source,
+        record_source: trainee_record_source,
       }.merge(created_from_hesa_attribute)
        .merge(personal_details_attributes)
        .merge(provider_attributes)
@@ -57,6 +57,18 @@ module Trainees
        .merge(school_attributes)
        .merge(training_initiative_attributes)
        .compact
+    end
+
+    # As soon as the trainee has been submitted over the HESA collection
+    # endpoint, the record_source should remain as "HESA collection". Only
+    # trainees who have ONLY ever been submitted over the TRN data endpoint
+    # should have the record_source "HESA TRN data"
+    def trainee_record_source
+      if record_source == RecordSources::HESA_TRN_DATA && trainee.record_source == RecordSources::HESA_COLLECTION
+        return RecordSources::HESA_COLLECTION
+      end
+
+      record_source
     end
 
     def trn
