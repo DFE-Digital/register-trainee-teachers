@@ -89,8 +89,8 @@ module Dqt
         context "when there is no degree type" do
           let(:degree) { build(:degree, :uk_degree_with_details, uk_degree_uuid: nil) }
 
-          it "sends an empty string as heQualificationType" do
-            expect(subject["qualification"]["heQualificationType"]).to eq("")
+          it "sends nil" do
+            expect(subject["qualification"]["heQualificationType"]).to be_nil
           end
         end
 
