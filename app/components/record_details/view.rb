@@ -43,7 +43,7 @@ module RecordDetails
       return unless show_record_source
 
       { field_label: t(".record_source.title"),
-        field_value: t(".record_source.#{trainee.record_source}") }
+        field_value: t(".record_source.#{trainee.derived_record_source}") }
     end
 
     def trainee_id_row
