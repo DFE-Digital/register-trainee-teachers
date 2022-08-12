@@ -170,7 +170,7 @@ module Trainees
     end
 
     def disability
-      Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
+      Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability1]]
     end
 
     def enqueue_background_jobs!

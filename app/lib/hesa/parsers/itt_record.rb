@@ -24,7 +24,6 @@ module Hesa
         commencement_date: "F_ITTCOMDATE",
         training_initiative: "F_INITIATIVES1",
         hesa_id: "F_HUSID",
-        disability: "F_DISABLE",
         end_date: "F_ENDDATE",
         reason_for_leaving: "F_RSNEND",
         bursary_level: "F_BURSLEV",
@@ -40,6 +39,15 @@ module Hesa
         year_of_course: "F_YEARPRG",
         degrees: "PREVIOUSQUALIFICATIONS",
         placements: "PLACEMENTS",
+        disability1: "F_DISABLE1",
+        disability2: "F_DISABLE2",
+        disability3: "F_DISABLE3",
+        disability4: "F_DISABLE4",
+        disability5: "F_DISABLE5",
+        disability6: "F_DISABLE6",
+        disability7: "F_DISABLE7",
+        disability8: "F_DISABLE8",
+        disability9: "F_DISABLE9",
       }.freeze
 
       class << self

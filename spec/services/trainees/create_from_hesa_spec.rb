@@ -172,7 +172,7 @@ module Trainees
         let(:hesa_stub_attributes) do
           {
             ethnic_background: hesa_disability_codes[Diversities::NOT_PROVIDED],
-            disability: nil,
+            disability1: nil,
           }
         end
 
@@ -185,28 +185,12 @@ module Trainees
         let(:hesa_stub_attributes) do
           {
             ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
-            disability: hesa_disability_codes[Diversities::LEARNING_DIFFICULTY],
+            disability1: hesa_disability_codes[Diversities::LEARNING_DIFFICULTY],
           }
         end
 
         it "sets the diversity disclosure to 'diversity_disclosed'" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
-        end
-      end
-
-      context "when disability is 'MULTIPLE_DISABILITIES'" do
-        let(:trainee_disability) { trainee.trainee_disabilities.last }
-        let(:create_custom_state) { create(:disability, name: Diversities::OTHER) }
-        let(:hesa_stub_attributes) do
-          {
-            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
-            disability: hesa_disability_codes[Diversities::MULTIPLE_DISABILITIES],
-          }
-        end
-
-        it "saves the disability as 'other' and sets the additional_diversity text" do
-          expect(trainee_disability.additional_disability).to eq(Trainees::CreateFromHesa::MULTIPLE_DISABILITIES_TEXT)
-          expect(trainee_disability.disability.name).to eq(Diversities::OTHER)
         end
       end
 
