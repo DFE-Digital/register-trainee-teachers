@@ -24,7 +24,6 @@ module Trainees
         if trainee.save!
           create_degrees!
           store_hesa_metadata!
-          add_multiple_disability_text!
           enqueue_background_jobs!
         end
       end
@@ -133,6 +132,33 @@ module Trainees
       MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
     end
 
+    def diversity_disclosure
+      if disabilities.any? || ethnicity_disclosed?
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      else
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+      end
+    end
+
+    def disability_attributes
+      if disabilities.empty? || disabilities == [Diversities::NOT_PROVIDED]
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
+        }
+      end
+
+      if disabilities == [Diversities::NO_KNOWN_DISABILITY]
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
+        }
+      end
+
+      {
+        disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
+        disabilities: disabilities.map { |disability| Disability.find_by(name: disability) },
+      }
+    end
+
     def ethnicity_attributes
       if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
         ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
@@ -169,8 +195,10 @@ module Trainees
       Hesa::CodeSets::Ethnicities::MAPPING[hesa_trainee[:ethnic_background]]
     end
 
-    def disability
-      Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
+    def disabilities
+      (1..9).map do |n|
+        Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee["disability#{n}".to_sym]]
+      end.compact
     end
 
     def enqueue_background_jobs!
