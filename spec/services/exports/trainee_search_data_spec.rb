@@ -110,7 +110,7 @@ module Exports
           "itt_end_date" => trainee.itt_end_date&.iso8601,
           "course_duration_in_years" => trainee.course_duration_in_years,
           "course_summary" => course&.summary,
-          "commencement_date" => trainee.commencement_date&.iso8601,
+          "trainee_start_date" => trainee.commencement_date&.iso8601,
           "lead_school_name" => trainee.lead_school&.name,
           "lead_school_urn" => trainee.lead_school&.urn,
           "employing_school_name" => trainee.employing_school&.name,

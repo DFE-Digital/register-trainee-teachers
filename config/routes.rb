@@ -59,6 +59,10 @@ Rails.application.routes.draw do
 
   resources :drafts, only: :index
 
+  resources :reports, only: :index do
+    get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off", on: :collection
+  end
+
   resources :trainees, except: :edit do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
