@@ -47,6 +47,8 @@ module "paas" {
   app_docker_image               = var.paas_app_docker_image
   app_start_timeout              = var.paas_app_start_timeout
   postgres_service_plan          = var.paas_postgres_service_plan
+  postgres_snapshot_service_plan = var.paas_postgres_snapshot_service_plan
+  snapshot_databases_to_deploy   = var.paas_snapshot_databases_to_deploy
   redis_service_plan             = var.paas_redis_service_plan
   space_name                     = var.paas_space_name
   app_name                       = var.paas_app_name

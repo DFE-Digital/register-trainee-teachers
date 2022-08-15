@@ -6,6 +6,10 @@ variable app_start_timeout { default = 300 }
 
 variable postgres_service_plan {}
 
+variable postgres_snapshot_service_plan {}
+
+variable snapshot_databases_to_deploy {}
+
 variable redis_service_plan {}
 
 variable space_name {}
@@ -41,12 +45,13 @@ variable "restore_from_db_guid" {}
 variable "db_backup_before_point_in_time" {}
 
 locals {
-  app_name_suffix           = var.app_name == null ? var.app_environment : var.app_name
-  postgres_service_name     = "register-postgres-${local.app_name_suffix}"
-  redis_worker_service_name = "register-redis-worker-${local.app_name_suffix}"
-  redis_cache_service_name  = "register-redis-cache-${local.app_name_suffix}"
-  web_app_name              = "register-${local.app_name_suffix}"
-  base_url_env_var          = var.app_environment == "review" ? { SETTINGS__BASE_URL = "https://${local.web_app_name}.london.cloudapps.digital" } : {}
+  app_name_suffix                = var.app_name == null ? var.app_environment : var.app_name
+  postgres_service_name          = "register-postgres-${local.app_name_suffix}"
+  postgres_snapshot_service_name = "register-postgres-analysis"
+  redis_worker_service_name      = "register-redis-worker-${local.app_name_suffix}"
+  redis_cache_service_name       = "register-redis-cache-${local.app_name_suffix}"
+  web_app_name                   = "register-${local.app_name_suffix}"
+  base_url_env_var               = var.app_environment == "review" ? { SETTINGS__BASE_URL = "https://${local.web_app_name}.london.cloudapps.digital" } : {}
   app_environment = merge(var.app_config_variable, var.app_secrets_variable, {
     DATABASE_URL  = cloudfoundry_service_key.postgres-key.credentials.uri
     SETTINGS__BLAZER_DATABASE_URL = cloudfoundry_service_key.postgres-blazer-key.credentials.uri

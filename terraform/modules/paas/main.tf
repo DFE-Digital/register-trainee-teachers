@@ -18,6 +18,19 @@ resource cloudfoundry_service_instance postgres_instance {
   }
 }
 
+resource cloudfoundry_service_instance postgres_snapshot {
+  count        = var.snapshot_databases_to_deploy
+  name         = local.postgres_snapshot_service_name
+  space        = data.cloudfoundry_space.space.id
+  service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_snapshot_service_plan]
+  json_params  = jsonencode(local.postgres_params)
+  timeouts {
+    create = "30m"
+    delete = "30m"
+    update = "30m"
+  }
+}
+
 resource cloudfoundry_service_instance worker_redis_instance {
   name         = local.redis_worker_service_name
   space        = data.cloudfoundry_space.space.id
@@ -137,4 +150,10 @@ resource cloudfoundry_service_key postgres-key {
 resource cloudfoundry_service_key postgres-blazer-key {
   name             = "${local.postgres_service_name}-blazer"
   service_instance = cloudfoundry_service_instance.postgres_instance.id
+}
+
+resource cloudfoundry_service_key postgres-analysis-key {
+  count            = var.snapshot_databases_to_deploy
+  name             = "${local.postgres_snapshot_service_name}-key"
+  service_instance = cloudfoundry_service_instance.postgres_snapshot[count.index].id
 }
