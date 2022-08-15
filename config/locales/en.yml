@@ -203,10 +203,11 @@ en:
         date_of_birth: &date_of_birth Date of birth
         gender: &gender Gender
         genders:
-          male: Male
           female: Female
-          other: Other
+          male: Male
           gender_not_provided: Not provided
+          other: Other
+          prefer_not_to_say: Prefer not to say
         nationality: &nationality Nationality
       reinstatement_details:
         reinstate_date_label: Date of return
@@ -1178,6 +1179,12 @@ en:
         study_modes:
           full_time: Full time
           part_time: Part time
+        genders:
+          female: Female
+          male: Male
+          gender_not_provided: Not provided
+          prefer_not_to_say: Prefer not to say
+          other: Other
     errors:
       models:
         trainee:

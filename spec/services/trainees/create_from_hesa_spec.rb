@@ -15,8 +15,12 @@ module Trainees
     let(:hesa_course_subject_codes) { Hesa::CodeSets::CourseSubjects::MAPPING.invert }
     let(:hesa_age_range_codes) { Hesa::CodeSets::AgeRanges::MAPPING.invert }
     let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2016) }
-    let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2018) }
+    let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2017) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
+    let(:first_disability_name) { Diversities::LEARNING_DIFFICULTY }
+    let!(:first_disability) { create(:disability, name: first_disability_name) }
+    let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
+    let!(:second_disability) { create(:disability, name: second_disability_name) }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -63,16 +67,16 @@ module Trainees
         expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
         expect(trainee.study_mode).to eq("full_time")
         expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
-        expect(trainee.itt_end_date).to be_nil
+        expect(trainee.itt_end_date).to eq(Date.parse(student_attributes[:itt_end_date]))
         expect(trainee.start_academic_cycle).to eq(start_academic_cycle)
-        expect(trainee.end_academic_cycle).to be_nil
+        expect(trainee.end_academic_cycle).to eq(end_academic_cycle)
         expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
       end
 
       it "updates the trainee's school and training details" do
         expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
         expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
-        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
       end
 
       it "updates the trainee's funding details" do
@@ -95,12 +99,9 @@ module Trainees
       end
 
       it "creates a trainee HESA metadata record" do
-        expect(trainee.hesa_metadatum.study_length).to eq(3)
-        expect(trainee.hesa_metadatum.study_length_unit).to eq("years")
         expect(trainee.hesa_metadatum.itt_aim).to eq("Both professional status and academic award")
         expect(trainee.hesa_metadatum.itt_qualification_aim).to eq("Masters, not by research")
         expect(trainee.hesa_metadatum.fundability).to eq("Eligible for funding from the DfE")
-        expect(trainee.hesa_metadatum.service_leaver).to eq("Trainee has not left full time employment in the British Army, Royal Air Force or Royal Navy within 5 years of beginning the programme")
         expect(trainee.hesa_metadatum.course_programme_title).to eq("FE Course 1")
         expect(trainee.hesa_metadatum.placement_school_urn).to eq(900000)
         expect(trainee.hesa_metadatum.year_of_course).to eq("0")
@@ -111,34 +112,6 @@ module Trainees
 
         it "enqueues Dqt::RegisterForTrnJob" do
           expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(Trainee.last)
-        end
-      end
-
-      context "when the HESA training route is Provider-led" do
-        let(:hesa_stub_attributes) { { training_route: "01", itt_qualification_aim: itt_qualification_aim } }
-
-        context "when the qualification aim is undergrad level" do
-          let(:itt_qualification_aim) { "001" }
-
-          it "creates a Provider-led (undergrad) trainee" do
-            expect(trainee.training_route).to eq("provider_led_undergrad")
-          end
-        end
-
-        context "when the qualification aim is not undergrad level" do
-          let(:itt_qualification_aim) { "020" }
-
-          it "creates a Provider-led (postgrad) trainee" do
-            expect(trainee.training_route).to eq("provider_led_postgrad")
-          end
-        end
-
-        context "when the qualification aim is nil" do
-          let(:itt_qualification_aim) { nil }
-
-          it "creates a Provider-led (undergrad) trainee" do
-            expect(trainee.training_route).to eq("provider_led_postgrad")
-          end
         end
       end
     end
@@ -202,8 +175,8 @@ module Trainees
       context "when neither ethnicity nor disabilities are disclosed" do
         let(:hesa_stub_attributes) do
           {
-            ethnic_background: hesa_disability_codes[Diversities::INFORMATION_REFUSED],
-            disability: nil,
+            ethnic_background: hesa_disability_codes[Diversities::NOT_PROVIDED],
+            disability1: nil,
           }
         end
 
@@ -215,45 +188,61 @@ module Trainees
       context "when just disability is disclosed" do
         let(:hesa_stub_attributes) do
           {
-            ethnic_background: hesa_ethnicity_codes[Diversities::INFORMATION_REFUSED],
-            disability: hesa_disability_codes[Diversities::LEARNING_DIFFICULTY],
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
+            disability1: hesa_disability_codes[first_disability_name],
           }
         end
 
-        it "sets the diversity disclosure to 'diversity_disclosed'" do
+        it "correctly sets the disclosures and the disability on the trainee" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
+          expect(trainee.disabilities).to include(first_disability)
         end
       end
 
-      context "when disability is 'MULTIPLE_DISABILITIES'" do
-        let(:trainee_disability) { trainee.trainee_disabilities.last }
-        let(:create_custom_state) { create(:disability, name: Diversities::OTHER) }
+      context "when multiple disabilities are disclosed" do
         let(:hesa_stub_attributes) do
           {
-            ethnic_background: hesa_ethnicity_codes[Diversities::INFORMATION_REFUSED],
-            disability: hesa_disability_codes[Diversities::MULTIPLE_DISABILITIES],
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
+            disability1: hesa_disability_codes[first_disability_name],
+            disability2: hesa_disability_codes[second_disability_name],
           }
         end
 
-        it "saves the disability as 'other' and sets the additional_diversity text" do
-          expect(trainee_disability.additional_disability).to eq(Trainees::CreateFromHesa::MULTIPLE_DISABILITIES_TEXT)
-          expect(trainee_disability.disability.name).to eq(Diversities::OTHER)
+        it "correctly sets the disclosures and all the disabilities on the trainee" do
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
+          expect(trainee.disabilities).to include(first_disability, second_disability)
+        end
+      end
+
+      context "when disability is disclosed as No known disability" do
+        let(:hesa_stub_attributes) do
+          {
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
+            disability1: hesa_disability_codes[Diversities::NO_KNOWN_DISABILITY],
+          }
+        end
+
+        it "sets no disabilities on the trainee" do
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
+          expect(trainee.disabilities).to be_empty
         end
       end
 
       context "when just ethnicity is disclosed" do
-        let(:hesa_stub_attributes) { { ethnic_background: hesa_ethnicity_codes[Diversities::AFRICAN] } }
-
-        it "sets the diversity disclosure to 'diversity_disclosed'" do
-          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+        let(:hesa_stub_attributes) do
+          {
+            ethnic_background: hesa_ethnicity_codes[Diversities::AFRICAN],
+            disability1: hesa_disability_codes[Diversities::NOT_PROVIDED],
+          }
         end
-      end
 
-      context "when ethnicity is information_refused" do
-        let(:hesa_stub_attributes) { { ethnic_background: hesa_ethnicity_codes[Diversities::INFORMATION_REFUSED] } }
-
-        it "sets the ethnic_group to 'Not provided'" do
-          expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+        it "sets the diversity disclosure to 'diversity_disclosed' and the correct ethnic group and background" do
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:black])
+          expect(trainee.ethnic_background).to eq(Diversities::AFRICAN)
         end
       end
 
@@ -273,24 +262,24 @@ module Trainees
           let(:hesa_stub_attributes) do
             {
               end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[WithdrawalReasons::HEALTH_REASONS],
+              reason_for_leaving: hesa_reasons_for_leaving_codes[WithdrawalReasons::DEATH],
             }
           end
 
           it "creates a withdrawn trainee with the relevant details" do
             expect(trainee.state).to eq("withdrawn")
             expect(trainee.withdraw_date).to eq(date)
-            expect(trainee.withdraw_reason).to eq(WithdrawalReasons::HEALTH_REASONS)
+            expect(trainee.withdraw_reason).to eq(WithdrawalReasons::DEATH)
           end
         end
 
-        context "and the reason for completion is 'Completion of course - result unknown'" do
+        context "and the reason for completion is 'Left but award of credit or a qualification not yet known'" do
           let(:hesa_modes) { Hesa::CodeSets::Modes::MAPPING.invert }
 
           let(:hesa_stub_attributes) do
             {
               end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::UNKNOWN_COMPLETION],
+              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
               mode: hesa_modes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
             }
           end

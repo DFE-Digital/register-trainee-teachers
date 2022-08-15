@@ -13,7 +13,6 @@ FactoryBot.define do
     itt_aim { Hesa::CodeSets::IttAims::MAPPING.values.sample }
     itt_qualification_aim { Hesa::CodeSets::IttQualificationAims::MAPPING.values.sample }
     fundability { Hesa::CodeSets::FundCodes::MAPPING.values.sample }
-    service_leaver { Hesa::CodeSets::ServiceLeavers::MAPPING.values.sample }
     year_of_course { (0..5).to_a.sample }
   end
 end

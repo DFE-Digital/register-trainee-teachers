@@ -3,26 +3,33 @@
 module Hesa
   module CodeSets
     module Ethnicities
-      # https://www.hesa.ac.uk/collection/c21053/xml/c21053/c21053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/e/ethnic
       MAPPING = {
-        "10" => Diversities::WHITE_BRITISH,
-        "15" => Diversities::TRAVELLER_OR_GYPSY,
-        "21" => Diversities::CARIBBEAN,
-        "22" => Diversities::AFRICAN,
-        "29" => Diversities::ANOTHER_BLACK_BACKGROUND,
-        "31" => Diversities::INDIAN,
-        "32" => Diversities::PAKISTANI,
-        "33" => Diversities::BANGLADESHI,
-        "34" => Diversities::CHINESE,
-        "39" => Diversities::ANOTHER_ASIAN_BACKGROUND,
-        "41" => Diversities::BLACK_CARIBBEAN_AND_WHITE,
-        "42" => Diversities::BLACK_AFRICAN_AND_WHITE,
-        "43" => Diversities::ASIAN_AND_WHITE,
-        "49" => Diversities::ANOTHER_MIXED_BACKGROUND,
-        "50" => Diversities::ARAB,
-        "80" => Diversities::ANOTHER_ETHNIC_BACKGROUND,
-        "90" => Diversities::NOT_PROVIDED,
-        "98" => Diversities::INFORMATION_REFUSED,
+        "180"	=> Diversities::ARAB,
+        "100"	=> Diversities::BANGLADESHI,
+        "101"	=> Diversities::CHINESE,
+        "103"	=> Diversities::INDIAN,
+        "104"	=> Diversities::PAKISTANI,
+        "119"	=> Diversities::ANOTHER_ASIAN_BACKGROUND,
+        "120"	=> Diversities::AFRICAN,
+        "121"	=> Diversities::CARIBBEAN,
+        "139"	=> Diversities::ANOTHER_BLACK_BACKGROUND,
+        "140"	=> Diversities::ASIAN_AND_WHITE,
+        "141"	=> Diversities::BLACK_AFRICAN_AND_WHITE,
+        "142"	=> Diversities::BLACK_CARIBBEAN_AND_WHITE,
+        "159"	=> Diversities::ANOTHER_MIXED_BACKGROUND,
+        "160"	=> Diversities::WHITE_BRITISH,
+        "163"	=> Diversities::TRAVELLER_OR_GYPSY,
+        "166"	=> Diversities::IRISH,
+        "168"	=> Diversities::ROMA,
+        "179"	=> Diversities::ANOTHER_WHITE_BACKGROUND,
+        "899"	=> Diversities::ANOTHER_ETHNIC_BACKGROUND,
+        # HESA distinguishes between (in order) 'Not known', 'Prefer not to say'
+        # and 'Not available'. We consider these equivalent in Register.
+        "997"	=> Diversities::NOT_PROVIDED,
+        "998"	=> Diversities::NOT_PROVIDED,
+        "999"	=> Diversities::NOT_PROVIDED,
       }.freeze
     end
   end

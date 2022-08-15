@@ -24,7 +24,6 @@ module Trainees
         if trainee.save!
           create_degrees!
           store_hesa_metadata!
-          add_multiple_disability_text!
           enqueue_background_jobs!
         end
       end
@@ -73,7 +72,7 @@ module Trainees
         first_names: hesa_trainee[:first_names],
         last_name: hesa_trainee[:last_name],
         date_of_birth: hesa_trainee[:date_of_birth],
-        gender: gender,
+        gender: sex,
         nationalities: nationalities,
         email: hesa_trainee[:email],
       }
@@ -133,8 +132,51 @@ module Trainees
       MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
     end
 
-    def gender
-      Hesa::CodeSets::Genders::MAPPING[hesa_trainee[:gender]]
+    def diversity_disclosure
+      if disabilities.any? || ethnicity_disclosed?
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      else
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+      end
+    end
+
+    def disability_attributes
+      if disabilities.empty? || disabilities == [Diversities::NOT_PROVIDED]
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
+        }
+      end
+
+      if disabilities == [Diversities::NO_KNOWN_DISABILITY]
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
+        }
+      end
+
+      {
+        disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
+        disabilities: disabilities.map { |disability| Disability.find_by(name: disability) },
+      }
+    end
+
+    def ethnicity_attributes
+      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
+        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+
+        return {
+          ethnic_group: ethnic_group,
+          ethnic_background: ethnic_background,
+        }
+      end
+
+      {
+        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+        ethnic_background: Diversities::NOT_PROVIDED,
+      }
+    end
+
+    def sex
+      Hesa::CodeSets::Sexes::MAPPING[hesa_trainee[:sex]]
     end
 
     def nationalities
@@ -146,18 +188,6 @@ module Trainees
     end
 
     def training_route
-      provider_led_undergrad? ? TRAINING_ROUTE_ENUMS[:provider_led_undergrad] : hesa_route
-    end
-
-    def provider_led_undergrad?
-      hesa_route == TRAINING_ROUTE_ENUMS[:provider_led_postgrad] && undergrad_level?
-    end
-
-    def undergrad_level?
-      Hesa::CodeSets::IttQualificationAims::UNDERGRAD_AIMS.include?(itt_qualification_aim)
-    end
-
-    def hesa_route
       Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_trainee[:training_route]]
     end
 
@@ -165,8 +195,10 @@ module Trainees
       Hesa::CodeSets::Ethnicities::MAPPING[hesa_trainee[:ethnic_background]]
     end
 
-    def disability
-      Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:disability]]
+    def disabilities
+      (1..9).map do |n|
+        Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee["disability#{n}".to_sym]]
+      end.compact
     end
 
     def enqueue_background_jobs!
@@ -244,21 +276,14 @@ module Trainees
 
     def store_hesa_metadata!
       hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee: trainee)
-      hesa_metadatum.assign_attributes(study_length: hesa_trainee[:study_length],
-                                       study_length_unit: study_length_unit,
-                                       itt_aim: itt_aim,
+      hesa_metadatum.assign_attributes(itt_aim: itt_aim,
                                        itt_qualification_aim: itt_qualification_aim,
                                        fundability: fundability,
-                                       service_leaver: service_leaver,
                                        course_programme_title: hesa_trainee[:course_programme_title]&.strip,
                                        placement_school_urn: hesa_trainee[:placements]&.first&.fetch(:school_urn),
                                        pg_apprenticeship_start_date: hesa_trainee[:pg_apprenticeship_start_date],
                                        year_of_course: hesa_trainee[:year_of_course])
       hesa_metadatum.save
-    end
-
-    def study_length_unit
-      Hesa::CodeSets::StudyLengthUnits::MAPPING[hesa_trainee[:study_length_unit]]
     end
 
     def itt_aim
@@ -273,12 +298,8 @@ module Trainees
       Hesa::CodeSets::FundCodes::MAPPING[hesa_trainee[:fund_code]]
     end
 
-    def service_leaver
-      Hesa::CodeSets::ServiceLeavers::MAPPING[hesa_trainee[:service_leaver]]
-    end
-
     def trainee_state
-      @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee)
+      @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee, trainee_persisted: trainee.persisted?) || trainee.state
     end
 
     def course_allocation_subject

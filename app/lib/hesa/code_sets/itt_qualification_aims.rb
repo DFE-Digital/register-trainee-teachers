@@ -13,8 +13,8 @@ module Hesa
 
       UNDERGRAD_AIMS = [BA, BA_HONS, BED, BED_HONS, BSC, BSC_HONS, UNDERGRAD_MASTER_OF_TEACHING].freeze
 
-      # https://www.hesa.ac.uk/collection/c21053/xml/c21053/c21053codelists.xsd
-      # https://www.hesa.ac.uk/collection/c21053/e/qlaim
+      # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/e/qlaim
       MAPPING = {
         "007" => BA,
         "008" => BA_HONS,

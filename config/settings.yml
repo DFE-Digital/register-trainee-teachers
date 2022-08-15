@@ -22,7 +22,7 @@ hesa:
   collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData"
   trn_data_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNData"
   trn_file_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNFile"
-  current_collection_reference: "C21053"
+  current_collection_reference: "C22053"
   current_collection_start_date: "2022-04-01"
   username: <get from secrets>
   password: <get from secrets>

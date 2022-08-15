@@ -3,8 +3,8 @@
 module Hesa
   module CodeSets
     module BursaryLevels
-      # https://www.hesa.ac.uk/collection/c21053/xml/c21053/c21053codelists.xsd
-      # https://www.hesa.ac.uk/collection/c21053/e/burslev
+      # https://www.hesa.ac.uk/collection/c22053/xml/c22053/c22053codelists.xsd
+      # https://www.hesa.ac.uk/collection/c22053/e/burslev
       # Note that Tier 1, Tier 2, and Tier 3 are fetched from the previous year, i.e:
       # https://www.hesa.ac.uk/collection/c20053/e/burslev
       MAPPING = {

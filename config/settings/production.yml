@@ -36,7 +36,7 @@ features:
     send_data_to_big_query: true
   integrate_with_dqt: true
   hesa_import:
-    sync_collection: true
+    sync_collection: false
 environment:
   name: beta
 
