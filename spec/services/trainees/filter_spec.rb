@@ -8,18 +8,28 @@ module Trainees
 
     let(:draft_trainee) { create(:trainee, :incomplete_draft, first_names: "Draft") }
     let(:apply_draft_trainee) { create(:trainee, :with_apply_application, first_names: "Apply") }
+    let(:hesa_trn_data_trainee) { create(:trainee, record_source: RecordSources::HESA_TRN_DATA) }
+    let(:hesa_collection_trainee) { create(:trainee, record_source: RecordSources::HESA_COLLECTION) }
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
 
     it { is_expected.to match_array(trainees) }
 
-    context "empty trainee exists" do
+    context "when an empty trainee exists" do
       let!(:empty_trainee) do
         Trainee.create(provider_id: draft_trainee.provider.id,
                        training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
       end
 
       it { is_expected.not_to include(empty_trainee) }
+    end
+
+    context "when a trainee created from the HESA TRN data endpoint exists" do
+      it { is_expected.not_to include(hesa_trn_data_trainee) }
+    end
+
+    context "when a trainee submitted in the HESA collection exists" do
+      it { is_expected.to include(hesa_collection_trainee) }
     end
 
     context "with training_route filter" do
