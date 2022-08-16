@@ -35,6 +35,8 @@ FactoryBot.define do
     email { "#{first_names}.#{last_name}@example.com" }
     applying_for_bursary { nil }
 
+    record_source { RecordSources::MANUAL }
+
     factory :trainee do
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
     end
@@ -564,6 +566,7 @@ FactoryBot.define do
 
     trait :created_from_dttp do
       created_from_dttp { true }
+      record_source { RecordSources::DTTP }
     end
 
     trait :imported_from_hesa do
@@ -572,6 +575,7 @@ FactoryBot.define do
       end
 
       hesa_id { Faker::Number.number(digits: 13) }
+      record_source { RecordSources::HESA_COLLECTION }
       created_from_hesa { true }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
       hesa_student { create(:hesa_student, hesa_id: hesa_id) }

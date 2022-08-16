@@ -64,7 +64,7 @@ module ApplicationRecordCard
       return unless show_record_source
 
       title = I18n.t("components.application_record_card.record_source.title")
-      record_source_text = I18n.t("components.application_record_card.record_source.#{record.record_source}")
+      record_source_text = I18n.t("components.application_record_card.record_source.#{record.derived_record_source}")
       tag.p("#{title}: #{record_source_text}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__record_source govuk-!-margin-bottom-0 govuk-!-margin-top-2")
     end
 

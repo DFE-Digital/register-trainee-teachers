@@ -14,5 +14,9 @@ module Hesa
     def url
       "#{Settings.hesa.trn_data_base_url}/#{@collection_reference}/Latest"
     end
+
+    def record_source
+      RecordSources::HESA_TRN_DATA
+    end
   end
 end

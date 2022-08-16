@@ -241,6 +241,7 @@ shared:
     - progress
     - provider_id
     - recommended_for_award_at
+    - record_source
     - region
     - reinstate_date
     - slug

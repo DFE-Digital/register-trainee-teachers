@@ -21,6 +21,7 @@ module Trainees
     let!(:first_disability) { create(:disability, name: first_disability_name) }
     let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
     let!(:second_disability) { create(:disability, name: second_disability_name) }
+    let(:record_source) { RecordSources::HESA_COLLECTION }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -35,15 +36,16 @@ module Trainees
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:school, urn: student_attributes[:lead_school_urn])
       create_custom_state
-      described_class.call(student_node: student_node)
+      described_class.call(student_node: student_node, record_source: record_source)
     end
 
     describe "HESA information imported from XML" do
-      it "updates the Trainee ID, HESA ID and TRN" do
+      it "updates the Trainee ID, HESA ID, TRN and record_source" do
         expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
         expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
         expect(trainee.trn).to eq(student_attributes[:trn])
         expect(trainee.course_allocation_subject).to eq(course_allocation_subject)
+        expect(trainee.record_source).to eq(record_source)
       end
 
       it "updates the trainee's personal details" do
@@ -112,6 +114,36 @@ module Trainees
 
         it "enqueues Dqt::RegisterForTrnJob" do
           expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(Trainee.last)
+        end
+      end
+    end
+
+    context "when the trainee was originally created via the TRN data endpoint" do
+      let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
+      let(:create_custom_state) do
+        create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: RecordSources::HESA_TRN_DATA)
+      end
+
+      it "updates the trainee record source to be HESA collection" do
+        expect(trainee.record_source).to eq(RecordSources::HESA_COLLECTION)
+      end
+    end
+
+    context "when the trainee is submitted via TRN data" do
+      let(:record_source) { RecordSources::HESA_TRN_DATA }
+
+      it "sets record source to HESA_TRN_DATA" do
+        expect(trainee.record_source).to eq(RecordSources::HESA_TRN_DATA)
+      end
+
+      context "but was originally created via the collection endpoint" do
+        let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
+        let(:create_custom_state) do
+          create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: RecordSources::HESA_COLLECTION)
+        end
+
+        it "does not update the trainee record source" do
+          expect(trainee.record_source).to eq(RecordSources::HESA_COLLECTION)
         end
       end
     end

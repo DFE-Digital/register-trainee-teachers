@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_09_102256) do
+ActiveRecord::Schema.define(version: 2022_08_12_143158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -678,6 +678,7 @@ ActiveRecord::Schema.define(version: 2022_08_09_102256) do
     t.bigint "course_allocation_subject_id"
     t.bigint "start_academic_cycle_id"
     t.bigint "end_academic_cycle_id"
+    t.string "record_source"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"

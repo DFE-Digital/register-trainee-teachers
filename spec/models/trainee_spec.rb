@@ -403,8 +403,8 @@ describe Trainee do
       end
     end
 
-    describe "#record_source" do
-      subject { trainee.record_source }
+    describe "#derived_record_source" do
+      subject { trainee.derived_record_source }
 
       context "manual record source" do
         let(:trainee) { create(:trainee) }

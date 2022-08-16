@@ -46,3 +46,7 @@ RSpec/Capybara/FeatureMethods:
 
 RSpec/MessageChain:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Exclude:
+    - "spec/**/*"

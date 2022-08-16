@@ -45,6 +45,7 @@ module Trainees
         course_min_age: course.min_age,
         course_max_age: course.max_age,
         study_mode: "full_time",
+        record_source: RecordSources::APPLY,
       }
     end
 

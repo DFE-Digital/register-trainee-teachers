@@ -397,7 +397,7 @@ class Trainee < ApplicationRecord
     hesa_id.present?
   end
 
-  def record_source
+  def derived_record_source
     return "hesa" if hesa_record?
 
     return "apply" if apply_application?
