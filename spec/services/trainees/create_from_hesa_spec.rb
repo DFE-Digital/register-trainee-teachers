@@ -113,7 +113,17 @@ module Trainees
         let(:hesa_stub_attributes) { {} }
 
         it "enqueues Dqt::RegisterForTrnJob" do
-          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(Trainee.last)
+          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(trainee)
+        end
+      end
+
+      context "when the trainee has no TRN and no reason for leaving", feature_integrate_with_dqt: true do
+        let(:hesa_stub_attributes) { { trn: nil } }
+
+        it "sets the state to submitted_for_trn and the submitted_for_trn_at" do
+          expect(trainee.state).to eq("submitted_for_trn")
+          expect(trainee.submitted_for_trn_at).not_to be_nil
+          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(trainee)
         end
       end
     end
