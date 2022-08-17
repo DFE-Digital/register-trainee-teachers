@@ -8,8 +8,6 @@ module Trainees
 
     let(:draft_trainee) { create(:trainee, :incomplete_draft, first_names: "Draft") }
     let(:apply_draft_trainee) { create(:trainee, :with_apply_application, first_names: "Apply") }
-    let(:hesa_trn_data_trainee) { create(:trainee, record_source: RecordSources::HESA_TRN_DATA) }
-    let(:hesa_collection_trainee) { create(:trainee, record_source: RecordSources::HESA_COLLECTION) }
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
 
@@ -22,14 +20,6 @@ module Trainees
       end
 
       it { is_expected.not_to include(empty_trainee) }
-    end
-
-    context "when a trainee created from the HESA TRN data endpoint exists" do
-      it { is_expected.not_to include(hesa_trn_data_trainee) }
-    end
-
-    context "when a trainee submitted in the HESA collection exists" do
-      it { is_expected.to include(hesa_collection_trainee) }
     end
 
     context "with training_route filter" do
