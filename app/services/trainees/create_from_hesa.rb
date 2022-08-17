@@ -53,6 +53,7 @@ module Trainees
        .merge(course_attributes)
        .merge(withdrawal_attributes)
        .merge(deferral_attributes)
+       .merge(submitted_for_trn_attributes)
        .merge(funding_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
@@ -124,6 +125,12 @@ module Trainees
       return {} unless trainee_state == :deferred
 
       { defer_date: hesa_trainee[:end_date] }
+    end
+
+    def submitted_for_trn_attributes
+      return {} unless trainee_state == :submitted_for_trn
+
+      { submitted_for_trn_at: Time.zone.now }
     end
 
     def school_attributes
