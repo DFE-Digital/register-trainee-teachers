@@ -4,7 +4,7 @@ module TeacherTrainingApi
   class ImportCourse
     include ServicePattern
 
-    # For full list, see https://api.publish-teacher-training-courses.service.gov.uk/api-reference.html#schema-courseattributes
+    # For full list, see https://api.publish-teacher-training-courses.service.gov.uk/docs/api-reference.html#schema-courseattributes
     IMPORTABLE_STATES = %w[
       rolled_over
       published
