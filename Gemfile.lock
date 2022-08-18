@@ -15,6 +15,14 @@ GIT
     dfe-reference-data (1.0.0)
       activesupport
 
+GIT
+  remote: https://github.com/DFE-Digital/rspec-retry.git
+  revision: f6b9f3fd9ed7f140794adaf5b08d430265b6ebd2
+  branch: main
+  specs:
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -675,6 +683,7 @@ DEPENDENCIES
   redcarpet
   request_store (~> 1.5)
   rspec-rails (~> 5.1.2)
+  rspec-retry!
   rubocop-rails
   rubocop-rspec
   scss_lint-govuk

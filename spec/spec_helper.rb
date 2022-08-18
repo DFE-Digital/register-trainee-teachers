@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "rspec/retry"
+
 if ENV.fetch("COVERAGE", false)
   require "simplecov"
 
@@ -37,4 +39,18 @@ RSpec.configure do |config|
   config.order = :random
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  config.verbose_retry = true
+
+  config.display_try_failure_messages = true
+
+  config.around do |ex|
+    ex.run_with_retry retry: 3
+  end
+
+  config.retry_callback = proc do |ex|
+    if ex.metadata[:js]
+      Capybara.reset!
+    end
+  end
 end
