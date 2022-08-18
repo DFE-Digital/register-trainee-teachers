@@ -7,22 +7,12 @@ module Dqt
     describe TraineeRequest do
       let(:trainee) { create(:trainee, :completed, gender: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
-      let(:hesa_code) { "11111" }
-      let(:ukprn) { DfE::ReferenceData::Degrees::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
+      let(:hesa_code) { Degrees::DfeReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
+      let(:ukprn) { Degrees::DfeReference::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
       let(:dqt_degree_type) { "BachelorOfArts" }
       let(:uk_degree_uuid) { "db695652-c197-e711-80d8-005056ac45bb" }
 
       before do
-        stub_const(
-          "DfE::ReferenceData::Degrees::SINGLE_SUBJECTS",
-          DfE::ReferenceData::HardcodedReferenceList.new({
-            SecureRandom.uuid => {
-              name: degree.subject,
-              hecos_code: hesa_code,
-            },
-          }),
-        )
-
         degree.uk_degree_uuid = uk_degree_uuid
       end
 

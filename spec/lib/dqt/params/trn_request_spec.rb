@@ -7,20 +7,8 @@ module Dqt
     describe TrnRequest do
       let(:trainee_attributes) { {} }
       let(:degree) { build(:degree, :uk_degree_with_details) }
-      let(:hesa_code) { "11111" }
+      let(:hesa_code) { Degrees::DfeReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
       let(:trainee) { create(:trainee, :completed, gender: "female", degrees: [degree], **trainee_attributes) }
-
-      before do
-        stub_const(
-          "DfE::ReferenceData::Degrees::SINGLE_SUBJECTS",
-          DfE::ReferenceData::HardcodedReferenceList.new({
-            SecureRandom.uuid => {
-              name: degree.subject,
-              hecos_code: hesa_code,
-            },
-          }),
-        )
-      end
 
       describe "#params" do
         subject { described_class.new(trainee: trainee).params }

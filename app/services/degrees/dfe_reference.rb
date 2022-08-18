@@ -43,11 +43,11 @@ module Degrees
 
     class << self
       def find_subject(uuid: nil, name: nil, hecos_code: nil)
-        find_item(:single_subjects, id: uuid, hecos_code: hecos_code, name: name)
+        find_item(:subjects, id: uuid, hecos_code: hecos_code, name: name)
       end
 
       def find_type(uuid: nil, name: nil, abbreviation: nil, hesa_code: nil)
-        find_item(:types_including_generics,
+        find_item(:types,
                   id: uuid,
                   name: name,
                   hesa_itt_code: hesa_code,
@@ -63,7 +63,7 @@ module Degrees
       end
 
       def find_item(list_type, filters)
-        ref_dataset = DfE::ReferenceData::Degrees.const_get(list_type.to_s.upcase)
+        ref_dataset = Degrees::DfeReference.const_get(list_type.to_s.upcase)
 
         return ref_dataset.one(filters[:id]) if filters[:id].present?
 
