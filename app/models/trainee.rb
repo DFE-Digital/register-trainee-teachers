@@ -44,6 +44,7 @@ class Trainee < ApplicationRecord
   has_many :disabilities, through: :trainee_disabilities
 
   has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
+  has_one :dqt_trn_request, class_name: "Dqt::TrnRequest"
 
   attribute :progress, Progress.to_type
 
