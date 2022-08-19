@@ -48,6 +48,7 @@ module Dqt
             "subject3" => trainee.course_subject_three,
             "ageRangeFrom" => trainee.course_min_age,
             "ageRangeTo" => trainee.course_max_age,
+            "ittQualificationAim" => nil,
           })
         end
 
@@ -102,8 +103,8 @@ module Dqt
                    degrees: [degree])
           end
 
-          it "includes the qualitifcation aim and type" do
-            expect(subject["qualification"]).to include("ittQualificationAim" => dqt_itt_aim)
+          it "includes the itt qualification aim and type" do
+            expect(subject["initialTeacherTraining"]).to include("ittQualificationAim" => dqt_itt_aim)
           end
         end
 
