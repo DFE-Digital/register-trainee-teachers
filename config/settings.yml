@@ -69,6 +69,7 @@ features:
   redirect_education_domain: true
   hesa_trn_requests: false
   hesa_import:
+    test_mode: false
     sync_collection: false
     sync_trn_data: false
   # For the 3 months prior to an academic cycle, we're not sure
