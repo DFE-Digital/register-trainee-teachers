@@ -34,7 +34,8 @@ features:
   google:
     send_data_to_big_query: false
   hesa_import:
-    sync_collection: true
+    test_mode: true
+    sync_trn_data: true
 
 environment:
   name: productiondata
