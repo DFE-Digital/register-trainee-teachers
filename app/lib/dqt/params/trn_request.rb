@@ -106,6 +106,7 @@ module Dqt
           "subject3" => course_subject_code(trainee.course_subject_three),
           "ageRangeFrom" => trainee.course_min_age,
           "ageRangeTo" => trainee.course_max_age,
+          "ittQualificationAim" => ITT_AIMS[trainee.hesa_metadatum&.itt_aim],
         }
       end
 
@@ -119,7 +120,6 @@ module Dqt
           "subject" => subject_code,
           "class" => DEGREE_CLASSES[degree.grade],
           "date" => Date.parse("01-01-#{degree.graduation_year}").iso8601,
-          "ittQualificationAim" => ITT_AIMS[trainee.hesa_metadatum&.itt_aim],
           "heQualificationType" => CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
         }
       end
