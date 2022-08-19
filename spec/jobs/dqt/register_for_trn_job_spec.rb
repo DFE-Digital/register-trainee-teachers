@@ -32,23 +32,6 @@ module Dqt
 
         expect(trainee.state).to eql("submitted_for_trn")
       end
-
-      context "with a HESA trainee" do
-        before do
-          allow(SlackNotifierService).to receive(:call)
-          allow(trainee).to receive(:hesa_record?).and_return(true)
-        end
-
-        it "reports to Slack" do
-          expect(SlackNotifierService).to receive(:call).with(message: "Trainee id: #{trainee.id}, slug: #{trainee.slug} has been registered for TRN but is a HESA trainee", username: "Register Trainee Teachers: Job Failure")
-          described_class.perform_now(trainee)
-        end
-
-        it "doesn't send the trainee to DQT" do
-          expect(RecommendForAward).not_to receive(:call)
-          described_class.perform_now(trainee)
-        end
-      end
     end
   end
 end
