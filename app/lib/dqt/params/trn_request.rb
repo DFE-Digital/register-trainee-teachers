@@ -149,7 +149,18 @@ module Dqt
       end
 
       def itt_end_date
-        trainee.itt_end_date || Trainees::CalculateIttEndDate.call(trainee: trainee, actual: true)
+        trainee.itt_end_date || (start_date + estimated_course_duration)
+      end
+
+      def start_date
+        trainee.commencement_date || trainee.itt_start_date
+      end
+
+      def estimated_course_duration
+        return 3.years if UNDERGRAD_ROUTES.include?(trainee.training_route)
+        return 2.years if trainee.part_time?
+
+        1.year
       end
 
       attr_reader :trainee, :degree
