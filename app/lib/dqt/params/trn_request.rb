@@ -10,7 +10,7 @@ module Dqt
         male: "Male",
         female: "Female",
         other: "Other",
-        gender_not_provided: "NotProvided",
+        prefer_not_to_say: "NotProvided",
         gender_not_available: "NotAvailable",
       }.freeze
 
