@@ -11,6 +11,10 @@ on:
         required: true
         type: boolean
         default: false
+      restoreToProductionAnalysisEnv:
+        required: true
+        type: boolean
+        default: false
   schedule: # 03:00 UTC
     - cron: '0 3 * * *'
 
@@ -89,4 +93,9 @@ jobs:
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
       run: |
         cf conduit register-postgres-productiondata -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
+
+    - name: Restore backup to analysis
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
+      run: |
+        cf conduit register-postgres-analysis -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
         rm ${BACKUP_FILE_NAME}.sql
