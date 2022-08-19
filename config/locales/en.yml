@@ -742,7 +742,7 @@ en:
           label_names:
             register: Yes, register on %{course}
             change: No, change the course
-            change_hint: For trainees, who have changed courses since applying
+            change_hint: For trainees who have changed courses since applying
       common:
         today: Today
         yesterday: Yesterday
