@@ -38,10 +38,23 @@ module Dqt
         Dttp::CodeSets::Grades::PASS => "Pass",
       }.freeze
 
-      # HESA/Register considers the following mapping as ITT_AIMS, but DQT calls it ittQualificationAim
-      ITT_AIMS = {
+      ITT_QUALIFICATION_AIMS = {
         "Professional status only" => "ProfessionalStatusOnly",
         "Both professional status and academic award" => "ProfessionalStatusAndAcademicAward",
+      }.freeze
+
+      ITT_QUALIFICATION_TYPES = {
+        "BA" => "BA",
+        "BA (Hons)" => "BAHons",
+        "BEd" => "BEd",
+        "BEd (Hons)" => "BEdHons",
+        "BSc" => "BSc",
+        "BSc (Hons)" => "BScHons",
+        "Postgraduate Certificate in Education" => "PostgraduateCertificateInEducation",
+        "Postgraduate Diploma in Education" => "PostgraduateDiplomaInEducation",
+        "Undergraduate Master of Teaching" => "UndergraduateMasterOfTeaching",
+        "Professional Graduate Certificate in Education" => "ProfessionalGraduateCertificateInEducation",
+        "Masters, not by research" => "MastersNotByResearch",
       }.freeze
 
       attr_reader :params
@@ -106,7 +119,8 @@ module Dqt
           "subject3" => course_subject_code(trainee.course_subject_three),
           "ageRangeFrom" => trainee.course_min_age,
           "ageRangeTo" => trainee.course_max_age,
-          "ittQualificationAim" => ITT_AIMS[trainee.hesa_metadatum&.itt_aim],
+          "ittQualificationAim" => ITT_QUALIFICATION_AIMS[trainee.hesa_metadatum&.itt_aim],
+          "ittQualificationType" => ITT_QUALIFICATION_TYPES[trainee.hesa_metadatum&.itt_qualification_aim],
         }
       end
 

@@ -8,7 +8,15 @@ module Dqt
       let(:trainee_attributes) { {} }
       let(:degree) { build(:degree, :uk_degree_with_details) }
       let(:hesa_code) { Degrees::DfeReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
-      let(:trainee) { create(:trainee, :completed, gender: "female", degrees: [degree], **trainee_attributes) }
+      let(:hesa_metadatum) { build(:hesa_metadatum) }
+      let(:trainee) do
+        create(:trainee,
+               :completed,
+               gender: "female",
+               hesa_metadatum: hesa_metadatum,
+               degrees: [degree],
+               **trainee_attributes)
+      end
 
       describe "#params" do
         subject { described_class.new(trainee: trainee).params }
@@ -48,7 +56,8 @@ module Dqt
             "subject3" => trainee.course_subject_three,
             "ageRangeFrom" => trainee.course_min_age,
             "ageRangeTo" => trainee.course_max_age,
-            "ittQualificationAim" => nil,
+            "ittQualificationAim" => described_class::ITT_QUALIFICATION_AIMS[hesa_metadatum.itt_aim],
+            "ittQualificationType" => described_class::ITT_QUALIFICATION_TYPES[hesa_metadatum.itt_qualification_aim],
           })
         end
 
@@ -88,23 +97,6 @@ module Dqt
 
           it "doesn't send a degree to DQT" do
             expect(subject["qualification"]).to be_nil
-          end
-        end
-
-        context "imported from HESA" do
-          let(:itt_aim) { Hesa::CodeSets::IttAims::MAPPING.values.sample }
-          let(:dqt_itt_aim) { described_class::ITT_AIMS[itt_aim] }
-          let(:trainee) do
-            create(:trainee,
-                   :completed,
-                   :imported_from_hesa,
-                   gender: "female",
-                   itt_aim: itt_aim,
-                   degrees: [degree])
-          end
-
-          it "includes the itt qualification aim and type" do
-            expect(subject["initialTeacherTraining"]).to include("ittQualificationAim" => dqt_itt_aim)
           end
         end
 
