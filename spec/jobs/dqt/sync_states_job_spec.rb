@@ -3,8 +3,8 @@
 require "rails_helper"
 
 module Dqt
-  describe SyncStateJob do
-    let(:trainee) { create(:trainee, state) }
+  describe SyncStatesJob do
+    let!(:trainee) { create(:trainee, state, :imported_from_hesa) }
     let(:award_date) { nil }
     let(:result) { nil }
     let(:dqt_response) do
@@ -25,12 +25,36 @@ module Dqt
       it "is a no-op" do
         expect(Dqt::RetrieveTeacher).not_to receive(:call)
 
-        described_class.perform_now(trainee)
+        described_class.perform_now
       end
     end
 
     context "when the Register trainee is trn_received" do
       let(:state) { "trn_received" }
+
+      context "but not from HESA" do
+        before do
+          trainee.update!(hesa_id: nil)
+        end
+
+        it "is a no-op" do
+          expect(Dqt::RetrieveTeacher).not_to receive(:call)
+
+          described_class.perform_now
+        end
+      end
+
+      context "but the TRN is not 7-digits" do
+        before do
+          trainee.update!(trn: "123456")
+        end
+
+        it "is a no-op" do
+          expect(Dqt::RetrieveTeacher).not_to receive(:call)
+
+          described_class.perform_now
+        end
+      end
 
       context "and the dqt state is Pass" do
         let(:result) { "Pass" }
@@ -39,15 +63,15 @@ module Dqt
           let(:award_date) { Date.yesterday }
 
           it "transitions the trainee to awarded" do
-            expect { described_class.perform_now(trainee) }
-              .to change { trainee.state }.from("trn_received").to("awarded")
-              .and change { trainee.awarded_at }.from(nil).to(Date.yesterday)
+            expect { described_class.perform_now }
+              .to change { trainee.reload.state }.from("trn_received").to("awarded")
+              .and change { trainee.reload.awarded_at }.from(nil).to(Date.yesterday)
           end
         end
 
         context "and there no award date in DQT" do
           it "does not transisiton the trainee to awarded" do
-            expect { described_class.perform_now(trainee) }
+            expect { described_class.perform_now }
               .not_to change { trainee.state }
           end
         end
@@ -57,7 +81,7 @@ module Dqt
         let(:result) { "Withdrawn" }
 
         it "does not transisiton the trainee" do
-          expect { described_class.perform_now(trainee) }
+          expect { described_class.perform_now }
             .not_to change { trainee.state }
         end
       end
