@@ -22,6 +22,24 @@ module Trainees
       it { is_expected.not_to include(empty_trainee) }
     end
 
+    context "when HESA TRN data trainee exists" do
+      let!(:hesa_trn_data_trainee) { create(:trainee, record_source: RecordSources::HESA_TRN_DATA) }
+
+      it { is_expected.not_to include(hesa_trn_data_trainee) }
+    end
+
+    context "when a HESA collection trainee exists" do
+      let!(:hesa_collection_trainee) { create(:trainee, record_source: RecordSources::HESA_COLLECTION) }
+
+      it { is_expected.to include(hesa_collection_trainee) }
+    end
+
+    context "when a trainee exists with nil record source" do
+      let!(:nil_record_source_trainee) { create(:trainee, record_source: nil) }
+
+      it { is_expected.to include(nil_record_source_trainee) }
+    end
+
     context "with training_route filter" do
       let!(:provider_led_postgrad_trainee) { create(:trainee, :provider_led_postgrad) }
       let(:filters) { { training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad] } }

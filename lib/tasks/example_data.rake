@@ -181,7 +181,6 @@ namespace :example_data do
 
                   attrs.merge!(
                     apply_application: FactoryBot.build(:apply_application, accredited_body_code: provider.code),
-                    record_source: RecordSources::APPLY,
                   )
                 else
                   # Create manual drafts for *current* academic cycle
