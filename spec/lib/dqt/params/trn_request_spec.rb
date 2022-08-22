@@ -100,6 +100,14 @@ module Dqt
           end
         end
 
+        context "when there is no degree graduation year" do
+          let(:degree) { build(:degree, graduation_year: nil) }
+
+          it "doesn't send a graduation date" do
+            expect(subject["qualification"]["date"]).to be_nil
+          end
+        end
+
         context "where there is no institution uuid" do
           let(:degree) { build(:degree, :uk_degree_with_details, institution_uuid: nil) }
 
