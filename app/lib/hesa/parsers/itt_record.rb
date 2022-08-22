@@ -96,7 +96,7 @@ module Hesa
                 convert_all_null_values_to_nil(h)
               end
             else
-              v.downcase == "null" ? nil : v
+              v&.downcase == "null" ? nil : v
             end
           end
         end
