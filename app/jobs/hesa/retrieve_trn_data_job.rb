@@ -12,7 +12,10 @@ module Hesa
     end
 
     def url
-      "#{Settings.hesa.trn_data_base_url}/#{@collection_reference}/Latest"
+      endpoint = "#{Settings.hesa.trn_data_base_url}/#{@collection_reference}/Latest"
+      return "#{endpoint}/Test" if FeatureService.enabled?("hesa_import.test_mode")
+
+      endpoint
     end
 
     def record_source

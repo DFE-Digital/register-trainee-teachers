@@ -5,6 +5,9 @@ dttp:
   scope: https://dttp.crm4.dynamics.com/.default
   api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
 
+dqt:
+  base_url: https://preprod-teacher-qualifications-api.education.gov.uk
+
 dfe_sign_in:
   # URL that the users are redirected to for signing in
   issuer: https://oidc.signin.education.gov.uk
@@ -31,7 +34,8 @@ features:
   google:
     send_data_to_big_query: false
   hesa_import:
-    sync_collection: true
+    test_mode: true
+    sync_trn_data: true
 
 environment:
   name: productiondata

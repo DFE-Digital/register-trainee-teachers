@@ -28,7 +28,7 @@ module Hesa
       CSV.generate do |csv|
         csv << %w[UKPRN HUSID TRN]
         trainees.each do |trainee|
-          csv << [trainee.hesa_student.ukprn, trainee.hesa_id, trainee.trn]
+          csv << [trainee.provider.ukprn, trainee.hesa_id, trainee.trn]
         end
       end
     end
