@@ -133,7 +133,7 @@ module Dqt
           "countryCode" => country_code,
           "subject" => subject_code,
           "class" => DEGREE_CLASSES[degree.grade],
-          "date" => Date.parse("01-01-#{degree.graduation_year}").iso8601,
+          "date" => graduation_date,
           "heQualificationType" => CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
         }
       end
@@ -149,6 +149,12 @@ module Dqt
 
       def subject_code
         Degrees::DfeReference.find_subject(name: degree.subject)&.hecos_code
+      end
+
+      def graduation_date
+        return if degree.graduation_year.nil?
+
+        Date.parse("01-01-#{degree.graduation_year}").iso8601
       end
 
       def institution_ukprn
