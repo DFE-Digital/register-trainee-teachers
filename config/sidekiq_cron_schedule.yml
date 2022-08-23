@@ -30,3 +30,7 @@ import_trn_data_from_hesa:
   cron: "0 */2 * * *"
   class: "Hesa::RetrieveTrnDataJob"
   queue: default
+upload_trn_file_to_hesa:
+  cron: "10 */2 * * *"
+  class: "Hesa::UploadTrnFileJob"
+  queue: default

@@ -128,7 +128,7 @@ module Trainees
     end
 
     def submitted_for_trn_attributes
-      return {} unless trainee_state == :submitted_for_trn
+      return {} unless request_for_trn?
 
       { submitted_for_trn_at: Time.zone.now }
     end
@@ -223,9 +223,14 @@ module Trainees
     end
 
     def enqueue_background_jobs!
-      if FeatureService.enabled?(:integrate_with_dqt) && trainee.trn.blank?
+      if FeatureService.enabled?(:integrate_with_dqt) && request_for_trn?
         Dqt::RegisterForTrnJob.perform_later(trainee)
       end
+    end
+
+    def request_for_trn?
+      # Withdrawn trainees are also expected to get a TRN
+      trainee.trn.blank? && (trainee_state == :submitted_for_trn || trainee_state == :withdrawn)
     end
 
     def training_initiative
