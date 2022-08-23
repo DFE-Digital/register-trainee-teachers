@@ -299,10 +299,12 @@ module Trainees
       context "when end date is available" do
         let(:date) { "2020-12-12" }
         let(:hesa_reasons_for_leaving_codes) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
+        let(:existing_trn) { nil }
 
         context "and the trainee did not complete the course" do
           let(:hesa_stub_attributes) do
             {
+              trn: nil,
               end_date: date,
               reason_for_leaving: hesa_reasons_for_leaving_codes[WithdrawalReasons::DEATH],
             }
