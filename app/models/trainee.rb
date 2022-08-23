@@ -213,6 +213,8 @@ class Trainee < ApplicationRecord
   # Even though some records imported from DTTP will have a HESA ID, their original source is HESA so we chose this implementation
   scope :imported_from_hesa, -> { where.not(hesa_id: nil) }
 
+  scope :imported_from_hesa_trn_data, -> { where(record_source: RecordSources::HESA_TRN_DATA) }
+
   scope :complete_for_filter, -> { where(submission_ready: true).or(where(state: COMPLETE_STATES)).or(where(id: imported_from_hesa)) }
   scope :incomplete_for_filter, -> { where.not(id: complete_for_filter) }
 
