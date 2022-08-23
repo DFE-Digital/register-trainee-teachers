@@ -177,10 +177,13 @@ module Dqt
       end
 
       def estimated_course_duration
-        return 3.years if UNDERGRAD_ROUTES.include?(trainee.training_route)
-        return 2.years if trainee.part_time?
+        return 70.months if trainee.provider_led_undergrad? && trainee.part_time?
 
-        1.year
+        return 34.months if trainee.provider_led_undergrad? && trainee.full_time?
+
+        return 22.months if trainee.opt_in_undergrad? || trainee.part_time?
+
+        10.months
       end
 
       attr_reader :trainee, :degree
