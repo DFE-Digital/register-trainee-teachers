@@ -310,6 +310,7 @@ module Trainees
 
           it "creates a withdrawn trainee with the relevant details" do
             expect(trainee.state).to eq("withdrawn")
+            expect(trainee.submitted_for_trn_at).not_to be_nil
             expect(trainee.withdraw_date).to eq(date)
             expect(trainee.withdraw_reason).to eq(WithdrawalReasons::DEATH)
           end

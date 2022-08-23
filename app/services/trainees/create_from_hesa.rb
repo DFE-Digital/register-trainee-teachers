@@ -128,7 +128,8 @@ module Trainees
     end
 
     def submitted_for_trn_attributes
-      return {} unless trainee_state == :submitted_for_trn
+      # Withdrawn trainees are also expected to get a TRN
+      return {} unless trainee_state == :submitted_for_trn || trainee_state == :withdrawn
 
       { submitted_for_trn_at: Time.zone.now }
     end
