@@ -62,12 +62,56 @@ module Dqt
         end
 
         context "itt_end_date is missing" do
-          let(:training_route) { TRAINING_ROUTES_FOR_COURSE.keys.sample }
-          let(:hesa_metadatum) { build(:hesa_metadatum, study_length: 1, study_length_unit: "years") }
-          let(:trainee_attributes) { { itt_end_date: nil, hesa_metadatum: hesa_metadatum, training_route: training_route } }
+          let(:hesa_metadatum) { build(:hesa_metadatum) }
+          let(:trainee_attributes) { { itt_end_date: nil, hesa_metadatum: hesa_metadatum, training_route: training_route, study_mode: study_mode } }
 
-          it "calculates the end date using the course duration data" do
-            expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 1.year).iso8601)
+          context "and the trainee is part time" do
+            let(:study_mode) { "part_time" }
+
+            context "provider led undergrad" do
+              let(:training_route) { "provider_led_undergrad" }
+
+              it "calculates the end date using the course duration data" do
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 70.months).iso8601)
+              end
+            end
+
+            context "and the trainee is school direct tuition fee" do
+              let(:training_route) { "school_direct_tuition_fee" }
+
+              it "calculates the end date using the course duration data" do
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 22.months).iso8601)
+              end
+            end
+          end
+
+          context "and the trainee is full time" do
+            let(:study_mode) { "full_time" }
+
+            context "provider led undergrad" do
+              let(:training_route) { "provider_led_undergrad" }
+
+              it "calculates the end date using the course duration data" do
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 34.months).iso8601)
+              end
+            end
+
+            context "and the trainee is school direct tuition fee" do
+              let(:training_route) { "school_direct_tuition_fee" }
+
+              it "calculates the end date using the course duration data" do
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 10.months).iso8601)
+              end
+            end
+          end
+
+          context "and the training route is opt in undergrad" do
+            let(:trainee_attributes) { { itt_end_date: nil, hesa_metadatum: hesa_metadatum, training_route: training_route } }
+            let(:training_route) { "opt_in_undergrad" }
+
+            it "calculates the end date using the course duration data" do
+              expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 22.months).iso8601)
+            end
           end
         end
 
