@@ -58,13 +58,9 @@ module Dqt
       context "with more trainees" do
         let!(:trainee2) { create(:trainee, :trn_received, :imported_from_hesa) }
 
-        before do
-          stub_const("Dqt::SyncStatesJob::BATCH_SIZE", 1)
-        end
-
         it "queues up SyncStatesBatchJob at intervals with the trainee batches" do
           Timecop.freeze(Time.zone.now) do
-            described_class.perform_now
+            described_class.perform_now(1)
             expect(SyncStatesBatchJob).to have_been_enqueued.with([trainee.id])
             expect(SyncStatesBatchJob).to have_been_enqueued.at(30.seconds.from_now)
               .with([trainee2.id])

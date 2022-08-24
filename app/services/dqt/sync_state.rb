@@ -40,6 +40,8 @@ module Dqt
         { state: "withdrawn", withdraw_reason: WithdrawalReasons::UNKNOWN }
       when DEFERRED
         { state: "deferred" }
+      else
+        {}
       end
     end
   end

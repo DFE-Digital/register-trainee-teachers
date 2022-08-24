@@ -34,3 +34,8 @@ upload_trn_file_to_hesa:
   cron: "10 */2 * * *"
   class: "Hesa::UploadTrnFileJob"
   queue: default
+# sync_trainee_states_from_dqt:
+#   cron: "0 11 * * *"
+#   class: "Dqt::SyncStatesJob"
+#   queue: dqt_sync
+
