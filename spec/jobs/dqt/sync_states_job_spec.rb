@@ -6,27 +6,29 @@ module Dqt
   describe SyncStatesJob do
     let!(:trainee) { create(:trainee, state, :imported_from_hesa) }
 
+    subject(:sync_states_job) { described_class.perform_now }
+
     before do
       enable_features(:integrate_with_dqt)
     end
 
-    context "when the Register trainee is not trn_received" do
+    context "with no trn_received trainees" do
       let(:state) { "awarded" }
 
-      it "is a no-op" do
-        expect(Dqt::SyncState).not_to receive(:call)
-
-        described_class.perform_now
+      it "doesn't queue a batch job" do
+        expect {
+          sync_states_job
+        }.not_to enqueue_job(SyncStatesBatchJob)
       end
     end
 
-    context "when the Register trainee is trn_received" do
+    context "with trn_received trainees" do
       let(:state) { "trn_received" }
 
-      it "calls the Dqt::Sync service" do
-        expect(Dqt::SyncState).to receive(:call).with(trainee: trainee)
-
-        described_class.perform_now
+      it "calls the SyncStatesBatchJob" do
+        expect {
+          sync_states_job
+        }.to enqueue_job(SyncStatesBatchJob).with([trainee.id])
       end
 
       context "but not from HESA" do
@@ -34,10 +36,10 @@ module Dqt
           trainee.update!(hesa_id: nil)
         end
 
-        it "is a no-op" do
-          expect(Dqt::SyncState).not_to receive(:call)
-
-          described_class.perform_now
+        it "doesn't queue a batch job" do
+          expect {
+            sync_states_job
+          }.not_to enqueue_job(SyncStatesBatchJob)
         end
       end
 
@@ -46,10 +48,27 @@ module Dqt
           trainee.update!(trn: "123456")
         end
 
-        it "is a no-op" do
-          expect(Dqt::SyncState).not_to receive(:call)
+        it "doesn't queue a batch job" do
+          expect {
+            sync_states_job
+          }.not_to enqueue_job(SyncStatesBatchJob)
+        end
+      end
 
-          described_class.perform_now
+      context "with more trainees" do
+        let!(:trainee2) { create(:trainee, :trn_received, :imported_from_hesa) }
+
+        before do
+          stub_const("Dqt::SyncStatesJob::BATCH_SIZE", 1)
+        end
+
+        it "queues up SyncStatesBatchJob at intervals with the trainee batches" do
+          Timecop.freeze(Time.zone.now) do
+            described_class.perform_now
+            expect(SyncStatesBatchJob).to have_been_enqueued.with([trainee.id])
+            expect(SyncStatesBatchJob).to have_been_enqueued.at(30.seconds.from_now)
+              .with([trainee2.id])
+          end
         end
       end
     end
