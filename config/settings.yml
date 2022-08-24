@@ -30,6 +30,7 @@ hesa:
 dqt:
   base_url: "https://teacher-qualifications-api.education.gov.uk/"
   api_key: <get from secrets>
+  trainee_sync_state_limit: 1000
 
 # Used to add feature flags in the app to control access to certain features.
 features:
