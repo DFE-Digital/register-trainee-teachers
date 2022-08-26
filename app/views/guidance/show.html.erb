@@ -1,0 +1,35 @@
+<%= render PageTitle::View.new(text: "How to use this service") %>
+
+  <%= content_for(:breadcrumbs) do %>
+    <%= render GovukComponent::BackLinkComponent.new(
+        text: "Home",
+        href: root_path,
+    ) %>
+  <% end %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="govuk-heading-l">How to use this service</h1>
+        <ul class="govuk-list govuk-list--spaced">
+        <li>
+          <a class="govuk-link" href="/guidance/about-register-trainee-teachers">About Register trainee teachers</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="/guidance/dates-and-deadlines">Dates and deadlines for the 2022 to 2023 academic year</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="/guidance/manually-registering-trainees">Registering trainees manually in this service</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="/guidance/check-data">Check what data you need to provide to register trainees manually</a>
+        </li>
+        <li>
+        <li>
+          <a class="govuk-link" href="/guidance/registering-trainees-through-hesa">Registering trainees through HESA</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="/guidance/hesa-register-data-mapping">Check the data mapping between HESA and Register trainee teachers</a>
+        </li>
+      </ul>
+    </div>
+  </div>

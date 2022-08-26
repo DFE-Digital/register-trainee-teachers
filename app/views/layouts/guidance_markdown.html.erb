@@ -1,0 +1,14 @@
+<%= extends_layout :application do %>
+    <%= render PageTitle::View.new(text: @front_matter["title"])%>
+
+    <%= content_for(:breadcrumbs) do %>
+      <%= render GovukComponent::BackLinkComponent.new(
+          text: "How to use this service",
+          href: guidance_path,
+      ) %>
+    <% end %>
+    <div class="govuk-grid-row">
+          <%= tag.h1 @front_matter["title"], class: "govuk-heading-xl" %>
+          <%= yield %>
+    </div>
+<% end %>
