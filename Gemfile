@@ -102,6 +102,7 @@ gem "blazer"
 gem "auto_strip_attributes"
 
 # Markdown
+gem "front_matter_parser"
 gem "redcarpet"
 
 gem "mechanize" # interact with HESA

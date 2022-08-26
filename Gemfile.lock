@@ -235,6 +235,7 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
     foreman (0.87.2)
+    front_matter_parser (1.0.1)
     fugit (1.5.3)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
@@ -664,6 +665,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   foreman
+  front_matter_parser
   google-cloud-bigquery
   govuk-components (~> 3.0)
   govuk_design_system_formbuilder
