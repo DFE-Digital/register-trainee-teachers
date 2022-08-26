@@ -28,7 +28,6 @@ Rails.application.routes.draw do
   get "/privacy-policy", to: redirect("/privacy-notice")
   get "/privacy-notice", to: "pages#privacy_notice", as: :privacy_notice
 
-  get "/guidance", to: "pages#guidance"
   get "/check-data", to: "pages#check_data"
   get "/data-sharing-agreement", to: "pages#data_sharing_agreement"
   get "/dttp-replaced", to: "pages#dttp_replaced"
@@ -159,6 +158,13 @@ Rails.application.routes.draw do
 
   resources :service_updates, only: %i[index], path: "service-updates"
   resources :organisations, only: %i[index show], path: "organisations"
+
+  resource :guidance, only: %i[show], controller: "guidance" do
+    get "/about-register-trainee-teachers", to: "guidance#about_register_trainee_teachers"
+    get "/dates-and-deadlines", to: "guidance#dates_and_deadlines"
+    get "/manually-registering-trainees", to: "guidance#manually_registering_trainees"
+    get "/registering-trainees-through-hesa", to: "guidance#registering_trainees_through_hesa"
+  end
 
   if FeatureService.enabled?("funding")
     namespace :funding do
