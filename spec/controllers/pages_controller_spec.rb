@@ -3,13 +3,6 @@
 require "rails_helper"
 
 describe PagesController, type: :controller do
-  describe "GET #guidance" do
-    it "returns a 200 status code" do
-      get :guidance
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   describe "start page" do
     context "when not signed in and navigate to start page" do
       it "renders start page" do
