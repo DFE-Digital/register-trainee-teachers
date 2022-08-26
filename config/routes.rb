@@ -28,7 +28,8 @@ Rails.application.routes.draw do
   get "/privacy-policy", to: redirect("/privacy-notice")
   get "/privacy-notice", to: "pages#privacy_notice", as: :privacy_notice
 
-  get "/guidance", to: "pages#guidance"
+  get "/guidance", to: "guidance#show"
+  get "/guidance/about-register-trainee-teachers", to: "guidance#about_register_trainee_teachers", as: :about_register_trainee_teachers
   get "/check-data", to: "pages#check_data"
   get "/data-sharing-agreement", to: "pages#data_sharing_agreement"
   get "/dttp-replaced", to: "pages#dttp_replaced"
