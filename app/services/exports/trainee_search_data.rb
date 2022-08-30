@@ -34,10 +34,11 @@ module Exports
     attr_reader :data_for_export
 
     def format_trainees(trainees)
-      trainees.map do |trainee|
+      formatted_trainees = []
+      Trainee.where(id: trainees.pluck(:id)).includes(:apply_application, :degrees, :end_academic_cycle, :nationalities, :provider, :start_academic_cycle).find_each do |trainee|
         degree = trainee.degrees.first
         course = Course.where(uuid: trainee.course_uuid).first
-        {
+        formatted_trainees << {
           "register_id" => trainee.slug,
           "trainee_url" => "#{Settings.base_url}/trainees/#{trainee.slug}",
           "record_source" => record_source(trainee),
@@ -118,6 +119,7 @@ module Exports
           "additional_withdraw_reason" => trainee.additional_withdraw_reason,
         }
       end
+      formatted_trainees
     end
 
     def course_level(trainee)
