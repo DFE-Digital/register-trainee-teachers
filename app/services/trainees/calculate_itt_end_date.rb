@@ -20,8 +20,8 @@ module Trainees
     def call
       return unless start_date
 
-      if course_duration > 5.years
-        raise("Trainee id: #{trainee.id}, slug: #{trainee.slug} has a course length greater than five years")
+      if course_duration > 8.years
+        raise("Trainee id: #{trainee.id}, slug: #{trainee.slug} has a course length greater than eight years")
       end
 
       start_date + course_duration
