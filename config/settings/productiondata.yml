@@ -33,10 +33,10 @@ features:
     school_direct_tuition_fee: true
   google:
     send_data_to_big_query: false
-  integrate_with_dqt: true
+  integrate_with_dqt: false
   hesa_import:
     test_mode: true
-    sync_trn_data: true
+    sync_trn_data: false
 
 environment:
   name: productiondata
