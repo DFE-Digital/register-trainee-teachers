@@ -139,13 +139,13 @@ module Trainees
           end
         end
 
-        context "and duration that is longer than 5 years" do
+        context "and duration that is longer than 8 years" do
           let(:hesa_metadatum) do
-            build(:hesa_metadatum, study_length: 20, study_length_unit: "years")
+            build(:hesa_metadatum, study_length: 9, study_length_unit: "years")
           end
 
           it "raises an exception" do
-            msg = "Trainee id: #{trainee.id}, slug: #{trainee.slug} has a course length greater than five years"
+            msg = "Trainee id: #{trainee.id}, slug: #{trainee.slug} has a course length greater than eight years"
             expect { subject }.to raise_error(msg)
           end
         end
