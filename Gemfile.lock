@@ -690,7 +690,6 @@ DEPENDENCIES
   rails (~> 6.1.6.1)
   rails-controller-testing
   rails_semantic_logger (= 4.10.0)
-  redcarpet
   request_store (~> 1.5)
   rspec-rails (~> 5.1.2)
   rspec-retry!
