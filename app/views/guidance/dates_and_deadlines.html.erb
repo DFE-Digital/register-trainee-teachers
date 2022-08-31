@@ -1,0 +1,76 @@
+<%= render PageTitle::View.new(text: "Dates and deadlines") %>
+
+  <%= content_for(:breadcrumbs) do %>
+    <%= render GovukComponent::BackLinkComponent.new(
+        text: "How to use this service",
+        href: guidance_path,
+    ) %>
+  <% end %>
+          
+  <div class="govuk-grid-row">
+    <div class="NaN">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Dates and deadlines for the <span class="app-nowrap">2022 to 2023</span> academic year</h1>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Deadlines for all training providers</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-third">Date</th>
+          <th scope="col" class="govuk-table__header">What happens</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"
+            ><span class="app-nowrap">Wednesday 12 October 2022</span></td>
+            <td class="govuk-table__cell">
+            The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training.</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"
+            ><span class="app-nowrap">31 October 2022</span></td>
+            <td class="govuk-table__cell"
+            >A senior person from your organisation must sign off your new trainee data on or before this date (this should be a different person to who submitted the data). </td>
+          </tr>
+      </tbody>
+      </table>
+
+      <table class="govuk-table">
+       <caption class="govuk-table__caption govuk-table__caption--m">Deadlines for higher education institutions (HEIs) that use HESA</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-third">Date</th>
+          <th scope="col" class="govuk-table__header">What happens</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"
+            ><span class="app-nowrap">1 September 2022</span></td>
+            <td class="govuk-table__cell">HESA data collection system opens. Training providers can start submitting their ITT trainee data to the DfE through HESA.</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"
+            ><span class="app-nowrap">14 October 2022</span></td>
+            <td class="govuk-table__cell"
+            >First data submission required to HESA. Training providers should have started submitting data by this date.</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"
+            ><span class="app-nowrap">31 October 2022</span></td>
+            <td class="govuk-table__cell"
+            >HESA data collection system closes. ITT trainee data must be submitted and signed off on or before the data collection system closes. Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication.</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"
+            >
+            <span class="app-nowrap">16 to 31 January 2023</span>
+            <span class="app-nowrap">17 to 28 April 2023</span>
+            <span class="app-nowrap">17 to 31 July 2023</span>
+            </td>
+            <td class="govuk-table__cell"
+            >ITT data collection update periods where you can update your trainee data through HESA if anything has changed. Data will be imported into Register. You do not need to sign off your data during these update periods.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
