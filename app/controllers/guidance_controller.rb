@@ -8,4 +8,6 @@ class GuidanceController < ApplicationController
   def about_register_trainee_teachers
     render(template: "guidance/about_register_trainee_teachers.md", layout: "guidance_markdown")
   end
+
+  def dates_and_deadlines; end
 end
