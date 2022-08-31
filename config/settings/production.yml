@@ -35,8 +35,10 @@ features:
   google:
     send_data_to_big_query: true
   integrate_with_dqt: true
+  hesa_trn_requests: true
   hesa_import:
-    sync_collection: false
+    sync_collection: true
+    sync_trn_data: true
 environment:
   name: beta
 
