@@ -10,4 +10,8 @@ class GuidanceController < ApplicationController
   end
 
   def dates_and_deadlines; end
+
+  def manually_registering_trainees
+    render(layout: "guidance_markdown")
+  end
 end

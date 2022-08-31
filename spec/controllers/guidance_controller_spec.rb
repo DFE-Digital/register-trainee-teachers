@@ -34,4 +34,17 @@ describe GuidanceController, type: :controller do
       expect(response).to render_template("dates_and_deadlines")
     end
   end
+
+  describe "#manually_registering_trainees" do
+    it "returns a 200 status code" do
+      get :manually_registering_trainees
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :manually_registering_trainees
+      expect(response).to render_template("guidance_markdown")
+      expect(response).to render_template("manually_registering_trainees")
+    end
+  end
 end
