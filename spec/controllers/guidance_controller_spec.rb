@@ -47,4 +47,17 @@ describe GuidanceController, type: :controller do
       expect(response).to render_template("manually_registering_trainees")
     end
   end
+
+  describe "#registering_trainees_through_hesa" do
+    it "returns a 200 status code" do
+      get :registering_trainees_through_hesa
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :registering_trainees_through_hesa
+      expect(response).to render_template("guidance_markdown")
+      expect(response).to render_template("registering_trainees_through_hesa")
+    end
+  end
 end
