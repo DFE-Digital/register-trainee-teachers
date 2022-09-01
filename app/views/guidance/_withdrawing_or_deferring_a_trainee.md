@@ -1,7 +1,8 @@
 ---
+page_title: Registering trainees manually in Register
 title: Registering trainees manually in this service
 ---
-## Withdraw or deferring a trainee
+<h2 class="govuk-heading-m">Withdraw or deferring a trainee</h2>
 
 Once you’ve registered a trainee and they have started their training, you can withdraw or defer them. You can do this using the links on the trainee record in Register.
 

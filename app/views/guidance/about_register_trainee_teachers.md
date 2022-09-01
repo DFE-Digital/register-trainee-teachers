@@ -1,4 +1,5 @@
 ---
+page_title: About Register trainee teachers
 title: About Register trainee teachers
 ---
 
@@ -13,7 +14,7 @@ The DfE uses trainee data in Register to:
 * create the ITT performance profiles publication
 * inform policy development
 
-## Access to Register for accredited providers
+<h2 class="govuk-heading-m">Access to Register for accredited providers</h2>
 
 Accredited providers can perform tasks for their trainees in Register, these include:
 
@@ -23,7 +24,7 @@ Accredited providers can perform tasks for their trainees in Register, these inc
 
 If you have trainees eligible for funding, you can view funding information from the 2021 to 2022 academic year onwards. You can view this from the main navigation bar under ‘Funding’. Accredited providers will see monthly payments paid and predicted to be paid for scholarships and bursaries.
 
-## Access to Register for lead schools
+<h2 class="govuk-heading-m">Access to Register for lead schools</h2>
 
 Lead schools that deliver School Direct initial teacher training (ITT) courses in partnership with an accredited provider, can access Register to:
 
@@ -37,7 +38,7 @@ Access to Register for lead schools is view only. As a lead school you cannot:
 * view draft trainee records
 * view a trainee’s diversity information
 
-## How trainees are grouped on the Register homepage
+<h2 class="govuk-heading-m">How trainees are grouped on the Register homepage</h2>
 
 When you log into Register, on the homepage you’ll see a section called ‘Draft trainees’ and a section called ‘Registered trainees’. Under ‘Registered trainees’ there are ‘training statuses’ where trainees are grouped by:
 
@@ -47,7 +48,7 @@ When you log into Register, on the homepage you’ll see a section called ‘Dra
 * awarded this year (all trainees awarded QTS or EYTS in the current academic year)
 * incomplete records (registered trainees that are missing data)
 
-## How Register relates to the initial teacher training (ITT) census publication
+<h2 class="govuk-heading-m">How Register relates to the initial teacher training (ITT) census publication</h2>
 
 Every academic year, the DfE publishes a census of trainee teachers who are starting their training. This is so we have an idea of who could be entering the teaching workforce and can plan teacher recruitment activities.
 
@@ -55,7 +56,7 @@ The ITT census happens in September and October every year. We‘ll notify you a
 
 Once you register your new trainees, your trainee data gets analysed and filtered for the ITT census publication. Not all your new trainees will be included in the ITT census publication, to understand what data will be used read the [Initial Teacher Training Census methodology.](https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology)
 
-## Registering trainees and signing off new trainee data
+<h2 class="govuk-heading-m">Registering trainees and signing off new trainee data</h2>
 
 At the start of every academic year, during September and October, you’ll need to register your new trainees and sign off your new trainee data before the end of October. We ask you to sign off your data so we know it’s accurate for the ITT census publication.
 
@@ -67,13 +68,13 @@ Training providers who use HESA, should submit their data through HESA. Your dat
 
 [Read more about how to register your trainees through HESA.](/guidance/registering-trainees-through-hesa)
 
-### Who you should register
+<h3 class="govuk-heading-s">Who you should register</h3>
 
 You should register all trainees who start their training, even if they decide to drop out after the first few weeks. If they do drop out, you can withdraw them.
 
 Not registering trainees who drop out early means we do not have any record of them, which could affect funding payments.
 
-### Checking and signing off your organisation’s data
+<h3 class="govuk-heading-s">Checking and signing off your organisation’s data</h3>
 
 Once you’ve registered your trainees, you’ll need to check your data is correct. You can do this in Register by:
 
@@ -82,7 +83,7 @@ Once you’ve registered your trainees, you’ll need to check your data is corr
 
 Once you’re confident your new trainee data is correct, a senior person from your organisation (this should be a different person to who submitted the data) must sign it off at the end of October every academic year.
 
-## How Register relates to ITT performance profiles
+<h2 class="govuk-heading-m">How Register relates to ITT performance profiles</h2>
 
 Every academic year, the DfE publishes data on GOV.UK of how many people have successfully completed their teacher training.
 
