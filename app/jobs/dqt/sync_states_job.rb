@@ -15,6 +15,8 @@ module Dqt
                         .where(dqt_trn_validation_clause)
 
       trainees.find_in_batches(batch_size: batch_size).with_index do |group, batch|
+        # The API rate limit is 300 requests per minute so by default we're
+        # kicking off 100 trainees every 30 seconds to stay within that.
         Dqt::SyncStatesBatchJob.set(wait: interval * batch).perform_later(group.pluck(:id))
       end
     end
