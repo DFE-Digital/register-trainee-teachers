@@ -12,4 +12,8 @@ class UserPolicy < ProviderPolicy
   def drafts?
     user.system_admin? || !user.lead_school?
   end
+
+  def reports?
+    user.system_admin? || !user.lead_school?
+  end
 end
