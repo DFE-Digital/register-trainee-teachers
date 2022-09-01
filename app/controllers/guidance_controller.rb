@@ -14,4 +14,8 @@ class GuidanceController < ApplicationController
   def manually_registering_trainees
     render(layout: "guidance_markdown")
   end
+
+  def registering_trainees_through_hesa
+    render(layout: "guidance_markdown")
+  end
 end
