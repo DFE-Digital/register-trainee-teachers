@@ -59,26 +59,45 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-l"><%= t(".guidance_heading") %></h2>
+    <h2 class="govuk-heading-l">How to use this service</h2>
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to(
-          t(".service_updates_link"),
-          service_updates_path,
-          { class: "govuk-link--no-visited-state" }
-        )%>
-      </li>
-      <li>
-        <%= govuk_link_to(
-          t(".guidance_about_link"),
+          "View all guidance for Register trainee teachers",
           guidance_path,
           { class: "govuk-link--no-visited-state" }
         )%>
       </li>
       <li>
         <%= govuk_link_to(
-          t(".guidance_data_link"),
-          check_data_path,
+          "Dates and deadlines for the 2022 to 2023 academic year",
+          dates_and_deadlines_guidance_path,
+          { class: "govuk-link--no-visited-state" }
+        )%>
+      </li>
+      <li>
+        <%= govuk_link_to(
+          "Registering trainees manually in this service",
+          manually_registering_trainees_guidance_path,
+          { class: "govuk-link--no-visited-state" }
+        )%>
+      </li>
+      <li>
+        <%= govuk_link_to(
+          "Registering trainees through HESA",
+          registering_trainees_through_hesa_guidance_path,
+          { class: "govuk-link--no-visited-state" }
+        )%>
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l">News and feedback</h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to("View news and updates",
+          service_updates_path,
           { class: "govuk-link--no-visited-state" }
         )%>
       </li>

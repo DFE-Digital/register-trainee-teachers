@@ -8,6 +8,11 @@ describe GuidanceController, type: :controller do
       get :show
       expect(response).to have_http_status(:ok)
     end
+
+    it "renders the application template" do
+      get :show
+      expect(response).to render_template("application")
+    end
   end
 
   describe "#about_register_trainee_teachers" do
@@ -18,8 +23,8 @@ describe GuidanceController, type: :controller do
 
     it "renders the correct template and page" do
       get :about_register_trainee_teachers
-      expect(response).to render_template("guidance_markdown")
-      expect(response).to render_template("about_register_trainee_teachers.md")
+      expect(response).to render_template("guidance")
+      expect(response).to render_template("about_register_trainee_teachers")
     end
   end
 
@@ -29,8 +34,9 @@ describe GuidanceController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
-    it "renders the correct page" do
+    it "renders the correct template and page" do
       get :dates_and_deadlines
+      expect(response).to render_template("application")
       expect(response).to render_template("dates_and_deadlines")
     end
   end
@@ -43,7 +49,7 @@ describe GuidanceController, type: :controller do
 
     it "renders the correct template and page" do
       get :manually_registering_trainees
-      expect(response).to render_template("guidance_markdown")
+      expect(response).to render_template("guidance")
       expect(response).to render_template("manually_registering_trainees")
     end
   end
@@ -56,7 +62,7 @@ describe GuidanceController, type: :controller do
 
     it "renders the correct template and page" do
       get :registering_trainees_through_hesa
-      expect(response).to render_template("guidance_markdown")
+      expect(response).to render_template("guidance")
       expect(response).to render_template("registering_trainees_through_hesa")
     end
   end
@@ -69,7 +75,7 @@ describe GuidanceController, type: :controller do
 
     it "renders the correct template and page" do
       get :check_data
-      expect(response).to render_template("guidance_markdown")
+      expect(response).to render_template("guidance")
       expect(response).to render_template("check_data")
     end
   end
