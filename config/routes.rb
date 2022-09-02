@@ -160,6 +160,7 @@ Rails.application.routes.draw do
     get "/dates-and-deadlines", to: "guidance#dates_and_deadlines"
     get "/manually-registering-trainees", to: "guidance#manually_registering_trainees"
     get "/registering-trainees-through-hesa", to: "guidance#registering_trainees_through_hesa"
+    get "/check-data", to: "guidance#check_data"
   end
 
   if FeatureService.enabled?("funding")

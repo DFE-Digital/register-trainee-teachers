@@ -18,4 +18,8 @@ class GuidanceController < ApplicationController
   def registering_trainees_through_hesa
     render(layout: "guidance_markdown")
   end
+
+  def check_data
+    render(format: :md, layout: "guidance_markdown")
+  end
 end
