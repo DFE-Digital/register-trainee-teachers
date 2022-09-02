@@ -52,13 +52,15 @@ When you log into Register, on the homepage you’ll see a section called ‘Dra
 
 Every academic year, the DfE publishes a census of trainee teachers who are starting their training. This is so we have an idea of who could be entering the teaching workforce and can plan teacher recruitment activities.
 
-The ITT census happens in September and October every year. We‘ll notify you about the exact dates each year. [Find out what the dates and deadlines are for the 2022 to 2023 academic year.](/guidance/dates-and-deadlines)
+The ITT census happens in September and October every year. We‘ll notify you about the exact dates each year. 
 
 Once you register your new trainees, your trainee data gets analysed and filtered for the ITT census publication. Not all your new trainees will be included in the ITT census publication, to understand what data will be used read the [Initial Teacher Training Census methodology.](https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology)
 
 <h2 class="govuk-heading-m">Registering trainees and signing off new trainee data</h2>
 
 At the start of every academic year, during September and October, you’ll need to register your new trainees and sign off your new trainee data before the end of October. We ask you to sign off your data so we know it’s accurate for the ITT census publication.
+
+[Find out what the dates and deadlines are for the 2022 to 2023 academic year.](/guidance/dates-and-deadlines)
 
 Training providers that do not use the Higher Education Statistics Agency (HESA) data collection system should register their trainees manually in the Register service. 
 
@@ -78,6 +80,7 @@ Not registering trainees who drop out early means we do not have any record of t
 
 Once you’ve registered your trainees, you’ll need to check your data is correct. You can do this in Register by:
 
+* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year (available in Register soon)
 * exporting a CSV of your trainees in the ‘Registered trainees’ section, using the ‘start year’ filter to select the current academic year
 * checking your trainees directly in the service one by one
 
