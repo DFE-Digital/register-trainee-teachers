@@ -60,4 +60,17 @@ describe GuidanceController, type: :controller do
       expect(response).to render_template("registering_trainees_through_hesa")
     end
   end
+
+  describe "#check_data" do
+    it "returns a 200 status code" do
+      get :check_data
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :check_data
+      expect(response).to render_template("guidance_markdown")
+      expect(response).to render_template("check_data")
+    end
+  end
 end
