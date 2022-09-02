@@ -11,25 +11,36 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
         <h1 class="govuk-heading-l">How to use this service</h1>
         <ul class="govuk-list govuk-list--spaced">
-        <li>
-          <a class="govuk-link" href="/guidance/about-register-trainee-teachers">About Register trainee teachers</a>
-        </li>
-        <li>
-          <a class="govuk-link" href="/guidance/dates-and-deadlines">Dates and deadlines for the 2022 to 2023 academic year</a>
-        </li>
-        <li>
-          <a class="govuk-link" href="/guidance/manually-registering-trainees">Registering trainees manually in this service</a>
-        </li>
-        <li>
-          <a class="govuk-link" href="/guidance/check-data">Check what data you need to provide to register trainees manually</a>
-        </li>
-        <li>
-        <li>
-          <a class="govuk-link" href="/guidance/registering-trainees-through-hesa">Registering trainees through HESA</a>
-        </li>
-        <li>
-          <a class="govuk-link" href="/guidance/hesa-register-data-mapping">Check the data mapping between HESA and Register trainee teachers</a>
-        </li>
-      </ul>
+          <li>
+            <%= govuk_link_to(
+              "About Register trainee teachers",
+              about_register_trainee_teachers_guidance_path,
+            )%>
+          </li>
+          <li>
+            <%= govuk_link_to(
+              "Dates and deadlines for the 2022 to 2023 academic year",
+              dates_and_deadlines_guidance_path,
+            )%>
+          </li>
+          <li>
+            <%= govuk_link_to(
+              "Registering trainees manually in this service",
+              manually_registering_trainees_guidance_path,
+            )%>
+          </li>
+          <li>
+            <%= govuk_link_to(
+              "Check what data you need to provide to register trainees manually",
+              check_data_guidance_path,
+            )%>
+          </li>
+          <li>
+            <%= govuk_link_to(
+              "Registering trainees through HESA",
+              registering_trainees_through_hesa_guidance_path,
+            )%>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
