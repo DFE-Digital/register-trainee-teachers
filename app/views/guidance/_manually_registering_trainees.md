@@ -5,7 +5,7 @@ title: Registering trainees manually in this service
 
 Training providers can register their trainees manually in the Register service by creating draft trainee records and adding the required data about your trainees.
 
-Get prepared for adding a trainee record manually by [checking what data you need to provide](/check-data).
+Get prepared for adding a trainee record manually by [checking what data you need to provide](/guidance/check-data).
 
 <h2 class="govuk-heading-m">How trainees are grouped on the Register homepage</h2>
 
