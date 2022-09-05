@@ -6,7 +6,7 @@ class GuidanceController < ApplicationController
   def show; end
 
   def about_register_trainee_teachers
-    render(template: "guidance/about_register_trainee_teachers.md", layout: "guidance_markdown")
+    render(format: :md, layout: "guidance_markdown")
   end
 
   def dates_and_deadlines; end
