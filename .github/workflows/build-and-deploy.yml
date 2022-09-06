@@ -270,27 +270,23 @@ jobs:
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   deploy-after-production:
-    name: Parallel deployment after production
+    name: Deployment after production
     environment:
-      name: ${{ matrix.environment }}
+      name: productiondata
       url: ${{ steps.deploy_app_after_production.outputs.deploy-url }}
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     needs: [deploy-production]
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: [sandbox,productiondata]
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Deploy App to ${{ matrix.environment }}
+    - name: Deploy app to productiondata
       id: deploy_app_after_production
       uses: ./.github/actions/deploy/
       with:
-        arm-access-key: ${{ secrets[format('ARM_ACCESS_KEY_{0}', matrix.environment)] }}
-        azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
-        environment: ${{ matrix.environment }}
+        arm-access-key: ${{ secrets.ARM_ACCESS_KEY_PRODUCTIONDATA }}
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTIONDATA }}
+        environment: productiondata
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}

@@ -12,7 +12,6 @@ on:
         - qa
         - staging
         - production
-        - sandbox
         - productiondata
       sha:
         description: Commit sha to be deployed
