@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'The environment to run tests against (qa, staging , production, sandbox or review)'
+        description: 'The environment to run tests against (qa, staging , production, productiondata or review)'
         default: qa
         required: true
         type: choice
@@ -12,7 +12,6 @@ on:
         - qa
         - staging
         - production
-        - sandbox
         - productiondata
       pr:
         description: 'The PR number if the environment is review'
