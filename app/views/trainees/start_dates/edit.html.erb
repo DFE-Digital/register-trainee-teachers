@@ -11,10 +11,10 @@
       <%= f.hidden_field :context, value: params[:context] %>
 
       <%= render TraineeName::View.new(@trainee) %>
-      <%= f.govuk_date_field :commencement_date, legend: {
-        text: t("views.forms.start_dates.commencement_date.label").html_safe, size: "l", tag: "h1"
+      <%= f.govuk_date_field :trainee_start_date, legend: {
+        text: t("views.forms.start_dates.trainee_start_date.label").html_safe, size: "l", tag: "h1"
       }, hint: {
-        text: t("views.forms.start_dates.commencement_date.hint",
+        text: t("views.forms.start_dates.trainee_start_date.hint",
                 itt_start_date: @trainee.itt_start_date.strftime("%d %m %Y")).html_safe } %>
       <%= f.govuk_submit "Continue" %>
     <% end %>

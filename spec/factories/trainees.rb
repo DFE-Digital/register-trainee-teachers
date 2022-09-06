@@ -87,7 +87,7 @@ FactoryBot.define do
       international_address { nil }
       locale_code { nil }
       email { nil }
-      commencement_date { nil }
+      trainee_start_date { nil }
     end
 
     trait :in_progress do
@@ -232,7 +232,7 @@ FactoryBot.define do
     end
 
     trait :with_start_date do
-      commencement_date do
+      trainee_start_date do
         if itt_start_date.present?
           Faker::Date.between(from: itt_start_date, to: itt_start_date + rand(20).days)
         else
@@ -503,7 +503,7 @@ FactoryBot.define do
 
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
-        trainee.commencement_date = funding_method.academic_cycle.start_date
+        trainee.trainee_start_date = funding_method.academic_cycle.start_date
       end
     end
 
@@ -514,7 +514,7 @@ FactoryBot.define do
         funding_method = create(:funding_method, :grant, :with_subjects, training_route: :early_years_salaried)
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
-        trainee.commencement_date = funding_method.academic_cycle.start_date
+        trainee.trainee_start_date = funding_method.academic_cycle.start_date
       end
     end
 
@@ -525,7 +525,7 @@ FactoryBot.define do
         funding_method = create(:funding_method, :scholarship, :with_subjects, training_route: :provider_led_postgrad)
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
-        trainee.commencement_date = funding_method.academic_cycle.start_date
+        trainee.trainee_start_date = funding_method.academic_cycle.start_date
       end
     end
 
@@ -543,7 +543,7 @@ FactoryBot.define do
 
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
-        trainee.commencement_date = funding_method.academic_cycle.start_date
+        trainee.trainee_start_date = funding_method.academic_cycle.start_date
       end
     end
 

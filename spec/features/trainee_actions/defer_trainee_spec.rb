@@ -248,7 +248,7 @@ feature "Deferring a trainee", type: :feature do
 
   def and_i_enter_a_start_date_after_the_deferral_date
     new_start_date = trainee.defer_date + 1.day
-    trainee_start_status_edit_page.set_date_fields(:commencement_date, new_start_date.strftime("%d/%m/%Y"))
+    trainee_start_status_edit_page.set_date_fields(:trainee_start_date, new_start_date.strftime("%d/%m/%Y"))
   end
 
   def given_a_trainee_exists_to_be_deferred
@@ -257,7 +257,7 @@ feature "Deferring a trainee", type: :feature do
 
   def given_a_trainee_exists_with_a_deferral_date
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
-                           commencement_date: 1.month.ago,
+                           trainee_start_date: 1.month.ago,
                            itt_start_date: 1.year.ago,
                            itt_end_date: 1.year.from_now,
                            defer_date: 1.week.ago)
@@ -265,13 +265,13 @@ feature "Deferring a trainee", type: :feature do
 
   def given_a_trainee_with_course_starting_in_the_future_exists
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
-                           commencement_date: nil,
+                           trainee_start_date: nil,
                            itt_start_date: Time.zone.today + 1.day)
   end
 
   def given_a_trainee_with_course_started_in_the_past_exists
     given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
-                           commencement_date: nil,
+                           trainee_start_date: nil,
                            itt_start_date: Time.zone.today - 1.day)
   end
 

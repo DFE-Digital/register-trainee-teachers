@@ -253,7 +253,7 @@ module Trainees
         course_max_age: age_range && age_range[1],
         course_allocation_subject: course_allocation_subject,
         study_mode: study_mode,
-        commencement_date: commencement_date,
+        trainee_start_date: trainee_start_date,
         itt_start_date: placement_assignment.programme_start_date,
         itt_end_date: placement_assignment.programme_end_date,
       }
@@ -265,7 +265,7 @@ module Trainees
       course(placement_assignment.response["_dfe_ittsubject1id_value"])
     end
 
-    def commencement_date
+    def trainee_start_date
       placement_assignment.response["dfe_commencementdate"] || placement_assignment.programme_start_date
     end
 

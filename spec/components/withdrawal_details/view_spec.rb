@@ -5,13 +5,13 @@ require "rails_helper"
 describe WithdrawalDetails::View do
   include SummaryHelper
 
-  let(:trainee) { build(:trainee, withdraw_date: 2.days.ago, commencement_date: 3.days.ago, id: 1) }
+  let(:trainee) { build(:trainee, withdraw_date: 2.days.ago, trainee_start_date: 3.days.ago, id: 1) }
   let(:withdraw_date) { trainee.withdraw_date }
   let(:withdraw_reason) { nil }
   let(:additional_withdraw_reason) { nil }
 
   let(:data_model) do
-    OpenStruct.new(trainee: trainee, commencement_date: trainee.commencement_date, date: withdraw_date, withdraw_reason: withdraw_reason, additional_withdraw_reason: additional_withdraw_reason)
+    OpenStruct.new(trainee: trainee, trainee_start_date: trainee.trainee_start_date, date: withdraw_date, withdraw_reason: withdraw_reason, additional_withdraw_reason: additional_withdraw_reason)
   end
 
   before do
@@ -19,8 +19,8 @@ describe WithdrawalDetails::View do
   end
 
   context "withdrawn on another day" do
-    it "renders commencement date" do
-      expect(rendered_component).to have_text(date_for_summary_view(trainee.commencement_date))
+    it "renders trainee start date" do
+      expect(rendered_component).to have_text(date_for_summary_view(trainee.trainee_start_date))
     end
 
     it "renders the date of withdrawal" do

@@ -469,7 +469,7 @@ en:
           itt_start_date: &itt_start_date ITT start date
           itt_end_date: &itt_end_date ITT end date
           course_subject_one: Course subject updated
-          commencement_date: Trainee start date updated
+          trainee_start_date: Trainee start date updated
           trainee_id: Trainee ID updated
           disability_disclosure: Disability disclosures updated
           diversity_disclosure: Diversity disclosures updated
@@ -616,8 +616,8 @@ en:
         lead_school_id: &lead_school_path edit_trainee_lead_schools_path
         employing_school_id: edit_trainee_employing_schools_path
         school_id: *lead_school_path
-        commencement_date: &commencement_date_path edit_trainee_start_date_path
-        commencement_date_radio_option: *commencement_date_path
+        trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
+        trainee_start_date_radio_option: *trainee_start_date_path
         trainee_id: edit_trainee_training_details_path
         study_mode: *course_path
         primary_course_subjects: *course_path
@@ -664,8 +664,8 @@ en:
         lead_school_id: *lead_school
         employing_school_id: *employing_school
         school_id: *lead_school
-        commencement_date: *trainee_start_date
-        commencement_date_radio_option: Trainee’s start date
+        trainee_start_date: *trainee_start_date
+        trainee_start_date_radio_option: Trainee’s start date
         trainee_id: *trainee_id
         study_mode: *study_mode
         primary_course_subjects: *course_subject
@@ -802,7 +802,7 @@ en:
             This will help you to identify them and search for them in your trainee records.
             We may also use it if we need to get in touch with you about this trainee.
       start_dates:
-        commencement_date:
+        trainee_start_date:
           label: When did the trainee start their ITT?
           hint: Their ITT started on %{itt_start_date}
       publish_course_details:
@@ -1483,7 +1483,7 @@ en:
               invalid: Select a withdrawal reason
         trainee_start_date_form:
           attributes:
-            commencement_date:
+            trainee_start_date:
               blank: Enter a start date
               invalid: Enter a valid start date
               not_after_itt_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{itt_end_date})</span>
@@ -1491,7 +1491,7 @@ en:
               too_old: Trainee start date cannot be more than 10 years in the past
         trainee_start_status_form:
           attributes:
-            commencement_date:
+            trainee_start_date:
               blank: Enter a start date
               invalid: Enter a valid start date
               not_after_itt_end_date_html: Trainee start date must not be after the ITT has finished <span class="no-wrap">(%{itt_end_date})</span>

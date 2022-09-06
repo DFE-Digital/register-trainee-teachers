@@ -30,7 +30,7 @@ module Hesa
             itt_end_date: "2017-10-01",
             mode: "01",
             course_age_range: "13909",
-            commencement_date: nil,
+            trainee_start_date: nil,
             training_initiative: "009",
             hesa_id: "0310261553101",
             reason_for_leaving: nil,

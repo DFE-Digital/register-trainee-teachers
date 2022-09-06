@@ -10,7 +10,7 @@ class TraineeStartStatusForm < TraineeForm
 
   FIELDS = %i[
     commencement_status
-    commencement_date
+    trainee_start_date
     context
     day
     month
@@ -20,11 +20,11 @@ class TraineeStartStatusForm < TraineeForm
   attr_accessor(*FIELDS)
 
   validates :commencement_status, presence: true
-  validate :commencement_date_valid, if: :itt_started_later?
+  validate :trainee_start_date_valid, if: :itt_started_later?
 
   def save!
     if valid?
-      update_trainee_commencement_date
+      update_trainee_start_date
       Trainees::Update.call(trainee: trainee)
       clear_stash
     else
@@ -32,8 +32,8 @@ class TraineeStartStatusForm < TraineeForm
     end
   end
 
-  def commencement_date
-    @commencement_date ||= begin
+  def trainee_start_date
+    @trainee_start_date ||= begin
       set_on_time_itt_start_date if itt_started_on_time?
       unset_itt_start_date if itt_not_yet_started?
 
@@ -79,7 +79,7 @@ class TraineeStartStatusForm < TraineeForm
 private
 
   def itt_start_date_is_after_deferral_date?
-    deferral_date.is_a?(Date) && commencement_date.after?(deferral_date)
+    deferral_date.is_a?(Date) && trainee_start_date.after?(deferral_date)
   end
 
   def deferral_date
@@ -101,23 +101,23 @@ private
   def compute_fields
     {
       commencement_status: trainee.commencement_status,
-      day: trainee.commencement_date&.day,
-      month: trainee.commencement_date&.month,
-      year: trainee.commencement_date&.year,
+      day: trainee.trainee_start_date&.day,
+      month: trainee.trainee_start_date&.month,
+      year: trainee.trainee_start_date&.year,
     }.merge(new_attributes.slice(:day, :month, :year, :commencement_status, :context))
   end
 
-  def update_trainee_commencement_date
+  def update_trainee_start_date
     return unless errors.empty?
 
-    trainee.assign_attributes(commencement_date: formatted_commencement_date, commencement_status: commencement_status)
+    trainee.assign_attributes(trainee_start_date: formatted_trainee_start_date, commencement_status: commencement_status)
   end
 
   def fields_from_store
     store.get(trainee.id, :trainee_start_status).presence || {}
   end
 
-  def formatted_commencement_date
-    commencement_date.is_a?(Date) ? commencement_date : nil
+  def formatted_trainee_start_date
+    trainee_start_date.is_a?(Date) ? trainee_start_date : nil
   end
 end

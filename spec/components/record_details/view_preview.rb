@@ -70,7 +70,7 @@ module RecordDetails
         defer_date: state == :deferred ? Time.zone.today : nil,
         withdraw_date: state == :withdrawn ? Time.zone.today : nil,
         recommended_for_award_at: state == :recommended_for_award ? Time.zone.now : nil,
-        commencement_date: Time.zone.now,
+        trainee_start_date: Time.zone.now,
         commencement_status: commencement_status,
         awarded_at: state == :awarded ? Time.zone.now : nil,
         provider: mock_provider,

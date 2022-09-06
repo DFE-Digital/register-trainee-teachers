@@ -6,7 +6,7 @@ class DeferralForm < MultiDateForm
   def itt_start_date
     return if itt_not_yet_started?
 
-    @itt_start_date ||= ::TraineeStartStatusForm.new(trainee).commencement_date
+    @itt_start_date ||= ::TraineeStartStatusForm.new(trainee).trainee_start_date
   end
 
   delegate :itt_not_yet_started?, to: :trainee
@@ -14,7 +14,7 @@ class DeferralForm < MultiDateForm
 private
 
   def assign_attributes_to_trainee
-    trainee.commencement_date = itt_start_date if itt_start_date.is_a?(Date)
+    trainee.trainee_start_date = itt_start_date if itt_start_date.is_a?(Date)
     trainee[date_field] = date
   end
 

@@ -23,7 +23,7 @@ feature "edit Trainee start date" do
   end
 
   scenario "start date is not set" do
-    given_a_trainee_exists(:submitted_for_trn, commencement_date: nil)
+    given_a_trainee_exists(:submitted_for_trn, trainee_start_date: nil)
     when_i_visit_the_edit_trainee_start_date_page
     then_i_am_redirected_to_the_edit_trainee_start_status_page
   end
@@ -33,7 +33,7 @@ feature "edit Trainee start date" do
   end
 
   def when_i_change_the_start_date
-    trainee_start_date_edit_page.set_date_fields(:commencement_date, new_start_date.strftime("%d/%m/%Y"))
+    trainee_start_date_edit_page.set_date_fields(:trainee_start_date, new_start_date.strftime("%d/%m/%Y"))
   end
 
   def when_i_click_continue

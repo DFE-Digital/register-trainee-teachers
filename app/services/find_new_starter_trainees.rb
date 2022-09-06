@@ -8,8 +8,8 @@ class FindNewStarterTrainees
   end
 
   def call
-    trainees = Trainee.where("itt_start_date <= :date or commencement_date <= :date", date: census_date)
-                      .or(Trainee.where(commencement_date: nil))
+    trainees = Trainee.where("itt_start_date <= :date or trainee_start_date <= :date", date: census_date)
+                      .or(Trainee.where(trainee_start_date: nil))
                       .where(start_academic_cycle_id: AcademicCycle.current)
                       .not_draft
 

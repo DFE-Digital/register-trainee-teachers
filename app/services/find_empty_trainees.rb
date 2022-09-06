@@ -33,7 +33,7 @@ class FindEmptyTrainees
     trainees.additional_withdraw_reason
     trainees.defer_date
     trainees.recommended_for_award_at
-    trainees.commencement_date
+    trainees.trainee_start_date
     trainees.reinstate_date
     trainees.lead_school_id
     trainees.employing_school_id

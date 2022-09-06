@@ -21,7 +21,7 @@ module Hesa
         lead_school_urn: "F_SDLEAD",
         mode: "F_MODE",
         course_age_range: "F_ITTPHSC",
-        commencement_date: "F_ITTCOMDATE",
+        trainee_start_date: "F_ITTCOMDATE",
         training_initiative: "F_INITIATIVES1",
         hesa_id: "F_HUSID",
         end_date: "F_ENDDATE",

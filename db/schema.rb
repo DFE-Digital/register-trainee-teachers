@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_12_143158) do
+ActiveRecord::Schema.define(version: 2022_09_06_140208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -461,7 +461,7 @@ ActiveRecord::Schema.define(version: 2022_08_12_143158) do
     t.string "lead_school_urn"
     t.string "mode"
     t.string "course_age_range"
-    t.string "commencement_date"
+    t.string "trainee_start_date"
     t.string "training_initiative"
     t.string "disability"
     t.string "end_date"
@@ -644,7 +644,7 @@ ActiveRecord::Schema.define(version: 2022_08_12_143158) do
     t.string "slug", null: false
     t.datetime "recommended_for_award_at"
     t.string "dttp_update_sha"
-    t.date "commencement_date"
+    t.date "trainee_start_date"
     t.date "reinstate_date"
     t.uuid "dormancy_dttp_id"
     t.bigint "lead_school_id"

@@ -18,7 +18,7 @@ module Trainees
 
     attr_reader :trainee
 
-    delegate :commencement_date,
+    delegate :trainee_start_date,
              :itt_start_date,
              :awarded_at,
              :withdraw_date,
@@ -33,7 +33,7 @@ module Trainees
     end
 
     def start_date
-      commencement_date || itt_start_date
+      trainee_start_date || itt_start_date
     end
 
     def end_date

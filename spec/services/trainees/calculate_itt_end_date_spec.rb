@@ -14,25 +14,25 @@ module Trainees
       let(:study_length) { 1 }
       let(:study_length_unit) { "years" }
 
-      it { is_expected.to eq(trainee.commencement_date + 10.months) }
+      it { is_expected.to eq(trainee.trainee_start_date + 10.months) }
     end
 
     context "study_length and study_length_unit is nil" do
       let(:study_length) { nil }
       let(:study_length_unit) { nil }
 
-      it { is_expected.to eq(trainee.commencement_date + 1.year) }
+      it { is_expected.to eq(trainee.trainee_start_date + 1.year) }
 
       context "trainee is part-time" do
         let(:trainee_attributes) { { study_mode: :part_time } }
 
-        it { is_expected.to eq(trainee.commencement_date + 2.years) }
+        it { is_expected.to eq(trainee.trainee_start_date + 2.years) }
       end
 
       context "trainee has undergrade training route" do
         let(:trainee_attributes) { { training_route: UNDERGRAD_ROUTES.keys.sample } }
 
-        it { is_expected.to eq(trainee.commencement_date + 3.years) }
+        it { is_expected.to eq(trainee.trainee_start_date + 3.years) }
       end
     end
 
@@ -42,7 +42,7 @@ module Trainees
 
       subject { described_class.call(trainee: trainee, actual: true) }
 
-      it { is_expected.to eq(trainee.commencement_date + 1.year) }
+      it { is_expected.to eq(trainee.trainee_start_date + 1.year) }
     end
   end
 end

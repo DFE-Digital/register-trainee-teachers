@@ -82,15 +82,15 @@ describe ReinstatementForm, type: :model do
 
     context "itt start date is in the future" do
       let(:trainee) do
-        create(:trainee, :deferred, commencement_date: nil, itt_start_date: Time.zone.today + 1.day)
+        create(:trainee, :deferred, trainee_start_date: nil, itt_start_date: Time.zone.today + 1.day)
       end
 
       before do
         allow(form_store).to receive(:set).with(trainee.id, :reinstatement, nil)
       end
 
-      it "saves the reinstatement date as the commencement date" do
-        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.new(*expected_date_params))
+      it "saves the reinstatement date as the trainee start date" do
+        expect { subject.save! }.to change(trainee, :trainee_start_date).to(Date.new(*expected_date_params))
       end
     end
   end

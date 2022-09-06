@@ -10,11 +10,11 @@ class TraineeStartDateForm < TraineeForm
   DEFER = "defer"
   DELETE = "delete"
 
-  validate :commencement_date_valid
+  validate :trainee_start_date_valid
 
   def save!
     if valid?
-      update_trainee_commencement_date
+      update_trainee_start_date
       Trainees::Update.call(trainee: trainee)
       clear_stash
     else
@@ -22,7 +22,7 @@ class TraineeStartDateForm < TraineeForm
     end
   end
 
-  def commencement_date
+  def trainee_start_date
     date_hash = { year: year, month: month, day: day }
     date_args = date_hash.values.map(&:to_i)
 
@@ -34,7 +34,7 @@ class TraineeStartDateForm < TraineeForm
   end
 
   def itt_start_date_is_after_deferral_date?
-    deferral_date.is_a?(Date) && commencement_date.after?(deferral_date)
+    deferral_date.is_a?(Date) && trainee_start_date.after?(deferral_date)
   end
 
 private
@@ -45,18 +45,18 @@ private
 
   def compute_fields
     {
-      day: trainee.commencement_date&.day,
-      month: trainee.commencement_date&.month,
-      year: trainee.commencement_date&.year,
+      day: trainee.trainee_start_date&.day,
+      month: trainee.trainee_start_date&.month,
+      year: trainee.trainee_start_date&.year,
     }.merge(new_attributes.slice(:day, :month, :year, :context))
   end
 
-  def update_trainee_commencement_date
-    trainee.assign_attributes(commencement_date: commencement_date, commencement_status: commencement_status)
+  def update_trainee_start_date
+    trainee.assign_attributes(trainee_start_date: trainee_start_date, commencement_status: commencement_status)
   end
 
   def commencement_status
-    if commencement_date.after?(trainee.itt_start_date)
+    if trainee_start_date.after?(trainee.itt_start_date)
       COMMENCEMENT_STATUS_ENUMS[:itt_started_later]
     else
       COMMENCEMENT_STATUS_ENUMS[:itt_started_on_time]

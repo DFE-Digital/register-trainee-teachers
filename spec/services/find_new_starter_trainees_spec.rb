@@ -18,7 +18,7 @@ describe FindNewStarterTrainees do
   end
 
   let(:valid_trainee) { create(:trainee, state: 1, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current) }
-  let(:valid_trainee_with_no_commencement_date) { create(:trainee, state: 1, commencement_date: nil, start_academic_cycle: AcademicCycle.current) }
+  let(:valid_trainee_with_no_trainee_start_date) { create(:trainee, state: 1, trainee_start_date: nil, start_academic_cycle: AcademicCycle.current) }
   let(:valid_draft_trainee) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current) }
   let(:valid_trainee_from_previous_academic_cycle) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle_id: 10) }
 
@@ -26,8 +26,8 @@ describe FindNewStarterTrainees do
     expect(subject).to include(valid_trainee)
   end
 
-  it "to contain non draft current academic cycle trainees with no commencement date" do
-    expect(subject).to include(valid_trainee_with_no_commencement_date)
+  it "to contain non draft current academic cycle trainees with no trainee start date" do
+    expect(subject).to include(valid_trainee_with_no_trainee_start_date)
   end
 
   it "to not contain draft trainees" do

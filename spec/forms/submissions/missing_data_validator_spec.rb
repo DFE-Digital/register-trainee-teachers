@@ -48,7 +48,7 @@ module Submissions
 
       context "when trainee start date is missing" do
         context "and the course has not started" do
-          let(:trainee) { build(:trainee, :submitted_for_trn, :itt_start_date_in_the_future, commencement_date: nil) }
+          let(:trainee) { build(:trainee, :submitted_for_trn, :itt_start_date_in_the_future, trainee_start_date: nil) }
 
           it "returns an empty array" do
             expect(subject.missing_fields).to be_empty
@@ -56,10 +56,10 @@ module Submissions
         end
 
         context "and the course has already started" do
-          let(:trainee) { build(:trainee, :submitted_for_trn, :itt_start_date_in_the_past, commencement_date: nil) }
+          let(:trainee) { build(:trainee, :submitted_for_trn, :itt_start_date_in_the_past, trainee_start_date: nil) }
 
           it "returns the correct attributes from the invalid form" do
-            expect(subject.missing_fields).to contain_exactly(:commencement_date)
+            expect(subject.missing_fields).to contain_exactly(:trainee_start_date)
           end
         end
       end

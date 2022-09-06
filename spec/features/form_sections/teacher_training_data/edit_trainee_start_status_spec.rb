@@ -80,7 +80,7 @@ feature "edit Trainee start status" do
   end
 
   def when_i_change_the_start_date
-    trainee_start_status_edit_page.set_date_fields(:commencement_date, new_start_date.strftime("%d/%m/%Y"))
+    trainee_start_status_edit_page.set_date_fields(:trainee_start_date, new_start_date.strftime("%d/%m/%Y"))
   end
 
   def when_i_click_continue

@@ -124,7 +124,7 @@ module ApplicationRecordCard
           training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
           trainee_id: "132456",
           trn: "789456",
-          commencement_date: DateTime.new(2020, 1, 2),
+          trainee_start_date: DateTime.new(2020, 1, 2),
           provider: provider,
           state: state,
         )

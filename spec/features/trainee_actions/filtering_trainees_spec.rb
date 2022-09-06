@@ -202,13 +202,13 @@ private
 
   def given_an_incomplete_hesa_trainee_exists
     @incomplete_hesa_trainee ||= create(:trainee, :imported_from_hesa, :submitted_for_trn)
-    @incomplete_hesa_trainee.update(commencement_date: nil)
+    @incomplete_hesa_trainee.update(trainee_start_date: nil)
     Trainee.update_all(provider_id: @current_user.organisation.id)
   end
 
   def given_an_incomplete_withdrawn_trainee_exists
     @incomplete_withdrawn_trainee ||= create(:trainee, :submitted_for_trn, :withdrawn)
-    @incomplete_withdrawn_trainee.update(commencement_date: nil)
+    @incomplete_withdrawn_trainee.update(trainee_start_date: nil)
     Trainee.update_all(provider_id: @current_user.organisation.id)
   end
 
@@ -284,7 +284,7 @@ private
   end
 
   def when_i_filter_by_incomplete
-    @incomplete_trainee.update(commencement_date: nil)
+    @incomplete_trainee.update(trainee_start_date: nil)
     trainee_index_page.incomplete_checkbox.check
     trainee_index_page.apply_filters.click
   end

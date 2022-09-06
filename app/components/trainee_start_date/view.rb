@@ -12,7 +12,7 @@ module TraineeStartDate
     end
 
     def start_date
-      data_model.commencement_date.strftime("%d %B %Y")
+      data_model.trainee_start_date.strftime("%d %B %Y")
     end
 
   private

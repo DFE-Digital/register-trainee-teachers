@@ -82,7 +82,7 @@ module HPITT
         "Street" => assign_field[:address_line_two],
         "Study mode" => method(:to_study_mode) >> assign_field[:study_mode],
         "Town or city" => assign_field[:town_city],
-        "Trainee start date" => assign_field[:commencement_date],
+        "Trainee start date" => assign_field[:trainee_start_date],
         "TRN" => assign_field[:trn],
       }
       column_mapper.default = proc {}

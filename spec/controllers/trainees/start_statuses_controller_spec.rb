@@ -15,9 +15,9 @@ describe Trainees::StartStatusesController, type: :controller do
              trainee_id: trainee,
              trainee_start_status_form: {
                "commencement_status" => "itt_started_on_time",
-               "commencement_date(3i)" => "",
-               "commencement_date(2i)" => "",
-               "commencement_date(1i)" => "",
+               "trainee_start_date(3i)" => "",
+               "trainee_start_date(2i)" => "",
+               "trainee_start_date(1i)" => "",
                context: page_context,
              },
            })
@@ -78,7 +78,7 @@ describe Trainees::StartStatusesController, type: :controller do
         end
       end
 
-      context "withdrawal form has started and the commencement date is before the withdrawal date" do
+      context "withdrawal form has started and the trainee start date is before the withdrawal date" do
         let(:trainee) { create(:trainee, :submitted_for_trn, :with_withdrawal_date) }
         let(:page_context) { :withdraw }
 

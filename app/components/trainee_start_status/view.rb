@@ -14,7 +14,7 @@ module TraineeStartStatus
     def start_status_or_date
       return t("components.confirmation.start_status.itt_not_yet_started") if data_model.itt_not_yet_started?
 
-      data_model.commencement_date.strftime("%d %B %Y")
+      data_model.trainee_start_date.strftime("%d %B %Y")
     end
 
   private

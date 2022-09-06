@@ -72,7 +72,7 @@ module Trainees
         expect(trainee.itt_end_date).to eq(Date.parse(student_attributes[:itt_end_date]))
         expect(trainee.start_academic_cycle).to eq(start_academic_cycle)
         expect(trainee.end_academic_cycle).to eq(end_academic_cycle)
-        expect(trainee.commencement_date).to eq(Date.parse(student_attributes[:itt_start_date]))
+        expect(trainee.trainee_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
       end
 
       it "updates the trainee's school and training details" do
@@ -303,11 +303,11 @@ module Trainees
         end
       end
 
-      context "when commencement_date is not null" do
-        let(:hesa_stub_attributes) { { commencement_date: "2020-09-27" } }
+      context "when trainee_start_date is not null" do
+        let(:hesa_stub_attributes) { { trainee_start_date: "2020-09-27" } }
 
-        it "uses the commencement_date" do
-          expect(trainee.commencement_date).to eq(Date.parse("2020-09-27"))
+        it "uses the trainee_start_date" do
+          expect(trainee.trainee_start_date).to eq(Date.parse("2020-09-27"))
         end
       end
 

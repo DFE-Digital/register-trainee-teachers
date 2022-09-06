@@ -48,8 +48,8 @@ trainees.
 
 Rules for determining start academic cycle:
 
-1. Use the trainee's commencement date.
-2. If commencement date is missing, use their ITT start date.
+1. Use the trainee's start date.
+2. If trainee start date is missing, use their ITT start date.
 3. If the ITT start date is missing, default to the current cycle.
 
 Rules for determining end academic cycle:
