@@ -12,6 +12,8 @@ module Hesa
     end
 
     def call
+      return if trainees.empty?
+
       file = Mechanize::Form::FileUpload.new({ "name" => "file" }, "trn_file.csv")
       file.file_data = build_csv
       response = Hesa::Client.upload_trn_file(url: url, file: file)

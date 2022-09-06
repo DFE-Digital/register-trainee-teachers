@@ -20,6 +20,12 @@ module Hesa
 
         expect(described_class.call(trainees: [trainee])).to eq(file.file_data)
       end
+
+      it "does not upload a file if there are no trainees in scope" do
+        expect(Hesa::Client).not_to receive(:upload_trn_file)
+
+        expect(described_class.call(trainees: [])).to be_nil
+      end
     end
   end
 end
