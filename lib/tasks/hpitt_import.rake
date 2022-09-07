@@ -7,7 +7,7 @@ namespace :hpitt do
     error_rows = []
 
     csv.each_with_index do |row, i|
-      error_row = Hpitt.import_row(row)
+      error_row = Hpitt::ImportTrainees.import_row(row)
       if error_row.present?
         error_rows << error_row
       end
