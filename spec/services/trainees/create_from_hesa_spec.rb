@@ -14,8 +14,8 @@ module Trainees
     let(:trainee_degree) { trainee.degrees.first }
     let(:hesa_course_subject_codes) { Hesa::CodeSets::CourseSubjects::MAPPING.invert }
     let(:hesa_age_range_codes) { Hesa::CodeSets::AgeRanges::MAPPING.invert }
-    let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2016) }
-    let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2017) }
+    let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2022) }
+    let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2023) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
     let(:first_disability_name) { Diversities::LEARNING_DIFFICULTY }
     let!(:first_disability) { create(:disability, name: first_disability_name) }
@@ -68,11 +68,11 @@ module Trainees
         expect(trainee.course_subject_three).to be_nil
         expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
         expect(trainee.study_mode).to eq("full_time")
-        expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
+        expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:commencement_date]))
         expect(trainee.itt_end_date).to eq(Date.parse(student_attributes[:itt_end_date]))
         expect(trainee.start_academic_cycle).to eq(start_academic_cycle)
         expect(trainee.end_academic_cycle).to eq(end_academic_cycle)
-        expect(trainee.trainee_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
+        expect(trainee.trainee_start_date).to eq(Date.parse(student_attributes[:commencement_date]))
       end
 
       it "updates the trainee's school and training details" do
@@ -107,6 +107,16 @@ module Trainees
         expect(trainee.hesa_metadatum.course_programme_title).to eq("FE Course 1")
         expect(trainee.hesa_metadatum.placement_school_urn).to eq(900000)
         expect(trainee.hesa_metadatum.year_of_course).to eq("0")
+      end
+
+      context "when there's an itt_commencement_date provided" do
+        let(:hesa_stub_attributes) { { itt_commencement_date: "2022-09-10" } }
+
+        it "sets this as the trainee's itt_start_date/commencement_date rather than commencement_date" do
+          itt_commencement_date = Date.parse(student_attributes[:itt_commencement_date])
+          expect(trainee.itt_start_date).to eq(itt_commencement_date)
+          expect(trainee.trainee_start_date).to eq(itt_commencement_date)
+        end
       end
 
       context "when the trn does not exist", feature_integrate_with_dqt: true do
@@ -300,14 +310,6 @@ module Trainees
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
           expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:black])
           expect(trainee.ethnic_background).to eq(Diversities::AFRICAN)
-        end
-      end
-
-      context "when trainee_start_date is not null" do
-        let(:hesa_stub_attributes) { { trainee_start_date: "2020-09-27" } }
-
-        it "uses the trainee_start_date" do
-          expect(trainee.trainee_start_date).to eq(Date.parse("2020-09-27"))
         end
       end
 
