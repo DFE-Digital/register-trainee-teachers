@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe HPITT do
+describe Hpitt do
   include SeedHelper
 
   describe "#import_row" do
@@ -20,7 +20,7 @@ describe HPITT do
       }
     end
 
-    subject { HPITT.import_row(csv_row) }
+    subject { Hpitt.import_row(csv_row) }
 
     it "creates the trainee/degree" do
       expect { subject }.to change { Trainee.count }.from(0).to(1)
@@ -43,7 +43,7 @@ describe HPITT do
   describe "#to_post_code" do
     let(:postcode) { "NE29 9LH" }
 
-    subject { HPITT.to_post_code(postcode) }
+    subject { Hpitt.to_post_code(postcode) }
 
     it "returns the post code" do
       expect(subject).to eq "NE29 9LH"
@@ -62,7 +62,7 @@ describe HPITT do
     let(:trainee) { create(:trainee, :school_direct_salaried) }
     let(:ethnicity) { "Another ethnic group\n(includes any other ethnic group, for example, Arab)" }
 
-    subject { HPITT.to_ethnic_group(ethnicity) }
+    subject { Hpitt.to_ethnic_group(ethnicity) }
 
     it "returns the correct ethnic group" do
       expect(subject).to eq Diversities::ETHNIC_GROUP_ENUMS[:other]
@@ -86,7 +86,7 @@ describe HPITT do
   end
 
   describe "build_degree" do
-    subject { HPITT.build_degree(trainee, csv_row) }
+    subject { Hpitt.build_degree(trainee, csv_row) }
 
     let(:trainee) { build(:trainee) }
 
@@ -135,7 +135,7 @@ describe HPITT do
   end
 
   describe "to_age_range" do
-    subject { HPITT.to_age_range(age_range) }
+    subject { Hpitt.to_age_range(age_range) }
 
     context "an age rage can be found" do
       let(:age_range) { "Other 5-14 programme" }
@@ -155,7 +155,7 @@ describe HPITT do
   end
 
   describe "to_disability_ids" do
-    subject { HPITT.to_disability_ids(disabilities) }
+    subject { Hpitt.to_disability_ids(disabilities) }
 
     context "when disabilities exist" do
       let(:disabilities) { "Learning difficulty\n(for example, dyslexia, dyspraxia or ADHD)" }
@@ -179,7 +179,7 @@ describe HPITT do
   end
 
   describe "to_school_id" do
-    subject { HPITT.to_school_id(urn) }
+    subject { Hpitt.to_school_id(urn) }
 
     let(:urn) { "123" }
 
@@ -199,7 +199,7 @@ describe HPITT do
   end
 
   describe "#to_nationality_ids" do
-    subject { HPITT.to_nationality_ids(nationalities) }
+    subject { Hpitt.to_nationality_ids(nationalities) }
 
     context "when nationalities exist" do
       let(:nationalities) { "albanian" }
@@ -221,7 +221,7 @@ describe HPITT do
   end
 
   describe "to_course_subject" do
-    subject { HPITT.to_course_subject(itt_subject) }
+    subject { Hpitt.to_course_subject(itt_subject) }
 
     context "a course subject can be found" do
       let(:itt_subject) { "Design and Technology" }
@@ -241,7 +241,7 @@ describe HPITT do
   end
 
   describe "to_degree_grade" do
-    subject { HPITT.to_degree_grade(degree_grade) }
+    subject { Hpitt.to_degree_grade(degree_grade) }
 
     context "a degree grade can be found" do
       let(:degree_grade) { "First-class honours" }
@@ -261,7 +261,7 @@ describe HPITT do
   end
 
   describe "validate_uk_degree" do
-    subject { HPITT.validate_uk_degree(degree_type) }
+    subject { Hpitt.validate_uk_degree(degree_type) }
 
     context "the degree type can be found" do
       let(:degree_type) { "Doctor of Divinity" }
@@ -297,7 +297,7 @@ describe HPITT do
   end
 
   describe "#validate_degree_institution" do
-    subject { HPITT.validate_degree_institution(degree_institution) }
+    subject { Hpitt.validate_degree_institution(degree_institution) }
 
     context "when an exact match is found" do
       let(:degree_institution) { "The University of Manchester" }
@@ -333,7 +333,7 @@ describe HPITT do
   end
 
   describe "validate_degree_subject" do
-    subject { HPITT.validate_degree_subject(degree_subject) }
+    subject { Hpitt.validate_degree_subject(degree_subject) }
 
     context "the degree subejct can be found" do
       let(:degree_subject) { "Bob Dylan Studies" }
@@ -361,7 +361,7 @@ describe HPITT do
   end
 
   describe "validate_enic_non_uk" do
-    subject { HPITT.validate_enic_non_uk_degree(enic) }
+    subject { Hpitt.validate_enic_non_uk_degree(enic) }
 
     context "the enic value can be found" do
       let(:enic) {  "Bachelor degree" }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HPITT
+module Hpitt
   class Error < StandardError; end
 
   REJECTED_WORD_LIST = ["the"].freeze
@@ -148,7 +148,7 @@ module HPITT
     end
 
     def to_course_subject(raw_string)
-      potential_subjects = HPITT::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
+      potential_subjects = Hpitt::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
         values.include?(raw_string.squish)
       end
 
@@ -231,7 +231,7 @@ module HPITT
     def to_disability_ids(raw_string)
       return [] if raw_string.blank?
 
-      Disability.where(name: HPITT::CodeSets::Disabilities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase]).map(&:id)
+      Disability.where(name: Hpitt::CodeSets::Disabilities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase]).map(&:id)
     end
 
     def to_school_id(urn)
@@ -239,7 +239,7 @@ module HPITT
     end
 
     def to_ethnic_group(raw_string)
-      HPITT::CodeSets::Ethnicities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase].tap do |ethnic_group|
+      Hpitt::CodeSets::Ethnicities::MAPPING[raw_string.gsub(/[^a-z]/i, "").downcase].tap do |ethnic_group|
         raise(Error, "Ethnic group not recognised: #{raw_string}") if ethnic_group.nil?
       end
     end
@@ -285,7 +285,7 @@ module HPITT
     end
 
     def potential_institutions_in_hpitt_codeset(raw_string)
-      HPITT::CodeSets::Institutions::MAPPING.select do |_k, value|
+      Hpitt::CodeSets::Institutions::MAPPING.select do |_k, value|
         normalise_string(value) == normalise_string(raw_string)
       end
     end
