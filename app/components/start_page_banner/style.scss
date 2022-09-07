@@ -13,7 +13,6 @@
   background-color: govuk-colour("red");
 }
 
-.app-phase-banner__env--sandbox .govuk-tag,
 .app-phase-banner__env--review .govuk-tag {
   background-color: govuk-colour("purple");
 }
@@ -33,9 +32,7 @@
   border-color: govuk-colour("red");
 }
 
-.app-header__env--sandbox,
 .app-header__env--review,
-.app-header__env--sandbox .govuk-header__container,
 .app-header__env--review .govuk-header__container {
   border-color: govuk-colour("purple");
 }

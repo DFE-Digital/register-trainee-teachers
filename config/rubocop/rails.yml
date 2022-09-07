@@ -95,7 +95,6 @@ Rails/UnknownEnv:
     - test
     - pentest
     - rollover
-    - sandbox
     - qa_pass
     - research
 
