@@ -6,15 +6,11 @@ module Trainees
 
     class Error < StandardError; end
 
-    REJECTED_WORD_LIST = ["the"].freeze
-
-    HESA_UK_COUNTRY = "United Kingdom, not otherwise specified"
-
     def initialize(csv_row:)
       @csv_row = csv_row
       # TODO: Temporary, the provider code will need to be added to this csv
       @provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
-      @trainee = provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
+      @trainee = @provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
     end
 
     def call
@@ -22,13 +18,16 @@ module Trainees
       Trainees::SetAcademicCycles.call(trainee: trainee)
 
       if trainee.save!
-        create_degree!
+        ::Degrees::CreateFromHpittCsv.call(
+          trainee: trainee,
+          csv_row: csv_row.select { |column_name, _| column_name.start_with?("Degree:") },
+        )
       end
     end
 
   private
 
-    attr_reader :csv_row, :trainee, :provider
+    attr_reader :csv_row, :trainee
 
     def mapped_attributes
       {
@@ -175,62 +174,6 @@ module Trainees
       ethnic_background.present? && ethnic_background != Diversities::INFORMATION_REFUSED
     end
 
-    # Move into new file?
-    def create_degree!
-      trainee.degrees.create!(mapped_degree_attributes)
-    end
-
-    def mapped_degree_attributes
-      subject = ::Degrees::DfeReference.find_subject(name: csv_row["Degree: subjects"])
-      degree_institution = ::Degrees::DfeReference.find_institution(name: csv_row["Degree: UK awarding institution"])
-      degree_type = ::Degrees::DfeReference.find_type(name: csv_row["Degree: UK degree types"])
-      degree_grade = ::Degrees::DfeReference.find_grade(name: csv_row["Degree: UK grade"])
-
-      attrs = {
-        subject: subject&.name,
-        subject_uuid: subject&.id,
-        graduation_year: csv_row["Degree: graduation year"],
-        grade: degree_grade&.name,
-        grade_uuid: degree_grade&.id,
-      }
-
-      if uk_country?(degree_country)
-        attrs.merge!({
-          institution: degree_institution&.name,
-          institution_uuid: degree_institution&.id,
-          locale_code: "uk",
-          uk_degree: degree_type&.name,
-          uk_degree_uuid: degree_type&.id,
-        })
-      else
-        attrs.merge!({
-          locale_code: "non_uk",
-          country: degree_country,
-          # Not sure about this
-          non_uk_degree: degree_type&.name,
-        })
-      end
-
-      attrs
-    end
-
-    def degree_country
-      raw_country = csv_row["Degree: country"]
-
-      # They can provide either the country code or name
-      if ["UK", "United Kingdom"].include?(raw_country)
-        HESA_UK_COUNTRY
-      elsif Hesa::CodeSets::Countries::MAPPING.values.include?(raw_country)
-        raw_country
-      else
-        Hesa::CodeSets::Countries::MAPPING[raw_country]
-      end
-    end
-
-    def uk_country?(country)
-      Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
-    end
-
     def sex
       if csv_row["Sex"] == "Not provided"
         "gender_not_provided"
@@ -300,12 +243,6 @@ module Trainees
 
     def employing_school_id
       School.find_by_urn(csv_row["Employing school URN"])&.id
-    end
-
-    def degree_grade
-      Dttp::CodeSets::Grades::MAPPING.keys.find { |mapping| mapping.casecmp?(csv_row["Degree grade"]) }.tap do |grade|
-        raise(Error, "Degree grade not recognised") if grade.blank?
-      end
     end
   end
 end
