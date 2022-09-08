@@ -20,6 +20,20 @@ module Hesa
         "98" =>	Diversities::NOT_PROVIDED,
         "99" =>	Diversities::NOT_PROVIDED,
       }.freeze
+
+      NAME_MAPPING = {
+        "No disabilities" => Diversities::NO_KNOWN_DISABILITY,
+        "Not provided" =>	Diversities::NOT_PROVIDED,
+        "Has disabilities but specific disabilities not shared" => Diversities::OTHER,
+        "Blind" => Diversities::BLIND,
+        "Deaf" =>	Diversities::DEAF,
+        "Learning difficulty" => Diversities::LEARNING_DIFFICULTY,
+        "Long-standing illness" => Diversities::LONG_STANDING_ILLNESS,
+        "Mental health condition" => Diversities::MENTAL_HEALTH_CONDITION,
+        "Other" => Diversities::OTHER,
+        "Physical disability or mobility issue" => Diversities::PHYSICAL_DISABILITY,
+        "Social or communication impairment" => Diversities::SOCIAL_IMPAIRMENT,
+      }.freeze
     end
   end
 end
