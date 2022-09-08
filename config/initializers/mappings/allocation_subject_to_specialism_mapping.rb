@@ -59,6 +59,7 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
   ],
   AllocationSubjects::ENGLISH => [
     CourseSubjects::ENGLISH_STUDIES,
+    CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE,
   ],
   AllocationSubjects::GEOGRAPHY => [
     CourseSubjects::GEOGRAPHY,
@@ -77,7 +78,6 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::MODERN_LANGUAGES,
     CourseSubjects::ARABIC_LANGUAGES,
     CourseSubjects::CHINESE_LANGUAGES,
-    CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE,
     CourseSubjects::FRENCH_LANGUAGE,
     CourseSubjects::GERMAN_LANGUAGE,
     CourseSubjects::ITALIAN_LANGUAGE,

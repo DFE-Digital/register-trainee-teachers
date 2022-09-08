@@ -34,7 +34,6 @@ PUBLISH_PRIMARY_SUBJECTS = [
 ].freeze
 
 PUBLISH_MODERN_LANGUAGES = [
-  PublishSubjects::ENGLISH_AS_SECOND_LANGUAGE,
   PublishSubjects::FRENCH,
   PublishSubjects::GERMAN,
   PublishSubjects::ITALIAN,
