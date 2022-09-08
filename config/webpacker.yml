@@ -104,6 +104,3 @@ review:
 
 staging:
   <<: *production
-
-sandbox:
-  <<: *production

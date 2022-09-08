@@ -72,10 +72,6 @@ productiondata:
 	$(eval DEPLOY_ENV=productiondata)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
 
-sandbox:
-	$(eval DEPLOY_ENV=sandbox)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
-
 install-fetch-config:
 	[ ! -f bin/fetch_config.rb ] \
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
