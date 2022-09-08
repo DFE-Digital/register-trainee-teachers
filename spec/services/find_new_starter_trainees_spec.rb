@@ -3,7 +3,7 @@
 require "rails_helper"
 require "csv"
 
-describe NewStarterTraineesService do
+describe FindNewStarterTrainees do
   subject { described_class.new(DateTime.new(2022, 10, 12)).call }
 
   before do

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class NewStarterTraineesService
+class FindNewStarterTrainees
+  attr_reader :census_date
+
   def initialize(census_date)
     @census_date = census_date
   end
@@ -13,6 +15,4 @@ class NewStarterTraineesService
 
     Trainees::Filter.call(trainees: trainees, filters: nil)
   end
-
-  attr_reader :census_date
 end
