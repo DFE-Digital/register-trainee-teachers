@@ -41,16 +41,6 @@ module Trainees
         date_of_birth: csv_row["Date of birth"],
         nationality_ids: nationality_ids,
         email: csv_row["Email"],
-        course_education_phase: course_education_phase,
-        course_subject_one: course_subject_one_name,
-        course_subject_two: course_subject_two_name,
-        course_subject_three: course_subject_three_name,
-        course_age_range: course_age_range,
-        study_mode: study_mode,
-        itt_start_date: csv_row["Course ITT start date"],
-        itt_end_date: csv_row["Course ITT end date"],
-        trainee_start_date: csv_row["Trainee start date"],
-        course_allocation_subject: course_allocation_subject,
         training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
         employing_school_id: employing_school_id,
         progress: Progress.new(
@@ -67,6 +57,7 @@ module Trainees
         ),
       }.merge(address_attributes)
        .merge(ethnicity_and_disability_attributes)
+       .merge(course_attributes)
     end
 
     def address_attributes
@@ -172,6 +163,40 @@ module Trainees
 
     def ethnicity_disclosed?
       ethnic_background.present? && ethnic_background != Diversities::INFORMATION_REFUSED
+    end
+
+    def course_attributes
+      attrs = {
+        course_education_phase: course_education_phase,
+        course_subject_one: course_subject_one_name,
+        course_subject_two: course_subject_two_name,
+        course_subject_three: course_subject_three_name,
+        course_age_range: course_age_range,
+        study_mode: study_mode,
+        itt_start_date: csv_row["Course ITT start date"],
+        itt_end_date: csv_row["Course ITT end date"],
+        commencement_date: csv_row["Trainee start date"],
+        course_allocation_subject: course_allocation_subject,
+      }
+
+      primary_education_phase? ? fix_invalid_primary_course_subjects(attrs) : attrs
+    end
+
+    # Maybe make HESA the same?
+    def primary_education_phase?
+      course_age_range.last <= AgeRange::UPPER_BOUND_PRIMARY_AGE
+    end
+
+    def fix_invalid_primary_course_subjects(course_attributes)
+      # This always ensures "primary teaching" is the first subject or inserts it if it's missing
+      other_subjects = course_subjects - [CourseSubjects::PRIMARY_TEACHING]
+      course_attributes.merge(course_subject_one: CourseSubjects::PRIMARY_TEACHING,
+                              course_subject_two: other_subjects.first,
+                              course_subject_three: other_subjects.second)
+    end
+
+    def course_subjects
+      [course_subject_one_name, course_subject_two_name, course_subject_three_name].compact
     end
 
     def sex

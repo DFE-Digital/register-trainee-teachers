@@ -60,6 +60,7 @@ module Trainees
       generate_seed_nationalities
       generate_seed_disabilities
       create(:school, urn: urn)
+      create(:subject_specialism, name: "primary teaching")
     end
 
     describe "#call" do
@@ -185,6 +186,33 @@ module Trainees
           expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
           expect(trainee.disabilities).to be_empty
         end
+      end
+    end
+
+    context "when the trainee's course is in the primary age range but subject isn't" do
+      before do
+        csv_row.merge!({ "Course age range" => "7 to 11" })
+        described_class.call(csv_row: csv_row)
+      end
+
+      it "adds 'primary teaching' and places it in the course_subject_one column" do
+        expect(trainee.course_subject_one).to eq(CourseSubjects::PRIMARY_TEACHING)
+        expect(trainee.course_subject_two).to eq(CourseSubjects::BIOLOGY)
+      end
+    end
+
+    context "when the trainee's course is in the primary age range but primary subject not the first subject" do
+      before do
+        csv_row.merge!({
+          "Course age range" => "7 to 11",
+          "Course ITT subject 2" => "primary teaching",
+        })
+        described_class.call(csv_row: csv_row)
+      end
+
+      it "moves 'primary teaching' to be the first subject" do
+        expect(trainee.course_subject_one).to eq(CourseSubjects::PRIMARY_TEACHING)
+        expect(trainee.course_subject_two).to eq(CourseSubjects::BIOLOGY)
       end
     end
   end

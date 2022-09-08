@@ -44,7 +44,6 @@ module Trainees
         trn: trn,
         state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
-        course_allocation_subject: course_allocation_subject,
         record_source: trainee_record_source,
       }.merge(created_from_hesa_attribute)
        .merge(personal_details_attributes)
@@ -112,6 +111,7 @@ module Trainees
         # HESA do not distinguish between the ITT start date and the trainee
         # start date, so we're setting both to the ITT start date.
         trainee_start_date: itt_start_date,
+        course_allocation_subject: course_allocation_subject,
       }
 
       primary_education_phase? ? fix_invalid_primary_course_subjects(attributes) : attributes
