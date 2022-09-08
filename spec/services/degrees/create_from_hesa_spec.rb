@@ -150,6 +150,26 @@ module Degrees
           end
         end
       end
+
+      context "handling honours degree types" do
+        let(:hesa_degrees) do
+          [
+            {
+              graduation_date: "2003-06-01",
+              degree_type: "008",
+              subject: "100485",
+              institution: "00429",
+              grade: "02",
+              country: nil,
+            },
+          ]
+        end
+
+        it "maps the honours HESA code to a non-honours HESA code" do
+          expect(degree.uk_degree).to eq("Bachelor of Arts in Education")
+          expect(degree.uk_degree_uuid).to eq("007a0999-87f7-4afc-8ccd-ce1e1d92c9ac")
+        end
+      end
     end
   end
 end
