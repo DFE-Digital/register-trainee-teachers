@@ -3,12 +3,12 @@
 module Trainees
   class CreateFromHpittCsv
     include ServicePattern
+    include DiversityAttributes
 
     class Error < StandardError; end
 
     def initialize(csv_row:)
       @csv_row = csv_row
-      # TODO: Temporary, the provider code will need to be added to this csv
       @provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
       @trainee = @provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
     end
@@ -84,90 +84,13 @@ module Trainees
       UKPostcode.parse(raw_postcode.gsub(/\W/, "")).to_s
     end
 
-    def ethnicity_and_disability_attributes
-      ethnicity_attributes.merge(disability_attributes)
-                          .merge({ diversity_disclosure: diversity_disclosure })
-    end
-
-    def ethnicity_attributes
-      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
-        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
-
-        return {
-          ethnic_group: ethnic_group,
-          ethnic_background: ethnic_background,
-        }
-      end
-
-      {
-        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
-        ethnic_background: Diversities::NOT_PROVIDED,
-      }
-    end
-
     def ethnic_background
       Hesa::CodeSets::Ethnicities::NAME_MAPPING[csv_row["Ethnicity"]]
-    end
-
-    def diversity_attributes
-      attrs = {
-        diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
-        ethnic_background: Diversities::NOT_PROVIDED,
-        ethnic_group: ethnic_group,
-      }
-
-      if csv_row["Disability"].present?
-        attrs.merge({
-          disability_ids: Disability.where(name: Hpitt::CodeSets::Disabilities::MAPPING[csv_row["Disability"].gsub(/[^a-z]/i, "").downcase]).map(&:id),
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
-        })
-      else
-        attrs.merge({
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
-        })
-      end
-
-      attrs
-    end
-
-    def disability_attributes
-      if !disability_disclosed?
-        return {
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
-        }
-      end
-
-      if disabilities == [Diversities::NO_KNOWN_DISABILITY]
-        return {
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
-        }
-      end
-
-      {
-        disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
-        disabilities: disabilities.map { |disability| Disability.find_by(name: disability) },
-      }
-    end
-
-    def diversity_disclosure
-      if disability_disclosed? || ethnicity_disclosed?
-        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
-      else
-        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
-      end
     end
 
     def disabilities
       disabilities = csv_row["Disabilities"].split(",").map(&:strip)
       disabilities.map { |disability| Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
-    end
-
-    def disability_disclosed?
-      disabilities.any? && disabilities != [Diversities::NOT_PROVIDED]
-    end
-
-    def ethnicity_disclosed?
-      ethnic_background.present? && [Diversities::NOT_PROVIDED, Diversities::INFORMATION_REFUSED].exclude?(ethnic_background)
     end
 
     def course_attributes
