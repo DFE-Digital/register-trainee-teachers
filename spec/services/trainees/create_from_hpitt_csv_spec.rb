@@ -109,7 +109,6 @@ module Trainees
       end
 
       it "creates the trainee's degree" do
-        expect(trainee.degrees.count).to eq(1)
         degree = trainee.degrees.last
         expect(degree.locale_code).to eq("uk")
         expect(degree.uk_degree).to eq("Bachelor of Arts")
@@ -131,6 +130,34 @@ module Trainees
 
       it "create's the trainee's degree with the correct institution" do
         expect(trainee.degrees.first.institution).to eq("University of Warwick")
+      end
+    end
+
+    context "when the degree is not from the UK" do
+      before do
+        csv_row.merge!({
+          "Degree: country" => "Germany",
+          "Degree: subjects" => "Akkadian language",
+          "Degree: UK degree types" => "",
+          "Degree: UK awarding institution"	=> "",
+          "Degree: UK grade" => "",
+          "Degree: Non-UK degree types" => "Bachelor degree",
+          "Degree: graduation year" => "2021",
+        })
+        described_class.call(csv_row: csv_row)
+      end
+
+      it "create's the trainee's non-uk degree" do
+        degree = trainee.degrees.last
+        expect(degree.locale_code).to eq("non_uk")
+        expect(degree.uk_degree).to be_nil
+        expect(degree.non_uk_degree).to eq("Bachelor degree")
+        expect(degree.subject).to eq("Akkadian language")
+        expect(degree.institution).to be_nil
+        expect(degree.graduation_year).to eq(2021)
+        expect(degree.grade).to be_nil
+        expect(degree.other_grade).to be_nil
+        expect(degree.country).to eq("Germany")
       end
     end
 

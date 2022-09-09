@@ -20,10 +20,6 @@ module Degrees
     attr_reader :trainee, :csv_row
 
     def mapped_degree_attributes
-      subject = ::Degrees::DfeReference.find_subject(name: csv_row["Degree: subjects"])
-      degree_type = ::Degrees::DfeReference.find_type(name: csv_row["Degree: UK degree types"])
-      degree_grade = ::Degrees::DfeReference.find_grade(name: csv_row["Degree: UK grade"])
-
       attrs = {
         subject: subject&.name,
         subject_uuid: subject&.id,
@@ -37,15 +33,14 @@ module Degrees
           institution: institution&.name,
           institution_uuid: institution&.id,
           locale_code: "uk",
-          uk_degree: degree_type&.name,
-          uk_degree_uuid: degree_type&.id,
+          uk_degree: uk_degree_type&.name,
+          uk_degree_uuid: uk_degree_type&.id,
         })
       else
         attrs.merge!({
           locale_code: "non_uk",
           country: country,
-          # Not sure about this
-          non_uk_degree: degree_type&.name,
+          non_uk_degree: non_uk_degree_type,
         })
       end
 
@@ -53,15 +48,15 @@ module Degrees
     end
 
     def country
-      raw_country = csv_row["Degree: country"]
+      country = csv_row["Degree: country"]
 
       # They can provide either the country code or name
-      if ["UK", "United Kingdom"].include?(raw_country)
+      if ["UK", "United Kingdom"].include?(country)
         HESA_UK_COUNTRY
-      elsif Hesa::CodeSets::Countries::MAPPING.values.include?(raw_country)
-        raw_country
+      elsif Hesa::CodeSets::Countries::MAPPING.values.include?(country)
+        country
       else
-        Hesa::CodeSets::Countries::MAPPING[raw_country]
+        Hesa::CodeSets::Countries::MAPPING[country]
       end
     end
 
@@ -69,9 +64,33 @@ module Degrees
       Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
     end
 
+    def subject
+      @subject ||= DfeReference.find_subject(name: csv_row["Degree: subjects"])
+    end
+
     def institution
-      institution = csv_row["Degree: UK awarding institution"]
-      DfeReference.find_institution(name: institution, ukprn: institution)
+      @institution ||= begin
+        institution = csv_row["Degree: UK awarding institution"]
+        DfeReference.find_institution(name: institution, ukprn: institution)
+      end
+    end
+
+    def degree_grade
+      @degree_grade ||= DfeReference.find_grade(name: csv_row["Degree: UK grade"])
+    end
+
+    def uk_degree_type
+      @uk_degree_type ||= DfeReference.find_type(name: csv_row["Degree: UK degree types"])
+    end
+
+    def non_uk_degree_type
+      type = csv_row["Degree: Non-UK degree types"]
+
+      if (ENIC_NON_UK + [NON_ENIC]).include?(type)
+        type
+      else
+        raise(Error, "Non-UK degree type not recognised: #{type}")
+      end
     end
   end
 end
