@@ -26,8 +26,7 @@ module Trainees
         "Outside UK address" => "",
         "Email"	=> "bob@example.com",
         "Ethnicity"	=> "Not provided",
-        # Change back to Not provided when fixed
-        "Disabilities" => "",
+        "Disabilities" => "Not provided",
         # Not sure why we're asking for this?
         "Course level" => "Postgraduate",
         "Course education phase" => "Secondary",
@@ -92,7 +91,6 @@ module Trainees
       it "updates trainee's course details" do
         expect(trainee.course_allocation_subject).to eq(course_allocation_subject)
         expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:secondary])
-        # TODO logic for primary first subject
         expect(trainee.course_subject_one).to eq(::CourseSubjects::BIOLOGY)
         expect(trainee.course_subject_two).to be_nil
         expect(trainee.course_subject_three).to be_nil
@@ -185,6 +183,19 @@ module Trainees
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
           expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
           expect(trainee.disabilities).to be_empty
+        end
+      end
+
+      context "when multiple disabilities are provided" do
+        before do
+          csv_row.merge!({ "Disabilities" => "Learning difficulty, Long-standing illness" })
+          described_class.call(csv_row: csv_row)
+        end
+
+        it "sets the disabilities and disability disclosure" do
+          expect(trainee.disabilities.map(&:name)).to include("Learning difficulty", "Long-standing illness")
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
         end
       end
     end

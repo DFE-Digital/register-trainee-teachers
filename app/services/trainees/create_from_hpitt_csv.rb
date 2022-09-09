@@ -158,7 +158,8 @@ module Trainees
     end
 
     def disabilities
-      [Hesa::CodeSets::Disabilities::NAME_MAPPING[csv_row["Disabilities"]]].compact
+      disabilities = csv_row["Disabilities"].split(",").map(&:strip)
+      disabilities.map { |disability| Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
     end
 
     def disability_disclosed?
