@@ -131,7 +131,7 @@ module Trainees
     end
 
     def disability_attributes
-      if disabilities.empty? || disabilities == [Diversities::NOT_PROVIDED]
+      if !disability_disclosed?
         return {
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
         }
@@ -150,7 +150,7 @@ module Trainees
     end
 
     def diversity_disclosure
-      if disabilities.any? || ethnicity_disclosed?
+      if disability_disclosed? || ethnicity_disclosed?
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
       else
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
@@ -161,8 +161,12 @@ module Trainees
       [Hesa::CodeSets::Disabilities::NAME_MAPPING[csv_row["Disabilities"]]].compact
     end
 
+    def disability_disclosed?
+      disabilities.any? && disabilities != [Diversities::NOT_PROVIDED]
+    end
+
     def ethnicity_disclosed?
-      ethnic_background.present? && ethnic_background != Diversities::INFORMATION_REFUSED
+      ethnic_background.present? && [Diversities::NOT_PROVIDED, Diversities::INFORMATION_REFUSED].exclude?(ethnic_background)
     end
 
     def course_attributes
