@@ -21,7 +21,6 @@ module Degrees
 
     def mapped_degree_attributes
       subject = ::Degrees::DfeReference.find_subject(name: csv_row["Degree: subjects"])
-      degree_institution = ::Degrees::DfeReference.find_institution(name: csv_row["Degree: UK awarding institution"])
       degree_type = ::Degrees::DfeReference.find_type(name: csv_row["Degree: UK degree types"])
       degree_grade = ::Degrees::DfeReference.find_grade(name: csv_row["Degree: UK grade"])
 
@@ -33,10 +32,10 @@ module Degrees
         grade_uuid: degree_grade&.id,
       }
 
-      if uk_country?(degree_country)
+      if uk_country?(country)
         attrs.merge!({
-          institution: degree_institution&.name,
-          institution_uuid: degree_institution&.id,
+          institution: institution&.name,
+          institution_uuid: institution&.id,
           locale_code: "uk",
           uk_degree: degree_type&.name,
           uk_degree_uuid: degree_type&.id,
@@ -44,7 +43,7 @@ module Degrees
       else
         attrs.merge!({
           locale_code: "non_uk",
-          country: degree_country,
+          country: country,
           # Not sure about this
           non_uk_degree: degree_type&.name,
         })
@@ -53,7 +52,7 @@ module Degrees
       attrs
     end
 
-    def degree_country
+    def country
       raw_country = csv_row["Degree: country"]
 
       # They can provide either the country code or name
@@ -68,6 +67,11 @@ module Degrees
 
     def uk_country?(country)
       Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
+    end
+
+    def institution
+      institution = csv_row["Degree: UK awarding institution"]
+      DfeReference.find_institution(name: institution, ukprn: institution)
     end
   end
 end

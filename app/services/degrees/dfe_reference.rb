@@ -54,8 +54,8 @@ module Degrees
                   abbreviation: abbreviation)
       end
 
-      def find_institution(uuid: nil, name: nil, hesa_code: nil)
-        find_item(:institutions, id: uuid, hesa_itt_code: hesa_code, name: name)
+      def find_institution(uuid: nil, name: nil, hesa_code: nil, ukprn: nil)
+        find_item(:institutions, id: uuid, hesa_itt_code: hesa_code, name: name, ukprn: ukprn)
       end
 
       def find_grade(uuid: nil, name: nil, hesa_code: nil)
@@ -85,7 +85,12 @@ module Degrees
       end
 
       def match_values(item)
-        [item[:name], item[:match_synonyms], item[:abbreviation]].flatten.compact.map(&:downcase).map(&:strip)
+        [
+          item[:name],
+          item[:match_synonyms],
+          item[:abbreviation],
+          item[:ukprn],
+        ].flatten.compact.map(&:downcase).map(&:strip)
       end
 
       def build_hesa_filter(filters)

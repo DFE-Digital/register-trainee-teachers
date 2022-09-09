@@ -123,6 +123,17 @@ module Trainees
       end
     end
 
+    context "when the degree institution UKPRN is provided" do
+      before do
+        csv_row.merge!({ "Degree: UK awarding institution" => "10007163" })
+        described_class.call(csv_row: csv_row)
+      end
+
+      it "create's the trainee's degree with the correct institution" do
+        expect(trainee.degrees.first.institution).to eq("University of Warwick")
+      end
+    end
+
     context "when the trainee does not live in the UK" do
       before do
         csv_row.merge!({ "Outside UK address" => "Another land" })

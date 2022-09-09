@@ -272,7 +272,7 @@ module Trainees
     end
 
     def employing_school_id
-      School.find_by_urn(csv_row["Employing school URN"])&.id
+      School.find_by(urn: csv_row["Employing school URN"])&.id
     end
   end
 end
