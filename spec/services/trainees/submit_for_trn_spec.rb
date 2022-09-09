@@ -8,6 +8,10 @@ module Trainees
 
     subject { described_class.call(trainee: trainee) }
 
+    before { ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false }
+
+    after { ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true }
+
     context "integrate_with_dqt enabled", feature_integrate_with_dqt: true do
       it "queues a background job to register trainee for TRN" do
         expect {
