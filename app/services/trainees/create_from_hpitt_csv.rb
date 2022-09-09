@@ -3,7 +3,8 @@
 module Trainees
   class CreateFromHpittCsv
     include ServicePattern
-    include DiversityAttributes
+    include HasDiversityAttributes
+    include HasCourseAttributes
 
     class Error < StandardError; end
 
@@ -93,38 +94,16 @@ module Trainees
       disabilities.map { |disability| Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
     end
 
-    def course_attributes
-      attrs = {
-        course_education_phase: course_education_phase,
-        course_subject_one: course_subject_one_name,
-        course_subject_two: course_subject_two_name,
-        course_subject_three: course_subject_three_name,
-        course_age_range: course_age_range,
-        study_mode: study_mode,
-        itt_start_date: csv_row["Course ITT start date"],
-        itt_end_date: csv_row["Course ITT end date"],
-        commencement_date: csv_row["Trainee start date"],
-        course_allocation_subject: course_allocation_subject,
-      }
-
-      primary_education_phase? ? fix_invalid_primary_course_subjects(attrs) : attrs
+    def itt_start_date
+      csv_row["Course ITT start date"]
     end
 
-    # Maybe make HESA the same?
-    def primary_education_phase?
-      course_age_range.last <= AgeRange::UPPER_BOUND_PRIMARY_AGE
+    def itt_end_date
+      csv_row["Course ITT end date"]
     end
 
-    def fix_invalid_primary_course_subjects(course_attributes)
-      # This always ensures "primary teaching" is the first subject or inserts it if it's missing
-      other_subjects = course_subjects - [CourseSubjects::PRIMARY_TEACHING]
-      course_attributes.merge(course_subject_one: CourseSubjects::PRIMARY_TEACHING,
-                              course_subject_two: other_subjects.first,
-                              course_subject_three: other_subjects.second)
-    end
-
-    def course_subjects
-      [course_subject_one_name, course_subject_two_name, course_subject_three_name].compact
+    def trainee_start_date
+      csv_row["Trainee start date"]
     end
 
     def sex
@@ -188,10 +167,6 @@ module Trainees
 
     def study_mode
       csv_row["Course study mode"].downcase.gsub("-", "_")
-    end
-
-    def course_allocation_subject
-      SubjectSpecialism.find_by(name: course_subject_one_name)&.allocation_subject
     end
 
     def employing_school_id

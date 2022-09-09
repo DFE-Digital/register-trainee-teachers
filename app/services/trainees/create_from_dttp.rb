@@ -4,7 +4,7 @@ module Trainees
   class CreateFromDttp
     include ServicePattern
     include HasDttpMapping
-    include DiversityAttributes
+    include HasDiversityAttributes
 
     TRN_REGEX = /^(\d{6,7})$/.freeze
 

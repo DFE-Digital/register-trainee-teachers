@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DiversityAttributes
+module HasDiversityAttributes
   def ethnicity_and_disability_attributes
     ethnicity_attributes.merge(disability_attributes)
                         .merge({ diversity_disclosure: diversity_disclosure })
