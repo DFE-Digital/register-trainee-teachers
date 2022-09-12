@@ -118,14 +118,14 @@ describe "hpitt:import" do
       expect(trainee.nationalities).to include(Nationality.find_by_name("french"))
       expect(trainee.diversity_disclosure).to eq Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
       expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:asian])
-      expect(trainee.ethnic_background).to eq(Diversities::INDIAN)
-      expect(trainee.disability_disclosure).to eq Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided]
-      expect(trainee.disabilities.count).to eq(0)
-      expect(trainee.region).to eq("South West")
+      expect(trainee.ethnic_background).to eq(Diversities::BANGLADESHI)
+      expect(trainee.disability_disclosure).to eq Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
+      expect(trainee.disabilities.count).to eq(2)
+      expect(trainee.region).to be_nil
 
-      expect(trainee.itt_start_date).to eq(Date.parse("9/9/2022"))
-      expect(trainee.itt_end_date).to eq(Date.parse("31/7/2023"))
-      expect(trainee.commencement_date).to eq(Date.parse("9/9/2022"))
+      expect(trainee.itt_start_date).to eq(Date.parse("28/9/2022"))
+      expect(trainee.itt_end_date).to eq(Date.parse("25/7/2023"))
+      expect(trainee.commencement_date).to eq(Date.parse("28/9/2022"))
       expect(trainee.course_subject_one).to eq("history")
       expect(trainee.study_mode).to eq("full_time")
       expect(trainee.course_education_phase).to eq("secondary")
