@@ -32,7 +32,9 @@ private
   end
 
   def data_for_export
-    @data_for_export ||= Exports::TraineeSearchData.new(policy_scope(NewStarterTraineesService.new(census_date(AcademicCycle.current.start_year)).call))
+    @data_for_export ||= Exports::TraineeSearchData.new(
+      policy_scope(FindNewStarterTrainees.new(census_date(AcademicCycle.current.start_year)).call),
+    )
   end
 
   def filename

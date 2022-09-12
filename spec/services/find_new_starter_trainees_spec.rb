@@ -3,7 +3,7 @@
 require "rails_helper"
 require "csv"
 
-describe NewStarterTraineesService do
+describe FindNewStarterTrainees do
   subject { described_class.new(DateTime.new(2022, 10, 12)).call }
 
   before do
@@ -36,5 +36,17 @@ describe NewStarterTraineesService do
 
   it "to not contain valid trainees starting in a previous academic cycle" do
     expect(subject).not_to include(valid_trainee_from_previous_academic_cycle)
+  end
+
+  context "when trainee came from HESA TRN data" do
+    before do
+      create(:trainee,
+             state: 1,
+             itt_start_date: 2.months.ago,
+             start_academic_cycle: AcademicCycle.current,
+             record_source: RecordSources::HESA_TRN_DATA)
+    end
+
+    it { is_expected.to be_empty }
   end
 end
