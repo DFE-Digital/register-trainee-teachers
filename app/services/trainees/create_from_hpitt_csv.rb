@@ -21,7 +21,7 @@ module Trainees
       if trainee.save!
         ::Degrees::CreateFromHpittCsv.call(
           trainee: trainee,
-          csv_row: csv_row.select { |column_name, _| column_name.start_with?("Degree:") },
+          csv_row: csv_row.to_hash.compact.select { |column_name, _| column_name.start_with?("Degree:") },
         )
       end
     end
@@ -39,7 +39,7 @@ module Trainees
         middle_names: csv_row["Middle name"],
         last_name: csv_row["Last name"],
         gender: sex,
-        date_of_birth: csv_row["Date of birth"],
+        date_of_birth: Date.parse(csv_row["Date of birth"]),
         nationality_ids: nationality_ids,
         email: csv_row["Email"],
         training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
@@ -115,7 +115,7 @@ module Trainees
     end
 
     def nationality_ids
-      Nationality.where(name: csv_row["Nationality"]&.downcase).ids
+      Nationality.where(name: csv_row["Nationality"]&.strip&.downcase).ids
     end
 
     def course_education_phase

@@ -4,6 +4,8 @@ module Degrees
   class CreateFromHpittCsv
     include ServicePattern
 
+    class Error < StandardError; end
+
     HESA_UK_COUNTRY = "United Kingdom, not otherwise specified"
 
     def initialize(trainee:, csv_row:)
