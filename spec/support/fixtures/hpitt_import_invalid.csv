@@ -1,7 +1,31 @@
-Age range,Allocation Type,Building,Country (Non UK) degree,ITT end date,Course length,Course level,ITT start date,Date left,Date of birth,Date of deferral,Degree grade,Degree subject,Degree type,Disability,Duration,Email address,Employing school,Employing school URN,Ethnicity,First names,Gender,Graduation year,Institution,ITT Qualification Aim,ITT Subject 1,Last names,Location URN,Middle names,Nationality,Outside UK address,Placements,Postal code,Region,Start month,Street,Study mode,Subject of UG. Degree (Non UK),Town or city,Trainee ID,Trainee start date,TRN,UK ENIC equivalent (Non UK),Undergrad degree date obtained (Non UK)
-Other 11 to 16 programme,Allocated ,Buckingham Palace,,13-04-2020,2 years,PG,13-04-2018,13-04-2020,13-04-1992,13-04-2021,First-class honours,Bob Dylan Studies,BA,"Learning difficulty
-(for example, dyslexia, dyspraxia or ADHD)",1 year,jeff@example.com,Penwortham Primary School,123,"Black, African, Black British or Caribbean
-(includes any Black background)",Jeff,Female,2019,Teesside University,,Maths,McJeff,123, Goeff,Luxembourger,,,SW1A 1AA,West Midlands,,The mall,part time,Toxicology,Preston,L0V3LYiD,13-04-2021,1234,Bachelor degree,2017
-Other 11 to 16 programme,Allocated ,Buckingham Palace,,13-04-2020,2 years,PG,13-04-2018,13-04-2020,13-04-1992,13-04-2021,First-class honours,Art History,BA,"Learning difficulty
-(for example, dyslexia, dyspraxia or ADHD)",1 year,jeff@example.com,Penwortham Primary School,1234,"Black, African, Black British or Caribbean
-(includes any Black background)",Jeff,Female,12-12-2019,Teesside University,,Maths,McJeff,123, Goeff,Luxembourger,,,SW1A 1AA,West Midlands,,The mall,Full time,Toxicology,Preston,L0V4LYiD,13-04-2021,1234,Bachelor degree,2017
+Provider trainee ID ,Region,First names,Middle name,Last name,Date of birth,Sex,Nationality,UK address: Line 1,UK address: Line 2,UK address: town or city,UK Address 1: Postcode,Outside UK address,Email,Ethnicity,Disabilities,Course level,Course education phase,Course age range,Course ITT subject 1,Course ITT subject 2 ,Course ITT Subject 3,Course study mode,Course ITT start date,Course ITT end date,Trainee start date,Employing school URN ,Degree: country,Degree: subjects,Degree: UK degree types,Degree: UK awarding institution,Degree: UK grade,Degree: Non-UK degree types,Degree: graduation year
+Mandatory,Mandatory,Mandatory,If available,Mandatory,Mandatory,Mandatory,Mandatory,If it's a UK address,If it's a UK address,If it's a UK address,If it's a UK address,If it's a non-UK address,Mandatory,Mandatory,Mandatory,Mandatory,Mandatory,Mandatory,Mandatory,Optional,Optional,Mandatory,Mandatory,Mandatory,If they've started,If they have an employing school,Mandatory,Mandatory,If a UK degree,If a UK degree,If a UK degree,If a non-UK degree,Mandatory
+"Your unique identifier for the trainee. This will help you search for the trainee in Register.
+
+Should not contain personal information of the trainee.",The region the trainee is placed in for their Teachfirst training.,First names of trainee,Middle names of trainee,Last names of trainee,Date of birth of trainee,"Sex of the trainee.
+
+Please refer to sheet 'Sex' for the values that can be given here. It is fine to also state 'Not provided'.","Comma separated list of nationalities the trainee has.
+
+Please refer to sheet 'Nationality' for the values that can be given here.",UK address line 1. Leave blank if non-uk address,UK address line 2. Optional. Leave blank if non-uk address,UK address town or city. Leave blank if non-uk address,UK postcode. Leave blank if non-uk address,"Non UK address - include full address, comma separated","Email address of the trainee.
+
+This should be their personal email address, not any school-issued address.",The ethnicity of the trainee. Please refer to sheet 'Ethnicity' for the values that can be given here. It is fine to also state 'Not provided'.,Comma separated list of trainee disabilities. Please refer to 'Disabilities' for the values that can be given here. It is fine to also state 'Not provided'.,The level of the ITT course - either 'Postgraduate' or 'Undergraduate',Whether the trainee is training to teach primary or secondary,"The age range the trainee will be learning to teach.
+
+This should match the course education phase. Primary trainees can train to teach up to age 11",The ITT subject specialism the trainee is training to teach. This is the main subject they are training to teach in. Please refer to 'Course ITT subjects' for the values that can be given here.,"Optional second subject - this may be used for trainees that are studying 2 subjects, e.g. French language and Spanish language. Please refer to 'ITT subjects' for the values that can be given here.","Optional third subject - this may be used for trainees that are studying 3 subjects, e.g. French language and Spanish language and Chinese languages. Please refer to 'ITT subjects' for the values that can be given here.",Whether the trainee is studying part-time or full-time,This is when the course starts for initial teacher training.,This is when the course ends for initial teacher training.,"The actual date the trainee started. If they haven't started yet, it should be blank.","The URN for the school the trainee is employed at.
+
+Please double-check the URN is up to date, particularly if the school has recently gone through academisation.
+
+URNs can be looked up on https://get-information-schools.service.gov.uk/","The country where the trainee received their first undergraduate degree. If you leave it blank, we will set it to the United Kingdom.
+
+Refer to sheet 'Degree: countries' for accepted values. You can also provide a two letter ISO country code such as UK for United Kingdom","Comma separated list of degree subjects. You can give us the subject name or the HECOS code of the subject of the trainee's first undergraduate degree. 
+
+Return multiple subjects where it was a joint honours degree.
+
+Please refer to sheet 'Degree: subjects' for the values that can be given here.","Please refer to sheet 'Degree: UK degree types' for the values that can be given here. 
+
+Leave blank if awarded by non-uk institution","Awarding institution for UK awarded degrees. Leave blank for Non-UK degrees.
+
+You can give us the UKPRN for the awarding institution or the name of the awarding institution. Please refer to sheet 'Degree awarding institutions' for the values that can be given here.","For UK degrees, the grade achieved. Leave blank if a Non-UK degree.
+
+Please refer to sheet 'Degree: UK grades' for the values that can be given here.",For Non-UK degrees only. The equivalent UK degree as provided by UK Enic. Please refer to sheet 'Degree: Non-uk types' for available options.,The year the trainee graduated from their degree.
+A1,South West,Abz,,McPhee,5/2/90,Female,british ,1 This Road,,London,SW1A 1AA,,test@example.com,Asian - Indian or Indian British,Not provided,Postgraduate,Secondary,11 to 16,History,,,full-time,2022-09-09,2023-07-31,2022-09-09,,Germany,English studies,,,,Bachelor degree,2020
+A2,South West,BAbz,,McPhoo,5/2/90,Female,british ,1 This Road,,London,SW1A 1AA,,test2@example.com,Asian - Indian or Indian British,Not provided,Postgraduate,Secondary,11 to 16,History,,,full-time,2022-09-09,2023-07-31,2022-09-09,,Germany,English stoodies,,,,Bachelor degree,2020
