@@ -328,6 +328,30 @@ module Trainees
         end
       end
 
+      context "when hesa disability code is invalid" do
+        let(:hesa_stub_attributes) do
+          {
+            course_subject_one: "invalid course subject one codeset",
+          }
+        end
+
+        it "raises an error" do
+          expect(Sentry).to have_received(:capture_message).with("Unmapped fields [:course_subject_one] on trainee - id: #{trainee.trainee_id} - record source: #{trainee.record_source}")
+        end
+      end
+
+      context "when hesa code is invalid" do
+        let(:hesa_stub_attributes) do
+          {
+            disability1: "disability not in codeset",
+          }
+        end
+
+        it "raises an error" do
+          expect(Sentry).to have_received(:capture_message).with("Unmapped fields [:disability1] on trainee - id: #{trainee.trainee_id} - record source: #{trainee.record_source}")
+        end
+      end
+
       context "when just ethnicity is disclosed" do
         let(:hesa_stub_attributes) do
           {
