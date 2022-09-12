@@ -126,7 +126,9 @@ describe "hpitt:import" do
       expect(trainee.itt_start_date).to eq(Date.parse("28/9/2022"))
       expect(trainee.itt_end_date).to eq(Date.parse("25/7/2023"))
       expect(trainee.commencement_date).to eq(Date.parse("28/9/2022"))
-      expect(trainee.course_subject_one).to eq("history")
+      expect(trainee.course_subject_one).to eq("French language")
+      expect(trainee.course_subject_two).to eq("Spanish language")
+      expect(trainee.course_subject_three).to eq("Italian language")
       expect(trainee.study_mode).to eq("full_time")
       expect(trainee.course_education_phase).to eq("secondary")
 
@@ -135,10 +137,13 @@ describe "hpitt:import" do
 
       expect(trainee.degrees.count).to eq(1)
       degree = trainee.degrees.first
-      expect(degree.locale_code).to eq("non_uk")
-      expect(degree.non_uk_degree).to eq("Bachelor degree")
+      expect(degree.locale_code).to eq("uk")
+      expect(degree.uk_degree).to eq("Bachelor of Arts")
+      expect(degree.grade).to eq("First-class honours")
+      expect(degree.graduation_year).to eq(2016)
+      expect(degree.non_uk_degree).to be_nil
       expect(degree.subject).to eq("English studies")
-      expect(degree.country).to eq("Germany")
+      expect(degree.country).to be_nil
     end
   end
 end

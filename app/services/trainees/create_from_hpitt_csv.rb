@@ -131,7 +131,7 @@ module Trainees
     end
 
     def course_subject_three_name
-      course_subject_name("Course ITT subject 3")
+      course_subject_name("Course ITT Subject 3")
     end
 
     def course_subject_name(field)
