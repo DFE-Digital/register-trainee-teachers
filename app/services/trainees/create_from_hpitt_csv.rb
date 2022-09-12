@@ -8,10 +8,9 @@ module Trainees
 
     class Error < StandardError; end
 
-    def initialize(csv_row:)
+    def initialize(provider:, csv_row:)
       @csv_row = csv_row
-      @provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
-      @trainee = @provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
+      @trainee = provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
     end
 
     def call

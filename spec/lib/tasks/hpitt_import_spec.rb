@@ -8,7 +8,7 @@ describe "hpitt:import" do
   let!(:provider) { create(:provider, :teach_first) }
 
   subject do
-    args = Rake::TaskArguments.new([:csv_path], [csv_path])
+    args = Rake::TaskArguments.new(%i[provider_code csv_path], [provider.code, csv_path])
     Rake::Task["hpitt:import"].execute(args)
   end
 
