@@ -98,7 +98,7 @@ module Trainees
     end
 
     def itt_end_date
-      csv_row["Course ITT end date"]
+      csv_row["Course Expected End Date"]
     end
 
     def trainee_start_date
