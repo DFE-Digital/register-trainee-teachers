@@ -114,8 +114,8 @@ describe "hpitt:import" do
       expect(trainee.postcode).to eq("SW1A 2AA")
 
       expect(trainee.nationalities.count).to eq(2)
-      expect(trainee.nationalities.first).to eq(Nationality.find_by_name("british"))
-      expect(trainee.nationalities.first).to eq(Nationality.find_by_name("french"))
+      expect(trainee.nationalities).to include(Nationality.find_by_name("british"))
+      expect(trainee.nationalities).to include(Nationality.find_by_name("french"))
       expect(trainee.diversity_disclosure).to eq Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
       expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:asian])
       expect(trainee.ethnic_background).to eq(Diversities::INDIAN)

@@ -114,7 +114,8 @@ module Trainees
     end
 
     def nationality_ids
-      Nationality.where(name: csv_row["Nationality"]&.strip&.downcase).ids
+      nationalities = csv_row["Nationality"].split(",").compact
+      nationalities.map { |nationality| Nationality.find_by!(name: nationality.strip.downcase) }.map(&:id)
     end
 
     def course_education_phase
