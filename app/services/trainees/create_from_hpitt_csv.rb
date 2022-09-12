@@ -8,9 +8,24 @@ module Trainees
 
     class Error < StandardError; end
 
+    TRAINING_ROUTES = {
+      "Assessment only" => TRAINING_ROUTE_ENUMS[:assessment_only],
+      "Early years (assessment only)" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+      "Early years (postgrad)" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+      "Early years (salaried)" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
+      "Early years (undergrad)" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+      "Opt-in (undergrad)" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+      "Provider-led (postgrad)" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+      "Provider-led (undergrad)" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+      "School direct (fee funded)" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+      "School direct (salaried)" => TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      "Teaching apprenticeship (postgrad)" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    }.freeze
+
     def initialize(provider:, csv_row:)
       @csv_row = csv_row
-      @trainee = provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
+      @provider = provider
+      @trainee = @provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
     end
 
     def call
@@ -27,13 +42,13 @@ module Trainees
 
   private
 
-    attr_reader :csv_row, :trainee
+    attr_reader :csv_row, :trainee, :provider
 
     def mapped_attributes
       {
         record_source: RecordSources::MANUAL,
         region: csv_row["Region"],
-        training_route: TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+        training_route: training_route,
         first_names: csv_row["First names"],
         middle_names: csv_row["Middle names"],
         last_name: csv_row["Last names"],
@@ -105,6 +120,10 @@ module Trainees
       csv_row["Trainee start date"]
     end
 
+    def training_route
+      hpitt_trainee? ? TRAINING_ROUTE_ENUMS[:hpitt_postgrad] : TRAINING_ROUTES[csv_row["Training route"]]
+    end
+
     def sex
       if csv_row["Sex"] == Diversities::NOT_PROVIDED
         "sex_not_provided"
@@ -171,6 +190,10 @@ module Trainees
 
     def employing_school_id
       School.find_by(urn: csv_row["Employing school URN"])&.id
+    end
+
+    def hpitt_trainee?
+      @provider.code == "HPITT"
     end
   end
 end
