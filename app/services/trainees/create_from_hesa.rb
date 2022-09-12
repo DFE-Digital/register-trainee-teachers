@@ -154,7 +154,7 @@ module Trainees
     end
 
     def diversity_disclosure
-      if disabilities.any? || ethnicity_disclosed?
+      if disability_disclosed? || ethnicity_disclosed?
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
       else
         Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
@@ -162,7 +162,7 @@ module Trainees
     end
 
     def disability_attributes
-      if disabilities.empty? || disabilities == [Diversities::NOT_PROVIDED]
+      if !disability_disclosed?
         return {
           disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
         }
@@ -194,6 +194,10 @@ module Trainees
         ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
         ethnic_background: Diversities::NOT_PROVIDED,
       }
+    end
+
+    def disability_disclosed?
+      disabilities.any? && disabilities != [Diversities::NOT_PROVIDED]
     end
 
     def sex

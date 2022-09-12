@@ -79,6 +79,6 @@ module DiversityAttributes
   end
 
   def ethnicity_disclosed?
-    ethnic_background.present? && ethnic_background != Diversities::INFORMATION_REFUSED
+    ethnic_background.present? && [Diversities::NOT_PROVIDED, Diversities::INFORMATION_REFUSED].exclude?(ethnic_background)
   end
 end

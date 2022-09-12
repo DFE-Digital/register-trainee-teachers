@@ -205,7 +205,7 @@ module Trainees
 
       context "when ethnicity is explicitly 'not provided'" do
         let(:hesa_stub_attributes) do
-          { ethnic_background: hesa_disability_codes[Diversities::NOT_PROVIDED] }
+          { ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED] }
         end
 
         it "sets the ethnic_group and background to 'Not provided'" do
@@ -217,13 +217,28 @@ module Trainees
       context "when neither ethnicity nor disabilities are disclosed" do
         let(:hesa_stub_attributes) do
           {
-            ethnic_background: hesa_disability_codes[Diversities::NOT_PROVIDED],
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
             disability1: nil,
           }
         end
 
         it "sets the diversity disclosure to 'diversity_not_disclosed'" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
+        end
+      end
+
+      context "when disability is 'Not provided'" do
+        let(:hesa_stub_attributes) do
+          {
+            ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
+            disability1: hesa_disability_codes[Diversities::NOT_PROVIDED],
+          }
+        end
+
+        it "sets the disclosures to 'not_disclosed'" do
+          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
         end
       end
 
