@@ -5,9 +5,8 @@ require "rails_helper"
 module Trainees
   describe CreateFromHpittCsv do
     include SeedHelper
-
     let!(:academic_cycle) { AcademicCycle.current }
-    let(:urn) { "0123456" }
+    let(:employing_school_urn) { "0123456" }
 
     let(:csv_row) {
       {
@@ -38,7 +37,7 @@ module Trainees
         "Course ITT start date" => "2022-09-09",
         "Course Expected End Date" => "2023-07-31",
         "Trainee start date" => "2022-09-09",
-        "Employing school URN" => urn,
+        "Employing school URN" => employing_school_urn,
         "Degree: country" => "United Kingdom",
         "Degree: subjects" => "History",
         "Degree: UK degree types" => "Bachelor of Arts",
@@ -58,7 +57,7 @@ module Trainees
     before do
       generate_seed_nationalities
       generate_seed_disabilities
-      create(:school, urn: urn)
+      create(:school, urn: employing_school_urn)
       create(:subject_specialism, name: "primary teaching")
     end
 
@@ -107,7 +106,7 @@ module Trainees
         end
 
         it "updates the trainee's school and training details" do
-          expect(trainee.employing_school.urn).to eq(urn)
+          expect(trainee.employing_school.urn).to eq(employing_school_urn)
           expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
         end
 
@@ -270,17 +269,26 @@ module Trainees
     end
 
     context "with a SCITT CSV" do
-      let!(:provider) { create(:provider) }
+      let!(:provider) { create(:provider, :with_courses) }
+      let(:lead_school_urn) { "1234567" }
 
       before do
+        create(:school, :lead, urn: lead_school_urn)
+
         csv_row.merge!({
           "Training route" => "School direct (salaried)",
+          "Publish Course Code" => provider.courses.first.code,
+          "Lead school URN" => lead_school_urn,
+          "Funding: Training Initiatives" => "Transition to Teach",
         })
         described_class.call(provider: provider, csv_row: csv_row)
       end
 
       it "sets the extra fields" do
         expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:school_direct_salaried])
+        expect(trainee.course_uuid).to eq(provider.courses.first.uuid)
+        expect(trainee.lead_school.urn).to eq(lead_school_urn)
+        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:transition_to_teach])
       end
     end
   end

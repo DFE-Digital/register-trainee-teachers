@@ -22,6 +22,15 @@ module Trainees
       "Teaching apprenticeship (postgrad)" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     }.freeze
 
+    INITIATIVES = {
+      "Future Teaching Scholars" => ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars],
+      "Maths and Physics Chairs programme / Researchers in Schools" => ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
+      "Now Teach" => ROUTE_INITIATIVES_ENUMS[:now_teach],
+      "Transition to Teach" => ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+      "Troops to Teachers" => ROUTE_INITIATIVES_ENUMS[:troops_to_teachers],
+      "Not on a training initiative" => ROUTE_INITIATIVES_ENUMS[:no_initiative],
+    }.freeze
+
     def initialize(provider:, csv_row:)
       @csv_row = csv_row
       @provider = provider
@@ -56,8 +65,10 @@ module Trainees
         date_of_birth: Date.parse(csv_row["Date of birth"]),
         nationality_ids: nationality_ids,
         email: csv_row["Email"],
-        training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+        training_initiative: training_initiative,
         employing_school_id: employing_school_id,
+        lead_school_id: lead_school_id,
+        course_uuid: course_uuid,
         progress: Progress.new(
           personal_details: true,
           contact_details: true,
@@ -122,6 +133,10 @@ module Trainees
 
     def training_route
       hpitt_trainee? ? TRAINING_ROUTE_ENUMS[:hpitt_postgrad] : TRAINING_ROUTES[csv_row["Training route"]]
+    end
+
+    def training_initiative
+      hpitt_trainee? ? ROUTE_INITIATIVES_ENUMS[:no_initiative] : INITIATIVES[csv_row["Funding: Training Initiatives"]]
     end
 
     def sex
@@ -190,6 +205,20 @@ module Trainees
 
     def employing_school_id
       School.find_by(urn: csv_row["Employing school URN"])&.id
+    end
+
+    def lead_school_id
+      School.lead_only.find_by(urn: csv_row["Lead school URN"])&.id
+    end
+
+    def course_uuid
+      course_code = csv_row["Publish Course Code"]
+      return if course_code.blank?
+
+      course = provider.courses.find_by(code: course_code)
+      raise(Error, "Course UUID not recognised for provider: #{course_code}") if course.nil?
+
+      course.uuid
     end
 
     def hpitt_trainee?
