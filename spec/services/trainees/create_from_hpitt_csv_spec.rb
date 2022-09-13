@@ -100,7 +100,7 @@ module Trainees
         expect(trainee.itt_end_date).to eq(Date.parse(csv_row["Course ITT end date"]))
         expect(trainee.start_academic_cycle).to eq(academic_cycle)
         expect(trainee.end_academic_cycle).to eq(academic_cycle)
-        expect(trainee.commencement_date).to eq(Date.parse(csv_row["Trainee start date"]))
+        expect(trainee.trainee_start_date).to eq(Date.parse(csv_row["Trainee start date"]))
       end
 
       it "updates the trainee's school and training details" do
