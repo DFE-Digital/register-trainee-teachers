@@ -115,6 +115,10 @@ module Trainees
       primary_education_phase? ? fix_invalid_primary_course_subjects(attributes) : attributes
     end
 
+    # Use HESA's itt_commencement_date first, this is populated when the trainee
+    # has transferred from a non-QTS  awarding course, to an ITT (QTS awarding)
+    # course, otherwise use HESA's commencement_date.  This is the start date
+    # for trainees who have not transferred courses.
     def trainee_start_date
       hesa_trainee[:itt_commencement_date].presence || hesa_trainee[:commencement_date]
     end
