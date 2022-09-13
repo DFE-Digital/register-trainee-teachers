@@ -107,12 +107,22 @@ module Trainees
         course_min_age: age_range && age_range[0],
         course_max_age: course_max_age,
         study_mode: study_mode,
-        itt_start_date: hesa_trainee[:itt_start_date],
+        itt_start_date: itt_start_date,
         itt_end_date: hesa_trainee[:itt_end_date],
-        trainee_start_date: hesa_trainee[:trainee_start_date] || hesa_trainee[:itt_start_date],
+        # HESA do not distinguish between the ITT start date and the trainee
+        # start date, so we're setting both to the ITT start date.
+        trainee_start_date: itt_start_date,
       }
 
       primary_education_phase? ? fix_invalid_primary_course_subjects(attributes) : attributes
+    end
+
+    # Use HESA's itt_commencement_date first, this is populated when the trainee
+    # has transferred from a non-QTS  awarding course, to an ITT (QTS awarding)
+    # course, otherwise use HESA's commencement_date.  This is the start date
+    # for trainees who have not transferred courses.
+    def itt_start_date
+      hesa_trainee[:itt_commencement_date].presence || hesa_trainee[:commencement_date]
     end
 
     def withdrawal_attributes
