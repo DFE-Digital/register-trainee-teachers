@@ -62,7 +62,7 @@ Follow these steps to register a trainee on a PE with EBacc course:
 
 1. Add a first subject as ‘Physical education’, or a physical education based subject.
 2. Add a second subject as their EBacc subject.
-3. Email us at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk) stating their trainee ID and that they are doing PE with EBacc.
+3. Email us at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Registering%20trainees%20on%20a%20PE%20with%20EBacc%20course) stating their trainee ID and that they are doing PE with EBacc.
 
 <h2 class="govuk-heading-m">Recommending a trainee for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)</h2>
 
