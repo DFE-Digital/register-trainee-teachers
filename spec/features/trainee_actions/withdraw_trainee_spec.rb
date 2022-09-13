@@ -5,7 +5,14 @@ require "rails_helper"
 feature "Withdrawing a trainee", type: :feature do
   include SummaryHelper
 
-  before { ActiveJob::Base.queue_adapter.enqueued_jobs.clear }
+  before do
+    ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
+  end
+
+  after do
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
+  end
 
   context "validation errors" do
     before do

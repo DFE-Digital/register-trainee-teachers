@@ -42,6 +42,7 @@ feature "apply registrations", type: :feature do
     let(:subjects) { ["Art and design"] }
 
     scenario "selecting specialisms" do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       when_i_enter_the_course_details_page
       and_i_confirm_the_course_details
       and_i_select_a_specialism("Graphic design")

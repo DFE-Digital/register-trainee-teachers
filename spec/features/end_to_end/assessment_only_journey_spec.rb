@@ -6,6 +6,7 @@ feature "assessment-only end-to-end journey", type: :feature do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN" do
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_i_have_created_an_assessment_only_trainee
     and_the_personal_details_is_complete
     and_the_contact_details_is_complete

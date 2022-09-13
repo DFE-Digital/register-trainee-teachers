@@ -11,6 +11,7 @@ RSpec.feature "EmployingSchoolSearch", type: :feature do
   end
 
   scenario "choosing a employing school", js: true do
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     and_i_fill_in_my_employing_school
     and_i_click_the_first_item_in_the_list
     and_i_continue
