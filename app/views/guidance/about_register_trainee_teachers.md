@@ -60,15 +60,15 @@ Once you register your new trainees, your trainee data gets analysed and filtere
 
 At the start of every academic year, during September and October, you’ll need to register your new trainees and sign off your new trainee data before the end of October. We ask you to sign off your data so we know it’s accurate for the ITT census publication.
 
-[Find out what the dates and deadlines are for the 2022 to 2023 academic year.](/guidance/dates-and-deadlines)
+Find out what the [dates and deadlines are for the 2022 to 2023 academic year](/guidance/dates-and-deadlines).
 
 Training providers that do not use the Higher Education Statistics Agency (HESA) data collection system should register their trainees manually in the Register service. 
 
-[Read about how to register your trainees manually.](/guidance/manually-registering-trainees)
+Read about how to [register your trainees manually](/guidance/manually-registering-trainees).
 
 Training providers who use HESA, should submit their data through HESA. Your data will then be imported into Register where you can check it. 
 
-[Read more about how to register your trainees through HESA.](/guidance/registering-trainees-through-hesa)
+Read more about how to [register your trainees through HESA](/guidance/registering-trainees-through-hesa).
 
 <h3 class="govuk-heading-s">Who you should register</h3>
 
