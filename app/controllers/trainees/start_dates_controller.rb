@@ -3,13 +3,13 @@
 module Trainees
   class StartDatesController < BaseController
     PARAM_CONVERSION = {
-      "commencement_date(3i)" => "day",
-      "commencement_date(2i)" => "month",
-      "commencement_date(1i)" => "year",
+      "trainee_start_date(3i)" => "day",
+      "trainee_start_date(2i)" => "month",
+      "trainee_start_date(1i)" => "year",
     }.freeze
 
     def edit
-      redirect_to(edit_trainee_start_status_path(trainee)) if @trainee.commencement_date.blank?
+      redirect_to(edit_trainee_start_status_path(trainee)) if @trainee.trainee_start_date.blank?
       @trainee_start_date_form = TraineeStartDateForm.new(trainee, params: params.slice(:context).permit!)
     end
 
@@ -26,7 +26,7 @@ module Trainees
   private
 
     def trainee_params
-      params.require(:trainee_start_date_form).permit(:commencement_date, :context, *PARAM_CONVERSION.keys)
+      params.require(:trainee_start_date_form).permit(:trainee_start_date, :context, *PARAM_CONVERSION.keys)
             .transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end

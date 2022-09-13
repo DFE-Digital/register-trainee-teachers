@@ -12,8 +12,8 @@ module WithdrawalDetails
       @deferred = data_model.trainee.deferred?
     end
 
-    def trainee_commencement_date
-      date_for_summary_view(data_model.commencement_date)
+    def trainee_start_date
+      date_for_summary_view(data_model.trainee_start_date)
     end
 
     def withdraw_date
@@ -43,7 +43,7 @@ module WithdrawalDetails
     def start_date_row
       {
         key: t("components.confirmation.withdrawal_details.trainee_start_date_label"),
-        value: trainee_commencement_date,
+        value: trainee_start_date,
         action_href: deferred ? nil : trainee_start_date_verification_path(data_model.trainee, context: :withdraw),
         action_text: deferred ? nil : t(:change),
       }

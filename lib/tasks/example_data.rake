@@ -209,9 +209,9 @@ namespace :example_data do
 
             end
 
-            # Make *roughly* 25% of submitted_for_trn trainees not have a commencement date
+            # Make *roughly* 25% of submitted_for_trn trainees not have a trainee start date
             if state == :submitted_for_trn && sample_index < sample_size * 25.0 / 100
-              attrs.merge!(commencement_date: nil)
+              attrs.merge!(trainee_start_date: nil)
             end
 
             # Make 75% of drafts (both apply and manual) incomplete

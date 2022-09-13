@@ -39,7 +39,7 @@ describe StartDateVerificationForm, type: :model do
       expect {
         subject.save!
       }.to change(trainee, :commencement_status).to("itt_not_yet_started")
-      .and change(trainee, :commencement_date).to(nil)
+      .and change(trainee, :trainee_start_date).to(nil)
     end
   end
 end

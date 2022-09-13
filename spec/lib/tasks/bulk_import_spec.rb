@@ -83,7 +83,7 @@ describe "bulk_import:import" do
     expect(trainee.training_route).to eq "school_direct_salaried"
     expect(trainee.training_initiative).to eq "no_initiative"
     expect(trainee.trainee_id).to eq "L0V3LYiD"
-    expect(trainee.commencement_date).to eq Date.parse("01/09/2021")
+    expect(trainee.trainee_start_date).to eq Date.parse("01/09/2021")
 
     expect(trainee.degrees.count).to eq 1
     degree = trainee.degrees.first

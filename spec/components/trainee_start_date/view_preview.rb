@@ -11,7 +11,7 @@ module TraineeStartDate
   private
 
     def mock_trainee
-      @mock_trainee ||= Trainee.new(commencement_date: Time.zone.today)
+      @mock_trainee ||= Trainee.new(trainee_start_date: Time.zone.today)
     end
   end
 end

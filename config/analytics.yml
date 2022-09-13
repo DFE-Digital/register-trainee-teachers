@@ -202,7 +202,7 @@ shared:
     - applying_for_scholarship
     - awarded_at
     - bursary_tier
-    - commencement_date
+    - trainee_start_date
     - commencement_status
     - course_allocation_subject_id
     - course_education_phase

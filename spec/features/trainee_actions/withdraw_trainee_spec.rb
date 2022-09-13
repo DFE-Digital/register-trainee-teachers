@@ -302,7 +302,7 @@ feature "Withdrawing a trainee", type: :feature do
   def given_a_trainee_exists_to_be_withdrawn
     given_a_trainee_exists(
       %i[submitted_for_trn trn_received].sample,
-      commencement_date: 10.days.ago,
+      trainee_start_date: 10.days.ago,
       itt_end_date: 1.year.from_now,
     )
   end
@@ -310,7 +310,7 @@ feature "Withdrawing a trainee", type: :feature do
   def given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     given_a_trainee_exists(
       %i[submitted_for_trn trn_received].sample,
-      commencement_date: nil,
+      trainee_start_date: nil,
       itt_end_date: 1.year.from_now,
     )
   end
@@ -392,7 +392,7 @@ feature "Withdrawing a trainee", type: :feature do
   end
 
   def and_i_fill_in_a_new_start_date(date)
-    trainee_start_status_edit_page.set_date_fields("commencement_date", date.strftime("%d/%m/%Y"))
+    trainee_start_status_edit_page.set_date_fields("trainee_start_date", date.strftime("%d/%m/%Y"))
   end
 
   def and_integrate_with_dqt_feature_is_active

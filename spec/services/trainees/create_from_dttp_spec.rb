@@ -163,12 +163,12 @@ module Trainees
         end
       end
 
-      context "when the commencement_date is missing" do
+      context "when the trainee_start_date is missing" do
         let(:api_placement_assignment) { create(:api_placement_assignment, dfe_commencementdate: nil) }
 
         it "uses the programme start date" do
           create_trainee_from_dttp
-          expect(Trainee.last.commencement_date).to eq(placement_assignment.programme_start_date)
+          expect(Trainee.last.trainee_start_date).to eq(placement_assignment.programme_start_date)
         end
       end
 
@@ -333,7 +333,7 @@ module Trainees
           create_trainee_from_dttp
           trainee = Trainee.last
           expect(trainee.course_subject_one).to eq(CourseSubjects::MODERN_LANGUAGES)
-          expect(trainee.commencement_date).to eq(placement_assignment_two.response["dfe_commencementdate"].to_date)
+          expect(trainee.trainee_start_date).to eq(placement_assignment_two.response["dfe_commencementdate"].to_date)
         end
 
         it "sets the trainee submitted_for_trn_at date from the first placement assignment" do

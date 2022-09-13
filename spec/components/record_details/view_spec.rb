@@ -195,16 +195,16 @@ module RecordDetails
           trainee.itt_start_date = 5.days.ago.to_date
         end
 
-        context "commencement_date is set" do
-          let(:commencement_date) { 5.days.from_now.to_date }
+        context "trainee_start_date is set" do
+          let(:trainee_start_date) { 5.days.from_now.to_date }
 
           before do
-            trainee.commencement_date = commencement_date
+            trainee.trainee_start_date = trainee_start_date
             render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end
 
-          it "renders commencement_date" do
-            expect(rendered_component).to have_text(date_for_summary_view(commencement_date))
+          it "renders trainee_start_date" do
+            expect(rendered_component).to have_text(date_for_summary_view(trainee_start_date))
           end
 
           it "renders link to trainee start date form" do
@@ -213,9 +213,9 @@ module RecordDetails
           end
         end
 
-        context "commencement_date is not set" do
+        context "trainee_start_date is not set" do
           before do
-            trainee.commencement_date = nil
+            trainee.trainee_start_date = nil
             render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end
 

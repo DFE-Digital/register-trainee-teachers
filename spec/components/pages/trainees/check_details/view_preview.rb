@@ -119,7 +119,7 @@ module Pages
                       ),
                       diversity_disclosure: 1,
                       degrees: [Degree.new(id: 1, locale_code: 1, subject: "subject")],
-                      commencement_date: Time.zone.now,
+                      trainee_start_date: Time.zone.now,
                       training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
                       applying_for_bursary: true,
                       provider: Provider.new)

@@ -7,8 +7,8 @@ class WithdrawalForm < MultiDateForm
   validate :withdraw_reason_valid
   validate :additional_withdraw_reason_valid
 
-  def commencement_date
-    @commencement_date ||= ::TraineeStartStatusForm.new(trainee).commencement_date
+  def trainee_start_date
+    @trainee_start_date ||= ::TraineeStartStatusForm.new(trainee).trainee_start_date
   end
 
   def save!

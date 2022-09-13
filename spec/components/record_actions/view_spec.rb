@@ -98,7 +98,7 @@ RSpec.describe RecordActions::View do
   end
 
   context "when the trainee has missing fields" do
-    let(:trainee) { build(:trainee, :submitted_for_trn, :itt_start_date_in_the_past, commencement_date: nil) }
+    let(:trainee) { build(:trainee, :submitted_for_trn, :itt_start_date_in_the_past, trainee_start_date: nil) }
 
     subject { render_inline(described_class.new(trainee, has_missing_fields: true)).text }
 

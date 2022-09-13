@@ -173,7 +173,7 @@ module Dqt
       end
 
       def start_date
-        trainee.commencement_date || trainee.itt_start_date
+        trainee.trainee_start_date || trainee.itt_start_date
       end
 
       def estimated_course_duration

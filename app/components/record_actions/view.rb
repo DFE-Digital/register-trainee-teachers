@@ -111,11 +111,11 @@ module RecordActions
     end
 
     def course_started_but_no_specified_start_date?
-      !course_starting_in_the_future? && trainee.commencement_date.blank?
+      !course_starting_in_the_future? && trainee.trainee_start_date.blank?
     end
 
     def relevant_redirect_path
-      if trainee.commencement_date.present?
+      if trainee.trainee_start_date.present?
         trainee_withdrawal_path(trainee)
       else
         trainee_start_date_verification_path(trainee, context: :withdraw)

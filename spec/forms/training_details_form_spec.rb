@@ -30,7 +30,7 @@ describe TrainingDetailsForm, type: :model do
       end
 
       context "over 100 characters" do
-        let(:trainee) { build(:trainee, commencement_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(101)) }
+        let(:trainee) { build(:trainee, trainee_start_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(101)) }
 
         it "returns a max character exceeded message" do
           expect(subject).not_to be_valid
@@ -41,7 +41,7 @@ describe TrainingDetailsForm, type: :model do
       end
 
       context "under 100 characters" do
-        let(:trainee) { build(:trainee, commencement_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(99)) }
+        let(:trainee) { build(:trainee, trainee_start_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(99)) }
 
         it "is valid" do
           expect(subject).to be_valid

@@ -43,8 +43,8 @@ describe MissingDataBannerView do
         end
       end
 
-      context "commencement_date" do
-        let(:field) { :commencement_date }
+      context "trainee_start_date" do
+        let(:field) { :trainee_start_date }
         let(:expected_path) { edit_trainee_start_date_path(trainee) }
 
         it "returns the link to the form containing the missing data" do

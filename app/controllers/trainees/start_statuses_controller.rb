@@ -3,9 +3,9 @@
 module Trainees
   class StartStatusesController < BaseController
     PARAM_CONVERSION = {
-      "commencement_date(3i)" => "day",
-      "commencement_date(2i)" => "month",
-      "commencement_date(1i)" => "year",
+      "trainee_start_date(3i)" => "day",
+      "trainee_start_date(2i)" => "month",
+      "trainee_start_date(1i)" => "year",
     }.freeze
 
     def edit
@@ -41,7 +41,7 @@ module Trainees
     def relevant_redirect_path
       return trainee_forbidden_deletes_path(trainee) if @trainee_start_status_form.deleting?
 
-      return trainee_confirm_withdrawal_path(trainee) if trainee_commencement_date_before_withdrawal_date?
+      return trainee_confirm_withdrawal_path(trainee) if trainee_start_date_before_withdrawal_date?
 
       return trainee_withdrawal_path(trainee) if @trainee_start_status_form.withdrawing?
 
@@ -54,12 +54,12 @@ module Trainees
       trainee_start_status_confirm_path(trainee)
     end
 
-    def trainee_commencement_date_before_withdrawal_date?
+    def trainee_start_date_before_withdrawal_date?
       withdrawal_date = WithdrawalForm.new(trainee).date
 
       return false unless withdrawal_date
 
-      @trainee_start_status_form.withdrawing? && @trainee_start_status_form.commencement_date < withdrawal_date
+      @trainee_start_status_form.withdrawing? && @trainee_start_status_form.trainee_start_date < withdrawal_date
     end
   end
 end

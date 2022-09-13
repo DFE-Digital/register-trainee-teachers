@@ -30,7 +30,7 @@ module Trainees
       course_subject_one
       itt_start_date
       itt_end_date
-      commencement_date
+      trainee_start_date
       course_max_age
       course_uuid
       course_subject_two

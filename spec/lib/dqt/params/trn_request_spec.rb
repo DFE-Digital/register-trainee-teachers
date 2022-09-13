@@ -72,7 +72,7 @@ module Dqt
               let(:training_route) { "provider_led_undergrad" }
 
               it "calculates the end date using the course duration data" do
-                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 70.months).iso8601)
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.trainee_start_date + 70.months).iso8601)
               end
             end
 
@@ -80,7 +80,7 @@ module Dqt
               let(:training_route) { "school_direct_tuition_fee" }
 
               it "calculates the end date using the course duration data" do
-                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 22.months).iso8601)
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.trainee_start_date + 22.months).iso8601)
               end
             end
           end
@@ -92,7 +92,7 @@ module Dqt
               let(:training_route) { "provider_led_undergrad" }
 
               it "calculates the end date using the course duration data" do
-                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 34.months).iso8601)
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.trainee_start_date + 34.months).iso8601)
               end
             end
 
@@ -100,7 +100,7 @@ module Dqt
               let(:training_route) { "school_direct_tuition_fee" }
 
               it "calculates the end date using the course duration data" do
-                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 10.months).iso8601)
+                expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.trainee_start_date + 10.months).iso8601)
               end
             end
           end
@@ -110,7 +110,7 @@ module Dqt
             let(:training_route) { "opt_in_undergrad" }
 
             it "calculates the end date using the course duration data" do
-              expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.commencement_date + 22.months).iso8601)
+              expect(subject["initialTeacherTraining"]).to include("programmeEndDate" => (trainee.trainee_start_date + 22.months).iso8601)
             end
           end
         end

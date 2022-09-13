@@ -75,7 +75,7 @@ module ApplicationRecordCard
     end
 
     def start_year
-      academic_cycle = AcademicCycle.for_date(record.commencement_date)
+      academic_cycle = AcademicCycle.for_date(record.trainee_start_date)
       return unless academic_cycle
 
       tag.p("Start year: #{academic_cycle.label}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__start_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")

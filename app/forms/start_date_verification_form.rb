@@ -41,7 +41,7 @@ private
   def update_trainee_commencement_status
     attributes = { commencement_status: commencement_status }
 
-    attributes.merge!(commencement_date: nil) if not_yet_started?
+    attributes.merge!(trainee_start_date: nil) if not_yet_started?
 
     trainee.assign_attributes(attributes)
   end

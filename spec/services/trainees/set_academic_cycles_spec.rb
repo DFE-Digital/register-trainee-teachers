@@ -12,25 +12,25 @@ module Trainees
     describe "start_academic_cycle" do
       subject { described_class.call(trainee: trainee).start_academic_cycle }
 
-      context "when a trainee has a commencement_date" do
+      context "when a trainee has a trainee_start_date" do
         let(:trainee) do
           build(
             :trainee,
-            commencement_date: current_academic_cycle.start_date,
+            trainee_start_date: current_academic_cycle.start_date,
             itt_start_date: next_academic_cycle.start_date,
           )
         end
 
-        it "favours commencement_date" do
+        it "favours trainee_start_date" do
           expect(subject).to eq(current_academic_cycle)
         end
       end
 
-      context "when a trainee has no commencement_date, but has an itt_start_date" do
+      context "when a trainee has no trainee_start_date, but has an itt_start_date" do
         let(:trainee) do
           build(
             :trainee,
-            commencement_date: nil,
+            trainee_start_date: nil,
             itt_start_date: next_academic_cycle.start_date,
           )
         end
@@ -40,7 +40,7 @@ module Trainees
         end
       end
 
-      context "when a trainee has no commencement_date/itt_start_date" do
+      context "when a trainee has no trainee_start_date/itt_start_date" do
         let(:trainee) { build(:trainee) }
 
         it "favours current academic cycle" do

@@ -6,7 +6,7 @@ describe TraineeStartStatusForm, type: :model do
   let(:params) { { year: "2020", month: "12", day: "20", commencement_status: "itt_started_later" } }
   let(:trainee) { build(:trainee, :incomplete) }
   let(:form_store) { class_double(FormStore) }
-  let(:error_attr) { "activemodel.errors.models.trainee_start_status_form.attributes.commencement_date" }
+  let(:error_attr) { "activemodel.errors.models.trainee_start_status_form.attributes.trainee_start_date" }
 
   subject { described_class.new(trainee, params: params, store: form_store) }
 
@@ -30,7 +30,7 @@ describe TraineeStartStatusForm, type: :model do
       let(:params) { { day: 20, month: 20, year: 2020, commencement_status: "itt_started_later" } }
 
       it "is invalid" do
-        expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.invalid"))
+        expect(subject.errors[:trainee_start_date]).to include(I18n.t("#{error_attr}.invalid"))
       end
     end
 
@@ -38,7 +38,7 @@ describe TraineeStartStatusForm, type: :model do
       let(:params) { { day: "", month: "", year: "", commencement_status: "itt_started_later" } }
 
       it "is invalid" do
-        expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.blank"))
+        expect(subject.errors[:trainee_start_date]).to include(I18n.t("#{error_attr}.blank"))
       end
 
       context "when trainee started on time" do
@@ -47,7 +47,7 @@ describe TraineeStartStatusForm, type: :model do
         let(:trainee) { build(:trainee, itt_start_date: Time.zone.today) }
 
         it "uses the trainee's itt_start_date" do
-          expect(subject.commencement_date).to eq(trainee.itt_start_date)
+          expect(subject.trainee_start_date).to eq(trainee.itt_start_date)
         end
 
         it "is valid" do
@@ -58,8 +58,8 @@ describe TraineeStartStatusForm, type: :model do
       context "when trainee did not start yet" do
         let(:params) { { day: "20", month: "12", year: "2020", commencement_status: "itt_not_yet_started" } }
 
-        it "unsets the trainee's commencement_date" do
-          expect(subject.commencement_date).to have_attributes(year: nil, month: nil, day: nil)
+        it "unsets the trainee's trainee_start_date" do
+          expect(subject.trainee_start_date).to have_attributes(year: nil, month: nil, day: nil)
         end
 
         it "is valid" do
@@ -74,7 +74,7 @@ describe TraineeStartStatusForm, type: :model do
       end
 
       it "is invalid" do
-        expect(subject.errors[:commencement_date]).to include(
+        expect(subject.errors[:trainee_start_date]).to include(
           I18n.t(
             "#{error_attr}.not_after_itt_end_date_html",
             itt_end_date: trainee.itt_end_date.strftime("%-d %B %Y"),
@@ -89,7 +89,7 @@ describe TraineeStartStatusForm, type: :model do
       let(:params) { { year: "2009", month: "12", day: "20", commencement_status: "itt_started_later" } }
 
       it "is invalid" do
-        expect(subject.errors[:commencement_date]).to include(I18n.t("#{error_attr}.too_old"))
+        expect(subject.errors[:trainee_start_date]).to include(I18n.t("#{error_attr}.too_old"))
       end
     end
   end
@@ -115,7 +115,7 @@ describe TraineeStartStatusForm, type: :model do
       date_params = params.values.map(&:to_i)
       expect {
         subject.save!
-      }.to change(trainee, :commencement_date).to(Date.new(*date_params))
+      }.to change(trainee, :trainee_start_date).to(Date.new(*date_params))
       .and change(trainee, :commencement_status).to("itt_started_later")
     end
   end

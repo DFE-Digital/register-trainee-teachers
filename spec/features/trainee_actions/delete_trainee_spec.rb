@@ -56,7 +56,7 @@ private
     given_a_trainee_exists(:trn_received,
                            :with_publish_course_details,
                            itt_start_date: 10.days.ago,
-                           commencement_date: nil)
+                           trainee_start_date: nil)
   end
 
   def given_a_trainee_thats_deleted

@@ -31,31 +31,31 @@ describe AcademicCycle, type: :model do
 
     subject { academic_cycle.trainees_starting }
 
-    context "a trainee with commencement_date in the cycle" do
-      let(:trainee) { create(:trainee, commencement_date: academic_cycle.start_date, itt_start_date: nil) }
+    context "a trainee with trainee_start_date in the cycle" do
+      let(:trainee) { create(:trainee, trainee_start_date: academic_cycle.start_date, itt_start_date: nil) }
 
       it { is_expected.to match_array([trainee]) }
     end
 
     context "a trainee with itt_start_date in the cycle" do
-      let(:trainee) { create(:trainee, itt_start_date: academic_cycle.start_date, commencement_date: nil) }
+      let(:trainee) { create(:trainee, itt_start_date: academic_cycle.start_date, trainee_start_date: nil) }
 
       it { is_expected.to match_array([trainee]) }
     end
 
-    context "a trainee with commencement_date in the cycle and itt_start_date outside the cycle" do
+    context "a trainee with trainee_start_date in the cycle and itt_start_date outside the cycle" do
       let(:trainee) do
-        create(:trainee, itt_start_date: academic_cycle.start_date - 1.day, commencement_date: academic_cycle.start_date)
+        create(:trainee, itt_start_date: academic_cycle.start_date - 1.day, trainee_start_date: academic_cycle.start_date)
       end
 
-      it "returns the trainee having preferred commencement date" do
+      it "returns the trainee having preferred trainee start date" do
         expect(subject).to match_array([trainee])
       end
     end
 
     context "a trainee with commencment_date outside the cycle and itt_start_date inside the cycle" do
       let(:trainee) do
-        create(:trainee, itt_start_date: academic_cycle.start_date, commencement_date: academic_cycle.start_date - 1.day)
+        create(:trainee, itt_start_date: academic_cycle.start_date, trainee_start_date: academic_cycle.start_date - 1.day)
       end
 
       it "does not return the trainee" do
@@ -64,13 +64,13 @@ describe AcademicCycle, type: :model do
     end
 
     context "a trainee that didn't start in the cycle" do
-      let(:trainee) { create(:trainee, commencement_date: academic_cycle.start_date - 1.day, itt_start_date: nil) }
+      let(:trainee) { create(:trainee, trainee_start_date: academic_cycle.start_date - 1.day, itt_start_date: nil) }
 
       it { is_expected.to be_empty }
     end
 
     context "a trainee with no start dates" do
-      let(:trainee) { create(:trainee, :draft, itt_start_date: nil, commencement_date: nil) }
+      let(:trainee) { create(:trainee, :draft, itt_start_date: nil, trainee_start_date: nil) }
 
       context "the current cycle" do
         let(:academic_cycle) { build(:academic_cycle, :current) }

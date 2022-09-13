@@ -125,7 +125,7 @@ describe DeferralForm, type: :model do
     end
 
     context "when start date is changed" do
-      let(:trainee) { create(:trainee, :deferred, commencement_date: nil) }
+      let(:trainee) { create(:trainee, :deferred, trainee_start_date: nil) }
 
       before do
         allow(FormStore).to receive(:get).with(trainee.id, :trainee_start_status).and_return({
@@ -140,7 +140,7 @@ describe DeferralForm, type: :model do
         expect(FormStore).to receive(:set).with(trainee.id, :trainee_start_status, nil)
         expect(FormStore).to receive(:set).with(trainee.id, :start_date_verification, nil)
 
-        expect { subject.save! }.to change(trainee, :commencement_date).to(Date.parse("21-9-2021"))
+        expect { subject.save! }.to change(trainee, :trainee_start_date).to(Date.parse("21-9-2021"))
       end
     end
   end

@@ -6,7 +6,7 @@ module Trainees
 
     DURATIONS = %w[hours months days years].freeze
 
-    delegate :commencement_date,
+    delegate :trainee_start_date,
              :itt_start_date,
              :itt_end_date,
              :hesa_metadatum,
@@ -34,7 +34,7 @@ module Trainees
     attr_reader :trainee, :actual
 
     def start_date
-      commencement_date || itt_start_date
+      trainee_start_date || itt_start_date
     end
 
     def course_duration
