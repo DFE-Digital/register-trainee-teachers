@@ -133,6 +133,27 @@ jobs:
       run: |
         echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
 
+    - name: Set KV environment variables
+      if: github.actor != 'dependabot[bot]'
+      run: |
+        # tag build to the review env for vars and secrets
+        tf_vars_file=terraform/workspace-variables/review.tfvars.json
+        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+
+    - uses: azure/login@v1
+      if: github.actor != 'dependabot[bot]'
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+
+    - uses: DFE-Digital/keyvault-yaml-secret@v1
+      if: github.actor != 'dependabot[bot]'
+      id: get-secret
+      with:
+        keyvault: ${{ env.KEY_VAULT_NAME }}
+        secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
+        key: SENTRY_DSN
+
     - name: Pull docker images
       run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
 
@@ -163,6 +184,8 @@ jobs:
 
     - name: Run Rspec tests
       run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test bundle exec rake spec'
+      env:
+        SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
 
     - name: Run Javascript tests
       run: docker-compose exec -T web /bin/sh -c 'yarn run test'
