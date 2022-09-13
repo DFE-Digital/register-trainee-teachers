@@ -29,6 +29,7 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
       - REDIS_URL=redis://redis:6379
+      - SENTRY_DSN=${SENTRY_DSN}
 
   bg-jobs:
     image: ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
