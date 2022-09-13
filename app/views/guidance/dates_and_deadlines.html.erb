@@ -20,14 +20,18 @@
       <% end %>
       <% table.body do |body| %>
         <% body.row do |row| %>
-          <% row.cell(text: "Wednesday 12 October 2022")%>
-          <% row.cell(text: "The second Wednesday of October every academic year is called the ‘census date’. 
-          If a new trainee starts their course after this date, they will not be included in the ITT census publication. 
+          <% row.cell do %>
+              <span class="no-wrap">Wednesday 12 October 2022</span>
+          <% end %>
+          <% row.cell(text: "The second Wednesday of October every academic year is called the ‘census date’.
+          If a new trainee starts their course after this date, they will not be included in the ITT census publication.
           This is why it’s important to add your new trainees as they start their training.")%>
         <% end %>
         <% body.row do |row| %>
-          <% row.cell(text: "31 October 2022")%>
-          <% row.cell(text: "A senior person from your organisation must sign off your new trainee data on or before this date 
+            <% row.cell do %>
+              <span class="no-wrap">31 October 2022</span>
+            <% end %>
+          <% row.cell(text: "A senior person from your organisation must sign off your new trainee data on or before this date
           (this should be a different person to who submitted the data).")%>
         <% end %>
       <% end %>
@@ -43,29 +47,35 @@
       <% end %>
       <% table.body do |body| %>
         <% body.row do |row| %>
-          <% row.cell(text: "1 September 2022")%>
-          <% row.cell(text: "	HESA data collection system opens. 
+            <% row.cell do %>
+              <span class="no-wrap">1 September 2022</span>
+            <% end %>
+          <% row.cell(text: "	HESA data collection system opens.
           Training providers can start submitting their ITT trainee data to the DfE through HESA.")%>
         <% end %>
         <% body.row do |row| %>
-          <% row.cell(text: "14 October 2022")%>
-          <% row.cell(text: "First data submission required to HESA. 
+            <% row.cell do %>
+              <span class="no-wrap">14 October 2022</span>
+            <% end %>
+          <% row.cell(text: "First data submission required to HESA.
           Training providers should have started submitting data by this date.")%>
         <% end %>
         <% body.row do |row| %>
-          <% row.cell(text: "31 October 2022	")%>
-          <% row.cell(text: "HESA data collection system closes. 
-          ITT trainee data must be submitted and signed off on or before the data collection system closes. 
+            <% row.cell do %>
+              <span class="no-wrap">31 October 2022</span>
+            <% end %>
+          <% row.cell(text: "HESA data collection system closes.
+          ITT trainee data must be submitted and signed off on or before the data collection system closes.
           Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication.")%>
         <% end %>
         <% body.row do |row| %>
           <% row.cell do %>
-            <div>16 to 31 January 2023</div>
-            <div>17 to 28 April 2023</div>
-            <div>17 to 31 July 2023</div>
+            <div class="no-wrap">16 to 31 January 2023</div>
+            <div class="no-wrap">17 to 28 April 2023</div>
+            <div class="no-wrap">17 to 31 July 2023</div>
           <% end %>
-          <% row.cell(text: "ITT data collection update periods where you can update your trainee data through HESA 
-          if anything has changed. Data will be imported into Register. 
+          <% row.cell(text: "ITT data collection update periods where you can update your trainee data through HESA
+          if anything has changed. Data will be imported into Register.
           You do not need to sign off your data during these update periods.")%>
         <% end %>
       <% end %>
