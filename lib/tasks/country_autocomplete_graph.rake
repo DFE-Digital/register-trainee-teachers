@@ -7,7 +7,7 @@ namespace :country_autocomplete_graph do
 
     graph_file_name = "location-autocomplete-graph.json"
     node_plugin_path = "node_modules/govuk-country-and-territory-autocomplete/dist"
-    original_location_graph = JSON.parse(File.read(Rails.root.join(node_plugin_path, graph_file_name)))
+    original_location_graph = JSON.parse(Rails.root.join(node_plugin_path, graph_file_name).read)
 
     dttp_location_graph = {}
     missing_from_dttp = {}
@@ -31,8 +31,8 @@ namespace :country_autocomplete_graph do
       missing_from_dttp[primary_key] = original_location_graph[primary_key]
     end
 
-    File.write(Rails.public_path.join(graph_file_name), dttp_location_graph.to_json)
+    Rails.public_path.join(graph_file_name).write(dttp_location_graph.to_json)
 
-    File.write(Rails.root.join("missing-location-graph-from-dttp.json"), missing_from_dttp.to_json)
+    Rails.root.join("missing-location-graph-from-dttp.json").write(missing_from_dttp.to_json)
   end
 end
