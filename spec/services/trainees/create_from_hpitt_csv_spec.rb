@@ -6,7 +6,7 @@ module Trainees
   describe CreateFromHpittCsv do
     include SeedHelper
     let!(:provider) { create(:provider, :teach_first) }
-    let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2022) }
+    let!(:academic_cycle) { AcademicCycle.current }
     let(:urn) { "0123456" }
 
     let(:csv_row) {
