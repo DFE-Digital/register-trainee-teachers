@@ -15,13 +15,17 @@ namespace :country_autocomplete_graph do
     Dttp::CodeSets::Countries::MAPPING.each do |_, meta|
       results = {}
       country_code = meta[:country_code]
-      primary_key = "country:#{country_code}"
+      country_key = "country:#{country_code}"
+      territory_key = "territory:#{country_code}"
 
       original_location_graph.each do |key, value|
-        inbound_nodes = value.dig("edges", "from").join
-        if key == primary_key || inbound_nodes.include?(primary_key) || inbound_nodes.include?("#{country_code.downcase}:")
-          results[key] = value
-        end
+        child_nodes = value.dig("edges", "from").join
+        next unless key == country_key ||
+          key == territory_key ||
+          child_nodes.include?(country_key) ||
+          child_nodes.include?(territory_key)
+
+        results[key] = value
       end
 
       dttp_location_graph.merge!(results)
