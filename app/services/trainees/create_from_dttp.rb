@@ -4,7 +4,7 @@ module Trainees
   class CreateFromDttp
     include ServicePattern
     include HasDttpMapping
-    include DiversityAttributes
+    include HasDiversityAttributes
 
     TRN_REGEX = /^(\d{6,7})$/.freeze
 
@@ -27,6 +27,8 @@ module Trainees
 
     POSTGRAD_CODE = 12
     UNDERGRAD_CODE = 20
+
+    MULTIPLE_DISABILITIES_TEXT = "HESA multiple disabilities"
 
     def initialize(dttp_trainee:, placement_assignment: nil)
       @dttp_trainee = dttp_trainee
@@ -443,6 +445,76 @@ module Trainees
     def set_created_at_and_updated_at!
       trainee.update!(created_at: dttp_trainee.created_at)
       trainee.update!(updated_at: dttp_trainee.updated_at)
+    end
+
+    def ethnicity_attributes
+      if Diversities::NOT_PROVIDED_ETHNICITIES.include?(ethnic_background)
+        return {
+          ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+          ethnic_background: Diversities::NOT_PROVIDED,
+        }
+      end
+
+      if Diversities::WHITE_ETHNICITIES.include?(ethnic_background)
+        return {
+          ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:white],
+          ethnic_background: Diversities::NOT_PROVIDED,
+        }
+      end
+
+      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
+        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+
+        return {
+          ethnic_group: ethnic_group,
+          ethnic_background: ethnic_background,
+        }
+      end
+
+      {
+        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+        ethnic_background: Diversities::NOT_PROVIDED,
+      }
+    end
+
+    def disability_attributes
+      if disability.blank? || disability == Diversities::NOT_PROVIDED
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
+        }
+      end
+
+      if disability == Diversities::NO_KNOWN_DISABILITY
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
+        }
+      end
+
+      if disability == Diversities::MULTIPLE_DISABILITIES
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
+          disabilities: Disability.where(name: ::Diversities::OTHER),
+        }
+      end
+
+      {
+        disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
+        disabilities: Disability.where(name: disability),
+      }
+    end
+
+    def diversity_disclosure
+      if disability.present? || ethnicity_disclosed?
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
+      else
+        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
+      end
+    end
+
+    def add_multiple_disability_text!
+      return unless disability == Diversities::MULTIPLE_DISABILITIES
+
+      trainee.trainee_disabilities.last.update!(additional_disability: MULTIPLE_DISABILITIES_TEXT)
     end
   end
 end

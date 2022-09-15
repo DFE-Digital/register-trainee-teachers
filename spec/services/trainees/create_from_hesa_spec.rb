@@ -44,7 +44,6 @@ module Trainees
         expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
         expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
         expect(trainee.trn).to eq(student_attributes[:trn])
-        expect(trainee.course_allocation_subject).to eq(course_allocation_subject)
         expect(trainee.record_source).to eq(record_source)
       end
 
@@ -62,6 +61,7 @@ module Trainees
       end
 
       it "updates trainee's course details" do
+        expect(trainee.course_allocation_subject).to eq(course_allocation_subject)
         expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:primary])
         expect(trainee.course_subject_one).to eq(::CourseSubjects::PRIMARY_TEACHING)
         expect(trainee.course_subject_two).to eq(::CourseSubjects::BIOLOGY)

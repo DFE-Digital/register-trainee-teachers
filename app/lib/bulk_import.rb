@@ -186,7 +186,7 @@ module BulkImport
     def to_course_subject(raw_string)
       return if raw_string.blank?
 
-      potential_subjects = HPITT::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
+      potential_subjects = Hpitt::CodeSets::CourseSubjects::MAPPING.select do |_key, values|
         values.include?(raw_string.squish)
       end
 
@@ -306,7 +306,7 @@ module BulkImport
     def to_ethnic_group(raw_string)
       return Diversities::ETHNIC_GROUP_ENUMS[:not_provided] if raw_string.blank?
 
-      HPITT::CodeSets::Ethnicities::MAPPING.select do |key, _value|
+      Hpitt::CodeSets::Ethnicities::MAPPING.select do |key, _value|
         normalise_string(key).starts_with?(normalise_string(raw_string))
       end.values.first
     end
@@ -362,7 +362,7 @@ module BulkImport
     end
 
     def potential_institutions_in_hpitt_codeset(raw_string)
-      HPITT::CodeSets::Institutions::MAPPING.select do |_k, value|
+      Hpitt::CodeSets::Institutions::MAPPING.select do |_k, value|
         normalise_string(value) == normalise_string(raw_string)
       end
     end

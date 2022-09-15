@@ -3,7 +3,8 @@
 module Trainees
   class CreateFromHesa
     include ServicePattern
-    include DiversityAttributes
+    include HasDiversityAttributes
+    include HasCourseAttributes
 
     USERNAME = "HESA"
 
@@ -44,7 +45,6 @@ module Trainees
         trn: trn,
         state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
-        course_allocation_subject: course_allocation_subject,
         record_source: trainee_record_source,
       }.merge(created_from_hesa_attribute)
        .merge(personal_details_attributes)
@@ -98,33 +98,6 @@ module Trainees
       provider ? { provider: provider } : {}
     end
 
-    def course_attributes
-      attributes = {
-        course_education_phase: course_education_phase,
-        course_subject_one: course_subject_one_name,
-        course_subject_two: course_subject_two_name,
-        course_subject_three: course_subject_three_name,
-        course_min_age: age_range && age_range[0],
-        course_max_age: course_max_age,
-        study_mode: study_mode,
-        itt_start_date: itt_start_date,
-        itt_end_date: hesa_trainee[:itt_end_date],
-        # HESA do not distinguish between the ITT start date and the trainee
-        # start date, so we're setting both to the ITT start date.
-        trainee_start_date: itt_start_date,
-      }
-
-      primary_education_phase? ? fix_invalid_primary_course_subjects(attributes) : attributes
-    end
-
-    # Use HESA's itt_commencement_date first, this is populated when the trainee
-    # has transferred from a non-QTS  awarding course, to an ITT (QTS awarding)
-    # course, otherwise use HESA's commencement_date.  This is the start date
-    # for trainees who have not transferred courses.
-    def itt_start_date
-      hesa_trainee[:itt_commencement_date].presence || hesa_trainee[:commencement_date]
-    end
-
     def withdrawal_attributes
       return {} unless trainee_state == :withdrawn
 
@@ -161,53 +134,6 @@ module Trainees
 
     def funding_attributes
       MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
-    end
-
-    def diversity_disclosure
-      if disability_disclosed? || ethnicity_disclosed?
-        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed]
-      else
-        Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed]
-      end
-    end
-
-    def disability_attributes
-      if !disability_disclosed?
-        return {
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
-        }
-      end
-
-      if disabilities == [Diversities::NO_KNOWN_DISABILITY]
-        return {
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
-        }
-      end
-
-      {
-        disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
-        disabilities: disabilities.map { |disability| Disability.find_by(name: disability) },
-      }
-    end
-
-    def ethnicity_attributes
-      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
-        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
-
-        return {
-          ethnic_group: ethnic_group,
-          ethnic_background: ethnic_background,
-        }
-      end
-
-      {
-        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
-        ethnic_background: Diversities::NOT_PROVIDED,
-      }
-    end
-
-    def disability_disclosed?
-      disabilities.any? && disabilities != [Diversities::NOT_PROVIDED]
     end
 
     def sex
@@ -251,6 +177,24 @@ module Trainees
       Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_trainee[:training_initiative]]
     end
 
+    # Use HESA's itt_commencement_date first, this is populated when the trainee
+    # has transferred from a non-QTS  awarding course, to an ITT (QTS awarding)
+    # course, otherwise use HESA's commencement_date.  This is the start date
+    # for trainees who have not transferred courses.
+    def itt_start_date
+      hesa_trainee[:itt_commencement_date].presence || hesa_trainee[:commencement_date]
+    end
+
+    def itt_end_date
+      hesa_trainee[:itt_end_date]
+    end
+
+    # HESA do not distinguish between the ITT start date and the trainee
+    # start date, so we're setting both to the ITT start date.
+    def trainee_start_date
+      itt_start_date
+    end
+
     def course_subject_name(subject_code)
       Hesa::CodeSets::CourseSubjects::MAPPING[subject_code]
     end
@@ -265,14 +209,6 @@ module Trainees
 
     def course_subject_three_name
       course_subject_name(hesa_trainee[:course_subject_three])
-    end
-
-    def course_max_age
-      age_range && age_range[1]
-    end
-
-    def primary_education_phase?
-      course_max_age && course_max_age <= AgeRange::UPPER_BOUND_PRIMARY_AGE
     end
 
     def course_education_phase
@@ -290,7 +226,7 @@ module Trainees
       Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:mode]]
     end
 
-    def age_range
+    def course_age_range
       Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
     end
 
@@ -300,18 +236,6 @@ module Trainees
 
     def create_degrees!
       ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
-    end
-
-    def fix_invalid_primary_course_subjects(course_attributes)
-      # This always ensures "primary teaching" is the first subject or inserts it if it's missing
-      other_subjects = course_subjects - [CourseSubjects::PRIMARY_TEACHING]
-      course_attributes.merge(course_subject_one: CourseSubjects::PRIMARY_TEACHING,
-                              course_subject_two: other_subjects.first,
-                              course_subject_three: other_subjects.second)
-    end
-
-    def course_subjects
-      [course_subject_one_name, course_subject_two_name, course_subject_three_name].compact
     end
 
     def store_hesa_metadata!
@@ -340,10 +264,6 @@ module Trainees
 
     def trainee_state
       @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee, trainee_persisted: trainee.persisted?) || trainee.state
-    end
-
-    def course_allocation_subject
-      SubjectSpecialism.find_by(name: course_subject_one_name)&.allocation_subject
     end
   end
 end

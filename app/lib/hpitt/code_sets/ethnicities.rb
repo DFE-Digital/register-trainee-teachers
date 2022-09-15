@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HPITT
+module Hpitt
   module CodeSets
     module Ethnicities
       MAPPING = {
