@@ -3,7 +3,7 @@ page_title: About Register trainee teachers
 title: About Register trainee teachers
 ---
 
-Register trainee teachers (Register) is the service that replaced the Database of Trainee Teachers & Providers (DTTP) in 2022.
+Register trainee teachers (Register) is the service that replaced the Database of Trainee Teachers and Providers (DTTP) in 2022.
 
 Initial Teacher Training (ITT) providers use Register to provide the Department for Education (DfE) with their trainee data.
 
@@ -80,7 +80,7 @@ Not registering trainees who drop out early means we do not have any record of t
 
 Once you’ve registered your trainees, you’ll need to check your data is correct. You can do this in Register by:
 
-* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year (available in Register soon)
+* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year
 * exporting a CSV of your trainees in the ‘Registered trainees’ section, using the ‘start year’ filter to select the current academic year
 * checking your trainees directly in the service one by one
 

@@ -50,7 +50,7 @@ Once an application is imported into Register, any changes you make to the appli
 
 There are 3 ways to do this in Register and you can choose whichever one suits you. These are:
 
-* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year (available in Register soon)
+* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year
 * exporting a CSV of your trainees in the ‘Registered trainees’ section, using the ‘start year’ filter to select the current academic year
 * checking your trainees directly in the service one by one
 

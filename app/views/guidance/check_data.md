@@ -1,6 +1,6 @@
 ---
-page_title: Check what data you need to provide
-title: Check what data you need to provide
+page_title: Check what data you need to provide to register trainees manually
+title: Check what data you need to provide to register trainees manually
 ---
 
 This information is mainly for school centred initial teacher training providers (SCITTs) that use this service to manually register their trainees.

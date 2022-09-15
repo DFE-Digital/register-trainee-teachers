@@ -21,7 +21,7 @@ When you log into Register, on the homepage you’ll see a section called ‘Dra
 
 Once your data has been imported into Register, you can check it. There are 3 ways to do this in Register and you can choose whichever one suits you. These are:
 
-* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year (available in Register soon)
+* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year
 * exporting a CSV of your trainees in the ‘Registered trainees’ section, using the ‘start year’ filter to select the current academic year
 * checking your trainees directly in the service one by one
 
@@ -41,7 +41,7 @@ In HESA, withdrawn trainees are recorded by using the [Student.ENDDATE](https://
 
 <h2 class="govuk-heading-m">Expected end date for trainees</h2>
 
-HESA has added a new field in their collection for the 2022 to 2023 academic year called [‘expected end date’ (EXPECTEDENDDATE)](https://www.hesa.ac.uk/collection/c22053/e/expectedenddate). 
+HESA has added a new field in their collection for the 2022 to 2023 academic year called ‘expected end date’ ([EXPECTEDENDDATE](https://www.hesa.ac.uk/collection/c22053/e/expectedenddate)). 
 
 The Register service requires this field to issue TRNs and for funding purposes. You must fill out this field in HESA, it will then import into Register as ‘ITT end date’.
 
