@@ -26,10 +26,6 @@ class PagesController < ApplicationController
     render(:privacy_notice)
   end
 
-  def guidance
-    render(:guidance)
-  end
-
   def dttp_replaced
     render(:dttp_replaced)
   end

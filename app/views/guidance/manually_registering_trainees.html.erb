@@ -1,0 +1,17 @@
+<%= render "manually_registering_trainees" %>
+        
+<%= govuk_details(summary_text: "How to find a trainee once you’ve recommended them for QTS or EYTS",
+    text: "Once you’ve recommended a trainee for QTS or EYTS, you’ll find their record by going to the
+     ‘Awarded this year’ training status on the Homepage. You can also filter by ‘Awarded’ on the records list page.") %>
+
+<%= render "withdrawing_or_deferring_a_trainee" %>
+
+<%= govuk_details(summary_text: "More information on what ‘withdrawn’ and ‘deferred’ means in Register") do %>
+  <p>
+    A ‘deferred’ trainee in Register is a trainee who is registered on a course but then decides to defer to a later date or academic year. 
+    In Register, trainees can be deferred if they have started their ITT course or if they never start their ITT course.
+  </p>
+  <p>
+    A ‘withdrawn‘ trainee in Register is a trainee that is registered on an ITT course, started that course, but then decides to withdraw from the course or the qualified teacher status (QTS) part of the course and will not return.
+  </p>
+<% end %>
