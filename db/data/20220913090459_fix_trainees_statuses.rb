@@ -3,13 +3,13 @@
 class FixTraineesStatuses < ActiveRecord::Migration[6.1]
   def up
     # Remove duplicate trainee
-    Trainee.find_by(hesa_id: 2010289040732).destroy
+    Trainee.find_by(hesa_id: 2010289040732)&.destroy
 
-    Trainee.find_by(trn: 2038203).update_columns(awarded_at: "08/01/2022")
-    Trainee.find_by(trn: 2068721).update_columns(state: :withdrawn, withdraw_reason: WithdrawalReasons::DEATH)
+    Trainee.find_by(trn: 2038203)&.update_columns(awarded_at: "08/01/2022")
+    Trainee.find_by(trn: 2068721)&.update_columns(state: :withdrawn, withdraw_reason: WithdrawalReasons::DEATH)
 
     [1754063, 1836859, 1859242, 1960177, 2042122, 2048081, 2052341, 2066594, 1685644].each do |trn|
-      Trainee.find_by(trn: trn).update_columns(state: :deferred)
+      Trainee.find_by(trn: trn)&.update_columns(state: :deferred)
     end
 
     [
@@ -56,7 +56,7 @@ class FixTraineesStatuses < ActiveRecord::Migration[6.1]
       4047434,
       1760850,
     ].each do |trn|
-      Trainee.find_by(trn: trn).update_columns(state: :withdrawn, withdraw_reason: WithdrawalReasons::UNKNOWN)
+      Trainee.find_by(trn: trn)&.update_columns(state: :withdrawn, withdraw_reason: WithdrawalReasons::UNKNOWN)
     end
 
     [
@@ -81,7 +81,7 @@ class FixTraineesStatuses < ActiveRecord::Migration[6.1]
       2058026,
       2063417,
     ].each do |trn|
-      Trainee.find_by(trn: trn).update_columns(state: :trn_received)
+      Trainee.find_by(trn: trn)&.update_columns(state: :trn_received)
     end
 
     [
@@ -91,7 +91,7 @@ class FixTraineesStatuses < ActiveRecord::Migration[6.1]
       { trn: 2056550, awarded_at: "05/01/2022" },
       { trn: 1758285, awarded_at: "10/09/2021" },
     ].each do |data|
-      Trainee.find_by(trn: data[:trn]).update_columns(awarded_at: data[:awarded_at])
+      Trainee.find_by(trn: data[:trn])&.update_columns(awarded_at: data[:awarded_at])
     end
 
     [
@@ -102,7 +102,7 @@ class FixTraineesStatuses < ActiveRecord::Migration[6.1]
       { trn: 2068161, new_trn: 2072954, awarded_at: "16/07/2021" },
       { trn: 2070906, new_trn: 2072030, awarded_at: "17/12/2021" },
     ].each do |data|
-      Trainee.find_by(trn: data[:trn]).update_columns(trn: data[:new_trn], awarded_at: data[:awarded_at])
+      Trainee.find_by(trn: data[:trn])&.update_columns(trn: data[:new_trn], awarded_at: data[:awarded_at])
     end
   end
 
