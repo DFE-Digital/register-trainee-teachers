@@ -22,7 +22,7 @@
                                           :value,
                                           :text,
                                           form_group: { class: invalid_data_class(form: @degree_form, field: "country") },
-                                          label: { text: "In which country is the degree institution based?", size: "s" }) do
+                                          label: { text: "In which country or territory is the degree institution based?", size: "s" }) do
       render InvalidDataText::View.new(form_section: :country, degree_form: @degree_form)
     end,
   ) %>
