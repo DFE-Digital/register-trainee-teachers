@@ -48,7 +48,9 @@ module Trainees
         )
       end
 
-      validate_and_save_progress
+      sanitise_funding
+      validate_and_set_progress
+      trainee.save!
     end
 
   private
@@ -74,6 +76,7 @@ module Trainees
       }.merge(address_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
+       .merge(funding_attributes)
     end
 
     def address_attributes
@@ -127,6 +130,18 @@ module Trainees
 
     def training_initiative
       hpitt_trainee? ? ROUTE_INITIATIVES_ENUMS[:no_initiative] : INITIATIVES[csv_row["Funding: Training Initiatives"]]
+    end
+
+    def funding_attributes
+      return {} if hpitt_trainee?
+
+      funding_type = csv_row["Funding: Type"]
+
+      {
+        applying_for_bursary: funding_type == "Bursary",
+        applying_for_scholarship: funding_type == "Scholarship",
+        applying_for_grant: funding_type == "Grant",
+      }
     end
 
     def sex
@@ -215,13 +230,18 @@ module Trainees
       @provider.code == "HPITT"
     end
 
-    def validate_and_save_progress
+    def sanitise_funding
+      funding_manager = FundingManager.new(trainee)
+      trainee.applying_for_bursary = nil unless funding_manager.can_apply_for_bursary?
+      trainee.applying_for_grant = nil unless funding_manager.can_apply_for_grant?
+      trainee.applying_for_scholarship = nil unless funding_manager.can_apply_for_scholarship?
+    end
+
+    def validate_and_set_progress
       Submissions::TrnValidator.new(trainee: trainee).validators.each do |section, validator|
         section_valid = validator[:form].constantize.new(trainee).valid?
         trainee.progress.public_send("#{section}=", section_valid)
       end
-
-      trainee.save!
     end
   end
 end

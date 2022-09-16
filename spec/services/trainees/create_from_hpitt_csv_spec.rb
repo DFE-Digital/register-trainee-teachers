@@ -122,13 +122,6 @@ module Trainees
           expect(degree.other_grade).to be_nil
           expect(degree.country).to be_nil
         end
-
-        it "sets the trainee's progress" do
-          values = %w[personal_details contact_details degrees diversity course_details training_details trainee_data schools funding]
-          values.each do |v|
-            expect(trainee.progress.public_send(v)).to be_truthy
-          end
-        end
       end
 
       context "when the degree institution UKPRN is provided" do
@@ -276,12 +269,7 @@ module Trainees
     end
 
     context "with a SCITT CSV" do
-<<<<<<< HEAD
       let!(:provider) { create(:provider, :with_courses) }
-=======
-      let!(:provider) { create(:provider) }
-      let!(:course) { create(:course, accredited_body_code: provider.code) }
->>>>>>> 05dcaea7a ([4656] Use validation logic from bulk import it HPITT import)
       let(:lead_school_urn) { "1234567" }
 
       before do
