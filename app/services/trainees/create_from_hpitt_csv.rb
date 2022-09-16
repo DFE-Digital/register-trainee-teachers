@@ -47,6 +47,8 @@ module Trainees
           csv_row: csv_row.to_hash.compact.select { |column_name, _| column_name.start_with?("Degree:") },
         )
       end
+
+      validate_and_save_progress
     end
 
   private
@@ -69,18 +71,6 @@ module Trainees
         employing_school_id: employing_school_id,
         lead_school_id: lead_school_id,
         course_uuid: course_uuid,
-        progress: Progress.new(
-          personal_details: true,
-          contact_details: true,
-          degrees: true,
-          diversity: true,
-          funding: true,
-          course_details: true,
-          training_details: true,
-          trainee_data: true,
-          trainee_start_status: true,
-          schools: true,
-        ),
       }.merge(address_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
@@ -223,6 +213,15 @@ module Trainees
 
     def hpitt_trainee?
       @provider.code == "HPITT"
+    end
+
+    def validate_and_save_progress
+      Submissions::TrnValidator.new(trainee: trainee).validators.each do |section, validator|
+        section_valid = validator[:form].constantize.new(trainee).valid?
+        trainee.progress.public_send("#{section}=", section_valid)
+      end
+
+      trainee.save!
     end
   end
 end
