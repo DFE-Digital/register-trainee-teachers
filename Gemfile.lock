@@ -147,7 +147,7 @@ GEM
     config (4.0.0)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
-    connection_pool (2.2.5)
+    connection_pool (2.3.0)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -537,7 +537,7 @@ GEM
       sidekiq (>= 3.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.6)
+    sidekiq (6.5.7)
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
