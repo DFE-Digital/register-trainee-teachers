@@ -95,7 +95,8 @@ class PublishCourseDetailsForm < TraineeForm
 private
 
   def update_trainee_attributes
-    trainee.assign_attributes(course_uuid: course_uuid,
+    trainee.assign_attributes(training_route: course.route,
+                              course_uuid: course_uuid,
                               course_subject_one: course_subject_one,
                               course_subject_two: course_subject_two,
                               course_subject_three: course_subject_three,

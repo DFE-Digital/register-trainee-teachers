@@ -36,6 +36,15 @@ feature "apply registrations", type: :feature do
       and_i_confirm_the_course
       then_i_am_redirected_to_the_review_draft_page
     end
+
+    scenario "changing course with a different route" do
+      given_my_provider_has_courses_for_other_training_routes
+      when_i_enter_the_course_details_page
+      and_i_choose_a_different_course
+      and_i_enter_itt_dates
+      and_i_confirm_the_course
+      and_the_training_route_matches_the_course_route
+    end
   end
 
   describe "with a course that requires selecting multiple specialisms" do
@@ -74,17 +83,31 @@ private
   end
 
   def and_a_trainee_exists_created_from_apply
-    given_a_trainee_exists(
-      :with_apply_application, :with_related_courses, courses_count: 1, subject_names: subjects, training_route: training_route
-    )
+    given_a_trainee_exists(:with_apply_application,
+                           :with_related_courses,
+                           courses_count: 1,
+                           subject_names: subjects,
+                           training_route: training_route)
 
     Course.first.tap do |course|
       trainee.update(course_uuid: course.uuid)
     end
   end
 
+  def given_i_am_on_an_existing_course
+    given_a_trainee_exists(:with_apply_application, :with_publish_course_details)
+  end
+
   def given_the_trainee_does_not_have_a_course_uuid
     trainee.update(course_uuid: nil)
+  end
+
+  def given_my_provider_has_courses_for_other_training_routes
+    other_route = TRAINING_ROUTES_FOR_COURSE.keys.excluding(trainee.training_route).sample
+    @other_course = create(:course_with_subjects,
+                           accredited_body_code: trainee.provider.code,
+                           route: other_route,
+                           subject_names: ["Philosophy"])
   end
 
   def then_the_section_should_be(status)
@@ -112,6 +135,13 @@ private
     apply_registrations_course_details_page.continue.click
   end
 
+  def and_i_choose_a_different_course
+    apply_registrations_course_details_page.course_options.second.choose
+    apply_registrations_course_details_page.continue.click
+    publish_course_details_page.course_options.second.choose
+    publish_course_details_page.submit_button.click
+  end
+
   def and_i_choose_my_languages
     language_specialism_page.language_specialism_options.first.check
     language_specialism_page.submit_button.click
@@ -129,5 +159,9 @@ private
   def and_i_select_a_specialism(specialism)
     subject_specialism_page.specialism_options.find { |o| o.label.text == specialism }.choose
     subject_specialism_page.submit_button.click
+  end
+
+  def and_the_training_route_matches_the_course_route
+    expect(review_draft_page).to have_content(I18n.t("activerecord.attributes.trainee.training_routes.#{@other_course.route}").downcase)
   end
 end
