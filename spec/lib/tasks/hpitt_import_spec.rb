@@ -125,7 +125,7 @@ describe "hpitt:import" do
 
       expect(trainee.itt_start_date).to eq(Date.parse("28/9/2022"))
       expect(trainee.itt_end_date).to eq(Date.parse("25/7/2023"))
-      expect(trainee.commencement_date).to eq(Date.parse("28/9/2022"))
+      expect(trainee.trainee_start_date).to eq(Date.parse("28/9/2022"))
       expect(trainee.course_subject_one).to eq("French language")
       expect(trainee.course_subject_two).to eq("Spanish language")
       expect(trainee.course_subject_three).to eq("Italian language")
