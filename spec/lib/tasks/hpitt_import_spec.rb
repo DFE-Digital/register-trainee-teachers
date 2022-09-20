@@ -5,8 +5,6 @@ require "rails_helper"
 describe "hpitt:import" do
   include SeedHelper
 
-  let!(:provider) { create(:provider, :teach_first) }
-
   subject do
     args = Rake::TaskArguments.new(%i[provider_code csv_path], [provider.code, csv_path])
     Rake::Task["hpitt:import"].execute(args)
@@ -25,6 +23,7 @@ describe "hpitt:import" do
     let(:csv_path) {
       File.join(__dir__, "..", "..", "support", "fixtures", "hpitt_import.csv")
     }
+    let!(:provider) { create(:provider, :teach_first) }
 
     before { subject }
 
@@ -84,6 +83,7 @@ describe "hpitt:import" do
     let(:csv_path) {
       File.join(__dir__, "..", "..", "support", "fixtures", "hpitt_import_invalid.csv")
     }
+    let!(:provider) { create(:provider, :teach_first) }
 
     it "gives an error for the invalid row, and still creates the valid trainee" do
       expect(Sentry).to receive(:capture_exception).with(StandardError)
@@ -95,10 +95,11 @@ describe "hpitt:import" do
     let(:csv_path) {
       File.join(__dir__, "..", "..", "support", "fixtures", "bulk_import.csv")
     }
+    let!(:provider) { create(:provider) }
 
-    it "creates the trainee/degree" do
-      expect { subject }.to change { Trainee.count }.from(0).to(1)
+    before { subject }
 
+    it "sets the trainee's personal details" do
       trainee = Trainee.first
       expect(trainee.reload.trainee_id).to eq("TF2022-123")
       expect(trainee.first_names).to eq("Fred")
@@ -107,12 +108,18 @@ describe "hpitt:import" do
       expect(trainee.date_of_birth).to eq(Date.parse("1970-01-29"))
       expect(trainee.email).to eq("fred.flintstone@example.com")
       expect(trainee.gender).to eq("male")
+    end
 
+    it "sets the trainee's address details" do
+      trainee = Trainee.first
       expect(trainee.address_line_one).to eq("10 Fiddlesticks lane")
       expect(trainee.address_line_two).to eq("Ambleside")
       expect(trainee.town_city).to eq("Frome")
       expect(trainee.postcode).to eq("SW1A 2AA")
+    end
 
+    it "sets the trainee's diversity details" do
+      trainee = Trainee.first
       expect(trainee.nationalities.count).to eq(2)
       expect(trainee.nationalities).to include(Nationality.find_by_name("british"))
       expect(trainee.nationalities).to include(Nationality.find_by_name("french"))
@@ -122,7 +129,10 @@ describe "hpitt:import" do
       expect(trainee.disability_disclosure).to eq Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
       expect(trainee.disabilities.count).to eq(2)
       expect(trainee.region).to be_nil
+    end
 
+    it "sets the trainee's course details" do
+      trainee = Trainee.first
       expect(trainee.itt_start_date).to eq(Date.parse("28/9/2022"))
       expect(trainee.itt_end_date).to eq(Date.parse("25/7/2023"))
       expect(trainee.trainee_start_date).to eq(Date.parse("28/9/2022"))
@@ -131,12 +141,12 @@ describe "hpitt:import" do
       expect(trainee.course_subject_three).to eq("Italian language")
       expect(trainee.study_mode).to eq("full_time")
       expect(trainee.course_education_phase).to eq("secondary")
-
-      expect(trainee.training_route).to eq("hpitt_postgrad")
+      expect(trainee.training_route).to eq("school_direct_salaried")
       expect(trainee.training_initiative).to eq("no_initiative")
+    end
 
-      expect(trainee.degrees.count).to eq(1)
-      degree = trainee.degrees.first
+    it "sets the trainee's degree details" do
+      degree = Trainee.first.degrees.first
       expect(degree.locale_code).to eq("uk")
       expect(degree.uk_degree).to eq("Bachelor of Arts")
       expect(degree.grade).to eq("First-class honours")
