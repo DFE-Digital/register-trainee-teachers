@@ -53,7 +53,7 @@ class PublishCourseDetailsForm < TraineeForm
     return false unless valid?
 
     update_trainee_attributes
-    clear_funding_information if course_subjects_changed?
+    clear_funding_information if clear_funding_information?
     Trainees::Update.call(trainee: trainee)
     clear_all_stashes
   end
@@ -146,5 +146,9 @@ private
     end
 
     clear_stash
+  end
+
+  def clear_funding_information?
+    course_subjects_changed? || trainee.training_route_changed?
   end
 end
