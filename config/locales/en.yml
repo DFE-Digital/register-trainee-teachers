@@ -201,6 +201,13 @@ en:
       personal_detail:
         full_name: &full_name Full name
         date_of_birth: &date_of_birth Date of birth
+        sex: &sex Sex
+        sexes:
+          female: Female
+          male: Male
+          gender_not_provided: Not provided
+          other: Other
+          prefer_not_to_say: Prefer not to say
         gender: &gender Gender
         genders:
           female: Female
@@ -1179,6 +1186,12 @@ en:
         study_modes:
           full_time: Full time
           part_time: Part time
+        sexes:
+          female: Female
+          male: Male
+          gender_not_provided: Not provided
+          prefer_not_to_say: Prefer not to say
+          other: Other
         genders:
           female: Female
           male: Male

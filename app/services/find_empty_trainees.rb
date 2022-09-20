@@ -16,7 +16,7 @@ class FindEmptyTrainees
     trainees.middle_names
     trainees.international_address
     trainees.locale_code
-    trainees.gender
+    trainees.sex
     trainees.diversity_disclosure
     trainees.ethnic_group
     trainees.ethnic_background

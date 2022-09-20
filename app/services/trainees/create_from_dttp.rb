@@ -209,7 +209,7 @@ module Trainees
         middle_names: dttp_trainee.response["middlename"],
         last_name: dttp_trainee.response["lastname"],
         date_of_birth: dttp_trainee.date_of_birth,
-        gender: trainee_gender,
+        sex: trainee_gender,
         nationalities: nationalities,
       }
     end

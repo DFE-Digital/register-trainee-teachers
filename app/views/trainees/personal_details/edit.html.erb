@@ -32,12 +32,12 @@
                              legend: { text: "Date of birth", size: "s" },
                              hint: { text: I18n.t("activemodel.errors.models.personal_details_form.attributes.date_of_birth.hint_html", year: 41.years.ago.year) } %>
 
-      <%= f.govuk_radio_buttons_fieldset(:gender, legend: { text: "Gender", size: "s" }, classes: "gender") do %>
-        <% %i[female male other prefer_not_to_say gender_not_provided].each_with_index do |gender, index| %>
+      <%= f.govuk_radio_buttons_fieldset(:sex, legend: { text: "Sex", size: "s" }, classes: "sex") do %>
+        <% %i[female male other prefer_not_to_say gender_not_provided].each_with_index do |sex, index| %>
           <%= f.govuk_radio_button(
-            :gender,
-            gender,
-            label: { text: t("activerecord.attributes.trainee.genders.#{gender}") },
+            :sex,
+            sex,
+            label: { text: t("activerecord.attributes.trainee.sexes.#{sex}") },
             link_errors: index.zero?)
           %>
         <% end %>

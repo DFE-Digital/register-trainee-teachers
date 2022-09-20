@@ -15,7 +15,7 @@ module PersonalDetails
         render_inline(View.new(data_model: personal_details_form, editable: true))
       end
 
-      it "renders blank rows for full name, date of birth, gender and nationality" do
+      it "renders blank rows for full name, date of birth, sex and nationality" do
         expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 4)
       end
 
@@ -61,7 +61,7 @@ module PersonalDetails
       it "renders the gender" do
         expect(rendered_component)
           .to have_text(
-            I18n.t("components.confirmation.personal_detail.genders.#{trainee.gender}"),
+            I18n.t("components.confirmation.personal_detail.sexes.#{trainee.gender}"),
           )
       end
 

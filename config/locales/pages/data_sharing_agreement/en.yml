@@ -75,7 +75,7 @@ en:
         <ul class='govuk-list govuk-list--bullet'>
           <li>full name</li>
           <li>date of birth</li>
-          <li>gender (female, male, other or not provided)</li>
+          <li>sex (female, male, other or not provided)</li>
           <li>nationalities</li>
           <li>disabilities</li>
           <li>ethnicity</li>
@@ -87,7 +87,7 @@ en:
         </p>
         <ul class='govuk-list govuk-list--bullet'>
           <li>nationalities</li>
-          <li>gender</li>
+          <li>sex</li>
           <li>ethnicity</li>
           <li>disabilities</li>
         </ul>

@@ -80,7 +80,7 @@ module Dqt
           "emailAddress" => trainee.email,
           "address" => address_params,
           "husid" => trainee.hesa_id,
-          "genderCode" => GENDER_CODES[trainee.gender.to_sym],
+          "genderCode" => GENDER_CODES[trainee.sex.to_sym],
           "initialTeacherTraining" => initial_teacher_training_params,
           "qualification" => qualification_params,
         }.compact

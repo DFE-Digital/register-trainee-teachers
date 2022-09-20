@@ -19,7 +19,7 @@ FactoryBot.define do
     first_names { Faker::Name.first_name }
     middle_names { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
-    gender { Trainee.genders.keys.sample }
+    sex { Trainee.sexes.keys.sample }
     slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
 
     diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
@@ -71,7 +71,7 @@ FactoryBot.define do
       first_names { nil }
       middle_names { nil }
       last_name { nil }
-      gender { nil }
+      sex { nil }
       date_of_birth { nil }
 
       diversity_disclosure { nil }

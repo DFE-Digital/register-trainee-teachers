@@ -87,7 +87,7 @@ module Trainees
         first_names: hesa_trainee[:first_names],
         last_name: hesa_trainee[:last_name],
         date_of_birth: hesa_trainee[:date_of_birth],
-        gender: sex,
+        sex: sex,
         nationalities: nationalities,
         email: hesa_trainee[:email],
       }

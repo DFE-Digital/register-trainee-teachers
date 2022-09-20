@@ -73,7 +73,7 @@ class Trainee < ApplicationRecord
 
   enum locale_code: { uk: 0, non_uk: 1 }
 
-  enum gender: {
+  enum sex: {
     male: 0,
     female: 1,
     other: 2,

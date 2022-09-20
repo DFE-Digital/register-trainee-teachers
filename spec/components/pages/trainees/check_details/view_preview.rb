@@ -97,7 +97,7 @@ module Pages
                       international_address: "international_address",
                       ethnic_background: "ethnic_background",
                       additional_ethnic_background: "additional_ethnic_background",
-                      gender: 1,
+                      sex: 1,
                       date_of_birth: Time.zone.now,
                       locale_code: 1,
                       postcode: "BN1 1AA",

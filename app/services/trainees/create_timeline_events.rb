@@ -21,6 +21,7 @@ module Trainees
       training_route
       international_address
       locale_code
+      sex
       gender
       diversity_disclosure
       ethnic_group

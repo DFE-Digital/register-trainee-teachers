@@ -38,7 +38,7 @@ module Trainees
         first_names: csv_row["First names"],
         middle_names: csv_row["Middle name"],
         last_name: csv_row["Last name"],
-        gender: sex,
+        sex: sex,
         date_of_birth: Date.parse(csv_row["Date of birth"]),
         nationality_ids: nationality_ids,
         email: csv_row["Email"],

@@ -492,7 +492,7 @@ module Trainees
 
         it "maps gender to other" do
           create_trainee_from_dttp
-          expect(Trainee.last.gender).to eq("other")
+          expect(Trainee.last.sex).to eq("other")
         end
       end
 
@@ -501,7 +501,7 @@ module Trainees
 
         it "maps gender to gender_not_provided" do
           create_trainee_from_dttp
-          expect(Trainee.last.gender).to eq("gender_not_provided")
+          expect(Trainee.last.sex).to eq("gender_not_provided")
         end
       end
 
