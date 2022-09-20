@@ -9,7 +9,7 @@ module PersonalDetails
     let(:irish) { build(:nationality, :irish) }
 
     context "when data has not been provided" do
-      let(:trainee) { build(:trainee, id: 1, first_names: nil, date_of_birth: nil, gender: nil) }
+      let(:trainee) { build(:trainee, id: 1, first_names: nil, date_of_birth: nil, sex: nil) }
 
       before do
         render_inline(View.new(data_model: personal_details_form, editable: true))
@@ -58,10 +58,10 @@ module PersonalDetails
         expect(rendered_component).to have_text(expected_dob)
       end
 
-      it "renders the gender" do
+      it "renders the sex" do
         expect(rendered_component)
           .to have_text(
-            I18n.t("components.confirmation.personal_detail.sexes.#{trainee.gender}"),
+            I18n.t("components.confirmation.personal_detail.sexes.#{trainee.sex}"),
           )
       end
 

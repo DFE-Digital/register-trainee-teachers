@@ -115,7 +115,7 @@ module BulkImport
         "Employing school" => method(:to_school_id) >> assign_field[:employing_school_id],
         "Ethnicity" => method(:to_ethnic_group) >> assign_field[:ethnic_group],
         "First names" => assign_field[:first_names],
-        "Sex" => method(:to_sex) >> assign_field[:sex],
+        "Gender" => method(:to_sex) >> assign_field[:sex],
         "Grant funding" => method(:to_funding) >> assign_field[:applying_for_grant],
         "ITT Subject 1" => method(:to_course_subject) >> assign_field[:course_subject_one],
         "ITT Subject 2" => method(:to_course_subject) >> assign_field[:course_subject_two],

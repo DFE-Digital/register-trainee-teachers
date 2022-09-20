@@ -81,7 +81,7 @@ module Trainees
         expect(trainee.postcode).to eq(api_trainee["address1_postalcode"])
         expect(trainee.email).to eq(api_trainee["emailaddress1"])
         expect(trainee.date_of_birth).to eq(Date.parse(api_trainee["birthdate"]))
-        expect(trainee.gender).to eq("male")
+        expect(trainee.sex).to eq("male")
         expect(trainee.trainee_id).to eq(api_trainee["dfe_traineeid"])
         expect(trainee.nationalities).to be_empty
         expect(trainee.trn).to eq(api_trainee["dfe_trn"])

@@ -11,7 +11,7 @@ module PageObjects
       element :dob_day, "#personal_details_form_date_of_birth_3i"
       element :dob_month, "#personal_details_form_date_of_birth_2i"
       element :dob_year, "#personal_details_form_date_of_birth_1i"
-      element :gender, ".govuk-radios.gender"
+      element :sex, ".govuk-radios.sex"
       element :nationality, ".govuk-checkboxes.nationality"
       element :other_nationality, "#personal-details-form-other-nationality1-field"
       element :other_nationality1_raw, "input[data-nameoriginal='personal_details_form[other_nationality1_raw]']"

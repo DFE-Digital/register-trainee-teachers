@@ -12,7 +12,7 @@ module Dqt
       let(:trainee) do
         create(:trainee,
                :completed,
-               gender: "female",
+               sex: "female",
                hesa_metadatum: hesa_metadatum,
                degrees: [degree],
                **trainee_attributes)
@@ -165,7 +165,7 @@ module Dqt
         end
 
         context "when sex is gender_not_provided" do
-          let(:trainee) { create(:trainee, :completed, gender: "prefer_not_to_say") }
+          let(:trainee) { create(:trainee, :completed, sex: "prefer_not_to_say") }
 
           it "maps gender to not provided" do
             expect(subject["genderCode"]).to eq("NotProvided")

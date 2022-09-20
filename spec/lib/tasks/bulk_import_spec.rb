@@ -69,7 +69,7 @@ describe "bulk_import:import" do
     expect(trainee.last_name).to eq "Geoff"
     expect(trainee.date_of_birth).to eq Date.parse("13/04/1992")
     expect(trainee.email).to eq "jeff@example.com"
-    expect(trainee.gender).to eq "female"
+    expect(trainee.sex).to eq "female"
 
     expect(trainee.nationalities.count).to eq 1
     expect(trainee.nationalities.first).to eq Nationality.find_by_name("british")

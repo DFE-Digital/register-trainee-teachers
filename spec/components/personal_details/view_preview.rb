@@ -18,7 +18,7 @@ module PersonalDetails
         first_names: "Mary",
         last_name: "Campbell",
         date_of_birth: Date.new(1970, 7, 30),
-        gender: :other,
+        sex: :other,
         nationalities: [
           Nationality.new(name: "British"),
         ],

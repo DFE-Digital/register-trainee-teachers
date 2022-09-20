@@ -20,7 +20,7 @@ module Features
       personal_details_page.first_names.set("Tim")
       personal_details_page.last_name.set("Smith")
       personal_details_page.set_date_fields("dob", "01/01/1986")
-      personal_details_page.gender.choose("Male")
+      personal_details_page.sex.choose("Male")
 
       if other_nationality
         personal_details_page.nationality.check("Other")

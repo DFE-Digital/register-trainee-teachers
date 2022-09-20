@@ -32,8 +32,8 @@ describe "trainees/personal_details/show.html.erb" do
   context "minimal mode" do
     let(:lead_school_user?) { true }
 
-    it "doesn't display gender or nationality" do
-      expect(rendered).not_to have_text("Gender")
+    it "doesn't display sex or nationality" do
+      expect(rendered).not_to have_text("Sex")
       expect(rendered).not_to have_text("Nationality")
     end
 

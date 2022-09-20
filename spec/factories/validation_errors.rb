@@ -6,7 +6,7 @@ FactoryBot.define do
     form_object { "PersonalDetailsForm" }
     details do
       {
-        "gender" => { "value" => nil, "messages" => ["You must select a gender", "is not included in the list"] },
+        "sex" => { "value" => nil, "messages" => ["You must select a sex", "is not included in the list"] },
         "last_name" => { "value" => "", "messages" => ["You must enter a last name"] },
         "first_names" => { "value" => "", "messages" => ["You must enter a first name"] },
         "date_of_birth" => {

@@ -50,7 +50,7 @@ module Trainees
       it "updates the trainee's personal details" do
         expect(trainee.first_names).to eq(student_attributes[:first_names])
         expect(trainee.last_name).to eq(student_attributes[:last_name])
-        expect(trainee.gender).to eq("male")
+        expect(trainee.sex).to eq("male")
         expect(trainee.date_of_birth).to eq(Date.parse(student_attributes[:date_of_birth]))
         expect(trainee.nationalities.pluck(:name)).to include(nationality_name)
         expect(trainee.email).to eq(student_attributes[:email])
