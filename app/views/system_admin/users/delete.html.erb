@@ -1,0 +1,20 @@
+<%= render PageTitle::View.new(i18n_key: "users.delete", has_errors: @user.errors.present?) %>
+
+<%= render GovukComponent::BackLinkComponent.new(
+      text: "Back",
+      href: user_path(@user),
+    ) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <span class="govuk-caption-l"> <%= @user.name %> </span>
+    <h1 class="govuk-heading-l">
+      Are you sure you want to delete <%= @user.name %>'s account?
+    </h1>
+
+    <%= govuk_button_to("Yes I'm sure - delete #{@user.name}'s account", user_path(@user), method: :delete, class: "govuk-button--warning") %>
+
+    <%= govuk_link_to("Cancel", user_path(@user)) %>
+  </div>
+</div>

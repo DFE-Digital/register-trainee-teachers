@@ -116,3 +116,7 @@ body:not(.js-enabled) .app-js-only {
     margin-bottom: 0;
   }
 }
+
+.link--delete {
+  color: govuk-colour("red") !important;
+}
