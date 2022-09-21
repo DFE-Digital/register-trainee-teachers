@@ -16,6 +16,7 @@ module PageObjects
       element :add_lead_school, "a", text: "Add lead school"
       elements :providers, ".provider-row dd a"
       elements :lead_schools, ".lead-school-row dd a"
+      element :delete_user, "a", text: "Delete this user"
     end
   end
 end
