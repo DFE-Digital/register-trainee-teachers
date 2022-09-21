@@ -108,7 +108,7 @@ module Trainees
 
     def sex
       if csv_row["Sex"] == Diversities::NOT_PROVIDED
-        "gender_not_provided"
+        "sex_not_provided"
       else
         csv_row["Sex"].downcase
       end

@@ -319,7 +319,7 @@ module BulkImport
 
     def to_sex(raw_string)
       if raw_string.downcase.include?("not")
-        "gender_not_provided"
+        "sex_not_provided"
       else
         raw_string.downcase
       end

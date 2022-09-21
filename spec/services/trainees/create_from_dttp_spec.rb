@@ -499,9 +499,9 @@ module Trainees
       context "when gender is nil" do
         let(:api_trainee) { create(:api_trainee, gendercode: nil) }
 
-        it "maps gender to gender_not_provided" do
+        it "maps gender to sex_not_provided" do
           create_trainee_from_dttp
-          expect(Trainee.last.sex).to eq("gender_not_provided")
+          expect(Trainee.last.sex).to eq("sex_not_provided")
         end
       end
 

@@ -22,7 +22,7 @@ module Trainees
       male: 1,
       female: 2,
       other: OTHER_GENDER_CODE,
-      gender_not_provided: OTHER_GENDER_CODE,
+      sex_not_provided: OTHER_GENDER_CODE,
     }.freeze
 
     POSTGRAD_CODE = 12
@@ -158,7 +158,7 @@ module Trainees
     end
 
     def trainee_gender
-      return :gender_not_provided if dttp_trainee.gender_code.blank?
+      return :sex_not_provided if dttp_trainee.gender_code.blank?
 
       return :other if OTHER_GENDER_CODE == dttp_trainee.gender_code.to_i
 

@@ -16,7 +16,7 @@ describe PersonalDetailsForm, type: :model do
       "first_names" => "Millie",
       "middle_names" => "Schmeler",
       "last_name" => "Lehner",
-      "sex" => "gender_not_provided",
+      "sex" => "sex_not_provided",
       "day" => "11",
       "month" => "11",
       "year" => "1963",
@@ -166,7 +166,7 @@ describe PersonalDetailsForm, type: :model do
         first_names: "Millie",
         middle_names: "Schmeler",
         last_name: "Lehner",
-        sex: "gender_not_provided",
+        sex: "sex_not_provided",
         day: "11",
         month: "11",
         year: "1963",
@@ -198,7 +198,7 @@ describe PersonalDetailsForm, type: :model do
       expect { subject.save! }.to change(trainee, :first_names).to("Millie")
         .and change(trainee, :middle_names).to("Schmeler")
         .and change(trainee, :last_name).to("Lehner")
-        .and change(trainee, :sex).to("gender_not_provided")
+        .and change(trainee, :sex).to("sex_not_provided")
         .and change(trainee, :date_of_birth).to(Date.parse("11/11/1963"))
         .and change { trainee.nationalities.map(&:name).sort }.to(%w[american french irish])
     end

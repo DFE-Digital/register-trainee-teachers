@@ -77,7 +77,7 @@ class Trainee < ApplicationRecord
     male: 0,
     female: 1,
     other: 2,
-    gender_not_provided: 3,
+    sex_not_provided: 3,
     prefer_not_to_say: 4,
   }
 

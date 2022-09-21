@@ -33,7 +33,7 @@
                              hint: { text: I18n.t("activemodel.errors.models.personal_details_form.attributes.date_of_birth.hint_html", year: 41.years.ago.year) } %>
 
       <%= f.govuk_radio_buttons_fieldset(:sex, legend: { text: "Sex", size: "s" }, classes: "sex") do %>
-        <% %i[female male other prefer_not_to_say gender_not_provided].each_with_index do |sex, index| %>
+        <% %i[female male other prefer_not_to_say sex_not_provided].each_with_index do |sex, index| %>
           <%= f.govuk_radio_button(
             :sex,
             sex,

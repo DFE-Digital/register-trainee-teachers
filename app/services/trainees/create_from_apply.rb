@@ -107,7 +107,7 @@ module Trainees
     end
 
     def sex
-      ApplyApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]] || Trainee.sexes[:gender_not_provided]
+      ApplyApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]] || Trainee.sexes[:sex_not_provided]
     end
 
     def ethnic_group

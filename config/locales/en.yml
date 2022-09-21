@@ -205,14 +205,14 @@ en:
         sexes:
           female: Female
           male: Male
-          gender_not_provided: Not provided
+          sex_not_provided: Not provided
           other: Other
           prefer_not_to_say: Prefer not to say
         gender: &gender Gender
         genders:
           female: Female
           male: Male
-          gender_not_provided: Not provided
+          sex_not_provided: Not provided
           other: Other
           prefer_not_to_say: Prefer not to say
         nationality: &nationality Nationality
@@ -590,6 +590,7 @@ en:
         last_name: *personal_details_path
         date_of_birth: *personal_details_path
         gender: *personal_details_path
+        sex: *personal_details_path
         nationality_names: *personal_details_path
         locale_code: &contact_details_path edit_trainee_contact_details_path
         address_line_one: *contact_details_path
@@ -640,6 +641,7 @@ en:
         last_name: *full_name
         date_of_birth: *date_of_birth
         gender: *gender
+        sex: *sex
         nationality_names: *nationality
         locale_code: *address
         address_line_one: *address
@@ -1189,13 +1191,13 @@ en:
         sexes:
           female: Female
           male: Male
-          gender_not_provided: Not provided
+          sex_not_provided: Not provided
           prefer_not_to_say: Prefer not to say
           other: Other
         genders:
           female: Female
           male: Male
-          gender_not_provided: Not provided
+          sex_not_provided: Not provided
           prefer_not_to_say: Prefer not to say
           other: Other
     errors:
@@ -1398,6 +1400,8 @@ en:
               past: Enter a valid date of birth
             gender:
               blank: Select a gender
+            sex:
+              blank: Select a sex
             nationality_names:
               empty_nationalities: Select at least one nationality
             other_nationality1:

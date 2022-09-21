@@ -9,7 +9,7 @@ module Hesa
         "11" => Trainee.sexes[:male],
         "12" => Trainee.sexes[:other],
         "96" => Trainee.sexes[:prefer_not_to_say],
-        "99" => Trainee.sexes[:gender_not_provided],
+        "99" => Trainee.sexes[:sex_not_provided],
       }.freeze
     end
   end

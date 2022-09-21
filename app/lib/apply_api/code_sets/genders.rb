@@ -7,8 +7,8 @@ module ApplyApi
         "male" => Trainee.sexes[:male],
         "female" => Trainee.sexes[:female],
         "intersex" => Trainee.sexes[:other],
-        "Prefer not to say" => Trainee.sexes[:gender_not_provided],
-        "" => Trainee.sexes[:gender_not_provided],
+        "Prefer not to say" => Trainee.sexes[:sex_not_provided],
+        "" => Trainee.sexes[:sex_not_provided],
       }.freeze
     end
   end
