@@ -38,5 +38,6 @@ private
 
   def and_successfully_delete_the_user
     expect(admin_index_user_page.flash_message).to be_visible
+    expect(user.reload.discarded?).to be true
   end
 end
