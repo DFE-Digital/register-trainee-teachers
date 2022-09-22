@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-namespace :hpitt do
+namespace :trainees do
   desc "Task to submit all of the HPITT records for TRN"
-  task bulk_submit: :environment do
+  task bulk_submitt_hpitt: :environment do
     trainees_to_exclude = %w[0034G00002fqS22QAE]
     teach_first_provider_id = 209
     teach_first = Provider.find(teach_first_provider_id)

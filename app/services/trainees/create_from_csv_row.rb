@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class CreateFromHpittCsv
+  class CreateFromCsvRow
     include ServicePattern
     include HasDiversityAttributes
     include HasCourseAttributes
@@ -46,7 +46,7 @@ module Trainees
       sanitise_funding
 
       if trainee.save!
-        ::Degrees::CreateFromHpittCsv.call(
+        ::Degrees::CreateFromCsvRow.call(
           trainee: trainee,
           csv_row: csv_row.to_hash.compact.select { |column_name, _| column_name.start_with?("Degree:") },
         )
