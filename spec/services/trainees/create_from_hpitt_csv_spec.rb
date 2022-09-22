@@ -303,7 +303,7 @@ module Trainees
         end
       end
 
-      context "when the course route does not match the academic year" do
+      context "when the course is from a different academic year" do
         let(:course) {
           create(
             :course,
@@ -320,7 +320,7 @@ module Trainees
         end
       end
 
-      context "when their are multiple courses with the same code" do
+      context "when there are multiple courses with the same code" do
         let(:last_year_course) {
           create(
             :course,
