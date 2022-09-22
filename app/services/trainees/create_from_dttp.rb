@@ -18,7 +18,7 @@ module Trainees
 
     OTHER_GENDER_CODE = 389_040_000
 
-    GENDER_CODES = {
+    SEX_CODES = {
       male: 1,
       female: 2,
       other: OTHER_GENDER_CODE,
@@ -162,7 +162,7 @@ module Trainees
 
       return :other if OTHER_GENDER_CODE == dttp_trainee.gender_code.to_i
 
-      GENDER_CODES.invert[dttp_trainee.gender_code.to_i]
+      SEX_CODES.invert[dttp_trainee.gender_code.to_i]
     end
 
     def trainee_id

@@ -11,7 +11,7 @@ module Dqt
         female: "Female",
         other: "Other",
         prefer_not_to_say: "NotProvided",
-        gender_not_available: "NotAvailable",
+        sex_not_provided: "NotAvailable",
       }.freeze
 
       PROGRAMME_TYPE = {

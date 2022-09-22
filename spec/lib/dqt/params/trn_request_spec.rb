@@ -164,11 +164,19 @@ module Dqt
           end
         end
 
-        context "when sex is gender_not_provided" do
+        context "when sex is prefer_not_to_say" do
           let(:trainee) { create(:trainee, :completed, sex: "prefer_not_to_say") }
 
           it "maps gender to not provided" do
             expect(subject["genderCode"]).to eq("NotProvided")
+          end
+        end
+
+        context "when sex is sex_not_provided" do
+          let(:trainee) { create(:trainee, :completed, sex: "sex_not_provided") }
+
+          it "maps gender to not available" do
+            expect(subject["genderCode"]).to eq("NotAvailable")
           end
         end
 
