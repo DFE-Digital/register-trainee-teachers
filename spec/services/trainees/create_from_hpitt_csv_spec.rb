@@ -5,7 +5,7 @@ require "rails_helper"
 module Trainees
   describe CreateFromHpittCsv do
     include SeedHelper
-    let!(:academic_cycle) { AcademicCycle.current }
+    let!(:academic_cycle) { create(:academic_cycle, :current) }
     let(:employing_school_urn) { "0123456" }
 
     let(:csv_row) {
@@ -269,7 +269,9 @@ module Trainees
     end
 
     context "with a SCITT CSV" do
-      let!(:provider) { create(:provider, :with_courses) }
+      let!(:provider) { create(:provider) }
+      let(:training_route) { TRAINING_ROUTE_ENUMS[:school_direct_salaried] }
+      let(:course) { create(:course, accredited_body_code: provider.code, route: training_route) }
       let(:lead_school_urn) { "1234567" }
 
       before do
@@ -277,18 +279,62 @@ module Trainees
 
         csv_row.merge!({
           "Training route" => "School direct (salaried)",
-          "Publish Course Code" => provider.courses.first.code,
+          "Publish Course Code" => course.code,
           "Lead school URN" => lead_school_urn,
           "Funding: Training Initiatives" => "Transition to Teach",
         })
-        described_class.call(provider: provider, csv_row: csv_row)
       end
 
       it "sets the extra fields" do
-        expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:school_direct_salaried])
-        expect(trainee.course_uuid).to eq(provider.courses.first.uuid)
+        described_class.call(provider: provider, csv_row: csv_row)
+        expect(trainee.training_route).to eq(training_route)
+        expect(trainee.course_uuid).to eq(course.uuid)
         expect(trainee.lead_school.urn).to eq(lead_school_urn)
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:transition_to_teach])
+      end
+
+      context "when the course route does not match the training route" do
+        let(:course) { create(:course, accredited_body_code: provider.code, route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) }
+
+        it "raises an error" do
+          expect {
+            described_class.call(provider: provider, csv_row: csv_row)
+          }.to raise_error(StandardError)
+        end
+      end
+
+      context "when the course route does not match the academic year" do
+        let(:course) {
+          create(
+            :course,
+            accredited_body_code: provider.code,
+            route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+            recruitment_cycle_year: create(:academic_cycle, previous_cycle: true),
+          )
+        }
+
+        it "raises an error" do
+          expect {
+            described_class.call(provider: provider, csv_row: csv_row)
+          }.to raise_error(StandardError)
+        end
+      end
+
+      context "when their are multiple courses with the same code" do
+        let(:last_year_course) {
+          create(
+            :course,
+            accredited_body_code: provider.code,
+            code: course.code,
+            route: training_route,
+            recruitment_cycle_year: create(:academic_cycle, previous_cycle: true),
+          )
+        }
+
+        it "picks the correct course uuid based on recruitment cycle year" do
+          described_class.call(provider: provider, csv_row: csv_row)
+          expect(trainee.course_uuid).to eq(course.uuid)
+        end
       end
     end
   end

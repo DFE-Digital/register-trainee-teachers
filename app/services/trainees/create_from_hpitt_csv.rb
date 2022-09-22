@@ -40,6 +40,10 @@ module Trainees
     def call
       trainee.assign_attributes(mapped_attributes)
       Trainees::SetAcademicCycles.call(trainee: trainee)
+      # This must happen after we've determined the academic cycles since we
+      # need to choose the course from the correct year.
+      trainee.course_uuid = course_uuid
+      sanitise_funding
 
       if trainee.save!
         ::Degrees::CreateFromHpittCsv.call(
@@ -48,7 +52,6 @@ module Trainees
         )
       end
 
-      sanitise_funding
       validate_and_set_progress
       trainee.save!
     end
@@ -72,7 +75,6 @@ module Trainees
         training_initiative: training_initiative,
         employing_school_id: employing_school_id,
         lead_school_id: lead_school_id,
-        course_uuid: course_uuid,
       }.merge(address_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
@@ -220,8 +222,16 @@ module Trainees
       course_code = csv_row["Publish Course Code"]
       return if course_code.blank?
 
-      course = provider.courses.find_by(code: course_code)
-      raise(Error, "Course UUID not recognised for provider: #{course_code}") if course.nil?
+      recruitement_cycle_year = trainee.start_academic_cycle.start_year
+      course = provider.courses.find_by(
+        code: course_code,
+        route: training_route,
+        recruitment_cycle_year: recruitement_cycle_year,
+      )
+
+      if course.nil?
+        raise(Error, "Course not recognised for provider (code: #{course_code}, route: #{training_route}, recruitment cycle year: #{recruitement_cycle_year})")
+      end
 
       course.uuid
     end
