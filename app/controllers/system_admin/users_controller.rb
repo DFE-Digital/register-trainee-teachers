@@ -2,6 +2,7 @@
 
 module SystemAdmin
   class UsersController < ApplicationController
+    before_action :redirect, only: %i[delete destroy]
     before_action :user, only: %i[show delete destroy]
 
     def index
@@ -32,6 +33,10 @@ module SystemAdmin
     end
 
   private
+
+    def redirect
+      redirect_to(users_path, flash: { warning: "Admin users may not be deleted" }) if user.system_admin?
+    end
 
     def user
       @user ||= authorize(User.find(params[:id]))

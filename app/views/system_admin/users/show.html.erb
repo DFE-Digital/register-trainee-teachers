@@ -66,4 +66,4 @@
     </dd>
 </dl>
   
-<%= govuk_link_to("Delete this user", delete_user_path(@user), class: "link--delete") %>
+<%= govuk_link_to("Delete this user", delete_user_path(@user), class: "link--delete") unless @user.system_admin? %>

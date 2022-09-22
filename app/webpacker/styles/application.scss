@@ -118,5 +118,7 @@ body:not(.js-enabled) .app-js-only {
 }
 
 .link--delete {
+  @extend .govuk-link--no-visited-state;
+  @extend .govuk-body;
   color: govuk-colour("red") !important;
 }
