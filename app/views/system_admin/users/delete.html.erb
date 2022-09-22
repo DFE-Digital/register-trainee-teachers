@@ -15,7 +15,7 @@
       Are you sure you want to delete <%= @user.name %>’s account?
     </h1>
 
-    <%= govuk_button_to("Yes I'm sure - delete #{@user.name}’s account", user_path(@user), method: :delete, class: "govuk-button--warning") %>
+    <%= govuk_button_to("Yes I’m sure – delete #{@user.name}’s account", user_path(@user), method: :delete, class: "govuk-button--warning") %>
 
     <%= govuk_link_to("Cancel", user_path(@user), class: "govuk-link--no-visited-state govuk-body") %>
   </div>
