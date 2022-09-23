@@ -72,16 +72,6 @@ private
     redirect_to(not_found_path)
   end
 
-  def filter_params
-    user_params = params.permit(permitted_params + permitted_admin_params)
-
-    if user_params.empty? && !user_params[:clear]
-      { status: %w[in_training] }
-    else
-      user_params
-    end
-  end
-
   def permitted_params
     [
       :subject,
@@ -89,7 +79,6 @@ private
       :start_year,
       :end_year,
       :sort_by,
-      :clear,
       {
         level: [],
         training_route: [],
