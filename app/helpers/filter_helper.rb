@@ -9,10 +9,6 @@ module FilterHelper
     tag.span("Remove ", class: "govuk-visually-hidden") + value.upcase_first + tag.span(" #{filter.humanize.downcase} filter", class: "govuk-visually-hidden")
   end
 
-  def clear_search_link(search_path)
-    trainee_search_path?(search_path) ? trainees_path(clear: true) : drafts_path
-  end
-
   def tags_for_filter(filters, filter, value)
     case value
     when String
@@ -34,11 +30,11 @@ private
   def remove_checkbox_tag_link(filters, filter, value)
     new_filters = filters.deep_dup
     new_filters[filter].reject! { |v| v == value }
-    new_filters.to_query.blank? ? "?clear=true" : "?#{new_filters.to_query}"
+    new_filters.to_query.blank? ? nil : "?#{new_filters.to_query}"
   end
 
   def remove_select_tag_link(filters, filter)
     new_filters = filters.reject { |f| f == filter }
-    new_filters.to_query.blank? ? "?clear=true" : "?#{new_filters.to_query}"
+    new_filters.to_query.blank? ? nil : "?#{new_filters.to_query}"
   end
 end

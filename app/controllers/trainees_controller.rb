@@ -72,10 +72,6 @@ private
     redirect_to(not_found_path)
   end
 
-  def filter_params
-    params.permit(permitted_params + permitted_admin_params)
-  end
-
   def permitted_params
     [
       :subject,
@@ -83,7 +79,6 @@ private
       :start_year,
       :end_year,
       :sort_by,
-      :clear,
       {
         level: [],
         training_route: [],
