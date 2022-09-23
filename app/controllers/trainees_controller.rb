@@ -73,13 +73,7 @@ private
   end
 
   def filter_params
-    user_params = params.permit(permitted_params + permitted_admin_params)
-
-    if user_params.empty? && !user_params[:clear]
-      { status: %w[in_training] }
-    else
-      user_params
-    end
+    params.permit(permitted_params + permitted_admin_params)
   end
 
   def permitted_params
