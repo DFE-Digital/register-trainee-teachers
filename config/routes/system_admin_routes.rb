@@ -25,6 +25,7 @@ module SystemAdminRoutes
         resources :users do
           resources :providers, controller: "user_providers", only: %i[new create]
           resources :lead_schools, controller: "user_lead_schools", only: %i[index new create], path: "lead-schools"
+          member { get :delete }
         end
 
         resources :validation_errors, only: %i[index]

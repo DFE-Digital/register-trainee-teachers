@@ -2,6 +2,9 @@
 
 module SystemAdmin
   class UsersController < ApplicationController
+    before_action :redirect, only: %i[delete destroy]
+    before_action :user, only: %i[show delete destroy]
+
     def index
       @users = filtered_users(policy_scope(User.kept, policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1))
     end
@@ -20,11 +23,20 @@ module SystemAdmin
       end
     end
 
-    def show
-      @user = user
+    def show; end
+
+    def delete; end
+
+    def destroy
+      @user.discard!
+      redirect_to(users_path, flash: { success: "User deleted" })
     end
 
   private
+
+    def redirect
+      redirect_to(users_path, flash: { warning: "Admin users may not be deleted" }) if user.system_admin?
+    end
 
     def user
       @user ||= authorize(User.find(params[:id]))

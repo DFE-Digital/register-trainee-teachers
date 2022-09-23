@@ -63,7 +63,7 @@
       <% end %>
       <%= govuk_link_to("Add provider", new_user_provider_path(@user), class: "govuk-!-display-block add-provider-to-user") %>
       </div>
-
     </dd>
-  </div>
 </dl>
+  
+<%= govuk_link_to("Delete this user", delete_user_path(@user), class: "link--delete govuk-link--no-visited-state govuk-body") unless @user.system_admin? %>

@@ -12,6 +12,7 @@ module PageObjects
       element :search, 'input[name="search"]'
       element :submit_search, ".submit-search"
       sections :users, UserRow, ".user-row"
+      element :flash_message, ".govuk-notification-banner__header"
     end
   end
 end

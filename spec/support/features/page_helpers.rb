@@ -382,6 +382,18 @@ module Features
       @lead_schools_trainee_summary_page ||= PageObjects::SystemAdmin::Funding::LeadSchoolsTraineeSummary.new
     end
 
+    def admin_index_user_page
+      @admin_index_user_page ||= PageObjects::SystemAdmin::User::Index.new
+    end
+
+    def admin_show_user_page
+      @admin_show_user_page ||= PageObjects::SystemAdmin::User::Show.new
+    end
+
+    def admin_delete_user_page
+      @admin_delete_user_page ||= PageObjects::SystemAdmin::User::Delete.new
+    end
+
   private
 
     def progress_with_prefix(status)
