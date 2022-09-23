@@ -34,7 +34,7 @@ module Trainees
         first_names: candidate_info["first_name"],
         last_name: candidate_info["last_name"],
         date_of_birth: candidate_info["date_of_birth"].to_date,
-        gender: candidate_info["gender"],
+        sex: candidate_info["gender"],
         ethnic_group: "asian_ethnic_group",
         ethnic_background: candidate_info["ethnic_background"],
         diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],

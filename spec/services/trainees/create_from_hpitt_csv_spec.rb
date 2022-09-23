@@ -78,7 +78,7 @@ module Trainees
         expect(trainee.first_names).to eq(csv_row["First names"])
         expect(trainee.middle_names).to eq(csv_row["Middle name"])
         expect(trainee.last_name).to eq(csv_row["Last name"])
-        expect(trainee.gender).to eq("male")
+        expect(trainee.sex).to eq("male")
         expect(trainee.date_of_birth).to eq(Date.parse(csv_row["Date of birth"]))
         expect(trainee.nationalities.pluck(:name)).to include("british")
         expect(trainee.email).to eq(csv_row["Email"])

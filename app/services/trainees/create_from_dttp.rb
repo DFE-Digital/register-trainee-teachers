@@ -18,11 +18,11 @@ module Trainees
 
     OTHER_GENDER_CODE = 389_040_000
 
-    GENDER_CODES = {
+    SEX_CODES = {
       male: 1,
       female: 2,
       other: OTHER_GENDER_CODE,
-      gender_not_provided: OTHER_GENDER_CODE,
+      sex_not_provided: OTHER_GENDER_CODE,
     }.freeze
 
     POSTGRAD_CODE = 12
@@ -158,11 +158,11 @@ module Trainees
     end
 
     def trainee_gender
-      return :gender_not_provided if dttp_trainee.gender_code.blank?
+      return :sex_not_provided if dttp_trainee.gender_code.blank?
 
       return :other if OTHER_GENDER_CODE == dttp_trainee.gender_code.to_i
 
-      GENDER_CODES.invert[dttp_trainee.gender_code.to_i]
+      SEX_CODES.invert[dttp_trainee.gender_code.to_i]
     end
 
     def trainee_id
@@ -209,7 +209,7 @@ module Trainees
         middle_names: dttp_trainee.response["middlename"],
         last_name: dttp_trainee.response["lastname"],
         date_of_birth: dttp_trainee.date_of_birth,
-        gender: trainee_gender,
+        sex: trainee_gender,
         nationalities: nationalities,
       }
     end

@@ -81,7 +81,7 @@ module Trainees
         expect(trainee.postcode).to eq(api_trainee["address1_postalcode"])
         expect(trainee.email).to eq(api_trainee["emailaddress1"])
         expect(trainee.date_of_birth).to eq(Date.parse(api_trainee["birthdate"]))
-        expect(trainee.gender).to eq("male")
+        expect(trainee.sex).to eq("male")
         expect(trainee.trainee_id).to eq(api_trainee["dfe_traineeid"])
         expect(trainee.nationalities).to be_empty
         expect(trainee.trn).to eq(api_trainee["dfe_trn"])
@@ -492,16 +492,16 @@ module Trainees
 
         it "maps gender to other" do
           create_trainee_from_dttp
-          expect(Trainee.last.gender).to eq("other")
+          expect(Trainee.last.sex).to eq("other")
         end
       end
 
       context "when gender is nil" do
         let(:api_trainee) { create(:api_trainee, gendercode: nil) }
 
-        it "maps gender to gender_not_provided" do
+        it "maps gender to sex_not_provided" do
           create_trainee_from_dttp
-          expect(Trainee.last.gender).to eq("gender_not_provided")
+          expect(Trainee.last.sex).to eq("sex_not_provided")
         end
       end
 

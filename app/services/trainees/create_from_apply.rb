@@ -52,7 +52,7 @@ module Trainees
         first_names: raw_trainee["first_name"],
         last_name: raw_trainee["last_name"],
         date_of_birth: raw_trainee["date_of_birth"],
-        gender: gender,
+        sex: sex,
         ethnic_group: ethnic_group,
         diversity_disclosure: diversity_disclosure,
         disability_disclosure: disability_disclosure,
@@ -106,8 +106,8 @@ module Trainees
       }
     end
 
-    def gender
-      ApplyApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]] || Trainee.genders[:gender_not_provided]
+    def sex
+      ApplyApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]] || Trainee.sexes[:sex_not_provided]
     end
 
     def ethnic_group

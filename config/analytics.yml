@@ -226,7 +226,7 @@ shared:
     - employing_school_id
     - employing_school_not_applicable
     - end_academic_cycle_id
-    - gender
+    - sex
     - hesa_id
     - hesa_updated_at
     - id

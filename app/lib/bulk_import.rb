@@ -115,7 +115,7 @@ module BulkImport
         "Employing school" => method(:to_school_id) >> assign_field[:employing_school_id],
         "Ethnicity" => method(:to_ethnic_group) >> assign_field[:ethnic_group],
         "First names" => assign_field[:first_names],
-        "Gender" => method(:to_gender) >> assign_field[:gender],
+        "Gender" => method(:to_sex) >> assign_field[:sex],
         "Grant funding" => method(:to_funding) >> assign_field[:applying_for_grant],
         "ITT Subject 1" => method(:to_course_subject) >> assign_field[:course_subject_one],
         "ITT Subject 2" => method(:to_course_subject) >> assign_field[:course_subject_two],
@@ -317,9 +317,9 @@ module BulkImport
       return false if raw_string.downcase == "no"
     end
 
-    def to_gender(raw_string)
+    def to_sex(raw_string)
       if raw_string.downcase.include?("not")
-        "gender_not_provided"
+        "sex_not_provided"
       else
         raw_string.downcase
       end

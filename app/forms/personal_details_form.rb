@@ -7,7 +7,7 @@ class PersonalDetailsForm < TraineeForm
     first_names
     middle_names
     last_name
-    gender
+    sex
     nationality_names
     nationality_ids
   ].freeze
@@ -30,7 +30,7 @@ class PersonalDetailsForm < TraineeForm
   validates :middle_names, length: { maximum: 50 }, allow_nil: true
   validates :date_of_birth, presence: true
   validate :date_of_birth_valid
-  validates :gender, presence: true, inclusion: { in: Trainee.genders.keys }
+  validates :sex, presence: true, inclusion: { in: Trainee.sexes.keys }
   validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true, if: :other_is_selected?
   validate :nationalities_cannot_be_empty
 

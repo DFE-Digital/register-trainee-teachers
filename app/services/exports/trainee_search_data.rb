@@ -59,7 +59,7 @@ module Exports
           "middle_names" => trainee.middle_names,
           "last_names" => trainee.last_name,
           "date_of_birth" => trainee.date_of_birth&.iso8601,
-          "gender" => gender(trainee),
+          "sex" => sex(trainee),
           "nationalities" => trainee.nationalities.pluck(:name).map(&:titleize).join(", "),
           "address_line_1" => trainee.address_line_one,
           "address_line_2" => trainee.address_line_two,
@@ -179,10 +179,10 @@ module Exports
       StatusTag::View.new(trainee: trainee).status
     end
 
-    def gender(trainee)
-      return if trainee.gender.blank?
+    def sex(trainee)
+      return if trainee.sex.blank?
 
-      t("components.confirmation.personal_detail.genders.#{trainee.gender}")
+      t("components.confirmation.personal_detail.sexes.#{trainee.sex}")
     end
 
     def diversity_disclosure(trainee)

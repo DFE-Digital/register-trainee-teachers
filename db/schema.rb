@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_06_140208) do
+ActiveRecord::Schema.define(version: 2022_09_16_124425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -449,7 +449,7 @@ ActiveRecord::Schema.define(version: 2022_09_06_140208) do
     t.string "email"
     t.string "date_of_birth"
     t.string "ethnic_background"
-    t.string "gender"
+    t.string "sex"
     t.string "ukprn"
     t.string "trainee_id"
     t.string "course_subject_one"
@@ -621,7 +621,7 @@ ActiveRecord::Schema.define(version: 2022_09_06_140208) do
     t.integer "training_route"
     t.text "international_address"
     t.integer "locale_code"
-    t.integer "gender"
+    t.integer "sex"
     t.integer "diversity_disclosure"
     t.integer "ethnic_group"
     t.text "ethnic_background"
@@ -689,11 +689,11 @@ ActiveRecord::Schema.define(version: 2022_09_06_140208) do
     t.index ["employing_school_id"], name: "index_trainees_on_employing_school_id"
     t.index ["end_academic_cycle_id"], name: "index_trainees_on_end_academic_cycle_id"
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
-    t.index ["gender"], name: "index_trainees_on_gender"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
+    t.index ["sex"], name: "index_trainees_on_sex"
     t.index ["slug"], name: "index_trainees_on_slug", unique: true
     t.index ["start_academic_cycle_id"], name: "index_trainees_on_start_academic_cycle_id"
     t.index ["state"], name: "index_trainees_on_state"

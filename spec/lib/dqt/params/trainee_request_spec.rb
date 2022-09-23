@@ -5,7 +5,7 @@ require "rails_helper"
 module Dqt
   module Params
     describe TraineeRequest do
-      let(:trainee) { create(:trainee, :completed, gender: "female", hesa_id: 1) }
+      let(:trainee) { create(:trainee, :completed, sex: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
       let(:hesa_code) { Degrees::DfeReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
       let(:ukprn) { Degrees::DfeReference::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }

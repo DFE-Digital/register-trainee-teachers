@@ -33,7 +33,7 @@ describe "hpitt:import" do
       expect(trainee.last_name).to eq("McPhee")
       expect(trainee.date_of_birth).to eq(Date.parse("1990-04-23"))
       expect(trainee.email).to eq("test@example.com")
-      expect(trainee.gender).to eq("female")
+      expect(trainee.sex).to eq("female")
     end
 
     it "sets the trainee's address" do

@@ -16,7 +16,7 @@ module PersonalDetails
       [
         full_name_row,
         date_of_birth_row,
-        (gender_row unless minimal),
+        (sex_row unless minimal),
         (nationality_row unless minimal),
       ].compact
     end
@@ -45,10 +45,10 @@ module PersonalDetails
       )
     end
 
-    def gender_row
+    def sex_row
       default_mappable_field(
-        data_model.gender ? I18n.t("components.confirmation.personal_detail.genders.#{data_model.gender}") : nil,
-        t("components.confirmation.personal_detail.gender"),
+        data_model.sex ? I18n.t("components.confirmation.personal_detail.sexes.#{data_model.sex}") : nil,
+        t("components.confirmation.personal_detail.sex"),
       )
     end
 

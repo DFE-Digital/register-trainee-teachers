@@ -41,7 +41,7 @@ en:
       <p class='govuk-body'>We collect your personal data to register you with the DfE as a trainee teacher. We collect your:</p>
       <ul class='govuk-list govuk-list--bullet'>
         <li>full name</li>
-        <li>gender (female, male, other or not provided)</li>
+        <li>sex (female, male, other or not provided)</li>
         <li>nationality</li>
         <li>address (including country)</li>
         <li>date of birth</li>

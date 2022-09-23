@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe PersonalDetailsForm, type: :model do
-  let(:trainee) { create(:trainee, gender: :male) }
+  let(:trainee) { create(:trainee, sex: :male) }
   let(:form_store) { class_double(FormStore) }
   let(:french) { create(:nationality, name: "french") }
   let(:american) { create(:nationality, name: "american") }
@@ -16,7 +16,7 @@ describe PersonalDetailsForm, type: :model do
       "first_names" => "Millie",
       "middle_names" => "Schmeler",
       "last_name" => "Lehner",
-      "gender" => "gender_not_provided",
+      "sex" => "sex_not_provided",
       "day" => "11",
       "month" => "11",
       "year" => "1963",
@@ -42,8 +42,8 @@ describe PersonalDetailsForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:first_names) }
     it { is_expected.to validate_presence_of(:last_name) }
-    it { is_expected.to validate_presence_of(:gender) }
-    it { is_expected.to validate_inclusion_of(:gender).in_array(Trainee.genders.keys) }
+    it { is_expected.to validate_presence_of(:sex) }
+    it { is_expected.to validate_inclusion_of(:sex).in_array(Trainee.sexes.keys) }
     it { is_expected.to validate_length_of(:first_names).is_at_most(50).with_message("First name must be 50 characters or fewer") }
     it { is_expected.to validate_length_of(:last_name).is_at_most(50).with_message("Last name must be 50 characters or fewer") }
     it { is_expected.to validate_length_of(:middle_names).is_at_most(50).with_message("Middle name must be 50 characters or fewer") }
@@ -166,7 +166,7 @@ describe PersonalDetailsForm, type: :model do
         first_names: "Millie",
         middle_names: "Schmeler",
         last_name: "Lehner",
-        gender: "gender_not_provided",
+        sex: "sex_not_provided",
         day: "11",
         month: "11",
         year: "1963",
@@ -198,7 +198,7 @@ describe PersonalDetailsForm, type: :model do
       expect { subject.save! }.to change(trainee, :first_names).to("Millie")
         .and change(trainee, :middle_names).to("Schmeler")
         .and change(trainee, :last_name).to("Lehner")
-        .and change(trainee, :gender).to("gender_not_provided")
+        .and change(trainee, :sex).to("sex_not_provided")
         .and change(trainee, :date_of_birth).to(Date.parse("11/11/1963"))
         .and change { trainee.nationalities.map(&:name).sort }.to(%w[american french irish])
     end

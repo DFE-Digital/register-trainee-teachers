@@ -4,11 +4,11 @@ module ApplyApi
   module CodeSets
     module Genders
       MAPPING = {
-        "male" => Trainee.genders[:male],
-        "female" => Trainee.genders[:female],
-        "intersex" => Trainee.genders[:other],
-        "Prefer not to say" => Trainee.genders[:gender_not_provided],
-        "" => Trainee.genders[:gender_not_provided],
+        "male" => Trainee.sexes[:male],
+        "female" => Trainee.sexes[:female],
+        "intersex" => Trainee.sexes[:other],
+        "Prefer not to say" => Trainee.sexes[:sex_not_provided],
+        "" => Trainee.sexes[:sex_not_provided],
       }.freeze
     end
   end
