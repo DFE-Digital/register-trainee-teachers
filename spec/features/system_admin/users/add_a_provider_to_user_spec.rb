@@ -59,6 +59,6 @@ private
   end
 
   def and_i_see_the_new_provider
-    expect(users_show_page.providers.map(&:text)).to include("#{new_provider.name} - #{new_provider.code}")
+    expect(users_show_page.providers.map(&:text)).to include(new_provider.name)
   end
 end

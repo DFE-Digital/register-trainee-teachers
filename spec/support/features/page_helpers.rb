@@ -394,6 +394,14 @@ module Features
       @admin_delete_user_page ||= PageObjects::SystemAdmin::User::Delete.new
     end
 
+    def admin_remove_provider_access_page
+      @admin_remove_provider_access_page ||= PageObjects::SystemAdmin::Providers::RemoveAccessConfirmation.new
+    end
+
+    def admin_remove_lead_school_access_page
+      @admin_remove_lead_school_access_page ||= PageObjects::SystemAdmin::LeadSchools::RemoveAccessConfirmation.new
+    end
+
   private
 
     def progress_with_prefix(status)
