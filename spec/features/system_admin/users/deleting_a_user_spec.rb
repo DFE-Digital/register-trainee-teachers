@@ -31,32 +31,32 @@ feature "Deleting a user" do
 private
 
   def visiting_the_users_page
-    admin_show_user_page.load(id: user.id)
+    admin_user_show_page.load(id: user.id)
   end
 
   def and_i_click_on_delete
-    admin_show_user_page.delete_user.click
+    admin_user_show_page.delete_user.click
   end
 
   def i_am_taken_to_the_delete_user_page
-    expect(admin_delete_user_page).to be_displayed(id: user.id)
+    expect(admin_user_delete_page).to be_displayed(id: user.id)
   end
 
   def where_i_click_the_delete_button
-    admin_delete_user_page.delete_button.click
+    admin_user_delete_page.delete_button.click
   end
 
   def and_successfully_delete_the_user
-    expect(admin_index_user_page.flash_message).to be_visible
-    expect(user.reload.discarded?).to be true
+    expect(admin_users_index_page.flash_message).to be_visible
+    expect(user.reload).to be_discarded
   end
 
   def there_is_no_delete_link
-    expect(admin_show_user_page).to have_no_delete_user
+    expect(admin_user_show_page).to have_no_delete_user
   end
 
   def delete_page_is_redirected
-    admin_delete_user_page.load(id: user.id)
-    expect(admin_index_user_page).to be_displayed
+    admin_user_delete_page.load(id: user.id)
+    expect(admin_users_index_page).to be_displayed
   end
 end

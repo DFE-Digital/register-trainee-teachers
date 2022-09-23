@@ -61,19 +61,19 @@ private
   end
 
   def when_i_visit_the_user_index_page
-    users_index_page.load
+    admin_users_index_page.load
   end
 
   def and_i_click_on_the_user_name_link
-    users_index_page.users.find { |user| user.link.text == user_to_be_updated.name }.link.click
+    admin_users_index_page.users.find { |user| user.link.text == user_to_be_updated.name }.link.click
   end
 
   def then_i_am_taken_to_the_user_show_page
-    expect(users_show_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}")
+    expect(admin_user_show_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}")
   end
 
   def and_i_click_on_add_lead_school
-    users_show_page.add_lead_school.click
+    admin_user_show_page.add_lead_school.click
   end
 
   def then_i_am_taken_to_the_add_lead_school_to_user_page
@@ -103,7 +103,7 @@ private
   end
 
   def and_i_see_the_new_lead_school
-    expect(users_show_page.lead_schools.map(&:text)).to include("#{my_lead_school.name} - #{my_lead_school.urn}")
+    expect(admin_user_show_page.lead_schools).to have_content(my_lead_school.name)
   end
 
   def then_i_am_redirected_to_the_lead_schools_page

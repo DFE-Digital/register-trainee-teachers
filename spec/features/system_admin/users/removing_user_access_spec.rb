@@ -28,23 +28,23 @@ feature "Removing user access" do
 private
 
   def given_i_am_on_a_user_page
-    admin_show_user_page.load(id: user.id)
+    admin_user_show_page.load(id: user.id)
   end
 
   def and_the_provider_access_table_is_shown
-    expect(admin_show_user_page).to have_content(user.providers.first.name)
+    expect(admin_user_show_page).to have_content(user.providers.first.name)
   end
 
   def and_the_lead_school_access_table_is_shown
-    expect(admin_show_user_page).to have_content(user.lead_schools.first.name)
+    expect(admin_user_show_page).to have_content(user.lead_schools.first.name)
   end
 
   def and_i_choose_a_user_to_remove_access_under_providers
-    admin_show_user_page.provider_access.remove_access_links.first.click
+    admin_user_show_page.providers.remove_access_links.first.click
   end
 
   def and_i_choose_a_user_to_remove_access_under_lead_schools
-    admin_show_user_page.lead_school_access.remove_access_links.first.click
+    admin_user_show_page.lead_schools.remove_access_links.first.click
   end
 
   def and_i_confirm_remove_access_from_provider
@@ -56,12 +56,12 @@ private
   end
 
   def then_the_provider_is_no_longer_listed_on_the_user_page
-    expect(admin_show_user_page).not_to have_content(user.providers.first.name)
-    expect(admin_show_user_page.flash_message).to be_visible
+    expect(admin_user_show_page).not_to have_content(user.providers.first.name)
+    expect(admin_user_show_page.flash_message).to be_visible
   end
 
   def then_the_lead_school_is_no_longer_listed_on_the_user_page
-    expect(admin_show_user_page).not_to have_content(user.lead_schools.first.name)
-    expect(admin_show_user_page.flash_message).to be_visible
+    expect(admin_user_show_page).not_to have_content(user.lead_schools.first.name)
+    expect(admin_user_show_page.flash_message).to be_visible
   end
 end
