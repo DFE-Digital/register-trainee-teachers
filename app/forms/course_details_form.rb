@@ -83,7 +83,7 @@ class CourseDetailsForm < TraineeForm
   def save!
     if valid?
       update_trainee_attributes
-      clear_funding_information if course_subjects_changed?
+      clear_funding_information if clear_funding_information?
       Trainees::Update.call(trainee: trainee)
       clear_stash
     else

@@ -147,8 +147,4 @@ private
 
     clear_stash
   end
-
-  def clear_funding_information?
-    course_subjects_changed? || trainee.training_route_changed?
-  end
 end

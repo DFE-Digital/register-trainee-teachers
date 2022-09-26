@@ -12,8 +12,8 @@ module CourseFormHelpers
     })
   end
 
-  def course_subjects_changed?
-    trainee.course_subject_one_changed? || trainee.course_subject_two_changed? || trainee.course_subject_three_changed?
+  def clear_funding_information?
+    trainee.course_allocation_subject_id_changed? || trainee.training_route_changed?
   end
 
   def course_allocation_subject

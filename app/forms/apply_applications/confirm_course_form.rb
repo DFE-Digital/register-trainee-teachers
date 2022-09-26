@@ -109,9 +109,5 @@ module ApplyApplications
 
       course.study_mode == COURSE_STUDY_MODES[:full_time_or_part_time]
     end
-
-    def clear_funding_information?
-      course_subjects_changed? || trainee.training_route_changed?
-    end
   end
 end
