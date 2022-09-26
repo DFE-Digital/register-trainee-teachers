@@ -1,0 +1,42 @@
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-visually-hidden">Trainee progress</caption>
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header">Register CSV column</th>
+    <th class="govuk-table__header">Register field in the service</th>
+    <th class="govuk-table__header">HESA field</th>
+    <th class="govuk-table__header">More information</th>
+  </tr>
+  </thead>
+  <tbody class="govuk-table__body"><tr class="govuk-table__row">
+    <td class="govuk-table__cell">hesa_id</td>
+    <td class="govuk-table__cell">not displayed</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/husid">HUSID</a> (HESA unique student identifier)</td>
+    <td class="govuk-table__cell">–</td>
+  </tr>
+  <tr class="govuk-table__row">
+    <td class="govuk-table__cell">provider_trainee_id</td>
+    <td class="govuk-table__cell">Trainee ID</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/ownstu">OWNSTU</a> (provider’s own identifier for student)</td>
+    <td class="govuk-table__cell">–</td>
+  </tr>
+  <tr class="govuk-table__row">
+    <td class="govuk-table__cell">trn</td>
+    <td class="govuk-table__cell">TRN</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/trn">TRN</a> (teacher reference number)</td>
+    <td class="govuk-table__cell">–</td>
+  </tr>
+  <tr class="govuk-table__row">
+    <td class="govuk-table__cell">status</td>
+    <td class="govuk-table__cell">Trainee status</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/rsnend">RSNEND</a> (reason for ending instance)</td>
+    <td class="govuk-table__cell">If HESA codes 03, 05 or 11 are used we mark the trainee status as ‘withdrawn’ in Register. We’ll also add a ‘withdraw_date’ and ‘withdraw_reason’ in the Register CSV.<br><br>HESA field ‘MODE’ will also impact ‘Trainee status’. If codes 63 or 64 (dormant trainees) are used, the trainee’s status will change to ‘Deferred’ in Register.<br><br>‘Dormant’ in HESA means ‘Deferred’ in Register.</td>
+  </tr>
+  <tr class="govuk-table__row">
+    <td class="govuk-table__cell">hesa_updated_at</td>
+    <td class="govuk-table__cell">not displayed</td>
+    <td class="govuk-table__cell">STATUS_TIMESTAMP</td>
+    <td class="govuk-table__cell">The date the trainee record was last updated in HESA or the TRA portal.<br><br>This is not the date the record was uploaded to HESA. For example, if you update and then upload a record in September, ‘hesa_updated_at’ will show a date for September. If you then upload the same record in January and April without any updates, ‘hesa_updated_at’ will still show with a date in September.</td>
+  </tr>
+  </tbody>
+</table>
