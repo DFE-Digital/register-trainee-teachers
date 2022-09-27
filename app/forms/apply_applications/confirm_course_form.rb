@@ -25,7 +25,7 @@ module ApplyApplications
     def save
       update_trainee_attributes unless trainee_confirmed?
       trainee.progress.course_details = mark_as_reviewed
-      clear_funding_information if course_subjects_changed?
+      clear_funding_information if clear_funding_information?
 
       Trainees::Update.call(trainee: trainee)
     end
