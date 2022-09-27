@@ -45,7 +45,6 @@ jobs:
         echo "paas_space_name=$(jq -r '.paas_space_name' ${tf_vars_file})" >> $GITHUB_ENV
 
     - uses: azure/login@v1
-      if: env.TF_STATE_EXISTS == 'true'
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
 
