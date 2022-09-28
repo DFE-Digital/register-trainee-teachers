@@ -2,7 +2,7 @@
 
 namespace :hpitt do
   desc "imports a csv of trainees from HPITT"
-  task :import, %i[csv_path] => [:environment] do |_, args|
+  task :import, %i[provider_code csv_path] => [:environment] do |_, args|
     csv = CSV.read(
       args.csv_path,
       headers: true,
@@ -10,11 +10,17 @@ namespace :hpitt do
       header_converters: ->(f) { f&.strip },
     )
 
+    provider = Provider.find_by!(code: args.provider_code)
+
     csv.each_with_index do |row, i|
-      Trainees::CreateFromHpittCsv.call(csv_row: row)
+      Trainees::CreateFromHpittCsv.call(provider: provider, csv_row: row)
     rescue StandardError => e
       Rails.logger.error("error on row #{i + 1}: #{e.message}")
       Sentry.capture_exception(e)
     end
+
+  rescue ActiveRecord::RecordNotFound => e
+    Rails.logger.error("Provider not found with code #{args.provider_code}")
+    Sentry.capture_exception(e)
   end
 end

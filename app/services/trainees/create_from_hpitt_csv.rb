@@ -8,15 +8,42 @@ module Trainees
 
     class Error < StandardError; end
 
-    def initialize(csv_row:)
+    TRAINING_ROUTES = {
+      "Assessment only" => TRAINING_ROUTE_ENUMS[:assessment_only],
+      "Early years (assessment only)" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+      "Early years (postgrad)" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+      "Early years (salaried)" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
+      "Early years (undergrad)" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+      "Opt-in (undergrad)" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+      "Provider-led (postgrad)" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+      "Provider-led (undergrad)" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+      "School direct (fee funded)" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+      "School direct (salaried)" => TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      "Teaching apprenticeship (postgrad)" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    }.freeze
+
+    INITIATIVES = {
+      "Future Teaching Scholars" => ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars],
+      "Maths and Physics Chairs programme / Researchers in Schools" => ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
+      "Now Teach" => ROUTE_INITIATIVES_ENUMS[:now_teach],
+      "Transition to Teach" => ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
+      "Troops to Teachers" => ROUTE_INITIATIVES_ENUMS[:troops_to_teachers],
+      "Not on a training initiative" => ROUTE_INITIATIVES_ENUMS[:no_initiative],
+    }.freeze
+
+    def initialize(provider:, csv_row:)
       @csv_row = csv_row
-      @provider = Provider.find_by!(code: TEACH_FIRST_PROVIDER_CODE)
+      @provider = provider
       @trainee = @provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
     end
 
     def call
       trainee.assign_attributes(mapped_attributes)
       Trainees::SetAcademicCycles.call(trainee: trainee)
+      # This must happen after we've determined the academic cycles since we
+      # need to choose the course from the correct year.
+      trainee.course_uuid = course_uuid
+      sanitise_funding
 
       if trainee.save!
         ::Degrees::CreateFromHpittCsv.call(
@@ -24,41 +51,34 @@ module Trainees
           csv_row: csv_row.to_hash.compact.select { |column_name, _| column_name.start_with?("Degree:") },
         )
       end
+
+      validate_and_set_progress
+      trainee.save!
     end
 
   private
 
-    attr_reader :csv_row, :trainee
+    attr_reader :csv_row, :trainee, :provider
 
     def mapped_attributes
       {
         record_source: RecordSources::MANUAL,
         region: csv_row["Region"],
-        training_route: TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+        training_route: training_route,
         first_names: csv_row["First names"],
-        middle_names: csv_row["Middle name"],
-        last_name: csv_row["Last name"],
+        middle_names: csv_row["Middle names"],
+        last_name: csv_row["Last names"],
         sex: sex,
         date_of_birth: Date.parse(csv_row["Date of birth"]),
         nationality_ids: nationality_ids,
         email: csv_row["Email"],
-        training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+        training_initiative: training_initiative,
         employing_school_id: employing_school_id,
-        progress: Progress.new(
-          personal_details: true,
-          contact_details: true,
-          degrees: true,
-          diversity: true,
-          funding: true,
-          course_details: true,
-          training_details: true,
-          trainee_data: true,
-          trainee_start_status: true,
-          schools: true,
-        ),
+        lead_school_id: lead_school_id,
       }.merge(address_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
+       .merge(funding_attributes)
     end
 
     def address_attributes
@@ -99,11 +119,31 @@ module Trainees
     end
 
     def itt_end_date
-      csv_row["Course ITT end date"]
+      csv_row["Course Expected End Date"]
     end
 
     def trainee_start_date
       csv_row["Trainee start date"]
+    end
+
+    def training_route
+      hpitt_trainee? ? TRAINING_ROUTE_ENUMS[:hpitt_postgrad] : TRAINING_ROUTES[csv_row["Training route"]]
+    end
+
+    def training_initiative
+      hpitt_trainee? ? ROUTE_INITIATIVES_ENUMS[:no_initiative] : INITIATIVES[csv_row["Funding: Training Initiatives"]]
+    end
+
+    def funding_attributes
+      return {} if hpitt_trainee?
+
+      funding_type = csv_row["Funding: Type"]
+
+      {
+        applying_for_bursary: funding_type == "Bursary",
+        applying_for_scholarship: funding_type == "Scholarship",
+        applying_for_grant: funding_type == "Grant",
+      }
     end
 
     def sex
@@ -115,7 +155,8 @@ module Trainees
     end
 
     def nationality_ids
-      Nationality.where(name: csv_row["Nationality"]&.strip&.downcase).ids
+      nationalities = csv_row["Nationality"].split(",").compact
+      nationalities.map { |nationality| Nationality.find_by!(name: nationality.strip.downcase) }.map(&:id)
     end
 
     def course_education_phase
@@ -131,7 +172,7 @@ module Trainees
     end
 
     def course_subject_three_name
-      course_subject_name("Course ITT subject 3")
+      course_subject_name("Course ITT Subject 3")
     end
 
     def course_subject_name(field)
@@ -171,6 +212,46 @@ module Trainees
 
     def employing_school_id
       School.find_by(urn: csv_row["Employing school URN"])&.id
+    end
+
+    def lead_school_id
+      School.lead_only.find_by(urn: csv_row["Lead school URN"])&.id
+    end
+
+    def course_uuid
+      course_code = csv_row["Publish Course Code"]
+      return if course_code.blank?
+
+      recruitement_cycle_year = trainee.start_academic_cycle.start_year
+      course = provider.courses.find_by(
+        code: course_code,
+        route: training_route,
+        recruitment_cycle_year: recruitement_cycle_year,
+      )
+
+      if course.nil?
+        raise(Error, "Course not recognised for provider (code: #{course_code}, route: #{training_route}, recruitment cycle year: #{recruitement_cycle_year})")
+      end
+
+      course.uuid
+    end
+
+    def hpitt_trainee?
+      @provider.code == "HPITT"
+    end
+
+    def sanitise_funding
+      funding_manager = FundingManager.new(trainee)
+      trainee.applying_for_bursary = nil unless funding_manager.can_apply_for_bursary?
+      trainee.applying_for_grant = nil unless funding_manager.can_apply_for_grant?
+      trainee.applying_for_scholarship = nil unless funding_manager.can_apply_for_scholarship?
+    end
+
+    def validate_and_set_progress
+      Submissions::TrnValidator.new(trainee: trainee).validators.each do |section, validator|
+        section_valid = validator[:form].constantize.new(trainee).valid?
+        trainee.progress.public_send("#{section}=", section_valid)
+      end
     end
   end
 end
