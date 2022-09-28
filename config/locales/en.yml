@@ -32,7 +32,7 @@ en:
   header:
     items:
       sign_out: Sign out
-      system_admin: System admin
+      system_admin: Support for Register
   contact_details:
     view:
       address: &address Address
