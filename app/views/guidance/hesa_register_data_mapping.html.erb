@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Hesa register data mapping") %>
+<%= render PageTitle::View.new(text: "Check the data mapping between HESA and Register trainee teachers - #{@tab.humanize}") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Check the data mapping between HESA and Register trainee teachers</h1>
+    <h1 class="govuk-heading-l">Check the data mapping between HESA and Register trainee teachers</h1>
     <p class="govuk-body">
       Use the table to check how data maps between HESA and Register trainee teachers (Register).
     </p>
@@ -21,27 +21,27 @@
     <%= render TabNavigation::View.new(items: [
       {
         name: "Trainee progress",
-        url: hesa_register_data_mapping_guidance_url(:trainee_progress)
+        url: hesa_register_data_mapping_guidance_url("trainee-progress")
       },
       {
         name: "Personal details",
-        url: hesa_register_data_mapping_guidance_url(:personal_details)
+        url: hesa_register_data_mapping_guidance_url("personal-details")
       },
       {
         name: "Course details",
-        url: hesa_register_data_mapping_guidance_url(:course_details)
+        url: hesa_register_data_mapping_guidance_url("course-details")
       },
       {
         name: "Schools",
-        url: hesa_register_data_mapping_guidance_url(:schools)
+        url: hesa_register_data_mapping_guidance_url("schools")
       },
       {
         name: "Funding",
-        url: hesa_register_data_mapping_guidance_url(:funding)
+        url: hesa_register_data_mapping_guidance_url("funding")
       },
       {
         name: "Database only",
-        url: hesa_register_data_mapping_guidance_url(:database_only)
+        url: hesa_register_data_mapping_guidance_url("database-only")
       },
     ]) %>
       <%= render "guidance/#{@tab}" %>
