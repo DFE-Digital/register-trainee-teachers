@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-describe "hpitt:import" do
+describe "trainees:create_from_csv" do
   include SeedHelper
 
   subject do
     args = Rake::TaskArguments.new(%i[provider_code csv_path], [provider.code, csv_path])
-    Rake::Task["hpitt:import"].execute(args)
+    Rake::Task["trainees:create_from_csv"].execute(args)
   end
 
   before do

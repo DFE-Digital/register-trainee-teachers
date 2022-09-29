@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-namespace :hpitt do
-  desc "imports a csv of trainees from HPITT"
-  task :import, %i[provider_code csv_path] => [:environment] do |_, args|
+namespace :trainees do
+  desc "creates trainees from a CSV"
+  task :create_from_csv, %i[provider_code csv_path] => [:environment] do |_, args|
     csv = CSV.read(
       args.csv_path,
       headers: true,
@@ -13,7 +13,7 @@ namespace :hpitt do
     provider = Provider.find_by!(code: args.provider_code)
 
     csv.each_with_index do |row, i|
-      Trainees::CreateFromHpittCsv.call(provider: provider, csv_row: row)
+      Trainees::CreateFromCsvRow.call(provider: provider, csv_row: row)
     rescue StandardError => e
       Rails.logger.error("error on row #{i + 1}: #{e.message}")
       Sentry.capture_exception(e)

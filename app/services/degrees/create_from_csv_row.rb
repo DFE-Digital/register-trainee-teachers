@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Degrees
-  class CreateFromHpittCsv
+  class CreateFromCsvRow
     include ServicePattern
 
     class Error < StandardError; end

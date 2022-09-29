@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Trainees
-  describe CreateFromHpittCsv do
+  describe CreateFromCsvRow do
     include SeedHelper
     let!(:academic_cycle) { create(:academic_cycle, :current) }
     let(:employing_school_urn) { "0123456" }
