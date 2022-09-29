@@ -259,7 +259,6 @@ shared:
     - withdraw_reason
   users:
     - created_at
-    - dfe_sign_in_uid
     - discarded_at
     - dttp_id
     - id

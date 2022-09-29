@@ -16,6 +16,14 @@
   - remote_address
   - request_uuid
   - created_at
+  :sessions:
+  - id
+  - session_id
+  - data
+  - created_at
+  - updated_at
+  :schema_migrations:
+  - version
   :data_migrations:
   - version
   :trainees:
@@ -44,8 +52,8 @@
   - response_code
   - successful
   - created_at
-  - recruitment_cycle_year
   - updated_at
+  - recruitment_cycle_year
   :disabilities:
   - name
   - description
@@ -223,7 +231,7 @@
   - created_at
   - updated_at
   :hesa_trn_submissions:
-    - payload
+  - payload
   :users:
   - first_name
   - last_name
@@ -243,18 +251,5 @@
   - user_id
   - form_object
   - details
-  - created_at
-  - updated_at
-  :sessions:
-  - id
-  - session_id
-  - data
-  - created_at
-  - updated_at
-  :schema_migrations:
-  - version
-  :ar_internal_metadata:
-  - key
-  - value
   - created_at
   - updated_at
