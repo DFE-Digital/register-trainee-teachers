@@ -79,4 +79,16 @@ describe GuidanceController, type: :controller do
       expect(response).to render_template("check_data")
     end
   end
+
+  describe "#hesa_register_data_mapping" do
+    it "returns a 200 status code" do
+      get :hesa_register_data_mapping, params: { tab: "trainee_progress" }
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :hesa_register_data_mapping, params: { tab: "trainee_progress" }
+      expect(response).to render_template("hesa_register_data_mapping")
+    end
+  end
 end
