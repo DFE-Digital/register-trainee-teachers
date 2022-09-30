@@ -59,7 +59,11 @@ module CourseDetails
 
     def training_route_row
       unless trainee.draft?
-        { field_value: t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"), field_label: t("components.course_detail.route"), action_url: nil }
+        {
+          field_value: t("activerecord.attributes.trainee.training_routes.#{training_route}"),
+          field_label: t("components.course_detail.route"),
+          action_url: nil,
+        }
       end
     end
 
@@ -127,11 +131,15 @@ module CourseDetails
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(uuid: data_model.course_uuid)
+      @course ||= trainee.available_courses&.find_by(uuid: data_model.course_uuid)
     end
 
     def default_mappable_field(field_value, field_label)
       { field_value: field_value, field_label: field_label, action_url: edit_trainee_course_details_path(trainee) }
+    end
+
+    def training_route
+      course&.route || trainee.training_route
     end
   end
 end
