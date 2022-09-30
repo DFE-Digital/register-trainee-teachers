@@ -27,16 +27,16 @@
     <td class="govuk-table__cell">–</td>
   </tr>
   <tr class="govuk-table__row">
-    <td class="govuk-table__cell">status</td>
+    <td class="govuk-table__cell">trainee_status</td>
     <td class="govuk-table__cell">Trainee status</td>
     <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/rsnend">RSNEND</a> (reason for ending instance)</td>
     <td class="govuk-table__cell">If HESA codes 03, 05 or 11 are used we mark the trainee status as ‘withdrawn’ in Register. We’ll also add a ‘withdraw_date’ and ‘withdraw_reason’ in the Register CSV.<br><br>HESA field ‘MODE’ will also impact ‘Trainee status’. If codes 63 or 64 (dormant trainees) are used, the trainee’s status will change to ‘Deferred’ in Register.<br><br>‘Dormant’ in HESA means ‘Deferred’ in Register.</td>
   </tr>
   <tr class="govuk-table__row">
-    <td class="govuk-table__cell">hesa_updated_at</td>
+    <td class="govuk-table__cell">hesa_record_last_changed_at</td>
     <td class="govuk-table__cell">not displayed</td>
     <td class="govuk-table__cell">STATUS_TIMESTAMP</td>
-    <td class="govuk-table__cell">The date the trainee record was last updated in HESA or the TRA portal.<br><br>This is not the date the record was uploaded to HESA. For example, if you update and then upload a record in September, ‘hesa_updated_at’ will show a date for September. If you then upload the same record in January and April without any updates, ‘hesa_updated_at’ will still show with a date in September.</td>
+    <td class="govuk-table__cell">The date the trainee record was last changed in HESA or the TRA portal.<br><br>This is not the date the record was uploaded to HESA. For example, if you change and then upload a record in September, ‘hesa_record_last_changed_at’ will show a date for September. If you then upload the same record in January and April without any changes, ‘hesa_record_last_changed_at’ will still show with a date in September.</td>
   </tr>
   </tbody>
 </table>
