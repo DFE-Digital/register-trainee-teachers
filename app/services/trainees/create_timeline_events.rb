@@ -73,7 +73,7 @@ module Trainees
           ),
         ]
 
-        if hesa_or_dttp_user?
+        if hesa_or_dttp_user? && auditable_type == "Trainee"
           creation_events <<
             TimelineEvent.new(
               title: import_title,

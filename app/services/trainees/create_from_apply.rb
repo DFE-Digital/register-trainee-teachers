@@ -24,7 +24,8 @@ module Trainees
         return
       end
 
-      raise(MissingCourseError, "Cannot find course with uuid: #{@raw_course['course_uuid']}") if course.nil? # Courses can be missing in non-prod environments
+      # Courses can be missing in non-prod environments
+      raise(MissingCourseError, "Cannot find course with uuid: #{@raw_course['course_uuid']}") if course.nil?
 
       Trainees::SetAcademicCycles.call(trainee: trainee)
       trainee.save!
@@ -147,9 +148,10 @@ module Trainees
     end
 
     def trainee_already_exists?
-      Trainee.exists?(first_names: raw_trainee["first_name"],
-                      last_name: raw_trainee["last_name"],
-                      date_of_birth: raw_trainee["date_of_birth"])
+      scope = application_record.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
+      scope.exists?(first_names: raw_trainee["first_name"],
+                    last_name: raw_trainee["last_name"],
+                    date_of_birth: raw_trainee["date_of_birth"])
     end
 
     def ethnic_background_attributes
