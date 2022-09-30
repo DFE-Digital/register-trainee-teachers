@@ -24,7 +24,7 @@ feature "Search users" do
   end
 
   def when_i_visit_the_user_index_page
-    users_index_page.load
+    admin_users_index_page.load
   end
 
   def then_i_see_the_users
@@ -33,36 +33,36 @@ feature "Search users" do
   end
 
   def index_page_has_first_user_details
-    expect(users_index_page).to have_text(user.first_name)
-    expect(users_index_page).to have_text(user.last_name)
-    expect(users_index_page).to have_text(user.email)
+    expect(admin_users_index_page).to have_text(user.first_name)
+    expect(admin_users_index_page).to have_text(user.last_name)
+    expect(admin_users_index_page).to have_text(user.email)
   end
 
   def index_page_has_second_user_details
-    expect(users_index_page).to have_text(second_user.first_name)
-    expect(users_index_page).to have_text(second_user.last_name)
-    expect(users_index_page).to have_text(second_user.email)
+    expect(admin_users_index_page).to have_text(second_user.first_name)
+    expect(admin_users_index_page).to have_text(second_user.last_name)
+    expect(admin_users_index_page).to have_text(second_user.email)
   end
 
   def then_i_enter_the_first_users_last_name_into_the_search_field
-    users_index_page.search.set(user.last_name)
+    admin_users_index_page.search.set(user.last_name)
   end
 
   def then_i_click_search
-    users_index_page.submit_search.click
+    admin_users_index_page.submit_search.click
   end
 
   def then_i_see_only_the_first_user
     index_page_has_first_user_details
-    expect(users_index_page).not_to have_text(second_user.first_name)
+    expect(admin_users_index_page).not_to have_text(second_user.first_name)
   end
 
   def then_i_enter_the_second_users_email_address_into_the_search_field
-    users_index_page.search.set(second_user.email)
+    admin_users_index_page.search.set(second_user.email)
   end
 
   def then_i_see_only_the_second_user
     index_page_has_second_user_details
-    expect(users_index_page).not_to have_text(user.first_name)
+    expect(admin_users_index_page).not_to have_text(user.first_name)
   end
 end

@@ -31,19 +31,19 @@ feature "creating a new user" do
 private
 
   def when_i_visit_the_user_index_page
-    users_index_page.load
+    admin_users_index_page.load
   end
 
   def and_i_click_on_the_user_name_link
-    users_index_page.users.find { |user| user.link.text == user_to_be_updated.name }.link.click
+    admin_users_index_page.users.find { |user| user.link.text == user_to_be_updated.name }.link.click
   end
 
   def then_i_am_taken_to_the_user_show_page
-    expect(users_show_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}")
+    expect(admin_user_show_page.current_path).to eq("/system-admin/users/#{user_to_be_updated.id}")
   end
 
   def and_i_click_on_add_provider
-    users_show_page.add_provider.click
+    admin_user_show_page.add_provider.click
   end
 
   def then_i_am_taken_to_the_add_provider_to_user_page
@@ -59,6 +59,6 @@ private
   end
 
   def and_i_see_the_new_provider
-    expect(users_show_page.providers.map(&:text)).to include("#{new_provider.name} - #{new_provider.code}")
+    expect(admin_user_show_page.providers).to have_content(new_provider.name)
   end
 end

@@ -1,69 +1,100 @@
 <%= render PageTitle::View.new(text: @user.name) %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(
-    text: t("back"),
-    href: users_path,
-    ) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: users_path) %>
 <% end %>
 
 <h1 class="govuk-heading-l"><%= @user.name %></h1>
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-      First name
-    </dt>
-    <dd class="govuk-summary-list__value">
-      <%= @user.first_name %>
-    </dd>
+    <dt class="govuk-summary-list__key">First name</dt>
+    <dd class="govuk-summary-list__value"><%= @user.first_name %></dd>
   </div>
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-      Last name
-    </dt>
-    <dd class="govuk-summary-list__value">
-      <%= @user.last_name %>
-    </dd>
+    <dt class="govuk-summary-list__key">Last name</dt>
+    <dd class="govuk-summary-list__value"><%= @user.last_name %></dd>
   </div>
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-      Email
-    </dt>
-    <dd class="govuk-summary-list__value">
-      <%= @user.email %>
-    </dd>
+    <dt class="govuk-summary-list__key">Email</dt>
+    <dd class="govuk-summary-list__value"><%= @user.email %></dd>
   </div>
-  <div class="govuk-summary-list__row lead-school-row">
-    <dt class="govuk-summary-list__key">
-      Lead schools
-    </dt>
-    <dd class="govuk-summary-list__value">
-      <% if @user.lead_schools.any? %>
-        <div class="govuk-!-margin-bottom-3">
-          <% @user.lead_schools.each do |lead_school| %>
-            <%= govuk_link_to("#{lead_school.name} - #{lead_school.urn}", lead_school_path(lead_school), class: "govuk-!-display-block") %>
-          <% end %>
-        </div>
-      <% end %>
-      <%= govuk_link_to("Add lead school", new_user_lead_school_path(@user), class: "govuk-!-display-block add-lead-school-to-user") %>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row provider-row">
-    <dt class="govuk-summary-list__key">
-      Providers
-    </dt>
-    <dd class="govuk-summary-list__value">
-      <% if @user.providers.any? %>
-        <div class="govuk-!-margin-bottom-3">
-          <% @user.providers.each do |provider| %>
-            <%= govuk_link_to "#{provider.name} - #{provider.code}", provider_path(provider), class: "govuk-!-display-block" %>
-          <% end %>
-        </div>
-      <% end %>
-      <%= govuk_link_to("Add provider", new_user_provider_path(@user), class: "govuk-!-display-block add-provider-to-user") %>
-      </div>
-    </dd>
 </dl>
-  
-<%= govuk_link_to("Delete this user", delete_user_path(@user), class: "link--delete govuk-link--no-visited-state govuk-body") unless @user.system_admin? %>
+
+<h2 class="govuk-heading-m">Providers</h2>
+<% if @user.providers.any? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table id="providers" class="govuk-table">
+        <caption class="govuk-visually-hidden govuk-table__caption govuk-table__caption--m">Providers</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Remove access</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @user.providers.each do |provider| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= govuk_link_to provider.name, provider_path(provider), class: 'provider' %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= govuk_link_to "Remove<span class=\"govuk-visually-hidden\"> access to #{provider.name}</span>".html_safe,
+                                  edit_user_provider_accessions_path(@user, provider),
+                                  class: 'remove-access' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% else %>
+  <p class="govuk-body govuk-hint">User is not a member of any providers</p>
+<% end %>
+<%= render GovukButtonLinkTo::View.new(body: "Add user to a provider",
+                                       url: new_user_provider_path(@user),
+                                       class_option: "govuk-button--secondary add-user-to-provider") %>
+
+<h2 class="govuk-heading-m">Lead schools</h2>
+<% if @user.lead_schools.any? %>
+  <div class="govuk-grid-row">
+    <div class ="govuk-grid-column-full">
+      <table id="lead-schools" class="govuk-table">
+        <caption class="govuk-visually-hidden govuk-table__caption govuk-table__caption--m">Lead schools</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Remove access</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% @user.lead_schools.each do |lead_school| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <%= govuk_link_to lead_school.name, lead_school_path(lead_school), class: "lead-school" %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= govuk_link_to "Remove<span class=\"govuk-visually-hidden\"> access to #{lead_school.name}</span>".html_safe,
+                                edit_user_lead_school_accessions_path(@user, lead_school),
+                                class: 'remove-access' %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% else %>
+  <p class="govuk-body govuk-hint">User is not a member of any lead schools</p>
+<% end %>
+<%= render GovukButtonLinkTo::View.new(body: "Add user to a lead school",
+                                       url: new_user_lead_school_path(@user),
+                                       class_option: "govuk-button--secondary add-user-lead-school") %>
+
+<p class="govuk-body">
+  <%= govuk_link_to("Delete this user",
+                    delete_user_path(@user),
+                    class: "link--delete govuk-link--no-visited-state govuk-body") unless @user.system_admin? %>
+</p>

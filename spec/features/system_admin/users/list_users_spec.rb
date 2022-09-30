@@ -21,14 +21,14 @@ feature "List users" do
   end
 
   def when_i_visit_the_user_index_page
-    users_index_page.load
+    admin_users_index_page.load
   end
 
   def then_i_see_the_user
-    expect(users_index_page).to have_text(user.first_name)
-    expect(users_index_page).to have_text(user.last_name)
-    expect(users_index_page).to have_text(user.email)
-    expect(users_index_page).to have_text(lead_school.name)
-    expect(users_index_page).to have_text(provider.name)
+    expect(admin_users_index_page).to have_text(user.first_name)
+    expect(admin_users_index_page).to have_text(user.last_name)
+    expect(admin_users_index_page).to have_text(user.email)
+    expect(admin_users_index_page).to have_text(lead_school.name)
+    expect(admin_users_index_page).to have_text(provider.name)
   end
 end

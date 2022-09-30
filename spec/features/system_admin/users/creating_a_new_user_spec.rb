@@ -35,38 +35,38 @@ feature "Creating a new user" do
 private
 
   def when_i_visit_the_user_index_page
-    users_index_page.load
+    admin_users_index_page.load
   end
 
   def then_i_am_taken_to_the_user_show_page
-    expect(users_show_page).to have_text(I18n.t("system_admin.users.create.success"))
+    expect(admin_user_show_page).to have_text(I18n.t("system_admin.users.create.success"))
   end
 
   def and_i_click_on_add_a_user
-    users_index_page.add_a_user.click
+    admin_users_index_page.add_a_user.click
   end
 
   def and_i_fill_in_first_name
-    new_user_page.first_name.set("Darth")
+    admin_new_user_page.first_name.set("Darth")
   end
 
   def and_i_fill_in_last_name
-    new_user_page.last_name.set("Vader")
+    admin_new_user_page.last_name.set("Vader")
   end
 
   def and_i_fill_in_email
-    new_user_page.email.set("darthvader@email.com")
+    admin_new_user_page.email.set("darthvader@email.com")
   end
 
   def and_i_fill_in_dttp_id
-    new_user_page.dttp_id.set(dttp_id)
+    admin_new_user_page.dttp_id.set(dttp_id)
   end
 
   def when_i_save_the_form
-    new_user_page.submit.click
+    admin_new_user_page.submit.click
   end
 
   def then_i_should_see_the_error_summary
-    expect(new_user_page.error_summary).to be_visible
+    expect(admin_new_user_page.error_summary).to be_visible
   end
 end

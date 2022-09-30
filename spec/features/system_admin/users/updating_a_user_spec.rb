@@ -43,19 +43,19 @@ private
   end
 
   def then_i_am_taken_to_the_edit_user_page
-    edit_user_page.load(provider_id: provider.id, id: user.id)
+    admin_user_edit_page.load(provider_id: provider.id, id: user.id)
   end
 
   def and_i_fill_in_email(email:)
-    edit_user_page.email.set(email)
+    admin_user_edit_page.email.set(email)
   end
 
   def when_i_save_the_form
-    edit_user_page.submit.click
+    admin_user_edit_page.submit.click
   end
 
   def then_i_should_see_the_error_summary
-    expect(edit_user_page.error_summary).to be_visible
+    expect(admin_user_edit_page.error_summary).to be_visible
   end
 
   def then_i_am_taken_to_the_provider_show_page

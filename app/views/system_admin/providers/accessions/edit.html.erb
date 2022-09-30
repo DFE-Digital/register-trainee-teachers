@@ -1,0 +1,13 @@
+<%= render PageTitle::View.new(text: "Yes I’m sure – remove #{@user.name}’s access to #{@provider.name}") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l"><%= @user.name %></span>
+    <h1 class="govuk-heading-l">Remove <%= @user.name %>’s access to <%= @provider.name %>?</h1>
+    <%= govuk_button_to "Yes I’m sure – remove #{@user.name}’s access to #{@provider.name}",
+                        user_provider_accessions_path(@user, @provider),
+                        method: :delete,
+                        class: "govuk-button govuk-button--warning" %>
+    <%= govuk_link_to("Cancel", user_path(@user), class: "govuk-link--no-visited-state govuk-body") %>
+  </div>
+</div>

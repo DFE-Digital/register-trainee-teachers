@@ -19,7 +19,7 @@ module Features
     end
 
     def trainee_edit_training_route_page
-      @trainee_edit_training_route_page = PageObjects::Trainees::EditTrainingRoute.new
+      @trainee_edit_training_route_page ||= PageObjects::Trainees::EditTrainingRoute.new
     end
 
     def training_details_page
@@ -92,22 +92,6 @@ module Features
 
     def lead_school_show_page
       @lead_school_show_page ||= PageObjects::LeadSchools::Show.new
-    end
-
-    def users_index_page
-      @users_index_page ||= PageObjects::Users::Index.new
-    end
-
-    def users_show_page
-      @users_show_page ||= PageObjects::Users::Show.new
-    end
-
-    def new_user_page
-      @new_user_page ||= PageObjects::Users::New.new
-    end
-
-    def show_user_page
-      @show_user_page ||= PageObjects::Users::Show.new
     end
 
     def add_provider_to_user_page
@@ -350,10 +334,6 @@ module Features
       @organisations_index_page ||= PageObjects::Organisations::Index.new
     end
 
-    def edit_user_page
-      @edit_user_page ||= PageObjects::Users::Edit.new
-    end
-
     def user_delete_page
       @user_delete_page ||= PageObjects::Users::Delete.new
     end
@@ -382,16 +362,32 @@ module Features
       @lead_schools_trainee_summary_page ||= PageObjects::SystemAdmin::Funding::LeadSchoolsTraineeSummary.new
     end
 
-    def admin_index_user_page
-      @admin_index_user_page ||= PageObjects::SystemAdmin::User::Index.new
+    def admin_users_index_page
+      @admin_users_index_page ||= PageObjects::SystemAdmin::Users::Index.new
     end
 
-    def admin_show_user_page
-      @admin_show_user_page ||= PageObjects::SystemAdmin::User::Show.new
+    def admin_new_user_page
+      @admin_new_user_page ||= PageObjects::SystemAdmin::Users::New.new
     end
 
-    def admin_delete_user_page
-      @admin_delete_user_page ||= PageObjects::SystemAdmin::User::Delete.new
+    def admin_user_edit_page
+      @admin_user_edit_page ||= PageObjects::SystemAdmin::Users::Edit.new
+    end
+
+    def admin_user_show_page
+      @admin_user_show_page ||= PageObjects::SystemAdmin::Users::Show.new
+    end
+
+    def admin_user_delete_page
+      @admin_user_delete_page ||= PageObjects::SystemAdmin::Users::Delete.new
+    end
+
+    def admin_remove_provider_access_page
+      @admin_remove_provider_access_page ||= PageObjects::SystemAdmin::Providers::RemoveAccessConfirmation.new
+    end
+
+    def admin_remove_lead_school_access_page
+      @admin_remove_lead_school_access_page ||= PageObjects::SystemAdmin::LeadSchools::RemoveAccessConfirmation.new
     end
 
   private
