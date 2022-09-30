@@ -247,8 +247,7 @@ module CourseDetails
 
         it "renders route" do
           expect(rendered_component).to have_text(education_phase)
-          expect(rendered_component)
-            .to have_text("Secondary")
+          expect(rendered_component).to have_text("Secondary")
         end
 
         it "renders course age range" do
@@ -265,8 +264,7 @@ module CourseDetails
 
         it "renders route" do
           expect(rendered_component).to have_text(education_phase)
-          expect(rendered_component)
-            .to have_text("Secondary")
+          expect(rendered_component).to have_text("Secondary")
         end
 
         it "renders course age range" do
@@ -297,6 +295,20 @@ module CourseDetails
 
       it "does not render study_mode" do
         expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time")
+      end
+    end
+
+    context "trainee with Apply application changes course" do
+      let(:trainee) { create(:trainee, :recommended_for_award, :with_apply_application, :with_publish_course_details) }
+      let!(:new_course) { create(:course_with_subjects, accredited_body_code: trainee.provider.code) }
+      let(:data_model) { PublishCourseDetailsForm.new(trainee, params: { course_uuid: new_course.uuid }) }
+
+      before do
+        render_inline(View.new(data_model: data_model))
+      end
+
+      it "renders the training route from the course" do
+        expect(rendered_component).to have_text(t("activerecord.attributes.trainee.training_routes.#{new_course.route}"))
       end
     end
   end
