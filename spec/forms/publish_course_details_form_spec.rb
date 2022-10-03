@@ -55,13 +55,6 @@ describe PublishCourseDetailsForm, type: :model do
           subject_specialism_form.stash_or_save!
         end
 
-        it "updates the trainee with the publish course details" do
-          expect { subject.save! }
-          .to change { trainee.course_subject_one }.to(subject_name)
-          .and change { trainee.course_education_phase }.to(course_level)
-          .and change { trainee.course_allocation_subject }.to(allocation_subject)
-        end
-
         context "with a pg_teaching_apprenticeship trainee" do
           let(:route) { :pg_teaching_apprenticeship }
           let(:trainee) { build(:trainee, route) }

@@ -41,6 +41,7 @@ class SubjectSpecialismForm < TraineeForm
       course_subject_three: course_subject_three,
       course_allocation_subject: course_allocation_subject,
     )
+    clear_funding_information if clear_funding_information?
     Trainees::Update.call(trainee: trainee)
     clear_stash
   end
