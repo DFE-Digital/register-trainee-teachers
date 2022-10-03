@@ -43,6 +43,20 @@ module Dqt
           expect(TrnRequest.count).to eq(0)
         end
       end
+
+      context "when the initial request to register the trainee fails" do
+        let(:trainee) { create(:trainee, :with_secondary_course_details, :with_start_date, :with_degree) }
+        let(:trn_request) { double(failed?: true) }
+
+        before do
+          allow(RegisterForTrn).to receive(:call).with(trainee: trainee).and_return(trn_request)
+        end
+
+        it "does not register a TRN request with DQT" do
+          described_class.perform_now(trainee)
+          expect(RetrieveTrnJob).not_to have_received(:perform_later)
+        end
+      end
     end
   end
 end
