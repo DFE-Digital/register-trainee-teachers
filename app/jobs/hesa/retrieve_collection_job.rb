@@ -4,6 +4,8 @@ module Hesa
   class RetrieveCollectionJob < RetrieveJob
     def perform(collection_reference: Settings.hesa.current_collection_reference,
                 sync_from_hesa: FeatureService.enabled?("hesa_import.sync_collection"))
+      return unless FeatureService.enabled?("hesa_import.retrieve_collection")
+
       super
     end
 
