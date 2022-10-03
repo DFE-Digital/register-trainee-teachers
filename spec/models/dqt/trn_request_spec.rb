@@ -12,7 +12,6 @@ module Dqt
 
     describe "validations" do
       it { is_expected.to validate_presence_of(:request_id) }
-      it { is_expected.to validate_presence_of(:response) }
     end
   end
 end
