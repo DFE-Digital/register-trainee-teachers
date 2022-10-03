@@ -40,7 +40,7 @@ features:
   integrate_with_dqt: true
   hesa_trn_requests: true
   hesa_import:
-    sync_collection: true
+    sync_collection: false
     sync_trn_data: true
 environment:
   name: beta
