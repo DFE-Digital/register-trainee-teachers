@@ -2,7 +2,7 @@ nodejs 16.14.0
 ruby 2.7.5
 yarn 1.22.18
 bundler 2.1.4
-terraform 1.2.3
+terraform 1.2.8
 cf 7.4.0
 az 2.36.0
 jq 1.6

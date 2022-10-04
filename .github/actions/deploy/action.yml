@@ -66,9 +66,9 @@ runs:
           ${{ env.key_vault_infra_secret_name }}
 
     - name: Pin Terraform version
-      uses: hashicorp/setup-terraform@v1.2.1
+      uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.2.3
+        terraform_version: 1.2.8
 
     - name: Terraform init, Terraform Plan and Apply
       shell: bash
