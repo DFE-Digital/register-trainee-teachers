@@ -31,7 +31,7 @@ module Dqt
       end
 
       context "when multiple teachers are found" do
-        let(:dqt_response) { { "results" => [dqt_trainee, dqt_trainee] }}
+        let(:dqt_response) { { "results" => [dqt_trainee, dqt_trainee] } }
 
         it "raises an error" do
           expect {
