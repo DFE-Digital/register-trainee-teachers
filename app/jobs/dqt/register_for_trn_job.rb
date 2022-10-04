@@ -10,7 +10,7 @@ module Dqt
       return if trainee.trn.present?
 
       trn_request = RegisterForTrn.call(trainee: trainee)
-      RetrieveTrnJob.perform_later(trn_request)
+      RetrieveTrnJob.perform_later(trn_request) unless trn_request.failed?
     end
   end
 end

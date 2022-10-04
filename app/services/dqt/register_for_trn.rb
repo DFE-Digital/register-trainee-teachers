@@ -21,7 +21,8 @@ module Dqt
   private
 
     def trn_request
-      @trn_request ||= TrnRequest.new(trainee: trainee, request_id: SecureRandom.uuid)
+      @trn_request ||= TrnRequest.create_with(request_id: SecureRandom.uuid)
+                                 .find_or_create_by!(trainee: trainee)
     end
 
     def submit_trn_request
@@ -30,6 +31,14 @@ module Dqt
       response = Client.put(path, body: body)
       trn_request.response = response
       trn_request.requested!
+    rescue Client::HttpError => e
+      # Sometimes we receive a 500 from DQT even though the TRN request is
+      # eventually successful. Because of this, we still want to save the
+      # dqt_trn_request to the DB when it fails. This means we can kick off a
+      # `RetrieveTrnJob` (which requires the request_id) in the future.
+      trn_request.response = { error: e }
+      trn_request.failed!
+      Sentry.capture_exception(e)
     end
 
     def update_trainee

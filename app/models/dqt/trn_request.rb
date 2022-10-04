@@ -9,8 +9,9 @@ module Dqt
     enum state: {
       requested: 0,
       received: 1,
+      failed: 2,
     }
 
-    validates :request_id, :response, presence: true
+    validates :request_id, presence: true
   end
 end
