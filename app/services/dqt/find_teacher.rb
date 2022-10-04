@@ -13,8 +13,12 @@ module Dqt
     end
 
     def call
+      if teachers.empty?
+        raise(Error, "No teachers found with #{error_details}")
+      end
+
       if teachers.count > 1
-        raise(Error, "Multiple teachers found with firstName: #{first_names}, lastName: #{last_name}, dateOfBirth: #{date_of_birth}")
+        raise(Error, "Multiple teachers found with #{error_details}")
       end
 
       teachers.first
@@ -25,7 +29,7 @@ module Dqt
   private
 
     def teachers
-      Client.get("/v2/teachers/find?#{params.to_query}")["results"]
+      @teachers ||= Client.get("/v2/teachers/find?#{params.to_query}")["results"]
     end
 
     def params
@@ -34,6 +38,10 @@ module Dqt
         lastName: last_name,
         dateOfBirth: date_of_birth.iso8601,
       }
+    end
+
+    def error_details
+      "firstName: #{first_names}, lastName: #{last_name}, dateOfBirth: #{date_of_birth}"
     end
   end
 end
