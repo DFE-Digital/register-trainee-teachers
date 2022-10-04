@@ -6,7 +6,9 @@ module SystemAdmin
     before_action :user, only: %i[show delete destroy]
 
     def index
-      @users = filtered_users(policy_scope(User.kept, policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1))
+      @users = filtered_users(policy_scope(User.kept, policy_scope_class: UserPolicy).includes(:providers, :lead_schools).order_by_last_name.page(params[:page] || 1))
+      @user_search_form = UserSearchForm.new
+      @all_users = @users.limit(nil)
     end
 
     def new
@@ -30,6 +32,16 @@ module SystemAdmin
     def destroy
       @user.discard!
       redirect_to(users_path, flash: { success: "User deleted" })
+    end
+
+    def search
+      search_params = params.require(:user_search_form).permit(:user)
+      @user = search_params[:user]
+      if @user
+        redirect_to(user_path(@user))
+      else
+        redirect_to(users_path)
+      end
     end
 
   private

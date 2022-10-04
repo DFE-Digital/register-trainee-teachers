@@ -80,4 +80,8 @@ private
   def user_only_has_lead_school?
     !user.system_admin && user.providers.empty? && user.lead_schools.present?
   end
+
+  def search_string_raw
+    nil
+  end
 end

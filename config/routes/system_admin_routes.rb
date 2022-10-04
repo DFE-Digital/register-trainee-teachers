@@ -22,6 +22,7 @@ module SystemAdminRoutes
           end
         end
 
+        get "users/search"
         resources :users do
           resources :providers, controller: "user_providers", only: %i[new create] do
             resource :accessions, controller: "providers/accessions", only: %i[edit destroy]
@@ -30,7 +31,6 @@ module SystemAdminRoutes
           resources :lead_schools, controller: "user_lead_schools", only: %i[index new create], path: "lead-schools" do
             resource :accessions, controller: "lead_schools/accessions", only: %i[edit destroy]
           end
-
           member { get :delete }
         end
 

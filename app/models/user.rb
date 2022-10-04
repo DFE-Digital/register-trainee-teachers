@@ -31,6 +31,22 @@ class User < ApplicationRecord
     User.kept.exists?(email: email)
   end
 
+  def search_values
+    {
+      id: id,
+      name: name,
+      synonyms: [email] + Array(provider_names) + Array(lead_school_names),
+    }
+  end
+
+  def provider_names
+    providers.map(&:name)
+  end
+
+  def lead_school_names
+    lead_schools.map(&:name)
+  end
+
 private
 
   def sanitise_email

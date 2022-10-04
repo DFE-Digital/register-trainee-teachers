@@ -11,8 +11,8 @@ module PageObjects
         end
 
         element :add_a_user, "a", text: "Add a user"
-        element :search, 'input[name="search"]'
-        element :submit_search, ".submit-search"
+        element :search, "#user-search-form-user-field"
+        element :first_option, "#user-search-form-user-field__option--0"
         sections :users, UserRow, ".user-row"
         element :flash_message, ".govuk-notification-banner__header"
         element :flash_message, ".govuk-notification-banner__header"
