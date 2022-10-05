@@ -90,4 +90,4 @@ February = 2 etc.
 
 ### Gotcha's
 
-1. We don’t expect to get summaries `TB_summary_upload_{Month}.csv` until December time
+1. `TB_summary_upload_{Month}.csv` are received every 2 months (so don't expect to see one each time)
