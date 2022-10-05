@@ -12,11 +12,11 @@ module Dqt
 
     def call
       if teachers.empty?
-        raise(Error, "No teachers found with #{error_details}")
+        raise(Error, "No teachers found in DQT for trainee #{trainee.id}")
       end
 
       if teachers.count > 1
-        raise(Error, "Multiple teachers found with #{error_details}")
+        raise(Error, "Multiple teachers found in DQT for trainee #{trainee.id}")
       end
 
       teachers.first
@@ -39,10 +39,6 @@ module Dqt
         dateOfBirth: trainee.date_of_birth.iso8601,
         emailAddress: trainee.email,
       }
-    end
-
-    def error_details
-      "firstName: #{trainee.first_names}, lastName: #{trainee.last_name}, dateOfBirth: #{trainee.date_of_birth}"
     end
   end
 end

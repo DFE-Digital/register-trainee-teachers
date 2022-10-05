@@ -38,7 +38,7 @@ module Dqt
             subject
           }.to raise_error(
             Dqt::FindTeacher::Error,
-            "Multiple teachers found with firstName: #{trainee.first_names}, lastName: #{trainee.last_name}, dateOfBirth: #{trainee.date_of_birth}",
+            "Multiple teachers found in DQT for trainee #{trainee.id}",
           )
         end
       end
@@ -51,7 +51,7 @@ module Dqt
             subject
           }.to raise_error(
             Dqt::FindTeacher::Error,
-            "No teachers found with firstName: #{trainee.first_names}, lastName: #{trainee.last_name}, dateOfBirth: #{trainee.date_of_birth}",
+            "No teachers found in DQT for trainee #{trainee.id}",
           )
         end
       end
