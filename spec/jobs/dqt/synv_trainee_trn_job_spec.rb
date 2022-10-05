@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Dqt
   describe SyncTraineeTrnJob do
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { create(:trainee, :submitted_for_trn) }
     let(:dqt_teacher) {
       {
         "trn" => trn,
@@ -21,12 +21,15 @@ module Dqt
     context "when a TRN is returned" do
       let(:trn) { "0123456" }
 
-      it "updates the trainee's TRN to what is in DQT", feature_integrate_with_dqt: true do
+      it "updates the trainee's TRN to what is in DQT and transitions them to trn_received", feature_integrate_with_dqt: true do
         expect {
-          described_class.perform_now(trainee)
+          described_class.perform_now(trainee.id)
         }.to change {
-          trainee.trn
+          trainee.reload.trn
         }.to(trn)
+        .and change {
+          trainee.state
+        }.to("trn_received")
       end
     end
 
@@ -35,7 +38,7 @@ module Dqt
 
       it "raises an error", feature_integrate_with_dqt: true do
         expect {
-          described_class.perform_now(trainee)
+          described_class.perform_now(trainee.id)
         }.to raise_error(SyncTraineeTrnJob::Error, "No TRN found in DQT for trainee: #{trainee.id}")
       end
     end

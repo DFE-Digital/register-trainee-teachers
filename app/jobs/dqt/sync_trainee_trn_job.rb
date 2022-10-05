@@ -7,22 +7,16 @@ module Dqt
 
     class Error < StandardError; end
 
-    def perform(trainee)
+    def perform(trainee_id)
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      teacher = Dqt::FindTeacher.call(trainee: trainee)
+      trainee = Trainee.find(trainee_id)
+      response = Dqt::FindTeacher.call(trainee: trainee)
 
-      if teacher["trn"].present?
-        Trainees::Update.call(
-          trainee: trainee,
-          params: { trn: teacher["trn"] },
-          update_dqt: false,
-        )
+      if response["trn"].present?
+        trainee.trn_received!(response["trn"])
       else
-        raise(
-          Error,
-          "No TRN found in DQT for trainee: #{trainee.id}",
-        )
+        raise(Error, "No TRN found in DQT for trainee: #{trainee.id}")
       end
     end
   end
