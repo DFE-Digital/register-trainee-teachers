@@ -88,6 +88,6 @@ Follow the same steps as above, but run the payment schedule task:
 The second argument is the first predicted month. For example, January = 1,
 February = 2 etc.
 
-### Gotcha's
+### Gotchas
 
 1. `TB_summary_upload_{Month}.csv` are received every 2 months (so don't expect to see one each time)
