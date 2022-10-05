@@ -21,12 +21,16 @@ named something like this:
 
 * `SDS_subject_breakdown_{Month}.csv`
   * The trainee summary for lead schools.
+  * `rake funding:import_lead_school_trainee_summaries[csv_path]`
 * `SDS_Profile_{Month}.csv`
   * The payment schedule for lead schools.
+  * `rake funding:import_lead_school_payment_schedules[csv_path,first_predicted_month_index]`
 * `TB_summary_upload_{Month}.csv`
   * The trainee summary for providers.
+  * `rake funding:import_provider_trainee_summaries[csv_path]`
 * `TB_Profile_{Month}.csv`
   * The payment schedule for providers.
+  * `rake funding:import_provider_payment_schedules[csv_path,first_predicted_month_index]`
 
 For the payment schedules, we will also be told which months contain predicted
 values. If this is not clear, then reach out to the funding team to clarify.
@@ -83,3 +87,7 @@ Follow the same steps as above, but run the payment schedule task:
 
 The second argument is the first predicted month. For example, January = 1,
 February = 2 etc.
+
+### Gotcha's
+
+1. We don’t expect to get summaries `TB_summary_upload_{Month}.csv` until December time
