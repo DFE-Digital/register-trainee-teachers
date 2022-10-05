@@ -6,8 +6,6 @@ module Dqt
 
     class Error < StandardError; end
 
-    delegate :first_names, :last_name, :date_of_birth, to: :trainee
-
     def initialize(trainee:)
       @trainee = trainee
     end
@@ -24,24 +22,27 @@ module Dqt
       teachers.first
     end
 
-    attr_reader :trainee
-
   private
+
+    attr_reader :trainee
 
     def teachers
       @teachers ||= Client.get("/v2/teachers/find?#{params.to_query}")["results"]
     end
 
+    # The DQT API requires at least three data items to return a teacher.
+    # `firstName` and `lastName` count as one data item.
     def params
       {
-        firstName: first_names,
-        lastName: last_name,
-        dateOfBirth: date_of_birth.iso8601,
+        firstName: trainee.first_names,
+        lastName: trainee.last_name,
+        dateOfBirth: trainee.date_of_birth.iso8601,
+        emailAddress: trainee.email,
       }
     end
 
     def error_details
-      "firstName: #{first_names}, lastName: #{last_name}, dateOfBirth: #{date_of_birth}"
+      "firstName: #{trainee.first_names}, lastName: #{trainee.last_name}, dateOfBirth: #{trainee.date_of_birth}"
     end
   end
 end
