@@ -96,7 +96,6 @@ current_default_course_year: 2022
 apply_applications:
   import:
     recruitment_cycle_years:
-      - 2021
       - 2022
   create:
     recruitment_cycle_year: 2022
