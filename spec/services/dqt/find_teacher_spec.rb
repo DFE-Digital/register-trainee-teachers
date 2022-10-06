@@ -37,7 +37,7 @@ module Dqt
           expect {
             subject
           }.to raise_error(
-            Dqt::FindTeacher::Error,
+            FindTeacher::Error,
             "Multiple teachers found in DQT for trainee #{trainee.id}",
           )
         end
@@ -50,9 +50,26 @@ module Dqt
           expect {
             subject
           }.to raise_error(
-            Dqt::FindTeacher::Error,
+            FindTeacher::Error,
             "No teachers found in DQT for trainee #{trainee.id}",
           )
+        end
+      end
+
+      context "when the trainee has multiple first names" do
+        let(:trainee) { create(:trainee, first_names: "Bobby Joe") }
+
+        let(:dqt_response) { { "results" => [dqt_trainee] } }
+
+        it "calls the DQT API with just the _first_ first name" do
+          described_class.call(trainee: trainee)
+          expected_params = {
+            firstName: "Bobby",
+            lastName: trainee.last_name,
+            dateOfBirth: trainee.date_of_birth.iso8601,
+            emailAddress: trainee.email,
+          }
+          expect(Client).to have_received(:get).with("/v2/teachers/find?#{expected_params.to_query}")
         end
       end
     end

@@ -34,7 +34,7 @@ module Dqt
     # `firstName` and `lastName` count as one data item.
     def params
       {
-        firstName: trainee.first_names,
+        firstName: trainee.first_names.split.first,
         lastName: trainee.last_name,
         dateOfBirth: trainee.date_of_birth.iso8601,
         emailAddress: trainee.email,
