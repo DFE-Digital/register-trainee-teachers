@@ -85,7 +85,7 @@ class CourseDetailsForm < TraineeForm
       update_trainee_attributes
       clear_funding_information if clear_funding_information?
       Trainees::Update.call(trainee: trainee)
-      clear_stash
+      clear_all_used_stashes
     else
       false
     end
