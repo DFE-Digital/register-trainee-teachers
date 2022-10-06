@@ -254,6 +254,20 @@ module Trainees
           expect(trainee.reload.additional_ethnic_background).to eq("Mixed European")
         end
       end
+
+      context "gender" do
+        %w[intersex other].each do |option|
+          context "when the gender attribute is #{option}" do
+            let(:candidate_attributes) { { gender: option.to_s } }
+
+            before { create_trainee_from_apply }
+
+            it "sets the trainee's sex to other" do
+              expect(trainee.reload.sex).to eq("other")
+            end
+          end
+        end
+      end
     end
   end
 end
