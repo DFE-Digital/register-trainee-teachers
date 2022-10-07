@@ -55,11 +55,11 @@ class PublishCourseDetailsForm < TraineeForm
     update_trainee_attributes
     clear_funding_information if clear_funding_information?
     Trainees::Update.call(trainee: trainee)
-    clear_all_stashes
+    clear_all_used_stashes
   end
 
   def stash
-    clear_all_stashes
+    clear_all_used_stashes
 
     super
   end
@@ -77,19 +77,15 @@ class PublishCourseDetailsForm < TraineeForm
   end
 
   def study_mode
-    @study_mode ||= ::StudyModesForm.new(trainee).study_mode
+    @study_mode ||= StudyModesForm.new(trainee).study_mode
   end
 
   def itt_start_date
-    if trainee.requires_itt_start_date?
-      itt_dates_form.start_date
-    end || course.start_date
+    itt_dates_form.start_date || course.start_date
   end
 
   def itt_end_date
-    if trainee.requires_itt_start_date?
-      itt_dates_form.end_date
-    end || course.end_date
+    itt_dates_form.end_date || course.end_date
   end
 
 private
@@ -132,19 +128,5 @@ private
 
   def compute_fields
     trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
-  end
-
-  def clear_all_stashes
-    [
-      LanguageSpecialismsForm,
-      SubjectSpecialismForm,
-      StudyModesForm,
-      IttDatesForm,
-      CourseDetailsForm,
-    ].each do |klass|
-      klass.new(trainee).clear_stash
-    end
-
-    clear_stash
   end
 end
