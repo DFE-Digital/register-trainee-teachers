@@ -7,7 +7,7 @@ module Hesa
 
       trainees = Trainee.imported_from_hesa
                         .where.not(trn: nil) # some trainees could still be waiting for their TRN from DQT
-                        .where("created_at > ?", TrnSubmission.last_submitted_at)
+                        .where(hesa_trn_submission_id: nil)
       payload = UploadTrnFile.call(trainees: trainees)
       TrnSubmission.create(payload: payload, submitted_at: Time.zone.now)
     rescue UploadTrnFile::TrnFileUploadError => e
