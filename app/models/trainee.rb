@@ -65,9 +65,7 @@ class Trainee < ApplicationRecord
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
 
-  # rubocop:disable Rails/UniqueValidationWithoutIndex
-  validates :hesa_id, uniqueness: true, allow_nil: true
-  # rubocop:enable Rails/UniqueValidationWithoutIndex
+  validates :hesa_id, uniqueness: true, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
 
   enum training_route: TRAINING_ROUTES
 
