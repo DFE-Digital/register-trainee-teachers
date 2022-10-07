@@ -5,7 +5,7 @@ module Hesa
     def perform
       return unless FeatureService.enabled?(:hesa_trn_requests)
 
-      trainees = Trainee.imported_from_hesa_trn_data
+      trainees = Trainee.imported_from_hesa
                         .where.not(trn: nil) # some trainees could still be waiting for their TRN from DQT
                         .where("created_at > ?", TrnSubmission.last_submitted_at)
       payload = UploadTrnFile.call(trainees: trainees)
