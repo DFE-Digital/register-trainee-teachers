@@ -257,6 +257,7 @@ shared:
     - updated_at
     - withdraw_date
     - withdraw_reason
+    - hesa_trn_submission_id
   users:
     - created_at
     - dfe_sign_in_uid
