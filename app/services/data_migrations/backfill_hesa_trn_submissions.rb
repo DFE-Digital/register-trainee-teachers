@@ -9,7 +9,7 @@ module DataMigrations
         trns = CSV.new(submission.payload, headers: true).pluck("TRN")
         next if trns.empty?
 
-        ::Trainee.where(trn: trns).update(hesa_trn_submission_id: submission.id)
+        ::Trainee.where(trn: trns).update_all(hesa_trn_submission_id: submission.id)
       end
     end
 
