@@ -3,7 +3,7 @@
 module Dqt
   class RetrieveAwardJob < ApplicationJob
     sidekiq_options retry: 0
-    queue_as :default
+    queue_as :dqt
     retry_on Client::HttpError
 
     class TraineeAttributeError < StandardError; end
