@@ -2,7 +2,7 @@
 
 module Dqt
   class RetrieveTrnJob < ApplicationJob
-    queue_as :default
+    queue_as :dqt
     retry_on Client::HttpError
     include NotifyOnTimeout
 
