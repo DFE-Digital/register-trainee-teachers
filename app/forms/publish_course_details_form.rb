@@ -53,7 +53,6 @@ class PublishCourseDetailsForm < TraineeForm
     return false unless valid?
 
     update_trainee_attributes
-    clear_funding_information if clear_funding_information?
     Trainees::Update.call(trainee: trainee)
     clear_all_used_stashes
   end
@@ -93,12 +92,8 @@ private
   def update_trainee_attributes
     trainee.assign_attributes(training_route: course.route,
                               course_uuid: course_uuid,
-                              course_subject_one: course_subject_one,
-                              course_subject_two: course_subject_two,
-                              course_subject_three: course_subject_three,
                               course_education_phase: course&.level,
-                              course_age_range: course_age_range,
-                              course_allocation_subject: course_allocation_subject)
+                              course_age_range: course_age_range)
   end
 
   def course_subjects
