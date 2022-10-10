@@ -36,6 +36,7 @@ class Trainee < ApplicationRecord
 
   belongs_to :start_academic_cycle, optional: true, class_name: "AcademicCycle"
   belongs_to :end_academic_cycle, optional: true, class_name: "AcademicCycle"
+  belongs_to :hesa_trn_submission, optional: true, class_name: "Hesa::TrnSubmission"
 
   has_many :degrees, dependent: :destroy
   has_many :nationalisations, dependent: :destroy, inverse_of: :trainee

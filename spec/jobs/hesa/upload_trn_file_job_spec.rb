@@ -4,6 +4,8 @@ require "rails_helper"
 
 module Hesa
   describe UploadTrnFileJob do
+    let!(:academic_cycle) { create(:academic_cycle, :current) }
+
     context "feature flag is off" do
       before { disable_features(:hesa_trn_requests) }
 

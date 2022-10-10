@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_16_124425) do
+ActiveRecord::Schema.define(version: 2022_10_07_090525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -679,6 +679,7 @@ ActiveRecord::Schema.define(version: 2022_09_16_124425) do
     t.bigint "start_academic_cycle_id"
     t.bigint "end_academic_cycle_id"
     t.string "record_source"
+    t.bigint "hesa_trn_submission_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -689,6 +690,7 @@ ActiveRecord::Schema.define(version: 2022_09_16_124425) do
     t.index ["employing_school_id"], name: "index_trainees_on_employing_school_id"
     t.index ["end_academic_cycle_id"], name: "index_trainees_on_end_academic_cycle_id"
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
+    t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
@@ -747,6 +749,7 @@ ActiveRecord::Schema.define(version: 2022_09_16_124425) do
   add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
+  add_foreign_key "trainees", "hesa_trn_submissions"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"
