@@ -66,7 +66,7 @@ module Degrees
 
     describe ".find_grade" do
       let(:degree_grade) do
-        Degrees::DfeReference::GRADES.all.find { |item| item[:hesa_code].present? }
+        Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.find { |item| item[:hesa_code].present? }
       end
 
       it "can find the grade by UUID" do

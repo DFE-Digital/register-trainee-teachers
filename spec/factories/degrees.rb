@@ -22,11 +22,11 @@ FactoryBot.define do
       uk_degree_type
 
       subject_uuid { Degrees::DfeReference::SUBJECTS.all.sample.id }
-      grade_uuid { Degrees::DfeReference::GRADES.all.sample.id }
+      grade_uuid { Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.sample.id }
       institution_uuid { DfE::ReferenceData::Degrees::INSTITUTIONS.all.sample.id }
 
       subject { subject_uuid && Degrees::DfeReference::SUBJECTS.one(subject_uuid).name }
-      grade { grade_uuid && Degrees::DfeReference::GRADES.one(grade_uuid).name }
+      grade { grade_uuid && Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.one(grade_uuid).name }
       institution { institution_uuid && DfE::ReferenceData::Degrees::INSTITUTIONS.one(institution_uuid).name }
 
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
@@ -41,7 +41,7 @@ FactoryBot.define do
     trait :non_uk_degree_with_details do
       non_uk_degree_type
       subject { Degrees::DfeReference::SUBJECTS.all.sample.name }
-      grade { Degrees::DfeReference::GRADES.all.sample.name }
+      grade { Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.sample.name }
       country { Dttp::CodeSets::Countries::MAPPING.keys.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
     end

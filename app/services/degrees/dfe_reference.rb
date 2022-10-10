@@ -6,24 +6,6 @@ module Degrees
 
     COMMON_TYPES = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
 
-    SUPPORTED_GRADES_BY_HESA_CODES = %w[1 2 3 5 14].freeze
-
-    SUPPORTED_GRADES = DfE::ReferenceData::Degrees::GRADES.all_as_hash.select { |_, item|
-      SUPPORTED_GRADES_BY_HESA_CODES.include?(item[:hesa_code])
-    }
-
-    GRADES = DfE::ReferenceData::HardcodedReferenceList.new(
-      SUPPORTED_GRADES.merge(
-        {
-          "4182ef37-df1c-4f1e-9be6-feb66037f775" => {
-            name: OTHER,
-            match_synonyms: [],
-            suggestion_synonyms: [],
-          },
-        },
-      ),
-    )
-
     INSTITUTIONS = DfE::ReferenceData::TweakedReferenceList.new(
       DfE::ReferenceData::Degrees::INSTITUTIONS,
       DfE::ReferenceData::Record.new(
@@ -38,8 +20,27 @@ module Degrees
       ),
     )
 
+    GRADES = DfE::ReferenceData::Degrees::GRADES
     SUBJECTS = DfE::ReferenceData::Degrees::SINGLE_SUBJECTS
     TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS
+
+    SUPPORTED_GRADES_BY_HESA_CODES = %w[1 2 3 5 12 13 14].freeze
+
+    SUPPORTED_GRADES = GRADES.all_as_hash.select { |_, item|
+      SUPPORTED_GRADES_BY_HESA_CODES.include?(item[:hesa_code])
+    }
+
+    SUPPORTED_GRADES_WITH_OTHER = DfE::ReferenceData::HardcodedReferenceList.new(
+      SUPPORTED_GRADES.merge(
+        {
+          "4182ef37-df1c-4f1e-9be6-feb66037f775" => {
+            name: OTHER,
+            match_synonyms: [],
+            suggestion_synonyms: [],
+          },
+        },
+      ),
+    )
 
     class << self
       def find_subject(uuid: nil, name: nil, hecos_code: nil)
