@@ -21,6 +21,8 @@ manager.update_training_route!("school_direct_salaried")
 
 A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask support to communicate with the user to update the Trainee record for the missing information.
 
+`update_training_route!` no longer kicks off an update to DQT so that will need to be done manually if needed.
+
 ## Unwithdrawing a withdrawn trainee
 
 Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. You can find the previous trainee state by running `trainee.audits` and comparing the numbers to the enum in `trainee.rb`.

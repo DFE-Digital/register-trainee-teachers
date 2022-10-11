@@ -34,6 +34,7 @@ class FormStore
     study_modes
     course_education_phase
     training_details
+    training_routes
   ].freeze
 
   class << self
