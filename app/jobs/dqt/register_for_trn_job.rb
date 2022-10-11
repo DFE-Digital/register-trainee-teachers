@@ -2,12 +2,6 @@
 
 module Dqt
   class RegisterForTrnJob < ApplicationJob
-    include Sidekiq::Throttled::Job
-    sidekiq_throttle({
-      concurrency: { limit: 1 },
-      threshold: { limit: 40, period: 1.minute },
-    })
-
     sidekiq_options retry: 0
     queue_as :dqt
 

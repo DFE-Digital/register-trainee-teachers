@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "sidekiq/throttled"
-
 if ENV.key?("VCAP_SERVICES")
   service_config = JSON.parse(ENV["VCAP_SERVICES"])
   redis_config = service_config["redis"]
@@ -26,5 +24,3 @@ end
 if Settings.sidekiq.schedule_file && Sidekiq.server?
   Sidekiq::Cron::Job.load_from_hash!(YAML.load_file(Settings.sidekiq.schedule_file))
 end
-
-Sidekiq::Throttled.setup!
