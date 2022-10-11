@@ -7,6 +7,8 @@ class BackfillUnmappedHesaDegreeGrades < ActiveRecord::Migration[6.1]
     url = "#{Settings.hesa.collection_base_url}/#{collection_reference}/#{from_date}"
     xml_response = Hesa::Client.get(url: url)
 
+    return unless xml_response.include?("ITTRecord")
+
     Nokogiri::XML::Reader(xml_response).each do |node|
       next unless node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
 
