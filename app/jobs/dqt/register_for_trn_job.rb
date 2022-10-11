@@ -5,7 +5,7 @@ module Dqt
     include Sidekiq::Throttled::Job
     sidekiq_throttle({
       concurrency: { limit: 1 },
-      threshold: { limit: 20, period: 1.minute },
+      threshold: { limit: 40, period: 1.minute },
     })
 
     sidekiq_options retry: 0

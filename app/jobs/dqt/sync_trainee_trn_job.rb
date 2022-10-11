@@ -2,7 +2,7 @@
 
 module Dqt
   class SyncTraineeTrnJob < ApplicationJob
-    queue_as :default
+    queue_as :dqt_sync
     retry_on Client::HttpError
 
     class Error < StandardError; end
