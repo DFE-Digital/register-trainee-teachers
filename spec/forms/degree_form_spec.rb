@@ -129,7 +129,7 @@ describe DegreeForm, type: :model do
       let(:dfe_institution) { Degrees::DfeReference::INSTITUTIONS.all.sample }
       let(:dfe_subject) { Degrees::DfeReference::SUBJECTS.all.sample }
       let(:dfe_type) { Degrees::DfeReference::TYPES.all.sample }
-      let(:dfe_grade) { Degrees::DfeReference::GRADES.all.sample }
+      let(:dfe_grade) { Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.sample }
 
       let(:degree) do
         build(:degree,

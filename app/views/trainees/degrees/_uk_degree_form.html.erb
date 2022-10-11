@@ -58,7 +58,7 @@
         hint: -> { render InvalidDataText::View.new(form_section: :grade, degree_form: @degree_form) },
         classes: "degree-grade") do %>
 
-    <% Degrees::DfeReference::GRADES.all.each_with_index do |item, index| %>
+    <% grade_options(@trainee).all.each_with_index do |item, index| %>
       <% if item[:name] == Degrees::DfeReference::OTHER %>
         <%= f.govuk_radio_button :grade, item[:name], label: { text: item[:name] } do %>
           <%= f.govuk_text_field :other_grade, label: { text: "Enter the degree grade" }, width: "two-thirds" %>

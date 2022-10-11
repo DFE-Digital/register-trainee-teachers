@@ -32,6 +32,14 @@ module DegreesHelper
     end
   end
 
+  def grade_options(trainee)
+    if current_user.system_admin? && trainee.hesa_record?
+      Degrees::DfeReference::GRADES
+    else
+      Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER
+    end
+  end
+
   def countries_options
     to_options(Dttp::CodeSets::Countries::MAPPING.keys)
   end
