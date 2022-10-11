@@ -31,7 +31,7 @@
           <% @courses.each_with_index do |course, i| %>
             <%= f.govuk_radio_button :course_uuid, course.uuid,
               label: { text: "#{course.name} (#{course.code})" },
-              hint: { text: course_summary_text_for(@trainee, course) }, 
+              hint: { text: "#{course.summary}" },
               link_errors: i == 0
             %>
           <% end %>

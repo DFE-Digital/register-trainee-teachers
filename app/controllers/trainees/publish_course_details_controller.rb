@@ -8,11 +8,13 @@ module Trainees
 
     before_action :set_course_year
 
+    helper_method :training_route
+
     def edit
       @courses = course_year_available_courses
       @publish_course_details_form = PublishCourseDetailsForm.new(trainee)
 
-      if @courses.empty?
+      if @courses.blank?
         page_tracker.remove_last_page
         if params[:year].present?
           @publish_course_details_form.process_manual_entry!
@@ -68,7 +70,7 @@ module Trainees
     end
 
     def course_year_available_courses
-      trainee.available_courses.where(recruitment_cycle_year: @course_year)
+      trainee.available_courses(training_route)&.where(recruitment_cycle_year: @course_year)
     end
 
     def course_params
