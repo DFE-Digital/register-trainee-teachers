@@ -1,9 +1,13 @@
 ---
 :concurrency: 5
 :queues:
+  - high_priority
   - default
   - dqt
+  - apply
+  - hesa
   - dttp
   - mailers
   - dqt_sync
   - dfe_analytics
+  - others
