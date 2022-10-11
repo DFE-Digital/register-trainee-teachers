@@ -12,6 +12,7 @@ feature "Change course", feature_publish_course_details: true do
     and_trainee_related_courses_exist
     and_i_am_on_the_trainee_record_page
     when_i_click_to_change_course_details
+    and_i_do_not_change_training_route
     and_i_choose_a_different_course
     and_i_click_continue
     and_select_a_specialism_if_necessary
@@ -24,8 +25,10 @@ feature "Change course", feature_publish_course_details: true do
     given_i_am_authenticated
     and_a_trainee_exists
     and_trainee_related_courses_exist
+    and_courses_on_another_route_exist
     and_i_am_on_the_trainee_record_page
     when_i_click_to_change_course_details
+    and_i_choose_a_different_training_route
     then_i_am_redirected_to_the_course_years_page
     and_i_choose_a_different_year
     and_i_am_redirected_to_the_publish_course_details_page
@@ -41,6 +44,13 @@ private
     create(:subject_specialism, name: @different_course.name)
   end
 
+  def and_courses_on_another_route_exist
+    create(:course_with_subjects,
+           :secondary,
+           accredited_body_code: trainee.provider.code,
+           route: "school_direct_tuition_fee")
+  end
+
   def and_a_trainee_exists_with_trn_received
     given_a_trainee_exists(:trn_received, :with_publish_course_details, :school_direct_salaried, :with_secondary_education)
   end
@@ -51,6 +61,17 @@ private
 
   def when_i_click_to_change_course_details
     record_page.change_course_details.click
+  end
+
+  def and_i_do_not_change_training_route
+    trainee_edit_training_route_page.continue_button.click
+  end
+
+  def and_i_choose_a_different_training_route
+    trainee_edit_training_route_page.training_route_options.find { |o|
+      o.input.value.include?("school_direct_tuition_fee")
+    }.choose
+    trainee_edit_training_route_page.continue_button.click
   end
 
   def and_i_choose_a_different_course

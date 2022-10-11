@@ -22,6 +22,7 @@ class CourseDetailsForm < TraineeForm
     additional_age_range
     study_mode
     primary_course_subjects
+    training_route
   ].freeze
 
   COURSE_DATES = %i[
@@ -56,12 +57,14 @@ class CourseDetailsForm < TraineeForm
   validate :itt_end_date_valid, if: :end_date_required?
 
   delegate :apply_application?, :requires_study_mode?, to: :trainee
+  delegate :training_route, to: :training_routes_form
 
   MAX_END_YEARS = 4
 
   def initialize(...)
     super(...)
     @primary_course_subjects ||= set_primary_phase_subjects if is_primary_phase?
+    @training_routes_form = TrainingRoutesForm.new(trainee)
   end
 
   def course_age_range
@@ -137,6 +140,8 @@ class CourseDetailsForm < TraineeForm
 
 private
 
+  attr_reader :training_routes_form
+
   def requires_secondary_subjects?
     !is_primary_phase? && require_subject?
   end
@@ -173,10 +178,11 @@ private
 
   def update_trainee_attributes
     attributes = {
-      course_uuid:,
-      itt_start_date:,
-      itt_end_date:,
-      course_education_phase:,
+      course_uuid: course_uuid,
+      itt_start_date: itt_start_date,
+      itt_end_date: itt_end_date,
+      training_route: training_route,
+      course_education_phase: course_education_phase,
     }
 
     set_course_subject_from_primary_phase if is_primary_phase?

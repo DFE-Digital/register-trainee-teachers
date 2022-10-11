@@ -8,8 +8,9 @@ module PageObjects
     end
 
     class ConfirmCourseDetails < PageObjects::Base
-      set_url "/trainees/{trainee_id}/course-details/confirm"
+      set_url "/trainees/{id}/course-details/confirm"
 
+      element :change_course, "a", text: "Change course"
       element :confirm, "input[name='confirm_detail_form[mark_as_completed]']"
       element :continue_button, "button[type='submit']", text: "Continue"
 

@@ -101,7 +101,6 @@ private
 
   def then_the_course_details_are_updated
     when_i_visit_the_course_details_page
-    # save_and_open_page
 
     expect(course_details_page.subject.value).to eq(trainee.reload.course_subject_one)
     expect(course_details_page.itt_start_date_day.value).to eq(trainee.itt_start_date.day.to_s)

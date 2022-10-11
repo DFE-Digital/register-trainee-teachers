@@ -6,7 +6,7 @@ module CourseDetails
   describe View do
     include SummaryHelper
 
-    let(:training_route) { "Training route" }
+    let(:course_and_route) { "Course" }
     let(:education_phase) { "Education phase" }
     let(:age_range) { "Age range" }
 
@@ -25,8 +25,8 @@ module CourseDetails
         render_inline(View.new(data_model: trainee, editable: true))
       end
 
-      it "renders 6 rows" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
+      it "renders 7 rows" do
+        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
       end
 
       it "renders missing hint education phase" do
@@ -180,8 +180,8 @@ module CourseDetails
           render_inline(View.new(data_model: trainee))
         end
 
-        it "renders 5 rows" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 5)
+        it "renders 6 rows" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
         end
       end
     end
@@ -194,8 +194,8 @@ module CourseDetails
       context "non draft" do
         let(:trainee) { create(:trainee, :early_years_undergrad, :with_early_years_course_details, :submitted_for_trn) }
 
-        it "renders the training route" do
-          expect(rendered_component).to have_text(training_route)
+        it "renders the course and training route" do
+          expect(rendered_component).to have_text(course_and_route)
         end
 
         it "does not render education phase" do
@@ -209,10 +209,6 @@ module CourseDetails
 
       context "draft" do
         let(:trainee) { create(:trainee, :early_years_undergrad, :with_early_years_course_details, :draft) }
-
-        it "does not render the training route" do
-          expect(rendered_component).not_to have_text(training_route)
-        end
 
         it "does not render education phase" do
           expect(rendered_component).not_to have_text(education_phase)
@@ -228,10 +224,6 @@ module CourseDetails
       context "draft" do
         let(:trainee) { create(:trainee, :with_secondary_course_details, :draft) }
 
-        it "does not render the training route" do
-          expect(rendered_component).not_to have_text(training_route)
-        end
-
         it "renders route" do
           expect(rendered_component).to have_text(education_phase)
           expect(rendered_component).to have_text("Secondary")
@@ -245,8 +237,8 @@ module CourseDetails
       context "non draft" do
         let(:trainee) { create(:trainee, :with_secondary_course_details, :submitted_for_trn) }
 
-        it "renders the training route" do
-          expect(rendered_component).to have_text(training_route)
+        it "renders the course and training route" do
+          expect(rendered_component).to have_text(course_and_route)
         end
 
         it "renders route" do
@@ -287,7 +279,7 @@ module CourseDetails
 
     context "trainee with Apply application changes course" do
       let(:trainee) { create(:trainee, :recommended_for_award, :with_apply_application, :with_publish_course_details) }
-      let!(:new_course) { create(:course_with_subjects, accredited_body_code: trainee.provider.code) }
+      let!(:new_course) { create(:course_with_subjects, accredited_body_code: trainee.provider.code, route: trainee.training_route) }
       let(:data_model) { PublishCourseDetailsForm.new(trainee, params: { course_uuid: new_course.uuid }) }
 
       before do

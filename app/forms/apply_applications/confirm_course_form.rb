@@ -8,16 +8,19 @@ module ApplyApplications
     FIELDS = %i[
       uuid
       mark_as_reviewed
+      training_route
     ].freeze
 
     attr_accessor(*FIELDS, :trainee, :specialisms, :params)
 
     delegate :id, :persisted?, to: :trainee
+    delegate :training_route, to: :training_routes_form
 
     def initialize(trainee, specialisms, params = {})
       @trainee = trainee
       @specialisms = specialisms
       @itt_dates_form = IttDatesForm.new(trainee)
+      @training_routes_form = TrainingRoutesForm.new(trainee)
 
       assign_attributes({ mark_as_reviewed: trainee.progress.course_details }.merge(params))
     end
@@ -70,14 +73,14 @@ module ApplyApplications
 
   private
 
-    attr_accessor :itt_dates_form
+    attr_accessor :itt_dates_form, :training_routes_form
 
     def update_trainee_attributes
       trainee.assign_attributes({
         course_subject_one: course_subject_one,
         course_subject_two: course_subject_two,
         course_subject_three: course_subject_three,
-        training_route: course&.route,
+        training_route: training_route,
         course_uuid: course_uuid,
         course_age_range: course_age_range,
         itt_start_date: itt_start_date,
@@ -87,7 +90,7 @@ module ApplyApplications
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(uuid:)
+      @course ||= trainee.available_courses(training_route).find_by(uuid: uuid)
     end
 
     def trainee_confirmed?
