@@ -8,7 +8,7 @@ class AddMissingDisabilitiesFromTadCheck < ActiveRecord::Migration[6.1]
   end
 
   def down
-    # raise ActiveRecord::IrreversibleMigration
+    raise ActiveRecord::IrreversibleMigration
   end
 
 private
