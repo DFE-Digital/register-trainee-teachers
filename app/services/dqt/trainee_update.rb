@@ -16,7 +16,7 @@ module Dqt
     def call
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      raise(TraineeUpdateMissingTrn, "Cannot update trainee on DQT without a trn") if trainee.trn.blank?
+      raise(TraineeUpdateMissingTrn, "Cannot update trainee on DQT without a trn (id: #{trainee.id})") if trainee.trn.blank?
 
       dqt_update("/v2/teachers/update/#{trainee.trn}?birthDate=#{trainee.date_of_birth.iso8601}", payload)
     end
