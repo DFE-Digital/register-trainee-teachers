@@ -12,8 +12,10 @@ module Trainees
     let(:hesa_mode_codes) { Hesa::CodeSets::Modes::MAPPING.invert }
     let(:hesa_trn) { Faker::Number.number(digits: 7) }
     let(:date_today) { Time.zone.today }
+    let(:register_trn) { nil }
+    let(:trainee) { double(persisted?: persisted, trn: register_trn) }
 
-    subject { described_class.call(hesa_trainee: hesa_trainee, trainee_persisted: persisted) }
+    subject { described_class.call(hesa_trainee: hesa_trainee, trainee: trainee) }
 
     context "when the trainee is new" do
       let(:persisted) { false }
@@ -117,6 +119,13 @@ module Trainees
         end
 
         it { is_expected.to be_falsey }
+      end
+
+      context "when there's no TRN received from HESA, but a TRN in Register already" do
+        let(:hesa_stub_attributes) { { reason_for_leaving: nil, trn: nil } }
+        let(:register_trn) { "1234567" }
+
+        it { is_expected.to eq(:trn_received) }
       end
     end
   end
