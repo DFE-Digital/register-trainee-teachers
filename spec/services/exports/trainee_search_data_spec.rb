@@ -136,6 +136,15 @@ module Exports
       it "sets the correct row values" do
         expect(subject.data).to include(expected_output.values.join(","))
       end
+
+      context "when there is no trainee data" do
+        let(:no_trainees_message) { "No trainee data to export" }
+
+        it "sets the 'no trainee data' message" do
+          trainee.destroy!
+          expect(subject.data).to include(no_trainees_message)
+        end
+      end
     end
 
     describe "#time" do
