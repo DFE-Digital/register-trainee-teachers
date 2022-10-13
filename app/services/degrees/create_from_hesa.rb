@@ -52,7 +52,7 @@ module Degrees
 
     def set_country_specific_attributes(degree, hesa_degree)
       country = Hesa::CodeSets::Countries::MAPPING[hesa_degree[:country]]
-      dfe_institution = DfeReference.find_institution(hesa_code: hesa_degree[:institution])
+      dfe_institution = DfeReference.find_institution(hesa_code: institution_hesa_code(hesa_degree))
       dfe_type = DfeReference.find_type(hesa_code: degree_type_hesa_code(hesa_degree))
 
       # Country code is not always provided, so we have
@@ -78,7 +78,7 @@ module Degrees
     end
 
     def set_grade_attributes(degree, hesa_degree)
-      dfe_grade = DfeReference.find_grade(hesa_code: degree_grade_hesa_code(hesa_degree))
+      dfe_grade = DfeReference.find_grade(hesa_code: grade_hesa_code(hesa_degree))
 
       degree.grade = dfe_grade&.name
       degree.grade_uuid = dfe_grade&.id
@@ -92,10 +92,16 @@ module Degrees
       HONOURS_TO_NON_HONOURS_HESA_CODE_MAP[hesa_degree[:degree_type]] || hesa_degree[:degree_type]
     end
 
-    def degree_grade_hesa_code(hesa_degree)
+    def grade_hesa_code(hesa_degree)
       # The HESA code "09" which is "Pass - degree awarded without honours following an honours course"
       # is not currently supported by the dfe-reference gem. Falling back to the nearest equivalent.
       hesa_degree[:grade] == "09" ? "14" : hesa_degree[:grade]
+    end
+
+    def institution_hesa_code(hesa_degree)
+      # HESA institution code 0133 (Institute of Education) is not listed in the dfe-reference
+      # gem but it is part of University College London (0149), therefore it can be remapped.
+      hesa_degree[:institution] == "0133" ? "0149" : hesa_degree[:institution]
     end
 
     def importable?(hesa_degree)
