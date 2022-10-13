@@ -2,6 +2,8 @@
 
 module Hesa
   class RetrieveJob < ApplicationJob
+    queue_as :hesa
+
     def perform(collection_reference:, sync_from_hesa:)
       @collection_reference = collection_reference
 
