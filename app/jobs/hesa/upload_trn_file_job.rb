@@ -2,6 +2,8 @@
 
 module Hesa
   class UploadTrnFileJob < ApplicationJob
+    queue_as :hesa
+
     def perform
       return unless FeatureService.enabled?(:hesa_trn_requests)
 
@@ -10,7 +12,11 @@ module Hesa
                         .where(hesa_trn_submission_id: nil)
                         .where(start_academic_cycle_id: AcademicCycle.current.id)
       payload = UploadTrnFile.call(trainees: trainees)
-      TrnSubmission.create(payload: payload, submitted_at: Time.zone.now)
+      trn_submission = TrnSubmission.create(payload: payload, submitted_at: Time.zone.now)
+
+      trainees.update_all(hesa_trn_submission_id: trn_submission.id)
+
+      trn_submission
     rescue UploadTrnFile::TrnFileUploadError => e
       Sentry.capture_exception(e)
     end

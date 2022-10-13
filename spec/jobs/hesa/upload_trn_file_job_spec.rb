@@ -29,6 +29,12 @@ module Hesa
         expect { described_class.new.perform }.to change { TrnSubmission.count }.by(1)
       end
 
+      it "sets the trainee trn_submission_id" do
+        trainee = create(:trainee, :imported_from_hesa, :trn_received)
+        described_class.new.perform
+        expect(trainee.reload.hesa_trn_submission_id).to eq(TrnSubmission.last.id)
+      end
+
       context "upload error" do
         let(:hesa_upload_error) { Hesa::UploadTrnFile::TrnFileUploadError.new }
 
