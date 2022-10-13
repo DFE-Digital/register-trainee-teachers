@@ -28,6 +28,7 @@ private
       learning_difficulty_trainees.map do |trainee|
         { trainee_id: trainee.id, disability_id: learning_difficulty.id, created_at: Time.zone.now, updated_at: Time.zone.now }
       end,
+      unique_by: %i[disability_id trainee_id],
     )
   end
 
@@ -36,6 +37,7 @@ private
       other_trainees.map do |trainee|
         { trainee_id: trainee.id, disability_id: other_disability.id, created_at: Time.zone.now, updated_at: Time.zone.now }
       end,
+      unique_by: %i[disability_id trainee_id],
     )
   end
 

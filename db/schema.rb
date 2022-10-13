@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_07_090525) do
+ActiveRecord::Schema.define(version: 2022_10_13_080403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "academic_cycles", force: :cascade do |t|
     t.date "start_date", null: false
@@ -165,9 +167,9 @@ ActiveRecord::Schema.define(version: 2022_10_07_090525) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
+    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
-    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -542,8 +544,8 @@ ActiveRecord::Schema.define(version: 2022_10_07_090525) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.string "accreditation_id"
     t.index ["accreditation_id"], name: "index_providers_on_accreditation_id", unique: true
@@ -600,6 +602,7 @@ ActiveRecord::Schema.define(version: 2022_10_07_090525) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "additional_disability"
+    t.index ["disability_id", "trainee_id"], name: "index_trainee_disabilities_on_disability_id_and_trainee_id", unique: true
     t.index ["disability_id"], name: "index_trainee_disabilities_on_disability_id"
     t.index ["trainee_id"], name: "index_trainee_disabilities_on_trainee_id"
   end
@@ -655,14 +658,14 @@ ActiveRecord::Schema.define(version: 2022_10_07_090525) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at"
-    t.boolean "applying_for_bursary"
     t.integer "training_initiative"
+    t.boolean "applying_for_bursary"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.integer "course_education_phase"
     t.boolean "applying_for_scholarship"
+    t.integer "course_education_phase"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_school_not_applicable", default: false
