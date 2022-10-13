@@ -8,12 +8,15 @@ module Exports
     DATA_NOT_AVAILABLE = "data not available"
     END_DATE_NOT_REQUIRED_BY_HESA = "End date not required by HESA so no data available in Register"
     NOT_REQUIRED_BY_HESA = "Not required by HESA so no data available in Register"
+    NO_TRAINEE_DATA = "No trainee data to export"
 
     def initialize(trainees)
       @data_for_export = format_trainees(trainees)
     end
 
     def data
+      return NO_TRAINEE_DATA if data_for_export.blank?
+
       header_row ||= data_for_export.first&.keys
 
       CSV.generate(headers: true) do |rows|
