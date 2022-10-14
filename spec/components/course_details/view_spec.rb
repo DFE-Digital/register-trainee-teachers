@@ -173,19 +173,6 @@ module CourseDetails
         end
       end
 
-      context "with a end_academic_cycle" do
-        let(:end_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
-        let(:trainee) { create(:trainee, :with_primary_education, :with_publish_course_details, hesa_id: "XXX", end_academic_cycle: end_academic_cycle) }
-
-        before do
-          render_inline(View.new(data_model: trainee))
-        end
-
-        it "renders the projected end date" do
-          expect(rendered_component).to have_text("Expected in academic year #{end_academic_cycle.label}")
-        end
-      end
-
       context "without a publish course" do
         let(:trainee) { create(:trainee, hesa_id: "XXX", itt_end_date: Time.zone.today) }
 
