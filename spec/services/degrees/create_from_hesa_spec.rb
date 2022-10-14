@@ -85,6 +85,25 @@ module Degrees
         end
       end
 
+      context "institution is Institute of Education (0133)" do
+        let(:hesa_degrees) do
+          [
+            {
+              graduation_date: "2003-06-01",
+              degree_type: "400",
+              subject: "100485",
+              institution: "0133",
+              grade: "02",
+              country: nil,
+            },
+          ]
+        end
+
+        it "remaps it to University College London (0149)" do
+          expect(degree.institution).to eq("University College London")
+        end
+      end
+
       context "Non-UK degree" do
         let(:hesa_degrees) do
           [{
