@@ -67,7 +67,11 @@ module Degrees
     end
 
     def subject
-      @subject ||= DfeReference.find_subject(name: csv_row["Degree: subjects"])
+      @subject ||= DfeReference.find_subject(name: raw_subject)
+    end
+
+    def raw_subject
+      @raw_subject ||= csv_row["Degree: subjects"]&.split(",")&.first
     end
 
     # They can provide either the name or the UKPRN

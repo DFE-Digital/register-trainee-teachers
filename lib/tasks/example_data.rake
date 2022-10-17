@@ -55,14 +55,14 @@ namespace :example_data do
   task generate: :environment do
     raise "THIS TASK CANNOT BE RUN IN PRODUCTION" if Rails.env.production?
 
-    if Trainee.any?
-      puts "Noop as DB already contains data"
-      exit
-    end
+    # if Trainee.any?
+    #   puts "Noop as DB already contains data"
+    #   exit
+    # end
 
     # Running `bundle exec rails db:migrate db:seed example_data:generate` can sometimes use cached column information.
     # This forces rails to reload column information before attempting to generate factories
-    Trainee.reset_column_information
+    # Trainee.reset_column_information
 
     Faker::Config.locale = "en-GB"
 
