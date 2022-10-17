@@ -24,6 +24,8 @@ private
   end
 
   def learning_difficulties!
+    return if learning_difficulty_trainees.empty?
+
     TraineeDisability.upsert_all(
       learning_difficulty_trainees.map do |trainee|
         { trainee_id: trainee.id, disability_id: learning_difficulty.id, created_at: Time.zone.now, updated_at: Time.zone.now }
@@ -33,6 +35,8 @@ private
   end
 
   def other_disabilites!
+    return if other_trainees.empty?
+
     TraineeDisability.upsert_all(
       other_trainees.map do |trainee|
         { trainee_id: trainee.id, disability_id: other_disability.id, created_at: Time.zone.now, updated_at: Time.zone.now }
