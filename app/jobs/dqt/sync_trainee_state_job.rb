@@ -3,7 +3,16 @@
 module Dqt
   class SyncTraineeStateJob < ApplicationJob
     queue_as :dqt_sync
-    retry_on Client::HttpError
+    sidekiq_options retry: 5
+
+    sidekiq_retry_in do |count, exception|
+      case exception
+      when Client::HttpError
+        60 * 30 * (count + 1) # 30 minutes * retry count
+      else
+        :kill
+      end
+    end
 
     def perform(trainee)
       return unless FeatureService.enabled?(:integrate_with_dqt)
