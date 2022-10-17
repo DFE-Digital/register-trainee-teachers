@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_07_090525) do
+ActiveRecord::Schema.define(version: 2022_10_13_080403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -600,6 +600,7 @@ ActiveRecord::Schema.define(version: 2022_10_07_090525) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "additional_disability"
+    t.index ["disability_id", "trainee_id"], name: "index_trainee_disabilities_on_disability_id_and_trainee_id", unique: true
     t.index ["disability_id"], name: "index_trainee_disabilities_on_disability_id"
     t.index ["trainee_id"], name: "index_trainee_disabilities_on_trainee_id"
   end
