@@ -59,4 +59,14 @@ describe AutocompleteValidator do
       expect(subject.errors[:search]).to be_blank
     end
   end
+
+  context "when the search value is blank" do
+    let(:search) { nil }
+    let(:search_raw) { "Does ask jeeves still exist?" }
+
+    it "does not add an error" do
+      expect(subject).to be_valid
+      expect(subject.errors[:search]).to be_blank
+    end
+  end
 end
