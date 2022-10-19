@@ -14,10 +14,8 @@ ActiveRecord::Schema.define(version: 2022_10_19_123127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
-  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
   create_table "academic_cycles", force: :cascade do |t|
     t.date "start_date", null: false
