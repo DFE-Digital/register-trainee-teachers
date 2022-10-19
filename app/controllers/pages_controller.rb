@@ -11,7 +11,6 @@ class PagesController < ApplicationController
       end
 
       @trainees = policy_scope(Trainee.all)
-      @home_view = HomeView.new(@trainees)
       render(:home)
     else
       render(:start)

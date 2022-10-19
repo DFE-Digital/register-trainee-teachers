@@ -14,24 +14,20 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
       <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
-        <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
-          <li>
-            <%= govuk_link_to(
-              t(".draft_trainees_link", count: @home_view.draft_trainees_count),
-              drafts_path,
-              { class: "govuk-link--no-visited-state" }
-            )%>
-          </li>
-        <% end %>
-        <% if @home_view.draft_apply_trainees_count > 0 %>
-          <li>
-            <%= govuk_link_to(
-              @home_view.apply_drafts_link_text,
-              drafts_path("record_source[]": :apply),
-              { class: "govuk-link--no-visited-state" }
-            )%>
-          </li>
-        <% end %>
+        <li>
+          <%= govuk_link_to(
+            "View all draft trainees",
+            drafts_path,
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
+        <li>
+          <%= govuk_link_to(
+            "View draft trainees imported from Apply",
+            drafts_path("record_source[]": :apply),
+            { class: "govuk-link--no-visited-state" }
+          )%>
+        </li>
         <% if policy(Trainee).new? %>
           <li class="govuk-!-margin-bottom-0">
             <%= govuk_link_to(
@@ -47,15 +43,6 @@
 
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 <% end %>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-l"><%= t(".registered_heading") %></h2>
-  </div>
-  <%= render "badges" %>
-</div>
-
-<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
