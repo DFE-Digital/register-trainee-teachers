@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_080403) do
+ActiveRecord::Schema.define(version: 2022_10_19_123127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "academic_cycles", force: :cascade do |t|
     t.date "start_date", null: false
@@ -90,62 +92,6 @@ ActiveRecord::Schema.define(version: 2022_10_13_080403) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "blazer_audits", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "query_id"
-    t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at"
-    t.index ["query_id"], name: "index_blazer_audits_on_query_id"
-    t.index ["user_id"], name: "index_blazer_audits_on_user_id"
-  end
-
-  create_table "blazer_checks", force: :cascade do |t|
-    t.bigint "creator_id"
-    t.bigint "query_id"
-    t.string "state"
-    t.string "schedule"
-    t.text "emails"
-    t.text "slack_channels"
-    t.string "check_type"
-    t.text "message"
-    t.datetime "last_run_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["creator_id"], name: "index_blazer_checks_on_creator_id"
-    t.index ["query_id"], name: "index_blazer_checks_on_query_id"
-  end
-
-  create_table "blazer_dashboard_queries", force: :cascade do |t|
-    t.bigint "dashboard_id"
-    t.bigint "query_id"
-    t.integer "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["dashboard_id"], name: "index_blazer_dashboard_queries_on_dashboard_id"
-    t.index ["query_id"], name: "index_blazer_dashboard_queries_on_query_id"
-  end
-
-  create_table "blazer_dashboards", force: :cascade do |t|
-    t.bigint "creator_id"
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["creator_id"], name: "index_blazer_dashboards_on_creator_id"
-  end
-
-  create_table "blazer_queries", force: :cascade do |t|
-    t.bigint "creator_id"
-    t.string "name"
-    t.text "description"
-    t.text "statement"
-    t.string "data_source"
-    t.string "status"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
-  end
-
   create_table "course_subjects", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "subject_id", null: false
@@ -165,9 +111,9 @@ ActiveRecord::Schema.define(version: 2022_10_13_080403) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
+    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
-    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -542,8 +488,8 @@ ActiveRecord::Schema.define(version: 2022_10_13_080403) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.string "accreditation_id"
     t.index ["accreditation_id"], name: "index_providers_on_accreditation_id", unique: true
@@ -656,14 +602,14 @@ ActiveRecord::Schema.define(version: 2022_10_13_080403) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at"
-    t.boolean "applying_for_bursary"
     t.integer "training_initiative"
+    t.boolean "applying_for_bursary"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.integer "course_education_phase"
     t.boolean "applying_for_scholarship"
+    t.integer "course_education_phase"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_school_not_applicable", default: false

@@ -12,8 +12,8 @@ module Funding
           raise(NotImplementedError("implement in subclass"))
         end
 
-        def to_attributes(file_path:)          csv = CSV.open(file_path, headers: true)
-
+        def to_attributes(file_path:)
+          csv = CSV.open(file_path, headers: true)
           validate_headers(csv: csv)
 
           csv.each_with_object({}) do |row, to_return|
