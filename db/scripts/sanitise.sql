@@ -1,6 +1,6 @@
 DELETE FROM "sessions";
 DELETE FROM "audits";
-DELETE FROM "blazer_audits";
+-- DELETE FROM "blazer_audits";
 DELETE FROM "validation_errors";
 DELETE FROM "apply_application_sync_requests";
 DELETE FROM "hesa_students";

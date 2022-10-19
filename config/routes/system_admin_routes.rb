@@ -7,8 +7,8 @@ module SystemAdminRoutes
         require "sidekiq/web"
         require "sidekiq/cron/web"
 
-        mount Blazer::Engine, at: "/blazer", constraints: SystemAdminConstraint.new
-        get "/blazer", to: redirect("/sign-in"), status: 302
+        # mount Blazer::Engine, at: "/blazer", constraints: SystemAdminConstraint.new
+        # get "/blazer", to: redirect("/sign-in"), status: 302
 
         mount Sidekiq::Web, at: "/sidekiq", constraints: SystemAdminConstraint.new
         get "/sidekiq", to: redirect("/sign-in"), status: 302

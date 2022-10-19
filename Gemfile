@@ -97,7 +97,7 @@ gem "data_migrate"
 # Gov Notify
 gem "govuk_notify_rails"
 
-gem "blazer"
+# gem "blazer"
 
 gem "auto_strip_attributes"
 

@@ -147,10 +147,10 @@ resource cloudfoundry_service_key postgres-key {
   service_instance = cloudfoundry_service_instance.postgres_instance.id
 }
 
-resource cloudfoundry_service_key postgres-blazer-key {
-  name             = "${local.postgres_service_name}-blazer"
-  service_instance = cloudfoundry_service_instance.postgres_instance.id
-}
+# resource cloudfoundry_service_key postgres-blazer-key {
+#   name             = "${local.postgres_service_name}-blazer"
+#   service_instance = cloudfoundry_service_instance.postgres_instance.id
+# }
 
 resource cloudfoundry_service_key postgres-analysis-key {
   count            = var.snapshot_databases_to_deploy
