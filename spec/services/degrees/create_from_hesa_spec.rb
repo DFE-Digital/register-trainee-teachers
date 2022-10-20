@@ -83,6 +83,25 @@ module Degrees
           expect(degree.country).to be_nil
           expect(degree.institution_uuid).to eq("bb3e182c-1425-ec11-b6e6-000d3adf095a")
         end
+
+        context "non-awarding institution" do
+          let(:hesa_degrees) do
+            [
+              {
+                graduation_date: "2003-06-01",
+                degree_type: "400",
+                subject: "100485",
+                institution: "0045",
+                grade: "02",
+                country: nil,
+              },
+            ]
+          end
+
+          it "sets the institution to 'other'" do
+            expect(degree.institution).to eq("Other UK institution")
+          end
+        end
       end
 
       context "institution is Institute of Education (0133)" do

@@ -108,7 +108,7 @@ gem "govuk_markdown"
 gem "mechanize" # interact with HESA
 
 # pinned to a commit as v1 doesn't contain the Doctor of Philosophy disambiguation
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", ref: "b17828c75162ffd61e438b9dbd458b9a51163c34"
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", ref: "442fe3f"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.3.2"
