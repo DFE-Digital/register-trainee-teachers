@@ -6,15 +6,26 @@ When enabled, all requests will receive the [service unavailable page](/service_
 
 ## Instructions
 
-* Update maintenance page with content as necessary
+* Update [service unavailable page](/service_unavailable_page/web/public/internal/index.html) with content as necessary
 * Update first update message with current time and date
 * Deploy with below instructions
 * Add further updates to the page through the day
 
 ## Deploy Maintenance mode
 
-Login to PaaS: `cf login --sso` or `cf login -o dfe -u my.name@digital.education.gov.uk`
+NB: the maintenance page is deployed from your local machine. There is no need to open a PR, CI etc during the deployment.
 
-Run the make command: `make prod enable-maintenance CONFIRM_PRODUCTION=y`
+* Login to PaaS: `cf login --sso` or `cf login -o dfe -u my.name@digital.education.gov.uk`
 
-To bring the application back up: `make prod disable-maintenance CONFIRM_PRODUCTION=y`
+* Run the make command: `make prod enable-maintenance CONFIRM_PRODUCTION=y`
+
+### Updating an already deployed maintenance page
+
+* Update the content (including the new date)
+
+* Rerun the enable steps. This will replace the existing page
+
+
+### Disabling maintenance mode
+
+* To bring the application back up: `make prod disable-maintenance CONFIRM_PRODUCTION=y`
