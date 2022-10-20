@@ -35,10 +35,10 @@ module Degrees
       hesa_degrees.map do |hesa_degree|
         next unless importable?(hesa_degree)
 
-        dfe_subject = DfeReference.find_subject(hecos_code: hesa_degree[:subject])
-        degree = trainee.degrees.find_or_initialize_by(subject: dfe_subject&.name)
+        subject = DfeReference.find_subject(hecos_code: hesa_degree[:subject])
+        degree = trainee.degrees.find_or_initialize_by(subject: subject&.name)
 
-        degree.subject_uuid = dfe_subject&.id
+        degree.subject_uuid = subject&.id
 
         degree.graduation_year = hesa_degree[:graduation_date]&.to_date&.year
 
@@ -52,36 +52,33 @@ module Degrees
 
     def set_country_specific_attributes(degree, hesa_degree)
       country = Hesa::CodeSets::Countries::MAPPING[hesa_degree[:country]]
-      dfe_institution = DfeReference.find_institution(hesa_code: institution_hesa_code(hesa_degree))
-      dfe_type = DfeReference.find_type(hesa_code: degree_type_hesa_code(hesa_degree))
+      degree_type = DfeReference.find_type(hesa_code: degree_type_hesa_code(hesa_degree))
 
-      # Country code is not always provided, so we have
-      # to fallback to institution which is always UK based
-      if uk_country?(country) || dfe_institution
-        # HESA guidance says to leave institution blank and set
-        # country for UK degrees where the HESA list doesn't
-        # have the institution so it may not be present for some UK degrees
-        degree.institution = dfe_institution&.name
-        degree.institution_uuid = dfe_institution&.id
+      # Country code is not always provided, so we have to fallback to institution which is always UK based
+      if uk_country?(country) || institution_hesa_code(hesa_degree).present?
+        institution = find_institution(hesa_degree)
+
+        degree.institution = institution&.name
+        degree.institution_uuid = institution&.id
 
         degree.locale_code = "uk"
         degree.country = nil
-        degree.uk_degree = dfe_type&.name
-        degree.uk_degree_uuid = dfe_type&.id
+        degree.uk_degree = degree_type&.name
+        degree.uk_degree_uuid = degree_type&.id
         degree.non_uk_degree = nil
       else
         degree.locale_code = "non_uk"
         degree.country = country
         degree.uk_degree = nil
-        degree.non_uk_degree = dfe_type&.name
+        degree.non_uk_degree = degree_type&.name
       end
     end
 
     def set_grade_attributes(degree, hesa_degree)
-      dfe_grade = DfeReference.find_grade(hesa_code: grade_hesa_code(hesa_degree))
+      grade = DfeReference.find_grade(hesa_code: grade_hesa_code(hesa_degree))
 
-      degree.grade = dfe_grade&.name
-      degree.grade_uuid = dfe_grade&.id
+      degree.grade = grade&.name
+      degree.grade_uuid = grade&.id
     end
 
     def uk_country?(country)
@@ -108,6 +105,13 @@ module Degrees
       return true unless hesa_degree[:degree_type]&.include?(UNKNOWN_DEGREE_TYPE)
 
       hesa_degree.compact.size > 1
+    end
+
+    def find_institution(hesa_degree)
+      hesa_code = institution_hesa_code(hesa_degree)
+      institution = DfeReference.find_institution(hesa_code: hesa_code)
+
+      institution || (hesa_code && DfeReference.find_institution(name: "Other UK institution"))
     end
   end
 end

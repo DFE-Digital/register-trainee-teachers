@@ -6,23 +6,10 @@ module Degrees
 
     COMMON_TYPES = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
 
-    INSTITUTIONS = DfE::ReferenceData::TweakedReferenceList.new(
-      DfE::ReferenceData::Degrees::INSTITUTIONS,
-      DfE::ReferenceData::Record.new(
-        {
-          "96e9359f-dbad-4486-8de9-f05f3c7104c2" => {
-            name: OTHER,
-            match_synonyms: [],
-            suggestion_synonyms: [],
-            abbreviation: nil,
-          },
-        },
-      ),
-    )
-
     GRADES = DfE::ReferenceData::Degrees::GRADES
     SUBJECTS = DfE::ReferenceData::Degrees::SINGLE_SUBJECTS
     TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS
+    INSTITUTIONS = DfE::ReferenceData::Degrees::INSTITUTIONS_INCLUDING_GENERICS
 
     SUPPORTED_GRADES_BY_HESA_CODES = %w[1 2 3 5 12 13 14].freeze
 
