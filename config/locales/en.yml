@@ -1065,7 +1065,8 @@ en:
           summary_text: Lead school is not listed, or the trainee is funded or employed privately
           label_text: Lead school is not applicable
           body:
-            <p> If the lead school is missing from the list, contact %{contact_link}</p>
+            <p class="govuk-body">If the lead school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
             <p>You do not need to provide a lead school if the trainee is funded or employed privately.</p>
     employing_schools:
       edit:
@@ -1075,8 +1076,9 @@ en:
           summary_text: Employing school is not listed, or the trainee is funded or employed privately
           label_text: Employing school is not applicable
           body:
-            <p> If the employing school is missing from the list, contact %{contact_link}</p>
-            <p>You do not need to provide an employing school if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
+            <p class="govuk-body">You do not need to provide a lead school if the trainee is funded or employed privately.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
