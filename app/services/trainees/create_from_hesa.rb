@@ -57,7 +57,6 @@ module Trainees
        .merge(funding_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
-       .compact
     end
 
     # As soon as the trainee has been submitted over the HESA collection
@@ -73,6 +72,11 @@ module Trainees
     end
 
     def trn
+      # From the HESA data it appears that a TRN might not always be submitted with
+      # an update, even though a TRN has previously been submitted. This prevents a
+      # blank TRN in the HESA update from overwriting an existing TRN in register.
+      return trainee.trn if hesa_trainee[:trn].nil? && trainee.trn.present?
+
       hesa_trainee[:trn] if TRN_REGEX.match?(hesa_trainee[:trn])
     end
 
@@ -99,13 +103,13 @@ module Trainees
     end
 
     def withdrawal_attributes
-      return {} unless trainee_state == :withdrawn
+      return { withdraw_date: nil, withdraw_reason: nil } unless trainee_state == :withdrawn
 
       { withdraw_date: hesa_trainee[:end_date], withdraw_reason: reason_for_leaving }
     end
 
     def deferral_attributes
-      return {} unless trainee_state == :deferred
+      return { defer_date: nil } unless trainee_state == :deferred
 
       { defer_date: hesa_trainee[:end_date] }
     end
