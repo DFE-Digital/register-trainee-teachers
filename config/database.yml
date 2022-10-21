@@ -7,6 +7,8 @@ default: &default
   host: <%= ENV["DB_HOSTNAME"] %>
   port: <%= ENV["DB_PORT"] %>
   database: <%= ENV["DB_DATABASE"] %>
+  variables:
+    statement_timeout: 120_000
 
 development:
   <<: *default
