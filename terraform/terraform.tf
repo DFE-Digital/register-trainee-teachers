@@ -46,7 +46,9 @@ module "paas" {
   app_environment                = var.paas_app_environment
   app_docker_image               = var.paas_app_docker_image
   app_start_timeout              = var.paas_app_start_timeout
-  postgres_service_plan          = var.paas_postgres_service_plan
+  postgres_service_plan          = var.paas_postgres_service_plan           # Remove after migration to postgres 13
+  point_app_to_postgres_13       = var.point_app_to_postgres_13             # Remove after migration to postgres 13
+  postgres_service_plan_13       = var.paas_postgres_service_plan_13
   postgres_snapshot_service_plan = var.paas_postgres_snapshot_service_plan
   snapshot_databases_to_deploy   = var.paas_snapshot_databases_to_deploy
   redis_service_plan             = var.paas_redis_service_plan

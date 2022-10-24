@@ -8,7 +8,14 @@ variable paas_app_docker_image {}
 
 variable paas_app_start_timeout {}
 
+# Remove after migration to postgres 13
 variable paas_postgres_service_plan {}
+variable point_app_to_postgres_13 {
+  type = bool
+  default = false
+}
+
+variable paas_postgres_service_plan_13 {}
 
 variable paas_postgres_snapshot_service_plan { default = "small-11" }
 
