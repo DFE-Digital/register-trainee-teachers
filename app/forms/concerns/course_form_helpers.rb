@@ -20,12 +20,15 @@ module CourseFormHelpers
     SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
   end
 
-  def clear_all_used_stashes
+  def clear_all_course_related_stashes
     [
       IttDatesForm,
       StudyModesForm,
       SubjectSpecialismForm,
       LanguageSpecialismsForm,
+      CourseEducationPhaseForm,
+      CourseDetailsForm,
+      PublishCourseDetailsForm,
     ].each do |klass|
       klass.new(trainee).clear_stash
     end

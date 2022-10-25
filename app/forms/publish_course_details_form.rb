@@ -54,11 +54,11 @@ class PublishCourseDetailsForm < TraineeForm
 
     update_trainee_attributes
     Trainees::Update.call(trainee: trainee)
-    clear_all_used_stashes
+    clear_all_course_related_stashes
   end
 
   def stash
-    clear_all_used_stashes
+    clear_all_course_related_stashes
 
     super
   end
