@@ -31,7 +31,7 @@ private
         locale_code: "non_uk",
         country: nil,
         institution: nil,
-        created_at: Date.new(2022, 10, 0o1)..Date.zone.today,
+        created_at: Date.new(2022, 10, 01)..Time.zone.today.end_of_day,
       )
   end
 end
