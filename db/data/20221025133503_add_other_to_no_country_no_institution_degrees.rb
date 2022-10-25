@@ -4,8 +4,8 @@ class AddOtherToNoCountryNoInstitutionDegrees < ActiveRecord::Migration[6.1]
   def up
     degrees.update_all(
       locale_code: :uk,
-      institution: institution,
-      institution_uuid: institution_uuid,
+      institution: institution.name,
+      institution_uuid: institution.id,
     )
   end
 
@@ -16,11 +16,7 @@ class AddOtherToNoCountryNoInstitutionDegrees < ActiveRecord::Migration[6.1]
 private
 
   def institution
-    ::Dttp::CodeSets::Institutions::OTHER_UK
-  end
-
-  def institution_uuid
-    ::Dttp::CodeSets::Institutions::MAPPING[institution][:entity_id]
+    DfeReference.find_institution(name: "Other UK institution")
   end
 
   def degrees
