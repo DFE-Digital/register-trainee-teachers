@@ -21,7 +21,6 @@ resource cloudfoundry_service_instance postgres_instance {
 }
 
 resource cloudfoundry_service_instance postgres_instance_13 {
-  count        = var.postgres_service_plan_13 != "" ? 1 : 0
   name         = local.postgres_service_name_13
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_service_plan_13]
@@ -34,15 +33,13 @@ resource cloudfoundry_service_instance postgres_instance_13 {
 }
 
 resource cloudfoundry_service_key postgres-key-13 {
-  count            = var.postgres_service_plan_13 != "" ? 1 : 0
   name             = local.postgres_service_name_13
-  service_instance = cloudfoundry_service_instance.postgres_instance_13[0].id
+  service_instance = cloudfoundry_service_instance.postgres_instance_13.id
 }
 
 resource cloudfoundry_service_key postgres-blazer-key-13 {
-  count            = var.postgres_service_plan_13 != "" ? 1 : 0
   name             = "${local.postgres_service_name_13}-blazer"
-  service_instance = cloudfoundry_service_instance.postgres_instance_13[0].id
+  service_instance = cloudfoundry_service_instance.postgres_instance_13.id
 }
 
 resource cloudfoundry_service_instance postgres_snapshot {

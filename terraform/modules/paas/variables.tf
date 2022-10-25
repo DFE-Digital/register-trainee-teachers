@@ -64,8 +64,8 @@ locals {
     SETTINGS__BLAZER_DATABASE_URL = cloudfoundry_service_key.postgres-blazer-key.credentials.uri
   }
   postgres_13_uris = {
-    DATABASE_URL  = cloudfoundry_service_key.postgres-key-13[0].credentials.uri
-    SETTINGS__BLAZER_DATABASE_URL = cloudfoundry_service_key.postgres-blazer-key-13[0].credentials.uri
+    DATABASE_URL  = cloudfoundry_service_key.postgres-key-13.credentials.uri
+    SETTINGS__BLAZER_DATABASE_URL = cloudfoundry_service_key.postgres-blazer-key-13.credentials.uri
   }
   postgres_uris = var.point_app_to_postgres_13 ? local.postgres_13_uris : local.postgres_11_uris
   app_environment = merge(var.app_config_variable, var.app_secrets_variable, local.postgres_uris, local.base_url_env_var)
