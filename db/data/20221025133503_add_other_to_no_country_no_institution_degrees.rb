@@ -5,7 +5,7 @@ class AddOtherToNoCountryNoInstitutionDegrees < ActiveRecord::Migration[6.1]
     degrees.update_all(
       locale_code: :uk,
       institution: institution,
-      institution_uuid: institution_uuid
+      institution_uuid: institution_uuid,
     )
   end
 
@@ -13,7 +13,7 @@ class AddOtherToNoCountryNoInstitutionDegrees < ActiveRecord::Migration[6.1]
     raise ActiveRecord::IrreversibleMigration
   end
 
-  private
+private
 
   def institution
     ::Dttp::CodeSets::Institutions::OTHER_UK
@@ -31,7 +31,7 @@ class AddOtherToNoCountryNoInstitutionDegrees < ActiveRecord::Migration[6.1]
         locale_code: "non_uk",
         country: nil,
         institution: nil,
-        created_at: Date.new(2022, 10, 01)..Date.today
+        created_at: Date.new(2022, 10, 0o1)..Date.zone.today,
       )
   end
 end
