@@ -58,8 +58,8 @@ module Degrees
       if uk_country?(country) || institution_hesa_code(hesa_degree).present?
         institution = find_institution(hesa_degree)
 
-        degree.institution = institution&.name
-        degree.institution_uuid = institution&.id
+        degree.institution = institution.name
+        degree.institution_uuid = institution.id
 
         degree.locale_code = "uk"
         degree.country = nil

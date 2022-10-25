@@ -43,7 +43,7 @@ module Degrees
           ]
         end
 
-        it "creates a UK degree with other institution and institution_uuid" do
+        it "creates a UK degree with 'other' institution and institution_uuid" do
           expect(degree.locale_code).to eq("uk")
           expect(degree.uk_degree).to eq("First Degree")
           expect(degree.non_uk_degree).to be_nil
@@ -128,6 +128,7 @@ module Degrees
 
           it "sets the institution to 'other'" do
             expect(degree.institution).to eq("Other UK institution")
+            expect(degree.institution_uuid).to eq("02132969-f5bc-47ca-be9c-b6f6d5b05e1b")
           end
         end
       end
