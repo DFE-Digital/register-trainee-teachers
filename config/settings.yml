@@ -151,3 +151,6 @@ google:
     table_name: events
 
 sign_off_trainee_data_url: https://example.com/trainee-data-sign-off
+
+trainee_export:
+  record_limit: 100

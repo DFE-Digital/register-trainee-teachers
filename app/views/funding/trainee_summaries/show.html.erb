@@ -27,7 +27,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <p class="govuk-body"><%= t('funding.trainee_summary.last_updated_at', date: @trainee_summary_view&.last_updated_at) %></p>
-      <p class="govuk-body app-export--link">
+      <p class="govuk-body app-export-link-container">
         <span class="app-nowrap">
           <%= govuk_link_to(
                 I18n.t('funding.trainee_summary.export_label', start_year: @start_year, end_year: @end_year),
