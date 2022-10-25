@@ -82,7 +82,7 @@ module Degrees
     end
 
     def uk_country?(country)
-      Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
+      country.nil? || Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
     end
 
     def degree_type_hesa_code(hesa_degree)
@@ -111,7 +111,7 @@ module Degrees
       hesa_code = institution_hesa_code(hesa_degree)
       institution = DfeReference.find_institution(hesa_code: hesa_code)
 
-      institution || (hesa_code && DfeReference.find_institution(name: "Other UK institution"))
+      institution || DfeReference.find_institution(name: "Other UK institution")
     end
   end
 end
