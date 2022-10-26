@@ -36,7 +36,7 @@ jobs:
     - name: Login to Azure ${{inputs.environment}} environment subscription
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_${{inputs.environment}} }}
+        creds: ${{ secrets[format('AZURE_CREDENTIALS_{0}', inputs.environment)] }}
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
       id: get-secrets
