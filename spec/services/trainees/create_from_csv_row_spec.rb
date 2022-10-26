@@ -266,6 +266,28 @@ module Trainees
           expect(trainee.course_subject_two).to eq(CourseSubjects::BIOLOGY)
         end
       end
+
+      context "when nationality is provided as 'other'" do
+        before do
+          csv_row.merge!({ "Nationality" => "other" })
+          described_class.call(provider: provider, csv_row: csv_row)
+        end
+
+        it "doesn't error and leaves the nationality blank" do
+          expect(trainee.nationalities).to be_empty
+        end
+      end
+
+      context "when nationality is provided as 'english'" do
+        before do
+          csv_row.merge!({ "Nationality" => "english" })
+          described_class.call(provider: provider, csv_row: csv_row)
+        end
+
+        it "doesn't error and leaves the nationality blank" do
+          expect(trainee.nationalities.pluck(:name)).to include("british")
+        end
+      end
     end
 
     context "with a SCITT CSV" do
