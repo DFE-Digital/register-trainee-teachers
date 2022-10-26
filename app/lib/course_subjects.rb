@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../app/lib/degree_subjects"
-
 module CourseSubjects
   ANCIENT_HEBREW = "Ancient Hebrew"
   APPLIED_BIOLOGY = "applied biology"
