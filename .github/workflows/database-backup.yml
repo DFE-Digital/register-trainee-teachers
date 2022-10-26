@@ -71,7 +71,7 @@ jobs:
 
     - name: Backup Prod DB
       run: |
-        cf conduit register-postgres-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
+        cf conduit register-postgres-13-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
         tar -cvzf ${BACKUP_FILE_NAME}.tar.gz ${BACKUP_FILE_NAME}.sql
 
     - name: Set Connection String
