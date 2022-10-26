@@ -43,17 +43,45 @@ module Degrees
           ]
         end
 
-        it "creates a UK degree with nil institution and institution_uuid" do
+        it "creates a UK degree with other institution and institution_uuid" do
           expect(degree.locale_code).to eq("uk")
           expect(degree.uk_degree).to eq("First Degree")
           expect(degree.non_uk_degree).to be_nil
           expect(degree.subject).to eq("Law")
-          expect(degree.institution).to be_nil
+          expect(degree.institution).to eq("Other UK institution")
           expect(degree.graduation_year).to eq(2003)
           expect(degree.grade).to eq("Upper second-class honours (2:1)")
           expect(degree.other_grade).to be_nil
           expect(degree.country).to be_nil
-          expect(degree.institution_uuid).to be_nil
+          expect(degree.institution_uuid).to eq("02132969-f5bc-47ca-be9c-b6f6d5b05e1b")
+        end
+      end
+
+      context "No country and no institution" do
+        let(:hesa_degrees) do
+          [
+            {
+              graduation_date: "2003-06-01",
+              degree_type: "400",
+              subject: "100485",
+              institution: nil,
+              grade: "02",
+              country: nil,
+            },
+          ]
+        end
+
+        it "creates a UK degree with other institution and institution_uuid" do
+          expect(degree.locale_code).to eq("uk")
+          expect(degree.uk_degree).to eq("First Degree")
+          expect(degree.non_uk_degree).to be_nil
+          expect(degree.subject).to eq("Law")
+          expect(degree.institution).to eq("Other UK institution")
+          expect(degree.graduation_year).to eq(2003)
+          expect(degree.grade).to eq("Upper second-class honours (2:1)")
+          expect(degree.other_grade).to be_nil
+          expect(degree.country).to be_nil
+          expect(degree.institution_uuid).to eq("02132969-f5bc-47ca-be9c-b6f6d5b05e1b")
         end
       end
 
