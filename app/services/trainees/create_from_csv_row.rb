@@ -110,6 +110,8 @@ module Trainees
     end
 
     def disabilities
+      return [] if csv_row["Disabilities"].nil?
+
       disabilities = csv_row["Disabilities"].split(",").map(&:strip)
       disabilities.map { |disability| Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
     end
@@ -155,12 +157,18 @@ module Trainees
     end
 
     def nationality_ids
-      nationalities = csv_row["Nationality"].split(",").compact
-      nationalities.map { |nationality| Nationality.find_by!(name: nationality.strip.downcase) }.map(&:id)
+      nationalities.map { |nationality| Nationality.find_by!(name: nationality.downcase.strip) }.map(&:id)
+    end
+
+    def nationalities
+      return [] if csv_row["Nationality"].downcase == "other"
+
+      british_nationalities = /english|scottish|welsh|irish/i
+      csv_row["Nationality"].gsub(british_nationalities, "british").split(",").compact
     end
 
     def course_education_phase
-      csv_row["Course education phase"].downcase
+      csv_row["Course education phase"].downcase.parameterize(separator: "_")
     end
 
     def course_subject_one_name
