@@ -61,7 +61,7 @@ values. If this is not clear, then reach out to the funding team to clarify.
 5. Paste the contents of your clipboard into the file and exit
 
     ```bash
-    ctrl+v
+    cmd+v
     ctrl+c
     ```
 
