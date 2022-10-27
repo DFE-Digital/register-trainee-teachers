@@ -4,7 +4,14 @@ The repo includes a simple service unavailable page page that can be pushed to a
 
 When enabled, all requests will receive the [service unavailable page](/service_unavailable_page/web/public/internal/index.html).
 
-### Enable Maintenance mode
+## Instructions
+
+* Update maintenance page with content as necessary
+* Update first update message with current time and date
+* Deploy with below instructions
+* Add further updates to the page through the day
+
+## Deploy Maintenance mode
 
 Login to PaaS: `cf login --sso` or `cf login -o dfe -u my.name@digital.education.gov.uk`
 
