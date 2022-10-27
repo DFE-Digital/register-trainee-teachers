@@ -33,23 +33,21 @@ module Degrees
 
     def create_degrees!
       trainee.transaction do
-        trainee.degrees.destroy_all if hesa_degrees.any?
-
-        hesa_degrees.map do |hesa_degree|
+        trainee.degrees.destroy_all
+        hesa_degrees.each do |hesa_degree|
           next unless importable?(hesa_degree)
 
           subject = DfeReference.find_subject(hecos_code: hesa_degree[:subject])
           degree = trainee.degrees.new(
             subject: subject&.name,
             subject_uuid: subject&.id,
-            graduation_year: hesa_degree[:graduation_date]&.to_date&.year
+            graduation_year: hesa_degree[:graduation_date]&.to_date&.year,
           )
 
           set_country_specific_attributes(degree, hesa_degree)
           set_grade_attributes(degree, hesa_degree)
 
           degree.save!
-          degree
         end
       end
     end
