@@ -91,7 +91,7 @@ module Degrees
     end
 
     def non_uk_degree_type
-      type = csv_row["Degree: Non-UK degree types"].gsub("'", "’")
+      type = csv_row["Degree: Non-UK degree types"]&.gsub("'", "’")
 
       if (ENIC_NON_UK + [NON_ENIC]).include?(type)
         type
