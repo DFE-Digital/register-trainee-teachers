@@ -46,6 +46,10 @@ module Trainees
       audits.includes(:user).group_by(&:request_uuid).map { |_, audits| audits.first }
     end
 
+    def submitted_for_trn
+      trainee.submitted_for_trn_at || Time.zone.now
+    end
+
     def audits
       trainee
         .own_and_associated_audits

@@ -48,7 +48,6 @@ module Degrees
           set_grade_attributes(degree, hesa_degree)
 
           degree.save!
-          degree
         end
       end
     end
