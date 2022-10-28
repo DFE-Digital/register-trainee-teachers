@@ -50,6 +50,7 @@ module "paas" {
   point_app_to_postgres_13       = var.point_app_to_postgres_13             # Remove after migration to postgres 13
   postgres_service_plan_13       = var.paas_postgres_service_plan_13
   postgres_snapshot_service_plan = var.paas_postgres_snapshot_service_plan
+  postgres_snapshot_service_plan_13 = var.paas_postgres_snapshot_service_plan_13
   snapshot_databases_to_deploy   = var.paas_snapshot_databases_to_deploy
   redis_service_plan             = var.paas_redis_service_plan
   space_name                     = var.paas_space_name
