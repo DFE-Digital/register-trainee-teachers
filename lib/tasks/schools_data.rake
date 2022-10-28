@@ -52,4 +52,21 @@ namespace :schools_data do
 
     puts "Done! #{upserted} schools upserted"
   end
+
+  desc "Import schools from csv data/schools_gias.csv"
+  task import_gias: :environment do
+    updated = 0
+    created = 0
+
+    CSV.read(Rails.root.join("data/schools_gias.csv"), headers: true).each do |row|
+      school = School.find_or_initialize_by(urn: row["urn"])
+      school.id ? updated += 1 : created += 1
+      # we don't have data on if the imported school is a lead school or not
+      # so we set to false by default, but we don't want to overwrite existing
+      # schools wit false, hence the double bang!!
+      school.update!(**row.to_h.except(:urn), lead_school: !school.lead_school.nil?)
+    end
+
+    puts "Done! created: #{created}, updated: #{updated}"
+  end
 end
