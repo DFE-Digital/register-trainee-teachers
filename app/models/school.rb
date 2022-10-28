@@ -61,7 +61,7 @@ private
       name,
       name_normalised,
       postcode,
-      postcode.delete(" "),
+      postcode&.delete(" "),
       town,
     ].join(" ")
 
