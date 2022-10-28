@@ -116,7 +116,7 @@ jobs:
     - name: Restore backup to productiondata
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
       run: |
-        cf conduit register-postgres-productiondata -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
+        cf conduit register-postgres-13-productiondata -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
 
     - name: Restore backup to analysis
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}

@@ -18,6 +18,7 @@ variable point_app_to_postgres_13 {
 variable paas_postgres_service_plan_13 {}
 
 variable paas_postgres_snapshot_service_plan { default = "small-11" }
+variable paas_postgres_snapshot_service_plan_13 { default = "small-13" }
 
 variable paas_snapshot_databases_to_deploy { default = 0 }
 

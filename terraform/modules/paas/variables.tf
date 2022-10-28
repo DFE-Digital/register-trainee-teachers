@@ -11,6 +11,7 @@ variable point_app_to_postgres_13 { type = bool }
 variable postgres_service_plan_13 {}
 
 variable postgres_snapshot_service_plan {}
+variable postgres_snapshot_service_plan_13 {}
 
 variable snapshot_databases_to_deploy {}
 
@@ -53,6 +54,7 @@ locals {
   postgres_service_name          = "register-postgres-${local.app_name_suffix}"
   postgres_service_name_13       = "register-postgres-13-${local.app_name_suffix}"
   postgres_snapshot_service_name = "register-postgres-analysis"
+  postgres_snapshot_service_name_13 = "register-postgres-analysis-13"
   redis_worker_service_name      = "register-redis-worker-${local.app_name_suffix}"
   redis_cache_service_name       = "register-redis-cache-${local.app_name_suffix}"
   web_app_name                   = "register-${local.app_name_suffix}"
