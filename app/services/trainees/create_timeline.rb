@@ -47,7 +47,9 @@ module Trainees
     end
 
     def audits
-      trainee.own_and_associated_audits
+      trainee
+        .own_and_associated_audits
+        .where.not(username: "HESA", auditable_type: "Degree")
     end
   end
 end

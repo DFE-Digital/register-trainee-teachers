@@ -168,7 +168,7 @@ private
       @course_subject_one, @course_subject_two, @course_subject_three = PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[primary_course_subjects]
     end
 
-    @course_subject_one = CourseSubjects::PRIMARY_TEACHING if primary_with_other?
+    @course_subject_one = ::CourseSubjects::PRIMARY_TEACHING if primary_with_other?
   end
 
   def update_trainee_attributes

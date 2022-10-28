@@ -32,21 +32,23 @@ module Degrees
     attr_reader :hesa_degrees, :trainee
 
     def create_degrees!
-      hesa_degrees.map do |hesa_degree|
-        next unless importable?(hesa_degree)
+      trainee.transaction do
+        trainee.degrees.destroy_all
+        hesa_degrees.each do |hesa_degree|
+          next unless importable?(hesa_degree)
 
-        subject = DfeReference.find_subject(hecos_code: hesa_degree[:subject])
-        degree = trainee.degrees.find_or_initialize_by(subject: subject&.name)
+          subject = DfeReference.find_subject(hecos_code: hesa_degree[:subject])
+          degree = trainee.degrees.new(
+            subject: subject&.name,
+            subject_uuid: subject&.id,
+            graduation_year: hesa_degree[:graduation_date]&.to_date&.year,
+          )
 
-        degree.subject_uuid = subject&.id
+          set_country_specific_attributes(degree, hesa_degree)
+          set_grade_attributes(degree, hesa_degree)
 
-        degree.graduation_year = hesa_degree[:graduation_date]&.to_date&.year
-
-        set_country_specific_attributes(degree, hesa_degree)
-        set_grade_attributes(degree, hesa_degree)
-
-        degree.save!
-        degree
+          degree.save!
+        end
       end
     end
 

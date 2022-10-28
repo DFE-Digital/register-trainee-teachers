@@ -62,6 +62,21 @@ module Trainees
           expect(subject.first.items).to eq([["Date of withdrawal:", "21 September 2021"], ["Reason for withdrawal:", "Lost interest"]])
         end
       end
+
+      context "when a degree has been created and deleted via HESA" do
+        before do
+          Audited.audit_class.as_user(::Trainees::CreateFromHesa::USERNAME) do
+            create(:degree, trainee: trainee)
+            trainee.degrees.destroy_all
+            reload_audits
+          end
+        end
+
+        it "does not return the events" do
+          expect(trainee.own_and_associated_audits.count).to eq(3)
+          expect(subject.count).to eq(1)
+        end
+      end
     end
 
     def update_name
