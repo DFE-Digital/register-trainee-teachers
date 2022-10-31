@@ -37,7 +37,7 @@ module HasDiversityAttributes
 
     {
       disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
-      disabilities: disabilities.map { |disability| Disability.find_by(name: disability) },
+      disabilities: disabilities.map { |disability| Disability.find_by(name: disability) }.compact,
     }
   end
 
