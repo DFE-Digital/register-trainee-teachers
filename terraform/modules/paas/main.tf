@@ -71,7 +71,7 @@ resource cloudfoundry_service_instance postgres_snapshot_13 {
 
 resource cloudfoundry_service_key postgres-analysis-key-13 {
   count            = var.snapshot_databases_to_deploy
-  name             = "${local.postgres_snapshot_service_name}-key"
+  name             = "${local.postgres_snapshot_service_name_13}-key"
   service_instance = cloudfoundry_service_instance.postgres_snapshot_13[count.index].id
 }
 
