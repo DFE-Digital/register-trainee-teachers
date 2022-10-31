@@ -1,12 +1,18 @@
 <% unless paginated_trainees.empty? %>
   <%= render SortLinks::View.new %>
   <% if FeatureService.enabled?(:trainee_export) && policy(:trainee).export? %>
-    <div class="app-export--link">
-      <%= govuk_link_to(
-        I18n.t("views.trainees.index.export"),
-        export_results_path,
-        class: "app-trainee-export",
-      ) %>
-    </div>
+    <% if exceeds_export_limit?(@current_user, filtered_trainees.count) %>
+      <div class="app-export-link-container govuk-body govuk-hint">
+        Admins cannot export more than 100 trainees
+      </div>
+    <% else %>
+      <div class="app-export-link-container">
+        <%= govuk_link_to(
+          I18n.t("views.trainees.index.export"),
+          export_results_path,
+          class: "app-trainee-export",
+        ) %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

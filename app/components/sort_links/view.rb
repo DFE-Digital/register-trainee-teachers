@@ -13,13 +13,13 @@ module SortLinks
   private
 
     def default_sort_link(name, sort_by)
-      return tag.span(name, class: "app-sort-links__item") if params[:sort_by].blank?
+      return tag.span(name, class: "app-sort-links__item--no_padding") if params[:sort_by].blank?
 
       sort_link(name, sort_by)
     end
 
     def sort_link(name, sort_by)
-      sorted_by?(sort_by) ? tag.span(name, class: "app-sort-links__item") : govuk_link_to(name, sort_path(sort_by), class: "app-sort-links__item govuk-link govuk-link--no-visited-state")
+      sorted_by?(sort_by) ? tag.span(name, class: "app-sort-links__item--no_padding") : govuk_link_to(name, sort_path(sort_by), class: "app-sort-links__item govuk-link govuk-link--no-visited-state")
     end
 
     def sort_path(sort_by)

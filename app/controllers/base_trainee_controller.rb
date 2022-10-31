@@ -5,6 +5,7 @@ class BaseTraineeController < ApplicationController
     export_results_path
     filter_params
     filters
+    filtered_trainees
     available_record_sources
     show_source_filters?
     paginated_trainees

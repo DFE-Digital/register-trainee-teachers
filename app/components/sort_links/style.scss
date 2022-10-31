@@ -40,3 +40,8 @@
 .app-sort-links__item {
   padding: 0.3125em;
 }
+
+.app-sort-links__item--no_padding {
+  padding-left: 0;
+  padding-right: 0.3125em;
+}
