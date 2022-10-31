@@ -42,6 +42,7 @@ resource cloudfoundry_service_key postgres-blazer-key-13 {
   service_instance = cloudfoundry_service_instance.postgres_instance_13.id
 }
 
+# Remove after migration to postgres 13
 resource cloudfoundry_service_instance postgres_snapshot {
   count        = var.snapshot_databases_to_deploy
   name         = local.postgres_snapshot_service_name
@@ -66,6 +67,12 @@ resource cloudfoundry_service_instance postgres_snapshot_13 {
     delete = "30m"
     update = "30m"
   }
+}
+
+resource cloudfoundry_service_key postgres-analysis-key-13 {
+  count            = var.snapshot_databases_to_deploy
+  name             = "${local.postgres_snapshot_service_name}-key"
+  service_instance = cloudfoundry_service_instance.postgres_snapshot_13[count.index].id
 }
 
 resource cloudfoundry_service_instance worker_redis_instance {
@@ -191,6 +198,7 @@ resource cloudfoundry_service_key postgres-blazer-key {
   service_instance = cloudfoundry_service_instance.postgres_instance.id
 }
 
+# Remove after migration to postgres 13
 resource cloudfoundry_service_key postgres-analysis-key {
   count            = var.snapshot_databases_to_deploy
   name             = "${local.postgres_snapshot_service_name}-key"
