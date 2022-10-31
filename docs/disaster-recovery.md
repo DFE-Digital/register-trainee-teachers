@@ -170,6 +170,26 @@ You will be prompted to review the terraform plan.  Check for the following:
 
 The restore process should take ~25 min. Terraform should write logs to the console with progress, the bulk of the time will be spent recreating the postgres instance.
 
+### Reboot postgres database instance
+
+[PaaS docs]{https://docs.cloud.service.gov.uk/deploying_services/postgresql/#reboot-a-postgresql-service-instance}
+
+This will take a few minutes of downtime
+
+```
+cf update-service SERVICE_NAME -c '{"reboot": true}'
+```
+
+### Failover postgres database instance
+
+High availability plans can be failed over to the replica
+
+[PaaS docs]{https://docs.cloud.service.gov.uk/deploying_services/postgresql/#reboot-a-postgresql-service-instance}
+
+```
+cf update-service SERVICE_NAME -c '{"reboot": true, "force_failover": true}'
+```
+
 ### PaaS documentation
 
 Gov UK PaaS Documentation on Point-in-time database recovery can be found [here](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#restoring-a-postgresql-service-from-a-point-in-time)
