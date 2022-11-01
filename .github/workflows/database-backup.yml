@@ -121,5 +121,5 @@ jobs:
     - name: Restore backup to analysis
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
       run: |
-        cf conduit register-postgres-13-analysis -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
+        cf conduit register-postgres-analysis-13 -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
         rm ${BACKUP_FILE_NAME}.sql
