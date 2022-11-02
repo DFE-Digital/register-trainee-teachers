@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class AddMissingDisabilitiesFromTadCheck < ActiveRecord::Migration[6.1]
+  FILE = "data/tad_disability_check_2022-10-03.csv"
+
   def up
+    return unless csv
+
     disclosures!
     learning_difficulties!
     other_disabilites!
@@ -72,6 +76,8 @@ private
   end
 
   def csv
-    @csv ||= CSV.table(Rails.root.join("data/tad_disability_check_2022-10-03.csv"))
+    return unless Rails.root.join(FILE).exist?
+
+    @csv ||= CSV.table(Rails.root.join(FILE))
   end
 end
