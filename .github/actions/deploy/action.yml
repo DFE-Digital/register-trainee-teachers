@@ -34,16 +34,16 @@ runs:
         if [ -n "${{ inputs.pr-number }}" ]; then
           APP_NAME=pr-${{ inputs.pr-number }}
           echo "APP_NAME=${APP_NAME}" >> $GITHUB_ENV
-          echo "::set-output name=deploy_url::https://register-${APP_NAME}.london.cloudapps.digital"
+          echo "deploy_url=https://register-${APP_NAME}.london.cloudapps.digital" >> $GITHUB_OUTPUT
           echo "DEPLOY_REF=${{ github.head_ref }}" >> $GITHUB_ENV
         else
           echo "DEPLOY_REF=${{ github.ref }}" >> $GITHUB_ENV
 
           hostname=$(jq -r '.paas_web_app_hostname | first' ${tf_vars_file})
           if [[ $hostname != null ]]; then
-            echo "::set-output name=deploy_url::https://${hostname}.register-trainee-teachers.service.gov.uk"
+            echo "deploy_url=https://${hostname}.register-trainee-teachers.service.gov.uk" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=deploy_url::https://register-${{ inputs.environment }}.london.cloudapps.digital"
+            echo "deploy_url=https://register-${{ inputs.environment }}.london.cloudapps.digital" >> $GITHUB_OUTPUT
           fi
         fi
 
