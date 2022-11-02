@@ -15,3 +15,6 @@ features:
 
 environment:
   name: beta
+
+trainee_export:
+  record_limit: 100

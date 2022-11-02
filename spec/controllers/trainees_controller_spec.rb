@@ -72,6 +72,20 @@ describe TraineesController do
           expect(response).to have_http_status(:forbidden)
         end
       end
+
+      context "with an export request of over the limit" do
+        before do
+          allow(Settings.trainee_export).to receive(:record_limit).and_return(0)
+          create(:trainee, :submitted_for_trn, provider: user.organisation)
+          get(:index, format: "csv")
+        end
+
+        it "redirects" do
+          enable_features(:user_can_have_multiple_organisations)
+          get(:index, format: "csv")
+          expect(response).to have_http_status(:found) # 302 redirect
+        end
+      end
     end
   end
 
