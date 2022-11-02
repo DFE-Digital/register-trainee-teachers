@@ -45,7 +45,7 @@ module Funding
     end
 
     def funding_method_row
-      return if no_funding_methods? && data_model.bursary_tier.blank?
+      return if (no_funding_methods? && data_model.bursary_tier.blank?) || data_model.training_initiative == "troops_to_teachers"
 
       if can_apply_for_grant?
         grant_funding_row
