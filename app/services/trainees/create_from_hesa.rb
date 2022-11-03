@@ -46,7 +46,8 @@ module Trainees
         state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
         record_source: trainee_record_source,
-      }.merge(created_from_hesa_attribute)
+      }.compact # trainee_state can be nil, therefore we don't want to override the current state
+       .merge(created_from_hesa_attribute)
        .merge(personal_details_attributes)
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
