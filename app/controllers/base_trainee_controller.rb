@@ -30,10 +30,10 @@ class BaseTraineeController < ApplicationController
       format.html
       format.js { render(json: json_response) }
       format.csv do
-        if filtered_trainees.count > Settings.trainee_export.record_limit
+        if current_user.system_admin? && filtered_trainees.count > Settings.trainee_export.record_limit
           return redirect_to(
             search_path(filter_params),
-            flash: { warning: "Exports cannot be run when there are more than #{Settings.trainee_export.record_limit} trainees" },
+            flash: { warning: "System admins cannot export more than #{Settings.trainee_export.record_limit} trainees" },
           )
         end
 
