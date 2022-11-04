@@ -31,6 +31,7 @@ module Trainees
 
     before do
       allow(Dqt::RegisterForTrnJob).to receive(:perform_later)
+      allow(Trainees::Update).to receive(:call).with(trainee: instance_of(Trainee))
       allow(Sentry).to receive(:capture_message)
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
@@ -124,6 +125,14 @@ module Trainees
 
         it "enqueues Dqt::RegisterForTrnJob" do
           expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(trainee)
+        end
+      end
+
+      context "when the trn is present", feature_integrate_with_dqt: true do
+        let(:create_custom_state) { create(:trainee, :trn_received, hesa_id: student_attributes[:hesa_id]) }
+
+        it "sends an update to DQT" do
+          expect(Trainees::Update).to have_received(:call).with(trainee: trainee)
         end
       end
 

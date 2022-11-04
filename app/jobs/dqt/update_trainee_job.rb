@@ -22,7 +22,7 @@ module Dqt
   private
 
     def trainee_updatable?(trainee)
-      !trainee.hesa_record? && VALID_STATES.include?(trainee.state)
+      VALID_STATES.include?(trainee.state)
     end
   end
 end
