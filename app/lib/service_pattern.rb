@@ -13,10 +13,10 @@ module ServicePattern
   end
 
   module ClassMethods
-    def call(**args)
-      return new.call if args.empty?
+    def call(*args, **keyword_args, &block)
+      return new.call if args.empty? && keyword_args.empty? && block.nil?
 
-      new(**args).call
+      new(*args, **keyword_args, &block).call
     end
   end
 end

@@ -39,7 +39,7 @@ class BaseTraineeController < ApplicationController
 
         authorize(:trainee, :export?)
         track_activity
-        send_data(data_export.data, filename: data_export.filename, disposition: :attachment)
+        send_data(data_export, filename: data_export_filename, disposition: :attachment)
       end
     end
   end
@@ -195,7 +195,11 @@ private
   end
 
   def data_export
-    @data_export ||= Exports::TraineeSearchData.new(filtered_trainees)
+    @data_export ||= Exports::ExportTraineesService.call(filtered_trainees)
+  end
+
+  def data_export_filename
+    "#{Time.zone.now.strftime('%Y-%m-%d_%H-%M_%S')}_Register-trainee-teachers_exported_records.csv"
   end
 
   def json_response

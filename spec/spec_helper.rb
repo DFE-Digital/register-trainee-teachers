@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rspec/retry"
+require "rspec-benchmark"
 
 if ENV.fetch("COVERAGE", false)
   require "simplecov"
@@ -13,6 +14,8 @@ if ENV.fetch("COVERAGE", false)
 end
 
 RSpec.configure do |config|
+  config.include RSpec::Benchmark::Matchers
+
   config.filter_run_excluding smoke: true
 
   config.expect_with :rspec do |expectations|
