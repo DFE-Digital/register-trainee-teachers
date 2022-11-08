@@ -32,7 +32,7 @@ private
   end
 
   def data_for_export
-    @data_for_export ||= Exports::TraineeSearchData.new(
+    @data_for_export ||= Exports::ExportTraineesService.call(
       policy_scope(FindNewStarterTrainees.new(census_date(AcademicCycle.current.start_year)).call),
     )
   end

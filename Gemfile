@@ -139,6 +139,8 @@ group :development, :test do
 
   gem "rails-controller-testing"
 
+  gem "rspec-benchmark", require: false
+
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", "~> 3.37"
 
@@ -157,7 +159,11 @@ group :development do
   gem "spring-commands-rspec", "~> 1.0"
   gem "spring-watcher-listen", "~> 2.0.0"
 
+  # Profiling
   gem "benchmark-memory"
+  gem "memory_profiler"
+  gem "rack-mini-profiler", require: false
+  gem "stackprof"
 end
 
 group :test do

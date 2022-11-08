@@ -101,8 +101,11 @@ GEM
       activerecord (>= 5.0, < 7.1)
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
+    benchmark-malloc (0.2.0)
     benchmark-memory (0.2.0)
       memory_profiler (~> 1)
+    benchmark-perf (0.6.0)
+    benchmark-trend (0.4.0)
     better_html (2.0.1)
       actionview (>= 6.0)
       activesupport (>= 6.0)
@@ -404,6 +407,8 @@ GEM
     raabro (1.4.0)
     racc (1.6.0)
     rack (2.2.4)
+    rack-mini-profiler (1.0.2)
+      rack (>= 1.2.0)
     rack-oauth2 (1.19.0)
       activesupport
       attr_required
@@ -470,6 +475,15 @@ GEM
       concurrent-ruby (~> 1.0)
     retriable (3.1.2)
     rexml (3.2.5)
+    rspec (3.11.0)
+      rspec-core (~> 3.11.0)
+      rspec-expectations (~> 3.11.0)
+      rspec-mocks (~> 3.11.0)
+    rspec-benchmark (0.6.0)
+      benchmark-malloc (~> 0.2)
+      benchmark-perf (~> 0.6)
+      benchmark-trend (~> 0.4)
+      rspec (>= 3.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
     rspec-expectations (3.11.0)
@@ -578,6 +592,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    stackprof (0.2.12)
     stateful_enum (0.7.0)
     store_model (1.2.0)
       activerecord (>= 5.2)
@@ -675,6 +690,7 @@ DEPENDENCIES
   launchy
   listen (>= 3.0.5, < 3.8)
   mechanize
+  memory_profiler
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
@@ -683,10 +699,12 @@ DEPENDENCIES
   pry-byebug
   puma (~> 5.6)
   pundit
+  rack-mini-profiler
   rails (~> 6.1.6.1)
   rails-controller-testing
   rails_semantic_logger (= 4.10.0)
   request_store (~> 1.5)
+  rspec-benchmark
   rspec-rails (~> 5.1.2)
   rspec-retry!
   rubocop-rails
@@ -705,6 +723,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.0.0)
+  stackprof
   stateful_enum
   store_model (~> 1.2)
   timecop (~> 0.9.5)

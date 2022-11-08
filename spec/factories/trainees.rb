@@ -48,6 +48,31 @@ FactoryBot.define do
       add_attribute("date_of_birth(1i)") { form_dob.year.to_s }
     end
 
+    trait :for_export do
+      with_primary_course_details
+      submitted_for_trn
+      trn_received
+      recommended_for_award
+      awarded
+      with_tiered_bursary
+      with_lead_school
+      with_employing_school
+      imported_from_hesa
+      with_nationalities
+      diversity_disclosure { "diversity_disclosed" }
+      ethnic_group { "asian_ethnic_group" }
+      disability_disclosure { "disabled" }
+      disabled_with_disabilites_disclosed
+      training_initiative { "transition_to_teach" }
+      international_address { "Test addr" }
+      itt_start_date { compute_valid_itt_start_date }
+      itt_end_date { itt_start_date + 2.years }
+    end
+
+    trait :with_nationalities do
+      nationalities { [Nationality.all.sample || build(:nationality)] }
+    end
+
     trait :with_uk_address do
       address_line_one { Faker::Address.street_address }
       address_line_two { Faker::Address.street_name }

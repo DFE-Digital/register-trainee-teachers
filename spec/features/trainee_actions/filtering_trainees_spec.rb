@@ -224,7 +224,7 @@ private
   end
 
   def given_a_subject_specialism_is_available_for_selection
-    @subject_specialism ||= create(:subject_specialism, name: CourseSubjects::CHEMISTRY)
+    @subject_specialism ||= create(:subject_specialism)
   end
 
   def when_i_visit_the_trainee_index_page
