@@ -11,7 +11,7 @@ module Trainees
     end
 
     def call
-      return :deferred if trainee_dormant?
+      return :deferred if trainee_dormant? && !withdrawn?
       # If the trainee has completed the course, but the result is unknown we
       # do not know enough to transition their state. If it's the first time
       # we're seeing this trainee, they are created as trn_received (line 41)
@@ -42,7 +42,11 @@ module Trainees
     end
 
     def withdrawn?
-      reason_for_leaving.present? && hesa_trainee[:end_date].present?
+      [
+        WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER,
+        WithdrawalReasons::DEATH,
+        WithdrawalReasons::FOR_ANOTHER_REASON,
+      ].include?(reason_for_leaving) && hesa_trainee[:end_date].present?
     end
 
     def completed_with_unknown_result?

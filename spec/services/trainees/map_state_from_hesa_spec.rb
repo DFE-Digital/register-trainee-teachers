@@ -127,6 +127,25 @@ module Trainees
 
         it { is_expected.to eq(:trn_received) }
       end
+
+      context "when a trainee has a dormant mode, reason for leaving and an end date" do
+        let(:hesa_stub_attributes) do
+          { reason_for_leaving: hesa_reason_for_leaving_codes[WithdrawalReasons::FOR_ANOTHER_REASON],
+            end_date: date_today,
+            mode: hesa_mode_codes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME] }
+        end
+
+        it { is_expected.to eq(:withdrawn) }
+      end
+
+      context "when a trainee has a dormant mode but reason for leaving is nil" do
+        let(:hesa_stub_attributes) do
+          { end_date: date_today,
+            mode: hesa_mode_codes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME] }
+        end
+
+        it { is_expected.to eq(:deferred) }
+      end
     end
   end
 end
