@@ -56,13 +56,13 @@ module Hesa
     end
 
     def xml_response
-      @xml_respnse ||= if read_write && File.exist?(xml_file_path)
-                         File.read(xml_file_path)
-                       else
-                         response = Hesa::Client.get(url: url)
-                         File.write(xml_file_path, response.force_encoding("UTF-8")) if read_write
-                         response
-                       end
+      @xml_response ||= if read_write && File.exist?(xml_file_path)
+                          File.read(xml_file_path)
+                        else
+                          response = Hesa::Client.get(url: url)
+                          File.write(xml_file_path, response.force_encoding("UTF-8")) if read_write
+                          response
+                        end
     end
 
     def url
