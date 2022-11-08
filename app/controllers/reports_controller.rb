@@ -18,7 +18,7 @@ class ReportsController < BaseTraineeController
       end
       format.csv do
         authorize(:trainee, :export?)
-        send_data(data_for_export.data, filename: filename, disposition: :attachment)
+        send_data(data_for_export, filename: filename, disposition: :attachment)
       end
     end
   end
