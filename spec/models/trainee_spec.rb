@@ -205,7 +205,12 @@ describe Trainee do
   context "slug" do
     subject { create(:trainee) }
 
-    it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
+    let(:trainee_with_matching_slug) { create(:trainee, slug: subject.slug.downcase) }
+
+
+    it "ensures unique case insensitive slugs" do
+      expect { trainee_with_matching_slug } .to raise_error(ActiveRecord::RecordNotUnique)
+    end
 
     context "immutability" do
       let(:original_slug) { subject.slug.dup }
