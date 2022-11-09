@@ -207,7 +207,6 @@ describe Trainee do
 
     let(:trainee_with_matching_slug) { create(:trainee, slug: subject.slug.downcase) }
 
-
     it "ensures unique case insensitive slugs" do
       expect { trainee_with_matching_slug } .to raise_error(ActiveRecord::RecordNotUnique)
     end

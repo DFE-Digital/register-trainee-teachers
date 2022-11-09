@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Hesa
-  describe Backfilling do
+  describe BackfillDegrees do
     subject(:service) { described_class.call(trns: trainee.trn) }
 
     let(:trainee) { create(:trainee, :imported_from_hesa, :trn_received) }
@@ -17,8 +17,8 @@ module Hesa
     end
 
     before do
-      allow(Hesa::Client).to receive(:get).with(url: url).and_return(
-        File.read(xml_file_path),
+      allow(::Hesa::Client).to receive(:get).with(url: url).and_return(
+        ::File.read(xml_file_path),
       )
     end
 

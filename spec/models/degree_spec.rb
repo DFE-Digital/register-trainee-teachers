@@ -67,8 +67,8 @@ RSpec.describe Degree, type: :model do
 
     context "slug" do
       subject { create(:degree) }
-      let(:degree_with_matching_slug) { create(:degree, slug: subject.slug.downcase) }
 
+      let(:degree_with_matching_slug) { create(:degree, slug: subject.slug.downcase) }
 
       it "ensures unique case insensitive slugs" do
         expect { degree_with_matching_slug } .to raise_error(ActiveRecord::RecordNotUnique)

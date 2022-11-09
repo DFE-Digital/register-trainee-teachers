@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCitextAndCaseInsensitiveIndexes < ActiveRecord::Migration[6.1]
   def up
     enable_extension("citext")
