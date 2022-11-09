@@ -2,7 +2,7 @@
 
 class BackfillManchesterTraineeDegreesHesa < ActiveRecord::Migration[6.1]
   def up
-    return unless Rails.env.production?
+    return unless Rails.env.production? || Rails.env.productiondata?
 
     ::Hesa::BackfillDegrees.call(
       trns: %w[
