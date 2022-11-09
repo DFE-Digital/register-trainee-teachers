@@ -13,13 +13,16 @@ class UpdateDqt < ActiveRecord::Migration[6.1]
   ].freeze
 
   def up
+    return unless Rails.env.production? # don't want update DQT during staging and productiondata deployments
+
     trainees = AcademicCycle.current.trainees_starting.where.not(hesa_id: nil).where.not(trn: nil)
 
     trainees.find_in_batches(batch_size: 100).with_index do |group, batch|
-      next if trns_to_ignore.include?(trainee.trn) || !trainee_changed?(trainee)
-
       group.each do |trainee|
+        next if trns_to_ignore.include?(trainee.trn) || !trainee_changed?(trainee)
+
         Dqt::UpdateTraineeJob.set(wait: 30.seconds * batch).perform_later(trainee)
+        Trainees::SetAcademicCyclesJob.perform_later(trainee)
       end
     end
   end
