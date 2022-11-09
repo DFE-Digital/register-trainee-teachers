@@ -50,6 +50,17 @@ en:
         <li>equality and diversity information</li>
       </ul>
 
+      <h2 class='govuk-heading-m'>The data we collect from all users</h2>
+      <p class='govuk-body'>
+        We collect your IP address to help us make improvements to the service.
+        If you use other digital services for which the Data Controller is also
+        the DfE (for example, a member of ITT provider staff using Manage
+        Teacher Training Applications or a trainee using a Get Into Teaching
+        service while applying to become a teacher), we may use your IP address
+        to understand how you used these services. This allows us to ensure that
+        public funds are being spent effectively.
+      </p>
+
       <h2 class='govuk-heading-m' id='how-trainee-personal-data-is-used-in-register'>How we use trainee teacher personal data in Register</h2>
 
       <p class='govuk-body'>Register processes trainee teacher personal data when candidates apply for teacher training and provide their personal data to the DfE or to ITT providers.</p>
@@ -94,7 +105,7 @@ en:
 
       <h2 class='govuk-heading-m' id='how-long-we-keep-your-personal-data'>How long we keep your personal data</h2>
 
-      <h3 class='govuk-heading-s'>Provider staff data</h3>
+      <h3 class='govuk-heading-s'>Provider staff data and user analytics data</h3>
 
       <p class='govuk-body'>We keep your personal data for as long as you use Register. We will keep it for no longer than 7 years after you stop using Register.</p>
 
