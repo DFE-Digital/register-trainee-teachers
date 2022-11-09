@@ -5,54 +5,60 @@ module Hesa
     include ServicePattern
 
     def initialize(
-      trns:,
+      trns: nil,
       read_write: false,
       collection_reference: Settings.hesa.current_collection_reference,
       from_date: Settings.hesa.current_collection_start_date
     )
-      @trns = [trns].flatten
+      @trns = [trns].flatten.compact
       @read_write = read_write
-      @update = update
       @collection_reference = collection_reference
       @from_date = from_date
     end
 
     def call
-      Rails.logger.debug { "Total student nodes: #{total_nodes}" }
+      return unless trainee_trns.any?
 
-      Nokogiri::XML::Reader(xml_response).each do |node|
-        next unless node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
-
-        student_node = Nokogiri::XML(node.outer_xml).at("./Student")
-        hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
-
-        # We're either backfilling everything, or specific Trainees
-        if trns.empty? || trns.include?(hesa_trainee[:trn])
-          Degree.without_auditing do
-            trainee = Trainee.find_by(hesa_id: hesa_trainee[:hesa_id])
-            if trainee
-              Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
-            end
-          end
+      Trainee.where(trn: trainee_trns).find_each do |trainee|
+        Degree.without_auditing do
+          ::Degrees::CreateFromHesa.call(
+            trainee: trainee,
+            hesa_degrees: trainees_with_degrees[trainee.trn],
+          )
         end
-        bar.increment
       end
     end
 
   private
 
-    attr_reader :trns, :read_write, :update, :collection_reference, :from_date
+    attr_reader :trns, :read_write, :collection_reference, :from_date
 
-    def bar
-      @bar ||= ProgressBar.create(total: total_nodes)
+    def trainees_with_degrees
+      return @trainees_with_degrees if @trainees_with_degrees
+
+      @trainees_with_degrees = {}
+
+      Nokogiri::XML::Reader(xml_response).each do |node|
+        next unless node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
+
+        trn = Nokogiri::XML(node.outer_xml).at("./Student/F_TRN")&.children&.first&.text
+        next unless trn && (trns.empty? || trns.include?(trn))
+
+        degrees = Nokogiri::XML(node.outer_xml).at("./Student/PREVIOUSQUALIFICATIONS")
+        next unless degrees
+
+        degrees = Hash.from_xml(degrees.to_s)["PREVIOUSQUALIFICATIONS"]
+        degrees = ::Hesa::Parsers::IttRecord.convert_all_null_values_to_nil(degrees)
+        degrees = ::Hesa::Parsers::IttRecord.to_degrees_attributes(degrees)
+
+        @trainees_with_degrees[trn] = degrees
+      end
+
+      @trainees_with_degrees
     end
 
-    def total_nodes
-      @total_nodes ||= xml_doc.root.children.size
-    end
-
-    def xml_doc
-      @xml_doc ||= Nokogiri::XML(xml_response)
+    def trainee_trns
+      @trainee_trns ||= trainees_with_degrees.keys
     end
 
     def xml_response

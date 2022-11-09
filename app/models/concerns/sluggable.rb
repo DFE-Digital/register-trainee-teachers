@@ -10,7 +10,7 @@ module Sluggable
 
     after_initialize :generate_slug, if: -> { slug.blank? }
 
-    validates :slug, presence: true, uniqueness: { case_sensitive: false }
+    validates :slug, presence: true
   end
 
   def to_param
