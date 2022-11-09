@@ -168,8 +168,9 @@ module Trainees
     end
 
     def enqueue_background_jobs!
-      if FeatureService.enabled?(:integrate_with_dqt) && request_for_trn?
-        Dqt::RegisterForTrnJob.perform_later(trainee)
+      if FeatureService.enabled?(:integrate_with_dqt)
+        Trainees::Update.call(trainee: trainee) if trainee.trn.present?
+        Dqt::RegisterForTrnJob.perform_later(trainee) if request_for_trn?
       end
     end
 
