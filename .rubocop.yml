@@ -69,3 +69,10 @@ Style/OpenStructUse:
     - "config/initializers/**/*"
     - "db/data/**/*"
     - "spec/**/*"
+
+Rails/UnknownEnv:
+  Environments:
+    - productiondata
+    - production
+    - development
+    - test
