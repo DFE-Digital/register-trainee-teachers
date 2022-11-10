@@ -27,11 +27,21 @@ module SystemAdmin
       end
 
       def trainee_summary
-        @trainee_summary ||= organisation.funding_trainee_summaries&.order(:created_at)&.last
+        return if trainee_summaries.blank?
+
+        @trainee_summary ||= trainee_summaries.order(:created_at).last
+      end
+
+      def trainee_summaries
+        organisation.funding_trainee_summaries.where(academic_year: academic_year_string)
       end
 
       def current_academic_cycle
         @current_academic_cycle ||= AcademicCycle.current
+      end
+
+      def academic_year_string
+        @academic_year_string ||= "#{Settings.current_recruitment_cycle_year}/#{(Settings.current_recruitment_cycle_year % 100) + 1}"
       end
 
       def data_export
