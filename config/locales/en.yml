@@ -88,10 +88,8 @@ en:
         tier: Tier
         total: Total
         trainees: Trainees
-      provider:
-        no_funding: There are no trainees eligible for bursaries and scholarships right now.
-      lead_school:
-        no_funding: There are no trainees eligible for grants right now.
+      organisation:
+        no_funding: There are no trainee summaries available right now. These will be available in December if you have eligible trainees.
       email_line_one: Contact
       email_subject: Funding
       email_line_two: if you think there should be trainees who are eligible.

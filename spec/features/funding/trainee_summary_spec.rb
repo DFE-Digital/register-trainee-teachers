@@ -225,7 +225,7 @@ private
   end
 
   def then_i_see_the_empty_state
-    expect(trainee_summary_page). to have_text("There are no trainees eligible")
+    expect(trainee_summary_page). to have_text("There are no trainee summaries available")
   end
 
   def then_i_do_not_see_the_row_in_the_table
