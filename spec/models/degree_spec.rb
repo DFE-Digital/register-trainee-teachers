@@ -68,7 +68,11 @@ RSpec.describe Degree, type: :model do
     context "slug" do
       subject { create(:degree) }
 
-      it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
+      let(:degree_with_matching_slug) { create(:degree, slug: subject.slug.downcase) }
+
+      it "ensures unique case insensitive slugs" do
+        expect { degree_with_matching_slug } .to raise_error(ActiveRecord::RecordNotUnique)
+      end
 
       context "immutability" do
         let(:original_slug) { subject.slug.dup }

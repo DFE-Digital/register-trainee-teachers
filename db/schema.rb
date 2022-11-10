@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_080403) do
+ActiveRecord::Schema.define(version: 2022_11_09_100055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -199,7 +200,7 @@ ActiveRecord::Schema.define(version: 2022_10_13_080403) do
     t.string "grade"
     t.string "country"
     t.text "other_grade"
-    t.string "slug", null: false
+    t.citext "slug", null: false
     t.uuid "dttp_id"
     t.uuid "institution_uuid"
     t.uuid "uk_degree_uuid"
@@ -642,7 +643,7 @@ ActiveRecord::Schema.define(version: 2022_10_13_080403) do
     t.datetime "withdraw_date"
     t.string "additional_withdraw_reason"
     t.date "defer_date"
-    t.string "slug", null: false
+    t.citext "slug", null: false
     t.datetime "recommended_for_award_at"
     t.string "dttp_update_sha"
     t.date "trainee_start_date"
@@ -701,6 +702,7 @@ ActiveRecord::Schema.define(version: 2022_10_13_080403) do
     t.index ["start_academic_cycle_id"], name: "index_trainees_on_start_academic_cycle_id"
     t.index ["state"], name: "index_trainees_on_state"
     t.index ["training_route"], name: "index_trainees_on_training_route"
+    t.index ["trn"], name: "index_trainees_on_trn"
   end
 
   create_table "users", force: :cascade do |t|
