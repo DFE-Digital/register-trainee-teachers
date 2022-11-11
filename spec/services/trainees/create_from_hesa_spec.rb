@@ -41,10 +41,9 @@ module Trainees
     end
 
     describe "HESA information imported from XML" do
-      it "updates the Trainee ID, HESA ID, TRN and record_source" do
+      it "updates the Trainee ID, HESA ID and record_source" do
         expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
         expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
-        expect(trainee.trn).to eq(student_attributes[:trn])
         expect(trainee.record_source).to eq(record_source)
       end
 
@@ -199,8 +198,9 @@ module Trainees
 
       context "when the trainee has a previously saved TRN" do
         context "HESA has a different TRN" do
-          it "updates the trainee TRN with the HESA TRN" do
-            expect(trainee.trn).to eq(hesa_trn)
+          it "captures a message to sentry" do
+            expect(Sentry).to have_received(:capture_message)
+                                .with("HESA TRN (#{hesa_trn}) different to trainee TRN (#{trainee.trn})")
           end
         end
 

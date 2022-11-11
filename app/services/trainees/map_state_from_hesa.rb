@@ -7,7 +7,7 @@ module Trainees
     def initialize(hesa_trainee:, trainee:)
       @hesa_trainee = hesa_trainee
       @trainee = trainee
-      @trn = hesa_trainee[:trn] || trainee.trn
+      @trn = trainee.trn || hesa_trainee[:trn]
     end
 
     def call
