@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Funding
-  class PaymentSchedulesController < ApplicationController
+  class PaymentSchedulesController < BaseFundingController
     def show
       respond_to do |format|
         format.html do
@@ -28,14 +28,6 @@ module Funding
 
     def organisation
       @organisation ||= current_user.organisation
-    end
-
-    def payment_schedule
-      @payment_schedule ||= organisation&.funding_payment_schedules&.order(:created_at)&.last
-    end
-
-    def current_academic_cycle
-      @current_academic_cycle ||= AcademicCycle.current
     end
   end
 end
