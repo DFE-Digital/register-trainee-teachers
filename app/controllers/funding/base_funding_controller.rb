@@ -7,7 +7,7 @@ module Funding
     end
 
     def academic_year_string
-      @academic_year_string ||= "#{Settings.current_recruitment_cycle_year}/#{(Settings.current_recruitment_cycle_year % 100) + 1}"
+      @academic_year_string ||= "#{current_academic_cycle.start_date.year}/#{current_academic_cycle.end_date.year % 100}"
     end
 
     def payment_schedule

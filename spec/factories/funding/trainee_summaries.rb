@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :trainee_summary, class: "Funding::TraineeSummary" do
-    academic_year { "#{Settings.current_recruitment_cycle_year}/#{(Settings.current_recruitment_cycle_year % 100) + 1}" }
+    academic_year { "#{(AcademicCycle.current || create(:academic_cycle, :current)).start_date.year}/#{(AcademicCycle.current || create(:academic_cycle, :current)).end_date.year % 100}" }
 
     trait :for_provider do
       payable { |p| p.association(:provider) }

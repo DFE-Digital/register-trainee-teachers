@@ -168,8 +168,9 @@ feature "viewing the trainee summary", feature_funding: true do
   end
 
   context "with a valid trainee summary in the previous academic year" do
-    let(:previous_academic_year) { "#{Settings.current_recruitment_cycle_year - 1}/#{Settings.current_recruitment_cycle_year % 100}" }
-    let(:summary) { create(:trainee_summary, payable: user.providers.first, academic_year: previous_academic_year) }
+    let(:academic_year) { AcademicCycle.current }
+    let(:previous_academic_year_string) { "#{academic_year.start_date.year - 1}/#{(academic_year.end_date.year - 1) % 100}" }
+    let(:summary) { create(:trainee_summary, payable: user.providers.first, academic_year: previous_academic_year_string) }
     let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
     let!(:amount) { create(:trainee_summary_row_amount, :with_bursary, row: row) }
 
