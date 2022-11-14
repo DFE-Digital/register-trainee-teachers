@@ -27,6 +27,7 @@ module Trainees
           create_degrees!
           store_hesa_metadata!
           enqueue_background_jobs!
+          check_for_trn_disparity!
         end
       end
     rescue ActiveRecord::RecordInvalid
@@ -42,7 +43,6 @@ module Trainees
       {
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
-        trn: trn,
         state: trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
         record_source: trainee_record_source,
@@ -70,15 +70,6 @@ module Trainees
       end
 
       record_source
-    end
-
-    def trn
-      # From the HESA data it appears that a TRN might not always be submitted with
-      # an update, even though a TRN has previously been submitted. This prevents a
-      # blank TRN in the HESA update from overwriting an existing TRN in register.
-      return trainee.trn if hesa_trainee[:trn].nil? && trainee.trn.present?
-
-      hesa_trainee[:trn] if TRN_REGEX.match?(hesa_trainee[:trn])
     end
 
     def created_from_hesa_attribute
@@ -171,6 +162,14 @@ module Trainees
       if FeatureService.enabled?(:integrate_with_dqt)
         Trainees::Update.call(trainee: trainee) if trainee.trn.present?
         Dqt::RegisterForTrnJob.perform_later(trainee) if request_for_trn?
+      end
+    end
+
+    def check_for_trn_disparity!
+      # Whilst providers can provide a TRN, it's not to be trusted. Only Register and DQT are
+      # responsible for the allocation of TRNs.
+      if hesa_trainee[:trn].present? && trainee.trn.present? && hesa_trainee[:trn] != trainee.trn
+        Sentry.capture_message("HESA TRN (#{hesa_trainee[:trn]}) different to trainee TRN (#{trainee.trn})")
       end
     end
 
