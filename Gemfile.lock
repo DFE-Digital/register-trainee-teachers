@@ -709,6 +709,7 @@ DEPENDENCIES
   rspec-retry!
   rubocop-rails
   rubocop-rspec
+  ruby-progressbar
   scss_lint-govuk
   sentry-rails
   sentry-ruby

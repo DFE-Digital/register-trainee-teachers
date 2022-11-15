@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_09_100055) do
+ActiveRecord::Schema.define(version: 2022_11_14_121151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -464,7 +464,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_100055) do
     t.string "course_age_range"
     t.string "trainee_start_date"
     t.string "training_initiative"
-    t.string "disability"
+    t.string "disability1"
     t.string "end_date"
     t.string "reason_for_leaving"
     t.string "bursary_level"
@@ -486,6 +486,16 @@ ActiveRecord::Schema.define(version: 2022_11_09_100055) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "collection_reference"
+    t.string "commencement_date"
+    t.string "itt_commencement_date"
+    t.string "disability2"
+    t.string "disability3"
+    t.string "disability4"
+    t.string "disability5"
+    t.string "disability6"
+    t.string "disability7"
+    t.string "disability8"
+    t.string "disability9"
   end
 
   create_table "hesa_trn_requests", force: :cascade do |t|

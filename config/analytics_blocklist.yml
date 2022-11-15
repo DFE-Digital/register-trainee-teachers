@@ -193,7 +193,6 @@
   - course_age_range
   - trainee_start_date
   - training_initiative
-  - disability
   - end_date
   - reason_for_leaving
   - bursary_level
@@ -215,6 +214,17 @@
   - created_at
   - updated_at
   - collection_reference
+  - commencement_date
+  - itt_commencement_date
+  - disability1
+  - disability2
+  - disability3
+  - disability4
+  - disability5
+  - disability6
+  - disability7
+  - disability8
+  - disability9
   :hesa_trn_requests:
   - id
   - collection_reference

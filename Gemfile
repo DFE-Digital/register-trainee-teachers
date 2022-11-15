@@ -113,6 +113,8 @@ gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/df
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.5.3"
 
+gem "ruby-progressbar" # useful for tracking long running rake tasks
+
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
   gem "cloudfront-rails"
