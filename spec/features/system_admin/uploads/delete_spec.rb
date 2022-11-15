@@ -28,7 +28,7 @@ private
   def when_i_visit_the_uploads_index_page
     index.load
   end
-  
+
   def and_an_upload_exists
     show.load(id: upload.id)
     expect(show).to have_text "test.txt"
