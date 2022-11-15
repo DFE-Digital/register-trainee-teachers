@@ -8,7 +8,7 @@ namespace :hesa do
     url = "#{Settings.hesa.collection_base_url}/#{collection_reference}/#{from_date}"
     xml_response = Hesa::Client.get(url: url)
 
-    total_nodes = Nokogiri::XML(xml_response).root.children.size
+    total_nodes = xml_response.scan(/<Student>.*?<\/Student>/m).size # Uses less memory - prevents task getting killed
     puts "Total student nodes: #{total_nodes}"
     bar = ProgressBar.create(total: total_nodes)
 
