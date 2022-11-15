@@ -26,7 +26,7 @@ module Dqt
         TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => "ProviderLedPostgrad",
         TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => "ProviderLedUndergrad",
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => "SchoolDirectTrainingProgrammeSalaried",
-        TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => "SchoolDirectTrainingProgrammeSelfFunded",
+        TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => "SchoolDirectTrainingProgramme",
       }.freeze
 
       DEGREE_CLASSES = {
