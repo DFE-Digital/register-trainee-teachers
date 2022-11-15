@@ -245,6 +245,24 @@ module Dqt
             end
           end
         end
+
+        context "when training route is school direct tuition fees" do
+          let(:trainee) do
+            create(:trainee,
+                   :completed,
+                   training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+                   sex: "female",
+                   hesa_metadatum: hesa_metadatum,
+                   degrees: [degree],
+                   **trainee_attributes)
+          end
+
+          subject { described_class.new(trainee: trainee).params }
+
+          it "maps the training route to SchoolDirectTrainingProgramme" do
+            expect(subject["initialTeacherTraining"]["programmeType"]).to eq("SchoolDirectTrainingProgramme")
+          end
+        end
       end
     end
   end
