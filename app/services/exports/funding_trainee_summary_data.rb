@@ -23,7 +23,7 @@ module Exports
     end
 
     def filename
-      "#{@organisation_name.downcase.gsub(' ', '-')}-trainee-summary-#{@trainee_summary.academic_year}-to-#{@trainee_summary.academic_year.to_i + 1}.csv"
+      "#{@organisation_name.downcase.gsub(' ', '-')}-trainee-summary-#{@trainee_summary.academic_year.to_i}-to-#{@trainee_summary.academic_year.to_i + 1}.csv"
     end
 
   private

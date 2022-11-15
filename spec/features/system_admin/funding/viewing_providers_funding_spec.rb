@@ -8,7 +8,7 @@ feature "Viewing provider's funding" do
 
   before do
     given_i_am_authenticated(user: user)
-    and_funding_data_exists
+    and_funding_data_exists_for_current_academic_year
     when_i_visit_the_provider_show_page
     when_i_click_view_funding
   end
@@ -22,7 +22,7 @@ feature "Viewing provider's funding" do
     then_i_see_the_trainee_summary
   end
 
-  def and_funding_data_exists
+  def and_funding_data_exists_for_current_academic_year
     create(:payment_schedule, payable: provider)
     create(:trainee_summary, :with_bursary_and_scholarship_rows, payable: provider)
   end

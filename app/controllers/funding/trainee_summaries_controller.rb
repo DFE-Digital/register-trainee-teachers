@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module Funding
-  class TraineeSummariesController < ApplicationController
+  class TraineeSummariesController < BaseFundingController
     def show
-      trainee_summary = current_user.organisation&.funding_trainee_summaries&.order(:created_at)&.last
       respond_to do |format|
         format.html do
           @trainee_summary_view = TraineeSummaryView.new(trainee_summary: trainee_summary)
@@ -28,14 +27,6 @@ module Funding
 
     def organisation
       @organisation ||= current_user.organisation
-    end
-
-    def trainee_summary
-      @trainee_summary ||= organisation&.funding_trainee_summaries&.order(:created_at)&.last
-    end
-
-    def current_academic_cycle
-      @current_academic_cycle ||= AcademicCycle.current
     end
   end
 end

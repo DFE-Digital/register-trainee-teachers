@@ -2,7 +2,7 @@
 
 module SystemAdmin
   module Funding
-    class TraineeSummariesController < ApplicationController
+    class TraineeSummariesController < ::Funding::BaseFundingController
       def show
         respond_to do |format|
           format.html do
@@ -24,14 +24,6 @@ module SystemAdmin
 
       def organisation
         @organisation ||= params[:provider_id].present? ? Provider.find(params[:provider_id]) : School.find(params[:lead_school_id])
-      end
-
-      def trainee_summary
-        @trainee_summary ||= organisation.funding_trainee_summaries&.order(:created_at)&.last
-      end
-
-      def current_academic_cycle
-        @current_academic_cycle ||= AcademicCycle.current
       end
 
       def data_export

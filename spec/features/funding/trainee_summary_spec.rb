@@ -11,7 +11,7 @@ feature "viewing the trainee summary", feature_funding: true do
     given_i_am_authenticated(user: user)
   }
 
-  context "with a trainee summary" do
+  context "with a trainee summary in the current academic year" do
     let(:summary) { create(:trainee_summary, payable: user.providers.first) }
     let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
 
@@ -167,6 +167,19 @@ feature "viewing the trainee summary", feature_funding: true do
     end
   end
 
+  context "with a valid trainee summary in the previous academic year" do
+    let(:academic_year) { AcademicCycle.current }
+    let(:previous_academic_year_string) { "#{academic_year.start_date.year - 1}/#{(academic_year.end_date.year - 1) % 100}" }
+    let(:summary) { create(:trainee_summary, payable: user.providers.first, academic_year: previous_academic_year_string) }
+    let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
+    let!(:amount) { create(:trainee_summary_row_amount, :with_bursary, row: row) }
+
+    scenario "displays the empty state" do
+      when_i_visit_the_trainee_summary_page
+      then_i_see_the_empty_state
+    end
+  end
+
   context "organisation without a trainee summary" do
     context "with rows but no amounts" do
       let(:summary) { create(:trainee_summary, payable: user.providers.first) }
@@ -213,7 +226,7 @@ private
   end
 
   def then_i_see_the_empty_state
-    expect(trainee_summary_page). to have_text("There are no trainees eligible")
+    expect(trainee_summary_page). to have_text("There are no trainee summaries available")
   end
 
   def then_i_do_not_see_the_row_in_the_table
