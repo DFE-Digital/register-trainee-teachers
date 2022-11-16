@@ -391,15 +391,15 @@ module Features
     end
 
     def admin_uploads_page
-      @admin_uploads_index_page || PageObjects::SystemAdmin::Uploads::Index.new
+      @admin_uploads_index_page ||= PageObjects::SystemAdmin::Uploads::Index.new
     end
 
     def admin_upload_new_page
-      @admin_uploads_new_page || PageObjects::SystemAdmin::Uploads::New.new
+      @admin_uploads_new_page ||= PageObjects::SystemAdmin::Uploads::New.new
     end
 
     def admin_upload_show_page
-      @admin_uploads_show_page || PageObjects::SystemAdmin::Uploads::Show.new
+      @admin_uploads_show_page ||= PageObjects::SystemAdmin::Uploads::Show.new
     end
 
   private

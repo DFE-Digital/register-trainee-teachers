@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module Hesa
+  #
+  # Can be used as a base class for HESA backfilling `write_xml` is by default set to `false`.
+  #
+  # Set this to true when running locally to save you from downloading the large HESA xml file
+  # multiple times
+  #
+  # If the service needs access to a HESA xml file no available from them upload a file via
+  # `/system-admin/uploads` and pass the `upload_id` to the service
+  #
   class Backfill
     include ServicePattern
 
@@ -25,9 +34,9 @@ module Hesa
     attr_reader :hesa_ids, :upload, :path, :collection_reference, :from_date
 
     def xml
-      @xml ||= if write_uploaded_xml?
+      @xml ||= if uploaded_xml
                  uploaded_xml.read.to_s
-               elsif write_xml?
+               elsif local_xml
                  local_xml.read
                else
                  Hesa::Client.get(url: url)
@@ -47,10 +56,6 @@ module Hesa
     ##############
     # Via Upload #
     ##############
-
-    def write_uploaded_xml?
-      upload.present?
-    end
 
     def uploaded_xml
       return @uploaded_xml if defined?(@uploaded_xml)
@@ -86,6 +91,8 @@ module Hesa
     end
 
     def build_local_xml!
+      return unless write_xml?
+
       FileUtils.mkdir_p(path)
       File.write(local_xml_path, Hesa::Client.get(url: url).force_encoding("UTF-8")) unless File.exist?(local_xml_path)
       @local_xml = File.new(local_xml_path)

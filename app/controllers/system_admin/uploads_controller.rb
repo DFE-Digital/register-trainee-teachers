@@ -4,7 +4,6 @@ module SystemAdmin
   class UploadsController < ApplicationController
     before_action :set_upload, only: %i[show destroy]
 
-    # GET /uploads
     def index
       @uploads = if params[:search].present?
                    Upload.search_by_name(params[:search])
@@ -13,15 +12,12 @@ module SystemAdmin
                  end
     end
 
-    # GET /uploads/1
     def show; end
 
-    # GET /uploads/new
     def new
       @upload = Upload.new
     end
 
-    # POST /uploads
     def create
       @upload = Upload.new(upload_params)
 
@@ -36,7 +32,6 @@ module SystemAdmin
       render(:new)
     end
 
-    # DELETE /uploads/1
     def destroy
       @upload.destroy!
       redirect_to(uploads_url, notice: "Upload destroyed")
@@ -44,12 +39,10 @@ module SystemAdmin
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_upload
       @upload = Upload.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def upload_params
       params.require(:upload).permit(:file).merge(
         user: current_user,
