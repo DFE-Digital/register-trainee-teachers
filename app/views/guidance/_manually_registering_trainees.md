@@ -56,13 +56,12 @@ There are 3 ways to do this in Register and you can choose whichever one suits y
 
 <h2 class="govuk-heading-m">Adding specific information to a trainee record</h2>
 
-<h3 class="govuk-heading-s">PE with EBaccalaureate (PE with EBacc)</h3>
+<h3 class="govuk-heading-s">Physical education with EBacc</h3>
 
-Follow these steps to register a trainee on a PE with EBacc course:
+Follow these steps to register a trainee on a physical education with EBacc course:
 
-1. Add a first subject as ‘Physical education’, or a physical education based subject.
-2. Add a second subject as their EBacc subject.
-3. Email us at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Registering%20trainees%20on%20a%20PE%20with%20EBacc%20course) stating their trainee ID and that they are doing PE with EBacc.
+1. Add physical education as the first subject.
+2. Add the EBacc subject they are studying as the second subject, for example biology.
 
 <h2 class="govuk-heading-m">Recommending a trainee for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)</h2>
 
