@@ -575,7 +575,7 @@ GEM
       capybara (~> 3.15)
       site_prism-all_there (>= 0.3.1, < 1.0)
     site_prism-all_there (0.3.2)
-    skylight (5.3.3)
+    skylight (5.3.4)
       activesupport (>= 5.2.0)
     slack-notifier (2.4.0)
     smart_properties (1.17.0)
@@ -649,7 +649,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
