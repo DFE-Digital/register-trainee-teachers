@@ -97,9 +97,9 @@ Trainee start date
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">Schools </h2> 
+<h2 class="govuk-heading-m">Lead and employing schools</h2> 
 
-This is only required for School direct and Teaching apprenticeship routes.
+These are only required for School direct and Teaching apprenticeship routes.
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"><h2 class="govuk-heading-m">Funding details</h2>
 
