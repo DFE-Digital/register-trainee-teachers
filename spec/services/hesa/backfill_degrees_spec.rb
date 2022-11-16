@@ -6,7 +6,7 @@ module Hesa
   describe BackfillDegrees do
     subject(:service) { described_class.call(**params) }
 
-    let(:params) { { trns: trainee.trn } }
+    let(:params) { { hesa_ids: trainee.hesa_id } }
 
     let(:trainee) { create(:trainee, :imported_from_hesa, :trn_received) }
     let(:xml_file_path) { Rails.root.join("spec/support/fixtures/hesa/itt_record.xml") }

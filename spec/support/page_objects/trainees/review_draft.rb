@@ -23,33 +23,35 @@ module PageObjects
       element :review_this_record_link, "#check-details"
       element :delete_this_draft_link, ".app-link--warning"
 
-      def personal_details_completed?
+      # rubocop:disable Naming/PredicateName
+      def has_personal_details_completed?
         personal_details.status.text == STATUS_COMPLETED
       end
 
-      def contact_details_completed?
+      def has_contact_details_completed?
         contact_details.status.text == STATUS_COMPLETED
       end
 
-      def diversity_information_completed?
+      def has_diversity_information_completed?
         diversity_section.status.text == STATUS_COMPLETED
       end
 
-      def degree_details_completed?
+      def has_degree_details_completed?
         degree_details.status.text == STATUS_COMPLETED
       end
 
-      def course_details_completed?
+      def has_course_details_completed?
         course_details.status.text == STATUS_COMPLETED
       end
 
-      def training_details_completed?
+      def has_training_details_completed?
         training_details.status.text == STATUS_COMPLETED
       end
 
-      def lead_and_employing_school_information_completed?
+      def has_lead_and_employing_school_information_completed?
         lead_and_employing_schools_section.status.text == STATUS_COMPLETED
       end
+      # rubocop:enable Naming/PredicateName
     end
   end
 end
