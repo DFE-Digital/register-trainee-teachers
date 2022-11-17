@@ -120,8 +120,9 @@ gem "faraday", "~> 1.10.2"
 
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
+  gem "azure-storage-blob", "~> 2", require: false
+  gem "azure-storage-common", "~> 2.0", ">= 2.0.4"
   gem "cloudfront-rails"
-  gem 'azure-storage-common', '~> 2.0', '>= 2.0.4'
 end
 
 group :development, :test do
