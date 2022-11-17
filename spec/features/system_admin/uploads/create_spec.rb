@@ -20,7 +20,7 @@ feature "Upload a file" do
       then_i_see_an_error
     end
 
-    scenario "with required attribets" do
+    scenario "with required attributes" do
       attach_file("upload[file]", Rails.root.join("spec/fixtures/files/test.txt"))
       and_i_click_on_submit
       then_i_see_the_upload
