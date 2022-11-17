@@ -118,8 +118,8 @@ Whether the trainee is on a training initiative
 
 <div class="govuk-inset-text">
 
-You should keep a record of the location of the trainee’s placements.
+<p>You should keep a record of the location of the trainee’s placements.</p>
 
-You cannot currently provide this data but you’ll be asked to provide it later in the 2022 to 2023 academic year.
+<p>You cannot currently provide this data but you’ll be asked to provide it later in the 2022 to 2023 academic year.</p>
   
 </div>
