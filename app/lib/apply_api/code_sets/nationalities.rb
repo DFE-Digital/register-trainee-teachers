@@ -65,6 +65,8 @@ module ApplyApi
         "croatian" => "HR",
         "cuban" => "CU",
         "cypriot" => "CY",
+        "cypriot (european union)" => "XA",
+        "cypriot (non european union)" => "XB",
         "cymraes" => "GB",
         "cymro" => "GB",
         "czech" => "CZ",
