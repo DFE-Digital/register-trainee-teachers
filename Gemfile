@@ -144,7 +144,7 @@ group :development, :test do
   gem "rspec-benchmark", require: false
 
   # Adds support for Capybara system testing and selenium driver
-  gem "capybara", "~> 3.37"
+  gem "capybara", "~> 3.38"
 
   gem "dotenv-rails"
 
