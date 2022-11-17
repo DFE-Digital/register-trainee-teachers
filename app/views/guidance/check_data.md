@@ -111,3 +111,15 @@ Whether the trainee is on a training initiative
 <li> Whether you’re applying for a grant for the trainee  </li>
 <li> Whether the trainee is applying for a scholarship  </li>
 </ul>
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">Placement details</h2> 
+
+<div class="govuk-inset-text">
+
+You should keep a record of the location of the trainee’s placements.
+
+You cannot currently provide this data but you’ll be asked to provide it later in the 2022 to 2023 academic year.
+  
+</div>
