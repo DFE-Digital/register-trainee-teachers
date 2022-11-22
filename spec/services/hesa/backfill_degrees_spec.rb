@@ -4,9 +4,7 @@ require "rails_helper"
 
 module Hesa
   describe BackfillDegrees do
-    subject(:service) { described_class.call(**params) }
-
-    let(:params) { { hesa_ids: trainee.hesa_id } }
+    subject(:service) { described_class.call(trns: trainee.trn) }
 
     let(:trainee) { create(:trainee, :imported_from_hesa, :trn_received) }
     let(:xml_file_path) { Rails.root.join("spec/support/fixtures/hesa/itt_record.xml") }
@@ -25,29 +23,8 @@ module Hesa
     end
 
     describe "#call" do
-      context "without upload or local write" do
-        it { expect { service }.not_to raise_error }
-      end
-
-      context "with upload" do
-        let(:filename) { "itt_record.xml" }
-        let(:upload) { create(:upload, name: filename, file: nil) }
-        let(:params) { super().merge(upload_id: upload.id) }
-
-        before do
-          upload.file.attach(
-            io: File.open(xml_file_path),
-            filename: filename, content_type: "text/xml"
-          )
-        end
-
-        it { expect { service }.not_to raise_error }
-      end
-
-      context "with local write" do
-        let(:params) { super().merge(write_xml: true, path: "tmp/test") }
-
-        it { expect { service }.not_to raise_error }
+      it "does not raise an error" do
+        expect { service }.not_to raise_error
       end
     end
   end

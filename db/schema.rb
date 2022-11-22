@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_15_162408) do
+ActiveRecord::Schema.define(version: 2022_11_14_121151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
-  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -25,34 +24,6 @@ ActiveRecord::Schema.define(version: 2022_11_15_162408) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)", name: "academic_cycles_date_range", using: :gist
-  end
-
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.string "service_name", null: false
-    t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "activities", force: :cascade do |t|
@@ -731,7 +702,6 @@ ActiveRecord::Schema.define(version: 2022_11_15_162408) do
     t.index ["employing_school_id"], name: "index_trainees_on_employing_school_id"
     t.index ["end_academic_cycle_id"], name: "index_trainees_on_end_academic_cycle_id"
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
-    t.index ["hesa_id"], name: "index_trainees_on_hesa_id"
     t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
     t.index ["locale_code"], name: "index_trainees_on_locale_code"
@@ -743,14 +713,6 @@ ActiveRecord::Schema.define(version: 2022_11_15_162408) do
     t.index ["state"], name: "index_trainees_on_state"
     t.index ["training_route"], name: "index_trainees_on_training_route"
     t.index ["trn"], name: "index_trainees_on_trn"
-  end
-
-  create_table "uploads", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "name", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -781,8 +743,6 @@ ActiveRecord::Schema.define(version: 2022_11_15_162408) do
     t.index ["user_id"], name: "index_validation_errors_on_user_id"
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
@@ -806,5 +766,4 @@ ActiveRecord::Schema.define(version: 2022_11_15_162408) do
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"
-  add_foreign_key "uploads", "users"
 end

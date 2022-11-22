@@ -3,19 +3,16 @@
 module Hesa
   class BackfillDegrees < Backfill
     def call
-      return unless trainee_hesa_ids.any?
+      return unless trainee_trns.any?
 
-      Trainee.where(hesa_id: trainee_hesa_ids).find_each do |trainee|
+      Trainee.where(trn: trainee_trns).find_each do |trainee|
         Degree.without_auditing do
           ::Degrees::CreateFromHesa.call(
             trainee: trainee,
-            hesa_degrees: trainees_with_degrees[trainee.hesa_id],
+            hesa_degrees: trainees_with_degrees[trainee.trn],
           )
         end
       end
-      Rails.logger.debug("Finish upating Trainees")
-    ensure
-      tidy_up!
     end
 
   private
@@ -25,12 +22,11 @@ module Hesa
 
       @trainees_with_degrees = {}
 
-      Rails.logger.debug("Reading XML")
-      Nokogiri::XML::Reader(xml).each do |node|
+      Nokogiri::XML::Reader(xml_response).each do |node|
         next unless node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
 
-        hesa_id = Nokogiri::XML(node.outer_xml).at("./Student/F_HUSID")&.children&.first&.text
-        next unless hesa_id && (hesa_ids.empty? || hesa_ids.include?(hesa_id))
+        trn = Nokogiri::XML(node.outer_xml).at("./Student/F_TRN")&.children&.first&.text
+        next unless trn && (trns.empty? || trns.include?(trn))
 
         degrees = Nokogiri::XML(node.outer_xml).at("./Student/PREVIOUSQUALIFICATIONS")
         next unless degrees
@@ -39,17 +35,14 @@ module Hesa
         degrees = ::Hesa::Parsers::IttRecord.convert_all_null_values_to_nil(degrees)
         degrees = ::Hesa::Parsers::IttRecord.to_degrees_attributes(degrees)
 
-        @trainees_with_degrees[hesa_id] = degrees
+        @trainees_with_degrees[trn] = degrees
       end
-      Rails.logger.debug("Finish reading XML")
-      Rails.logger.debug("")
-      Rails.logger.debug("Upating Trainees")
 
       @trainees_with_degrees
     end
 
-    def trainee_hesa_ids
-      @trainee_hesa_ids ||= trainees_with_degrees.keys
+    def trainee_trns
+      @trainee_trns ||= trainees_with_degrees.keys
     end
   end
 end
