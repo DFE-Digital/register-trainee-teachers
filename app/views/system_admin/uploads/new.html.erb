@@ -1,0 +1,23 @@
+<%= render PageTitle::View.new(i18n_key: "uploads.new", has_errors: @upload.errors.present?) %>
+
+<%= render GovukComponent::BackLinkComponent.new(
+      text: "Back",
+      href: uploads_path,
+    ) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with model: [@upload], local: true do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        Upload a file
+      </h1>
+
+      <%= f.govuk_file_field :file, label: { hidden: true } %>
+
+      <%= f.govuk_submit "Submit" %>
+    <% end %>
+  </div>
+</div>

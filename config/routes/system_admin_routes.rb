@@ -51,6 +51,8 @@ module SystemAdminRoutes
             get :placement_assignments, path: "placement-assignments"
           end
         end
+
+        resources :uploads, only: %i[index new create show destroy]
       end
     end
   end

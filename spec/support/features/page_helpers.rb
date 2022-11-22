@@ -390,6 +390,18 @@ module Features
       @admin_remove_lead_school_access_page ||= PageObjects::SystemAdmin::LeadSchools::RemoveAccessConfirmation.new
     end
 
+    def admin_uploads_page
+      @admin_uploads_index_page ||= PageObjects::SystemAdmin::Uploads::Index.new
+    end
+
+    def admin_upload_new_page
+      @admin_uploads_new_page ||= PageObjects::SystemAdmin::Uploads::New.new
+    end
+
+    def admin_upload_show_page
+      @admin_uploads_show_page ||= PageObjects::SystemAdmin::Uploads::Show.new
+    end
+
   private
 
     def progress_with_prefix(status)
