@@ -13,6 +13,7 @@ TRAINING_ROUTE_ENUMS = {
   school_direct_salaried: "school_direct_salaried",
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
   hpitt_postgrad: "hpitt_postgrad",
+  iqts: "iqts",
 }.freeze
 
 ROUTE_INITIATIVES_ENUMS = {
@@ -37,6 +38,7 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
   TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
+  TRAINING_ROUTE_ENUMS[:iqts] => 12,
 }.freeze
 
 ROUTE_INITIATIVES = {
@@ -82,6 +84,7 @@ TRAINING_ROUTE_AWARD_TYPE = {
   school_direct_tuition_fee: QTS_AWARD_TYPE,
   opt_in_undergrad: QTS_AWARD_TYPE,
   hpitt_postgrad: QTS_AWARD_TYPE,
+  iqts: QTS_AWARD_TYPE,
 }.freeze
 
 EARLY_YEARS_ROUTE_NAME_PREFIX = "early_years"

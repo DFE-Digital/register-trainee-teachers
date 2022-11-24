@@ -19,6 +19,7 @@ module PageObjects
       element :pg_teaching_apprenticeship, "#trainee-training-route-pg-teaching-apprenticeship-field"
       element :hpitt_postgrad, "#trainee-training-route-hpitt-postgrad-field"
       element :opt_in_undergrad, "#trainee-training-route-opt-in-undergrad-field"
+      element :iqts, "#trainee-training-route-iqts-field"
 
       element :other, "#trainee-training-route-other-field"
 

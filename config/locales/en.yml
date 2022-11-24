@@ -1093,7 +1093,10 @@ en:
           summary_with_route: *summary_with_route
     training_routes:
       form_fields:
-        provider_led_hint: Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
+        hints:
+          provider_led_postgrad: Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
+          provider_led_undergrad: Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
+          iqts: This is a pilot programme that selected training providers are offering for the 2022 to 2023 academic year
     start_statuses:
       edit:
         itt_not_yet_started: They have not started yet
@@ -1144,6 +1147,7 @@ en:
           early_years_postgrad: Early years (postgrad)
           early_years_salaried: Early years (salaried)
           early_years_undergrad: Early years (undergrad)
+          iqts: International qualified teacher status (iQTS)
           provider_led_postgrad: Provider-led (postgrad)
           provider_led_undergrad: Provider-led (undergrad)
           school_direct_salaried: School direct (salaried)
