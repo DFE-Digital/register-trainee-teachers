@@ -20,9 +20,9 @@ module Submissions
     validator :training_details, form: "TrainingDetailsForm"
     validator :trainee_data, form: "ApplyApplications::TraineeDataForm", if: :apply_application_and_draft?
     validator :schools, form: "Schools::FormValidator", if: :requires_schools?
-    validator :funding, form: "Funding::FormValidator"
+    validator :funding, form: "Funding::FormValidator", if: :requires_funding?
 
-    delegate :requires_schools?, :requires_degree?, :apply_application?, to: :trainee
+    delegate :requires_schools?, :requires_degree?, :apply_application?, :requires_funding?, to: :trainee
 
     validate :submission_ready
 

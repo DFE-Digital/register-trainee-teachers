@@ -28,6 +28,8 @@
   </div>
 <% end %>
 
-<div class="funding">
-  <%= render Funding::View.new(data_model: @trainee, editable: trainee_editable?) %>
-</div>
+<% if @trainee.requires_funding? %>
+  <div class="funding">
+    <%= render Funding::View.new(data_model: @trainee, editable: trainee_editable?) %>
+  </div>
+<% end %>

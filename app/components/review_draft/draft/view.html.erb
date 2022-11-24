@@ -33,7 +33,9 @@
         component.row(**row_helper(@trainee, :school_details))
       end
 
-      component.row(**row_helper(@trainee, funding_options(@trainee)))
+      if @trainee.requires_funding?
+        component.row(**row_helper(@trainee, funding_options(@trainee)))
+      end
 
       # This will be uncommented once the form is built
       # if @trainee.requires_placement_details?
