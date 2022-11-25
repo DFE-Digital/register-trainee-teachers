@@ -168,6 +168,7 @@ group :development do
 
   # Profiling
   gem "benchmark-memory"
+  gem "flamegraph"
   gem "memory_profiler"
   gem "rack-mini-profiler", require: false
   gem "stackprof"

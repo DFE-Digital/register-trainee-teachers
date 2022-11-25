@@ -264,6 +264,7 @@ GEM
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
+    flamegraph (0.9.5)
     foreman (0.87.2)
     front_matter_parser (1.0.1)
     fugit (1.7.1)
@@ -711,6 +712,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday (~> 1.10.2)
+  flamegraph
   foreman
   front_matter_parser
   google-cloud-bigquery
