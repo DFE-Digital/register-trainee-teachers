@@ -23,6 +23,7 @@ module PageObjects
       element :review_this_record_link, "#check-details"
       element :delete_this_draft_link, ".app-link--warning"
 
+      # rubocop:disable Naming/PredicateName
       def has_personal_details_completed?
         personal_details.status.text == STATUS_COMPLETED
       end
@@ -50,6 +51,7 @@ module PageObjects
       def has_lead_and_employing_school_information_completed?
         lead_and_employing_schools_section.status.text == STATUS_COMPLETED
       end
+      # rubocop:enable Naming/PredicateName
     end
   end
 end
