@@ -8,8 +8,8 @@ local:
 
 microsoft:
   service: AzureStorage
-  storage_account_name: <%= ENV.fetch('TEMP_STORAGE_ACCOUNT', nil) %>
-  storage_access_key: <%= ENV.fetch('TEMP_STORAGE_ACCESS_KEY', nil) %>
+  storage_account_name: <%= ENV.fetch('SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCOUNT', nil) %>
+  storage_access_key: <%= ENV.fetch('SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCESS_KEY', nil) %>
   container: tempdata
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
