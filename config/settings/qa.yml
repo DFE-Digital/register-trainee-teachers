@@ -26,6 +26,7 @@ features:
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
     opt_in_undergrad: true
+    iqts: true
   google:
     send_data_to_big_query: true
 
