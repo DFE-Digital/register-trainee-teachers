@@ -109,6 +109,26 @@ module Trainees
         expect(trainee.hesa_metadatum.year_of_course).to eq("0")
       end
 
+      context "leading and employing schools not applicable" do
+        let(:not_applicable_or_not_available_hesa_code) { "900010" }
+        let(:establishment_outside_england_and_wales_hesa_code) { "900000" }
+
+        let(:hesa_stub_attributes) do
+          {
+            lead_school_urn: not_applicable_or_not_available_hesa_code,
+            employing_school_urn: establishment_outside_england_and_wales_hesa_code,
+          }
+        end
+
+        it "marks the trainee's lead school as not applicable" do
+          expect(trainee.lead_school_not_applicable).to be(true)
+        end
+
+        it "marks the trainee's employing school as not applicable" do
+          expect(trainee.employing_school_not_applicable).to be(true)
+        end
+      end
+
       context "when there's an itt_commencement_date provided" do
         let(:hesa_stub_attributes) { { itt_commencement_date: "2022-09-10" } }
 

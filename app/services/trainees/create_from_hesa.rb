@@ -10,6 +10,8 @@ module Trainees
 
     TRN_REGEX = /^(\d{6,7})$/.freeze
 
+    NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010].freeze
+
     class HesaImportError < StandardError; end
 
     def initialize(student_node:, record_source:)
@@ -113,12 +115,22 @@ module Trainees
     end
 
     def school_attributes
-      return {} if hesa_trainee[:lead_school_urn].blank?
+      attrs = {}
 
-      attrs = { lead_school: School.find_by(urn: hesa_trainee[:lead_school_urn]) }
+      return attrs if hesa_trainee[:lead_school_urn].blank?
+
+      if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:lead_school_urn])
+        attrs.merge!(lead_school_not_applicable: true)
+      else
+        attrs.merge!(lead_school: School.find_by(urn: hesa_trainee[:lead_school_urn]))
+      end
 
       if hesa_trainee[:employing_school_urn].present?
-        attrs.merge!({ employing_school: School.find_by(urn: hesa_trainee[:employing_school_urn]) })
+        if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:lead_school_urn])
+          attrs.merge!(employing_school_not_applicable: true)
+        else
+          attrs.merge!(employing_school: School.find_by(urn: hesa_trainee[:employing_school_urn]))
+        end
       end
 
       attrs
