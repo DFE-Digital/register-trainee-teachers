@@ -13,11 +13,15 @@ class HomeView
   Badge = Struct.new(:status, :trainee_count, :link)
 
   def draft_trainees_count
-    @draft_trainees_count ||= trainees.draft.count
+    @draft_trainees_count ||= Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_trainees_count") do
+      @trainees.select(&:draft?).size
+    end
   end
 
   def draft_apply_trainees_count
-    @draft_apply_trainees_count ||= trainees.draft.with_apply_application.count
+    @draft_apply_trainees_count ||= Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_apply_trainees_count") do
+      @trainees.select { |trainee| trainee.draft? && trainee.apply_application.present? }.size
+    end
   end
 
   def apply_drafts_link_text
@@ -39,17 +43,23 @@ private
 
   attr_reader :trainees
 
+  def awarded_this_year_size
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/awarded_this_year") do
+      trainees.awarded.merge(current_academic_cycle.trainees_ending).size
+    end
+  end
+
   def create_badges
     @badges = [
       Badge.new(
         :in_training,
-        trainees.in_training.count,
+        trainees_in_training_size,
         trainees_path(status: %w[in_training]),
       ),
 
       Badge.new(
         :awarded_this_year,
-        trainees.awarded.merge(current_academic_cycle.trainees_ending).count,
+        awarded_this_year_size,
         trainees_path(
           status: %w[awarded],
           end_year: current_academic_cycle.label,
@@ -58,22 +68,22 @@ private
 
       Badge.new(
         :deferred,
-        trainees.deferred.count,
+        deferred_size,
         trainees_path(status: %w[deferred]),
       ),
 
       Badge.new(
         :incomplete,
-        trainees.not_draft.incomplete_for_filter.count,
+        incomplete_size,
         trainees_path(record_completion: %w[incomplete]),
       ),
     ]
 
-    if course_not_yet_started_count.positive?
+    if course_not_yet_started_size.positive?
       @badges.prepend(
         Badge.new(
           :course_not_started_yet,
-          course_not_yet_started_count,
+          course_not_yet_started_size,
           trainees_path(status: %w[course_not_yet_started]),
         ),
       )
@@ -84,11 +94,31 @@ private
     @current_academic_cycle ||= AcademicCycle.current
   end
 
-  def course_not_yet_started_count
-    @course_not_yet_started_count ||= trainees.course_not_yet_started.count
+  def course_not_yet_started_size
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/course_not_yet_started_size") do
+      @course_not_yet_started_size ||= trainees.select { |trainee| trainee.itt_start_date.present? && trainee.itt_start_date > Time.zone.now && !trainee.draft? && !trainee.deferred? && !trainee.withdrawn? }.size
+    end
+  end
+
+  def deferred_size
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/deferred_size") do
+      trainees.deferred.size
+    end
   end
 
   def drafts_are_all_apply_drafts?
     draft_apply_trainees_count == draft_trainees_count
+  end
+
+  def incomplete_size
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/incomplete_size") do
+      trainees.not_draft.incomplete_for_filter.size
+    end
+  end
+
+  def trainees_in_training_size
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/trainees_in_training_size") do
+      trainees.select { |trainee| Trainee::IN_TRAINING_STATES.include?(trainee.state) && trainee.itt_start_date < Time.zone.now }.size
+    end
   end
 end

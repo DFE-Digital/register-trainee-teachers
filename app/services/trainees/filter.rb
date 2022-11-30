@@ -6,7 +6,7 @@ module Trainees
     ALL_SCIENCES_FILTER = "Sciences - biology, chemistry, physics"
 
     def initialize(trainees:, filters:)
-      @trainees = remove_hesa_trn_data_trainees(remove_empty_trainees(trainees))
+      @trainees = remove_hesa_trn_data_trainees_and_empty_trainees(trainees)
       @filters = filters
     end
 
@@ -27,6 +27,10 @@ module Trainees
     def remove_hesa_trn_data_trainees(trainees)
       visible_sources = RecordSources::ALL - [RecordSources::HESA_TRN_DATA]
       trainees.where(record_source: visible_sources.push(nil))
+    end
+
+    def remove_hesa_trn_data_trainees_and_empty_trainees(trainees)
+      remove_hesa_trn_data_trainees(remove_empty_trainees(trainees))
     end
 
     def course_education_phase(trainees, course_education_phases)

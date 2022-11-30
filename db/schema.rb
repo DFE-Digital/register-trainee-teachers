@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_15_162408) do
+ActiveRecord::Schema.define(version: 2022_11_24_155505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -725,6 +725,7 @@ ActiveRecord::Schema.define(version: 2022_11_15_162408) do
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
     t.index ["disability_disclosure"], name: "index_trainees_on_disability_disclosure"
+    t.index ["discarded_at", "record_source", "provider_id", "state"], name: "index_trainees_on_discarded_at__record_source__provider__state"
     t.index ["discarded_at"], name: "index_trainees_on_discarded_at"
     t.index ["diversity_disclosure"], name: "index_trainees_on_diversity_disclosure"
     t.index ["dttp_id"], name: "index_trainees_on_dttp_id"

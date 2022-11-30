@@ -20,7 +20,7 @@ class Degree < ApplicationRecord
 
   validate :graduation_year_valid, if: -> { graduation_year.present? }
 
-  belongs_to :trainee
+  belongs_to :trainee, touch: true
 
   enum locale_code: { uk: 0, non_uk: 1 }
 
