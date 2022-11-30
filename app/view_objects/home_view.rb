@@ -118,7 +118,7 @@ private
 
   def trainees_in_training_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/trainees_in_training_size") do
-      trainees.select { |trainee| Trainee::IN_TRAINING_STATES.include?(trainee.state) && trainee.itt_start_date < Time.zone.now }.size
+      trainees.select { |trainee| Trainee::IN_TRAINING_STATES.include?(trainee.state) && (trainee.itt_start_date.present? ? trainee.itt_start_date < Time.zone.now : false) }.size
     end
   end
 end
