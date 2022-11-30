@@ -148,7 +148,7 @@ describe HomeView do
     end
   end
 
-  context "when there trainees in various states" do
+  context "when there are trainees in various states" do
     let(:not_started_trainee) { create_list(:trainee, 3, :trn_received, itt_start_date: current_academic_cycle.end_date + 2.months) }
     let(:in_training_trainees) { create_list(:trainee, 6, :trn_received) }
     let(:awarded_this_year_trainee) { create_list(:trainee, 5, :awarded, end_academic_cycle: current_academic_cycle) }
