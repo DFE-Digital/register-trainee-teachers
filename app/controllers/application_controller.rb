@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  if FeatureService.performance_testing?
+    prepend ApplicationControllerDev
+    content_security_policy false
+  end
+
   before_action :authenticate
   before_action :track_page
   before_action :check_organisation_context_is_set
