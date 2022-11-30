@@ -227,6 +227,6 @@ private
   end
 
   def render_partial(partial, locals)
-    (render_to_string(formats: %w[html], partial: partial, locals: locals) || "").squish
+    (render_to_string(formats: [:html], partial: partial, locals: locals) || "").squish
   end
 end

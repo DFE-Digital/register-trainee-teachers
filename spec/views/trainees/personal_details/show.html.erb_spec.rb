@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "trainees/personal_details/show.html.erb" do
+describe "trainees/personal_details/show" do
   let(:lead_school_user?) { false }
   let(:trainee) { create(:trainee) }
 

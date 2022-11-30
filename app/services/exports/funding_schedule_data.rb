@@ -61,7 +61,7 @@ module Exports
 
     def label_for(month)
       year = month > 7 ? AcademicCycle.current.start_year : AcademicCycle.current.end_year
-      Date.new(year, month).to_s(:govuk_approx)
+      Date.new(year, month).to_fs(:govuk_approx)
     end
 
     def formatted_values(row)

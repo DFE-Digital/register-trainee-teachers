@@ -44,7 +44,7 @@ module Exports
           grand_total += (course_amount + training_amount)
 
           {
-            MONTH_HEADING => Date.new(year, month).to_s(:govuk_approx),
+            MONTH_HEADING => Date.new(year, month).to_fs(:govuk_approx),
             TRAINING_BURSARY_TRAINEES_HEADING => training_amount,
             COURSE_EXTENSION_PROVIDER_PAYMENTS_HEADING => course_amount,
             MONTH_TOTAL_HEADING => training_amount + course_amount,

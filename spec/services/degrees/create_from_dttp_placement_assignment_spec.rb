@@ -12,7 +12,7 @@ module Degrees
     let(:institution) { Dttp::CodeSets::Institutions::GOLDSMITHS_COLLEGE }
     let(:grade) { Dttp::CodeSets::Grades::FIRST_CLASS_HONOURS }
     let(:degree_type) { Dttp::CodeSets::DegreeTypes::BACHELOR_OF_ARTS }
-    let(:trainee) { create(:trainee, dttp_trainee: dttp_trainee) }
+    let(:trainee) { create(:trainee, dttp_id: dttp_trainee.dttp_id) }
     let!(:dttp_degree_qualification) { create(:dttp_degree_qualification, dttp_trainee: dttp_trainee) }
 
     subject(:create_from_placement_assignment) { described_class.call(trainee: trainee) }

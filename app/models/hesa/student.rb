@@ -8,7 +8,6 @@ module Hesa
                foreign_key: :hesa_id,
                primary_key: :hesa_id,
                inverse_of: :hesa_student,
-               optional: true,
-               class_name: "::Student"
+               optional: true
   end
 end

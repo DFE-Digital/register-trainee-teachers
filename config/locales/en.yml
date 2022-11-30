@@ -947,9 +947,8 @@ en:
       persona_sign_in_button: Sign in using Persona
   errors:
     forbidden:
-      html:
-        heading: *forbidden
-        support_message_html: "If you think you should have access, contact: %{link}."
+      heading: *forbidden
+      support_message_html: "If you think you should have access, contact: %{link}."
     not_found:
       heading: Page not found
       body: Check the web address and try again.

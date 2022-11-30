@@ -115,7 +115,7 @@ describe DegreeForm, type: :model do
       let(:degree) { trainee.degrees.first }
 
       before do
-        degree.institution = Degrees::DfeReference::INSTITUTIONS.all.sample.name
+        degree.institution = Degrees::DfEReference::INSTITUTIONS.all.sample.name
       end
 
       it "deletes the invalid degree" do
@@ -126,10 +126,10 @@ describe DegreeForm, type: :model do
     end
 
     context "UUID attributes" do
-      let(:dfe_institution) { Degrees::DfeReference::INSTITUTIONS.all.sample }
-      let(:dfe_subject) { Degrees::DfeReference::SUBJECTS.all.sample }
-      let(:dfe_type) { Degrees::DfeReference::TYPES.all.sample }
-      let(:dfe_grade) { Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.sample }
+      let(:dfe_institution) { Degrees::DfEReference::INSTITUTIONS.all.sample }
+      let(:dfe_subject) { Degrees::DfEReference::SUBJECTS.all.sample }
+      let(:dfe_type) { Degrees::DfEReference::TYPES.all.sample }
+      let(:dfe_grade) { Degrees::DfEReference::GRADES.all.sample }
 
       let(:degree) do
         build(:degree,

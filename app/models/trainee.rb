@@ -11,15 +11,15 @@ class Trainee < ApplicationRecord
   belongs_to :dttp_trainee,
              foreign_key: :dttp_id,
              primary_key: :dttp_id,
-             inverse_of: :trainee,
              optional: true,
+             inverse_of: :trainee,
              class_name: "Dttp::Trainee"
 
   belongs_to :hesa_student,
              foreign_key: :hesa_id,
              primary_key: :hesa_id,
-             inverse_of: :trainee,
              optional: true,
+             inverse_of: :trainee,
              class_name: "Hesa::Student"
 
   belongs_to :lead_school, optional: true, class_name: "School"
@@ -28,11 +28,11 @@ class Trainee < ApplicationRecord
 
   belongs_to :published_course,
              ->(trainee) { where(accredited_body_code: trainee.provider.code) },
-             class_name: "Course",
              foreign_key: :course_uuid,
              primary_key: :uuid,
              inverse_of: :trainees,
-             optional: true
+             optional: true,
+             class_name: "Course"
 
   belongs_to :start_academic_cycle, optional: true, class_name: "AcademicCycle"
   belongs_to :end_academic_cycle, optional: true, class_name: "AcademicCycle"
