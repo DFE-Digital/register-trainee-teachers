@@ -504,7 +504,7 @@ describe Trainee do
 
   context "ordering scope" do
     let(:deferred_trainee_a) { create(:trainee, :deferred, last_name: "Smith") }
-    let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn,last_name: "Doe") }
+    let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, last_name: "Doe") }
     let(:draft_trainee_c) { create(:trainee, :draft, last_name: "Jones") }
     let(:draft_trainee_d) { create(:trainee, :draft, last_name: "Joker") }
 
