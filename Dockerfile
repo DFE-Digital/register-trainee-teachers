@@ -1,4 +1,4 @@
-FROM ruby:2.7.5-alpine3.15
+FROM ruby:3.1.3-alpine3.15
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
@@ -17,7 +17,7 @@ RUN apk add --update --no-cache --virtual build-dependances \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependances
 
-# Remove once base image ruby:2.7.5-alpine3.15 has been updated with latest libraries
+# Remove once base image ruby:3.1.3-alpine3.15 has been updated with latest libraries
 RUN apk add --no-cache libretls=3.3.4-r3 ncurses-libs=6.3_p20211120-r1 zlib=1.2.12-r3
 
 COPY package.json yarn.lock ./

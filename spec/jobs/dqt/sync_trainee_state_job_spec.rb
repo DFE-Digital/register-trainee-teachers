@@ -12,7 +12,7 @@ module Dqt
 
     it "calls the SyncState service", feature_integrate_with_dqt: true do
       described_class.perform_now(trainee)
-      expect(SyncState).to have_received(:call).with(trainee: trainee)
+      expect(SyncState).to have_received(:call).with(trainee:)
     end
   end
 end

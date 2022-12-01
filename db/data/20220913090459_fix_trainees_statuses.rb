@@ -9,7 +9,7 @@ class FixTraineesStatuses < ActiveRecord::Migration[6.1]
     Trainee.find_by(trn: 2068721)&.update_columns(state: :withdrawn, withdraw_reason: WithdrawalReasons::DEATH)
 
     [1754063, 1836859, 1859242, 1960177, 2042122, 2048081, 2052341, 2066594, 1685644].each do |trn|
-      Trainee.find_by(trn: trn)&.update_columns(state: :deferred)
+      Trainee.find_by(trn:)&.update_columns(state: :deferred)
     end
 
     [
@@ -56,7 +56,7 @@ class FixTraineesStatuses < ActiveRecord::Migration[6.1]
       4047434,
       1760850,
     ].each do |trn|
-      Trainee.find_by(trn: trn)&.update_columns(state: :withdrawn, withdraw_reason: WithdrawalReasons::UNKNOWN)
+      Trainee.find_by(trn:)&.update_columns(state: :withdrawn, withdraw_reason: WithdrawalReasons::UNKNOWN)
     end
 
     [
@@ -81,7 +81,7 @@ class FixTraineesStatuses < ActiveRecord::Migration[6.1]
       2058026,
       2063417,
     ].each do |trn|
-      Trainee.find_by(trn: trn)&.update_columns(state: :trn_received)
+      Trainee.find_by(trn:)&.update_columns(state: :trn_received)
     end
 
     [

@@ -76,7 +76,7 @@ RSpec.feature "Adding a degree" do
       background do
         given_i_have_selected_the_uk_route
         and_i_am_on_the_degree_details_page
-        and_i_fill_in_the_form(other_grade: other_grade)
+        and_i_fill_in_the_form(other_grade:)
         and_i_click_the_continue_button_on_the_degree_details_page
         then_i_am_redirected_to_the_trainee_degrees_confirmation_page
       end
@@ -235,11 +235,11 @@ private
   end
 
   def and_i_fill_in_subject_without_selecting_a_value(with:)
-    degree_details_page.subject_raw.fill_in with: with
+    degree_details_page.subject_raw.fill_in with:
   end
 
   def and_i_fill_in_country_without_selecting_a_value(with:)
-    degree_details_page.country_raw.fill_in with: with
+    degree_details_page.country_raw.fill_in with:
   end
 
   def then_subject_is_populated(with:)
@@ -251,7 +251,7 @@ private
   end
 
   def and_i_fill_in_degree_without_selecting_a_value(with:)
-    degree_details_page.uk_degree_raw.fill_in with: with
+    degree_details_page.uk_degree_raw.fill_in with:
   end
 
   def then_degree_is_populated(with:)
@@ -259,7 +259,7 @@ private
   end
 
   def and_i_fill_in_institution_without_selecting_a_value(with:)
-    degree_details_page.institution_raw.fill_in with: with
+    degree_details_page.institution_raw.fill_in with:
   end
 
   def then_institution_is_populated(with:)

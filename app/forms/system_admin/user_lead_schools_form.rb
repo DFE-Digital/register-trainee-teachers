@@ -45,7 +45,7 @@ module SystemAdmin
     def save
       if valid?
         lead_school = School.find(lead_school_id)
-        LeadSchoolUser.find_or_create_by!(lead_school: lead_school, user: user)
+        LeadSchoolUser.find_or_create_by!(lead_school:, user:)
       else
         false
       end

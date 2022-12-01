@@ -39,7 +39,7 @@ module Hesa
                elsif local_xml
                  local_xml.read
                else
-                 Hesa::Client.get(url: url)
+                 Hesa::Client.get(url:)
                end
     end
 
@@ -94,7 +94,7 @@ module Hesa
       return unless write_xml?
 
       FileUtils.mkdir_p(path)
-      File.write(local_xml_path, Hesa::Client.get(url: url).force_encoding("UTF-8")) unless File.exist?(local_xml_path)
+      File.write(local_xml_path, Hesa::Client.get(url:).force_encoding("UTF-8")) unless File.exist?(local_xml_path)
       @local_xml = File.new(local_xml_path)
     end
 

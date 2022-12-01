@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Api
-  describe SchoolsController, type: :controller do
+  describe SchoolsController do
     describe "#index" do
       context "default response" do
         before do

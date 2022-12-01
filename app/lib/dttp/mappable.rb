@@ -67,7 +67,7 @@ module Dttp
     end
 
     def dttp_school_id(urn)
-      Dttp::School.active.find_by!(urn: urn)&.dttp_id
+      Dttp::School.active.find_by!(urn:)&.dttp_id
     end
 
     def region_id(region)

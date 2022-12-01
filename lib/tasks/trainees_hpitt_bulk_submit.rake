@@ -9,9 +9,9 @@ namespace :trainees do
     interval_increment = 15
     batch_size = 10
 
-    provider.trainees.draft.find_in_batches(batch_size: batch_size) do |trainee_group|
+    provider.trainees.draft.find_in_batches(batch_size:) do |trainee_group|
       trainee_group.each do |trainee|
-        next unless Submissions::TrnValidator.new(trainee: trainee).valid?
+        next unless Submissions::TrnValidator.new(trainee:).valid?
 
         Dqt::RegisterForTrnJob.set(wait: current_interval.seconds).perform_later(trainee)
       end

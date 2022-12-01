@@ -11,7 +11,7 @@ module Degrees
     end
     let(:trainee) { create(:trainee, dttp_id: dttp_trainee.dttp_id) }
 
-    subject(:create_from_dttp) { described_class.call(trainee: trainee) }
+    subject(:create_from_dttp) { described_class.call(trainee:) }
 
     shared_examples "invalid" do
       it "does not save the degree" do

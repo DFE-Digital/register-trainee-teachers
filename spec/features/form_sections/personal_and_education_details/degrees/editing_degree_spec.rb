@@ -128,7 +128,7 @@ private
   end
 
   def and_i_fill_in_subject_without_selecting_a_value(with:)
-    degree_details_page.subject_raw.fill_in(with: with)
+    degree_details_page.subject_raw.fill_in(with:)
   end
 
   def then_subject_is_populated(with:)
@@ -136,7 +136,7 @@ private
   end
 
   def and_i_fill_in_institution_without_selecting_a_value(with:)
-    degree_details_page.institution_raw.fill_in(with: with)
+    degree_details_page.institution_raw.fill_in(with:)
   end
 
   def then_institution_is_populated(with:)

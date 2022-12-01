@@ -17,7 +17,7 @@ module Dqt
       end
 
       describe "#params" do
-        subject { described_class.new(trainee: trainee).params }
+        subject { described_class.new(trainee:).params }
 
         it "returns a hash including personal attributes" do
           expect(subject).to include({

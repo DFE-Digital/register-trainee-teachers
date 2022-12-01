@@ -9,7 +9,7 @@ module Dqt
       return unless FeatureService.enabled?(:integrate_with_dqt)
       return if trainee.trn.present?
 
-      trn_request = RegisterForTrn.call(trainee: trainee)
+      trn_request = RegisterForTrn.call(trainee:)
       RetrieveTrnJob.perform_later(trn_request) unless trn_request.failed?
     end
   end

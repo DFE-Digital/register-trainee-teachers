@@ -84,7 +84,7 @@ class CourseDetailsForm < TraineeForm
     if valid?
       update_trainee_attributes
       clear_funding_information if clear_funding_information?
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       clear_all_course_related_stashes
     else
       false
@@ -173,10 +173,10 @@ private
 
   def update_trainee_attributes
     attributes = {
-      course_uuid: course_uuid,
-      itt_start_date: itt_start_date,
-      itt_end_date: itt_end_date,
-      course_education_phase: course_education_phase,
+      course_uuid:,
+      itt_start_date:,
+      itt_end_date:,
+      course_education_phase:,
     }
 
     set_course_subject_from_primary_phase if is_primary_phase?
@@ -195,7 +195,7 @@ private
 
     if requires_study_mode?
       attributes.merge!({
-        study_mode: study_mode,
+        study_mode:,
       })
     end
 

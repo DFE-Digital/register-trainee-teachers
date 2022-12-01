@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SubjectSpecialism, type: :model do
+RSpec.describe SubjectSpecialism do
   subject { create(:subject_specialism) }
 
   describe "associations" do

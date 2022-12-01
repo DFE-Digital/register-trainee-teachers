@@ -13,7 +13,7 @@ module Dttp
     let(:trainee_list) do
       {
         items: [bursary_detail_one_hash, bursary_detail_two_hash],
-        meta: { next_page_url: next_page_url },
+        meta: { next_page_url: },
       }
     end
 

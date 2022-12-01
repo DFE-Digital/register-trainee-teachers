@@ -9,7 +9,7 @@ feature "Edit providers" do
     let(:accreditation_id) { Faker::Number.number(digits: 4) }
 
     before do
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
       when_i_visit_the_provider_index_page
       when_i_click_on_provider_name
       and_i_click_edit_this_provider

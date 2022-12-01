@@ -23,7 +23,7 @@ class DegreesForm
   end
 
   def find_degree_from_param(slug)
-    if (degree = trainee.degrees.find_by(slug: slug))
+    if (degree = trainee.degrees.find_by(slug:))
       form = DegreeForm.new(degrees_form: self, degree: degree)
       # Load stored attributes
       form.attributes = get_store[degree.slug] || {}

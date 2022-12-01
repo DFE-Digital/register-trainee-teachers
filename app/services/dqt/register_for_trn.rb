@@ -22,13 +22,13 @@ module Dqt
 
     def trn_request
       @trn_request ||= TrnRequest.create_with(request_id: SecureRandom.uuid)
-                                 .find_or_create_by!(trainee: trainee)
+                                 .find_or_create_by!(trainee:)
     end
 
     def submit_trn_request
       path = "/v2/trn-requests/#{trn_request.request_id}"
-      body = Dqt::Params::TrnRequest.new(trainee: trainee).to_json
-      response = Client.put(path, body: body)
+      body = Dqt::Params::TrnRequest.new(trainee:).to_json
+      response = Client.put(path, body:)
       trn_request.response = response
       trn_request.requested!
     rescue Client::HttpError => e

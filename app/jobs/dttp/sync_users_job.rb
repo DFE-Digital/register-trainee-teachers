@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_from_dttp)
 
-      @user_list = RetrieveUsers.call(request_uri: request_uri)
+      @user_list = RetrieveUsers.call(request_uri:)
 
       User.upsert_all(user_attributes, unique_by: :dttp_id)
 

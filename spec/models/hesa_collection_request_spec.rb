@@ -27,8 +27,8 @@ module Hesa
         before do
           create(:hesa_collection_request,
                  :import_successful,
-                 collection_reference: collection_reference,
-                 requested_at: requested_at)
+                 collection_reference:,
+                 requested_at:)
         end
 
         it "returns the last request run date" do

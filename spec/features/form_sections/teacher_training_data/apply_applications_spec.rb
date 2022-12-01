@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "apply registrations", type: :feature do
+feature "apply registrations" do
   include CourseDetailsHelper
 
   let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }

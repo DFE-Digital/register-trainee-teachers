@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_from_dttp)
 
-      @provider_list = RetrieveProviders.call(request_uri: request_uri)
+      @provider_list = RetrieveProviders.call(request_uri:)
 
       Provider.upsert_all(provider_attributes, unique_by: :dttp_id)
 

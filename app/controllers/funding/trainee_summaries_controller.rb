@@ -5,8 +5,8 @@ module Funding
     def show
       respond_to do |format|
         format.html do
-          @trainee_summary_view = TraineeSummaryView.new(trainee_summary: trainee_summary)
-          @navigation_view = ::Funding::NavigationView.new(organisation: organisation)
+          @trainee_summary_view = TraineeSummaryView.new(trainee_summary:)
+          @navigation_view = ::Funding::NavigationView.new(organisation:)
 
           current_academic_cycle = AcademicCycle.current
           @start_year = current_academic_cycle.start_year

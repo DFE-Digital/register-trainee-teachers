@@ -5,8 +5,8 @@ module Funding
     def show
       respond_to do |format|
         format.html do
-          @payment_schedule_view = PaymentScheduleView.new(payment_schedule: payment_schedule)
-          @navigation_view = NavigationView.new(organisation: organisation)
+          @payment_schedule_view = PaymentScheduleView.new(payment_schedule:)
+          @navigation_view = NavigationView.new(organisation:)
           @start_year = current_academic_cycle.start_year
           @end_year = current_academic_cycle.end_year
         end
@@ -23,7 +23,7 @@ module Funding
   private
 
     def data_export
-      @data_export ||= Exports::FundingScheduleData.new(payment_schedule: payment_schedule)
+      @data_export ||= Exports::FundingScheduleData.new(payment_schedule:)
     end
 
     def organisation

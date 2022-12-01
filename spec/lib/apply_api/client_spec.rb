@@ -23,7 +23,7 @@ module ApplyApi
     context "when the API call is successful" do
       it "does not create an ApplyApplicationSyncRequest record with recruitment_cycle_year" do
         expect { subject }.not_to(
-          change { ApplyApplicationSyncRequest.where(recruitment_cycle_year: recruitment_cycle_year).count },
+          change { ApplyApplicationSyncRequest.where(recruitment_cycle_year:).count },
         )
       end
     end
@@ -40,7 +40,7 @@ module ApplyApi
           subject
         rescue ApplyApi::Client::HttpError
           # Suppress exception so that we can assert no `ApplyApplicationSyncRequest` is created.
-        end.to change { ApplyApplicationSyncRequest.unsuccessful.where(recruitment_cycle_year: recruitment_cycle_year).count }.by(1)
+        end.to change { ApplyApplicationSyncRequest.unsuccessful.where(recruitment_cycle_year:).count }.by(1)
       end
     end
   end

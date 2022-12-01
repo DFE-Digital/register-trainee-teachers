@@ -20,7 +20,7 @@ module Dqt
         return
       end
 
-      trn = Dqt::RetrieveTrn.call(trn_request: trn_request)
+      trn = Dqt::RetrieveTrn.call(trn_request:)
 
       if trn
         trainee.trn_received!(trn)

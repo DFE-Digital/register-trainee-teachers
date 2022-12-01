@@ -255,7 +255,7 @@ class Trainee < ApplicationRecord
   before_save :set_submission_ready, if: :completion_trackable?
 
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
-    update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
+    update!(dttp_id:, placement_assignment_dttp_id:)
   end
 
   def trn_received!(new_trn = nil)
@@ -396,7 +396,7 @@ class Trainee < ApplicationRecord
   end
 
   def duplicate?
-    Trainee.where(first_names: first_names, last_name: last_name, date_of_birth: date_of_birth, email: email).count > 1
+    Trainee.where(first_names:, last_name:, date_of_birth:, email:).count > 1
   end
 
   def hesa_record?
@@ -422,7 +422,7 @@ private
 
     exclude_list = %w[created_at updated_at dttp_update_sha progress submission_ready]
 
-    trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
+    trainee_values = serializable_hash.except(*exclude_list).values.compact
 
     (
       trainee_values + [degrees, nationalities, disabilities].flat_map do |assoc|

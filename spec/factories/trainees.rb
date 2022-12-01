@@ -168,7 +168,7 @@ FactoryBot.define do
         subject_name { nil }
       end
 
-      course_subject_one { create(:subject_specialism, subject_name: subject_name).name }
+      course_subject_one { create(:subject_specialism, subject_name:).name }
     end
 
     trait :with_primary_education do
@@ -305,7 +305,7 @@ FactoryBot.define do
       end
 
       after(:create) do |trainee, evaluator|
-        create_list(:trainee_disability, evaluator.disabilities_count, trainee: trainee)
+        create_list(:trainee_disability, evaluator.disabilities_count, trainee:)
       end
     end
 
@@ -599,7 +599,7 @@ FactoryBot.define do
       hesa_id { Faker::Number.number(digits: 13) }
       created_from_hesa { true }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-      hesa_student { create(:hesa_student, hesa_id: hesa_id) }
+      hesa_student { create(:hesa_student, hesa_id:) }
 
       after(:create) do |trainee, evaluator|
         create(:hesa_metadatum, trainee: trainee, itt_aim: evaluator.itt_aim)

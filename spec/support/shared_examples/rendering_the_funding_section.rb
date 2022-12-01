@@ -10,7 +10,7 @@ RSpec.shared_examples "rendering the funding section" do
 
     context "and has not entered their course details" do
       it "renders the funding section as 'cannot start yet'" do
-        render_inline(described_class.new(trainee: trainee))
+        render_inline(described_class.new(trainee:))
         expect(rendered_component).to have_css "#funding-status", text: "cannot start yet"
       end
     end
@@ -19,7 +19,7 @@ RSpec.shared_examples "rendering the funding section" do
       before { trainee.progress.course_details = true }
 
       it "renders the funding section as 'incomplete'" do
-        render_inline(described_class.new(trainee: trainee))
+        render_inline(described_class.new(trainee:))
         expect(rendered_component).to have_css "#funding-status", text: "incomplete"
       end
     end
@@ -33,7 +33,7 @@ RSpec.shared_examples "rendering the funding section" do
 
     context "and has not entered their course details" do
       it "renders the funding section as 'cannot start yet'" do
-        render_inline(described_class.new(trainee: trainee))
+        render_inline(described_class.new(trainee:))
         expect(rendered_component).to have_css "#funding-status", text: "cannot start yet"
       end
     end
@@ -42,7 +42,7 @@ RSpec.shared_examples "rendering the funding section" do
       before { trainee.progress.course_details = true }
 
       it "renders the funding section as 'incomplete'" do
-        render_inline(described_class.new(trainee: trainee))
+        render_inline(described_class.new(trainee:))
         expect(rendered_component).to have_css "#funding-status", text: "incomplete"
       end
     end

@@ -11,7 +11,7 @@ class BackfillMissingInstitutionUuids < ActiveRecord::Migration[6.1]
     }
 
     institutions.each do |institution, uuid|
-      Degree.where(institution: institution).update_all(institution_uuid: uuid)
+      Degree.where(institution:).update_all(institution_uuid: uuid)
     end
   end
 

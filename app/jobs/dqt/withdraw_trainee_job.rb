@@ -10,7 +10,7 @@ module Dqt
 
       return unless trainee_updatable?(trainee)
 
-      WithdrawTrainee.call(trainee: trainee)
+      WithdrawTrainee.call(trainee:)
     end
 
   private

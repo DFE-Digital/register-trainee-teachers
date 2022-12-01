@@ -8,7 +8,7 @@ RSpec.describe RouteIndicator::View do
   let(:trainee) { create(:trainee) }
 
   before do
-    render_inline(described_class.new(trainee: trainee))
+    render_inline(described_class.new(trainee:))
   end
 
   describe "rendered component" do

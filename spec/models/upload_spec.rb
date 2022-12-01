@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Upload, type: :model do
+RSpec.describe Upload do
   context "scopes" do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to have_one_attached(:file) }

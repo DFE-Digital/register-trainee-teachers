@@ -25,7 +25,7 @@ module Funding
         month_total(month_index)
       end
 
-      payment_data_for(predicted_months, initial_total: initial_total)
+      payment_data_for(predicted_months, initial_total:)
     end
 
     def payment_breakdown

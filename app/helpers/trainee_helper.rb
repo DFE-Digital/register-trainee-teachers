@@ -25,7 +25,7 @@ module TraineeHelper
     if total_pages <= 1
       return I18n.t(
         "#{i18n_prefix}.index",
-        total_trainees_count_text: total_trainees_count_text,
+        total_trainees_count_text:,
       )
     end
 

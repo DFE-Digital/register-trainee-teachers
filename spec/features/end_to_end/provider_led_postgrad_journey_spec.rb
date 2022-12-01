@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "provider-led (postgrad) end-to-end journey", type: :feature do
+feature "provider-led (postgrad) end-to-end journey" do
   let(:itt_start_date) { 1.month.from_now }
   let(:itt_end_date) { itt_start_date + 1.year }
 

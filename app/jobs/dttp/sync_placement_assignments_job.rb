@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_trainees_from_dttp)
 
-      @placement_assignment_list = RetrievePlacementAssignments.call(request_uri: request_uri)
+      @placement_assignment_list = RetrievePlacementAssignments.call(request_uri:)
 
       PlacementAssignment.upsert_all(placement_assignment_attributes, unique_by: :dttp_id)
 

@@ -15,7 +15,7 @@ feature "creating a new lead school for a user" do
   let!(:user_to_be_updated) { create(:user, first_name: "James", last_name: "Rodney") }
 
   before do
-    given_i_am_authenticated(user: user)
+    given_i_am_authenticated(user:)
     and_a_number_of_lead_schools_exist
     when_i_visit_the_user_index_page
     and_i_click_on_the_user_name_link
@@ -56,7 +56,7 @@ private
 
   def and_a_number_of_lead_schools_exist
     @lead_schools = SCHOOL_NAMES.map do |name|
-      create(:school, :lead, name: name)
+      create(:school, :lead, name:)
     end
   end
 

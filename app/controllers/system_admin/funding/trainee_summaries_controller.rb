@@ -6,7 +6,7 @@ module SystemAdmin
       def show
         respond_to do |format|
           format.html do
-            @trainee_summary_view = ::Funding::TraineeSummaryView.new(trainee_summary: trainee_summary)
+            @trainee_summary_view = ::Funding::TraineeSummaryView.new(trainee_summary:)
             @navigation_view = ::Funding::NavigationView.new(organisation: organisation, system_admin: true)
 
             @start_year = current_academic_cycle.start_year

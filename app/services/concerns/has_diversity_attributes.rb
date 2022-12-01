@@ -3,7 +3,7 @@
 module HasDiversityAttributes
   def ethnicity_and_disability_attributes
     ethnicity_attributes.merge(disability_attributes)
-                        .merge({ diversity_disclosure: diversity_disclosure })
+                        .merge({ diversity_disclosure: })
   end
 
   def ethnicity_attributes
@@ -11,8 +11,8 @@ module HasDiversityAttributes
       ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
 
       return {
-        ethnic_group: ethnic_group,
-        ethnic_background: ethnic_background,
+        ethnic_group:,
+        ethnic_background:,
       }
     end
 

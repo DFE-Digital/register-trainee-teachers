@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "LeadSchoolSearch", type: :feature do
+RSpec.feature "LeadSchoolSearch" do
   before do
     given_i_am_authenticated
     given_a_school_direct_tuition_fee_trainee_exists

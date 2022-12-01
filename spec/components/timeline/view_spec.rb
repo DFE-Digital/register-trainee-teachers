@@ -16,7 +16,7 @@ module Timeline
       ]
     }
 
-    let(:event) { double(title: title, username: username, date: date, items: items) }
+    let(:event) { double(title:, username:, date:, items:) }
     let(:trainee) { build(:trainee, withdraw_date: withdrawal_date, withdraw_reason: withdraw_reason, additional_withdraw_reason: additional_withdraw_reason) }
     let(:withdrawal_date) { Time.zone.now + 1 }
     let(:withdraw_reason) { "for_another_reason" }

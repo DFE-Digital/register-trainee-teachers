@@ -13,7 +13,7 @@ module Dttp
     let(:trainee_list) do
       {
         items: [dormant_period_one_hash, dormant_period_two_hash],
-        meta: { next_page_url: next_page_url },
+        meta: { next_page_url: },
       }
     end
 

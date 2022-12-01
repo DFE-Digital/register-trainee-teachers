@@ -15,10 +15,10 @@ RSpec.shared_examples "rendering course confirmation" do
       }
     else
       {
-        trainee: trainee,
-        course: course,
-        specialisms: specialisms,
-        itt_start_date: itt_start_date,
+        trainee:,
+        course:,
+        specialisms:,
+        itt_start_date:,
       }
     end
   end

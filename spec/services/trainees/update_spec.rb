@@ -16,7 +16,7 @@ module Trainees
         end
 
         it "updates the trainee" do
-          described_class.call(trainee: trainee, params: params)
+          described_class.call(trainee:, params:)
           trainee.reload
           expect(trainee.first_names).to eq("Dave")
           expect(trainee.last_name).to eq("Hill")
@@ -25,21 +25,21 @@ module Trainees
 
         it "queues an update to DQT" do
           expect(Dqt::UpdateTraineeJob).to receive(:perform_later).with(trainee)
-          described_class.call(trainee: trainee, params: params)
+          described_class.call(trainee:, params:)
         end
 
         it "does not queue a withdrawal to DQT when `withdrawal` option is not set" do
           expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later).with(trainee)
-          described_class.call(trainee: trainee, params: params)
+          described_class.call(trainee:, params:)
         end
 
         it "queues a set academic cycles job" do
           expect(Trainees::SetAcademicCyclesJob).to receive(:perform_later).with(trainee)
-          described_class.call(trainee: trainee, params: params)
+          described_class.call(trainee:, params:)
         end
 
         it "returns true" do
-          expect(described_class.call(trainee: trainee, params: params)).to be(true)
+          expect(described_class.call(trainee:, params:)).to be(true)
         end
       end
 
@@ -47,7 +47,7 @@ module Trainees
         context "with no params" do
           it "persists any changes" do
             trainee.first_names = "Baldric"
-            described_class.call(trainee: trainee)
+            described_class.call(trainee:)
             trainee.reload
             expect(trainee.first_names).to eq("Baldric")
           end

@@ -13,7 +13,7 @@ module FlashBanner
     let(:expected_title) { type == :success ? "Success" : "Important" }
 
     before do
-      render_inline(described_class.new(flash: flash, trainee: trainee))
+      render_inline(described_class.new(flash:, trainee:))
     end
 
     context "non draft trainee" do

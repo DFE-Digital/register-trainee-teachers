@@ -21,7 +21,7 @@ class TraineesController < BaseTraineeController
 
   def create
     provider_id = current_user.provider? ? current_user.organisation.id : nil
-    authorize(@trainee = Trainee.new(trainee_params.merge(provider_id: provider_id)))
+    authorize(@trainee = Trainee.new(trainee_params.merge(provider_id:)))
     trainee.set_early_years_course_details
 
     if trainee.save
@@ -97,7 +97,7 @@ private
   end
 
   def missing_fields
-    @missing_fields ||= Submissions::MissingDataValidator.new(trainee: trainee).missing_fields
+    @missing_fields ||= Submissions::MissingDataValidator.new(trainee:).missing_fields
   end
 
   def trainee

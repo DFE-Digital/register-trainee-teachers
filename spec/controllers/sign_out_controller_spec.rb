@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe SignOutController, type: :controller do
+describe SignOutController do
   include DfESignInUserHelper
 
   let(:user) { create(:user) }

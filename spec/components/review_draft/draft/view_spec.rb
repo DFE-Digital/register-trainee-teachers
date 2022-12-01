@@ -6,7 +6,7 @@ RSpec.describe ReviewDraft::Draft::View do
   include TaskListHelper
 
   before do
-    render_inline(described_class.new(trainee: trainee))
+    render_inline(described_class.new(trainee:))
   end
 
   context "sections that appear for assessment-only trainees" do

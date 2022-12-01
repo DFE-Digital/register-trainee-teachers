@@ -8,10 +8,10 @@ module RecordHeader
 
     let(:trainee) do
       build(:trainee,
-            first_names: first_names,
-            middle_names: middle_names,
-            last_name: last_name,
-            trn: trn)
+            first_names:,
+            middle_names:,
+            last_name:,
+            trn:)
     end
 
     let(:first_names) { "Dave" }
@@ -21,7 +21,7 @@ module RecordHeader
 
     describe "trainee name" do
       before do
-        render_inline(described_class.new(trainee: trainee))
+        render_inline(described_class.new(trainee:))
       end
 
       it "renders the trainee name" do
@@ -47,7 +47,7 @@ module RecordHeader
 
     describe "trn" do
       before do
-        render_inline(described_class.new(trainee: trainee))
+        render_inline(described_class.new(trainee:))
       end
 
       context "where a trn is present" do
@@ -68,7 +68,7 @@ module RecordHeader
     describe "status tag" do
       before do
         allow(StatusTag::View).to receive(:new).with(trainee: trainee, hide_progress_tag: false).and_return(double(render_in: "liverpool"))
-        render_inline(described_class.new(trainee: trainee))
+        render_inline(described_class.new(trainee:))
       end
 
       it "is rendered" do

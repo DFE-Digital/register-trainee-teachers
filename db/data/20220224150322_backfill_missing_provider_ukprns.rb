@@ -56,7 +56,7 @@ class BackfillMissingProviderUkprns < ActiveRecord::Migration[6.1]
       119 => 10057399,
       121 => 10054033,
     }.each do |provider_id, ukprn|
-      Provider.find_by(id: provider_id)&.update(ukprn: ukprn)
+      Provider.find_by(id: provider_id)&.update(ukprn:)
     end
 
     # Fix data for existing provider.

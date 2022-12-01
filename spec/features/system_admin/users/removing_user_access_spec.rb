@@ -6,7 +6,7 @@ feature "Removing user access" do
   let(:user) { create(:user, :with_multiple_organisations, system_admin: true) }
 
   before do
-    given_i_am_authenticated(user: user)
+    given_i_am_authenticated(user:)
   end
 
   scenario "provider" do

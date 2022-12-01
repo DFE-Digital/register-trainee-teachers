@@ -18,7 +18,7 @@ class CorrectProviderCodes < ActiveRecord::Migration[6.1]
       "St. Joseph's College Stoke Secondary Partnership" => "1WJ",
       "Luminate Partnership for ITT" => "4L6",
     }.each do |name, code|
-      Provider.find_by(name: name)&.update(code: code)
+      Provider.find_by(name:)&.update(code:)
     end
   end
 

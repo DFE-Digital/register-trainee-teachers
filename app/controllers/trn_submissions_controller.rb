@@ -5,7 +5,7 @@ class TrnSubmissionsController < ApplicationController
 
   def create
     unless trainee.submission_ready?
-      @form = Submissions::TrnValidator.new(trainee: trainee)
+      @form = Submissions::TrnValidator.new(trainee:)
       @form.validate
       return render("trainees/check_details/show")
     end
@@ -14,7 +14,7 @@ class TrnSubmissionsController < ApplicationController
       return redirect_to(edit_trainee_start_status_path(trainee))
     end
 
-    Trainees::SubmitForTrn.call(trainee: trainee)
+    Trainees::SubmitForTrn.call(trainee:)
     redirect_to(trn_submission_path(trainee))
   end
 

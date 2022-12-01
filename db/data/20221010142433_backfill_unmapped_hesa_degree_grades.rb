@@ -5,7 +5,7 @@ class BackfillUnmappedHesaDegreeGrades < ActiveRecord::Migration[6.1]
     from_date = Settings.hesa.current_collection_start_date
     collection_reference = Settings.hesa.current_collection_reference
     url = "#{Settings.hesa.collection_base_url}/#{collection_reference}/#{from_date}"
-    xml_response = Hesa::Client.get(url: url)
+    xml_response = Hesa::Client.get(url:)
 
     return unless xml_response.include?("ITTRecord")
 
@@ -13,7 +13,7 @@ class BackfillUnmappedHesaDegreeGrades < ActiveRecord::Migration[6.1]
       next unless node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
 
       student_node = Nokogiri::XML(node.outer_xml).at("./Student")
-      hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
+      hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node:)
 
       Degree.without_auditing do
         trainee = Trainee.find_by(hesa_id: hesa_trainee[:hesa_id])

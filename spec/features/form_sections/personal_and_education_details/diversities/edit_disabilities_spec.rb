@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit disability details", type: :feature do
+feature "edit disability details" do
   background do
     given_i_am_authenticated
     given_a_disabled_trainee_exists

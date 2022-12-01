@@ -10,7 +10,7 @@ module Trainees
       return unless FeatureService.enabled?("import_trainees_from_dttp")
 
       Audited.audit_class.as_user(USERNAME) do
-        CreateFromDttp.call(dttp_trainee: dttp_trainee)
+        CreateFromDttp.call(dttp_trainee:)
       end
     end
   end

@@ -5,14 +5,14 @@ require "rails_helper"
 module Dqt
   describe RetrieveAwardJob do
     let(:trainee) { create(:trainee, :trn_received) }
-    let(:trn_request) { create(:dqt_trn_request, trainee: trainee) }
+    let(:trn_request) { create(:dqt_trn_request, trainee:) }
     let(:dqt_response) do
       { "qualified_teacher_status" => { "qts_date" => award_date } }
     end
 
     before do
       enable_features(:integrate_with_dqt)
-      allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee: trainee).and_return(dqt_response)
+      allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee:).and_return(dqt_response)
     end
 
     context "qts_date is present" do

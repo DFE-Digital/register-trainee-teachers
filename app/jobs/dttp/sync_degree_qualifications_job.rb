@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_trainees_from_dttp)
 
-      @degree_list = RetrieveDegreeQualifications.call(request_uri: request_uri)
+      @degree_list = RetrieveDegreeQualifications.call(request_uri:)
 
       DegreeQualification.upsert_all(degree_attributes, unique_by: :dttp_id)
 

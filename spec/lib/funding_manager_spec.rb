@@ -11,9 +11,9 @@ describe FundingManager do
     create(:trainee,
            :with_study_mode_and_course_dates,
            :with_course_allocation_subject,
-           course_subject_one: course_subject_one,
-           training_route: training_route,
-           bursary_tier: bursary_tier)
+           course_subject_one:,
+           training_route:,
+           bursary_tier:)
   end
 
   before do
@@ -47,7 +47,7 @@ describe FundingManager do
       context "there is a specialism for training route" do
         let(:subject_specialism) { create(:subject_specialism) }
         let(:amount) { 24_000 }
-        let(:funding_method) { create(:funding_method, training_route: training_route, amount: amount) }
+        let(:funding_method) { create(:funding_method, training_route:, amount:) }
 
         before do
           create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
@@ -82,7 +82,7 @@ describe FundingManager do
     context "there is a specialism for training route" do
       let(:subject_specialism) { create(:subject_specialism) }
       let(:amount) { 9_000 }
-      let(:funding_method) { create(:funding_method, :scholarship, training_route: training_route, amount: amount) }
+      let(:funding_method) { create(:funding_method, :scholarship, training_route:, amount:) }
 
       before do
         create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
@@ -116,7 +116,7 @@ describe FundingManager do
     context "there is a specialism for training route" do
       let(:subject_specialism) { create(:subject_specialism) }
       let(:amount) { 9_000 }
-      let(:funding_method) { create(:funding_method, :grant, training_route: training_route, amount: amount) }
+      let(:funding_method) { create(:funding_method, :grant, training_route:, amount:) }
 
       before do
         create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
@@ -224,7 +224,7 @@ describe FundingManager do
           let(:course_subject_one) { subject_specialism.name }
           let(:subject_specialism) { create(:subject_specialism) }
           let(:amount) { 24_000 }
-          let(:funding_method) { create(:funding_method, training_route: training_route, amount: amount) }
+          let(:funding_method) { create(:funding_method, training_route:, amount:) }
 
           before do
             create(:funding_method_subject,

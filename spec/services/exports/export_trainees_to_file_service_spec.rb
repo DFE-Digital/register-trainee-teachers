@@ -14,7 +14,7 @@ RSpec.describe Exports::ExportTraineesToFileService, type: :model do
     let(:trainee_csv_row) { csv[0] }
     let(:trainees) { Trainee.all }
 
-    subject(:service_call) { described_class.call(filename, trainees: trainees) }
+    subject(:service_call) { described_class.call(filename, trainees:) }
 
     before do
       trainee

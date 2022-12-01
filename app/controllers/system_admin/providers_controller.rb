@@ -8,9 +8,15 @@ module SystemAdmin
       @providers = authorize(Provider.all.order(:name))
     end
 
+    def show
+      @users_view = UsersView.new(@provider)
+    end
+
     def new
       @provider = authorize(Provider.new)
     end
+
+    def edit; end
 
     def create
       @provider = authorize(Provider.new(provider_params))
@@ -21,12 +27,6 @@ module SystemAdmin
         render(:new)
       end
     end
-
-    def show
-      @users_view = UsersView.new(@provider)
-    end
-
-    def edit; end
 
     def update
       if @provider.update(provider_params)

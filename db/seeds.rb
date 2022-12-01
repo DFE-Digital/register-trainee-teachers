@@ -84,7 +84,7 @@ SEED_FUNDING_RULES.each do |rule|
                                                academic_cycle: rule[:academic_cycle])
     b.allocation_subjects.map do |subject|
       allocation_subject = AllocationSubject.find_by!(name: subject)
-      bursary.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+      bursary.funding_method_subjects.find_or_create_by!(allocation_subject:)
     end
   end
 
@@ -95,7 +95,7 @@ SEED_FUNDING_RULES.each do |rule|
                                                       academic_cycle: rule[:academic_cycle])
     s.allocation_subjects.map do |subject|
       allocation_subject = AllocationSubject.find_by!(name: subject)
-      funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+      funding_method.funding_method_subjects.find_or_create_by!(allocation_subject:)
     end
   end
 
@@ -106,7 +106,7 @@ SEED_FUNDING_RULES.each do |rule|
                                                       academic_cycle: rule[:academic_cycle])
     s.allocation_subjects.map do |subject|
       allocation_subject = AllocationSubject.find_by!(name: subject)
-      funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+      funding_method.funding_method_subjects.find_or_create_by!(allocation_subject:)
     end
   end
 end

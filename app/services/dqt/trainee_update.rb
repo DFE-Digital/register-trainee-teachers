@@ -10,7 +10,7 @@ module Dqt
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
       @trainee = trainee
-      @payload = Params::TraineeRequest.new(trainee: trainee)
+      @payload = Params::TraineeRequest.new(trainee:)
     end
 
     def call

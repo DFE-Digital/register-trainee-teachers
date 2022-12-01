@@ -13,7 +13,7 @@ module Dttp
     let(:user_list) do
       {
         items: [user_one_hash, user_two_hash],
-        meta: { next_page_url: next_page_url },
+        meta: { next_page_url: },
       }
     end
 

@@ -78,7 +78,7 @@ RSpec.describe Diversity::View do
 
   describe "#disability_selection" do
     let(:disability_disclosure) { nil }
-    let(:trainee) { build(:trainee, :diversity_disclosed, disability_disclosure: disability_disclosure) }
+    let(:trainee) { build(:trainee, :diversity_disclosed, disability_disclosure:) }
 
     it "returns disability is missing" do
       expect(rendered_component).to have_text("Disability is missing")
@@ -86,7 +86,7 @@ RSpec.describe Diversity::View do
 
     context "disabled" do
       let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
-      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilites_disclosed, disability_disclosure: disability_disclosure) }
+      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilites_disclosed, disability_disclosure:) }
 
       it "returns a message stating the user is disabled" do
         expect(rendered_component).to have_text("They shared that they’re disabled")

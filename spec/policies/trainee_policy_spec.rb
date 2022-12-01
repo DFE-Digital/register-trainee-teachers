@@ -13,8 +13,8 @@ describe TraineePolicy do
   let(:lead_school_user) { user_with_organisation(create(:user, providers: []), lead_school) }
   let(:other_lead_school_user) { user_with_organisation(create(:user, providers: []), create(:school, :lead)) }
 
-  let(:provider_trainee) { create(:trainee, provider: provider) }
-  let(:lead_school_trainee) { create(:trainee, lead_school: lead_school) }
+  let(:provider_trainee) { create(:trainee, provider:) }
+  let(:lead_school_trainee) { create(:trainee, lead_school:) }
   let(:hesa_trainee) { create(:trainee, provider: provider, hesa_id: "XXX123") }
 
   subject { described_class }
@@ -60,7 +60,7 @@ describe TraineePolicy do
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
 
     context "when the trainee is not awaiting any actions" do
-      let(:provider_trainee) { create(:trainee, %i[recommended_for_award withdrawn awarded].sample, provider: provider) }
+      let(:provider_trainee) { create(:trainee, %i[recommended_for_award withdrawn awarded].sample, provider:) }
 
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
@@ -268,12 +268,12 @@ describe TraineePolicy do
       let(:organisation) { provider }
 
       context "where the trainee is associated with the provider" do
-        let(:trainee) { create(:trainee, provider: provider) }
+        let(:trainee) { create(:trainee, provider:) }
 
         it { is_expected.to contain_exactly(trainee) }
 
         context "and the trainee is deleted" do
-          let(:trainee) { create(:trainee, :discarded, provider: provider) }
+          let(:trainee) { create(:trainee, :discarded, provider:) }
 
           it { is_expected.not_to contain_exactly(trainee) }
         end
@@ -292,12 +292,12 @@ describe TraineePolicy do
       let(:organisation) { lead_school }
 
       context "where the trainee is associated with the provider" do
-        let(:trainee) { create(:trainee, lead_school: lead_school) }
+        let(:trainee) { create(:trainee, lead_school:) }
 
         it { is_expected.to contain_exactly(trainee) }
 
         context "and the trainee is deleted" do
-          let(:trainee) { create(:trainee, :discarded, lead_school: lead_school) }
+          let(:trainee) { create(:trainee, :discarded, lead_school:) }
 
           it { is_expected.not_to contain_exactly(trainee) }
         end

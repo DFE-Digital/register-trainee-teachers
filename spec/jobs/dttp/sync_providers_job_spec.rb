@@ -3,12 +3,12 @@
 require "rails_helper"
 
 module Dttp
-  describe SyncProvidersJob, type: :job do
+  describe SyncProvidersJob do
     include ActiveJob::TestHelper
 
     before do
       enable_features(:sync_from_dttp)
-      allow(RetrieveProviders).to receive(:call).with(request_uri: request_uri).and_return(provider_list)
+      allow(RetrieveProviders).to receive(:call).with(request_uri:).and_return(provider_list)
     end
 
     let(:provider_one_hash) { create(:api_provider) }

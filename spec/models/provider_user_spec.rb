@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProviderUser, type: :model do
+RSpec.describe ProviderUser do
   subject { create(:provider_user) }
 
   describe "validations" do

@@ -15,7 +15,7 @@ module Trainees
       @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
       @disabilities = Disability.where(name: disability_names)
       @trainee = Trainee.new(mapped_attributes)
-      @personal_details_form = PersonalDetailsForm.new(trainee, params: { nationality_names: nationality_names })
+      @personal_details_form = PersonalDetailsForm.new(trainee, params: { nationality_names: })
     end
 
     def call
@@ -27,7 +27,7 @@ module Trainees
       # Courses can be missing in non-prod environments
       raise(MissingCourseError, "Cannot find course with uuid: #{@raw_course['course_uuid']}") if course.nil?
 
-      Trainees::SetAcademicCycles.call(trainee: trainee)
+      Trainees::SetAcademicCycles.call(trainee:)
       trainee.save!
       save_personal_details!
       create_degrees!
@@ -70,7 +70,7 @@ module Trainees
     end
 
     def create_degrees!
-      ::Degrees::CreateFromApply.call(trainee: trainee)
+      ::Degrees::CreateFromApply.call(trainee:)
     end
 
     def save_personal_details!
@@ -161,7 +161,7 @@ module Trainees
       return {} unless ethnic_background
 
       if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
-        { ethnic_background: ethnic_background }
+        { ethnic_background: }
       else
         {
           ethnic_background: Diversities::ANOTHER_BACKGROUND[ethnic_group],

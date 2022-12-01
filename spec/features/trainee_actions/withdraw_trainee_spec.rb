@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Withdrawing a trainee", type: :feature do
+feature "Withdrawing a trainee" do
   include SummaryHelper
 
   before do

@@ -12,7 +12,7 @@ class FixMissingDegreesFromDttp < ActiveRecord::Migration[6.1]
       )
 
     trainees_with_missing_degrees.find_each do |trainee|
-      Degrees::CreateFromDttp.call(trainee: trainee)
+      Degrees::CreateFromDttp.call(trainee:)
     end
   end
 

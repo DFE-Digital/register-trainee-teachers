@@ -20,7 +20,7 @@ module Funding
           missing_payable_ids << id
         else
           academic_year = attributes.values.flatten.first[academic_year_column]
-          summary = payable.funding_trainee_summaries.create(academic_year: academic_year)
+          summary = payable.funding_trainee_summaries.create(academic_year:)
 
           attributes[id].each do |row_hash|
             row = summary.rows.create(

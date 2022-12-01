@@ -9,7 +9,7 @@ RSpec.feature "component previews" do
     end
   end).flatten
 
-  let(:create_nationality) { create :nationality }
+  let(:create_nationality) { create(:nationality) }
 
   before do
     create_nationality

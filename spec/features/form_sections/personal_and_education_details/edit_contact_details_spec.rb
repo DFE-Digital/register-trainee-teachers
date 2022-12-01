@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit contact details", type: :feature do
+feature "edit contact details" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists

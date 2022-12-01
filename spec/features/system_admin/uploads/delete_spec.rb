@@ -11,7 +11,7 @@ feature "Delete a file" do
   let(:show) { admin_upload_show_page }
 
   before do
-    given_i_am_authenticated(user: user)
+    given_i_am_authenticated(user:)
     when_i_visit_the_uploads_index_page
   end
 

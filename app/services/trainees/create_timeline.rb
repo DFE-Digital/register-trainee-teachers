@@ -18,7 +18,7 @@ module Trainees
     attr_reader :trainee, :current_user
 
     def events
-      filtered_audits.map { |audit| CreateTimelineEvents.call(audit: audit, current_user: current_user) }
+      filtered_audits.map { |audit| CreateTimelineEvents.call(audit:, current_user:) }
     end
 
     def filtered_audits

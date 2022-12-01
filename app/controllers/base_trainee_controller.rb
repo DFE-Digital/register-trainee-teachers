@@ -205,21 +205,21 @@ private
   def json_response
     {
       results: render_partial("trainees/results", {
-        paginated_trainees: paginated_trainees,
-        search_primary_result_title: search_primary_result_title,
-        search_primary_result_set: search_primary_result_set,
-        search_secondary_result_title: search_secondary_result_title,
-        search_secondary_result_set: search_secondary_result_set,
-        search_path: search_path,
-        filters: filters,
+        paginated_trainees:,
+        search_primary_result_title:,
+        search_primary_result_set:,
+        search_secondary_result_title:,
+        search_secondary_result_set:,
+        search_path:,
+        filters:,
       }),
       selected_filters: render_partial("trainees/selected_filters", {
-        filters: filters,
-        search_path: search_path,
+        filters:,
+        search_path:,
       }),
       action_bar: render_partial("trainees/action_bar", {
-        paginated_trainees: paginated_trainees,
-        export_results_path: export_results_path,
+        paginated_trainees:,
+        export_results_path:,
       }),
       trainee_count: total_trainees_count,
       page_title: trainees_page_title(paginated_trainees, total_trainees_count),

@@ -24,7 +24,7 @@ module Dqt
 
         before do
           allow(Dqt::Client).to receive(:put).and_return(dqt_response)
-          described_class.call(trainee: trainee)
+          described_class.call(trainee:)
         end
 
         it "registers TRN request with DQT" do
@@ -43,7 +43,7 @@ module Dqt
 
         before do
           allow(Dqt::Client).to receive(:put).and_raise(Client::HttpError, error_message)
-          described_class.call(trainee: trainee)
+          described_class.call(trainee:)
         end
 
         it "saves a failed TRN request" do
