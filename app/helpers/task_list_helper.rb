@@ -151,6 +151,18 @@ module TaskListHelper
         active: false,
       }
 
+    when :iqts_country_details
+      {
+        task_name: "International training details",
+        path: edit_trainee_iqts_country_path(trainee),
+        confirm_path: trainee_iqts_country_confirm_path(trainee),
+        status: ProgressService.call(
+          validator: IqtsCountryForm.new(trainee),
+          progress_value: trainee.progress.iqts_country,
+        ).status,
+        classes: "iqts-country-details",
+      }
+
     end
   end
 

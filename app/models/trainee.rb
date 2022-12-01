@@ -59,6 +59,7 @@ class Trainee < ApplicationRecord
            :requires_study_mode?,
            :requires_degree?,
            :requires_funding?,
+           :requires_iqts_country?,
            to: :training_route_manager
 
   delegate :update_training_route!, to: :route_data_manager

@@ -22,4 +22,5 @@ class Progress
   attribute :trainee_data, :boolean, default: false
   attribute :schools, :boolean, default: false
   attribute :funding, :boolean, default: false
+  attribute :iqts_country, :boolean, default: false
 end
