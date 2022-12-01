@@ -27,3 +27,7 @@
 <% if @trainee.requires_funding? %>
   <%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding, editable: @trainee_editable) %>
 <% end %>
+
+<% if @trainee.requires_iqts_country? %>
+  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :iqts_country, editable: @trainee_editable) %>
+<% end %>
