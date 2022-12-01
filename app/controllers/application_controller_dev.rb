@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This is prepended into `ApplicationController` if in development environment and the PERFORMANCE_TESTING env is present
+# See `app/controllers/application_controller.rb` and  `app/services/feature_service.rb`
 module ApplicationControllerDev
 private
 
