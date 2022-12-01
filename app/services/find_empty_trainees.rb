@@ -51,6 +51,7 @@ class FindEmptyTrainees
     trainees.region
     trainees.course_education_phase
     trainees.applying_for_scholarship
+    trainees.iqts_country
   ].freeze
 
   EARLY_YEARS_FIELDS_TO_EXCLUDE = %w[
