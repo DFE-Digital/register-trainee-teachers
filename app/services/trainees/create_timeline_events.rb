@@ -52,6 +52,7 @@ module Trainees
       other_grade
       lead_school_id
       employing_school_id
+      iqts_country
     ].freeze
 
     delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, to: :audit
