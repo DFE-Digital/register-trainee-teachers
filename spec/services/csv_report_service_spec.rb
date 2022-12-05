@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe CsvReportService do
+describe CsvReportService do
   describe "#call" do
     let(:report_data) { described_class.call(report_class, scope: []) }
     let(:csv_data) { CSV.parse report_data }

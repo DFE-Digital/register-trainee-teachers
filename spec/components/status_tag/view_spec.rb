@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe StatusTag::View do
+describe StatusTag::View do
   before do
     render_inline(described_class.new(trainee:))
   end

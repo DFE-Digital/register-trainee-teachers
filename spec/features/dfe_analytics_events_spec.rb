@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "dfe analytics integration" do
+feature "dfe analytics integration" do
   include TraineeHelper
 
   context "clicking return to draft record later" do

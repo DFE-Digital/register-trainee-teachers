@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Exports::ExportTraineesToFileService, type: :model do
+describe Exports::ExportTraineesToFileService, type: :model do
   include FileHelper
 
   describe "#call" do

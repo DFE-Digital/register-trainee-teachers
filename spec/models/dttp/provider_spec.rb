@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Dttp::Provider do
+describe Dttp::Provider do
   subject { create(:dttp_provider) }
 
   it { is_expected.to have_db_index(:dttp_id) }

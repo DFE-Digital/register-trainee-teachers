@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Filtering trainees" do
+feature "Filtering trainees" do
   context "registered trainees" do
     before do
       given_i_am_authenticated

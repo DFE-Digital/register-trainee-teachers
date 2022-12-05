@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Trainees::Degrees::TypeController do
+describe Trainees::Degrees::TypeController do
   describe "#create" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, providers: [trainee.provider]), session: {}) }
     let(:trainee) { create(:trainee) }

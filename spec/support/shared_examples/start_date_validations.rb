@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "start date validations" do
+shared_examples "start date validations" do
   context "when date is in the future" do
     let(:trainee) do
       build(:trainee, itt_start_date: Time.zone.today, itt_end_date: 1.year.from_now)

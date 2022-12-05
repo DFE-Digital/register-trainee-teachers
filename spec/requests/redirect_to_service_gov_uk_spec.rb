@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "GET register-trainee-teachers.education.gov.uk" do
+describe "GET register-trainee-teachers.education.gov.uk" do
   it "redirects root to register-trainee-teachers.service.gov.uk" do
     get "https://www.register-trainee-teachers.education.gov.uk/"
     expect(response.location).to eq(Settings.base_url)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Activity do
+describe Activity do
   let(:current_user) { create(:user) }
 
   context "fields" do

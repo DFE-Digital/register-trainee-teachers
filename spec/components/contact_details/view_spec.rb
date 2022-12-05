@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ContactDetails::View do
+describe ContactDetails::View do
   context "when no contact details data supplied for existing trainee" do
     before do
       @result ||= render_inline(

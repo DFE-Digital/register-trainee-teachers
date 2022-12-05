@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ReviewDraft::View do
+describe ReviewDraft::View do
   alias_method :component, :page
 
   context "renders apply draft component" do

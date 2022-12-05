@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ErrorsController do
+describe ErrorsController do
   describe "GET #not_found" do
     it "returns not found" do
       get :not_found

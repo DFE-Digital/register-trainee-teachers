@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Non-JS lead schools search" do
+feature "Non-JS lead schools search" do
   before do
     given_i_am_authenticated
     given_a_school_direct_tuition_fee_trainee_exists

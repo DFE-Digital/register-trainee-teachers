@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ReviewDraft::ApplyDraft::View do
+describe ReviewDraft::ApplyDraft::View do
   include TaskListHelper
 
   describe "sections that appear for application draft trainee" do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TraineeStatusCard::View do
+describe TraineeStatusCard::View do
   before do
     render_inline(
       described_class.new(status: "deferred", target: "some_path", count: 1),

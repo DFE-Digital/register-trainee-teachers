@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe RouteIndicator::View do
+describe RouteIndicator::View do
   alias_method :component, :page
 
   let(:trainee) { create(:trainee) }

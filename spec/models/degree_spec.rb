@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Degree do
+describe Degree do
   describe "database fields" do
     it { is_expected.to define_enum_for(:locale_code).with_values(uk: 0, non_uk: 1) }
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "rendering the funding section" do
+shared_examples "rendering the funding section" do
   context "when a trainee is on a route with a bursary" do
     let(:route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
     let(:trainee) { create(:trainee, :with_start_date, :with_study_mode_and_course_dates, :incomplete_draft, route, start_academic_cycle: current_academic_cycle) }

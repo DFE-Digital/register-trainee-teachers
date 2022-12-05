@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe RecordActions::View do
+describe RecordActions::View do
   include SummaryHelper
 
   let(:trainee) { build(:trainee, trait, id: 1) }

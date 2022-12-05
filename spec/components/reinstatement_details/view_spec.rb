@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ReinstatementDetails::View do
+describe ReinstatementDetails::View do
   include SummaryHelper
 
   let(:trainee) { build(:trainee, :reinstated, id: 1) }

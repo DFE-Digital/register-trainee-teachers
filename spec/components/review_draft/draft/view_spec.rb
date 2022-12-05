@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ReviewDraft::Draft::View do
+describe ReviewDraft::Draft::View do
   include TaskListHelper
 
   before do

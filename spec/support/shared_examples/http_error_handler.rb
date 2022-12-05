@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "an http error handler" do
+shared_examples "an http error handler" do
   let(:status) { 400 }
   let(:body) { "error" }
   let(:headers) { { "foo" => %w[bar] } }

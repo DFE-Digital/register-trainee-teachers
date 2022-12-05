@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "dttp info fetcher" do |dttp_wrapper|
+shared_examples "dttp info fetcher" do |dttp_wrapper|
   let(:dttp_id) { SecureRandom.uuid }
   let(:request_url) { "#{Settings.dttp.api_base_url}#{path}" }
 
