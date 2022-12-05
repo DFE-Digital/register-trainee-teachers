@@ -5,7 +5,7 @@ module Api
     def index
       return error_response if invalid_query?
 
-      @school_search = SchoolSearch.call(args).schools
+      @school_search = SchoolSearch.call(**args).schools
 
       render(json: { schools: @school_search.as_json(only: %i[id name urn town postcode]) })
     end

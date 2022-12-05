@@ -15,7 +15,7 @@ module Pages
             @trainee = trainee(sections)
 
             @form = Submissions::TrnValidator.new(trainee: @trainee)
-            render template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true }
+            render_with_template(template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true })
           end
 
           define_method "#{sections}_validated" do
@@ -23,14 +23,14 @@ module Pages
 
             @form = Submissions::TrnValidator.new(trainee: @trainee)
             @form.validate
-            render template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true }
+            render_with_template(template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true })
           end
 
           define_method "#{sections}_itt" do
             @trainee = itt_trainee(sections)
 
             @form = Submissions::TrnValidator.new(trainee: @trainee)
-            render template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true }
+            render_with_template(template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true })
           end
 
           define_method "#{sections}_itt_validated" do
@@ -38,7 +38,7 @@ module Pages
 
             @form = Submissions::TrnValidator.new(trainee: @trainee)
             @form.validate
-            render template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true }
+            render_with_template(template: template, locals: { "@trainee": @trainee, "@form": @form, "@trainee_editable": true })
           end
         end
 

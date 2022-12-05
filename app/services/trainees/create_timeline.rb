@@ -49,7 +49,7 @@ module Trainees
     def audits
       trainee
         .own_and_associated_audits
-        .where.not(username: "HESA", auditable_type: "Degree")
+        .where.not("username = ? AND auditable_type = ?", "HESA", "Degree")
     end
   end
 end
