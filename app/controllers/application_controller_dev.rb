@@ -9,7 +9,7 @@ private
   def current_user
     @current_user ||= begin
       user = User.where(system_admin: true).first
-      UserWithOrganisationContext.new(user: user, session: session) if user.present?
+      UserWithOrganisationContext.new(user:, session:) if user.present?
     end
   end
 end
