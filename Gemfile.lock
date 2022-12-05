@@ -639,7 +639,7 @@ GEM
       sprockets (>= 3.0.0)
     stackprof (0.2.12)
     stateful_enum (0.7.0)
-    store_model (1.2.0)
+    store_model (1.3.0)
       activerecord (>= 5.2)
     swd (1.3.0)
       activesupport (>= 3)
@@ -777,7 +777,7 @@ DEPENDENCIES
   sprockets-rails
   stackprof
   stateful_enum
-  store_model (~> 1.2)
+  store_model (~> 1.3)
   timecop (~> 0.9.5)
   tzinfo-data
   uk_postcode
