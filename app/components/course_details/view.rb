@@ -83,7 +83,7 @@ module CourseDetails
     def course_details
       return "#{course.name} (#{course.code})" if course
 
-      subject_names&.to_s
+      data_model.course_allocation_subject.name
     end
 
     def subject_names

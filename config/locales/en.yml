@@ -816,7 +816,7 @@ en:
           label: When did the trainee start their ITT?
           hint: Their ITT started on %{itt_start_date}
       publish_course_details:
-        route_message: Your %{route} courses in the Publish service
+        route_message: Courses imported from the Publish service
         all_courses_message: Your courses in the Publish service
         route_titles:
           provider_led_postgrad: provider-led postgrad
@@ -1018,7 +1018,7 @@ en:
         summary_with_route: &summary_with_route "%{summary}, %{route}"
     publish_course_details:
       edit:
-        heading: "Your courses starting in %{from_year} to %{to_year}"
+        heading: "Your %{route} courses starting in %{from_year} to %{to_year}"
         change_year_link_text: Choose from courses starting in a different academic year
         course_code_label: What course are they doing?
         course_not_listed: Another course not listed

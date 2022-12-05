@@ -1,5 +1,5 @@
 <%= render PageTitle::View.new(
-  text: t(".heading", from_year: @course_year, to_year: (@course_year + 1)),
+  text: t(".heading", route: route_title(training_route), from_year: @course_year, to_year: (@course_year + 1)),
   has_errors: @publish_course_details_form.errors.present?,
 ) %>
 
@@ -18,7 +18,7 @@
 
       <%= render TraineeName::View.new(@trainee) %>
 
-      <h1 class="govuk-heading-l"><%= t(".heading", from_year: @course_year, to_year: (@course_year + 1)) %></h1>
+      <h1 class="govuk-heading-l"><%= t(".heading", route: route_title(training_route), from_year: @course_year, to_year: (@course_year + 1)) %></h1>
       <div class="govuk-inset-text">
         <%= link_to t(".change_year_link_text"), edit_trainee_course_years_path(@trainee, year: @course_year), class: "govuk-link govuk-link--no-visited-state" %>
       </div>
@@ -26,19 +26,19 @@
       <div class="govuk-form-group">
         <%= f.govuk_radio_buttons_fieldset :course_uuid,
           legend: { text: t(".course_code_label"), size: "m" },
-          hint: { text: courses_fieldset_text_for(@trainee) },
+          hint: { text: courses_fieldset_text },
           classes: "published-courses" do %>
           <% @courses.each_with_index do |course, i| %>
             <%= f.govuk_radio_button :course_uuid, course.uuid,
               label: { text: "#{course.name} (#{course.code})" },
-              hint: { text: "#{course.summary}" },
+              hint: { text: course.summary },
               link_errors: i == 0
             %>
           <% end %>
 
           <div class="govuk-radios__divider">or</div>
 
-          <%= f.govuk_radio_button :course_uuid, PublishCourseDetailsForm::NOT_LISTED, label: { text: t(".course_not_listed") } %>
+          <%= f.govuk_radio_button :course_uuid, PublishCourseDetailsForm::NOT_LISTED, label: { text: t(".enter_course_details") } %>
         <% end %>
       </div>
 
