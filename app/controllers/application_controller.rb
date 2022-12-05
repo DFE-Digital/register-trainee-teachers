@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   include DfE::Analytics::Requests
 
   rescue_from Pundit::NotAuthorizedError do
-    render "errors/forbidden.html", status: :forbidden
+    render "errors/forbidden", status: :forbidden, formats: [:html]
   end
 
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }

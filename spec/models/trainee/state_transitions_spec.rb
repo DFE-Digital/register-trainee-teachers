@@ -184,7 +184,7 @@ describe "Trainee state transitions" do
     end
 
     it "sets the #submitted_for_trn_at to the time the record was submitted" do
-      expect(subject.submitted_for_trn_at).to eq(Time.zone.now)
+      expect(subject.submitted_for_trn_at).to be_within(5.seconds).of(Time.zone.now)
     end
 
     context "with an apply application" do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "trainees/_record_completion_filter.html.erb", "feature_routes.provider_led_postgrad": true do
+describe "trainees/_record_completion_filter", "feature_routes.provider_led_postgrad": true do
   before do
     without_partial_double_verification do
       allow(view).to receive(:search_path).and_return(trainees_path)

@@ -5,10 +5,10 @@
 <% end %>
 
 <div class="record-details">
-  <%= render RecordDetails::View.new(trainee: @trainee, 
-      last_updated_event: @trainee.timeline.first, 
-      show_provider: @current_user.system_admin? || @current_user.lead_school?, 
-      show_record_source: @current_user.system_admin?, 
+  <%= render RecordDetails::View.new(trainee: @trainee,
+      last_updated_event: @trainee.timeline.first,
+      show_provider: @current_user.system_admin? || @current_user.lead_school?,
+      show_record_source: @current_user.system_admin?,
       editable: trainee_editable?) %>
 </div>
 

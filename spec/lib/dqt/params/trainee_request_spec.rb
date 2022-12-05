@@ -7,8 +7,8 @@ module Dqt
     describe TraineeRequest do
       let(:trainee) { create(:trainee, :completed, sex: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
-      let(:hesa_code) { Degrees::DfeReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
-      let(:ukprn) { Degrees::DfeReference::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
+      let(:hesa_code) { Degrees::DfEReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
+      let(:ukprn) { Degrees::DfEReference::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
       let(:dqt_degree_type) { "BachelorOfArts" }
       let(:uk_degree_uuid) { "db695652-c197-e711-80d8-005056ac45bb" }
 

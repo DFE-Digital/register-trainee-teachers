@@ -29,7 +29,7 @@ module Timeline
     it "displays the event title, username and date" do
       expect(component).to have_text(title)
       expect(component).to have_text(username)
-      expect(component).to have_text(date.to_s(:govuk_date_and_time))
+      expect(component).to have_text(date.to_fs(:govuk_date_and_time))
     end
 
     it "displays the reason for withdrawal" do

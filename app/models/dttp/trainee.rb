@@ -11,18 +11,20 @@ module Dttp
     has_many :placement_assignments, -> { order(Arel.sql("#{PLACEMENT_ASSIGNMENTS_ORDER_SQL}, response->'modifiedon' DESC")) },
              foreign_key: :contact_dttp_id,
              primary_key: :dttp_id,
-             inverse_of: :trainee
+             inverse_of: :dttp_trainee,
+             class_name: "Dttp::PlacementAssignment"
 
     has_one :latest_placement_assignment, -> { order(Arel.sql("#{PLACEMENT_ASSIGNMENTS_ORDER_SQL}, response->'modifiedon' DESC")) },
             foreign_key: :contact_dttp_id,
             primary_key: :dttp_id,
-            inverse_of: :trainee,
+            inverse_of: :dttp_trainee,
             class_name: "Dttp::PlacementAssignment"
 
     has_many :degree_qualifications,
              foreign_key: :contact_dttp_id,
              primary_key: :dttp_id,
-             inverse_of: :dttp_trainee
+             inverse_of: :dttp_trainee,
+             class_name: "Dttp::DegreeQualification"
 
     belongs_to :trainee,
                foreign_key: :dttp_id,
@@ -32,11 +34,11 @@ module Dttp
                class_name: "::Trainee"
 
     belongs_to :provider,
-               class_name: "::Provider",
                foreign_key: :provider_dttp_id,
                primary_key: :dttp_id,
                inverse_of: :dttp_trainees,
-               optional: true
+               optional: true,
+               class_name: "::Provider"
 
     validates :response, presence: true
 

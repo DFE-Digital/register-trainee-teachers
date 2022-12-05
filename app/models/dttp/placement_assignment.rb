@@ -4,7 +4,12 @@ module Dttp
   class PlacementAssignment < ApplicationRecord
     self.table_name = "dttp_placement_assignments"
 
-    belongs_to :trainee, foreign_key: :contact_dttp_id, primary_key: :dttp_id, inverse_of: :placement_assignments, optional: true
+    belongs_to :dttp_trainee,
+               foreign_key: :contact_dttp_id,
+               primary_key: :dttp_id,
+               inverse_of: :placement_assignments,
+               optional: true,
+               class_name: "Dttp::Trainee"
 
     has_one :dormant_period, foreign_key: :placement_assignment_dttp_id, primary_key: :dttp_id, inverse_of: :placement_assignment
 
