@@ -162,30 +162,30 @@ private
       "apply" => records_contain_apply_source?,
       "dttp" => records_contain_dttp_source?,
       "hesa" => records_contain_hesa_source?,
-    }.select { |_key, value| value == true }.keys
+    }.select { |_, value| value == true }.keys
 
     sources.delete("dttp") unless current_user.system_admin?
     sources
   end
 
   def show_source_filters?
-    available_record_sources.count > 1
+    available_record_sources.size > 1
   end
 
   def records_contain_manual_source?
-    policy_scope(trainee_search_scope).with_manual_application.count.positive?
+    policy_scope(trainee_search_scope).with_manual_application.size.positive?
   end
 
   def records_contain_dttp_source?
-    policy_scope(trainee_search_scope).created_from_dttp.count.positive?
+    policy_scope(trainee_search_scope).created_from_dttp.size.positive?
   end
 
   def records_contain_apply_source?
-    policy_scope(trainee_search_scope).with_apply_application.count.positive?
+    policy_scope(trainee_search_scope).with_apply_application.size.positive?
   end
 
   def records_contain_hesa_source?
-    policy_scope(trainee_search_scope).imported_from_hesa.count.positive?
+    policy_scope(trainee_search_scope).imported_from_hesa.size.positive?
   end
 
   def save_filter

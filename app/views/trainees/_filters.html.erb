@@ -38,7 +38,6 @@
           class: "govuk-select"
         ) %>
       </div>
-      <%= render "trainees/record_source_filter" if current_page?(:trainees) %>
     <% end %>
   <% end %>
 
@@ -77,8 +76,6 @@
       </div>
     </fieldset>
   </div>
-
-  <%= render "trainees/record_source_filter" if current_page?(:drafts) %>
 
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
@@ -123,4 +120,6 @@
       </fieldset>
     </div>
   <% end %>
+
+  <%= render "trainees/record_source_filter" %>
 </form>
