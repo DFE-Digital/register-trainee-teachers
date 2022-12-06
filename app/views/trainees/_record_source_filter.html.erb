@@ -6,17 +6,16 @@
       </legend>
       <div class="govuk-checkboxes govuk-checkboxes--small">
           <% available_record_sources.map do |source| %>
-            <% next if source == "dttp" && !current_user.system_admin? %>
-          <div class="govuk-checkboxes__item">
-            <%= check_box_tag "record_source[]",
-                              source,
-                              checked?(filters, :record_source, source.to_s),
-                              id: "record_source-#{source}",
-                              class: "govuk-checkboxes__input" %>
-            <%= label_tag "record_source-#{source}",
-                          label_for("record_source", source),
-                          class: "govuk-label govuk-checkboxes__label" %>
-          </div>
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag "record_source[]",
+                                source,
+                                checked?(filters, :record_source, source.to_s),
+                                id: "record_source-#{source}",
+                                class: "govuk-checkboxes__input" %>
+              <%= label_tag "record_source-#{source}",
+                            label_for("record_source", source),
+                            class: "govuk-label govuk-checkboxes__label" %>
+            </div>
           <% end %>
       </div>
     </fieldset>
