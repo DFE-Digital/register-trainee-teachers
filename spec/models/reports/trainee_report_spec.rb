@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe Reports::TraineeReport, type: :model do
+  let(:current_cycle) { create(:academic_cycle, :current) }
+  let(:next_cycle) { create(:academic_cycle, next_cycle: true) }
   let!(:trainee) { create(:trainee, :for_export, course_uuid: create(:course).uuid) }
   let(:degree) { subject.degree }
   let(:course) { subject.course }
@@ -340,6 +342,37 @@ describe Reports::TraineeReport, type: :model do
 
     it "includes the additional_withdraw_reason" do
       expect(subject.additional_withdraw_reason).to eq(trainee.additional_withdraw_reason)
+    end
+  end
+
+  describe "#academic_years" do
+    context "with no end_academic_cycle set" do
+      let!(:trainee) { create(:trainee, start_academic_cycle: current_cycle, end_academic_cycle: nil) }
+
+      it "returns nil for academic_years" do
+        expect(subject.academic_years).to be_nil
+      end
+    end
+
+    context "when the trainee's course is one year" do
+      let!(:trainee) { create(:trainee, start_academic_cycle: current_cycle, end_academic_cycle: current_cycle) }
+
+      it "returns an array with one academic year" do
+        expect(subject.academic_years).to eq(["#{current_cycle.start_year} to #{current_cycle.start_year + 1}"])
+      end
+    end
+
+    context "when the trainee spans multiple years" do
+      let!(:trainee) { create(:trainee, start_academic_cycle: current_cycle, end_academic_cycle: next_cycle) }
+
+      it "returns an array of multiple academic_years" do
+        expect(subject.academic_years).to eq(
+          [
+            "#{current_cycle.start_year} to #{current_cycle.start_year + 1}",
+            "#{next_cycle.start_year} to #{next_cycle.start_year + 1}",
+          ],
+        )
+      end
     end
   end
 end
