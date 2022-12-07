@@ -37,6 +37,10 @@
         component.row(**row_helper(@trainee, funding_options(@trainee)))
       end
 
+      if @trainee.requires_iqts_country?
+        component.row(**row_helper(@trainee, :iqts_country_details))
+      end
+
       # This will be uncommented once the form is built
       # if @trainee.requires_placement_details?
       #   component.row(**row_helper(@trainee, :placement_details))

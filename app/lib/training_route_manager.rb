@@ -29,6 +29,10 @@ class TrainingRouteManager
     training_route != TRAINING_ROUTE_ENUMS[:iqts]
   end
 
+  def requires_iqts_country?
+    training_route == TRAINING_ROUTE_ENUMS[:iqts]
+  end
+
   def award_type
     TRAINING_ROUTE_AWARD_TYPE[training_route&.to_sym]
   end

@@ -128,6 +128,10 @@ en:
     view:
       title: *trainee_id
       region: *region
+  iqts_country:
+    view:
+      title: International training details
+      iqts_country: &iqts_country Country or territory of training
   deferral_details:
     view:
       defer_date_label: Date of deferral
@@ -177,6 +181,8 @@ en:
         title: Funding
         training_initiative:
           title: Training initiative
+      iqts_country:
+        title: Country or territory of training
       diversity:
         diversity_disclosure_title: &diversity_information Diversity information
         diversity_disclosure:
@@ -337,6 +343,8 @@ en:
         degrees:
           edit: Degree details
           new: Add undergraduate degree
+        iqts_country:
+          edit: Which country or territory is the trainee studying in?
         outcome_date:
           edit: When did they meet the QTS standards?
           eyts_edit: When did they meet the EYTS standards?
@@ -482,6 +490,7 @@ en:
           applying_for_scholarship: Funding method updated
           applying_for_grant: Funding method updated
           applying_for_bursary: Funding method updated
+          iqts_country: Country or territory of training updated
         degree:
           create: Degree added
           destroy: Degree deleted
@@ -518,6 +527,7 @@ en:
         schools: Schools
         funding: Funding details
         funding_inactive: Funding details cannot be started yet
+        iqts_country: International training details
       statuses:
         not_provided: not provided
         incomplete: not started
@@ -626,6 +636,7 @@ en:
         trainee_id: edit_trainee_training_details_path
         study_mode: *course_path
         primary_course_subjects: *course_path
+        iqts_country: edit_trainee_iqts_country_path
     missing_data_view:
       degrees_form: degree
       missing_fields_summary:
@@ -675,6 +686,7 @@ en:
         trainee_id: *trainee_id
         study_mode: *study_mode
         primary_course_subjects: *course_subject
+        iqts_country: Country or territory of training
     drafts:
       index:
         results:
@@ -1131,6 +1143,10 @@ en:
           <p class="govuk-body">%{course_name} (%{course_code}) is recorded in Publish as starting in September
           %{cycle_year} – but we do not have complete start and end dates for it.<p>
         is_for_all_courses: Use these dates for all %{study_mode} trainees on %{course_name} (%{course_code}) for the %{cycle_year} to %{next_cycle_year} cycle
+    iqts_countries:
+      edit:
+        label: Which country or territory is the trainee studying in?
+        hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time
   activerecord:
     attributes:
       trainee:

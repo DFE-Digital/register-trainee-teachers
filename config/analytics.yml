@@ -230,6 +230,7 @@ shared:
     - hesa_id
     - hesa_updated_at
     - id
+    - iqts_country
     - itt_end_date
     - itt_start_date
     - lead_school_id

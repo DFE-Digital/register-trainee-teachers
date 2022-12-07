@@ -291,11 +291,19 @@ module Features
     end
 
     def edit_funding_page
-      @edit_funding_page ||= PageObjects::Trainees::EditTraineeFunding.new
+      @edit_funding_page ||= PageObjects::Trainees::EditFunding.new
     end
 
     def confirm_funding_page
       @confirm_funding_page ||= PageObjects::Trainees::ConfirmFunding.new
+    end
+
+    def edit_iqts_country_page
+      @edit_iqts_country_page ||= PageObjects::Trainees::EditIqtsCountry.new
+    end
+
+    def confirm_iqts_country_page
+      @confirm_iqts_country_page ||= PageObjects::Trainees::ConfirmIqtsCountry.new
     end
 
     def apply_trainee_data_page

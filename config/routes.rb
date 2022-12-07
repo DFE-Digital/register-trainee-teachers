@@ -138,6 +138,8 @@ Rails.application.routes.draw do
       resources :employing_schools, only: %i[index], path: "/employing-schools"
       resource :employing_schools, only: %i[update edit], path: "/employing-schools"
 
+      resource :iqts_country, concerns: :confirmable, only: %i[edit update], path: "iqts-country"
+
       namespace :apply_applications, path: "/apply-application" do
         resource :trainee_data, only: %i[update edit], path: "/trainee-data"
         resource :course_details, only: %i[update edit], path: "/course-details"
