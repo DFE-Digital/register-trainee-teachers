@@ -6,9 +6,9 @@ module Dqt
   module Params
     describe Withdrawal do
       let(:provider) { create(:provider, ukprn: "12345678") }
-      let(:trainee) { create(:trainee, :withdrawn, provider: provider) }
+      let(:trainee) { create(:trainee, :withdrawn, provider:) }
 
-      subject { described_class.new(trainee: trainee).params }
+      subject { described_class.new(trainee:).params }
 
       describe "#params" do
         it "returns a hash with all required values" do

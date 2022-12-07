@@ -149,7 +149,7 @@ describe CourseDetailsForm, type: :model do
 
       describe "#age_range_valid" do
         let(:attributes) do
-          { main_age_range: main_age_range }
+          { main_age_range: }
         end
 
         context "main age range is blank" do

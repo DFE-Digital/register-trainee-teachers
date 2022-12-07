@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Dttp
-  describe School, type: :model do
+  describe School do
     subject { create(:dttp_school) }
 
     it { is_expected.to have_db_index(:dttp_id) }

@@ -13,7 +13,7 @@ module CollapsedSection
     context "default" do
       before do
         render_inline(
-          described_class.new(title: title, link_text: link_text, hint_text: hint_text, url: url),
+          described_class.new(title:, link_text:, hint_text:, url:),
         )
       end
 

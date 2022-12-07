@@ -104,7 +104,7 @@ describe TraineeFilter do
     context "with trainee start year" do
       let(:params) { { trainee_start_year: ["2020"] } }
 
-      subject { TraineeFilter.new(params: params) }
+      subject { TraineeFilter.new(params:) }
 
       it "returns trainee_start_year in hash" do
         expect(subject.filters).to eq({ "trainee_start_year" => ["2020"] })
@@ -114,7 +114,7 @@ describe TraineeFilter do
     context "with trainee status" do
       let(:params) { { status: ["in_training"] } }
 
-      subject { TraineeFilter.new(params: params) }
+      subject { TraineeFilter.new(params:) }
 
       it "returns trainee_start_year in hash" do
         expect(subject.filters).to eq({ "status" => ["in_training"] })

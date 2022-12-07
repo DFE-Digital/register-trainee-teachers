@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ServiceUpdatesController, type: :controller do
+describe ServiceUpdatesController do
   before do
     allow(YAML).to receive(:load_file).and_return(
       [

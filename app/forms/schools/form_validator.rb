@@ -16,8 +16,8 @@ module Schools
 
     def initialize(trainee, non_search_validation: false)
       @trainee = trainee
-      @lead_school_form = LeadSchoolForm.new(trainee, params: { non_search_validation: non_search_validation })
-      @employing_school_form = EmployingSchoolForm.new(trainee, params: { non_search_validation: non_search_validation })
+      @lead_school_form = LeadSchoolForm.new(trainee, params: { non_search_validation: })
+      @employing_school_form = EmployingSchoolForm.new(trainee, params: { non_search_validation: })
       @fields = lead_school_form_fields.merge(employing_school_form_fields).except(:non_search_validation)
     end
 

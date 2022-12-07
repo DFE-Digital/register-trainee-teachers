@@ -17,7 +17,7 @@ module Trainees
 
       if @trainee_start_status_form.stash_or_save!
         if trainee.draft? && trainee.submission_ready?
-          Trainees::SubmitForTrn.call(trainee: trainee)
+          Trainees::SubmitForTrn.call(trainee:)
           return redirect_to(trn_submission_path(trainee))
         end
 

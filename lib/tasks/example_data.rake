@@ -77,7 +77,7 @@ namespace :example_data do
     lead_schools = FactoryBot.create_list(:school, 50, lead_school: true)
 
     # Create some subjects
-    REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name: name) }
+    REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
 
     recruitment_cycle_years = [
       Settings.current_default_course_year - 1,
@@ -163,7 +163,7 @@ namespace :example_data do
               nationalities: nationalities,
               degrees: [FactoryBot.build(:degree, degree_type)],
             }
-            attrs.merge!(provider: provider) if provider
+            attrs.merge!(provider:) if provider
 
             # Some route-specific logic, but could move into factories too
             attrs.merge!(lead_school: lead_schools.sample) if LEAD_SCHOOL_ROUTES.include?(route)
@@ -171,7 +171,7 @@ namespace :example_data do
 
             if enabled_course_routes.include?(route)
 
-              courses = provider.courses.where(route: route)
+              courses = provider.courses.where(route:)
 
               if state == :draft
                 # Make *roughly* half of draft trainees apply drafts

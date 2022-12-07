@@ -50,3 +50,6 @@ RSpec/MessageChain:
 RSpec/MultipleMemoizedHelpers:
   Exclude:
     - "spec/**/*"
+
+RSpec/NoExpectationExample:
+  Enabled: false

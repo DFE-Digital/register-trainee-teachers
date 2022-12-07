@@ -21,7 +21,7 @@ module SchoolResultNotice
     def school_result_text
       return pluralised_school_result_text if remaining_search_count > 1
 
-      t("components.school_result_notice.result_text", search_query: search_query)
+      t("components.school_result_notice.result_text", search_query:)
     end
 
   private
@@ -33,7 +33,7 @@ module SchoolResultNotice
     end
 
     def pluralised_school_result_text
-      t("components.school_result_notice.multiple_result_text", search_query: search_query, remaining_search_count: remaining_search_count)
+      t("components.school_result_notice.multiple_result_text", search_query:, remaining_search_count:)
     end
   end
 end

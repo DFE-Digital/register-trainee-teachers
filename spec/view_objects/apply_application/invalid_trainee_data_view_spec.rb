@@ -13,8 +13,8 @@ module ApplyApplications
     let(:application) do
       create(:apply_application,
              :with_invalid_data,
-             degree_slug: degree_slug,
-             invalid_institution: invalid_institution)
+             degree_slug:,
+             invalid_institution:)
     end
 
     before do
@@ -38,9 +38,9 @@ module ApplyApplications
         let(:application) do
           create(:apply_application,
                  :with_multiple_invalid_data,
-                 degree_slug: degree_slug,
-                 invalid_institution: invalid_institution,
-                 invalid_subject: invalid_subject)
+                 degree_slug:,
+                 invalid_institution:,
+                 invalid_subject:)
         end
 
         it "returns the pluralised invalid answer summary" do

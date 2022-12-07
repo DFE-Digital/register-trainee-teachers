@@ -32,7 +32,7 @@ class IttDatesForm < TraineeForm
   def save!
     if valid?
       update_trainee_itt_dates
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       copy_dates_to_course if for_all_trainees?
       clear_stash
     else
@@ -42,12 +42,12 @@ class IttDatesForm < TraineeForm
 
   def stash
     course_details_form.assign_attributes_and_stash({
-      start_day: start_day,
-      start_month: start_month,
-      start_year: start_year,
-      end_day: end_day,
-      end_month: end_month,
-      end_year: end_year,
+      start_day:,
+      start_month:,
+      start_year:,
+      end_day:,
+      end_month:,
+      end_year:,
     })
 
     super

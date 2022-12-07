@@ -186,7 +186,7 @@ class RemoveHeiTrainees < ActiveRecord::Migration[6.1]
       x4RX39XAzB7t7auf3FRx1kGh
       qV15BMZ4HNCkA4XKEvu5qZLT
     ].each do |slug|
-      trainee = Trainee.find_by(slug: slug)
+      trainee = Trainee.find_by(slug:)
       if trainee&.draft? # double check just in case it has changed since
         trainee.apply_application.non_importable_hei!
         trainee.destroy

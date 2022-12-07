@@ -12,7 +12,7 @@ module TeacherTrainingApi
 
     before do
       allow(RetrieveCourses).to receive(:call).and_return(course_payload)
-      allow(ImportCourse).to receive(:call).with(course_data: course_data, provider_data: provider_data)
+      allow(ImportCourse).to receive(:call).with(course_data:, provider_data:)
 
       described_class.perform_now
     end
@@ -20,7 +20,7 @@ module TeacherTrainingApi
     context "when the feature flag is turned on", feature_import_courses_from_ttapi: true do
       it "queues up a job to import courses" do
         expect(RetrieveCourses).to have_received(:call).with(request_uri: nil)
-        expect(ImportCourse).to have_received(:call).with(course_data: course_data, provider_data: provider_data)
+        expect(ImportCourse).to have_received(:call).with(course_data:, provider_data:)
       end
     end
   end

@@ -7,7 +7,7 @@ module TraineeStartStatus
     include SummaryHelper
 
     let(:trainee_start_date) { Time.zone.today }
-    let(:trainee) { create(:trainee, trainee_start_date: trainee_start_date) }
+    let(:trainee) { create(:trainee, trainee_start_date:) }
 
     before do
       render_inline(View.new(data_model: trainee))

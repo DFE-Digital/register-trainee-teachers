@@ -9,7 +9,7 @@ describe StartDateVerificationForm, type: :model do
 
   let(:params) do
     {
-      trainee_has_started_course: trainee_has_started_course,
+      trainee_has_started_course:,
     }
   end
 

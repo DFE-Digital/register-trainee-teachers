@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "date is not before itt start date" do |form|
+shared_examples "date is not before itt start date" do |form|
   context "date is before the itt start date" do
     before do
       subject.year = trainee.itt_start_date.year - 1

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ApplicationController, type: :controller do
+describe ApplicationController do
   let(:user_email) { "bob@example.com" }
   let(:user_uid) { "6dd394f1-df7d-45f1-976e-687190390d62" }
   let!(:user) do

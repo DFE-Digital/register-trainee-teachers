@@ -46,7 +46,7 @@ describe SubjectSpecialismForm, type: :model do
     context "course allocation subject changed" do
       let(:trainee) { build(:trainee, :with_funding, :with_course_allocation_subject, id: 123456) }
       let(:course_subject_one) { Dttp::CodeSets::CourseSubjects::MAPPING.keys.sample }
-      let(:params) { { course_subject_one: course_subject_one } }
+      let(:params) { { course_subject_one: } }
 
       before do
         create(:subject_specialism, name: course_subject_one)

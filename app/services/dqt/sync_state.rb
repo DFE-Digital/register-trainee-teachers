@@ -24,7 +24,7 @@ module Dqt
     attr_reader :trainee
 
     def response
-      @response ||= Dqt::RetrieveTeacher.call(trainee: trainee)
+      @response ||= Dqt::RetrieveTeacher.call(trainee:)
     end
 
     def dqt_state

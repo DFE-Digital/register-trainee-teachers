@@ -10,7 +10,7 @@ module ApplyApi
     let(:http_response) { { status: status, body: ApiStubs::ApplyApi.applications } }
     let(:request_url) { "#{Settings.apply_api.base_url}#{expected_path}" }
 
-    subject { described_class.call(changed_since: changed_since, recruitment_cycle_year: recruitment_cycle_year).to_a }
+    subject { described_class.call(changed_since:, recruitment_cycle_year:).to_a }
 
     before do
       stub_request(:get, request_url).to_return(http_response)

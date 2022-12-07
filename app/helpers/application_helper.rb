@@ -16,7 +16,7 @@ module ApplicationHelper
     options.unshift(empty_result).compact
   end
 
-  def register_form_with(*args, &block)
+  def register_form_with(*args, &)
     options = args.extract_options!
     defaults = {
       html: {
@@ -26,7 +26,7 @@ module ApplicationHelper
         spellcheck: false,
       },
     }
-    form_with(*args << defaults.deep_merge(options), &block)
+    form_with(*args, **defaults.deep_merge(options), &)
   end
 
   def header_items(current_user)

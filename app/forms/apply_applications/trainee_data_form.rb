@@ -36,7 +36,7 @@ module ApplyApplications
       trainee.progress.diversity = true
       trainee.progress.degrees = true
       trainee.progress.trainee_data = true
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
     end
 
     def progress_status(progress_key)
@@ -58,7 +58,7 @@ module ApplyApplications
     def missing_fields
       form_validators.keys.map do |section|
         if section == :degrees
-          validator_obj(section).missing_fields(include_degree_id: include_degree_id)
+          validator_obj(section).missing_fields(include_degree_id:)
         else
           validator_obj(section).missing_fields
         end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe StartPageBanner::View do
+describe StartPageBanner::View do
   before(:all) do
     @result ||= render_inline(StartPageBanner::View.new)
   end

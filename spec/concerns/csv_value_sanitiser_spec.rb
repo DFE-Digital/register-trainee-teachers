@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe CsvValueSanitiser do
+describe CsvValueSanitiser do
   describe "#safe?" do
     let(:good_value) { "foo" }
     let(:date_value_str) { "2021-09-15 12:52:00 +0100" }

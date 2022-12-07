@@ -111,7 +111,7 @@ module Degrees
 
     def find_institution(hesa_degree)
       hesa_code = institution_hesa_code(hesa_degree)
-      institution = DfEReference.find_institution(hesa_code: hesa_code)
+      institution = DfEReference.find_institution(hesa_code:)
 
       institution || DfEReference.find_institution(name: "Other UK institution")
     end

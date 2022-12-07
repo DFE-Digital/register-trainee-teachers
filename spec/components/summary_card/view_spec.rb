@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SummaryCard::View do
+describe SummaryCard::View do
   let(:rows) do
     [
       { key: "Character", value: "Lando Calrissian" },

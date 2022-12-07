@@ -18,7 +18,7 @@ module Paginator
         current_page: current_page,
         total_pages: (total_count.to_f / page_size).ceil,
       )
-      component = described_class.new(scope: scope)
+      component = described_class.new(scope:)
       allow(component).to receive(:paginate).and_return("paginator")
       render_inline(component)
     end
@@ -58,7 +58,7 @@ module Paginator
           total_pages: total_pages,
         )
 
-        described_class.new(scope: scope).paginate_configuration
+        described_class.new(scope:).paginate_configuration
       end
 
       context "when there are KAMINARI_LINKS_LIMIT or fewer pages (e.g. 5)" do

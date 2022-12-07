@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "course education phase", type: :feature do
+feature "course education phase" do
   include SummaryHelper
 
   background { given_i_am_authenticated }

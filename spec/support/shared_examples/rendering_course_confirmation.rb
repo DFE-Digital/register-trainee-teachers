@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "rendering course confirmation" do
+shared_examples "rendering course confirmation" do
   let(:trainee) { build(:trainee, :provider_led_postgrad, study_mode: "full_time") }
   let(:itt_start_date) { nil }
 
@@ -15,10 +15,10 @@ RSpec.shared_examples "rendering course confirmation" do
       }
     else
       {
-        trainee: trainee,
-        course: course,
-        specialisms: specialisms,
-        itt_start_date: itt_start_date,
+        trainee:,
+        course:,
+        specialisms:,
+        itt_start_date:,
       }
     end
   end

@@ -16,7 +16,7 @@ module Hesa
       end
 
       it "builds a CSV of TRN data and uploads it as a file to HESA" do
-        expect(Hesa::Client).to receive(:upload_trn_file).with(url: url, file: file).and_return(hesa_response)
+        expect(Hesa::Client).to receive(:upload_trn_file).with(url:, file:).and_return(hesa_response)
 
         expect(described_class.call(trainees: [trainee])).to eq(file.file_data)
       end

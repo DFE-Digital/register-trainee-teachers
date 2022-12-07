@@ -7,7 +7,7 @@ class RemoveDuplicateDegreesFromHesaTrainees < ActiveRecord::Migration[6.1]
         Degree.without_auditing do
           trainee.degrees.delete_all
           hesa_degrees = trainee.hesa_student.degrees.map(&:with_indifferent_access)
-          Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_degrees)
+          Degrees::CreateFromHesa.call(trainee:, hesa_degrees:)
         end
       end
     end

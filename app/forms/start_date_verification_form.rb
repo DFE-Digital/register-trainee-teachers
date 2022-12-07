@@ -17,7 +17,7 @@ class StartDateVerificationForm < TraineeForm
   def save!
     if valid?
       update_trainee_commencement_status
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       clear_stash
     else
       false
@@ -39,7 +39,7 @@ class StartDateVerificationForm < TraineeForm
 private
 
   def update_trainee_commencement_status
-    attributes = { commencement_status: commencement_status }
+    attributes = { commencement_status: }
 
     attributes.merge!(trainee_start_date: nil) if not_yet_started?
 

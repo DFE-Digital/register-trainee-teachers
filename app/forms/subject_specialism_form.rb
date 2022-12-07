@@ -36,22 +36,22 @@ class SubjectSpecialismForm < TraineeForm
     return false unless valid?
 
     trainee.assign_attributes(
-      course_subject_one: course_subject_one,
-      course_subject_two: course_subject_two,
-      course_subject_three: course_subject_three,
-      course_allocation_subject: course_allocation_subject,
+      course_subject_one:,
+      course_subject_two:,
+      course_subject_three:,
+      course_allocation_subject:,
     )
     clear_funding_information if clear_funding_information?
-    Trainees::Update.call(trainee: trainee)
+    Trainees::Update.call(trainee:)
     clear_stash
   end
 
   def stash
     form = CourseDetailsForm.new(trainee)
     form.assign_attributes_and_stash({
-      course_subject_one: course_subject_one,
-      course_subject_two: course_subject_two,
-      course_subject_three: course_subject_three,
+      course_subject_one:,
+      course_subject_two:,
+      course_subject_three:,
     })
 
     super

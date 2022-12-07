@@ -5,7 +5,7 @@ require "rails_helper"
 module Trainees
   describe CreateFromApply do
     let(:candidate_attributes) { {} }
-    let(:application_data) { JSON.parse(ApiStubs::ApplyApi.application(candidate_attributes: candidate_attributes)) }
+    let(:application_data) { JSON.parse(ApiStubs::ApplyApi.application(candidate_attributes:)) }
     let(:apply_application) { create(:apply_application, application: application_data) }
     let(:candidate_info) { ApiStubs::ApplyApi.candidate_info.as_json }
     let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }

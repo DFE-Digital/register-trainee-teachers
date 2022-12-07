@@ -62,8 +62,8 @@ describe DegreesForm, type: :model do
   end
 
   describe "#find_degree_from_param" do
-    let(:degree1) { build(:degree, :uk_degree_with_details, trainee: trainee) }
-    let(:degree2) { build(:degree, :non_uk_degree_with_details, trainee: trainee) }
+    let(:degree1) { build(:degree, :uk_degree_with_details, trainee:) }
+    let(:degree2) { build(:degree, :non_uk_degree_with_details, trainee:) }
 
     before do
       allow(form_store).to receive(:get).and_return(nil)

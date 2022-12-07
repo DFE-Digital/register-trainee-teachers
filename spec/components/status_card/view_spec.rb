@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe StatusCard::View do
+describe StatusCard::View do
   alias_method :component, :page
 
   describe "rendered component" do

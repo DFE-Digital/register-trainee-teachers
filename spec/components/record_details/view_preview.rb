@@ -14,7 +14,7 @@ module RecordDetails
         t.provider = Provider.new(code: TEACH_FIRST_PROVIDER_CODE)
       end
 
-      render(View.new(trainee: trainee, last_updated_event: last_updated_event))
+      render(View.new(trainee:, last_updated_event:))
     end
 
     def as_system_admin
@@ -39,7 +39,7 @@ module RecordDetails
 
     def with_eyts_recommended
       trainee = mock_trainee("eyts_recommended", :recommended_for_award, TRAINING_ROUTE_ENUMS[:early_years_undergrad])
-      render(View.new(trainee: trainee, last_updated_event: last_updated_event))
+      render(View.new(trainee:, last_updated_event:))
     end
 
     def with_qts_awarded
@@ -48,12 +48,12 @@ module RecordDetails
 
     def with_eyts_awarded
       trainee = mock_trainee("eyts_awarded", :awarded, TRAINING_ROUTE_ENUMS[:early_years_undergrad])
-      render(View.new(trainee: trainee, last_updated_event: last_updated_event))
+      render(View.new(trainee:, last_updated_event:))
     end
 
     def with_itt_not_yet_started
       trainee = mock_trainee("eyts_awarded", :awarded, TRAINING_ROUTE_ENUMS[:early_years_undergrad], :itt_not_yet_started)
-      render(View.new(trainee: trainee, last_updated_event: last_updated_event))
+      render(View.new(trainee:, last_updated_event:))
     end
 
   private

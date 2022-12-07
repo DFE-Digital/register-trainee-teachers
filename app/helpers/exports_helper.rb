@@ -3,7 +3,7 @@
 module ExportsHelper
   VULNERABLE_CHARACTERS = %w[= + - @].freeze
   NEGATIVE_AMOUNT_PREFIX = %w[-£].freeze
-  SAFE_NEGATIVE_AMOUNT_REGEX = /\A-{1}£{1}\d+\,?\d+\.?\d*\Z/.freeze
+  SAFE_NEGATIVE_AMOUNT_REGEX = /\A-{1}£{1}\d+\,?\d+\.?\d*\Z/
 
   def sanitize(value)
     return value unless value.is_a?(String)

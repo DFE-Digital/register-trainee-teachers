@@ -9,7 +9,7 @@ module ApiStubs
       @raw_xml = read_fixture_file("hesa/itt_record.xml")
       xml_doc = Nokogiri::XML(raw_xml)
       @student_node = override_node_tags(xml_doc.xpath("//ITTRecord/Student").first)
-      @student_attributes = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
+      @student_attributes = Hesa::Parsers::IttRecord.to_attributes(student_node:)
     end
 
   private

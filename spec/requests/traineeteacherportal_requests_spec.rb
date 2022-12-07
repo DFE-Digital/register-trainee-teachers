@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "requests to traineeteacherportal-test.education.gov.uk" do
+describe "requests to traineeteacherportal-test.education.gov.uk" do
   it "redirects / to register" do
     get "https://traineeteacherportal-test.education.gov.uk"
 

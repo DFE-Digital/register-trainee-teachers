@@ -6,7 +6,7 @@ module Degrees
   describe CreateFromCsvRow do
     subject(:service) { described_class.call(trainee: trainee, csv_row: csv.first) }
 
-    let(:trainee) { create :trainee }
+    let(:trainee) { create(:trainee) }
     let(:degree) { trainee.degrees.first }
     let(:csv) do
       CSV.read(

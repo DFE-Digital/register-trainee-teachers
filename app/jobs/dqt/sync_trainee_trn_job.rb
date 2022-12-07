@@ -11,7 +11,7 @@ module Dqt
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
       trainee = Trainee.find(trainee_id)
-      response = Dqt::FindTeacher.call(trainee: trainee)
+      response = Dqt::FindTeacher.call(trainee:)
 
       if response["trn"].present?
         trainee.trn_received!(response["trn"])

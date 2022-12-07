@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-feature "teach-first end-to-end journey", type: :feature do
+feature "teach-first end-to-end journey" do
   let(:user) { create(:user, providers: [create(:provider, code: TEACH_FIRST_PROVIDER_CODE)]) }
 
-  background { given_i_am_authenticated(user: user) }
+  background { given_i_am_authenticated(user:) }
 
   scenario "submit for TRN" do
     ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true

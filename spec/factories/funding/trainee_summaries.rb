@@ -15,7 +15,7 @@ FactoryBot.define do
     trait :with_grant_rows do
       rows do
         [AllocationSubjects::CHEMISTRY, AllocationSubjects::BIOLOGY].map do |subject|
-          build(:trainee_summary_row, :with_grant_amount, subject: subject)
+          build(:trainee_summary_row, :with_grant_amount, subject:)
         end
       end
     end

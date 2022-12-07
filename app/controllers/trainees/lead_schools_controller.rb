@@ -19,7 +19,7 @@ module Trainees
       @lead_school_form = Schools::LeadSchoolForm.new(trainee, params: trainee_params, user: current_user)
 
       if @lead_school_form.school_not_selected? && @lead_school_form.valid?
-        return redirect_to(trainee_lead_schools_path(@trainee, query: query))
+        return redirect_to(trainee_lead_schools_path(@trainee, query:))
       end
 
       if @lead_school_form.stash_or_save!
@@ -55,7 +55,7 @@ module Trainees
     end
 
     def step_wizard
-      @step_wizard ||= Wizards::SchoolsStepWizard.new(trainee: trainee, page_tracker: page_tracker)
+      @step_wizard ||= Wizards::SchoolsStepWizard.new(trainee:, page_tracker:)
     end
 
     def validate_form_completeness

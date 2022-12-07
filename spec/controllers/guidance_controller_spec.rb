@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe GuidanceController, type: :controller do
+describe GuidanceController do
   describe "#show" do
     it "returns a 200 status code" do
       get :show

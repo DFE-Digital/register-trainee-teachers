@@ -15,7 +15,7 @@ class TraineeStartDateForm < TraineeForm
   def save!
     if valid?
       update_trainee_start_date
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       clear_stash
     else
       false
@@ -23,7 +23,7 @@ class TraineeStartDateForm < TraineeForm
   end
 
   def trainee_start_date
-    date_hash = { year: year, month: month, day: day }
+    date_hash = { year:, month:, day: }
     date_args = date_hash.values.map(&:to_i)
 
     valid_date?(date_args) ? Date.new(*date_args) : InvalidDate.new(date_hash)
@@ -52,7 +52,7 @@ private
   end
 
   def update_trainee_start_date
-    trainee.assign_attributes(trainee_start_date: trainee_start_date, commencement_status: commencement_status)
+    trainee.assign_attributes(trainee_start_date:, commencement_status:)
   end
 
   def commencement_status

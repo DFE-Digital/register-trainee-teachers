@@ -20,7 +20,7 @@ module DynamicBackLink
       if last_origin_page
         page_tracker.last_origin_page_path
       else
-        page_tracker.previous_page_path(consider_confirm_page: consider_confirm_page)
+        page_tracker.previous_page_path(consider_confirm_page:)
       end
     end
   end

@@ -7,7 +7,7 @@ feature "Viewing provider's funding" do
   let(:provider) { create(:provider) }
 
   before do
-    given_i_am_authenticated(user: user)
+    given_i_am_authenticated(user:)
     and_funding_data_exists_for_current_academic_year
     when_i_visit_the_provider_show_page
     when_i_click_view_funding

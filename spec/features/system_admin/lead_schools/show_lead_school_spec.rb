@@ -8,7 +8,7 @@ feature "Show lead school" do
     let!(:lead_school) { create(:school, :lead, name: "Test 1") }
 
     before do
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
     end
 
     scenario "show lead school" do

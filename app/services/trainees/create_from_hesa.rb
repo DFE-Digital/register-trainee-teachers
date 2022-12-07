@@ -8,14 +8,14 @@ module Trainees
 
     USERNAME = "HESA"
 
-    TRN_REGEX = /^(\d{6,7})$/.freeze
+    TRN_REGEX = /^(\d{6,7})$/
 
     NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010].freeze
 
     class HesaImportError < StandardError; end
 
     def initialize(student_node:, record_source:)
-      @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
+      @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node:)
       @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
       @record_source = record_source
     end
@@ -23,7 +23,7 @@ module Trainees
     def call
       Audited.audit_class.as_user(USERNAME) do
         trainee.assign_attributes(mapped_attributes)
-        Trainees::SetAcademicCycles.call(trainee: trainee)
+        Trainees::SetAcademicCycles.call(trainee:)
 
         if trainee.save!
           create_degrees!
@@ -93,7 +93,7 @@ module Trainees
 
     def provider_attributes
       provider = Provider.find_by(ukprn: hesa_trainee[:ukprn])
-      provider ? { provider: provider } : {}
+      provider ? { provider: } : {}
     end
 
     def withdrawal_attributes
@@ -141,7 +141,7 @@ module Trainees
     end
 
     def funding_attributes
-      MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
+      MapFundingFromDttpEntityId.call(funding_entity_id:)
     end
 
     def sex
@@ -172,7 +172,7 @@ module Trainees
 
     def enqueue_background_jobs!
       if FeatureService.enabled?(:integrate_with_dqt)
-        Trainees::Update.call(trainee: trainee) if trainee.trn.present?
+        Trainees::Update.call(trainee:) if trainee.trn.present?
         Dqt::RegisterForTrnJob.perform_later(trainee) if request_for_trn?
       end
     end
@@ -256,7 +256,7 @@ module Trainees
     end
 
     def store_hesa_metadata!
-      hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee: trainee)
+      hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee:)
       hesa_metadatum.assign_attributes(itt_aim: itt_aim,
                                        itt_qualification_aim: itt_qualification_aim,
                                        fundability: fundability,
@@ -280,7 +280,7 @@ module Trainees
     end
 
     def trainee_state
-      @trainee_state ||= MapStateFromHesa.call(hesa_trainee: hesa_trainee, trainee: trainee) || trainee.state
+      @trainee_state ||= MapStateFromHesa.call(hesa_trainee:, trainee:) || trainee.state
     end
   end
 end

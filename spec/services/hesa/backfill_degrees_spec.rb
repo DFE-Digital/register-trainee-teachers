@@ -19,7 +19,7 @@ module Hesa
     end
 
     before do
-      allow(::Hesa::Client).to receive(:get).with(url: url).and_return(
+      allow(::Hesa::Client).to receive(:get).with(url:).and_return(
         ::File.read(xml_file_path),
       )
     end

@@ -39,7 +39,7 @@ module Trainees
       return unless trainee_editable?
 
       @missing_data_view = MissingDataBannerView.new(
-        Submissions::MissingDataValidator.new(trainee: trainee).missing_fields, trainee
+        Submissions::MissingDataValidator.new(trainee:).missing_fields, trainee
       )
     end
 

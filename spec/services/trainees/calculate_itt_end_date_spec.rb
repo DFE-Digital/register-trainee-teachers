@@ -4,11 +4,11 @@ require "rails_helper"
 
 module Trainees
   describe CalculateIttEndDate do
-    let(:trainee) { build(:trainee, :with_start_date, hesa_metadatum: hesa_metadatum, **trainee_attributes) }
-    let(:hesa_metadatum) { build(:hesa_metadatum, study_length: study_length, study_length_unit: study_length_unit) }
+    let(:trainee) { build(:trainee, :with_start_date, hesa_metadatum:, **trainee_attributes) }
+    let(:hesa_metadatum) { build(:hesa_metadatum, study_length:, study_length_unit:) }
     let(:trainee_attributes) { {} }
 
-    subject { described_class.call(trainee: trainee) }
+    subject { described_class.call(trainee:) }
 
     context "study_length '1' and study_length_unit is 'years'" do
       let(:study_length) { 1 }

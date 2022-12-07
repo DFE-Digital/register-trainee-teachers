@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Wizards
   describe SchoolsStepWizard do
-    subject { described_class.new(trainee: trainee) }
+    subject { described_class.new(trainee:) }
 
     describe "#start_point" do
       context "when theres no lead or employing school" do

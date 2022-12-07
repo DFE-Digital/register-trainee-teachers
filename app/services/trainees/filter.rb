@@ -64,7 +64,7 @@ module Trainees
     def training_route(trainees, training_route)
       return trainees if training_route.blank?
 
-      trainees.where(training_route: training_route)
+      trainees.where(training_route:)
     end
 
     def status(trainees, statuses)
@@ -124,7 +124,7 @@ module Trainees
     def provider(trainees, provider)
       return trainees if provider.blank?
 
-      trainees.where(provider: provider)
+      trainees.where(provider:)
     end
 
     def record_completion(trainees, record_completion)
@@ -141,7 +141,7 @@ module Trainees
       return trainees if study_mode.blank? || (study_mode.count == 2)
 
       if study_mode.count == 1
-        trainees.where(study_mode: study_mode).where.not(training_route: "assessment_only").where.not(training_route: "early_years_assessment_only")
+        trainees.where(study_mode:).where.not(training_route: "assessment_only").where.not(training_route: "early_years_assessment_only")
       end
     end
 

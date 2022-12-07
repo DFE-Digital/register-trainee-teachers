@@ -16,10 +16,10 @@ module ApiStubs
 
     def self.application(id: "3772", course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
       uk_application(
-        id: id,
-        course_attributes: course_attributes,
-        candidate_attributes: candidate_attributes,
-        degree_attributes: degree_attributes,
+        id:,
+        course_attributes:,
+        candidate_attributes:,
+        degree_attributes:,
       ).to_json
     end
 

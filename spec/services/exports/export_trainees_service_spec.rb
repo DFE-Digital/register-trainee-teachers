@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Exports::ExportTraineesService, type: :model do
+describe Exports::ExportTraineesService, type: :model do
   describe "#call" do
     let(:csv) { CSV.parse(service_call, headers: true) }
     let(:expected_headers) { Reports::TraineesReport.headers }

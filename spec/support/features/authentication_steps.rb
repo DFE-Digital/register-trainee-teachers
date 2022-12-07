@@ -12,7 +12,7 @@ module Features
     end
 
     def given_i_am_authenticated_as_a_lead_school_user(user: create(:user, :with_lead_school_organisation))
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
     end
 
     def given_i_am_authenticated_as_system_admin

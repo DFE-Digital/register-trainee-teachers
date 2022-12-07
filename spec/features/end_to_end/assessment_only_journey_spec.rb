@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "assessment-only end-to-end journey", type: :feature do
+feature "assessment-only end-to-end journey" do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN" do

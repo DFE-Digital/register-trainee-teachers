@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit training initiative", type: :feature do
+feature "edit training initiative" do
   background { given_i_am_authenticated }
 
   let(:course_subject) { CourseSubjects::LAW }

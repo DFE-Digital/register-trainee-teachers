@@ -9,7 +9,7 @@ FactoryBot.define do
 
     trait :with_subjects do
       after(:create) do |funding_method, _|
-        create_list(:funding_method_subject, 2, funding_method: funding_method)
+        create_list(:funding_method_subject, 2, funding_method:)
       end
     end
   end

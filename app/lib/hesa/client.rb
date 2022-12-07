@@ -18,7 +18,7 @@ module Hesa
 
     def upload_trn_file(url:, file:)
       login
-      agent.post(url, { file: file })
+      agent.post(url, file:)
     end
 
   private

@@ -9,7 +9,7 @@ module TraineeStartDate
     let(:trainee_start_date) { Time.zone.today }
 
     context "when data has been provided" do
-      let(:trainee) { create(:trainee, trainee_start_date: trainee_start_date) }
+      let(:trainee) { create(:trainee, trainee_start_date:) }
 
       before do
         render_inline(View.new(data_model: trainee))

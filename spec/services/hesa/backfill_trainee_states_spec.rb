@@ -9,7 +9,7 @@ module Hesa
     let(:reason_for_leaving_code) { %w[11 05 03].sample }
     let(:reason_for_leaving) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[reason_for_leaving_code] }
 
-    subject { described_class.call(trainee: trainee) }
+    subject { described_class.call(trainee:) }
 
     context "when HESA student is withdrawn" do
       before do

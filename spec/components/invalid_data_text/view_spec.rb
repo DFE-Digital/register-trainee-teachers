@@ -5,7 +5,7 @@ require "rails_helper"
 module InvalidDataText
   describe View, type: :component do
     before do
-      render_inline(described_class.new(form_section: form_section, degree_form: degree_form))
+      render_inline(described_class.new(form_section:, degree_form:))
     end
 
     let(:degree) { trainee.degrees.first }

@@ -5,7 +5,7 @@ require "rails_helper"
 describe RouteDataManager do
   describe "#update_training_route!" do
     subject do
-      described_class.new(trainee: trainee).update_training_route!("provider_led_postgrad")
+      described_class.new(trainee:).update_training_route!("provider_led_postgrad")
     end
 
     let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true) }
@@ -20,7 +20,7 @@ describe RouteDataManager do
       end
 
       context "when a trainee has course details" do
-        let(:trainee) { create(:trainee, :assessment_only, :with_primary_course_details, progress: progress) }
+        let(:trainee) { create(:trainee, :assessment_only, :with_primary_course_details, progress:) }
 
         it "wipes the course details" do
           expect { subject }
@@ -85,7 +85,7 @@ describe RouteDataManager do
       let(:trainee) { create(:trainee, :assessment_only) }
 
       subject do
-        described_class.new(trainee: trainee).update_training_route!("early_years_undergrad")
+        described_class.new(trainee:).update_training_route!("early_years_undergrad")
       end
 
       it "sets course_subject_one to early years teaching and age_range to 0-5" do

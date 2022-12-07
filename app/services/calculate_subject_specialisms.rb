@@ -27,7 +27,7 @@ private
   attr_reader :subjects
 
   def specialism_type
-    @specialism_type ||= CalculateSubjectSpecialismType.call(subjects: subjects)
+    @specialism_type ||= CalculateSubjectSpecialismType.call(subjects:)
   end
 
   def attributes_for_language_subject

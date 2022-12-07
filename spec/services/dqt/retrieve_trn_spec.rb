@@ -22,7 +22,7 @@ module Dqt
         allow(Dqt::Client).to receive(:get).and_return(dqt_response)
       end
 
-      subject { described_class.call(trn_request: trn_request) }
+      subject { described_class.call(trn_request:) }
 
       context "TRN is available" do
         it "returns the TRN value" do

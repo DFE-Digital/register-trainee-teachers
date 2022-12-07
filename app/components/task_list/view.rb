@@ -21,7 +21,7 @@ private
     attr_accessor :task_name, :status, :hint_text, :active
 
     def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, active: true, classes: [], html_attributes: {})
-      super(classes: classes, html_attributes: html_attributes)
+      super(classes:, html_attributes:)
 
       @task_name = task_name
       @path = path

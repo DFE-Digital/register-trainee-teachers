@@ -51,7 +51,7 @@ module Funding
           create(:funding_method_subject,
                  funding_method: funding_method,
                  allocation_subject: subject_specialism.allocation_subject)
-          render_inline(View.new(data_model: data_model))
+          render_inline(View.new(data_model:))
         end
 
         it "renders if the trainee selects mathematics" do
@@ -104,7 +104,7 @@ module Funding
         describe "has no bursary" do
           before do
             create(:funding_method)
-            render_inline(View.new(data_model: data_model))
+            render_inline(View.new(data_model:))
           end
 
           it "doesnt not render bursary row" do

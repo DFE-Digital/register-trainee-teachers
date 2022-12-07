@@ -4,7 +4,7 @@ module RouteIndicator
   class ViewPreview < ViewComponent::Preview
     Trainee.training_routes.each_key do |training_route|
       define_method training_route.to_s do
-        render(View.new(trainee: Trainee.new(training_route: training_route)))
+        render(View.new(trainee: Trainee.new(training_route:)))
       end
 
       define_method "apply_#{training_route}" do
