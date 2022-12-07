@@ -10,7 +10,7 @@ module FilteredBackLink
     end
 
     def link_href
-      Tracker.new(session: session, href: href).get_path
+      Tracker.new(session:, href:).get_path
     end
   end
 end

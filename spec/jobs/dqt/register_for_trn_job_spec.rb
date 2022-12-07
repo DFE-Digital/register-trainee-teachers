@@ -49,7 +49,7 @@ module Dqt
         let(:trn_request) { double(failed?: true) }
 
         before do
-          allow(RegisterForTrn).to receive(:call).with(trainee: trainee).and_return(trn_request)
+          allow(RegisterForTrn).to receive(:call).with(trainee:).and_return(trn_request)
         end
 
         it "does not register a TRN request with DQT" do

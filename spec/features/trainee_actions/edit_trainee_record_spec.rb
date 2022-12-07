@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit trainee record", type: :feature do
+feature "edit trainee record" do
   include TraineeHelper
 
   background do

@@ -12,7 +12,7 @@ describe ApplyApplication do
   end
 
   describe "#degrees_invalid_data" do
-    let(:apply_application) { create(:apply_application, invalid_data: invalid_data) }
+    let(:apply_application) { create(:apply_application, invalid_data:) }
     let(:invalid_data) { nil }
 
     subject { apply_application.degrees_invalid_data }

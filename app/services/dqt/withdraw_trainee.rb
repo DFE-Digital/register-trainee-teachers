@@ -27,7 +27,7 @@ module Dqt
     end
 
     def params
-      @params ||= Params::Withdrawal.new(trainee: trainee)
+      @params ||= Params::Withdrawal.new(trainee:)
     end
   end
 end

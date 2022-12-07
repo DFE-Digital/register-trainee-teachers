@@ -6,7 +6,7 @@ describe CourseEducationPhaseForm, type: :model do
   let(:params) { {} }
   let(:trainee) { build(:trainee) }
 
-  subject { described_class.new(trainee, params: params) }
+  subject { described_class.new(trainee, params:) }
 
   describe "validations" do
     context "course_education_phase is nil" do

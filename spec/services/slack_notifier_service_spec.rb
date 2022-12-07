@@ -18,8 +18,8 @@ describe SlackNotifierService do
       end
 
       it "sends a message using the default webhook" do
-        expect(slack_notifier).to receive(:ping).with(message, icon_emoji: icon_emoji, username: username)
-        described_class.call(message: message, username: username)
+        expect(slack_notifier).to receive(:ping).with(message, icon_emoji:, username:)
+        described_class.call(message:, username:)
       end
     end
 
@@ -29,8 +29,8 @@ describe SlackNotifierService do
       end
 
       it "sends a message using the passed webhook" do
-        expect(slack_notifier).to receive(:ping).with(message, icon_emoji: icon_emoji, username: username)
-        described_class.call(channel_webhook: channel_webhook, message: message, username: username)
+        expect(slack_notifier).to receive(:ping).with(message, icon_emoji:, username:)
+        described_class.call(channel_webhook:, message:, username:)
       end
     end
   end

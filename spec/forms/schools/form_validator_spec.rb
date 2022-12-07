@@ -151,7 +151,7 @@ module Schools
 
           it { is_expected.to include([:lead_school_id]) }
 
-          context "with invalid LeadSchoolForm and EmployingSchoolForm form", "feature_routes.school_direct_tuition_fee": true, "feature_routes.school_direct_salaried": true do
+          context "with invalid LeadSchoolForm and EmployingSchoolForm form", "feature_routes.school_direct_salaried": true, "feature_routes.school_direct_tuition_fee": true do
             let(:employing_school_form) do
               instance_double(
                 Schools::EmployingSchoolForm,

@@ -15,7 +15,7 @@ FactoryBot.define do
     trait :for_full_year do
       rows do
         ["Training bursary trainees", "Course extension provider payments"].map do |description|
-          build(:payment_schedule_row, :for_full_year, description: description)
+          build(:payment_schedule_row, :for_full_year, description:)
         end
       end
     end

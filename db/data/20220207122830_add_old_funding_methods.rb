@@ -80,7 +80,7 @@ class AddOldFundingMethods < ActiveRecord::Migration[6.1]
         )
         bursary.allocation_subjects.map do |subject|
           allocation_subject = AllocationSubject.find_by!(name: subject)
-          b.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+          b.funding_method_subjects.find_or_create_by!(allocation_subject:)
         end
       end
 
@@ -93,7 +93,7 @@ class AddOldFundingMethods < ActiveRecord::Migration[6.1]
         )
         scholarship.allocation_subjects.map do |subject|
           allocation_subject = AllocationSubject.find_by!(name: subject)
-          s.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+          s.funding_method_subjects.find_or_create_by!(allocation_subject:)
         end
       end
     end

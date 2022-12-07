@@ -48,7 +48,7 @@ private
 
     @current_user ||= begin
       user = lookup_user_by_dfe_sign_in_uid || lookup_user_by_email
-      UserWithOrganisationContext.new(user: user, session: session) if user.present?
+      UserWithOrganisationContext.new(user:, session:) if user.present?
     end
   end
 
@@ -122,7 +122,7 @@ private
   def page_tracker
     @page_tracker ||= begin
       trainee_slug = params[:trainee_id] || params[:id]
-      PageTracker.new(trainee_slug: trainee_slug, session: session, request: request)
+      PageTracker.new(trainee_slug:, session:, request:)
     end
   end
 

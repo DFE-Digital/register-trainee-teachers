@@ -7,7 +7,7 @@ module ApplyApi
     describe "#call" do
       let(:application_data) { JSON.parse(ApiStubs::ApplyApi.application) }
 
-      subject { described_class.call(application_data: application_data) }
+      subject { described_class.call(application_data:) }
 
       context "when the provider exists in register" do
         let(:provider_code) { application_data["attributes"]["course"]["training_provider_code"] }

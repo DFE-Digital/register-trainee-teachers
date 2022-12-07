@@ -9,7 +9,7 @@ module Trainees
 
     describe "#perform", feature_import_trainees_from_dttp: true do
       it "calls the CreateFromDttp service" do
-        expect(CreateFromDttp).to receive(:call).with(dttp_trainee: dttp_trainee)
+        expect(CreateFromDttp).to receive(:call).with(dttp_trainee:)
         described_class.perform_now(dttp_trainee)
       end
 

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Wizards
   describe DiversitiesStepWizard do
-    subject { described_class.new(trainee: trainee) }
+    subject { described_class.new(trainee:) }
 
     describe "#start_point" do
       context "when diversity is disclosed and the rest of the form incomplete" do

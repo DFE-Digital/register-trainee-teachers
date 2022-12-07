@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Filtering trainees" do
+feature "Filtering trainees" do
   context "registered trainees" do
     before do
       given_i_am_authenticated
@@ -41,8 +41,8 @@ RSpec.feature "Filtering trainees" do
       then_all_registered_trainees_are_visible
     end
 
-    scenario "cannot filter by record source" do
-      then_the_record_source_filter_is_not_visible
+    scenario "can filter by record source" do
+      then_the_record_source_filter_is_visible
     end
 
     scenario "can filter by status" do
@@ -100,7 +100,6 @@ RSpec.feature "Filtering trainees" do
       scenario "when all trainees are from a single source" do
         given_all_trainees_are_from_a_single_source
         when_i_visit_the_trainee_index_page
-        then_the_record_source_filter_is_not_visible
       end
 
       scenario "can filter by dttp import as record source" do
@@ -219,8 +218,8 @@ private
     Trainee.created_from_dttp.destroy_all
   end
 
-  def then_the_record_source_filter_is_not_visible
-    expect(trainee_index_page).not_to have_text(I18n.t("activerecord.attributes.trainee.record_sources.manual"))
+  def then_the_record_source_filter_is_visible
+    expect(trainee_index_page).to have_text(I18n.t("activerecord.attributes.trainee.record_sources.manual"))
   end
 
   def given_a_subject_specialism_is_available_for_selection

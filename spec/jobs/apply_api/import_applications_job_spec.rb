@@ -21,16 +21,16 @@ module ApplyApi
 
         it "calls the RetrieveApplications service with the from_date param" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: from_date, recruitment_cycle_year: recruitment_cycle_year)
-          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(ImportApplication).to receive(:call).with(application_data:).and_return(application_record)
 
-          described_class.perform_now(from_date: from_date)
+          described_class.perform_now(from_date:)
         end
       end
 
       context "when there have been no previous syncs" do
         it "imports application data from Apply and creates a trainee record" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: nil, recruitment_cycle_year: recruitment_cycle_year)
-          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(ImportApplication).to receive(:call).with(application_data:).and_return(application_record)
 
           described_class.perform_now
         end
@@ -50,7 +50,7 @@ module ApplyApi
 
         it "imports all applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: nil, recruitment_cycle_year: recruitment_cycle_year)
-          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(ImportApplication).to receive(:call).with(application_data:).and_return(application_record)
 
           described_class.perform_now
         end
@@ -70,7 +70,7 @@ module ApplyApi
 
         it "imports just the new applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: last_sync, recruitment_cycle_year: recruitment_cycle_year)
-          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(ImportApplication).to receive(:call).with(application_data:).and_return(application_record)
 
           described_class.perform_now
         end
@@ -97,7 +97,7 @@ module ApplyApi
 
         it "imports just the new applications from Apply" do
           expect(RetrieveApplications).to receive(:call).with(changed_since: last_successful_sync, recruitment_cycle_year: recruitment_cycle_year)
-          expect(ImportApplication).to receive(:call).with(application_data: application_data).and_return(application_record)
+          expect(ImportApplication).to receive(:call).with(application_data:).and_return(application_record)
 
           described_class.perform_now
         end
@@ -105,7 +105,7 @@ module ApplyApi
 
       context "when ImportApplication returns ApplyApiMissingDataError" do
         before do
-          allow(ImportApplication).to receive(:call).with(application_data: application_data).and_raise ApplyApi::ImportApplication::ApplyApiMissingDataError
+          allow(ImportApplication).to receive(:call).with(application_data:).and_raise ApplyApi::ImportApplication::ApplyApiMissingDataError
         end
 
         it "is rescued and captured by Sentry" do
@@ -118,7 +118,7 @@ module ApplyApi
     context "when the feature flag is turned off", feature_import_applications_from_apply: false do
       it "does nothing" do
         expect(RetrieveApplications).not_to receive(:call).with(changed_since: nil)
-        expect(ImportApplication).not_to receive(:call).with(application_data: application_data)
+        expect(ImportApplication).not_to receive(:call).with(application_data:)
 
         described_class.perform_now
       end

@@ -35,7 +35,7 @@ class FixIncorrectlyAwardedTrainees < ActiveRecord::Migration[6.1]
        3961536].each do |trn|
       # Nullifying awarded_at and outcome_date too because one of the trainees has these dates set incorrectly.
       # Not nullifying recommended_for_award_at and this is set to nil already.
-      Trainee.find_by(trn: trn)&.update_columns(state: :trn_received, awarded_at: nil, outcome_date: nil)
+      Trainee.find_by(trn:)&.update_columns(state: :trn_received, awarded_at: nil, outcome_date: nil)
     end
   end
 

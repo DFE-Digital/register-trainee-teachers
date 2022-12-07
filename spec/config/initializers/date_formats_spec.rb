@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Time::DATE_FORMATS" do
+describe "Time::DATE_FORMATS" do
   describe ":govuk_date_and_time" do
     it "formats time to indicate midday" do
       date_and_time = Time.zone.local(2020, 12, 25, 12, 0, 59)

@@ -30,7 +30,7 @@ class BackfillCyprusNationalityForHesaTrainees < ActiveRecord::Migration[6.1]
     return unless eu_cypriot
 
     trainee_slugs.each do |slug|
-      trainee = Trainee.find_by(slug: slug)
+      trainee = Trainee.find_by(slug:)
 
       if trainee
         Nationalisation.find_or_create_by!(trainee_id: trainee.id, nationality_id: eu_cypriot.id)

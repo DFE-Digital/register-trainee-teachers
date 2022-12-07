@@ -6,7 +6,7 @@ module Trainees
   describe SubmitForTrn do
     let(:trainee) { create(:trainee, :draft, :completed) }
 
-    subject { described_class.call(trainee: trainee) }
+    subject { described_class.call(trainee:) }
 
     before { ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false }
 

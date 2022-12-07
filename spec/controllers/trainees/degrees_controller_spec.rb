@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Trainees::DegreesController, type: :controller do
+describe Trainees::DegreesController do
   describe "#create" do
     let(:user) { build_current_user(user: create(:user, providers: [trainee.provider])) }
     let(:trainee) { create(:trainee) }

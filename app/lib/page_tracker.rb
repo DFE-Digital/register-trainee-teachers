@@ -3,7 +3,7 @@
 class PageTracker
   HISTORY_KEY_PREFIX = "history_for"
   ORIGIN_PAGES_KEY_PREFIX = "origin_pages_for"
-  TRAINEE_PAGE_URI_REGEX = /trainees\/.+/.freeze
+  TRAINEE_PAGE_URI_REGEX = /trainees\/.+/
 
   def initialize(trainee_slug:, session:, request:)
     @trainee_slug = trainee_slug

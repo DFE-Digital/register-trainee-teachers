@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "edit schools spec", type: :feature do
+feature "edit schools spec" do
   context "as a school direct salaried trn_submitted trainee" do
     before do
       given_i_am_authenticated

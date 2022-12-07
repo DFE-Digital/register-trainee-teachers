@@ -7,10 +7,10 @@ class Activity < ApplicationRecord
 
   def self.track(user:, controller_name:, action_name:, metadata: {})
     create!(
-      user: user,
-      controller_name: controller_name,
-      action_name: action_name,
-      metadata: metadata,
+      user:,
+      controller_name:,
+      action_name:,
+      metadata:,
     )
   end
 end

@@ -18,7 +18,7 @@ class HeartbeatController < ActionController::API
 
     render(status: status,
            json: {
-             checks: checks,
+             checks:,
            })
   end
 

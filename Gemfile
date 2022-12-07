@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.7.5"
+ruby "3.1.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 7.0"
@@ -49,7 +49,7 @@ gem "rails_semantic_logger", "4.11.0"
 gem "request_store", "~> 1.5"
 
 # Used to build our forms and style them using govuk-frontend class names
-gem "govuk-components", "~> 3.0"
+gem "govuk-components", "3.0.3"
 gem "govuk_design_system_formbuilder"
 
 # Background job processor
@@ -154,7 +154,7 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "timecop", "~> 0.9.5"
+  gem "timecop", "~> 0.9.6"
 end
 
 group :development do

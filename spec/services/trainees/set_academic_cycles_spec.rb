@@ -10,7 +10,7 @@ module Trainees
     let!(:one_after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
 
     describe "start_academic_cycle" do
-      subject { described_class.call(trainee: trainee).start_academic_cycle }
+      subject { described_class.call(trainee:).start_academic_cycle }
 
       context "when a trainee has a trainee_start_date" do
         let(:trainee) do
@@ -50,7 +50,7 @@ module Trainees
     end
 
     describe "end_academic_cycle" do
-      subject { described_class.call(trainee: trainee).end_academic_cycle }
+      subject { described_class.call(trainee:).end_academic_cycle }
 
       context "when a trainee has an awarded_at" do
         let(:trainee) do

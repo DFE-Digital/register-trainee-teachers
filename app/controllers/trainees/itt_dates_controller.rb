@@ -16,12 +16,12 @@ module Trainees
     }.freeze
 
     def edit
-      @itt_dates_form = IttDatesForm.new(trainee, params: { course_uuid: course_uuid })
+      @itt_dates_form = IttDatesForm.new(trainee, params: { course_uuid: })
     end
 
     def update
       @itt_dates_form = IttDatesForm.new(trainee,
-                                         params: itt_dates_params.merge(course_uuid: course_uuid),
+                                         params: itt_dates_params.merge(course_uuid:),
                                          user: current_user)
 
       if @itt_dates_form.stash_or_save!

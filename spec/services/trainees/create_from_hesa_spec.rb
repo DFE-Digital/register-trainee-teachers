@@ -37,7 +37,7 @@ module Trainees
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:school, urn: student_attributes[:lead_school_urn])
       create_custom_state
-      described_class.call(student_node: student_node, record_source: record_source)
+      described_class.call(student_node:, record_source:)
     end
 
     describe "HESA information imported from XML" do
@@ -151,7 +151,7 @@ module Trainees
         let(:create_custom_state) { create(:trainee, :trn_received, hesa_id: student_attributes[:hesa_id]) }
 
         it "sends an update to DQT" do
-          expect(Trainees::Update).to have_received(:call).with(trainee: trainee)
+          expect(Trainees::Update).to have_received(:call).with(trainee:)
         end
       end
 

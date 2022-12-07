@@ -11,7 +11,7 @@ module Dttp
     let(:request_headers) { { headers: { "Prefer" => "odata.maxpagesize=5000" } } }
     let(:http_response) { { status: 200, body: { value: [1, 2, 3], "@odata.nextLink": "https://example.com" }.to_json } }
 
-    subject { described_class.call(request_uri: request_uri) }
+    subject { described_class.call(request_uri:) }
 
     before do
       allow(AccessToken).to receive(:fetch).and_return("token")

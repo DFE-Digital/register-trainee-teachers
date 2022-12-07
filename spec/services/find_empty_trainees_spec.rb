@@ -12,7 +12,7 @@ describe FindEmptyTrainees do
   subject { described_class.call }
 
   before do
-    create(:trainee, :draft, provider: provider)
+    create(:trainee, :draft, provider:)
   end
 
   it "returns only trainees that have no data" do

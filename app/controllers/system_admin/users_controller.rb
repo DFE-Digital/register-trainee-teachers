@@ -9,6 +9,8 @@ module SystemAdmin
       @users = filtered_users(policy_scope(User.kept, policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1))
     end
 
+    def show; end
+
     def new
       @user = authorize(User.new)
     end
@@ -22,8 +24,6 @@ module SystemAdmin
         render(:new)
       end
     end
-
-    def show; end
 
     def delete; end
 

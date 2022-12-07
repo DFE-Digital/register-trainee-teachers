@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ReportsController, type: :controller do
+describe ReportsController do
   let(:user) { build_current_user }
 
   before do

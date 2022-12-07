@@ -9,7 +9,7 @@ describe UserWithOrganisationContext do
   let(:lead_school) { create(:school, :lead) }
 
   subject do
-    described_class.new(user: user, session: session)
+    described_class.new(user:, session:)
   end
 
   before do

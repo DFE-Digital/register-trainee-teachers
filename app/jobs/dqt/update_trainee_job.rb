@@ -16,7 +16,7 @@ module Dqt
 
       return unless trainee_updatable?(trainee)
 
-      TraineeUpdate.call(trainee: trainee)
+      TraineeUpdate.call(trainee:)
     end
 
   private

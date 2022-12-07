@@ -50,6 +50,6 @@ private
   end
 
   def record_state_tag
-    { status: status, status_colour: status_colour, classes: classes }
+    { status:, status_colour:, classes: }
   end
 end

@@ -18,7 +18,7 @@ module Trainees
     let(:placement_assignment) { create(:dttp_placement_assignment, response: api_placement_assignment) }
     let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], api_trainee_hash: api_trainee) }
 
-    subject { described_class.call(dttp_trainee: dttp_trainee) }
+    subject { described_class.call(dttp_trainee:) }
 
     context "when neither trainee nor placement_assignment have a status" do
       it "marks the trainee as non importable" do

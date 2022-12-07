@@ -15,7 +15,7 @@ feature "creating a new lead school for a user" do
   let!(:user_to_be_updated) { create(:user, first_name: "James", last_name: "Rodney") }
 
   before do
-    given_i_am_authenticated(user: user)
+    given_i_am_authenticated(user:)
     and_a_number_of_lead_schools_exist
     when_i_visit_the_user_index_page
     and_i_click_on_the_user_name_link
@@ -26,7 +26,7 @@ feature "creating a new lead school for a user" do
 
   describe "adding a lead school to a user" do
     context "with javascript" do
-      scenario "works", js: true do
+      scenario "adds the lead school", js: true do
         and_i_fill_in_my_lead_school
         and_i_click_the_first_item_in_the_list
         and_i_continue
@@ -35,7 +35,7 @@ feature "creating a new lead school for a user" do
       end
 
       context "when a lead school is not selected" do
-        it "works", js: true do
+        it "the user is redirected to the lead schools page", js: true do
           and_i_fill_in_my_lead_school
           and_i_continue
           then_i_am_redirected_to_the_lead_schools_page
@@ -44,7 +44,7 @@ feature "creating a new lead school for a user" do
     end
 
     context "without javascript" do
-      scenario "works" do
+      scenario "the user is redirected to the lead schools page" do
         and_i_fill_in_my_lead_school_without_js
         and_i_continue
         then_i_am_redirected_to_the_lead_schools_page
@@ -56,7 +56,7 @@ private
 
   def and_a_number_of_lead_schools_exist
     @lead_schools = SCHOOL_NAMES.map do |name|
-      create(:school, :lead, name: name)
+      create(:school, :lead, name:)
     end
   end
 

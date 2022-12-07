@@ -87,7 +87,7 @@ FactoryBot.define do
             course.subjects << create(:subject, name: subject_name)
           end
         else
-          create_list(:course_subjects, evaluator.subjects_count, course: course)
+          create_list(:course_subjects, evaluator.subjects_count, course:)
         end
       end
     end

@@ -66,7 +66,7 @@ module Trainees
 
       describe "#call" do
         before do
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "updates the Trainee ID, route, region and record_source" do
@@ -127,7 +127,7 @@ module Trainees
       context "when the degree institution UKPRN is provided" do
         before do
           csv_row.merge!({ "Degree: UK awarding institution" => "10007163" })
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "create's the trainee's degree with the correct institution" do
@@ -146,7 +146,7 @@ module Trainees
             "Degree: Non-UK degree types" => "Bachelor degree",
             "Degree: graduation year" => "2021",
           })
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "create's the trainee's non-uk degree" do
@@ -166,7 +166,7 @@ module Trainees
       context "when the trainee does not live in the UK" do
         before do
           csv_row.merge!({ "Outside UK address" => "Another land" })
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "sets the correct address fields" do
@@ -181,7 +181,7 @@ module Trainees
       describe "setting the trainee's diversity details" do
         context "when ethnicity is 'Not provided'" do
           it "sets the ethnic_group and background to 'Not provided'" do
-            described_class.call(provider: provider, csv_row: csv_row)
+            described_class.call(provider:, csv_row:)
             expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
             expect(trainee.ethnic_background).to eq(Diversities::NOT_PROVIDED)
             expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
@@ -191,7 +191,7 @@ module Trainees
         context "when ethnicity is provided" do
           before do
             csv_row.merge!({ "Ethnicity" => "Black - Caribbean or Caribbean British" })
-            described_class.call(provider: provider, csv_row: csv_row)
+            described_class.call(provider:, csv_row:)
           end
 
           it "sets the ethnic_group and background" do
@@ -203,7 +203,7 @@ module Trainees
         context "when disability is provided" do
           before do
             csv_row.merge!({ "Disabilities" => "Learning difficulty" })
-            described_class.call(provider: provider, csv_row: csv_row)
+            described_class.call(provider:, csv_row:)
           end
 
           it "sets the disability and disability disclosure" do
@@ -216,7 +216,7 @@ module Trainees
         context "when disability is provided as No known disability" do
           before do
             csv_row.merge!({ "Disabilities" => "No disabilities" })
-            described_class.call(provider: provider, csv_row: csv_row)
+            described_class.call(provider:, csv_row:)
           end
 
           it "sets no disabilities on the trainee and sets the disability disclosures correctly" do
@@ -229,7 +229,7 @@ module Trainees
         context "when multiple disabilities are provided" do
           before do
             csv_row.merge!({ "Disabilities" => "Learning difficulty, Long-standing illness" })
-            described_class.call(provider: provider, csv_row: csv_row)
+            described_class.call(provider:, csv_row:)
           end
 
           it "sets the disabilities and disability disclosure" do
@@ -243,7 +243,7 @@ module Trainees
       context "when the trainee's course is in the primary age range but subject isn't" do
         before do
           csv_row.merge!({ "Course age range" => "7 to 11" })
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "adds 'primary teaching' and places it in the course_subject_one column" do
@@ -258,7 +258,7 @@ module Trainees
             "Course age range" => "7 to 11",
             "Course ITT subject 2" => "primary teaching",
           })
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "moves 'primary teaching' to be the first subject" do
@@ -270,7 +270,7 @@ module Trainees
       context "when nationality is provided as 'other'" do
         before do
           csv_row.merge!({ "Nationality" => "other" })
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "doesn't error and leaves the nationality blank" do
@@ -281,7 +281,7 @@ module Trainees
       context "when nationality is provided as 'english'" do
         before do
           csv_row.merge!({ "Nationality" => "english" })
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
         end
 
         it "doesn't error and leaves the nationality blank" do
@@ -308,7 +308,7 @@ module Trainees
       end
 
       it "sets the extra fields" do
-        described_class.call(provider: provider, csv_row: csv_row)
+        described_class.call(provider:, csv_row:)
         expect(trainee.training_route).to eq(training_route)
         expect(trainee.course_uuid).to eq(course.uuid)
         expect(trainee.lead_school.urn).to eq(lead_school_urn)
@@ -320,7 +320,7 @@ module Trainees
 
         it "raises an error" do
           expect {
-            described_class.call(provider: provider, csv_row: csv_row)
+            described_class.call(provider:, csv_row:)
           }.to raise_error(StandardError)
         end
       end
@@ -337,7 +337,7 @@ module Trainees
 
         it "raises an error" do
           expect {
-            described_class.call(provider: provider, csv_row: csv_row)
+            described_class.call(provider:, csv_row:)
           }.to raise_error(StandardError)
         end
       end
@@ -354,7 +354,7 @@ module Trainees
         }
 
         it "picks the correct course uuid based on recruitment cycle year" do
-          described_class.call(provider: provider, csv_row: csv_row)
+          described_class.call(provider:, csv_row:)
           expect(trainee.course_uuid).to eq(course.uuid)
         end
       end

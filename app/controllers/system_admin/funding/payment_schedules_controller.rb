@@ -6,7 +6,7 @@ module SystemAdmin
       def show
         respond_to do |format|
           format.html do
-            @payment_schedule_view = ::Funding::PaymentScheduleView.new(payment_schedule: payment_schedule)
+            @payment_schedule_view = ::Funding::PaymentScheduleView.new(payment_schedule:)
             @navigation_view = ::Funding::NavigationView.new(organisation: organisation, system_admin: true)
 
             @start_year = current_academic_cycle.start_year
@@ -27,7 +27,7 @@ module SystemAdmin
       end
 
       def data_export
-        @data_export ||= Exports::FundingScheduleData.new(payment_schedule: payment_schedule)
+        @data_export ||= Exports::FundingScheduleData.new(payment_schedule:)
       end
     end
   end

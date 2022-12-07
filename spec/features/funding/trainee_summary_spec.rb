@@ -8,7 +8,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
   background {
     Rails.application.reload_routes!
-    given_i_am_authenticated(user: user)
+    given_i_am_authenticated(user:)
   }
 
   context "with a trainee summary in the current academic year" do
@@ -17,7 +17,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
     context "an organisation with bursary data" do
       background {
-        create(:trainee_summary_row_amount, :with_bursary, row: row)
+        create(:trainee_summary_row_amount, :with_bursary, row:)
         when_i_visit_the_trainee_summary_page
       }
       scenario "displays the bursary breakdown table" do
@@ -36,7 +36,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
     context "bursary rows with zero totals" do
       background {
-        create(:trainee_summary_row_amount, :with_bursary, row: row, number_of_trainees: number_of_trainees, amount_in_pence: amount_in_pence)
+        create(:trainee_summary_row_amount, :with_bursary, row:, number_of_trainees:, amount_in_pence:)
         when_i_visit_the_trainee_summary_page
       }
 
@@ -61,7 +61,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
     context "an organisation with scholarship data" do
       background {
-        create(:trainee_summary_row_amount, :with_scholarship, row: row)
+        create(:trainee_summary_row_amount, :with_scholarship, row:)
         when_i_visit_the_trainee_summary_page
       }
       scenario "displays the scholarship breakdown table" do
@@ -71,7 +71,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
     context "scholarship rows with zero totals" do
       background {
-        create(:trainee_summary_row_amount, :with_scholarship, row: row, number_of_trainees: number_of_trainees, amount_in_pence: amount_in_pence)
+        create(:trainee_summary_row_amount, :with_scholarship, row:, number_of_trainees:, amount_in_pence:)
         when_i_visit_the_trainee_summary_page
       }
 
@@ -96,7 +96,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
     context "an organisation with tiered bursary data" do
       background {
-        create(:trainee_summary_row_amount, :with_tiered_bursary, row: row)
+        create(:trainee_summary_row_amount, :with_tiered_bursary, row:)
         when_i_visit_the_trainee_summary_page
       }
       scenario "displays the tiered bursary breakdown table" do
@@ -108,7 +108,7 @@ feature "viewing the trainee summary", feature_funding: true do
       let(:tier) { 3 }
 
       background {
-        create(:trainee_summary_row_amount, :with_tiered_bursary, row: row, tier: tier, number_of_trainees: number_of_trainees, amount_in_pence: amount_in_pence)
+        create(:trainee_summary_row_amount, :with_tiered_bursary, row:, tier:, number_of_trainees:, amount_in_pence:)
         when_i_visit_the_trainee_summary_page
       }
 
@@ -133,7 +133,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
     context "an organisation with grant data" do
       background {
-        create(:trainee_summary_row_amount, :with_grant, row: row)
+        create(:trainee_summary_row_amount, :with_grant, row:)
         when_i_visit_the_trainee_summary_page
       }
       scenario "displays the grant breakdown table" do
@@ -143,7 +143,7 @@ feature "viewing the trainee summary", feature_funding: true do
 
     context "grant rows with zero totals" do
       background {
-        create(:trainee_summary_row_amount, :with_grant, row: row, number_of_trainees: number_of_trainees, amount_in_pence: amount_in_pence)
+        create(:trainee_summary_row_amount, :with_grant, row:, number_of_trainees:, amount_in_pence:)
         when_i_visit_the_trainee_summary_page
       }
 
@@ -172,7 +172,7 @@ feature "viewing the trainee summary", feature_funding: true do
     let(:previous_academic_year_string) { "#{academic_year.start_date.year - 1}/#{(academic_year.end_date.year - 1) % 100}" }
     let(:summary) { create(:trainee_summary, payable: user.providers.first, academic_year: previous_academic_year_string) }
     let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
-    let!(:amount) { create(:trainee_summary_row_amount, :with_bursary, row: row) }
+    let!(:amount) { create(:trainee_summary_row_amount, :with_bursary, row:) }
 
     scenario "displays the empty state" do
       when_i_visit_the_trainee_summary_page

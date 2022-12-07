@@ -11,7 +11,7 @@ module ApplyApi
 
       recruitment_cycle_years.each do |recruitment_cycle_year|
         new_applications(recruitment_cycle_year).each do |application_data|
-          ImportApplication.call(application_data: application_data)
+          ImportApplication.call(application_data:)
         rescue ApplyApi::ImportApplication::ApplyApiMissingDataError => e
           Sentry.capture_exception(e)
         end
@@ -30,7 +30,7 @@ module ApplyApi
     def last_successful_sync(recruitment_cycle_year)
       ApplyApplicationSyncRequest
         .successful
-        .where(recruitment_cycle_year: recruitment_cycle_year)
+        .where(recruitment_cycle_year:)
         .maximum(:created_at)
     end
   end

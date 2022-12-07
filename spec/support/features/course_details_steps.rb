@@ -81,7 +81,7 @@ module Features
 
     def and_i_click_enter_answer_for_itt_end_date
       Trainee.last.course_subjects.each do |name|
-        create(:subject_specialism, name: name)
+        create(:subject_specialism, name:)
       end
       confirm_publish_course_details_page.enter_an_answer_for_itt_end_date_link.click
     end

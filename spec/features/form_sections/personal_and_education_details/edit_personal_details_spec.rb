@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit personal details", type: :feature do
+feature "edit personal details" do
   background { given_i_am_authenticated }
 
   scenario "updates personal details with valid data" do

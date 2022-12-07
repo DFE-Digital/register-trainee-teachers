@@ -169,7 +169,7 @@ module Trainees
       end
 
       context "with an associated audit" do
-        let(:degree) { create(:degree, trainee: trainee) }
+        let(:degree) { create(:degree, trainee:) }
 
         it "returns a 'creation' timeline event" do
           degree.reload
@@ -189,7 +189,7 @@ module Trainees
       end
 
       context "with a destroy associated audit" do
-        let(:degree) { create(:degree, trainee: trainee) }
+        let(:degree) { create(:degree, trainee:) }
 
         before do
           degree.reload

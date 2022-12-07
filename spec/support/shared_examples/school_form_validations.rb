@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "school form validations" do |school_id_key|
+shared_examples "school form validations" do |school_id_key|
   before { subject.valid? }
 
   context "empty form data" do

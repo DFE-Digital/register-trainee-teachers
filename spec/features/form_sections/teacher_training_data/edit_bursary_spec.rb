@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit bursary", type: :feature do
+feature "edit bursary" do
   background { given_i_am_authenticated }
 
   let(:course_subject) { CourseSubjects::LAW }

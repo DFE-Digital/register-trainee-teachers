@@ -53,7 +53,7 @@ class PublishCourseDetailsForm < TraineeForm
     return false unless valid?
 
     update_trainee_attributes
-    Trainees::Update.call(trainee: trainee)
+    Trainees::Update.call(trainee:)
     clear_all_course_related_stashes
   end
 

@@ -5,7 +5,7 @@ module Dttp
     queue_as :dttp
 
     def perform(request_uri = nil)
-      @account_list = RetrieveAccounts.call(request_uri: request_uri)
+      @account_list = RetrieveAccounts.call(request_uri:)
 
       Account.upsert_all(account_attributes, unique_by: :dttp_id)
 

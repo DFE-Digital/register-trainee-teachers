@@ -351,7 +351,7 @@ module Reports
     end
 
     def trainee_status
-      StatusTag::View.new(trainee: trainee).status
+      StatusTag::View.new(trainee:).status
     end
 
     def trainee_url

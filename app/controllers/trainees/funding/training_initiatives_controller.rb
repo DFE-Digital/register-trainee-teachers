@@ -30,7 +30,7 @@ module Trainees
       end
 
       def step_wizard
-        @step_wizard ||= Wizards::FundingStepWizard.new(trainee: trainee, page_tracker: page_tracker)
+        @step_wizard ||= Wizards::FundingStepWizard.new(trainee:, page_tracker:)
       end
     end
   end

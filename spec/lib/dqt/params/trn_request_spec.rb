@@ -19,7 +19,7 @@ module Dqt
       end
 
       describe "#params" do
-        subject { described_class.new(trainee: trainee).params }
+        subject { described_class.new(trainee:).params }
 
         let(:uk_address_hash) do
           {
@@ -257,7 +257,7 @@ module Dqt
                    **trainee_attributes)
           end
 
-          subject { described_class.new(trainee: trainee).params }
+          subject { described_class.new(trainee:).params }
 
           it "maps the training route to SchoolDirectTrainingProgramme" do
             expect(subject["initialTeacherTraining"]["programmeType"]).to eq("SchoolDirectTrainingProgramme")

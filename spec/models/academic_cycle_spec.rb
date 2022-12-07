@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe AcademicCycle, type: :model do
+describe AcademicCycle do
   subject { build(:academic_cycle) }
 
   it { is_expected.to be_valid }

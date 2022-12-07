@@ -14,7 +14,7 @@ class AddFundingMethodsFor20222023 < ActiveRecord::Migration[6.1]
       )
       b.allocation_subjects.map do |subject|
         allocation_subject = AllocationSubject.find_by!(name: subject)
-        bursary.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+        bursary.funding_method_subjects.find_or_create_by!(allocation_subject:)
       end
     end
 
@@ -27,7 +27,7 @@ class AddFundingMethodsFor20222023 < ActiveRecord::Migration[6.1]
       )
       s.allocation_subjects.map do |subject|
         allocation_subject = AllocationSubject.find_by!(name: subject)
-        funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+        funding_method.funding_method_subjects.find_or_create_by!(allocation_subject:)
       end
     end
 
@@ -40,7 +40,7 @@ class AddFundingMethodsFor20222023 < ActiveRecord::Migration[6.1]
       )
       s.allocation_subjects.map do |subject|
         allocation_subject = AllocationSubject.find_by!(name: subject)
-        funding_method.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+        funding_method.funding_method_subjects.find_or_create_by!(allocation_subject:)
       end
     end
   end

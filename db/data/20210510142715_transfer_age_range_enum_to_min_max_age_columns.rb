@@ -7,7 +7,7 @@ class TransferAgeRangeEnumToMinMaxAgeColumns < ActiveRecord::Migration[6.1]
 
     Trainee.all.each do |trainee|
       course_min_age, course_max_age = trainee.age_range
-      trainee.update!(course_min_age: course_min_age, course_max_age: course_max_age)
+      trainee.update!(course_min_age:, course_max_age:)
     end
   end
 

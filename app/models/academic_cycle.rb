@@ -13,7 +13,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def self.for_date(date)
-    where("end_date >= :date AND start_date <= :date", date: date).first
+    where("end_date >= :date AND start_date <= :date", date:).first
   end
 
   def self.current

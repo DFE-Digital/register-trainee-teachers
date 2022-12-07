@@ -50,7 +50,7 @@ private
 
   def existing_trainee_with_id
     @existing_trainee_with_id ||= Trainee.where.not(id: trainee.id)
-      .where(provider_id: provider_id)
+      .where(provider_id:)
       .where("UPPER(trainee_id) = ?", trainee_id.upcase).first
   end
 
@@ -67,6 +67,6 @@ private
   end
 
   def update_trainee_attributes
-    trainee.assign_attributes(trainee_id: trainee_id)
+    trainee.assign_attributes(trainee_id:)
   end
 end

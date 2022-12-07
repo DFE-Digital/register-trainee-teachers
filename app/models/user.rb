@@ -28,7 +28,7 @@ class User < ApplicationRecord
   end
 
   def active_user?
-    User.kept.exists?(email: email)
+    User.kept.exists?(email:)
   end
 
 private

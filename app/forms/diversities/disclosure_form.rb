@@ -32,7 +32,7 @@ module Diversities
     def save_trainee!
       trainee.assign_attributes(fields.except(*fields_to_ignore_before_save))
       trainee.disability_disclosure = diversity_not_disclosed? ? Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] : nil
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
     end
 
     def compute_fields

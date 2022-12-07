@@ -14,7 +14,7 @@ describe ServiceUpdate::View do
 
   context "render component" do
     before do
-      render_inline(described_class.new(service_update: service_update))
+      render_inline(described_class.new(service_update:))
     end
 
     it "renders" do
@@ -25,7 +25,7 @@ describe ServiceUpdate::View do
   end
 
   context "helper methods" do
-    let(:component) { described_class.new(service_update: service_update) }
+    let(:component) { described_class.new(service_update:) }
 
     it "renders content as Markdown html" do
       expect(component.content_html.strip).to eql("<p><em>This</em> is a <strong>Markdown</strong> content.</p>")
@@ -43,7 +43,7 @@ describe ServiceUpdate::View do
       end
 
       context "when a title_tag is provided" do
-        let(:component) { described_class.new(service_update: service_update, title_tag: title_tag) }
+        let(:component) { described_class.new(service_update:, title_tag:) }
 
         context "which is valid" do
           let(:title_tag) { "h3" }

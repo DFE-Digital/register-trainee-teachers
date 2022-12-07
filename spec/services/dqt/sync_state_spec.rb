@@ -14,11 +14,11 @@ module Dqt
       }
     end
 
-    subject { described_class.call(trainee: trainee) }
+    subject { described_class.call(trainee:) }
 
     before do
       enable_features(:integrate_with_dqt)
-      allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee: trainee).and_return(dqt_response)
+      allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee:).and_return(dqt_response)
     end
 
     context "and the dqt state is Pass" do

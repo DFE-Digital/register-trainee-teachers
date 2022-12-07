@@ -39,7 +39,7 @@ module Trainees
 
     def call
       trainee.assign_attributes(mapped_attributes)
-      Trainees::SetAcademicCycles.call(trainee: trainee)
+      Trainees::SetAcademicCycles.call(trainee:)
       # This must happen after we've determined the academic cycles since we
       # need to choose the course from the correct year.
       trainee.course_uuid = course_uuid
@@ -256,7 +256,7 @@ module Trainees
     end
 
     def validate_and_set_progress
-      Submissions::TrnValidator.new(trainee: trainee).validators.each do |section, validator|
+      Submissions::TrnValidator.new(trainee:).validators.each do |section, validator|
         section_valid = validator[:form].constantize.new(trainee).valid?
         trainee.progress.public_send("#{section}=", section_valid)
       end

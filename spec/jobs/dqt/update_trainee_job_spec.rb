@@ -6,7 +6,7 @@ module Dqt
   describe UpdateTraineeJob do
     before do
       enable_features(:integrate_with_dqt)
-      allow(Dqt::TraineeUpdate).to receive(:call).with(trainee: trainee)
+      allow(Dqt::TraineeUpdate).to receive(:call).with(trainee:)
     end
 
     context "with valid state trainee" do
@@ -15,7 +15,7 @@ module Dqt
       it "calls the TraineeUpdate service" do
         described_class.perform_now(trainee)
 
-        expect(Dqt::TraineeUpdate).to have_received(:call).with(trainee: trainee)
+        expect(Dqt::TraineeUpdate).to have_received(:call).with(trainee:)
       end
     end
 
@@ -26,7 +26,7 @@ module Dqt
         it "does not call the TraineeUpdate service" do
           described_class.perform_now(trainee)
 
-          expect(Dqt::TraineeUpdate).not_to have_received(:call).with(trainee: trainee)
+          expect(Dqt::TraineeUpdate).not_to have_received(:call).with(trainee:)
         end
       end
     end

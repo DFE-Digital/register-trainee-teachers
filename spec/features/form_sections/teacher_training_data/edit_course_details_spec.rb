@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "course details", type: :feature do
+feature "course details" do
   include SummaryHelper
 
   background { given_i_am_authenticated }
@@ -126,7 +126,7 @@ private
   end
 
   def and_i_fill_in_subject_without_selecting_a_value(with:)
-    course_details_page.subject_raw.fill_in with: with
+    course_details_page.subject_raw.fill_in with:
   end
 
   def and_i_fill_in_subject_with_a_blank_value

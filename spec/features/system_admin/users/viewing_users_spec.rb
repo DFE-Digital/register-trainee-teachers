@@ -7,7 +7,7 @@ feature "View users" do
     let(:user) { create(:user, system_admin: true) }
 
     before do
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
       and_a_provider_exists
       when_i_visit_the_provider_index_page
       and_i_click_on_a_provider

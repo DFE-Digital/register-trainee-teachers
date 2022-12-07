@@ -6,7 +6,7 @@ module Funding
   describe PaymentScheduleView do
     let(:payment_schedule) { create(:payment_schedule, :for_provider, rows: payment_schedule_rows) }
 
-    subject { described_class.new(payment_schedule: payment_schedule) }
+    subject { described_class.new(payment_schedule:) }
 
     describe "#actual_payments" do
       let(:payment_schedule_rows) do
@@ -121,7 +121,7 @@ module Funding
     end
 
     describe "#any?" do
-      subject { described_class.new(payment_schedule: payment_schedule).any? }
+      subject { described_class.new(payment_schedule:).any? }
 
       context "no payment schedule rows" do
         let(:payment_schedule_rows) { [] }

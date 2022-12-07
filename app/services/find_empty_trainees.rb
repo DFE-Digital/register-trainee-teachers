@@ -101,7 +101,7 @@ private
   def empty_fields_query
     <<~SQL
         (
-          course_subject_one = \'#{CourseSubjects::EARLY_YEARS_TEACHING}\'
+          course_subject_one = '#{CourseSubjects::EARLY_YEARS_TEACHING}'
         AND
           concat(#{(TRAINEE_FIELDS - EARLY_YEARS_FIELDS_TO_EXCLUDE).join(',')}) = ''
         )

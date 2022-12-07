@@ -15,7 +15,7 @@ module Exports
       create(:payment_schedule, :for_provider, :for_full_year)
     end
 
-    subject(:exporter) { described_class.new(payment_schedule: payment_schedule) }
+    subject(:exporter) { described_class.new(payment_schedule:) }
 
     describe "#data" do
       let(:expected_headers) do
@@ -34,10 +34,10 @@ module Exports
         Funding::PayablePaymentSchedulesImporter::MONTH_ORDER.map do |month|
           training_amount = payment_schedule.rows.where(
             description: TRAINING_BURSARY_TRAINEES_HEADING,
-          ).first.amounts.where(month: month).first.amount_in_pence
+          ).first.amounts.where(month:).first.amount_in_pence
           course_amount = payment_schedule.rows.where(
             description: COURSE_EXTENSION_PROVIDER_PAYMENTS_HEADING,
-          ).first.amounts.where(month: month).first.amount_in_pence
+          ).first.amounts.where(month:).first.amount_in_pence
           year = month > 7 ? academic_cycle.start_year : academic_cycle.end_year
           course_total += course_amount
           training_total += training_amount
@@ -81,10 +81,10 @@ module Exports
         month = 8
         training_amount = payment_schedule.rows.where(
           description: TRAINING_BURSARY_TRAINEES_HEADING,
-        ).first.amounts.where(month: month).first.amount_in_pence
+        ).first.amounts.where(month:).first.amount_in_pence
         course_amount = payment_schedule.rows.where(
           description: COURSE_EXTENSION_PROVIDER_PAYMENTS_HEADING,
-        ).first.amounts.where(month: month).first.amount_in_pence
+        ).first.amounts.where(month:).first.amount_in_pence
 
         "August #{academic_cycle.start_year},#{format_amount(training_amount)},#{format_amount(course_amount)},#{format_amount(training_amount + course_amount)}"
       end

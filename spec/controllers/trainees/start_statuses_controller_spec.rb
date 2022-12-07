@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Trainees::StartStatusesController, type: :controller do
+describe Trainees::StartStatusesController do
   include ActiveJob::TestHelper
 
   describe "#update" do
@@ -42,7 +42,7 @@ describe Trainees::StartStatusesController, type: :controller do
         let(:trainee) { create(:trainee, :completed) }
 
         it "submits for TRN" do
-          expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: trainee })
+          expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: })
           send_request
         end
       end

@@ -42,7 +42,7 @@ module Hesa
       end
 
       it "returns XML from URL" do
-        expect(subject.get(url: url)).to eql("Test")
+        expect(subject.get(url:)).to eql("Test")
       end
     end
 
@@ -51,11 +51,11 @@ module Hesa
       let(:file) { double }
 
       before do
-        allow(mechanize).to receive(:post).with(url, file: file).and_return(sample_page)
+        allow(mechanize).to receive(:post).with(url, file:).and_return(sample_page)
       end
 
       it "sends a form post request with file data" do
-        subject.upload_trn_file(url: url, file: file)
+        subject.upload_trn_file(url:, file:)
       end
     end
   end

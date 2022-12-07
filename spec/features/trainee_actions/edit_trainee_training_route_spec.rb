@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "editing a trainee training route", type: :feature do
+feature "editing a trainee training route" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(traits)

@@ -12,6 +12,8 @@ module Trainees
       @degree_form = @degrees_form.build_degree(locale_code: params[:locale_code])
     end
 
+    def edit; end
+
     def create
       @degree_form = @degrees_form.build_degree(degree_params, autocomplete_params)
 
@@ -21,8 +23,6 @@ module Trainees
         render(:new)
       end
     end
-
-    def edit; end
 
     def update
       @degree_form.attributes = degree_params

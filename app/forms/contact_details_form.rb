@@ -35,7 +35,7 @@ class ContactDetailsForm < TraineeForm
   def save!
     if valid?
       update_trainee_attributes
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       store.set(trainee.id, :contact_details, nil)
     else
       false
@@ -59,7 +59,7 @@ private
   def update_trainee_attributes
     nullify_unused_address_fields!
     # Need to save the email attributes formatted by the ContactDetailsForm.
-    trainee.assign_attributes(fields.merge(email: email))
+    trainee.assign_attributes(fields.merge(email:))
   end
 
   def sanitise_email

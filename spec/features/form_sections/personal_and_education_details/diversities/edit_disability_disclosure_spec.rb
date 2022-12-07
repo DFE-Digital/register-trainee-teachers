@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit disability disclosure", type: :feature do
+feature "edit disability disclosure" do
   background { given_i_am_authenticated }
 
   context "when a trainee has not disclosed a disability" do

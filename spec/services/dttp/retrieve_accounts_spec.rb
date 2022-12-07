@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Dttp
   describe RetrieveAccounts do
-    subject { described_class.call(request_uri: request_uri) }
+    subject { described_class.call(request_uri:) }
 
     let(:expected_path) do
       "/accounts"

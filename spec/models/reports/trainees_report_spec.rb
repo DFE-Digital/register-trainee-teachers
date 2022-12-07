@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Reports::TraineesReport, type: :model do
+describe Reports::TraineesReport do
   include FileHelper
 
   let(:trainee) { create(:trainee, :for_export, course_uuid: create(:course).uuid) }

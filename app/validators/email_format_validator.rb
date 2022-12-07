@@ -7,9 +7,9 @@
 # Technical Failures)
 
 class EmailFormatValidator
-  EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~\-]+@([^.@][^@\s]+)$/.freeze
-  PART_REGEX = /^(xn-|[a-z0-9]+)(-[a-z0-9]+)*$/i.freeze
-  TLD_REGEX = /^([a-z]{2,63}|xn--([a-z0-9]+-)*[a-z0-9]+)$/.freeze
+  EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~\-]+@([^.@][^@\s]+)$/
+  PART_REGEX = /^(xn-|[a-z0-9]+)(-[a-z0-9]+)*$/i
+  TLD_REGEX = /^([a-z]{2,63}|xn--([a-z0-9]+-)*[a-z0-9]+)$/
 
   MAX_LENGTH = 320
   MAX_HOSTNAME_LENGTH = 253

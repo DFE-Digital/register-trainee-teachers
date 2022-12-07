@@ -5,7 +5,7 @@ module Trainees
     def perform(trainee)
       return unless trainee.persisted? # Trainees can be deleted before this job runs
 
-      trainee = Trainees::SetAcademicCycles.call(trainee: trainee)
+      trainee = Trainees::SetAcademicCycles.call(trainee:)
       trainee.save!
     end
   end

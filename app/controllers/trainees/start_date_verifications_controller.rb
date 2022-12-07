@@ -26,7 +26,7 @@ module Trainees
 
     def relevant_redirect_path
       if trainee_started_course?
-        edit_trainee_start_status_path(trainee, context: context)
+        edit_trainee_start_status_path(trainee, context:)
       elsif withdrawing?
         trainee_forbidden_withdrawal_path(trainee)
       elsif deferring?

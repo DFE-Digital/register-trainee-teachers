@@ -11,7 +11,7 @@ module Hesa
                         .where.not(trn: nil) # some trainees could still be waiting for their TRN from DQT
                         .where(hesa_trn_submission_id: nil)
                         .where(start_academic_cycle_id: AcademicCycle.current.id)
-      payload = UploadTrnFile.call(trainees: trainees)
+      payload = UploadTrnFile.call(trainees:)
       trn_submission = TrnSubmission.create(payload: payload, submitted_at: Time.zone.now)
 
       trainees.update_all(hesa_trn_submission_id: trn_submission.id)

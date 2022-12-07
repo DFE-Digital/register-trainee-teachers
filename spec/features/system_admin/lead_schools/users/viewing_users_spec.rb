@@ -9,7 +9,7 @@ feature "View users" do
     let!(:user_with_lead_school) { create(:user, lead_schools: [lead_school]) }
 
     scenario "I can view the users" do
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
       when_i_visit_the_lead_school_index_page
       and_i_click_on_a_lead_school
       then_i_am_taken_to_the_lead_school_show_page

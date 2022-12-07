@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Recommending for QTS", type: :feature do
+feature "Recommending for QTS" do
   include TraineeHelper
 
   scenario "redirects to the 'Recommended for QTS' page" do

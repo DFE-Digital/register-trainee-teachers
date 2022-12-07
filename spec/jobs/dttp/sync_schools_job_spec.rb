@@ -3,12 +3,12 @@
 require "rails_helper"
 
 module Dttp
-  describe SyncSchoolsJob, type: :job do
+  describe SyncSchoolsJob do
     include ActiveJob::TestHelper
 
     before do
       enable_features(:sync_from_dttp)
-      allow(RetrieveSchools).to receive(:call).with(request_uri: request_uri).and_return(school_list)
+      allow(RetrieveSchools).to receive(:call).with(request_uri:).and_return(school_list)
     end
 
     let(:school_one_hash) { ApiStubs::Dttp::School.attributes }

@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_trainees_from_dttp)
 
-      @trainee_list = RetrieveTrainees.call(request_uri: request_uri)
+      @trainee_list = RetrieveTrainees.call(request_uri:)
 
       Dttp::Trainee.upsert_all(trainee_attributes, unique_by: :dttp_id)
 

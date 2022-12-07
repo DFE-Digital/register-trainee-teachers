@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe ReviewDraft::ApplyDraft::View do
+describe ReviewDraft::ApplyDraft::View do
   include TaskListHelper
 
   describe "sections that appear for application draft trainee" do
     before do
-      render_inline(described_class.new(trainee: trainee))
+      render_inline(described_class.new(trainee:))
     end
 
     context "when the trainee is on the provider-led route", "feature_routes.provider_led_postgrad": true do

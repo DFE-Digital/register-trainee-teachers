@@ -9,7 +9,7 @@ module Degrees
     let(:subject_name) { "English studies" }
     let(:grade) { "First-class honours" }
 
-    subject { described_class.call(degree: degree) }
+    subject { described_class.call(degree:) }
 
     context "uk degree" do
       let(:degree) { create(:degree, institution: institution, uk_degree: type, subject: subject_name, grade: grade) }

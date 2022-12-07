@@ -13,7 +13,7 @@ module Dttp
     let(:degree_qualification_list) do
       {
         items: [degree_qualification_one_hash, degree_qualification_two_hash],
-        meta: { next_page_url: next_page_url },
+        meta: { next_page_url: },
       }
     end
 

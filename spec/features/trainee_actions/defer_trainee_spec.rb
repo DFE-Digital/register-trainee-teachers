@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Deferring a trainee", type: :feature do
+feature "Deferring a trainee" do
   include SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 

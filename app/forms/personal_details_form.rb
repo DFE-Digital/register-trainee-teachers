@@ -35,7 +35,7 @@ class PersonalDetailsForm < TraineeForm
   validate :nationalities_cannot_be_empty
 
   def date_of_birth
-    date_hash = { year: year, month: month, day: day }
+    date_hash = { year:, month:, day: }
     date_args = date_hash.values.map(&:to_i)
 
     valid_date?(date_args) ? Date.new(*date_args) : InvalidDate.new(date_hash)
@@ -44,7 +44,7 @@ class PersonalDetailsForm < TraineeForm
   def save!
     if valid?
       update_trainee_attributes
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       clear_stash
     else
       false
@@ -101,7 +101,7 @@ private
           :day, :month, :year, :other, :other_nationality1, :other_nationality2, :other_nationality3,
           :other_nationality1_raw, :other_nationality2_raw, :other_nationality3_raw, :nationality_names
         ).merge(
-          date_of_birth: date_of_birth, nationality_ids: nationality_ids,
+          date_of_birth:, nationality_ids:,
         ),
       )
     end

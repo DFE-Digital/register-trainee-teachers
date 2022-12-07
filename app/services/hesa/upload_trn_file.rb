@@ -16,7 +16,7 @@ module Hesa
 
       file = Mechanize::Form::FileUpload.new({ "name" => "file" }, "trn_file.csv")
       file.file_data = build_csv
-      response = Hesa::Client.upload_trn_file(url: url, file: file)
+      response = Hesa::Client.upload_trn_file(url:, file:)
       raise(TrnFileUploadError, response.body) if response.code != "200"
 
       file.file_data

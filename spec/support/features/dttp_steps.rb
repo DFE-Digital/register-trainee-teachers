@@ -7,7 +7,7 @@ module Features
 
       url = "#{Dttp::Client::Request.base_uri}/dfe_placementassignments(#{trainee.placement_assignment_dttp_id})"
       body = { dfe_datestandardsassessmentpassed: outcome_date.in_time_zone.iso8601 }.to_json
-      stub_request(:patch, url).with(body: body).to_return(status: status)
+      stub_request(:patch, url).with(body:).to_return(status:)
     end
 
     def stub_dttp_batch_request

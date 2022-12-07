@@ -10,7 +10,7 @@ module Trainees
       context "passed a non-HESA trainee that has had attributes set" do
         it "queues a withdrawal to DQT when `withdrawal` option is set" do
           expect(Dqt::WithdrawTraineeJob).to receive(:perform_later).with(trainee)
-          described_class.call(trainee: trainee)
+          described_class.call(trainee:)
         end
       end
 
@@ -19,7 +19,7 @@ module Trainees
 
         it "queues a withdrawal to DQT when `withdrawal` option is set" do
           expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later).with(trainee)
-          described_class.call(trainee: trainee)
+          described_class.call(trainee:)
         end
       end
     end

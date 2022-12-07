@@ -162,30 +162,30 @@ private
       "apply" => records_contain_apply_source?,
       "dttp" => records_contain_dttp_source?,
       "hesa" => records_contain_hesa_source?,
-    }.select { |_key, value| value == true }.keys
+    }.select { |_, value| value == true }.keys
 
     sources.delete("dttp") unless current_user.system_admin?
     sources
   end
 
   def show_source_filters?
-    available_record_sources.count > 1
+    available_record_sources.size > 1
   end
 
   def records_contain_manual_source?
-    policy_scope(trainee_search_scope).with_manual_application.count.positive?
+    policy_scope(trainee_search_scope).with_manual_application.size.positive?
   end
 
   def records_contain_dttp_source?
-    policy_scope(trainee_search_scope).created_from_dttp.count.positive?
+    policy_scope(trainee_search_scope).created_from_dttp.size.positive?
   end
 
   def records_contain_apply_source?
-    policy_scope(trainee_search_scope).with_apply_application.count.positive?
+    policy_scope(trainee_search_scope).with_apply_application.size.positive?
   end
 
   def records_contain_hesa_source?
-    policy_scope(trainee_search_scope).imported_from_hesa.count.positive?
+    policy_scope(trainee_search_scope).imported_from_hesa.size.positive?
   end
 
   def save_filter
@@ -205,21 +205,21 @@ private
   def json_response
     {
       results: render_partial("trainees/results", {
-        paginated_trainees: paginated_trainees,
-        search_primary_result_title: search_primary_result_title,
-        search_primary_result_set: search_primary_result_set,
-        search_secondary_result_title: search_secondary_result_title,
-        search_secondary_result_set: search_secondary_result_set,
-        search_path: search_path,
-        filters: filters,
+        paginated_trainees:,
+        search_primary_result_title:,
+        search_primary_result_set:,
+        search_secondary_result_title:,
+        search_secondary_result_set:,
+        search_path:,
+        filters:,
       }),
       selected_filters: render_partial("trainees/selected_filters", {
-        filters: filters,
-        search_path: search_path,
+        filters:,
+        search_path:,
       }),
       action_bar: render_partial("trainees/action_bar", {
-        paginated_trainees: paginated_trainees,
-        export_results_path: export_results_path,
+        paginated_trainees:,
+        export_results_path:,
       }),
       trainee_count: total_trainees_count,
       page_title: trainees_page_title(paginated_trainees, total_trainees_count),

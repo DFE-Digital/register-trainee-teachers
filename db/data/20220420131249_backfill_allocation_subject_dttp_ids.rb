@@ -26,7 +26,7 @@ class BackfillAllocationSubjectDttpIds < ActiveRecord::Migration[6.1]
       AllocationSubjects::PRIMARY_WITH_MATHEMATICS => "51d3114a-01b5-e811-812e-5065f38b6471",
       AllocationSubjects::RELIGIOUS_EDUCATION => "f7f10516-aac2-e611-80be-00155d010316",
     }.each do |name, dttp_id|
-      AllocationSubject.find_by(name: name).update(dttp_id: dttp_id)
+      AllocationSubject.find_by(name:).update(dttp_id:)
     end
   end
 

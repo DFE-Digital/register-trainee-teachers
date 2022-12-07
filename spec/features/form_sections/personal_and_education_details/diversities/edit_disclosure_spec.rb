@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit diversity disclosure", type: :feature do
+feature "edit diversity disclosure" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(diversity_disclosure: nil)

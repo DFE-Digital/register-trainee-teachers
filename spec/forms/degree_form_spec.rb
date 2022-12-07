@@ -6,9 +6,9 @@ describe DegreeForm, type: :model do
   let(:trainee) { build(:trainee) }
   let(:form_store) { class_double(FormStore, get: nil, set: nil) }
   let(:degrees_form) { DegreesForm.new(trainee, form_store) }
-  let(:degree) { build(:degree, :uk_degree_with_details, trainee: trainee) }
+  let(:degree) { build(:degree, :uk_degree_with_details, trainee:) }
 
-  subject { DegreeForm.new(degrees_form: degrees_form, degree: degree) }
+  subject { DegreeForm.new(degrees_form:, degree:) }
 
   describe "validations" do
     let(:degree) { Degree.new(locale_code: :uk) }

@@ -54,7 +54,7 @@ class FundingManager
       funding_methods = academic_cycle.nil? ? FundingMethod.all : academic_cycle.funding_methods
       funding_methods.includes(:funding_method_subjects)
                     .where.not(funding_method_subjects: { id: nil })
-                    .where(training_route: training_route).present?
+                    .where(training_route:).present?
     end
   end
 
@@ -83,8 +83,8 @@ private
   def available_amount(funding_type)
     return unless allocation_subject && academic_cycle
 
-    allocation_subject.funding_methods.find_by(training_route: training_route,
-                                               funding_type: funding_type,
-                                               academic_cycle: academic_cycle)&.amount
+    allocation_subject.funding_methods.find_by(training_route:,
+                                               funding_type:,
+                                               academic_cycle:)&.amount
   end
 end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TaskList::View do
+describe TaskList::View do
   let(:status) { nil }
   let(:active) { true }
 

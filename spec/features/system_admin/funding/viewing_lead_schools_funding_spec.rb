@@ -7,7 +7,7 @@ feature "Viewing lead school's funding" do
   let(:lead_school) { create(:school, lead_school: true) }
 
   before do
-    given_i_am_authenticated(user: user)
+    given_i_am_authenticated(user:)
     and_funding_data_exists
     when_i_visit_the_lead_school_show_page
     when_i_click_view_funding
