@@ -34,6 +34,16 @@ describe CourseDetailsForm, type: :model do
     end
   end
 
+  context "with early years route" do
+    let(:trainee) { build(:trainee, training_route: "early_years_postgrad") }
+    let!(:ey_allocation_subject) { create(:subject_specialism, name: CourseSubjects::EARLY_YEARS_TEACHING).allocation_subject }
+
+    it "sets the correct course subject and allocation subject" do
+      expect(subject.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
+      expect(subject.course_allocation_subject).to eq(ey_allocation_subject)
+    end
+  end
+
   describe "before validation" do
     describe "#sanitise_course_dates" do
       let(:params) do

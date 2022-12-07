@@ -16,7 +16,7 @@ class TrainingRoutesForm < TraineeForm
 
   def initialize(...)
     super(...)
-    @route_data_manager = RouteDataManager.new(trainee: trainee)
+    @route_data_manager = RouteDataManager.new(trainee:)
   end
 
   def compute_fields
@@ -31,7 +31,7 @@ class TrainingRoutesForm < TraineeForm
     if valid?
       assign_attributes_to_trainee
       update_training_route!(trainee.training_route)
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       clear_stash
     else
       false

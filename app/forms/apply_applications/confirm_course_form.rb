@@ -77,20 +77,20 @@ module ApplyApplications
 
     def update_trainee_attributes
       trainee.assign_attributes({
-        course_subject_one: course_subject_one,
-        course_subject_two: course_subject_two,
-        course_subject_three: course_subject_three,
-        training_route: training_route,
-        course_uuid: course_uuid,
-        course_age_range: course_age_range,
-        itt_start_date: itt_start_date,
-        itt_end_date: itt_end_date,
-        study_mode: study_mode,
+        course_subject_one:,
+        course_subject_two:,
+        course_subject_three:,
+        training_route:,
+        course_uuid:,
+        course_age_range:,
+        itt_start_date:,
+        itt_end_date:,
+        study_mode:,
       })
     end
 
     def course
-      @course ||= trainee.available_courses(training_route).find_by(uuid: uuid)
+      @course ||= trainee.available_courses(training_route).find_by(uuid:)
     end
 
     def trainee_confirmed?

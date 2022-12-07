@@ -67,9 +67,16 @@ module CourseDetails
     end
 
     def study_mode_row
-      if trainee.requires_study_mode?
+      if requires_study_mode?
         default_mappable_field(study_mode, t("components.course_detail.study_mode"))
       end
+    end
+
+    def requires_study_mode?
+      [
+        TRAINING_ROUTE_ENUMS[:assessment_only],
+        TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+      ].exclude?(data_model.training_route)
     end
 
     def course_date_row(value, context)
@@ -77,16 +84,32 @@ module CourseDetails
     end
 
     def non_early_year_route?
-      !trainee.early_years_route?
+      !EARLY_YEARS_TRAINING_ROUTES.include?(data_model.training_route)
+    end
+
+    def manual_entry_primary_phase?
+      data_model.is_a?(CourseDetailsForm) && data_model.course_education_phase == COURSE_EDUCATION_PHASE_ENUMS[:primary]
     end
 
     def course_details
       return "#{course.name} (#{course.code})" if course
 
-      data_model.course_allocation_subject.name
+      return primary_allocation_subject if manual_entry_primary_phase? && non_early_year_route?
+
+      data_model.course_allocation_subject&.name
+    end
+
+    def primary_allocation_subject
+      SubjectSpecialism.find_by(name: primary_course_subject).allocation_subject.name
+    end
+
+    def primary_course_subject
+      PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[data_model.primary_course_subjects].first
     end
 
     def subject_names
+      return data_model.primary_course_subjects if manual_entry_primary_phase?
+
       if data_model.course_subject_one.present?
         subjects_for_summary_view(
           *[
