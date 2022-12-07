@@ -121,7 +121,7 @@ module ApiStubs
         other_languages: "I have a GCSE in French and have a Italian aunt - or should I say zia!",
         disability_disclosure: "I am dyslexic",
         gender: "female",
-        disabilities: %w[blind long_standing],
+        disabilities: ["Blindness or a visual impairment not corrected by glasses", "Long-term illness"],
         ethnic_group: "Asian or Asian British",
         ethnic_background: "Chinese",
       }.merge(candidate_attributes)

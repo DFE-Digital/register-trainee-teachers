@@ -90,6 +90,8 @@ module Diversities
   MENTAL_HEALTH_CONDITION = "Mental health condition"
   PHYSICAL_DISABILITY = "Physical disability or mobility issue"
   SOCIAL_IMPAIRMENT = "Social or communication impairment"
+  NO_DISABILITY = "I do not have any of these disabilities or health conditions"
+  PREFER_NOT_TO_SAY = "Prefer not to say"
 
   # Internal only - DTTP related
   NO_KNOWN_DISABILITY = "No known disability"
