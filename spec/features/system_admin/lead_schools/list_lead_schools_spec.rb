@@ -9,7 +9,7 @@ feature "List lead schools" do
     let!(:non_lead_school) { create(:school, name: "Test 2", lead_school: false) }
 
     before do
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
     end
 
     scenario "list lead schools" do

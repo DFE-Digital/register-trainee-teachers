@@ -3,10 +3,10 @@
 require "rails_helper"
 
 module Degrees
-  describe DfeReference do
+  describe DfEReference do
     describe ".find_subject" do
       let(:degree_subject) do
-        Degrees::DfeReference::SUBJECTS.all.find { |item| item[:hecos_code].present? }
+        Degrees::DfEReference::SUBJECTS.all.find { |item| item[:hecos_code].present? }
       end
 
       it "can find the subject by UUID" do
@@ -24,7 +24,7 @@ module Degrees
 
     describe ".find_type" do
       let(:degree_type) do
-        Degrees::DfeReference::TYPES.all.find do |item|
+        Degrees::DfEReference::TYPES.all.find do |item|
           item[:hesa_itt_code].present? && item[:abbreviation].present?
         end
       end
@@ -48,7 +48,7 @@ module Degrees
 
     describe ".find_institution" do
       let(:degree_institution) do
-        Degrees::DfeReference::INSTITUTIONS.all.find { |item| item[:hesa_itt_code].present? }
+        Degrees::DfEReference::INSTITUTIONS.all.find { |item| item[:hesa_itt_code].present? }
       end
 
       it "can find the institution by UUID" do
@@ -66,7 +66,7 @@ module Degrees
 
     describe ".find_grade" do
       let(:degree_grade) do
-        Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.find { |item| item[:hesa_code].present? }
+        Degrees::DfEReference::SUPPORTED_GRADES_WITH_OTHER.all.find { |item| item[:hesa_code].present? }
       end
 
       it "can find the grade by UUID" do

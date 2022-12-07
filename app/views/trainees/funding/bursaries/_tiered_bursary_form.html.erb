@@ -30,7 +30,7 @@
     <%= f.govuk_radio_button(
       :funding_type,
       f.object.class::NONE_TYPE,
-      {
+      ** {
         hint: { text: t("views.forms.funding.funding_type.bursary.none.hint") },
         label: { text: t("views.forms.funding.funding_type.bursary.none.label") },
       }.merge(@trainee.applying_for_bursary.nil? ? { checked: false } : {} )

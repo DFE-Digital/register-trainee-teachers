@@ -12,21 +12,21 @@ FactoryBot.define do
 
     trait :uk_degree_type do
       locale_code { :uk }
-      uk_degree { uk_degree_uuid && Degrees::DfeReference::TYPES.one(uk_degree_uuid).name }
+      uk_degree { uk_degree_uuid && Degrees::DfEReference::TYPES.one(uk_degree_uuid).name }
       uk_degree_uuid do
-        Degrees::DfeReference::TYPES.all.reject { |type| type[:name].include?("Foundation") }.sample.id
+        Degrees::DfEReference::TYPES.all.reject { |type| type[:name].include?("Foundation") }.sample.id
       end
     end
 
     trait :uk_degree_with_details do
       uk_degree_type
 
-      subject_uuid { Degrees::DfeReference::SUBJECTS.all.sample.id }
-      grade_uuid { Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.sample.id }
+      subject_uuid { Degrees::DfEReference::SUBJECTS.all.sample.id }
+      grade_uuid { Degrees::DfEReference::SUPPORTED_GRADES_WITH_OTHER.all.sample.id }
       institution_uuid { DfE::ReferenceData::Degrees::INSTITUTIONS.all.sample.id }
 
-      subject { subject_uuid && Degrees::DfeReference::SUBJECTS.one(subject_uuid).name }
-      grade { grade_uuid && Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.one(grade_uuid).name }
+      subject { subject_uuid && Degrees::DfEReference::SUBJECTS.one(subject_uuid).name }
+      grade { grade_uuid && Degrees::DfEReference::SUPPORTED_GRADES_WITH_OTHER.one(grade_uuid).name }
       institution { institution_uuid && DfE::ReferenceData::Degrees::INSTITUTIONS.one(institution_uuid).name }
 
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
@@ -40,15 +40,15 @@ FactoryBot.define do
 
     trait :non_uk_degree_with_details do
       non_uk_degree_type
-      subject { Degrees::DfeReference::SUBJECTS.all.sample.name }
-      grade { Degrees::DfeReference::SUPPORTED_GRADES_WITH_OTHER.all.sample.name }
+      subject { Degrees::DfEReference::SUBJECTS.all.sample.name }
+      grade { Degrees::DfEReference::SUPPORTED_GRADES_WITH_OTHER.all.sample.name }
       country { Dttp::CodeSets::Countries::MAPPING.keys.sample }
       graduation_year { rand(NEXT_YEAR - Degree::MAX_GRAD_YEARS..NEXT_YEAR) }
     end
 
     trait :uk_foundation do
       transient do
-        degree_type { Degrees::DfeReference::TYPES.all.select { |type| type[:name].include?("Foundation") }.sample }
+        degree_type { Degrees::DfEReference::TYPES.all.select { |type| type[:name].include?("Foundation") }.sample }
       end
 
       locale_code { :uk }

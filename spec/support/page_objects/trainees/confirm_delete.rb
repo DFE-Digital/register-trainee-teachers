@@ -4,7 +4,8 @@ module PageObjects
   module Trainees
     class ConfirmDelete < PageObjects::Base
       set_url "/trainees/{id}/confirm-delete"
-      element :delete_button, "input[type='submit']"
+
+      element :delete_button, "[type='submit']"
     end
   end
 end

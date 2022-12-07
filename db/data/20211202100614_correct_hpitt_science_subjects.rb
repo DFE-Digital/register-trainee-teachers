@@ -290,7 +290,7 @@ class CorrectHpittScienceSubjects < ActiveRecord::Migration[6.1]
     ]
 
     correct_subjects.each do |id, subject|
-      trainee = hpitt_trainee_scope.find_by(id: id)
+      trainee = hpitt_trainee_scope.find_by(id:)
       trainee&.update(course_subject_one: subject)
     end
   end

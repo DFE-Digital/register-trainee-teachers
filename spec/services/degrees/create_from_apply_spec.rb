@@ -6,7 +6,7 @@ module Degrees
   describe CreateFromApply do
     let(:trainee) { create(:trainee, :with_apply_application) }
 
-    subject(:create_from_apply) { described_class.call(trainee: trainee) }
+    subject(:create_from_apply) { described_class.call(trainee:) }
 
     it "creates a degree against the provided trainee" do
       expect {

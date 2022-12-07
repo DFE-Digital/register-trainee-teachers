@@ -8,7 +8,7 @@ module Exports
     let!(:trainee_summary) { create(:trainee_summary, :for_school) }
     let!(:trainee_summary_row) { create(:trainee_summary_row, trainee_summary: trainee_summary, lead_school_urn: payable.urn) }
     let!(:tiered_bursary_amount) { create(:trainee_summary_row_amount, :with_tiered_bursary, row: trainee_summary_row) }
-    let!(:empty_trainee_summary_row) { create(:trainee_summary_row, trainee_summary: trainee_summary) }
+    let!(:empty_trainee_summary_row) { create(:trainee_summary_row, trainee_summary:) }
 
     before do
       create(:academic_cycle, :current)

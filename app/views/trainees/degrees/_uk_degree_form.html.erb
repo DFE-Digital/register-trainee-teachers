@@ -59,7 +59,7 @@
         classes: "degree-grade") do %>
 
     <% grade_options(@trainee).all.each_with_index do |item, index| %>
-      <% if item[:name] == Degrees::DfeReference::OTHER %>
+      <% if item[:name] == Degrees::DfEReference::OTHER %>
         <%= f.govuk_radio_button :grade, item[:name], label: { text: item[:name] } do %>
           <%= f.govuk_text_field :other_grade, label: { text: "Enter the degree grade" }, width: "two-thirds" %>
         <% end %>

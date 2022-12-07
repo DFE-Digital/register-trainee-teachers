@@ -34,7 +34,7 @@ describe PublishCourseDetailsForm, type: :model do
 
     describe "save!" do
       context "valid form" do
-        let(:params) { { course_uuid: course_uuid } }
+        let(:params) { { course_uuid: } }
         let(:course_uuid) { SecureRandom.uuid }
         let(:subject_name) { "Physical education" }
         let(:course_level) { "primary" }

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "authentication", type: :request do
+describe "authentication" do
   context "attempting to visit a restricted page" do
     context "without been authenticated" do
       it "redirects back to the sign in page" do

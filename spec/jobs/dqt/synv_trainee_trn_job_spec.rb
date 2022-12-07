@@ -15,7 +15,7 @@ module Dqt
     }
 
     before do
-      allow(FindTeacher).to receive(:call).with(trainee: trainee).and_return(dqt_teacher)
+      allow(FindTeacher).to receive(:call).with(trainee:).and_return(dqt_teacher)
     end
 
     context "when a TRN is returned" do

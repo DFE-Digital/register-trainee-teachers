@@ -10,7 +10,7 @@ module Personas
     let(:persona) { create(:user, id: persona_id, providers: [create(:provider)]) }
 
     before do
-      render_inline(described_class.new(persona: persona))
+      render_inline(described_class.new(persona:))
     end
 
     it "renders persona's name" do

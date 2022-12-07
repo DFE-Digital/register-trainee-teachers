@@ -45,7 +45,7 @@ describe Provider do
   end
 
   describe "#hpitt_postgrad?" do
-    subject { build(:provider, code: code).hpitt_postgrad? }
+    subject { build(:provider, code:).hpitt_postgrad? }
 
     context "provider is a teach first provider" do
       let(:code) { TEACH_FIRST_PROVIDER_CODE }

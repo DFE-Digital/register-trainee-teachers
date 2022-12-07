@@ -9,7 +9,7 @@ module Hesa
         let(:student_node) { ApiStubs::HesaApi.new.student_node }
 
         subject(:trainee_attributes) do
-          described_class.to_attributes(student_node: student_node)
+          described_class.to_attributes(student_node:)
         end
 
         it "returns an hash with mapped trainee attributes" do

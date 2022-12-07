@@ -18,9 +18,9 @@ class ServiceUpdate::View < GovukComponent::Base
   end
 
   def title_element
-    return tag.public_send(title_tag, title, { class: TITLE_CLASS }) if TITLE_TAGS.include?(title_tag)
+    return tag.public_send(title_tag, title, class: TITLE_CLASS) if TITLE_TAGS.include?(title_tag)
 
-    tag.h2(title, { class: TITLE_CLASS })
+    tag.h2(title, class: TITLE_CLASS)
   end
 
   def date_pretty

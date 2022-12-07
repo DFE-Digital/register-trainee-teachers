@@ -5,6 +5,6 @@ class SignOutController < ApplicationController
 
   def index
     DfESignInUser.end_session!(session)
-    redirect_to(dfe_sign_in_user.logout_url)
+    redirect_to(dfe_sign_in_user.logout_url, allow_other_host: true)
   end
 end

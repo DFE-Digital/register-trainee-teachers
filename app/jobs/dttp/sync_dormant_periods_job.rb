@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_trainees_from_dttp)
 
-      @dormant_periods = RetrieveDormantPeriods.call(request_uri: request_uri)
+      @dormant_periods = RetrieveDormantPeriods.call(request_uri:)
 
       DormantPeriod.upsert_all(dormant_period_attributes, unique_by: :dttp_id)
 

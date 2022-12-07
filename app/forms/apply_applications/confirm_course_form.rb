@@ -27,7 +27,7 @@ module ApplyApplications
       trainee.progress.course_details = mark_as_reviewed
       clear_funding_information if clear_funding_information?
 
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
     end
 
     def course_subject_one
@@ -87,7 +87,7 @@ module ApplyApplications
     end
 
     def course
-      @course ||= trainee.available_courses.find_by(uuid: uuid)
+      @course ||= trainee.available_courses.find_by(uuid:)
     end
 
     def trainee_confirmed?

@@ -14,13 +14,13 @@ module TeacherTrainingApi
       context "when the subject code does not exist in register" do
         it "create a subject with the correct code and name" do
           subject
-          expect(Subject.find_by(code: code, name: name)).not_to be_nil
+          expect(Subject.find_by(code:, name:)).not_to be_nil
         end
       end
 
       context "when the subject code already exists" do
         context "with the same name" do
-          before { create(:subject, code: code, name: name) }
+          before { create(:subject, code:, name:) }
 
           it "does not create a duplicate subject" do
             expect { subject }.not_to(change { Subject.count })
@@ -28,11 +28,11 @@ module TeacherTrainingApi
         end
 
         context "with a different name" do
-          before { create(:subject, code: code) }
+          before { create(:subject, code:) }
 
           it "updates the name" do
             subject
-            expect(Subject.find_by(code: code).name).to eq name
+            expect(Subject.find_by(code:).name).to eq name
           end
         end
       end

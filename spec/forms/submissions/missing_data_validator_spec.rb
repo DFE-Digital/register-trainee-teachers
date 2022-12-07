@@ -5,7 +5,7 @@ require "rails_helper"
 module Submissions
   describe MissingDataValidator, type: :model do
     describe "validations" do
-      subject { described_class.new(trainee: trainee) }
+      subject { described_class.new(trainee:) }
 
       context "when all sections are valid" do
         let(:trainee) { build(:trainee, :submitted_with_start_date) }
@@ -28,7 +28,7 @@ module Submissions
     end
 
     describe "#missing_fields" do
-      subject { described_class.new(trainee: trainee) }
+      subject { described_class.new(trainee:) }
 
       context "when trainee has no missing data" do
         let(:trainee) { build(:trainee, :submitted_with_start_date) }

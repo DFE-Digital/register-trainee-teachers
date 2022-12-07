@@ -11,11 +11,11 @@ module Dqt
     let(:configured_delay) { 6 }
     let(:configured_poll_timeout_days) { 4 }
     let(:timeout_date) { configured_poll_timeout_days.days.from_now }
-    let(:trn_request) { create(:dqt_trn_request, trainee: trainee) }
+    let(:trn_request) { create(:dqt_trn_request, trainee:) }
 
     before do
       enable_features(:integrate_with_dqt)
-      allow(RetrieveTrn).to receive(:call).with(trn_request: trn_request).and_return(trn)
+      allow(RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
       allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
       allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)
       allow(SlackNotifierService).to receive(:call)

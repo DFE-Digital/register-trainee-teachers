@@ -17,6 +17,7 @@ inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
+  TargetRubyVersion: 3.1
   NewCops: enable
   Exclude:
     - "bin/*"
@@ -33,6 +34,9 @@ Style/MethodCallWithArgsParentheses:
     - "db/data/*"
     - "db/migrate/*"
     - "config/routes/*"
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: consistent
 
 Lint/AmbiguousBlockAssociation:
   Exclude:

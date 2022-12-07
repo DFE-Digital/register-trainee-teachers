@@ -111,7 +111,7 @@ module Degrees
         end
 
         it "sets degree to uk" do
-          expect(subject).to include(uk_degree: uk_degree)
+          expect(subject).to include(uk_degree:)
         end
       end
     end

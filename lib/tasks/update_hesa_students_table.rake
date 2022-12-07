@@ -6,7 +6,7 @@ namespace :hesa do
     from_date = Settings.hesa.current_collection_start_date
     collection_reference = Settings.hesa.current_collection_reference
     url = "#{Settings.hesa.collection_base_url}/#{collection_reference}/#{from_date}"
-    xml_response = Hesa::Client.get(url: url)
+    xml_response = Hesa::Client.get(url:)
 
     total_nodes = xml_response.scan(/<Student>.*?<\/Student>/m).size # Uses less memory - prevents task getting killed
     puts "Total student nodes: #{total_nodes}"
@@ -16,7 +16,7 @@ namespace :hesa do
       next unless node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
 
       student_node = Nokogiri::XML(node.outer_xml).at("./Student")
-      hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node: student_node)
+      hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node:)
       hesa_student = Hesa::Student.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
       hesa_student.assign_attributes(hesa_trainee)
       hesa_student.collection_reference = collection_reference

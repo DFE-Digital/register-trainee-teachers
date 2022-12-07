@@ -5,7 +5,7 @@ class WelcomeEmailMailer < GovukNotifyRails::Mailer
     set_template(Settings.govuk_notify.welcome_email_template_id)
 
     set_personalisation(
-      first_name: first_name,
+      first_name:,
     )
 
     mail(to: email)

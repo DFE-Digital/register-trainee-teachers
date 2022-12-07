@@ -8,7 +8,7 @@ module Submissions
       create(
         :trainee,
         :completed,
-        progress: progress,
+        progress:,
       )
     end
 
@@ -22,7 +22,7 @@ module Submissions
 
     describe "validations" do
       context "when all sections are valid and complete" do
-        subject { described_class.new(trainee: trainee) }
+        subject { described_class.new(trainee:) }
 
         let(:progress) do
           {
@@ -200,7 +200,7 @@ module Submissions
       end
 
       context "when any section is invalid or incomplete" do
-        subject { described_class.new(trainee: trainee) }
+        subject { described_class.new(trainee:) }
 
         let(:progress) do
           {
@@ -223,7 +223,7 @@ module Submissions
       end
 
       context "with empty progress" do
-        subject { described_class.new(trainee: trainee) }
+        subject { described_class.new(trainee:) }
 
         let(:progress) { {} }
 
@@ -232,7 +232,7 @@ module Submissions
     end
 
     describe "#all_sections_complete?" do
-      subject { described_class.new(trainee: trainee) }
+      subject { described_class.new(trainee:) }
 
       context "when trainee is non draft" do
         let(:trainee) { build(:trainee, :completed, :trn_received) }

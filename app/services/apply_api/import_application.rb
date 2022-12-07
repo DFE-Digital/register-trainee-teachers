@@ -33,7 +33,7 @@ module ApplyApi
     # This is `ApplyApplication.find` rather than `provider.apply_applications.find`
     # to cover the possibility of an application's provider being updated.
     def application
-      @application ||= ApplyApplication.find_or_initialize_by(apply_id: apply_id)
+      @application ||= ApplyApplication.find_or_initialize_by(apply_id:)
     end
 
     def accredited_body_code

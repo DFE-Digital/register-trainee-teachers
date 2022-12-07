@@ -3,7 +3,7 @@
 module StatusCard
   class ViewPreview < ViewComponent::Preview
     def single_card
-      render(StatusCard::View.new(card))
+      render(StatusCard::View.new(**card))
     end
 
   private

@@ -8,7 +8,7 @@ feature "List schools" do
     let!(:school) { create(:school, name: "Test 1") }
 
     before do
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
     end
 
     scenario "list schools" do

@@ -13,11 +13,6 @@ module Trainees
       "date_of_birth(1i)" => "year",
     }.freeze
 
-    NATIONALITIES = [
-      Dttp::CodeSets::Nationalities::BRITISH,
-      Dttp::CodeSets::Nationalities::IRISH,
-    ].freeze
-
     def show
       page_tracker.save_as_origin!
       clear_form_stash(trainee)
@@ -44,13 +39,13 @@ module Trainees
       return unless trainee_editable?
 
       @missing_data_view = MissingDataBannerView.new(
-        Submissions::MissingDataValidator.new(trainee: trainee).missing_fields, trainee
+        Submissions::MissingDataValidator.new(trainee:).missing_fields, trainee
       )
     end
 
     def load_all_nationalities
-      @nationalities = Nationality.where(name: NATIONALITIES)
-      @other_nationalities = Nationality.all
+      @nationalities = Nationality.default
+      @other_nationalities = Nationality.other
     end
 
     def personal_details_params

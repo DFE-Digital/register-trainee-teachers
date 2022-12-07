@@ -67,7 +67,7 @@ module Funding
 
       context "when funding method is available" do
         let(:allocation_subject) { create(:allocation_subject) }
-        let(:subject_specialism) { create(:subject_specialism, allocation_subject: allocation_subject) }
+        let(:subject_specialism) { create(:subject_specialism, allocation_subject:) }
 
         let(:trainee) do
           create(:trainee,
@@ -84,7 +84,7 @@ module Funding
         end
 
         before do
-          create(:funding_method_subject, allocation_subject: allocation_subject, funding_method: funding_method)
+          create(:funding_method_subject, allocation_subject:, funding_method:)
           allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
           allow(Funding::BursaryForm).to receive(:new).and_return(bursary_form)
         end

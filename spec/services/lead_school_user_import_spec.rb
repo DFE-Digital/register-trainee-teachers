@@ -26,7 +26,7 @@ describe LeadSchoolUserImport do
 
     before do
       csv_urns.each do |urn|
-        create(:school, :lead, urn: urn)
+        create(:school, :lead, urn:)
       end
     end
 

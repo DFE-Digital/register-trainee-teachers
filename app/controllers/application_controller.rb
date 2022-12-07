@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  if FeatureService.performance_testing?
+    prepend ApplicationControllerDev
+    content_security_policy false
+  end
+
   before_action :authenticate
   before_action :track_page
   before_action :check_organisation_context_is_set
@@ -9,7 +14,7 @@ class ApplicationController < ActionController::Base
   include DfE::Analytics::Requests
 
   rescue_from Pundit::NotAuthorizedError do
-    render "errors/forbidden.html", status: :forbidden
+    render "errors/forbidden", status: :forbidden, formats: [:html]
   end
 
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
@@ -43,7 +48,7 @@ private
 
     @current_user ||= begin
       user = lookup_user_by_dfe_sign_in_uid || lookup_user_by_email
-      UserWithOrganisationContext.new(user: user, session: session) if user.present?
+      UserWithOrganisationContext.new(user:, session:) if user.present?
     end
   end
 
@@ -117,7 +122,7 @@ private
   def page_tracker
     @page_tracker ||= begin
       trainee_slug = params[:trainee_id] || params[:id]
-      PageTracker.new(trainee_slug: trainee_slug, session: session, request: request)
+      PageTracker.new(trainee_slug:, session:, request:)
     end
   end
 

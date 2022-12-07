@@ -5,7 +5,7 @@ module Degrees
     queue_as :dttp
 
     def perform(trainee)
-      CreateFromDttpPlacementAssignment.call(trainee: trainee)
+      CreateFromDttpPlacementAssignment.call(trainee:)
     end
   end
 end

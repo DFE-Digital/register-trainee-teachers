@@ -39,7 +39,7 @@ module ApplyApi
     end
 
     def get_response(page = 1)
-      @last_response = Client.get(params.merge(page: page))
+      @last_response = Client.get(params.merge(page:))
     end
 
     def params

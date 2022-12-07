@@ -73,7 +73,7 @@ class FindEmptyTrainees
   end
 
   def call
-    ids_only ? empty_draft_trainees.pluck(:id) : empty_draft_trainees
+    ids_only ? empty_draft_trainee_ids : empty_draft_trainees
   end
 
 private
@@ -93,10 +93,16 @@ private
       .where(empty_fields_query)
   end
 
+  def empty_draft_trainee_ids
+    Rails.cache.fetch("#{trainees.cache_key_with_version}/empty_draft_trainee_ids") do
+      empty_draft_trainees.pluck(:id)
+    end
+  end
+
   def empty_fields_query
     <<~SQL
         (
-          course_subject_one = \'#{CourseSubjects::EARLY_YEARS_TEACHING}\'
+          course_subject_one = '#{CourseSubjects::EARLY_YEARS_TEACHING}'
         AND
           concat(#{(TRAINEE_FIELDS - EARLY_YEARS_FIELDS_TO_EXCLUDE).join(',')}) = ''
         )

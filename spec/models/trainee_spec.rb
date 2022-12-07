@@ -504,10 +504,10 @@ describe Trainee do
   end
 
   context "ordering scope" do
-    let(:deferred_trainee_a) { create(:trainee, :deferred, updated_at: 1.day.ago, last_name: "Smith") }
-    let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, updated_at: 1.hour.ago, last_name: "Doe") }
-    let(:draft_trainee_c) { create(:trainee, :draft, updated_at: 1.week.ago, last_name: "Jones") }
-    let(:draft_trainee_d) { create(:trainee, :draft, updated_at: 1.month.ago, last_name: "Joker") }
+    let(:deferred_trainee_a) { create(:trainee, :deferred, last_name: "Smith") }
+    let(:submitted_for_trn_trainee_b) { create(:trainee, :submitted_for_trn, last_name: "Doe") }
+    let(:draft_trainee_c) { create(:trainee, :draft, last_name: "Jones") }
+    let(:draft_trainee_d) { create(:trainee, :draft, last_name: "Joker") }
 
     let(:save_trainees) do
       [
@@ -520,6 +520,10 @@ describe Trainee do
 
     before do
       save_trainees
+      submitted_for_trn_trainee_b.update!(updated_at: 1.hour.ago)
+      deferred_trainee_a.update!(updated_at: 1.day.ago)
+      draft_trainee_c.update!(updated_at: 1.week.ago)
+      draft_trainee_d.update!(updated_at: 1.month.ago)
     end
 
     describe "#ordered_by_updated_at" do

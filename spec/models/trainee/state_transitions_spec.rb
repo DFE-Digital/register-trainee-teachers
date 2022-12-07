@@ -184,7 +184,7 @@ describe "Trainee state transitions" do
     end
 
     it "sets the #submitted_for_trn_at to the time the record was submitted" do
-      expect(subject.submitted_for_trn_at).to eq(Time.zone.now)
+      expect(subject.submitted_for_trn_at).to be_within(5.seconds).of(Time.zone.now)
     end
 
     context "with an apply application" do
@@ -192,7 +192,7 @@ describe "Trainee state transitions" do
         create(:apply_application, invalid_data: { "unmappable info": "unmappable value" })
       end
 
-      subject { create(:trainee, :draft, apply_application: apply_application) }
+      subject { create(:trainee, :draft, apply_application:) }
 
       it "wipes out the apply application's invalid_data" do
         expect(apply_application.invalid_data).to be_nil

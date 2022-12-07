@@ -43,9 +43,7 @@ module ApplicationRecordCard
     end
 
     def last_updated_date
-      return record.updated_at if record.draft?
-
-      record.timeline&.first&.date.presence || record.updated_at
+      record.updated_at
     end
 
     def trainee_id
@@ -75,7 +73,7 @@ module ApplicationRecordCard
     end
 
     def start_year
-      academic_cycle = AcademicCycle.for_date(record.trainee_start_date)
+      academic_cycle = record.start_academic_cycle || AcademicCycle.for_date(record.trainee_start_date)
       return unless academic_cycle
 
       tag.p("Start year: #{academic_cycle.label}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__start_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")

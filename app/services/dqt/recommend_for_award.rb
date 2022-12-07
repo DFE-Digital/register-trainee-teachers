@@ -27,7 +27,7 @@ module Dqt
     end
 
     def params
-      @params ||= Params::Award.new(trainee: trainee)
+      @params ||= Params::Award.new(trainee:)
     end
   end
 end

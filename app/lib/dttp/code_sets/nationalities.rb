@@ -16,6 +16,8 @@ module Dttp
       BRITISH_INDIAN_OCEAN_TERRITORY = "British Indian Ocean Territory (BIOT)"
       FALKLAND_ISLANDS = "Falkland Islands [Falkland Islands (Malvinas)]"
 
+      CYPRIOT = "cypriot"
+
       NOT_KNOWN = "Not known"
 
       AMERICAN = "american"
@@ -102,7 +104,11 @@ module Dttp
         "cuban" => { entity_id: "a37d640e-5c62-e711-80d1-005056ac45bb" },
         CYMRAES => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
         CYMRO => { entity_id: "d17d640e-5c62-e711-80d1-005056ac45bb" },
-        "cypriot" => { entity_id: "ff7e640e-5c62-e711-80d1-005056ac45bb" },
+        CYPRIOT => { entity_id: "ff7e640e-5c62-e711-80d1-005056ac45bb" },
+        # entity_id is no longer relevant as we no longer need to map to DTTP.
+        # Left blank because we do not have an entity_id for cypriot non EU.
+        "cypriot (non european union)" => { entity_id: "" },
+        "cypriot (european union)" => { entity_id: "017f640e-5c62-e711-80d1-005056ac45bb" },
         "czech" => { entity_id: "a77d640e-5c62-e711-80d1-005056ac45bb" },
         "danish" => { entity_id: "ad7d640e-5c62-e711-80d1-005056ac45bb" },
         "djiboutian" => { entity_id: "ab7d640e-5c62-e711-80d1-005056ac45bb" },
@@ -274,7 +280,6 @@ module Dttp
         BRITISH_INDIAN_OCEAN_TERRITORY => { entity_id: "057e640e-5c62-e711-80d1-005056ac45bb" },
         "Channel Islands not otherwise specified" => { entity_id: "057f640e-5c62-e711-80d1-005056ac45bb" },
         "Czechoslovakia not otherwise specified" => { entity_id: "077f640e-5c62-e711-80d1-005056ac45bb" },
-        "Cyprus (Non-European Union)" => { entity_id: "017f640e-5c62-e711-80d1-005056ac45bb" },
         "Cyprus not otherwise specified" => { entity_id: "037f640e-5c62-e711-80d1-005056ac45bb" },
         ENGLAND => { entity_id: "40ad2d33-4787-e711-80e8-3863bb349ac0" },
         GUERNSEY => { entity_id: "d77d640e-5c62-e711-80d1-005056ac45bb" },

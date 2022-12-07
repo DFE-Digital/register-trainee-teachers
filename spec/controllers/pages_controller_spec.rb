@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe PagesController, type: :controller do
+describe PagesController do
   describe "start page" do
     context "when not signed in and navigate to start page" do
       it "renders start page" do

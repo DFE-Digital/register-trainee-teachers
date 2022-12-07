@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Reports::TraineeReport, type: :model do
+describe Reports::TraineeReport do
   let!(:trainee) { create(:trainee, :for_export, course_uuid: create(:course).uuid) }
   let(:degree) { subject.degree }
   let(:course) { subject.course }
@@ -59,7 +59,7 @@ describe Reports::TraineeReport, type: :model do
     end
 
     it "includes the trainee_status" do
-      expect(subject.trainee_status).to eq(StatusTag::View.new(trainee: trainee).status)
+      expect(subject.trainee_status).to eq(StatusTag::View.new(trainee:).status)
     end
 
     it "includes the start_academic_year" do

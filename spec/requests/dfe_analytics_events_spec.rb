@@ -26,7 +26,7 @@ class TestController < ::ApplicationController
   attr_reader :current_user
 end
 
-describe "sending request events", type: :request do
+describe "sending request events" do
   let!(:user) { create(:user) }
   let(:headers) do
     {
@@ -53,14 +53,14 @@ describe "sending request events", type: :request do
 
     it "does send to big query" do
       expect {
-        get "/test?foo=bar", headers: headers
+        get "/test?foo=bar", headers:
       }.to(have_sent_analytics_event_types(:web_request))
     end
 
     context "controller doesn't have a current_user" do
       it "does send to big query" do
         expect {
-          get "/unauthenticated_test?foo=bar", headers: headers
+          get "/unauthenticated_test?foo=bar", headers:
         }.to(have_sent_analytics_event_types(:web_request))
       end
     end
@@ -73,7 +73,7 @@ describe "sending request events", type: :request do
 
     it "doesn't send to big query" do
       expect {
-        get "/test?foo=bar", headers: headers
+        get "/test?foo=bar", headers:
       }.not_to(have_sent_analytics_event_types(:web_request))
     end
   end

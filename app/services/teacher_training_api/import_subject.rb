@@ -19,7 +19,7 @@ module TeacherTrainingApi
     attr_reader :attrs
 
     def subject
-      @subject ||= Subject.find_or_initialize_by(code: code)
+      @subject ||= Subject.find_or_initialize_by(code:)
     end
 
     def code

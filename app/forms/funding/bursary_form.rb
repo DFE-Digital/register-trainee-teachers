@@ -29,7 +29,7 @@ module Funding
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)
       params = add_fields_from_params(params)
-      super(trainee, params: params, user: user, store: store)
+      super(trainee, params:, user:, store:)
     end
 
     def view_partial

@@ -27,7 +27,7 @@ class Course < ApplicationRecord
 
   belongs_to :provider, foreign_key: :accredited_body_code, primary_key: :code, inverse_of: :courses, optional: true
 
-  has_many :trainees, ->(course) { unscope(:where).where(course_uuid: course.uuid) }, inverse_of: :trainee
+  has_many :trainees, ->(course) { unscope(:where).where(course_uuid: course.uuid) }, inverse_of: :published_course
 
   has_many :course_subjects
 

@@ -7,7 +7,7 @@ module Dqt
     describe Award do
       let(:trainee) { create(:trainee, :recommended_for_award) }
 
-      subject { described_class.new(trainee: trainee).params }
+      subject { described_class.new(trainee:).params }
 
       describe "#params" do
         it "returns a hash with all required values" do

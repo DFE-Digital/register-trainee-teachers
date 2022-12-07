@@ -8,15 +8,15 @@ module CourseDetails
        early_years_undergrad
        pg_teaching_apprenticeship].each do |training_route_enums_key|
       define_method "#{training_route_enums_key}_default" do
-        render(View.new(data_model: mock_trainee(training_route_enums_key: training_route_enums_key)))
+        render(View.new(data_model: mock_trainee(training_route_enums_key:)))
       end
 
       define_method "#{training_route_enums_key}_with_no_data" do
-        render(View.new(data_model: mock_trainee_with_no_data(training_route_enums_key: training_route_enums_key)))
+        render(View.new(data_model: mock_trainee_with_no_data(training_route_enums_key:)))
       end
 
       define_method "#{training_route_enums_key}_with_multiple_subjects" do
-        render(View.new(data_model: mock_trainee_with_multiple_subjects(training_route_enums_key: training_route_enums_key)))
+        render(View.new(data_model: mock_trainee_with_multiple_subjects(training_route_enums_key:)))
       end
     end
 

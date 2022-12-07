@@ -10,7 +10,7 @@ module Degrees
     let(:hesa_degrees) { student_attributes[:degrees] }
 
     subject(:create_from_hesa) do
-      described_class.call(trainee: trainee, hesa_degrees: hesa_degrees)
+      described_class.call(trainee:, hesa_degrees:)
     end
 
     shared_examples "invalid" do

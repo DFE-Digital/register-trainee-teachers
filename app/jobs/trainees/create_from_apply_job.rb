@@ -11,7 +11,7 @@ module Trainees
         providers: { apply_sync_enabled: true },
         recruitment_cycle_year: Settings.apply_applications.create.recruitment_cycle_year,
       ).importable.each do |application|
-        CreateFromApply.call(application: application)
+        CreateFromApply.call(application:)
       rescue Trainees::CreateFromApply::MissingCourseError => e
         Sentry.capture_exception(e)
       end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "dttp info fetcher" do |dttp_wrapper|
+shared_examples "dttp info fetcher" do |dttp_wrapper|
   let(:dttp_id) { SecureRandom.uuid }
   let(:request_url) { "#{Settings.dttp.api_base_url}#{path}" }
 
@@ -9,7 +9,7 @@ RSpec.shared_examples "dttp info fetcher" do |dttp_wrapper|
     stub_request(:get, request_url).to_return(http_response)
   end
 
-  subject { described_class.call(dttp_id: dttp_id) }
+  subject { described_class.call(dttp_id:) }
 
   context "filtered params" do
     let(:parsed_response) do

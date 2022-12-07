@@ -12,7 +12,7 @@ module Trainees
     let(:placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
     let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], api_trainee_hash: api_trainee, provider: provider) }
 
-    subject(:create_trainee_from_dttp) { described_class.call(dttp_trainee: dttp_trainee) }
+    subject(:create_trainee_from_dttp) { described_class.call(dttp_trainee:) }
 
     context "when provider does not exist" do
       let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], api_trainee_hash: api_trainee, provider_dttp_id: nil) }

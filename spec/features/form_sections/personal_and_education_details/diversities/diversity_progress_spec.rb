@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "completing the diversity section", type: :feature do
+feature "completing the diversity section" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(diversity_disclosure: nil, ethnic_group: nil, disability_disclosure: nil)

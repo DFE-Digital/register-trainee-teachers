@@ -41,11 +41,19 @@ Sometimes the different jobs that send trainee info to DQT (such as `Dqt::Update
 
 Sometimes a trainee will have both a failed update job, and a failed award job. In this case, make sure to re-run the update job first. If you run the award job first and then try to run the update job, the update will fail as the trainee will already have QTS (and therefore can no longer be updated on DQT's end).
 
-There is also a handy DQT API that you can call, to see some useful information that DQT hold on their end. Call the following
-where `t` is the trainee:
+We have a couple of services you can call which retrieve data about the trainee
+in DQT.
+
+If the trainee has a TRN already, call this (where `t` is the trainee):
 
 ```
-Dqt::Client.get("/v1/teachers/#{t.trn}?birthdate=#{t.date_of_birth.iso8601}")
+Dqt::RetrieveTeacher.call(trainee: t)
+```
+
+If the trainee doens't have a TRN yet, call this instead:
+
+```
+Dqt::FindTeacher.call(trainee: t)
 ```
 
 This list is not exhaustive, but here are some common errors types that we see:
@@ -106,3 +114,61 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 * Cross reference the trainee details on Register with the trainee details on DQT, you can use the DQT API for this - checking the trainee timeline on Register can also be helful
 * If there are no differences, it is likely a race condition and you can delete the failed update job
 * If there are differences, speak to DQT and maybe contact provider to see what needs updating
+
+### Dqt::RetrieveTrnJob for Trainee id: xxx has timed out after 4 days.
+
+We see this error on slack when our polling job times out before we receive a
+TRN from DQT. The default time out is four days from the trainee's
+`submitted_for_trn_at` date.
+
+We need to understand from DQT why the TRN is taking a while to assign. Is there
+a problem we need to address?
+
+If there is no issue, we can kick off another polling job with a timeout in the
+future:
+
+```ruby
+Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+```
+
+### Dqt::TraineeUpdate::TraineeUpdateMissingTrn
+
+This error will be accompanied by the message:
+
+`Cannot update trainee on DQT without a trn (id: 142508)`
+
+This means that we have tried to update a trainee on DQT before we've received a
+TRN back.
+
+Two issues are possible:
+
+1. The trainee is not present on DQT for some reason (it may have failed
+  previously with one of the above errors).
+
+    In this case, we need to re-register them:
+
+    ```ruby
+    Dqt::RegisterForTrnJob.perform_later(t)
+    ```
+
+    making sure that it succeeds.
+
+    We also need to kick off another polling job, so that we receive the TRN
+    when assigned:
+
+    ```ruby
+    Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+    ```
+
+    You will need to set the second argument (timeout) to some point in the
+    future if the trainee was submitted for TRN more than 4 days ago.
+
+2. The trainee is present on DQT but we never received the TRN (our polling
+  job may have timed out).
+
+    In this case, we need to kick off another polling job, so that we receive
+    the TRN:
+
+    ```ruby
+    Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+    ```

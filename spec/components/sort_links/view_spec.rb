@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SortLinks::View do
+describe SortLinks::View do
   alias_method :component, :page
 
   before do

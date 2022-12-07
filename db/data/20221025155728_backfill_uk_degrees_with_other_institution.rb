@@ -15,7 +15,7 @@ class BackfillUkDegreesWithOtherInstitution < ActiveRecord::Migration[6.1]
 private
 
   def institution
-    ::Degrees::DfeReference.find_institution(name: "Other UK institution")
+    ::Degrees::DfEReference.find_institution(name: "Other UK institution")
   end
 
   def degrees

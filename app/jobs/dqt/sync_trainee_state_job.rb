@@ -17,7 +17,7 @@ module Dqt
     def perform(trainee)
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      Dqt::SyncState.call(trainee: trainee)
+      Dqt::SyncState.call(trainee:)
     end
   end
 end

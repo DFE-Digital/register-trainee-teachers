@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Reinstating a trainee", type: :feature do
+feature "Reinstating a trainee" do
   include SummaryHelper
 
   before do

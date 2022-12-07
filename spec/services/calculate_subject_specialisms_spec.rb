@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe CalculateSubjectSpecialisms do
-  subject { described_class.call(subjects: subjects) }
+  subject { described_class.call(subjects:) }
 
   context "publish course has one subject" do
     let(:subjects) { %w[Chemistry] }

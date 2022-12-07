@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "pg_teaching_apprenticeship end-to-end journey", type: :feature do
+feature "pg_teaching_apprenticeship end-to-end journey" do
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.pg_teaching_apprenticeship": true do

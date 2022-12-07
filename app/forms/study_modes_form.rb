@@ -12,7 +12,7 @@ class StudyModesForm < TraineeForm
   def stash
     form = CourseDetailsForm.new(trainee)
     form.assign_attributes_and_stash({
-      study_mode: study_mode,
+      study_mode:,
     })
     super
   end

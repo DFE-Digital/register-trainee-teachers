@@ -39,7 +39,7 @@ class FixFundingMethodsFor20192020 < ActiveRecord::Migration[6.1]
       )
       bursary.allocation_subjects.map do |subject|
         allocation_subject = AllocationSubject.find_by!(name: subject)
-        b.funding_method_subjects.find_or_create_by!(allocation_subject: allocation_subject)
+        b.funding_method_subjects.find_or_create_by!(allocation_subject:)
       end
     end
   end

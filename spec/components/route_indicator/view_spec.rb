@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe RouteIndicator::View do
+describe RouteIndicator::View do
   alias_method :component, :page
 
   let(:trainee) { create(:trainee) }
 
   before do
-    render_inline(described_class.new(trainee: trainee))
+    render_inline(described_class.new(trainee:))
   end
 
   describe "rendered component" do
@@ -21,7 +21,7 @@ RSpec.describe RouteIndicator::View do
     let(:trainee) { create(:trainee, :submitted_for_trn) }
 
     it "wont render if the trainee is not a draft trainee" do
-      expect(component).to have_no_content
+      expect(component).not_to have_content("recruited to")
     end
   end
 

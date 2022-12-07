@@ -28,7 +28,7 @@ module Trainees
       end
 
       def step_wizard
-        @step_wizard ||= Wizards::DiversitiesStepWizard.new(trainee: trainee, page_tracker: page_tracker)
+        @step_wizard ||= Wizards::DiversitiesStepWizard.new(trainee:, page_tracker:)
       end
 
       def validate_form_completeness

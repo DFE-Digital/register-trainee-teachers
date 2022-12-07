@@ -19,7 +19,7 @@ module SystemAdmin
       @lead_school_form = UserLeadSchoolsForm.new(lead_school_params.merge(user: @user))
 
       if @lead_school_form.school_not_selected? && @lead_school_form.valid?
-        return redirect_to(user_lead_schools_path(query: query))
+        return redirect_to(user_lead_schools_path(query:))
       end
 
       if @lead_school_form.save

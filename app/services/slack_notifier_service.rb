@@ -13,7 +13,7 @@ class SlackNotifierService
   end
 
   def call
-    notifier.ping(message, icon_emoji: icon_emoji, username: username)
+    notifier.ping(message, icon_emoji:, username:)
   end
 
 private

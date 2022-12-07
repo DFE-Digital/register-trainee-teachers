@@ -46,7 +46,7 @@ private
 
   def and_i_have_a_dfe_sign_in_account
     user.first_name = user_first_name
-    user_exists_in_dfe_sign_in(user: user)
+    user_exists_in_dfe_sign_in(user:)
   end
 
   def when_i_visit_the_trainees_page

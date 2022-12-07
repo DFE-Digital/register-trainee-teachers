@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_from_dttp)
 
-      @school_list = RetrieveSchools.call(request_uri: request_uri)
+      @school_list = RetrieveSchools.call(request_uri:)
 
       School.upsert_all(school_attributes, unique_by: :dttp_id)
 

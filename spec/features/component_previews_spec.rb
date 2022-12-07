@@ -2,14 +2,14 @@
 
 require "rails_helper"
 
-RSpec.feature "component previews" do
+feature "component previews" do
   all_links = (ViewComponent::Preview.all.map do |component|
     component.examples.map do |example|
       "#{Rails.application.config.view_component.preview_route}/#{component.preview_name}/#{example}"
     end
   end).flatten
 
-  let(:create_nationality) { create :nationality }
+  let(:create_nationality) { create(:nationality) }
 
   before do
     create_nationality

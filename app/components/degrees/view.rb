@@ -73,7 +73,7 @@ module Degrees
     end
 
     def mappable_field_row(degree, field_name, field_label, field_value = nil)
-      { degree: degree, field_name: field_name, field_label: field_label, field_value: field_value }
+      { degree:, field_name:, field_label:, field_value: }
     end
   end
 end

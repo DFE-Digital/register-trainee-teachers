@@ -28,7 +28,7 @@ describe SendWelcomeEmailService do
 
       before do
         allow(WelcomeEmailMailer).to receive_message_chain(:generate, :deliver_later)
-        described_class.call(current_user: current_user)
+        described_class.call(current_user:)
       end
 
       it "sets their welcome email date to now" do
@@ -59,7 +59,7 @@ describe SendWelcomeEmailService do
       end
 
       before do
-        described_class.call(current_user: current_user)
+        described_class.call(current_user:)
       end
 
       it "does not update welcome_email_sent_at field" do
@@ -79,7 +79,7 @@ describe SendWelcomeEmailService do
 
     before do
       allow(WelcomeEmailMailer).to receive_message_chain(:generate, :deliver_later)
-      described_class.call(current_user: current_user)
+      described_class.call(current_user:)
     end
 
     context "and has received a welcome email" do

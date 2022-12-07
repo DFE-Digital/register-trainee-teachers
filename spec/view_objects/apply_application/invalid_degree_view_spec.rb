@@ -5,7 +5,7 @@ require "rails_helper"
 module ApplyApplications
   describe InvalidDegreeView do
     let(:degree_slug) { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s }
-    let(:application) { build(:apply_application, :with_invalid_data, degree_slug: degree_slug) }
+    let(:application) { build(:apply_application, :with_invalid_data, degree_slug:) }
 
     subject(:invalid_degree_view) { described_class.new(application, degree_slug) }
 
@@ -18,7 +18,7 @@ module ApplyApplications
       end
 
       context "when there are multiple invalid data" do
-        let(:application) { create(:apply_application, :with_multiple_invalid_data, degree_slug: degree_slug) }
+        let(:application) { create(:apply_application, :with_multiple_invalid_data, degree_slug:) }
 
         it "returns the pluralised invalid answer summary" do
           expected_text = I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: 2)
@@ -33,7 +33,7 @@ module ApplyApplications
       it { is_expected.to be_truthy }
 
       context "when there are no invalid data" do
-        let(:application) { build(:apply_application, degree_slug: degree_slug) }
+        let(:application) { build(:apply_application, degree_slug:) }
 
         it { is_expected.to be_falsey }
       end

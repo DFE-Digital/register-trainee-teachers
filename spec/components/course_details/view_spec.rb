@@ -69,7 +69,7 @@ module CourseDetails
       let(:course) { trainee.published_course }
 
       before do
-        render_inline(View.new(data_model: data_model))
+        render_inline(View.new(data_model:))
       end
 
       it "calculated/applicable specialisms for subject" do
@@ -98,7 +98,7 @@ module CourseDetails
       let(:course) { trainee.published_course }
 
       before do
-        render_inline(View.new(data_model: data_model))
+        render_inline(View.new(data_model:))
       end
 
       it "renders the not completed from hesa message" do
@@ -291,7 +291,7 @@ module CourseDetails
       let(:data_model) { PublishCourseDetailsForm.new(trainee, params: { course_uuid: new_course.uuid }) }
 
       before do
-        render_inline(View.new(data_model: data_model))
+        render_inline(View.new(data_model:))
       end
 
       it "renders the training route from the course" do

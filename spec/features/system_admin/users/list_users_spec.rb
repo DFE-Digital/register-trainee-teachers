@@ -11,7 +11,7 @@ feature "List users" do
     before do
       user.lead_schools << lead_school
       user.providers << provider
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
     end
 
     scenario "list users" do

@@ -37,7 +37,7 @@ module Trainees
     end
 
     def end_date
-      awarded_at || withdraw_date || itt_end_date || CalculateIttEndDate.call(trainee: trainee)
+      awarded_at || withdraw_date || itt_end_date || CalculateIttEndDate.call(trainee:)
     end
   end
 end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "edit ethnic background", type: :feature do
+feature "edit ethnic background" do
   background do
     given_i_am_authenticated
   end

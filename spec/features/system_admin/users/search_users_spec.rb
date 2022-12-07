@@ -8,7 +8,7 @@ feature "Search users" do
     let!(:second_user) { create(:user, system_admin: true) }
 
     before do
-      given_i_am_authenticated(user: user)
+      given_i_am_authenticated(user:)
     end
 
     scenario "search users" do

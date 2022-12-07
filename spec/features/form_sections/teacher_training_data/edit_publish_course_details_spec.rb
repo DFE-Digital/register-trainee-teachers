@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "publish course details", type: :feature, feature_publish_course_details: true do
+feature "publish course details", feature_publish_course_details: true do
   include CourseDetailsHelper
 
   let(:subjects) { [] }
@@ -263,7 +263,7 @@ private
                            subject_names: with_subjects,
                            training_route: with_training_route)
     @matching_courses = trainee.provider.courses.where(route: trainee.training_route)
-    @matching_courses.update_all(study_mode: study_mode)
+    @matching_courses.update_all(study_mode:)
   end
 
   def given_a_course_exists(with_subjects: [])

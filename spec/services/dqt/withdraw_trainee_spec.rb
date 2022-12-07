@@ -13,13 +13,13 @@ module Dqt
     let(:expected_path) { "/v2/teachers/#{trainee.trn}/itt-outcome?birthDate=#{trainee.date_of_birth.iso8601}" }
     let(:json_body_params) { "withdrawing bob" }
 
-    subject { described_class.call(trainee: trainee) }
+    subject { described_class.call(trainee:) }
 
     describe "#call" do
       before do
         enable_features(:integrate_with_dqt)
         allow(Dqt::Client).to receive(:patch).and_return(dqt_response)
-        allow(Dqt::Params::Withdrawal).to receive(:new).with(trainee: trainee).and_return(award_params = double)
+        allow(Dqt::Params::Withdrawal).to receive(:new).with(trainee:).and_return(award_params = double)
         allow(award_params).to receive(:to_json).and_return(json_body_params)
       end
 

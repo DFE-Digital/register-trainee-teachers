@@ -11,15 +11,15 @@ class Trainee < ApplicationRecord
   belongs_to :dttp_trainee,
              foreign_key: :dttp_id,
              primary_key: :dttp_id,
-             inverse_of: :trainee,
              optional: true,
+             inverse_of: :trainee,
              class_name: "Dttp::Trainee"
 
   belongs_to :hesa_student,
              foreign_key: :hesa_id,
              primary_key: :hesa_id,
-             inverse_of: :trainee,
              optional: true,
+             inverse_of: :trainee,
              class_name: "Hesa::Student"
 
   belongs_to :lead_school, optional: true, class_name: "School"
@@ -28,11 +28,11 @@ class Trainee < ApplicationRecord
 
   belongs_to :published_course,
              ->(trainee) { where(accredited_body_code: trainee.provider.code) },
-             class_name: "Course",
              foreign_key: :course_uuid,
              primary_key: :uuid,
              inverse_of: :trainees,
-             optional: true
+             optional: true,
+             class_name: "Course"
 
   belongs_to :start_academic_cycle, optional: true, class_name: "AcademicCycle"
   belongs_to :end_academic_cycle, optional: true, class_name: "AcademicCycle"
@@ -257,7 +257,7 @@ class Trainee < ApplicationRecord
   before_save :set_submission_ready, if: :completion_trackable?
 
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
-    update!(dttp_id: dttp_id, placement_assignment_dttp_id: placement_assignment_dttp_id)
+    update!(dttp_id:, placement_assignment_dttp_id:)
   end
 
   def trn_received!(new_trn = nil)
@@ -398,7 +398,7 @@ class Trainee < ApplicationRecord
   end
 
   def duplicate?
-    Trainee.where(first_names: first_names, last_name: last_name, date_of_birth: date_of_birth, email: email).count > 1
+    Trainee.where(first_names:, last_name:, date_of_birth:, email:).count > 1
   end
 
   def hesa_record?
@@ -424,7 +424,7 @@ private
 
     exclude_list = %w[created_at updated_at dttp_update_sha progress submission_ready]
 
-    trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
+    trainee_values = serializable_hash.except(*exclude_list).values.compact
 
     (
       trainee_values + [degrees, nationalities, disabilities].flat_map do |assoc|

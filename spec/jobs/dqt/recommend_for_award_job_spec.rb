@@ -9,7 +9,7 @@ module Dqt
 
     before do
       enable_features(:integrate_with_dqt)
-      allow(RecommendForAward).to receive(:call).with(trainee: trainee).and_return(award_date)
+      allow(RecommendForAward).to receive(:call).with(trainee:).and_return(award_date)
       allow(SlackNotifierService).to receive(:call)
     end
 

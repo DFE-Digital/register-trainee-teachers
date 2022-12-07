@@ -6,7 +6,7 @@ module ReviewSummary
   describe View, type: :component do
     let(:trainee) { build(:trainee, :with_apply_application) }
     let(:form) { instance_double(ApplyApplications::TraineeDataForm, errors: ["bad data"]) }
-    let(:described_component) { described_class.new(form: form, invalid_data_view: invalid_data_view) }
+    let(:described_component) { described_class.new(form:, invalid_data_view:) }
     let(:trainee_data_form) { ApplyApplications::TraineeDataForm.new(trainee, include_degree_id: true) }
 
     let(:invalid_data_view) do

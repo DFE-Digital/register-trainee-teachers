@@ -7,7 +7,7 @@ describe TrainingDetailsForm, type: :model do
   let(:trainee) { build(:trainee) }
   let(:error_attr) { "activemodel.errors.models.training_details_form.attributes" }
 
-  subject { described_class.new(trainee, params: params) }
+  subject { described_class.new(trainee, params:) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:trainee_id) }

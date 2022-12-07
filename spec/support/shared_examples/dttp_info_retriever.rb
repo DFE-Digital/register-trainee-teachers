@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "dttp info retriever" do
+shared_examples "dttp info retriever" do
   let(:request_headers) { { headers: { "Prefer" => "odata.maxpagesize=5000" } } }
   let(:http_response) { { status: 200, body: { value: [1, 2, 3], "@odata.nextLink": "https://example.com" }.to_json } }
 

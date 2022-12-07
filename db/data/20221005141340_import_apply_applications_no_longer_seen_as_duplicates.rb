@@ -5,7 +5,7 @@ class ImportApplyApplicationsNoLongerSeenAsDuplicates < ActiveRecord::Migration[
     ApplyApplication.non_importable_duplicate.each do |application|
       next unless application.provider && application.course
 
-      Trainees::CreateFromApply.call(application: application)
+      Trainees::CreateFromApply.call(application:)
     end
   end
 

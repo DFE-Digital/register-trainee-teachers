@@ -25,7 +25,7 @@ class TraineeStartStatusForm < TraineeForm
   def save!
     if valid?
       update_trainee_start_date
-      Trainees::Update.call(trainee: trainee)
+      Trainees::Update.call(trainee:)
       clear_stash
     else
       false
@@ -37,7 +37,7 @@ class TraineeStartStatusForm < TraineeForm
       set_on_time_itt_start_date if itt_started_on_time?
       unset_itt_start_date if itt_not_yet_started?
 
-      date_hash = { year: year, month: month, day: day }
+      date_hash = { year:, month:, day: }
       date_args = date_hash.values.map(&:to_i)
 
       valid_date?(date_args) ? Date.new(*date_args) : InvalidDate.new(date_hash)

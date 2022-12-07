@@ -76,16 +76,13 @@ module Trainees
         funding: "funding details",
         course_details: "trainee's course details",
         publish_course_details: "trainee's course details",
-        trainee_start_status: "trainee start date",
+        trainee_start_status: "start date",
         iqts_country: "international training details",
       }[trainee_section_key.to_sym] || trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
     end
 
     def flash_message_title
-      I18n.t(
-        "components.confirmation.flash.#{trainee_section_key}",
-        default: confirm_section_title.pluralize,
-      )
+      I18n.t("components.confirmation.flash.#{trainee_section_key}", default: confirm_section_title)
     end
 
     def toggle_trainee_progress_field

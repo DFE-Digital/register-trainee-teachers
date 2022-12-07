@@ -5,7 +5,7 @@ require "rails_helper"
 describe MissingDataBannerView do
   include Rails.application.routes.url_helpers
 
-  let(:missing_fields) { Submissions::MissingDataValidator.new(trainee: trainee).missing_fields }
+  let(:missing_fields) { Submissions::MissingDataValidator.new(trainee:).missing_fields }
 
   subject { described_class.new(missing_fields, trainee).content }
 

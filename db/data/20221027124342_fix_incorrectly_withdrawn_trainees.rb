@@ -23,7 +23,7 @@ private
        PUrq8swnX9XYpcHhE3HBaFpq
        1B5XifvejubeWWjG7TSRUZmg
        Rp9WaWT8vRRNf3usXaAiAuT8].each do |slug|
-      Trainee.find_by(slug: slug)&.update_columns(state: :trn_received, withdraw_date: nil, withdraw_reason: nil, additional_withdraw_reason: nil)
+      Trainee.find_by(slug:)&.update_columns(state: :trn_received, withdraw_date: nil, withdraw_reason: nil, additional_withdraw_reason: nil)
     end
   end
 
@@ -34,7 +34,7 @@ private
        KiSpScCsSyukAXPrmwRtqLV8
        zJN7GTDcHGtorbky4XKLe2Mv
        m7D7cuzLU5YyS8p3qn5sMP46].each do |slug|
-      Trainee.find_by(slug: slug)&.update_columns(withdraw_date: nil, withdraw_reason: nil, additional_withdraw_reason: nil)
+      Trainee.find_by(slug:)&.update_columns(withdraw_date: nil, withdraw_reason: nil, additional_withdraw_reason: nil)
     end
   end
 end

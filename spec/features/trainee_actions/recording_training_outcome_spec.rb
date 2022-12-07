@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Recording a training outcome", type: :feature do
+feature "Recording a training outcome" do
   include SummaryHelper
 
   before do

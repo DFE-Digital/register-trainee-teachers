@@ -6,7 +6,7 @@ module Trainees
     include HasDttpMapping
     include HasDiversityAttributes
 
-    TRN_REGEX = /^(\d{6,7})$/.freeze
+    TRN_REGEX = /^(\d{6,7})$/
 
     UK_COUNTRIES = ["England", "United Kingdom", "Scotland", "Northern Ireland",
                     "Wales", "Isle of Man",
@@ -118,7 +118,7 @@ module Trainees
     end
 
     def create_degrees!
-      ::Degrees::CreateFromDttp.call(trainee: trainee)
+      ::Degrees::CreateFromDttp.call(trainee:)
     end
 
     def multiple_providers?
@@ -386,7 +386,7 @@ module Trainees
     end
 
     def trainee_state
-      @trainee_state ||= MapStateFromDttp.call(dttp_trainee: dttp_trainee)
+      @trainee_state ||= MapStateFromDttp.call(dttp_trainee:)
     end
 
     def withdrawal_attributes
@@ -424,7 +424,7 @@ module Trainees
     end
 
     def funding_attributes
-      @funding_attributes ||= MapFundingFromDttpEntityId.call(funding_entity_id: funding_entity_id)
+      @funding_attributes ||= MapFundingFromDttpEntityId.call(funding_entity_id:)
     end
 
     def funding_entity_id
@@ -466,8 +466,8 @@ module Trainees
         ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
 
         return {
-          ethnic_group: ethnic_group,
-          ethnic_background: ethnic_background,
+          ethnic_group:,
+          ethnic_background:,
         }
       end
 

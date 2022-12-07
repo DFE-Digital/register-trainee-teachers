@@ -20,7 +20,7 @@ module Dqt
         allow(Dqt::Client).to receive(:get).and_return(dqt_response)
       end
 
-      subject { described_class.call(trainee: trainee) }
+      subject { described_class.call(trainee:) }
 
       context "when a teacher is found" do
         let(:dqt_response) { { "results" => [dqt_trainee] } }
@@ -62,7 +62,7 @@ module Dqt
         let(:dqt_response) { { "results" => [dqt_trainee] } }
 
         it "calls the DQT API with just the _first_ first name" do
-          described_class.call(trainee: trainee)
+          described_class.call(trainee:)
           expected_params = {
             firstName: "Bobby",
             lastName: trainee.last_name,

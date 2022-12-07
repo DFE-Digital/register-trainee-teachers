@@ -7,7 +7,7 @@ module Dttp
     def perform(request_uri = nil)
       return unless FeatureService.enabled?(:sync_trainees_from_dttp)
 
-      @bursary_details = RetrieveBursaryDetails.call(request_uri: request_uri)
+      @bursary_details = RetrieveBursaryDetails.call(request_uri:)
 
       BursaryDetail.upsert_all(bursary_detail_attributes, unique_by: :dttp_id)
 

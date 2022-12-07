@@ -15,7 +15,7 @@ module Trainees
     let(:register_trn) { nil }
     let(:trainee) { double(persisted?: persisted, trn: register_trn) }
 
-    subject { described_class.call(hesa_trainee: hesa_trainee, trainee: trainee) }
+    subject { described_class.call(hesa_trainee:, trainee:) }
 
     context "when the trainee is new" do
       let(:persisted) { false }

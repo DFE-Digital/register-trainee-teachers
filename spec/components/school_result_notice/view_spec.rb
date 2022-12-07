@@ -13,9 +13,9 @@ module SchoolResultNotice
       before do
         render_inline(
           described_class.new(
-            search_query: search_query,
-            search_limit: search_limit,
-            search_count: search_count,
+            search_query:,
+            search_limit:,
+            search_count:,
           ),
         )
       end
@@ -24,7 +24,7 @@ module SchoolResultNotice
         let(:search_count) { 16 }
 
         it "renders the remaining search count" do
-          expected_text = I18n.t("components.school_result_notice.result_text", search_query: search_query)
+          expected_text = I18n.t("components.school_result_notice.result_text", search_query:)
 
           expect(rendered_component).to have_text(expected_text)
         end

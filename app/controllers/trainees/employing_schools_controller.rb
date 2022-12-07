@@ -18,7 +18,7 @@ module Trainees
       @employing_school_form = Schools::EmployingSchoolForm.new(trainee, params: trainee_params, user: current_user)
 
       if @employing_school_form.school_not_selected? && @employing_school_form.valid?
-        return redirect_to(trainee_employing_schools_path(@trainee, query: query))
+        return redirect_to(trainee_employing_schools_path(@trainee, query:))
       end
 
       if @employing_school_form.stash_or_save!
@@ -31,7 +31,7 @@ module Trainees
   private
 
     def load_schools
-      @school_search = SchoolSearch.call(query: query)
+      @school_search = SchoolSearch.call(query:)
     end
 
     def trainee_params
