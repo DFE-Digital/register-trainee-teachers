@@ -43,7 +43,7 @@ module Reports
 
       start_years = trainee.start_academic_cycle.start_year..trainee.end_academic_cycle.start_year
 
-      start_years.map { |year| "#{year} to #{year + 1}" }
+      start_years.map { |year| "#{year} to #{year + 1}" }.join(", ")
     end
 
     def address_line_1
