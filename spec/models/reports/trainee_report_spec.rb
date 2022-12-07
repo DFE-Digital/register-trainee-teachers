@@ -365,7 +365,7 @@ describe Reports::TraineeReport, type: :model do
     context "when the trainee spans multiple years" do
       let!(:trainee) { create(:trainee, start_academic_cycle: current_cycle, end_academic_cycle: next_cycle) }
 
-      it "returns an array of multiple academic_years" do
+      it "returns an array of multiple academic years" do
         expect(subject.academic_years).to eq(
           [
             "#{current_cycle.start_year} to #{current_cycle.start_year + 1}",
