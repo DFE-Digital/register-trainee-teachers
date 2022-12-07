@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe Reports::TraineeReport do
+  let(:current_cycle) { create(:academic_cycle, :current) }
+  let(:next_cycle) { create(:academic_cycle, next_cycle: true) }
   let!(:trainee) { create(:trainee, :for_export, course_uuid: create(:course).uuid) }
   let(:degree) { subject.degree }
   let(:course) { subject.course }
