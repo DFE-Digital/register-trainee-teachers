@@ -52,6 +52,7 @@ class SubjectSpecialismForm < TraineeForm
       course_subject_one:,
       course_subject_two:,
       course_subject_three:,
+      course_allocation_subject:,
     })
 
     super
