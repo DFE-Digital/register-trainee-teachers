@@ -17,7 +17,9 @@
                                               countries_options,
                                               :value,
                                               :text,
-                                              label: { text: "Which country or territory is the trainee studying in?", size: "l", tag: "h1" }),
+                                              label: { text: t(".label"), size: "l", tag: "h1" },
+                                              hint: { text: t(".hint") }),
+
       ) %>
 
       <%= f.govuk_submit %>

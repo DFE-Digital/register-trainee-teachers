@@ -1143,6 +1143,10 @@ en:
           <p class="govuk-body">%{course_name} (%{course_code}) is recorded in Publish as starting in September
           %{cycle_year} – but we do not have complete start and end dates for it.<p>
         is_for_all_courses: Use these dates for all %{study_mode} trainees on %{course_name} (%{course_code}) for the %{cycle_year} to %{next_cycle_year} cycle
+    iqts_countries:
+      edit:
+        label: Which country or territory is the trainee studying in?
+        hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time
   activerecord:
     attributes:
       trainee:
