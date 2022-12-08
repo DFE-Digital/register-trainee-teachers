@@ -17,7 +17,7 @@ module Trainees
         if @review_course_form.valid?
           return save_course_and_continue if @review_course_form.registered?
 
-          redirect_to(edit_trainee_publish_course_details_path(trainee))
+          redirect_to(edit_trainee_training_route_path(trainee, context: "edit-course"))
         else
           render(:edit)
         end
