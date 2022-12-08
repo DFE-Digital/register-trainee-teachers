@@ -370,6 +370,11 @@ FactoryBot.define do
       training_route { TRAINING_ROUTE_ENUMS[:opt_in_undergrad] }
     end
 
+    trait :iqts do
+      training_route { TRAINING_ROUTE_ENUMS[:iqts] }
+      iqts_country { Dttp::CodeSets::Countries::MAPPING.keys.sample }
+    end
+
     trait :draft do
       completed
       state { "draft" }
