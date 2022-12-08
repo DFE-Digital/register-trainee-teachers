@@ -13,6 +13,7 @@ module Reports
          trainee_status
          start_academic_year
          end_academic_year
+         academic_years
          record_created_at
          register_record_last_changed_at
          hesa_record_last_changed_at
@@ -126,6 +127,7 @@ module Reports
         trainee_report.trainee_status,
         trainee_report.start_academic_year,
         trainee_report.end_academic_year,
+        trainee_report.academic_years,
         trainee_report.record_created_at,
         trainee_report.register_record_last_changed_at,
         trainee_report.hesa_record_last_changed_at,

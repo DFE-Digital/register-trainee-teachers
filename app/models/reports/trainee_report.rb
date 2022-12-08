@@ -38,6 +38,14 @@ module Reports
              to: :trainee,
              allow_nil: true
 
+    def academic_years
+      return unless trainee.start_academic_cycle && trainee.end_academic_cycle
+
+      start_years = trainee.start_academic_cycle.start_year..trainee.end_academic_cycle.start_year
+
+      start_years.map { |year| "#{year} to #{year + 1}" }.join(", ")
+    end
+
     def address_line_1
       trainee.address_line_one
     end
