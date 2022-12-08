@@ -1148,7 +1148,7 @@ en:
     iqts_countries:
       edit:
         label: Which country or territory is the trainee studying in?
-        hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time
+        hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time.
   activerecord:
     attributes:
       trainee:
@@ -1296,6 +1296,7 @@ en:
           other_nationality1: &nationality Select a nationality from the list - your entry is not recognised
           other_nationality2: *nationality
           other_nationality3: *nationality
+          iqts_country: Enter the country or territory the trainee is studying in
       models:
         cookie_preferences_form:
           attributes:
@@ -1608,6 +1609,10 @@ en:
           attributes:
             alternative_option:
               blank: Select defer, withdraw or return to trainee record
+        iqts_country_form:
+          attributes:
+            iqts_country:
+              blank: Enter the country or territory the trainee is studying in
   page_headings:
     start_page: Register trainee teachers
   service_updates:

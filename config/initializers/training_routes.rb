@@ -6,6 +6,7 @@ TRAINING_ROUTE_ENUMS = {
   early_years_postgrad: "early_years_postgrad",
   early_years_salaried: "early_years_salaried",
   early_years_undergrad: "early_years_undergrad",
+  iqts: "iqts",
   opt_in_undergrad: "opt_in_undergrad",
   provider_led_postgrad: "provider_led_postgrad",
   provider_led_undergrad: "provider_led_undergrad",
@@ -13,7 +14,6 @@ TRAINING_ROUTE_ENUMS = {
   school_direct_salaried: "school_direct_salaried",
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
   hpitt_postgrad: "hpitt_postgrad",
-  iqts: "iqts",
 }.freeze
 
 ROUTE_INITIATIVES_ENUMS = {
