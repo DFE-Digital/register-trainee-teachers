@@ -21,7 +21,7 @@
       <% table.body do |body| %>
         <% body.row do |row| %>
           <% row.cell do %>
-              <span class="no-wrap">Wednesday 12 October 2022</span>
+              <span class="no-wrap">12 October 2022</span>
           <% end %>
           <% row.cell(text: "The second Wednesday of October every academic year is called the ‘census date’.
           If a new trainee starts their course after this date, they will not be included in the ITT census publication.
@@ -31,9 +31,18 @@
             <% row.cell do %>
               <span class="no-wrap">1 November 2022</span>
             <% end %>
-          <% row.cell(text: "A senior person from your organisation must sign off your new trainee data on or before this date
-          (this should be a different person to who submitted the data).")%>
+          <% row.cell(text: "A senior person from your organisation must sign off your new trainee data on or before this date.
+          This should be a different person to the one who submitted the data.
+          This data will be used for the ITT census publication.")%>
         <% end %>
+        <% body.row do |row| %>
+            <% row.cell do %>
+              <span class="no-wrap">31 January 2023</span>
+            <% end %>
+          <% row.cell(text: "A senior person from your organisation must sign off your 2021 to 2022 trainee data on or before this date.
+          This should be a different person to the one who submitted the data.
+          Some of this data will be used for the ITT performance profiles publication.")%>
+        <% end %>      
       <% end %>
     <% end %>
 
