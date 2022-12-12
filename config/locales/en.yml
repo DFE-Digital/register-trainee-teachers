@@ -242,6 +242,7 @@ en:
         trainee_start_date: start date
     course_detail:
       title: Course details
+      course_and_route: Course
       education_phase: Education phase
       subject: Subject
       age_range: Age range
@@ -815,7 +816,7 @@ en:
           label: When did the trainee start their ITT?
           hint: Their ITT started on %{itt_start_date}
       publish_course_details:
-        route_message: Your %{route} courses in the Publish service
+        route_message: Courses imported from the Publish service
         all_courses_message: Your courses in the Publish service
         route_titles:
           provider_led_postgrad: provider-led postgrad
@@ -1017,7 +1018,7 @@ en:
         summary_with_route: &summary_with_route "%{summary}, %{route}"
     publish_course_details:
       edit:
-        heading: "Your courses starting in %{from_year} to %{to_year}"
+        heading: "Your %{route} courses starting in %{from_year} to %{to_year}"
         change_year_link_text: Choose from courses starting in a different academic year
         course_code_label: What course are they doing?
         course_not_listed: Another course not listed
@@ -1524,6 +1525,10 @@ en:
               max_char_exceeded: Your entry must not exceed 100 characters
               uniqueness: The trainee ID has already been used for another trainee
               uniqueness_explanation: The ID ‘<span class="no-wrap">%{trainee_id}</span>’ has already been used for <span class="no-wrap">%{short_name}</span> (created <span class="no-wrap">%{created}</span>). Choose a new one or check if this is a duplicate trainee record.
+        training_routes_form:
+          attributes:
+            training_route:
+              blank: Enter a training route
         schools_form:
           attributes:
             query:
