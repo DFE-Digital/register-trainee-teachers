@@ -47,5 +47,9 @@ module RegisterTraineeTeachers
     config.autoload_once_paths << Rails.root.join("config/initializers/subjects")
 
     config.analytics = config_for(:analytics)
+
+    config.active_record.encryption.primary_key = ENV["ACTIVE_RECORD_ENCRYPTION__PRIMARY_KEY"]
+    config.active_record.encryption.deterministic_key = ENV["ACTIVE_RECORD_ENCRYPTION__DETERMINISTIC_KEY"]
+    config.active_record.encryption.key_derivation_salt = ENV["ACTIVE_RECORD_ENCRYPTION__KEY_DERIVATION_SALT"]
   end
 end

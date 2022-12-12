@@ -1,0 +1,41 @@
+# frozen_string_literal: true
+
+class OtpSignInUser
+  attr_reader :email
+
+  def initialize(email:)
+    @email = email&.downcase
+  end
+
+  def self.begin_session!(session)
+    session["otp_sign_in_user"] = {
+      email: session[:email],
+      last_active_at: Time.zone.now,
+    }.with_indifferent_access
+
+    session.delete(:email)
+    session.delete(:salt)
+  end
+
+  def self.load_from_session(session)
+    otp_sign_in_session = session["otp_sign_in_user"]
+    return unless otp_sign_in_session
+    return if otp_sign_in_session.fetch("last_active_at") < 2.hours.ago
+
+    otp_sign_in_session[:last_active_at] = Time.zone.now
+
+    new(email: otp_sign_in_session[:email])
+  end
+
+  def self.end_session!(session)
+    session.destroy
+  end
+
+  def end_session!
+    session.destroy
+  end
+
+  def logout_url
+    "/"
+  end
+end

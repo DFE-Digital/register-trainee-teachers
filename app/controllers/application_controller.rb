@@ -39,34 +39,36 @@ private
     end
   end
 
-  def dfe_sign_in_user
-    @dfe_sign_in_user ||= DfESignInUser.load_from_session(session)
+  def sign_in_user
+    @sign_in_user ||=
+      DfESignInUser.load_from_session(session) ||
+        OtpSignInUser.load_from_session(session)
   end
 
   def current_user
-    return if dfe_sign_in_user.blank?
+    return unless sign_in_user
 
     @current_user ||= begin
-      user = lookup_user_by_dfe_sign_in_uid || lookup_user_by_email
+      user = lookup_user_by_email || lookup_user_by_dfe_sign_in_uid
       UserWithOrganisationContext.new(user:, session:) if user.present?
     end
   end
 
   def lookup_user_by_dfe_sign_in_uid
-    return nil if dfe_sign_in_user&.dfe_sign_in_uid.blank?
+    return if sign_in_user&.dfe_sign_in_uid.blank?
 
     User.kept.find_by(
       "LOWER(dfe_sign_in_uid) = ?",
-      dfe_sign_in_user.dfe_sign_in_uid.downcase,
+      sign_in_user.dfe_sign_in_uid.downcase,
     )
   end
 
   def lookup_user_by_email
-    return nil if dfe_sign_in_user&.email.blank?
+    return if sign_in_user&.email.blank?
 
     User.kept.find_by(
       "LOWER(email) = ?",
-      dfe_sign_in_user.email.downcase,
+      sign_in_user.email.downcase,
     )
   end
 

@@ -30,3 +30,6 @@ environment:
 track_validation_errors: false
 
 blazer_database_url: postgresql://localhost/register_trainee_teacher_data_development
+
+govuk_notify:
+  otp_email_template_id: 530b12e2-b381-456c-aee4-60f760afb446

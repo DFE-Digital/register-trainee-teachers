@@ -1,0 +1,17 @@
+<%= render PageTitle::View.new(i18n_key: "otp.show") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with url: otp_path do |f| %>
+
+      <span class="govuk-caption-l">Get a one-time password </span>
+      <h1 class="govuk-heading-l">
+        Enter your email
+      </h1>
+
+      <%= f.govuk_text_field :email, width: 'one-half', label: { hidden: true } %>
+
+      <%= f.govuk_submit "Submit" %>
+    <% end %>
+  </div>
+</div>
