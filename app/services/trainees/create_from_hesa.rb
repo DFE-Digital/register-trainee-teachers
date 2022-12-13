@@ -171,10 +171,15 @@ module Trainees
     end
 
     def enqueue_background_jobs!
-      if FeatureService.enabled?(:integrate_with_dqt)
-        Trainees::Update.call(trainee:) if trainee.trn.present?
-        Dqt::RegisterForTrnJob.perform_later(trainee) if request_for_trn?
+      return unless FeatureService.enabled?(:integrate_with_dqt)
+
+      if request_for_trn?
+        Dqt::RegisterForTrnJob.perform_later(trainee)
+      else
+        Trainees::Update.call(trainee:)
       end
+
+      Dqt::WithdrawTraineeJob.perform_later(trainee) if trainee_state == :withdrawn
     end
 
     def check_for_trn_disparity!
