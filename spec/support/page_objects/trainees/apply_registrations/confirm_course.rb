@@ -11,6 +11,8 @@ module PageObjects
       class ConfirmCourse < PageObjects::Base
         set_url "/trainees/{id}/apply-application/confirm-course"
 
+        element :change_course, "a", text: "Change course"
+
         element :confirm, "input[name='apply_applications_confirm_course_form[mark_as_reviewed]']"
         element :submit_button, "button[type='submit']"
 

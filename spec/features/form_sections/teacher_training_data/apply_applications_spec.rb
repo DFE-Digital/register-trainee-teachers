@@ -37,13 +37,17 @@ feature "apply registrations" do
       then_i_am_redirected_to_the_review_draft_page
     end
 
-    scenario "changing course with a different route" do
+    scenario "changing course with a different route via the confirm course page" do
       given_my_provider_has_courses_for_other_training_routes
       when_i_enter_the_course_details_page
-      and_i_choose_a_different_course
+      and_i_confirm_the_course_details
+      and_i_enter_itt_dates
+      when_i_click_change_course_on_the_confirm_course_page
+      and_i_select_a_different_route
+      and_i_choose_a_course_on_a_different_route
       and_i_enter_itt_dates
       and_i_confirm_the_course
-      and_the_training_route_matches_the_course_route
+      then_the_school_direct_training_route_is_the_route
     end
   end
 
@@ -108,6 +112,10 @@ private
                            accredited_body_code: trainee.provider.code,
                            route: other_route,
                            subject_names: ["Philosophy"])
+    @school_direct_course = create(:course_with_subjects,
+                                   accredited_body_code: trainee.provider.code,
+                                   route: "school_direct_tuition_fee",
+                                   subject_names: ["Dance"])
   end
 
   def then_the_section_should_be(status)
@@ -163,5 +171,25 @@ private
 
   def and_the_training_route_matches_the_course_route
     expect(review_draft_page).to have_content(I18n.t("activerecord.attributes.trainee.training_routes.#{@other_course.route}").downcase)
+  end
+
+  def when_i_click_change_course_on_the_confirm_course_page
+    apply_registrations_confirm_course_page.change_course.click
+  end
+
+  def and_i_select_a_different_route
+    trainee_edit_training_route_page.training_route_options.find { |o|
+      o.input.value.include?("school_direct_tuition_fee")
+    }.choose
+    trainee_edit_training_route_page.continue_button.click
+  end
+
+  def and_i_choose_a_course_on_a_different_route
+    publish_course_details_page.course_options.first.choose
+    publish_course_details_page.submit_button.click
+  end
+
+  def then_the_school_direct_training_route_is_the_route
+    expect(review_draft_page).to have_content(I18n.t("activerecord.attributes.trainee.training_routes.#{@school_direct_course.route}").downcase)
   end
 end

@@ -12,6 +12,7 @@ class CourseDetailsForm < TraineeForm
     course_subject_two_raw
     course_subject_three
     course_subject_three_raw
+    course_allocation_subject
     start_day
     start_month
     start_year
@@ -22,6 +23,7 @@ class CourseDetailsForm < TraineeForm
     additional_age_range
     study_mode
     primary_course_subjects
+    training_route
   ].freeze
 
   COURSE_DATES = %i[
@@ -56,12 +58,19 @@ class CourseDetailsForm < TraineeForm
   validate :itt_end_date_valid, if: :end_date_required?
 
   delegate :apply_application?, :requires_study_mode?, to: :trainee
+  delegate :training_route, to: :training_routes_form
 
   MAX_END_YEARS = 4
 
   def initialize(...)
     super(...)
     @primary_course_subjects ||= set_primary_phase_subjects if is_primary_phase?
+    @training_routes_form = TrainingRoutesForm.new(trainee)
+    @course_allocation_subject ||= set_early_years_attributes if early_years_route?
+  end
+
+  def early_years_route?
+    EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
   end
 
   def course_age_range
@@ -96,15 +105,19 @@ class CourseDetailsForm < TraineeForm
   end
 
   def require_subject?
-    !trainee.early_years_route?
+    !EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
   end
 
   def require_age_range?
-    !trainee.early_years_route?
+    !EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
   end
 
   def course_education_phase
     @course_education_phase ||= ::CourseEducationPhaseForm.new(trainee).course_education_phase
+  end
+
+  def course_allocation_subject
+    @course_allocation_subject ||= SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
   end
 
   def is_primary_phase?
@@ -135,7 +148,16 @@ class CourseDetailsForm < TraineeForm
     trainee.hesa_id.blank?
   end
 
+  def requires_study_mode?
+    [
+      TRAINING_ROUTE_ENUMS[:assessment_only],
+      TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+    ].exclude?(training_route)
+  end
+
 private
+
+  attr_reader :training_routes_form
 
   def requires_secondary_subjects?
     !is_primary_phase? && require_subject?
@@ -171,11 +193,18 @@ private
     @course_subject_one = ::CourseSubjects::PRIMARY_TEACHING if primary_with_other?
   end
 
+  def set_early_years_attributes
+    @course_subject_one = ::CourseSubjects::EARLY_YEARS_TEACHING
+
+    @course_allocation_subject = SubjectSpecialism.find_by(name: @course_subject_one)&.allocation_subject
+  end
+
   def update_trainee_attributes
     attributes = {
       course_uuid:,
       itt_start_date:,
       itt_end_date:,
+      training_route:,
       course_education_phase:,
     }
 
@@ -183,7 +212,15 @@ private
 
     attributes.merge!(course_uuid: nil) if course_allocation_subject_changed?
 
-    unless trainee.early_years_route?
+    if early_years_route?
+      attributes.merge!({
+        course_subject_one: course_subject_one,
+        course_subject_two: nil,
+        course_subject_three: nil,
+        course_age_range: nil,
+        course_allocation_subject: course_allocation_subject,
+      })
+    else
       attributes.merge!({
         course_subject_one: course_subject_one,
         course_subject_two: course_subject_two.presence,
@@ -221,7 +258,7 @@ private
       })
     end
 
-    if requires_study_mode?
+    if trainee.requires_study_mode?
       attributes.merge!({
         study_mode: trainee.study_mode,
       })

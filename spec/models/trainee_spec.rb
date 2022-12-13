@@ -188,7 +188,7 @@ describe Trainee do
     let(:trainee) { create(:trainee, training_route: course_route) }
     let(:provider) { trainee.provider }
 
-    subject { trainee.available_courses }
+    subject { trainee.available_courses(course_route) }
 
     it "returns courses available for the route ordered by name" do
       expect(subject).to eq([citizenship_course, physics_course])
@@ -197,8 +197,12 @@ describe Trainee do
     context "with a trainee from apply" do
       let(:trainee) { create(:trainee, :with_apply_application) }
 
-      it "returns all courses available from the provider ordered by name" do
-        expect(subject).to eq([citizenship_course, economics_course, physics_course])
+      it "returns all courses available for the route ordered by name" do
+        expect(subject).to eq([citizenship_course, physics_course])
+      end
+
+      it "does not return courses that are associated with the provider but not the route" do
+        expect(subject).not_to eq([citizenship_course, economics_course, physics_course])
       end
     end
   end

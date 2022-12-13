@@ -13,7 +13,7 @@ gem "sprockets-rails"
 gem "pg", ">= 0.18", "< 2.0"
 
 # Use Puma as the app server
-gem "puma", "~> 5.6"
+gem "puma", "~> 6.0"
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker"
@@ -54,7 +54,7 @@ gem "govuk_design_system_formbuilder"
 
 # Background job processor
 gem "sidekiq", "~> 6.5"
-gem "sidekiq-cron", "~> 1.8"
+gem "sidekiq-cron", "~> 1.9"
 
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
@@ -143,7 +143,7 @@ group :development, :test do
   gem "launchy"
 
   # Testing framework
-  gem "rspec-rails", "~> 5.1.2"
+  gem "rspec-rails", "~> 6.0.1"
 
   gem "rails-controller-testing"
 

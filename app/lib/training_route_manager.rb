@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TrainingRouteManager
+  delegate :training_route, to: :trainee
+
   def initialize(trainee)
     @trainee = trainee
   end
@@ -55,8 +57,6 @@ class TrainingRouteManager
 private
 
   attr_reader :trainee
-
-  delegate :training_route, to: :trainee
 
   def enabled?(training_route_enums_key)
     FeatureService.enabled?("routes.#{training_route_enums_key}") && training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym]

@@ -35,6 +35,7 @@ class FormStore
     course_education_phase
     training_details
     iqts_country
+    training_routes
   ].freeze
 
   class << self

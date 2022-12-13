@@ -296,9 +296,7 @@ class Trainee < ApplicationRecord
     @training_route_manager ||= TrainingRouteManager.new(self)
   end
 
-  def available_courses
-    return provider.courses.order(:name) if apply_application?
-
+  def available_courses(training_route = self.training_route)
     provider.courses.where(route: training_route).order(:name) if TRAINING_ROUTES_FOR_COURSE.keys.include?(training_route)
   end
 

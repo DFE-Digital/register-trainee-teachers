@@ -19,8 +19,7 @@ module CourseDetails
 
     def rows
       [
-        training_route_row,
-        publish_course_details_row,
+        route_and_course_details_row,
         education_phase_row,
         subject_row,
         age_range_row,
@@ -34,36 +33,30 @@ module CourseDetails
 
     attr_accessor :data_model, :trainee, :has_errors, :editable
 
-    def publish_course_details_row
-      if show_publish_courses?(trainee)
-        { key: t("components.course_detail.course_details"),
-          value: course_details,
-          action_href: edit_trainee_publish_course_details_path(trainee),
-          action_text: t(:change),
-          action_visually_hidden_text: "course details",
-          custom_value: true }
-      end
+    def route_and_course_details_row
+      {
+        field_label: t("components.course_detail.course_and_route"),
+        field_value: tag.div(
+          t("activerecord.attributes.trainee.training_routes.#{data_model.training_route}"),
+          class: "govuk-!-margin-bottom-2",
+        ) + tag.span(course_details, class: "govuk-hint"),
+        action_url: edit_trainee_training_route_path(trainee, context: "edit-course"),
+      }
     end
 
     def education_phase_row
       if non_early_year_route?
-        { field_value: data_model.course_education_phase&.upcase_first, field_label: t("components.course_detail.education_phase"), action_url: edit_trainee_course_education_phase_path(trainee) }
+        {
+          field_value: data_model.course_education_phase&.upcase_first,
+          field_label: t("components.course_detail.education_phase"),
+          action_url: edit_trainee_course_education_phase_path(trainee),
+        }
       end
     end
 
     def subject_row
       if non_early_year_route?
         default_mappable_field(subject_names, t("components.course_detail.subject"))
-      end
-    end
-
-    def training_route_row
-      unless trainee.draft?
-        {
-          field_value: t("activerecord.attributes.trainee.training_routes.#{training_route}"),
-          field_label: t("components.course_detail.route"),
-          action_url: nil,
-        }
       end
     end
 
@@ -74,9 +67,16 @@ module CourseDetails
     end
 
     def study_mode_row
-      if trainee.requires_study_mode?
+      if requires_study_mode?
         default_mappable_field(study_mode, t("components.course_detail.study_mode"))
       end
+    end
+
+    def requires_study_mode?
+      [
+        TRAINING_ROUTE_ENUMS[:assessment_only],
+        TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+      ].exclude?(data_model.training_route)
     end
 
     def course_date_row(value, context)
@@ -84,16 +84,32 @@ module CourseDetails
     end
 
     def non_early_year_route?
-      !trainee.early_years_route?
+      !EARLY_YEARS_TRAINING_ROUTES.include?(data_model.training_route)
+    end
+
+    def manual_entry_primary_phase?
+      data_model.is_a?(CourseDetailsForm) && data_model.course_education_phase == COURSE_EDUCATION_PHASE_ENUMS[:primary]
     end
 
     def course_details
-      return t("components.course_detail.details_not_on_publish") if data_model.course_uuid.blank?
+      return "#{course.name} (#{course.code})" if course
 
-      "#{course.name} (#{course.code})" if course
+      return primary_allocation_subject if manual_entry_primary_phase? && non_early_year_route?
+
+      data_model.course_allocation_subject&.name
+    end
+
+    def primary_allocation_subject
+      SubjectSpecialism.find_by(name: primary_course_subject).allocation_subject.name
+    end
+
+    def primary_course_subject
+      PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[data_model.primary_course_subjects].first
     end
 
     def subject_names
+      return data_model.primary_course_subjects if manual_entry_primary_phase?
+
       if data_model.course_subject_one.present?
         subjects_for_summary_view(
           *[
@@ -130,15 +146,11 @@ module CourseDetails
     end
 
     def course
-      @course ||= trainee.available_courses&.find_by(uuid: data_model.course_uuid)
+      @course ||= trainee.available_courses(data_model.training_route)&.find_by(uuid: data_model.course_uuid)
     end
 
     def default_mappable_field(field_value, field_label)
       { field_value: field_value, field_label: field_label, action_url: edit_trainee_course_details_path(trainee) }
-    end
-
-    def training_route
-      course&.route || trainee.training_route
     end
   end
 end

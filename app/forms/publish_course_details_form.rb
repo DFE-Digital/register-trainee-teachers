@@ -14,8 +14,13 @@ class PublishCourseDetailsForm < TraineeForm
   validates :course_uuid, presence: true
 
   delegate :age_range, to: :course, prefix: true
-
+  delegate :training_route, to: :training_routes_form
   delegate :course_subject_one, :course_subject_two, :course_subject_three, to: :specialism_form
+
+  def initialize(...)
+    super(...)
+    @training_routes_form = TrainingRoutesForm.new(trainee)
+  end
 
   def manual_entry_chosen?
     course_uuid == NOT_LISTED
@@ -53,6 +58,7 @@ class PublishCourseDetailsForm < TraineeForm
     return false unless valid?
 
     update_trainee_attributes
+    clear_funding_information if clear_funding_information?
     Trainees::Update.call(trainee:)
     clear_all_course_related_stashes
   end
@@ -72,11 +78,11 @@ class PublishCourseDetailsForm < TraineeForm
   end
 
   def course_education_phase
-    @course_education_phase ||= ::CourseEducationPhaseForm.new(trainee).course_education_phase
+    @course_education_phase = course&.level || CourseEducationPhaseForm.new(trainee).course_education_phase
   end
 
   def study_mode
-    @study_mode ||= StudyModesForm.new(trainee).study_mode
+    @study_mode = StudyModesForm.new(trainee).study_mode
   end
 
   def itt_start_date
@@ -89,11 +95,20 @@ class PublishCourseDetailsForm < TraineeForm
 
 private
 
+  attr_reader :training_routes_form
+
   def update_trainee_attributes
-    trainee.assign_attributes(training_route: course.route,
+    trainee.assign_attributes(training_route: training_routes_form.training_route,
                               course_uuid: course_uuid,
-                              course_education_phase: course&.level,
-                              course_age_range: course_age_range)
+                              course_subject_one: course_subject_one,
+                              course_subject_two: course_subject_two,
+                              course_subject_three: course_subject_three,
+                              course_education_phase: course_education_phase,
+                              course_age_range: course_age_range,
+                              course_allocation_subject: course_allocation_subject,
+                              itt_start_date: itt_start_date,
+                              itt_end_date: itt_end_date,
+                              study_mode: study_mode)
   end
 
   def course_subjects
@@ -118,7 +133,7 @@ private
   end
 
   def course
-    @course ||= trainee.available_courses&.find_by(uuid: course_uuid)
+    @course ||= trainee.available_courses(training_routes_form.training_route)&.find_by(uuid: course_uuid)
   end
 
   def compute_fields

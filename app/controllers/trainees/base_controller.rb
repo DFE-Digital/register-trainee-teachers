@@ -13,5 +13,9 @@ module Trainees
     def authorize_trainee
       authorize(trainee)
     end
+
+    def training_route
+      TrainingRoutesForm.new(trainee).training_route
+    end
   end
 end
