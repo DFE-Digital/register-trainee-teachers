@@ -20,6 +20,17 @@ class AcademicCycle < ApplicationRecord
     for_date(Time.zone.now)
   end
 
+  def self.previous
+    for_date(1.year.ago)
+  end
+
+  def total_trainees
+    trainees_starting.or(trainees_ending).or(Trainee.where("start_cycle.start_date < ?", start_date)
+    .where("end_cycle.start_date > ?", start_date))
+    .joins("INNER JOIN academic_cycles start_cycle ON trainees.start_academic_cycle_id = start_cycle.id")
+    .joins("INNER JOIN academic_cycles end_cycle ON trainees.end_academic_cycle_id = end_cycle.id")
+  end
+
   def trainees_starting
     trainee_scope = Trainee.where(start_academic_cycle: self)
     trainee_scope = trainee_scope.or(Trainee.where(start_academic_cycle: nil)) if current?

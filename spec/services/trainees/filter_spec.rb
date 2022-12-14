@@ -40,6 +40,53 @@ module Trainees
       it { is_expected.to include(nil_record_source_trainee) }
     end
 
+    context "with academic_year filter" do
+      let!(:old_cycle) { create(:academic_cycle, one_before_previous_cycle: true) }
+      let(:previous_cycle) { create(:academic_cycle, previous_cycle: true) }
+      let(:current_cycle) { create(:academic_cycle, :current) }
+      let!(:next_cycle) { create(:academic_cycle, next_cycle: true) }
+      let(:current_year_string) { current_cycle.start_year.to_s }
+      let(:previous_year_string) { previous_cycle.start_year.to_s }
+
+      context "with a trainee with start academic cycle in the selected academic year" do
+        let!(:trainee) { create(:trainee, :trn_received, start_academic_cycle: current_cycle, end_academic_cycle: next_cycle) }
+        let(:filters) { { academic_year: [current_year_string] } }
+
+        it { is_expected.to include(trainee) }
+      end
+
+      context "with a trainee with end academic cycle in the selected academic year" do
+        let!(:trainee) { create(:trainee, :trn_received, start_academic_cycle: previous_cycle, end_academic_cycle: current_cycle) }
+        let(:filters) { { academic_year: [current_year_string] } }
+
+        it { is_expected.to include(trainee) }
+      end
+
+      context "with a trainee that has start and end cycles spanning the selected academic year" do
+        let!(:trainee) { create(:trainee, :trn_received, start_academic_cycle: previous_cycle, end_academic_cycle: next_cycle) }
+        let(:filters) { { academic_year: [current_year_string] } }
+
+        it { is_expected.to include(trainee) }
+      end
+
+      context "when two academic years are selected" do
+        let!(:previous_year_trainee) { create(:trainee, :trn_received, start_academic_cycle: old_cycle, end_academic_cycle: previous_cycle) }
+        let!(:current_year_trainee) { create(:trainee, :trn_received, start_academic_cycle: current_cycle, end_academic_cycle: next_cycle) }
+        let(:filters) { { academic_year: [current_year_string, previous_year_string] } }
+
+        it { is_expected.to include(current_year_trainee, previous_year_trainee) }
+      end
+
+      context "when a trainee spans multiple academic years" do
+        let!(:trainee) { create(:trainee, :trn_received, start_academic_cycle: previous_cycle, end_academic_cycle: next_cycle) }
+        let(:filters) { { academic_year: [current_year_string, previous_year_string] } }
+
+        it "only returns trainee once" do
+          expect(subject).to contain_exactly(trainee)
+        end
+      end
+    end
+
     context "with training_route filter" do
       let!(:provider_led_postgrad_trainee) { create(:trainee, :provider_led_postgrad) }
       let(:filters) { { training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad] } }

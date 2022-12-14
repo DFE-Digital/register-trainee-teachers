@@ -33,6 +33,23 @@ module Trainees
       remove_hesa_trn_data_trainees(remove_empty_trainees(trainees))
     end
 
+    def academic_year(trainees, academic_years)
+      return trainees if academic_years.blank?
+
+      scoped_trainees = trainees
+      academic_years.each_with_index do |academic_year, i|
+        academic_cycle = AcademicCycle.for_year(academic_year)
+
+        if i.zero?
+          scoped_trainees = academic_cycle.total_trainees
+        else
+          scoped_trainees = scoped_trainees.or(academic_cycle.total_trainees)
+        end
+      end
+
+      trainees.merge(scoped_trainees)
+    end
+
     def course_education_phase(trainees, course_education_phases)
       return trainees if course_education_phases.blank?
 
@@ -148,6 +165,7 @@ module Trainees
     def filter_trainees
       filtered_trainees = trainees
 
+      filtered_trainees = academic_year(filtered_trainees, filters[:academic_year])
       filtered_trainees = training_route(filtered_trainees, filters[:training_route])
       filtered_trainees = status(filtered_trainees, filters[:status])
       filtered_trainees = subject(filtered_trainees, filters[:subject])

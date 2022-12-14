@@ -26,6 +26,26 @@ describe AcademicCycle do
     end
   end
 
+  describe "#total_trainees" do
+    let(:current_cycle) { create(:academic_cycle, :current) }
+    let(:previous_cycle) { create(:academic_cycle, previous_cycle: true) }
+    let(:next_cycle) { create(:academic_cycle, next_cycle: true) }
+
+    subject { current_cycle.total_trainees }
+
+    context "a trainee that spans the academic cycle" do
+      let(:trainee) { create(:trainee, start_academic_cycle: previous_cycle, end_academic_cycle: next_cycle) }
+
+      it { is_expected.to match_array([trainee]) }
+    end
+
+    context "a trainee that ends in the cycle" do
+      let(:trainee) { create(:trainee, start_academic_cycle: previous_cycle, end_academic_cycle: current_cycle) }
+
+      it { is_expected.to match_array([trainee]) }
+    end
+  end
+
   describe "#trainees_starting" do
     let(:academic_cycle) { build(:academic_cycle) }
 
