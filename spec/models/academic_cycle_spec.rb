@@ -168,5 +168,11 @@ describe AcademicCycle do
     subject { described_class.current }
 
     it { is_expected.to eq(current_academic_year) }
+
+    describe ".previous" do
+      subject { described_class.previous }
+
+      it { is_expected.to eq(past_academic_year) }
+    end
   end
 end

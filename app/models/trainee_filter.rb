@@ -24,6 +24,7 @@ private
 
   def merged_filters
     @merged_filters ||= text_search.merge(
+      **academic_year,
       **level,
       **training_route,
       **status,
@@ -37,6 +38,22 @@ private
       **trainee_start_years,
       **study_modes,
     ).with_indifferent_access
+  end
+
+  def academic_year
+    return {} unless academic_year_options.any?
+
+    { "academic_year" => academic_year_options }
+  end
+
+  def academic_year_options
+    current_academic_cycle ||= AcademicCycle.current
+
+    return [] if current_academic_cycle.nil?
+
+    [current_academic_cycle.start_year.to_s, (current_academic_cycle.start_year - 1).to_s].each_with_object([]) do |option, arr|
+      arr << option if params[:academic_year]&.include?(option)
+    end
   end
 
   def level

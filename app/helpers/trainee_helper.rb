@@ -52,8 +52,7 @@ module TraineeHelper
   end
 
   def label_for(attribute, value)
-    case attribute
-    when "trainee_start_year"
+    if attribute.include?("trainee_start_year") || attribute.include?("academic_year")
       "#{value.to_i} to #{value.to_i + 1}"
     else
       I18n.t("activerecord.attributes.trainee.#{attribute.pluralize}.#{value}")

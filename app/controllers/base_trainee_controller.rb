@@ -6,6 +6,7 @@ class BaseTraineeController < ApplicationController
     filter_params
     filters
     filtered_trainees
+    academic_cycle_options
     available_record_sources
     show_source_filters?
     paginated_trainees
@@ -94,6 +95,14 @@ private
       .sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
   end
 
+  def academic_cycle_options
+    current_academic_cycle ||= AcademicCycle.current
+
+    return [] if current_academic_cycle.nil?
+
+    [current_academic_cycle.start_year, current_academic_cycle.start_year - 1]
+  end
+
   def all_trainees_started?
     policy_scope(trainee_search_scope).course_not_yet_started.blank?
   end
@@ -147,6 +156,7 @@ private
       :start_year,
       :end_year,
       {
+        academic_year: [],
         level: [],
         training_route: [],
         status: [],

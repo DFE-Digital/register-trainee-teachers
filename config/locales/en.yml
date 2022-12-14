@@ -449,6 +449,7 @@ en:
       service_updates: News and updates
       organisations: Choose organisation
     filter:
+      academic_year: Academic year
       level: Education phase
       provider: Provider
       record_source: Record source

@@ -80,6 +80,7 @@ private
       :end_year,
       :sort_by,
       {
+        academic_year: [],
         level: [],
         training_route: [],
         status: [],
