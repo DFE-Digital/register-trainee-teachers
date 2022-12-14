@@ -218,8 +218,8 @@ class Trainee < ApplicationRecord
 
   scope :imported_from_hesa_trn_data, -> { where(record_source: RecordSources::HESA_TRN_DATA) }
 
-  scope :complete_for_filter, -> { where(submission_ready: true).or(where(state: COMPLETE_STATES)).or(where(id: imported_from_hesa)) }
-  scope :incomplete_for_filter, -> { where.not(id: complete_for_filter) }
+  scope :complete, -> { where(submission_ready: true).or(where(state: COMPLETE_STATES)) }
+  scope :incomplete, -> { where.not(id: complete) }
 
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
 

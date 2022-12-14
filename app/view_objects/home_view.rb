@@ -112,7 +112,7 @@ private
 
   def incomplete_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/incomplete_size") do
-      trainees.not_draft.incomplete_for_filter.size
+      trainees.not_draft.incomplete.size
     end
   end
 

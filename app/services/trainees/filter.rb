@@ -131,9 +131,9 @@ module Trainees
       return trainees if record_completion.blank? || record_completion.size > 1
 
       if record_completion.include?("complete")
-        trainees.complete_for_filter
+        trainees.complete
       else
-        trainees.incomplete_for_filter
+        trainees.incomplete
       end
     end
 
