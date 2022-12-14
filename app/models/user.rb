@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include Discard::Model
+  include PgSearch::Model
 
   has_many :provider_users, inverse_of: :user
   has_many :providers, through: :provider_users
@@ -22,6 +23,11 @@ class User < ApplicationRecord
   validate do |record|
     EmailFormatValidator.new(record).validate
   end
+
+  pg_search_scope :search,
+                  against: %i[first_name last_name email],
+                  associated_against: { providers: [:name], lead_schools: [:name] },
+                  using: { trigram: { word_similarity: true } }
 
   def name
     "#{first_name} #{last_name}"

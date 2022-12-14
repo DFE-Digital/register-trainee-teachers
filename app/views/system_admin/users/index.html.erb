@@ -17,18 +17,21 @@
     ) %>
     </p>
 
-    <div class="govuk-grid-row">
-      <div class ="govuk-grid-column-full">
-        <%= register_form_with url: users_path, method: :get do |f| %>
-          <%= f.govuk_text_field :search,
-                                 label: { text: "Search for a user"},
-                                 hint: { text: "Search using the person’s email address or surname", size: "s" },
-                                 value: params[:search],
-                                 width: "two-thirds" %>
-          <%= f.govuk_submit "Search", class: "submit-search" %>
-        <% end %>
-      </div>
-    </div>
+    <% if params[:search].present? %>
+      <h2 class="govuk-heading-m">Results for ‘<%= params[:search] %>’</h2>
+      <p class="govuk-body"><%= link_to "Clear search", users_path, class: "govuk-link govuk-link--no-visited-state" %></p>
+    <% end %>
+    <%= register_form_with url: users_path,
+                           method: :get,
+                           html: { data: { module: "app-users-autocomplete" } } do |f| %>
+      <%= f.govuk_text_field :search,
+                             label: { text: "Search for a user", size: "s" },
+                             hint: { text: "Search using the person’s name, email, provider or lead school", size: "s" },
+                             width: "one-half",
+                             "data-field" => "users-autocomplete" %>
+      <div id="users-autocomplete-element" class="govuk-!-width-one-half" data-field-name="search"></div>
+      <%= f.govuk_submit "Search", class: "submit-search app-no-js-only" %>
+    <% end %>
 
   <table class="govuk-table" summary="Users list">
     <thead class="govuk-table__head">

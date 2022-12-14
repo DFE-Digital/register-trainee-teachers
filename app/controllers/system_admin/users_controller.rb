@@ -43,11 +43,7 @@ module SystemAdmin
     end
 
     def filtered_users(users)
-      if params[:search]
-        users.where("last_name like ? or email like ?", "%#{params[:search]}%", "%#{params[:search]}%")
-      else
-        users
-      end
+      UserSearch.call(query: params[:search], scope: users).users
     end
   end
 end
