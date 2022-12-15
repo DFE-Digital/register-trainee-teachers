@@ -170,7 +170,7 @@ GEM
     cuprite (0.14.3)
       capybara (~> 3.0)
       ferrum (~> 0.13.0)
-    data_migrate (8.4.1)
+    data_migrate (8.4.2)
       activerecord (>= 5.0)
       railties (>= 5.0)
     debug (1.7.0)
