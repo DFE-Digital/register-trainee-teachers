@@ -5,6 +5,7 @@ module ApiRoutes
     router.instance_exec do
       namespace :api do
         resources :schools, only: :index
+        resources :users, only: :index
       end
     end
   end
