@@ -125,6 +125,42 @@ describe TrainingRouteManager do
     end
   end
 
+  describe "#requires_funding?", "feature_routes.iqts": true do
+    context "with an iqts trainee" do
+      let(:trainee) { build(:trainee, :iqts) }
+
+      it "returns false" do
+        expect(subject.requires_funding?).to be false
+      end
+    end
+
+    context "with a non iqts trainee" do
+      let(:trainee) { build(:trainee) }
+
+      it "returns true" do
+        expect(subject.requires_funding?).to be true
+      end
+    end
+  end
+
+  describe "#requires_iqts_country?", "feature_routes.iqts": true do
+    context "with an iqts trainee" do
+      let(:trainee) { build(:trainee, :iqts) }
+
+      it "returns true" do
+        expect(subject.requires_iqts_country?).to be true
+      end
+    end
+
+    context "with a non iqts trainee" do
+      let(:trainee) { build(:trainee) }
+
+      it "returns false" do
+        expect(subject.requires_iqts_country?).to be false
+      end
+    end
+  end
+
   describe "#early_years_route?" do
     context "non early years route" do
       let(:trainee) { build(:trainee, :school_direct_salaried) }

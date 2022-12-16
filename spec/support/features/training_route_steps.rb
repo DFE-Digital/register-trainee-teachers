@@ -46,6 +46,10 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:opt_in_undergrad])
     end
 
+    def given_i_have_created_an_iqts_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:iqts])
+    end
+
   private
 
     def choose_training_route_for(route)

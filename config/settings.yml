@@ -59,6 +59,7 @@ features:
     opt_in_undergrad: false
     hpitt_postgrad: false
     pg_teaching_apprenticeship: false
+    iqts: false
   google:
     send_data_to_big_query: false
   filters:

@@ -28,6 +28,14 @@
   </div>
 <% end %>
 
-<div class="funding">
-  <%= render Funding::View.new(data_model: @trainee, editable: trainee_editable?) %>
-</div>
+<% if @trainee.requires_funding? %>
+  <div class="funding">
+    <%= render Funding::View.new(data_model: @trainee, editable: trainee_editable?) %>
+  </div>
+<% end %>
+
+<% if @trainee.requires_iqts_country? %>
+  <div class="iqts_country">
+    <%= render IqtsCountry::View.new(data_model: @trainee, editable: trainee_editable?) %>
+  </div>
+<% end %>

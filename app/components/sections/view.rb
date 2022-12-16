@@ -72,6 +72,7 @@ module Sections
         schools: Schools::View,
         funding: Funding::View,
         trainee_data: ApplyApplications::TraineeData::View,
+        iqts_country: IqtsCountry::View,
       }[section]
     end
 
@@ -131,6 +132,12 @@ module Sections
           in_progress_invalid: "edit_trainee_apply_applications_trainee_data_path",
           in_progress_valid: "edit_trainee_apply_applications_trainee_data_path",
           review: "edit_trainee_apply_applications_trainee_data_path",
+        },
+        iqts_country: {
+          incomplete: "edit_trainee_iqts_country_path",
+          in_progress_invalid: "edit_trainee_iqts_country_path",
+          in_progress_valid: "trainee_iqts_country_confirm_path",
+          review: "trainee_iqts_country_confirm_path",
         },
       }[section][progress_status]
     end

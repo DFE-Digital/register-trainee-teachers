@@ -19,6 +19,7 @@ module PageObjects
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
       section :funding_section, PageObjects::Sections::Funding, ".app-task-list__item.funding"
       section :lead_and_employing_schools_section, PageObjects::Sections::SchoolsDetails, ".app-task-list__item.school-details"
+      section :iqts_country_section, PageObjects::Sections::IqtsCountry, ".app-task-list__item.iqts-country-details"
 
       element :review_this_record_link, "#check-details"
       element :delete_this_draft_link, ".app-link--warning"

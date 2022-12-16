@@ -12,6 +12,7 @@ module FormComponents
       def default_html_attributes
         {
           id: attribute_name.to_s,
+          class: "app-!-autocomplete--max-width-two-thirds",
           "data-module" => "app-country-autocomplete",
           "data-default-value" => (@raw_attribute_value || @attribute_value).to_s,
         }

@@ -2,7 +2,7 @@
 
 module PageObjects
   module Trainees
-    class EditTraineeFunding < PageObjects::Base
+    class EditFunding < PageObjects::Base
       set_url "/trainees/{trainee_id}/funding/training-initiative/edit"
 
       element :training_initiative_radios, ".govuk-radios"
