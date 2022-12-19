@@ -42,5 +42,18 @@ module Dqt
         }.to raise_error(DqtNoAwardDateError)
       end
     end
+
+    context "with a HESA trainee" do
+      let(:award_date) { Time.zone.today.iso8601 }
+
+      before do
+        allow(trainee).to receive(:hesa_record?).and_return(true)
+      end
+
+      it "sends the trainee to DQT" do
+        expect(RecommendForAward).to receive(:call)
+        described_class.perform_now(trainee)
+      end
+    end
   end
 end
