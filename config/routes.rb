@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
   resources :reports, only: :index do
     get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off", on: :collection
+    get "performance-profiles", to: "reports#performance_profiles", on: :collection
   end
 
   resources :trainees, except: :edit do

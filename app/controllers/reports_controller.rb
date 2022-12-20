@@ -2,8 +2,6 @@
 
 class ReportsController < BaseTraineeController
   include DateOfTheNthWeekdayHelper
-  include UsersHelper
-  include TraineeHelper
 
   def index
     authorize(current_user, :reports?)
@@ -11,35 +9,57 @@ class ReportsController < BaseTraineeController
 
   def itt_new_starter_data_sign_off
     authorize(current_user, :reports?)
-    set_instance_variables
+
     respond_to do |format|
       format.html do
+        @current_academic_cycle_label = AcademicCycle.current.label
+        @current_academic_cycle_start_year = AcademicCycle.current.start_year
+        @sign_off_url = Settings.sign_off_trainee_data_url
         @census_date = census_date(@current_academic_cycle_start_year).strftime("%d %B %Y")
       end
       format.csv do
         authorize(:trainee, :export?)
-        send_data(data_for_export, filename: filename, disposition: :attachment)
+        send_data(
+          Exports::ExportTraineesService.call(itt_new_starter_trainees),
+          filename: itt_new_starter_filename,
+          disposition: :attachment,
+        )
+      end
+    end
+  end
+
+  def performance_profiles
+    authorize(current_user, :reports?)
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        authorize(:trainee, :export?)
+        send_data(
+          Exports::ExportTraineesService.call(performance_profiles_trainees),
+          filename: performance_profiles_filename,
+          disposition: :attachment,
+        )
       end
     end
   end
 
 private
 
-  def set_instance_variables
-    @current_academic_cycle_label = AcademicCycle.current.label
-    @current_academic_cycle_start_year = AcademicCycle.current.start_year
-    @sign_off_url = Settings.sign_off_trainee_data_url
+  def itt_new_starter_trainees
+    policy_scope(FindNewStarterTrainees.new(census_date(AcademicCycle.current.start_year)).call)
   end
 
-  def data_for_export
-    @data_for_export ||= Exports::ExportTraineesService.call(
-      policy_scope(FindNewStarterTrainees.new(census_date(AcademicCycle.current.start_year)).call),
-    )
+  def performance_profiles_trainees
+    policy_scope(FindNewStarterTrainees.new(census_date(AcademicCycle.current.start_year)).call)
   end
 
-  def filename
-    current_time = Time.zone.now
-    "#{current_time.strftime('%F_%H_%M_%S')}_New-trainees-#{AcademicCycle.current.start_year}-#{AcademicCycle.current.end_year}-sign-off-Register-trainee-teachers_exported_records.csv"
+  def itt_new_starter_filename
+    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_New-trainees-#{AcademicCycle.current.label.parameterize}-#{AcademicCycle.current.end_year}-sign-off-Register-trainee-teachers_exported_records.csv"
+  end
+
+  def performance_profiles_filename
+    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_Performance-profiles-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
   def census_date(year)
