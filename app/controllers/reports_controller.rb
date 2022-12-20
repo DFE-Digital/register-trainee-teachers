@@ -14,9 +14,8 @@ class ReportsController < BaseTraineeController
 
     respond_to do |format|
       format.html do
-        @current_academic_cycle_start_year = AcademicCycle.current.start_year
         @sign_off_url = Settings.sign_off_trainee_data_url
-        @census_date = census_date(@current_academic_cycle_start_year).strftime("%d %B %Y")
+        @census_date = census_date(current_academic_cycle_start_year).strftime("%d %B %Y")
       end
       format.csv do
         authorize(:trainee, :export?)
@@ -34,7 +33,7 @@ class ReportsController < BaseTraineeController
 
     respond_to do |format|
       format.html do
-        @sign_off_date = Date.new(AcademicCycle.current.end_year, 1, 31).strftime("%d %B %Y")
+        @sign_off_date = Date.new(current_academic_cycle.end_year, 1, 31).strftime("%d %B %Y")
       end
       format.csv do
         authorize(:trainee, :export?)
@@ -50,15 +49,15 @@ class ReportsController < BaseTraineeController
 private
 
   def itt_new_starter_trainees
-    policy_scope(FindNewStarterTrainees.new(census_date(AcademicCycle.current.start_year)).call)
+    policy_scope(FindNewStarterTrainees.new(census_date(current_academic_cycle_start_year)).call)
   end
 
   def performance_profiles_trainees
-    policy_scope(FindNewStarterTrainees.new(census_date(AcademicCycle.current.start_year)).call)
+    policy_scope(FindNewStarterTrainees.new(census_date(current_academic_cycle_start_year)).call)
   end
 
   def itt_new_starter_filename
-    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_New-trainees-#{AcademicCycle.current.label.parameterize}-#{AcademicCycle.current.end_year}-sign-off-Register-trainee-teachers_exported_records.csv"
+    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_New-trainees-#{current_academic_cycle_start_year}-#{current_academic_cycle.end_year}-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
   def performance_profiles_filename
@@ -70,7 +69,19 @@ private
   end
 
   def set_year_labels
-    @current_academic_cycle_label = AcademicCycle.current.label
-    @previous_academic_cycle_label = AcademicCycle.previous.label
+    @current_academic_cycle_label = current_academic_cycle.label
+    @previous_academic_cycle_label = previous_academic_cycle.label
+  end
+
+  def current_academic_cycle
+    @current_academic_cycle ||= AcademicCycle.current
+  end
+
+  def current_academic_cycle_start_year
+    @current_academic_cycle_start_year ||= current_academic_cycle.start_year
+  end
+
+  def previous_academic_cycle
+    @previous_academic_cycle ||= AcademicCycle.previous
   end
 end
