@@ -6,7 +6,7 @@ class OtpVerificationsForm
 
   validate :cool_down?
   validates :code, presence: true
-  validate :correct_code?
+  validate :code_is_correct?
 
   def initialize(session:, code:)
     @session = session
@@ -22,21 +22,20 @@ private
 
   attr_reader :session, :code, :user, :salt, :attempts, :last_attempt
 
-  def correct_code?
-    return @correct_code if defined?(@correct_code)
-
-    # 600 = 10 mins validity
-    @correct_code = if user && totp.verify(code, drift_behind: 600).present?
-                      true
-                    else
-                      errors.add(:code, :invalid_code)
-                      false
-                    end
+  # 600 = 10 mins validity
+  def code_is_correct?
+    unless user && totp.verify(code, drift_behind: 600).present?
+      errors.add(:code, :invalid_code)
+    end
   end
 
   def cool_down?
+    # Add error message if the user has not yet reached their
+    # cool off time.
     if Time.zone.now < (last_attempt + cool_down_time)
       errors.add(:code, cool_down_message)
+    # Otherwise incement their attempts and reset the last attempt
+    # if they submitted a code
     elsif code.present?
       session[:otp_attempts] += 1
       session[:otp_last_attempt] = Time.zone.now

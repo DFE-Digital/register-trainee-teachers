@@ -31,6 +31,13 @@ class OtpSignInUser
     session.destroy
   end
 
+  def user
+    @user ||= User.kept.find_by(
+      "LOWER(email) = ?",
+      email.downcase,
+    )
+  end
+
   def end_session!
     session.destroy
   end

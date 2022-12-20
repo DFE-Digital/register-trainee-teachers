@@ -1626,12 +1626,12 @@ en:
         otp_form:
           attributes:
             email:
-              blank: You must provide an email
+              blank: Enter your email address
         otp_verifications_form:
           attributes:
             code:
-              blank: You must provide a code
-              invalid_code: The code is either expired or incorrect
+              blank: Enter the code from your email
+              invalid_code: The code is incorrect or has expired
   page_headings:
     start_page: Register trainee teachers
   service_updates:

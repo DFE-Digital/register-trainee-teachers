@@ -46,30 +46,14 @@ private
   end
 
   def current_user
-    return unless sign_in_user
+    return @current_user if defined?(@current_user)
 
-    @current_user ||= begin
-      user = lookup_user_by_email || lookup_user_by_dfe_sign_in_uid
-      UserWithOrganisationContext.new(user:, session:) if user.present?
-    end
-  end
-
-  def lookup_user_by_dfe_sign_in_uid
-    return unless sign_in_user.try(:dfe_sign_in_uid)
-
-    User.kept.find_by(
-      "LOWER(dfe_sign_in_uid) = ?",
-      sign_in_user.dfe_sign_in_uid.downcase,
-    )
-  end
-
-  def lookup_user_by_email
-    return unless sign_in_user.try(:email)
-
-    User.kept.find_by(
-      "LOWER(email) = ?",
-      sign_in_user.email.downcase,
-    )
+    @current_user = if sign_in_user&.user&.present?
+                      UserWithOrganisationContext.new(
+                        user: sign_in_user.user,
+                        session: session,
+                      )
+                    end
   end
 
   def audit_user

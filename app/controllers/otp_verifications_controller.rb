@@ -7,6 +7,8 @@ class OtpVerificationsController < ApplicationController
   helper_method :otp_verifications_form
 
   def show
+    return redirect_to(otp_path) unless session[:otp_email]
+
     render("otp/verify")
   end
 
