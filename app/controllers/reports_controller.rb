@@ -3,6 +3,8 @@
 class ReportsController < BaseTraineeController
   include DateOfTheNthWeekdayHelper
 
+  before_action :set_year_labels
+
   def index
     authorize(current_user, :reports?)
   end
@@ -12,7 +14,6 @@ class ReportsController < BaseTraineeController
 
     respond_to do |format|
       format.html do
-        @current_academic_cycle_label = AcademicCycle.current.label
         @current_academic_cycle_start_year = AcademicCycle.current.start_year
         @sign_off_url = Settings.sign_off_trainee_data_url
         @census_date = census_date(@current_academic_cycle_start_year).strftime("%d %B %Y")
@@ -64,5 +65,10 @@ private
 
   def census_date(year)
     date_of_nth_weekday(10, year, 3, 2)
+  end
+
+  def set_year_labels
+    @current_academic_cycle_label = AcademicCycle.current.label
+    @previous_academic_cycle_label = AcademicCycle.previous.label
   end
 end

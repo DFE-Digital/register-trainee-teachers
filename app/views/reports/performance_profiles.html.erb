@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Export trainee data for the 2021 to 2022 academic year for performance profiles sign off") %>
+<%= render PageTitle::View.new(text: "Export trainee data for the #{@previous_academic_cycle_label} academic year for performance profiles sign off") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -10,7 +10,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
-      Trainees who studied in the 2021 to 2022 academic year
+      Trainees who studied in the <%= @previous_academic_cycle_label %> academic year
     </h1>
     <p class="govuk-body">
       You can use this report to help you sign off your data for the initial
@@ -28,7 +28,7 @@
         have been registered with the Department for Education
       </li>
       <li>
-        studied in the 2021 to 2022 academic year
+        studied in the <%= @previous_academic_cycle_label %> academic year
       </li>
     </ul>
 
@@ -40,7 +40,7 @@
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        all your 2020 to 2021 trainees are listed, including any who deferred or
+        all your <%= @previous_academic_cycle_label %> trainees are listed, including any who deferred or
         withdrew from the course
       </li>
       <li>

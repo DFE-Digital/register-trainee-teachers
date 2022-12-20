@@ -1,8 +1,8 @@
-<%= render PageTitle::View.new(text: "Export new trainee data for sign off for the 2022 to 2023 academic year") %>
+<%= render PageTitle::View.new(text: "Export new trainee data for sign off for the #{@current_academic_cycle_label} academic year") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
-    text: t("back"),
+    text: "Reports",
     href: reports_path,
     ) %>
 <% end %>
