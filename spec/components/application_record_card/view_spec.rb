@@ -125,6 +125,7 @@ module ApplicationRecordCard
           trainee_id: "132456",
           trn: "789456",
           trainee_start_date: DateTime.new(2020, 1, 2),
+          itt_end_date: DateTime.new(2022, 5, 30),
           provider: provider,
           state: state,
         )
@@ -168,6 +169,10 @@ module ApplicationRecordCard
 
       it "renders start_year" do
         expect(rendered_component).to have_text("Start year: 2019 to 2020")
+      end
+
+      it "renders end_year" do
+        expect(rendered_component).to have_text("End year: 2021 to 2022")
       end
 
       it "renders trainee name" do
