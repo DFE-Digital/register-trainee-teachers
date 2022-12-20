@@ -10,7 +10,7 @@ module ApplicationRecordCard
       double(UserWithOrganisationContext, system_admin?: false, lead_school?: false)
     end
     let(:trainee) { create(:trainee, first_names: nil, provider: provider, course_uuid: course.uuid, trainee_id: nil) }
-    let(:cycle) { create(:academic_cycle, cycle_year: 2019)}
+    let(:cycle) { create(:academic_cycle, cycle_year: 2019) }
 
     before do
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
