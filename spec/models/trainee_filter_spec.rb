@@ -5,7 +5,7 @@ require "rails_helper"
 describe TraineeFilter do
   let(:permitted_params) do
     ActionController::Parameters.new(params)
-    .permit(:provider, :start_year, :subject, :text_search, training_route: [], state: [], record_source: [], study_mode: [])
+    .permit(:provider, :start_year, :subject, :text_search, academic_year: [], training_route: [], state: [], record_source: [], study_mode: [])
   end
 
   subject { TraineeFilter.new(params: permitted_params) }
@@ -19,6 +19,10 @@ describe TraineeFilter do
   end
 
   describe "#filters" do
+    before do
+      create(:academic_cycle, :current)
+    end
+
     context "with fully valid parameters" do
       let(:params) do
         {
@@ -40,6 +44,15 @@ describe TraineeFilter do
 
       it "returns the provider from the DB" do
         expect(subject.filters).to eq({ "provider" => provider })
+      end
+    end
+
+    context "with academic years" do
+      let(:academic_year_filter) { "2021" }
+      let(:params) { { academic_year: [academic_year_filter] } }
+
+      it "applies the academic year" do
+        expect(subject.filters).to eq({ "academic_year" => [academic_year_filter] })
       end
     end
 

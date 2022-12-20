@@ -1,0 +1,21 @@
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+      <%= t('components.filter.academic_year') %>
+    </legend>
+    <div class="govuk-checkboxes govuk-checkboxes--small">
+        <% academic_cycle_options.map do |academic_year| %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag "academic_year[]",
+                              academic_year,
+                              checked?(filters, :academic_year, academic_year.to_s),
+                              id: "academic_year-#{academic_year}",
+                              class: "govuk-checkboxes__input" %>
+            <%= label_tag "academic_year-#{academic_year}",
+                          label_for("academic_year", academic_year),
+                          class: "govuk-label govuk-checkboxes__label" %>
+          </div>
+        <% end %>
+    </div>
+  </fieldset>
+</div>

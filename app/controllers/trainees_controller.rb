@@ -61,7 +61,7 @@ private
   end
 
   def trainee_search_scope
-    Trainee.includes(provider: [:courses]).where.not(state: "draft")
+    Trainee.includes({ provider: [:courses] }, :start_academic_cycle, :end_academic_cycle).where.not(state: "draft")
   end
 
   def export_results_path
@@ -80,6 +80,7 @@ private
       :end_year,
       :sort_by,
       {
+        academic_year: [],
         level: [],
         training_route: [],
         status: [],
