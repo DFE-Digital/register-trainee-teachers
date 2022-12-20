@@ -40,20 +40,20 @@ private
   end
 
   def sign_in_user
-    @sign_in_user ||=
-      DfESignInUser.load_from_session(session) ||
-        OtpSignInUser.load_from_session(session)
+    @sign_in_user ||= begin
+      dfe = DfESignInUser.load_from_session(session)
+      otp = OtpSignInUser.load_from_session(session)
+      dfe&.user ? dfe : otp
+    end
   end
 
   def current_user
-    return @current_user if defined?(@current_user)
-
-    @current_user = if sign_in_user&.user&.present?
-                      UserWithOrganisationContext.new(
-                        user: sign_in_user.user,
-                        session: session,
-                      )
-                    end
+    @current_user ||= if sign_in_user.try(:user)
+                        UserWithOrganisationContext.new(
+                          user: sign_in_user.user,
+                          session: session,
+                        )
+                      end
   end
 
   def audit_user

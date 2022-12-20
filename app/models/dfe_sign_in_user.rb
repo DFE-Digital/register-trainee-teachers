@@ -68,14 +68,14 @@ private
   def user_by_uid
     User.kept.find_by(
       "LOWER(dfe_sign_in_uid) = ?",
-      dfe_sign_in_uid.downcase,
+      dfe_sign_in_uid&.downcase,
     )
   end
 
   def user_by_email
     User.kept.find_by(
       "LOWER(email) = ?",
-      email.downcase,
+      email&.downcase,
     )
   end
 

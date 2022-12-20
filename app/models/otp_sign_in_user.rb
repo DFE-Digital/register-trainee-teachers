@@ -34,7 +34,7 @@ class OtpSignInUser
   def user
     @user ||= User.kept.find_by(
       "LOWER(email) = ?",
-      email.downcase,
+      email&.downcase,
     )
   end
 

@@ -12,6 +12,6 @@ PERSONAS = [
   { first_name: "Denise", last_name: "Theominis", email: "denise_theominis@example.org", provider: PROVIDER_B, system_admin: false, lead_school: true },
   { first_name: "Emma", last_name: "Smith", email: "emma_smith@example.org", provider: PROVIDER_C, system_admin: false, lead_school: true },
   { first_name: "Emma", last_name: "Smith", email: "emma_smith@example.org", provider: PROVIDER_C, system_admin: false, lead_school: true },
-].concat([(DEVELOPER_PERSONA if defined?(DEVELOPER_PERSONA))]).freeze
+].concat([(DEVELOPER_PERSONA if defined?(DEVELOPER_PERSONA))]).compact.freeze
 
 PERSONA_EMAILS = PERSONAS.map { |persona| persona[:email] }

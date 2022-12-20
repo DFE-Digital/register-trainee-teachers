@@ -5,12 +5,12 @@ require "rails_helper"
 module DfESignInUsers
   describe Update do
     describe ".call" do
-      let(:service) { described_class.call(user:, dfe_sign_in_user:) }
+      let(:service) { described_class.call(user:, sign_in_user:) }
 
       context "when user details are valid" do
         let(:user) { create(:user) }
 
-        let(:dfe_sign_in_user) do
+        let(:sign_in_user) do
           template = build(:user)
           DfESignInUser.new(email: template.email,
                             dfe_sign_in_uid: template.dfe_sign_in_uid,
@@ -24,10 +24,10 @@ module DfESignInUsers
         end
 
         it "updates the user's details" do
-          expect(user.email).to eq(dfe_sign_in_user.email)
-          expect(user.dfe_sign_in_uid).to eq(dfe_sign_in_user.dfe_sign_in_uid)
-          expect(user.first_name).to eq(dfe_sign_in_user.first_name)
-          expect(user.last_name).to eq(dfe_sign_in_user.last_name)
+          expect(user.email).to eq(sign_in_user.email)
+          expect(user.dfe_sign_in_uid).to eq(sign_in_user.dfe_sign_in_uid)
+          expect(user.first_name).to eq(sign_in_user.first_name)
+          expect(user.last_name).to eq(sign_in_user.last_name)
         end
 
         it "is successful" do
@@ -38,7 +38,7 @@ module DfESignInUsers
       context "when user details are valid but name and email address don't match" do
         let(:user) { create(:user) }
 
-        let(:dfe_sign_in_user) do
+        let(:sign_in_user) do
           template = build(:user)
           DfESignInUser.new(email: template.email,
                             dfe_sign_in_uid: user.dfe_sign_in_uid,
@@ -52,10 +52,10 @@ module DfESignInUsers
         end
 
         it "updates the user's details" do
-          expect(user.email).to eq(dfe_sign_in_user.email)
-          expect(user.dfe_sign_in_uid).to eq(dfe_sign_in_user.dfe_sign_in_uid)
-          expect(user.first_name).to eq(dfe_sign_in_user.first_name)
-          expect(user.last_name).to eq(dfe_sign_in_user.last_name)
+          expect(user.email).to eq(sign_in_user.email)
+          expect(user.dfe_sign_in_uid).to eq(sign_in_user.dfe_sign_in_uid)
+          expect(user.first_name).to eq(sign_in_user.first_name)
+          expect(user.last_name).to eq(sign_in_user.last_name)
         end
 
         it "is successful" do
@@ -66,7 +66,7 @@ module DfESignInUsers
       context "when the user's details are invalid" do
         let(:user) { create(:user) }
 
-        let(:dfe_sign_in_user) do
+        let(:sign_in_user) do
           DfESignInUser.new(email: nil,
                             dfe_sign_in_uid: nil,
                             first_name: nil,
@@ -79,10 +79,10 @@ module DfESignInUsers
         end
 
         it "does not update the user's details" do
-          expect(user.email).not_to eq(dfe_sign_in_user.email)
-          expect(user.dfe_sign_in_uid).not_to eq(dfe_sign_in_user.dfe_sign_in_uid)
-          expect(user.first_name).not_to eq(dfe_sign_in_user.first_name)
-          expect(user.last_name).not_to eq(dfe_sign_in_user.last_name)
+          expect(user.email).not_to eq(sign_in_user.email)
+          expect(user.dfe_sign_in_uid).not_to eq(sign_in_user.dfe_sign_in_uid)
+          expect(user.first_name).not_to eq(sign_in_user.first_name)
+          expect(user.last_name).not_to eq(sign_in_user.last_name)
         end
 
         it "is unsuccessful" do
