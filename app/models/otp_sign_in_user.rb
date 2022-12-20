@@ -9,12 +9,12 @@ class OtpSignInUser
 
   def self.begin_session!(session)
     session["otp_sign_in_user"] = {
-      email: session[:email],
+      email: session[:otp_email],
       last_active_at: Time.zone.now,
     }.with_indifferent_access
 
-    session.delete(:email)
-    session.delete(:salt)
+    session.delete(:otp_email)
+    session.delete(:otp_salt)
   end
 
   def self.load_from_session(session)

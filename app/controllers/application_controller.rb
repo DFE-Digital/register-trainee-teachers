@@ -55,7 +55,7 @@ private
   end
 
   def lookup_user_by_dfe_sign_in_uid
-    return if sign_in_user&.dfe_sign_in_uid.blank?
+    return unless sign_in_user.try(:dfe_sign_in_uid)
 
     User.kept.find_by(
       "LOWER(dfe_sign_in_uid) = ?",
@@ -64,7 +64,7 @@ private
   end
 
   def lookup_user_by_email
-    return if sign_in_user&.email.blank?
+    return unless sign_in_user.try(:email)
 
     User.kept.find_by(
       "LOWER(email) = ?",

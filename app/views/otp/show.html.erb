@@ -1,17 +1,34 @@
-<%= render PageTitle::View.new(i18n_key: "otp.show") %>
+<%= render PageTitle::View.new(i18n_key: "otp.show", has_errors: otp_form.errors.present?) %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: sign_in_path,
+  ) %>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_with url: otp_path do |f| %>
 
-      <span class="govuk-caption-l">Get a one-time password </span>
+    <div class="govuk-!-margin-bottom-0">
+      <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+        <% notification_banner.heading(text: 'DfE Sign-in is currently unavailable') %>
+      <% end %>
+    </div>
+
+    <%= register_form_with model: otp_form, url: otp_path do |f| %>
+      <%= f.govuk_error_summary %>
+
       <h1 class="govuk-heading-l">
-        Enter your email
+        Sign in
       </h1>
 
-      <%= f.govuk_text_field :email, width: 'one-half', label: { hidden: true } %>
+      <p class="govuk-body">
+        You need to request an email with a code to sign in.
+      </p>
 
-      <%= f.govuk_submit "Submit" %>
+      <%= f.govuk_text_field :email, type: :email, width: 'two-thirds', label: { text: "Email address", size: "s" } %>
+
+      <%= f.govuk_submit "Request code to sign in" %>
     <% end %>
   </div>
 </div>
