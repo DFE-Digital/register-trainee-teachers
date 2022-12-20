@@ -33,7 +33,9 @@ class ReportsController < BaseTraineeController
     authorize(current_user, :reports?)
 
     respond_to do |format|
-      format.html
+      format.html do
+        @sign_off_date = Date.new(AcademicCycle.current.end_year, 1, 31).strftime("%d %B %Y")
+      end
       format.csv do
         authorize(:trainee, :export?)
         send_data(
