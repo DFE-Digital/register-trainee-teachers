@@ -341,13 +341,12 @@ private
 
   def then_only_complete_records_are_visible
     expect(trainee_index_page).to have_text(full_name(@complete_trainee)) &
-      have_text(full_name(@incomplete_hesa_trainee)) &
       have_text(full_name(@incomplete_withdrawn_trainee))
   end
 
   def then_only_incomplete_records_are_visible
     expect(trainee_index_page).to have_text(full_name(@incomplete_trainee))
-    expect(trainee_index_page).not_to have_text(full_name(@incomplete_hesa_trainee))
+    expect(trainee_index_page).to have_text(full_name(@incomplete_hesa_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@incomplete_withdrawn_trainee))
   end
 

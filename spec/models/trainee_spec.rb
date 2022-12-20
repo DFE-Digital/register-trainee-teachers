@@ -155,6 +155,22 @@ describe Trainee do
         expect(described_class.course_not_yet_started).not_to include(draft_trainee, recommended_for_award_trainee_in_past)
       end
     end
+
+    describe ".complete" do
+      let!(:complete_trainee) { create(:trainee, :completed) }
+      let!(:incomplete_recommended_trainee) { create(:trainee, :recommended_for_award, :incomplete) }
+      let!(:incomplete_awarded_trainee) { create(:trainee, :awarded, :incomplete) }
+      let!(:incomplete_withdrawn_trainee) { create(:trainee, :withdrawn, :incomplete) }
+      let!(:incomplete_trn_received) { create(:trainee, :trn_received, :incomplete) }
+
+      it "returns complete trainees, incomplete recommended trainees, incomplete awarded trainees, incomplete withdrawn trainees" do
+        expect(described_class.complete).to include(complete_trainee, incomplete_recommended_trainee, incomplete_awarded_trainee, incomplete_withdrawn_trainee)
+      end
+
+      it "does not return incomplete trainees" do
+        expect(described_class.complete).not_to include(incomplete_trn_received)
+      end
+    end
   end
 
   context "associations" do

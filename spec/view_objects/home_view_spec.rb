@@ -200,8 +200,8 @@ describe HomeView do
     end
 
     describe "#incomplete_size" do
-      it "returns the same value as the #count of the ::not_draft and ::incomplete_for_filter scopes" do
-        expect(subject.send(:incomplete_size)).to eq(Trainee.not_draft.incomplete_for_filter.count)
+      it "returns the same value as the #count of the ::not_draft and ::incomplete scopes" do
+        expect(subject.send(:incomplete_size)).to eq(Trainee.not_draft.incomplete.count)
       end
     end
 
