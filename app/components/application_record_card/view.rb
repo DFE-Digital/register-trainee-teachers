@@ -79,6 +79,13 @@ module ApplicationRecordCard
       tag.p("Start year: #{academic_cycle.label}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__start_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")
     end
 
+    def end_year
+      academic_cycle = record.end_academic_cycle
+      return unless academic_cycle
+
+      tag.p("End year: #{academic_cycle.label}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__end_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")
+    end
+
     def show_provider
       current_user.system_admin? || current_user.lead_school?
     end
