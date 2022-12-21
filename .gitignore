@@ -65,4 +65,3 @@ bin/fetch_config.rb
 
 Procfile.dev
 missing-location-graph-from-dttp.json
-.env.test

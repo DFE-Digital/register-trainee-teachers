@@ -9,7 +9,7 @@ class OtpForm
   end
 
   def initialize(email)
-    @email = email
+    @email = email&.strip
   end
 
   attr_reader :email

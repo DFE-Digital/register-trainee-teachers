@@ -10,7 +10,8 @@ class OtpController < ApplicationController
   def create
     return render(:show) unless otp_form.valid?
 
-    email_otp! if user
+    store_session!
+    email_otp!
     redirect_to(otp_verifications_path)
   end
 
@@ -21,18 +22,26 @@ private
   end
 
   def email
-    @email ||= session[:otp_email] = params.dig(:otp_form, :email)&.strip
+    @email ||= params.dig(:otp_form, :email)
   end
 
   def user
-    @user ||= User.find_by(email:)
+    @user ||= User.find_by(email: otp_form.email)
+  end
+
+  def otp
+    @otp ||= ROTP::TOTP.new(user.otp_secret + session[:otp_salt], issuer: "Register")
+  end
+
+  def store_session!
+    session[:otp_email] = otp_form.email
+    session[:otp_salt] = ROTP::Base32.random(16)
   end
 
   def email_otp!
-    user.generate_otp_secret!
+    return unless user
 
-    salt = session[:otp_salt] = ROTP::Base32.random(16)
-    otp = ROTP::TOTP.new(user.otp_secret + salt, issuer: "Register")
+    user.generate_otp_secret!
 
     ::OtpMailer.generate(
       name: user.name,
