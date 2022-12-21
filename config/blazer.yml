@@ -4,3 +4,24 @@ data_sources:
   main:
     url: <%= Settings.blazer_database_url %>
 override_csp: true
+smart_variables:
+  state: {
+    0: "Deferred",
+    1: "Pending TRN",
+    2: "TRN Received",
+    3: "Recommended for award",
+    4: "Withdrawn",
+    5: "Deferred",
+    6: "Awarded"
+  }
+smart_columns:
+  end_academic_year: "SELECT extract(year FROM academic_cycles.start_date)::text || ' to ' || extract(year FROM academic_cycles.end_date)::text",
+  state: {
+    0: "Deferred",
+    1: "Pending TRN",
+    2: "TRN Received",
+    3: "Recommended for award",
+    4: "Withdrawn",
+    5: "Deferred",
+    6: "Awarded"
+  }
