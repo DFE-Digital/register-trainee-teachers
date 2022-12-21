@@ -13,7 +13,7 @@ module Funding
     def payment_schedule
       return if payment_schedules.blank?
 
-      @payment_schedule ||= payment_schedules.order(:created_at).last
+      @payment_schedule ||= payment_schedules.order(:created_at).includes(rows: :amounts).select { |schedule| schedule.start_year == current_academic_cycle.start_year }.last
     end
 
     def payment_schedules

@@ -3,6 +3,8 @@
 require "rails_helper"
 
 feature "viewing the payment schedule" do
+  let(:next_academic_cycle) { build(:academic_cycle, start_date: Time.zone.yesterday + 1.year, end_date: Time.zone.tomorrow + 1.year) }
+
   background do
     given_i_am_authenticated
     and_funding_data_exists
@@ -19,6 +21,13 @@ feature "viewing the payment schedule" do
     given_i_am_on_the_funding_page
     and_i_export_the_results
     then_i_see_my_exported_data_in_csv_format
+  end
+
+  scenario "no payments this academic year" do
+    allow(AcademicCycle).to receive(:current).and_return(next_academic_cycle)
+
+    given_i_am_on_the_funding_page
+    then_i_should_see_a_message_to_say_there_are_no_payments
   end
 
 private
@@ -39,6 +48,10 @@ private
 
   def then_i_should_see_the_actual_payments
     expect(payment_schedule_page.payments_table.rows.size).to eq(3) # 1 row is the header
+  end
+
+  def then_i_should_see_a_message_to_say_there_are_no_payments
+    expect(payment_schedule_page).to have_text("There are no scheduled payments right now.")
   end
 
   def and_i_should_see_the_predicted_payments
