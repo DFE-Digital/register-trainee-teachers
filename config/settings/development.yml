@@ -4,6 +4,7 @@ dttp:
 
 features:
   use_dfe_sign_in: false
+  otp_sign_in: true
   basic_auth: false
   import_courses_from_ttapi: true
   publish_course_details: true
