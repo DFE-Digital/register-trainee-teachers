@@ -35,6 +35,7 @@ class ReportsController < BaseTraineeController
     respond_to do |format|
       format.html do
         @sign_off_date = Date.new(@current_academic_cycle.end_year, 1, 31).strftime("%d %B %Y")
+        @sign_off_url = Settings.sign_off_performance_profiles_url
       end
 
       format.csv do
