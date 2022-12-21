@@ -7,12 +7,12 @@
 <ul class="govuk-list govuk-list--spaced">
   <li>
     <p>
-      <%= govuk_link_to "Export new trainee data for the #{@current_academic_cycle_label} academic year for sign off", itt_new_starter_data_sign_off_reports_path %>
+      <%= govuk_link_to "Export new trainee data for the #{@current_academic_cycle_label} academic year for sign off", itt_new_starter_data_sign_off_reports_path, class: "new-trainee-data" %>
     </p>
   </li>
   <li>
     <p>
-      <%= govuk_link_to "Export trainee data for the #{@previous_academic_cycle_label} academic year for performance profiles sign off", performance_profiles_reports_path %>
+      <%= govuk_link_to "Export trainee data for the #{@previous_academic_cycle_label} academic year for performance profiles sign off", performance_profiles_reports_path, class: "performance-profiles" %>
     </p>
   </li>
 </ul>

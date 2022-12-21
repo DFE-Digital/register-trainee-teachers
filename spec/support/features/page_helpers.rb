@@ -418,6 +418,14 @@ module Features
       @admin_uploads_show_page ||= PageObjects::SystemAdmin::Uploads::Show.new
     end
 
+    def reports_page
+      @reports_page ||= PageObjects::Reports::Index.new
+    end
+
+    def performance_profiles_page
+      @performance_profiles_page ||= PageObjects::Reports::PerformanceProfiles.new
+    end
+
   private
 
     def progress_with_prefix(status)
