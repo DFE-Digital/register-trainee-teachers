@@ -24,4 +24,6 @@ data_sources:
       5: "Deferred",
       6: "Awarded"
     }
+  linked_columns:
+    trainee: "/trainees/{value}"
 override_csp: true
