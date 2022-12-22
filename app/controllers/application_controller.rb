@@ -39,6 +39,7 @@ private
     end
   end
 
+  # TODO: leave comment or refactor to make less opaque
   def sign_in_user
     @sign_in_user ||= begin
       dfe = DfESignInUser.load_from_session(session)
