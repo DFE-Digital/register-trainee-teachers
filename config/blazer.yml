@@ -25,5 +25,5 @@ data_sources:
       6: "Awarded"
     }
   linked_columns:
-    trainee: "/trainees/{value}"
+    trainee_url: "/trainees/{value}"
 override_csp: true
