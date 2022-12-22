@@ -71,3 +71,15 @@ locals {
 
   azure_credentials = try(jsondecode(var.azure_credentials), null)
 }
+
+# Azure Resource Variables
+
+variable resource_group_name {}
+
+variable azure_resource_group_name {}
+
+variable azure_tempdata_storage_account_name {}
+
+variable azure_storage_account_replication_type { default = "LRS"}
+
+variable azure_region_name { default = "west europe" }

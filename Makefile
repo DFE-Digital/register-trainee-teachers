@@ -26,11 +26,15 @@ help:
 	@echo ""
 	@echo "        make review APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF PASSCODE=AUTHCODE"
 
+.PHONY: review
 review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a name for your review app))
 	$(eval DEPLOY_ENV=review)
 	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
 	$(eval export TF_VAR_paas_app_name=$(APP_NAME))
+	$(eval export TF_VAR_app_suffix=$(paas_env))
+	$(eval export TF_VAR_azure_resource_group_name=s121d01-reg-rv-$(APP_NAME)-rg)
+	$(eval export TF_VAR_azure_tempdata_storage_account_name=s121d01regrv$(subst -,,$(APP_NAME)))
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 	$(eval space=bat-qa)
 	$(eval paas_env=pr-$(APP_NAME))
@@ -105,13 +109,13 @@ print-infra-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
 
 deploy-plan: terraform-init
-	cd terraform && terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json
+	cd terraform && terraform plan -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=workspace-variables/$(DEPLOY_ENV)_backend.tfvars
 
 deploy: terraform-init
-	cd terraform && terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
+	cd terraform && terraform apply -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(AUTO_APPROVE)
 
 destroy: terraform-init
-	cd terraform && terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json $(AUTO_APPROVE)
+	cd terraform && terraform destroy -var-file=workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(AUTO_APPROVE)
 
 terraform-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=main))
