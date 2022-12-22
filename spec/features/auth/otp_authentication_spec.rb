@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe "A user authenticates via Email Sign-in" do
   before do
+    # This forces verification (which is tested in otp_verifications_form_spec) to return true
     allow_any_instance_of(OtpVerificationsForm).to receive(:code_is_correct?).and_return(nil)
   end
 

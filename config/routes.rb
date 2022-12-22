@@ -43,7 +43,7 @@ Rails.application.routes.draw do
 
   get "request-an-account", to: "request_an_account#index"
 
-  if FeatureService.enabled?("otp_sign_in")
+  if FeatureService.enabled?("use_otp_sign_in")
     resource :otp, only: %i[show create], controller: :otp, path: "request-sign-in-code"
     resource :otp_verifications, only: %i[show create], path: "sign-in-code"
   end

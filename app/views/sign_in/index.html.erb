@@ -20,7 +20,7 @@
       <%= render GovukButtonLinkTo::View.new(body: t(".persona_sign_in_button"), url: "/personas", class_option: "qa-sign_in_button") %>
     <% end %>
 
-    <% if FeatureService.enabled?("otp_sign_in") %>
+    <% if FeatureService.enabled?("use_otp_sign_in") %>
       <%= govuk_button_to(t(".otp_sign_in_button"), otp_path, method: :get, class: "qa-otp_sign_in_button") %>
     <% end %>
   </div>

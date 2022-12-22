@@ -38,7 +38,7 @@ features:
   use_dfe_sign_in: true
   enable_feedback_link: true
   basic_auth: true
-  otp_sign_in: false
+  use_otp_sign_in: false
   trainee_export: true
   import_applications_from_apply: false
   import_courses_from_ttapi: false
