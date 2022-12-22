@@ -43,10 +43,10 @@ private
 
     user.generate_otp_secret!
 
-    # ::OtpMailer.generate(
-    #   name: user.name,
-    #   email: user.email,
-    #   code: otp.now,
-    # ).deliver_later
+    ::OtpMailer.generate(
+      name: user.name,
+      email: user.email,
+      code: otp.now,
+    ).deliver_later
   end
 end

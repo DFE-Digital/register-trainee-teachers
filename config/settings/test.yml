@@ -19,3 +19,8 @@ environment:
 
 trainee_export:
   record_limit: 100
+
+govuk_notify:
+  api_key: please_change_me
+  welcome_email_template_id: test-uuid
+  otp_email_template_id: test-uuid
