@@ -39,17 +39,18 @@ private
     end
   end
 
-  # TODO: leave comment or refactor to make less opaque
+  # dfe and otp objects can both be instantiated as `.begin_session!` will always create
+  # a session with a dfe/otp_sign_in_user hash regardless of there being a user/email.
+  # We only want to memoize the instance that resonds to #user hence the `.select`
   def sign_in_user
-    @sign_in_user ||= begin
-      dfe = DfESignInUser.load_from_session(session)
-      otp = OtpSignInUser.load_from_session(session)
-      dfe&.user ? dfe : otp
-    end
+    @sign_in_user ||= [
+      DfESignInUser.load_from_session(session),
+      OtpSignInUser.load_from_session(session),
+    ].select { _1.try(:user) }.first
   end
 
   def current_user
-    @current_user ||= if sign_in_user.try(:user)
+    @current_user ||= if sign_in_user
                         UserWithOrganisationContext.new(
                           user: sign_in_user.user,
                           session: session,

@@ -43,12 +43,10 @@ private
 
     user.generate_otp_secret!
 
-    unless Rails.env.test?
-      ::OtpMailer.generate(
-        name: user.name,
-        email: user.email,
-        code: otp.now,
-      ).deliver_later
-    end
+    ::OtpMailer.generate(
+      name: user.name,
+      email: user.email,
+      code: otp.now,
+    ).deliver_later
   end
 end

@@ -3,9 +3,25 @@
 require "rails_helper"
 
 describe "A user authenticates via Email Sign-in" do
+  let!(:user) { create(:user, :with_otp_secret) }
+  let!(:salt) { ROTP::Base32.random(16) }
+  let!(:otp)  { ROTP::TOTP.new(user.otp_secret + salt, issuer: "Register") }
+  let!(:code) { otp.now }
+  let(:mailer) { double(:mailer, deliver_later: true) }
+
   before do
-    # This forces verification (which is tested in otp_verifications_form_spec) to return true
-    allow_any_instance_of(OtpVerificationsForm).to receive(:code_is_correct?).and_return(nil)
+    # rather than digging and finding the session[:otp_salt] we set it here
+    allow(ROTP::Base32).to receive(:random).with(16).and_return(salt)
+
+    # this means we can generate the OTP code in the test
+    allow(ROTP::TOTP).to receive(:new).with(user.otp_secret + salt, issuer: "Register").and_return(otp)
+
+    # and make sure the mailer is called with the correct OTP code
+    allow(OtpMailer).to receive(:generate).with(
+      name: user.name,
+      email: user.email,
+      code: code,
+    ).and_return(mailer)
   end
 
   scenario "signing in successfully", feature_use_otp_sign_in: true do
@@ -18,12 +34,7 @@ describe "A user authenticates via Email Sign-in" do
 
 private
 
-  def user
-    @user ||= create(:user)
-  end
-
   def given_i_am_registered_as_a_user
-    user
     visit "/sign-in"
     sign_in_page.otp_sign_in_button.click
   end
@@ -34,7 +45,7 @@ private
   end
 
   def and_enter_my_otp
-    otp_verification_page.code.fill_in(with: "1234")
+    otp_verification_page.code.fill_in(with: code)
     otp_verification_page.submit.click
   end
 
