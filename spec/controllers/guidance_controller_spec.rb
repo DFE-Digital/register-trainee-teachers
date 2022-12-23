@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe GuidanceController do
+  before { create(:academic_cycle, previous_cycle: true) }
+
   describe "#show" do
     it "returns a 200 status code" do
       get :show

@@ -5,7 +5,7 @@ module PageObjects
     class PerformanceProfiles < PageObjects::Base
       set_url "/reports/performance-profiles"
 
-      element :export_link, ".govuk-button", text: "Export new trainee data (CSV)"
+      element :export_link, ".govuk-button", text: "Export trainee data"
     end
   end
 end

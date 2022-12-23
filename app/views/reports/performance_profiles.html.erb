@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Export trainee data for the #{@previous_academic_cycle_label} academic year for performance profiles sign off") %>
+<%= render PageTitle::View.new(text: "Trainees who studied in the #{@previous_academic_cycle_label} academic") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -13,15 +13,15 @@
       Trainees who studied in the <%= @previous_academic_cycle_label %> academic year
     </h1>
     <p class="govuk-body">
-      You can use this report to help you sign off your data for the initial
-      teacher training (ITT) performance profiles publication.
+      Use this report to help you sign off your data for the initial teacher
+      training performance profiles publication.
     </p>
+
+    <h2 class="govuk-heading-m">
+      Which trainees are included in this report
+    </h2>
     <p class="govuk-body">
-      You must check it, fix any mistakes and sign it off by 4pm on
-      <%= @sign_off_date %>.
-    </p>
-    <p class="govuk-body">
-      This export includes all trainees who:
+      This report includes all trainees who:
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <li>
@@ -33,99 +33,15 @@
     </ul>
 
     <h2 class="govuk-heading-m">
-      Check your trainee data
+      How to use this report
     </h2>
     <p class="govuk-body">
-      You need to check that:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        all your <%= @previous_academic_cycle_label %> trainees are listed, including any who deferred or
-        withdrew from the course
-      </li>
-      <li>
-        the number of trainees awarded qualified teacher status (QTS) or early
-        years teacher status (EYTS) is accurate
-      </li>
-    </ul>
-    <p class="govuk-body">
-      For each trainee you need to check:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        course details
-      </li>
-      <li>
-        status
-      </li>
-      <li>
-        the date they were awarded QTS, deferred or withdrew from the course,
-        unless they are still studying
-      </li>
-    </ul>
-
-    <h2 class="govuk-heading-m">
-      Fix mistakes
-    </h2>
-    <p class="govuk-body">
-      If the trainee has been awarded or withdrawn, email
-      <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20">becomingateacher@digital.education.gov.uk</a>
-      .
+      You can read about
+      <a href=<%= performance_profiles_guidance_path %> class="govuk-link">how to check, fix and sign off your data</a>.
     </p>
     <p class="govuk-body">
-      If a trainee is still studying or has deferred, how you fix a mistake
-      depends on whether you registered the trainee using HESA or this service.
+      You must sign off your data by <%= @sign_off_date %> at 11:59pm.
     </p>
-
-    <h3 class="govuk-heading-s">
-      Trainees registered using HESA
-    </h3>
-    <p class="govuk-body">
-      TBD
-    </p>
-
-    <h3 class="govuk-heading-s">
-      Trainees registered using this service
-    </h3>
-    <p class="govuk-body">
-      If the trainee is still studying or has deferred, you should update their
-      details with the correct information.
-    </p>
-
-    <h2 class="govuk-heading-m">
-      Sign off your trainee data
-    </h2>
-    <p class="govuk-body">
-      Once you’ve checked your data, a senior person from your organisation
-      should sign it off
-      <a href=<%=@sign_off_url %> class="govuk-link" rel="noreferrer noopener" target="_blank">using this form (opens in a new tab)</a>
-      .
-    </p>
-    <p class="govuk-body">
-      You must sign off your data on or before <%= @sign_off_date %>.
-    </p>
-    <p class="govuk-body">
-      If you do not do this then your trainees may be excluded from the ITT
-      performance profiles publication.
-    </p>
-
-    <h2 class="govuk-heading-m">
-      How will trainee data be used in the ITT performance profiles publication
-    </h2>
-    <p class="govuk-body">
-      Some trainees listed in this export will not be included in the ITT
-      performance profiles publication. For example, trainees who withdrew
-      within 90 days of the course start will not be included.
-    </p>
-    <p class="govuk-body">
-      To find out how the data will be used, read the
-      <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-performance-profiles-methodology" class="govuk-link" rel="noreferrer noopener" target="_blank">Initial Teacher Training performance profiles methodology (opens in a new tab)</a>
-      .
-    </p>
-    <p class="govuk-body">
-      You need to check and sign off all the trainee data in the export.
-    </p>
-
-    <%= govuk_link_to "Export new trainee data (CSV)", performance_profiles_reports_path(:csv), class: "govuk-button" %>
+    <%= govuk_link_to "Export trainee data", performance_profiles_reports_path(:csv), class: "govuk-button" %>
   </div>
 </div>

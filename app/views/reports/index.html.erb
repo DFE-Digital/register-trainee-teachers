@@ -1,19 +1,29 @@
 <%= render PageTitle::View.new(text: "Reports") %>
 
-<h1 class="govuk-heading-l">
-    Reports
-</h1>
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+<% end %>
 
-<ul class="govuk-list govuk-list--spaced">
-  <li>
-    <p>
-      <%= govuk_link_to "Export new trainee data for the #{@current_academic_cycle_label} academic year for sign off", itt_new_starter_data_sign_off_reports_path, class: "new-trainee-data" %>
-    </p>
-  </li>
-  <li>
-    <p>
-      <%= govuk_link_to "Export trainee data for the #{@previous_academic_cycle_label} academic year for performance profiles sign off", performance_profiles_reports_path, class: "performance-profiles" %>
-    </p>
-  </li>
-</ul>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
 
+    <h1 class="govuk-heading-l">
+        Reports
+    </h1>
+
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <p>
+          <%= govuk_link_to "New trainees for the #{@current_academic_cycle_label} academic year", itt_new_starter_data_sign_off_reports_path, class: "new-trainee-data" %>
+          - for census sign off
+        </p>
+      </li>
+      <li>
+        <p>
+          <%= govuk_link_to "Trainees who studied in the #{@previous_academic_cycle_label} academic year", performance_profiles_reports_path, class: "performance-profiles" %>
+          - for performance profiles sign off
+        </p>
+      </li>
+    </ul>
+  </div>
+</div>
