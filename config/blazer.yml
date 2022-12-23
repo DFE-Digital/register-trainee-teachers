@@ -4,9 +4,28 @@ data_sources:
   main:
     url: <%= Settings.blazer_database_url %>
     smart_variables:
-      academic_year: "SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles"
-      start_academic_year: "SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles"
-      end_academic_year: "SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles"
+      year: {
+        'all years': "All years",
+        2013: "2013 to 2014",
+        2014: "2014 to 2015",
+        2015: "2015 to 2016",
+        2016: "2016 to 2017",
+        2017: "2017 to 2018",
+        2018: "2018 to 2019",
+        2019: "2019 to 2020",
+        2020: "2020 to 2021",
+        2021: "2021 to 2022",
+        2022: "2022 to 2023",
+        2023: "2023 to 2024",
+        2024: "2024 to 2025",
+        2025: "2025 to 2026",
+        2026: "2026 to 2027",
+        2027: "2027 to 2028"
+      }
+      academic_cycle: "SELECT -1,'All years'::text UNION SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles ORDER BY 2 DESC"
+      start_academic_cycle: "SELECT -1,'All years'::text UNION SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles ORDER BY 2 DESC"
+      end_academic_cycle: "SELECT -1,'All years'::text UNION SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles ORDER BY 2 DESC"
+      include_drafts: ['true', 'false']
       allocation_subject: "SELECT id, name FROM allocation_subjects ORDER BY name asc"
       state: {
         0: "Draft",
