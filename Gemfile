@@ -182,7 +182,7 @@ group :test do
 
   gem "shoulda-matchers", "~> 5.3"
   # Code coverage reporter
-  gem "simplecov", "~> 0.21.2", require: false
+  gem "simplecov", "~> 0.22.0", require: false
 
   # Page objects
   gem "site_prism", "~> 3.7"
