@@ -3,4 +3,97 @@
 data_sources:
   main:
     url: <%= Settings.blazer_database_url %>
+    smart_variables:
+      year: {
+        'all years': "All years",
+        2013: "2013 to 2014",
+        2014: "2014 to 2015",
+        2015: "2015 to 2016",
+        2016: "2016 to 2017",
+        2017: "2017 to 2018",
+        2018: "2018 to 2019",
+        2019: "2019 to 2020",
+        2020: "2020 to 2021",
+        2021: "2021 to 2022",
+        2022: "2022 to 2023",
+        2023: "2023 to 2024",
+        2024: "2024 to 2025",
+        2025: "2025 to 2026",
+        2026: "2026 to 2027",
+        2027: "2027 to 2028"
+      }
+      academic_cycle: "SELECT -1,'All years'::text UNION SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles ORDER BY 2 DESC"
+      start_academic_cycle: "SELECT -1,'All years'::text UNION SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles ORDER BY 2 DESC"
+      end_academic_cycle: "SELECT -1,'All years'::text UNION SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles ORDER BY 2 DESC"
+      include_drafts: ['true', 'false']
+      allocation_subject: "SELECT id, name FROM allocation_subjects ORDER BY name asc"
+      state: {
+        0: "Draft",
+        1: "Pending TRN",
+        2: "TRN Received",
+        3: "Recommended for award",
+        4: "Withdrawn",
+        5: "Deferred",
+        6: "Awarded"
+      }
+      training_route: {
+        0: "Assessment only",
+        1: "Provider led postgrad",
+        2: "Early years undergrad",
+        3: "School direct tuition fee",
+        4: "School direct salaried",
+        5: "PG teaching apprenticeship",
+        6: "Early years assessment only",
+        7: "Early years salaried",
+        8: "Early years postgrad",
+        9: "Provider led undergrad",
+        10: "Opt-in undergrad",
+        11: "HPITT postgrad",
+        12: "iQTS",
+      }
+    smart_columns:
+      course_uuid: "SELECT uuid, name || ' (' || code || ')' FROM courses WHERE uuid in {value}"
+      course_allocation_subject_id: "SELECT id, name FROM allocation_subjects WHERE id in {value}"
+      end_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
+      start_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
+      employing_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
+      lead_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
+      trainee_state: {
+        0: "Draft",
+        1: "Pending TRN",
+        2: "TRN Received",
+        3: "Recommended for award",
+        4: "Withdrawn",
+        5: "Deferred",
+        6: "Awarded"
+      }
+      trainee_study_mode: {
+        0: "Part time",
+        1: "Full time"
+      }
+      training_initiative: {
+        0: "Future teaching scholars",
+        1: "Maths physics chairs programme researchers in schools",
+        2: "Now teach",
+        3: "Transition to teach",
+        4: "No initiative",
+        5: "Troops to teachers"
+      }
+      training_route: {
+        0: "Assessment only",
+        1: "Provider led postgrad",
+        2: "Early years undergrad",
+        3: "School direct tuition fee",
+        4: "School direct salaried",
+        5: "PG teaching apprenticeship",
+        6: "Early years assessment only",
+        7: "Early years salaried",
+        8: "Early years postgrad",
+        9: "Provider led undergrad",
+        10: "Opt-in undergrad",
+        11: "HPITT postgrad",
+        12: "iQTS",
+      }
+    linked_columns:
+      slug: "/trainees/{value}"
 override_csp: true
