@@ -14,7 +14,7 @@ class OtpVerificationsController < ApplicationController
 
   def create
     if otp_verifications_form.valid?
-      ::OtpSignInUser.begin_session!(session)
+      OtpSignInUser.begin_session!(session)
       session[:otp_attempts] = 0
       redirect_to(root_path)
     else
@@ -25,7 +25,7 @@ class OtpVerificationsController < ApplicationController
 private
 
   def otp_verifications_form
-    @otp_verifications_form ||= ::OtpVerificationsForm.new(
+    @otp_verifications_form ||= OtpVerificationsForm.new(
       session:,
       code:,
     )

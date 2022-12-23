@@ -18,7 +18,7 @@ class OtpController < ApplicationController
 private
 
   def otp_form
-    @otp_form ||= ::OtpForm.new(email)
+    @otp_form ||= OtpForm.new(email)
   end
 
   def email
@@ -43,7 +43,7 @@ private
 
     user.generate_otp_secret!
 
-    ::OtpMailer.generate(
+    OtpMailer.generate(
       name: user.name,
       email: user.email,
       code: otp.now,
