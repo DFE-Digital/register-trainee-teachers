@@ -58,6 +58,7 @@ data_sources:
       start_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
       employing_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
       lead_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
+      provider_id: "SELECT id, name FROM providers WHERE id in {value}"
       trainee_state: {
         0: "Draft",
         1: "Pending TRN",
