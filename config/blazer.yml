@@ -4,7 +4,9 @@ data_sources:
   main:
     url: <%= Settings.blazer_database_url %>
     smart_variables:
-      academic_cycle: "SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles"
+      academic_year: "SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles"
+      start_academic_year: "SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles"
+      end_academic_year: "SELECT id, extract(year FROM start_date)::text || ' to ' || extract(year FROM end_date)::text FROM academic_cycles"
       allocation_subject: "SELECT id, name FROM allocation_subjects ORDER BY name asc"
       state: {
         0: "Draft",
