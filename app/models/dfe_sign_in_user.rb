@@ -59,7 +59,29 @@ class DfESignInUser
     end
   end
 
+  def user
+    @user ||= user_by_uid || user_by_email
+  end
+
 private
+
+  def user_by_uid
+    return if dfe_sign_in_uid.blank?
+
+    User.kept.find_by(
+      "LOWER(dfe_sign_in_uid) = ?",
+      dfe_sign_in_uid&.downcase,
+    )
+  end
+
+  def user_by_email
+    return if email.blank?
+
+    User.kept.find_by(
+      "LOWER(email) = ?",
+      email&.downcase,
+    )
+  end
 
   def signed_in_from_dfe?
     @provider == "dfe"

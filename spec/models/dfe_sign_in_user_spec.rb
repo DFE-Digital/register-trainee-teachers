@@ -8,7 +8,6 @@ describe DfESignInUser do
       session = { "dfe_sign_in_user" => { "last_active_at" => Time.zone.now } }
 
       user = DfESignInUser.load_from_session(session)
-
       expect(user).not_to be_nil
     end
 

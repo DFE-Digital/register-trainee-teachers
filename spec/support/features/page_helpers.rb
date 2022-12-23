@@ -118,6 +118,14 @@ module Features
       @sign_in_page ||= PageObjects::SignIn.new
     end
 
+    def otp_page
+      @otp_page ||= PageObjects::Otp.new
+    end
+
+    def otp_verification_page
+      @otp_verification_page ||= PageObjects::OtpVerification.new
+    end
+
     def not_found_page
       @not_found_page ||= PageObjects::NotFound.new
     end

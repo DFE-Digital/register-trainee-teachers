@@ -24,6 +24,8 @@ class User < ApplicationRecord
     EmailFormatValidator.new(record).validate
   end
 
+  encrypts :otp_secret
+
   pg_search_scope :search,
                   against: %i[first_name last_name email],
                   associated_against: { providers: [:name], lead_schools: [:name] },
@@ -35,6 +37,19 @@ class User < ApplicationRecord
 
   def active_user?
     User.kept.exists?(email:)
+  end
+
+  # This is used as a secret for this user to
+  # generate their OTPs, keep it private.
+  def generate_otp_secret
+    self.otp_secret = ROTP::Base32.random(16)
+  end
+
+  def generate_otp_secret!(regenerate: false)
+    return unless otp_secret.blank? || regenerate
+
+    generate_otp_secret
+    save!
   end
 
 private

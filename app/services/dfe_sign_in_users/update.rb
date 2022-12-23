@@ -8,17 +8,17 @@ module DfESignInUsers
 
     alias_method :successful?, :successful
 
-    def initialize(user:, dfe_sign_in_user:)
+    def initialize(user:, sign_in_user:)
       @user = user
 
       attributes = {
         last_signed_in_at: Time.zone.now,
-        email: dfe_sign_in_user.email,
-        dfe_sign_in_uid: dfe_sign_in_user.dfe_sign_in_uid,
+        email: sign_in_user.email,
+        dfe_sign_in_uid: sign_in_user.dfe_sign_in_uid,
       }
 
-      attributes[:first_name] = dfe_sign_in_user.first_name if dfe_sign_in_user.first_name.present?
-      attributes[:last_name] = dfe_sign_in_user.last_name if dfe_sign_in_user.last_name.present?
+      attributes[:first_name] = sign_in_user.first_name if sign_in_user.first_name.present?
+      attributes[:last_name] = sign_in_user.last_name if sign_in_user.last_name.present?
 
       @user.assign_attributes(attributes)
     end

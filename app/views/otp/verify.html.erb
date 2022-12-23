@@ -1,0 +1,28 @@
+<%= render PageTitle::View.new(i18n_key: "otp.verify", has_errors: otp_verifications_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: otp_path,
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with model: otp_verifications_form, url: otp_verifications_path, local: true do |f| %>
+      <%= f.govuk_error_summary %>
+      
+      <h1 class="govuk-heading-l">
+        Check your email
+      </h1>
+
+      <p class="govuk-body">
+        We’ve sent you an email with a sign in code.
+      </p>
+
+      <%= f.govuk_text_field :code, width: 'one-quarter', label: { text: "Sign in code", size: "s" }, inputmode: "numeric" %>
+
+      <%= f.govuk_submit "Sign in" %>
+    <% end %>
+  </div>
+</div>

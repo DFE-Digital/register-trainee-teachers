@@ -106,4 +106,10 @@ describe User do
       end
     end
   end
+
+  describe "#generate_otp_secret!" do
+    subject(:user) { create(:user) }
+
+    it { expect(user.generate_otp_secret!).not_to be_nil }
+  end
 end

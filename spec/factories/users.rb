@@ -29,5 +29,9 @@ FactoryBot.define do
       providers { [] }
       lead_schools { [] }
     end
+
+    trait :with_otp_secret do
+      after(:build, &:generate_otp_secret!)
+    end
   end
 end

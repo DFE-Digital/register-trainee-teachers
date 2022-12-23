@@ -43,6 +43,11 @@ Rails.application.routes.draw do
 
   get "request-an-account", to: "request_an_account#index"
 
+  if FeatureService.enabled?("use_otp_sign_in")
+    resource :otp, only: %i[show create], controller: :otp, path: "request-sign-in-code"
+    resource :otp_verifications, only: %i[show create], path: "sign-in-code"
+  end
+
   if FeatureService.enabled?("use_dfe_sign_in")
     get "/auth/dfe/callback" => "sessions#callback"
     get "/auth/dfe/sign-out" => "sessions#signout"

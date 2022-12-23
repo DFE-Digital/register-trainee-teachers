@@ -39,35 +39,23 @@ private
     end
   end
 
-  def dfe_sign_in_user
-    @dfe_sign_in_user ||= DfESignInUser.load_from_session(session)
+  # dfe and otp objects can both be instantiated as `.begin_session!` will always create
+  # a session with a dfe/otp_sign_in_user hash regardless of there being a user/email.
+  # We only want to memoize the instance that resonds to #user hence the `.select`
+  def sign_in_user
+    @sign_in_user ||= [
+      DfESignInUser.load_from_session(session),
+      OtpSignInUser.load_from_session(session),
+    ].select { _1.try(:user) }.first
   end
 
   def current_user
-    return if dfe_sign_in_user.blank?
-
-    @current_user ||= begin
-      user = lookup_user_by_dfe_sign_in_uid || lookup_user_by_email
-      UserWithOrganisationContext.new(user:, session:) if user.present?
-    end
-  end
-
-  def lookup_user_by_dfe_sign_in_uid
-    return nil if dfe_sign_in_user&.dfe_sign_in_uid.blank?
-
-    User.kept.find_by(
-      "LOWER(dfe_sign_in_uid) = ?",
-      dfe_sign_in_user.dfe_sign_in_uid.downcase,
-    )
-  end
-
-  def lookup_user_by_email
-    return nil if dfe_sign_in_user&.email.blank?
-
-    User.kept.find_by(
-      "LOWER(email) = ?",
-      dfe_sign_in_user.email.downcase,
-    )
+    @current_user ||= if sign_in_user
+                        UserWithOrganisationContext.new(
+                          user: sign_in_user.user,
+                          session: session,
+                        )
+                      end
   end
 
   def audit_user

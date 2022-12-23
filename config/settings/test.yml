@@ -6,6 +6,7 @@ slack:
   default_channel: "test-channel"
   webhook_url: "https://test-slack-webhook-url.com"
 features:
+  use_otp_sign_in: true
   basic_auth: false
   routes:
     school_direct_salaried: true
@@ -18,3 +19,8 @@ environment:
 
 trainee_export:
   record_limit: 100
+
+govuk_notify:
+  api_key: please_change_me
+  welcome_email_template_id: test-uuid
+  otp_email_template_id: test-uuid

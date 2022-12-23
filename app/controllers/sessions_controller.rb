@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])
 
     if current_user
-      DfESignInUsers::Update.call(user: current_user, dfe_sign_in_user: dfe_sign_in_user)
+      DfESignInUsers::Update.call(user: current_user, sign_in_user: sign_in_user)
       SendWelcomeEmailService.call(current_user:)
 
       redirect_to(login_redirect_path)

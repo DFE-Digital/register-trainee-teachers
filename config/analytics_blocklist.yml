@@ -260,6 +260,7 @@
   - last_name
   - email
   - read_only
+  - otp_secret
   :schools:
   - searchable
   :trainee_disabilities:

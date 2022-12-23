@@ -73,6 +73,10 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 
+# OTP Sign-in
+gem "base32"
+gem "rotp"
+
 # Full text search
 gem "pg_search", "~> 2.3"
 

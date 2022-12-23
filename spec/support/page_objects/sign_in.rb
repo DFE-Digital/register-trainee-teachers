@@ -7,5 +7,7 @@ module PageObjects
     element :page_heading, ".govuk-heading-l"
 
     element :sign_in_button, ".qa-sign_in_button"
+
+    element :otp_sign_in_button, ".qa-otp_sign_in_button"
   end
 end

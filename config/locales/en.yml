@@ -295,6 +295,9 @@ en:
       uploads:
         index: Uploads
         new: Upload a file
+      otp:
+        show: Sign in
+        verify: Check your email
       funding:
         trainee_summary: Funding - Trainee summary %{start_year} to %{end_year}
         payment_schedule: Funding - Payment schedule %{start_year} to %{end_year}
@@ -959,6 +962,7 @@ en:
       body: Use DfE Sign-in to access your account.
       dfe_sign_in_button: Sign in using DfE Sign-in
       persona_sign_in_button: Sign in using Persona
+      otp_sign_in_button: Sign in using your email
   errors:
     forbidden:
       heading: *forbidden
@@ -1619,6 +1623,15 @@ en:
           attributes:
             iqts_country:
               blank: Enter the country or territory the trainee is studying in
+        otp_form:
+          attributes:
+            email:
+              blank: Enter your email address
+        otp_verifications_form:
+          attributes:
+            code:
+              blank: Enter the code from your email
+              invalid_code: The code is incorrect or has expired
   page_headings:
     start_page: Register trainee teachers
   service_updates:
