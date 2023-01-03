@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :payment_schedule_row_amount, class: "Funding::PaymentScheduleRowAmount" do
     month { (1..12).to_a.sample }
-    year { Time.zone.now.year }
+    year { current_academic_year }
     amount_in_pence { Faker::Number.number(digits: 6) }
   end
 end
