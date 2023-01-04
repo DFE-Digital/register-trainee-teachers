@@ -9,16 +9,11 @@ module Trainees
     end
 
     def call
-      Dqt::WithdrawTraineeJob.perform_later(trainee) unless hesa_trainee?
-      true
+      Dqt::WithdrawTraineeJob.perform_later(trainee)
     end
 
   private
 
     attr_reader :trainee
-
-    def hesa_trainee?
-      trainee.hesa_record?
-    end
   end
 end

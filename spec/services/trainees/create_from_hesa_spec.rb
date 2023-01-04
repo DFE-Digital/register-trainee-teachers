@@ -31,6 +31,7 @@ module Trainees
 
     before do
       allow(Dqt::RegisterForTrnJob).to receive(:perform_later)
+      allow(Dqt::WithdrawTraineeJob).to receive(:perform_later)
       allow(Trainees::Update).to receive(:call).with(trainee: instance_of(Trainee))
       allow(Sentry).to receive(:capture_message)
       create(:nationality, name: nationality_name)
@@ -347,7 +348,7 @@ module Trainees
         let(:hesa_reasons_for_leaving_codes) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
         let(:existing_trn) { nil }
 
-        context "and the trainee did not complete the course" do
+        context "and the trainee did not complete the course", feature_integrate_with_dqt: true do
           let(:hesa_stub_attributes) do
             {
               trn: nil,
@@ -361,6 +362,10 @@ module Trainees
             expect(trainee.submitted_for_trn_at).not_to be_nil
             expect(trainee.withdraw_date).to eq(date)
             expect(trainee.withdraw_reason).to eq(WithdrawalReasons::DEATH)
+          end
+
+          it "enqueues Dqt::WithdrawTraineeJob" do
+            expect(Dqt::WithdrawTraineeJob).to have_received(:perform_later).with(trainee)
           end
         end
 
