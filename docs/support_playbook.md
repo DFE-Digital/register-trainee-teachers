@@ -39,7 +39,7 @@ end
 
 ## Error codes on DQT trainee jobs
 
-Sometimes the different jobs that send trainee info to DQT (such as `Dqt::UpdateTraineeJob`,`Dqt::WithdrawTraineeJob` and `Dqt::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI. 
+Sometimes the different jobs that send trainee info to DQT (such as `Dqt::UpdateTraineeJob`,`Dqt::WithdrawTraineeJob` and `Dqt::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI.
 
 Sometimes a trainee will have both a failed update job, and a failed award job. In this case, make sure to re-run the update job first. If you run the award job first and then try to run the update job, the update will fail as the trainee will already have QTS (and therefore can no longer be updated on DQT's end).
 
@@ -94,6 +94,7 @@ status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode"
 ```
 status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}
 ```
+
 * If this error came from the award job, then the trainee might be stuck in recommended for award state
 * If everything matches on DQT's side (trainee details, the provider) then you may be able to just award the trainee on Register's side
 * If any doubt then check with the provider
@@ -102,6 +103,7 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 ```
 “qualification.providerUkprn”:[“Organisation not found”]
 ```
+
 * We send the UKPRN of the trainee's degree institution to DQT
 * This error happens when DQT do not have a matching UKPRN on their end for the trainee's degree organisation
 * Locate the institution_uuid for the failing trainee and look up the UKPRN in the DfE Reference Data gem repo
@@ -110,14 +112,20 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 ```
 {"initialTeacherTraining.programmeType":["Teacher already has QTS/EYTS date"]}
 ```
+
 * We've noticed there is likely a race condition sometimes causing this error
 * When we run an award job, an update job is also kicked off
 * We think that sometimes the award job succeeds before the update job, which causes this error on the update job
 * Cross reference the trainee details on Register with the trainee details on DQT, you can use the DQT API for this - checking the trainee timeline on Register can also be helful
+
+  ```ruby
+  Dqt::RetrieveTeacher.call(trainee:)
+  ```
+
 * If there are no differences, it is likely a race condition and you can delete the failed update job
 * If there are differences, speak to DQT and maybe contact provider to see what needs updating
 
-### Dqt::RetrieveTrnJob for Trainee id: xxx has timed out after 4 days.
+### Dqt::RetrieveTrnJob for Trainee id: xxx has timed out after 4 days
 
 We see this error on slack when our polling job times out before we receive a
 TRN from DQT. The default time out is four days from the trainee's
@@ -174,3 +182,23 @@ Two issues are possible:
     ```ruby
     Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
     ```
+
+## Incorrectly awarded trainee
+
+If a trainee has incorrectly been recommended for award in register this will also impact DQT.
+
+In this scenario we must also contact DQT to fix the trainee award status and update the trainee status in register.
+
+```ruby
+trainee.update_columns(state: :trn_received, recommended_for_award_at: nil, awarded_at: nil)
+```
+
+The audit trail may also need to be cleaned up. This can be done by inspecting the last entries one-by-one and deleting any that not show an incorrect history.
+
+```ruby
+trainee.audits.last # check the last audit
+trainee.audits.last.destroy # if appropriate
+# repeat
+```
+
+Register support may need to communicate with the trainee and provider to ensure that they understand the error and the resolution.
