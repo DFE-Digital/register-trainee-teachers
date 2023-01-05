@@ -51,8 +51,8 @@ class AcademicCycle < ApplicationRecord
     end_date.year
   end
 
-  def label
-    "#{start_year} to #{start_year + 1}"
+  def label(text = " to ")
+    "#{start_year}#{text}#{start_year + 1}"
   end
 
   def current?

@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
   resources :reports, only: :index do
     get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off", on: :collection
+    get "performance-profiles", to: "reports#performance_profiles", on: :collection
   end
 
   resources :trainees, except: :edit do
@@ -173,6 +174,7 @@ Rails.application.routes.draw do
     get "/registering-trainees-through-hesa", to: "guidance#registering_trainees_through_hesa"
     get "/check-data", to: "guidance#check_data"
     get "/hesa-register-data-mapping/:tab", to: "guidance#hesa_register_data_mapping", as: "hesa_register_data_mapping"
+    get "/performance-profiles", to: "guidance#performance_profiles"
   end
 
   if FeatureService.enabled?("funding")

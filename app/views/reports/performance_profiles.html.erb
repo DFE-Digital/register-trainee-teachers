@@ -1,0 +1,47 @@
+<%= render PageTitle::View.new(text: "Trainees who studied in the #{@previous_academic_cycle_label} academic") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Reports",
+    href: reports_path,
+    ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">
+      Trainees who studied in the <%= @previous_academic_cycle_label %> academic year
+    </h1>
+    <p class="govuk-body">
+      Use this report to help you sign off your data for the initial teacher
+      training performance profiles publication.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Which trainees are included in this report
+    </h2>
+    <p class="govuk-body">
+      This report includes all trainees who:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        have been registered with the Department for Education
+      </li>
+      <li>
+        studied in the <%= @previous_academic_cycle_label %> academic year
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      How to use this report
+    </h2>
+    <p class="govuk-body">
+      You can read about
+      <a href=<%= performance_profiles_guidance_path %> class="govuk-link">how to check, fix and sign off your data</a>.
+    </p>
+    <p class="govuk-body">
+      You must sign off your data by <%= @sign_off_date %> at 11:59pm.
+    </p>
+    <%= govuk_link_to "Export trainee data", performance_profiles_reports_path(:csv), class: "govuk-button" %>
+  </div>
+</div>
