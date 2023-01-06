@@ -92,8 +92,13 @@ const setupAutoComplete = (form) => {
         },
         templates: renderTemplate,
         onConfirm: (value) => {
-          tracker.sendTrackingEvent(value, fieldName)
-          setSchoolHiddenField(value)
+          if (value?.id && element.dataset.systemAdminRedirectLeadSchool) {
+            window.location.assign(`/system-admin/lead-schools/${value.id}`);
+          }
+          else {
+            tracker.sendTrackingEvent(value, fieldName)
+            setSchoolHiddenField(value)
+          }
         },
         tNoResults: () => statusMessage
       })

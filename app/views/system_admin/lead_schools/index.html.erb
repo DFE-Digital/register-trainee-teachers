@@ -4,6 +4,25 @@
 
 <%= render "system_admin/tab_nav" %>
 
+<%= register_form_with url: lead_schools_path,
+                       local: true,
+                       method: :get,
+                       html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+  <%= f.hidden_field :lead_school_id, id: "school-id" %>
+  <%= f.govuk_text_field(
+    :query,
+    form_group: { class: "govuk-form-group app-js-only" },
+    label: { text: "Search for a lead school", size: "s" },
+    hint: { text: "Search for a school by its unique reference number (URN), name or postcode" },
+    value: params[:query],
+    "data-field" => "schools-autocomplete",
+    width: "three-quarters",
+  )%>
+  <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-schools=true
+      data-system-admin-redirect-lead-school="true"
+      data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_schools_form[query]"></div>
+<% end %>
+
 <table class="govuk-table" summary="Lead schools list">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
