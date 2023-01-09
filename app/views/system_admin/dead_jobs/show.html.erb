@@ -1,0 +1,41 @@
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: dead_jobs_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-two-thirds-from-desktop">
+    <%= render PageTitle::View.new(i18n_key: "dead_jobs.show") %>
+
+    <h1 class="govuk-heading-l"><%= dead_job_service.name %></h1>
+  </div>
+</div>
+
+<% if dead_job_service.count > 0 %>
+
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <% dead_job_service.headers&.each do |header| %>
+          <th scope="col" class="govuk-table__header"><%= header.to_s.humanize %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% dead_job_service.rows&.each do |row| %>
+        <tr class="govuk-table__row">
+          <% row.each do |data| %>
+            <td class="govuk-table__cell"><%= data[-1] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+
+  <p class="govuk-body">
+    There are no dead jobs
+  </p>
+
+<% end %>
