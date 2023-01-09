@@ -9,6 +9,7 @@ describe FindNewStarterTrainees do
   before do
     create(:academic_cycle)
     create(:academic_cycle, previous_cycle: true, id: 10)
+    allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
   end
 
   around do |example|

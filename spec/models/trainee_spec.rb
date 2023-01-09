@@ -248,8 +248,21 @@ describe Trainee do
   end
 
   context "callbacks" do
+    context "academic cycles" do
+      subject { create(:trainee, :submitted_for_trn) }
+
+      before do
+        allow(Trainees::SetAcademicCycles).to receive(:call).with(subject)
+      end
+
+      it "sets/recalculates the the start and end academic cycles" do
+        expect(Trainees::SetAcademicCycles).to receive(:call).with(trainee: subject)
+        subject.save
+      end
+    end
+
     describe "submission_ready" do
-      context "when complection is trackable" do
+      context "when completion is trackable" do
         subject { create(:trainee, :completed, :draft) }
 
         context "when trainee has not changed" do

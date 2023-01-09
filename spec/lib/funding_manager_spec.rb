@@ -178,6 +178,7 @@ describe FundingManager do
       let(:funding_manager) { described_class.new(trainee_without_start_dates) }
 
       before do
+        allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
         create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
       end
 

@@ -5,6 +5,10 @@ require "rails_helper"
 describe AcademicCycle do
   subject { build(:academic_cycle) }
 
+  before do
+    allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
+  end
+
   it { is_expected.to be_valid }
 
   describe "validations" do

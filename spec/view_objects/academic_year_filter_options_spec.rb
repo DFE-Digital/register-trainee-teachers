@@ -14,6 +14,10 @@ describe AcademicYearFilterOptions do
   let(:trainee_start_date) { current_academic_cycle.start_date + 1.day }
   let(:cycle_context) { :start_year }
 
+  before do
+    allow(Trainees::SetAcademicCycles).to receive(:call)
+  end
+
   context "non draft" do
     subject { described_class.new(user: current_user, draft: false).formatted_years(cycle_context) }
 

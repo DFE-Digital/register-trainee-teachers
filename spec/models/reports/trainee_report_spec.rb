@@ -5,7 +5,7 @@ require "rails_helper"
 describe Reports::TraineeReport do
   let(:current_cycle) { create(:academic_cycle, :current) }
   let(:next_cycle) { create(:academic_cycle, next_cycle: true) }
-  let!(:trainee) { create(:trainee, :for_export, course_uuid: create(:course).uuid) }
+  let(:trainee) { create(:trainee, :for_export, course_uuid: create(:course).uuid) }
   let(:degree) { subject.degree }
   let(:course) { subject.course }
 
@@ -346,6 +346,10 @@ describe Reports::TraineeReport do
   end
 
   describe "#academic_years" do
+    before do
+      allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
+    end
+
     context "with no end_academic_cycle set" do
       let!(:trainee) { create(:trainee, start_academic_cycle: current_cycle, end_academic_cycle: nil) }
 

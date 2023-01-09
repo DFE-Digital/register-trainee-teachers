@@ -11,6 +11,10 @@ module Trainees
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
 
+    before do
+      allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
+    end
+
     it { is_expected.to match_array(trainees) }
 
     context "when an empty trainee exists" do

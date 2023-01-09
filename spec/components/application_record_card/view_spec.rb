@@ -13,6 +13,7 @@ module ApplicationRecordCard
     let(:cycle) { create(:academic_cycle, cycle_year: 2019) }
 
     before do
+      allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
       allow(trainee).to receive(:timeline).and_return([double(date: Time.zone.now)])
       render_inline(described_class.new(record: trainee, current_user: current_user))
     end
