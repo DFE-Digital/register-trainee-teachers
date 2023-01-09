@@ -52,13 +52,26 @@ data_sources:
         12: "iQTS",
       }
     smart_columns:
+      # From https://github.com/DFE-Digital/register-trainee-teachers/blob/df3c3171bce938eca6f89e4ddf29beca6da0be56/app/models/trainee.rb#L128
+      course_education_phase: {
+        0: 'Primary',
+        1: 'Secondary',
+        2: 'Early years',
+      }
       course_uuid: "SELECT uuid, name || ' (' || code || ')' FROM courses WHERE uuid in {value}"
       course_allocation_subject_id: "SELECT id, name FROM allocation_subjects WHERE id in {value}"
-      end_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
-      start_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
+      # From https://github.com/DFE-Digital/register-trainee-teachers/blob/df3c3171bce938eca6f89e4ddf29beca6da0be56/app/models/trainee.rb#L96
+      disability_disclosure: {
+        0: 'Disabled',
+        1: 'No disability',
+        2: 'Not provided',
+      }
       employing_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
+      end_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
       lead_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
       provider_id: "SELECT id, name FROM providers WHERE id in {value}"
+      # From https://github.com/DFE-Digital/register-trainee-teachers/blob/df3c3171bce938eca6f89e4ddf29beca6da0be56/app/models/trainee.rb#L134
+      # Using 'trainee_state' rather than 'state' to avoid changing other columns that use the name 'state'
       trainee_state: {
         0: "Draft",
         1: "Pending TRN",
@@ -94,6 +107,30 @@ data_sources:
         10: "Opt-in undergrad",
         11: "HPITT postgrad",
         12: "iQTS",
+      }
+      # From https://github.com/DFE-Digital/register-trainee-teachers/blob/df3c3171bce938eca6f89e4ddf29beca6da0be56/app/models/trainee.rb#L81
+      sex: {
+        0: "Male",
+        1: "Female",
+        2: "Other",
+        3: "Sex not provided",
+        4: "Prefer not to say",
+      }
+      start_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
+      # From https://github.com/DFE-Digital/register-trainee-teachers/blob/df3c3171bce938eca6f89e4ddf29beca6da0be56/app/models/trainee.rb#L111
+      withdrawal_reason: {
+        0: "Unknown",
+        1: "For another reason",
+        2: "Death",
+        3: "Exclusion",
+        4: "Financial reasons",
+        5: "Gone into employment",
+        6: "Health reasons",
+        7: "Personal reasons",
+        8: "Transferred to another provdier",
+        9: "Written off after lapse of time",
+        10: "Did not pass assessment",
+        11: "Did not pass exams",
       }
     linked_columns:
       slug: "/trainees/{value}"
