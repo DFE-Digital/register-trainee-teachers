@@ -44,4 +44,15 @@ describe FindEmptyTrainees do
 
     it { is_expected.to match_array(draft_trainee_with_no_data) }
   end
+
+  context "for trainees with a trainee_id" do
+    # trainees with a trainee_id should not be classed as empty
+    let!(:draft_trainee_with_no_data) do
+      Trainee.create(provider: provider, training_route: TRAINING_ROUTE_ENUMS[:assessment_only], trainee_id: 1)
+    end
+
+    subject { described_class.call }
+
+    it { is_expected.to be_empty }
+  end
 end

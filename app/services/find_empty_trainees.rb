@@ -88,6 +88,7 @@ private
     # Finds all the draft trainees that do not have any degrees, disabilities and nationalities.
     trainees
       .draft
+      .where(trainee_id: nil)
       .includes(:degrees, :disabilities, :nationalities)
       .where(degrees: { id: nil }, disabilities: { id: nil }, nationalities: { id: nil })
       .where(empty_fields_query)
