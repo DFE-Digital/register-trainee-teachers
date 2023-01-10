@@ -15,8 +15,8 @@ module Dqt
       @trainee = trainee
       @timeout_after = timeout_after
 
-      if @timeout_after.nil?
-        @timeout_after = trainee.submitted_for_trn_at + Settings.jobs.max_poll_duration_days.days
+      if timeout_after.nil?
+        @timeout_after = Settings.jobs.max_poll_duration_days.days.from_now
         requeue
         return
       end
@@ -35,10 +35,6 @@ module Dqt
     attr_reader :trainee, :timeout_after
 
     def continue_waiting_for_trn?
-      if trainee.submitted_for_trn_at.nil?
-        raise(TraineeAttributeError, "Trainee#submitted_for_trn_at is nil - it should be timestamped (id: #{trainee.id})")
-      end
-
       Time.zone.now.utc < timeout_after
     end
 
