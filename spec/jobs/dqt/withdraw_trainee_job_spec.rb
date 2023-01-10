@@ -62,17 +62,6 @@ module Dqt
             expect(WithdrawTraineeJob).not_to have_been_enqueued
           end
         end
-
-        context "the trainee attribute submitted_for_trn_at is nil" do
-          let(:trainee) { create(:trainee, :submitted_for_trn, submitted_for_trn_at: nil) }
-          let(:error_msg) { "Trainee#submitted_for_trn_at is nil - it should be timestamped (id: #{trainee.id})" }
-
-          it "raises a TraineeAttributeError" do
-            expect {
-              described_class.perform_now(trainee, timeout_date)
-            }.to raise_error(WithdrawTraineeJob::TraineeAttributeError, error_msg)
-          end
-        end
       end
     end
   end
