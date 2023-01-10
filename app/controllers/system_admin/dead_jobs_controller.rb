@@ -2,10 +2,7 @@
 
 module SystemAdmin
   class DeadJobsController < ApplicationController
-    before_action :dead_job_services, only: :index
     helper_method :dead_job_service, :dead_job_services
-
-    def index; end
 
     def show
       respond_to do |format|

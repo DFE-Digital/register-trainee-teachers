@@ -14,6 +14,7 @@
 <% if dead_job_service.count > 0 %>
 
   <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m"><%= dead_job_service.name %></caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <% dead_job_service.headers&.each do |header| %>
