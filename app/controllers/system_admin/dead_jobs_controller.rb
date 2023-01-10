@@ -24,8 +24,8 @@ module SystemAdmin
         DeadJobs
           .constants
           # returns Array of DeadJob classes instances, e.g. [::DeadJobs::DqtUpdateTrainee, ...]
-          .select { (DeadJobs.const_get(_1).is_a?(Class) && _1 != :Base) }
-          .map { "::DeadJobs::#{_1}".constantize.new }
+          .select { |constant| (DeadJobs.const_get(constant).is_a?(Class) && constant != :Base) }
+          .map { |constant| "::DeadJobs::#{constant}".constantize.new }
     end
   end
 end
