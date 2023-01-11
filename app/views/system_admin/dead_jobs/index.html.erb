@@ -1,0 +1,50 @@
+<%= render PageTitle::View.new(i18n_key: "dead_jobs.index") %>
+
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-full">
+    <%= render "system_admin/tab_nav" %>
+
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m">Dead background Jobs</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">Count</th>
+        <th scope="col" class="govuk-table__header"></th>
+      </tr>
+    </thead>
+
+    <tbody class="govuk-table__body">
+      <% dead_job_services.each do |service| %>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__cell">
+            <%= service.name %>
+          </th>
+
+          <td class="govuk-table__cell">
+            <%= service.count %>
+          </td>
+
+          <td class="govuk-table__cell">
+            <% unless service.count.zero? %>
+              <%= render GovukButtonLinkTo::View.new(
+                body: "Download (.csv)",
+                url: dead_job_path(service.class, format: :csv),
+                class_option: "govuk-!-margin-bottom-0",
+              ) %>
+
+              <%= render GovukButtonLinkTo::View.new(
+                body: "View",
+                url: dead_job_path(service.class),
+                class_option: "govuk-!-margin-bottom-0",
+              ) %>
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+

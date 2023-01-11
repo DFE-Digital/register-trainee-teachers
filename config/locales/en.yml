@@ -295,6 +295,9 @@ en:
       uploads:
         index: Uploads
         new: Upload a file
+      dead_jobs:
+        index: Dead Jobs
+        show: Dead Jobs
       otp:
         show: Sign in
         verify: Check your email
