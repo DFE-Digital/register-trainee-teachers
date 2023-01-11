@@ -6,12 +6,16 @@
 <div class="govuk-grid-row">
   <div class ="govuk-grid-column-two-thirds-from-desktop">
     <%= render PageTitle::View.new(i18n_key: "dead_jobs.show") %>
-
-    <h1 class="govuk-heading-l"><%= dead_job_service.name %></h1>
   </div>
 </div>
 
-<% if dead_job_service.count > 0 %>
+<% if dead_job_service.count.zero? %>
+
+  <p class="govuk-body">
+    There are no dead jobs
+  </p>
+
+<% else %>
 
   <table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m"><%= dead_job_service.name %></caption>
@@ -32,11 +36,5 @@
       <% end %>
     </tbody>
   </table>
-
-<% else %>
-
-  <p class="govuk-body">
-    There are no dead jobs
-  </p>
 
 <% end %>

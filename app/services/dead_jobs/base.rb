@@ -2,6 +2,10 @@
 
 module DeadJobs
   class Base
+    def initialize(dead_set = Sidekiq::DeadSet.new)
+      @dead_set = dead_set
+    end
+
     def to_a
       @to_a ||= trainees.map do |trainee|
         {
@@ -17,10 +21,10 @@ module DeadJobs
     end
 
     # includes the error_message entry using `includes: ...`
-    def csv
-      @csv ||= CSV.generate do |csv|
-        csv << headers(includes: :error_message)
-        rows(includes: :error_message).each do |row|
+    def to_csv
+      @to_csv ||= CSV.generate do |csv|
+        csv << headers(includes: %i[error_message])
+        rows(includes: %i[error_message]).each do |row|
           csv << row.values
         end
       end
@@ -38,7 +42,7 @@ module DeadJobs
     # so as not to clutter the html view
     def rows(includes: [])
       to_a.map do |row|
-        row.slice(DEFAULT_HEADERS | includes)
+        row.slice(*(DEFAULT_HEADERS | includes))
       end
     end
 
@@ -46,17 +50,17 @@ module DeadJobs
       @name ||= identifier.underscore.humanize
     end
 
-    def identifier
-      @identifier ||= self.class.name.demodulize
-    end
-
     delegate :count, to: :dead_jobs
 
   private
 
+    attr_reader :dead_set
+
     DEFAULT_HEADERS = %i[register_id trainee_name trainee_trn trainee_dob provider_name provider_ukprn].freeze
 
-    attr_reader :with_errors, :with_params
+    def identifier
+      @identifier ||= self.class.name.demodulize
+    end
 
     def trainees
       Trainee.includes(:provider).find(dead_jobs.keys)
@@ -65,11 +69,10 @@ module DeadJobs
     # returns: [{ record_id => error_message }, ... ]
     def dead_jobs
       @dead_jobs ||=
-        Sidekiq::DeadSet
-        .new
+        dead_set
         .select { |job| job.item["wrapped"] == klass }
         .to_h do |job|
-          [job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i, parse_error(job["error_message"])]
+          [job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i, parse_error(job.item["error_message"])]
         end
     end
 
