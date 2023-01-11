@@ -1,11 +1,10 @@
-Support Playbook
-================
+# Support Playbook
 
 ## Making data changes
 
 If you're making a data change, try to include an `audit_comment` so that we can see why we did this. E.g
 
-```
+```ruby
 trainee.update(date_of_birth: <whatevs>, audit_comment: 'Update from the trainee via DQT')
 ```
 
@@ -13,7 +12,7 @@ trainee.update(date_of_birth: <whatevs>, audit_comment: 'Update from the trainee
 
 Sometimes support will ask a dev to update the training route. Here is an example for updating a route to `school_direct_salaried`.
 
-```
+```ruby
 trainee = Trainee.find_by(slug: "XXX")
 manager = RouteDataManager.new(trainee: trainee)
 manager.update_training_route!("school_direct_salaried")
@@ -48,13 +47,13 @@ in DQT.
 
 If the trainee has a TRN already, call this (where `t` is the trainee):
 
-```
+```ruby
 Dqt::RetrieveTeacher.call(trainee: t)
 ```
 
 If the trainee doens't have a TRN yet, call this instead:
 
-```
+```ruby
 Dqt::FindTeacher.call(trainee: t)
 ```
 
@@ -68,7 +67,7 @@ This is a cloud server error. You can usually just rerun these jobs and they'll 
 
 This is triggered when DQT cannot find the trainee on their side.
 
-```
+```json
 status: 404, body: {"title":"Teacher with specified TRN not found","status":404,"errorCode":10001}
 ```
 
@@ -82,7 +81,7 @@ Speak with the DQT team to work out if it's one of the above issues. Align the d
 
 This error means there is an unprocessable entry. This normally means there is some kind of validation error in the payload which will need to be investigated.
 
-```
+```json
 status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode":10006}
 ```
 
@@ -91,7 +90,7 @@ status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode"
 * We have some known examples of trainees like this so it's worth checking with our support team to see if there are existing comms about the trainee
 * In this case you might need to check with the provider what the state of the record should be
 
-```
+```json
 status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}
 ```
 
@@ -100,8 +99,8 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 * If any doubt then check with the provider
 * We've also seen this error on the withdraw job - cross-reference with DQT and check with provider if necessary to see what state the trainee should be in
 
-```
-“qualification.providerUkprn”:[“Organisation not found”]
+```json
+"qualification.providerUkprn":["Organisation not found"]
 ```
 
 * We send the UKPRN of the trainee's degree institution to DQT
@@ -109,7 +108,7 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 * Locate the institution_uuid for the failing trainee and look up the UKPRN in the DfE Reference Data gem repo
 * Send the UKPRN and degree institution details over to DQT so they can add on their side and re-run the job
 
-```
+```json
 {"initialTeacherTraining.programmeType":["Teacher already has QTS/EYTS date"]}
 ```
 
@@ -202,3 +201,33 @@ trainee.audits.last.destroy # if appropriate
 ```
 
 Register support may need to communicate with the trainee and provider to ensure that they understand the error and the resolution.
+
+## Managing the siqekiq queue
+
+### Console commands
+
+#### Inspect jobs in a queue
+
+```ruby
+dqt_queue = Sidekiq::Queue.new("dqt")
+dqt_queue.select { _1.value.include? "122803" } # select jobs containing user id value 122803
+```
+
+#### Tally by job type
+
+```ruby
+default_queue = Sidekiq::Queue.new("default")
+default_queue.map { _1["wrapped"] }.tally
+```
+
+#### Dead jobs
+
+```ruby
+ds = Sidekiq::DeadSet.new
+# unique user ids
+ds.map { _1.args[0]["arguments"][0]["_aj_globalid"].split("/").last }.uniq.count
+# eg count 405 errors
+ds.select { _1.item["error_message"].starts_with? "status: 405" }.count
+# retry
+ds.select { _1.item["error_message"].starts_with? "status: 405" }.map(&:retry)
+```
