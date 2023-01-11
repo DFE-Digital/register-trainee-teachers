@@ -12,7 +12,6 @@ module Trainees
 
         before do
           allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
-          allow(Trainees::SetAcademicCyclesJob).to receive(:perform_later)
         end
 
         it "updates the trainee" do
@@ -30,11 +29,6 @@ module Trainees
 
         it "does not queue a withdrawal to DQT when `withdrawal` option is not set" do
           expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later).with(trainee)
-          described_class.call(trainee:, params:)
-        end
-
-        it "queues a set academic cycles job" do
-          expect(Trainees::SetAcademicCyclesJob).to receive(:perform_later).with(trainee)
           described_class.call(trainee:, params:)
         end
 

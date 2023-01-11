@@ -40,6 +40,7 @@ module Trainees
     def call
       trainee.assign_attributes(mapped_attributes)
       Trainees::SetAcademicCycles.call(trainee:)
+
       # This must happen after we've determined the academic cycles since we
       # need to choose the course from the correct year.
       trainee.course_uuid = course_uuid

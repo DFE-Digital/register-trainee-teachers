@@ -123,6 +123,8 @@ gem "ruby-progressbar" # useful for tracking long running rake tasks
 # version is constrained due to azure-storage-common
 gem "faraday", "~> 1.10.2"
 
+gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
+
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
   gem "azure-storage-blob", "~> 2", require: false

@@ -255,6 +255,7 @@ class Trainee < ApplicationRecord
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
   before_save :clear_lead_school_id, if: :lead_school_not_applicable?
   before_save :set_submission_ready, if: :completion_trackable?
+  before_save :set_academic_cycles
 
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id:, placement_assignment_dttp_id:)
@@ -455,5 +456,9 @@ private
 
     submission_klass = validate_trn ? Submissions::TrnValidator : Submissions::MissingDataValidator
     self.submission_ready = submission_klass.new(trainee: self).valid?
+  end
+
+  def set_academic_cycles
+    Trainees::SetAcademicCycles.call(trainee: self)
   end
 end

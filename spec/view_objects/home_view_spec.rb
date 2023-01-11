@@ -11,6 +11,10 @@ describe HomeView do
 
   subject { described_class.new(trainees) }
 
+  before do
+    allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
+  end
+
   describe "#badges" do
     let(:not_started_trainee) { create(:trainee, :trn_received, itt_start_date: current_academic_cycle.end_date + 2.months) }
     let(:in_training_trainees) { create_list(:trainee, 2, :trn_received) }

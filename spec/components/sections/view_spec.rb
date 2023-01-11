@@ -10,6 +10,7 @@ module Sections
     end
 
     before do
+      allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
       create(:academic_cycle, :current)
       render_inline(trainees_sections_component)
     end
