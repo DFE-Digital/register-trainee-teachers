@@ -3,7 +3,7 @@ dqt:
 
 features:
   home_text: true
-  use_dfe_sign_in: false
+  sign_in_method: persona
   enable_feedback_link: true
   publish_course_details: true
   routes:

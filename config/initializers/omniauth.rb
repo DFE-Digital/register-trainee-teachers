@@ -2,7 +2,7 @@
 
 require_relative "../../app/services/feature_service"
 
-if FeatureService.enabled?("use_dfe_sign_in")
+if Settings.features.sign_in_method == "dfe"
 
   OmniAuth.config.logger = Rails.logger
 
@@ -32,7 +32,7 @@ if FeatureService.enabled?("use_dfe_sign_in")
 
   Rails.application.config.middleware.use(OmniAuth::Strategies::OpenIDConnect, options)
 
-else
+elsif Settings.features.sign_in_method == "persona"
 
   Rails.application.config.middleware.use(OmniAuth::Builder) do
     provider :developer,

@@ -30,7 +30,6 @@ RSpec.configure do |config|
   config.around do |example|
     original_features = {}
     features = example.metadata.keys.grep(/^feature_.*/)
-
     features.each do |metadata_key|
       feature = normalise_feature_name.call(metadata_key)
       if settings_has_key.call(feature)
@@ -38,6 +37,7 @@ RSpec.configure do |config|
       end
 
       set_feature.call(feature, example.metadata[metadata_key])
+      Rails.application.reload_routes!
     end
 
     example.run
@@ -45,6 +45,7 @@ RSpec.configure do |config|
     features.each do |metadata_key|
       feature = normalise_feature_name.call(metadata_key)
       set_feature.call(feature, original_features[feature])
+      Rails.application.reload_routes!
     end
   end
 end

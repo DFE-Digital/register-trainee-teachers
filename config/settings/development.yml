@@ -3,8 +3,7 @@ dttp:
   portal_host: traineeteacherportal-local.education.gov.uk
 
 features:
-  use_dfe_sign_in: false
-  use_otp_sign_in: true
+  sign_in_method: persona # "dfe", "persona", "otp"
   basic_auth: false
   import_courses_from_ttapi: true
   publish_course_details: true

@@ -35,10 +35,9 @@ dqt:
 features:
   home_text: false
   use_ssl: true
-  use_dfe_sign_in: true
+  sign_in_method: dfe
   enable_feedback_link: true
   basic_auth: true
-  use_otp_sign_in: false
   trainee_export: true
   import_applications_from_apply: false
   import_courses_from_ttapi: false

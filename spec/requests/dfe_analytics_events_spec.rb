@@ -44,7 +44,6 @@ describe "sending request events" do
   end
 
   after do
-    enable_features("use_dfe_sign_in")
     Rails.application.reload_routes!
   end
 
@@ -66,9 +65,9 @@ describe "sending request events" do
     end
   end
 
-  context "feature is disabled" do
+  context "feature is disabled", feature_sign_in_method: "persona" do
     before {
-      disable_features("google.send_data_to_big_query", "use_dfe_sign_in")
+      disable_features("google.send_data_to_big_query")
     }
 
     it "doesn't send to big query" do

@@ -43,18 +43,17 @@ Rails.application.routes.draw do
 
   get "request-an-account", to: "request_an_account#index"
 
-  if FeatureService.enabled?("use_otp_sign_in")
-    resource :otp, only: %i[show create], controller: :otp, path: "request-sign-in-code"
-    resource :otp_verifications, only: %i[show create], path: "sign-in-code"
-  end
-
-  if FeatureService.enabled?("use_dfe_sign_in")
-    get "/auth/dfe/callback" => "sessions#callback"
-    get "/auth/dfe/sign-out" => "sessions#signout"
-  else
-    get "/personas", to: "personas#index"
-    get "/auth/developer/sign-out", to: "sessions#signout"
-    post "/auth/developer/callback", to: "sessions#callback"
+  case Settings.features.sign_in_method
+  when "dfe"
+    get("/auth/dfe/callback" => "sessions#callback")
+    get("/auth/dfe/sign-out" => "sessions#signout")
+  when "otp"
+    resource(:otp, only: %i[show create], controller: :otp, path: "request-sign-in-code")
+    resource(:otp_verifications, only: %i[show create], path: "sign-in-code")
+  when "persona"
+    get("/personas", to: "personas#index")
+    get("/auth/developer/sign-out", to: "sessions#signout")
+    post("/auth/developer/callback", to: "sessions#callback")
   end
 
   concern :confirmable do

@@ -11,7 +11,7 @@ dqt:
 
 features:
   home_text: true
-  use_dfe_sign_in: false
+  sign_in_method: persona
   import_courses_from_ttapi: true
   publish_course_details: true
   course_study_mode: true
