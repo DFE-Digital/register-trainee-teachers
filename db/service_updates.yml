@@ -1,3 +1,10 @@
+- date: '2023-01-11'
+  title: Trainee list can now be filtered by academic year
+  content: |
+     You can now filter your list of registered trainees to show only those training in a specific academic year.
+     
+     Exported lists of trainees now include academic years.
+
 - date: '2022-10-25'
   title: Sign off deadline extended to 1 November 2022
   content: |
