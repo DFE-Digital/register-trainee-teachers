@@ -35,7 +35,7 @@ describe HomeView do
     end
 
     before do
-      allow(Trainee).to receive_message_chain(:course_not_yet_started, :count).and_return(1)
+      allow(Trainee).to receive_message_chain(:course_not_yet_started, :size).and_return(1)
     end
 
     it "returns correct counts and links" do
