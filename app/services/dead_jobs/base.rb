@@ -85,6 +85,8 @@ module DeadJobs
              .split(", headers:")
              .first,
       )
+    rescue JSON::ParserError
+      error
     end
   end
 end
