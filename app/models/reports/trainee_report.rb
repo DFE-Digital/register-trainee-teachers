@@ -78,17 +78,6 @@ module Reports
       }[trainee.bursary_tier]
     end
 
-    def course_award
-      return if trainee.course_uuid.blank? || course&.summary.blank?
-
-      case trainee.study_mode
-      when "part_time"
-        course.summary.gsub(/(full time)/i, "part time")
-      when "full_time"
-        course.summary.gsub(/(part time)/i, "full time")
-      end
-    end
-
     def course_education_phase
       return EARLY_YEARS_ROUTE_NAME_PREFIX.humanize if trainee.early_years_route?
 

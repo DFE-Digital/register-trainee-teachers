@@ -276,10 +276,6 @@ describe Reports::TraineeReport do
       expect(subject.course_duration_in_years).to eq(trainee.course_duration_in_years)
     end
 
-    it "includes the course_award" do
-      expect(subject.course_award).to end_with(trainee.study_mode.gsub("_", " "))
-    end
-
     it "includes the trainee_start_date" do
       expect(subject.trainee_start_date).to eq(trainee.trainee_start_date&.iso8601)
     end

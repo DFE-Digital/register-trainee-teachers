@@ -65,7 +65,6 @@ module Reports
          itt_start_date
          expected_end_date
          course_duration_in_years
-         course_award
          trainee_start_date
          lead_school_name
          lead_school_urn
@@ -179,7 +178,6 @@ module Reports
         trainee_report.itt_start_date,
         trainee_report.expected_end_date,
         trainee_report.course_duration_in_years,
-        trainee_report.course_award,
         trainee_report.trainee_start_date,
         trainee_report.lead_school_name,
         trainee_report.lead_school_urn,
