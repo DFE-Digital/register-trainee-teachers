@@ -11,6 +11,7 @@ module Trainees
     end
 
     def call
+      return :awarded if trainee.awarded?
       return :deferred if trainee_dormant? && !withdrawn?
       # If the trainee has completed the course, but the result is unknown we
       # do not know enough to transition their state. If it's the first time
