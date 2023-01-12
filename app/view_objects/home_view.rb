@@ -13,14 +13,14 @@ class HomeView
   Badge = Struct.new(:status, :trainee_count, :link)
 
   def draft_trainees_count
-    @draft_trainees_count ||= Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_trainees_count") do
-      @trainees.select(&:draft?).size
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_trainees_count") do
+      trainees.draft.size
     end
   end
 
   def draft_apply_trainees_count
-    @draft_apply_trainees_count ||= Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_apply_trainees_count") do
-      @trainees.select { |trainee| trainee.draft? && trainee.apply_application.present? }.size
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_apply_trainees_count") do
+      trainees.draft.with_apply_application.size
     end
   end
 
@@ -96,7 +96,7 @@ private
 
   def course_not_yet_started_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/course_not_yet_started_size") do
-      @course_not_yet_started_size ||= trainees.select { |trainee| trainee.itt_start_date.present? && trainee.itt_start_date > Time.zone.now && !trainee.draft? && !trainee.deferred? && !trainee.withdrawn? }.size
+      trainees.course_not_yet_started.size
     end
   end
 
@@ -118,7 +118,7 @@ private
 
   def trainees_in_training_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/trainees_in_training_size") do
-      trainees.select { |trainee| Trainee::IN_TRAINING_STATES.include?(trainee.state) && (trainee.itt_start_date.present? ? trainee.itt_start_date < Time.zone.now : false) }.size
+      trainees.in_training.size
     end
   end
 end
