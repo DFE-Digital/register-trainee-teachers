@@ -14,13 +14,13 @@ class HomeView
 
   def draft_trainees_count
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_trainees_count") do
-      @draft_trainees_count ||= trainees.draft.size
+      trainees.draft.size
     end
   end
 
   def draft_apply_trainees_count
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_apply_trainees_count") do
-      @draft_apply_trainees_count ||= trainees.draft.with_apply_application.size
+      trainees.draft.with_apply_application.size
     end
   end
 
@@ -45,7 +45,7 @@ private
 
   def awarded_this_year_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/awarded_this_year") do
-      @awarded_this_year_size ||= trainees.awarded.merge(current_academic_cycle.trainees_ending).size
+      trainees.awarded.merge(current_academic_cycle.trainees_ending).size
     end
   end
 
@@ -96,13 +96,13 @@ private
 
   def course_not_yet_started_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/course_not_yet_started_size") do
-      @course_not_yet_started_size ||= trainees.course_not_yet_started.size
+      trainees.course_not_yet_started.size
     end
   end
 
   def deferred_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/deferred_size") do
-      @deferred_size ||= trainees.deferred.size
+      trainees.deferred.size
     end
   end
 
@@ -112,13 +112,13 @@ private
 
   def incomplete_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/incomplete_size") do
-      @incomplete_size ||= trainees.not_draft.incomplete.size
+      trainees.not_draft.incomplete.size
     end
   end
 
   def trainees_in_training_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/trainees_in_training_size") do
-      @trainees_in_training_size ||= trainees.in_training.size
+      trainees.in_training.size
     end
   end
 end
