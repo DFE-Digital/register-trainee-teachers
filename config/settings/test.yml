@@ -6,7 +6,7 @@ slack:
   default_channel: "test-channel"
   webhook_url: "https://test-slack-webhook-url.com"
 features:
-  use_otp_sign_in: true
+  sign_in_method: dfe-sign-in
   basic_auth: false
   routes:
     school_direct_salaried: true

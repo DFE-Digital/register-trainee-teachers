@@ -17,6 +17,7 @@ dqt:
 
 features:
   basic_auth: false
+  sign_in_method: persona
   import_courses_from_ttapi: true
   import_applications_from_apply: true
   publish_course_details: true

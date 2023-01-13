@@ -26,7 +26,7 @@ A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask suppor
 
 Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. You can find the previous trainee state by running `trainee.audits` and comparing the numbers to the enum in `trainee.rb`.
 
-Here is an examole of unwithdrawing a trainee without leaving an audit trail.
+Here is an example of unwithdrawing a trainee without leaving an audit trail.
 
 ```ruby
 trainee = Trainee.find_by(slug: "XXX")
@@ -51,7 +51,7 @@ If the trainee has a TRN already, call this (where `t` is the trainee):
 Dqt::RetrieveTeacher.call(trainee: t)
 ```
 
-If the trainee doens't have a TRN yet, call this instead:
+If the trainee doesn't have a TRN yet, call this instead:
 
 ```ruby
 Dqt::FindTeacher.call(trainee: t)
@@ -204,6 +204,10 @@ Register support may need to communicate with the trainee and provider to ensure
 
 ## Managing the siqekiq queue
 
+### via the UI
+
+`system-admin/dead_jobs/` uses the methods below to list failed trainees. You can also download the list along with errors via `download (.csv)`.
+
 ### Console commands
 
 #### Inspect jobs in a queue
@@ -230,4 +234,24 @@ ds.map { _1.args[0]["arguments"][0]["_aj_globalid"].split("/").last }.uniq.count
 ds.select { _1.item["error_message"].starts_with? "status: 405" }.count
 # retry
 ds.select { _1.item["error_message"].starts_with? "status: 405" }.map(&:retry)
+```
+
+## Settings
+
+Sometimes we need to toggle/change features and settings. This can be done using the `cf set-env` command. For example:
+
+```sh
+# set the ENV
+cf set-env register-production SETTINGS__FEATURES__SIGN_IN_METHOD otp
+# restart the app server
+cf restage register-production
+```
+
+The format of the ENV you set is important. Double underscores `__` are the equivalent of subsections in `settings.yml` so the above is equivalent to:
+
+```yml
+# config/settings.yml
+
+features:
+  sign_in_method: otp
 ```

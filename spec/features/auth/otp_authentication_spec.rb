@@ -24,7 +24,7 @@ describe "A user authenticates via Email Sign-in" do
     ).and_return(mailer)
   end
 
-  scenario "signing in successfully", feature_use_otp_sign_in: true do
+  scenario "signing in successfully", feature_sign_in_method: "otp" do
     given_i_am_registered_as_a_user
     and_submit_my_email
     and_enter_my_otp
