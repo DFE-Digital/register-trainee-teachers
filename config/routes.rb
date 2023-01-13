@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   get "request-an-account", to: "request_an_account#index"
 
   case Settings.features.sign_in_method
-  when "dfe"
+  when "dfe-sign-in"
     get("/auth/dfe/callback" => "sessions#callback")
     get("/auth/dfe/sign-out" => "sessions#signout")
   when "otp"

@@ -35,7 +35,7 @@ dqt:
 features:
   home_text: false
   use_ssl: true
-  sign_in_method: dfe
+  sign_in_method: dfe-sign-in
   enable_feedback_link: true
   basic_auth: true
   trainee_export: true

@@ -13,7 +13,7 @@ feature "sign in page" do
     expect(sign_in_page.sign_in_button.text).to eq("Sign in using Persona")
   end
 
-  scenario "navigate to sign in", feature_sign_in_method: "dfe" do
+  scenario "navigate to sign in", feature_sign_in_method: "dfe-sign-in" do
     expect(sign_in_page.page_heading).to have_text("Sign in")
     expect(sign_in_page).to have_title("Sign in to Register trainee teachers - Register trainee teachers - GOV.UK")
     expect(sign_in_page.sign_in_button.text).to eq("Sign in using DfE Sign-in")

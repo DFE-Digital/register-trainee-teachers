@@ -17,7 +17,7 @@
     <% case Settings.features.sign_in_method %>
     <% when "otp" %>
       <%= govuk_button_to(t(".otp_sign_in_button"), otp_path, method: :get, class: "qa-otp_sign_in_button") %>
-    <% when "dfe" %>
+    <% when "dfe-sign-in" %>
       <%= govuk_button_to(t(".dfe_sign_in_button"), "/auth/dfe", class: "qa-sign_in_button") %>
     <% when "persona"%>
       <%= render GovukButtonLinkTo::View.new(body: t(".persona_sign_in_button"), url: "/personas", class_option: "qa-sign_in_button") %>

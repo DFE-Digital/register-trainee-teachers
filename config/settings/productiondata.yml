@@ -16,7 +16,7 @@ dfe_sign_in:
 
 features:
   basic_auth: true
-  sign_in_method: dfe
+  sign_in_method: dfe-sign-in
   enable_feedback_link: false
   import_courses_from_ttapi: true
   import_applications_from_apply: true

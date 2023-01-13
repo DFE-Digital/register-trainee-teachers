@@ -25,7 +25,7 @@ describe "Settings" do
     features = settings[:features]
 
     include_examples expected_value_test, :use_ssl, features, true
-    include_examples expected_value_test, :sign_in_method, features, "dfe"
+    include_examples expected_value_test, :sign_in_method, features, "dfe-sign-in"
     include_examples expected_value_test, :home_text, features, false
   end
 

@@ -3,7 +3,7 @@
 require_relative "../../app/services/feature_service"
 
 case Settings.features.sign_in_method
-when "dfe"
+when "dfe-sign-in"
 
   OmniAuth.config.logger = Rails.logger
 
