@@ -12,13 +12,11 @@ module Trainees
     let(:hesa_mode_codes) { Hesa::CodeSets::Modes::MAPPING.invert }
     let(:hesa_trn) { Faker::Number.number(digits: 7) }
     let(:date_today) { Time.zone.today }
-    let(:register_trn) { nil }
-    let(:trainee) { double(persisted?: persisted, trn: register_trn) }
 
     subject { described_class.call(hesa_trainee:, trainee:) }
 
     context "when the trainee is new" do
-      let(:persisted) { false }
+      let(:trainee) { build(:trainee) }
 
       context "when the trainee has no 'reason for leaving'" do
         context "and has no TRN" do
@@ -99,7 +97,8 @@ module Trainees
     end
 
     context "when the trainee is persisted" do
-      let(:persisted) { true }
+      let(:register_trn) { nil }
+      let(:trainee) { create(:trainee, trn: register_trn) }
 
       context "when the trainee's reason for leaving is COMPLETED_WITH_CREDIT_OR_AWARD" do
         let(:hesa_stub_attributes) do
@@ -145,6 +144,12 @@ module Trainees
         end
 
         it { is_expected.to eq(:deferred) }
+      end
+
+      context "when a trainee has already been awarded QTS" do
+        let(:trainee) { create(:trainee, :awarded) }
+
+        it { is_expected.to eq(:awarded) }
       end
     end
   end
