@@ -29,6 +29,7 @@ module Trainees
           store_hesa_metadata!
           enqueue_background_jobs!
           check_for_trn_disparity!
+          check_for_missing_hesa_mappings!
         end
       end
     rescue ActiveRecord::RecordInvalid
@@ -285,6 +286,10 @@ module Trainees
 
     def trainee_state
       @trainee_state ||= MapStateFromHesa.call(hesa_trainee:, trainee:) || trainee.state
+    end
+
+    def check_for_missing_hesa_mappings!
+      Hesa::ValidateMapping.call(hesa_trainee:, record_source:)
     end
   end
 end
