@@ -54,7 +54,7 @@
     <h2 class="govuk-heading-m">Fix mistakes in your trainee data</h2>
     <p class="govuk-body">You need to fix any mistakes before you sign off the data. How you do this depends on the type of organisation you work for.</p>
    
-    <h3 class="govuk-heading-s">Providers of school-centred initial teacher training (SCITTs)</h3> 
+    <h3 class="govuk-heading-s">Providers of school centred initial teacher training (SCITTs)</h3> 
     <p class="govuk-body">
       If the trainee is shown in this service as awarded or withdrawn, you should email
       <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Fix mistake in <%= @previous_academic_cycle_label %> data for performance profiles publication">becomingateacher@digital.education.gov.uk</a>.
@@ -67,10 +67,10 @@
     </p>
     <p class="govuk-body">If the trainee is shown in this service as actively training or deferred, you should:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>make the change through the Higher Education Statistics Agency (HESA) if the trainee was registered through HESA and is in the 2022 to 2023 initial teacher training (ITT) collection</li>
+      <li>make the change through the Higher Education Statistics Agency (HESA) if the trainee was registered through HESA and is in the <%= @current_academic_cycle_label %> initial teacher training (ITT) collection</li>
       <li>email
       <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Fix mistake in <%= @previous_academic_cycle_label %> data for performance profiles publication">becomingateacher@digital.education.gov.uk</a>
-      if the trainee was registered through HESA but is not in the 2022 to 2023 ITT collection</li>
+      if the trainee was registered through HESA but is not in the <%= @current_academic_cycle_label %> ITT collection</li>
       <li>make the change in this service if the trainee was not registered through HESA</li>
     </ul>
 
