@@ -16,7 +16,6 @@ module Reports
     end
 
     # rubocop:disable Naming/VariableNumber
-    delegate :code, :name, to: :course, prefix: true, allow_nil: true
     delegate :country,
              :grade,
              :graduation_year,

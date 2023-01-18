@@ -49,8 +49,6 @@ module Reports
          degree_1_other_grade
          degree_1_graduation_year
          degrees
-         course_code
-         course_name
          course_training_route
          course_qualification
          course_education_phase
@@ -162,8 +160,6 @@ module Reports
         trainee_report.degree_1_other_grade,
         trainee_report.degree_1_graduation_year,
         trainee_report.degrees,
-        trainee_report.course_code,
-        trainee_report.course_name,
         trainee_report.course_training_route,
         trainee_report.course_qualification,
         trainee_report.course_education_phase,
