@@ -5,7 +5,7 @@ require "rails_helper"
 module Trainees
   describe CreateFromApply do
     let(:candidate_attributes) { {} }
-    let(:application_data) { JSON.parse(ApiStubs::ApplyApi.application(candidate_attributes:)) }
+    let(:course_attributes) { {} }
     let(:apply_application) { create(:apply_application, application: application_data) }
     let(:candidate_info) { ApiStubs::ApplyApi.candidate_info.as_json }
     let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }
@@ -13,10 +13,16 @@ module Trainees
     let(:course_info) { ApiStubs::ApplyApi.course.as_json }
     let(:trainee) { create_trainee_from_apply }
     let(:subject_names) { [] }
+    let(:recruitment_cycle_year) { current_academic_year + 1 }
     let(:course_uuid) { course_info["course_uuid"] }
     let!(:current_academic_cycle) { create(:academic_cycle) }
     let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
+
+    let(:application_data) do
+      JSON.parse(ApiStubs::ApplyApi.application(candidate_attributes: candidate_attributes,
+                                                course_attributes: course_attributes.merge(recruitment_cycle_year:)))
+    end
 
     let!(:course) do
       create(
@@ -131,64 +137,77 @@ module Trainees
       it { is_expected.to have_attributes(course_education_phase: COURSE_EDUCATION_PHASE_ENUMS[:primary]) }
     end
 
-    context "disabilities" do
-      context "when the application is diversity disclosed with disabilities" do
-        before do
-          Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h))
-        end
+    context "when the application is diversity disclosed with disabilities" do
+      before { Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h)) }
 
-        it "adds the trianee's disabilities" do
-          expect(trainee.disabilities.map(&:name)).to match_array(["Blind", "Long-standing illness"])
-        end
-
-        it "sets the diversity disclosure to disclosed" do
-          expect(trainee).to be_diversity_disclosed
-        end
-
-        it "sets the disability disclosure to provided" do
-          expect(trainee).to be_disabled
-        end
-      end
-
-      context "when the application is diversity and disability disclosed with no disabilities" do
-        let(:application_data) do
-          JSON.parse(
-            ApiStubs::ApplyApi.application(
-              candidate_attributes: {
-                disabilities: [],
-              },
-            ),
-          )
-        end
-
-        it "sets the diversity disclosure to disclosed" do
-          expect(trainee).to be_diversity_disclosed
-        end
-
-        it "sets the disability disclosure to not disabled" do
-          expect(trainee).to be_no_disability
-        end
-      end
-    end
-
-    context "when the application is diversity disclosed with no disability information" do
-      let(:application_data) do
-        JSON.parse(
-          ApiStubs::ApplyApi.application(
-            candidate_attributes: {
-              disability_disclosure: nil,
-              disabilities: [],
-            },
-          ),
-        )
+      it "adds the trainee's disabilities" do
+        expect(trainee.disabilities.map(&:name)).to match_array(["Blind", "Long-standing illness"])
       end
 
       it "sets the diversity disclosure to disclosed" do
         expect(trainee).to be_diversity_disclosed
       end
 
+      it "sets the disability disclosure to provided" do
+        expect(trainee).to be_disabled
+      end
+    end
+
+    context "when the application has no disabilities" do
+      let(:candidate_attributes) { { disabilities: [Diversities::NO_DISABILITY] } }
+
+      it "sets the disability disclosure to not disabled" do
+        expect(trainee).to be_no_disability
+      end
+
+      context "application is 2022 or earlier" do
+        let(:recruitment_cycle_year) { 2022 }
+        let(:candidate_attributes) { { disabilities: [] } }
+
+        it "sets the disability disclosure to not disabled" do
+          expect(trainee).to be_no_disability
+        end
+
+        context "continues to support older disability mappings" do
+          let(:candidate_attributes) { { disabilities: ["blind"] } }
+
+          it "adds the trainee's disabilities" do
+            expect(trainee.disabilities.map(&:name)).to match_array(["Blind"])
+          end
+        end
+      end
+    end
+
+    context "when the application has no disabilities and a disability" do
+      let(:candidate_attributes) do
+        { disabilities: ["I do not have any of these disabilities or health conditions", "Blindness or a visual impairment not corrected by glasses"] }
+      end
+
+      before { Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h)) }
+
+      it "sets the disability disclosure to not disabled" do
+        expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
+      end
+    end
+
+    context "when the application is diversity disclosed with no disability information" do
+      let(:candidate_attributes) { { disabilities: ["Prefer not to say"] } }
+
       it "sets the disability disclosure to not provided" do
         expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
+      end
+    end
+
+    context "when the application is has a custom disability" do
+      let(:custom_disability) { "Long term pain" }
+      let(:candidate_attributes) { { disabilities: [custom_disability] } }
+
+      it "sets the disability to the custom value" do
+        expect(trainee.disabilities.pluck(:name)).to include(custom_disability)
+      end
+
+      it "sets the disability disclosure to not provided" do
+        expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
       end
     end
 

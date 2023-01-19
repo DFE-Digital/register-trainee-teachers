@@ -13,7 +13,7 @@ module Trainees
       @raw_trainee = application_record.application.dig("attributes", "candidate")
       @raw_contact_details = application_record.application.dig("attributes", "contact_details")
       @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
-      @disabilities = Disability.where(name: disability_names)
+      @disabilities = find_or_create_disabilities
       @trainee = Trainee.new(mapped_attributes)
       @personal_details_form = PersonalDetailsForm.new(trainee, params: { nationality_names: })
     end
@@ -25,7 +25,7 @@ module Trainees
       end
 
       # Courses can be missing in non-prod environments
-      raise(MissingCourseError, "Cannot find course with uuid: #{@raw_course['course_uuid']}") if course.nil?
+      raise(MissingCourseError, "Cannot find course with uuid: #{raw_course['course_uuid']}") if course.nil?
 
       trainee.save!
       save_personal_details!
@@ -39,6 +39,7 @@ module Trainees
     attr_reader :application_record,
                 :trainee,
                 :course,
+                :raw_course,
                 :raw_trainee,
                 :raw_contact_details,
                 :study_mode,
@@ -122,22 +123,41 @@ module Trainees
     end
 
     def disability_disclosure
-      return Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] if disability_disclosed? && disabilities.present?
-      return Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] if disability_disclosed? && disabilities.blank?
+      return Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] if not_provided?
+      return Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] if no_disabilities?
 
-      Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided]
+      Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
     end
 
     def diversity_disclosed?
       raw_trainee.slice("disabilities", "ethnic_group", "ethnic_background").values.any?(&:present?)
     end
 
-    def disability_disclosed?
-      raw_trainee["disability_disclosure"].present?
+    def not_provided?
+      raw_trainee["disabilities"].include?(Diversities::PREFER_NOT_TO_SAY)
     end
 
-    def disability_names
-      raw_trainee["disabilities"].map { |disability| ApplyApi::CodeSets::Disabilities::MAPPING[disability] }
+    def no_disabilities?
+      if trainee_requires_old_disability_mapping?
+        raw_trainee["disabilities"].empty?
+      else
+        raw_trainee["disabilities"].include?(Diversities::NO_DISABILITY)
+      end
+    end
+
+    def find_or_create_disabilities
+      disability_names = []
+
+      raw_trainee["disabilities"].each do |disability|
+        disability_names << Disability.find_or_create_by(name: map_disability_name(disability)).name
+      end
+
+      Disability.where(name: disability_names)
+    end
+
+    def map_disability_name(disability)
+      mapping = trainee_requires_old_disability_mapping? ? "OLD_MAPPING" : "NEW_MAPPING"
+      ApplyApi::CodeSets::Disabilities.const_get(mapping).fetch(disability, disability)
     end
 
     def nationality_names
@@ -167,6 +187,10 @@ module Trainees
           additional_ethnic_background: ethnic_background,
         }
       end
+    end
+
+    def trainee_requires_old_disability_mapping?
+      raw_course["recruitment_cycle_year"] <= 2022
     end
   end
 end
