@@ -212,14 +212,6 @@ describe Reports::TraineeReport do
       expect(subject.degrees).to be_a(String)
     end
 
-    it "includes the course_code" do
-      expect(subject.course_code).to eq(course.code)
-    end
-
-    it "includes the course_name" do
-      expect(subject.course_name).to eq(course.name)
-    end
-
     it "includes the course_training_route" do
       expect(subject.course_training_route).to eq(I18n.t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}"))
     end

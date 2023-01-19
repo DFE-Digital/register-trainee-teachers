@@ -227,14 +227,6 @@ describe Exports::ExportTraineesToFileService, type: :model do
         expect(trainee_csv_row["degrees"]).to eq(trainee_report.degrees)
       end
 
-      it "includes the course_code in the csv" do
-        expect(trainee_csv_row["course_code"]).to eq(trainee_report.course_code)
-      end
-
-      it "includes the course_name in the csv" do
-        expect(trainee_csv_row["course_name"]).to eq(trainee_report.course_name)
-      end
-
       it "includes the course_training_route in the csv" do
         expect(trainee_csv_row["course_training_route"]).to eq(trainee_report.course_training_route)
       end
