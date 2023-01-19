@@ -64,7 +64,7 @@ gem "config", "~> 4.1"
 gem "httparty", "~> 0.21"
 
 # Wrap jsonb columns with activemodel-like classes
-gem "store_model", "~> 1.3"
+gem "store_model", "~> 1.5"
 
 gem "pundit"
 
