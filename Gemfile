@@ -121,7 +121,7 @@ gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.5.3"
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
 # version is constrained due to azure-storage-common
-gem "faraday", "~> 1.10.2"
+gem "faraday", "~> 1.10.3"
 
 gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
 
