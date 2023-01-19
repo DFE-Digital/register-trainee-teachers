@@ -92,7 +92,7 @@ class FixAwardedTrainees < ActiveRecord::Migration[7.0]
       "GEnT6jKTQ6mWNHVJAHw9qmCf" => "02/09/2020",
       "NappUrNdYZtci4J8yZdNdVNV" => "31/07/2022",
     }.each do |slug, awarded_at|
-      trainee = Trainee.from_param(slug)
+      trainee = Trainee.find_by(slug:)
       next unless trainee
 
       trainee.assign_attributes(state: :awarded, awarded_at: awarded_at, defer_date: nil, withdraw_date: nil)
