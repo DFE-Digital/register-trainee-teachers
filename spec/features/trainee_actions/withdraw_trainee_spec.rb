@@ -193,6 +193,21 @@ feature "Withdrawing a trainee" do
     and_i_see_my_date(Time.zone.today)
   end
 
+  scenario "trainee is already withdrawn" do
+    given_i_am_authenticated
+    given_a_trainee_exists_that_is_already_withdrawn
+    and_i_am_on_the_trainee_record_page
+    then_i_cannot_see_the_withdraw_link
+    then_i_cannot_see_the_edit_withdrawal_link
+  end
+
+  scenario "as a system admin trainee is already withdrawn" do
+    given_i_am_authenticated_as_system_admin
+    given_a_trainee_exists_that_is_already_withdrawn
+    and_i_am_on_the_trainee_record_page
+    then_i_can_see_the_edit_withdrawal_link
+  end
+
   def when_i_am_on_the_withdrawal_page
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn
@@ -326,6 +341,10 @@ feature "Withdrawing a trainee" do
     given_a_trainee_exists(:deferred)
   end
 
+  def given_a_trainee_exists_that_is_already_withdrawn
+    @trainee ||= create(:trainee, :withdrawn)
+  end
+
   def and_the_trainee_has_a_duplicate
     @trainee.dup.tap { |t| t.slug = t.generate_slug }.save
   end
@@ -392,6 +411,18 @@ feature "Withdrawing a trainee" do
 
   def then_i_am_redirected_to_start_date_verification_page
     expect(start_date_verification_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_i_cannot_see_the_withdraw_link
+    expect(record_page).not_to have_text(t("views.trainees.edit.withdraw"))
+  end
+
+  def then_i_cannot_see_the_edit_withdrawal_link
+    expect(record_page).not_to have_change_trainee_status
+  end
+
+  def then_i_can_see_the_edit_withdrawal_link
+    expect(record_page).to have_change_trainee_status
   end
 
   def and_i_select_no_they_started_later

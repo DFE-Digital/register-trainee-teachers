@@ -60,7 +60,7 @@ class TraineePolicy
   end
 
   def withdraw?
-    write? && (defer? || trainee.deferred?)
+    write? && (defer? || trainee.deferred? || user_is_system_admin?)
   end
 
   def defer?

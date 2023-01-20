@@ -53,6 +53,7 @@ module Trainees
       lead_school_id
       employing_school_id
       iqts_country
+      withdraw_date
     ].freeze
 
     delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, to: :audit

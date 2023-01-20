@@ -110,7 +110,7 @@ describe TraineePolicy do
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
-      it { is_expected.not_to permit(system_admin_user, provider_trainee) }
+      it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
   end
 
