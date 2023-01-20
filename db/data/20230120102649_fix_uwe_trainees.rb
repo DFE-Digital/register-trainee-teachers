@@ -1,0 +1,120 @@
+# frozen_string_literal: true
+
+class FixUweTrainees < ActiveRecord::Migration[7.0]
+  def up
+    withdrawals_slugs = [{ slug: "rc7ARNczoa3U4e1JuDt11hT3" },
+                         { slug: "NBQPLKKUZue9jffjKqyi5Jn5" },
+                         { slug: "Yd2YwyWvZvTWQbDemC9KCbzM" },
+                         { slug: "TpQCW8vEShkoVVAg1YzdzksN" },
+                         { slug: "MA8tSZ1B7CTgw1yxU5yH1nJU" },
+                         { slug: "Vss5rZLuWqG7LPnaLfS2peN8" },
+                         { slug: "D7SccfSeHYrSkQxfuQCEZoQc" },
+                         { slug: "WWGX1jjnxCvmxXE9DVwqBB2u" },
+                         { slug: "5HTiEV66tSqp2i61i6u4pmhg" },
+                         { slug: "Yr4TpmNFFn8N2u9aGw3ebz12" },
+                         { slug: "ne9j7hk4FDQVGXBRJeiLUMxB" },
+                         { slug: "QkgP2wf6Tu7mvkBhHBaDeeRf" },
+                         { slug: "FSmWE5r7E53btUjnWRQqir35" },
+                         { slug: "XQJRciy3ipbSDVbbfD3WtMpW" },
+                         { slug: "9rcdmhBsxyhCCyoqRWUFHoHy" },
+                         { slug: "JLpLTJBao9Haow6Es8a7We7S" },
+                         { slug: "Kh33oiUniVBqCYpX8gbowLFt" },
+                         { slug: "AWQmRZFpvfmy8xX6i2njXaxy" },
+                         { slug: "WwCHgKigAnXssHZ5PMLFCPQ9" },
+                         { slug: "6kiY6AouKW4uCuNNtsguW4vu" },
+                         { slug: "8TiqxKsgrGfeh8VqtyrUTNak" },
+                         { slug: "xSsUY39JPwvbhMYTrvLbKM7v" },
+                         { slug: "tZWw8NfGSoCzVWEcDqphNstw" },
+                         { slug: "uSDqjRX8Az9irkdrcToUQTxF" },
+                         { slug: "GReMTwH1XhDUf4XFhNJo6rBf" },
+                         { slug: "6BttZKVRMkJ3VsVWGzuEwsVr" },
+                         { slug: "eCbTup9EDPbzPtxwJSzJXanD" },
+                         { slug: "DpcvoyGW4df81jeN7gQEGuZW" },
+                         { slug: "xmhRwLCz5bS9q5fwixPVewF9" },
+                         { slug: "pBcKekCS8fJTa2GNfp6e8RS2" },
+                         { slug: "qK4U4Ph5Q37KogkzCeLHFXWz" },
+                         { slug: "CzKnZ23DYhsy3bowZhsgF4Hb" },
+                         { slug: "zZKyZym8r8snzinMTY5PKFmM" },
+                         { slug: "MaC4CbgTJif1SGEAQfwCiXjA" },
+                         { slug: "Gd4nTKnPATRLU4VZGeSyXM3i" },
+                         { slug: "rdQZjfAZxhjQT28dZuyT6eoL" },
+                         { slug: "p7c2RVwgvDKqaMBYuiTFFQ7L" },
+                         { slug: "mydMEh4S3JgGy9TccXCgvNDa" },
+                         { slug: "mLEgbQHxVaUhMuSLhGZ5dfap" },
+                         { slug: "Einbm5Vp32PaBpxVeMwuQcN2" },
+                         { slug: "HH2g3LJK5BpBgeuA6cn2GYLE" },
+                         { slug: "dkRzgFYDNfP5XrSgTrjnBKuN" },
+                         { slug: "bjf73Y9aptCW91YHyU74g9ef" },
+                         { slug: "p3jZLkSA43tB6WfnwiDPyLU1" },
+                         { slug: "xhWWEmH8uTdVLqgxyyH3GEtS" },
+                         { slug: "Z8D5qXR7JFNCCofKLYo7pRG1" },
+                         { slug: "74tJEaCgRwy6ytHyFgPZ4nBe" },
+                         { slug: "WvBuUzfoJLZWu5yY4yuXG9ug" }]
+
+    withdrawals_data =
+      [
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Tue, 15 Mar 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Thu, 03 Jan 2019 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 08 Mar 2021 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Tue, 14 Sep 2021 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Tue, 27 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 25 Jan 2021 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::PERSONAL_REASONS, withdraw_date: "Tue, 06 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Fri, 05 Apr 2019 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Fri, 16 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 20 Sep 2021 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Thu, 15 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Tue, 13 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::PERSONAL_REASONS, withdraw_date: "Tue, 31 May 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Thu, 01 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 27 Sep 2021 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 19 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Fri, 16 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 19 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Thu, 15 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Wed, 19 Oct 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Wed, 31 Aug 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 24 Jan 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 19 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Fri, 09 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Thu, 11 Aug 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Tue, 27 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 19 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Fri, 09 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Tue, 27 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::PERSONAL_REASONS, withdraw_date: "Mon, 25 Jul 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Sun, 18 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Fri, 17 Jun 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 03 Oct 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Wed, 14 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::UNKNOWN, withdraw_date: "Mon, 05 Sep 2022 00:00:00 +0000" },
+        { withdraw_reason: WithdrawalReasons::PERSONAL_REASONS, withdraw_date: "Mon, 04 Apr 2022 00:00:00 +0000" },
+      ]
+
+    withdrawals_slugs.each_with_index do |slug, index|
+      trainee = Trainee.find_by(slug[:slug])
+      next unless trainee
+
+      trainee.assign_attributes(withdraw_at: withdrawals_data[index][:withdraw_date],
+                                withdraw_reason: withdrawals_data[index][:withdraw_reason],
+                                state: :withdrawn)
+      trainee.save!
+    end
+  end
+
+  def down
+    raise ActiveRecord::IrreversibleMigration
+  end
+end
