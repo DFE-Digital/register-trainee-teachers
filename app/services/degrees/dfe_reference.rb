@@ -7,7 +7,7 @@ module Degrees
     COMMON_TYPES = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
 
     GRADES = DfE::ReferenceData::Degrees::GRADES
-    SUBJECTS = DfE::ReferenceData::Degrees::SINGLE_SUBJECTS
+    SUBJECTS = DfE::ReferenceData::Degrees::SUBJECTS_INCLUDING_GENERICS
     TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS
     INSTITUTIONS = DfE::ReferenceData::Degrees::INSTITUTIONS_INCLUDING_GENERICS
 
@@ -83,14 +83,10 @@ module Degrees
 
       def build_hesa_filter(filters)
         {
-          hesa_itt_code: remove_leading_zeros(filters[:hesa_itt_code]),
-          hesa_code: remove_leading_zeros(filters[:hesa_code]),
-          hecos_code: remove_leading_zeros(filters[:hecos_code]),
+          hesa_itt_code: filters[:hesa_itt_code],
+          hesa_code: filters[:hesa_code],
+          hecos_code: filters[:hecos_code],
         }.compact
-      end
-
-      def remove_leading_zeros(code)
-        code && code.to_i.to_s
       end
     end
   end
