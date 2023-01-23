@@ -32,6 +32,7 @@
     { name: "About their teacher training", url: trainee_path(@trainee) },
     { name: @trainee.requires_degree? ? "Personal details and education" : "Personal details", url: trainee_personal_details_path(@trainee) },
     { name: "Timeline", url: trainee_timeline_path(@trainee) },
+    ({ name: "Admin", url: trainee_admin_path(@trainee) } if current_user.system_admin?),
   ]) %>
 
   <%= yield %>

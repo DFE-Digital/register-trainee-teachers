@@ -1,0 +1,34 @@
+<div class="govuk-summary-list__row">
+   <dt class="govuk-summary-list__key">
+      Collection <%= collection %>
+   </dt>
+   <% if hesa_trainee.present? %>
+     <dd class="govuk-summary-list__value">
+        <details class="govuk-details" data-module="govuk-details">
+           <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+              <%= date %>
+              </span>
+           </summary>
+           <div class="govuk-details__text">
+              <h2 class="govuk-heading-m">Student</h2>
+              <%= govuk_summary_list(rows: student) %>
+              
+              <% if degrees.present? %>
+                <h2 class="govuk-heading-m govuk-!-margin-top-6">Degree(s)</h2>
+                <%= govuk_summary_list(rows: degrees) %>
+              <% end %>
+
+              <% if placements.present? %>
+                <h2 class="govuk-heading-m govuk-!-margin-top-6">Placement(s)</h2>
+                <%= govuk_summary_list(rows: placements) %>
+              <% end %>
+           </div>
+        </details>
+     </dd>
+  <% else %>
+      <dd class="govuk-summary-list__value">
+          <p class="govuk-body"> No data</p>
+      </dd>
+  <% end %>
+</div>

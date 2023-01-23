@@ -152,6 +152,7 @@ Rails.application.routes.draw do
       end
 
       resource :timeline, only: :show
+      resource :admin, only: :show
 
       resource :subject_specialism, only: %i[edit update], path: "/subject-specialism/:position"
       resource :start_date_verification, only: %i[show update], path: "/start-date-verification"
