@@ -104,10 +104,10 @@ class FixUweTrainees < ActiveRecord::Migration[7.0]
       ]
 
     withdrawals_slugs.each_with_index do |slug, index|
-      trainee = Trainee.find_by(slug[:slug])
+      trainee = Trainee.find_by(slug: slug[:slug])
       next unless trainee
 
-      trainee.assign_attributes(withdraw_at: withdrawals_data[index][:withdraw_date],
+      trainee.assign_attributes(withdraw_date: withdrawals_data[index][:withdraw_date],
                                 withdraw_reason: withdrawals_data[index][:withdraw_reason],
                                 state: 4)
       trainee.save!
