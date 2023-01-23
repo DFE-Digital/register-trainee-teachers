@@ -1,13 +1,16 @@
-<section class="app-summary-card govuk-!-margin-bottom-6">
-   <header class="app-summary-card__header">
-      <h2 class="app-summary-card__title">
-         HESA
-      </h2>
-   </header>
-   <div class="app-summary-card__body">
-      <dl class="govuk-summary-list" style="overflow:hidden;">
-         <%= render HesaStudentSummary::View.new(trainee:, collection: "C22053") %>
-         <%= render HesaStudentSummary::View.new(trainee:, collection: "C21053") %>  
-      </dl>
-   </div>
-</section>
+<% if trainee.hesa_id %>
+   <section class="app-summary-card govuk-!-margin-bottom-6">
+      <header class="app-summary-card__header">
+         <h2 class="app-summary-card__title">
+            HESA
+         </h2>
+      </header>
+      <div class="app-summary-card__body">
+         <dl class="govuk-summary-list" style="overflow:hidden;">
+            <% collections.each do |collection| %>
+               <%= render HesaStudentSummary::View.new(trainee:, collection:) %>
+            <% end %>
+         </dl>
+      </div>
+   </section>
+<% end %>
