@@ -55,7 +55,7 @@ class CourseDetailsForm < TraineeForm
   validates :study_mode, inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, if: :requires_study_mode?
 
   validate :itt_start_date_valid
-  validate :itt_end_date_valid, if: :end_date_required?
+  validate :itt_end_date_valid
 
   delegate :apply_application?, :requires_study_mode?, to: :trainee
   delegate :training_route, to: :training_routes_form
@@ -84,9 +84,9 @@ class CourseDetailsForm < TraineeForm
   end
 
   def itt_end_date
-    if end_date_required?
-      new_date({ year: end_year, month: end_month, day: end_day })
-    end
+    return if end_date_not_required? && end_date_not_provided?
+
+    new_date({ year: end_year, month: end_month, day: end_day })
   end
 
   def save!
@@ -142,10 +142,6 @@ class CourseDetailsForm < TraineeForm
       sum
     }
     assign_attributes_and_stash(opts)
-  end
-
-  def end_date_required?
-    trainee.hesa_id.blank?
   end
 
   def requires_study_mode?
@@ -312,6 +308,8 @@ private
   end
 
   def itt_end_date_valid
+    return true if end_date_not_required? && end_date_not_provided?
+
     if [end_day, end_month, end_year].all?(&:blank?)
       errors.add(:itt_end_date, :blank)
     elsif end_year.to_i > max_years
