@@ -54,16 +54,27 @@ module HesaStudentSummary
       summary = []
 
       data.each do |key, value|
-        next if value.blank?
-
-        summary << { key: { text: humanise(key) }, value: { text: value } }
+        summary << { key: { text: humanise(key) }, value: { text: value.presence || "-" } }
       end
 
       summary
     end
 
     def humanise(key)
-      key.humanize.gsub("Itt", "ITT").gsub("Hesa", "HESA").gsub("urn", "URN").gsub("Ukprn", "UKPRN")
+      key = key.humanize.downcase
+
+      {
+        "itt" => "ITT",
+        "hesa" => "HESA",
+        "urn" => "URN",
+        "ukprn" => "UKPRN",
+        "trn" => "TRN",
+        "pg" => "PG",
+      }.each do |k, v|
+        key.sub!(k, v)
+      end
+
+      key
     end
   end
 end

@@ -126,14 +126,14 @@ private
 
     # placements
     expect(trainee_admin_page.collection).to have_text "Placements"
-    expect(trainee_admin_page.collection).to have_text "School URN"
+    expect(trainee_admin_page.collection).to have_text "school URN"
     expect(trainee_admin_page.collection).to have_text "138734"
     expect(trainee_admin_page.collection).to have_text "139408"
 
     # degrees
     expect(trainee_admin_page.collection).to have_text "Degree"
     expect(trainee_admin_page.collection).not_to have_text "Degrees" # should not pluralise
-    expect(trainee_admin_page.collection).to have_text "Graduation date"
+    expect(trainee_admin_page.collection).to have_text "graduation date"
     expect(trainee_admin_page.collection).to have_text "2019-06-13"
   end
 
