@@ -5,7 +5,7 @@ module TabNavigation
     attr_reader :items
 
     def initialize(items:)
-      @items = items
+      @items = items&.compact
     end
   end
 end

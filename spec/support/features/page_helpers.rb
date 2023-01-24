@@ -242,6 +242,10 @@ module Features
       @timeline_page ||= PageObjects::Trainees::Timeline.new
     end
 
+    def trainee_admin_page
+      @trainee_admin_page ||= PageObjects::Trainees::Admin.new
+    end
+
     def withdrawal_page
       @withdrawal_page ||= PageObjects::Trainees::Withdrawal.new
     end

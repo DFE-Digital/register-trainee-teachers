@@ -257,6 +257,10 @@ class Trainee < ApplicationRecord
   before_save :set_submission_ready, if: :completion_trackable?
   before_save :set_academic_cycles
 
+  def hesa_student_for_collection(collection_reference)
+    Hesa::Student.where(hesa_id:, collection_reference:).order(created_at: :asc).first
+  end
+
   def trn_requested!(dttp_id, placement_assignment_dttp_id)
     update!(dttp_id:, placement_assignment_dttp_id:)
   end
