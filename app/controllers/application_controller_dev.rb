@@ -8,7 +8,7 @@ private
   # Current User set to first admin profile
   def current_user
     @current_user ||= begin
-      user = User.where(system_admin: false).first
+      user = User.where(system_admin: true).first
       UserWithOrganisationContext.new(user:, session:) if user.present?
     end
   end
