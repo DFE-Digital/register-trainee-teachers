@@ -63,7 +63,7 @@ module HesaStudentSummary
     end
 
     def humanise(key)
-      key.humanize.gsub("Itt", "ITT").gsub("Hesa", "HESA")
+      key.humanize.gsub("Itt", "ITT").gsub("Hesa", "HESA").gsub("urn", "URN").gsub("Ukprn", "UKPRN")
     end
   end
 end

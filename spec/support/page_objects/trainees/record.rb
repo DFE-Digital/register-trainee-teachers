@@ -6,6 +6,7 @@ module PageObjects
       set_url "/trainees/{id}"
 
       element :timeline_tab, "a", text: "Timeline"
+      element :admin_tab, "a", text: "Admin"
 
       element :trainee_name, ".govuk-heading-xl"
       element :trn_status, ".govuk-tag.trainee-status", match: :first

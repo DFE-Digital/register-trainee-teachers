@@ -56,6 +56,47 @@ feature "View trainees" do
     end
   end
 
+  context "when trainee is imported from HESA" do
+    background { given_i_am_authenticated_as_a_lead_school_user }
+
+    let(:degrees) do
+      [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
+    end
+
+    let(:placements) do
+      [{ "school_urn" => "138734" }, { "school_urn" => "139408" }]
+    end
+
+    let(:trainee) { create(:trainee, :completed, :trn_received, hesa_id: "1234", lead_school: @current_user.lead_schools.first) }
+
+    let!(:hesa_student) do
+      create(
+        :hesa_student,
+        collection_reference: "C22053",
+        hesa_id: trainee.hesa_id,
+        first_names: trainee.first_names,
+        last_name: trainee.last_name,
+        degrees: degrees,
+        placements: placements,
+      )
+    end
+
+    scenario "and I am a system admin" do
+      given_i_am_authenticated_as_system_admin
+      and_i_visit_the_personal_details
+      then_click_on_the_admin_tab_link
+      then_i_should_see_the_hesa_summary
+    end
+
+    scenario "and I am not a system admin" do
+      and_i_visit_the_personal_details
+      then_i_should_not_see_the_admin_tab
+      and_i_visit_the_trainee_admin_page
+      # redirect to trainees index
+      expect(trainee_index_page).to be_displayed
+    end
+  end
+
 private
 
   def when_i_view_the_trainee_index_page
@@ -68,6 +109,32 @@ private
 
   def then_i_see_the_trainee_data_on_the(expected_page)
     expect(expected_page).to have_trainee_data
+  end
+
+  def then_click_on_the_admin_tab_link
+    record_page.admin_tab.click
+  end
+
+  def then_i_should_see_the_hesa_summary
+    expect(trainee_admin_page.collection_name).to have_text "Collection #{hesa_student.collection_reference}"
+    trainee_admin_page.collection.click
+
+    # student
+    expect(trainee_admin_page.collection).to have_text "Student"
+    expect(trainee_admin_page.collection).to have_text "UKPRN"
+    expect(trainee_admin_page.collection).to have_text hesa_student.ukprn
+
+    # placements
+    expect(trainee_admin_page.collection).to have_text "Placements"
+    expect(trainee_admin_page.collection).to have_text "School URN"
+    expect(trainee_admin_page.collection).to have_text "138734"
+    expect(trainee_admin_page.collection).to have_text "139408"
+
+    # degrees
+    expect(trainee_admin_page.collection).to have_text "Degree"
+    expect(trainee_admin_page.collection).not_to have_text "Degrees" # should not pluralise
+    expect(trainee_admin_page.collection).to have_text "Graduation date"
+    expect(trainee_admin_page.collection).to have_text "2019-06-13"
   end
 
   def and_i_click_the_trainee_name_on_the(expected_page)
@@ -88,6 +155,14 @@ private
 
   def then_i_should_not_see_any_add_degree_links_on_the(expected_page)
     expect(expected_page).not_to have_link("Add degree details")
+  end
+
+  def then_i_should_not_see_the_admin_tab
+    expect(page).not_to have_link("Admin")
+  end
+
+  def and_i_visit_the_trainee_admin_page
+    visit(trainee_admin_path(trainee))
   end
 
   def and_i_should_not_see_any_action_links

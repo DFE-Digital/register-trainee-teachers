@@ -13,7 +13,7 @@ module Trainees
   private
 
     def collections
-      @collections ||= Hesa::Student.distinct.pluck(:collection_reference).sort.reverse
+      @collections ||= Hesa::Student.where.not(collection_reference: nil).distinct.pluck(:collection_reference).sort.reverse
     end
   end
 end
