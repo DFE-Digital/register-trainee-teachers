@@ -84,10 +84,18 @@ module RecordDetails
     def trainee_status_row
       return unless trainee.deferred? || trainee.withdrawn?
 
-      {
-        field_label: t(".trainee_status"),
-        field_value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + status_date,
-      }
+      if trainee.withdrawn?
+        mappable_field(trainee_status_tag, t(".trainee_status"), trainee_withdrawal_path(trainee))
+      else
+        {
+          field_label: t(".trainee_status"),
+          field_value: trainee_status_tag,
+        }
+      end
+    end
+
+    def trainee_status_tag
+      render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + status_date
     end
 
     def last_updated_row

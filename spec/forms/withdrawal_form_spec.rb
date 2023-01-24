@@ -11,6 +11,7 @@ describe WithdrawalForm, type: :model do
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
+    allow(form_store).to receive(:set).with(trainee.id, :withdrawal, nil)
   end
 
   describe "validations" do
@@ -98,16 +99,29 @@ describe WithdrawalForm, type: :model do
     end
 
     it "takes any data from the form store and saves it to the database and clears the store data" do
-      expect(form_store).to receive(:set).with(trainee.id, :withdrawal, nil)
-
       expect { subject.save! }.to change(trainee, :withdraw_reason).to(WithdrawalReasons::FINANCIAL_REASONS)
     end
 
     it "triggers trainee update job" do
-      expect(form_store).to receive(:set).with(trainee.id, :withdrawal, nil)
       expect(Trainees::Update).to receive(:call).with(trainee: trainee,
                                                       update_dqt: false)
       subject.save!
+    end
+
+    it "does not trigger withdrawal job if trainee is already withdrawn" do
+      expect(Trainees::Withdraw).not_to receive(:call).with(trainee:)
+
+      subject.save!
+    end
+
+    describe "trainee that is in withdrawable state" do
+      let(:trainee) { create(:trainee, :deferred) }
+
+      it "triggers withdrawal job if trainee is not already withdrawn" do
+        expect(Trainees::Withdraw).to receive(:call).with(trainee:)
+
+        subject.save!
+      end
     end
   end
 end

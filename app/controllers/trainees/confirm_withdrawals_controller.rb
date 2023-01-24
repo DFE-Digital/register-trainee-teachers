@@ -9,7 +9,7 @@ module Trainees
 
     def update
       if withdrawal.save!
-        trainee.withdraw!
+        trainee.withdraw! unless trainee.withdrawn?
         flash[:success] = I18n.t("flash.trainee_withdrawn")
         redirect_to(trainee_path(trainee))
       end

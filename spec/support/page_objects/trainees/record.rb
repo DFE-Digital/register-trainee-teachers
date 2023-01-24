@@ -28,6 +28,7 @@ module PageObjects
       element :change_lead_school, "a", text: "Change lead school", visible: false
       element :change_employing_school, "a", text: "Change employing school", visible: false
       element :change_course_details, "a", text: "Change course", visible: false
+      element :change_trainee_status, "a", text: "Change trainee status", visible: false
     end
   end
 end
