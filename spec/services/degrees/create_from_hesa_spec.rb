@@ -92,7 +92,7 @@ module Degrees
               graduation_date: "2003-06-01",
               degree_type: "400",
               subject: "100485",
-              institution: "00429",
+              institution: "0429",
               grade: "02",
               country: nil,
             },
@@ -223,7 +223,7 @@ module Degrees
           [
             {
               graduation_date: "2003-06-01",
-              degree_type: "008",
+              degree_type: "007",
               subject: "100485",
               institution: "00429",
               grade: "02",

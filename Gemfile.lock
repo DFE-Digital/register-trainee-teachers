@@ -9,11 +9,12 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 442fe3f40a15e05edd52aad5254aed7cafa96824
-  ref: 442fe3f
+  revision: f1a586f2170d46c717aca22a52e74c1669a1154a
+  ref: f1a586f
   specs:
-    dfe-reference-data (1.0.0)
+    dfe-reference-data (2.0.0)
       activesupport
+      tzinfo
 
 GIT
   remote: https://github.com/DFE-Digital/rspec-retry.git

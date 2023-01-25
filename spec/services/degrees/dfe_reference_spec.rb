@@ -10,15 +10,15 @@ module Degrees
       end
 
       it "can find the subject by UUID" do
-        expect(described_class.find_subject(uuid: degree_subject.id)).to eq(degree_subject)
+        expect(described_class.find_subject(uuid: degree_subject.id)).to match(degree_subject)
       end
 
       it "can find the subject by name" do
-        expect(described_class.find_subject(name: degree_subject.name)).to eq(degree_subject)
+        expect(described_class.find_subject(name: degree_subject.name)).to match(degree_subject)
       end
 
       it "can find the subject by hecos_code" do
-        expect(described_class.find_subject(hecos_code: degree_subject.hecos_code)).to eq(degree_subject)
+        expect(described_class.find_subject(hecos_code: degree_subject.hecos_code)).to match(degree_subject)
       end
     end
 
@@ -30,19 +30,19 @@ module Degrees
       end
 
       it "can find the type by UUID" do
-        expect(described_class.find_type(uuid: degree_type.id)).to eq(degree_type)
+        expect(described_class.find_type(uuid: degree_type.id)).to match(degree_type)
       end
 
       it "can find the type by name" do
-        expect(described_class.find_type(abbreviation: degree_type.name)).to eq(degree_type)
+        expect(described_class.find_type(abbreviation: degree_type.name)).to match(degree_type)
       end
 
       it "can find the type by abbreviation" do
-        expect(described_class.find_type(abbreviation: degree_type.abbreviation)).to eq(degree_type)
+        expect(described_class.find_type(abbreviation: degree_type.abbreviation)).to match(degree_type)
       end
 
       it "can find the type by HESA code" do
-        expect(described_class.find_type(hesa_code: degree_type.hesa_itt_code)).to eq(degree_type)
+        expect(described_class.find_type(hesa_code: degree_type.hesa_itt_code)).to match(degree_type)
       end
     end
 
@@ -52,15 +52,15 @@ module Degrees
       end
 
       it "can find the institution by UUID" do
-        expect(described_class.find_institution(uuid: degree_institution.id)).to eq(degree_institution)
+        expect(described_class.find_institution(uuid: degree_institution.id)).to match(degree_institution)
       end
 
       it "can find the institution by name" do
-        expect(described_class.find_institution(name: degree_institution.name)).to eq(degree_institution)
+        expect(described_class.find_institution(name: degree_institution.name)).to match(degree_institution)
       end
 
       it "can find the institution by HESA code" do
-        expect(described_class.find_institution(hesa_code: degree_institution.hesa_itt_code)).to eq(degree_institution)
+        expect(described_class.find_institution(hesa_code: degree_institution.hesa_itt_code)).to match(degree_institution)
       end
     end
 
@@ -70,15 +70,15 @@ module Degrees
       end
 
       it "can find the grade by UUID" do
-        expect(described_class.find_grade(uuid: degree_grade.id)).to eq(degree_grade)
+        expect(described_class.find_grade(uuid: degree_grade.id)).to match(degree_grade)
       end
 
       it "can find the grade by name" do
-        expect(described_class.find_grade(name: degree_grade.name)).to eq(degree_grade)
+        expect(described_class.find_grade(name: degree_grade.name)).to match(degree_grade)
       end
 
       it "can find the grade by HESA code" do
-        expect(described_class.find_grade(hesa_code: degree_grade.hesa_code)).to eq(degree_grade)
+        expect(described_class.find_grade(hesa_code: degree_grade.hesa_code)).to match(degree_grade)
       end
     end
   end
