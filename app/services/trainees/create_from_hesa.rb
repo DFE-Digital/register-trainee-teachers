@@ -18,6 +18,7 @@ module Trainees
       @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node:)
       @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
       @record_source = record_source
+      @current_trainee_state = @trainee.state.to_sym
     end
 
     def call
@@ -39,13 +40,13 @@ module Trainees
 
   private
 
-    attr_reader :hesa_trainee, :trainee, :record_source
+    attr_reader :hesa_trainee, :trainee, :record_source, :current_trainee_state
 
     def mapped_attributes
       {
         trainee_id: hesa_trainee[:trainee_id],
         training_route: training_route,
-        state: trainee_state,
+        state: mapped_trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],
         record_source: trainee_record_source,
       }.compact # trainee_state can be nil, therefore we don't want to override the current state
@@ -97,13 +98,13 @@ module Trainees
     end
 
     def withdrawal_attributes
-      return { withdraw_date: nil, withdraw_reason: nil } unless trainee_state == :withdrawn
+      return { withdraw_date: nil, withdraw_reason: nil } unless mapped_trainee_state == :withdrawn
 
       { withdraw_date: hesa_trainee[:end_date], withdraw_reason: reason_for_leaving }
     end
 
     def deferral_attributes
-      return { defer_date: nil } unless trainee_state == :deferred
+      return { defer_date: nil } unless mapped_trainee_state == :deferred
 
       { defer_date: hesa_trainee[:end_date] }
     end
@@ -179,7 +180,11 @@ module Trainees
         Trainees::Update.call(trainee:)
       end
 
-      Dqt::WithdrawTraineeJob.perform_later(trainee) if trainee_state == :withdrawn
+      Dqt::WithdrawTraineeJob.perform_later(trainee) if enqueue_dqt_withdrawal_job?
+    end
+
+    def enqueue_dqt_withdrawal_job?
+      current_trainee_state != :withdrawn && mapped_trainee_state == :withdrawn
     end
 
     def check_for_trn_disparity!
@@ -192,7 +197,7 @@ module Trainees
 
     def request_for_trn?
       # Withdrawn trainees are also expected to get a TRN
-      trainee.trn.blank? && (trainee_state == :submitted_for_trn || trainee_state == :withdrawn)
+      trainee.trn.blank? && (mapped_trainee_state == :submitted_for_trn || mapped_trainee_state == :withdrawn)
     end
 
     def training_initiative
@@ -284,8 +289,8 @@ module Trainees
       Hesa::CodeSets::FundCodes::MAPPING[hesa_trainee[:fund_code]]
     end
 
-    def trainee_state
-      @trainee_state ||= MapStateFromHesa.call(hesa_trainee:, trainee:) || trainee.state
+    def mapped_trainee_state
+      @mapped_trainee_state ||= MapStateFromHesa.call(hesa_trainee:, trainee:) || trainee.state
     end
 
     def check_for_missing_hesa_mappings!
