@@ -16,7 +16,7 @@ module DeadJobs
           provider_name: trainee.provider.name,
           provider_ukprn: trainee.provider.ukprn,
           error_message: dead_jobs[trainee.id],
-        }.compact
+        }
       end
     end
 
