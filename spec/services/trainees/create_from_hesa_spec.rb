@@ -391,6 +391,14 @@ module Trainees
           it "enqueues Dqt::WithdrawTraineeJob" do
             expect(Dqt::WithdrawTraineeJob).to have_received(:perform_later).with(trainee)
           end
+
+          context "trainee has already been withdrawn" do
+            let(:create_custom_state) { create(:trainee, :withdrawn, hesa_id: student_attributes[:hesa_id]) }
+
+            it "does not enqueue Dqt::WithdrawTraineeJob" do
+              expect(Dqt::WithdrawTraineeJob).not_to have_received(:perform_later).with(trainee)
+            end
+          end
         end
 
         context "and the reason for completion is 'Left but award of credit or a qualification not yet known'" do
