@@ -2,12 +2,12 @@
 
 shared_examples "DeadJobs" do |klass, name|
   let(:service) { described_class.new(dead_set) }
-  let(:trainee) { create(:trainee, :trn_received) }
+  let(:trainee) { create(:trainee) }
   let(:result) do
     {
       register_id: trainee.id,
       trainee_name: trainee.full_name,
-      trainee_trn: trainee.trn,
+      trainee_trn: nil,
       trainee_dob: trainee.date_of_birth,
       provider_name: trainee.provider.name,
       provider_ukprn: trainee.provider.ukprn,
@@ -45,7 +45,7 @@ shared_examples "DeadJobs" do |klass, name|
   end
 
   describe "#to_csv" do
-    it do
+    it "returns the expected CSV" do
       expect(service.to_csv).to eq(
         <<~CSV # rubocop:disable Style/TrailingCommaInArguments
           register_id,trainee_name,trainee_trn,trainee_dob,provider_name,provider_ukprn,error_message
