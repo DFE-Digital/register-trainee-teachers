@@ -10,4 +10,16 @@ module DatesHelper
   def valid_date?(date_args)
     Date.valid_date?(*date_args) && date_args.all?(&:positive?)
   end
+
+  def end_date_required?
+    trainee.hesa_id.blank?
+  end
+
+  def end_date_not_required?
+    !end_date_required?
+  end
+
+  def end_date_not_provided?
+    [end_year, end_month, end_day].any?(&:blank?)
+  end
 end

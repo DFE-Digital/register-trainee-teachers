@@ -381,6 +381,17 @@ describe CourseDetailsForm, type: :model do
               expect(subject.errors.messages[:itt_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_end_date.too_old")
             end
           end
+
+          context "for a trainee where end date is not required and is not provided" do
+            let(:trainee) { build(:trainee, hesa_id: "XXX") }
+            let(:end_date_attributes) do
+              { end_day: "", end_month: "", end_year: "" }
+            end
+
+            it "does not return an error message for end date" do
+              expect(subject.errors[:itt_end_date]).to be_empty
+            end
+          end
         end
       end
     end
@@ -436,6 +447,28 @@ describe CourseDetailsForm, type: :model do
         it "does not validate itt_end_date" do
           expect(subject.errors[:itt_end_date]).to be_empty
         end
+
+        it "returns nil" do
+          expect(subject.itt_end_date).to be_nil
+        end
+      end
+
+      context "itt_end_date invalid" do
+        let(:params) do
+          {
+            end_day: "a",
+            end_month: "b",
+            end_year: "c",
+          }
+        end
+
+        before do
+          subject.valid?
+        end
+
+        it "validates itt_end_date" do
+          expect(subject.errors[:itt_end_date]).not_to be_empty
+        end
       end
 
       context "itt_end_date is set" do
@@ -462,12 +495,8 @@ describe CourseDetailsForm, type: :model do
           subject.valid?
         end
 
-        it "does not validate itt_end_date" do
-          expect(subject.errors[:itt_end_date]).to be_empty
-        end
-
-        it "returns nil" do
-          expect(subject.itt_end_date).to be_nil
+        it "sets the end date correctly" do
+          expect(subject.itt_end_date).to eq(valid_end_date)
         end
       end
     end
