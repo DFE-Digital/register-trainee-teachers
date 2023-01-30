@@ -8,7 +8,7 @@ module SystemAdmin
       respond_to do |format|
         format.html
         format.csv do
-          send_data(dead_job_service.to_csv, filename: "#{dead_job_service.name}.csv", disposition: :attachment)
+          send_data(dead_job_service.to_csv, filename: "#{dead_job_service.name}_#{DateTime.now.strftime('%F')}.csv", disposition: :attachment)
         end
       end
     end

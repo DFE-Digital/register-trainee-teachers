@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-shared_examples "DeadJobs" do |klass, name|
+shared_examples "DeadJobs" do
   let(:service) { described_class.new(dead_set) }
-  let(:trainee) { create(:trainee) }
+  let(:trainee) { create(:trainee, :completed, sex: "female", hesa_id: 1) }
   let(:result) do
     {
       register_id: trainee.id,
       trainee_name: trainee.full_name,
       trainee_trn: nil,
       trainee_dob: trainee.date_of_birth,
+      trainee_state: trainee.state,
       provider_name: trainee.provider.name,
       provider_ukprn: trainee.provider.ukprn,
     }
@@ -29,34 +30,29 @@ shared_examples "DeadJobs" do |klass, name|
             },
           ],
           error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
+          jid: "jobid1234",
         }.with_indifferent_access,
       ),
     ]
   end
 
-  describe "#to_a" do
-    it "returns the expected array of hashes" do
-      expect(service.to_a).to eq(
-        [
-          { **result, error_message: { "title" => "Teacher has no incomplete ITT record", "status" => 400, "errorCode" => 10005 } },
-        ],
-      )
-    end
+  let(:csv) do
+    <<~CSV
+      register_id,trainee_name,trainee_trn,trainee_dob,trainee_state,provider_name,provider_ukprn,error_message,job_id
+      #{trainee.id},#{trainee.full_name},#{trainee.trn},#{trainee.date_of_birth.strftime('%F')},#{trainee.state},#{trainee.provider.name},#{trainee.provider.ukprn},"{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}",jobid1234
+    CSV
   end
+
+  let(:headers) { %i[register_id trainee_name trainee_trn trainee_dob trainee_state provider_name provider_ukprn] }
 
   describe "#to_csv" do
     it "returns the expected CSV" do
-      expect(service.to_csv).to eq(
-        <<~CSV # rubocop:disable Style/TrailingCommaInArguments
-          register_id,trainee_name,trainee_trn,trainee_dob,provider_name,provider_ukprn,error_message
-          #{trainee.id},#{trainee.full_name},#{trainee.trn},#{trainee.date_of_birth.strftime('%F')},#{trainee.provider.name},#{trainee.provider.ukprn},"{""title""=>""Teacher has no incomplete ITT record"", ""status""=>400, ""errorCode""=>10005}"
-        CSV
-      )
+      expect(service.to_csv).to eq(csv)
     end
   end
 
   describe "#headers" do
-    it { expect(service.headers).to eq %i[register_id trainee_name trainee_trn trainee_dob provider_name provider_ukprn] }
+    it { expect(service.headers).to eq headers }
   end
 
   describe "#rows" do

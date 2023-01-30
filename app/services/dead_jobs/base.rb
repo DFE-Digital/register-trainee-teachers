@@ -6,25 +6,11 @@ module DeadJobs
       @dead_set = dead_set
     end
 
-    def to_a
-      @to_a ||= trainees.map do |trainee|
-        {
-          register_id: trainee.id,
-          trainee_name: trainee.full_name,
-          trainee_trn: trainee.trn,
-          trainee_dob: trainee.date_of_birth,
-          provider_name: trainee.provider.name,
-          provider_ukprn: trainee.provider.ukprn,
-          error_message: dead_jobs[trainee.id],
-        }
-      end
-    end
-
     # includes the error_message entry using `includes: ...`
     def to_csv
       @to_csv ||= CSV.generate do |csv|
-        csv << headers(includes: %i[error_message])
-        rows(includes: %i[error_message]).each do |row|
+        csv << headers(includes: %i[error_message job_id])
+        rows(includes: %i[error_message job_id]).each do |row|
           csv << row.values
         end
       end
@@ -56,7 +42,7 @@ module DeadJobs
 
     attr_reader :dead_set
 
-    DEFAULT_HEADERS = %i[register_id trainee_name trainee_trn trainee_dob provider_name provider_ukprn].freeze
+    DEFAULT_HEADERS = %i[register_id trainee_name trainee_trn trainee_dob trainee_state provider_name provider_ukprn].freeze
 
     def identifier
       @identifier ||= self.class.name.demodulize
@@ -66,13 +52,35 @@ module DeadJobs
       Trainee.includes(:provider).find(dead_jobs.keys)
     end
 
+    def to_a
+      @to_a ||= trainees.map do |trainee|
+        {
+          register_id: trainee.id,
+          trainee_name: trainee.full_name,
+          trainee_trn: trainee.trn,
+          trainee_dob: trainee.date_of_birth,
+          trainee_state: trainee.state,
+          provider_name: trainee.provider.name,
+          provider_ukprn: trainee.provider.ukprn,
+          error_message: dead_jobs[trainee.id][:error_message]&.to_s&.gsub('"', "'"),
+          job_id: dead_jobs[trainee.id][:job_id],
+        }
+      end
+    end
+
     # returns: [{ record_id => error_message }, ... ]
     def dead_jobs
       @dead_jobs ||=
         dead_set
         .select { |job| job.item["wrapped"] == klass }
         .to_h do |job|
-          [job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i, parse_error(job.item["error_message"])]
+          [
+            job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i,
+            {
+              error_message: parse_error(job.item["error_message"]),
+              job_id: job.item["jid"],
+            },
+          ]
         end
     end
 
