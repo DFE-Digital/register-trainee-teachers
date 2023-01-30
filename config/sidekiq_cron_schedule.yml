@@ -38,3 +38,7 @@ sync_hesa_students:
   cron: "0 5 * * *"
   class: "Hesa::SyncStudentsJob"
   queue: hesa
+remove_duplicate_dead_jobs:
+  cron: "* * * * *"
+  class: "Sidekiq::RemoveDeadDuplicatesJob"
+  queue: default
