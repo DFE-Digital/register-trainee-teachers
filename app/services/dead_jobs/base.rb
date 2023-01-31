@@ -38,6 +38,10 @@ module DeadJobs
       @name ||= identifier.titleize.gsub("Dqt", "DQT")
     end
 
+    def identifier
+      @identifier ||= self.class.name.demodulize
+    end
+
     delegate :count, to: :dead_jobs
 
   private
@@ -45,10 +49,6 @@ module DeadJobs
     attr_reader :dead_set, :include_dqt_status
 
     DEFAULT_HEADERS = %i[register_id trainee_name trainee_trn trainee_dob trainee_state provider_name provider_ukprn].freeze
-
-    def identifier
-      @identifier ||= self.class.name.demodulize
-    end
 
     def trainees
       Trainee.includes(:provider).find(dead_jobs.keys)

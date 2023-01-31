@@ -26,15 +26,23 @@
         <% end %>
       </tr>
     </thead>
+
     <tbody class="govuk-table__body">
       <% dead_job_service.rows&.each do |row| %>
         <tr class="govuk-table__row">
           <% row.each do |data| %>
             <td class="govuk-table__cell"><%= data[-1] %></td>
           <% end %>
+          <td class="govuk-table__cell">
+            <%= render GovukButtonLinkTo::View.new(
+              body: "View",
+              id: "view_#{row[:register_id]}",
+              url: trainee_path(Trainee.find(row[:register_id]),
+                                class_option: "govuk-!-margin-bottom-0"
+              )) %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-
 <% end %>

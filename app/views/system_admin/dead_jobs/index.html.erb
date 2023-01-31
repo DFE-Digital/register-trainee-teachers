@@ -30,8 +30,9 @@
               <%= render GovukButtonLinkTo::View.new(
                 body: "View",
                 url: dead_job_path(service.class),
+                id: "view_#{service.identifier}",
                 class_option: "govuk-!-margin-bottom-0",
-              ) %>
+                ) %>
 
               <%= render GovukButtonLinkTo::View.new(
                 body: "Download (.csv)",
@@ -40,10 +41,11 @@
               ) %>
 
               <%= render GovukButtonLinkTo::View.new(
+
                 body: "Download (.csv) with DQT status",
                 url: dead_job_path(service.class, format: :csv, include_dqt_status: true),
                 class_option: "govuk-!-margin-bottom-0 govuk-button--warning",
-              ) %>
+                ) %>
               <% end %>
           </td>
         </tr>

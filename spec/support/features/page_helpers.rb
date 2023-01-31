@@ -382,6 +382,14 @@ module Features
       @lead_schools_trainee_summary_page ||= PageObjects::SystemAdmin::Funding::LeadSchoolsTraineeSummary.new
     end
 
+    def admin_dead_jobs_page
+      @admin_dead_jobs_page ||= PageObjects::SystemAdmin::DeadJobs::DeadBackgroundJobs.new
+    end
+
+    def admin_dead_jobs_dqt_update_trainee
+      @admin_dead_jobs_dqt_update_trainee ||= PageObjects::SystemAdmin::DeadJobs::DqtUpdateTrainee.new
+    end
+
     def admin_users_index_page
       @admin_users_index_page ||= PageObjects::SystemAdmin::Users::Index.new
     end
