@@ -8,12 +8,16 @@ module SystemAdmin
       respond_to do |format|
         format.html
         format.csv do
-          send_data(dead_job_service.to_csv, filename: "#{dead_job_service.name}_#{DateTime.now.strftime('%F')}.csv", disposition: :attachment)
+          send_data(dead_job_service.to_csv(includes:), filename: "#{dead_job_service.name}_#{DateTime.now.strftime('%F')}.csv", disposition: :attachment)
         end
       end
     end
 
   private
+
+    def includes
+      include_dqt_status ? %i[dqt_status] : []
+    end
 
     def dead_job_service
       @dead_job_service ||= params[:id]&.constantize&.new(include_dqt_status:)
