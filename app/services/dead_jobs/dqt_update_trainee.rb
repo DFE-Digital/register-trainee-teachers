@@ -17,6 +17,7 @@ module DeadJobs
     def to_a
       @to_a ||= trainees.map do |trainee|
         {
+          job_id: dead_jobs[trainee.id][:job_id],
           register_id: trainee.id,
           trainee_name: trainee.full_name,
           trainee_trn: trainee.trn,
@@ -25,8 +26,8 @@ module DeadJobs
           provider_name: trainee.provider.name,
           provider_ukprn: trainee.provider.ukprn,
           error_message: dead_jobs[trainee.id][:error_message]&.to_s&.gsub('"', "'"),
-          job_id: dead_jobs[trainee.id][:job_id],
           params_sent: Dqt::Params::TraineeRequest.new(trainee:).to_json&.to_s&.gsub('"', "'"),
+          dqt_status: dqt_status(trainee),
         }
       end
     end

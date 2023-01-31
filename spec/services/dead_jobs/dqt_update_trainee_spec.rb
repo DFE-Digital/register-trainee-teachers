@@ -6,7 +6,7 @@ module DeadJobs
   describe DqtUpdateTrainee do
     it_behaves_like "DeadJobs" do
       let(:klass) { "Dqt::UpdateTraineeJob" }
-      let(:name) { "Dqt update trainee" }
+      let(:name) { "DQT Update Trainee" }
 
       let(:params_sent) { Dqt::Params::TraineeRequest.new(trainee:).to_json.to_s.gsub('"', "'") }
 

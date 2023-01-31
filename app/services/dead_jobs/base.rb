@@ -2,8 +2,9 @@
 
 module DeadJobs
   class Base
-    def initialize(dead_set = Sidekiq::DeadSet.new)
+    def initialize(dead_set: Sidekiq::DeadSet.new, include_dqt_status: false)
       @dead_set = dead_set
+      @include_dqt_status = include_dqt_status
     end
 
     # includes the error_message entry using `includes: ...`
@@ -33,14 +34,14 @@ module DeadJobs
     end
 
     def name
-      @name ||= identifier.underscore.humanize
+      @name ||= identifier.titleize.gsub("Dqt", "DQT")
     end
 
     delegate :count, to: :dead_jobs
 
   private
 
-    attr_reader :dead_set
+    attr_reader :dead_set, :include_dqt_status
 
     DEFAULT_HEADERS = %i[register_id trainee_name trainee_trn trainee_dob trainee_state provider_name provider_ukprn].freeze
 
@@ -55,6 +56,7 @@ module DeadJobs
     def to_a
       @to_a ||= trainees.map do |trainee|
         {
+          job_id: dead_jobs[trainee.id][:job_id],
           register_id: trainee.id,
           trainee_name: trainee.full_name,
           trainee_trn: trainee.trn,
@@ -63,7 +65,7 @@ module DeadJobs
           provider_name: trainee.provider.name,
           provider_ukprn: trainee.provider.ukprn,
           error_message: dead_jobs[trainee.id][:error_message]&.to_s&.gsub('"', "'"),
-          job_id: dead_jobs[trainee.id][:job_id],
+          dqt_status: dqt_status(trainee),
         }
       end
     end
@@ -82,6 +84,14 @@ module DeadJobs
             },
           ]
         end
+    end
+
+    def dqt_status(trainee)
+      return unless include_dqt_status && trainee.trn.present?
+
+      Dqt::RetrieveTeacher.call(trainee:).dig("initial_teacher_training", "result")&.to_s&.gsub('"', "'")
+    rescue StandardError => e
+      "error: #{e.message}"
     end
 
     def parse_error(error)

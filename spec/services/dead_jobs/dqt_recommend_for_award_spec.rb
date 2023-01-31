@@ -6,7 +6,7 @@ module DeadJobs
   describe DqtRecommendForAward do
     it_behaves_like "DeadJobs" do
       let(:klass) { "Dqt::RecommendForAwardJob" }
-      let(:name) { "Dqt recommend for award" }
+      let(:name) { "DQT Recommend For Award" }
     end
   end
 end

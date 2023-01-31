@@ -16,7 +16,11 @@ module SystemAdmin
   private
 
     def dead_job_service
-      @dead_job_service ||= params[:id]&.constantize&.new
+      @dead_job_service ||= params[:id]&.constantize&.new(include_dqt_status:)
+    end
+
+    def include_dqt_status
+      params[:include_dqt_status].present?
     end
 
     def dead_job_services

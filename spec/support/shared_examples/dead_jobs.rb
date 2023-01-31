@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 shared_examples "DeadJobs" do
-  let(:service) { described_class.new(dead_set) }
+  let(:service) { described_class.new(dead_set:, include_dqt_status:) }
+  let(:include_dqt_status) { false }
   let(:trainee) { create(:trainee, :completed, sex: "female", hesa_id: 1) }
   let(:result) do
     {
@@ -38,16 +39,39 @@ shared_examples "DeadJobs" do
 
   let(:csv) do
     <<~CSV
-      register_id,trainee_name,trainee_trn,trainee_dob,trainee_state,provider_name,provider_ukprn,error_message,job_id
-      #{trainee.id},#{trainee.full_name},#{trainee.trn},#{trainee.date_of_birth.strftime('%F')},#{trainee.state},#{trainee.provider.name},#{trainee.provider.ukprn},"{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}",jobid1234
+      job_id,register_id,trainee_name,trainee_trn,trainee_dob,trainee_state,provider_name,provider_ukprn,error_message
+      jobid1234,#{trainee.id},#{trainee.full_name},#{trainee.trn},#{trainee.date_of_birth.strftime('%F')},#{trainee.state},#{trainee.provider.name},#{trainee.provider.ukprn},"{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}"
+    CSV
+  end
+
+  let(:csv) do
+    <<~CSV
+      job_id,register_id,trainee_name,trainee_trn,trainee_dob,trainee_state,provider_name,provider_ukprn,error_message,dqt_status
+      jobid1234,#{trainee.id},#{trainee.full_name},#{trainee.trn},#{trainee.date_of_birth.strftime('%F')},#{trainee.state},#{trainee.provider.name},#{trainee.provider.ukprn},"{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}"
     CSV
   end
 
   let(:headers) { %i[register_id trainee_name trainee_trn trainee_dob trainee_state provider_name provider_ukprn] }
 
   describe "#to_csv" do
-    it "returns the expected CSV" do
-      expect(service.to_csv).to eq(csv)
+    context "not including dqt status" do
+      it "returns the expected CSV" do
+        expect(service.to_csv).to eq(csv)
+      end
+    end
+
+    context "including DQT status" do
+      let(:include_dqt_status) { true }
+
+      before do
+        allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee:).and_return(
+          { "initial_teacher_training" => { "result" => "the result" } },
+        )
+      end
+
+      it "returns the expected CSV" do
+        expect(service.to_csv).to eq(csv_with_dqt_status)
+      end
     end
   end
 

@@ -9,7 +9,7 @@
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header"></th>
-        <th scope="col" class="govuk-table__header">Count</th>
+        <th scope="col" class="govuk-table__header"></th>
         <th scope="col" class="govuk-table__header"></th>
       </tr>
     </thead>
@@ -28,15 +28,21 @@
           <td class="govuk-table__cell">
             <% unless service.count.zero? %>
               <%= render GovukButtonLinkTo::View.new(
+                body: "View",
+                url: dead_job_path(service.class),
+                class_option: "govuk-!-margin-bottom-0",
+              ) %>
+
+              <%= render GovukButtonLinkTo::View.new(
                 body: "Download (.csv)",
                 url: dead_job_path(service.class, format: :csv),
                 class_option: "govuk-!-margin-bottom-0",
               ) %>
 
               <%= render GovukButtonLinkTo::View.new(
-                body: "View",
-                url: dead_job_path(service.class),
-                class_option: "govuk-!-margin-bottom-0",
+                body: "Download (.csv) with DQT status",
+                url: dead_job_path(service.class, format: :csv, include_dqt_status: true),
+                class_option: "govuk-!-margin-bottom-0 govuk-button--warning",
               ) %>
               <% end %>
           </td>
