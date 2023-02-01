@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: funding_payment_schedule_rows
+#
+#  id                          :bigint           not null, primary key
+#  description                 :string
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  funding_payment_schedule_id :integer
+#
+# Indexes
+#
+#  index_payment_schedule_rows_on_funding_payment_schedule_id  (funding_payment_schedule_id)
+#
 module Funding
   class PaymentScheduleRow < ApplicationRecord
     self.table_name = "funding_payment_schedule_rows"

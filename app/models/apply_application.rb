@@ -1,5 +1,25 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: apply_applications
+#
+#  id                     :bigint           not null, primary key
+#  accredited_body_code   :string
+#  application            :jsonb
+#  invalid_data           :jsonb
+#  recruitment_cycle_year :integer
+#  state                  :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  apply_id               :integer          not null
+#
+# Indexes
+#
+#  index_apply_applications_on_accredited_body_code    (accredited_body_code)
+#  index_apply_applications_on_apply_id                (apply_id) UNIQUE
+#  index_apply_applications_on_recruitment_cycle_year  (recruitment_cycle_year)
+#
 class ApplyApplication < ApplicationRecord
   belongs_to :provider, foreign_key: :accredited_body_code, primary_key: :code, inverse_of: :apply_applications, optional: true
 

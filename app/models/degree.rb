@@ -1,5 +1,40 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: degrees
+#
+#  id               :bigint           not null, primary key
+#  country          :string
+#  grade            :string
+#  grade_uuid       :uuid
+#  graduation_year  :integer
+#  institution      :string
+#  institution_uuid :uuid
+#  locale_code      :integer          not null
+#  non_uk_degree    :string
+#  other_grade      :text
+#  slug             :citext           not null
+#  subject          :string
+#  subject_uuid     :uuid
+#  uk_degree        :string
+#  uk_degree_uuid   :uuid
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  dttp_id          :uuid
+#  trainee_id       :bigint           not null
+#
+# Indexes
+#
+#  index_degrees_on_dttp_id      (dttp_id)
+#  index_degrees_on_locale_code  (locale_code)
+#  index_degrees_on_slug         (slug) UNIQUE
+#  index_degrees_on_trainee_id   (trainee_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (trainee_id => trainees.id)
+#
 class Degree < ApplicationRecord
   include Sluggable
 

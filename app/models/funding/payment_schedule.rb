@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: funding_payment_schedules
+#
+#  id           :bigint           not null, primary key
+#  payable_type :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  payable_id   :integer
+#
+# Indexes
+#
+#  index_funding_payment_schedules_on_payable_id_and_payable_type  (payable_id,payable_type)
+#
 module Funding
   class PaymentSchedule < ApplicationRecord
     self.table_name = "funding_payment_schedules"

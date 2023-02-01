@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: academic_cycles
+#
+#  id         :bigint           not null, primary key
+#  end_date   :date             not null
+#  start_date :date             not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  academic_cycles_date_range  (tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)) USING gist
+#
 class AcademicCycle < ApplicationRecord
   has_many :funding_methods
 

@@ -1,5 +1,38 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: courses
+#
+#  id                     :bigint           not null, primary key
+#  accredited_body_code   :string           not null
+#  code                   :string           not null
+#  course_length          :string
+#  duration_in_years      :integer          not null
+#  full_time_end_date     :date
+#  full_time_start_date   :date
+#  level                  :integer          not null
+#  max_age                :integer
+#  min_age                :integer
+#  name                   :string           not null
+#  part_time_end_date     :date
+#  part_time_start_date   :date
+#  published_start_date   :date             not null
+#  qualification          :integer          not null
+#  recruitment_cycle_year :integer
+#  route                  :integer          not null
+#  study_mode             :integer
+#  summary                :string           not null
+#  uuid                   :uuid
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_courses_on_code_and_accredited_body_code  (code,accredited_body_code)
+#  index_courses_on_recruitment_cycle_year         (recruitment_cycle_year)
+#  index_courses_on_uuid                           (uuid) UNIQUE
+#
 class Course < ApplicationRecord
   validates :code, presence: true
   validates :name, presence: true

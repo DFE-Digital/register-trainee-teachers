@@ -179,6 +179,7 @@ group :development do
   gem "memory_profiler"
   gem "rack-mini-profiler", require: false
   gem "stackprof"
+  gem "annotate"
 end
 
 group :test do
