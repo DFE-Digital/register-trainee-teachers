@@ -4,6 +4,9 @@ require "rails_helper"
 
 module DeadJobs
   describe DqtRecommendForAward do
-    it_behaves_like "DeadJobs", "Dqt::RecommendForAwardJob", "Dqt recommend for award"
+    it_behaves_like "DeadJobs" do
+      let(:klass) { "Dqt::RecommendForAwardJob" }
+      let(:name) { "DQT Recommend For Award" }
+    end
   end
 end

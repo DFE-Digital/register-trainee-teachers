@@ -11,7 +11,7 @@ Data migrations can/should be tested using production data. To download a copy f
 4. Make sure conduit is installed:
    `cf install-plugin conduit`
 5. Download the db:
-   `cf conduit register-postgres-production -- pg_dump -f register-postgres-production.sql --no-acl --no-owner --clean`
+   `cf conduit register-postgres-13-production -- pg_dump -f register-postgres-production.sql --no-acl --no-owner --clean`
 6. Then import:
    `DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rake db:{drop,create} && psql register_trainee_teacher_data_development < register-postgres-production.sql`
 7. This will have overwritten any migrations you have created for the feature you are working on, if so run
