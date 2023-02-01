@@ -174,12 +174,12 @@ group :development do
   gem "spring-watcher-listen", "~> 2.1.0"
 
   # Profiling
+  gem "annotate"
   gem "benchmark-memory"
   gem "flamegraph"
   gem "memory_profiler"
   gem "rack-mini-profiler", require: false
   gem "stackprof"
-  gem "annotate"
 end
 
 group :test do
