@@ -9,9 +9,11 @@ module Dqt
     let(:trainee) { create(:trainee, :withdrawn, :submitted_for_trn) }
     let(:configured_poll_timeout_days) { 4 }
     let(:timeout_date) { configured_poll_timeout_days.days.from_now }
+    let(:dqt_response) { {} }
 
     before do
       allow(WithdrawTrainee).to receive(:call).with(trainee:).and_return(nil)
+      allow(RetrieveTeacher).to receive(:call).with(trainee:).and_return(dqt_response)
     end
 
     context "with the `integrate_with_dqt` feature flag inactive" do
@@ -41,6 +43,15 @@ module Dqt
         it "doesn't queue another job" do
           described_class.perform_now(trainee, timeout_date)
           expect(WithdrawTraineeJob).not_to have_been_enqueued
+        end
+
+        context "trainee is already withdrawn in DQT" do
+          let(:dqt_response) { { "initial_teacher_training" => { "result" => "Withdrawn" } } }
+
+          it "doesn't call the WithdrawTrainee service" do
+            expect(WithdrawTrainee).not_to receive(:call).with(trainee:)
+            described_class.perform_now(trainee, timeout_date)
+          end
         end
       end
 
