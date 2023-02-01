@@ -1,5 +1,20 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: validation_errors
+#
+#  id          :bigint           not null, primary key
+#  details     :jsonb
+#  form_object :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :bigint
+#
+# Indexes
+#
+#  index_validation_errors_on_user_id  (user_id)
+#
 class ValidationError < ApplicationRecord
   validates :form_object, presence: true
 

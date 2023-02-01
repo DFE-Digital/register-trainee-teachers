@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: hesa_collection_requests
+#
+#  id                   :bigint           not null, primary key
+#  collection_reference :string
+#  requested_at         :datetime
+#  response_body        :text
+#  state                :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+# Indexes
+#
+#  index_hesa_collection_requests_on_state  (state)
+#
 module Hesa
   class CollectionRequest < ApplicationRecord
     self.table_name = "hesa_collection_requests"

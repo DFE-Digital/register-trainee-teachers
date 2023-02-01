@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: dttp_degree_qualifications
+#
+#  id              :bigint           not null, primary key
+#  response        :jsonb
+#  state           :integer          default("importable")
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  contact_dttp_id :uuid
+#  dttp_id         :uuid             not null
+#
+# Indexes
+#
+#  index_dttp_degree_qualifications_on_dttp_id  (dttp_id) UNIQUE
+#
 module Dttp
   class DegreeQualification < ApplicationRecord
     self.table_name = "dttp_degree_qualifications"

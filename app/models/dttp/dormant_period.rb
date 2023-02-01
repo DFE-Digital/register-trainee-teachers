@@ -1,5 +1,20 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: dttp_dormant_periods
+#
+#  id                           :bigint           not null, primary key
+#  response                     :jsonb
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  dttp_id                      :uuid             not null
+#  placement_assignment_dttp_id :uuid
+#
+# Indexes
+#
+#  index_dttp_dormant_periods_on_dttp_id  (dttp_id) UNIQUE
+#
 module Dttp
   class DormantPeriod < ApplicationRecord
     self.table_name = "dttp_dormant_periods"

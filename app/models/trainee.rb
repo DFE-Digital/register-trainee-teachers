@@ -1,5 +1,124 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: trainees
+#
+#  id                              :bigint           not null, primary key
+#  additional_dttp_data            :jsonb
+#  additional_ethnic_background    :text
+#  additional_withdraw_reason      :string
+#  address_line_one                :text
+#  address_line_two                :text
+#  applying_for_bursary            :boolean
+#  applying_for_grant              :boolean
+#  applying_for_scholarship        :boolean
+#  awarded_at                      :datetime
+#  bursary_tier                    :integer
+#  commencement_status             :integer
+#  course_education_phase          :integer
+#  course_max_age                  :integer
+#  course_min_age                  :integer
+#  course_subject_one              :text
+#  course_subject_three            :text
+#  course_subject_two              :text
+#  course_uuid                     :uuid
+#  created_from_dttp               :boolean          default(FALSE), not null
+#  created_from_hesa               :boolean          default(FALSE), not null
+#  date_of_birth                   :date
+#  defer_date                      :date
+#  disability_disclosure           :integer
+#  discarded_at                    :datetime
+#  diversity_disclosure            :integer
+#  dttp_update_sha                 :string
+#  ebacc                           :boolean          default(FALSE)
+#  email                           :text
+#  employing_school_not_applicable :boolean          default(FALSE)
+#  ethnic_background               :text
+#  ethnic_group                    :integer
+#  first_names                     :text
+#  hesa_updated_at                 :datetime
+#  international_address           :text
+#  iqts_country                    :string
+#  itt_end_date                    :date
+#  itt_start_date                  :date
+#  last_name                       :text
+#  lead_school_not_applicable      :boolean          default(FALSE)
+#  locale_code                     :integer
+#  middle_names                    :text
+#  outcome_date                    :date
+#  postcode                        :text
+#  progress                        :jsonb
+#  recommended_for_award_at        :datetime
+#  record_source                   :string
+#  region                          :string
+#  reinstate_date                  :date
+#  sex                             :integer
+#  slug                            :citext           not null
+#  state                           :integer          default("draft")
+#  study_mode                      :integer
+#  submission_ready                :boolean          default(FALSE)
+#  submitted_for_trn_at            :datetime
+#  town_city                       :text
+#  trainee_start_date              :date
+#  training_initiative             :integer
+#  training_route                  :integer
+#  trn                             :string
+#  withdraw_date                   :datetime
+#  withdraw_reason                 :integer
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  apply_application_id            :bigint
+#  course_allocation_subject_id    :bigint
+#  dormancy_dttp_id                :uuid
+#  dttp_id                         :uuid
+#  employing_school_id             :bigint
+#  end_academic_cycle_id           :bigint
+#  hesa_id                         :string
+#  hesa_trn_submission_id          :bigint
+#  lead_school_id                  :bigint
+#  placement_assignment_dttp_id    :uuid
+#  provider_id                     :bigint           not null
+#  start_academic_cycle_id         :bigint
+#  trainee_id                      :text
+#
+# Indexes
+#
+#  index_trainees_on_apply_application_id                          (apply_application_id)
+#  index_trainees_on_course_allocation_subject_id                  (course_allocation_subject_id)
+#  index_trainees_on_course_uuid                                   (course_uuid)
+#  index_trainees_on_disability_disclosure                         (disability_disclosure)
+#  index_trainees_on_discarded_at                                  (discarded_at)
+#  index_trainees_on_discarded_at__record_source__provider__state  (discarded_at,record_source,provider_id,state)
+#  index_trainees_on_diversity_disclosure                          (diversity_disclosure)
+#  index_trainees_on_dttp_id                                       (dttp_id)
+#  index_trainees_on_employing_school_id                           (employing_school_id)
+#  index_trainees_on_end_academic_cycle_id                         (end_academic_cycle_id)
+#  index_trainees_on_ethnic_group                                  (ethnic_group)
+#  index_trainees_on_hesa_id                                       (hesa_id)
+#  index_trainees_on_hesa_trn_submission_id                        (hesa_trn_submission_id)
+#  index_trainees_on_lead_school_id                                (lead_school_id)
+#  index_trainees_on_locale_code                                   (locale_code)
+#  index_trainees_on_progress                                      (progress) USING gin
+#  index_trainees_on_provider_id                                   (provider_id)
+#  index_trainees_on_sex                                           (sex)
+#  index_trainees_on_slug                                          (slug) UNIQUE
+#  index_trainees_on_start_academic_cycle_id                       (start_academic_cycle_id)
+#  index_trainees_on_state                                         (state)
+#  index_trainees_on_training_route                                (training_route)
+#  index_trainees_on_trn                                           (trn)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (apply_application_id => apply_applications.id)
+#  fk_rails_...  (course_allocation_subject_id => allocation_subjects.id)
+#  fk_rails_...  (employing_school_id => schools.id)
+#  fk_rails_...  (end_academic_cycle_id => academic_cycles.id)
+#  fk_rails_...  (hesa_trn_submission_id => hesa_trn_submissions.id)
+#  fk_rails_...  (lead_school_id => schools.id)
+#  fk_rails_...  (provider_id => providers.id)
+#  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
+#
 class Trainee < ApplicationRecord
   include Sluggable
   include PgSearch::Model

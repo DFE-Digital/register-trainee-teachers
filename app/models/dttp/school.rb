@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: dttp_schools
+#
+#  id          :bigint           not null, primary key
+#  name        :string
+#  status_code :integer
+#  urn         :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  dttp_id     :string
+#
+# Indexes
+#
+#  index_dttp_schools_on_dttp_id  (dttp_id) UNIQUE
+#
 module Dttp
   class School < ApplicationRecord
     self.table_name = "dttp_schools"

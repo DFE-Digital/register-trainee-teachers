@@ -174,6 +174,7 @@ group :development do
   gem "spring-watcher-listen", "~> 2.1.0"
 
   # Profiling
+  gem "annotate"
   gem "benchmark-memory"
   gem "flamegraph"
   gem "memory_profiler"

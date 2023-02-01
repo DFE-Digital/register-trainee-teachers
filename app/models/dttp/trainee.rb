@@ -1,5 +1,22 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: dttp_trainees
+#
+#  id               :bigint           not null, primary key
+#  response         :jsonb
+#  state            :integer          default("importable")
+#  status           :uuid
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  dttp_id          :uuid             not null
+#  provider_dttp_id :uuid
+#
+# Indexes
+#
+#  index_dttp_trainees_on_dttp_id  (dttp_id) UNIQUE
+#
 module Dttp
   class Trainee < ApplicationRecord
     self.table_name = "dttp_trainees"

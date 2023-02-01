@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: schools
+#
+#  id          :bigint           not null, primary key
+#  close_date  :date
+#  lead_school :boolean          not null
+#  name        :string           not null
+#  open_date   :date
+#  postcode    :string
+#  searchable  :tsvector
+#  town        :string
+#  urn         :string           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+# Indexes
+#
+#  index_schools_on_close_date   (close_date) WHERE (close_date IS NULL)
+#  index_schools_on_lead_school  (lead_school) WHERE (lead_school IS TRUE)
+#  index_schools_on_searchable   (searchable) USING gin
+#  index_schools_on_urn          (urn) UNIQUE
+#
 class School < ApplicationRecord
   include PgSearch::Model
 

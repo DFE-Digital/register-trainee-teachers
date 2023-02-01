@@ -1,5 +1,24 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: providers
+#
+#  id                 :bigint           not null, primary key
+#  apply_sync_enabled :boolean          default(FALSE)
+#  code               :string
+#  name               :string           not null
+#  ukprn              :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  accreditation_id   :string
+#  dttp_id            :uuid
+#
+# Indexes
+#
+#  index_providers_on_accreditation_id  (accreditation_id) UNIQUE
+#  index_providers_on_dttp_id           (dttp_id) UNIQUE
+#
 class Provider < ApplicationRecord
   has_many :provider_users, inverse_of: :provider
   has_many :users, through: :provider_users

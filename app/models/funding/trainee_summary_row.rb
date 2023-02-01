@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: funding_trainee_summary_rows
+#
+#  id                         :bigint           not null, primary key
+#  cohort_level               :string
+#  lead_school_name           :string
+#  lead_school_urn            :string
+#  route                      :string
+#  subject                    :string
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  funding_trainee_summary_id :integer
+#
+# Indexes
+#
+#  index_trainee_summary_rows_on_trainee_summary_id  (funding_trainee_summary_id)
+#
 module Funding
   class TraineeSummaryRow < ApplicationRecord
     self.table_name = "funding_trainee_summary_rows"

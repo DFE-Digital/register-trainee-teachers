@@ -1,5 +1,25 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: funding_methods
+#
+#  id                :bigint           not null, primary key
+#  amount            :integer          not null
+#  funding_type      :integer
+#  training_route    :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  academic_cycle_id :bigint
+#
+# Indexes
+#
+#  index_funding_methods_on_academic_cycle_id  (academic_cycle_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (academic_cycle_id => academic_cycles.id)
+#
 class FundingMethod < ApplicationRecord
   belongs_to :academic_cycle
 
