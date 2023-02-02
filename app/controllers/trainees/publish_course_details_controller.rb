@@ -47,7 +47,7 @@ module Trainees
       year ||= @trainee.published_course&.recruitment_cycle_year
       year ||= Settings.current_default_course_year
 
-      course_years_form = CourseYearsForm.new(course_year: year)
+      course_years_form = CourseYearsForm.new(trainee: trainee, params: { course_year: year })
       if course_years_form.valid?
         @course_year = course_years_form.course_year
       else

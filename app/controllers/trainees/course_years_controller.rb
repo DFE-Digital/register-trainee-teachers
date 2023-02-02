@@ -3,11 +3,11 @@
 module Trainees
   class CourseYearsController < BaseController
     def edit
-      @course_years_form = CourseYearsForm.new
+      @course_years_form = CourseYearsForm.new(trainee:)
     end
 
     def update
-      @course_years_form = CourseYearsForm.new(course_years_params)
+      @course_years_form = CourseYearsForm.new(trainee: trainee, params: course_years_params)
       if @course_years_form.valid?
         Trainees::Update.call(trainee: trainee, params: { course_uuid: nil })
         redirect_to(edit_trainee_publish_course_details_path(trainee, year: @course_years_form.course_year))

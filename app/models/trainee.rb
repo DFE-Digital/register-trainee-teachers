@@ -424,6 +424,12 @@ class Trainee < ApplicationRecord
     provider.courses.where(route: training_route).order(:name) if TRAINING_ROUTES_FOR_COURSE.keys.include?(training_route)
   end
 
+  def current_course
+    return unless course_uuid
+
+    available_courses&.find_by(uuid: course_uuid)
+  end
+
   def clear_disabilities
     disabilities.clear
   end
