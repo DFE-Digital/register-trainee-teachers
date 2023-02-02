@@ -202,6 +202,16 @@ trainee.audits.last.destroy # if appropriate
 
 Register support may need to communicate with the trainee and provider to ensure that they understand the error and the resolution.
 
+## HESA integration
+
+Sometimes we receive TRNs from HESA. These TRNs cannot be trusted as they are entered by providers, and may be incorrect. Only DQT should be the source of TRNs. You might see this alert in Sentry:
+
+`HESA TRN (2181587) different to trainee TRN (2159484)`
+
+We might want to start looking at the mismatches and letting providers know they are inputting the wrong TRN.
+
+We made a decision to disregard TRNs sent from HESA. If we receive a TRN for a trainee from HESA, and we do not already have a TRN for them in Register, we kick off a RegisterForTrnJob to DQT to get the correct TRN. 
+
 ## Managing the siqekiq queue
 
 ### via the UI
