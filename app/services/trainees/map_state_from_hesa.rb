@@ -7,7 +7,7 @@ module Trainees
     def initialize(hesa_trainee:, trainee:)
       @hesa_trainee = hesa_trainee
       @trainee = trainee
-      @trn = trainee.trn || hesa_trainee[:trn]
+      @trn = trainee.trn
     end
 
     def call
@@ -39,6 +39,9 @@ module Trainees
     end
 
     def trn_received?
+      # Whilst providers can provide a TRN, it's not to be trusted. Only Register and DQT are
+      # responsible for the allocation of TRNs. Therefore we do not check for the presence of
+      # TRN in the HESA trainee data.
       (reason_for_leaving.blank? || completed_with_unknown_result?) && trn.present?
     end
 
