@@ -1,0 +1,80 @@
+<div class="app-summary-card__body">
+  <dl class="govuk-summary-list" style="overflow:hidden;">
+    <% if dqt_data.present? %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= dqt_data["name"] %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Date of birth
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= Date.parse(dqt_data["dob"]).strftime("%e %B %Y") %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          ITT result
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= dqt_data["initial_teacher_training"]["result"] %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          QTS date
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= dqt_data["qts_date"].present? ? Date.parse(dqt_data["qts_date"]) : "-" %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Full API response
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                <%= date %>
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <h3 class="govuk-heading-m">General</h3>
+              <%= govuk_summary_list(rows: general) %>
+
+              <h3 class="govuk-heading-m govuk-!-margin-top-6">Qualified teacher status</h3>
+              <%= govuk_summary_list(rows: qualified_teacher_status) %>
+
+              <h3 class="govuk-heading-m govuk-!-margin-top-6">Induction</h3>
+              <% if induction.present? %>
+                <%= govuk_summary_list(rows: induction) %>
+              <% else %>
+                No induction data
+              <% end %>
+
+              <h3 class="govuk-heading-m govuk-!-margin-top-6">Initial teacher training</h3>
+              <%= govuk_summary_list(rows: initial_teacher_training) %>
+
+              <h3 class="govuk-heading-m govuk-!-margin-top-6"><%= "Qualification".pluralize(qualification_count) %></h3>
+              <%= govuk_summary_list(rows: qualifications) %>
+            </div>
+          </details>
+        </dd>
+      </div>
+    <% else %>
+      <p class="govuk-body">
+        Data not available
+      </p>
+    <% end %>
+  </dl>
+</div>
