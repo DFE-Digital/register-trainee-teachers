@@ -11,7 +11,7 @@ module Degrees
     TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS
     INSTITUTIONS = DfE::ReferenceData::Degrees::INSTITUTIONS_INCLUDING_GENERICS
 
-    SUPPORTED_GRADES_BY_HESA_CODES = %w[1 2 3 5 12 13 14].freeze
+    SUPPORTED_GRADES_BY_HESA_CODES = %w[01 02 03 05 12 13 14].freeze
 
     SUPPORTED_GRADES = GRADES.all_as_hash.select { |_, item|
       SUPPORTED_GRADES_BY_HESA_CODES.include?(item[:hesa_code])
