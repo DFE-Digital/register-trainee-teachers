@@ -37,7 +37,7 @@ module Degrees
         hesa_degrees.each do |hesa_degree|
           next unless importable?(hesa_degree)
 
-          subject = DfEReference.find_subject(hecos_code: hesa_degree[:subject])
+          subject = DfEReference.find_subject(hecos_code: hesa_degree[:subject_one])
           degree = trainee.degrees.new(
             subject: subject&.name,
             subject_uuid: subject&.id,

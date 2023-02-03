@@ -35,7 +35,7 @@ module Degrees
             {
               graduation_date: "2003-06-01",
               degree_type: "400",
-              subject: "100485",
+              subject_one: "100485",
               institution: nil,
               grade: "02",
               country: "XF",
@@ -63,7 +63,7 @@ module Degrees
             {
               graduation_date: "2003-06-01",
               degree_type: "400",
-              subject: "100485",
+              subject_one: "100485",
               institution: nil,
               grade: "02",
               country: nil,
@@ -91,7 +91,7 @@ module Degrees
             {
               graduation_date: "2003-06-01",
               degree_type: "400",
-              subject: "100485",
+              subject_one: "100485",
               institution: "0429",
               grade: "02",
               country: nil,
@@ -118,7 +118,7 @@ module Degrees
               {
                 graduation_date: "2003-06-01",
                 degree_type: "400",
-                subject: "100485",
+                subject_one: "100485",
                 institution: "0045",
                 grade: "02",
                 country: nil,
@@ -139,7 +139,7 @@ module Degrees
             {
               graduation_date: "2003-06-01",
               degree_type: "400",
-              subject: "100485",
+              subject_one: "100485",
               institution: "0133",
               grade: "02",
               country: nil,
@@ -157,7 +157,7 @@ module Degrees
           [{
             graduation_date: "2004-12-01",
             degree_type: "205",
-            subject: "100403",
+            subject_one: "100403",
             institution: nil,
             grade: "14",
             country: "IN",
@@ -184,7 +184,7 @@ module Degrees
               {
                 graduation_date: nil,
                 degree_type: "999",
-                subject: nil,
+                subject_one: nil,
                 institution: nil,
                 grade: nil,
                 country: nil,
@@ -203,7 +203,7 @@ module Degrees
               {
                 graduation_date: nil,
                 degree_type: "999",
-                subject: nil,
+                subject_one: nil,
                 institution: nil,
                 grade: "14",
                 country: nil,
@@ -224,7 +224,7 @@ module Degrees
             {
               graduation_date: "2003-06-01",
               degree_type: "007",
-              subject: "100485",
+              subject_one: "100485",
               institution: "00429",
               grade: "02",
               country: nil,

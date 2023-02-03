@@ -48,6 +48,18 @@ module Hesa
         disability7: "F_DISABLE7",
         disability8: "F_DISABLE8",
         disability9: "F_DISABLE9",
+        itt_key: "F_ITTKEY",
+        rec_id: "F_RECID",
+        status: "F_STATUS",
+        allocated_place: "F_ALLPLACE",
+        provider_course_id: "F_COURSEID",
+        initiatives_two: "F_INITIATIVES2",
+        ni_number: "F_NIN",
+        numhus: "F_NUMHUS",
+        previous_surname: "F_PSURNAME",
+        surname16: "F_SNAME16",
+        ttcid: "F_TTCID",
+        hesa_committed_at: "F_COMMIT_TIMESTAMP",
       }.freeze
 
       class << self
@@ -73,7 +85,9 @@ module Hesa
             {
               graduation_date: qualification["F_DEGENDDT"],
               degree_type: qualification["F_DEGTYPE"],
-              subject: qualification["F_DEGSBJ1"],
+              subject_one: qualification["F_DEGSBJ1"],
+              subject_two: qualification["F_DEGSBJ2"],
+              subject_three: qualification["F_DEGSBJ3"],
               institution: qualification["F_DEGEST"],
               grade: qualification["F_DEGCLSS"],
               country: qualification["F_DEGCTRY"],
@@ -85,6 +99,7 @@ module Hesa
           [placements&.values].flatten.compact.map do |placement|
             {
               school_urn: placement["F_PLMNTSCH"],
+              placement_days: placement["F_PLMNTDYS"],
             }
           end
         end
