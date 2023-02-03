@@ -246,6 +246,18 @@
   - disability7
   - disability8
   - disability9
+  - itt_key
+  - rec_id
+  - status
+  - allocated_place
+  - provider_course_id
+  - initiatives_two
+  - ni_number
+  - numhus
+  - previous_surname
+  - surname16
+  - ttcid
+  - hesa_committed_at
   :hesa_trn_requests:
   - id
   - collection_reference

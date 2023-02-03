@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_12_113144) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_01_26_110151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -525,6 +524,19 @@ ActiveRecord::Schema.define(version: 2022_12_12_113144) do
     t.string "disability7"
     t.string "disability8"
     t.string "disability9"
+    t.string "itt_key"
+    t.string "rec_id"
+    t.string "status"
+    t.string "allocated_place"
+    t.string "provider_course_id"
+    t.string "initiatives_two"
+    t.string "ni_number"
+    t.string "numhus"
+    t.string "previous_surname"
+    t.string "surname16"
+    t.string "ttcid"
+    t.string "hesa_committed_at"
+    t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
 
   create_table "hesa_trn_requests", force: :cascade do |t|
