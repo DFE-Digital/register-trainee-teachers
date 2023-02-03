@@ -15,6 +15,8 @@ module DqtDataSummary
     end
 
     def qualified_teacher_status
+      return [] if dqt_data["qualified_teacher_status"].nil?
+
       @qualified_teacher_status ||= summarise(dqt_data["qualified_teacher_status"])
     end
 
@@ -40,6 +42,18 @@ module DqtDataSummary
       return if dqt_data["qualifications"].empty?
 
       dqt_data["qualifications"].count
+    end
+
+    def itt_result
+      dqt_data["initial_teacher_training"].present? ? dqt_data["initial_teacher_training"]["result"] : "-"
+    end
+
+    def qts_date
+      dqt_data["qts_date"].present? ? Date.parse(dqt_data["qts_date"]) : "-"
+    end
+
+    def date_of_birth
+      Date.parse(dqt_data["dob"]).strftime("%e %B %Y")
     end
 
     # 4 December 2022 at 1:07pm

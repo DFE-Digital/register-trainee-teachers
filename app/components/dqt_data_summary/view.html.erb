@@ -15,7 +15,7 @@
           Date of birth
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= Date.parse(dqt_data["dob"]).strftime("%e %B %Y") %>
+          <%= date_of_birth %>
         </dd>
       </div>
 
@@ -24,7 +24,7 @@
           ITT result
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= dqt_data["initial_teacher_training"]["result"] %>
+          <%= itt_result %>
         </dd>
       </div>
 
@@ -33,7 +33,7 @@
           QTS date
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= dqt_data["qts_date"].present? ? Date.parse(dqt_data["qts_date"]) : "-" %>
+          <%= qts_date %>
         </dd>
       </div>
 
@@ -53,20 +53,37 @@
               <%= govuk_summary_list(rows: general) %>
 
               <h3 class="govuk-heading-m govuk-!-margin-top-6">Qualified teacher status</h3>
-              <%= govuk_summary_list(rows: qualified_teacher_status) %>
+
+              <% if qualified_teacher_status.present? %>
+                <%= govuk_summary_list(rows: qualified_teacher_status) %>
+              <% else %>
+                No data
+              <% end %>
 
               <h3 class="govuk-heading-m govuk-!-margin-top-6">Induction</h3>
+
               <% if induction.present? %>
                 <%= govuk_summary_list(rows: induction) %>
               <% else %>
-                No induction data
+                No data
               <% end %>
 
               <h3 class="govuk-heading-m govuk-!-margin-top-6">Initial teacher training</h3>
-              <%= govuk_summary_list(rows: initial_teacher_training) %>
 
-              <h3 class="govuk-heading-m govuk-!-margin-top-6"><%= "Qualification".pluralize(qualification_count) %></h3>
-              <%= govuk_summary_list(rows: qualifications) %>
+              <% if initial_teacher_training.present? %>
+                <%= govuk_summary_list(rows: initial_teacher_training) %>
+              <% else %>
+                No data
+              <% end %>
+
+              <h3 class="govuk-heading-m govuk-!-margin-top-6 govuk-!-margin-bottom-4"><%= "Qualification".pluralize(qualification_count) %></h3>
+
+              <% if qualifications.present? %>
+                <%= govuk_summary_list(rows: qualifications) %>
+              <% else %>
+                No data
+              <% end %>
+
             </div>
           </details>
         </dd>
