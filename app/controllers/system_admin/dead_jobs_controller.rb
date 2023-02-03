@@ -2,7 +2,7 @@
 
 module SystemAdmin
   class DeadJobsController < ApplicationController
-    helper_method :dead_job_service, :dead_job_services
+    helper_method :dead_job_service, :dead_job_services, :trainees
 
     def show
       respond_to do |format|
@@ -21,6 +21,10 @@ module SystemAdmin
 
     def dead_job_service
       @dead_job_service ||= params[:id]&.constantize&.new(include_dqt_status:)
+    end
+
+    def trainees
+      @trainees = Kaminari.paginate_array(dead_job_service.trainees).page(params[:page] || 1)
     end
 
     def include_dqt_status
