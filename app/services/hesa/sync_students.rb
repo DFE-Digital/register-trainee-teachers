@@ -20,7 +20,10 @@ module Hesa
 
         student_node = Nokogiri::XML(node.outer_xml).at("./Student")
         hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node:)
-        hesa_student = Hesa::Student.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
+        hesa_student = Hesa::Student.find_or_initialize_by(
+          hesa_id: hesa_trainee[:hesa_id],
+          rec_id: hesa_trainee[:rec_id],
+        )
         hesa_student.assign_attributes(hesa_trainee)
         hesa_student.collection_reference = collection_reference
         hesa_student.save

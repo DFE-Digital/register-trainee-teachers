@@ -31,6 +31,14 @@ module Hesa
           expect { described_class.call }.not_to raise_error(Nokogiri::XML::SyntaxError)
         end
       end
+
+      context "hesa record spanning two collections" do
+        let!(:hesa_student) { create(:hesa_student, hesa_id: "0310261553101", rec_id: "16054") }
+
+        it "creates new collection record" do
+          expect { described_class.call }.to change { Student.count }.from(1).to(2)
+        end
+      end
     end
   end
 end

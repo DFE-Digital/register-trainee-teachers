@@ -5,8 +5,9 @@ module Hesa
     include ServicePattern
 
     def initialize(trainee:)
+      @collection_reference = Settings.hesa.current_collection_reference
       @trainee = trainee
-      @hesa_student = trainee.hesa_student
+      @hesa_student = trainee.hesa_student_for_collection(collection_reference)
     end
 
     def call
@@ -17,7 +18,7 @@ module Hesa
 
   private
 
-    attr_reader :hesa_student, :trainee
+    attr_reader :hesa_student, :trainee, :collection_reference
 
     def withdrawn?
       [

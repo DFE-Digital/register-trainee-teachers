@@ -134,13 +134,6 @@ class Trainee < ApplicationRecord
              inverse_of: :trainee,
              class_name: "Dttp::Trainee"
 
-  belongs_to :hesa_student,
-             foreign_key: :hesa_id,
-             primary_key: :hesa_id,
-             optional: true,
-             inverse_of: :trainee,
-             class_name: "Hesa::Student"
-
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
   belongs_to :course_allocation_subject, optional: true, class_name: "AllocationSubject"
@@ -162,6 +155,12 @@ class Trainee < ApplicationRecord
   has_many :nationalities, through: :nationalisations
   has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
   has_many :disabilities, through: :trainee_disabilities
+
+  has_many :hesa_students,
+           foreign_key: :hesa_id,
+           primary_key: :hesa_id,
+           inverse_of: :trainee,
+           class_name: "Hesa::Student"
 
   has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
   has_one :dqt_trn_request, class_name: "Dqt::TrnRequest", dependent: :destroy

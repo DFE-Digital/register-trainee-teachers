@@ -81,7 +81,7 @@ module Hesa
     belongs_to :trainee,
                foreign_key: :hesa_id,
                primary_key: :hesa_id,
-               inverse_of: :hesa_student,
+               inverse_of: :hesa_students,
                optional: true
   end
 end
