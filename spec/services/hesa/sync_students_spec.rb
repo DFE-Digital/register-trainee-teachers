@@ -39,6 +39,28 @@ module Hesa
           expect { described_class.call }.to change { Student.count }.from(1).to(2)
         end
       end
+
+      context "with an optional upload" do
+        let(:filename) { "itt_record.xml" }
+        let(:upload) { create(:upload, name: filename, file: nil) }
+
+        before do
+          upload.file.attach(
+            io: File.open(xml_file_path),
+            filename: filename, content_type: "text/xml"
+          )
+        end
+
+        it "uses the uploaded xml to create students" do
+          expect { described_class.call(upload_id: upload.id) }.to change { Student.count }.from(0).to(1)
+        end
+
+        it "sets collection reference correctly" do
+          described_class.call(upload_id: upload.id)
+
+          expect(Student.first.collection_reference).to eq("C16053")
+        end
+      end
     end
   end
 end
