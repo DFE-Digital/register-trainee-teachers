@@ -14,7 +14,29 @@ module DqtDataSummary
       end
     end
 
-    context "when has_errors is false" do
+    context "when there is some missing data" do
+      let(:dqt_data) do
+        {
+          "trn" => "1234567",
+          "qualified_teacher_status" => nil,
+          "induction" => nil,
+          "initial_teacher_training" => nil,
+          "qualifications" => [],
+          "name" => "Abigail McPhillips",
+          "dob" => "1990-04-27T00:00:00",
+        }
+      end
+
+      before do
+        render_inline(described_class.new(dqt_data:))
+      end
+
+      it "renders 'Data not available' content" do
+        expect(rendered_component).to have_text("No data")
+      end
+    end
+
+    context "when there is data" do
       let(:dqt_data) do
         {
           "trn" => "1234567",
@@ -53,7 +75,7 @@ module DqtDataSummary
 
       it "renders the data" do
         expect(rendered_component).to have_text("Abigail McPhillips")
-        expect(rendered_component).to have_text("No induction data")
+        expect(rendered_component).to have_text("No data")
         expect(rendered_component).to have_text("In Training")
         expect(rendered_component).to have_text("First Degree")
       end
