@@ -49,11 +49,15 @@ module DqtDataSummary
     end
 
     def qts_date
-      dqt_data["qts_date"].present? ? Date.parse(dqt_data["qts_date"]) : "-"
+      date = dqt_data.dig("qualified_teacher_status", "qts_date")
+
+      date.present? ? Date.parse(date).strftime("%e %B %Y") : "-"
     end
 
     def date_of_birth
-      Date.parse(dqt_data["dob"]).strftime("%e %B %Y")
+      date = dqt_data["dob"]
+
+      date.present? ? Date.parse(dqt_data["dob"]).strftime("%e %B %Y") : "-"
     end
 
     # 4 December 2022 at 1:07pm

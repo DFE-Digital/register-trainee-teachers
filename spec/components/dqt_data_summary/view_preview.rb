@@ -18,7 +18,7 @@ module DqtDataSummary
           "name" => "Trainee Teacher",
           "state" => "Active",
           "state_name" => "Active",
-          "qts_date" => nil,
+          "qts_date" => "2022-09-19",
         },
         "induction" => {
           "start_date" => "2023-09-19T00:00:00Z",
