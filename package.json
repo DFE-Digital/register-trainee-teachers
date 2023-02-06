@@ -14,7 +14,7 @@
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.27.2",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
-    "govuk-frontend": "^4.4.1",
+    "govuk-frontend": "^4.5.0",
     "jquery": "^3.6.3",
     "rails-ujs": "^5.2.8",
     "serialize-javascript": "^6.0.1",
