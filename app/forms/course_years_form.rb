@@ -25,11 +25,15 @@ class CourseYearsForm
 
 private
 
+  def course_year_to
+    Settings.current_default_course_year
+  end
+
   def course_year_from
     [
-      recruitment_cycle_year,
       itt_start_date_year,
       course_year_to - 1,
+      trainee&.trainee_start_date&.year,
     ].compact.min
   end
 
@@ -37,16 +41,6 @@ private
     return unless trainee&.itt_start_date
 
     AcademicCycle.for_date(trainee.itt_start_date).start_year
-  end
-
-  def recruitment_cycle_year
-    return unless trainee&.current_course&.recruitment_cycle_year
-
-    trainee.current_course.recruitment_cycle_year + 1
-  end
-
-  def course_year_to
-    Settings.current_default_course_year
   end
 
   attr_reader :trainee
