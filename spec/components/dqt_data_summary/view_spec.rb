@@ -18,12 +18,15 @@ module DqtDataSummary
       let(:dqt_data) do
         {
           "trn" => "1234567",
-          "qualified_teacher_status" => nil,
-          "induction" => nil,
-          "initial_teacher_training" => nil,
-          "qualifications" => [],
-          "name" => "Abigail McPhillips",
-          "dob" => "1990-04-27T00:00:00",
+          "firstName" => "Abigail",
+          "lastName" => "McPhillips",
+          "dateOfBirth" => "1977-07-17",
+          "nationalInsuranceNumber" => "098765",
+          "hasActiveSanctions" => false,
+          "qtsDate" => "2022-07-18",
+          "eytsDate" => nil,
+          "earlyYearsStatus" => nil,
+          "initialTeacherTraining" => nil,
         }
       end
 
@@ -31,8 +34,9 @@ module DqtDataSummary
         render_inline(described_class.new(dqt_data:))
       end
 
-      it "renders 'Data not available' content" do
-        expect(rendered_component).to have_text("No data")
+      it "renders available data" do
+        expect(rendered_component).to have_text("Abigail")
+        expect(rendered_component).to have_text("McPhillips")
       end
     end
 
@@ -40,32 +44,23 @@ module DqtDataSummary
       let(:dqt_data) do
         {
           "trn" => "1234567",
-          "qualified_teacher_status" => {
-            "name" => "Trainee Teacher",
-            "state" => "Active",
-            "state_name" => "Active",
-            "qts_date" => nil,
-          },
-          "induction" => nil,
-          "initial_teacher_training" => {
-            "state" => "Active",
-            "state_code" => "Active",
-            "programme_start_date" => "2022-09-19T00:00:00Z",
-            "programme_end_date" => "2026-05-22T00:00:00Z",
-            "programme_type" => "Provider-led (undergrad)",
-            "result" => "In Training",
-            "subject1" => "primary teaching",
-            "qualification" => "BA (Hons)",
-            "subject1_code" => "100511",
-          },
-          "qualifications" => [
+          "firstName" => "Abigail",
+          "lastName" => "McPhillips",
+          "dateOfBirth" => "1977-07-17",
+          "nationalInsuranceNumber" => "098765",
+          "hasActiveSanctions" => false,
+          "qtsDate" => "2022-07-18",
+          "eytsDate" => nil,
+          "earlyYearsStatus" => nil,
+          "initialTeacherTraining" => [
             {
-              "name" => "Higher Education",
-              "he_qualification_name" => "First Degree",
+              "programmeStartDate" => "2021-09-06",
+              "programmeEndDate" => "2022-06-17",
+              "programmeType" => "SchoolDirecttrainingprogramme",
+              "result" => "Pass",
+              "provider" => { "ukprn" => "10034789" },
             },
           ],
-          "name" => "Abigail McPhillips",
-          "dob" => "1990-04-27T00:00:00",
         }
       end
 
@@ -74,10 +69,50 @@ module DqtDataSummary
       end
 
       it "renders the data" do
-        expect(rendered_component).to have_text("Abigail McPhillips")
-        expect(rendered_component).to have_text("No data")
-        expect(rendered_component).to have_text("In Training")
-        expect(rendered_component).to have_text("First Degree")
+        expect(rendered_component).to have_text("Abigail")
+        expect(rendered_component).to have_text("McPhillips")
+        expect(rendered_component).to have_text("Pass")
+      end
+    end
+
+    context "when there are multiple training instances" do
+      let(:dqt_data) do
+        {
+          "trn" => "1234567",
+          "firstName" => "Abigail",
+          "lastName" => "McPhillips",
+          "dateOfBirth" => "1977-07-17",
+          "nationalInsuranceNumber" => "098765",
+          "hasActiveSanctions" => false,
+          "qtsDate" => "2022-07-18",
+          "eytsDate" => nil,
+          "earlyYearsStatus" => nil,
+          "initialTeacherTraining" => [
+            {
+              "programmeStartDate" => "2021-09-06",
+              "programmeEndDate" => "2022-06-17",
+              "programmeType" => "SchoolDirecttrainingprogramme",
+              "result" => "Pass",
+              "provider" => { "ukprn" => "10034789" },
+            },
+            {
+              "programmeStartDate" => "2021-09-06",
+              "programmeEndDate" => "2022-06-17",
+              "programmeType" => "SchoolDirecttrainingprogramme",
+              "result" => "Pass",
+              "provider" => { "ukprn" => "10034789" },
+            },
+          ],
+        }
+      end
+
+      before do
+        render_inline(described_class.new(dqt_data:))
+      end
+
+      it "renders them all" do
+        expect(rendered_component).to have_text("Training instance 1")
+        expect(rendered_component).to have_text("Training instance 2")
       end
     end
   end
