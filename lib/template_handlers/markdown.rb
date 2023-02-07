@@ -13,7 +13,7 @@ module TemplateHandlers
       end
 
       def render(text)
-        GovukMarkdown.render(text).html_safe
+        GovukMarkdown.render(text, headings_start_with: "l").html_safe
       end
     end
   end

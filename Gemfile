@@ -108,7 +108,7 @@ gem "auto_strip_attributes"
 
 # Markdown
 gem "front_matter_parser"
-gem "govuk_markdown"
+gem "govuk_markdown", github: "DFE-Digital/govuk_markdown", ref: "f05f305"
 
 gem "mechanize" # interact with HESA
 

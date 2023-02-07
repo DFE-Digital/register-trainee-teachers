@@ -68,3 +68,17 @@ Follow these steps to register a trainee on a physical education with EBacc cour
 When a trainee has successfully completed their training (or completed their assessment for an ‘assessment only’ route) and met the required standards, you can recommend them for QTS or EYTS in Register.
 
 If the trainee’s record is incomplete (there is missing information), the button will not appear, but there will be a prompt to guide you to add the missing information before you can recommend the trainee.
+
+{details}How to find a trainee once you’ve recommended them for QTS or EYTS.Once you’ve recommended a trainee for QTS or EYTS, you’ll find their record by going to the ‘Awarded this year’ training status on the Homepage. You can also filter by ‘Awarded’ on the records list page.{/details}
+
+<h2 class="govuk-heading-m">Withdraw or defer a trainee</h2>
+
+Once you’ve registered a trainee and they have started their training, you can withdraw or defer them. You can do this using the links on the trainee record in Register.
+
+Trainees who are registered, but then do not start their ITT course at all, do not need to be withdrawn – their records can be deleted.
+
+{details}More information on what ‘withdrawn’ and ‘deferred’ means in Register. 
+A ‘deferred’ trainee in Register is a trainee who is registered on a course but then decides to defer to a later date or academic year. In Register, trainees can be deferred if they have started their ITT course or if they never start their ITT course. 
+
+A ‘withdrawn‘ trainee in Register is a trainee that is registered on an ITT course, started that course, but then decides to withdraw from the course or the qualified teacher status (QTS) part of the course and will not return.
+{/details}
