@@ -45,15 +45,15 @@ module DeadJobs
       @name ||= identifier.titleize.gsub("Dqt", "DQT")
     end
 
+    def identifier
+      @identifier ||= self.class.name.demodulize
+    end
+
     delegate :count, to: :dead_jobs
 
   private
 
     attr_reader :dead_set, :include_dqt_status
-
-    def identifier
-      @identifier ||= self.class.name.demodulize
-    end
 
     def trainees
       Trainee.includes(:provider).find(dead_jobs.keys)
