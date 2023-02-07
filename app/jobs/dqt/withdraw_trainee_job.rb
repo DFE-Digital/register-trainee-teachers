@@ -43,7 +43,6 @@ module Dqt
     end
 
     def already_withdrawn_in_dqt?
-      # TODO: check that the result is actually "Withdrawn" capital W
       RetrieveTrainingInstance.call(trainee:)["result"] == "Withdrawn"
     end
   end
