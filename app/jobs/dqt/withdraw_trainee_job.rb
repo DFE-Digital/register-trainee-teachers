@@ -43,7 +43,8 @@ module Dqt
     end
 
     def already_withdrawn_in_dqt?
-      RetrieveTeacher.call(trainee:).dig("initial_teacher_training", "result") == "Withdrawn"
+      # TODO: check that the result is actually "Withdrawn" capital W
+      RetrieveTrainingInstance.call(trainee:)["result"] == "Withdrawn"
     end
   end
 end

@@ -13,7 +13,7 @@ module Dqt
 
     before do
       allow(WithdrawTrainee).to receive(:call).with(trainee:).and_return(nil)
-      allow(RetrieveTeacher).to receive(:call).with(trainee:).and_return(dqt_response)
+      allow(RetrieveTrainingInstance).to receive(:call).with(trainee:).and_return(dqt_response)
     end
 
     context "with the `integrate_with_dqt` feature flag inactive" do
@@ -46,7 +46,7 @@ module Dqt
         end
 
         context "trainee is already withdrawn in DQT" do
-          let(:dqt_response) { { "initial_teacher_training" => { "result" => "Withdrawn" } } }
+          let(:dqt_response) { { "result" => "Withdrawn" } }
 
           it "doesn't call the WithdrawTrainee service" do
             expect(WithdrawTrainee).not_to receive(:call).with(trainee:)
