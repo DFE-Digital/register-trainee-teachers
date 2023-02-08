@@ -76,7 +76,7 @@ features:
   # For the 3 months prior to an academic cycle, we're not sure
   # which year the user wants courses listed for. This feature
   # makes sure the correct year is selected before listing courses.
-  always_show_course_year_choice: false
+  show_draft_trainee_course_year_choice: false
 dfe_sign_in:
   # Our service name
   identifier: rtt

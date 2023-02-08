@@ -13,7 +13,7 @@ page, rather than defaulting to the current year. This is because it's ambiguous
 
 ## Decision
 
-To enable this behaviour at the appropriate time, we've gone with a feature flag (`always_show_course_year_choice`).
+To enable this behaviour at the appropriate time, we've gone with a feature flag (`show_draft_trainee_course_year_choice`).
 
 ## Consequences
 

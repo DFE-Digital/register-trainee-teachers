@@ -11,6 +11,7 @@ module PageObjects
       set_url "/trainees/{id}/course-details/confirm"
 
       element :change_course, "a", text: "Change course"
+      element :course_link, :xpath, "//*[@id='course']/dd[2]/a"
       element :confirm, "input[name='confirm_detail_form[mark_as_completed]']"
       element :continue_button, "button[type='submit']", text: "Continue"
 
