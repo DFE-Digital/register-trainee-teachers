@@ -146,7 +146,7 @@ module CourseDetails
     end
 
     def course
-      @course ||= trainee.current_course
+      @course ||= trainee.available_courses(data_model.training_route)&.find_by(uuid: data_model.course_uuid)
     end
 
     def default_mappable_field(field_value, field_label)

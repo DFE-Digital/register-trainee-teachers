@@ -52,9 +52,7 @@ module Trainees
     end
 
     def year
-      return @year if defined?(@year)
-
-      @year = params[:year].presence ||
+      @year ||= params[:year].presence ||
         trainee.published_course&.recruitment_cycle_year ||
         trainee.start_academic_cycle&.start_year ||
         Settings.current_default_course_year
@@ -84,6 +82,7 @@ module Trainees
 
     def redirect_to_course_years_page
       return unless FeatureService.show_draft_trainee_course_year_choice?(trainee)
+      return if params[:year].present?
 
       page_tracker.remove_last_page
       redirect_to(edit_trainee_course_years_path(trainee))
