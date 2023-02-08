@@ -16,7 +16,7 @@ module Dqt
         "initialTeacherTraining" => training_instances,
       }
     end
-    let(:expected_training_instance) {
+    let(:current_training_instance) {
       {
         "programmeStartDate" => "2021-09-07",
         "programmeEndDate" => "2022-07-29",
@@ -33,11 +33,11 @@ module Dqt
         allow(Dqt::Client).to receive(:get).and_return(dqt_response)
       end
 
-      context "when there's only one training instance" do
-        let(:training_instances) { [expected_training_instance] }
+      context "when there's a matching training instance" do
+        let(:training_instances) { [current_training_instance] }
 
         it "returns the training instance" do
-          expect(subject).to eq(expected_training_instance)
+          expect(subject).to eq(current_training_instance)
         end
       end
 
@@ -52,10 +52,44 @@ module Dqt
           }
         }
 
-        let(:training_instances) { [old_training_instance, expected_training_instance] }
+        let(:training_instances) { [old_training_instance, current_training_instance] }
 
         it "returns the correct training instance" do
-          expect(subject).to eq(expected_training_instance)
+          expect(subject).to eq(current_training_instance)
+        end
+      end
+
+      context "when there's no matching training instance" do
+        let(:different_training_instance) {
+          {
+            "programmeStartDate" => "2021-09-08",
+            "programmeEndDate" => "2022-07-29",
+            "programmeType" => "EYITTGraduateEntry",
+            "result" => "Pass",
+            "provider" => { "ukprn" => "10005790" },
+          }
+        }
+
+        let(:training_instances) { [different_training_instance] }
+
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
+
+      context "when there are no training instances" do
+        let(:training_instances) { [] }
+
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
+
+      context "when training instances is nil" do
+        let(:training_instances) { nil }
+
+        it "returns nil" do
+          expect(subject).to be_nil
         end
       end
     end

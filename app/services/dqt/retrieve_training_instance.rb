@@ -9,7 +9,7 @@ module Dqt
     end
 
     def call
-      return training_instances.first if training_instances.one?
+      return if training_instances.blank?
 
       training_instances.find do |training_instance|
         training_instance["programmeStartDate"].to_date == trainee.itt_start_date
