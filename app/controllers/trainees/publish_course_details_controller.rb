@@ -4,7 +4,7 @@ module Trainees
   class PublishCourseDetailsController < BaseController
     include Publishable
 
-    before_action :redirect_to_course_years_page, only: :edit, if: :redirect_to_course_years_page?
+    before_action :redirect_to_course_years_page, only: :edit
 
     before_action :set_course_year
 
@@ -16,7 +16,7 @@ module Trainees
 
       if @courses.blank?
         page_tracker.remove_last_page
-        if params[:year].present?
+        if year.present?
           @publish_course_details_form.process_manual_entry!
           redirect_to(edit_trainee_course_education_phase_path(trainee))
         else
@@ -43,16 +43,19 @@ module Trainees
   private
 
     def set_course_year
-      year = params[:year].presence
-      year ||= @trainee.published_course&.recruitment_cycle_year
-      year ||= Settings.current_default_course_year
-
-      course_years_form = CourseYearsForm.new(course_year: year)
+      course_years_form = CourseYearsForm.new(trainee: trainee, params: { course_year: year })
       if course_years_form.valid?
         @course_year = course_years_form.course_year
       else
         redirect_to_course_years_page
       end
+    end
+
+    def year
+      @year ||= params[:year].presence ||
+        trainee.published_course&.recruitment_cycle_year ||
+        trainee.start_academic_cycle&.start_year ||
+        Settings.current_default_course_year
     end
 
     def course_uuid
@@ -78,14 +81,11 @@ module Trainees
     end
 
     def redirect_to_course_years_page
-      page_tracker.remove_last_page
-      redirect_to(edit_trainee_course_years_path(@trainee))
-    end
+      return unless FeatureService.show_draft_trainee_course_year_choice?(trainee)
+      return if params[:year].present?
 
-    def redirect_to_course_years_page?
-      FeatureService.enabled?(:always_show_course_year_choice) &&
-        params[:year].nil? &&
-        trainee.course_uuid.nil?
+      page_tracker.remove_last_page
+      redirect_to(edit_trainee_course_years_path(trainee))
     end
   end
 end

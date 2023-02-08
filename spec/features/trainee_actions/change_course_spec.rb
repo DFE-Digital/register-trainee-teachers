@@ -6,7 +6,7 @@ feature "Change course", feature_publish_course_details: true do
   let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
   let(:itt_end_date) { itt_start_date + 1.year }
 
-  scenario "TRN received", feature_always_show_course_year_choice: false do
+  scenario "TRN received" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
     and_trainee_related_courses_exist
@@ -21,7 +21,7 @@ feature "Change course", feature_publish_course_details: true do
     then_the_trainee_course_has_changed
   end
 
-  scenario "published course not selected", feature_always_show_course_year_choice: true do
+  scenario "published course not selected" do
     given_i_am_authenticated
     and_a_trainee_exists
     and_trainee_related_courses_exist
@@ -29,12 +29,47 @@ feature "Change course", feature_publish_course_details: true do
     and_i_am_on_the_trainee_record_page
     when_i_click_to_change_course_details
     and_i_choose_a_different_training_route
-    then_i_am_redirected_to_the_course_years_page
-    and_i_choose_a_different_year
     and_i_am_redirected_to_the_publish_course_details_page
   end
 
+  context "given a draft trainee" do
+    scenario "show course year choice", feature_show_draft_trainee_course_year_choice: true do
+      given_i_am_authenticated
+      and_a_draft_trainee_exists
+      and_i_am_on_the_confirm_course_details_page
+      and_i_click_change_course
+      and_i_do_not_change_training_route
+      i_am_redirected_to_the_change_course_year_page
+    end
+
+    scenario "do not show course year choice", feature_show_draft_trainee_course_year_choice: false do
+      given_i_am_authenticated
+      and_a_draft_trainee_exists
+      and_i_am_on_the_confirm_course_details_page
+      and_i_click_change_course
+      and_i_do_not_change_training_route
+      and_i_am_redirected_to_the_publish_course_details_page
+    end
+  end
+
 private
+
+  def and_i_am_on_the_confirm_course_details_page
+    confirm_course_details_page.load(id: trainee.slug)
+  end
+
+  def and_i_click_change_course
+    confirm_course_details_page.course_link.click
+  end
+
+  def i_am_redirected_to_the_change_course_year_page
+    puts source
+    expect(course_years_page).to be_displayed
+  end
+
+  def i_am_redirected_to_the_training_routes_page
+    expect(trainee_edit_training_route_page).to be_displayed
+  end
 
   def and_trainee_related_courses_exist
     @different_course = create(:course_with_subjects,
@@ -49,6 +84,10 @@ private
            :secondary,
            accredited_body_code: trainee.provider.code,
            route: "school_direct_tuition_fee")
+  end
+
+  def and_a_draft_trainee_exists
+    given_a_trainee_exists(:draft, :with_publish_course_details, :school_direct_salaried, :with_secondary_education)
   end
 
   def and_a_trainee_exists_with_trn_received

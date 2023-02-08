@@ -5,7 +5,7 @@ require "rails_helper"
 describe CourseYearsForm, type: :model do
   let(:params) { {} }
 
-  subject { described_class.new(params) }
+  subject { described_class.new(params:) }
 
   describe "validations" do
     it { is_expected.to validate_inclusion_of(:course_year).in_array(subject.course_years_options.keys) }

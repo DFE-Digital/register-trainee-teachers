@@ -13,5 +13,9 @@ module FeatureService
     def performance_testing?
       Rails.env.development? && ENV.fetch("PERFORMANCE_TESTING", false)
     end
+
+    def show_draft_trainee_course_year_choice?(trainee)
+      enabled?(:show_draft_trainee_course_year_choice) && trainee.draft?
+    end
   end
 end
