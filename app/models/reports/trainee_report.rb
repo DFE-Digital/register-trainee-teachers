@@ -356,6 +356,14 @@ module Reports
       trainee.withdraw_date&.to_date&.iso8601
     end
 
+    def qts_or_eyts
+      trainee.award_type
+    end
+
+    def course_age_range
+      "#{trainee.course_maximum_age} to #{trainee.course_maximum_age}"
+    end
+
   private
 
     def course_allocation_subject

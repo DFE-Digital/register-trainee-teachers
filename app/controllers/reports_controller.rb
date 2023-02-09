@@ -49,6 +49,20 @@ class ReportsController < BaseTraineeController
     end
   end
 
+  def bulk_qts_export
+    authorize(current_user, :reports?)
+
+    respond_to do |format|
+      format.csv do
+        send_data(
+          Exports::BulkQtsExport.call(bulk_qts_trainees),
+          filename: trainees_recommended_for_award_filename,
+          disposition: :attachment,
+        )
+      end
+    end
+  end
+
 private
 
   def itt_new_starter_trainees
@@ -56,7 +70,14 @@ private
   end
 
   def performance_profiles_trainees
+    itt_end_date_range = (Time.zone.today - 6.moths)..(Time.zone.today + 6.months)
+
+    base_trainee_scope.where(state: :trn_received).where(itt_end_date: itt_end_date_range)
     Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@previous_academic_cycle.start_year] })
+  end
+
+  def bulk_qts_trainees
+    Trainees::Filter.call(trainees: base_trainee_scope, filters: { state: :trn_received })
   end
 
   def itt_new_starter_filename
@@ -65,6 +86,10 @@ private
 
   def performance_profiles_filename
     "#{Time.zone.now.strftime('%F_%H_%M_%S')}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
+  end
+
+  def bulk_qts_export_filename
+    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_trainees_recommended_for_award_register-trainee-teachers.csv"
   end
 
   def census_date(year)
