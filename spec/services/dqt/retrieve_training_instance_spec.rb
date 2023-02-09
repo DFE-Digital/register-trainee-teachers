@@ -4,7 +4,8 @@ require "rails_helper"
 
 module Dqt
   describe RetrieveTrainingInstance do
-    let(:trainee) { create(:trainee, itt_start_date: Date.new(2021, 9, 7)) }
+    let(:provider) { create(:provider) }
+    let(:trainee) { create(:trainee, :trn_received, :early_years_postgrad, provider:) }
     let(:dqt_response) do
       {
         "trn" => "0123456",
@@ -22,7 +23,7 @@ module Dqt
         "programmeEndDate" => "2022-07-29",
         "programmeType" => "EYITTGraduateEntry",
         "result" => "Pass",
-        "provider" => { "ukprn" => "10005790" },
+        "provider" => { "ukprn" => provider.ukprn },
       }
     }
 
@@ -72,24 +73,24 @@ module Dqt
 
         let(:training_instances) { [different_training_instance] }
 
-        it "returns nil" do
-          expect(subject).to be_nil
+        it "raises an error" do
+          expect { subject }.to raise_error(DqtNoTrainingInstanceError)
         end
       end
 
       context "when there are no training instances" do
         let(:training_instances) { [] }
 
-        it "returns nil" do
-          expect(subject).to be_nil
+        it "raises an error" do
+          expect { subject }.to raise_error(DqtNoTrainingInstanceError)
         end
       end
 
       context "when training instances is nil" do
         let(:training_instances) { nil }
 
-        it "returns nil" do
-          expect(subject).to be_nil
+        it "raises an error" do
+          expect { subject }.to raise_error(DqtNoTrainingInstanceError)
         end
       end
     end

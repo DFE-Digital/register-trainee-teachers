@@ -1,0 +1,1 @@
+class DqtNoTrainingInstanceError < StandardError; end

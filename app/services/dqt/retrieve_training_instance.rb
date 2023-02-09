@@ -9,16 +9,25 @@ module Dqt
     end
 
     def call
-      return if training_instances.blank?
+      raise(DqtNoTrainingInstanceError) if training_instances.blank? || training_instance.nil?
 
-      training_instances.find do |training_instance|
-        training_instance["programmeStartDate"].to_date == trainee.itt_start_date
-      end
+      training_instance
     end
 
     attr_reader :trainee
 
   private
+
+    def training_instance
+      @training_instance ||= training_instances.find do |training|
+        training.dig("provider", "ukprn") == trainee.provider.ukprn &&
+          training["programmeType"] == programme_type(trainee)
+      end
+    end
+
+    def programme_type(trainee)
+      Dqt::Params::TrnRequest.new(trainee:).params.dig("initialTeacherTraining", "programmeType")
+    end
 
     def training_instances
       @training_instances ||= RetrieveTeacher.call(trainee:)["initialTeacherTraining"]
