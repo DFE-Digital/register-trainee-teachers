@@ -29,9 +29,20 @@ module Reports
       csv << self.class.headers
     end
 
-    def add_report_rows
-      return csv << ["No trainee data to export"] if trainees.blank? # TODO: move text to translation file
+    def post_header_row!
+      last_row = <<~TEXT
+        "For example, 20/7/2022
 
+        Leave empty if the trainee has not met the standards"
+      TEXT
+
+      csv << [*(self.class.headers.count - 1).times.map { "Do not edit" }, last_row]
+    end
+
+    def add_report_rows
+      return csv << ["No trainee data to export"] if trainees.blank?
+
+      post_header_row!
       trainees.strict_loading.includes(:apply_application,
                                        { course_allocation_subject: [:subject_specialisms] },
                                        :degrees, :disabilities,

@@ -361,7 +361,7 @@ module Reports
     end
 
     def course_age_range
-      "#{trainee.course_maximum_age} to #{trainee.course_maximum_age}"
+      "#{course_minimum_age} to #{course_maximum_age}"
     end
 
   private

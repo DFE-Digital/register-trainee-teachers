@@ -53,10 +53,15 @@ class ReportsController < BaseTraineeController
     authorize(current_user, :reports?)
 
     respond_to do |format|
+      format.html do
+        @trainee_count = bulk_qts_trainees.count
+        @academic_cycle_label = @current_academic_cycle.label
+      end
+
       format.csv do
         send_data(
           Exports::BulkQtsExport.call(bulk_qts_trainees),
-          filename: trainees_recommended_for_award_filename,
+          filename: bulk_qts_export_filename,
           disposition: :attachment,
         )
       end
@@ -70,14 +75,13 @@ private
   end
 
   def performance_profiles_trainees
-    itt_end_date_range = (Time.zone.today - 6.moths)..(Time.zone.today + 6.months)
-
-    base_trainee_scope.where(state: :trn_received).where(itt_end_date: itt_end_date_range)
     Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@previous_academic_cycle.start_year] })
   end
 
   def bulk_qts_trainees
-    Trainees::Filter.call(trainees: base_trainee_scope, filters: { state: :trn_received })
+    itt_end_date_range = (Time.zone.today - 6.months)..(Time.zone.today + 6.months)
+
+    base_trainee_scope.where(state: :trn_received).where(itt_end_date: itt_end_date_range)
   end
 
   def itt_new_starter_filename
