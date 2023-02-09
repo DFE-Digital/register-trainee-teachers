@@ -36,6 +36,7 @@ module Reports
         Leave empty if the trainee has not met the standards"
       TEXT
 
+      # ["Do not edit", "Do not edit" ... last_row]
       csv << [*(self.class.headers.count - 1).times.map { "Do not edit" }, last_row]
     end
 

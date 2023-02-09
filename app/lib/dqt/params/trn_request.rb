@@ -169,7 +169,7 @@ module Dqt
       end
 
       def itt_end_date
-        trainee.itt_end_date || trainee.esitmated_end_date
+        trainee.itt_end_date || trainee.estimated_end_date
       end
 
       attr_reader :trainee, :degree
