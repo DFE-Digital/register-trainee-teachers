@@ -2,12 +2,16 @@
 
 module Reports
   class BulkQtsReport < TemplateClassCsv
+    def initialize(csv, scope:)
+      @csv = csv
+      @scope = scope
+    end
+
     def self.headers
       [
         "TRN",
         "Provider trainee ID",
-        "HESA ID",
-        "HESA NUMHUS",
+        ("HESA ID" if hesa_id?),
         "Last names",
         "First names",
         "Lead school",
@@ -16,7 +20,6 @@ module Reports
         "Phase",
         "Age range",
         "Subject",
-        "End academic year",
         "Date QTS or EYTS standards met",
       ].compact
     end
@@ -25,15 +28,21 @@ module Reports
 
   private
 
+    def hesa_id?
+      return @hesa_id if defined?(@hesa_id)
+
+      @hesa_id = trainees.pluck(:hesa_id).compact.any?
+    end
+
     def add_headers
       csv << self.class.headers
     end
 
     def post_header_row!
       last_row = <<~TEXT
-        "For example, 20/7/2022
+        For example, 20/7/2022
 
-        Leave empty if the trainee has not met the standards"
+        Leave empty if the trainee has not met the standards
       TEXT
 
       # ["Do not edit", "Do not edit" ... last_row]
@@ -44,17 +53,12 @@ module Reports
       return csv << ["No trainee data to export"] if trainees.blank?
 
       post_header_row!
-      trainees.strict_loading.includes(:apply_application,
+      trainees.strict_loading.includes(:degrees,
                                        { course_allocation_subject: [:subject_specialisms] },
-                                       :degrees, :disabilities,
-                                       :employing_school,
                                        :end_academic_cycle,
-                                       :lead_school,
-                                       { nationalisations: :nationality },
-                                       :nationalities,
-                                       :provider,
                                        :start_academic_cycle,
-                                       :trainee_disabilities).in_batches.each_record do |trainee|
+                                       :provider,
+                                       :lead_school).in_batches.each_record do |trainee|
         add_trainee_to_csv(trainee)
       end
     end
@@ -69,18 +73,16 @@ module Reports
       [
         trainee_report.trn,
         trainee_report.provider_trainee_id,
-        trainee_report.hesa_id,
-        1, # hesa numhus not yet in schema
+        (trainee_report.hesa_id if hesa_id?),
         trainee_report.last_names,
         trainee_report.first_names,
-        trainee_report.lead_school_name,
+        trainee_report.lead_school_name.presence || "-",
         trainee_report.qts_or_eyts,
         trainee_report.course_training_route,
         trainee_report.course_education_phase,
         trainee_report.course_age_range,
-        trainee_report.course_subject_category,
-        trainee_report.end_academic_year,
-      ].map { |value| CsvValueSanitiser.new(value).sanitise }
+        trainee_report.course_allocation_subject,
+      ].compact.map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end
 end

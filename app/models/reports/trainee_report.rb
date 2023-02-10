@@ -121,6 +121,15 @@ module Reports
       trainee_allocation_subject(trainee.course_subject_one) || course_allocation_subject
     end
 
+    def course_allocation_subject
+      return if course.blank? || course.subjects.blank?
+
+      subject = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
+        .values.map(&:first).first
+
+      trainee_allocation_subject(subject)
+    end
+
     def course_training_route
       I18n.t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
     end
@@ -365,15 +374,6 @@ module Reports
     end
 
   private
-
-    def course_allocation_subject
-      return if course.blank? || course.subjects.blank?
-
-      subject = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
-        .values.map(&:first).first
-
-      trainee_allocation_subject(subject)
-    end
 
     def trainee_allocation_subject(subject)
       return if subject.blank?

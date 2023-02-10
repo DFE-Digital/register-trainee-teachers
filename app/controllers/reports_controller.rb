@@ -78,22 +78,33 @@ private
     Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@previous_academic_cycle.start_year] })
   end
 
+  # rubocop:disable Style/TrailingCommaInArguments
   def bulk_qts_trainees
-    itt_end_date_range = (Time.zone.today - 6.months)..(Time.zone.today + 6.months)
+    itt_end_date_range = [(Time.zone.today - 6.months).iso8601, (Time.zone.today + 6.months).iso8601]
 
-    base_trainee_scope.where(state: :trn_received).where(itt_end_date: itt_end_date_range)
+    policy_scope(
+      Trainee
+        .where(state: :trn_received)
+        .where(
+          <<~SQL
+            '#{itt_end_date_range}'::daterange @> trainees.itt_end_date OR
+            trainees.itt_end_date IS NULL
+          SQL
+        ).order_by_last_name
+    )
   end
+  # rubocop:enable Style/TrailingCommaInArguments
 
   def itt_new_starter_filename
-    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
+    "#{Time.zone.now.strftime('%F_%H-%M-%S')}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
   def performance_profiles_filename
-    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
+    "#{Time.zone.now.strftime('%F_%H-%M-%S')}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
   end
 
   def bulk_qts_export_filename
-    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_trainees_recommended_for_award_register-trainee-teachers.csv"
+    "#{Time.zone.now.strftime('%F_%H-%M-%S')}_#{@current_academic_cycle.start_year}_#{@current_academic_cycle.end_year}_course-end_bulk-recommend_register-trainee-teachers.csv"
   end
 
   def census_date(year)
