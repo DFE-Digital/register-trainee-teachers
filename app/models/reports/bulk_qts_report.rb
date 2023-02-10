@@ -7,7 +7,7 @@ module Reports
       @scope = scope
     end
 
-    def self.headers
+    def headers
       [
         "TRN",
         "Provider trainee ID",
@@ -35,7 +35,7 @@ module Reports
     end
 
     def add_headers
-      csv << self.class.headers
+      csv << headers
     end
 
     def post_header_row!
@@ -46,7 +46,7 @@ module Reports
       TEXT
 
       # ["Do not edit", "Do not edit" ... last_row]
-      csv << [*(self.class.headers.count - 1).times.map { "Do not edit" }, last_row]
+      csv << [*(headers.count - 1).times.map { "Do not edit" }, last_row]
     end
 
     def add_report_rows
@@ -58,7 +58,7 @@ module Reports
                                        :end_academic_cycle,
                                        :start_academic_cycle,
                                        :provider,
-                                       :lead_school).in_batches.each_record do |trainee|
+                                       :lead_school).each do |trainee| # rubocop:disable Rails/FindEach
         add_trainee_to_csv(trainee)
       end
     end
@@ -70,10 +70,10 @@ module Reports
     def csv_row(trainee)
       trainee_report = Reports::TraineeReport.new(trainee)
 
-      [
+      row = [
         trainee_report.trn,
         trainee_report.provider_trainee_id,
-        (trainee_report.hesa_id if hesa_id?),
+        trainee_report.hesa_id,
         trainee_report.last_names,
         trainee_report.first_names,
         trainee_report.lead_school_name.presence || "-",
@@ -82,7 +82,10 @@ module Reports
         trainee_report.course_education_phase,
         trainee_report.course_age_range,
         trainee_report.course_allocation_subject,
-      ].compact.map { |value| CsvValueSanitiser.new(value).sanitise }
+      ].map { |value| CsvValueSanitiser.new(value).sanitise }
+
+      row.delete_at(2) unless hesa_id?
+      row
     end
   end
 end

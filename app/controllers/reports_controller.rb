@@ -90,7 +90,7 @@ private
             '#{itt_end_date_range}'::daterange @> trainees.itt_end_date OR
             trainees.itt_end_date IS NULL
           SQL
-        ).order_by_last_name
+        ).order(last_name: :asc)
     )
   end
   # rubocop:enable Style/TrailingCommaInArguments
