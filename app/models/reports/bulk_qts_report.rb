@@ -42,7 +42,7 @@ module Reports
       last_row = <<~TEXT
         For example, 20/7/2022
 
-        Leave empty if the trainee has not met the standards
+        Delete row if the trainee has not met the standards
       TEXT
 
       # ["Do not edit", "Do not edit" ... last_row]
