@@ -5,9 +5,11 @@ on:
   push:
    branches:
     - main
+    - bulk-qts
   pull_request:
     branches:
     - main
+    - bulk-qts
     types: [opened, reopened, synchronize, labeled]
 
 permissions:
