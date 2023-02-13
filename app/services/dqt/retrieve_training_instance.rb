@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Dqt
+  class NoTrainingInstanceError < StandardError; end
+
   class RetrieveTrainingInstance
     include ServicePattern
 
@@ -9,7 +11,7 @@ module Dqt
     end
 
     def call
-      raise(DqtNoTrainingInstanceError) if training_instances.blank? || training_instance.nil?
+      raise(NoTrainingInstanceError) if training_instances.blank? || training_instance.nil?
 
       training_instance
     end
@@ -26,7 +28,7 @@ module Dqt
     end
 
     def programme_type(trainee)
-      Dqt::Params::TrnRequest.new(trainee:).params.dig("initialTeacherTraining", "programmeType")
+      Dqt::Params::TrnRequest::PROGRAMME_TYPE[trainee.training_route]
     end
 
     def training_instances

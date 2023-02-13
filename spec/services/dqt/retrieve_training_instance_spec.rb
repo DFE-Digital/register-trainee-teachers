@@ -74,7 +74,7 @@ module Dqt
         let(:training_instances) { [different_training_instance] }
 
         it "raises an error" do
-          expect { subject }.to raise_error(DqtNoTrainingInstanceError)
+          expect { subject }.to raise_error(Dqt::NoTrainingInstanceError)
         end
       end
 
@@ -82,7 +82,7 @@ module Dqt
         let(:training_instances) { [] }
 
         it "raises an error" do
-          expect { subject }.to raise_error(DqtNoTrainingInstanceError)
+          expect { subject }.to raise_error(Dqt::NoTrainingInstanceError)
         end
       end
 
@@ -90,7 +90,7 @@ module Dqt
         let(:training_instances) { nil }
 
         it "raises an error" do
-          expect { subject }.to raise_error(DqtNoTrainingInstanceError)
+          expect { subject }.to raise_error(Dqt::NoTrainingInstanceError)
         end
       end
     end
