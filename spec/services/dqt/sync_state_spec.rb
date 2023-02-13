@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Dqt
   describe SyncState do
-    # let!(:trainee) { create(:trainee, :trn_received, :imported_from_hesa) }
+    let!(:trainee) { create(:trainee, :trn_received, :imported_from_hesa) }
     # let(:award_date) { nil }
     # let(:result) { nil }
     # let(:dqt_response) do
