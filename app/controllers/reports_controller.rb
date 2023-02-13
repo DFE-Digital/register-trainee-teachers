@@ -95,16 +95,20 @@ private
   end
   # rubocop:enable Style/TrailingCommaInArguments
 
+  def time_now
+    Time.zone.now.strftime("%F_%H-%M-%S")
+  end
+
   def itt_new_starter_filename
-    "#{Time.zone.now.strftime('%F_%H-%M-%S')}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
+    "#{time_now}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
   def performance_profiles_filename
-    "#{Time.zone.now.strftime('%F_%H-%M-%S')}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
+    "#{time_now}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
   end
 
   def bulk_qts_export_filename
-    "#{Time.zone.now.strftime('%F_%H-%M-%S')}_#{@current_academic_cycle.start_year}_#{@current_academic_cycle.end_year}_course-end_bulk-recommend_register-trainee-teachers.csv"
+    "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
   end
 
   def census_date(year)

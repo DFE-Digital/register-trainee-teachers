@@ -34,6 +34,9 @@ module Reports
              :town_city,
              :trn,
              :withdraw_reason,
+             :course_subject_one,
+             :course_subject_two,
+             :course_subject_three,
              to: :trainee,
              allow_nil: true
 
@@ -132,6 +135,18 @@ module Reports
 
     def course_training_route
       I18n.t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
+    end
+
+    def subjects
+      primary_subjects = PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING.key([course_subject_one, course_subject_two, course_subject_three].compact_blank)
+
+      return primary_subjects if primary_subjects.present?
+
+      course_subject_one = PublishSubjects::PRIMARY if course_subject_one.eql?(CourseSubjects::PRIMARY_TEACHING)
+
+      additional_subjects = [course_subject_two, course_subject_three].compact_blank.join(" and ")
+
+      [course_subject_one&.upcase_first, additional_subjects].compact_blank.join(" with ")
     end
 
     def date_of_birth
