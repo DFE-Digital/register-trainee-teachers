@@ -7,6 +7,7 @@ module PageObjects
 
       element :performance_profiles_link, ".performance-profiles"
       element :performance_profiles_guidance_link, "#performance-profiles-guidance"
+      element :bulk_recommend_link, ".bulk-recommend"
     end
   end
 end

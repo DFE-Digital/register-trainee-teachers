@@ -34,6 +34,9 @@ module Reports
              :town_city,
              :trn,
              :withdraw_reason,
+             :course_subject_one,
+             :course_subject_two,
+             :course_subject_three,
              to: :trainee,
              allow_nil: true
 
@@ -142,8 +145,23 @@ module Reports
       trainee_allocation_subject(trainee.course_subject_one) || course_allocation_subject
     end
 
+    def course_allocation_subject
+      return if course.blank? || course.subjects.blank?
+
+      subject = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
+        .values.map(&:first).first
+
+      trainee_allocation_subject(subject)
+    end
+
     def course_training_route
       I18n.t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
+    end
+
+    def subjects
+      additional_subjects = [course_subject_two, course_subject_three].compact_blank.join(" and ")
+
+      [course_subject_one&.upcase_first, additional_subjects].compact_blank.join(" with ")
     end
 
     def date_of_birth
@@ -377,16 +395,15 @@ module Reports
       trainee.withdraw_date&.to_date&.iso8601
     end
 
-  private
-
-    def course_allocation_subject
-      return if course.blank? || course.subjects.blank?
-
-      subject = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
-        .values.map(&:first).first
-
-      trainee_allocation_subject(subject)
+    def qts_or_eyts
+      trainee.award_type
     end
+
+    def course_age_range
+      "#{course_minimum_age} to #{course_maximum_age}"
+    end
+
+  private
 
     def trainee_allocation_subject(subject)
       return if subject.blank?

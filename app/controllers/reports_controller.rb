@@ -49,6 +49,25 @@ class ReportsController < BaseTraineeController
     end
   end
 
+  def bulk_recommend_export
+    authorize(current_user, :bulk_recommend?)
+
+    respond_to do |format|
+      format.html do
+        @trainee_count = bulk_recommend_trainees.count
+        @academic_cycle_label = @current_academic_cycle.label
+      end
+
+      format.csv do
+        send_data(
+          Exports::BulkRecommendExport.call(bulk_recommend_trainees),
+          filename: bulk_recommend_export_filename,
+          disposition: :attachment,
+        )
+      end
+    end
+  end
+
 private
 
   def itt_new_starter_trainees
@@ -59,12 +78,37 @@ private
     Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@previous_academic_cycle.start_year] })
   end
 
+  # rubocop:disable Style/TrailingCommaInArguments
+  def bulk_recommend_trainees
+    itt_end_date_range = [(Time.zone.today - 6.months).iso8601, (Time.zone.today + 6.months).iso8601]
+
+    policy_scope(
+      Trainee
+        .where(state: :trn_received)
+        .where(
+          <<~SQL
+            '#{itt_end_date_range}'::daterange @> trainees.itt_end_date OR
+            trainees.itt_end_date IS NULL
+          SQL
+        ).order(last_name: :asc)
+    )
+  end
+  # rubocop:enable Style/TrailingCommaInArguments
+
+  def time_now
+    Time.zone.now.strftime("%F_%H-%M-%S")
+  end
+
   def itt_new_starter_filename
-    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
+    "#{time_now}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
   def performance_profiles_filename
-    "#{Time.zone.now.strftime('%F_%H_%M_%S')}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
+    "#{time_now}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
+  end
+
+  def bulk_recommend_export_filename
+    "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
   end
 
   def census_date(year)

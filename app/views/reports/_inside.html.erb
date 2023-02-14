@@ -5,6 +5,13 @@
       - for census sign off
     </p>
   </li>
+  <% if policy(:user).bulk_recommend? %>
+    <li>
+      <p>
+        <%= govuk_link_to "Trainees you can bulk recommend for QTS or EYTS", trainees_you_can_recommend_reports_path, class: "bulk-recommend" %>
+      </p>
+    </li>
+  <% end %>
   <li>
     <p>
       <%= govuk_link_to "Trainees who studied in the #{@previous_academic_cycle_label} academic year", performance_profiles_reports_path, class: "performance-profiles" %>
