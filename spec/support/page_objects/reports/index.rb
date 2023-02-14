@@ -6,6 +6,7 @@ module PageObjects
       set_url "/reports"
 
       element :performance_profiles_link, ".performance-profiles"
+      element :bulk_qts_link, ".bulk-qts"
     end
   end
 end
