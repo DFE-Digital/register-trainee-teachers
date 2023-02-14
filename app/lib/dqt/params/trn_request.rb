@@ -179,21 +179,7 @@ module Dqt
       end
 
       def itt_end_date
-        trainee.itt_end_date || (start_date + estimated_course_duration)
-      end
-
-      def start_date
-        trainee.trainee_start_date || trainee.itt_start_date
-      end
-
-      def estimated_course_duration
-        return 70.months if trainee.provider_led_undergrad? && trainee.part_time?
-
-        return 34.months if trainee.provider_led_undergrad? && trainee.full_time?
-
-        return 22.months if trainee.opt_in_undergrad? || trainee.part_time?
-
-        10.months
+        trainee.itt_end_date || trainee.estimated_end_date
       end
 
       def iqts_programme_type?
