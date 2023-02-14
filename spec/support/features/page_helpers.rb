@@ -454,6 +454,14 @@ module Features
       @bulk_recommend_page ||= PageObjects::Reports::BulkRecommend.new
     end
 
+    def recommendation_upload_page
+      @recommendation_upload_page ||= PageObjects::RecommendationUploads::New.new
+    end
+
+    def recommendation_upload_show_page
+      @recommendation_upload_show_page ||= PageObjects::RecommendationUploads::Show.new
+    end
+
   private
 
     def progress_with_prefix(status)

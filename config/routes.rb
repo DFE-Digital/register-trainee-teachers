@@ -68,6 +68,13 @@ Rails.application.routes.draw do
     get "trainees-you-can-recommend", to: "reports#bulk_recommend_export", on: :collection
   end
 
+  namespace :bulk_update, path: "bulk-update" do
+    resources :recommendation_uploads, only: %i[new create edit update], path: "recommend", path_names: { new: "upload", edit: "upload-changes" } do
+      get "upload-summary", to: "recommendation_uploads#show", as: "summary"
+      get "check-pending-updates", to: "recommendation_uploads#check", as: "check"
+    end
+  end
+
   resources :trainees, except: :edit do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
