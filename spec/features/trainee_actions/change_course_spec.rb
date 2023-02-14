@@ -63,7 +63,6 @@ private
   end
 
   def i_am_redirected_to_the_change_course_year_page
-    puts source
     expect(course_years_page).to be_displayed
   end
 
