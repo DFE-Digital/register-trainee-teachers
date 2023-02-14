@@ -438,6 +438,10 @@ module Features
       @performance_profiles_page ||= PageObjects::Reports::PerformanceProfiles.new
     end
 
+    def bulk_recommend_page
+      @bulk_recommend_page ||= PageObjects::Reports::BulkRecommend.new
+    end
+
   private
 
     def progress_with_prefix(status)
