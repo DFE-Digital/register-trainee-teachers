@@ -1,0 +1,45 @@
+<%= render PageTitle::View.new(text: "Bulk recommend trainees for QTS or EYTS") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
+      Bulk recommend trainees for QTS or EYTS
+    </h1>
+
+    <p class="govuk-body">
+      You can upload a CSV file to recommend multiple trainees for
+      qualified teacher status (QTS) or early years teacher status (EYTS).
+    </p>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>
+        Download a CSV file listing 147 trainees you can recommend
+      </li>
+      <li>
+        Fill in the date when each trainee met the QTS or EYTS standards. If a
+        trainee has not met the standards, either delete the row or leave the
+        date column blank.
+      </li>
+      <li>
+        Upload the CSV file.
+      </li>
+    </ol>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">
+        You cannot use this upload to make other changes to a trainee’s record.
+        Read guidance about bulk recommending trainees to find out how to make
+        changes and what to do if trainees have withdrawn or deferred.
+      </p>
+    </div>
+
+    <%= register_form_with url: bulk_update_recommendation_uploads_path, local: true do |f| %>
+      <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
+    <% end %>
+  </div>
+</div>
