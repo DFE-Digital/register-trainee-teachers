@@ -537,6 +537,24 @@ class Trainee < ApplicationRecord
     "manual"
   end
 
+  def estimated_end_date
+    start_date + estimated_course_duration
+  end
+
+  def start_date
+    trainee_start_date || itt_start_date
+  end
+
+  def estimated_course_duration
+    return 70.months if provider_led_undergrad? && part_time?
+
+    return 34.months if provider_led_undergrad? && full_time?
+
+    return 22.months if opt_in_undergrad? || part_time?
+
+    10.months
+  end
+
 private
 
   def value_digest
