@@ -2,7 +2,7 @@
 
 module PageObjects
   module Reports
-    class BulkQts < PageObjects::Base
+    class BulkRecommend < PageObjects::Base
       set_url "/reports/trainees-you-can-recommend"
 
       element :export_link, ".govuk-button", text: "Export trainee data"

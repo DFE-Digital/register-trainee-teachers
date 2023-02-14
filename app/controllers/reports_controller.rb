@@ -49,19 +49,19 @@ class ReportsController < BaseTraineeController
     end
   end
 
-  def bulk_qts_export
+  def bulk_recommend_export
     authorize(current_user, :bulk_qts?)
 
     respond_to do |format|
       format.html do
-        @trainee_count = bulk_qts_trainees.count
+        @trainee_count = bulk_recommend_trainees.count
         @academic_cycle_label = @current_academic_cycle.label
       end
 
       format.csv do
         send_data(
-          Exports::BulkQtsExport.call(bulk_qts_trainees),
-          filename: bulk_qts_export_filename,
+          Exports::BulkRecommendExport.call(bulk_recommend_trainees),
+          filename: bulk_recommend_export_filename,
           disposition: :attachment,
         )
       end
@@ -79,7 +79,7 @@ private
   end
 
   # rubocop:disable Style/TrailingCommaInArguments
-  def bulk_qts_trainees
+  def bulk_recommend_trainees
     itt_end_date_range = [(Time.zone.today - 6.months).iso8601, (Time.zone.today + 6.months).iso8601]
 
     policy_scope(
@@ -107,7 +107,7 @@ private
     "#{time_now}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
   end
 
-  def bulk_qts_export_filename
+  def bulk_recommend_export_filename
     "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
   end
 

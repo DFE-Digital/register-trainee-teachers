@@ -19,7 +19,7 @@
         </p>
       </li>
     
-      <% if !current_user.system_admin? && !current_user.lead_school? %>
+      <% if policy(:user).bulk_qts? %>
         <li>
           <p>
             <%= govuk_link_to "Trainees you can bulk recommend for QTS or EYTS", trainees_you_can_recommend_reports_path, class: "bulk-qts" %>

@@ -438,8 +438,8 @@ module Features
       @performance_profiles_page ||= PageObjects::Reports::PerformanceProfiles.new
     end
 
-    def bulk_qts_page
-      @bulk_qts_page ||= PageObjects::Reports::BulkQts.new
+    def bulk_recommend_page
+      @bulk_recommend_page ||= PageObjects::Reports::BulkRecommend.new
     end
 
   private

@@ -40,8 +40,8 @@ private
   end
 
   def then_i_should_see_the_correct_bulk_qts_guidance
-    expect(bulk_qts_page).to have_text("Trainees you can bulk recommend for QTS or EYTS")
-    expect(bulk_qts_page).to have_text("This export includes the details of 1 trainees")
-    expect(bulk_qts_page).to have_text("Export trainee data (1 trainees)")
+    expect(bulk_recommend_page).to have_text("Trainees you can bulk recommend for QTS or EYTS")
+    expect(bulk_recommend_page).to have_text("This export includes the details of 1 trainees")
+    expect(bulk_recommend_page).to have_text("Export trainee data (1 trainees)")
   end
 end

@@ -4,9 +4,9 @@ require "csv"
 
 # Service to export data
 module Exports
-  class BulkQtsExport < ExportServiceBase
+  class BulkRecommendExport < ExportServiceBase
     def initialize(trainees)
-      @report_class = Reports::BulkQtsReport
+      @report_class = Reports::BulkRecommendReport
       @scope = trainees
     end
   end

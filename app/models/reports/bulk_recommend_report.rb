@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Reports
-  class BulkQtsReport < TemplateClassCsv
+  class BulkRecommendReport < TemplateClassCsv
     def initialize(csv, scope:)
       @csv = csv
       @scope = scope
