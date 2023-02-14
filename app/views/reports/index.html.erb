@@ -19,10 +19,10 @@
         </p>
       </li>
     
-      <% if policy(:user).bulk_qts? %>
+      <% if policy(:user).bulk_recommend? %>
         <li>
           <p>
-            <%= govuk_link_to "Trainees you can bulk recommend for QTS or EYTS", trainees_you_can_recommend_reports_path, class: "bulk-qts" %>
+            <%= govuk_link_to "Trainees you can bulk recommend for QTS or EYTS", trainees_you_can_recommend_reports_path, class: "bulk-recommend" %>
           </p>
         </li>
       <% end %>

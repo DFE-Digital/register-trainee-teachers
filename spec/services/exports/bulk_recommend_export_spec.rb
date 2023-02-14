@@ -6,7 +6,7 @@ describe Exports::BulkRecommendExport, type: :model do
   describe "#call" do
     subject(:service) { described_class.call(trainees) }
 
-    let(:trainee) { create(:trainee, :bulk_qts_from_hesa) }
+    let(:trainee) { create(:trainee, :bulk_recommend_from_hesa) }
     let(:csv) { CSV.parse(service, headers: true) }
     let(:relevent_trainee_count) { Trainee.count }
     let(:trainee_csv_row) { csv[1] }
@@ -55,7 +55,7 @@ describe Exports::BulkRecommendExport, type: :model do
           ]
         end
 
-        let(:trainee) { create(:trainee, :bulk_qts) }
+        let(:trainee) { create(:trainee, :bulk_recommend) }
 
         it "includes the correct headers" do
           expect(csv.headers).to match_array(expected_headers)

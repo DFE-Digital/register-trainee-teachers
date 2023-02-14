@@ -15,11 +15,11 @@ feature "viewing bulk QTS" do
     given_i_am_authenticated
     given_trainees_exist
     given_i_am_on_the_reports_page
-    and_i_click_the_bulk_qts_link
+    and_i_click_the_bulk_recommend_link
   end
 
   scenario "shows the correct count of trainees" do
-    then_i_should_see_the_correct_bulk_qts_guidance
+    then_i_should_see_the_correct_bulk_recommend_guidance
   end
 
 private
@@ -35,11 +35,11 @@ private
     reports_page.load
   end
 
-  def and_i_click_the_bulk_qts_link
-    reports_page.bulk_qts_link.click
+  def and_i_click_the_bulk_recommend_link
+    reports_page.bulk_recommend_link.click
   end
 
-  def then_i_should_see_the_correct_bulk_qts_guidance
+  def then_i_should_see_the_correct_bulk_recommend_guidance
     expect(bulk_recommend_page).to have_text("Trainees you can bulk recommend for QTS or EYTS")
     expect(bulk_recommend_page).to have_text("This export includes the details of 1 trainees")
     expect(bulk_recommend_page).to have_text("Export trainee data (1 trainees)")

@@ -69,15 +69,15 @@ FactoryBot.define do
       itt_end_date { itt_start_date + 2.years }
     end
 
-    trait :bulk_qts do
+    trait :bulk_recommend do
       submitted_for_trn
       trn_received
       with_lead_school
       with_primary_course_details
     end
 
-    trait :bulk_qts_from_hesa do
-      bulk_qts
+    trait :bulk_recommend_from_hesa do
+      bulk_recommend
       imported_from_hesa
     end
 

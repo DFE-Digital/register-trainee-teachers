@@ -17,7 +17,7 @@ class UserPolicy < ProviderPolicy
     user.system_admin? || !user.lead_school?
   end
 
-  def bulk_qts?
+  def bulk_recommend?
     !user.system_admin? && !user.lead_school?
   end
 end

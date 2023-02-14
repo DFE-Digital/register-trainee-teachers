@@ -50,7 +50,7 @@ class ReportsController < BaseTraineeController
   end
 
   def bulk_recommend_export
-    authorize(current_user, :bulk_qts?)
+    authorize(current_user, :bulk_recommend?)
 
     respond_to do |format|
       format.html do
