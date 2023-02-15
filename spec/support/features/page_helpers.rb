@@ -446,6 +446,10 @@ module Features
       @recommendations_upload_show_page ||= PageObjects::RecommendationsUploads::Show.new
     end
 
+    def recommendation_upload_page
+      @recommendation_upload_page ||= PageObjects::RecommendationUploads::New.new
+    end
+
   private
 
     def progress_with_prefix(status)
