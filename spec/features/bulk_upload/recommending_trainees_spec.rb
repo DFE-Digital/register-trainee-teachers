@@ -50,4 +50,8 @@ private
     recommendations_upload_page.upload_button.click
     expect(BulkUpdate::RecommendedTrainee.count).to be 2
   end
+
+  def and_i_check_who_ill_recommend
+    recommendation_upload_show_page.check_button.click
+  end
 end
