@@ -8,12 +8,17 @@ module Hesa
     let(:end_date) { Time.zone.today }
     let(:reason_for_leaving_code) { %w[11 05 03].sample }
     let(:reason_for_leaving) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[reason_for_leaving_code] }
+    let(:current_collection) { Settings.hesa.current_collection_reference }
 
     subject { described_class.call(trainee:) }
 
     context "when HESA student is withdrawn" do
       before do
-        trainee.hesa_student.update_columns(reason_for_leaving: reason_for_leaving_code, end_date: end_date)
+        trainee.hesa_students.first.update_columns(
+          reason_for_leaving: reason_for_leaving_code,
+          end_date: end_date,
+          collection_reference: current_collection,
+        )
         subject
       end
 
