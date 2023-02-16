@@ -18,7 +18,9 @@
 
     <ol class="govuk-list govuk-list--number">
       <li>
-        Download a CSV file listing 147 trainees you can recommend
+         <p>
+            <%= govuk_link_to "Download a CSV file listing {COUNT} trainees you can recommend", trainees_you_can_recommend_reports_path(:csv), class: "bulk-recommend" %>
+          </p>
       </li>
       <li>
         Fill in the date when each trainee met the QTS or EYTS standards. If a
