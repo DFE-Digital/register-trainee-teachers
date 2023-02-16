@@ -7,7 +7,7 @@ module BulkUpdate
     def new; end
 
     def create
-      redirect_to(bulk_update_recommendation_upload_summary_url(1))
+      redirect_to(bulk_update_recommendation_upload_summary_path(1))
     end
 
     def check; end
