@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: bulk_update_recommended_trainees
+#
+#  id                                    :bigint           not null, primary key
+#  csv_row_number                        :integer
+#  standards_met_at                      :date
+#  trn                                   :string
+#  created_at                            :datetime         not null
+#  updated_at                            :datetime         not null
+#  bulk_update_recommendations_upload_id :bigint           not null
+#  hesa_id                               :string
+#
+# Indexes
+#
+#  idx_bu_recommended_trainees_on_bu_recommendations_upload_id  (bulk_update_recommendations_upload_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (bulk_update_recommendations_upload_id => bulk_update_recommendations_uploads.id)
+#
+class BulkUpdate::RecommendedTrainee < ApplicationRecord
+  belongs_to :bulk_update_recommendations_upload
+
+  alias upload bulk_update_recommendations_upload
+end
