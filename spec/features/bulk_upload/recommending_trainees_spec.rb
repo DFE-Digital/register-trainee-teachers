@@ -4,6 +4,7 @@ require "rails_helper"
 
 feature "recommending trainees" do
   background do
+    create(:academic_cycle, previous_cycle: true)
     given_i_am_authenticated
   end
 
