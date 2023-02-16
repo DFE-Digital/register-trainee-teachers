@@ -110,7 +110,7 @@ module DeadJobs
     def dqt_status(trainee)
       return unless include_dqt_status && trainee.trn.present?
 
-      Dqt::RetrieveTeacher.call(trainee:).dig("initial_teacher_training", "result")&.to_s&.gsub('"', "'")
+      Dqt::RetrieveTrainingInstance.call(trainee:)["result"]&.to_s&.gsub('"', "'")
     rescue StandardError => e
       "error: #{e.message}"
     end

@@ -74,8 +74,8 @@ shared_examples "DeadJobs" do
       let(:include_dqt_status) { true }
 
       before do
-        allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee:).and_return(
-          { "initial_teacher_training" => { "result" => "Pass" } },
+        allow(Dqt::RetrieveTrainingInstance).to receive(:call).with(trainee:).and_return(
+          { "result" => "Pass" },
         )
       end
 
