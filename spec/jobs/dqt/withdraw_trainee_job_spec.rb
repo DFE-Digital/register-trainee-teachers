@@ -13,7 +13,7 @@ module Dqt
 
     before do
       allow(WithdrawTrainee).to receive(:call).with(trainee:).and_return(nil)
-      allow(RetrieveTrainingInstance).to receive(:call).with(trainee:).and_return(dqt_response)
+      allow(RetrieveTraining).to receive(:call).with(trainee:).and_return(dqt_response)
     end
 
     context "with the `integrate_with_dqt` feature flag inactive" do

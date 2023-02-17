@@ -150,20 +150,26 @@ class Trainee < ApplicationRecord
   belongs_to :end_academic_cycle, optional: true, class_name: "AcademicCycle"
   belongs_to :hesa_trn_submission, optional: true, class_name: "Hesa::TrnSubmission"
 
+  has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
+  has_one :dqt_trn_request, class_name: "Dqt::TrnRequest", dependent: :destroy
+  has_one :dqt_teacher,
+          class_name: "Dqt::Teacher",
+          foreign_key: :trn,
+          primary_key: :trn,
+          inverse_of: :trainee
+
   has_many :degrees, dependent: :destroy
   has_many :nationalisations, dependent: :destroy, inverse_of: :trainee
   has_many :nationalities, through: :nationalisations
   has_many :trainee_disabilities, dependent: :destroy, inverse_of: :trainee
   has_many :disabilities, through: :trainee_disabilities
+  has_many :dqt_teacher_trainings, class_name: "Dqt::TeacherTraining", through: :dqt_teacher, source: :dqt_trainings
 
   has_many :hesa_students,
            foreign_key: :hesa_id,
            primary_key: :hesa_id,
            inverse_of: :trainee,
            class_name: "Hesa::Student"
-
-  has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
-  has_one :dqt_trn_request, class_name: "Dqt::TrnRequest", dependent: :destroy
 
   attribute :progress, Progress.to_type
 

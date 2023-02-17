@@ -43,7 +43,7 @@ module Dqt
     end
 
     def already_withdrawn_in_dqt?
-      RetrieveTrainingInstance.call(trainee:)["result"] == "Withdrawn"
+      RetrieveTraining.call(trainee:)["result"] == "Withdrawn"
     end
   end
 end
