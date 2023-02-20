@@ -450,10 +450,6 @@ module Features
       @performance_profiles_page ||= PageObjects::Reports::PerformanceProfiles.new
     end
 
-    def bulk_recommend_page
-      @bulk_recommend_page ||= PageObjects::Reports::BulkRecommend.new
-    end
-
     def recommendation_upload_page
       @recommendation_upload_page ||= PageObjects::RecommendationUploads::New.new
     end

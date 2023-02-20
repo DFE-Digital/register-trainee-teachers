@@ -52,20 +52,11 @@ class ReportsController < BaseTraineeController
   def bulk_recommend_export
     authorize(current_user, :bulk_recommend?)
 
-    respond_to do |format|
-      format.html do
-        @trainee_count = bulk_recommend_trainees.count
-        @academic_cycle_label = @current_academic_cycle.label
-      end
-
-      format.csv do
-        send_data(
-          Exports::BulkRecommendExport.call(bulk_recommend_trainees),
-          filename: bulk_recommend_export_filename,
-          disposition: :attachment,
-        )
-      end
-    end
+    send_data(
+      Exports::BulkRecommendExport.call(bulk_recommend_trainees),
+      filename: bulk_recommend_export_filename,
+      disposition: :attachment,
+    )
   end
 
 private
@@ -78,22 +69,9 @@ private
     Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@previous_academic_cycle.start_year] })
   end
 
-  # rubocop:disable Style/TrailingCommaInArguments
   def bulk_recommend_trainees
-    itt_end_date_range = [(Time.zone.today - 6.months).iso8601, (Time.zone.today + 6.months).iso8601]
-
-    policy_scope(
-      Trainee
-        .where(state: :trn_received)
-        .where(
-          <<~SQL
-            '#{itt_end_date_range}'::daterange @> trainees.itt_end_date OR
-            trainees.itt_end_date IS NULL
-          SQL
-        ).order(last_name: :asc)
-    )
+    policy_scope(FindBulkRecommendTrainees.call)
   end
-  # rubocop:enable Style/TrailingCommaInArguments
 
   def time_now
     Time.zone.now.strftime("%F_%H-%M-%S")
