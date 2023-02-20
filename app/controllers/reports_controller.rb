@@ -78,22 +78,9 @@ private
     Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@previous_academic_cycle.start_year] })
   end
 
-  # rubocop:disable Style/TrailingCommaInArguments
   def bulk_recommend_trainees
-    itt_end_date_range = [(Time.zone.today - 6.months).iso8601, (Time.zone.today + 6.months).iso8601]
-
-    policy_scope(
-      Trainee
-        .where(state: :trn_received)
-        .where(
-          <<~SQL
-            '#{itt_end_date_range}'::daterange @> trainees.itt_end_date OR
-            trainees.itt_end_date IS NULL
-          SQL
-        ).order(last_name: :asc)
-    )
+    policy_scope(FindBulkRecommendTrainees.call)
   end
-  # rubocop:enable Style/TrailingCommaInArguments
 
   def time_now
     Time.zone.now.strftime("%F_%H-%M-%S")
