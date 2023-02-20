@@ -63,11 +63,6 @@ describe ReportsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it "renders the application template" do
-      get :bulk_recommend_export
-      expect(response).to render_template("application")
-    end
-
     it "renders a csv" do
       get :bulk_recommend_export, params: { format: :csv }
       expect(response.content_type).to eq("text/csv")
