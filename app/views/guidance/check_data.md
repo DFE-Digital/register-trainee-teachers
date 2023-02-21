@@ -7,7 +7,7 @@ This information is mainly for school centred initial teacher training providers
 
 You’ll need the following information about a trainee to complete their record manually in Register.
 
-<h2 class="govuk-heading-m">Personal details</h2>
+## Personal details
 
 <ul class="govuk-list"> 
 <li> First names </li>  
@@ -20,7 +20,7 @@ You’ll need the following information about a trainee to complete their record
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">Contact details</h2>
+## Contact details
 
 <ul class="govuk-list">
 <li> Address  </li>
@@ -28,8 +28,10 @@ You’ll need the following information about a trainee to complete their record
 </ul>
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-<h2 class="govuk-heading-m">Diversity information (optional)</h2>
-<div class="govuk-inset-text">If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.</div>
+
+## Diversity information (optional)
+
+{inset-text}If the trainee chose not to share this information during the application process, do not ask for it for the purpose of registering them.{/inset-text}
 
 <ul class="govuk-list">
 <li> Ethnicity </li>
@@ -37,9 +39,9 @@ You’ll need the following information about a trainee to complete their record
 </ul>
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">Degrees</h2>
+## Degrees
 
-<h4 class="govuk-heading-s">If it’s a UK degree</h4>
+### If it’s a UK degree
 
 <ul class="govuk-list">
 <li> Type (for example, BA or BSc) </li>
@@ -49,7 +51,7 @@ You’ll need the following information about a trainee to complete their record
 <li> Graduation year </li>  
 </ul>
 
-<h4 class="govuk-heading-s">If it’s not a UK degree</h4>
+### If it’s not a UK degree
 
 <ul class="govuk-list">
 <li> Country where the degree was obtained </li>  
@@ -59,9 +61,9 @@ You’ll need the following information about a trainee to complete their record
 </ul>
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">Course details</h2>  
+## Course details
 
-<h4 class="govuk-heading-s">If it’s a course on Publish teacher training courses</h4>
+### If it’s a course on Publish teacher training courses
 <ul class="govuk-list">
 <li> Which Publish course  </li>
 <li> Subject specialisms  </li>
@@ -70,7 +72,7 @@ You’ll need the following information about a trainee to complete their record
 Expected end date  
 </ul>
 
-<h4 class="govuk-heading-s">If it's not a course on Publish teacher training courses</h4> 
+### If it's not a course on Publish teacher training courses
 
 <ul class="govuk-list">
 <li> Primary or secondary </li>
@@ -81,7 +83,7 @@ Expected end date
 <li> Expected end date </li> 
 </ul>
 
-<h4 class="govuk-heading-s">If it's a course leading to Early Years Teacher Status (EYTS) </h4> 
+### If it's a course leading to Early Years Teacher Status (EYTS)
 
 <ul class="govuk-list">
 <li> Full or part time </li>
@@ -91,20 +93,23 @@ Expected end date
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">Trainee start date </h2>
+## Trainee start date
 
 Trainee start date
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">Lead and employing schools</h2> 
+## Lead and employing schools
 
 These are only required for School direct and Teaching apprenticeship routes.
 
-<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"><h2 class="govuk-heading-m">Funding details</h2>
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-Whether the trainee is on a training initiative  
-<h4 class="govuk-heading-s">For courses with bursaries, scholarships or grants available</h4>
+## Funding details
+
+Whether the trainee is on a training initiative 
+
+### For courses with bursaries, scholarships or grants available
 
 <ul class="govuk-list">
 <li> Whether you’re applying for a bursary for the trainee  </li>
@@ -114,12 +119,8 @@ Whether the trainee is on a training initiative
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">Placement details</h2> 
+## Placement details
 
-<div class="govuk-inset-text">
+{inset-text}You should keep a record of the location of the trainee’s placements.
 
-  <p class="govuk-body">You should keep a record of the location of the trainee’s placements.</p>
-
-  <p class="govuk-body">You cannot currently provide this data but you’ll be asked to provide it later in the 2022 to 2023 academic year.</p>
-  
-</div>
+You cannot currently provide this data but you’ll be asked to provide it later in the 2022 to 2023 academic year.{/inset-text}
