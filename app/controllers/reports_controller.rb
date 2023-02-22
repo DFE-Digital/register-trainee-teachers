@@ -52,20 +52,11 @@ class ReportsController < BaseTraineeController
   def bulk_recommend_export
     authorize(current_user, :bulk_recommend?)
 
-    respond_to do |format|
-      format.html do
-        @trainee_count = bulk_recommend_trainees.count
-        @academic_cycle_label = @current_academic_cycle.label
-      end
-
-      format.csv do
-        send_data(
-          Exports::BulkRecommendExport.call(bulk_recommend_trainees),
-          filename: bulk_recommend_export_filename,
-          disposition: :attachment,
-        )
-      end
-    end
+    send_data(
+      Exports::BulkRecommendExport.call(bulk_recommend_trainees),
+      filename: bulk_recommend_export_filename,
+      disposition: :attachment,
+    )
   end
 
 private
