@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBulkUpdateRecommendationsUploads < ActiveRecord::Migration[7.0]
   def change
     create_table :bulk_update_recommendations_uploads do |t|

@@ -4,7 +4,7 @@ module BulkUpdate
   class RecommendationUploadsController < ApplicationController
     helper_method :bulk_recommend_count, :recommendations_upload_form
 
-     # TODO: Find the user's upload and pick out counts
+    # TODO: Find the user's upload and pick out counts
     def show; end
 
     def new

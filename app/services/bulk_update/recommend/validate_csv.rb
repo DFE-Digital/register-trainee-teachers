@@ -12,7 +12,7 @@ module BulkUpdate
         csv_headers_set.superset?(VALID_HEADERS_SET)
       end
 
-      private
+    private
 
       attr_reader :csv
 

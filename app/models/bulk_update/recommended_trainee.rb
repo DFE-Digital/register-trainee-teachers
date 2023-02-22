@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: bulk_update_recommended_trainees
@@ -21,7 +23,7 @@
 #
 class BulkUpdate::RecommendedTrainee < ApplicationRecord
   belongs_to :bulk_update_recommendations_upload, class_name: "BulkUpdate::RecommendationsUpload"
-  validates_presence_of :standards_met_at
+  validates :standards_met_at, presence: true
 
   alias upload bulk_update_recommendations_upload
 end
