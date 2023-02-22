@@ -18,7 +18,7 @@
 class BulkUpdate::RecommendationsUpload < ApplicationRecord
   belongs_to :user
   has_one_attached :file
-  has_many :bulk_update_recommended_trainees
+  has_many :bulk_update_recommended_trainees, class_name: "BulkUpdate::RecommendedTrainee", dependent: :destroy
 
   alias trainees bulk_update_recommended_trainees
 end
