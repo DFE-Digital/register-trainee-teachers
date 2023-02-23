@@ -26,6 +26,8 @@ module BulkUpdate
     # TODO: Find the user's upload trainees
     def check; end
 
+    def confirmation; end
+
   private
 
     attr_reader :recommendations_upload_form

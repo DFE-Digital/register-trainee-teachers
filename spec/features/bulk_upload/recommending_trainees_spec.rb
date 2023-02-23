@@ -23,6 +23,9 @@ feature "recommending trainees" do
       given_i_am_on_the_recommendations_upload_page
       then_i_see_how_many_trainees_i_can_recommend
       and_i_upload_a_csv
+      and_i_check_who_ill_recommend
+      and_i_click_recommend
+      then_i_see_the_confirmation_page
     end
   end
 
@@ -52,6 +55,14 @@ private
   end
 
   def and_i_check_who_ill_recommend
-    recommendation_upload_show_page.check_button.click
+    recommendations_upload_show_page.check_button.click
+  end
+
+  def and_i_click_recommend
+    recommendations_upload_check_page.recommend_button.click
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(recommendations_upload_confirmation_page).to be_displayed
   end
 end

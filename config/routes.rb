@@ -72,6 +72,8 @@ Rails.application.routes.draw do
     resources :recommendations_uploads, only: %i[new create edit update], path: "recommend", path_names: { new: "upload", edit: "upload-changes" } do
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
       get "check-pending-updates", to: "recommendations_uploads#check", as: "check"
+      get "confirmation"
+      resource :award_recommendations, only: :create
     end
   end
 
