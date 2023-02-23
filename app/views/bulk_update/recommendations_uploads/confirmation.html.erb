@@ -14,13 +14,19 @@
 
     <h2 class="govuk-heading-m">Next steps</h2>
 
-    <p class="govuk-body">
-      You can recommend <%= bulk_recommend_count %> more trainees. You can now:
-    </p>
+    <% if bulk_recommend_count.zero? %>
+      <p class="govuk-body">
+        You can now <%= govuk_link_to("view your list of registered trainees", trainees_path) %>
+      </p>
+    <% else %>
+      <p class="govuk-body">
+        You can recommend <%= bulk_recommend_count %> more <%= "trainees".pluralize(bulk_recommend_count) %>. You can now:
+      </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= govuk_link_to("bulk recommend more trainees", new_bulk_update_recommendation_upload_path) %></li>
-      <li><%= govuk_link_to("view your list of registered trainees", trainees_path) %></li>
-    </ul>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= govuk_link_to("bulk recommend more trainees", new_bulk_update_recommendation_upload_path) %></li>
+        <li><%= govuk_link_to("view your list of registered trainees", trainees_path) %></li>
+      </ul>
+    <% end %>
   </div>
 </div>
