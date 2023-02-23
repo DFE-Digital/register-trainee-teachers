@@ -351,3 +351,25 @@
   - user_id
   - created_at
   - updated_at
+  :dqt_teachers:
+  - id
+  - trn
+  - first_name
+  - last_name
+  - date_of_birth
+  - qts_date
+  - eyts_date
+  - early_years_status_name
+  - early_years_status_value
+  - created_at
+  - updated_at
+  :dqt_teacher_trainings:
+  - id
+  - dqt_teacher_id
+  - programme_start_date
+  - programme_end_date
+  - programme_type
+  - result
+  - provider_ukprn
+  - created_at
+  - updated_at

@@ -43,6 +43,8 @@ features:
   hesa_import:
     sync_collection: true
     sync_trn_data: true
+  dqt_import:
+    sync_teachers: true
 environment:
   name: beta
 

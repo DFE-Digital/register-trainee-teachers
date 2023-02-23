@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Dqt
-  describe RetrieveTrainingInstance do
+  describe RetrieveTraining do
     let(:provider) { create(:provider) }
     let(:trainee) { create(:trainee, :trn_received, :early_years_postgrad, provider:) }
     let(:dqt_response) do

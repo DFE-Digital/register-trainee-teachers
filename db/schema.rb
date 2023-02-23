@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_26_110151) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_16_154509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -246,6 +246,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_110151) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_disabilities_on_name", unique: true
+  end
+
+  create_table "dqt_teacher_trainings", force: :cascade do |t|
+    t.bigint "dqt_teacher_id"
+    t.string "programme_start_date"
+    t.string "programme_end_date"
+    t.string "programme_type"
+    t.string "result"
+    t.string "provider_ukprn"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dqt_teacher_id"], name: "index_dqt_teacher_trainings_on_dqt_teacher_id"
+  end
+
+  create_table "dqt_teachers", force: :cascade do |t|
+    t.string "trn"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "date_of_birth"
+    t.string "qts_date"
+    t.string "eyts_date"
+    t.string "early_years_status_name"
+    t.string "early_years_status_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dqt_trn_requests", force: :cascade do |t|

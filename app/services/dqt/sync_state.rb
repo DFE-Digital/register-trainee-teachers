@@ -5,7 +5,7 @@
 #
 # Before using this service again (for example if we turn back on
 # Dqt::SyncStatesJob) we need to be comparing the result from
-# Dqt::RetrieveTrainingInstance rather than Dqt::RetrieveTeacher.
+# Dqt::RetrieveTraining rather than Dqt::RetrieveTeacher.
 module Dqt
   class SyncState
     include ServicePattern

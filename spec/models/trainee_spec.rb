@@ -176,6 +176,7 @@ describe Trainee do
   context "associations" do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:apply_application).optional }
+    it { is_expected.to have_one(:dqt_teacher) }
     it { is_expected.to have_many(:degrees).dependent(:destroy) }
     it { is_expected.to have_many(:nationalisations).dependent(:destroy).inverse_of(:trainee) }
     it { is_expected.to have_many(:nationalities).through(:nationalisations) }
@@ -183,6 +184,7 @@ describe Trainee do
     it { is_expected.to have_many(:disabilities).through(:trainee_disabilities) }
     it { is_expected.to have_many(:hesa_students).inverse_of(:trainee) }
     it { is_expected.to have_one(:dqt_trn_request).dependent(:destroy) }
+    it { is_expected.to have_many(:dqt_teacher_trainings) }
     it { is_expected.to belong_to(:lead_school).class_name("School").optional }
     it { is_expected.to belong_to(:employing_school).class_name("School").optional }
 

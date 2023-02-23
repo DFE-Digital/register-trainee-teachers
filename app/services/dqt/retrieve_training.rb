@@ -3,7 +3,7 @@
 module Dqt
   class NoTrainingInstanceError < StandardError; end
 
-  class RetrieveTrainingInstance
+  class RetrieveTraining
     include ServicePattern
 
     def initialize(trainee:)
@@ -11,17 +11,17 @@ module Dqt
     end
 
     def call
-      raise(NoTrainingInstanceError) if training_instances.blank? || training_instance.nil?
+      raise(NoTrainingInstanceError) if trainings.blank? || training.nil?
 
-      training_instance
+      training
     end
 
     attr_reader :trainee
 
   private
 
-    def training_instance
-      @training_instance ||= training_instances.find do |training|
+    def training
+      @training ||= trainings.find do |training|
         training.dig("provider", "ukprn") == trainee.provider.ukprn &&
           training["programmeType"] == programme_type(trainee)
       end
@@ -31,8 +31,8 @@ module Dqt
       Dqt::Params::TrnRequest::PROGRAMME_TYPE[trainee.training_route]
     end
 
-    def training_instances
-      @training_instances ||= RetrieveTeacher.call(trainee:)["initialTeacherTraining"]
+    def trainings
+      @trainings ||= RetrieveTeacher.call(trainee:)["initialTeacherTraining"]
     end
   end
 end
