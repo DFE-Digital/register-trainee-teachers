@@ -14,7 +14,7 @@ module Dqt
       dqt_data = RetrieveTeacher.call(trainee:)
       dqt_teacher = Teacher.find_or_initialize_by(trn: dqt_data["trn"], date_of_birth: dqt_data["dateOfBirth"])
       dqt_teacher.assign_attributes(first_name: dqt_data["firstName"],
-                                    last_name: dqt_data["dateOfBirth"],
+                                    last_name: dqt_data["lastName"],
                                     qts_date: dqt_data["qtsDate"],
                                     eyts_date: dqt_data["eytsDate"],
                                     early_years_status_name: dqt_data.dig("earlyYearsStatus", "name"),
