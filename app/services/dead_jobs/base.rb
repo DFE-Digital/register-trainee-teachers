@@ -49,15 +49,15 @@ module DeadJobs
       @identifier ||= self.class.name.demodulize
     end
 
+    def trainees
+      Trainee.includes(:provider).find(dead_jobs.keys)
+    end
+
     delegate :count, to: :dead_jobs
 
   private
 
     attr_reader :dead_set, :include_dqt_status
-
-    def trainees
-      Trainee.includes(:provider).find(dead_jobs.keys)
-    end
 
     def build_csv(includes:)
       CSV.generate do |csv|
