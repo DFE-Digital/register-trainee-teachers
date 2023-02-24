@@ -9,16 +9,14 @@ class GuidanceController < ApplicationController
   end
 
   def about_register_trainee_teachers; end
+  def registering_trainees_through_hesa; end
+  def check_data; end
+  def bulk_recommend_trainees; end
+  def manually_registering_trainees; end
 
   def dates_and_deadlines
     render(layout: "application")
   end
-
-  def manually_registering_trainees; end
-
-  def registering_trainees_through_hesa; end
-
-  def check_data; end
 
   def hesa_register_data_mapping
     tab_param = params[:tab].underscore
