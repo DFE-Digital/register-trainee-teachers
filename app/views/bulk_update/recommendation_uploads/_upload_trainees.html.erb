@@ -7,7 +7,7 @@
   <li>
       <p>
         <%= govuk_link_to(
-          "Download a CSV file listing #{ pluralize(@bulk_recommend_count, "trainee") } you can recommend",
+          "Download a CSV file listing #{ pluralize(bulk_recommend_count, "trainee") } you can recommend",
           bulk_recommend_export_reports_path(:csv),
           class: "bulk-recommend")
           %>

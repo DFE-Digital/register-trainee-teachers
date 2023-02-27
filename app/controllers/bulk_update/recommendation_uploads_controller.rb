@@ -48,7 +48,8 @@ module BulkUpdate
 
       Recommend::CreateTrainees.call(
         recommendations_upload_id: recommendations_upload.id,
-        csv: CSV.new(file.tempfile, headers: true).read,
+        # csv: CSV.new(file.tempfile, headers: true).read,
+        csv: recommendations_upload_form.csv,
       )
     rescue StandardError
       recommendations_upload.destroy

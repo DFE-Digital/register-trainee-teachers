@@ -3,5 +3,11 @@
 require "rails_helper"
 
 RSpec.describe BulkUpdate::RecommendedTrainee do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "associations" do
+    it { is_expected.to belong_to(:recommendations_upload) }
+  end
+
+  describe "validations" do
+    it { validate_presence_of(:standards_met_at) }
+  end
 end

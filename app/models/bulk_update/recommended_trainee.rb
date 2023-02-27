@@ -22,8 +22,10 @@
 #  fk_rails_...  (bulk_update_recommendations_upload_id => bulk_update_recommendations_uploads.id)
 #
 class BulkUpdate::RecommendedTrainee < ApplicationRecord
-  belongs_to :bulk_update_recommendations_upload, class_name: "BulkUpdate::RecommendationsUpload"
-  validates :standards_met_at, presence: true
+  belongs_to :recommendations_upload,
+             class_name: "BulkUpdate::RecommendationsUpload",
+             foreign_key: :bulk_update_recommendations_upload_id,
+             inverse_of: :recommended_trainees
 
-  alias upload bulk_update_recommendations_upload
+  validates :standards_met_at, presence: true
 end
