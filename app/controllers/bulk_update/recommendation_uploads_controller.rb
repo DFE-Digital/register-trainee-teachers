@@ -41,14 +41,9 @@ module BulkUpdate
 
     # for now, if anything goes wrong during creation of trainees
     # delete the recommend_upload record (and uploaded file)
-    #
-    # the local tempfile is re-used here to save time (i.e. avoids downloading it from Azure)
     def create_recommended_trainees!
-      file.tempfile.rewind
-
       Recommend::CreateTrainees.call(
         recommendations_upload_id: recommendations_upload.id,
-        # csv: CSV.new(file.tempfile, headers: true).read,
         csv: recommendations_upload_form.csv,
       )
     rescue StandardError
