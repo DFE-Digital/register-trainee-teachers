@@ -4,9 +4,9 @@ require "rails_helper"
 
 module BulkUpdate
   describe RecommendationsUploadForm, type: :model do
-    subject(:form) { described_class.new(current_user:, file:) }
+    subject(:form) { described_class.new(provider:, file:) }
 
-    let(:current_user) { create(:user) }
+    let(:provider) { create(:provider) }
     let(:file) do
       ActionDispatch::Http::UploadedFile.new(
         {

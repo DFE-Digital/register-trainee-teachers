@@ -3,6 +3,7 @@
 module BulkUpdate
   class RecommendationUploadsController < ApplicationController
     helper_method :bulk_recommend_count, :recommendations_upload_form
+    before_action :redirect
 
     # TODO: Find the user's upload and pick out counts
     def show; end
@@ -12,7 +13,7 @@ module BulkUpdate
     end
 
     def create
-      @recommendations_upload_form = RecommendationsUploadForm.new(current_user:, file:)
+      @recommendations_upload_form = RecommendationsUploadForm.new(provider:, file:)
 
       if recommendations_upload_form.save
         create_recommended_trainees!
@@ -35,6 +36,10 @@ module BulkUpdate
       @file ||= params[:bulk_update_recommendations_upload_form][:file]
     end
 
+    def provider
+      @provider ||= current_user.organisation
+    end
+
     def bulk_recommend_count
       @bulk_recommend_count ||= policy_scope(FindBulkRecommendTrainees.call).count
     end
@@ -48,6 +53,10 @@ module BulkUpdate
       )
     rescue StandardError
       recommendations_upload.destroy
+    end
+
+    def redirect
+      redirect_to(root_path) unless provider.is_a?(Provider)
     end
   end
 end

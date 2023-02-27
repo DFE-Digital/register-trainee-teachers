@@ -41,7 +41,7 @@ private
 
   # dfe and otp objects can both be instantiated as `.begin_session!` will always create
   # a session with a dfe/otp_sign_in_user hash regardless of there being a user/email.
-  # We only want to memoize the instance that resonds to #user hence the `.select`
+  # We only want to memoize the instance that responds to #user hence the `.select`
   def sign_in_user
     @sign_in_user ||= [
       DfESignInUser.load_from_session(session),

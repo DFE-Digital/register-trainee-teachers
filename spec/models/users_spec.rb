@@ -50,8 +50,6 @@ describe User do
 
   describe "associations" do
     it { is_expected.to have_many(:providers) }
-    it { is_expected.to have_many(:recommendations_uploads) }
-    it { is_expected.to have_many(:recommended_trainees) }
   end
 
   describe "indexes" do

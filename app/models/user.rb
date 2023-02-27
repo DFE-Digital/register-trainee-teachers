@@ -36,9 +36,6 @@ class User < ApplicationRecord
   has_many :lead_school_users
   has_many :lead_schools, through: :lead_school_users
 
-  has_many :recommendations_uploads, class_name: "BulkUpdate::RecommendationsUpload"
-  has_many :recommended_trainees, class_name: "BulkUpdate::RecommendedTrainee", through: :recommendations_uploads
-
   scope :order_by_last_name, -> { order(:last_name) }
   scope :system_admins, -> { where(system_admin: true) }
 

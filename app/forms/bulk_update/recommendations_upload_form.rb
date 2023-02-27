@@ -8,15 +8,15 @@ module BulkUpdate
 
     validate :csv_is_valid?
 
-    def initialize(current_user: nil, file: nil)
-      @current_user = current_user
+    def initialize(provider: nil, file: nil)
+      @provider = provider
       @file = file
     end
 
     def save
       return false unless valid?
 
-      @recommendations_upload = RecommendationsUpload.create(user: current_user, file: file)
+      @recommendations_upload = RecommendationsUpload.create(provider:, file:)
     end
 
     def csv
@@ -27,7 +27,7 @@ module BulkUpdate
 
   private
 
-    attr_reader :current_user, :file
+    attr_reader :provider, :file
 
     def csv_is_valid?
       return true if Recommend::ValidateCsv.new(csv).valid?
