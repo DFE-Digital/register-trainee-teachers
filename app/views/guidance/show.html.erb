@@ -1,78 +1,67 @@
 <%= render PageTitle::View.new(text: "How to use this service") %>
 
-  <%= content_for(:breadcrumbs) do %>
-    <%= render GovukComponent::BackLinkComponent.new(
-        text: "Home",
-        href: root_path,
-    ) %>
-  <% end %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+<% end %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-        <h1 class="govuk-heading-l">How to use this service</h1>
-        <ul class="govuk-list govuk-list--spaced">
-          <li>
-            <%= govuk_link_to(
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">How to use this service</h1>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to(
               "About Register trainee teachers",
               about_register_trainee_teachers_guidance_path,
-            )%>
-          </li>
-          <li>
-            <%= govuk_link_to(
+            ) %>
+      </li>
+      <li>
+        <%= govuk_link_to(
               "Dates and deadlines for the 2022 to 2023 academic year",
               dates_and_deadlines_guidance_path,
-            )%>
-          </li>
-        </ul>
+            ) %>
+      </li>
+    </ul>
 
-        <h2 class="govuk-heading-m">Registering trainees</h2>
-        <ul class="govuk-list govuk-list--spaced">
-          <li>
-            <%= govuk_link_to(
+    <h2 class="govuk-heading-m">Registering trainees</h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to(
               "Registering trainees manually in this service",
               manually_registering_trainees_guidance_path,
-            )%>
-          </li>
-          <li>
-            <%= govuk_link_to(
+            ) %>
+      </li>
+      <li>
+        <%= govuk_link_to(
               "Check what data you need to provide to register trainees manually",
               check_data_guidance_path,
-            )%>
-          </li>
-          <li>
-            <%= govuk_link_to(
+            ) %>
+      </li>
+      <li>
+        <%= govuk_link_to(
               "Registering trainees through HESA",
               registering_trainees_through_hesa_guidance_path,
-            )%>
-          </li>
-        </ul>
+            ) %>
+      </li>
+    </ul>
 
-      <h2 class="govuk-heading-m">Recommending trainees for QTS or EYTS</h2>
-      <ul class="govuk-list govuk-list--spaced">
-        <li>
-          <%= govuk_link_to("Bulk recommend trainees for QTS or EYTS", bulk_recommend_trainees_guidance_path)%>
-        </li>
-      </ul>
-
-        <h2 class="govuk-heading-m">Signing off data</h2>
-        <ul class="govuk-list govuk-list--spaced">
-          <li>
-            <%= govuk_link_to(
+    <h2 class="govuk-heading-m">Signing off data</h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to(
               "Sign off your list of trainees from #{@previous_academic_cycle_label} for the performance profiles publication",
               performance_profiles_guidance_path,
-              )%>
-          </li>
-        </ul>
+            ) %>
+      </li>
+    </ul>
 
-
-        <h2 class="govuk-heading-m">Understanding data</h2>
-        <ul class="govuk-list govuk-list--spaced">
-          <li>
-            <%= govuk_link_to(
+    <h2 class="govuk-heading-m">Understanding data</h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to(
               "Check the data mapping between HESA and Register trainee teachers",
               hesa_register_data_mapping_guidance_url("trainee-progress"),
-              )%>
-          </li>
-        </ul>
-      </div>
-    </div>
+            ) %>
+      </li>
+    </ul>
+  </div>
+</div>
