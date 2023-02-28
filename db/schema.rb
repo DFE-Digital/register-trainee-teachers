@@ -175,6 +175,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_130025) do
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
   end
 
+  create_table "bulk_update_recommendations_uploads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "provider_id", null: false
+    t.index ["provider_id"], name: "index_bulk_update_recommendations_uploads_on_provider_id"
+  end
+
+  create_table "bulk_update_recommended_trainees", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "bulk_update_recommendations_upload_id", null: false
+    t.integer "csv_row_number"
+    t.string "trn"
+    t.string "hesa_id"
+    t.date "standards_met_at"
+    t.index ["bulk_update_recommendations_upload_id"], name: "idx_bu_recommended_trainees_on_bu_recommendations_upload_id"
+  end
+
   create_table "course_subjects", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "subject_id", null: false
@@ -825,6 +843,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_130025) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
+  add_foreign_key "bulk_update_recommendations_uploads", "providers"
+  add_foreign_key "bulk_update_recommended_trainees", "bulk_update_recommendations_uploads"
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"
