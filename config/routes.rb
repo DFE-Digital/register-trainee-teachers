@@ -175,6 +175,7 @@ Rails.application.routes.draw do
     get "/check-data", to: "guidance#check_data"
     get "/hesa-register-data-mapping/:tab", to: "guidance#hesa_register_data_mapping", as: "hesa_register_data_mapping"
     get "/performance-profiles", to: "guidance#performance_profiles"
+    get "/bulk-recommend-trainees", to: "guidance#bulk_recommend_trainees"
   end
 
   if FeatureService.enabled?("funding")
