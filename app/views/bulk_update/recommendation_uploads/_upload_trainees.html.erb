@@ -7,7 +7,7 @@
   <li>
       <p>
         <%= govuk_link_to(
-          "Download a CSV file listing #{ pluralize(@bulk_recommend_count, "trainee") } you can recommend",
+          "Download a CSV file listing #{ pluralize(bulk_recommend_count, "trainee") } you can recommend",
           bulk_recommend_export_reports_path(:csv),
           class: "bulk-recommend")
           %>
@@ -20,6 +20,7 @@
   </li>
   <li>
     Upload the CSV file.
+    <%= f.govuk_file_field :file, label: { hidden: true } %>
   </li>
 </ol>
 
@@ -31,6 +32,4 @@
   </p>
 </div>
 
-<%= register_form_with url: bulk_update_recommendation_uploads_path, local: true do |f| %>
-  <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
-<% end %>
+<%= f.govuk_submit "Upload file and check who you’ll recommend" %>
