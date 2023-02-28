@@ -27,4 +27,9 @@ class BulkUpdate::RecommendationsUpload < ApplicationRecord
            inverse_of: :recommendations_upload
 
   alias rows recommendations_upload_rows
+
+  # TODO: Also, ones with no errors
+  def awardable_rows
+    rows.where.not(standards_met_at: nil)
+  end
 end
