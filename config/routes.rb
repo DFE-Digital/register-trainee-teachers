@@ -75,6 +75,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :bulk_update, path: "bulk-update" do
+    resources :recommendation_uploads, only: %i[new create], path: "recommend", path_names: { new: "upload", edit: "upload-changes" }
+  end
+
   resources :trainees, except: :edit do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
