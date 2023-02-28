@@ -29,7 +29,7 @@ module Hesa
         allow(subject).to receive(:agent).and_return(mechanize)
       end
 
-      xit "logs in successfully" do
+      it "logs in successfully" do
         expect(subject.send(:login)).to be(true)
       end
     end

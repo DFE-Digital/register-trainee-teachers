@@ -30,10 +30,6 @@ describe ReviewDraft::Draft::View do
   context "when the trainee is on the provider-led route", "feature_routes.provider_led_postgrad": true do
     let(:trainee) { create(:trainee, :provider_led_postgrad, :with_placement_assignment) }
 
-    xit "renders additional provider-led specific sections" do
-      expect(rendered_component).to have_text("Placement details")
-    end
-
     it "does not render non provider-led sections" do
       expect(rendered_component).not_to have_text(I18n.t("components.review_draft.draft.schools.titles.tuition"))
     end
