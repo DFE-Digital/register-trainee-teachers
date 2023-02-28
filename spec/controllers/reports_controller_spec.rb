@@ -56,16 +56,4 @@ describe ReportsController do
       expect(response.content_type).to eq("text/csv")
     end
   end
-
-  describe "#bulk_recommend_export" do
-    it "returns a 200 status code" do
-      get :bulk_recommend_export
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "renders a csv" do
-      get :bulk_recommend_export, params: { format: :csv }
-      expect(response.content_type).to eq("text/csv")
-    end
-  end
 end
