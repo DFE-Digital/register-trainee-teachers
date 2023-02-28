@@ -1,20 +1,23 @@
 <%= render PageTitle::View.new(text: "Bulk recommend trainees for QTS or EYTS") %>
-
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop" >
-    <h1 class="govuk-heading-l">
-      <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
-      Bulk recommend trainees for QTS or EYTS
-    </h1>
+    <%= register_form_with(model: recommendations_upload_form, url: bulk_update_recommendation_uploads_path) do |f| %>
+      <%= f.govuk_error_summary %>
 
-    <% if @bulk_recommend_count.zero? %>
-      <%= render("no_trainees") %>
-    <% else %>
-      <%= render("upload_trainees") %>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
+        Bulk recommend trainees for QTS or EYTS
+      </h1>
+
+      <% if bulk_recommend_count.zero? %>
+        <%= render("no_trainees") %>
+      <% else %>
+        <%= render("upload_trainees", f: ) %>
+      <% end %>
     <% end %>
   </div>
 </div>
