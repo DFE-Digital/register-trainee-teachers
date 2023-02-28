@@ -30,7 +30,7 @@ module BulkUpdate
     attr_reader :provider, :file
 
     def csv_is_valid?
-      return true if Recommend::ValidateCsv.new(csv).valid?
+      return true if RecommendationsUploads::ValidateCsv.new(csv).valid?
 
       errors.add(:file, "CSV not valid")
     rescue CSV::MalformedCSVError

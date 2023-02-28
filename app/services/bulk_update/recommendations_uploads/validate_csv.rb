@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  module Recommend
+  module RecommendationsUploads
     class ValidateCsv
       def initialize(csv)
         @csv = csv
