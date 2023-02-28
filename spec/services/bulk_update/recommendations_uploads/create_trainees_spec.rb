@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module BulkUpdate
-  module Recommend
+  module RecommendationsUploads
     describe CreateTrainees do
       subject(:service) { described_class.call(recommendations_upload_id: recommendations_upload.id, csv: csv) }
 
