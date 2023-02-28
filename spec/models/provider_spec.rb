@@ -37,6 +37,8 @@ describe Provider do
     it { is_expected.to have_many(:users) }
     it { is_expected.to have_many(:funding_payment_schedules) }
     it { is_expected.to have_many(:funding_trainee_summaries) }
+    it { is_expected.to have_many(:recommendations_uploads) }
+    it { is_expected.to have_many(:recommended_trainees) }
   end
 
   describe "auditing" do
