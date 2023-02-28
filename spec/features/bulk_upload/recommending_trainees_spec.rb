@@ -23,7 +23,6 @@ feature "recommending trainees" do
       given_i_am_on_the_recommendation_upload_page
       then_i_see_how_many_trainees_i_can_recommend
       and_i_upload_a_csv
-      and_i_check_who_ill_recommend
     end
   end
 
@@ -47,10 +46,8 @@ private
   end
 
   def and_i_upload_a_csv
+    attach_file("bulk_update_recommendations_upload_form[file]", file_fixture("bulk_update/recommendations_upload/complete.csv").to_path)
     recommendation_upload_page.upload_button.click
-  end
-
-  def and_i_check_who_ill_recommend
-    recommendation_upload_show_page.check_button.click
+    expect(BulkUpdate::RecommendedTrainee.count).to be 2
   end
 end

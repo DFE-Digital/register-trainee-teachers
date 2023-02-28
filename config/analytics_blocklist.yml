@@ -376,3 +376,17 @@
   - provider_ukprn
   - created_at
   - updated_at
+  :bulk_update_recommended_trainees:
+  - id
+  - created_at
+  - updated_at
+  - bulk_update_recommendations_upload_id
+  - csv_row_number
+  - trn
+  - hesa_id
+  - standards_met_at
+  :bulk_update_recommendations_uploads:
+  - id
+  - created_at
+  - updated_at
+  - provider_id
