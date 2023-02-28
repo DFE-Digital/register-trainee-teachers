@@ -11,7 +11,7 @@
       Check who you’ll recommend for QTS or EYTS
     </h1>
 
-    <%= register_form_with url: bulk_update_recommendation_upload_award_recommendations_path, method: :post, local: true do |f| %>
+    <%= register_form_with url: bulk_update_recommendations_upload_recommendations_path, method: :post, local: true do |f| %>
       <%= f.govuk_submit("Recommend {COUNT} trainees for QTS or EYTS", id: "recommend") %>
     <% end %>
   </div>

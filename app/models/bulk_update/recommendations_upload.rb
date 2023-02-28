@@ -25,4 +25,9 @@ class BulkUpdate::RecommendationsUpload < ApplicationRecord
            foreign_key: :bulk_update_recommendations_upload_id,
            dependent: :destroy,
            inverse_of: :recommendations_upload
+
+  # TODO: Also, ones with no errors
+  def awardable_rows
+    recommended_trainees.where.not(standards_met_at: nil)
+  end
 end

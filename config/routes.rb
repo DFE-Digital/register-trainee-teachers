@@ -73,7 +73,7 @@ Rails.application.routes.draw do
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
       get "check-pending-updates", to: "recommendations_uploads#check", as: "check"
       get "confirmation"
-      resource :award_recommendations, only: :create
+      resource :recommendations, only: :create
     end
   end
 

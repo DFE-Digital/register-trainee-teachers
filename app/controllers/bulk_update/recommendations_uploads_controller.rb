@@ -5,8 +5,9 @@ module BulkUpdate
     helper_method :bulk_recommend_count, :recommendations_upload_form
     before_action :redirect
 
-    # TODO: Find the user's upload and pick out counts
-    def show; end
+    def show
+      @recommendations_upload = provider.recommendations_uploads.find(params[:recommendations_upload_id])
+    end
 
     def new
       @recommendations_upload_form = RecommendationsUploadForm.new
@@ -17,7 +18,7 @@ module BulkUpdate
 
       if recommendations_upload_form.save
         create_recommended_trainees!
-        redirect_to(root_path)
+        redirect_to(bulk_update_recommendations_upload_summary_path(recommendations_upload))
       else
         render(:new)
       end

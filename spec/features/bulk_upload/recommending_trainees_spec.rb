@@ -36,8 +36,8 @@ private
   end
 
   def given_multiple_trainees_exist_to_recommend
-    create(:trainee, :trn_received, itt_end_date: Time.zone.today, provider: current_user.organisation)
-    create(:trainee, :trn_received, itt_end_date: Time.zone.today + 1.month, provider: current_user.organisation)
+    create(:trainee, :trn_received, trn: "2413295", itt_end_date: Time.zone.today, provider: current_user.organisation)
+    create(:trainee, :trn_received, trn: "4814731", itt_end_date: Time.zone.today + 1.month, provider: current_user.organisation)
   end
 
   def then_i_see_how_many_trainees_i_can_recommend
