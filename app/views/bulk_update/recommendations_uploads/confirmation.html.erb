@@ -1,0 +1,32 @@
+<%= render PageTitle::View.new(text: "{COUNT} trainees recommended for QTS or EYTS") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
+      <h1 class="govuk-panel__title">
+        {COUNT} trainees recommended for QTS or EYTS
+      </h1>
+    </div>
+
+    <p class="govuk-body">
+      The Department for Education will award QTS or EYTS within 3 working days.
+    </p>
+
+    <h2 class="govuk-heading-m">Next steps</h2>
+
+    <% if bulk_recommend_count.zero? %>
+      <p class="govuk-body">
+        You can now <%= govuk_link_to("view your list of registered trainees", trainees_path) %>
+      </p>
+    <% else %>
+      <p class="govuk-body">
+        You can recommend <%= bulk_recommend_count %> more <%= "trainees".pluralize(bulk_recommend_count) %>. You can now:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= govuk_link_to("bulk recommend more trainees", new_bulk_update_recommendations_upload_path) %></li>
+        <li><%= govuk_link_to("view your list of registered trainees", trainees_path) %></li>
+      </ul>
+    <% end %>
+  </div>
+</div>
