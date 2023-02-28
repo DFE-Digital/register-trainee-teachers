@@ -28,6 +28,4 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
              inverse_of: :recommendations_upload_rows
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
-
-  validates :standards_met_at, presence: true
 end

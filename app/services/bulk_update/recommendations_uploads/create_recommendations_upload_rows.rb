@@ -16,7 +16,7 @@ module BulkUpdate
           ::BulkUpdate::RecommendationsUploadRow.create(
             bulk_update_recommendations_upload_id: recommendations_upload_id,
             csv_row_number: row_number,
-            standards_met_at: row["Date QTS or EYTS standards met"].to_date,
+            standards_met_at: row["Date QTS or EYTS standards met"]&.to_date,
             trn: row["TRN"],
             hesa_id: row["HESA ID"],
           )
