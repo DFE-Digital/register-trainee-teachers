@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_16_154509) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_28_135922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -257,6 +257,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_16_154509) do
     t.string "provider_ukprn"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "hesa_id"
     t.index ["dqt_teacher_id"], name: "index_dqt_teacher_trainings_on_dqt_teacher_id"
   end
 
@@ -271,6 +272,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_16_154509) do
     t.string "early_years_status_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "hesa_id"
   end
 
   create_table "dqt_trn_requests", force: :cascade do |t|

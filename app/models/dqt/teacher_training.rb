@@ -13,6 +13,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  dqt_teacher_id       :bigint
+#  hesa_id              :string
 #
 # Indexes
 #

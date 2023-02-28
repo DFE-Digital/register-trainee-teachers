@@ -15,6 +15,7 @@
 #  trn                      :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  hesa_id                  :string
 #
 module Dqt
   class Teacher < ApplicationRecord
