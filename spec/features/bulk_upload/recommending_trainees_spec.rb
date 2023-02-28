@@ -9,7 +9,7 @@ feature "recommending trainees" do
 
   context "given no trainees exist to recommend" do
     scenario "i see 'no trainees' content" do
-      given_i_am_on_the_recommendation_upload_page
+      given_i_am_on_the_recommendations_upload_page
       then_i_see_no_trainees_content
     end
   end
@@ -20,7 +20,7 @@ feature "recommending trainees" do
     end
 
     scenario "i can upload trainees for recommendation" do
-      given_i_am_on_the_recommendation_upload_page
+      given_i_am_on_the_recommendations_upload_page
       then_i_see_how_many_trainees_i_can_recommend
       and_i_upload_a_csv
     end
@@ -28,8 +28,8 @@ feature "recommending trainees" do
 
 private
 
-  def given_i_am_on_the_recommendation_upload_page
-    recommendation_upload_page.load
+  def given_i_am_on_the_recommendations_upload_page
+    recommendations_upload_page.load
   end
 
   def given_multiple_trainees_exist_to_recommend
@@ -38,16 +38,16 @@ private
   end
 
   def then_i_see_how_many_trainees_i_can_recommend
-    expect(recommendation_upload_page).to have_text("2 trainees")
+    expect(recommendations_upload_page).to have_text("2 trainees")
   end
 
   def then_i_see_no_trainees_content
-    expect(recommendation_upload_page).to have_text("You do not have any trainees")
+    expect(recommendations_upload_page).to have_text("You do not have any trainees")
   end
 
   def and_i_upload_a_csv
     attach_file("bulk_update_recommendations_upload_form[file]", file_fixture("bulk_update/recommendations_upload/complete.csv").to_path)
-    recommendation_upload_page.upload_button.click
+    recommendations_upload_page.upload_button.click
     expect(BulkUpdate::RecommendedTrainee.count).to be 2
   end
 end
