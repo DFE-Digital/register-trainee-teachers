@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  class RecommendationUploadsController < ApplicationController
+  class RecommendationsUploadsController < ApplicationController
     helper_method :bulk_recommend_count, :recommendations_upload_form
     before_action :redirect
 
@@ -47,7 +47,7 @@ module BulkUpdate
     # for now, if anything goes wrong during creation of trainees
     # delete the recommend_upload record (and uploaded file)
     def create_recommended_trainees!
-      Recommend::CreateTrainees.call(
+      RecommendationsUploads::CreateTrainees.call(
         recommendations_upload_id: recommendations_upload.id,
         csv: recommendations_upload_form.csv,
       )
