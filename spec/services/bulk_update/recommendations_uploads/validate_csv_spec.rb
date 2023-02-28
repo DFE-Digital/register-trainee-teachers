@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module BulkUpdate
-  module Recommend
+  module RecommendationsUploads
     describe ValidateCsv do
       subject(:service) { described_class.new(csv) }
 
