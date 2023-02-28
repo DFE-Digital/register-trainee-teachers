@@ -19,7 +19,7 @@ class PageTracker
     return unless on_trainee_specific_pages?
 
     reset_history_to_current_path
-    history << request.fullpath if request.get? && !history.include?(request.fullpath)
+    history << request.fullpath if request.get? && history.exclude?(request.fullpath)
   end
 
   def save_as_origin!

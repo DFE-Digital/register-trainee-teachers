@@ -84,7 +84,7 @@ module CourseDetails
     end
 
     def non_early_year_route?
-      !EARLY_YEARS_TRAINING_ROUTES.include?(data_model.training_route)
+      EARLY_YEARS_TRAINING_ROUTES.exclude?(data_model.training_route)
     end
 
     def manual_entry_primary_phase?

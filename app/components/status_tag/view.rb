@@ -46,7 +46,7 @@ private
     return if hide_progress_tag
     return if trainee.draft? || trainee.submission_ready? || !trainee.awaiting_action?
 
-    { status: "incomplete", status_colour: "grey", classes: classes.concat(%w[govuk-tag--white]) }
+    { status: "incomplete", status_colour: "grey", classes: classes.push("govuk-tag--white") }
   end
 
   def record_state_tag

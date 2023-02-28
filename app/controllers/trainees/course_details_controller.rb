@@ -67,7 +67,7 @@ module Trainees
       # If there is an application and they are confirming their course for the first time
       # the page_tracker.last_origin_page_path will be the review draft page so we don't want to redirect
       # there in this instance, they need to go to the course details confirm page
-      draft_apply_application? && !page_tracker.last_origin_page_path.include?("/review-draft")
+      draft_apply_application? && page_tracker.last_origin_page_path.exclude?("/review-draft")
     end
   end
 end

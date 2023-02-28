@@ -7,7 +7,7 @@ module PersonalDetails
     end
 
     def with_multiple_nationalities
-      trainee.nationalities.concat([Nationality.new(name: "Irish"), Nationality.new(name: "Australian")])
+      trainee.nationalities.push(Nationality.new(name: "Irish"), Nationality.new(name: "Australian"))
       render(View.new(data_model: trainee))
     end
 

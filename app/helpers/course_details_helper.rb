@@ -44,7 +44,7 @@ module CourseDetailsHelper
   end
 
   def format_language(language)
-    language =~ /language$/ && !language.include?("English") ? language.gsub(" language", "").chomp : language
+    language =~ /language$/ && language.exclude?("English") ? language.gsub(" language", "").chomp : language
   end
 
   def sort_specialisms(subject, specialisms)

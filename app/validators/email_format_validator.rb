@@ -48,7 +48,7 @@ private
   end
 
   def no_consecutive_periods?
-    !email.include?("..")
+    email.exclude?("..")
   end
 
   def hostname_valid?

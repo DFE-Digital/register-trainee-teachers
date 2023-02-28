@@ -105,11 +105,11 @@ class CourseDetailsForm < TraineeForm
   end
 
   def require_subject?
-    !EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
+    EARLY_YEARS_TRAINING_ROUTES.exclude?(training_route)
   end
 
   def require_age_range?
-    !EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
+    EARLY_YEARS_TRAINING_ROUTES.exclude?(training_route)
   end
 
   def course_education_phase

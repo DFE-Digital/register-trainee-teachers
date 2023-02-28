@@ -202,7 +202,7 @@ FactoryBot.define do
         if randomise_subjects
           Dttp::CodeSets::CourseSubjects::MAPPING.keys.reject { |subject| SubjectSpecialism::PRIMARY_SUBJECT_NAMES.include?(subject) }.sample
         else
-          ::CourseSubjects::MATHEMATICS
+          CourseSubjects::MATHEMATICS
         end
       end
       course_subject_two { nil }
