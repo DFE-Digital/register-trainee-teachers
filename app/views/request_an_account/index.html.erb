@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: t("components.page_titles.pages.request_an_account")) %>
+<%= render PageTitle::View.new(text: "Request an account to use Register trainee teachers") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -9,48 +9,35 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-9"><%= t("components.page_titles.pages.request_an_account") %></h1>
-    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.get_account_heading") %></h2>
-    <p class="govuk-body"><%= t("pages.request_an_account.get_account") %></p>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-9"><%= "Request an account to use Register trainee teachers" %></h1>
+    <p class="govuk-body">You can only get a Register trainee teachers (Register) account if you work for either:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li><%= t("pages.request_an_account.bullets1.1") %></li>
-      <li><%= t("pages.request_an_account.bullets1.2") %></li>
+      <li>an initial teacher training (ITT) accredited provider</li>
+      <li>a lead school involved in School Direct teacher training</li>
     </ul>
-    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.steps_heading") %></h2>
-    <p class="govuk-body"><%= t("pages.request_an_account.first_para") %></p>
-    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_1_heading") %></h2>
-    <p class="govuk-body"><%= t("pages.request_an_account.second_para") %></p>
-    <p class="govuk-body"><%= t("pages.request_an_account.email_address") %></p>
+    <p class="govuk-body">Follow these steps to get an account to use Register.</p>
+    <h2 class="govuk-heading-m">1. Get a DfE Sign-in account</h2>
+      <p class="govuk-body">You’ll use a DfE Sign-in account to sign in to Register.</p>
+    <p class="govuk-body">The email address you use for your DfE Sign-in account must:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li><%= t("pages.request_an_account.bullets2.1") %></li>
-      <li><%= t("pages.request_an_account.bullets2.2") %></li>
+      <li>be a named individual email address, for example jane.doe@example.com</li>
+      <li>have an email domain belonging to your organisation, for example it cannot end with @gmail.com or @icloud.com</li>
     </ul>
-    <p class="govuk-body">Get a <%= govuk_link_to t("pages.request_an_account.sign_in_account"), "https://services.signin.education.gov.uk" %> if you do not already have one.</p>
-    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_2_heading") %></h2>
-    <p class="govuk-body"><%= t("pages.request_an_account.send_email") %>
-    <%= govuk_mail_to(
-      Settings.support_email,
-      Settings.support_email,
-      subject: t("pages.request_an_account.email_subject")
-    ) %>
-    </p>
-    <p class="govuk-body"><%= t("pages.request_an_account.tell_us") %>
+    <p class="govuk-body"><a href="https://services.signin.education.gov.uk/" class="govuk-link">Get a DfE Sign-in account</a> if you do not already have one.</p>
+    <h2 class="govuk-heading-m">2. Get a Register account</h2>
+    <p class="govuk-body">Once you have a DfE Sign-in account, ask a colleague with a Register account to send an email requesting an account for you.</p>
+    <p class="govuk-body">If nobody in your organisation has a Register account, you can send the email yourself.</p>
+    <p class="govuk-body">The email should be sent to <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Request a Register account" class="govuk-link">becomingateacher@digital.education.gov.uk</a>. It should say that you want to start using Register and include:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li><%= t("pages.request_an_account.bullets3.1") %></li>
-      <li><%= t("pages.request_an_account.bullets3.2") %></li>
-      <li><%= t("pages.request_an_account.bullets3.3") %></li>
+      <li>the name of the accredited provider or lead school you work for</li>
+      <li>the email address used for your DfE Sign-in account</li>
     </ul>
-    <p class="govuk-body"><%= t("pages.request_an_account.third_para") %></p>
-    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_3_heading") %></h2>
-    <p class="govuk-body"><%= t("pages.request_an_account.fourth_para") %></p>
-    <p class="govuk-body"><%= t("pages.request_an_account.fifth_para") %></p>
-    <h2 class="govuk-heading-m"><%= t("pages.request_an_account.step_4_heading") %></h2>
-    <p class="govuk-body"><%= t("pages.request_an_account.sixth_para") %></p>
-    <p class="govuk-body"><%= t("pages.request_an_account.final_para") %>
-    <%= govuk_mail_to(
-      Settings.support_email,
-      Settings.support_email,
-      subject: t("pages.request_an_account.multiple_providers_email_subject")
-    ) %>
-  </p>
+    <p class="govuk-body">If more than one person in your organisation needs a Register account, all the details can be included in the same email.</p>
+    <p class="govuk-body">You’ll be sent an email once your Register account has been set up.</p>
+    <h2 class="govuk-heading-m">3. Get access to additional accredited providers or lead schools in Register (optional)</h2>
+    <p class="govuk-body">Once you have a Register account, you can request access to additional accredited providers or lead schools. You do not need a separate Register account for each organisation.</p>
+    <p class="govuk-body">Ask someone with a Register account in the organisation you want to access to send an email requesting access for you.</p>
+    <p class="govuk-body">If nobody in the organisation has a Register account, you can send the email yourself.</p>
+    <p class="govuk-body">The email should be sent to <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Add multiple organisations to Register account" class="govuk-link">becomingateacher@digital.education.gov.uk</a>.</p>    
+  </div>  
 </div>
