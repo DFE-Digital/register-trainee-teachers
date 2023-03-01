@@ -20,9 +20,11 @@
 class BulkUpdate::RecommendationsUpload < ApplicationRecord
   belongs_to :provider
   has_one_attached :file
-  has_many :recommended_trainees,
-           class_name: "BulkUpdate::RecommendedTrainee",
+  has_many :recommendations_upload_rows,
+           class_name: "BulkUpdate::RecommendationsUploadRow",
            foreign_key: :bulk_update_recommendations_upload_id,
            dependent: :destroy,
            inverse_of: :recommendations_upload
+
+  alias rows recommendations_upload_rows
 end
