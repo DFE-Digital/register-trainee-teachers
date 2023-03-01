@@ -16,7 +16,7 @@ module BulkUpdate
       @recommendations_upload_form = RecommendationsUploadForm.new(provider:, file:)
 
       if recommendations_upload_form.save
-        create_recommended_trainees!
+        create_rows!
         redirect_to(root_path)
       else
         render(:new)
@@ -46,8 +46,8 @@ module BulkUpdate
 
     # for now, if anything goes wrong during creation of trainees
     # delete the recommend_upload record (and uploaded file)
-    def create_recommended_trainees!
-      RecommendationsUploads::CreateTrainees.call(
+    def create_rows!
+      RecommendationsUploads::CreateRecommendationsUploadRows.call(
         recommendations_upload_id: recommendations_upload.id,
         csv: recommendations_upload_form.csv,
       )
