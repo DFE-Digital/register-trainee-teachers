@@ -13,7 +13,7 @@ module BulkUpdate
       # we skip the first non-header row as this will just contain "do not edit" warning.
       def call
         csv[1..].map.with_index(3) do |row, row_number|
-          ::BulkUpdate::RecommendedTrainee.create(
+          ::BulkUpdate::RecommendationsUploadRow.create(
             bulk_update_recommendations_upload_id: recommendations_upload_id,
             csv_row_number: row_number,
             standards_met_at: row["Date QTS or EYTS standards met"].to_date,
