@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeRecommendedTraineesToRecommendationsUploadRows < ActiveRecord::Migration[7.0]
   def up
     drop_table :bulk_update_recommended_trainees
