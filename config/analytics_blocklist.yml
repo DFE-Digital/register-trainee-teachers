@@ -375,7 +375,7 @@
   - provider_ukprn
   - created_at
   - updated_at
-  :bulk_update_recommended_trainees:
+  :bulk_update_recommendations_upload_rows:
   - id
   - created_at
   - updated_at

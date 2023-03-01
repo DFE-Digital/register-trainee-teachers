@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe BulkUpdate::RecommendedTrainee do
+RSpec.describe BulkUpdate::RecommendationsUploadRow do
   describe "associations" do
     it { is_expected.to belong_to(:recommendations_upload) }
   end
