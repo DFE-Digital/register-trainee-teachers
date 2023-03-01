@@ -160,7 +160,7 @@ module Trainees
     def trainee_gender
       return :sex_not_provided if dttp_trainee.gender_code.blank?
 
-      return :other if OTHER_GENDER_CODE == dttp_trainee.gender_code.to_i
+      return :other if dttp_trainee.gender_code.to_i == OTHER_GENDER_CODE
 
       SEX_CODES.invert[dttp_trainee.gender_code.to_i]
     end
@@ -225,7 +225,7 @@ module Trainees
         }
       end
 
-      if dttp_trainee.country.present? && !UK_COUNTRIES.include?(dttp_trainee.country)
+      if dttp_trainee.country.present? && UK_COUNTRIES.exclude?(dttp_trainee.country)
         return {
           locale_code: Trainee.locale_codes[:non_uk],
           international_address: dttp_trainee.response["address1_composite"],

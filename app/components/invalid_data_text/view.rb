@@ -29,7 +29,7 @@ private
   end
 
   def form_section_valid?
-    degree_form.errors.any? && !degree_form.errors.messages.keys.include?(form_section)
+    degree_form.errors.any? && degree_form.errors.messages.keys.exclude?(form_section)
   end
 
   def text_class

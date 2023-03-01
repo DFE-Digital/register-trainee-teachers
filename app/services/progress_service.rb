@@ -34,7 +34,7 @@ class ProgressService
   end
 
   def in_progress_invalid?
-    started? && !@validator.valid? && !completed?
+    started? && @validator.invalid? && !completed?
   end
 
   def review?

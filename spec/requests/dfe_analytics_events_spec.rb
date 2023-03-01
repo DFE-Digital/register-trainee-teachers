@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-class UnauthenticatedTestController < ::ApplicationController
+class UnauthenticatedTestController < ApplicationController
   skip_before_action :authenticate
 
   def test
@@ -10,7 +10,7 @@ class UnauthenticatedTestController < ::ApplicationController
   end
 end
 
-class TestController < ::ApplicationController
+class TestController < ApplicationController
   def test
     render plain: "Booyah"
   end

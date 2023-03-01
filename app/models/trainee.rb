@@ -498,7 +498,7 @@ class Trainee < ApplicationRecord
   end
 
   def awaiting_action?
-    !COMPLETE_STATES.include?(state)
+    COMPLETE_STATES.exclude?(state)
   end
 
   def short_name

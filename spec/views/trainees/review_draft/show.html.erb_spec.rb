@@ -21,14 +21,6 @@ describe "trainees/review_drafts/show" do
         expect(rendered).not_to have_text("Placement details")
       end
     end
-
-    context "with a Provider-led (postgrad) trainee" do
-      let(:trainee) { create(:trainee, :provider_led_postgrad) }
-
-      xit "renders the placement details component" do
-        expect(rendered).to have_text("Placement details")
-      end
-    end
   end
 
   describe "trainees/review_drafts/show", "feature_routes.provider_led_postgrad": true

@@ -9,6 +9,7 @@ describe ProgressService do
       double(
         trainee: instance_double(Trainee),
         valid?: valid,
+        invalid?: !valid,
         fields: { first_name: nil },
       )
     end
