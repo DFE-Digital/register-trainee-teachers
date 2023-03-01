@@ -25,7 +25,7 @@ class Provider < ApplicationRecord
   has_many :trainees
 
   has_many :recommendations_uploads, class_name: "BulkUpdate::RecommendationsUpload"
-  has_many :recommended_trainees, class_name: "BulkUpdate::RecommendedTrainee", through: :recommendations_uploads
+  has_many :recommendations_upload_rows, class_name: "BulkUpdate::RecommendationsUploadRow", through: :recommendations_uploads
 
   validates :name, presence: true
   validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }
