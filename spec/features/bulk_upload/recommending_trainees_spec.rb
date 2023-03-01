@@ -48,6 +48,6 @@ private
   def and_i_upload_a_csv
     attach_file("bulk_update_recommendations_upload_form[file]", file_fixture("bulk_update/recommendations_upload/complete.csv").to_path)
     recommendations_upload_page.upload_button.click
-    expect(BulkUpdate::RecommendedTrainee.count).to be 2
+    expect(BulkUpdate::RecommendationsUploadRow.count).to be 2
   end
 end
