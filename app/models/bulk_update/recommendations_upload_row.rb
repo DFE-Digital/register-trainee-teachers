@@ -25,7 +25,7 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
   belongs_to :recommendations_upload,
              class_name: "BulkUpdate::RecommendationsUpload",
              foreign_key: :bulk_update_recommendations_upload_id,
-             inverse_of: :rows
+             inverse_of: :recommendations_upload_rows
 
   validates :standards_met_at, presence: true
 end
