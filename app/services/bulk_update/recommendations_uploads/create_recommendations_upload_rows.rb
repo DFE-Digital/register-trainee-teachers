@@ -2,7 +2,7 @@
 
 module BulkUpdate
   module RecommendationsUploads
-    class CreateTrainees
+    class CreateRecommendationsUploadRows
       include ServicePattern
 
       def initialize(recommendations_upload_id:, csv:)
