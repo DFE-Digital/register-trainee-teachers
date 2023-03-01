@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: bulk_update_recommended_trainees
+# Table name: bulk_update_recommendations_upload_rows
 #
 #  id                                    :bigint           not null, primary key
 #  csv_row_number                        :integer
@@ -15,17 +15,17 @@
 #
 # Indexes
 #
-#  idx_bu_recommended_trainees_on_bu_recommendations_upload_id  (bulk_update_recommendations_upload_id)
+#  idx_bu_ru_rows_on_bu_recommendations_upload_id  (bulk_update_recommendations_upload_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (bulk_update_recommendations_upload_id => bulk_update_recommendations_uploads.id)
 #
-class BulkUpdate::RecommendedTrainee < ApplicationRecord
+class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
   belongs_to :recommendations_upload,
              class_name: "BulkUpdate::RecommendationsUpload",
              foreign_key: :bulk_update_recommendations_upload_id,
-             inverse_of: :recommended_trainees
+             inverse_of: :rows
 
   validates :standards_met_at, presence: true
 end
