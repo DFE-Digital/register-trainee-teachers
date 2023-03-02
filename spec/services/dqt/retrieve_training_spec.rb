@@ -58,6 +58,14 @@ module Dqt
         it "returns the correct training instance" do
           expect(subject).to eq(current_training_instance)
         end
+
+        context "more than one training instance matches the search criteria" do
+          let(:training_instances) { [current_training_instance, current_training_instance] }
+
+          it "raises an duplicate training instance error" do
+            expect { subject }.to raise_error(Dqt::DuplicateTrainingInstanceError)
+          end
+        end
       end
 
       context "when there's no matching training instance" do

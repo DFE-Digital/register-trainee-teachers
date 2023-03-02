@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_28_135922) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_02_155425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -258,6 +258,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_28_135922) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "hesa_id"
+    t.boolean "active"
     t.index ["dqt_teacher_id"], name: "index_dqt_teacher_trainings_on_dqt_teacher_id"
   end
 

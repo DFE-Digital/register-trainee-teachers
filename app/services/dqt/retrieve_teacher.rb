@@ -9,7 +9,7 @@ module Dqt
     end
 
     def call
-      Client.get("/v2/teachers/#{trainee.trn}?birthdate=#{trainee.date_of_birth}")
+      Client.get("/v2/teachers/#{trainee.trn}?birthdate=#{trainee.date_of_birth}&includeInactive=true")
     end
 
     attr_reader :trainee
