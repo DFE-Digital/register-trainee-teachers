@@ -1,6 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe BulkUpdate::RowError, type: :model do
+require "rails_helper"
+
+RSpec.describe BulkUpdate::RowError do
   describe "associations" do
     it { is_expected.to belong_to(:errored_on) }
   end
