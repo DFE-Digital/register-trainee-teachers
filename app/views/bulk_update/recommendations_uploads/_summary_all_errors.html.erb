@@ -1,0 +1,16 @@
+<p class="govuk-body">
+  All <%= pluralize(@error_rows_count, "trainee") %> have errors in their
+  details
+</p>
+
+<p class="govuk-body">
+  You need to review the errors before you can recommend trainees for QTS
+  or EYTS.
+</p>
+
+<!-- TODO: Change link to fix errors page when this exists -->
+<%= govuk_link_to(
+  "Review errors",
+  bulk_update_recommendations_upload_check_path(@recommendations_upload),
+  class: "govuk-button"
+  ) %>
