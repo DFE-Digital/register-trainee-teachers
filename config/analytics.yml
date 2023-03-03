@@ -80,13 +80,13 @@ shared:
     - id
     - updated_at
   :dqt_trn_requests:
-  - id
-  - trainee_id
-  - request_id
-  - response
-  - state
-  - created_at
-  - updated_at
+    - id
+    - trainee_id
+    - request_id
+    - response
+    - state
+    - created_at
+    - updated_at
   dttp_providers:
     - created_at
     - dttp_id
@@ -272,3 +272,10 @@ shared:
   hesa_collection_requests:
     - requested_at
     - state
+  :bulk_update_row_errors:
+    - id
+    - created_at
+    - updated_at
+    - errored_on_id
+    - errored_on_type
+    - message
