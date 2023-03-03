@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_01_141627) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_03_133825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -191,6 +191,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_01_141627) do
     t.datetime "updated_at", null: false
     t.bigint "provider_id", null: false
     t.index ["provider_id"], name: "index_bulk_update_recommendations_uploads_on_provider_id"
+  end
+
+  create_table "bulk_update_row_errors", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "errored_on_id"
+    t.string "errored_on_type"
+    t.string "message"
   end
 
   create_table "course_subjects", force: :cascade do |t|
