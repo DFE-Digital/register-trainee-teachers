@@ -28,8 +28,15 @@ class BulkUpdate::RecommendationsUpload < ApplicationRecord
 
   alias rows recommendations_upload_rows
 
-  # TODO: Also, ones with no errors
   def awardable_rows
-    rows.where.not(standards_met_at: nil)
+    rows.where.not(standards_met_at: nil).where.missing(:row_errors)
+  end
+
+  def missing_date_rows
+    rows.where(standards_met_at: nil)
+  end
+
+  def error_rows
+    rows.where.associated(:row_errors).distinct
   end
 end

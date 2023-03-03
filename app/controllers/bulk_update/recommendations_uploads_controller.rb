@@ -2,11 +2,13 @@
 
 module BulkUpdate
   class RecommendationsUploadsController < ApplicationController
-    helper_method :bulk_recommend_count, :recommendations_upload_form
+    helper_method :bulk_recommend_count, :recommendations_upload_form, :awardable_rows_count
     before_action :redirect
 
     def show
-      @recommendations_upload = provider.recommendations_uploads.find(params[:recommendations_upload_id])
+      @total_rows_count = recommendations_upload.rows.size
+      @missing_date_rows_count = recommendations_upload.missing_date_rows.size
+      @error_rows_count = recommendations_upload.error_rows.size
     end
 
     def new
@@ -18,20 +20,15 @@ module BulkUpdate
 
       if recommendations_upload_form.save
         create_rows!
-        redirect_to(bulk_update_recommendations_upload_summary_path(recommendations_upload))
+        redirect_to(bulk_update_recommendations_upload_summary_path(recommendations_upload_form.recommendations_upload))
       else
         render(:new)
       end
     end
 
-    # TODO: Find the user's upload trainees
-    def check; end
-
   private
 
     attr_reader :recommendations_upload_form
-
-    delegate :recommendations_upload, to: :recommendations_upload_form
 
     def file
       @file ||= params.dig(:bulk_update_recommendations_upload_form, :file)
@@ -41,6 +38,14 @@ module BulkUpdate
       @provider ||= current_user.organisation
     end
 
+    def awardable_rows_count
+      @awardable_rows_count = recommendations_upload.awardable_rows.size
+    end
+
+    def recommendations_upload
+      @recommendations_upload ||= provider.recommendations_uploads.find(params[:recommendations_upload_id])
+    end
+
     def bulk_recommend_count
       @bulk_recommend_count ||= policy_scope(FindBulkRecommendTrainees.call).count
     end
@@ -48,6 +53,8 @@ module BulkUpdate
     # for now, if anything goes wrong during creation of trainees
     # delete the recommend_upload record (and uploaded file)
     def create_rows!
+      recommendations_upload = recommendations_upload_form.recommendations_upload
+
       RecommendationsUploads::CreateRecommendationsUploadRows.call(
         recommendations_upload: recommendations_upload,
         csv: recommendations_upload_form.csv,

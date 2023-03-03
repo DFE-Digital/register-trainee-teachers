@@ -1,0 +1,15 @@
+<p class="govuk-body">
+  You did not enter any dates when trainees met the standards for QTS or EYTS.
+  This means that you will not recommend any trainees.
+</p>
+
+<p class="govuk-body">
+  If you want to bulk recommend trainees, you need to enter the dates in the
+  CSV file and upload it again.
+</p>
+
+<%= govuk_link_to(
+  "Return to upload CSV file again",
+  new_bulk_update_recommendations_upload_path,
+  class: "govuk-button"
+  ) %>

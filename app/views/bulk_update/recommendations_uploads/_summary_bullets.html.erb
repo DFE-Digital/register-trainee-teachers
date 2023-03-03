@@ -1,0 +1,39 @@
+<p class="govuk-body">
+  It included:
+</p>
+
+<ul class="govuk-list govuk-list--number">
+  <% if awardable_rows_count.positive? %>
+    <li>
+      <%= pluralize(awardable_rows_count, "trainee") %> who will be
+      recommended for QTS or EYTS
+    </li>
+  <% end %>
+
+  <% if @missing_date_rows_count.positive? %>
+    <li>
+      <%= pluralize(@missing_date_rows_count, "trainee") %>  who will not be
+      recommended, as you did not give a date when they met the QTS or EYTS
+      standards
+    </li>
+  <% end %>
+
+  <% if @error_rows_count.positive? %>
+    <li>
+      <%= pluralize(@error_rows_count, "trainee") %> with errors in their
+      details
+    </li>
+  <% end %>
+</ul>
+
+<% if @error_rows_count.positive? %>
+  <p class="govuk-body">
+    You need to review the errors before you can recommend trainees for QTS
+    or EYTS.
+  </p>
+
+  <!-- TODO: Change link to fix errors page when this exists -->
+  <%= govuk_link_to("Review errors", bulk_update_recommendations_upload_check_path(@recommendations_upload), class: "govuk-button") %>
+<% else %>
+  <%= govuk_link_to("Check who you’ll recommend", bulk_update_recommendations_upload_check_path(@recommendations_upload), class: "govuk-button") %>
+<% end %>
