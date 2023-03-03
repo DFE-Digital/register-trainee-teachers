@@ -6,7 +6,7 @@ module PageObjects
       set_url "/bulk-update/recommend/upload"
 
       element :upload_button, ".govuk-button", text: "Upload file and check who you’ll recommend"
-      element :export_link, ".govuk-link", text: "Download a CSV file listing {COUNT} trainees you can recommend"
+      element :export_link, ".govuk-link", class: "bulk-recommend"
     end
   end
 end
