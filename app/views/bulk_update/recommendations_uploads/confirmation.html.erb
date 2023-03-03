@@ -1,10 +1,10 @@
-<%= render PageTitle::View.new(text: "{COUNT} trainees recommended for QTS or EYTS") %>
+<%= render PageTitle::View.new(text: "#{pluralize(awardable_rows_count, "trainee")} recommended for QTS or EYTS") %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        {COUNT} trainees recommended for QTS or EYTS
+        <%= pluralize(awardable_rows_count, "trainee") %> recommended for QTS or EYTS
       </h1>
     </div>
 

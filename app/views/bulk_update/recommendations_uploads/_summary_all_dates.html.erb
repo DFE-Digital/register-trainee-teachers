@@ -1,0 +1,10 @@
+<p class="govuk-body">
+  All <%= pluralize(awardable_rows_count, "trainee") %> will be recommended
+  for QTS or EYTS
+</p>
+
+<%= govuk_link_to(
+  "Check who you’ll recommend",
+  bulk_update_recommendations_upload_check_path(@recommendations_upload),
+  class: "govuk-button"
+  ) %>
