@@ -389,3 +389,10 @@
   - created_at
   - updated_at
   - provider_id
+  :bulk_update_row_errors:
+  - id
+  - created_at
+  - updated_at
+  - errored_on_id
+  - errored_on_type
+  - message
