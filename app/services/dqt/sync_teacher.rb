@@ -30,18 +30,19 @@ module Dqt
                                     eyts_date: dqt_data["eytsDate"],
                                     early_years_status_name: dqt_data.dig("earlyYearsStatus", "name"),
                                     early_years_status_value: dqt_data.dig("earlyYearsStatus", "value"))
-      dqt_teacher.save
 
-      dqt_data["initialTeacherTraining"].each do |training_data|
-        dqt_teacher_training = TeacherTraining.find_or_initialize_by(dqt_teacher:)
-        dqt_teacher_training.assign_attributes(programme_start_date: training_data["programmeStartDate"],
-                                               programme_end_date: training_data["programmeEndDate"],
-                                               programme_type: training_data["programmeType"],
-                                               result: training_data["result"],
-                                               hesa_id: training_data["husId"], # associated with that period of training
-                                               provider_ukprn: training_data.dig("provider", "ukprn"))
-        dqt_teacher_training.save
+      dqt_teacher.dqt_trainings = dqt_data["initialTeacherTraining"].map do |training_data|
+        TeacherTraining.new(dqt_teacher: dqt_teacher,
+                            programme_start_date: training_data["programmeStartDate"],
+                            programme_end_date: training_data["programmeEndDate"],
+                            programme_type: training_data["programmeType"],
+                            result: training_data["result"],
+                            active: training_data["active"],
+                            hesa_id: training_data["husId"], # associated with that period of training
+                            provider_ukprn: training_data.dig("provider", "ukprn"))
       end
+
+      dqt_teacher.save
     end
   end
 end

@@ -372,6 +372,7 @@
   - programme_end_date
   - programme_type
   - result
+  - active
   - provider_ukprn
   - created_at
   - updated_at

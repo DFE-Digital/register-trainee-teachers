@@ -5,6 +5,7 @@
 # Table name: dqt_teacher_trainings
 #
 #  id                   :bigint           not null, primary key
+#  active               :boolean
 #  programme_end_date   :string
 #  programme_start_date :string
 #  programme_type       :string

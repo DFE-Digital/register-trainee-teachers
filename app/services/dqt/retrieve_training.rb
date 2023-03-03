@@ -2,6 +2,7 @@
 
 module Dqt
   class NoTrainingInstanceError < StandardError; end
+  class DuplicateTrainingInstanceError < StandardError; end
 
   class RetrieveTraining
     include ServicePattern
@@ -11,17 +12,18 @@ module Dqt
     end
 
     def call
-      raise(NoTrainingInstanceError) if trainings.blank? || training.nil?
+      raise(NoTrainingInstanceError) if trainings.blank? || trainings_with_matching_criteria.empty?
+      raise(DuplicateTrainingInstanceError) if trainings_with_matching_criteria.size > 1
 
-      training
+      trainings_with_matching_criteria.first
     end
 
     attr_reader :trainee
 
   private
 
-    def training
-      @training ||= trainings.find do |training|
+    def trainings_with_matching_criteria
+      @trainings_with_matching_criteria ||= trainings.select do |training|
         training.dig("provider", "ukprn") == trainee.provider.ukprn &&
           training["programmeType"] == programme_type(trainee)
       end
