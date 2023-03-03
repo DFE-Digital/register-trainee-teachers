@@ -200,6 +200,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_133825) do
     t.string "message"
   end
 
+  create_table "bulk_update_row_errors", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "errored_on_id"
+    t.string "errored_on_type"
+    t.string "message"
+  end
+
   create_table "course_subjects", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "subject_id", null: false
