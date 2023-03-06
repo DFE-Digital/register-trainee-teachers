@@ -3,22 +3,29 @@
 module BulkUpdate
   module RecommendationsUploads
     class ValidateCsv
-      def initialize(csv)
+      def initialize(csv:, record:)
         @csv = csv
+        @record = record
       end
 
       # do all required headers exist in the CSV headers
-      def valid?
-        csv_headers_set.superset?(VALID_HEADERS_SET)
+      def validate!
+        has_required_headers?        
+      end
+
+      def has_required_headers?
+        unless csv_headers_set.superset?(VALID_HEADERS_SET)
+          record.errors.add(:base, "CSV is missing the required headers")
+        end
       end
 
     private
 
-      attr_reader :csv
+      attr_reader :csv, :record
 
       VALID_HEADERS_SET = ::Set[
-        "TRN",
-        "Date QTS or EYTS standards met",
+        "trn",
+        "date qts or eyts standards met",
       ].freeze
 
       def csv_headers_set

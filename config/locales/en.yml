@@ -1345,6 +1345,10 @@ en:
             language_specialisms:
               blank: Select at least one language
               invalid: Select a maximum of three languages
+        bulk_update/recommendations_upload_form:
+          attributes:
+            file:
+              blank: File cannot be blank
         deferral_form:
           attributes:
             date_string:

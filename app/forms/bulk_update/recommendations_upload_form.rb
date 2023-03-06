@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 module BulkUpdate
   class RecommendationsUploadForm
@@ -6,7 +6,9 @@ module BulkUpdate
     include ActiveModel::AttributeAssignment
     include ActiveModel::Validations::Callbacks
 
-    validate :csv_is_valid?
+    validate :validate_file!
+    validate :validate_csv!
+
 
     def initialize(provider: nil, file: nil)
       @provider = provider
@@ -20,21 +22,27 @@ module BulkUpdate
     end
 
     def csv
-      @csv ||= CSV.new(file.tempfile, headers: true).read
+      @csv ||= CSV.new(file.tempfile, headers: true, header_converters: :downcase, strip: true).read
     end
 
-    attr_reader :recommendations_upload
+    attr_reader :recommendations_upload, :provider, :file
 
   private
 
-    attr_reader :provider, :file
+    def tempfile
+      @tempfile ||= file&.tempfile
+    end
 
-    def csv_is_valid?
-      return true if RecommendationsUploads::ValidateCsv.new(csv).valid?
+    def validate_file!
+      RecommendationsUploads::ValidateFile.new(file: file, record: self).validate!
+    end
 
-      errors.add(:file, "CSV not valid")
+    def validate_csv!
+      return unless tempfile
+
+      RecommendationsUploads::ValidateCsv.new(csv: csv, record: self).validate!
     rescue CSV::MalformedCSVError
-      errors.add(:file, "File must be a CSV")
+      errors.add(:base, "File must be a CSV")
     end
   end
 end

@@ -34,7 +34,7 @@ module BulkUpdate
     delegate :recommendations_upload, to: :recommendations_upload_form
 
     def file
-      @file ||= params[:bulk_update_recommendations_upload_form][:file]
+      @file ||= params.dig(:bulk_update_recommendations_upload_form, :file)
     end
 
     def provider
@@ -49,11 +49,12 @@ module BulkUpdate
     # delete the recommend_upload record (and uploaded file)
     def create_rows!
       RecommendationsUploads::CreateRecommendationsUploadRows.call(
-        recommendations_upload_id: recommendations_upload.id,
+        recommendations_upload: recommendations_upload,
         csv: recommendations_upload_form.csv,
       )
-    rescue StandardError
+    rescue StandardError => e
       recommendations_upload.destroy
+      raise e
     end
 
     def redirect
