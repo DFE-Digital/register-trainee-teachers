@@ -24,7 +24,7 @@ module BulkUpdate
       end
 
       def valid?
-        messages.any?
+        messages.empty?
       end
 
       attr_reader :messages, :row
