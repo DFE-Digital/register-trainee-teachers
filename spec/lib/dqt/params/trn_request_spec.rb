@@ -61,6 +61,26 @@ module Dqt
           })
         end
 
+        context "iQTS trainee" do
+          let(:trainee_attributes) { { training_route: "iqts" } }
+
+          it "sets the programme type to international qualified teacher status" do
+            expect(subject["initialTeacherTraining"]).to include({
+              "programmeType" => "InternationalQualifiedTeacherStatus",
+            })
+          end
+
+          context "ITT qualification aim is not specified" do
+            let(:hesa_metadatum) { build(:hesa_metadatum, itt_qualification_aim: nil) }
+
+            it "sets the itt qualification type to international qualified teacher status" do
+              expect(subject["initialTeacherTraining"]).to include({
+                "ittQualificationType" => "InternationalQualifiedTeacherStatus",
+              })
+            end
+          end
+        end
+
         context "itt_end_date is missing" do
           let(:hesa_metadatum) { build(:hesa_metadatum) }
           let(:trainee_attributes) { { itt_end_date: nil, hesa_metadatum: hesa_metadatum, training_route: training_route, study_mode: study_mode } }

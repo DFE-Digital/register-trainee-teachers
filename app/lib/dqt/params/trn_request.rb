@@ -5,6 +5,7 @@ module Dqt
     class TrnRequest
       UNITED_KINGDOM = "United Kingdom"
       UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED = "United Kingdom, not otherwise specified"
+      DQT_IQTS_PROGRAMME_TYPE = "InternationalQualifiedTeacherStatus"
 
       GENDER_CODES = {
         male: "Male",
@@ -27,6 +28,7 @@ module Dqt
         TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => "ProviderLedUndergrad",
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => "SchoolDirectTrainingProgrammeSalaried",
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => "SchoolDirectTrainingProgramme",
+        TRAINING_ROUTE_ENUMS[:iqts] => DQT_IQTS_PROGRAMME_TYPE,
       }.freeze
 
       DEGREE_CLASSES = {
@@ -70,6 +72,8 @@ module Dqt
       end
 
     private
+
+      attr_reader :trainee, :degree
 
       def build_params
         {
@@ -120,7 +124,7 @@ module Dqt
           "ageRangeFrom" => trainee.course_min_age,
           "ageRangeTo" => trainee.course_max_age,
           "ittQualificationAim" => ITT_QUALIFICATION_AIMS[trainee.hesa_metadatum&.itt_aim],
-          "ittQualificationType" => ITT_QUALIFICATION_TYPES[trainee.hesa_metadatum&.itt_qualification_aim],
+          "ittQualificationType" => itt_qualification_type,
         }
       end
 
@@ -136,6 +140,12 @@ module Dqt
           "date" => graduation_date,
           "heQualificationType" => CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
         }
+      end
+
+      def itt_qualification_type
+        return DQT_IQTS_PROGRAMME_TYPE if iqts_programme_type? && trainee.hesa_metadatum&.itt_qualification_aim.nil?
+
+        ITT_QUALIFICATION_TYPES[trainee.hesa_metadatum&.itt_qualification_aim]
       end
 
       def course_subject_code(subject_name)
@@ -186,7 +196,9 @@ module Dqt
         10.months
       end
 
-      attr_reader :trainee, :degree
+      def iqts_programme_type?
+        PROGRAMME_TYPE[trainee.training_route] == DQT_IQTS_PROGRAMME_TYPE
+      end
     end
   end
 end
