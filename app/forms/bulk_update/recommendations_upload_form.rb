@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 module BulkUpdate
   class RecommendationsUploadForm
@@ -8,7 +8,6 @@ module BulkUpdate
 
     validate :validate_file!
     validate :validate_csv!
-
 
     def initialize(provider: nil, file: nil)
       @provider = provider

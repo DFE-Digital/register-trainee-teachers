@@ -63,7 +63,7 @@ module BulkUpdate
                 "TRN must be 7 characters long and contain only numbers",
                 "HESA ID must be 17 characters long and contain only numbers",
                 "Date could not be parsed, please use the format dd/mm/yyyy e.g. 27/02/2022",
-              ]
+              ],
             )
           end
         end

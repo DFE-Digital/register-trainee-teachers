@@ -68,11 +68,13 @@ module BulkUpdate
       context "that is greater than 1MB" do
         let(:test_file) { file_fixture("bulk_update/recommendations_upload/empty.csv") }
 
+        # rubocop:disable RSpec/AnyInstance
         before do
           allow_any_instance_of(ActionDispatch::Http::UploadedFile).to receive(:size).and_return(
-            1.megabyte + 1
+            1.megabyte + 1,
           )
         end
+        # rubocop:enable RSpec/AnyInstance
 
         it "is invalid" do
           expect(form.valid?).to be false

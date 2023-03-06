@@ -10,10 +10,10 @@ module BulkUpdate
 
       # do all required headers exist in the CSV headers
       def validate!
-        has_required_headers?        
+        required_headers
       end
 
-      def has_required_headers?
+      def required_headers
         unless csv_headers_set.superset?(VALID_HEADERS_SET)
           record.errors.add(:base, "CSV is missing the required headers")
         end

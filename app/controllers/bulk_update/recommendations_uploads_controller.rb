@@ -54,7 +54,7 @@ module BulkUpdate
       )
     rescue StandardError => e
       recommendations_upload.destroy
-      raise e
+      raise(e)
     end
 
     def redirect

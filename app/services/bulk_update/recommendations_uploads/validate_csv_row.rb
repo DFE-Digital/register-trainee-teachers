@@ -3,6 +3,7 @@
 module BulkUpdate
   module RecommendationsUploads
     class ValidateCsvRow
+      # rubocop:disable Style/OpenStructUse
       def initialize(row)
         @row = OpenStruct.new(
           trn: row["trn"],
@@ -22,6 +23,7 @@ module BulkUpdate
 
         validate!
       end
+      # rubocop:enable Style/OpenStructUse
 
       def valid?
         messages.empty?
