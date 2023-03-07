@@ -43,7 +43,7 @@ module BulkUpdate
 
         it "is invalid" do
           expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "File File must be a CSV"
+          expect(form.errors.full_messages.first).to eql "File must be a CSV"
         end
       end
 
@@ -52,7 +52,33 @@ module BulkUpdate
 
         it "is invalid" do
           expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "File CSV not valid"
+          expect(form.errors.full_messages.first).to eql "CSV is missing the required headers"
+        end
+      end
+
+      context "that is 0 byte csv" do
+        let(:test_file) { file_fixture("bulk_update/recommendations_upload/empty.csv") }
+
+        it "is invalid" do
+          expect(form.valid?).to be false
+          expect(form.errors.full_messages.first).to eql "File cannot be empty"
+        end
+      end
+
+      context "that is greater than 1MB" do
+        let(:test_file) { file_fixture("bulk_update/recommendations_upload/empty.csv") }
+
+        # rubocop:disable RSpec/AnyInstance
+        before do
+          allow_any_instance_of(ActionDispatch::Http::UploadedFile).to receive(:size).and_return(
+            1.megabyte + 1,
+          )
+        end
+        # rubocop:enable RSpec/AnyInstance
+
+        it "is invalid" do
+          expect(form.valid?).to be false
+          expect(form.errors.full_messages.first).to eql "File must be no greater than 1MB"
         end
       end
     end
