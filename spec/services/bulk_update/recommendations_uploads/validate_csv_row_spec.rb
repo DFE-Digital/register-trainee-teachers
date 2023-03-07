@@ -9,7 +9,7 @@ module BulkUpdate
 
       context "When row is valid" do
         let(:row) do
-          {
+          Row.new({
             "trn" => "1234567",
             "hesa id" => "12345678912345678",
             "provider trainee id" => "1234567",
@@ -22,7 +22,7 @@ module BulkUpdate
             "age range" => "0 to 5",
             "subject" => "Early years teaching",
             "date qts or eyts standards met" => Date.yesterday,
-          }
+          })
         end
 
         describe "#valid?" do
@@ -36,7 +36,7 @@ module BulkUpdate
 
       context "When row is invalid" do
         let(:row) do
-          {
+          Row.new({
             "trn" => "123567",
             "hesa id" => "1234568912345678",
             "provider trainee id" => "1234",
@@ -49,7 +49,7 @@ module BulkUpdate
             "age range" => "0 to 5",
             "subject" => "Early years teaching",
             "date qts or eyts standards met" => "df",
-          }
+          })
         end
 
         describe "#valid?" do

@@ -25,9 +25,9 @@ module Reports
     def headers
       @headers ||=
         if hesa_id?
-          DEFAULT_HEADERS - ["HESA ID"]
-        else
           DEFAULT_HEADERS
+        else
+          DEFAULT_HEADERS - ["HESA ID"]
         end
     end
 

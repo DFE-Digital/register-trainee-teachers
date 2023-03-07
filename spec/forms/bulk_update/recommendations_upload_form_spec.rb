@@ -43,7 +43,7 @@ module BulkUpdate
 
         it "is invalid" do
           expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "File File must be a CSV"
+          expect(form.errors.full_messages.first).to eql "File must be a CSV"
         end
       end
 
@@ -52,7 +52,7 @@ module BulkUpdate
 
         it "is invalid" do
           expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "File CSV not valid"
+          expect(form.errors.full_messages.first).to eql "CSV is missing the required headers"
         end
       end
 
