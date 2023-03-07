@@ -16,10 +16,14 @@
       <%= pluralize(@total_rows_count, "trainee") %>.
     </p>
 
-    <% if @missing_date_rows_count == @total_rows_count %>
-      <%= render("no_dates_uploaded") %>
+    <% if awardable_rows_count == @total_rows_count %>
+      <%= render("summary_all_dates") %>
+    <% elsif @missing_date_rows_count == @total_rows_count %>
+      <%= render("summary_no_dates") %>
+    <% elsif @error_rows_count == @total_rows_count %>
+      <%= render("summary_all_errors") %>
     <% else %>
-      <%= render("dates_uploaded") %>
+      <%= render("summary_bullets") %>
     <% end %>
   </div>
 </div>
