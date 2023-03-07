@@ -39,6 +39,7 @@ module Dqt
             "ageRangeTo" => trainee.course_max_age,
             "ittQualificationAim" => nil,
             "ittQualificationType" => nil,
+            "trainingCountryCode" => nil,
           })
         end
 
