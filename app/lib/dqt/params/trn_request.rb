@@ -125,6 +125,7 @@ module Dqt
           "ageRangeTo" => trainee.course_max_age,
           "ittQualificationAim" => ITT_QUALIFICATION_AIMS[trainee.hesa_metadatum&.itt_aim],
           "ittQualificationType" => itt_qualification_type,
+          "trainingCountryCode" => find_country_code(trainee.iqts_country),
         }
       end
 
@@ -174,8 +175,7 @@ module Dqt
       end
 
       def country_code
-        country = degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country
-        Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+        find_country_code(degree.uk? ? UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED : degree.country)
       end
 
       def itt_end_date
@@ -198,6 +198,12 @@ module Dqt
 
       def iqts_programme_type?
         PROGRAMME_TYPE[trainee.training_route] == DQT_IQTS_PROGRAMME_TYPE
+      end
+
+      def find_country_code(country)
+        return if country.blank?
+
+        Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
       end
     end
   end

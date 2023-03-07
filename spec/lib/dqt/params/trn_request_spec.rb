@@ -58,14 +58,16 @@ module Dqt
             "ageRangeTo" => trainee.course_max_age,
             "ittQualificationAim" => described_class::ITT_QUALIFICATION_AIMS[hesa_metadatum.itt_aim],
             "ittQualificationType" => described_class::ITT_QUALIFICATION_TYPES[hesa_metadatum.itt_qualification_aim],
+            "trainingCountryCode" => nil,
           })
         end
 
         context "iQTS trainee" do
-          let(:trainee_attributes) { { training_route: "iqts" } }
+          let(:trainee_attributes) { { training_route: "iqts", iqts_country: "Ireland" } }
 
-          it "sets the programme type to international qualified teacher status" do
+          it "sets the programme type and training country code appropriately" do
             expect(subject["initialTeacherTraining"]).to include({
+              "trainingCountryCode" => "IE",
               "programmeType" => "InternationalQualifiedTeacherStatus",
             })
           end
