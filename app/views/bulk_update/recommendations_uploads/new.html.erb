@@ -6,7 +6,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop" >
     <%= register_form_with(model: recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
-      <%= f.govuk_error_summary %>
+      <%= f.govuk_error_summary(presenter: ErrorSummaryShowAllMessagesPresenter) %>
 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
@@ -16,7 +16,7 @@
       <% if bulk_recommend_count.zero? %>
         <%= render("no_trainees") %>
       <% else %>
-        <%= render("upload_trainees", f: ) %>
+        <%= render("upload_trainees", f:) %>
       <% end %>
     <% end %>
   </div>
