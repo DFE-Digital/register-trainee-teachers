@@ -3,27 +3,12 @@
 module BulkUpdate
   module RecommendationsUploads
     class ValidateCsvRow
-      # rubocop:disable Style/OpenStructUse
       def initialize(row)
-        @row = OpenStruct.new(
-          trn: row["trn"],
-          hesa_id: row["heas id"],
-          provider_trainee_id: row["provider trainee id"],
-          last_names: row["last names"],
-          first_names: row["first names"],
-          lead_school: row["lead school"],
-          qts_or_eyts: row["qts or eyts"],
-          route: row["route"],
-          phase: row["phase"],
-          age_range: row["age range"],
-          subject: row["subject"],
-          standards_met_at: row["date qts or eyts standards met"],
-        )
+        @row = row
         @messages = []
 
         validate!
       end
-      # rubocop:enable Style/OpenStructUse
 
       def valid?
         messages.empty?
@@ -46,6 +31,7 @@ module BulkUpdate
       end
 
       def hesa_id
+        return if row.hesa_id.nil?
         return if row.hesa_id =~ /^\d{17}$/
 
         @messages << "HESA ID must be 17 characters long and contain only numbers"

@@ -13,13 +13,14 @@ module BulkUpdate
       # we skip the first non-header row as this will just contain "do not edit" warning.
       def call
         csv[1..].map.with_index(3) do |row, row_number|
+          row = Row.new(row)
           validation = ValidateCsvRow.new(row)
 
           upload_row = recommendations_upload.rows.create(
             csv_row_number: row_number,
-            standards_met_at: row["date qts or eyts standards met"].to_date,
-            trn: row["trn"],
-            hesa_id: row["heas id"],
+            standards_met_at: row.standards_met_at&.to_date,
+            trn: row.trn,
+            hesa_id: row.hesa_id,
           )
 
           validation.messages.each do |message|

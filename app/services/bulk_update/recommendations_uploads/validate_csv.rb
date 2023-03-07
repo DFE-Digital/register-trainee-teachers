@@ -13,12 +13,6 @@ module BulkUpdate
         required_headers
       end
 
-      def required_headers
-        unless csv_headers_set.superset?(VALID_HEADERS_SET)
-          record.errors.add(:base, "CSV is missing the required headers")
-        end
-      end
-
     private
 
       attr_reader :csv, :record
@@ -27,6 +21,12 @@ module BulkUpdate
         "trn",
         "date qts or eyts standards met",
       ].freeze
+
+      def required_headers
+        unless csv_headers_set.superset?(VALID_HEADERS_SET)
+          record.errors.add(:base, "CSV is missing the required headers")
+        end
+      end
 
       def csv_headers_set
         @csv_headers_set ||= ::Set.new(csv.headers)

@@ -11,7 +11,7 @@ module BulkUpdate
         let(:row) do
           {
             "trn" => "1234567",
-            "heas id" => "12345678912345678",
+            "hesa id" => "12345678912345678",
             "provider trainee id" => "1234567",
             "last names" => "Blobby",
             "first names" => "Russell",
@@ -38,7 +38,7 @@ module BulkUpdate
         let(:row) do
           {
             "trn" => "123567",
-            "heas id" => "1234568912345678",
+            "hesa id" => "1234568912345678",
             "provider trainee id" => "1234",
             "last names" => "Blobby",
             "first names" => "Russell",

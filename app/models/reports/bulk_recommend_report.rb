@@ -2,26 +2,33 @@
 
 module Reports
   class BulkRecommendReport < TemplateClassCsv
+    DEFAULT_HEADERS = [
+      "TRN",
+      "Provider trainee ID",
+      "HESA ID",
+      "Last names",
+      "First names",
+      "Lead school",
+      "QTS or EYTS",
+      "Route",
+      "Phase",
+      "Age range",
+      "Subject",
+      "Date QTS or EYTS standards met",
+    ].freeze
+
     def initialize(csv, scope:)
       @csv = csv
       @scope = scope
     end
 
     def headers
-      [
-        "TRN",
-        "Provider trainee ID",
-        ("HESA ID" if hesa_id?),
-        "Last names",
-        "First names",
-        "Lead school",
-        "QTS or EYTS",
-        "Route",
-        "Phase",
-        "Age range",
-        "Subject",
-        "Date QTS or EYTS standards met",
-      ].compact
+      @headers ||=
+        if hesa_id?
+          DEFAULT_HEADERS - ["HESA ID"]
+        else
+          DEFAULT_HEADERS
+        end
     end
 
     alias trainees scope

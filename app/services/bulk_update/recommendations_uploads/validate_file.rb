@@ -21,7 +21,7 @@ module BulkUpdate
       def file_size_within_range?
         if file.size > 1.megabyte
           record.errors.add(:base, "File must be no greater than 1MB")
-        elsif file.empty?
+        elsif file.size.zero? # rubocop:disable Style/ZeroLengthPredicate
           record.errors.add(:base, "File cannot be empty")
         end
       end
