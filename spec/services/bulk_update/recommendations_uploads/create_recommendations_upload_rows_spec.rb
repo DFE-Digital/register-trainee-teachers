@@ -5,9 +5,9 @@ require "rails_helper"
 module BulkUpdate
   module RecommendationsUploads
     describe CreateRecommendationsUploadRows do
-      subject(:service) { described_class.call(recommendations_upload_id: recommendations_upload.id, csv: csv) }
+      subject(:service) { described_class.call(recommendations_upload:, csv:) }
 
-      let(:csv) { CSV.new(file.read, headers: true).read }
+      let(:csv) { CSV.new(file.read, headers: true, header_converters: :downcase, strip: true).read }
       let(:recommendations_upload) { create(:bulk_update_recommendations_upload) }
       let(:provider) { recommendations_upload.provider }
 
