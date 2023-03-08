@@ -32,6 +32,7 @@ features:
     provider_led_undergrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
+    iqts: true
   google:
     send_data_to_big_query: false
   integrate_with_dqt: false
