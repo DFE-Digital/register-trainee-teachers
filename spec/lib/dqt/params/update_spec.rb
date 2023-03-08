@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Dqt
   module Params
-    describe TraineeRequest do
+    describe Update do
       let(:trainee) { create(:trainee, :completed, sex: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
       let(:hesa_code) { Degrees::DfEReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }

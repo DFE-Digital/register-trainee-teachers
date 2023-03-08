@@ -2,7 +2,7 @@
 
 module Dqt
   module Params
-    class TraineeRequest < TrnRequest
+    class Update < TrnRequest
     private
 
       def build_params

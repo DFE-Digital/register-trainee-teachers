@@ -8,7 +8,7 @@ module DeadJobs
       let(:klass) { "Dqt::UpdateTraineeJob" }
       let(:name) { "DQT Update Trainee" }
 
-      let(:params_sent) { Dqt::Params::TraineeRequest.new(trainee:).to_json.to_s.gsub('"', "'") }
+      let(:params_sent) { Dqt::Params::Update.new(trainee:).to_json.to_s.gsub('"', "'") }
 
       let(:csv) do
         <<~CSV
