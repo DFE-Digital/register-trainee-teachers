@@ -54,6 +54,38 @@ module Dqt
           })
         end
 
+        context "trainee is deferred" do
+          let(:trainee) { create(:trainee, :completed, :deferred) }
+
+          it "sets the outcome param to Deferred" do
+            expect(subject["initialTeacherTraining"]).to include({ "outcome" => "Deferred" })
+          end
+        end
+
+        context "trainee is in training" do
+          let(:trainee) { create(:trainee, :completed, :school_direct_tuition_fee, :submitted_for_trn) }
+
+          it "sets the outcome param to Deferred" do
+            expect(subject["initialTeacherTraining"]).to include({ "outcome" => "InTraining" })
+          end
+
+          context "assessment only route" do
+            let(:trainee) { create(:trainee, :completed, :assessment_only, :trn_received) }
+
+            it "sets the outcome param to Deferred" do
+              expect(subject["initialTeacherTraining"]).to include({ "outcome" => "UnderAssessment" })
+            end
+          end
+        end
+
+        context "trainee is not deferred or in training" do
+          let(:trainee) { create(:trainee, :completed, :withdrawn) }
+
+          it "doesn't add the outcome params" do
+            expect(subject["initialTeacherTraining"]).not_to have_key("outcome")
+          end
+        end
+
         context "when trainee has an international degree" do
           let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country: "Albania") }
           let(:trainee) { create(:trainee, :completed, degrees: [non_uk_degree]) }
