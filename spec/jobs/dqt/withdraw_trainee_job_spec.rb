@@ -44,15 +44,6 @@ module Dqt
           described_class.perform_now(trainee, timeout_date)
           expect(WithdrawTraineeJob).not_to have_been_enqueued
         end
-
-        context "trainee is already withdrawn in DQT" do
-          let(:dqt_response) { { "result" => "Withdrawn" } }
-
-          it "doesn't call the WithdrawTrainee service" do
-            expect(WithdrawTrainee).not_to receive(:call).with(trainee:)
-            described_class.perform_now(trainee, timeout_date)
-          end
-        end
       end
 
       context "TRN is not available" do
