@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_03_133825) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_07_135307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -183,7 +183,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_133825) do
     t.string "trn"
     t.string "hesa_id"
     t.date "standards_met_at"
+    t.string "provider_trainee_id"
+    t.string "last_names"
+    t.string "first_names"
+    t.string "lead_school"
+    t.string "qts_or_eyts"
+    t.string "route"
+    t.string "phase"
+    t.string "age_range"
+    t.string "subject"
+    t.bigint "matched_trainee_id"
     t.index ["bulk_update_recommendations_upload_id"], name: "idx_bu_ru_rows_on_bu_recommendations_upload_id"
+    t.index ["matched_trainee_id"], name: "idx_bu_recommendations_upload_rows_on_matched_trainee_id"
   end
 
   create_table "bulk_update_recommendations_uploads", force: :cascade do |t|
@@ -858,6 +869,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_133825) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
   add_foreign_key "bulk_update_recommendations_upload_rows", "bulk_update_recommendations_uploads"
+  add_foreign_key "bulk_update_recommendations_upload_rows", "trainees", column: "matched_trainee_id"
   add_foreign_key "bulk_update_recommendations_uploads", "providers"
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"

@@ -5,7 +5,6 @@ module Reports
     DEFAULT_HEADERS = [
       "TRN",
       "Provider trainee ID",
-      "HESA ID",
       "Last names",
       "First names",
       "Lead school",
@@ -25,9 +24,9 @@ module Reports
     def headers
       @headers ||=
         if hesa_id?
-          DEFAULT_HEADERS
+          DEFAULT_HEADERS.insert(2, "HESA ID")
         else
-          DEFAULT_HEADERS - ["HESA ID"]
+          DEFAULT_HEADERS
         end
     end
 

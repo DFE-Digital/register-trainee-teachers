@@ -17,10 +17,7 @@ module BulkUpdate
 
       attr_reader :csv, :record
 
-      VALID_HEADERS_SET = ::Set[
-        "trn",
-        "date qts or eyts standards met",
-      ].freeze
+      VALID_HEADERS_SET = Set.new(Reports::BulkRecommendReport::DEFAULT_HEADERS.map(&:downcase))
 
       def required_headers
         unless csv_headers_set.superset?(VALID_HEADERS_SET)
@@ -29,7 +26,7 @@ module BulkUpdate
       end
 
       def csv_headers_set
-        @csv_headers_set ||= ::Set.new(csv.headers)
+        @csv_headers_set ||= Set.new(csv.headers)
       end
     end
   end
