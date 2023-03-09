@@ -32,8 +32,23 @@ RSpec.describe BulkUpdate::RecommendationsUpload do
     end
 
     describe "error_rows" do
+      context "with a row with single error"
       it "returns the rows with errors" do
         expect(recommendations_upload.error_rows).to eq([error_row])
+      end
+    end
+
+    context "with a row with multiple errors" do
+      let(:multiple_errors_row) do
+        create(
+          :bulk_update_recommendations_upload_row,
+          :with_multiple_errors,
+          recommendations_upload:,
+        )
+      end
+
+      it "returns the rows with errors" do
+        expect(recommendations_upload.error_rows).to eq([error_row, multiple_errors_row])
       end
     end
   end

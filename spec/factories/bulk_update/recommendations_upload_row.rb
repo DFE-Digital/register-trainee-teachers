@@ -17,5 +17,11 @@ FactoryBot.define do
         create(:bulk_update_row_error, errored_on: row)
       end
     end
+
+    trait :with_multiple_errors do
+      after(:create) do |row, _|
+        create_list(:bulk_update_row_error, 2, errored_on: row)
+      end
+    end
   end
 end

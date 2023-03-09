@@ -37,6 +37,6 @@ class BulkUpdate::RecommendationsUpload < ApplicationRecord
   end
 
   def error_rows
-    rows.joins(:row_errors)
+    rows.where.associated(:row_errors).distinct
   end
 end
