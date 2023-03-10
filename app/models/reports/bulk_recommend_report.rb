@@ -5,6 +5,7 @@ module Reports
     DEFAULT_HEADERS = [
       "TRN",
       "Provider trainee ID",
+      "HESA ID",
       "Last names",
       "First names",
       "Lead school",
@@ -16,6 +17,8 @@ module Reports
       "Date QTS or EYTS standards met",
     ].freeze
 
+    REQUIRED_HEADERS = (DEFAULT_HEADERS - ["HESA ID"]).freeze
+
     def initialize(csv, scope:)
       @csv = csv
       @scope = scope
@@ -24,9 +27,9 @@ module Reports
     def headers
       @headers ||=
         if hesa_id?
-          DEFAULT_HEADERS.insert(2, "HESA ID")
-        else
           DEFAULT_HEADERS
+        else
+          DEFAULT_HEADERS - ["HESA ID"]
         end
     end
 

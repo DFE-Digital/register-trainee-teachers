@@ -14,14 +14,14 @@ module BulkUpdate
 
       # we skip the first non-header row as this will just contain "do not edit" warning.
       def call
-        csv[1..].map.with_index(3) do |row, _row_number|
+        csv[1..].map.with_index(3) do |row, row_number|
           # validate row and (matched) trainee
           row = Row.new(row)
           trainee_validator = ValidateTrainee.new(row: row, provider: recommendations_upload.provider)
           csv_row_validator = ValidateCsvRow.new(row: row, trainee: trainee_validator.trainee)
 
           # create the recommendations_upload_row and associate it with the matched trainee (if any)
-          upload_row = create_recommendations_upload_row!(trainee_validator.trainee, row)
+          upload_row = create_recommendations_upload_row!(trainee_validator.trainee, row, row_number)
 
           # create any validation errors and associate them with the recommendations_upload_row just created
           create_validation_errors!(upload_row, csv_row_validator.messages)
@@ -33,9 +33,9 @@ module BulkUpdate
 
       attr_reader :recommendations_upload, :csv
 
-      def create_recommendations_upload_row!(_trainee, row)
+      def create_recommendations_upload_row!(trainee, row, row_number)
         recommendations_upload.rows.create(
-          matched_trainee_id: trainee_validator.trainee&.id,
+          matched_trainee_id: trainee&.id,
           csv_row_number: row_number,
           standards_met_at: row.standards_met_at&.to_date,
           trn: row.trn,

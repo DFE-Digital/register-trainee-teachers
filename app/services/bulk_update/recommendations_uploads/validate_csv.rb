@@ -17,7 +17,7 @@ module BulkUpdate
 
       attr_reader :csv, :record
 
-      VALID_HEADERS_SET = Set.new(Reports::BulkRecommendReport::DEFAULT_HEADERS.map(&:downcase))
+      VALID_HEADERS_SET = Set.new(Reports::BulkRecommendReport::REQUIRED_HEADERS.map(&:downcase))
 
       def required_headers
         unless csv_headers_set.superset?(VALID_HEADERS_SET)

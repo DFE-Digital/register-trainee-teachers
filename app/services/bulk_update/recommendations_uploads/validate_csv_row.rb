@@ -5,10 +5,10 @@ module BulkUpdate
     class ValidateCsvRow
       def initialize(row:, trainee:)
         @row = row
-        @trainee = trainee
+        @trainee = (::Reports::TraineeReport.new(trainee) if trainee)
         @messages = []
 
-        cannot_be_blank!
+        validate_presence!
         validate!
       end
 
@@ -22,8 +22,9 @@ module BulkUpdate
 
       attr_reader :trainee
 
-      def cannot_be_blank!
+      def validate_presence!
         %i[
+          trn
           first_names
           last_names
           lead_school
@@ -33,9 +34,9 @@ module BulkUpdate
           age_range
           subject
         ].each do |attribute|
-          next if row.send(attribute).presnt?
+          next if row.send(attribute).present?
 
-          @messages << "#{attribute.humanize} cannot be blank"
+          @messages << "\"#{attribute.to_s.humanize.titleize}\" cannot be blank"
         end
       end
 
@@ -49,10 +50,10 @@ module BulkUpdate
         qts_or_eyts
         route
         phase
-        subject
       end
 
       def trn
+        return if row.trn.blank?
         return if row.trn =~ /^\d{7}$/
 
         @messages << "TRN must be 7 characters long and contain only numbers"
@@ -60,7 +61,7 @@ module BulkUpdate
 
       def hesa_id
         return if row.hesa_id.nil?
-        return if row.hesa_id =~ /^\d{17}$/
+        return if row.hesa_id =~ /^[0-9]{13}([0-9]{4})?$/
 
         @messages << "HESA ID must be 17 characters long and contain only numbers"
       end
@@ -79,23 +80,30 @@ module BulkUpdate
       end
 
       def names
-        @messages << "Trainee name does not match" unless trainee.full_name.downcase == row.full_name.downcase
+        if row.first_names.present? && trainee.first_names.downcase != row.first_names.downcase
+          @messages << "Trainee first names do not match"
+        end
+        if row.last_names.present? && trainee.last_names.downcase != row.last_names.downcase
+          @messages << "Trainee last names do not match"
+        end
       end
 
       def qts_or_eyts
-        @messages << "QTS/EYTS declaration does not match" unless trainee.award_type == row.qts_or_eyts
+        return if row.qts_or_eyts.blank?
+
+        @messages << "QTS/EYTS declaration does not match" unless trainee.qts_or_eyts == row.qts_or_eyts
       end
 
       def route
-        @messages << "Route does not match" unless trainee.training_route == row.route
+        return if row.route.blank?
+
+        @messages << "Route does not match" unless trainee.course_training_route == row.route
       end
 
       def phase
-        @messages << "Phase does not match" unless trainee.phase == row.phase
-      end
+        return if row.phase.blank?
 
-      def subject
-        @messages << "Subject does not match" unless trainee.subject == row.subject
+        @messages << "Phase does not match" unless trainee.course_education_phase == row.phase
       end
     end
   end

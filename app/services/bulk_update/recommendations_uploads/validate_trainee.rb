@@ -35,11 +35,11 @@ module BulkUpdate
 
       def validate!
         @messages << "Multiple trainees found via #{found_with}" if @trainees.size > 1
-        @messages << "No trainee could be matched" if @trainees.zero?
+        @messages << "No trainee could be matched" if @trainees.empty?
       end
 
       def found_with
-        { trn: "TRN", hesa: "HESA ID", provider_trainee_id: "the provider trainee ID" }[@found_with]
+        { trn: "TRN", hesa_id: "HESA ID", provider_trainee_id: "the provider trainee ID" }[@found_with]
       end
 
       # rubocop:disable Naming/MemoizedInstanceVariableName
@@ -54,7 +54,7 @@ module BulkUpdate
       end
 
       def trainees_by_hesa_id!
-        return unless row.hesa_id =~ /^\d{17}$/
+        return unless row.hesa_id =~ /^[0-9]{13}([0-9]{4})?$/
 
         @trainees ||= begin
           t = provider.trainees.where(hesa_id: row.hesa_id)
