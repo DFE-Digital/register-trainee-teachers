@@ -11,7 +11,7 @@ module DeadJobs
 
     def build_rows
       super do |trainee|
-        { params_sent: Dqt::Params::TraineeRequest.new(trainee:).to_json&.to_s&.gsub('"', "'") }
+        { params_sent: Dqt::Params::Update.new(trainee:).to_json&.to_s&.gsub('"', "'") }
       end
     end
 

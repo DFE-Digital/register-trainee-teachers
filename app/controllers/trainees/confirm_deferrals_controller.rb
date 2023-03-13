@@ -9,7 +9,6 @@ module Trainees
 
     def update
       if deferral_form.save!
-        trainee.defer!
         flash[:success] = I18n.t("flash.trainee_deferred")
         redirect_to(trainee_path(trainee))
       end

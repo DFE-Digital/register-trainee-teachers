@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe DeferralForm, type: :model do
-  let(:trainee) { create(:trainee, :deferred) }
+  let(:trainee) { create(:trainee, :trn_received) }
   let(:form_store) { class_double(FormStore) }
 
   let(:params) do
@@ -115,11 +115,14 @@ describe DeferralForm, type: :model do
 
     before do
       allow(FormStore).to receive(:get)
+      allow(form_store).to receive(:set).with(trainee.id, :deferral, nil)
+    end
+
+    it "transitions the trainee state to deferred" do
+      expect { subject.save! }.to change(trainee, :state).to("deferred")
     end
 
     it "takes any data from the form store and saves it to the database and clears the store data" do
-      expect(form_store).to receive(:set).with(trainee.id, :deferral, nil)
-
       date_params = params.except("date_string").values.map(&:to_i)
       expect { subject.save! }.to change(trainee, :defer_date).to(Date.new(*date_params))
     end

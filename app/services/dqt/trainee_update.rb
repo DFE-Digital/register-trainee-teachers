@@ -7,10 +7,8 @@ module Dqt
     class TraineeUpdateMissingTrn < StandardError; end
 
     def initialize(trainee:)
-      return unless FeatureService.enabled?(:integrate_with_dqt)
-
       @trainee = trainee
-      @payload = Params::TraineeRequest.new(trainee:)
+      @payload = Params::Update.new(trainee:)
     end
 
     def call

@@ -15,6 +15,7 @@ private
 
   def assign_attributes_to_trainee
     trainee.trainee_start_date = itt_start_date if itt_start_date.is_a?(Date)
+    trainee.state = :deferred
     trainee[date_field] = date
   end
 

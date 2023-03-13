@@ -22,7 +22,7 @@ module Dqt
       end
 
       if trainee.trn.present?
-        WithdrawTrainee.call(trainee:) unless already_withdrawn_in_dqt?
+        WithdrawTrainee.call(trainee:)
       elsif continue_waiting_for_trn?
         requeue
       else
@@ -40,10 +40,6 @@ module Dqt
 
     def requeue
       self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trainee, timeout_after)
-    end
-
-    def already_withdrawn_in_dqt?
-      RetrieveTraining.call(trainee:)["result"] == "Withdrawn"
     end
   end
 end
