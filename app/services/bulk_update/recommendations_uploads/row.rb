@@ -23,10 +23,6 @@ module BulkUpdate
       def standards_met_at
         send("date_qts_or_eyts_standards_met")
       end
-
-      def full_name
-        "#{first_names} #{last_names}"
-      end
     end
   end
 end

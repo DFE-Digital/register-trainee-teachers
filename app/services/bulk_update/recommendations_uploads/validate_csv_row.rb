@@ -63,11 +63,12 @@ module BulkUpdate
         return if row.hesa_id.nil?
         return if row.hesa_id =~ /^[0-9]{13}([0-9]{4})?$/
 
-        @messages << "HESA ID must be 17 characters long and contain only numbers"
+        @messages << "HESA ID must be 13 or 17 characters long and contain only numbers"
       end
 
       def standards_met_at
-        if row.standards_met_at =~ /\A\d{1,2}\/\d{1,2}\/\d{4}\z/
+        # dd/mm/yyyy or dd-mm-yyyy or d/m/yyyy etc etc
+        if row.standards_met_at =~ /^\d{1,2}[\/-]\d{1,2}[\/-]\d{4}$/
           date = row.standards_met_at&.to_date
           if date && date > Time.zone.today
             @messages << "Award date must not be in the future (#{date.iso8601})"
