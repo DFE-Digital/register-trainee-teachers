@@ -200,15 +200,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_135307) do
   create_table "bulk_update_recommendations_uploads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
-  end
-
-  create_table "bulk_update_row_errors", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "errored_on_id"
-    t.string "errored_on_type"
-    t.string "message"
+    t.bigint "provider_id", null: false
+    t.index ["provider_id"], name: "index_bulk_update_recommendations_uploads_on_provider_id"
   end
 
   create_table "bulk_update_row_errors", force: :cascade do |t|

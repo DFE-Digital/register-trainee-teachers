@@ -6,7 +6,7 @@ module Reports
 
     def initialize(trainee)
       @trainee = trainee
-      @degree = trainee.degrees&.first
+      @degree = trainee.degrees.first
       @funding_manager = FundingManager.new(trainee)
 
       # In rails 6 we can't preload the `published_course`, because it is instance dependent. This is supported in rails 7.
