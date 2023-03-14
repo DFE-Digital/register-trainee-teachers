@@ -43,6 +43,13 @@ feature "recommending trainees" do
         then_i_see_no_dates_content
       end
     end
+
+    scenario "I can change who i want to recommend" do
+      and_i_upload_a_csv("bulk_update/recommendations_upload/complete.csv")
+      and_i_check_who_ill_recommend
+      and_i_click_change_link
+      then_i_see_the_form_to_change_upload
+    end
   end
 
 private
@@ -74,6 +81,10 @@ private
     recommendations_upload_show_page.check_button.click
   end
 
+  def and_i_click_change_link
+    recommendations_upload_check_page.change_link.click
+  end
+
   def then_i_see_count_complete
     expect(recommendations_upload_show_page).to have_text("All 2 trainees will be recommended")
   end
@@ -85,5 +96,9 @@ private
 
   def then_i_see_no_dates_content
     expect(recommendations_upload_show_page).to have_text("You did not enter any dates")
+  end
+
+  def then_i_see_the_form_to_change_upload
+    expect(edit_recommendations_upload_page).to be_displayed
   end
 end

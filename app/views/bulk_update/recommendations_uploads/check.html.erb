@@ -14,5 +14,9 @@
     <%= register_form_with url: bulk_update_recommendations_upload_recommendations_path, method: :post, local: true do |f| %>
       <%= f.govuk_submit("Recommend #{pluralize(awardable_rows_count, "trainee")} for QTS or EYTS", id: "recommend") %>
     <% end %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to("Change who you’ll recommend", edit_bulk_update_recommendations_upload_path(@recommendations_upload)) %>
+    </p>
   </div>
 </div>

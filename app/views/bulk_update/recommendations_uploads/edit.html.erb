@@ -1,0 +1,40 @@
+<%= render PageTitle::View.new(text: "Change who you’ll recommend for QTS or EYTS") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
+    <%= register_form_with(model: recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
+      <%= f.govuk_error_summary(presenter: ErrorSummaryShowAllMessagesPresenter) %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
+        Change who you’ll recommend for QTS or EYTS
+      </h1>
+
+      <p class="govuk-body">
+        You can edit your CSV file to change which trainees you’ll recommend.
+      </p>
+
+      <ol class="govuk-list govuk-list--number">
+        <li>
+          To recommend a trainee, add the date when they met the QTS or EYTS
+          standards. If you remove the date then the trainee will not be
+          recommended.
+        </li>
+        <li>
+          Upload the CSV file.
+          <%= f.govuk_file_field :file, label: { hidden: true } %>
+        </li>
+      </ol>
+
+      <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
+    <% end %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to("Return to check who you’ll recommend without making changes", bulk_update_recommendations_upload_check_path(@recommendations_upload)) %>
+    </p>
+  </div>
+</div>

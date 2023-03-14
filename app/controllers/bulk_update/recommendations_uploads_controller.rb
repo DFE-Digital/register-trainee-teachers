@@ -15,6 +15,11 @@ module BulkUpdate
       @recommendations_upload_form = RecommendationsUploadForm.new
     end
 
+    def edit
+      recommendations_upload
+      @recommendations_upload_form = RecommendationsUploadForm.new
+    end
+
     def create
       @recommendations_upload_form = RecommendationsUploadForm.new(provider:, file:)
 
@@ -24,6 +29,10 @@ module BulkUpdate
       else
         render(:new)
       end
+    end
+
+    def check
+      recommendations_upload
     end
 
   private
@@ -43,7 +52,7 @@ module BulkUpdate
     end
 
     def recommendations_upload
-      @recommendations_upload ||= provider.recommendations_uploads.find(params[:recommendations_upload_id])
+      @recommendations_upload ||= provider.recommendations_uploads.find(params[:id] || params[:recommendations_upload_id])
     end
 
     def bulk_recommend_count
