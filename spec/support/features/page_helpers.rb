@@ -446,8 +446,8 @@ module Features
       @recommendations_upload_show_page ||= PageObjects::RecommendationsUploads::Show.new
     end
 
-    def recommendations_upload_check_page
-      @recommendations_upload_check_page ||= PageObjects::RecommendationsUploads::Check.new
+    def recommendations_checks_show_page
+      @recommendations_checks_show_page ||= PageObjects::RecommendationsChecks::Show.new
     end
 
     def edit_recommendations_upload_page

@@ -33,7 +33,7 @@
   </p>
 
   <!-- TODO: Change link to fix errors page when this exists -->
-  <%= govuk_link_to("Review errors", bulk_update_recommendations_upload_check_path(@recommendations_upload), class: "govuk-button") %>
+  <%= govuk_link_to("Review errors", bulk_update_recommendations_upload_recommendations_checks_path(@recommendations_upload), class: "govuk-button") %>
 <% else %>
-  <%= govuk_link_to("Check who you’ll recommend", bulk_update_recommendations_upload_check_path(@recommendations_upload), class: "govuk-button") %>
+  <%= govuk_link_to("Check who you’ll recommend", bulk_update_recommendations_upload_recommendations_checks_path(@recommendations_upload), class: "govuk-button") %>
 <% end %>

@@ -82,7 +82,7 @@ private
   end
 
   def and_i_click_change_link
-    recommendations_upload_check_page.change_link.click
+    recommendations_checks_show_page.change_link.click
   end
 
   def then_i_see_count_complete
