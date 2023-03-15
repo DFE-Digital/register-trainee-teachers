@@ -1,0 +1,27 @@
+<%= render PageTitle::View.new(text: "Confirm you want to cancel bulk recommending trainees") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: url_for(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">Confirm you want to cancel bulk recommending trainees</h1>
+
+    <p class="govuk-body">
+      No changes will be made to your trainees’ records.
+    </p>
+
+    <div class="govuk-body">
+      <%= govuk_link_to(
+        "Cancel bulk recommending trainees",
+        new_bulk_update_recommendations_upload_path,
+        class: "govuk-button govuk-button--warning"
+        ) %>
+    </div>
+
+    <p class="govuk-body">
+      <%= govuk_link_to("Return to the previous page", url_for(:back)) %>
+    </p>
+  </div>
+</div>
