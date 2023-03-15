@@ -458,6 +458,10 @@ module Features
       @recommendations_upload_fix_errors_page ||= PageObjects::RecommendationsErrors::Show.new
     end
 
+    def recommendations_upload_cancel_page
+      @recommendations_upload_cancel_page ||= PageObjects::RecommendationsUploads::Cancel.new
+    end
+
   private
 
     def progress_with_prefix(status)
