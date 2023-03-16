@@ -27,6 +27,8 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
              foreign_key: :bulk_update_recommendations_upload_id,
              inverse_of: :recommendations_upload_rows
 
+  has_one :trainee, foreign_key: :trn, primary_key: :trn, inverse_of: false
+
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
 
   def row_error_messages
