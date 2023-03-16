@@ -5,22 +5,49 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop" >
+  <div class="govuk-grid-column-full" >
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
       Check who you’ll recommend for QTS or EYTS
     </h1>
 
-    <%= register_form_with url: bulk_update_recommendations_upload_recommendations_path, method: :post, local: true do |f| %>
-      <%= f.govuk_submit("Recommend #{pluralize(@awardable_rows_count, "trainee")} for QTS or EYTS", id: "recommend") %>
+    <% @recommendations_upload.awardable_rows.includes(:trainee).tap do |awardable_rows| %>
+      <% if awardable_rows.count <= @table_row_limit %>
+        <%= render partial: "table", locals: {
+          rows: awardable_rows,
+          caption: "Trainees you’ll recommend for QTS or EYTS"
+        } %>
+      <% else %>
+        <%= govuk_accordion(id: "recommendations-upload-#{@recommendations_upload.id}",
+                            html_attributes: {
+                              "data-i18n.show-all-sections" => "Show all trainees you’ll recommend",
+                              "data-i18n.hide-all-sections" => "Hide all trainees you’ll recommend",
+                            }) do |accordion|
+          awardable_rows.each_slice(@table_row_limit).with_index do |(*rows), index|
+            heading_text = "Trainees #{@table_row_limit*index + 1} to #{@table_row_limit*index + rows.count} you’ll recommend for QTS or EYTS"
+            accordion.section(heading_text: heading_text) do
+              render partial: "table", locals: { rows: rows, caption: heading_text }
+            end
+          end
+        end %>
+      <% end %>
     <% end %>
+    <hr class="govuk-section-break govuk-section-break--xl">
+  </div>
+</div>
 
-    <p class="govuk-body">
-      <%= govuk_link_to("Change who you’ll recommend", edit_bulk_update_recommendations_upload_path(@recommendations_upload)) %>
-    </p>
-
-    <p class="govuk-body">
-      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(@recommendations_upload))%>
-    </p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="js-stick-at-bottom-when-scrolling">
+      <%= register_form_with url: bulk_update_recommendations_upload_recommendations_path, method: :post, local: true do |f| %>
+        <%= f.govuk_submit("Recommend #{pluralize(@awardable_rows_count, "trainee")} for QTS or EYTS", id: "recommend") %>
+      <% end %>
+      <div class="govuk-body">
+        <%= govuk_link_to("Change who you’ll recommend", edit_bulk_update_recommendations_upload_path(@recommendations_upload)) %>
+      </div>
+      <div class="govuk-body">
+        <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(@recommendations_upload)) %>
+      </div>
+    </div>
   </div>
 </div>
