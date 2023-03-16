@@ -1,0 +1,56 @@
+<%= render PageTitle::View.new(text: "Review errors for #{pluralize(@error_rows_count, "trainee")} in the CSV file you uploaded") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
+    <%= register_form_with(model: @recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
+        Review errors for <%= pluralize(@error_rows_count, "trainee") %> in the
+        CSV file you uploaded
+      </h1>
+
+      <p class="govuk-body">
+        You cannot recommend a trainee for QTS or EYTS if there’s an error in
+        their row in the CSV file. You need to fix the errors if you want to
+        recommend them.
+      </p>
+
+      <ol class="govuk-list govuk-list--number">
+        <li>
+            <p>
+              <%= govuk_link_to(
+                "Download your CSV file with errors indicated.",
+                bulk_update_recommendations_upload_recommendations_errors_path(@recommendations_upload, format: :csv),
+                class: "download-errors"
+                ) %>
+            </p>
+        </li>
+        <li>
+          Fix the errors. If you cannot fix an error, you can delete the row and
+          the trainee will not be recommended.
+        </li>
+        <li>
+          Upload the CSV file.
+          <%= f.govuk_file_field :file, label: { hidden: true } %>
+        </li>
+      </ol>
+
+      <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
+    <% end %>
+
+    <% if @awardable_rows_count.positive? %>
+      <p class="govuk-body">
+        <%= govuk_link_to(
+          "Skip trainees with errors and check who you’ll recommend",
+          bulk_update_recommendations_upload_recommendations_checks_path(@recommendations_upload)
+          ) %>
+      </p>
+    <% end %>
+  </div>
+</div>
