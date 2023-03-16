@@ -29,6 +29,7 @@ feature "recommending trainees" do
       scenario "I can upload trainees for recommendation" do
         then_i_see_count_complete
         and_i_check_who_ill_recommend
+        and_i_see_a_list_of_trainees_to_check
       end
 
       scenario "I can cancel my upload" do
@@ -76,8 +77,10 @@ private
   end
 
   def given_two_trainees_exist_to_recommend
-    create(:trainee, :trn_received, trn: "2413295", itt_end_date: Time.zone.today, provider: current_user.organisation)
-    create(:trainee, :trn_received, trn: "4814731", itt_end_date: Time.zone.today + 1.month, provider: current_user.organisation)
+    @trainees = [
+      create(:trainee, :trn_received, trn: "2413295", itt_end_date: Time.zone.today, provider: current_user.organisation),
+      create(:trainee, :trn_received, trn: "4814731", itt_end_date: Time.zone.today + 1.month, provider: current_user.organisation),
+    ]
   end
 
   def then_i_see_how_many_trainees_i_can_recommend
@@ -141,5 +144,14 @@ private
 
   def then_i_am_taken_back_to_the_upload_page
     expect(recommendations_upload_page).to be_displayed
+  end
+
+  def and_i_see_a_list_of_trainees_to_check
+    @trainees.each do |trainee|
+      training_route = t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
+      expect(recommendations_checks_show_page).to have_text("#{trainee.last_name}, #{trainee.first_names}")
+      expect(recommendations_checks_show_page).to have_text("TRN: #{trainee.trn}")
+      expect(recommendations_checks_show_page).to have_text(training_route)
+    end
   end
 end
