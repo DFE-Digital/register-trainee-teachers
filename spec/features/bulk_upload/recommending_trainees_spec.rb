@@ -50,6 +50,14 @@ feature "recommending trainees" do
       and_i_click_change_link
       then_i_see_the_form_to_change_upload
     end
+
+    context "and I upload a CSV with an error" do
+      scenario "I am shown the error count and am told to fix errors" do
+        and_i_upload_a_csv("bulk_update/recommendations_upload/date_in_future.csv")
+        then_i_see_count_errors
+        then_i_click_review_errors
+      end
+    end
   end
 
 private
@@ -100,5 +108,17 @@ private
 
   def then_i_see_the_form_to_change_upload
     expect(edit_recommendations_upload_page).to be_displayed
+  end
+
+  def then_i_see_count_errors
+    expect(recommendations_upload_show_page).to have_text("1 trainee with errors in their details")
+  end
+
+  def then_i_click_review_errors
+    recommendations_upload_show_page.review_errors_button.click
+  end
+
+  def then_i_can_fix_my_errors
+    recommendations_upload_fix_errors_page.to have_text("Review errors for 1 trainee in the CSV file you uploaded")
   end
 end
