@@ -6,6 +6,7 @@ module PageObjects
       set_url "/bulk-update/recommend/{id}/upload-summary"
 
       element :check_button, ".govuk-button", text: "Check who you’ll recommend"
+      element :review_errors_button, ".govuk-button", text: "Review errors"
     end
   end
 end
