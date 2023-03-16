@@ -454,6 +454,10 @@ module Features
       @edit_recommendations_upload_page ||= PageObjects::RecommendationsUploads::Edit.new
     end
 
+    def recommendations_upload_fix_errors_page
+      @recommendations_upload_fix_errors_page ||= PageObjects::RecommendationsErrors::Show.new
+    end
+
   private
 
     def progress_with_prefix(status)
