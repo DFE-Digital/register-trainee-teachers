@@ -1,0 +1,12 @@
+@for $i from 1 through 20 {
+  .app-table__column-#{$i * 5} {
+    width: $i * 5 + unquote('%');
+  }
+}
+
+.app-table--no-bottom-border .govuk-table__body {
+  .govuk-table__row:last-child .govuk-table__cell,
+  .govuk-table__row:last-child .govuk-table__header {
+    border-bottom-width: 0;
+  }
+}
