@@ -44,7 +44,7 @@ module BulkUpdate
     end
 
     def awardable_rows_count
-      @awardable_rows_count = recommendations_upload.awardable_rows.size
+      @awardable_rows_count ||= recommendations_upload.awardable_rows.size
     end
 
     def recommendations_upload
