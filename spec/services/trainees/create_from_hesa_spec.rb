@@ -471,5 +471,13 @@ module Trainees
         end
       end
     end
+
+    context "trainee is already awarded with conflicting data to hesa" do
+      let(:create_custom_state) { create(:trainee, :awarded, itt_end_date: DateTime.new(2024, 5, 11), hesa_id: student_attributes[:hesa_id]) }
+
+      it "does not update the trainee" do
+        expect(trainee.itt_end_date).to eq(DateTime.new(2024, 5, 11))
+      end
+    end
   end
 end
