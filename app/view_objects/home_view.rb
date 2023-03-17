@@ -12,7 +12,6 @@ class HomeView
     create_badges
 
     if !current_user.system_admin? && !current_user.lead_school?
-      @providers = current_user.providers
       create_action_badges
     else
       badges << incomplete_badge
@@ -50,18 +49,7 @@ class HomeView
 
 private
 
-  attr_reader :trainees, :providers
-
-  def awardable_rows_count
-    @awardable_rows_count = Rails.cache.fetch("#{@trainees.cache_key_with_version}/awardable_rows_count") do
-      providers.map do |row|
-        upload = row.latest_recommendations_upload
-        next if upload.blank?
-
-        upload.awardable_rows.size
-      end.sum
-    end
-  end
+  attr_reader :trainees
 
   def awarded_this_year_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/awarded_this_year") do
@@ -80,7 +68,7 @@ private
       Badge.new(
         :can_bulk_recommend_for_award,
         bulk_recommend_count,
-        recommendations_upload_check_path,
+        new_bulk_update_recommendations_upload_path,
       ),
       Badge.new(
         :can_complete,
@@ -157,12 +145,6 @@ private
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/incomplete_size") do
       trainees.not_draft.incomplete.size
     end
-  end
-
-  def recommendations_upload_check_path
-    return new_bulk_update_recommendations_upload_path if providers.first.latest_recommendations_upload.blank?
-
-    bulk_update_recommendations_upload_check_path(recommendations_upload_id: providers.first.latest_recommendations_upload.id)
   end
 
   def trainees_in_training_size
