@@ -1,129 +1,121 @@
 <%= render PageTitle::View.new(text: t(".heading")) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <% if current_user.organisation %>
-      <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
-    <% end %>
-    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
-  </div>
-</div>
-
-<% unless lead_school_user? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
-      <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
-        <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
-          <li>
-            <%= govuk_link_to(
-              t(".draft_trainees_link", count: @home_view.draft_trainees_count),
-              drafts_path,
-              { class: "govuk-link--no-visited-state" }
-            )%>
-          </li>
+      <% if current_user.organisation %>
+        <span class="govuk-caption-l">
+          <%= current_user.organisation.name %>
+        </span>
         <% end %>
-        <% if @home_view.draft_apply_trainees_count > 0 %>
-          <li>
-            <%= govuk_link_to(
-              @home_view.apply_drafts_link_text,
-              drafts_path("record_source[]": :apply),
-              { class: "govuk-link--no-visited-state" }
-            )%>
-          </li>
-        <% end %>
-        <% if policy(Trainee).new? %>
-          <li class="govuk-!-margin-bottom-0">
-            <%= govuk_link_to(
-              t(".new_trainee_link"),
-              new_trainee_path,
-              { class: "govuk-link--no-visited-state" }
-            ) %>
-          </li>
-        <% end %>
-      </ul>
+          <h1 class="govuk-heading-xl">
+            <%= t(".heading") %>
+          </h1>
     </div>
   </div>
 
-  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-<% end %>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-l"><%= t(".registered_heading") %></h2>
-  </div>
-  <%= render "badges" %>
-</div>
-
-<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-l">How to use this service</h2>
-    <ul class="govuk-list govuk-list--spaced">
-      <li>
-        <%= govuk_link_to(
-          "View all guidance for Register trainee teachers",
-          guidance_path,
-          { class: "govuk-link--no-visited-state" }
-        )%>
-      </li>
-      <li>
-        <%= govuk_link_to(
-          "Dates and deadlines for the 2022 to 2023 academic year",
-          dates_and_deadlines_guidance_path,
-          { class: "govuk-link--no-visited-state" }
-        )%>
-      </li>
-      <li>
-        <%= govuk_link_to(
-          "Registering trainees manually in this service",
-          manually_registering_trainees_guidance_path,
-          { class: "govuk-link--no-visited-state" }
-        )%>
-      </li>
-      <li>
-        <%= govuk_link_to(
-          "Registering trainees through HESA",
-          registering_trainees_through_hesa_guidance_path,
-          { class: "govuk-link--no-visited-state" }
-        )%>
-      </li>
-      <li>
-        <%= govuk_link_to(
-          "Check the data mapping between HESA and Register trainee teachers",
-          hesa_register_data_mapping_guidance_url("trainee-progress"),
-          { class: "govuk-link--no-visited-state" }
-          )%>
-      </li>
-    </ul>
+  <% unless lead_school_user? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h2 class="govuk-heading-l">
+          <%= t(".draft_heading") %>
+        </h2>
+        <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
+          <% if @home_view.draft_trainees_count> @home_view.draft_apply_trainees_count %>
+            <li>
+              <%= govuk_link_to( t(".draft_trainees_link", count: @home_view.draft_trainees_count), drafts_path, {
+                class: "govuk-link--no-visited-state" } )%>
+            </li>
+            <% end %>
+              <% if @home_view.draft_apply_trainees_count> 0 %>
+                <li>
+                  <%= govuk_link_to( @home_view.apply_drafts_link_text, drafts_path("record_source[]": :apply), {
+                    class: "govuk-link--no-visited-state" } )%>
+                </li>
+                <% end %>
+                  <% if policy(Trainee).new? %>
+                    <li class="govuk-!-margin-bottom-0">
+                      <%= govuk_link_to( t(".new_trainee_link"), new_trainee_path, {
+                        class: "govuk-link--no-visited-state" } ) %>
+                    </li>
+                    <% end %>
+        </ul>
+      </div>
+    </div>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <% end %>
 
-    <h2 class="govuk-heading-l">News and feedback</h2>
-    <ul class="govuk-list govuk-list--spaced">
-      <li>
-        <%= govuk_link_to("View news and updates",
-          service_updates_path,
-          { class: "govuk-link--no-visited-state" }
-        )%>
-      </li>
-      <li>
-        <%= govuk_link_to(
-          t(".data_sharing_agreement_link"),
-          data_sharing_agreement_path,
-          { class: "govuk-link--no-visited-state" }
-        )%>
-      </li>
-      <% if FeatureService.enabled?("enable_feedback_link") %>
-        <li>
-          <%= govuk_link_to(
-            t(".give_feedback_link"),
-            Settings.feedback_link_url,
-            { class: "govuk-link--no-visited-state" }
-          )%>
-        </li>
-      <% end%>
-    </ul>
-  </div>
-</div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+          <h2 class="govuk-heading-l">
+            <%= t(".registered_heading") %>
+          </h2>
+        </div>
+        <%= render "badges" %>
+      </div>
+
+      <% if policy(User).bulk_recommend? %>
+
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h2 class="govuk-heading-l">
+              <%= t(".available_to_do_heading") %>
+            </h2>
+          </div>
+          <%= render "action_badges" %>
+        </div>
+
+        <% end %>
+
+          <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds-from-desktop">
+              <h2 class="govuk-heading-l">How to use this service</h2>
+              <ul class="govuk-list govuk-list--spaced">
+                <li>
+                  <%= govuk_link_to( "View all guidance for Register trainee teachers" , guidance_path, {
+                    class: "govuk-link--no-visited-state" } )%>
+                </li>
+                <li>
+                  <%= govuk_link_to( "Dates and deadlines for the 2022 to 2023 academic year" ,
+                    dates_and_deadlines_guidance_path, { class: "govuk-link--no-visited-state" } )%>
+                </li>
+                <li>
+                  <%= govuk_link_to( "Registering trainees manually in this service" ,
+                    manually_registering_trainees_guidance_path, { class: "govuk-link--no-visited-state" } )%>
+                </li>
+                <li>
+                  <%= govuk_link_to( "Registering trainees through HESA" ,
+                    registering_trainees_through_hesa_guidance_path, { class: "govuk-link--no-visited-state" } )%>
+                </li>
+                <li>
+                  <%= govuk_link_to( "Check the data mapping between HESA and Register trainee teachers" ,
+                    hesa_register_data_mapping_guidance_url("trainee-progress"), { class: "govuk-link--no-visited-state"
+                    } )%>
+                </li>
+              </ul>
+
+              <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+              <h2 class="govuk-heading-l">News and feedback</h2>
+              <ul class="govuk-list govuk-list--spaced">
+                <li>
+                  <%= govuk_link_to("View news and updates", service_updates_path, {
+                    class: "govuk-link--no-visited-state" } )%>
+                </li>
+                <li>
+                  <%= govuk_link_to( t(".data_sharing_agreement_link"), data_sharing_agreement_path, {
+                    class: "govuk-link--no-visited-state" } )%>
+                </li>
+                <% if FeatureService.enabled?("enable_feedback_link") %>
+                  <li>
+                    <%= govuk_link_to( t(".give_feedback_link"), Settings.feedback_link_url, {
+                      class: "govuk-link--no-visited-state" } )%>
+                  </li>
+                  <% end%>
+              </ul>
+            </div>
+          </div>

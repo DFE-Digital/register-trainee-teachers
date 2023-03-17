@@ -3,11 +3,16 @@
 class HomeView
   include Rails.application.routes.url_helpers
 
-  attr_reader :badges
+  attr_reader :badges, :action_badges, :current_user
 
-  def initialize(trainees)
+  def initialize(trainees, current_user)
     @trainees = Trainees::Filter.call(trainees: trainees, filters: {})
     create_badges
+    @current_user = current_user
+    if !current_user.system_admin? && !current_user.lead_school?
+      @providers = current_user.providers
+      create_action_badges
+    end
   end
 
   Badge = Struct.new(:status, :trainee_count, :link)
@@ -41,12 +46,44 @@ class HomeView
 
 private
 
-  attr_reader :trainees
+  attr_reader :trainees, :providers
+
+  def awardable_rows_count
+    @awardable_rows_count = Rails.cache.fetch("#{@trainees.cache_key_with_version}/awardable_rows_count") do
+      providers.map do |row|
+        upload = row.latest_recommendations_upload
+        next if upload.blank?
+
+        upload.awardable_rows.size
+      end.sum
+    end
+  end
 
   def awarded_this_year_size
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/awarded_this_year") do
       trainees.awarded.merge(current_academic_cycle.trainees_ending).size
     end
+  end
+
+  def bulk_recommend_count
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/bulk_recommend_count") do
+      Pundit.policy_scope(current_user, FindBulkRecommendTrainees.call).count
+    end
+  end
+
+  def create_action_badges
+    @action_badges = [
+      Badge.new(
+        :can_bulk_recommend_for_award,
+        bulk_recommend_count,
+        recommendations_upload_check_path,
+      ),
+      Badge.new(
+        :can_complete,
+        incomplete_size,
+        trainees_path(record_completion: %w[incomplete]),
+      ),
+    ]
   end
 
   def create_badges
@@ -70,12 +107,6 @@ private
         :deferred,
         deferred_size,
         trainees_path(status: %w[deferred]),
-      ),
-
-      Badge.new(
-        :incomplete,
-        incomplete_size,
-        trainees_path(record_completion: %w[incomplete]),
       ),
     ]
 
@@ -114,6 +145,12 @@ private
     Rails.cache.fetch("#{@trainees.cache_key_with_version}/incomplete_size") do
       trainees.not_draft.incomplete.size
     end
+  end
+
+  def recommendations_upload_check_path
+    return new_bulk_update_recommendations_upload_path if providers.first.latest_recommendations_upload.blank?
+
+    bulk_update_recommendations_upload_check_path(recommendations_upload_id: providers.first.latest_recommendations_upload.id)
   end
 
   def trainees_in_training_size
