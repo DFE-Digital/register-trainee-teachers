@@ -7,11 +7,15 @@ class HomeView
 
   def initialize(trainees, current_user)
     @trainees = Trainees::Filter.call(trainees: trainees, filters: {})
-    create_badges
     @current_user = current_user
+
+    create_badges
+
     if !current_user.system_admin? && !current_user.lead_school?
       @providers = current_user.providers
       create_action_badges
+    else
+      badges << incomplete_badge
     end
   end
 
@@ -139,6 +143,14 @@ private
 
   def drafts_are_all_apply_drafts?
     draft_apply_trainees_count == draft_trainees_count
+  end
+
+  def incomplete_badge
+    Badge.new(
+      :incomplete,
+      incomplete_size,
+      trainees_path(record_completion: %w[incomplete]),
+    )
   end
 
   def incomplete_size
