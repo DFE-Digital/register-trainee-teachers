@@ -39,18 +39,6 @@ describe Provider do
     it { is_expected.to have_many(:funding_trainee_summaries) }
     it { is_expected.to have_many(:recommendations_uploads) }
     it { is_expected.to have_many(:recommendations_upload_rows) }
-    it { is_expected.to have_one(:latest_recommendations_upload) }
-
-    context "latest recommendations upload" do
-      let(:provider) { create(:provider) }
-
-      it "returns the latest upload" do
-        create(:bulk_update_recommendations_upload, provider:)
-        latest_upload = create(:bulk_update_recommendations_upload, provider:)
-
-        expect(latest_upload).to eq(provider.latest_recommendations_upload)
-      end
-    end
   end
 
   describe "auditing" do
