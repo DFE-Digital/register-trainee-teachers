@@ -1,4 +1,4 @@
-<% if trainee_editable? %>
+<% if display_record_actions? %>
   <div class="record-outcome-action-bar">
     <%= render RecordActions::View.new(@trainee, has_missing_fields: @missing_fields.present?) %>
   </div>
