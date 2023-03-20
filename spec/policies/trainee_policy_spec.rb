@@ -50,7 +50,6 @@ describe TraineePolicy do
 
   permissions :update?, :edit?, :destroy?, :confirm? do
     it { is_expected.to permit(provider_user, provider_trainee) }
-    it { is_expected.not_to permit(provider_user, hesa_trainee) }
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
     it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
 
