@@ -29,6 +29,8 @@ en:
   not_applicable: Not applicable
   draft: draft
   record: record
+  defer: defer
+  reinstate: reinstate
   header:
     items:
       sign_out: Sign out
@@ -1644,7 +1646,8 @@ en:
       bad_request: The query param needs to be at least %{length} characters
   layouts:
     trainee_record:
-      hesa_uneditable_heading: This record was imported from HESA and cannot be edited
-      body_html: <p class="govuk-body">Updates from HESA are imported regularly.</p>
+      hesa_deferred_inset: You can reinstate or withdraw them. If you reinstate them then you can recommend them for %{award_level}. You cannot make other changes.
+      hesa_in_training_inset: You can defer, withdraw or recommend them for %{award_level}. You cannot make other changes.
+      hesa_inset: This trainee was imported from HESA.
       qts_award_level: QTS
       eyts_award_level: EYTS
