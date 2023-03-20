@@ -91,8 +91,14 @@ class TraineePolicy
     user.lead_school?
   end
 
-  alias_method :index?, :show?
+  # This is a temporary method until HESA trainees are editable
+  def show_actions?
+    return false if user_is_read_only?
 
+    user_is_system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
+  end
+
+  alias_method :index?, :show?
   alias_method :edit?, :update?
   alias_method :destroy?, :update?
   alias_method :confirm?, :update?

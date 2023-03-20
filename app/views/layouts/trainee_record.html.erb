@@ -14,8 +14,12 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
         <%= render GovukComponent::InsetTextComponent.new(classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0") do %>
-          <h2 class="govuk-heading-s"><%= t(".hesa_uneditable_heading") %></h2>
-          <%= t(".body_html") %>
+          <div class="govuk-body"><%= t(".hesa_inset") %></div>
+          <div class="govuk-body">
+            <% (@trainee.early_years_route? ? t(".eyts_award_level") : t(".qts_award_level")).tap do |award_level| %>
+              <%= t(@trainee.deferred? ? ".hesa_deferred_inset" : ".hesa_in_training_inset", award_level: award_level).html_safe %>
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>
