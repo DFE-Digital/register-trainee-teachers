@@ -22,10 +22,19 @@ feature "recommending trainees" do
     end
 
     context "and I upload a complete CSV" do
-      scenario "I can upload trainees for recommendation" do
+      before do
         and_i_upload_a_csv("bulk_update/recommendations_upload/complete.csv")
+      end
+
+      scenario "I can upload trainees for recommendation" do
         then_i_see_count_complete
         and_i_check_who_ill_recommend
+      end
+
+      scenario "I can cancel my upload" do
+        and_i_click_cancel
+        and_i_click_confirm_cancel
+        then_i_am_taken_back_to_the_upload_page
       end
     end
 
@@ -93,6 +102,14 @@ private
     recommendations_checks_show_page.change_link.click
   end
 
+  def and_i_click_cancel
+    recommendations_upload_show_page.cancel_link.click
+  end
+
+  def and_i_click_confirm_cancel
+    recommendations_upload_cancel_page.confirm_button.click
+  end
+
   def then_i_see_count_complete
     expect(recommendations_upload_show_page).to have_text("All 2 trainees will be recommended")
   end
@@ -120,5 +137,9 @@ private
 
   def then_i_can_fix_my_errors
     recommendations_upload_fix_errors_page.to have_text("Review errors for 1 trainee in the CSV file you uploaded")
+  end
+
+  def then_i_am_taken_back_to_the_upload_page
+    expect(recommendations_upload_page).to be_displayed
   end
 end
