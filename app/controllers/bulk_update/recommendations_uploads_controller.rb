@@ -31,6 +31,10 @@ module BulkUpdate
       end
     end
 
+    def confirmation
+      recommendations_upload
+    end
+
   private
 
     attr_reader :recommendations_upload_form

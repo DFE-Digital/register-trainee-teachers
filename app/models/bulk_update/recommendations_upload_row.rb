@@ -34,4 +34,12 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
   def row_error_messages
     row_errors.map(&:message).join("\n")
   end
+
+  def qts?
+    trainee.award_type == "QTS"
+  end
+
+  def eyts?
+    trainee.award_type == "EYTS"
+  end
 end

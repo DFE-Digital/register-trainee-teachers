@@ -16,9 +16,10 @@
       </h1>
 
       <p class="govuk-body">
-        You cannot recommend a trainee for QTS or EYTS if there’s an error in
-        their row in the CSV file. You need to fix the errors if you want to
-        recommend them.
+        You cannot recommend a trainee for
+        <%= qts_or_eyts(@recommendations_upload.error_rows) %> if there’s an
+        error in their row in the CSV file. You need to fix the errors if you
+        want to recommend them.
       </p>
 
       <ol class="govuk-list govuk-list--number">
