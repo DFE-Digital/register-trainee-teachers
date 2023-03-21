@@ -66,6 +66,8 @@ feature "recommending trainees" do
         and_i_upload_a_csv("bulk_update/recommendations_upload/date_in_future.csv")
         then_i_see_count_errors
         then_i_click_review_errors
+        when_i_submit_form_with_no_file_attached
+        then_i_see_validation_errors
       end
     end
   end
@@ -144,6 +146,14 @@ private
 
   def then_i_am_taken_back_to_the_upload_page
     expect(recommendations_upload_page).to be_displayed
+  end
+
+  def when_i_submit_form_with_no_file_attached
+    recommendations_checks_show_page.upload_button.click
+  end
+
+  def then_i_see_validation_errors
+    expect(recommendations_checks_show_page).to have_text("Please select a file")
   end
 
   def and_i_see_a_list_of_trainees_to_check
