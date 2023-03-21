@@ -523,6 +523,8 @@ en:
       awarded_this_year: Awarded this year
       deferred: Currently deferred
       incomplete: Incomplete records
+      can_bulk_recommend_for_award: Trainees you can bulk recommend for QTS or EYTS
+      can_complete: Records you can complete
     sections:
       titles:
         personal_details: Personal details
@@ -895,6 +897,7 @@ en:
       draft_apply_trainees_link_all_apply: View draft trainees imported from Apply (%{count})
       new_trainee_link: Create a trainee record
       registered_heading: Registered trainees
+      available_to_do_heading: Available to do
       guidance_heading: News, guidance and feedback
       service_updates_link: View news and updates
       guidance_about_link: Find out about Register trainee teachers
