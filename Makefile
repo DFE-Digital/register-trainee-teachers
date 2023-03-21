@@ -62,6 +62,11 @@ staging:
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
 
+pen:
+	$(eval DEPLOY_ENV=pen)
+	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
+	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
+
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=production)
