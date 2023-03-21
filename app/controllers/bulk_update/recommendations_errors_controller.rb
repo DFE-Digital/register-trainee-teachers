@@ -3,18 +3,29 @@
 module BulkUpdate
   class RecommendationsErrorsController < ApplicationController
     before_action :check_for_provider
+    before_action :set_recommendations_upload, :set_count_variables, format: :html
 
     def show
       respond_to do |format|
         format.html do
           @recommendations_upload_form = RecommendationsUploadForm.new
-          @error_rows_count = recommendations_upload.error_rows.size
-          @awardable_rows_count = recommendations_upload.awardable_rows.size
         end
 
         format.csv do
           send_data(csv_with_errors, filename: csv_with_errors_filename, disposition: :attachment)
         end
+      end
+    end
+
+    def create
+      @recommendations_upload_form = RecommendationsUploadForm.new(provider:, file:)
+
+      if @recommendations_upload_form.save
+        create_rows!
+        @recommendations_upload.destroy # the new upload will replace the existing one
+        redirect_to(bulk_update_recommendations_upload_summary_path(@recommendations_upload_form.recommendations_upload))
+      else
+        render(:show, format: :html)
       end
     end
 
@@ -48,5 +59,28 @@ module BulkUpdate
     def original_filename
       @original_filename ||= recommendations_upload.file.blob.filename.to_s
     end
+
+    def file
+      @file ||= params.dig(:bulk_update_recommendations_upload_form, :file)
+    end
+
+    def create_rows!
+      recommendations_upload = @recommendations_upload_form.recommendations_upload
+
+      RecommendationsUploads::CreateRecommendationsUploadRows.call(
+        recommendations_upload: recommendations_upload,
+        csv: @recommendations_upload_form.csv,
+      )
+    rescue StandardError => e
+      recommendations_upload.destroy
+      raise(e)
+    end
+
+    def set_count_variables
+      @error_rows_count = recommendations_upload.error_rows.size
+      @awardable_rows_count = recommendations_upload.awardable_rows.size
+    end
+
+    alias_method :set_recommendations_upload, :recommendations_upload
   end
 end
