@@ -5,6 +5,7 @@ module PageObjects
     class Show < PageObjects::Base
       set_url "/bulk-update/recommend/{id}/check-pending-updates"
 
+      element :upload_button, ".govuk-button", text: "Upload file and check who you’ll recommend"
       element :change_link, ".govuk-link", text: "Change who you’ll recommend"
     end
   end
