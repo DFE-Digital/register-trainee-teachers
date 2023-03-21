@@ -6,7 +6,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop" >
-    <%= register_form_with(model: @recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
+    <%= register_form_with(model: @recommendations_upload_form,
+                           url: bulk_update_recommendations_upload_recommendations_errors_path(@recommendations_upload)) do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">
