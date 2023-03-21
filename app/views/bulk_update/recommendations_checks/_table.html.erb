@@ -17,18 +17,33 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= row.csv_row_number %></td>
         <td class="govuk-table__cell">
-          <%= row.trainee.last_name %>, <%= row.trainee.first_names %><br>
-          TRN: <%= row.trn %><br>
-          Provider trainee ID: <%= row.trainee.trainee_id %>
+          <div class="govuk-body govuk-!-margin-bottom-1">
+            <%= row.trainee.last_name %>, <%= row.trainee.first_names %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            TRN: <%= row.trn %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            Provider trainee ID: <%= row.trainee.trainee_id %>
+          </div>
         </td>
         <td class="govuk-table__cell">
-          <%= t("activerecord.attributes.trainee.training_routes.#{row.trainee.training_route}") %><br>
-          <%= subjects_for_summary_view(row.trainee.course_subject_one,
-                                        row.trainee.course_subject_two,
-                                        row.trainee.course_subject_three) %><br>
+          <div class="govuk-body govuk-!-margin-bottom-1">
+            <%= t("activerecord.attributes.trainee.training_routes.#{row.trainee.training_route}") %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            <%= subjects_for_summary_view(row.trainee.course_subject_one,
+                                          row.trainee.course_subject_two,
+                                          row.trainee.course_subject_three) %>
+          </div>
         </td>
         <td class="govuk-table__cell">
-          <%= row.standards_met_at.strftime("%d %B %Y") %>
+          <div class="govuk-body govuk-!-margin-bottom-1">
+            <%= row.standards_met_at.strftime("%-d %B %Y") %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            <%=  TrainingRouteManager.new(row.trainee).award_type %>
+          </div>
         </td>
       </tr>
     <% end %>
