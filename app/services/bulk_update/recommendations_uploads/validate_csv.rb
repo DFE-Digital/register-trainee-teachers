@@ -10,23 +10,44 @@ module BulkUpdate
 
       # do all required headers exist in the CSV headers
       def validate!
-        required_headers
+        identifier_header!
+        date_header!
+        dates!
       end
 
     private
 
       attr_reader :csv, :record
 
-      VALID_HEADERS_SET = Set.new(Reports::BulkRecommendReport::REQUIRED_HEADERS.map(&:downcase))
+      def identifier_header!
+        return if headers & identifying_headers != []
 
-      def required_headers
-        unless csv_headers_set.superset?(VALID_HEADERS_SET)
-          record.errors.add(:base, "CSV is missing the required headers")
-        end
+        record.errors.add(:file, :no_id_header)
       end
 
-      def csv_headers_set
-        @csv_headers_set ||= Set.new(csv.headers)
+      def identifying_headers
+        Reports::BulkRecommendReport::IDENTIFIERS.map(&:downcase)
+      end
+
+      def date_header!
+        return if headers.include?(date_header)
+
+        record.errors.add(:file, :no_date_header)
+      end
+
+      def date_header
+        Reports::BulkRecommendReport::DATE.downcase
+      end
+
+      def dates!
+        return unless date_header!
+        return if csv[date_header].to_a.map(&:presence).any?
+
+        record.errors.add(:file, :no_dates_given)
+      end
+
+      def headers
+        @headers ||= csv.headers
       end
     end
   end

@@ -41,7 +41,7 @@ module BulkUpdate
 
       RecommendationsUploads::ValidateCsv.new(csv: csv, record: self).validate!
     rescue CSV::MalformedCSVError
-      errors.add(:base, "File must be a CSV")
+      errors.add(:file, "File must be a CSV")
     end
   end
 end

@@ -3,12 +3,12 @@
 module BulkUpdate
   module RecommendationsUploads
     class ValidateCsvRow
-      def initialize(row:, trainee:)
+      def initialize(csv:, row:, trainee:)
+        @csv = csv
         @row = row
         @trainee = (::Reports::TraineeReport.new(trainee) if trainee)
         @messages = []
 
-        validate_presence!
         validate!
       end
 
@@ -16,29 +16,11 @@ module BulkUpdate
         messages.empty?
       end
 
-      attr_reader :messages, :row
+      attr_reader :messages
 
     private
 
-      attr_reader :trainee
-
-      def validate_presence!
-        %i[
-          trn
-          first_names
-          last_names
-          lead_school
-          qts_or_eyts
-          route
-          phase
-          age_range
-          subject
-        ].each do |attribute|
-          next if row.send(attribute).present?
-
-          @messages << "\"#{attribute.to_s.humanize.titleize}\" cannot be blank"
-        end
-      end
+      attr_reader :trainee, :csv, :row
 
       def validate!
         trn
@@ -46,65 +28,105 @@ module BulkUpdate
         standards_met_at
         return unless trainee
 
-        names
+        first_names
+        last_names
+        lead_school
         qts_or_eyts
         route
         phase
+        age_range
+        subject
       end
 
       def trn
         return if row.trn.blank?
         return if row.trn =~ /^\d{7}$/
 
-        @messages << "TRN must be 7 characters long and contain only numbers"
+        @messages << error_message(:trn)
       end
 
       def hesa_id
         return if row.hesa_id.nil?
         return if row.hesa_id =~ /^[0-9]{13}([0-9]{4})?$/
 
-        @messages << "HESA ID must be 13 or 17 characters long and contain only numbers"
+        @messages << error_message(:hesa_id)
       end
 
       def standards_met_at
-        # dd/mm/yyyy or dd-mm-yyyy or d/m/yyyy etc etc
-        if row.standards_met_at =~ /^\d{1,2}[\/-]\d{1,2}[\/-]\d{4}$/
-          date = row.standards_met_at&.to_date
-          if date && date > Time.zone.today
-            @messages << "Award date must not be in the future (#{date.iso8601})"
-          elsif date && date < 12.months.ago
-            @messages << "Award date cannot be from more that 12 months ago #{12.months.ago.to_date.iso8601} (#{date.iso8601})"
-          end
+        case row.standards_met_at
+        when /^\d{1,2}[\/-]\d{1,2}[\/-]\d{4}$/ # dd/mm/yyyy or dd-mm-yyyy or d/m/yyyy etc etc
+          date = row.standards_met_at.to_date
+          today = Time.zone.today
+          ago_12_months = 12.months.ago.to_date
+
+          @messages << error_message(:award_date_future, date: date.strftime(Date::DATE_FORMATS[:govuk])) if date > today
+          @messages << error_message(:award_date_past, date: ago_12_months.strftime(Date::DATE_FORMATS[:govuk])) if date < ago_12_months
+          @messages << error_message(:date_standards_met, date: trainee.itt_start_date.strftime(Date::DATE_FORMATS[:govuk])) if trainee && date < trainee.itt_start_date
         else
-          @messages << "Date could not be parsed, please use the format dd/mm/yyyy e.g. 27/02/2022"
+          @messages << error_message(:date_parse)
         end
       end
 
-      def names
-        if row.first_names.present? && trainee.first_names.downcase != row.first_names.downcase
-          @messages << "Trainee first names do not match"
+      def column_exists?(column_name)
+        csv.headers.include?(column_name)
+      end
+
+      def first_names
+        return unless column_exists?(Reports::BulkRecommendReport::FIRST_NAME)
+
+        # UnicodeUtils is used to remove accented characters for a simpler/more reliable comparison
+        if UnicodeUtils.ascii_string(trainee.first_names.downcase) != UnicodeUtils.ascii_string(row.first_names.downcase)
+          @messages << error_message(:first_names)
         end
-        if row.last_names.present? && trainee.last_names.downcase != row.last_names.downcase
-          @messages << "Trainee last names do not match"
+      end
+
+      def last_names
+        return unless column_exists?(Reports::BulkRecommendReport::LAST_NAME)
+
+        # UnicodeUtils is used to remove accented characters for a simpler/more reliable comparison
+        if UnicodeUtils.ascii_string(trainee.last_names.downcase) != UnicodeUtils.ascii_string(row.last_names.downcase)
+          @messages << error_message(:last_names)
         end
+      end
+
+      def lead_school
+        return unless column_exists?(Reports::BulkRecommendReport::LEAD_SCHOOL)
+
+        @messages << error_message(:lead_school) if (trainee.lead_school_name || "-") != row.lead_school
       end
 
       def qts_or_eyts
-        return if row.qts_or_eyts.blank?
+        return unless column_exists?(Reports::BulkRecommendReport::QTS_OR_EYTS)
 
-        @messages << "QTS/EYTS declaration does not match" unless trainee.qts_or_eyts == row.qts_or_eyts
+        @messages << error_message(:qts_or_eyts) if trainee.qts_or_eyts != row.qts_or_eyts
       end
 
       def route
-        return if row.route.blank?
+        return unless column_exists?(Reports::BulkRecommendReport::ROUTE)
 
-        @messages << "Route does not match" unless trainee.course_training_route == row.route
+        @messages << error_message(:route) if trainee.course_training_route != row.route
       end
 
       def phase
-        return if row.phase.blank?
+        return unless column_exists?(Reports::BulkRecommendReport::PHASE)
 
-        @messages << "Phase does not match" unless trainee.course_education_phase == row.phase
+        @messages << error_message(:phase) if trainee.course_education_phase != row.phase
+      end
+
+      def age_range
+        return unless column_exists?(Reports::BulkRecommendReport::AGE_RANGE)
+
+        @messages << error_message(:age_range) if trainee.course_age_range != row.age_range
+      end
+
+      def subject
+        return unless column_exists?(Reports::BulkRecommendReport::AGE_RANGE)
+
+        @messages << error_message(:subject) if trainee.subjects != row.subject
+      end
+
+      def error_message(key, variables = {})
+        I18n.t("activemodel.errors.models.bulk_update.recommendations_uploads.validate_csv_row.#{key}", variables)
       end
     end
   end

@@ -18,14 +18,14 @@ module BulkUpdate
           # validate row and (matched) trainee
           row = Row.new(row)
           trainee_validator = ValidateTrainee.new(row: row, provider: recommendations_upload.provider)
-          csv_row_validator = ValidateCsvRow.new(row: row, trainee: trainee_validator.trainee)
+          csv_row_validator = ValidateCsvRow.new(csv: csv, row: row, trainee: trainee_validator.trainee)
 
           # create the recommendations_upload_row and associate it with the matched trainee (if any)
           upload_row = create_recommendations_upload_row!(trainee_validator.trainee, row, row_number)
 
           # create any validation errors and associate them with the recommendations_upload_row just created
-          create_validation_errors!(upload_row, csv_row_validator.messages)
-          create_validation_errors!(upload_row, trainee_validator.messages)
+          create_validation_errors!(upload_row, csv_row_validator.messages) unless csv_row_validator.valid?
+          create_validation_errors!(upload_row, trainee_validator.messages) unless trainee_validator.valid?
         end
       end
 
