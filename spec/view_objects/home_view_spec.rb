@@ -5,11 +5,12 @@ require "rails_helper"
 describe HomeView do
   include Rails.application.routes.url_helpers
 
+  let(:admin_user) { create(:user, :system_admin) }
   let(:draft_trainee) { create(:trainee, :draft) }
   let!(:current_academic_cycle) { create(:academic_cycle, :current) }
   let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
 
-  subject { described_class.new(trainees) }
+  subject { described_class.new(trainees, admin_user) }
 
   before do
     allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories

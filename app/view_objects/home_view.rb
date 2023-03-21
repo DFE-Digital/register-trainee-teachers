@@ -3,11 +3,19 @@
 class HomeView
   include Rails.application.routes.url_helpers
 
-  attr_reader :badges
+  attr_reader :badges, :action_badges, :current_user
 
-  def initialize(trainees)
+  def initialize(trainees, current_user)
     @trainees = Trainees::Filter.call(trainees: trainees, filters: {})
+    @current_user = current_user
+
     create_badges
+
+    if !current_user.system_admin? && !current_user.lead_school?
+      create_action_badges
+    else
+      badges << incomplete_badge
+    end
   end
 
   Badge = Struct.new(:status, :trainee_count, :link)
@@ -49,6 +57,27 @@ private
     end
   end
 
+  def bulk_recommend_count
+    Rails.cache.fetch("#{@trainees.cache_key_with_version}/bulk_recommend_count") do
+      Pundit.policy_scope(current_user, FindBulkRecommendTrainees.call).count
+    end
+  end
+
+  def create_action_badges
+    @action_badges = [
+      Badge.new(
+        :can_bulk_recommend_for_award,
+        bulk_recommend_count,
+        new_bulk_update_recommendations_upload_path,
+      ),
+      Badge.new(
+        :can_complete,
+        incomplete_size,
+        trainees_path(record_completion: %w[incomplete]),
+      ),
+    ]
+  end
+
   def create_badges
     @badges = [
       Badge.new(
@@ -70,12 +99,6 @@ private
         :deferred,
         deferred_size,
         trainees_path(status: %w[deferred]),
-      ),
-
-      Badge.new(
-        :incomplete,
-        incomplete_size,
-        trainees_path(record_completion: %w[incomplete]),
       ),
     ]
 
@@ -108,6 +131,14 @@ private
 
   def drafts_are_all_apply_drafts?
     draft_apply_trainees_count == draft_trainees_count
+  end
+
+  def incomplete_badge
+    Badge.new(
+      :incomplete,
+      incomplete_size,
+      trainees_path(record_completion: %w[incomplete]),
+    )
   end
 
   def incomplete_size
