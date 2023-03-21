@@ -10,6 +10,7 @@ module TraineeStatusCard
       awarded_this_year: "",
       deferred: "yellow",
       incomplete: "grey",
+      can_complete: "grey",
     }.freeze
 
     def initialize(status:, count:, target:)
