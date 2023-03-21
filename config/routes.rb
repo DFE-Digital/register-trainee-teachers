@@ -74,7 +74,7 @@ Rails.application.routes.draw do
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
       resource :recommendations, only: :create
       resource :recommendations_checks, only: :show, path: "check-pending-updates"
-      resource :recommendations_errors, only: :show, path: "fix-errors"
+      resource :recommendations_errors, only: %i[show create], path: "fix-errors"
       member { get :cancel, path: "cancel-bulk-updates" }
     end
   end
