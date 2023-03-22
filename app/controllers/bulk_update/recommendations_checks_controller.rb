@@ -5,6 +5,7 @@ module BulkUpdate
     before_action :check_for_provider
 
     def show
+      @table_row_limit = 5
       @recommendations_upload ||= provider.recommendations_uploads.find(params[:recommendations_upload_id])
       @awardable_rows_count = @recommendations_upload.awardable_rows.size
     end

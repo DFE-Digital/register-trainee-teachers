@@ -1,0 +1,51 @@
+<table class="govuk-table app-table--no-bottom-border">
+  <caption class="govuk-table__caption"><span class="govuk-visually-hidden"><%= caption %></span></caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header app-table__column-5">CSV row</th>
+      <th scope="col" class="govuk-table__header app-table__column-40">Trainee</th>
+      <th scope="col" class="govuk-table__header app-table__column-35">
+        Type of training and subject
+      </th>
+      <th scope="col" class="govuk-table__header app-table__column-20">
+        Date standards met and award type
+      </th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% rows.each do |row| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= row.csv_row_number %></td>
+        <td class="govuk-table__cell">
+          <div class="govuk-body govuk-!-margin-bottom-1">
+            <%= row.trainee.last_name %>, <%= row.trainee.first_names %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            TRN: <%= row.trn %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            Provider trainee ID: <%= row.trainee.trainee_id %>
+          </div>
+        </td>
+        <td class="govuk-table__cell">
+          <div class="govuk-body govuk-!-margin-bottom-1">
+            <%= t("activerecord.attributes.trainee.training_routes.#{row.trainee.training_route}") %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            <%= subjects_for_summary_view(row.trainee.course_subject_one,
+                                          row.trainee.course_subject_two,
+                                          row.trainee.course_subject_three) %>
+          </div>
+        </td>
+        <td class="govuk-table__cell">
+          <div class="govuk-body govuk-!-margin-bottom-1">
+            <%= row.standards_met_at.strftime("%-d %B %Y") %>
+          </div>
+          <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+            <%=  TrainingRouteManager.new(row.trainee).award_type %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
