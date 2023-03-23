@@ -1317,6 +1317,16 @@ en:
             language_specialisms:
               blank: Select at least one language
               invalid: Select a maximum of three languages
+        bulk_update/recommendations_upload_form:
+          attributes:
+            file:
+              missing: Please select a file
+              empty: File cannot be empty
+              too_large: File must be no greater than 1MB
+              is_not_csv: File must be a CSV
+              no_id_header: At least one identifying column is required (TRN, HESA ID or Trainee provider ID)
+              no_date_header: Date QTS or EYTS standards met is required
+              no_dates_given: No dates have been proved in this CSV
         bulk_update:
           recommendations_uploads:
             validate_trainee:
@@ -1325,30 +1335,23 @@ en:
               trainee_wrong_state: Trainee is %{state}
               no_trainee_matched: No trainee could be matched
             validate_csv_row:
-              trn: TRN must be 7 characters long and contain only numbers
-              hesa_id: HESA ID must be 13 or 17 characters long and contain only numbers
+              trn_format: TRN must be 7 characters long and contain only numbers
+              hesa_id_format: HESA ID must be 13 or 17 characters long and contain only numbers
               award_date_future: Award date must not be in the future (%{date})
               award_date_past: Award date cannot be from more than 12 months ago (%{date})
               date_standards_met: Date standards met cannot be before the ITT start date (%{date})
               date_parse: Date could not be parsed, please use the format dd/mm/yyyy e.g. 27/02/2022
+              trn: Trainee TRN does not match
+              hesa_id: Trainee HESA ID does not match
+              provider_trainee_id: Provider trainee id does not match
               first_names: Trainee first names do not match
               last_names: Trainee last names do not match
               lead_school: Lead school does not match
-              qts_eyts_declaration: QTS/EYTS declaration does not match
+              qts_or_eyts: QTS/EYTS declaration does not match
               route: Route does not match
               phase: Phase does not match
               age_range: Age range does not match
               subject: Subject does not match
-          recommendations_upload_form:
-            attributes:
-              file:
-                blank: File cannot be blank
-                missing: Please select a file
-                empty: File cannot be empty
-                too_large: File must be no greater than 1MB
-                no_id_headers: At least one identifying column is required (TRN, HESA ID or Trainee provider ID)
-                no_date_header: Date QTS or EYTS standards met is required
-                no_dates_given: No dates have been proved in this CSV
         deferral_form:
           attributes:
             date_string:

@@ -77,7 +77,7 @@ module BulkUpdate
         let(:trainee) { create(:trainee, :bulk_recommend) }
 
         context "and a row with only TRN" do
-          let!(:trainee_two) { create(:trainee, provider: trainee.provider, trn: trainee.trn) }
+          let!(:trainee_two) { create(:trainee, provider: trainee.provider, trn: trainee.trn, state: :trn_received) }
 
           let(:row) do
             Row.new({
@@ -90,7 +90,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["Multiple trainees found via TRN"] }
+            it { expect(service.messages).to eql ["Multiple trainees in state 'trn received' found via TRN"] }
           end
 
           describe "#trainee" do
@@ -105,7 +105,7 @@ module BulkUpdate
               "hesa id" => trainee.hesa_id,
             })
           end
-          let!(:trainee_two) { create(:trainee, provider: trainee.provider) }
+          let!(:trainee_two) { create(:trainee, provider: trainee.provider, state: :trn_received) }
 
           before { trainee_two.update_column(:hesa_id, trainee.hesa_id) }
 
@@ -114,7 +114,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["Multiple trainees found via HESA ID"] }
+            it { expect(service.messages).to eql ["Multiple trainees in state 'trn received' found via HESA ID"] }
           end
 
           describe "#trainee" do
@@ -123,7 +123,7 @@ module BulkUpdate
         end
 
         context "and a row with only Provider Trainee ID" do
-          let!(:trainee_two) { create(:trainee, provider: trainee.provider, trainee_id: trainee.trainee_id) }
+          let!(:trainee_two) { create(:trainee, provider: trainee.provider, trainee_id: trainee.trainee_id, state: :trn_received) }
 
           let(:row) do
             Row.new({
@@ -136,7 +136,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["Multiple trainees found via the provider trainee ID"] }
+            it { expect(service.messages).to eql ["Multiple trainees in state 'trn received' found via the provider trainee ID"] }
           end
 
           describe "#trainee" do

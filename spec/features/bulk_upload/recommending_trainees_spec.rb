@@ -23,6 +23,12 @@ feature "recommending trainees" do
 
     context "and I upload a complete CSV" do
       before do
+        allow(BulkUpdate::RecommendationsUploads::ValidateCsvRow).to receive(:new).with(anything).and_return(
+          double("validator", valid?: true, messages: []),
+        )
+      end
+
+      scenario "I can upload trainees for recommendation" do
         and_i_upload_a_csv("bulk_update/recommendations_upload/complete.csv")
       end
 
@@ -40,6 +46,12 @@ feature "recommending trainees" do
     end
 
     context "and I upload a CSV missing dates" do
+      before do
+        allow(BulkUpdate::RecommendationsUploads::ValidateCsvRow).to receive(:new).with(anything).and_return(
+          double("validator", valid?: true, messages: []),
+        )
+      end
+
       scenario "I can upload trainees for recommendation" do
         and_i_upload_a_csv("bulk_update/recommendations_upload/missing_date.csv")
         then_i_see_count_missing_dates

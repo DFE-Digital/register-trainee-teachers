@@ -100,7 +100,7 @@ module BulkUpdate
       end
 
       def error_message(key, variables = {})
-        I18n.t("activemodel.errors.models.bulk_update.recommendations_uploads.validate_trainee.#{key}", variables)
+        I18n.t("activemodel.errors.models.bulk_update.recommendations_uploads.validate_trainee.#{key}", **variables)
       end
     end
   end

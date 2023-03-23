@@ -3,8 +3,12 @@
 module Reports
   class BulkRecommendReport < TemplateClassCsv
     # required headers
-    IDENTIFYIERS = ["TRN", "Provider trainee ID", "HESA ID"].freeze
-    DATE         = "Date QTS or EYTS standards met"
+    TRN = "TRN"
+    TRAINEE_ID = "Provider trainee ID"
+    HESA_ID = "HESA ID"
+
+    IDENTIFIERS = [TRN, TRAINEE_ID, HESA_ID].freeze
+    DATE        = "Date QTS or EYTS standards met"
 
     # additional headers
     LAST_NAME   = "Last names"
@@ -17,7 +21,7 @@ module Reports
     SUBJECT     = "Subject"
 
     DEFAULT_HEADERS = [
-      *IDENTIFYIERS,
+      *IDENTIFIERS,
       LAST_NAME,
       FIRST_NAME,
       LEAD_SCHOOL,
