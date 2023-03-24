@@ -201,7 +201,7 @@ group :test do
 end
 
 # Required for example_data so needed in review, qa and pen too
-group :development, :test, :review, :qa, :audit do
+group :development, :test, :review, :qa, :audit, :pen do
   gem "bundle-audit", require: false
   gem "factory_bot_rails"
   gem "faker"
