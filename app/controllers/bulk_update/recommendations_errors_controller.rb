@@ -19,7 +19,6 @@ module BulkUpdate
 
       if @recommendations_upload_form.save
         create_rows!
-        @recommendations_upload.destroy # the new upload will replace the existing one
         redirect_to(bulk_update_recommendations_upload_summary_path(@recommendations_upload_form.recommendations_upload))
       else
         render(:show, format: :html)

@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(text: "Review errors for #{pluralize(error_rows_count, "trainee")} in the CSV file you uploaded") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: bulk_update_recommendations_upload_summary_path(recommendations_upload)) %>
 <% end %>
 
 <div class="govuk-grid-row">
