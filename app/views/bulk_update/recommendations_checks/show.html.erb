@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(text: "Check who you’ll recommend for #{qts_or_eyts(recommendations_upload.awardable_rows)}") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: back_url_for_check_page(recommendations_upload)) %>
 <% end %>
 
 <div class="govuk-grid-row">
