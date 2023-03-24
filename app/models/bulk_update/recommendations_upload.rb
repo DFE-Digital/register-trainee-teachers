@@ -33,7 +33,7 @@ class BulkUpdate::RecommendationsUpload < ApplicationRecord
   end
 
   def missing_date_rows
-    rows.where(standards_met_at: nil)
+    rows.where(standards_met_at: nil).where.missing(:row_errors)
   end
 
   def error_rows
