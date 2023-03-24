@@ -14,27 +14,28 @@ RSpec.describe BulkUpdate::RecommendationsUpload do
     let(:complete_row) { create(:bulk_update_recommendations_upload_row) }
     let(:error_row) { create(:bulk_update_recommendations_upload_row, :with_error) }
     let(:missing_date_row) { create(:bulk_update_recommendations_upload_row, :missing_date) }
+    let(:missing_date_and_error_row) { create(:bulk_update_recommendations_upload_row, :missing_date, :with_error) }
 
     before do
-      recommendations_upload.recommendations_upload_rows = [complete_row, error_row, missing_date_row]
+      recommendations_upload.recommendations_upload_rows = [complete_row, error_row, missing_date_row, missing_date_and_error_row]
     end
 
     describe "awardable_rows" do
       it "returns the rows with dates and no errors" do
-        expect(recommendations_upload.awardable_rows).to eq([complete_row])
+        expect(recommendations_upload.awardable_rows).to match_array([complete_row])
       end
     end
 
     describe "missing_date_rows" do
       it "returns the rows with missing dates and no errors" do
-        expect(recommendations_upload.missing_date_rows).to eq([missing_date_row])
+        expect(recommendations_upload.missing_date_rows).to match_array([missing_date_row])
       end
     end
 
     describe "error_rows" do
-      context "with a row with single error"
+      context "with rows with single error"
       it "returns the rows with errors" do
-        expect(recommendations_upload.error_rows).to eq([error_row])
+        expect(recommendations_upload.error_rows).to match_array([error_row, missing_date_and_error_row])
       end
     end
 
@@ -48,7 +49,7 @@ RSpec.describe BulkUpdate::RecommendationsUpload do
       end
 
       it "returns the rows with errors" do
-        expect(recommendations_upload.error_rows).to eq([error_row, multiple_errors_row])
+        expect(recommendations_upload.error_rows).to match_array([error_row, multiple_errors_row, missing_date_and_error_row])
       end
     end
   end
