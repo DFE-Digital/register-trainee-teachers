@@ -2,34 +2,32 @@
   It included:
 </p>
 
-<ul class="govuk-list govuk-list--number">
+<ul class="govuk-list govuk-list--bullet">
   <% if awardable_rows_count.positive? %>
     <li>
       <%= pluralize(awardable_rows_count, "trainee") %> who will be
-      recommended for QTS or EYTS
+      recommended for <%= qts_or_eyts(@recommendations_upload.awardable_rows) %>
     </li>
   <% end %>
 
   <% if @missing_date_rows_count.positive? %>
     <li>
       <%= pluralize(@missing_date_rows_count, "trainee") %>  who will not be
-      recommended, as you did not give a date when they met the QTS or EYTS
-      standards
+      recommended, as you did not give a date when they met the
+      <%= qts_or_eyts(@recommendations_upload.awardable_rows) %> standards
     </li>
   <% end %>
 
   <% if @error_rows_count.positive? %>
     <li>
-      <%= pluralize(@error_rows_count, "trainee") %> with errors in their
-      details
+      <%= pluralize(@error_rows_count, "trainee") %> with errors
     </li>
   <% end %>
 </ul>
 
 <% if @error_rows_count.positive? %>
   <p class="govuk-body">
-    You need to review the errors before you can recommend trainees for QTS
-    or EYTS.
+    You need to review the errors before you can bulk recommend trainees.
   </p>
 
   <%= govuk_link_to("Review errors", bulk_update_recommendations_upload_recommendations_errors_path(@recommendations_upload), class: "govuk-button") %>
