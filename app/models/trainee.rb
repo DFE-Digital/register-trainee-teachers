@@ -324,15 +324,6 @@ class Trainee < ApplicationRecord
 
   scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: Date.new..Time.zone.now) }
 
-  scope :with_award_states, (lambda do |*award_states|
-    qts_states = award_states.select { |s| s.start_with?("qts") }.map { |s| genericize_state(s) }
-    eyts_states = award_states.select { |s| s.start_with?("eyts") }.map { |s| genericize_state(s) }
-
-    where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys, state: eyts_states).or(
-      where(state: qts_states).where.not(training_route: EARLY_YEARS_TRAINING_ROUTES.keys),
-    )
-  end)
-
   scope :with_manual_application, -> { where(apply_application: nil, created_from_dttp: false, hesa_id: nil) }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
   scope :created_from_dttp, -> { where(created_from_dttp: true) }

@@ -1,6 +1,6 @@
 <p class="govuk-body">
   All <%= pluralize(awardable_rows_count, "trainee") %> will be recommended
-  for QTS or EYTS
+  for <%= qts_or_eyts(@recommendations_upload.awardable_rows) %>
 </p>
 
 <%= govuk_link_to(
