@@ -4,12 +4,15 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        <%= pluralize(awardable_rows_count, "trainee") %> recommended for QTS or EYTS
+        <%= pluralize(awardable_rows_count, "trainee") %> recommended for
+        <%= qts_or_eyts(@recommendations_upload.awardable_rows) %>
       </h1>
     </div>
 
     <p class="govuk-body">
-      The Department for Education will award QTS or EYTS within 3 working days.
+      The Department for Education will award
+      <%= qts_or_eyts(@recommendations_upload.awardable_rows) %> within 3
+      working days.
     </p>
 
     <h2 class="govuk-heading-m">Next steps</h2>
@@ -20,7 +23,8 @@
       </p>
     <% else %>
       <p class="govuk-body">
-        You can recommend <%= bulk_recommend_count %> more <%= "trainees".pluralize(bulk_recommend_count) %>. You can now:
+        You can recommend <%= bulk_recommend_count %> more
+        <%= "trainees".pluralize(bulk_recommend_count) %>. You can now:
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
