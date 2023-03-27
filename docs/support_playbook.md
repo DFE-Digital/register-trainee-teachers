@@ -2,7 +2,7 @@
 
 ## Making data changes
 
-If you're making a data change, try to include an `audit_comment` so that we can see why we did this. E.g
+If you're making a data change, you must include an `audit_comment` so that we can see why we did this. E.g
 
 ```ruby
 trainee.update(date_of_birth: <whatevs>, audit_comment: 'Update from the trainee via DQT')
@@ -26,14 +26,12 @@ A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask suppor
 
 Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. You can find the previous trainee state by running `trainee.audits` and comparing the numbers to the enum in `trainee.rb`.
 
-Here is an example of unwithdrawing a trainee without leaving an audit trail.
+Here is an example of unwithdrawing a trainee. Note that the audit trail should be left intact.
 
 ```ruby
 trainee = Trainee.find_by(slug: "XXX")
 
-trainee.without_auditing do
-  trainee.update_columns(state: "XXX", withdraw_reason: nil, additional_withdraw_reason: nil, withdraw_date: nil)
-end
+trainee.update_columns(state: "XXX", withdraw_reason: nil, additional_withdraw_reason: nil, withdraw_date: nil)
 ```
 
 ## Error codes on DQT trainee jobs
@@ -192,27 +190,11 @@ In this scenario we must also contact DQT to fix the trainee award status and up
 trainee.update_columns(state: :trn_received, recommended_for_award_at: nil, awarded_at: nil)
 ```
 
-The audit trail may also need to be cleaned up. This can be done by inspecting the last entries one-by-one and deleting any that not show an incorrect history.
-
-```ruby
-trainee.audits.last # check the last audit
-trainee.audits.last.destroy # if appropriate
-# repeat
-```
+All record changes should be sent to DQT unless otherwise specified or impossible (e.g. we can't send a DOB update). If DQT already has that info (e.g. they're awarded on DQT, and we're just awarding on Register) we should not send any information.
 
 Register support may need to communicate with the trainee and provider to ensure that they understand the error and the resolution.
 
-## HESA integration
-
-Sometimes we receive TRNs from HESA. These TRNs cannot be trusted as they are entered by providers, and may be incorrect. Only DQT should be the source of TRNs. You might see this alert in Sentry:
-
-`HESA TRN (2181587) different to trainee TRN (2159484)`
-
-We might want to start looking at the mismatches and letting providers know they are inputting the wrong TRN.
-
-We made a decision to disregard TRNs sent from HESA. If we receive a TRN for a trainee from HESA, and we do not already have a TRN for them in Register, we kick off a RegisterForTrnJob to DQT to get the correct TRN. 
-
-## Managing the siqekiq queue
+## Managing the sidekiq queue
 
 ### via the UI
 
