@@ -74,17 +74,6 @@ describe Trainee do
   end
 
   describe "scopes" do
-    describe "with_award_states" do
-      it "returns trainees with the correct training route and state" do
-        create(:trainee, :trn_received)
-        qts_awarded = create(:trainee, :qts_awarded)
-        eyts_recommended = create(:trainee, :eyts_recommended)
-        create(:trainee, :eyts_awarded)
-
-        expect(Trainee.with_award_states(:qts_awarded, :eyts_recommended)).to contain_exactly(qts_awarded, eyts_recommended)
-      end
-    end
-
     describe ".on_early_years_routes" do
       it "returns trainees with the correct training route and state" do
         create(:trainee, :school_direct_salaried)

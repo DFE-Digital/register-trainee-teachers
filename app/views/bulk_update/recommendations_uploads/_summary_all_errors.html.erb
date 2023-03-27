@@ -1,15 +1,15 @@
 <p class="govuk-body">
   All <%= pluralize(@error_rows_count, "trainee") %> have errors in their
-  details
+  details.
 </p>
 
 <p class="govuk-body">
-  You need to review the errors before you can recommend trainees for QTS
-  or EYTS.
+  You need to review the errors before you can recommend trainees for
+  <%= qts_or_eyts(@recommendations_upload.error_rows) %>.
 </p>
 
 <%= govuk_link_to(
   "Review errors",
-  bulk_update_recommendations_upload_recommendations_errors(@recommendations_upload),
+  bulk_update_recommendations_upload_recommendations_errors_path(@recommendations_upload),
   class: "govuk-button"
   ) %>
