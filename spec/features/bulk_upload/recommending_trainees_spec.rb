@@ -133,7 +133,7 @@ private
   end
 
   def then_i_see_count_errors
-    expect(recommendations_upload_show_page).to have_text("1 trainee with errors in their details")
+    expect(recommendations_upload_show_page).to have_text("1 trainee with errors")
   end
 
   def then_i_click_review_errors

@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Check who you’ll recommend for QTS or EYTS") %>
+<%= render PageTitle::View.new(text: "Check who you’ll recommend for #{qts_or_eyts(@recommendations_upload.awardable_rows)}") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
@@ -8,14 +8,15 @@
   <div class="govuk-grid-column-full" >
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
-      Check who you’ll recommend for QTS or EYTS
+      Check who you’ll recommend for
+      <%= qts_or_eyts(@recommendations_upload.awardable_rows) %>
     </h1>
 
     <% @recommendations_upload.awardable_rows.includes(:trainee).tap do |awardable_rows| %>
       <% if awardable_rows.count <= @table_row_limit %>
         <%= render partial: "table", locals: {
           rows: awardable_rows,
-          caption: "Trainees you’ll recommend for QTS or EYTS"
+          caption: "Trainees you’ll recommend for #{qts_or_eyts(@recommendations_upload.awardable_rows)}"
         } %>
       <% else %>
         <%= govuk_accordion(id: "recommendations-upload-#{@recommendations_upload.id}",
@@ -24,7 +25,7 @@
                               "data-i18n.hide-all-sections" => "Hide all trainees you’ll recommend",
                             }) do |accordion|
           awardable_rows.each_slice(@table_row_limit).with_index do |(*rows), index|
-            heading_text = "Trainees #{@table_row_limit*index + 1} to #{@table_row_limit*index + rows.count} you’ll recommend for QTS or EYTS"
+            heading_text = "Trainees #{@table_row_limit*index + 1} to #{@table_row_limit*index + rows.count} you’ll recommend for #{qts_or_eyts(@recommendations_upload.awardable_rows)}"
             accordion.section(heading_text: heading_text) do
               render partial: "table", locals: { rows: rows, caption: heading_text }
             end
@@ -40,7 +41,7 @@
   <div class="govuk-grid-column-full">
     <div class="js-stick-at-bottom-when-scrolling">
       <%= register_form_with url: bulk_update_recommendations_upload_recommendations_path, method: :post, local: true do |f| %>
-        <%= f.govuk_submit("Recommend #{pluralize(@awardable_rows_count, "trainee")} for QTS or EYTS", id: "recommend") %>
+        <%= f.govuk_submit("Recommend #{pluralize(@awardable_rows_count, "trainee")} for #{qts_or_eyts(@recommendations_upload.awardable_rows)}", id: "recommend") %>
       <% end %>
       <div class="govuk-body">
         <%= govuk_link_to("Change who you’ll recommend", edit_bulk_update_recommendations_upload_path(@recommendations_upload)) %>
