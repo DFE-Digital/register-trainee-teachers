@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  class RecommendationsErrorsController < ApplicationController
-    before_action :check_for_provider
-    before_action :set_recommendations_upload, :set_count_variables, format: :html
-
+  class RecommendationsErrorsController < RecommendationsBaseController
     def show
       respond_to do |format|
         format.html do
@@ -31,17 +28,7 @@ module BulkUpdate
 
   private
 
-    def check_for_provider
-      redirect_to(root_path) unless provider.is_a?(Provider)
-    end
-
-    def provider
-      @provider ||= current_user.organisation
-    end
-
-    def recommendations_upload
-      @recommendations_upload ||= provider.recommendations_uploads.find(params[:recommendations_upload_id])
-    end
+    attr_reader :recommendations_upload_form
 
     def csv_with_errors
       @csv_with_errors ||= RecommendationsUploads::CreateCsvWithErrors.call(recommendations_upload:)
@@ -75,12 +62,5 @@ module BulkUpdate
       recommendations_upload.destroy
       raise(e)
     end
-
-    def set_count_variables
-      @error_rows_count = recommendations_upload.error_rows.size
-      @awardable_rows_count = recommendations_upload.awardable_rows.size
-    end
-
-    alias_method :set_recommendations_upload, :recommendations_upload
   end
 end
