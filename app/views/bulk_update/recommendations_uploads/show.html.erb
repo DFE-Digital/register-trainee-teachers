@@ -13,21 +13,21 @@
 
     <p class="govuk-body">
       You uploaded a CSV file with details of
-      <%= pluralize(@total_rows_count, "trainee") %>.
+      <%= pluralize(total_rows_count, "trainee") %>.
     </p>
 
-    <% if awardable_rows_count == @total_rows_count %>
+    <% if awardable_rows_count == total_rows_count %>
       <%= render("summary_all_dates") %>
-    <% elsif @missing_date_rows_count == @total_rows_count %>
+    <% elsif missing_date_rows_count == total_rows_count %>
       <%= render("summary_no_dates") %>
-    <% elsif @error_rows_count == @total_rows_count %>
+    <% elsif error_rows_count == total_rows_count %>
       <%= render("summary_all_errors") %>
     <% else %>
       <%= render("summary_bullets") %>
     <% end %>
 
     <p class="govuk-body">
-      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(@recommendations_upload))%>
+      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(recommendations_upload))%>
     </p>
   </div>
 </div>
