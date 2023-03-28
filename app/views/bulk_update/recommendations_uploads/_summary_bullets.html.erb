@@ -6,31 +6,31 @@
   <% if awardable_rows_count.positive? %>
     <li>
       <%= pluralize(awardable_rows_count, "trainee") %> who will be
-      recommended for <%= qts_or_eyts(@recommendations_upload.awardable_rows) %>
+      recommended for <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
     </li>
   <% end %>
 
-  <% if @missing_date_rows_count.positive? %>
+  <% if missing_date_rows_count.positive? %>
     <li>
-      <%= pluralize(@missing_date_rows_count, "trainee") %>  who will not be
+      <%= pluralize(missing_date_rows_count, "trainee") %>  who will not be
       recommended, as you did not give a date when they met the
-      <%= qts_or_eyts(@recommendations_upload.awardable_rows) %> standards
+      <%= qts_or_eyts(recommendations_upload.awardable_rows) %> standards
     </li>
   <% end %>
 
-  <% if @error_rows_count.positive? %>
+  <% if error_rows_count.positive? %>
     <li>
-      <%= pluralize(@error_rows_count, "trainee") %> with errors
+      <%= pluralize(error_rows_count, "trainee") %> with errors
     </li>
   <% end %>
 </ul>
 
-<% if @error_rows_count.positive? %>
+<% if error_rows_count.positive? %>
   <p class="govuk-body">
     You need to review the errors before you can bulk recommend trainees.
   </p>
 
-  <%= govuk_link_to("Review errors", bulk_update_recommendations_upload_recommendations_errors_path(@recommendations_upload), class: "govuk-button") %>
+  <%= govuk_link_to("Review errors", bulk_update_recommendations_upload_recommendations_errors_path(recommendations_upload), class: "govuk-button") %>
 <% else %>
-  <%= govuk_link_to("Check who you’ll recommend", bulk_update_recommendations_upload_recommendations_checks_path(@recommendations_upload), class: "govuk-button") %>
+  <%= govuk_link_to("Check who you’ll recommend", bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload), class: "govuk-button") %>
 <% end %>

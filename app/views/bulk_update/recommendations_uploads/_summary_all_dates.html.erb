@@ -1,10 +1,10 @@
 <p class="govuk-body">
   All <%= pluralize(awardable_rows_count, "trainee") %> will be recommended
-  for <%= qts_or_eyts(@recommendations_upload.awardable_rows) %>
+  for <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
 </p>
 
 <%= govuk_link_to(
   "Check who you’ll recommend",
-  bulk_update_recommendations_upload_recommendations_checks_path(@recommendations_upload),
+  bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload),
   class: "govuk-button"
   ) %>
