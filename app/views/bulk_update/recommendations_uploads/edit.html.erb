@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop" >
-    <%= register_form_with(model: recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
+    <%= register_form_with(model: @recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
       <%= f.govuk_error_summary(presenter: ErrorSummaryShowAllMessagesPresenter) %>
 
       <h1 class="govuk-heading-l">
@@ -34,7 +34,7 @@
     <% end %>
 
     <p class="govuk-body">
-      <%= govuk_link_to("Return to check who you’ll recommend without making changes", bulk_update_recommendations_upload_recommendations_checks_path(@recommendations_upload)) %>
+      <%= govuk_link_to("Return to check who you’ll recommend without making changes", bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload)) %>
     </p>
   </div>
 </div>

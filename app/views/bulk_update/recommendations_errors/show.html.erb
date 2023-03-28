@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Review errors for #{pluralize(@error_rows_count, "trainee")} in the CSV file you uploaded") %>
+<%= render PageTitle::View.new(text: "Review errors for #{pluralize(error_rows_count, "trainee")} in the CSV file you uploaded") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
@@ -7,18 +7,18 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop" >
     <%= register_form_with(model: @recommendations_upload_form,
-                           url: bulk_update_recommendations_upload_recommendations_errors_path(@recommendations_upload)) do |f| %>
+                           url: bulk_update_recommendations_upload_recommendations_errors_path(recommendations_upload)) do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-xl"><%= current_user.organisation.name %></span>
-        Review errors for <%= pluralize(@error_rows_count, "trainee") %> in the
+        Review errors for <%= pluralize(error_rows_count, "trainee") %> in the
         CSV file you uploaded
       </h1>
 
       <p class="govuk-body">
         You cannot recommend a trainee for
-        <%= qts_or_eyts(@recommendations_upload.error_rows) %> if there’s an
+        <%= qts_or_eyts(recommendations_upload.error_rows) %> if there’s an
         error in their row in the CSV file. You need to fix the errors if you
         want to recommend them.
       </p>
@@ -28,7 +28,7 @@
             <p>
               <%= govuk_link_to(
                 "Download your CSV file with errors indicated.",
-                bulk_update_recommendations_upload_recommendations_errors_path(@recommendations_upload, format: :csv),
+                bulk_update_recommendations_upload_recommendations_errors_path(recommendations_upload, format: :csv),
                 class: "download-errors"
                 ) %>
             </p>
@@ -46,17 +46,17 @@
       <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
     <% end %>
 
-    <% if @awardable_rows_count.positive? %>
+    <% if awardable_rows_count.positive? %>
       <p class="govuk-body">
         <%= govuk_link_to(
           "Skip trainees with errors and check who you’ll recommend",
-          bulk_update_recommendations_upload_recommendations_checks_path(@recommendations_upload)
+          bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload)
           ) %>
       </p>
     <% end %>
 
     <p class="govuk-body">
-      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(@recommendations_upload))%>
+      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(recommendations_upload))%>
     </p>
   </div>
 </div>
