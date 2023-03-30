@@ -22,8 +22,10 @@ module Trainees
     end
 
     def call
+      return if @current_trainee_state == :awarded
+
       Audited.audit_class.as_user(USERNAME) do
-        trainee.assign_attributes(mapped_attributes) unless @current_trainee_state == :awarded
+        trainee.assign_attributes(mapped_attributes)
 
         if trainee.save!
           create_degrees!
