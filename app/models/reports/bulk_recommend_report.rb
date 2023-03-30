@@ -2,6 +2,8 @@
 
 module Reports
   class BulkRecommendReport < TemplateClassCsv
+    DO_NOT_EDIT = "Do not edit"
+
     # required headers
     TRN = "TRN"
     TRAINEE_ID = "Provider trainee ID"
@@ -69,7 +71,7 @@ module Reports
       TEXT
 
       # ["Do not edit", "Do not edit" ... last_row]
-      csv << [*(headers.count - 1).times.map { "Do not edit" }, last_row]
+      csv << [*(headers.count - 1).times.map { DO_NOT_EDIT }, last_row]
     end
 
     def add_report_rows
