@@ -17,7 +17,7 @@ module BulkUpdate
         context "given a valid CSV" do
           let(:file) { file_fixture("bulk_update/recommendations_upload/complete.csv") }
 
-          it "creates the row records" do
+          it "creates the rows with the correct row numbers" do
             expect(provider.recommendations_upload_rows.pluck(:trn, :csv_row_number, :standards_met_at)).to eql(
               [
                 ["2413295", 3, "20-07-2022".to_date],
@@ -40,6 +40,19 @@ module BulkUpdate
 
             row_errors = RecommendationsUploadRow.find_by(trn: "241a295").row_errors
             expect(row_errors.first.message).to eql "TRN must be 7 characters long and contain only numbers"
+          end
+        end
+
+        context "given a CSV with no 'Do not edit' row" do
+          let(:file) { file_fixture("bulk_update/recommendations_upload/missing_do_not_edit_row.csv") }
+
+          it "creates the rows with the correct row numbers" do
+            expect(provider.recommendations_upload_rows.pluck(:trn, :csv_row_number, :standards_met_at)).to eql(
+              [
+                ["2413295", 2, "20-07-2022".to_date],
+                ["4814731", 3, "21-07-2022".to_date],
+              ],
+            )
           end
         end
       end
