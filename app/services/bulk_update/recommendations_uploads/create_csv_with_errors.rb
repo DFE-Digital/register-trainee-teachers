@@ -5,6 +5,8 @@ module BulkUpdate
     class CreateCsvWithErrors
       include ServicePattern
 
+      FIRST_CSV_ROW_NUMBER = 2
+
       def initialize(recommendations_upload:)
         @recommendations_upload = recommendations_upload
       end
@@ -13,13 +15,11 @@ module BulkUpdate
         table = download_csv
 
         table.each.with_index do |row, index|
-          # The first row in the table is the "Do not edit" row
-          if index.zero?
-            row["Errors"] = "Do not edit"
+          # If we're dealing with a "Do not edit" row, add another "Do not edit"
+          if row.any? { |cell| cell.include?(Reports::BulkRecommendReport::DO_NOT_EDIT) }
+            row["Errors"] = Reports::BulkRecommendReport::DO_NOT_EDIT
           else
-            # We add 2 here because the first data row is actually the third
-            # csv row (after headers and "Do not edit" row)
-            row["Errors"] = errors_for_row(index + 2)
+            row["Errors"] = errors_for_row(index + FIRST_CSV_ROW_NUMBER)
           end
         end
 
