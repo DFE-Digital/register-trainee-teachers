@@ -15,7 +15,7 @@ module BulkUpdate
       context "given a CSV with missing headers" do
         let(:file) { file_fixture("bulk_update/recommendations_upload/missing_required_header.csv") }
 
-        it { expect(record.errors.first.message).to eql "CSV is missing the required headers" }
+        it { expect(record.errors.first.message).to eql "At least one identifying column is required (TRN, HESA ID or Trainee provider ID)" }
       end
     end
   end
