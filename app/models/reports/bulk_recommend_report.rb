@@ -2,19 +2,35 @@
 
 module Reports
   class BulkRecommendReport < TemplateClassCsv
+    # required headers
+    TRN = "TRN"
+    TRAINEE_ID = "Provider trainee ID"
+    HESA_ID = "HESA ID"
+
+    IDENTIFIERS = [TRN, TRAINEE_ID, HESA_ID].freeze
+    DATE        = "Date QTS or EYTS standards met"
+
+    # additional headers
+    LAST_NAME   = "Last names"
+    FIRST_NAME  = "First names"
+    LEAD_SCHOOL = "Lead school"
+    QTS_OR_EYTS = "QTS or EYTS"
+    ROUTE       = "Route"
+    PHASE       = "Phase"
+    AGE_RANGE   = "Age range"
+    SUBJECT     = "Subject"
+
     DEFAULT_HEADERS = [
-      "TRN",
-      "Provider trainee ID",
-      "HESA ID",
-      "Last names",
-      "First names",
-      "Lead school",
-      "QTS or EYTS",
-      "Route",
-      "Phase",
-      "Age range",
-      "Subject",
-      "Date QTS or EYTS standards met",
+      *IDENTIFIERS,
+      LAST_NAME,
+      FIRST_NAME,
+      LEAD_SCHOOL,
+      QTS_OR_EYTS,
+      ROUTE,
+      PHASE,
+      AGE_RANGE,
+      SUBJECT,
+      DATE,
     ].freeze
 
     def initialize(csv, scope:)

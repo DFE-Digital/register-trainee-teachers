@@ -390,3 +390,22 @@
   - created_at
   - updated_at
   - provider_id
+  :bulk_update_recommendations_upload_rows:
+  - id
+  - created_at
+  - updated_at
+  - bulk_update_recommendations_upload_id
+  - csv_row_number
+  - trn
+  - hesa_id
+  - standards_met_at
+  - provider_trainee_id
+  - last_names
+  - first_names
+  - lead_school
+  - qts_or_eyts
+  - route
+  - phase
+  - age_range
+  - subject
+  - matched_trainee_id
