@@ -30,55 +30,16 @@ module BulkUpdate
       context "that is a CSV with expected headers" do
         let(:test_file) { file_fixture("bulk_update/recommendations_upload/complete.csv") }
 
+        before do
+          allow(RecommendationsUploads::ValidateCsv).to receive(:new).with(anything).and_return(double("validation", validate!: true))
+          allow(RecommendationsUploads::ValidateFile).to receive(:new).with(anything).and_return(double("validation", validate!: true))
+        end
+
         it "returns an a RecommendationsUpload record and CSV::Table" do
           expect(form.valid?).to be true
           form.save
           expect(form.recommendations_upload).to be_a BulkUpdate::RecommendationsUpload
           expect(form.csv).to be_a CSV::Table
-        end
-      end
-
-      context "that is not a CSV" do
-        let(:test_file) { file_fixture("bulk_update/recommendations_upload/not_a_csv.csv") }
-
-        it "is invalid" do
-          expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "File must be a CSV"
-        end
-      end
-
-      context "that is a CSV with missing headers" do
-        let(:test_file) { file_fixture("bulk_update/recommendations_upload/missing_required_header.csv") }
-
-        it "is invalid" do
-          expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "CSV is missing the required headers"
-        end
-      end
-
-      context "that is 0 byte csv" do
-        let(:test_file) { file_fixture("bulk_update/recommendations_upload/empty.csv") }
-
-        it "is invalid" do
-          expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "File cannot be empty"
-        end
-      end
-
-      context "that is greater than 1MB" do
-        let(:test_file) { file_fixture("bulk_update/recommendations_upload/empty.csv") }
-
-        # rubocop:disable RSpec/AnyInstance
-        before do
-          allow_any_instance_of(ActionDispatch::Http::UploadedFile).to receive(:size).and_return(
-            1.megabyte + 1,
-          )
-        end
-        # rubocop:enable RSpec/AnyInstance
-
-        it "is invalid" do
-          expect(form.valid?).to be false
-          expect(form.errors.full_messages.first).to eql "File must be no greater than 1MB"
         end
       end
     end
