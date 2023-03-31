@@ -40,7 +40,7 @@ module BulkUpdate
       end
 
       def dates!
-        return unless date_header!
+        return unless headers.include?(date_header)
         return if csv[date_header].to_a.map(&:presence).any?
 
         record.errors.add(:file, :no_dates_given)

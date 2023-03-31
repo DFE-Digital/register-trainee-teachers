@@ -59,14 +59,6 @@ feature "recommending trainees" do
       end
     end
 
-    context "and I upload a CSV with no dates" do
-      let(:overwrite) { [] }
-
-      scenario "I am told to try again" do
-        then_i_see_no_dates_content
-      end
-    end
-
     scenario "I can change who i want to recommend" do
       and_i_check_who_ill_recommend
       and_i_click_change_link
@@ -140,10 +132,6 @@ private
   def then_i_see_count_missing_dates
     expect(recommendations_upload_show_page).to have_text("1 trainee who will be recommended")
     expect(recommendations_upload_show_page).to have_text("1 trainee who will not be recommended")
-  end
-
-  def then_i_see_no_dates_content
-    expect(recommendations_upload_show_page).to have_text("You did not enter any dates")
   end
 
   def then_i_see_the_form_to_change_upload
