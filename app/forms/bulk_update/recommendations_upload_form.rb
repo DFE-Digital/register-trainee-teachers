@@ -20,8 +20,9 @@ module BulkUpdate
       @recommendations_upload = RecommendationsUpload.create(provider:, file:)
     end
 
+    CSV_ARGS = { headers: true, header_converters: :downcase, strip: true }.freeze
     def csv
-      @csv ||= CSV.new(file.tempfile, headers: true, header_converters: :downcase, strip: true).read
+      @csv ||= CSV.new(file.tempfile, **CSV_ARGS).read
     end
 
     attr_reader :recommendations_upload, :provider, :file
@@ -40,8 +41,8 @@ module BulkUpdate
       return unless tempfile
 
       RecommendationsUploads::ValidateCsv.new(csv: csv, record: self).validate!
-    rescue CSV::MalformedCSVError
-      errors.add(:base, "File must be a CSV")
+    rescue CSV::MalformedCSVError, Encoding::UndefinedConversionError
+      errors.add(:file, :is_not_csv)
     end
   end
 end
