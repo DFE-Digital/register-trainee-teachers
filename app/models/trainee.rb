@@ -171,6 +171,12 @@ class Trainee < ApplicationRecord
            inverse_of: :trainee,
            class_name: "Hesa::Student"
 
+  has_many :recommendations_upload_rows,
+           foreign_key: :matched_trainee_id,
+           class_name: "BulkUpdate::RecommendationsUploadRow",
+           dependent: :nullify,
+           inverse_of: :trainee
+
   attribute :progress, Progress.to_type
 
   delegate :award_type,
