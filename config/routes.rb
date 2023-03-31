@@ -69,13 +69,13 @@ Rails.application.routes.draw do
   end
 
   namespace :bulk_update, path: "bulk-update" do
-    resources :recommendations_uploads, only: %i[new create edit update], path: "recommend", path_names: { new: "upload", edit: "upload-changes" } do
+    resources :recommendations_uploads, only: %i[new create edit update], path: "recommend", path_names: { new: "choose-who-to-recommend", edit: "change-who-youll-recommend" } do
       get "confirmation"
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
       resource :recommendations, only: :create
-      resource :recommendations_checks, only: :show, path: "check-pending-updates"
-      resource :recommendations_errors, only: %i[show create], path: "fix-errors"
-      member { get :cancel, path: "cancel-bulk-updates" }
+      resource :recommendations_checks, only: :show, path: "check-who-youll-recommend"
+      resource :recommendations_errors, only: %i[show create], path: "review-errors"
+      member { get :cancel, path: "cancel" }
     end
   end
 
