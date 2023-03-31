@@ -11,7 +11,7 @@ module BulkUpdate
 
       let!(:trainee) { create(:trainee, :bulk_recommend) }
       let(:overwrite) { [] }
-      let(:csv) { recommendations_upload_csv(Trainee.all, overwrite) }
+      let(:csv) { create_recommendations_upload_csv!(overwrite:) }
       let(:row) { Row.new(csv[1]) }
 
       context "without a matched trainee" do

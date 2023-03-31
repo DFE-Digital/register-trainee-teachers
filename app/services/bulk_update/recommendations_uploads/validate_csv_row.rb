@@ -66,7 +66,7 @@ module BulkUpdate
           @messages << error_message(:award_date_past, date: gds_date(ago_12_months)) if date < ago_12_months
           @messages << error_message(:date_standards_met, date: gds_date(trainee.itt_start_date.to_date)) if trainee&.itt_start_date && date < trainee.itt_start_date.to_date
         else
-          @messages << error_message(:date_parse)
+          @messages << error_message(:date_parse) if row.standards_met_at.present?
         end
       end
 
@@ -99,8 +99,7 @@ module BulkUpdate
       def first_names
         return unless column_exists?(Reports::BulkRecommendReport::FIRST_NAME)
 
-        # UnicodeUtils is used to remove accented characters for a simpler/more reliable comparison
-        if I18n.transliterate(trainee.first_names.downcase, replacement: "") != I18n.transliterate(row.first_names.downcase, replacement: "")
+        if transliterate(trainee.first_names.downcase) != transliterate(row.first_names.downcase)
           @messages << error_message(:first_names)
         end
       end
@@ -108,8 +107,7 @@ module BulkUpdate
       def last_names
         return unless column_exists?(Reports::BulkRecommendReport::LAST_NAME)
 
-        # UnicodeUtils is used to remove accented characters for a simpler/more reliable comparison
-        if I18n.transliterate(trainee.last_names.downcase, replacement: "") != I18n.transliterate(row.last_names.downcase, replacement: "")
+        if transliterate(trainee.last_names.downcase) != transliterate(row.last_names.downcase)
           @messages << error_message(:last_names)
         end
       end
@@ -148,6 +146,11 @@ module BulkUpdate
         return unless column_exists?(Reports::BulkRecommendReport::SUBJECT)
 
         @messages << error_message(:subject) if trainee.subjects != row.subject
+      end
+
+      # Used to remove accented characters for a simpler/more reliable comparison
+      def transliterate(string)
+        I18n.transliterate(string, replacement: "")
       end
 
       def error_message(key, variables = {})

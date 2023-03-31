@@ -38,12 +38,11 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
              class_name: "BulkUpdate::RecommendationsUpload",
              foreign_key: :bulk_update_recommendations_upload_id,
              inverse_of: :recommendations_upload_rows
+
   belongs_to :trainee,
              foreign_key: :matched_trainee_id,
              inverse_of: :recommendations_upload_rows,
              optional: true
-
-  has_one :trainee, foreign_key: :trn, primary_key: :trn, inverse_of: false
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
 

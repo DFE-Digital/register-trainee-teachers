@@ -3,6 +3,8 @@
 require "rails_helper"
 
 feature "recommending trainees" do
+  include RecommendationsUploadHelper
+
   before do
     given_i_am_authenticated
   end
@@ -15,23 +17,22 @@ feature "recommending trainees" do
   end
 
   context "given multiple trainees exist to recommend" do
+    let(:write_to_disk) { true }
+    let(:overwrite) do # one valid date for each trainee created in `given_two_trainees_exist_to_recommend`
+      [
+        { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+        { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+      ]
+    end
+
     before do
       given_two_trainees_exist_to_recommend
       given_i_am_on_the_recommendations_upload_page
       then_i_see_how_many_trainees_i_can_recommend
+      and_i_upload_a_csv(create_recommendations_upload_csv!(write_to_disk:, overwrite:))
     end
 
     context "and I upload a complete CSV" do
-      before do
-        allow(BulkUpdate::RecommendationsUploads::ValidateCsvRow).to receive(:new).with(anything).and_return(
-          double("validator", valid?: true, messages: []),
-        )
-      end
-
-      scenario "I can upload trainees for recommendation" do
-        and_i_upload_a_csv("bulk_update/recommendations_upload/complete.csv")
-      end
-
       scenario "I can upload trainees for recommendation" do
         then_i_see_count_complete
         and_i_check_who_ill_recommend
@@ -46,36 +47,41 @@ feature "recommending trainees" do
     end
 
     context "and I upload a CSV missing dates" do
-      before do
-        allow(BulkUpdate::RecommendationsUploads::ValidateCsvRow).to receive(:new).with(anything).and_return(
-          double("validator", valid?: true, messages: []),
-        )
+      let(:overwrite) do # a valid date for the first trainee created in `given_two_trainees_exist_to_recommend`
+        [
+          { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+        ]
       end
 
       scenario "I can upload trainees for recommendation" do
-        and_i_upload_a_csv("bulk_update/recommendations_upload/missing_date.csv")
         then_i_see_count_missing_dates
         and_i_check_who_ill_recommend
       end
     end
 
     context "and I upload a CSV with no dates" do
+      let(:overwrite) { [] }
+
       scenario "I am told to try again" do
-        and_i_upload_a_csv("bulk_update/recommendations_upload/no_date.csv")
         then_i_see_no_dates_content
       end
     end
 
     scenario "I can change who i want to recommend" do
-      and_i_upload_a_csv("bulk_update/recommendations_upload/complete.csv")
       and_i_check_who_ill_recommend
       and_i_click_change_link
       then_i_see_the_form_to_change_upload
     end
 
     context "and I upload a CSV with an error" do
+      let(:overwrite) do # one valid, and one invalid date for trainees created in `given_two_trainees_exist_to_recommend`
+        [
+          { Reports::BulkRecommendReport::DATE => Date.tomorrow.strftime("%d/%m/%Y") },
+          { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+        ]
+      end
+
       scenario "I am shown the error count and am told to fix errors" do
-        and_i_upload_a_csv("bulk_update/recommendations_upload/date_in_future.csv")
         then_i_see_count_errors
         then_i_click_review_errors
         when_i_submit_form_with_no_file_attached
@@ -106,7 +112,7 @@ private
   end
 
   def and_i_upload_a_csv(csv_path)
-    attach_file("bulk_update_recommendations_upload_form[file]", file_fixture(csv_path).to_path)
+    attach_file("bulk_update_recommendations_upload_form[file]", csv_path)
     recommendations_upload_page.upload_button.click
     expect(BulkUpdate::RecommendationsUploadRow.count).to be 2
   end

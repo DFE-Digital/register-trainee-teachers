@@ -52,13 +52,13 @@ module BulkUpdate
       def trainees
         return @trainees if defined?(@trainees)
 
-        @trainees = @trainees&.where(state: :trn_received)
+        @trainees = @trainees&.trn_received
       end
 
       def trainees_not_trn_received
         return @trainees_not_trn_received if defined?(@trainees_not_trn_received)
 
-        @trainees_not_trn_received = @trainees&.where&.not(state: :trn_received)
+        @trainees_not_trn_received = @trainees&.not_trn_received
       end
 
       def trainee_not_trn_received

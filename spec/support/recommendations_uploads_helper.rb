@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RecommendationsUploadHelper
-  def recommendations_upload_csv(trainees, overwrite = [])
+  def create_recommendations_upload_csv!(trainees: Trainee.all, overwrite: [], write_to_disk: false)
     csv = CSV.parse(
       ::Exports::BulkRecommendExport.call(trainees).to_s,
       **::BulkUpdate::RecommendationsUploadForm::CSV_ARGS,
@@ -14,6 +14,11 @@ module RecommendationsUploadHelper
       end
     end
 
-    csv
+    return csv unless write_to_disk
+
+    tempfile = Tempfile.new("csv")
+    tempfile.write(csv.to_s)
+    tempfile.rewind
+    tempfile.path
   end
 end
