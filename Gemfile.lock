@@ -132,7 +132,7 @@ GEM
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bindata (2.4.14)
+    bindata (2.4.15)
     bindex (0.8.1)
     blazer (2.6.5)
       activerecord (>= 5)
@@ -427,7 +427,7 @@ GEM
     omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    omniauth_openid_connect (0.6.0)
+    omniauth_openid_connect (0.6.1)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 1.1)
     openid_connect (1.4.2)
