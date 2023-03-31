@@ -17,13 +17,29 @@ module BulkUpdate
         context "given a valid CSV" do
           let(:file) { file_fixture("bulk_update/recommendations_upload/complete.csv") }
 
-          it "creates the trainee records" do
+          it "creates the row records" do
             expect(provider.recommendations_upload_rows.pluck(:trn, :csv_row_number, :standards_met_at)).to eql(
               [
                 ["2413295", 3, "20-07-2022".to_date],
                 ["4814731", 4, "21-07-2022".to_date],
               ],
             )
+          end
+        end
+
+        context "given an valid CSV with errorable rows" do
+          let(:file) { file_fixture("bulk_update/recommendations_upload/with_invalid_trn.csv") }
+
+          it "creates the row records and error records" do
+            expect(provider.recommendations_upload_rows.pluck(:trn, :csv_row_number, :standards_met_at)).to eql(
+              [
+                ["241a295", 3, "20-07-2022".to_date],
+                ["4814731", 4, "21-07-2022".to_date],
+              ],
+            )
+
+            row_errors = RecommendationsUploadRow.find_by(trn: "241a295").row_errors
+            expect(row_errors.first.message).to eql "TRN must be 7 characters long and contain only numbers"
           end
         end
       end
