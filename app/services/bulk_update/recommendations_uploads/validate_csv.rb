@@ -4,11 +4,6 @@ module BulkUpdate
   module RecommendationsUploads
     class ValidateCsv
       def initialize(csv:, record:)
-        # Remove the non-data warning row
-        csv.delete_if do |row|
-          row.fields.any? { |cell| cell&.downcase&.include?(Reports::BulkRecommendReport::DO_NOT_EDIT.downcase) }
-        end
-
         @csv = csv
         @record = record
       end
@@ -25,13 +20,13 @@ module BulkUpdate
       attr_reader :csv, :record
 
       def header_row!
-        return if (headers & all_headers).any?
+        return if headers.intersect?(all_headers)
 
         record.errors.add(:file, :no_header_detected)
       end
 
       def identifier_header!
-        return if (headers & identifying_headers).any?
+        return if headers.intersect?(identifying_headers)
 
         record.errors.add(:file, :no_id_header)
       end
@@ -44,9 +39,13 @@ module BulkUpdate
 
       def dates!
         return unless headers.include?(date_header)
-        return if csv[date_header].to_a.map(&:presence).any?
+        return if date_cells_sans_date_guidance.map(&:presence).any?
 
         record.errors.add(:file, :no_dates_given)
+      end
+
+      def date_cells_sans_date_guidance
+        csv[date_header].to_a.reject { |cell| cell&.downcase&.strip == Reports::BulkRecommendReport::DATE_GUIDANCE.downcase }
       end
 
       def all_headers

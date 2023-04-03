@@ -29,7 +29,7 @@ module BulkUpdate
         it { expect(record.errors.first.message).to eql "At least one identifying column is required (TRN, HESA ID or Trainee provider ID)" }
       end
 
-      context "given a CSV no date header" do
+      context "given a CSV with no date header" do
         let(:columns_to_delete) { [Reports::BulkRecommendReport::DATE.downcase] }
 
         it { expect(record.errors.first.message).to eql "Date QTS or EYTS standards met is required" }
@@ -38,7 +38,7 @@ module BulkUpdate
       context "given a CSV with no dates" do
         let(:csv) { create_recommendations_upload_csv! }
 
-        it { expect(record.errors.first.message).to eql "No dates have been proved in this CSV" }
+        it { expect(record.errors.first.message).to eql "No dates have been provided in this CSV" }
       end
     end
   end
