@@ -1,6 +1,6 @@
 resource "azurerm_storage_account" "tempdata" {
   name                              = var.tempdata_storage_account_name
-  resource_group_name               = var.resource_group_name
+  resource_group_name               = var.backend_resource_group_name
   location                          = var.region_name
   account_replication_type          = var.storage_account_replication_type
   account_tier                      = "Standard"
@@ -14,6 +14,12 @@ resource "azurerm_storage_account" "tempdata" {
     container_delete_retention_policy {
       days = 7
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
   }
 
   depends_on = [data.azurerm_resource_group.group]

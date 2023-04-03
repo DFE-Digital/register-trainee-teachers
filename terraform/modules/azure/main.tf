@@ -7,8 +7,8 @@ terraform {
   }
 }
 
-resource "azurerm_resource_group" "app_group" {
-  name     = var.resource_group_name
-  location = var.region_name
-  tags     = data.azurerm_resource_group.backend_resource_group_name.tags
-}
+#resource "azurerm_resource_group" "app_group" {
+#  name     = var.resource_group_name
+#  location = var.region_name
+#  tags     = data.azurerm_resource_group.backend_resource_group_name.tags
+#}
