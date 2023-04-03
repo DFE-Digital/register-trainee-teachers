@@ -74,7 +74,7 @@ private
   end
 
   def time_now
-    Time.zone.now.strftime("%F_%H-%M-%S")
+    Time.now.in_time_zone("London").strftime("%F_%H-%M-%S")
   end
 
   def itt_new_starter_filename
