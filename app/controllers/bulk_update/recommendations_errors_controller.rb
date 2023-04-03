@@ -39,7 +39,7 @@ module BulkUpdate
       # Remove any old timestamps or "errors_" that have been previously prepended
       base_filename = original_filename.gsub(Regexp.union(timestamp_regex, "errors_"), "")
 
-      "#{Time.zone.now.strftime('%F_%H-%M-%S')}_errors_#{base_filename}"
+      "#{Time.now.in_time_zone("London").strftime('%F_%H-%M-%S')}_errors_#{base_filename}"
     end
 
     def original_filename
