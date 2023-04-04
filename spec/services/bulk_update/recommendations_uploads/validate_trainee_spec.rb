@@ -28,6 +28,22 @@ module BulkUpdate
           describe "#trainee" do
             it { expect(service.trainee).to eql trainee }
           end
+
+          context "In the wrong state" do
+            let(:trainee) { create(:trainee, :bulk_recommend, state: :withdrawn) }
+
+            describe "#valid?" do
+              it { expect(service.valid?).to be false }
+            end
+
+            describe "#messages" do
+              it { expect(service.messages).to eql ["Trainee is Withdrawn"] }
+            end
+
+            describe "#trainee" do
+              it { expect(service.trainee).to be_nil }
+            end
+          end
         end
 
         context "and a row with only HESA ID" do
