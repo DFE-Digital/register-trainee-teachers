@@ -2,7 +2,8 @@
 
 module Reports
   class BulkRecommendReport < TemplateClassCsv
-    DO_NOT_EDIT = "Do not edit"
+    DO_NOT_EDIT   = "Do not edit"
+    DATE_GUIDANCE = "For example, 20/7/2022\nDelete row if the trainee has not met the standards"
 
     # required headers
     TRN = "TRN"
@@ -64,14 +65,8 @@ module Reports
     end
 
     def post_header_row!
-      last_row = <<~TEXT
-        For example, 20/7/2022
-
-        Delete row if the trainee has not met the standards
-      TEXT
-
-      # ["Do not edit", "Do not edit" ... last_row]
-      csv << [*(headers.count - 1).times.map { DO_NOT_EDIT }, last_row]
+      # ["Do not edit", "Do not edit" ... DATE_GUIDANCE]
+      csv << [*(headers.count - 1).times.map { DO_NOT_EDIT }, DATE_GUIDANCE]
     end
 
     def add_report_rows

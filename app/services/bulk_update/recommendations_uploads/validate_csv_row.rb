@@ -16,7 +16,7 @@ module BulkUpdate
         messages.empty?
       end
 
-      attr_reader :messages
+      attr_reader :messages, :date
 
     private
 
@@ -58,13 +58,13 @@ module BulkUpdate
       def standards_met_at
         case row.standards_met_at
         when /^\d{1,2}[\/-]\d{1,2}[\/-]\d{4}$/ # dd/mm/yyyy or dd-mm-yyyy or d/m/yyyy etc etc
-          date = row.standards_met_at.to_date
+          @date = row.standards_met_at.to_date
           today = Time.zone.today.to_date
           ago_12_months = 12.months.ago.to_date
 
-          @messages << error_message(:award_date_future, date: gds_date(date)) if date > today
-          @messages << error_message(:award_date_past, date: gds_date(ago_12_months)) if date < ago_12_months
-          @messages << error_message(:date_standards_met, date: gds_date(trainee.itt_start_date.to_date)) if trainee&.itt_start_date && date < trainee.itt_start_date.to_date
+          @messages << error_message(:award_date_future, date: gds_date(date)) if @date > today
+          @messages << error_message(:award_date_past, date: gds_date(ago_12_months)) if @date < ago_12_months
+          @messages << error_message(:date_standards_met, date: gds_date(trainee.itt_start_date.to_date)) if trainee&.itt_start_date && @date < trainee.itt_start_date.to_date
         else
           @messages << error_message(:date_parse) if row.standards_met_at.present?
         end
