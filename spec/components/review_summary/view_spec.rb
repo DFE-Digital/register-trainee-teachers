@@ -33,7 +33,7 @@ module ReviewSummary
       let(:form) { instance_double(ApplyApplications::TraineeDataForm, errors: [], valid?: false) }
 
       it "renders the component" do
-        expect(rendered_component).to have_text("Some header content")
+        expect(page).to have_text("Some header content")
       end
 
       it "renders the given content in a InformationSummary::View component" do
@@ -43,7 +43,7 @@ module ReviewSummary
 
     context "with header content" do
       it "renders the given content from the block" do
-        expect(rendered_component).to have_selector("p", text: invalid_data_view.summary_content)
+        expect(page).to have_selector("p", text: invalid_data_view.summary_content)
       end
     end
 
@@ -52,7 +52,7 @@ module ReviewSummary
       let(:invalid_data_view) { instance_double(ApplyApplications::InvalidTraineeDataView, invalid_data?: false) }
 
       it "does not render" do
-        expect(rendered_component).not_to have_text("Some header content")
+        expect(page).not_to have_text("Some header content")
       end
     end
   end

@@ -18,27 +18,27 @@ module Schools
 
       describe "lead school" do
         it "renders" do
-          expect(rendered_component).to have_text(trainee.lead_school.name)
-          expect(rendered_component).to have_text(trainee.lead_school.urn)
-          expect(rendered_component).to have_text(trainee.lead_school.town)
-          expect(rendered_component).to have_text(trainee.lead_school.postcode)
+          expect(page).to have_text(trainee.lead_school.name)
+          expect(page).to have_text(trainee.lead_school.urn)
+          expect(page).to have_text(trainee.lead_school.town)
+          expect(page).to have_text(trainee.lead_school.postcode)
         end
 
         it "has correct change links" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/lead-schools/edit")
+          expect(page).to have_link(href: "/trainees/#{trainee.slug}/lead-schools/edit")
         end
       end
 
       describe "employing school" do
         it "renders" do
-          expect(rendered_component).to have_text(trainee.employing_school.name)
-          expect(rendered_component).to have_text(trainee.employing_school.urn)
-          expect(rendered_component).to have_text(trainee.employing_school.town)
-          expect(rendered_component).to have_text(trainee.employing_school.postcode)
+          expect(page).to have_text(trainee.employing_school.name)
+          expect(page).to have_text(trainee.employing_school.urn)
+          expect(page).to have_text(trainee.employing_school.town)
+          expect(page).to have_text(trainee.employing_school.postcode)
         end
 
         it "has correct change links" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/employing-schools/edit")
+          expect(page).to have_link(href: "/trainees/#{trainee.slug}/employing-schools/edit")
         end
       end
     end
@@ -48,23 +48,23 @@ module Schools
 
       describe "lead school" do
         it "renders" do
-          expect(rendered_component).to have_text(trainee.lead_school.name)
-          expect(rendered_component).to have_text(trainee.lead_school.urn)
-          expect(rendered_component).to have_text(trainee.lead_school.town)
-          expect(rendered_component).to have_text(trainee.lead_school.postcode)
+          expect(page).to have_text(trainee.lead_school.name)
+          expect(page).to have_text(trainee.lead_school.urn)
+          expect(page).to have_text(trainee.lead_school.town)
+          expect(page).to have_text(trainee.lead_school.postcode)
         end
 
         it "has correct change links" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/lead-schools/edit")
+          expect(page).to have_link(href: "/trainees/#{trainee.slug}/lead-schools/edit")
         end
       end
 
       describe "employing school" do
         it "does not render" do
-          expect(rendered_component).not_to have_text(trainee.employing_school.name)
-          expect(rendered_component).not_to have_text(trainee.employing_school.urn)
-          expect(rendered_component).not_to have_text(trainee.employing_school.town)
-          expect(rendered_component).not_to have_text(trainee.employing_school.postcode)
+          expect(page).not_to have_text(trainee.employing_school.name)
+          expect(page).not_to have_text(trainee.employing_school.urn)
+          expect(page).not_to have_text(trainee.employing_school.town)
+          expect(page).not_to have_text(trainee.employing_school.postcode)
         end
       end
     end

@@ -21,7 +21,7 @@ module RecordDetails
       end
 
       it "renders the provider name and code" do
-        expect(rendered_component).to have_text(provider.name_and_code)
+        expect(page).to have_text(provider.name_and_code)
       end
     end
 
@@ -31,7 +31,7 @@ module RecordDetails
       end
 
       it "renders the provider name and code" do
-        expect(rendered_component).not_to have_text(provider.name_and_code)
+        expect(page).not_to have_text(provider.name_and_code)
       end
     end
 
@@ -41,7 +41,7 @@ module RecordDetails
       end
 
       it "renders the record source" do
-        expect(rendered_component).to have_text(I18n.t("record_details.view.record_source.title"))
+        expect(page).to have_text(I18n.t("record_details.view.record_source.title"))
       end
     end
 
@@ -51,7 +51,7 @@ module RecordDetails
       end
 
       it "does not render the record source" do
-        expect(rendered_component).not_to have_text(I18n.t(".record_details.view.record_source"))
+        expect(page).not_to have_text(I18n.t(".record_details.view.record_source"))
       end
     end
 
@@ -62,7 +62,7 @@ module RecordDetails
       end
 
       it "tells the user that the data is missing" do
-        expect(rendered_component).to have_text(t("components.confirmation.missing"))
+        expect(page).to have_text(t("components.confirmation.missing"))
       end
     end
 
@@ -72,22 +72,22 @@ module RecordDetails
       end
 
       it "renders the trainee ID" do
-        expect(rendered_component).to have_text(trainee.trainee_id)
+        expect(page).to have_text(trainee.trainee_id)
       end
 
       it "renders the trainee's last timeline event date" do
-        expect(rendered_component).to have_text(date_for_summary_view(timeline_event.date))
+        expect(page).to have_text(date_for_summary_view(timeline_event.date))
       end
 
       it "renders the trainee record created date" do
-        expect(rendered_component).to have_text(date_for_summary_view(trainee.created_at))
+        expect(page).to have_text(date_for_summary_view(trainee.created_at))
       end
 
       context "but the trainee has no trn or submitted_for_trn_at" do
         let(:trainee) { create(:trainee, :withdrawn, trn: nil, submitted_for_trn_at: nil) }
 
         it "renders the page" do
-          expect(rendered_component).to have_text(trainee.trainee_id)
+          expect(page).to have_text("withdrawn")
         end
       end
 
@@ -95,7 +95,7 @@ module RecordDetails
         let(:trainee) { create(:trainee, :submitted_for_trn) }
 
         it "renders the trn submission date" do
-          expect(rendered_component).to have_text(date_for_summary_view(trainee.submitted_for_trn_at))
+          expect(page).to have_text(date_for_summary_view(trainee.submitted_for_trn_at))
         end
       end
 
@@ -103,7 +103,39 @@ module RecordDetails
         let(:trainee) { build(:trainee, :with_hpitt_provider, :trn_received) }
 
         it "renders the trainee's region" do
-          expect(rendered_component).to have_text(trainee.region)
+          expect(page).to have_text(trainee.region)
+        end
+      end
+
+      context "when trainee state is deferred" do
+        let(:state) { :deferred }
+
+        it "renders the trainee deferral date" do
+          expect(rendered_component).to have_text(date_for_summary_view(trainee.defer_date))
+        end
+
+        it "renders the trainee status tag" do
+          expect(rendered_component).to have_text("deferred")
+        end
+
+        context "when trainee did not start ITT" do
+          let(:trainee) { create(:trainee, state, commencement_status: :itt_not_yet_started) }
+
+          it "renders text stating that the trainee deferred before starting" do
+            expect(rendered_component).to have_text(strip_tags(t("deferral_details.view.itt_started_but_trainee_did_not_start")))
+          end
+        end
+      end
+
+      context "when trainee state is withdrawn" do
+        let(:state) { :withdrawn }
+
+        it "renders the trainee withdrawal date" do
+          expect(rendered_component).to have_text(date_for_summary_view(trainee.withdraw_date))
+        end
+
+        it "renders the trainee state" do
+          expect(rendered_component).to have_text(I18n.t("record_details.view.status_date_prefix.#{trainee.state}"))
         end
       end
 
@@ -111,14 +143,14 @@ module RecordDetails
         let(:state) { :recommended_for_award }
 
         it "renders the trainee recommended date" do
-          expect(rendered_component).to have_text(date_for_summary_view(trainee.recommended_for_award_at))
+          expect(page).to have_text(date_for_summary_view(trainee.recommended_for_award_at))
         end
 
         context "and the trainee is an EY trainee" do
           let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
 
           it "renders the trainee recommended date" do
-            expect(rendered_component).to have_text(date_for_summary_view(trainee.recommended_for_award_at))
+            expect(page).to have_text(date_for_summary_view(trainee.recommended_for_award_at))
           end
         end
       end
@@ -127,14 +159,14 @@ module RecordDetails
         let(:state) { :awarded }
 
         it "renders the trainee awarded date" do
-          expect(rendered_component).to have_text(date_for_summary_view(trainee.awarded_at))
+          expect(page).to have_text(date_for_summary_view(trainee.awarded_at))
         end
 
         context "and the trainee is an EY trainee" do
           let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
 
           it "renders the trainee awarded date" do
-            expect(rendered_component).to have_text(date_for_summary_view(trainee.awarded_at))
+            expect(page).to have_text(date_for_summary_view(trainee.awarded_at))
           end
         end
       end
@@ -149,11 +181,11 @@ module RecordDetails
         end
 
         it "renders itt has not started text" do
-          expect(rendered_component).to have_text(strip_tags(t("record_details.view.itt_has_not_started")))
+          expect(page).to have_text(strip_tags(t("record_details.view.itt_has_not_started")))
         end
 
         it "does not render link" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 0)
+          expect(page).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 0)
         end
       end
 
@@ -172,12 +204,12 @@ module RecordDetails
           end
 
           it "renders trainee_start_date" do
-            expect(rendered_component).to have_text(date_for_summary_view(trainee_start_date))
+            expect(page).to have_text(date_for_summary_view(trainee_start_date))
           end
 
           it "renders link to trainee start date form" do
-            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
-            expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-date/edit")
+            expect(page).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(page).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-date/edit")
           end
         end
 
@@ -188,12 +220,12 @@ module RecordDetails
           end
 
           it "renders not provided" do
-            expect(rendered_component).to have_text(t("record_details.view.not_provided"))
+            expect(page).to have_text(t("record_details.view.not_provided"))
           end
 
           it "renders link to trainee start status form" do
-            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
-            expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-status/edit")
+            expect(page).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(page).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-status/edit")
           end
 
           context "when deferred" do
@@ -202,7 +234,7 @@ module RecordDetails
             end
 
             it "renders the trainee deferred before course started message" do
-              expect(rendered_component).to have_text(strip_tags(t("record_details.view.deferred_before_itt_started")))
+              expect(page).to have_text(strip_tags(t("record_details.view.deferred_before_itt_started")))
             end
           end
         end
@@ -217,7 +249,7 @@ module RecordDetails
         end
 
         it "renders the not provided from hesa message" do
-          expect(rendered_component).to have_text(I18n.t("components.confirmation.not_provided_from_hesa_update"))
+          expect(page).to have_text(I18n.t("components.confirmation.not_provided_from_hesa_update"))
         end
       end
     end

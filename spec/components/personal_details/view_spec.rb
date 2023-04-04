@@ -16,11 +16,11 @@ module PersonalDetails
       end
 
       it "renders blank rows for full name, date of birth, sex and nationality" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 4)
+        expect(page).to have_selector(".govuk-summary-list__row", count: 4)
       end
 
       it "tells the user that the data is missing" do
-        expect(rendered_component).to have_selector(
+        expect(page).to have_selector(
           ".govuk-summary-list__value",
           text: t("components.confirmation.missing"), count: 4,
         )
@@ -35,7 +35,7 @@ module PersonalDetails
       end
 
       it "renders the not uploaded from hesa message" do
-        expect(rendered_component).to have_text(t("components.confirmation.not_provided_from_hesa_update"))
+        expect(page).to have_text(t("components.confirmation.not_provided_from_hesa_update"))
       end
     end
 
@@ -49,24 +49,24 @@ module PersonalDetails
       it "renders the full name" do
         expected_name = "#{trainee.first_names} #{trainee.middle_names} #{trainee.last_name}"
 
-        expect(rendered_component).to have_text(expected_name)
+        expect(page).to have_text(expected_name)
       end
 
       it "renders the date of birth" do
         expected_dob = trainee.date_of_birth.strftime("%-d %B %Y")
 
-        expect(rendered_component).to have_text(expected_dob)
+        expect(page).to have_text(expected_dob)
       end
 
       it "renders the sex" do
-        expect(rendered_component)
+        expect(page)
           .to have_text(
             I18n.t("components.confirmation.personal_detail.sexes.#{trainee.sex}"),
           )
       end
 
       it "renders the nationality" do
-        expect(rendered_component).to have_text("British")
+        expect(page).to have_text("British")
       end
 
       context "when multiple nationalities have been provided" do
@@ -77,12 +77,12 @@ module PersonalDetails
         end
 
         it "renders a list of nationalities" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.nationality .govuk-list li", count: 2)
+          expect(page).to have_selector(".govuk-summary-list__row.nationality .govuk-list li", count: 2)
         end
 
         it "renders in the order of first to last" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.nationality .govuk-list li:first-child", text: "British")
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.nationality .govuk-list li:last-child", text: "Irish")
+          expect(page).to have_selector(".govuk-summary-list__row.nationality .govuk-list li:first-child", text: "British")
+          expect(page).to have_selector(".govuk-summary-list__row.nationality .govuk-list li:last-child", text: "Irish")
         end
       end
     end

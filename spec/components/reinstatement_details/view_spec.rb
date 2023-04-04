@@ -13,6 +13,6 @@ describe ReinstatementDetails::View do
   end
 
   it "renders the date the trainee was reinstated" do
-    expect(rendered_component).to have_text(date_for_summary_view(data_model.date))
+    expect(page).to have_text(date_for_summary_view(data_model.date))
   end
 end

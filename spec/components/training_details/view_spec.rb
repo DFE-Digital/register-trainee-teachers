@@ -15,7 +15,7 @@ module TrainingDetails
       end
 
       it "tells the user that the data is missing" do
-        expect(rendered_component).to have_text(t("components.confirmation.missing"), count: 1)
+        expect(page).to have_text(t("components.confirmation.missing"), count: 1)
       end
     end
 
@@ -28,14 +28,14 @@ module TrainingDetails
       end
 
       it "renders the trainee_id" do
-        expect(rendered_component).to have_text(trainee.trainee_id)
+        expect(page).to have_text(trainee.trainee_id)
       end
 
       context "when trainee has a hpitt_provider" do
         let(:trainee) { build(:trainee, :with_hpitt_provider) }
 
         it "renders the trainee's region" do
-          expect(rendered_component).to have_text(trainee.region)
+          expect(page).to have_text(trainee.region)
         end
       end
     end

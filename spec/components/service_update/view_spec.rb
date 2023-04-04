@@ -18,9 +18,9 @@ describe ServiceUpdate::View do
     end
 
     it "renders" do
-      expect(rendered_component).to have_text("This is a title")
-      expect(rendered_component).to have_text("This is a Markdown content.")
-      expect(rendered_component).to have_text("8 November 2021")
+      expect(page).to have_text("This is a title")
+      expect(page).to have_text("This is a Markdown content.")
+      expect(page).to have_text("8 November 2021")
     end
   end
 

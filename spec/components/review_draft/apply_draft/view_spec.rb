@@ -15,14 +15,14 @@ describe ReviewDraft::ApplyDraft::View do
         let(:trainee) { build(:trainee, route, :with_apply_application) }
 
         it "renders the correct school direct sections" do
-          expect(rendered_component).to have_text("Course details")
-          expect(rendered_component).to have_text("Trainee data")
-          expect(rendered_component).to have_text("Trainee ID")
-          expect(rendered_component).to have_text(school_details_title(route))
+          expect(page).to have_text("Course details")
+          expect(page).to have_text("Trainee data")
+          expect(page).to have_text("Trainee ID")
+          expect(page).to have_text(school_details_title(route))
         end
 
         it "does not render non school-direct sections" do
-          expect(rendered_component).not_to have_text("Placement details")
+          expect(page).not_to have_text("Placement details")
         end
       end
     end

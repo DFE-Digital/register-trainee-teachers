@@ -16,7 +16,7 @@ module TraineeStartDate
       end
 
       it "renders the trainee start date" do
-        expect(rendered_component).to have_text(date_for_summary_view(trainee_start_date))
+        expect(page).to have_text(date_for_summary_view(trainee_start_date))
       end
     end
   end

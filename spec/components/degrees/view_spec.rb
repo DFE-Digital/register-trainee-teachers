@@ -19,11 +19,11 @@ describe Degrees::View do
 
   shared_examples summary_list_row do |degree_attribute, field_name|
     it "renders row #{field_name}" do
-      expect(rendered_component).to have_text(degree.public_send(degree_attribute))
+      expect(page).to have_text(degree.public_send(degree_attribute))
     end
 
     it "has change link for #{field_name}" do
-      expect(rendered_component).to have_link("Change #{field_name}")
+      expect(page).to have_link("Change #{field_name}")
     end
   end
 
@@ -31,7 +31,7 @@ describe Degrees::View do
     context "when trainee has only one UK degree" do
       it "renders section title for the UK degree" do
         expected_title = "#{degree.uk_degree}: #{degree.subject.downcase}"
-        expect(rendered_component).to have_text(expected_title)
+        expect(page).to have_text(expected_title)
       end
 
       it_behaves_like summary_list_row, :uk_degree, "degree type"
@@ -47,7 +47,7 @@ describe Degrees::View do
       end
 
       it "renders a summary card for each degree" do
-        expect(rendered_component).to have_selector(".app-summary-card", count: trainee.degrees.size)
+        expect(page).to have_selector(".app-summary-card", count: trainee.degrees.size)
       end
     end
   end
@@ -60,7 +60,7 @@ describe Degrees::View do
 
       it "renders section title for the UK degree" do
         expected_title = "Non-UK #{degree.non_uk_degree}: #{degree.subject.downcase}"
-        expect(rendered_component).to have_text(expected_title)
+        expect(page).to have_text(expected_title)
       end
 
       it_behaves_like summary_list_row, :subject, "subject"
@@ -75,7 +75,7 @@ describe Degrees::View do
       end
 
       it "renders a summary card for each degree" do
-        expect(rendered_component).to have_selector(".app-summary-card", count: trainee.degrees.size)
+        expect(page).to have_selector(".app-summary-card", count: trainee.degrees.size)
       end
     end
   end
@@ -83,7 +83,7 @@ describe Degrees::View do
   describe "Degree button text" do
     context "when there are degrees" do
       it "renders 'Add another degree' button" do
-        expect(rendered_component).to have_text(t("components.degrees.add_another_degree"))
+        expect(page).to have_text(t("components.degrees.add_another_degree"))
       end
     end
 
@@ -93,7 +93,7 @@ describe Degrees::View do
       end
 
       it "does not render 'Add another degree' button" do
-        expect(rendered_component).not_to have_css(degree_button_selector)
+        expect(page).not_to have_css(degree_button_selector)
       end
     end
   end

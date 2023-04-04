@@ -14,7 +14,7 @@ module ErrorSummary
       end
 
       it "renders the given content from the block" do
-        expect(rendered_component).to have_selector("li", count: 1)
+        expect(page).to have_selector("li", count: 1)
       end
     end
 
@@ -24,7 +24,7 @@ module ErrorSummary
       end
 
       it "does not render" do
-        expect(rendered_component).not_to have_css(".govuk-error-summary")
+        expect(page).not_to have_css(".govuk-error-summary")
       end
     end
   end

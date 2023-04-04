@@ -23,8 +23,8 @@ module Funding
       end
 
       it "renders tiered bursary text" do
-        expect(rendered_component).to have_text("Applied for Tier 1")
-        expect(rendered_component).to have_text("£5,000 estimated bursary")
+        expect(page).to have_text("Applied for Tier 1")
+        expect(page).to have_text("£5,000 estimated bursary")
       end
     end
 
@@ -64,7 +64,7 @@ module Funding
         end
 
         it "renders if the trainee selects mathematics" do
-          expect(rendered_component).to have_text("£9,000 estimated bursary")
+          expect(page).to have_text("£9,000 estimated bursary")
         end
       end
 
@@ -74,7 +74,7 @@ module Funding
         end
 
         it "doesn't render if the trainee selects drama" do
-          expect(rendered_component).not_to have_text("Bursary applied for")
+          expect(page).not_to have_text("Bursary applied for")
         end
       end
     end
@@ -103,11 +103,11 @@ module Funding
         let(:training_initiative) { ROUTE_INITIATIVES.keys.first }
 
         it "renders" do
-          expect(rendered_component).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
+          expect(page).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
         end
 
         it "has correct change link" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
+          expect(page).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
         end
 
         describe "has no bursary" do
@@ -117,7 +117,7 @@ module Funding
           end
 
           it "doesnt not render bursary row" do
-            expect(rendered_component).not_to have_text("Bursary applied for")
+            expect(page).not_to have_text("Bursary applied for")
           end
 
           context "and it non-draft" do
@@ -128,7 +128,7 @@ module Funding
             end
 
             it "renders bursary not available" do
-              expect(rendered_component).to have_text("Not applicable")
+              expect(page).to have_text("Not applicable")
             end
           end
         end
@@ -152,12 +152,12 @@ module Funding
             let(:applying_for_bursary) { true }
 
             it "renders" do
-              expect(rendered_component).to have_text("Bursary applied for")
-              expect(rendered_component).to have_text("£24,000 estimated bursary")
+              expect(page).to have_text("Bursary applied for")
+              expect(page).to have_text("£24,000 estimated bursary")
             end
 
             it "has correct change link" do
-              expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
+              expect(page).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
             end
           end
 
@@ -165,12 +165,12 @@ module Funding
             let(:applying_for_bursary) { false }
 
             it "renders" do
-              expect(rendered_component).to have_text("Not funded")
-              expect(rendered_component).not_to have_text("£24,000 estimated bursary")
+              expect(page).to have_text("Not funded")
+              expect(page).not_to have_text("£24,000 estimated bursary")
             end
 
             it "has correct change link" do
-              expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
+              expect(page).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
             end
           end
         end
@@ -180,11 +180,11 @@ module Funding
         let(:training_initiative) { "no_initiative" }
 
         it "renders" do
-          expect(rendered_component).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
+          expect(page).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
         end
 
         it "has correct change links" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
+          expect(page).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
         end
       end
     end
@@ -201,8 +201,8 @@ module Funding
         let(:applying_for_grant) { true }
 
         it "renders grant text" do
-          expect(rendered_component).to have_text("Grant applied for")
-          expect(rendered_component).to have_text("£25,000 estimated grant")
+          expect(page).to have_text("Grant applied for")
+          expect(page).to have_text("£25,000 estimated grant")
         end
       end
 
@@ -210,11 +210,11 @@ module Funding
         let(:applying_for_grant) { false }
 
         it "renders grant text" do
-          expect(rendered_component).to have_text("Not grant funded")
+          expect(page).to have_text("Not grant funded")
         end
 
         it "has correct change link" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Change")
+          expect(page).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Change")
         end
       end
 
@@ -222,11 +222,11 @@ module Funding
         let(:applying_for_grant) { nil }
 
         it "renders grant text" do
-          expect(rendered_component).to have_text("Funding method is missing")
+          expect(page).to have_text("Funding method is missing")
         end
 
         it "has correct change link" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Enter an answer")
+          expect(page).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Enter an answer")
         end
       end
     end
@@ -235,7 +235,7 @@ module Funding
       let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true, start_academic_cycle: start_academic_cycle) }
 
       it "doesn't render the funding row" do
-        expect(rendered_component).not_to have_text("Funding method")
+        expect(page).not_to have_text("Funding method")
       end
     end
   end

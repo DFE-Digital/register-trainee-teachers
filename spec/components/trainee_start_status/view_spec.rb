@@ -15,7 +15,7 @@ module TraineeStartStatus
 
     context "when data has been provided" do
       it "renders the trainee start date" do
-        expect(rendered_component).to have_text(date_for_summary_view(trainee_start_date))
+        expect(page).to have_text(date_for_summary_view(trainee_start_date))
       end
     end
 
@@ -23,7 +23,7 @@ module TraineeStartStatus
       let(:trainee) { create(:trainee, commencement_status: :itt_not_yet_started) }
 
       it "renders not started yet text" do
-        expect(rendered_component).to have_text("Trainee has not started yet")
+        expect(page).to have_text("Trainee has not started yet")
       end
     end
   end

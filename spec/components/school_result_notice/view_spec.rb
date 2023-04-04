@@ -26,7 +26,7 @@ module SchoolResultNotice
         it "renders the remaining search count" do
           expected_text = I18n.t("components.school_result_notice.result_text", search_query:)
 
-          expect(rendered_component).to have_text(expected_text)
+          expect(page).to have_text(expected_text)
         end
       end
 
@@ -40,7 +40,7 @@ module SchoolResultNotice
             remaining_search_count: expected_count,
           )
 
-          expect(rendered_component).to have_text(expected_text)
+          expect(page).to have_text(expected_text)
         end
       end
     end
@@ -49,7 +49,7 @@ module SchoolResultNotice
       let(:search_count) { 8 }
 
       it "does not render" do
-        expect(rendered_component).not_to have_css("body")
+        expect(page).not_to have_css("body")
       end
     end
   end

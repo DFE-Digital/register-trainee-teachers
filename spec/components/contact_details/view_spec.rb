@@ -11,11 +11,11 @@ describe ContactDetails::View do
     end
 
     it "renders blank rows for address, email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
+      expect(page).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
     it "tells the user that the data is missing" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 2)
+      expect(page).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 2)
     end
   end
 
@@ -26,16 +26,16 @@ describe ContactDetails::View do
     end
 
     it "renders rows for address, email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
+      expect(page).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
     it "renders the contact details change link" do
-      expect(rendered_component)
+      expect(page)
         .to have_link(t("change"), href: "/trainees/#{mock_trainee.slug}/contact-details/edit")
     end
 
     it "renders the address" do
-      expect(rendered_component)
+      expect(page)
         .to have_text([
           mock_trainee.address_line_one,
           mock_trainee.address_line_two,
@@ -45,7 +45,7 @@ describe ContactDetails::View do
     end
 
     it "renders the email address" do
-      expect(rendered_component)
+      expect(page)
         .to have_text(mock_trainee.email)
     end
   end
@@ -58,16 +58,16 @@ describe ContactDetails::View do
     end
 
     it "renders rows for address, email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
+      expect(page).to have_selector(".govuk-summary-list__row", count: 2)
     end
 
     it "renders the address" do
-      expect(rendered_component)
+      expect(page)
         .to have_text(mock_trainee.international_address.split(/\r\n+/).join)
     end
 
     it "renders the email address" do
-      expect(rendered_component)
+      expect(page)
         .to have_text(mock_trainee.email)
     end
   end
@@ -80,15 +80,15 @@ describe ContactDetails::View do
     end
 
     it "does not renders rows for address, only email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
+      expect(page).to have_selector(".govuk-summary-list__row", count: 1)
     end
 
     it "does not render the address" do
-      expect(rendered_component).not_to have_text(mock_trainee.address_line_one)
+      expect(page).not_to have_text(mock_trainee.address_line_one)
     end
 
     it "renders the email address" do
-      expect(rendered_component)
+      expect(page)
         .to have_text(mock_trainee.email)
     end
   end

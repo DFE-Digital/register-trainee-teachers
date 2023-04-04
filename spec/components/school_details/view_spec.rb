@@ -6,20 +6,20 @@ module SchoolDetails
   describe View do
     shared_examples("school row") do |field_name|
       it "renders the school type" do
-        expect(rendered_component).to have_text(field_name.humanize)
+        expect(page).to have_text(field_name.humanize)
       end
 
       it "renders the school name" do
-        expect(rendered_component).to have_text(school.name)
+        expect(page).to have_text(school.name)
       end
 
       it "renders the school location" do
         expected_location_format = "URN #{school.urn}, #{school.town}, #{school.postcode}"
-        expect(rendered_component).to have_text(expected_location_format)
+        expect(page).to have_text(expected_location_format)
       end
 
       it "renders the school change link" do
-        expect(rendered_component).to have_link(t("change"))
+        expect(page).to have_link(t("change"))
       end
     end
 
@@ -53,7 +53,7 @@ module SchoolDetails
       end
 
       it "renders the not imported from hesa message" do
-        expect(rendered_component).to have_text(t("components.confirmation.not_provided_from_hesa_update"))
+        expect(page).to have_text(t("components.confirmation.not_provided_from_hesa_update"))
       end
     end
   end

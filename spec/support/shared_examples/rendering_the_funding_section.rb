@@ -11,7 +11,7 @@ shared_examples "rendering the funding section" do
     context "and has not entered their course details" do
       it "renders the funding section as 'cannot start yet'" do
         render_inline(described_class.new(trainee:))
-        expect(rendered_component).to have_css "#funding-status", text: "cannot start yet"
+        expect(page).to have_css "#funding-status", text: "cannot start yet"
       end
     end
 
@@ -20,7 +20,7 @@ shared_examples "rendering the funding section" do
 
       it "renders the funding section as 'incomplete'" do
         render_inline(described_class.new(trainee:))
-        expect(rendered_component).to have_css "#funding-status", text: "incomplete"
+        expect(page).to have_css "#funding-status", text: "incomplete"
       end
     end
   end
@@ -34,7 +34,7 @@ shared_examples "rendering the funding section" do
     context "and has not entered their course details" do
       it "renders the funding section as 'cannot start yet'" do
         render_inline(described_class.new(trainee:))
-        expect(rendered_component).to have_css "#funding-status", text: "cannot start yet"
+        expect(page).to have_css "#funding-status", text: "cannot start yet"
       end
     end
 
@@ -43,7 +43,7 @@ shared_examples "rendering the funding section" do
 
       it "renders the funding section as 'incomplete'" do
         render_inline(described_class.new(trainee:))
-        expect(rendered_component).to have_css "#funding-status", text: "incomplete"
+        expect(page).to have_css "#funding-status", text: "incomplete"
       end
     end
   end

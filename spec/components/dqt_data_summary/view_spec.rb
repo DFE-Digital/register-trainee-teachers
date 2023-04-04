@@ -10,7 +10,7 @@ module DqtDataSummary
       end
 
       it "renders 'Data not available' content" do
-        expect(rendered_component).to have_text("Data not available")
+        expect(page).to have_text("Data not available")
       end
     end
 
@@ -35,8 +35,8 @@ module DqtDataSummary
       end
 
       it "renders available data" do
-        expect(rendered_component).to have_text("Abigail")
-        expect(rendered_component).to have_text("McPhillips")
+        expect(page).to have_text("Abigail")
+        expect(page).to have_text("McPhillips")
       end
     end
 
@@ -69,9 +69,9 @@ module DqtDataSummary
       end
 
       it "renders the data" do
-        expect(rendered_component).to have_text("Abigail")
-        expect(rendered_component).to have_text("McPhillips")
-        expect(rendered_component).to have_text("Pass")
+        expect(page).to have_text("Abigail")
+        expect(page).to have_text("McPhillips")
+        expect(page).to have_text("Pass")
       end
     end
 
@@ -111,8 +111,8 @@ module DqtDataSummary
       end
 
       it "renders them all" do
-        expect(rendered_component).to have_text("Training instance 1")
-        expect(rendered_component).to have_text("Training instance 2")
+        expect(page).to have_text("Training instance 1")
+        expect(page).to have_text("Training instance 2")
       end
     end
   end

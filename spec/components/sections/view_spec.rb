@@ -21,11 +21,11 @@ module Sections
       let(:trainee) { create(:trainee, :in_progress, :with_apply_application, start_academic_cycle: AcademicCycle.first) }
 
       it "renders section text for apply draft course details" do
-        expect(rendered_component).to have_css(".app-inset-text__title", text: expected_title(section, status))
+        expect(page).to have_css(".app-inset-text__title", text: expected_title(section, status))
       end
 
       it "renders section link for apply draft course details section" do
-        expect(rendered_component).to have_link(expected_link_text(section, status), href: expected_href(section, status, trainee))
+        expect(page).to have_link(expected_link_text(section, status), href: expected_href(section, status, trainee))
       end
     end
 
@@ -51,11 +51,11 @@ module Sections
         end
 
         it "has title" do
-          expect(rendered_component).to have_css(".app-inset-text__title", text: expected_title(section, status))
+          expect(page).to have_css(".app-inset-text__title", text: expected_title(section, status))
         end
 
         it "has link" do
-          expect(rendered_component).to have_link(expected_link_text(section, status), href: expected_href(section, status, trainee))
+          expect(page).to have_link(expected_link_text(section, status), href: expected_href(section, status, trainee))
         end
       end
     end

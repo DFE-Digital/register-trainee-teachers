@@ -11,7 +11,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :early_years_undergrad, :recommended_for_award) }
 
     it "renders the correct status" do
-      expect(rendered_component).to have_text("EYTS recommended")
+      expect(page).to have_text("EYTS recommended")
     end
   end
 
@@ -19,7 +19,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :early_years_undergrad, :awarded) }
 
     it "renders the correct status" do
-      expect(rendered_component).to have_text("EYTS awarded")
+      expect(page).to have_text("EYTS awarded")
     end
   end
 
@@ -27,7 +27,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :recommended_for_award) }
 
     it "renders the correct status" do
-      expect(rendered_component).to have_text("QTS recommended")
+      expect(page).to have_text("QTS recommended")
     end
   end
 
@@ -35,7 +35,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :awarded) }
 
     it "renders the correct status" do
-      expect(rendered_component).to have_text("QTS awarded")
+      expect(page).to have_text("QTS awarded")
     end
   end
 
@@ -43,7 +43,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :trn_received, :not_submission_ready) }
 
     it "renders the correct status" do
-      expect(rendered_component).to have_text("incomplete")
+      expect(page).to have_text("incomplete")
     end
   end
 
@@ -55,7 +55,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :trn_received, :not_submission_ready) }
 
     it "does not render the incomplete progress tag" do
-      expect(rendered_component).not_to have_text("incomplete")
+      expect(page).not_to have_text("incomplete")
     end
   end
 end

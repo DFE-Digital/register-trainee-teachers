@@ -32,40 +32,40 @@ shared_examples "rendering course confirmation" do
     end
 
     it "renders the course details" do
-      expect(rendered_component).to have_text("#{course.name} (#{course.code})")
+      expect(page).to have_text("#{course.name} (#{course.code})")
     end
 
     it "renders the level" do
-      expect(rendered_component).to have_text(course.level.capitalize)
+      expect(page).to have_text(course.level.capitalize)
     end
 
     it "renders the age range" do
-      expect(rendered_component).to have_text(age_range_for_summary_view(course.age_range))
+      expect(page).to have_text(age_range_for_summary_view(course.age_range))
     end
 
     it "renders the start date" do
-      expect(rendered_component).to have_text(date_for_summary_view(course.start_date))
+      expect(page).to have_text(date_for_summary_view(course.start_date))
     end
 
     it "renders the duration" do
-      expect(rendered_component).to have_text("#{course.duration_in_years} years")
+      expect(page).to have_text("#{course.duration_in_years} years")
     end
 
     it "renders study_mode" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+      expect(page).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
     end
 
     it "renders the selected study_mode" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+      expect(page).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
     end
 
     if described_class == PublishCourseDetails::View
       it "renders 7 rows on the confirmation page" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
+        expect(page).to have_selector(".govuk-summary-list__row", count: 7)
       end
     else
       it "renders 8 rows on the confirmation page" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 8)
+        expect(page).to have_selector(".govuk-summary-list__row", count: 8)
       end
     end
 
@@ -73,20 +73,20 @@ shared_examples "rendering course confirmation" do
       let(:trainee) { build(:trainee, :assessment_only) }
 
       it "does not render study_mode" do
-        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+        expect(page).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
       end
 
       it "does not render the selected study_mode" do
-        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+        expect(page).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
       end
 
       if described_class == PublishCourseDetails::View
         it "renders 6 rows on the confirmation page" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
+          expect(page).to have_selector(".govuk-summary-list__row", count: 6)
         end
       else
         it "renders 7 rows on the confirmation page" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
+          expect(page).to have_selector(".govuk-summary-list__row", count: 7)
         end
       end
     end
@@ -95,7 +95,7 @@ shared_examples "rendering course confirmation" do
       let(:itt_start_date) { Time.zone.now }
 
       it "renders the itt start date" do
-        expect(rendered_component).to have_text(date_for_summary_view(course.start_date))
+        expect(page).to have_text(date_for_summary_view(course.start_date))
       end
     end
   end
@@ -113,11 +113,11 @@ shared_examples "rendering course confirmation" do
       let(:expected_names) { subjects_for_summary_view(specialisms.first, nil, nil) }
 
       it "renders the first subject's name" do
-        expect(rendered_component).to have_text(expected_names)
+        expect(page).to have_text(expected_names)
       end
 
       it "displays the correct subject summary label" do
-        expect(rendered_component).to have_text(I18n.t("publish_course_details.view.subject"))
+        expect(page).to have_text(I18n.t("publish_course_details.view.subject"))
       end
     end
 
@@ -127,11 +127,11 @@ shared_examples "rendering course confirmation" do
       let(:expected_names) { subjects_for_summary_view(specialisms.first, specialisms.second, nil) }
 
       it "renders the first and second subject's name" do
-        expect(rendered_component).to have_text(expected_names)
+        expect(page).to have_text(expected_names)
       end
 
       it "displays the correct subject summary label" do
-        expect(rendered_component).to have_text(I18n.t("publish_course_details.view.multiple_subjects"))
+        expect(page).to have_text(I18n.t("publish_course_details.view.multiple_subjects"))
       end
     end
 
@@ -141,7 +141,7 @@ shared_examples "rendering course confirmation" do
       let(:expected_names) { subjects_for_summary_view(*specialisms) }
 
       it "renders the first, second and third subject's name" do
-        expect(rendered_component).to have_text(expected_names)
+        expect(page).to have_text(expected_names)
       end
     end
   end
