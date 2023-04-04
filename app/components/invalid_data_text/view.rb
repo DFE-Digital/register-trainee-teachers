@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InvalidDataText::View < GovukComponent::Base
+class InvalidDataText::View < ComponentBase
   include TraineeHelper
 
   def initialize(form_section:, hint: "", degree_form:)

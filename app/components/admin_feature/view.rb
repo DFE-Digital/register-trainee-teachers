@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AdminFeature
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :title
 
     def initialize(title: nil, classes: [], html_attributes: {})

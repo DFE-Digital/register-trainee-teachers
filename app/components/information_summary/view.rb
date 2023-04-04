@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InformationSummary::View < GovukComponent::Base
+class InformationSummary::View < ComponentBase
   renders_one :header
 
   def initialize(renderable: false)

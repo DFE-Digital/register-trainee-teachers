@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ReviewDraft
-  class View < GovukComponent::Base
+  class View < ComponentBase
     def initialize(trainee:)
       @trainee = trainee
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SchoolDetails
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include SchoolHelper
 
     attr_reader :trainee, :lead_school, :employing_school, :has_errors, :editable

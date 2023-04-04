@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ProviderCard
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include SanitizeHelper
 
     with_collection_parameter :provider

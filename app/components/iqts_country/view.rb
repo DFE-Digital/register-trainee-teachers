@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module IqtsCountry
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include SummaryHelper
 
     def initialize(data_model:, has_errors: false, editable: false)

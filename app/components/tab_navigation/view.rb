@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TabNavigation
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :items
 
     def initialize(items:)

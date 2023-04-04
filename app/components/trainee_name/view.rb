@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TraineeName
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :trainee
 
     def initialize(trainee)

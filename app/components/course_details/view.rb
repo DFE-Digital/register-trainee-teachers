@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CourseDetails
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include SummaryHelper
     include CourseDetailsHelper
     include TraineeHelper

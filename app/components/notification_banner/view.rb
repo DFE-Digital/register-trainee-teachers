@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module NotificationBanner
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :text, :title_id
 
     SUCCESS_TITLE = "Success"

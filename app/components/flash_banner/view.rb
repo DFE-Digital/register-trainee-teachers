@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FlashBanner
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :flash, :trainee
 
     FLASH_TYPES = %i[success warning info].freeze

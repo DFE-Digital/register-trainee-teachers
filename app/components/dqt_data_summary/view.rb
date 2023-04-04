@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DqtDataSummary
-  class View < GovukComponent::Base
+  class View < ComponentBase
     def initialize(dqt_data:)
       @dqt_data = dqt_data
     end

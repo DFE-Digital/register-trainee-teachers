@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SchoolResultNotice
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :search_query
 
     def initialize(search_query:, search_limit:, search_count:)

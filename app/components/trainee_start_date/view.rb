@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TraineeStartDate
-  class View < GovukComponent::Base
+  class View < ComponentBase
     def initialize(data_model:, editable: false)
       @data_model = data_model
       @editable = editable

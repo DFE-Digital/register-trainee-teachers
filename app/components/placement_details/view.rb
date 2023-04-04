@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PlacementDetails
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include SummaryHelper
 
     attr_accessor :trainee, :editable, :has_errors, :show_link

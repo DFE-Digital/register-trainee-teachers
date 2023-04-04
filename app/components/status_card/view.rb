@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module StatusCard
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :status_colour, :count, :state_name, :target
 
     def initialize(status_colour:, count:, state_name:, target:)

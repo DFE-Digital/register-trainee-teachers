@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CancelLink
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include TraineeHelper
 
     attr_reader :draft

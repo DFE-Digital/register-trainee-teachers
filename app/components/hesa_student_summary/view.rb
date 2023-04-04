@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HesaStudentSummary
-  class View < GovukComponent::Base
+  class View < ComponentBase
     def initialize(trainee:, collection:)
       @trainee = trainee
       @collection = collection

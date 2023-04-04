@@ -2,7 +2,7 @@
 
 module ReviewDraft
   module Draft
-    class View < GovukComponent::Base
+    class View < ComponentBase
       include TraineeHelper
       include TaskListHelper
       include FundingHelper

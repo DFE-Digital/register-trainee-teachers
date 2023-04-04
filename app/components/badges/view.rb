@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Badges
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :badges
 
     def initialize(badges:)

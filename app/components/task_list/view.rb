@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TaskList::View < GovukComponent::Base
+class TaskList::View < ComponentBase
   renders_many :rows, "Row"
 
   def any_row_has_status?
@@ -17,7 +17,15 @@ private
     %w[app-task-list]
   end
 
-  class Row < GovukComponent::Base
+  def default_attributes
+    {}
+  end
+
+  def classes
+    @classes ||= nil
+  end
+
+  class Row < ComponentBase
     attr_accessor :task_name, :status, :hint_text, :active
 
     def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, active: true, classes: [], html_attributes: {})

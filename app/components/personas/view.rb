@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Personas
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include ApplicationHelper
     with_collection_parameter :persona
     attr_reader :persona

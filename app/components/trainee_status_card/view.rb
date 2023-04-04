@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TraineeStatusCard
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :status, :count, :target
 
     STATUS_COLOURS = {

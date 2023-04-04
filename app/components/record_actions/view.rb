@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RecordActions
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include ApplicationHelper
     include SummaryHelper
 

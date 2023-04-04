@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ServiceUpdate::View < GovukComponent::Base
+class ServiceUpdate::View < ComponentBase
   attr_reader :service_update
 
   delegate :title, :content, :date, to: :service_update

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Degrees
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include ApplicationHelper
 
     def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true, has_errors: false, editable: false)

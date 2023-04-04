@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Header::View < GovukComponent::Base
+class Header::View < ComponentBase
   attr_reader :service_name, :items
 
   include ActiveModel

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PersonalDetails
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include SanitizeHelper
 
     def initialize(data_model:, has_errors: false, editable: false, minimal: false)

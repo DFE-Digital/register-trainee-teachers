@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Timeline
-  class View < GovukComponent::Base
+  class View < ComponentBase
     attr_reader :events
 
     def initialize(events:)

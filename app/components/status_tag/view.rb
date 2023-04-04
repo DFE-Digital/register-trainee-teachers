@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StatusTag::View < GovukComponent::Base
+class StatusTag::View < ComponentBase
   def initialize(trainee:, classes: "", hide_progress_tag: false)
     super(classes: classes, html_attributes: {})
     @trainee = trainee

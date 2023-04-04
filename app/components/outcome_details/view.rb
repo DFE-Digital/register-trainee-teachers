@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OutcomeDetails
-  class View < GovukComponent::Base
+  class View < ComponentBase
     include SummaryHelper
 
     attr_reader :data_model, :editable

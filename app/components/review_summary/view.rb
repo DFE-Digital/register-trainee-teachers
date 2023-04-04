@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ReviewSummary
-  class View < GovukComponent::Base
+  class View < ComponentBase
     renders_one :header
 
     def initialize(form:, invalid_data_view:)

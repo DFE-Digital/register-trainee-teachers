@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ErrorSummary::View < GovukComponent::Base
+class ErrorSummary::View < ComponentBase
   renders_one :header
 
   def initialize(renderable: false)
