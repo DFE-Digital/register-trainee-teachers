@@ -39,12 +39,12 @@ module BulkUpdate
 
       def dates!
         return unless headers.include?(date_header)
-        return if date_cells_sans_date_guidance.map(&:presence).any?
+        return if date_cells_without_date_guidance.map(&:presence).any?
 
         record.errors.add(:file, :no_dates_given)
       end
 
-      def date_cells_sans_date_guidance
+      def date_cells_without_date_guidance
         csv[date_header].to_a.reject { |cell| cell&.downcase&.strip == Reports::BulkRecommendReport::DATE_GUIDANCE.downcase }
       end
 
