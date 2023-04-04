@@ -40,7 +40,7 @@ module BulkUpdate
         # otherwise check if multiple in non-draft non-trn-received were found
         return @messages << error_message(:multiple_trainees_found_via, found_with:) if trainees_not_trn_received.size > 1
         # otherwise check if one was found outside of non-draft, non-trn_received
-        return @messages << error_message(:multiple_trainees_found_via, state: trainee_not_trn_received.state.humanize) if trainee_not_trn_received
+        return @messages << error_message(:trainee_wrong_state, state: trainee_not_trn_received.state.humanize) if trainee_not_trn_received
 
         @messages << error_message(:no_trainee_matched)
       end
@@ -50,9 +50,7 @@ module BulkUpdate
       end
 
       def trainees
-        return @trainees if defined?(@trainees)
-
-        @trainees = @trainees&.trn_received
+        @trainees&.trn_received
       end
 
       def trainees_not_trn_received
