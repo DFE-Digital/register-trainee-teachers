@@ -51,10 +51,10 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
   end
 
   def qts?
-    trainee.award_type == "QTS"
+    trainee&.award_type == "QTS"
   end
 
   def eyts?
-    trainee.award_type == "EYTS"
+    trainee&.award_type == "EYTS"
   end
 end
