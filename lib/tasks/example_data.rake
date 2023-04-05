@@ -145,7 +145,7 @@ namespace :example_data do
         # And for all possible trainee states...
         Trainee.states.keys.map(&:to_sym).each do |state|
           # Create small number of trainees
-          sample_size = rand(4...8)
+          sample_size = rand(18...34)
 
           sample_size.times do |sample_index|
             nationalities = [nationalities.sample]
