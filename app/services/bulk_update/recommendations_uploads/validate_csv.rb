@@ -12,6 +12,7 @@ module BulkUpdate
         header_row!
         identifier_header!
         date_header!
+        trainees!
         dates!
       end
 
@@ -48,6 +49,21 @@ module BulkUpdate
         csv[date_header].to_a.reject { |cell| cell&.downcase&.strip == Reports::BulkRecommendReport::DATE_GUIDANCE.downcase }
       end
 
+      def trainees!
+        return unless csv.empty? || (rows.one? && not_a_trainee_row?)
+
+        record.errors.add(:file, :no_trainees)
+      end
+
+      def not_a_trainee_row?
+        rows[0].any? do |cell|
+          # Either they've deleted all their trainees
+          cell.include?(Reports::BulkRecommendReport::DO_NOT_EDIT) ||
+            # Or they managed to export an empty CSV
+            cell.include?("No trainee data to export")
+        end
+      end
+
       def all_headers
         Reports::BulkRecommendReport::DEFAULT_HEADERS.map(&:downcase)
       end
@@ -62,6 +78,10 @@ module BulkUpdate
 
       def headers
         @headers ||= csv.headers
+      end
+
+      def rows
+        @rows ||= csv.entries
       end
     end
   end
