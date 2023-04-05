@@ -1349,6 +1349,7 @@ en:
               no_id_header: At least one identifying column is required (TRN, HESA ID or Trainee provider ID)
               no_date_header: Date QTS or EYTS standards met is required
               no_dates_given: No dates have been provided in this CSV
+              no_trainees: The selected file must contain at least one trainee
         bulk_update:
           recommendations_uploads:
             validate_trainee:
