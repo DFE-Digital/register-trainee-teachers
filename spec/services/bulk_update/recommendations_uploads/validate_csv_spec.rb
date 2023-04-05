@@ -41,7 +41,14 @@ module BulkUpdate
         it { expect(record.errors.first.message).to eql "No dates have been provided in this CSV" }
       end
 
-      context "given a CSV with no trainees" do
+      context "given a CSV with only headers, no trainees" do
+        let(:headers) { Reports::BulkRecommendReport::DEFAULT_HEADERS.join(",") }
+        let(:csv) { CSV.new(headers, **BulkUpdate::RecommendationsUploadForm::CSV_ARGS).read }
+
+        it { expect(record.errors.first.message).to eql "The selected file must contain at least one trainee" }
+      end
+
+      context "given a CSV with headers and 'No trainee data to export'" do
         let(:csv) { create_recommendations_upload_csv!(trainees: []) }
 
         it { expect(record.errors.first.message).to eql "The selected file must contain at least one trainee" }
