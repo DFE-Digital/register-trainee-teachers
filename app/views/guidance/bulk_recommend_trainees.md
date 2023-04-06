@@ -4,7 +4,7 @@ title: Bulk recommend trainees for QTS or EYTS
 ---
 
 ## Bulk recommend trainees for QTS or EYTS
-You can [recommend multiple trainees at the same time](/bulk-update/recommend/upload) for QTS or EYTS.
+You can [recommend multiple trainees at the same time](/bulk-update/recommend/choose-who-to-recommend) for QTS or EYTS.
 
 {inset-text}
 You cannot use this process to indicate that trainees have withdrawn or deferred, or to make changes to trainee
