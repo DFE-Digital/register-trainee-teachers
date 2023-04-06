@@ -22,9 +22,7 @@
 </p>
 
 <p class="govuk-body">
-  Read guidance about how to bulk recommend trainees for QTS or EYTS.
+  Read
+  <%= govuk_link_to("guidance about how to bulk recommend trainees for QTS or EYTS", bulk_recommend_trainees_guidance_path) %>
+  .
 </p>
-
-<%= register_form_with url: bulk_update_recommendations_uploads_path, local: true do |f| %>
-  <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
-<% end %>
