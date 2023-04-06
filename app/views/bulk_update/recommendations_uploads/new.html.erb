@@ -1,4 +1,7 @@
-<%= render PageTitle::View.new(text: "Bulk recommend trainees for QTS or EYTS") %>
+<%= render PageTitle::View.new(
+  text: "Choose who to recommend for QTS or EYTS",
+  has_errors: @recommendations_upload_form.errors.present?,
+  ) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
