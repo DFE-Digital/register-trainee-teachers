@@ -87,7 +87,7 @@ module RecordDetails
         let(:trainee) { create(:trainee, :withdrawn, trn: nil, submitted_for_trn_at: nil) }
 
         it "renders the page" do
-          expect(rendered_component).to have_text("withdrawn")
+          expect(rendered_component).to have_text(trainee.trainee_id)
         end
       end
 
@@ -104,38 +104,6 @@ module RecordDetails
 
         it "renders the trainee's region" do
           expect(rendered_component).to have_text(trainee.region)
-        end
-      end
-
-      context "when trainee state is deferred" do
-        let(:state) { :deferred }
-
-        it "renders the trainee deferral date" do
-          expect(rendered_component).to have_text(date_for_summary_view(trainee.defer_date))
-        end
-
-        it "renders the trainee status tag" do
-          expect(rendered_component).to have_text("deferred")
-        end
-
-        context "when trainee did not start ITT" do
-          let(:trainee) { create(:trainee, state, commencement_status: :itt_not_yet_started) }
-
-          it "renders text stating that the trainee deferred before starting" do
-            expect(rendered_component).to have_text(strip_tags(t("deferral_details.view.itt_started_but_trainee_did_not_start")))
-          end
-        end
-      end
-
-      context "when trainee state is withdrawn" do
-        let(:state) { :withdrawn }
-
-        it "renders the trainee withdrawal date" do
-          expect(rendered_component).to have_text(date_for_summary_view(trainee.withdraw_date))
-        end
-
-        it "renders the trainee state" do
-          expect(rendered_component).to have_text(I18n.t("record_details.view.status_date_prefix.#{trainee.state}"))
         end
       end
 

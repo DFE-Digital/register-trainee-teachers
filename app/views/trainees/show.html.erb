@@ -12,6 +12,24 @@
       editable: trainee_editable?) %>
 </div>
 
+<% if @trainee.withdrawn? %>
+  <div class="withdrawal-details">
+    <%= render WithdrawalDetails::View.new(WithdrawalForm.new(@trainee), editable: trainee_editable?, omit_start_date_row: true) %>
+  </div>
+<% end %>
+
+<% if @trainee.deferred? %>
+  <div class="deferral-details">
+    <%= render DeferralDetails::View.new(DeferralForm.new(@trainee), editable: trainee_editable?, omit_start_date: true) %>
+  </div>
+<% end %>
+
+<% if @trainee.awarded? or @trainee.recommended_for_award? %>
+  <div class="award-details">
+    <%= render OutcomeDetails::View.new(OutcomeDateForm.new(@trainee), editable: trainee_editable?) %>
+  </div>
+<% end %>
+
 <div class="course-details">
   <%= render CourseDetails::View.new(data_model: @trainee, editable: trainee_editable?) %>
 </div>

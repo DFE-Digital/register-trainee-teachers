@@ -22,8 +22,6 @@ module RecordDetails
         trainee_id_row,
         region,
         trn_row,
-        trainee_progress_row,
-        trainee_status_row,
         last_updated_row,
         record_created_row,
         trainee_start_date_row,
@@ -68,28 +66,6 @@ module RecordDetails
         {
           field_label: t(".submitted_for_trn"),
           field_value: submission_date,
-        }
-      end
-    end
-
-    def trainee_progress_row
-      return unless trainee.recommended_for_award? || trainee.awarded?
-
-      {
-        field_label: trainee.award_type,
-        field_value: render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + progress_date,
-      }
-    end
-
-    def trainee_status_row
-      return unless trainee.deferred? || trainee.withdrawn?
-
-      if trainee.withdrawn?
-        mappable_field(trainee_status_tag, t(".trainee_status"), trainee_withdrawal_path(trainee))
-      else
-        {
-          field_label: t(".trainee_status"),
-          field_value: trainee_status_tag,
         }
       end
     end

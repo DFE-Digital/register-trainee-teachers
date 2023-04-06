@@ -4,17 +4,18 @@ module DeferralDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_reader :data_model
+    attr_reader :data_model, :editable
 
-    def initialize(data_model)
+    def initialize(data_model, editable: true, omit_start_date: false)
       @data_model = data_model
+      @omit_start_date = omit_start_date
+      @editable = editable
     end
 
     def rows
-      [
-        trainee_start_date_row,
-        deferral_date_row,
-      ].compact
+      rows = [deferral_date_row]
+      rows.unshift(trainee_start_date_row) unless @omit_start_date
+      rows.compact
     end
 
     def trainee_start_date_row
