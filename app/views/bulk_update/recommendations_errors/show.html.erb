@@ -1,4 +1,7 @@
-<%= render PageTitle::View.new(text: "Review errors for #{pluralize(error_rows_count, "trainee")} in the CSV file you uploaded") %>
+<%= render PageTitle::View.new(
+  text: "Review errors for #{pluralize(error_rows_count, "trainee")} in the CSV file you uploaded",
+  has_errors: @recommendations_upload_form.errors.present?,
+  ) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: bulk_update_recommendations_upload_summary_path(recommendations_upload)) %>
