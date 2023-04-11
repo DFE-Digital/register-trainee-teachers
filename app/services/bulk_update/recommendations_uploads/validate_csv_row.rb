@@ -115,7 +115,7 @@ module BulkUpdate
       def lead_school
         return unless column_exists?(Reports::BulkRecommendReport::LEAD_SCHOOL)
 
-        @messages << error_message(:lead_school) if (trainee.lead_school_name || "-") != row.lead_school
+        @messages << error_message(:lead_school) if trainee.lead_school_name != row.lead_school
       end
 
       def qts_or_eyts

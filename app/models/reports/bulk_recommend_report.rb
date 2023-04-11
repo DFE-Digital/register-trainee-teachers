@@ -96,7 +96,7 @@ module Reports
         trainee_report.hesa_id,
         trainee_report.last_names,
         trainee_report.first_names,
-        trainee_report.lead_school_name.presence || "-",
+        trainee_report.lead_school_name.presence,
         trainee_report.qts_or_eyts,
         trainee_report.course_training_route,
         trainee_report.course_education_phase,

@@ -172,6 +172,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    csv-safe (3.2.1)
     cuprite (0.14.3)
       capybara (~> 3.0)
       ferrum (~> 0.13.0)
@@ -735,6 +736,7 @@ DEPENDENCIES
   capybara (~> 3.39)
   cloudfront-rails
   config (~> 4.1)
+  csv-safe
   cuprite (~> 0.13)
   data_migrate
   debug
