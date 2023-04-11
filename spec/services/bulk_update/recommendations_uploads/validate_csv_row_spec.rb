@@ -121,6 +121,34 @@ module BulkUpdate
             end
           end
         end
+
+        describe "award type" do
+          let(:award_type_error) { "QTS/EYTS declaration does not match" }
+          let(:report_award_type) { nil }
+          let(:overwrite) do
+            [
+              { Reports::BulkRecommendReport::QTS_OR_EYTS => report_award_type },
+            ]
+          end
+
+          let!(:trainee) { create(:trainee, :early_years_assessment_only) }
+
+          context "doesn't match" do
+            let(:report_lead_school) { "QTS" }
+
+            it "errors" do
+              expect(service.messages).to include(award_type_error)
+            end
+          end
+
+          context "matches but with differing case" do
+            let!(:report_award_type) { "eyts" }
+
+            it "does not error" do
+              expect(service.messages).not_to include(award_type_error)
+            end
+          end
+        end
       end
     end
   end

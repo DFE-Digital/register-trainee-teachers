@@ -18,7 +18,7 @@
   </li>
   <li>
     Upload the CSV file.
-    <%= f.govuk_file_field :file, label: { hidden: true } %>
+    <%= f.govuk_file_field(:file, label: { hidden: true }, accept: ".csv") %>
   </li>
 </ol>
 
@@ -30,4 +30,4 @@
   </p>
 </div>
 
-<%= f.govuk_submit "Upload file and check who you’ll recommend" %>
+<%= f.govuk_submit("Upload file and check who you’ll recommend") %>
