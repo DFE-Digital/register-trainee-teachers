@@ -55,9 +55,9 @@ module BulkUpdate
             it do
               expect(service.messages).to eql(
                 [
-                  "TRN must be 7 characters long and contain only numbers",
-                  "HESA ID must be 13 or 17 characters long and contain only numbers",
-                  "Date could not be parsed, please use the format dd/mm/yyyy e.g. 27/02/2022",
+                  "TRN must be 7 numbers",
+                  "HESA ID must be 13 or 17 numbers",
+                  "Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023",
                 ],
               )
             end
@@ -102,20 +102,19 @@ module BulkUpdate
             it "is returns all expected error messages" do
               expect(service.messages).to eql(
                 [
-                  "TRN must be 7 characters long and contain only numbers",
-                  "HESA ID must be 13 or 17 characters long and contain only numbers",
-                  "Date could not be parsed, please use the format dd/mm/yyyy e.g. 27/02/2022",
-                  "Trainee TRN does not match",
-                  "Trainee HESA ID does not match",
-                  "Provider trainee id does not match",
-                  "Trainee first names do not match",
-                  "Trainee last names do not match",
-                  "Lead school does not match",
-                  "QTS/EYTS declaration does not match",
-                  "Route does not match",
-                  "Phase does not match",
-                  "Age range does not match",
-                  "Subject does not match",
+                  "TRN must be 7 numbers",
+                  "HESA ID must be 13 or 17 numbers",
+                  "Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023",
+                  "TRN must match trainee record", "HESA ID must match trainee record",
+                  "Provider trainee ID must match trainee record",
+                  "First name must match trainee record",
+                  "Last name must match trainee record",
+                  "Lead school must match trainee record",
+                  "QTS or EYTS must match trainee record",
+                  "Route must match trainee record",
+                  "Phase must match trainee record",
+                  "Age range must match trainee record",
+                  "Subject must match trainee record"
                 ],
               )
             end
@@ -123,7 +122,7 @@ module BulkUpdate
         end
 
         describe "award type" do
-          let(:award_type_error) { "QTS/EYTS declaration does not match" }
+          let(:award_type_error) { "QTS or EYTS must match trainee record" }
           let(:report_award_type) { nil }
           let(:overwrite) do
             [

@@ -38,13 +38,13 @@ module BulkUpdate
       def validate!
         return if trainee
         # if no singular trainee in state trn_recevied was found then check if there are multiple in trn_received
-        return @messages << error_message(:multiple_trainees_trn_recieved, found_with:) if trainees.size > 1
+        return @messages << error_message(:multiple_trainees_trn_received, count: trainees.count, found_with: found_with) if trainees.size > 1
         # otherwise check if multiple in non-draft non-trn-received were found
-        return @messages << error_message(:multiple_trainees_found_via, found_with:) if trainees_not_trn_received.size > 1
+        return @messages << error_message(:multiple_trainees_found_via, count: trainees_not_trn_received.count, found_with: found_with) if trainees_not_trn_received.size > 1
         # otherwise check if one was found outside of non-draft, non-trn_received
-        return @messages << error_message(:trainee_wrong_state, state: trainee_not_trn_received.state.humanize) if trainee_not_trn_received
+        return @messages << error_message(:trainee_wrong_state, state: format_output(trainee_not_trn_received.state)) if trainee_not_trn_received
 
-        @messages << error_message(:no_trainee_matched)
+        @messages << error_message(:no_trainee_matched, id_available: id_columns)
       end
 
       def found_with
@@ -53,6 +53,17 @@ module BulkUpdate
 
       def trainees
         @trainees&.trn_received
+      end
+
+      def format_output(state)
+        case state
+        when "submitted_for_trn"
+          "pending TRN"
+        when "recommended_for_award"
+          "#{trainee_not_trn_received.award_type} recommended"
+        else
+          state.gsub("_", " ")
+        end
       end
 
       def trainees_not_trn_received
@@ -84,6 +95,18 @@ module BulkUpdate
           @found_with = :hesa_id if t.any?
           t
         end
+      end
+
+      def id_columns
+        formatted = { trn: "TRN", hesa_id: "HESA ID", provider_trainee_id: "provider trainee ID" }
+        output = []
+        %i[trn hesa_id provider_trainee_id].each do |field|
+          output << formatted[field] if row.public_send(field)
+        end
+        if output.length == 1 && output.include?("provider trainee ID")
+          output[0] = "Provider trainee ID"
+        end
+        output.length > 1 ? "#{output[0..-2].join(', ')} or #{output.last}" : output.join
       end
 
       def trainees_by_provider_trainee_id!

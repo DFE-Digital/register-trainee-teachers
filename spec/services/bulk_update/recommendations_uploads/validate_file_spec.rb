@@ -14,13 +14,13 @@ module BulkUpdate
       context "given a file that is empty" do
         let(:file) { double("file", size: 0) }
 
-        it { expect(record.errors.first.message).to eql "File cannot be empty" }
+        it { expect(record.errors.first.message).to eql "The selected file is empty" }
       end
 
       context "given a file that is greater than 1MB" do
         let(:file) { double("file", size: 2.megabytes) }
 
-        it { expect(record.errors.first.message).to eql "File must be no greater than 1MB" }
+        it { expect(record.errors.first.message).to eql "The selected file must be smaller than 1MB" }
       end
     end
   end

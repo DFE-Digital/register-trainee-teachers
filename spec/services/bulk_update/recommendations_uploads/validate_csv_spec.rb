@@ -26,19 +26,19 @@ module BulkUpdate
       context "given a CSV with a missing identifying header" do
         let(:columns_to_delete) { Reports::BulkRecommendReport::IDENTIFIERS.map(&:downcase) }
 
-        it { expect(record.errors.first.message).to eql "At least one identifying column is required (TRN, HESA ID or Trainee provider ID)" }
+        it { expect(record.errors.first.message).to eql "The selected file must contain a column for TRN, trainee provider ID or HESA ID" }
       end
 
       context "given a CSV with no date header" do
         let(:columns_to_delete) { [Reports::BulkRecommendReport::DATE.downcase] }
 
-        it { expect(record.errors.first.message).to eql "Date QTS or EYTS standards met is required" }
+        it { expect(record.errors.first.message).to eql "The selected file must contain a column for date QTS or EYTS standards met" }
       end
 
       context "given a CSV with no dates" do
         let(:csv) { create_recommendations_upload_csv! }
 
-        it { expect(record.errors.first.message).to eql "No dates have been provided in this CSV" }
+        it { expect(record.errors.first.message).to eql "The selected file must contain date QTS or EYTS standards met for at least one trainee" }
       end
 
       context "given a CSV with only headers, no trainees" do

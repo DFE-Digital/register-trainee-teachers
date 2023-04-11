@@ -39,7 +39,7 @@ module BulkUpdate
             )
 
             row_errors = RecommendationsUploadRow.find_by(trn: "241a295").row_errors
-            expect(row_errors.first.message).to eql "TRN must be 7 characters long and contain only numbers"
+            expect(row_errors.first.message).to eql "TRN must be 7 numbers"
           end
         end
 
