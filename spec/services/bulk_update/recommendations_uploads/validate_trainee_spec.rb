@@ -29,7 +29,7 @@ module BulkUpdate
             it { expect(service.trainee).to eql trainee }
           end
 
-          context "In the wrong state" do
+          context "In the wrong state - withdrawn" do
             let(:trainee) { create(:trainee, :bulk_recommend, state: :withdrawn) }
 
             describe "#valid?" do
@@ -37,7 +37,39 @@ module BulkUpdate
             end
 
             describe "#messages" do
-              it { expect(service.messages).to eql ["Trainee is Withdrawn"] }
+              it { expect(service.messages).to eql ["The trainee has withdrawn status - you can only recommend trainees with TRN received status"] }
+            end
+
+            describe "#trainee" do
+              it { expect(service.trainee).to be_nil }
+            end
+          end
+
+          context "In the wrong state - recommended for award" do
+            let(:trainee) { create(:trainee, :bulk_recommend, state: :recommended_for_award) }
+
+            describe "#valid?" do
+              it { expect(service.valid?).to be false }
+            end
+
+            describe "#messages" do
+              it { expect(service.messages).to eql ["The trainee has QTS recommended status - you can only recommend trainees with TRN received status"] }
+            end
+
+            describe "#trainee" do
+              it { expect(service.trainee).to be_nil }
+            end
+          end
+
+          context "In the wrong state - submitted for TRN" do
+            let(:trainee) { create(:trainee, :bulk_recommend, state: :submitted_for_trn) }
+
+            describe "#valid?" do
+              it { expect(service.valid?).to be false }
+            end
+
+            describe "#messages" do
+              it { expect(service.messages).to eql ["The trainee has pending TRN status - you can only recommend trainees with TRN received status"] }
             end
 
             describe "#trainee" do
@@ -89,6 +121,32 @@ module BulkUpdate
         end
       end
 
+      context "with multiple trainee matches with not trn received" do
+        let(:trainee) { create(:trainee, :bulk_recommend, state: :deferred) }
+
+        context "and a row with only TRN" do
+          let!(:trainee_two) { create(:trainee, provider: trainee.provider, trn: trainee.trn, state: :deferred) }
+
+          let(:row) do
+            Row.new({
+              "trn" => trainee.trn,
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be false }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql ["2 trainee records have the same TRN but none have TRN received status - you can only recommend trainees with TRN received status"] }
+          end
+
+          describe "#trainee" do
+            it { expect(service.trainee).to be_nil }
+          end
+        end
+      end
+
       context "with multiple trainee matches" do
         let(:trainee) { create(:trainee, :bulk_recommend) }
 
@@ -106,7 +164,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["Multiple trainees in state 'trn received' found via TRN"] }
+            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same TRN - contact becomingateacher@digital.education.gov.uk to fix this"] }
           end
 
           describe "#trainee" do
@@ -130,7 +188,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["Multiple trainees in state 'trn received' found via HESA ID"] }
+            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same HESA ID - contact becomingateacher@digital.education.gov.uk to fix this"] }
           end
 
           describe "#trainee" do
@@ -152,11 +210,78 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["Multiple trainees in state 'trn received' found via the provider trainee ID"] }
+            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same the provider trainee ID - contact becomingateacher@digital.education.gov.uk to fix this"] }
           end
 
           describe "#trainee" do
             it { expect(service.trainee).to be_nil }
+          end
+        end
+      end
+
+      context "with no trainee matches" do
+        let(:trainee) { create(:trainee, :bulk_recommend) }
+
+        context "and a row with only TRN" do
+          let(:row) do
+            Row.new({
+              "trn" => "NotMatch",
+            })
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql ["TRN must match a trainee record"] }
+          end
+        end
+
+        context "and a row with only HESA ID" do
+          let(:row) do
+            Row.new({
+              "hesa id" => "NotMatch",
+            })
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql ["HESA ID must match a trainee record"] }
+          end
+        end
+
+        context "and a row with only Provider Trainee ID" do
+          let(:row) do
+            Row.new({
+              "provider trainee id" => "NotMatch",
+            })
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql ["Provider trainee ID must match a trainee record"] }
+          end
+        end
+
+        context "and a row with HESA ID and Provider Trainee ID" do
+          let(:row) do
+            Row.new({
+              "hesa id" => "NotMatch",
+              "provider trainee id" => "NotMatch",
+            })
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql ["HESA ID or provider trainee ID must match a trainee record"] }
+          end
+        end
+
+        context "and a row with HESA ID, Provider Trainee ID and TRN" do
+          let(:row) do
+            Row.new({
+              "hesa id" => "NotMatch",
+              "provider trainee id" => "NotMatch",
+              "trn" => "NotMatch",
+            })
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql ["TRN, HESA ID or provider trainee ID must match a trainee record"] }
           end
         end
       end

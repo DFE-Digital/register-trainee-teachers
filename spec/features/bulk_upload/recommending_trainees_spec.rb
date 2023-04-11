@@ -171,7 +171,7 @@ private
   alias and_i_submit_form_with_no_file when_i_submit_form_with_no_file_attached
 
   def then_i_see_validation_errors
-    expect(recommendations_checks_show_page).to have_text("Please select a file")
+    expect(recommendations_checks_show_page).to have_text("Select a CSV file")
   end
 
   def and_i_remain_on_the_change_upload_page
