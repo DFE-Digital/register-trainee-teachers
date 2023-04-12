@@ -29,8 +29,8 @@ module Trainees
 
     def trainee_dormant?
       [
-        Hesa::CodeSets::Modes::DORMANT_FULL_TIME,
-        Hesa::CodeSets::Modes::DORMANT_PART_TIME,
+        ::Hesa::CodeSets::Modes::DORMANT_FULL_TIME,
+        ::Hesa::CodeSets::Modes::DORMANT_PART_TIME,
       ].include?(mode)
     end
 
@@ -61,19 +61,19 @@ module Trainees
     end
 
     def completed_with_credit_or_award?
-      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD
+      reason_for_leaving == ::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD
     end
 
     def completed_with_credit_or_award_unknown?
-      reason_for_leaving == Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN
+      reason_for_leaving == ::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN
     end
 
     def reason_for_leaving
-      Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
+      ::Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
     end
 
     def mode
-      Hesa::CodeSets::Modes::MAPPING[hesa_trainee[:mode]]
+      ::Hesa::CodeSets::Modes::MAPPING[hesa_trainee[:mode]]
     end
   end
 end

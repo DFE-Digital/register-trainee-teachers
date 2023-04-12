@@ -76,13 +76,23 @@ module RecordActions
     def defer_link(capitalise)
       text = maybe_capitalise(t("views.trainees.edit.defer"), capitalise)
       text += this_trainee_text if delete_allowed_but_not_withdraw?
-      govuk_link_to(text, trainee_deferral_path(trainee), class: "defer")
+      path = (if trainee.hesa_record?
+                trainee_interstitials_hesa_deferrals_path(trainee)
+              else
+                trainee_deferral_path(trainee)
+              end)
+      govuk_link_to(text, path, class: "defer")
     end
 
     def reinstate_link(capitalise)
       text = maybe_capitalise(t("views.trainees.edit.reinstate"), capitalise)
       text += this_trainee_text if delete_allowed_but_not_withdraw?
-      govuk_link_to(text, trainee_reinstatement_path(trainee), class: "reinstate")
+      path = (if trainee.hesa_record?
+                trainee_interstitials_hesa_reinstatements_path(trainee)
+              else
+                trainee_reinstatement_path(trainee)
+              end)
+      govuk_link_to(text, path, class: "reinstate")
     end
 
     def withdraw_link(capitalise)

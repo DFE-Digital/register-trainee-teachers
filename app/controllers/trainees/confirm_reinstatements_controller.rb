@@ -20,5 +20,9 @@ module Trainees
     def reinstatement
       @reinstatement ||= ReinstatementForm.new(trainee)
     end
+
+    def authorize_trainee
+      authorize(trainee, :reinstate?)
+    end
   end
 end

@@ -170,6 +170,15 @@ Rails.application.routes.draw do
       resource :start_date_verification, only: %i[show update], path: "/start-date-verification"
       resource :forbidden_deletes, only: %i[show create], path: "/delete-forbidden"
       resource :forbidden_withdrawal, only: %i[show], path: "/withdrawal-forbidden"
+
+      namespace :hesa, path: nil do
+        resource :enable_edits, only: %i[show update], path: "/editing-enabled"
+      end
+
+      namespace :interstitials, path: "/interstitial" do
+        resource :hesa_deferrals, only: :show, path: "/defer"
+        resource :hesa_reinstatements, only: :show, path: "/reinstate"
+      end
     end
   end
 
