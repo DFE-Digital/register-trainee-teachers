@@ -1,0 +1,17 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.interstitials.common.show") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back), consider_confirm_page: false) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l"><%= trainee_name(@trainee) %></span>
+    <h1 class="govuk-heading-l">You’re making changes to a trainee imported from HESA</h1>
+    <p class="govuk-body">
+      The record is still linked to the HESA service. If you update it using HESA then any changes you’ve made in
+      this service will be replaced by the data from HESA.
+    </p>
+    <%= govuk_link_to link_text, link_path, class: "govuk-button continue" %>
+  </div>
+</div>
