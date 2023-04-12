@@ -10,8 +10,6 @@ module Trainees
     end
 
     def update
-      authorize(trainee, :defer?)
-
       @deferral_form = DeferralForm.new(trainee, params: trainee_params, user: current_user)
 
       if @deferral_form.stash
@@ -37,6 +35,10 @@ module Trainees
 
     def redirect_to_start_date_selection
       redirect_to(trainee_start_date_verification_path(trainee, context: :defer))
+    end
+
+    def authorize_trainee
+      authorize(trainee, :defer?)
     end
   end
 end

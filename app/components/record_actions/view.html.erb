@@ -1,13 +1,21 @@
 <% if display_actions? %>
-  <div class="record-actions">
+  <div class="record-actions govuk-!-padding-bottom-3">
+    <div class="govuk-button-group govuk-!-margin-bottom-0">
+      <% if can_recommend_for_award? %>
+        <%= render GovukButtonLinkTo::View.new(body: button_text,
+                                               url: edit_trainee_outcome_details_outcome_date_path(trainee),
+                                               class_option: "recommend-for-award govuk-!-margin-bottom-0") %>
+      <% else %>
+        <div class="govuk-inset-text govuk-!-margin-0"><%= inset_text %></div>
+      <% end %>
 
-    <% if can_recommend_for_award? %>
-      <%= render GovukButtonLinkTo::View.new(body: button_text, url: edit_trainee_outcome_details_outcome_date_path(trainee), class_option: "govuk-!-margin-bottom-0") %>
-    <% else %>
-      <div class="govuk-inset-text govuk-!-margin-0">
-        <%= inset_text %>
-      </div>
-    <% end %>
+      <% if @trainee.hesa_record? && !@trainee.hesa_editable? %>
+        <%= govuk_button_to "Enable editing for trainee record",
+                            trainee_hesa_enable_edits_path(@trainee),
+                            method: :patch,
+                            class: "govuk-button--inline govuk-!-margin-bottom-0 govuk-button--secondary enable-editing" %>
+      <% end %>
+    </div>
 
     <div class="record-actions__links">
       <p class="govuk-body govuk-!-margin-bottom-0">
@@ -16,5 +24,5 @@
     </div>
   </div>
 
-  <hr class='govuk-section-break govuk-section-break--m govuk-section-break--visible'>
+  <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
 <% end %>

@@ -100,7 +100,7 @@ private
   end
 
   def display_record_actions?
-    @display_record_actions ||= policy(trainee).show_actions?
+    @display_record_actions ||= policy(trainee).allow_actions?
   end
 
   def ensure_trainee_is_not_draft!

@@ -60,15 +60,15 @@ class TraineePolicy
   end
 
   def withdraw?
-    write? && (defer? || trainee.deferred? || user_is_system_admin?)
+    allow_actions? && (defer? || trainee.deferred? || user_is_system_admin?)
   end
 
   def defer?
-    write? && (trainee.submitted_for_trn? || trainee.trn_received?)
+    allow_actions? && (trainee.submitted_for_trn? || trainee.trn_received?)
   end
 
   def reinstate?
-    write? && trainee.deferred?
+    allow_actions? && trainee.deferred?
   end
 
   def recommended?
@@ -76,7 +76,7 @@ class TraineePolicy
   end
 
   def recommend_for_award?
-    write? && trainee.trn_received?
+    allow_actions? && trainee.trn_received?
   end
 
   def export?
@@ -87,8 +87,7 @@ class TraineePolicy
     user.lead_school?
   end
 
-  # This is a temporary method until HESA trainees are editable
-  def show_actions?
+  def allow_actions?
     return false if user_is_read_only?
 
     user_is_system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
@@ -108,7 +107,11 @@ private
   def write?
     return false if user_is_read_only?
 
-    user_is_system_admin? || (!trainee.hesa_record? && user_in_provider_context? && trainee.awaiting_action?)
+    user_is_system_admin? || (
+      user_in_provider_context? && trainee.awaiting_action? && (
+        !trainee.hesa_record? || trainee.hesa_editable?
+      )
+    )
   end
 
   def user_in_provider_context?

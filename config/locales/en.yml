@@ -432,6 +432,11 @@ en:
           show: Withdrawal forbidden
         start_date_verification:
           show: Did the trainee start their ITT?
+        permissions:
+          show: Editing enabled
+        interstitials:
+          common:
+            show: You’re making changes to a trainee imported from HESA
       providers:
         index: Providers
         new: Add a provider
@@ -503,6 +508,7 @@ en:
           applying_for_grant: Funding method updated
           applying_for_bursary: Funding method updated
           iqts_country: Country or territory of training updated
+          hesa_editable: Editing enabled
         degree:
           create: Degree added
           destroy: Degree deleted
@@ -730,7 +736,7 @@ en:
           trainee_start_year: *trainee_start_year
           type_of_training: Type of training
       edit:
-        delete: delete this record,
+        delete: delete
         defer: defer
         withdraw: withdraw
         reinstate: reinstate
@@ -1679,8 +1685,7 @@ en:
       bad_request: The query param needs to be at least %{length} characters
   layouts:
     trainee_record:
-      hesa_deferred_inset: You can reinstate or withdraw them. If you reinstate them then you can recommend them for %{award_level}. You cannot make other changes.
-      hesa_in_training_inset: You can defer, withdraw or recommend them for %{award_level}. You cannot make other changes.
-      hesa_inset: This trainee was imported from HESA.
+      hesa_inset: This trainee was imported from HESA. You can recommend, defer or withdraw them. You need to enable editing to make other changes.
+      hesa_editable_inset: Editing has been enabled for this trainee. The record is still linked to the HESA service. If you update it using HESA then any changes you’ve made in this service will be replaced by the data from HESA.
       qts_award_level: QTS
       eyts_award_level: EYTS

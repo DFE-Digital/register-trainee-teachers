@@ -37,6 +37,7 @@
 #  ethnic_background               :text
 #  ethnic_group                    :integer
 #  first_names                     :text
+#  hesa_editable                   :boolean          default(FALSE)
 #  hesa_updated_at                 :datetime
 #  international_address           :text
 #  iqts_country                    :string

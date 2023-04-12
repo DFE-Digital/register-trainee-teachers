@@ -20,5 +20,9 @@ module Trainees
     def withdrawal
       @withdrawal ||= WithdrawalForm.new(trainee)
     end
+
+    def authorize_trainee
+      authorize(trainee, :withdraw?)
+    end
   end
 end

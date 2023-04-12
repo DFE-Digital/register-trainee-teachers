@@ -15,7 +15,7 @@ module Trainees
     class HesaImportError < StandardError; end
 
     def initialize(student_node:, record_source:)
-      @hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node:)
+      @hesa_trainee = ::Hesa::Parsers::IttRecord.to_attributes(student_node:)
       @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
       @record_source = record_source
       @current_trainee_state = @trainee.state.to_sym
@@ -148,7 +148,7 @@ module Trainees
     end
 
     def sex
-      Hesa::CodeSets::Sexes::MAPPING[hesa_trainee[:sex]]
+      ::Hesa::CodeSets::Sexes::MAPPING[hesa_trainee[:sex]]
     end
 
     def nationalities
@@ -160,16 +160,16 @@ module Trainees
     end
 
     def training_route
-      Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_trainee[:training_route]]
+      ::Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_trainee[:training_route]]
     end
 
     def ethnic_background
-      Hesa::CodeSets::Ethnicities::MAPPING[hesa_trainee[:ethnic_background]]
+      ::Hesa::CodeSets::Ethnicities::MAPPING[hesa_trainee[:ethnic_background]]
     end
 
     def disabilities
       (1..9).map do |n|
-        Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee["disability#{n}".to_sym]]
+        ::Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee["disability#{n}".to_sym]]
       end.compact
     end
 
@@ -203,7 +203,7 @@ module Trainees
     end
 
     def training_initiative
-      Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_trainee[:training_initiative]]
+      ::Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_trainee[:training_initiative]]
     end
 
     # Use HESA's itt_commencement_date first, this is populated when the trainee
@@ -225,7 +225,7 @@ module Trainees
     end
 
     def course_subject_name(subject_code)
-      Hesa::CodeSets::CourseSubjects::MAPPING[subject_code]
+      ::Hesa::CodeSets::CourseSubjects::MAPPING[subject_code]
     end
 
     def course_subject_one_name
@@ -247,20 +247,20 @@ module Trainees
     end
 
     def funding_entity_id
-      Hesa::CodeSets::BursaryLevels::MAPPING[hesa_trainee[:bursary_level]]
+      ::Hesa::CodeSets::BursaryLevels::MAPPING[hesa_trainee[:bursary_level]]
     end
 
     # This field indicates the mode the student was reported on for the DfE census in their first year.
     def study_mode
-      Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:mode]]
+      ::Hesa::CodeSets::StudyModes::MAPPING[hesa_trainee[:mode]]
     end
 
     def course_age_range
-      Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
+      ::Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
     end
 
     def reason_for_leaving
-      Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
+      ::Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
     end
 
     def create_degrees!
@@ -268,7 +268,7 @@ module Trainees
     end
 
     def store_hesa_metadata!
-      hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee:)
+      hesa_metadatum = ::Hesa::Metadatum.find_or_initialize_by(trainee:)
       hesa_metadatum.assign_attributes(itt_aim: itt_aim,
                                        itt_qualification_aim: itt_qualification_aim,
                                        fundability: fundability,
@@ -280,15 +280,15 @@ module Trainees
     end
 
     def itt_aim
-      Hesa::CodeSets::IttAims::MAPPING[hesa_trainee[:itt_aim]]
+      ::Hesa::CodeSets::IttAims::MAPPING[hesa_trainee[:itt_aim]]
     end
 
     def itt_qualification_aim
-      Hesa::CodeSets::IttQualificationAims::MAPPING[hesa_trainee[:itt_qualification_aim]]
+      ::Hesa::CodeSets::IttQualificationAims::MAPPING[hesa_trainee[:itt_qualification_aim]]
     end
 
     def fundability
-      Hesa::CodeSets::FundCodes::MAPPING[hesa_trainee[:fund_code]]
+      ::Hesa::CodeSets::FundCodes::MAPPING[hesa_trainee[:fund_code]]
     end
 
     def mapped_trainee_state
@@ -296,7 +296,7 @@ module Trainees
     end
 
     def check_for_missing_hesa_mappings!
-      Hesa::ValidateMapping.call(hesa_trainee:, record_source:)
+      ::Hesa::ValidateMapping.call(hesa_trainee:, record_source:)
     end
   end
 end
