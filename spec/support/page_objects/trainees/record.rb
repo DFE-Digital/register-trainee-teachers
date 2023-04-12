@@ -11,7 +11,7 @@ module PageObjects
       element :trainee_name, ".govuk-heading-xl"
       element :trn_status, ".govuk-tag.trainee-status", match: :first
 
-      element :record_outcome, ".record-actions > .govuk-button"
+      element :record_outcome, ".govuk-button.recommend-for-award"
       element :reinstate, ".govuk-link.reinstate"
       element :withdraw, ".govuk-link.withdraw"
       element :undo_withdrawal, "a", text: "Undo withdrawal"
@@ -32,6 +32,7 @@ module PageObjects
       element :change_course_details, "a", text: "Change course", visible: false
       element :change_trainee_status, "a", text: "Change status", visible: false
       element :withdrawal_details_component, "h2", text: "Withdrawal details", visible: false
+      element :enable_editing, ".enable-editing"
     end
   end
 end

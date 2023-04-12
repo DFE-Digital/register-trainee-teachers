@@ -7,8 +7,6 @@ module Trainees
     end
 
     def update
-      authorize(trainee, :withdraw?)
-
       @withdrawal_form = WithdrawalForm.new(trainee, params: trainee_params, user: current_user)
 
       if @withdrawal_form.stash
@@ -26,6 +24,10 @@ module Trainees
         .transform_keys do |key|
           MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end
+    end
+
+    def authorize_trainee
+      authorize(trainee, :withdraw?)
     end
   end
 end

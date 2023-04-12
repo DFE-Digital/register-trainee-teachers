@@ -107,14 +107,14 @@ module Trainees
     end
 
     def ethnic_background
-      Hesa::CodeSets::Ethnicities::NAME_MAPPING[csv_row["Ethnicity"]]
+      ::Hesa::CodeSets::Ethnicities::NAME_MAPPING[csv_row["Ethnicity"]]
     end
 
     def disabilities
       return [] if csv_row["Disabilities"].nil?
 
       disabilities = csv_row["Disabilities"].split(",").map(&:strip)
-      disabilities.map { |disability| Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
+      disabilities.map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
     end
 
     def itt_start_date
