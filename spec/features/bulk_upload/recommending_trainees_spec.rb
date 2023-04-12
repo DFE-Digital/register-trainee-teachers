@@ -130,7 +130,7 @@ private
   end
 
   def then_i_see_count_missing_dates
-    expect(recommendations_upload_show_page).to have_text("1 trainee who will be recommended")
+    expect(recommendations_upload_show_page).to have_text("The trainee who will be recommended")
     expect(recommendations_upload_show_page).to have_text("1 trainee who will not be recommended")
   end
 
