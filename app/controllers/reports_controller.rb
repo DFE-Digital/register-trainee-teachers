@@ -70,7 +70,7 @@ private
   end
 
   def bulk_recommend_trainees
-    policy_scope(FindBulkRecommendTrainees.call)
+    policy_scope(FindBulkRecommendTrainees.call).order(last_name: :asc)
   end
 
   def time_now
