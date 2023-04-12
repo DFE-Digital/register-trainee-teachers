@@ -9,8 +9,6 @@ module Trainees
     end
 
     def update
-      authorize(trainee, :reinstate?)
-
       @reinstatement_form = ReinstatementForm.new(trainee, params: trainee_params, user: current_user)
 
       if @reinstatement_form.stash
@@ -32,6 +30,10 @@ module Trainees
 
     def redirect_to_confirm_reinstatement
       redirect_to(trainee_confirm_reinstatement_path(trainee))
+    end
+
+    def authorize_trainee
+      authorize(trainee, :reinstate?)
     end
   end
 end

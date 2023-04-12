@@ -474,6 +474,18 @@ module Features
       @recommendations_upload_cancel_page ||= PageObjects::RecommendationsUploads::Cancel.new
     end
 
+    def hesa_editing_enabled_page
+      @hesa_editing_enabled_page ||= PageObjects::Trainees::Hesa::EnableEdits::Show.new
+    end
+
+    def interstitials_hesa_defer_page
+      @interstitials_hesa_defer_page ||= PageObjects::Interstitials::Defer.new
+    end
+
+    def interstitials_hesa_reinstate_page
+      @interstitials_hesa_reinstate_page ||= PageObjects::Interstitials::Reinstate.new
+    end
+
   private
 
     def progress_with_prefix(status)

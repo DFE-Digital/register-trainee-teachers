@@ -54,6 +54,7 @@ module Trainees
       employing_school_id
       iqts_country
       withdraw_date
+      hesa_editable
     ].freeze
 
     delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, :comment, to: :audit

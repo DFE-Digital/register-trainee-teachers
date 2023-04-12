@@ -7,9 +7,9 @@ module Trainees
     let(:hesa_stub_attributes) { {} }
     let(:hesa_api_stub) { ApiStubs::HesaApi.new(hesa_stub_attributes) }
     let(:hesa_xml) { hesa_api_stub.raw_xml }
-    let(:hesa_trainee) { Hesa::Parsers::IttRecord.to_attributes(student_node: hesa_api_stub.student_node) }
-    let(:hesa_reason_for_leaving_codes) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
-    let(:hesa_mode_codes) { Hesa::CodeSets::Modes::MAPPING.invert }
+    let(:hesa_trainee) { ::Hesa::Parsers::IttRecord.to_attributes(student_node: hesa_api_stub.student_node) }
+    let(:hesa_reason_for_leaving_codes) { ::Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
+    let(:hesa_mode_codes) { ::Hesa::CodeSets::Modes::MAPPING.invert }
     let(:hesa_trn) { Faker::Number.number(digits: 7) }
     let(:date_today) { Time.zone.today }
 
@@ -40,7 +40,7 @@ module Trainees
         context "and has a HESA TRN but does not have a Register TRN" do
           let(:hesa_stub_attributes) do
             {
-              reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
+              reason_for_leaving: hesa_reason_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
               trn: hesa_trn,
             }
           end
@@ -51,7 +51,7 @@ module Trainees
         context "and has no HESA TRN" do
           let(:hesa_stub_attributes) do
             {
-              reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
+              reason_for_leaving: hesa_reason_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
               trn: nil,
             }
           end
@@ -64,7 +64,7 @@ module Trainees
         context "and they have a HESA TRN but do not have Register TRN" do
           let(:hesa_stub_attributes) do
             {
-              reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
+              reason_for_leaving: hesa_reason_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
               trn: hesa_trn,
             }
           end
@@ -75,7 +75,7 @@ module Trainees
         context "and they have no HESA TRN" do
           let(:hesa_stub_attributes) do
             {
-              reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
+              reason_for_leaving: hesa_reason_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
               trn: nil,
             }
           end
@@ -103,7 +103,7 @@ module Trainees
       context "when the trainee's reason for leaving is COMPLETED_WITH_CREDIT_OR_AWARD" do
         let(:hesa_stub_attributes) do
           {
-            reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
+            reason_for_leaving: hesa_reason_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD],
           }
         end
 
@@ -113,7 +113,7 @@ module Trainees
       context "when the trainee's reason for leaving is COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN" do
         let(:hesa_stub_attributes) do
           {
-            reason_for_leaving: hesa_reason_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
+            reason_for_leaving: hesa_reason_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
           }
         end
 
@@ -131,7 +131,7 @@ module Trainees
         let(:hesa_stub_attributes) do
           { reason_for_leaving: hesa_reason_for_leaving_codes[WithdrawalReasons::FOR_ANOTHER_REASON],
             end_date: date_today,
-            mode: hesa_mode_codes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME] }
+            mode: hesa_mode_codes[::Hesa::CodeSets::Modes::DORMANT_FULL_TIME] }
         end
 
         it { is_expected.to eq(:withdrawn) }
@@ -140,7 +140,7 @@ module Trainees
       context "when a trainee has a dormant mode but reason for leaving is nil" do
         let(:hesa_stub_attributes) do
           { end_date: date_today,
-            mode: hesa_mode_codes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME] }
+            mode: hesa_mode_codes[::Hesa::CodeSets::Modes::DORMANT_FULL_TIME] }
         end
 
         it { is_expected.to eq(:deferred) }
