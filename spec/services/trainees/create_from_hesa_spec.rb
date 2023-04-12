@@ -12,8 +12,8 @@ module Trainees
     let(:hesa_stub_attributes) { { trn: hesa_trn } }
     let(:hesa_trn) { Faker::Number.number(digits: 7).to_s }
     let(:trainee_degree) { trainee.degrees.first }
-    let(:hesa_course_subject_codes) { Hesa::CodeSets::CourseSubjects::MAPPING.invert }
-    let(:hesa_age_range_codes) { Hesa::CodeSets::AgeRanges::MAPPING.invert }
+    let(:hesa_course_subject_codes) { ::Hesa::CodeSets::CourseSubjects::MAPPING.invert }
+    let(:hesa_age_range_codes) { ::Hesa::CodeSets::AgeRanges::MAPPING.invert }
     let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2022) }
     let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2023) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
@@ -207,8 +207,8 @@ module Trainees
 
     context "trainee already exists and didn't come from HESA" do
       let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
-      let(:hesa_disability_codes) { Hesa::CodeSets::Disabilities::MAPPING.invert }
-      let(:hesa_ethnicity_codes) { Hesa::CodeSets::Ethnicities::MAPPING.invert }
+      let(:hesa_disability_codes) { ::Hesa::CodeSets::Disabilities::MAPPING.invert }
+      let(:hesa_ethnicity_codes) { ::Hesa::CodeSets::Ethnicities::MAPPING.invert }
       let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn) }
 
       describe "#created_from_hesa" do
@@ -362,7 +362,7 @@ module Trainees
 
       context "when end date is available" do
         let(:date) { "2020-12-12" }
-        let(:hesa_reasons_for_leaving_codes) { Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
+        let(:hesa_reasons_for_leaving_codes) { ::Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
         let(:existing_trn) { nil }
 
         context "and the trainee did not complete the course", feature_integrate_with_dqt: true do
@@ -395,13 +395,13 @@ module Trainees
         end
 
         context "and the reason for completion is 'Left but award of credit or a qualification not yet known'" do
-          let(:hesa_modes) { Hesa::CodeSets::Modes::MAPPING.invert }
+          let(:hesa_modes) { ::Hesa::CodeSets::Modes::MAPPING.invert }
 
           let(:hesa_stub_attributes) do
             {
               end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
-              mode: hesa_modes[Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
+              reason_for_leaving: hesa_reasons_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
+              mode: hesa_modes[::Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
             }
           end
 
@@ -413,7 +413,7 @@ module Trainees
       end
 
       context "when bursary is available" do
-        let(:hesa_bursary_level_codes) { Hesa::CodeSets::BursaryLevels::MAPPING.invert }
+        let(:hesa_bursary_level_codes) { ::Hesa::CodeSets::BursaryLevels::MAPPING.invert }
         let(:hesa_stub_attributes) do
           { bursary_level: hesa_bursary_level_codes[Dttp::CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY] }
         end
@@ -424,7 +424,7 @@ module Trainees
       end
 
       context "when training initiative is available and mappable" do
-        let(:hesa_training_initiative_codes) { Hesa::CodeSets::TrainingInitiatives::MAPPING.invert }
+        let(:hesa_training_initiative_codes) { ::Hesa::CodeSets::TrainingInitiatives::MAPPING.invert }
 
         let(:hesa_stub_attributes) do
           { training_initiative: hesa_training_initiative_codes[ROUTE_INITIATIVES_ENUMS[:now_teach]] }
