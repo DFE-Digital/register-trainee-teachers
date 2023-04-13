@@ -93,13 +93,13 @@ module BulkUpdate
       def provider_trainee_id
         return unless column_exists?(Reports::BulkRecommendReport::TRAINEE_ID)
 
-        @messages << error_message(:provider_trainee_id) if trainee.provider_trainee_id != row.provider_trainee_id
+        @messages << error_message(:provider_trainee_id) if trainee.provider_trainee_id&.downcase != row.provider_trainee_id&.downcase
       end
 
       def first_names
         return unless column_exists?(Reports::BulkRecommendReport::FIRST_NAME)
 
-        if transliterate(trainee.first_names.downcase) != transliterate(row.first_names.downcase)
+        if transliterate(trainee.first_names.downcase) != transliterate(row.first_names&.downcase)
           @messages << error_message(:first_names)
         end
       end
@@ -107,7 +107,7 @@ module BulkUpdate
       def last_names
         return unless column_exists?(Reports::BulkRecommendReport::LAST_NAME)
 
-        if transliterate(trainee.last_names.downcase) != transliterate(row.last_names.downcase)
+        if transliterate(trainee.last_names.downcase) != transliterate(row.last_names&.downcase)
           @messages << error_message(:last_names)
         end
       end
@@ -115,41 +115,43 @@ module BulkUpdate
       def lead_school
         return unless column_exists?(Reports::BulkRecommendReport::LEAD_SCHOOL)
 
-        @messages << error_message(:lead_school) if trainee.lead_school_name != row.lead_school
+        @messages << error_message(:lead_school) if trainee.lead_school_name&.downcase != row.lead_school&.downcase
       end
 
       def qts_or_eyts
         return unless column_exists?(Reports::BulkRecommendReport::QTS_OR_EYTS)
 
-        @messages << error_message(:qts_or_eyts) if trainee.qts_or_eyts != row.qts_or_eyts
+        @messages << error_message(:qts_or_eyts) if trainee.qts_or_eyts.downcase != row.qts_or_eyts&.downcase
       end
 
       def route
         return unless column_exists?(Reports::BulkRecommendReport::ROUTE)
 
-        @messages << error_message(:route) if trainee.course_training_route != row.route
+        @messages << error_message(:route) if trainee.course_training_route.downcase != row.route&.downcase
       end
 
       def phase
         return unless column_exists?(Reports::BulkRecommendReport::PHASE)
 
-        @messages << error_message(:phase) if trainee.course_education_phase != row.phase
+        @messages << error_message(:phase) if trainee.course_education_phase&.downcase != row.phase&.downcase
       end
 
       def age_range
         return unless column_exists?(Reports::BulkRecommendReport::AGE_RANGE)
 
-        @messages << error_message(:age_range) if trainee.course_age_range != row.age_range
+        @messages << error_message(:age_range) if trainee.course_age_range&.downcase != row.age_range&.downcase
       end
 
       def subject
         return unless column_exists?(Reports::BulkRecommendReport::SUBJECT)
 
-        @messages << error_message(:subject) if trainee.subjects != row.subject
+        @messages << error_message(:subject) if trainee.subjects&.downcase != row.subject&.downcase
       end
 
       # Used to remove accented characters for a simpler/more reliable comparison
       def transliterate(string)
+        return unless string
+
         I18n.transliterate(string, replacement: "")
       end
 
