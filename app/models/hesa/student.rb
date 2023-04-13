@@ -39,7 +39,6 @@
 #  itt_end_date                 :string
 #  itt_key                      :string
 #  itt_qualification_aim        :string
-#  itt_start_date               :string
 #  last_name                    :string
 #  lead_school_urn              :string
 #  mode                         :string
@@ -56,7 +55,6 @@
 #  study_length                 :string
 #  study_length_unit            :string
 #  surname16                    :string
-#  trainee_start_date           :string
 #  training_initiative          :string
 #  training_route               :string
 #  trn                          :string
