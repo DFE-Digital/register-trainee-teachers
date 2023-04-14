@@ -1639,5 +1639,3 @@ en:
     trainee_record:
       hesa_uneditable_heading: This record was imported from HESA and cannot be edited
       body_html: <p class="govuk-body">Updates from HESA are imported regularly.</p>
-      qts_award_level: QTS
-      eyts_award_level: EYTS
