@@ -35,7 +35,25 @@ module BulkUpdate
           allow(RecommendationsUploads::ValidateFile).to receive(:new).with(anything).and_return(double("validation", validate!: true))
         end
 
-        it "returns an a RecommendationsUpload record and CSV::Table" do
+        it "returns a RecommendationsUpload record and CSV::Table" do
+          expect(form.valid?).to be true
+          form.save
+          expect(form.recommendations_upload).to be_a BulkUpdate::RecommendationsUpload
+          expect(form.csv).to be_a CSV::Table
+        end
+      end
+
+      context "that has possibly malicious scripts" do
+        let(:test_file) { file_fixture("bulk_update/recommendations_upload/injected.csv") }
+
+        before do
+          allow(RecommendationsUploads::ValidateCsv).to receive(:new).with(anything).and_return(double("validation", validate!: true))
+          allow(RecommendationsUploads::ValidateFile).to receive(:new).with(anything).and_return(double("validation", validate!: true))
+        end
+
+        it "returns a RecommendationsUpload record and sanitised CSV::Table" do
+          # cell containing potential spreadsheet formula is safely quoted to avoid execution
+          expect(form.csv["lead school"][-1][0]).to eql "'"
           expect(form.valid?).to be true
           form.save
           expect(form.recommendations_upload).to be_a BulkUpdate::RecommendationsUpload
