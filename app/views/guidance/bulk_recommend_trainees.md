@@ -38,6 +38,8 @@ If a trainee’s estimated end date is not in the period covered by the CSV file
 The CSV file has a blank column for you to fill in the date when trainees met QTS or EYTS standards. This may be
 different to the date when they finish their course or get an academic qualification.
 
+You can only bulk recommend trainees who met the QTS or EYTS standards in the past 12 months. If a trainee met the standards longer ago, you need to recommend them separately in their trainee record.
+
 If a trainee has not met the standards, either delete the row or leave the date blank in the CSV file.
 
 Do not make any other changes to the CSV file.
