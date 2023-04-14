@@ -13,6 +13,10 @@ module RecommendationsUploadHelper
     end
   end
 
+  def from_to(from, to)
+    from == to ? from : "#{from} to #{to}"
+  end
+
   # We can't use url_for(:back) because if the user proceeds to 'Change' and
   # presses back, they would get stuck in a loop between 'Change' and 'Check'.
   def back_url_for_check_page(recommendations_upload)
