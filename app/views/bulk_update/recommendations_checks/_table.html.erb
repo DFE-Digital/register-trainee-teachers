@@ -26,6 +26,11 @@
           <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
             Provider trainee ID: <%= row.trainee.trainee_id %>
           </div>
+          <% if row.trainee.hesa_id.present? %>
+            <div class="govuk-body govuk-!-margin-bottom-0 govuk-hint">
+              HESA ID: <%= row.trainee.hesa_id %>
+            </div>
+          <% end %>
         </td>
         <td class="govuk-table__cell">
           <div class="govuk-body govuk-!-margin-bottom-1">
