@@ -5,8 +5,7 @@
 <ul class="govuk-list govuk-list--bullet">
   <% if awardable_rows_count.positive? %>
     <li>
-      <%= pluralize(awardable_rows_count, "trainee") %> who will be
-      recommended for <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
+      <%= pluralize(awardable_rows_count, "trainee") %> who will be recommended for <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
     </li>
   <% end %>
 

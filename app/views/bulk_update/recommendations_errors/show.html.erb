@@ -28,13 +28,11 @@
 
       <ol class="govuk-list govuk-list--number">
         <li>
-            <p>
-              <%= govuk_link_to(
-                "Download your CSV file with errors indicated.",
-                bulk_update_recommendations_upload_recommendations_errors_path(recommendations_upload, format: :csv),
-                class: "download-errors"
-                ) %>
-            </p>
+          <%= govuk_link_to(
+            "Download your CSV file with errors indicated",
+            bulk_update_recommendations_upload_recommendations_errors_path(recommendations_upload, format: :csv),
+            class: "download-errors"
+            ) %>.
         </li>
         <li>
           Fix the errors. If you cannot fix an error, you can delete the row and
