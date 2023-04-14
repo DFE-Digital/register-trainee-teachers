@@ -774,7 +774,7 @@ en:
       common:
         today: Today
         yesterday: Yesterday
-        specific_date: On another day
+        specific_date: Another date
         on_what_date: On what date?
         for_example: For example
         continue: Continue
@@ -817,7 +817,8 @@ en:
         deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
       withdrawal_reasons:
         headings:
-          withdrawal_date: When did the trainee withdraw?
+          withdrawal_date: Date the trainee withdrew
+          withdrawal_date_hint: This is the last day they trained for %{award_type}.
           withdrawal_reason: Reason for leaving
         labels:
           additional_reason: Enter the reason for withdrawal
