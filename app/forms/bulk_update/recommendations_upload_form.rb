@@ -17,12 +17,12 @@ module BulkUpdate
     def save
       return false unless valid?
 
-      @recommendations_upload = RecommendationsUpload.create(provider:, file:)
+      @recommendations_upload = RecommendationsUpload.create(provider: provider, file: original_csv_sanitised_file)
     end
 
     CSV_ARGS = { headers: true, header_converters: :downcase, strip: true }.freeze
     def csv
-      @csv ||= CSV.new(file.tempfile, **CSV_ARGS).read
+      @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
 
     attr_reader :recommendations_upload, :provider, :file
@@ -31,6 +31,33 @@ module BulkUpdate
 
     def tempfile
       @tempfile ||= file&.tempfile
+    end
+
+    # no stripping or downcasing of data/headers, just reading with headers expected
+    def original_csv_sanitised
+      @original_csv_sanitised ||= begin
+        file.tempfile.rewind
+        CSVSafe.new(file.tempfile, headers: true).read
+      end
+    end
+
+    # write original_csv_sanitised to a new tempfile
+    def original_csv_sanitised_file
+      return @original_csv_sanitised_file if defined?(@original_csv_sanitised_file)
+
+      sanitised_tempfile = Tempfile.new
+      sanitised_tempfile.write(original_csv_sanitised.to_csv)
+      sanitised_tempfile.rewind
+
+      # Return the temporary file as an UploadedFile expected by RecommendationsUpload
+      # with the original content type and file name from the initial upload
+      @original_csv_sanitised_file = ::ActionDispatch::Http::UploadedFile.new(
+        {
+          filename: file.original_filename,
+          tempfile: sanitised_tempfile,
+          type: file.content_type,
+        },
+      )
     end
 
     def validate_file!
