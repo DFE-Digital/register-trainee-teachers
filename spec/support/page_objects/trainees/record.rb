@@ -9,7 +9,7 @@ module PageObjects
       element :admin_tab, "a", text: "Admin"
 
       element :trainee_name, ".govuk-heading-xl"
-      element :trn_status, ".govuk-tag.trainee-status", match: :first
+      element :trn_status, ".trainee-record-header .govuk-tag", match: :first
 
       element :record_outcome, ".govuk-button.recommend-for-award"
       element :reinstate, ".govuk-link.reinstate"
