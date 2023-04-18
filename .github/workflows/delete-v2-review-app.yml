@@ -27,6 +27,7 @@ jobs:
           echo "APP_NAME=pr-$PR_NUMBER" >> $GITHUB_ENV
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
+          echo "TERRAFORM_VERSION=$terraform_version" >> $GITHUB_ENV
 
           pr_state_file=$(az storage blob list -c rtt-tfstate \
            --connection-string $AZURE_STORAGE_CONNECTION_STRING \
