@@ -45,9 +45,9 @@ tfplan
 *.plan
 **/*token*
 *secret*.tfvars
-!terraform/**/app_config.yml
 terraform/**/*.yml
 terraform/**/*.base64
+!terraform/**/workspace-variables/app_config.yml
 
 config/settings.local.yml
 config/settings/*.local.yml

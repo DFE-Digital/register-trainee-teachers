@@ -41,7 +41,7 @@ provider "azurerm" {
 
 
 module "paas" {
-  source = "./modules/paas"
+  source = "../modules/paas"
 
   app_environment                   = var.paas_app_environment
   app_docker_image                  = var.paas_app_docker_image
@@ -73,7 +73,7 @@ provider "statuscake" {
 }
 # interface into statusCake module
 module "statuscake" {
-  source = "./modules/statuscake"
+  source = "../modules/statuscake"
   alerts = var.statuscake_alerts
 }
 
