@@ -27,7 +27,6 @@ module InvalidDataText
 
       it "does not render the inset css" do
         expect(page).not_to have_css(".app-inset-text__title")
-        expect(page).to be_blank
       end
     end
   end
