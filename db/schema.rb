@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_02_155425) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_13_130025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -512,13 +512,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_155425) do
     t.string "course_subject_one"
     t.string "course_subject_two"
     t.string "course_subject_three"
-    t.string "itt_start_date"
     t.string "itt_end_date"
     t.string "employing_school_urn"
     t.string "lead_school_urn"
     t.string "mode"
     t.string "course_age_range"
-    t.string "trainee_start_date"
     t.string "training_initiative"
     t.string "disability1"
     t.string "end_date"
