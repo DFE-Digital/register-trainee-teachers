@@ -8,8 +8,6 @@ module Trainees
 
     USERNAME = "HESA"
 
-    TRN_REGEX = /^(\d{6,7})$/
-
     NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010].freeze
 
     class HesaImportError < StandardError; end
@@ -31,7 +29,6 @@ module Trainees
           create_degrees!
           store_hesa_metadata!
           enqueue_background_jobs!
-          check_for_trn_disparity!
           check_for_missing_hesa_mappings!
         end
       end
@@ -187,14 +184,6 @@ module Trainees
 
     def enqueue_dqt_withdrawal_job?
       current_trainee_state != :withdrawn && mapped_trainee_state == :withdrawn
-    end
-
-    def check_for_trn_disparity!
-      # Whilst providers can provide a TRN, it's not to be trusted. Only Register and DQT are
-      # responsible for the allocation of TRNs.
-      if hesa_trainee[:trn].present? && trainee.trn.present? && hesa_trainee[:trn] != trainee.trn
-        Sentry.capture_message("HESA TRN (#{hesa_trainee[:trn]}) different to trainee TRN (#{trainee.trn})")
-      end
     end
 
     def request_for_trn?
