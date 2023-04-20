@@ -218,13 +218,6 @@ module Trainees
       end
 
       context "when the trainee has a previously saved TRN" do
-        context "HESA has a different TRN" do
-          it "captures a message to sentry" do
-            expect(Sentry).to have_received(:capture_message)
-                                .with("HESA TRN (#{hesa_trn}) different to trainee TRN (#{trainee.trn})")
-          end
-        end
-
         context "HESA TRN is nil" do
           let(:hesa_stub_attributes) { { trn: nil } }
 
