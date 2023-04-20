@@ -101,7 +101,7 @@ feature "Reinstating a trainee" do
   end
 
   def when_i_choose_another_day
-    when_i_choose("On another day")
+    when_i_choose("Another date")
   end
 
   def and_i_continue
