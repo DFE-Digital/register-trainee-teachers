@@ -12,9 +12,7 @@ module BulkUpdate
       return if awardable_rows.empty?
 
       awardable_rows.find_each do |row|
-        # TODO: this will actually be an association on the row
-        trainee = Trainee.find_by(trn: row.trn)
-
+        trainee = row.trainee
         next if trainee.nil? || !trainee.trn_received?
 
         trainee.outcome_date = row.standards_met_at
