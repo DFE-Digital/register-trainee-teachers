@@ -1,0 +1,21 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.confirm_undo_withdrawal.show") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: edit_trainee_undo_withdrawal_path(trainee),
+  ) %>
+<% end %>
+
+<span class="govuk-caption-l"><%= trainee.full_name %></span>
+<h1 class="govuk-heading-l"> Confirm you want to undo the withdrawal </h1>
+
+<%= render ConfirmUndoWithdrawalDetails::View.new(trainee:, comment:, ticket:, state: ) %>
+
+<%= govuk_button_to "Confirm undo withdrawal", trainee_undo_withdrawal_confirmation_path(trainee), method: :patch, class: "govuk-button--warning" %>
+
+<%= register_form_with model: trainee, url: trainee_undo_withdrawal_confirmation_path(trainee), method: :delete, local: true do |f| %>
+  <%= f.submit "Cancel and return to record", class: "govuk-link app-button--link govuk-body", role: "link" %>
+<% end %>
+
+

@@ -63,6 +63,10 @@ class TraineePolicy
     write? && (defer? || trainee.deferred? || user_is_system_admin?)
   end
 
+  def undo_withdraw?
+    write? && trainee.withdrawn?
+  end
+
   def defer?
     write? && (trainee.submitted_for_trn? || trainee.trn_received?)
   end
