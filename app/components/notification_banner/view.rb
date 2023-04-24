@@ -19,12 +19,14 @@ module NotificationBanner
       classes: [],
       role: nil,
       title_id: nil,
-      disable_auto_focus: false
+      disable_auto_focus: false,
+      html_attributes: {}
     )
-      super(classes: classes, html_attributes: {})
+      super(classes:, html_attributes:)
       @title_text = title_text
       @text = text
       @type = type
+      @classes = classes
       @role = role
       @title_id = title_id || "#{DEFAULT_CLASS}-title"
       @disable_auto_focus = disable_auto_focus
@@ -36,6 +38,12 @@ module NotificationBanner
 
     def default_classes
       [DEFAULT_CLASS]
+    end
+
+    def classes
+      return @classes unless @classes.empty?
+
+      default_classes
     end
 
     def type_class
