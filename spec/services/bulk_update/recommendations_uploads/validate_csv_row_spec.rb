@@ -9,7 +9,7 @@ module BulkUpdate
 
       subject(:service) { described_class.new(csv:, row:, trainee:) }
 
-      let!(:trainee) { create(:trainee, :bulk_recommend) }
+      let!(:trainee) { create(:trainee, :bulk_recommend, first_names: "Dâvìd") }
       let(:overwrite) { [] }
       let(:csv) { create_recommendations_upload_csv!(overwrite:) }
       let(:row) { Row.new(csv[1]) }
@@ -87,7 +87,7 @@ module BulkUpdate
           let(:overwrite) do
             [
               Reports::BulkRecommendReport::DEFAULT_HEADERS.map.index_with do
-                "asdfsd" # will force error each attribute
+                "āsdfēsdö" # will force error each attribute but should not through encoding issue with diacritics
               end,
             ]
           end
