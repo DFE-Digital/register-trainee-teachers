@@ -79,7 +79,7 @@ describe Exports::BulkRecommendExport, type: :model do
       end
 
       it "includes the HESA ID" do
-        expect(trainee_csv_row["HESA ID"]).to end_with(trainee_report.hesa_id)
+        expect(trainee_csv_row["HESA ID"]).to end_with("'#{trainee_report.hesa_id}'")
       end
 
       it "includes the Last names" do
