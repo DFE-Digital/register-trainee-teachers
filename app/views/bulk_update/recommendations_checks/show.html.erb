@@ -12,7 +12,7 @@
       <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
     </h1>
 
-    <% recommendations_upload.awardable_rows.includes(:trainee).tap do |awardable_rows| %>
+    <% @rows.tap do |awardable_rows| %>
       <% if awardable_rows.count <= @table_row_limit %>
         <%= render partial: "table", locals: {
           rows: awardable_rows,
