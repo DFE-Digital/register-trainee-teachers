@@ -152,7 +152,7 @@ module BulkUpdate
       def transliterate(string)
         return unless string
 
-        I18n.transliterate(string, replacement: "")
+        I18n.transliterate(string.force_encoding("UTF-8"), replacement: "")
       end
 
       def error_message(key, variables = {})
