@@ -17,7 +17,7 @@ class UndoWithdrawalForm
     session[:undo_withdrawal_ticket] = @ticket
   end
 
-  def save!
+  def save
     return false unless valid?
 
     trainee.update(
@@ -51,8 +51,7 @@ private
         .audits
         .where(action: :update)
         .pluck(:audited_changes)
-        .select { |hash| hash.key?("state") }
-        .reject { |hash| hash&.dig("state", 1) == 4 }
+        .reject { |hash| hash.dig("state", 1) == 4 }
         &.last&.dig("state")&.last || 2 # default to trn_received
   end
 end

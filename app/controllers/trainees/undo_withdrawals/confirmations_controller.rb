@@ -8,8 +8,15 @@ module Trainees
       def show; end
 
       def update
-        undo_withdrawal_form.save!
-        redirect_to(trainee_path(trainee), flash: { success: "Withdrawal undone" })
+        if undo_withdrawal_form.save
+          Dqt::UpdateTraineeJob.perform_later(trainee)
+          redirect_to(trainee_path(trainee), flash: { success: "Withdrawal undone" })
+        else
+          redirect_failed
+        end
+      rescue StandardError => e
+        Sentry.capture_exception(e)
+        redirect_failed
       end
 
       def destroy
@@ -18,6 +25,10 @@ module Trainees
       end
 
     private
+
+      def redirect_failed
+        redirect_to(trainee_path(trainee), flash: { warning: "Unable to undo the trainee Withdrawal. Please contact support." })
+      end
 
       def comment
         undo_withdrawal_form.comment

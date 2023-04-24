@@ -1620,7 +1620,7 @@ en:
             comment:
               blank: Enter a comment
             ticket:
-              format: Must be a URL
+              invalid: Must be a URL
   page_headings:
     start_page: Register trainee teachers
   service_updates:
