@@ -49,6 +49,14 @@ module SchoolResultNotice
       let(:search_count) { 8 }
 
       it "does not render" do
+        render_inline(
+          described_class.new(
+            search_query:,
+            search_limit:,
+            search_count:,
+          ),
+        )
+
         expect(page).not_to have_css("body")
       end
     end
