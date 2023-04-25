@@ -99,7 +99,7 @@ module BulkUpdate
       def first_names
         return unless column_exists?(Reports::BulkRecommendReport::FIRST_NAME)
 
-        if transliterate(trainee.first_names.downcase) != transliterate(row.first_names&.downcase)
+        if transliterate(trainee.first_names) != transliterate(row.first_names)
           @messages << error_message(:first_names)
         end
       end
@@ -107,7 +107,7 @@ module BulkUpdate
       def last_names
         return unless column_exists?(Reports::BulkRecommendReport::LAST_NAME)
 
-        if transliterate(trainee.last_names.downcase) != transliterate(row.last_names&.downcase)
+        if transliterate(trainee.last_names) != transliterate(row.last_names)
           @messages << error_message(:last_names)
         end
       end
@@ -152,7 +152,7 @@ module BulkUpdate
       def transliterate(string)
         return unless string
 
-        I18n.transliterate(string.force_encoding("UTF-8"), replacement: "")
+        I18n.transliterate(string.dup.force_encoding("UTF-8"), replacement: "")&.downcase
       end
 
       def error_message(key, variables = {})
