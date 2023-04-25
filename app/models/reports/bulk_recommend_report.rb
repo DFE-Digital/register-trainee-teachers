@@ -14,8 +14,8 @@ module Reports
     DATE        = "Date QTS or EYTS standards met"
 
     # additional headers
-    LAST_NAME   = "Last names"
     FIRST_NAME  = "First names"
+    LAST_NAME   = "Last names"
     LEAD_SCHOOL = "Lead school"
     QTS_OR_EYTS = "QTS or EYTS"
     ROUTE       = "Route"
@@ -25,8 +25,8 @@ module Reports
 
     DEFAULT_HEADERS = [
       *IDENTIFIERS,
-      LAST_NAME,
       FIRST_NAME,
+      LAST_NAME,
       LEAD_SCHOOL,
       QTS_OR_EYTS,
       ROUTE,
@@ -94,8 +94,8 @@ module Reports
         trainee_report.trn,
         trainee_report.provider_trainee_id,
         trainee_report.hesa_id,
-        trainee_report.last_names,
         trainee_report.first_names,
+        trainee_report.last_names,
         trainee_report.lead_school_name,
         trainee_report.qts_or_eyts,
         trainee_report.course_training_route,
