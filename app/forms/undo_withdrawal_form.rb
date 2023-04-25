@@ -51,7 +51,7 @@ private
         .audits
         .where(action: :update)
         .pluck(:audited_changes)
-        .reject { |hash| hash.dig("state", 1) == 4 }
-        &.last&.dig("state")&.last || 2 # default to trn_received
+        .reject { |hash| hash.dig("state", 1) == Trainee.states["withdrawn"] }
+        &.last&.dig("state")&.last || Trainee.states["trn_received"] # default to trn_received
   end
 end

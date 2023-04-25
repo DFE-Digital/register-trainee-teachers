@@ -134,7 +134,11 @@ module Trainees
       return unless audited_changes.is_a?(Hash)
 
       audited_changes.any? do |key, value|
-        key == "state" && value.is_a?(Array) && value.size == 2 && value[0] == 4 && value[1].is_a?(Integer)
+        key == "state" &&
+          value.is_a?(Array) &&
+          value.size == 2 &&
+          value[0] == Trainee.states["withdrawn"] &&
+          value[1].is_a?(Integer)
       end
     end
 
