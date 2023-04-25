@@ -181,7 +181,7 @@ private
   def and_i_see_a_list_of_trainees_to_check
     @trainees.each do |trainee|
       training_route = t("activerecord.attributes.trainee.training_routes.#{trainee.training_route}")
-      expect(recommendations_checks_show_page).to have_text("#{trainee.last_name}, #{trainee.first_names}")
+      expect(recommendations_checks_show_page).to have_text("#{trainee.first_names} #{trainee.last_name}")
       expect(recommendations_checks_show_page).to have_text("TRN: #{trainee.trn}")
       expect(recommendations_checks_show_page).to have_text(training_route)
     end
