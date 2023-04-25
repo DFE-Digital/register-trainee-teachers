@@ -26,3 +26,5 @@ variable "region_name" {
 locals {
   hosting_environment = var.environment_name
 }
+
+variable "deploy_temp_data_storage_account" { default = true }

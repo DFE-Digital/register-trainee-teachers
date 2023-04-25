@@ -243,10 +243,12 @@ locals {
 
 ### variable resource_group_name {}
 
-variable azure_resource_group_name {}
+variable azure_resource_group_name { default = null }
 
-variable azure_tempdata_storage_account_name {}
+variable azure_tempdata_storage_account_name { default = null }
 
-variable azure_storage_account_replication_type { default = "LRS"}
+variable azure_storage_account_replication_type { default = "LRS" }
 
 variable azure_region_name { default = "uk south" }
+
+variable "deploy_temp_data_storage_account" { default = true }
