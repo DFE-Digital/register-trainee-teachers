@@ -400,8 +400,8 @@
   - hesa_id
   - standards_met_at
   - provider_trainee_id
-  - last_names
   - first_names
+  - last_names
   - lead_school
   - qts_or_eyts
   - route
