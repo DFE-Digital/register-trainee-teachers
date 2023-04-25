@@ -138,7 +138,9 @@ module Trainees
     def state_change_action
       change_from, change_to = audited_changes["state"].map { |change| Trainee.states.key(change) }
 
-      if change_from == "deferred" && change_to != "withdrawn"
+      # Trainees are occasionally transitioned manually from deferred to awarded
+      # and in these cases we don't want the timeline to say "reinstated".
+      if change_from == "deferred" && %w[withdrawn awarded].exclude?(change_to)
         "reinstated"
       elsif change_to == "recommended_for_award"
         "recommended_for_#{auditable.award_type.downcase}"
