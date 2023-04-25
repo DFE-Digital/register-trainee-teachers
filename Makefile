@@ -79,6 +79,9 @@ pen:
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
 
+audit:
+	$(eval DEPLOY_ENV=audit)
+
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=production)
@@ -270,3 +273,45 @@ upload-review-backup: read-deployment-config read-tf-config # make review upload
 
 backup-review-database: read-deployment-config # make review backup-review-database APP_NAME=1234
 	bin/backup-review-database ${POSTGRES_DATABASE_NAME} ${paas_env}
+
+deploy-domain-resources: check-auto-approve domain-azure-resources # make register deploy-domain-resources AUTO_APPROVE=1
+
+check-auto-approve:
+	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
+
+register:
+	$(eval include global_config/register-domain.sh)
+
+domains-infra-init: set-production-subscription set-azure-account
+	terraform -chdir=terraform/custom_domains/infrastructure init -reconfigure -upgrade \
+		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
+
+domains-infra-plan: domains-infra-init # make register domains-infra-plan
+	terraform -chdir=terraform/custom_domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
+
+domains-infra-apply: domains-infra-init # make register domains-infra-apply
+	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
+
+domains-init: set-production-subscription set-azure-account
+	$(if $(PR_NUMBER), $(eval DEPLOY_ENV=${PR_NUMBER}))
+	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}_backend.tfvars
+
+domains-plan: domains-init  # make register qa domains-plan
+	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+
+domains-apply: domains-init # make register qa domains-apply
+	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+domains-destroy: domains-init # make register qa domains-destroy
+	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+
+set-production-subscription:
+	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
+
+domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags #
+	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
+	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
+
+validate-domain-resources: set-what-if domain-azure-resources # make register validate-domain-resources
