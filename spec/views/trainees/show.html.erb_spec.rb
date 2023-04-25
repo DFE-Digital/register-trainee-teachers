@@ -69,4 +69,35 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
       end
     end
   end
+
+  context "details components" do
+    let(:trainee) { create(:trainee, state) }
+    let(:current_user) { create(:user, :system_admin) }
+
+    before { render }
+
+    context "withdrawn trainee" do
+      let(:state) { :withdrawn }
+
+      it "renders the check withdrawn component" do
+        expect(rendered).to have_text("Withdrawal details")
+      end
+    end
+
+    context "deferred trainee" do
+      let(:state) { :deferred }
+
+      it "renders the check withdrawn component" do
+        expect(rendered).to have_text("Deferral details")
+      end
+    end
+
+    context "awarded trainee" do
+      let(:state) { :awarded }
+
+      it "renders the check withdrawn component" do
+        expect(rendered).to have_text("QTS details")
+      end
+    end
+  end
 end

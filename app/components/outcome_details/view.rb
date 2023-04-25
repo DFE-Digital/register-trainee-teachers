@@ -4,10 +4,11 @@ module OutcomeDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_reader :data_model
+    attr_reader :data_model, :editable
 
-    def initialize(data_model)
+    def initialize(data_model, editable: true)
       @data_model = data_model
+      @editable = editable
     end
 
     def outcome_date

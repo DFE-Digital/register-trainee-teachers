@@ -205,7 +205,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated_as_system_admin
     given_a_trainee_exists_that_is_already_withdrawn
     and_i_am_on_the_trainee_record_page
-    then_i_can_see_the_edit_withdrawal_link
+    then_i_can_see_the_edit_withdrawal_details_component
   end
 
   def when_i_am_on_the_withdrawal_page
@@ -421,8 +421,8 @@ feature "Withdrawing a trainee" do
     expect(record_page).not_to have_change_trainee_status
   end
 
-  def then_i_can_see_the_edit_withdrawal_link
-    expect(record_page).to have_change_trainee_status
+  def then_i_can_see_the_edit_withdrawal_details_component
+    expect(record_page).to have_withdrawal_details_component
   end
 
   def and_i_select_no_they_started_later
