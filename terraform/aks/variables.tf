@@ -58,9 +58,9 @@ variable "paas_restore_db_from_point_in_time_before" { default = "" }
 variable "paas_enable_external_logging" { default = true }
 
 # Kubernetes variables
-variable "namespace" { default = "" }
+variable "namespace" {}
 
-variable "cluster" { default = "" }
+variable "cluster" {}
 
 variable "deploy_azure_backing_services" { default = true }
 
@@ -143,7 +143,7 @@ locals {
 
 # only works for dv_review_aks as review_aks is in the test cluster
 #  base_url_env_var  = var.paas_app_environment == "review" ? var.cluster != "" ? { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${var.cluster}.development.teacherservices.cloud" } : { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${var.cluster}.test.teacherservices.cloud" } : {}
-  base_url_env_var  = var.paas_app_environment == "review" ? { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${local.cluster[var.cluster].dns_zone_prefix}.teacherservices.cloud" } : {}
+  base_url_env_var  = var.paas_app_environment == "review" ? { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${module.cluster_data.configuration_map.dns_zone_prefix}.teacherservices.cloud" } : {}
 
   app_env_values_from_yaml = try(yamldecode(file("${path.module}/workspace-variables/${var.paas_app_environment}_app_env.yml")), {})
 
@@ -161,54 +161,7 @@ locals {
     { DB_SSLMODE = var.db_sslmode }
   )
 
-  cluster = {
-    cluster1 = {
-      cluster_resource_group_name = "s189d01-tsc-dv-rg"
-      cluster_resource_prefix     = "s189d01-tsc-cluster1"
-      dns_zone_prefix             = "cluster1.development"
-    }
-    cluster2 = {
-      cluster_resource_group_name = "s189d01-tsc-dv-rg"
-      cluster_resource_prefix     = "s189d01-tsc-cluster2"
-      dns_zone_prefix             = "cluster2.development"
-    }
-    cluster3 = {
-      cluster_resource_group_name = "s189d01-tsc-dv-rg"
-      cluster_resource_prefix     = "s189d01-tsc-cluster3"
-      dns_zone_prefix             = "cluster3.development"
-    }
-    cluster4 = {
-      cluster_resource_group_name = "s189d01-tsc-dv-rg"
-      cluster_resource_prefix     = "s189d01-tsc-cluster4"
-      dns_zone_prefix             = "cluster4.development"
-    }
-    cluster5 = {
-      cluster_resource_group_name = "s189d01-tsc-dv-rg"
-      cluster_resource_prefix     = "s189d01-tsc-cluster5"
-      dns_zone_prefix             = "cluster5.development"
-    }
-    cluster6 = {
-      cluster_resource_group_name = "s189d01-tsc-dv-rg"
-      cluster_resource_prefix     = "s189d01-tsc-cluster6"
-      dns_zone_prefix             = "cluster6.development"
-    }
-    test = {
-      cluster_resource_group_name = "s189t01-tsc-ts-rg"
-      cluster_resource_prefix     = "s189t01-tsc-test"
-      dns_zone_prefix             = "test"
-    }
-    platform-test = {
-      cluster_resource_group_name = "s189t01-tsc-pt-rg"
-      cluster_resource_prefix     = "s189t01-tsc-platform-test"
-      dns_zone_prefix             = "platform-test"
-    }
-    production = {
-      cluster_resource_group_name = "s189p01-tsc-pd-rg"
-      cluster_resource_prefix     = "s189p01-tsc-production"
-      dns_zone_prefix             = null
-    }
-  }
-  cluster_name = "${local.cluster[var.cluster].cluster_resource_prefix}-aks"
+  cluster_name = "${module.cluster_data.configuration_map.resource_prefix}-aks"
   app_resource_group_name = "${var.azure_resource_prefix}-${var.service_short}-${var.config_short}-rg"
 }
 

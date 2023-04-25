@@ -5,7 +5,6 @@ module "kubernetes" {
   app_environment                     = local.app_name_suffix
   app_environment_variables           = local.app_env_values
   app_secrets                         = local.app_secrets
-#  cluster                             = local.cluster[var.cluster]
   cluster                             = var.cluster
   deploy_azure_backing_services       = var.deploy_azure_backing_services
   namespace                           = var.namespace

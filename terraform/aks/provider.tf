@@ -33,8 +33,8 @@ provider "statuscake" {
 }
 
 provider "kubernetes" {
-  host                   = try(data.azurerm_kubernetes_cluster.main.kube_config.0.host, null)
-  client_certificate     = try(base64decode(data.azurerm_kubernetes_cluster.main.kube_config.0.client_certificate), null)
-  client_key             = try(base64decode(data.azurerm_kubernetes_cluster.main.kube_config.0.client_key), null)
-  cluster_ca_certificate = try(base64decode(data.azurerm_kubernetes_cluster.main.kube_config.0.cluster_ca_certificate), null)
+  host                   = module.cluster_data.kubernetes_host
+  client_certificate     = module.cluster_data.kubernetes_client_certificate
+  client_key             = module.cluster_data.kubernetes_client_key
+  cluster_ca_certificate = module.cluster_data.kubernetes_cluster_ca_certificate
 }
